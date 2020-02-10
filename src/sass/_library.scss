@@ -1,0 +1,62 @@
+@font-face {
+  font-family: "NotoSansUI-Regular";
+  src: url("../fonts/NotoSansUI-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSansUI-Bold";
+  src: url("../fonts/NotoSansUI-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.televerificationIcon {
+  font-size: 7.5em !important;
+}
+
+.center {
+  text-align: center;
+}
+
+a {
+  button {
+    margin-top: 3em;
+    margin-bottom: 3em;
+  }
+}
+
+button {
+  margin: 0.3em 0.3em 0.3em 0.6em;
+  background: #03476e;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 0.3em;
+  overflow: hidden;
+  position: relative;
+  min-width: 4vw;
+  color: white;
+  font-family: "NotoSansUI-Bold";
+  font-weight: bold;
+  font-size: initial;
+  text-align: center;
+  cursor: pointer;
+  border: medium none;
+  text-transform: uppercase;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  writing-mode: horizontal-tb;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  align-items: flex-start;
+  -webkit-box-direction: normal;
+
+  &:disabled {
+    background-color: rgba(75, 75, 75, 0.87);
+  }
+}

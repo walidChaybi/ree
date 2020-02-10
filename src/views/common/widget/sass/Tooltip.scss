@@ -1,0 +1,20 @@
+.tooltip {
+  width: 2em;
+  height: auto;
+}
+
+.tooltipPanel {
+  z-index: 3;
+  bottom: 150%;
+  left: 174%;
+  width: 160px;
+  margin-bottom: 5px;
+  margin-left: -92px;
+  padding: 7px;
+  border-radius: 3px;
+  color: #fff;
+  background: rgba(51, 51, 51, 0.9);
+  text-align: center;
+  line-height: 1.2;
+  height: fit-content;
+}

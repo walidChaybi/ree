@@ -1,0 +1,161 @@
+.App {
+  text-align: center;
+  font-family: "NotoSansUI-Regular";
+}
+
+.AppHeader {
+  background: #0579be no-repeat scroll 0 0;
+  height: 4em;
+  width: 100%;
+  display: grid;
+  box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.55);
+  color: white;
+  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  @media (max-width: 1250px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 850px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  h1 {
+    float: right;
+    @media (max-width: 1250px) {
+      text-align: left;
+      margin-left: 0em;
+      padding-left: 0em;
+    }
+    @media (max-width: 850px) {
+      text-align: center;
+    }
+  }
+}
+
+.AppBody {
+  padding-left: 10em;
+  padding-right: 10em;
+
+  @media (max-width: 1500px) {
+    padding-left: 5em;
+    padding-right: 5em;
+  }
+
+  @media (max-width: 1100px) {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+
+  @media (max-width: 700px) {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+}
+
+.FormContent {
+  color: #232425;
+  font-family: "NotoSansUI-Regular";
+  font-size: 1.6rem;
+  line-height: 1.5;
+  background-color: #f4f4f4;
+  border-radius: 0.3em;
+  padding: 0.45em;
+  position: relative;
+}
+
+form {
+  button {
+    margin-top: 3em;
+    margin-bottom: 3em;
+  }
+}
+
+.AppLink {
+  color: #61dafb;
+}
+
+h1 {
+  font-size: large;
+  margin-top: 1.2em;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: "NotoSansUI-Bold";
+  font-size: 1.875em;
+  color: #024056;
+}
+
+h3 {
+  color: #0579be;
+  font-family: "NotoSansUI-Regular";
+  font-size: 1.0625em;
+}
+
+h4 {
+  color: #0579be;
+  font-family: "NotoSansUI-Regular";
+  font-size: 0.6725em;
+}
+
+select {
+  width: 18em;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 3.00075em;
+  padding: 0.5em 3em 0.5em 1em;
+  background: url(../../img/expand-close.svg) #fff no-repeat calc(100% - 6px)
+    50%;
+  background-size: 43px;
+  line-height: 1.5em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #aeaeae;
+}
+
+option {
+  font: 400 13.3333px Arial;
+}
+
+input {
+  height: 1.852em;
+  width: 13.851em;
+  padding: 0.5em 3em 0.5em 1em;
+  -webkit-appearance: none;
+  border: 1px solid #aeaeae;
+}
+
+input::placeholder {
+  font-size: smaller;
+}
+
+legend {
+  font-size: 0.6725em;
+  margin: 0.525em;
+}
+
+p {
+  text-align: justify;
+}
+
+.logoBox {
+  .logo {
+    margin-top: 0.15em;
+    // margin-right: 5em;
+    height: 3.7em;
+    @media (max-width: 850px) {
+      display: none;
+    }
+  }
+}
+
+.logo:nth-child(2) {
+  @media (max-width: 950px) {
+    display: none;
+  }
+}

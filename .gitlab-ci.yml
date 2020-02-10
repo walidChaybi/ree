@@ -1,0 +1,10 @@
+# Sélection du template Gitlab
+include:
+  - project: "rece/gitlab-ci/rece-jobs-lib"
+    file: "rece-pipeline-js.yml"
+    ref: "master"
+
+# Tag du runner à utiliser pour tous les jobs
+.commun:
+  tags:
+    - rece

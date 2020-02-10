@@ -1,0 +1,11 @@
+{
+  "pages": {
+    "verification": {
+      "form": {
+        "dateEvenement": "^[0-9]{4}$",
+        "nomTitulaire": "^[a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' -.]{1,100}$",
+        "ctv": "^[a-km-np-zA-NP-Z2-9]{6}$"
+      }
+    }
+  }
+}
