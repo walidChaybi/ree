@@ -2,7 +2,8 @@ import React from "react";
 const messages = require("../../../ressources/messages.json");
 const errors = require("../../../ressources/errors.json");
 const regex = require("../../../ressources/regex.json");
-const ressources = { ...messages, errors, regex };
+const referentiel = require("../../../ressources/referentiel.json");
+const ressources = { ...messages, errors, regex, referentiel };
 
 export interface ITextProps {
   messageId: string;

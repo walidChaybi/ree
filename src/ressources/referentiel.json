@@ -1,0 +1,60 @@
+{
+  "canalProvenance": {
+    "DILA": "DILA",
+    "DALI": "DALI",
+    "CORIDA": "CORIDA",
+    "COMEDEC": "COMEDEC",
+    "PLANETE": "PLANETE",
+    "SIANF": "SIANF",
+    "SAGA": "SAGA",
+    "GRECO": "GRECO",
+    "MICADO": "MICADO"
+  },
+  "natureActe": {
+    "NAISSANCE": "Naissance",
+    "MARIAGE": "Mariage",
+    "DECES": "Décès"
+  },
+  "qualiteRequerant": {
+    "Particulier": "Particulier",
+    "Administration": "Administration",
+    "MandataireHabilite": "Mandataire habilité"
+  },
+  "sousQualiteRequerant": {
+    "Titulaire": "Titulaire",
+    "Parent": "Parent",
+    "Enfant": "Enfant",
+    "EpouxEpouse": "Epoux/Epouse",
+    "GrandParent": "Grand parent",
+    "PetitEnfant": "Petit enfant",
+    "AutreRequerant": "Autre requerant",
+    "Tribunal": "Tribunal",
+    "ProcureurRepublique": "Procureur de la république",
+    "Service": "Service",
+    "EtablissementPublic": "Etablissement public",
+    "OrganismeCaisseControleEtat": "Organisme de caisse controlé par l'état",
+    "Avocat": "Avocat",
+    "Tuteur": "Tuteur",
+    "Huissier": "Huissier",
+    "Genealogiste": "Genealogiste",
+    "Notaire": "Notaire"
+  },
+  "sousTypeRequete": {
+    "DELIVRANCE_DEMAT": "Délivrance Démat",
+    "DELIVRANCE_COURRIER": "Délivrance Courrier"
+  },
+  "statutRequete": {
+    "DOUBLON": "Doublon",
+    "A_TRAITER": "A traiter",
+    "A_SIGNALER": "A signaler",
+    "A_TRAITER_DEMAT": "A traiter démat",
+    "TRAITE_DEMAT": "Traité démat",
+    "A_IMPRIMER": "A imprimer",
+    "TRAITE_IMPRIME": "Traité imprimé"
+  },
+  "typeRequete": {
+    "Delivrance": "Délivrance",
+    "CreationActe": "Création d'acte",
+    "MiseAJour": "Mise à jour"
+  }
+}

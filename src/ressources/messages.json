@@ -8,5 +8,21 @@
       "requis": "*"
     }
   },
-  "pages": {}
+  "pages": {
+    "requetes": {
+      "tableau": {
+        "header": {
+          "identifiant": "N°",
+          "sousTypeRequete": "Type",
+          "canalProvenance": "Provenance",
+          "natureActe": "Nature d'acte",
+          "requerant": "Requerant",
+          "dateCreation": "Date de création",
+          "dateStatut": "Dernière mise à jour",
+          "statutRequete": "Statut",
+          "prioriteRequete": "Priorité"
+        }
+      }
+    }
+  }
 }
