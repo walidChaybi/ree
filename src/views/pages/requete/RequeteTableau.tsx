@@ -51,7 +51,7 @@ const data = [
     "Xavi Miro",
     moment(),
     moment(),
-    StatutRequete.ATraiter
+    StatutRequete.ASigner
   ),
   createData(
     "ACQY23677",
@@ -62,7 +62,7 @@ const data = [
     "Joan Miro",
     moment(),
     moment(),
-    StatutRequete.ATraiter
+    StatutRequete.ASigner
   ),
   createData(
     "COL23678",
@@ -73,7 +73,7 @@ const data = [
     "Jaume Miro",
     moment(),
     moment(),
-    StatutRequete.ATraiter
+    StatutRequete.ASigner
   )
 ];
 
