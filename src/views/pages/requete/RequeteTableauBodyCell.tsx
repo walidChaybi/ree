@@ -1,7 +1,6 @@
 import React from "react";
 import TableCell from "@material-ui/core/TableCell";
 import "../../../sass/_library.scss";
-import { DataTable } from "./RequeteTableauHeaderCell";
 
 interface RequeteTableauBodyCellProps {
   data: any;

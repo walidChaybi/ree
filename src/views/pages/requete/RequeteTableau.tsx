@@ -1,20 +1,20 @@
 import React from "react";
 import { Box } from "reakit/Box";
 import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
 import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { NatureActe } from "../../../model/requete/NatureActe";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
-import { Text } from "../../common/widget/Text";
+import { getText } from "../../common/widget/Text";
 import moment from "moment";
 import { RequeteTableauHeader } from "./RequeteTableauHeader";
-import { DataTable, SortOrder } from "./RequeteTableauHeaderCell";
+import { DataTable } from "./RequeteTableauHeaderCell";
+import TablePagination from "@material-ui/core/TablePagination";
+import { RequeteTableauBody } from "./RequeteTableauBody";
+import { SortOrder, stableSort, getComparator } from "./tableau/TableUtils";
 
 // TODO mock à retirer
 // La gestion du requerant est provisoire, l'api retournera un objet structuré
@@ -90,6 +90,534 @@ const data = [
     moment(),
     moment(),
     StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23678",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
   )
 ];
 
@@ -98,6 +626,9 @@ export const RequeteTableau: React.FC = () => {
   const [sortOrderByState, setSortOrderByState] = React.useState<DataTable>(
     "dateStatut"
   );
+  const [rowsPerPageState, setRowsPerPageState] = React.useState(20);
+  const [pageState, setPageState] = React.useState(0);
+
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: DataTable
@@ -107,50 +638,65 @@ export const RequeteTableau: React.FC = () => {
     setSortOrderByState(property);
   };
 
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPageState(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPageState(parseInt(event.target.value, 10));
+    setPageState(0);
+  };
+
+  function getDataForBodyTable() {
+    const bodyData = data.map(requete => {
+      return {
+        identifiant: requete.identifiant,
+        typeRequete: requete.typeRequete,
+        sousTypeRequete: requete.sousTypeRequete,
+        canalProvenance: requete.canalProvenance,
+        natureActe: requete.natureActe,
+        requerant: requete.requerant,
+        dateCreation: requete.dateCreation.format("DD/MM/YYYY"),
+        dateStatut: requete.dateStatut.format("DD/MM/YYYY"),
+        statutRequete: requete.statutRequete,
+        prioriteRequete: "TODO"
+      };
+    });
+    return stableSort(
+      bodyData,
+      getComparator(sortOrderState, sortOrderByState)
+    ).slice(
+      pageState * rowsPerPageState,
+      pageState * rowsPerPageState + rowsPerPageState
+    );
+  }
+
   return (
-    <TableContainer component={Paper}>
-      <Box as={Table} role="presentation" size="small">
-        <RequeteTableauHeader
-          order={sortOrderState}
-          orderBy={sortOrderByState}
-          onRequestSort={handleRequestSort}
-        />
-        <TableBody>
-          {data.map(row => (
-            <TableRow key={row.identifiant}>
-              <TableCell className="tableauFontBody" align="center">
-                {row.identifiant}
-              </TableCell>
-              <TableCell className="tableauFontBody" align="center">
-                <Text
-                  messageId={`referentiel.sousTypeRequete.${row.sousTypeRequete}`}
-                />
-              </TableCell>
-              <TableCell className="tableauFontBody" align="center">
-                <Text
-                  messageId={`referentiel.canalProvenance.${row.canalProvenance}`}
-                />
-              </TableCell>
-              <TableCell align="center">
-                <Text messageId={`referentiel.natureActe.${row.natureActe}`} />
-              </TableCell>
-              <TableCell align="center">{row.requerant}</TableCell>
-              <TableCell align="center">
-                {row.dateCreation.format("DD/MM/YYYY")}
-              </TableCell>
-              <TableCell align="center">
-                {row.dateStatut.format("DD/MM/YYYY")}
-              </TableCell>
-              <TableCell align="center">
-                <Text
-                  messageId={`referentiel.statutRequete.${row.statutRequete}`}
-                />
-              </TableCell>
-              <TableCell align="center">TODO</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Box>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper}>
+        <Box as={Table} role="presentation" size="small">
+          <RequeteTableauHeader
+            order={sortOrderState}
+            orderBy={sortOrderByState}
+            onRequestSort={handleRequestSort}
+          />
+          <RequeteTableauBody data={getDataForBodyTable()} />
+        </Box>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 20]}
+        component="div"
+        count={data.length}
+        rowsPerPage={rowsPerPageState}
+        labelRowsPerPage={getText("pagination.rowsPerPage", [
+          getText("pages.requetes.tableau.pagination.donneePaginee")
+        ])}
+        page={pageState}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+    </>
   );
 };

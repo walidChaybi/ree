@@ -3,9 +3,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import {
   DataTable,
-  SortOrder,
   RequeteTableauHeaderCell
 } from "./RequeteTableauHeaderCell";
+import { SortOrder } from "./tableau/TableUtils";
 
 export interface RequeteTableauHeaderProps {
   onRequestSort: (

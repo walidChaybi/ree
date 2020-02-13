@@ -8,6 +8,11 @@
       "requis": "*"
     }
   },
+  "pagination": {
+    "rowsPerPage": "${0} par page",
+    "pageSuivante": "Page suivante",
+    "pagePrecedente": "Page précédente"
+  },
   "pages": {
     "requetes": {
       "enCours": {
@@ -24,6 +29,9 @@
           "dateStatut": "Dernière mise à jour",
           "statutRequete": "Statut",
           "prioriteRequete": "Priorité"
+        },
+        "pagination": {
+          "donneePaginee": "Requêtes"
         }
       }
     }

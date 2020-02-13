@@ -3,8 +3,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { Text } from "../../common/widget/Text";
 import "../../../sass/_library.scss";
-
-export type SortOrder = "asc" | "desc";
+import { SortOrder } from "./tableau/TableUtils";
 
 export type DataTable =
   | "identifiant"
@@ -16,6 +15,18 @@ export type DataTable =
   | "dateStatut"
   | "statutRequete"
   | "prioriteRequete";
+
+export interface IDataTable {
+  identifiant: string;
+  sousTypeRequete: string;
+  canalProvenance: string;
+  natureActe: string;
+  requerant: string;
+  dateCreation: string;
+  dateStatut: string;
+  statutRequete: string;
+  prioriteRequete: string;
+}
 
 interface RequeteTableauHeaderCellProps {
   order: SortOrder;

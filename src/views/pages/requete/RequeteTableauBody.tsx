@@ -2,12 +2,12 @@ import React from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import { RequeteData } from "./RequeteTableau";
 import { RequeteTableauBodyCell } from "./RequeteTableauBodyCell";
 import { getText } from "../../common/widget/Text";
+import { IDataTable } from "./RequeteTableauHeaderCell";
 
 interface RequeteTableauBodyProps {
-  data: RequeteData[];
+  data: IDataTable[];
 }
 
 export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
@@ -20,21 +20,21 @@ export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
           <TableRow key={row.identifiant}>
             <RequeteTableauBodyCell data={row.identifiant} />
             <RequeteTableauBodyCell
-              data={`referentiel.sousTypeRequete.${row.sousTypeRequete}`}
+              data={getText(
+                `referentiel.sousTypeRequete.${row.sousTypeRequete}`
+              )}
             />
             <RequeteTableauBodyCell
-              data={`referentiel.canalProvenance.${row.canalProvenance}`}
+              data={getText(
+                `referentiel.canalProvenance.${row.canalProvenance}`
+              )}
             />
             <RequeteTableauBodyCell
               data={getText(`referentiel.natureActe.${row.natureActe}`)}
             />
             <RequeteTableauBodyCell data={row.requerant} />
-            <RequeteTableauBodyCell
-              data={row.dateCreation.format("DD/MM/YYYY")}
-            />
-            <RequeteTableauBodyCell
-              data={row.dateStatut.format("DD/MM/YYYY")}
-            />
+            <RequeteTableauBodyCell data={row.dateCreation} />
+            <RequeteTableauBodyCell data={row.dateStatut} />
             <RequeteTableauBodyCell
               data={getText(`referentiel.statutRequete.${row.statutRequete}`)}
             />
