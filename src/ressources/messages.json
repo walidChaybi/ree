@@ -1,5 +1,5 @@
 {
-  "header": "Header de l'application",
+  "header": "Registre d'État Civil Électronique",
   "titre": "Titre de l'application",
   "subtitre": "Sous-titre de l'application",
   "altLogoMariane": "Alternative au logo",
@@ -10,6 +10,9 @@
   },
   "pages": {
     "requetes": {
+      "enCours": {
+        "titre": "Requêtes en cours"
+      },
       "tableau": {
         "header": {
           "identifiant": "N°",
