@@ -20,6 +20,18 @@ import { DataTable, SortOrder } from "./RequeteTableauHeaderCell";
 // La gestion du requerant est provisoire, l'api retournera un objet structuré
 // et non une chaine de caractères
 
+export interface RequeteData {
+  identifiant: string;
+  typeRequete: TypeRequete;
+  sousTypeRequete: SousTypeRequete;
+  canalProvenance: CanalProvenance;
+  natureActe: NatureActe;
+  requerant: string;
+  dateCreation: moment.Moment;
+  dateStatut: moment.Moment;
+  statutRequete: StatutRequete;
+}
+
 function createData(
   identifiant: string,
   typeRequete: TypeRequete,
