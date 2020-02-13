@@ -82,7 +82,7 @@ const data = [
 ];
 
 export const RequeteTableau: React.FC = () => {
-  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("asc");
+  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("desc");
   const [sortOrderByState, setSortOrderByState] = React.useState<DataTable>(
     "dateStatut"
   );
@@ -106,13 +106,15 @@ export const RequeteTableau: React.FC = () => {
         <TableBody>
           {data.map(row => (
             <TableRow key={row.identifiant}>
-              <TableCell align="center">{row.identifiant}</TableCell>
-              <TableCell align="center">
+              <TableCell className="tableauFontBody" align="center">
+                {row.identifiant}
+              </TableCell>
+              <TableCell className="tableauFontBody" align="center">
                 <Text
                   messageId={`referentiel.sousTypeRequete.${row.sousTypeRequete}`}
                 />
               </TableCell>
-              <TableCell align="center">
+              <TableCell className="tableauFontBody" align="center">
                 <Text
                   messageId={`referentiel.canalProvenance.${row.canalProvenance}`}
                 />

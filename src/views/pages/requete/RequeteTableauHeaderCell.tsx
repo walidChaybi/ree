@@ -2,6 +2,7 @@ import React from "react";
 import TableCell from "@material-ui/core/TableCell";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { Text } from "../../common/widget/Text";
+import "../../../sass/_library.scss";
 
 export type SortOrder = "asc" | "desc";
 
@@ -37,6 +38,7 @@ export const RequeteTableauHeaderCell: React.FC<RequeteTableauHeaderCellProps> =
       sortDirection={orderBy === column ? order : false}
     >
       <TableSortLabel
+        className="tableauFontHeader"
         active={orderBy === column}
         direction={orderBy === column ? order : "asc"}
         onClick={sortHandler(column)}
