@@ -4,7 +4,6 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
@@ -14,8 +13,13 @@ import { NatureActe } from "../../../model/requete/NatureActe";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { Text } from "../../common/widget/Text";
 import moment from "moment";
+import { RequeteTableauHeader } from "./RequeteTableauHeader";
+import { DataTable, SortOrder } from "./RequeteTableauHeaderCell";
 
 // TODO mock à retirer
+// La gestion du requerant est provisoire, l'api retournera un objet structuré
+// et non une chaine de caractères
+
 function createData(
   identifiant: string,
   typeRequete: TypeRequete,
@@ -78,46 +82,27 @@ const data = [
 ];
 
 export const RequeteTableau: React.FC = () => {
+  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("asc");
+  const [sortOrderByState, setSortOrderByState] = React.useState<DataTable>(
+    "dateStatut"
+  );
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: DataTable
+  ) => {
+    const isAsc = sortOrderByState === property && sortOrderState === "asc";
+    setSortOrderState(isAsc ? "desc" : "asc");
+    setSortOrderByState(property);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Box as={Table} role="presentation" size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell align="center">
-              <Text messageId={"pages.requetes.tableau.header.identifiant"} />
-            </TableCell>
-            <TableCell align="center">
-              <Text
-                messageId={"pages.requetes.tableau.header.sousTypeRequete"}
-              />
-            </TableCell>
-            <TableCell align="center">
-              <Text
-                messageId={"pages.requetes.tableau.header.canalProvenance"}
-              />
-            </TableCell>
-            <TableCell align="center">
-              <Text messageId={"pages.requetes.tableau.header.natureActe"} />
-            </TableCell>
-            <TableCell align="center">
-              <Text messageId={"pages.requetes.tableau.header.requerant"} />
-            </TableCell>
-            <TableCell align="center">
-              <Text messageId={"pages.requetes.tableau.header.dateCreation"} />
-            </TableCell>
-            <TableCell align="center">
-              <Text messageId={"pages.requetes.tableau.header.dateStatut"} />
-            </TableCell>
-            <TableCell align="center">
-              <Text messageId={"pages.requetes.tableau.header.statutRequete"} />
-            </TableCell>
-            <TableCell align="center">
-              <Text
-                messageId={"pages.requetes.tableau.header.prioriteRequete"}
-              />
-            </TableCell>
-          </TableRow>
-        </TableHead>
+        <RequeteTableauHeader
+          order={sortOrderState}
+          orderBy={sortOrderByState}
+          onRequestSort={handleRequestSort}
+        />
         <TableBody>
           {data.map(row => (
             <TableRow key={row.identifiant}>
