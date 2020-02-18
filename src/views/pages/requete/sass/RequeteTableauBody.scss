@@ -1,0 +1,17 @@
+.PrioriteBasse {
+  color: green;
+}
+
+.PrioriteMoyenne {
+  color: orange;
+}
+
+.PrioriteHaute {
+  color: red;
+}
+
+.PrioriteBasse,
+.PrioriteMoyenne,
+.PrioriteHaute {
+  font-size: 1rem !important;
+}

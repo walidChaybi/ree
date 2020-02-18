@@ -6,7 +6,12 @@ import { RequeteTableauBodyCell } from "./RequeteTableauBodyCell";
 import { getText } from "../../common/widget/Text";
 import { IDataTable } from "./RequeteTableauHeaderCell";
 import { useHistory } from "react-router-dom";
+import LabelIcon from "@material-ui/icons/Label";
+import classNames from "classnames";
+import moment from "moment";
+
 import "./tableau/sass/Table.scss";
+import "./sass/RequeteTableauBody.scss";
 
 interface RequeteTableauBodyProps {
   data: IDataTable[];
@@ -49,10 +54,22 @@ export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
             <RequeteTableauBodyCell
               data={getText(`referentiel.statutRequete.${row.statutRequete}`)}
             />
-            <TableCell align="center">TODO</TableCell>
+            <TableCell align="center">
+              <LabelIcon className={prioriteDeLaRequete(row.dateStatut)} />
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </>
   );
 };
+
+function prioriteDeLaRequete(dateStatut: string): string {
+  const ecartEnJours = moment().diff(moment(dateStatut, "DD/MM/YYYY"), "days");
+
+  return classNames({
+    PrioriteBasse: ecartEnJours <= 2,
+    PrioriteMoyenne: ecartEnJours > 2 && ecartEnJours <= 5,
+    PrioriteHaute: ecartEnJours > 5
+  });
+}

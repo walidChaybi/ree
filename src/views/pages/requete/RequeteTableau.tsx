@@ -65,8 +65,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Mariage,
     "Xavi Miro",
-    moment(),
-    moment(),
+    moment("05/02/2020", "DD/MM/YYYY"),
+    moment("05/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -76,8 +76,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Naissance,
     "Joan Miro",
-    moment(),
-    moment(),
+    moment("06/02/2020", "DD/MM/YYYY"),
+    moment("06/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -87,8 +87,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("07/02/2020", "DD/MM/YYYY"),
+    moment("07/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -98,8 +98,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("08/02/2020", "DD/MM/YYYY"),
+    moment("08/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -109,8 +109,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("09/02/2020", "DD/MM/YYYY"),
+    moment("09/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -120,8 +120,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("10/02/2020", "DD/MM/YYYY"),
+    moment("10/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -131,8 +131,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("11/02/2020", "DD/MM/YYYY"),
+    moment("11/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -142,8 +142,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("12/02/2020", "DD/MM/YYYY"),
+    moment("12/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -153,8 +153,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("13/02/2020", "DD/MM/YYYY"),
+    moment("13/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -164,8 +164,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("14/02/2020", "DD/MM/YYYY"),
+    moment("14/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -175,8 +175,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("15/02/2020", "DD/MM/YYYY"),
+    moment("15/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -186,8 +186,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("16/02/2020", "DD/MM/YYYY"),
+    moment("16/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(
@@ -197,8 +197,8 @@ const data = [
     CanalProvenance.DALI,
     NatureActe.Deces,
     "Jaume Miro",
-    moment(),
-    moment(),
+    moment("17/02/2020", "DD/MM/YYYY"),
+    moment("17/02/2020", "DD/MM/YYYY"),
     StatutRequete.ASigner
   ),
   createData(

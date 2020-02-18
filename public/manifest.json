@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "RECE",
+  "name": "Registre d'état civil électronique",
   "icons": [
     {
       "src": "favicon.ico",
