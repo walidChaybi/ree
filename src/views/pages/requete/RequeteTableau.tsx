@@ -59,7 +59,7 @@ function createData(
 // TODO mock à retirer
 const data = [
   createData(
-    "CSL23675",
+    "CSL23671",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -70,7 +70,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "ACQY23677",
+    "ACQY23672",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceCourrier,
     CanalProvenance.DALI,
@@ -81,7 +81,51 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23673",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23674",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23675",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23676",
+    TypeRequete.Delivrance,
+    SousTypeRequete.DelivranceDemat,
+    CanalProvenance.DALI,
+    NatureActe.Deces,
+    "Jaume Miro",
+    moment(),
+    moment(),
+    StatutRequete.ASigner
+  ),
+  createData(
+    "COL23677",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -103,7 +147,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23679",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -114,7 +158,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23680",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -125,7 +169,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23681",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -136,7 +180,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23682",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -147,7 +191,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23683",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -158,7 +202,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23684",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -169,7 +213,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23685",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -180,7 +224,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23686",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -191,7 +235,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23687",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -202,7 +246,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23688",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -213,7 +257,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23689",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -224,7 +268,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23690",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -235,7 +279,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23691",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -246,7 +290,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23692",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -257,7 +301,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23693",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -268,7 +312,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23694",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -279,7 +323,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23695",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -290,7 +334,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23696",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -301,7 +345,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23697",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -312,7 +356,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23698",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -323,7 +367,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23699",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -334,7 +378,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23700",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -345,7 +389,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23701",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -356,7 +400,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23702",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -367,7 +411,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23703",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -378,7 +422,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23704",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -389,7 +433,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23705",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -400,7 +444,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23706",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -411,7 +455,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23707",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -422,7 +466,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23708",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -433,7 +477,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23709",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -444,7 +488,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23710",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -455,7 +499,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23711",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -466,7 +510,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23712",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -477,7 +521,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23713",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -488,7 +532,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23714",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -499,7 +543,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23715",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -510,7 +554,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23716",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -521,7 +565,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23717",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -532,7 +576,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23718",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -543,7 +587,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23719",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -554,7 +598,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
+    "COL23720",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -565,51 +609,7 @@ const data = [
     StatutRequete.ASigner
   ),
   createData(
-    "COL23678",
-    TypeRequete.Delivrance,
-    SousTypeRequete.DelivranceDemat,
-    CanalProvenance.DALI,
-    NatureActe.Deces,
-    "Jaume Miro",
-    moment(),
-    moment(),
-    StatutRequete.ASigner
-  ),
-  createData(
-    "COL23678",
-    TypeRequete.Delivrance,
-    SousTypeRequete.DelivranceDemat,
-    CanalProvenance.DALI,
-    NatureActe.Deces,
-    "Jaume Miro",
-    moment(),
-    moment(),
-    StatutRequete.ASigner
-  ),
-  createData(
-    "COL23678",
-    TypeRequete.Delivrance,
-    SousTypeRequete.DelivranceDemat,
-    CanalProvenance.DALI,
-    NatureActe.Deces,
-    "Jaume Miro",
-    moment(),
-    moment(),
-    StatutRequete.ASigner
-  ),
-  createData(
-    "COL23678",
-    TypeRequete.Delivrance,
-    SousTypeRequete.DelivranceDemat,
-    CanalProvenance.DALI,
-    NatureActe.Deces,
-    "Jaume Miro",
-    moment(),
-    moment(),
-    StatutRequete.ASigner
-  ),
-  createData(
-    "COL23678",
+    "COL23721",
     TypeRequete.Delivrance,
     SousTypeRequete.DelivranceDemat,
     CanalProvenance.DALI,
@@ -664,13 +664,14 @@ export const RequeteTableau: React.FC = () => {
         prioriteRequete: "TODO"
       };
     });
-    return stableSort(
+    const result = stableSort(
       bodyData,
       getComparator(sortOrderState, sortOrderByState)
     ).slice(
       pageState * rowsPerPageState,
       pageState * rowsPerPageState + rowsPerPageState
     );
+    return result;
   }
 
   return (
