@@ -5,6 +5,8 @@ import TableCell from "@material-ui/core/TableCell";
 import { RequeteTableauBodyCell } from "./RequeteTableauBodyCell";
 import { getText } from "../../common/widget/Text";
 import { IDataTable } from "./RequeteTableauHeaderCell";
+import { useHistory } from "react-router-dom";
+import "./tableau/sass/Table.scss";
 
 interface RequeteTableauBodyProps {
   data: IDataTable[];
@@ -13,11 +15,20 @@ interface RequeteTableauBodyProps {
 export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
   data
 }) => {
+  const history = useHistory();
+
+  function onClickRequeteHandler(identifiantRequete: string) {
+    history.push(`/requetes/${identifiantRequete}`);
+  }
+
   return (
     <>
       <TableBody>
         {data.map(row => (
-          <TableRow key={row.identifiant}>
+          <TableRow
+            key={row.identifiant}
+            onClick={() => onClickRequeteHandler(row.identifiant)}
+          >
             <RequeteTableauBodyCell data={row.identifiant} />
             <RequeteTableauBodyCell
               data={getText(
