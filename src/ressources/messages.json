@@ -19,6 +19,7 @@
         "titre": "Requêtes en cours"
       },
       "tableau": {
+        "titre": "Mes requêtes",
         "header": {
           "identifiant": "N°",
           "sousTypeRequete": "Type",
@@ -29,6 +30,13 @@
           "dateStatut": "Dernière mise à jour",
           "statutRequete": "Statut",
           "prioriteRequete": "Priorité"
+        },
+        "body": {
+          "priorite": {
+            "basse": "Priorité basse",
+            "moyenne": "Priorité moyenne",
+            "haute": "Priorité haute"
+          }
         },
         "pagination": {
           "donneePaginee": "Requêtes"

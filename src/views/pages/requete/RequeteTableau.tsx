@@ -2,19 +2,21 @@ import React from "react";
 import { Box } from "reakit/Box";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
+import Toolbar from "@material-ui/core/Toolbar";
 import Paper from "@material-ui/core/Paper";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
 import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { NatureActe } from "../../../model/requete/NatureActe";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
-import { getText } from "../../common/widget/Text";
+import { Text, getText } from "../../common/widget/Text";
 import moment from "moment";
 import { RequeteTableauHeader } from "./RequeteTableauHeader";
 import { DataTable } from "./RequeteTableauHeaderCell";
 import TablePagination from "@material-ui/core/TablePagination";
 import { RequeteTableauBody } from "./RequeteTableauBody";
 import { SortOrder, stableSort, getComparator } from "./tableau/TableUtils";
+import Typography from "@material-ui/core/Typography";
 
 // TODO mock à retirer
 // La gestion du requerant est provisoire, l'api retournera un objet structuré
@@ -676,6 +678,11 @@ export const RequeteTableau: React.FC = () => {
 
   return (
     <>
+      <Toolbar>
+        <h3 id="TableauRequetesTitre">
+          <Text messageId="pages.requetes.tableau.titre" />
+        </h3>
+      </Toolbar>
       <TableContainer component={Paper}>
         <Box as={Table} role="presentation" size="small">
           <RequeteTableauHeader
