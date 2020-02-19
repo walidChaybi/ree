@@ -13,6 +13,9 @@
     "pageSuivante": "Page suivante",
     "pagePrecedente": "Page précédente"
   },
+  "boutons": {
+    "accueil": "<< Accueil"
+  },
   "pages": {
     "requetes": {
       "enCours": {
