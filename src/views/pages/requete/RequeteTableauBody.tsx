@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "reakit/Box";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -55,7 +56,13 @@ export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
               data={getText(`referentiel.statutRequete.${row.statutRequete}`)}
             />
             <TableCell align="center">
-              <LabelIcon className={prioriteDeLaRequete(row.dateStatut)} />
+              <Box
+                title={getMessagePrioriteDeLaRequete(row.dateStatut)}
+                aria-label={getMessagePrioriteDeLaRequete(row.dateStatut)}
+                aria-hidden={true}
+              >
+                <LabelIcon className={prioriteDeLaRequete(row.dateStatut)} />
+              </Box>
             </TableCell>
           </TableRow>
         ))}
@@ -72,4 +79,15 @@ function prioriteDeLaRequete(dateStatut: string): string {
     PrioriteMoyenne: ecartEnJours > 2 && ecartEnJours <= 5,
     PrioriteHaute: ecartEnJours > 5
   });
+}
+
+function getMessagePrioriteDeLaRequete(dateStatut: string): string {
+  const ecartEnJours = moment().diff(moment(dateStatut, "DD/MM/YYYY"), "days");
+  if (ecartEnJours <= 2) {
+    return getText("pages.requetes.tableau.body.priorite.basse");
+  } else if (ecartEnJours > 2 && ecartEnJours <= 5) {
+    return getText("pages.requetes.tableau.body.priorite.moyenne");
+  } else {
+    return getText("pages.requetes.tableau.body.priorite.haute");
+  }
 }

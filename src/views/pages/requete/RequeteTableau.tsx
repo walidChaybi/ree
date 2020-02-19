@@ -16,7 +16,6 @@ import { DataTable } from "./RequeteTableauHeaderCell";
 import TablePagination from "@material-ui/core/TablePagination";
 import { RequeteTableauBody } from "./RequeteTableauBody";
 import { SortOrder, stableSort, getComparator } from "./tableau/TableUtils";
-import Typography from "@material-ui/core/Typography";
 
 // TODO mock à retirer
 // La gestion du requerant est provisoire, l'api retournera un objet structuré
