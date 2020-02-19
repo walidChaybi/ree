@@ -2,8 +2,9 @@ import React from "react";
 import TableCell from "@material-ui/core/TableCell";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { Text } from "../../common/widget/Text";
-import "../../../sass/_library.scss";
 import { SortOrder } from "./tableau/TableUtils";
+import "../../../sass/_library.scss";
+import "../requete/sass/RequeteTableau.scss";
 
 export type DataTable =
   | "identifiant"
@@ -47,6 +48,7 @@ export const RequeteTableauHeaderCell: React.FC<RequeteTableauHeaderCellProps> =
     <TableCell
       align="center"
       sortDirection={orderBy === column ? order : false}
+      className="ColonneTableauRequete"
     >
       <TableSortLabel
         className="tableauFontHeader"

@@ -1,7 +1,8 @@
 import React from "react";
 import TableCell from "@material-ui/core/TableCell";
-import "../../../sass/_library.scss";
 import { Link } from "react-router-dom";
+import "../../../sass/_library.scss";
+import "../requete/sass/RequeteTableau.scss";
 
 interface RequeteTableauBodyCellProps {
   data: any;
@@ -17,7 +18,7 @@ export const RequeteTableauBodyCell: React.FC<RequeteTableauBodyCellProps> = ({
   const dataToDisplay = formater ? formater(data) : data;
 
   return (
-    <TableCell className="tableauFontBody" align="center">
+    <TableCell className="tableauFontBody ColonneTableauRequete" align="center">
       {identifiant !== null && identifiant !== undefined
         ? renderWithLink(dataToDisplay, identifiant)
         : dataToDisplay}
