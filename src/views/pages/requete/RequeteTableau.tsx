@@ -622,7 +622,7 @@ const data = [
 ];
 
 export const RequeteTableau: React.FC = () => {
-  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("desc");
+  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("asc");
   const [sortOrderByState, setSortOrderByState] = React.useState<DataTable>(
     "dateStatut"
   );
