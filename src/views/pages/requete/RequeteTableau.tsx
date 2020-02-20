@@ -17,7 +17,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import { RequeteTableauBody } from "./RequeteTableauBody";
 import { SortOrder, stableSort, getComparator } from "./tableau/TableUtils";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
-
+import { ApiManager, HttpMethod } from "../../../api/ApiManager";
 // TODO mock à retirer
 // La gestion du requerant est provisoire, l'api retournera un objet structuré
 // et non une chaine de caractères
@@ -623,6 +623,18 @@ const data = [
   )
 ];
 
+function callApi() {
+  const api = ApiManager.getInstance("rece-requete-api", "v1");
+  api
+    .fetch({ method: HttpMethod.GET, uri: "/requetes" })
+    .then(result => {
+      console.log("Tableau callApi result", result);
+    })
+    .catch(error => {
+      console.log("Tableau callApi error", error);
+    });
+}
+
 export const RequeteTableau: React.FC = () => {
   const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("asc");
   const [sortOrderByState, setSortOrderByState] = React.useState<DataTable>(
@@ -652,6 +664,7 @@ export const RequeteTableau: React.FC = () => {
   };
 
   function getDataForBodyTable() {
+    callApi();
     const bodyData = data.map(requete => {
       return {
         identifiant: requete.identifiant,

@@ -1,3 +1,10 @@
 {
-  "apis": []
+  "apis": [
+    {
+      "url": "http://10.110.204.59",
+      "ports": 8082,
+      "name": "rece-requete-api",
+      "version": ["v1"]
+    }
+  ]
 }
