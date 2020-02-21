@@ -1,3 +1,17 @@
 .ColonneTableauRequete {
   width: 11.11%;
 }
+
+.RequetesToolbar {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.RequetesToolbarTitre {
+  text-align: left;
+}
+
+.RequetesToolbarSignature {
+  text-align: right;
+}
