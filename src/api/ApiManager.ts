@@ -30,6 +30,7 @@ interface HttpRequestHeader {
 interface HttpRequestConfig {
   uri: string;
   method: HttpMethod;
+  parameters?: any;
   data?: any;
   headers?: HttpRequestHeader[];
 }
@@ -90,6 +91,13 @@ export class ApiManager {
       httpRequestConfig.uri
     );
 
+    if (httpRequestConfig.parameters) {
+      request = this.processRequestQueyParameters(
+        httpRequestConfig.parameters,
+        request
+      );
+    }
+
     if (httpRequestConfig.data) {
       request = this.processRequestData(httpRequestConfig.data, request);
     }
@@ -100,12 +108,10 @@ export class ApiManager {
 
     return request
       .then(response => {
-        console.log("fetch : response", response);
-        return Promise.resolve();
+        return Promise.resolve(response.body);
       })
       .catch(error => {
-        console.log("fetch: error", error);
-        return Promise.reject();
+        return Promise.reject(error);
       });
   }
 
@@ -118,6 +124,13 @@ export class ApiManager {
       res = request.set(element.header, element.value);
     });
     return res;
+  }
+
+  public processRequestQueyParameters(
+    parameters: any,
+    request: superagent.SuperAgentRequest
+  ) {
+    return request.query(parameters);
   }
 
   public processRequestData(
