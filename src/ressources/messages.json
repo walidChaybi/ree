@@ -21,6 +21,9 @@
       "enCours": {
         "titre": "Requêtes en cours"
       },
+      "action": {
+        "signature": "Signer tous les documents"
+      },
       "tableau": {
         "titre": "Mes requêtes",
         "header": {
