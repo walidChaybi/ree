@@ -70,11 +70,20 @@ export interface IQueryParametersPourRequetes {
 export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
   const [dataState, setDataState] = useState<IDataTable[]>();
   const [rowsNumberState, setRowsNumberState] = useState<number>();
+  const [minRangeState, setMinRangeState] = useState<number>();
+  const [maxRangeState, setMaxRangeState] = useState<number>();
+  const [previousDataLinkState, setPreviousDataLinkState] = useState<string>();
+  const [nextDataLinkState, setNextDataLinkState] = useState<string>();
   const [errorState, setErrorState] = useState(undefined);
 
   useEffect(() => {
     setDataState(undefined);
     setErrorState(undefined);
+    setRowsNumberState(undefined);
+    setMinRangeState(undefined);
+    setMaxRangeState(undefined);
+    setPreviousDataLinkState(undefined);
+    setNextDataLinkState(undefined);
     const api = ApiManager.getInstance("rece-requete-api", "v1");
     console.log(
       "Call API /requetes",
@@ -100,10 +109,30 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
         }
       })
       .then(result => {
+        // <http://10.110.204.59:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=asc&range=2-50>;rel="next",<http://10.110.204.59:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=asc&range=0-50>;rel="prev"
         setDataState(reponseRequeteMapper(result.data));
-        setRowsNumberState(
-          +(result.httpHeaders["Content-Ranger"][0] as string).split("/")[1]
+        const rowsNumber: number = +(result.httpHeaders[
+          "Content-Range"
+        ][0] as string).split("/")[1];
+        setRowsNumberState(rowsNumber);
+        const minRange: number = +(result.httpHeaders[
+          "Content-Range"
+        ][0] as string)
+          .split("/")[0]
+          .split("-")[0];
+        setMinRangeState(minRange);
+        const maxRange: number = +(result.httpHeaders[
+          "Content-Range"
+        ][0] as string)
+          .split("/")[0]
+          .split("-")[1];
+        setMaxRangeState(maxRange);
+        const { nextLink, prevLink } = parseLink(
+          result.httpHeaders["Link"][0],
+          api
         );
+        setPreviousDataLinkState(prevLink);
+        setNextDataLinkState(nextLink);
       })
       .catch(error => {
         setErrorState(error);
@@ -115,7 +144,15 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     queryParameters.tri,
     queryParameters.sens
   ]);
-  return { dataState, rowsNumberState, errorState };
+  return {
+    dataState,
+    previousDataLinkState,
+    nextDataLinkState,
+    rowsNumberState,
+    minRangeState,
+    maxRangeState,
+    errorState
+  };
 }
 
 function reponseRequeteMapper(data: IRequeteApi[]): IDataTable[] {
@@ -136,4 +173,26 @@ function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     prioriteRequete: "TODO",
     requerant: data.requerant.nomOuRaisonSociale
   };
+}
+
+function parseLink(linkHeader: string, api: ApiManager) {
+  let nextLink;
+  let prevLink;
+  if (linkHeader.indexOf(`rel="next"`) > 0) {
+    nextLink = linkHeader
+      .split(`;rel="next"`)[0]
+      .replace("<", "")
+      .replace(">", "");
+    nextLink = `${api.url}:${api.ports}${nextLink}`;
+  }
+  if (linkHeader.indexOf(`rel="prev"`) > 0) {
+    prevLink = linkHeader
+      .replace(`<${nextLink}>;rel="next",`, "")
+      .split(`;rel="prev"`)[0]
+      .replace("<", "")
+      .replace(">", "");
+    prevLink = `${api.url}:${api.ports}${prevLink}`;
+  }
+
+  return { nextLink, prevLink };
 }

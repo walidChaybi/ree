@@ -26,7 +26,15 @@ export const RequeteTableau: React.FC = () => {
   );
   const [rowsPerPageState, setRowsPerPageState] = React.useState(20);
   const [pageState, setPageState] = React.useState(0);
-  const { dataState = [], rowsNumberState, errorState } = useRequeteApi({
+  const {
+    dataState = [],
+    rowsNumberState = 0,
+    previousDataLinkState,
+    nextDataLinkState,
+    minRangeState = 0,
+    maxRangeState = 0,
+    errorState
+  } = useRequeteApi({
     nomOec: "Garisson",
     prenomOec: "Juliette",
     statut: StatutRequete.ASigner,
@@ -43,6 +51,13 @@ export const RequeteTableau: React.FC = () => {
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
+    // TODO pagination server
+    // if (newPage > pageState && maxRangeState < pageState * rowsPerPageState) {
+    //   // TODO call api next
+    // }
+    // if (newPage < pageState && minRangeState > pageState * rowsPerPageState) {
+    //   // TODO call api prev
+    // }
     setPageState(newPage);
   };
 
@@ -54,7 +69,7 @@ export const RequeteTableau: React.FC = () => {
   };
 
   function processData() {
-    if (rowsNumberState && rowsNumberState <= 100) {
+    if (rowsNumberState && rowsNumberState < 100) {
       const dataTriee = processDataStorting(
         dataState,
         sortOrderState,
@@ -93,7 +108,7 @@ export const RequeteTableau: React.FC = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 20]}
         component="div"
-        count={dataState.length}
+        count={rowsNumberState}
         rowsPerPage={rowsPerPageState}
         labelRowsPerPage={getText("pagination.rowsPerPage", [
           getText("pages.requetes.tableau.pagination.donneePaginee")
