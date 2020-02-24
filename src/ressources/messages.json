@@ -27,14 +27,14 @@
       "tableau": {
         "titre": "Mes requêtes",
         "header": {
-          "identifiant": "N°",
+          "idSagaDila": "N°",
           "sousTypeRequete": "Type",
-          "canalProvenance": "Provenance",
+          "provenance": "Provenance",
           "natureActe": "Nature d'acte",
           "requerant": "Requerant",
           "dateCreation": "Date de création",
           "dateStatut": "Dernière mise à jour",
-          "statutRequete": "Statut",
+          "statut": "Statut",
           "prioriteRequete": "Priorité"
         },
         "body": {

@@ -7,25 +7,25 @@ import "../../../sass/_library.scss";
 import "../requete/sass/RequeteTableau.scss";
 
 export type DataTable =
-  | "identifiant"
+  | "idSagaDila"
   | "sousTypeRequete"
-  | "canalProvenance"
+  | "provenance"
   | "natureActe"
   | "requerant"
   | "dateCreation"
   | "dateStatut"
-  | "statutRequete"
+  | "statut"
   | "prioriteRequete";
 
 export interface IDataTable {
-  identifiant: string;
+  idSagaDila: number;
   sousTypeRequete: string;
-  canalProvenance: string;
+  provenance: string;
   natureActe: string;
   requerant: string;
   dateCreation: string;
   dateStatut: string;
-  statutRequete: string;
+  statut: string;
   prioriteRequete: string;
 }
 

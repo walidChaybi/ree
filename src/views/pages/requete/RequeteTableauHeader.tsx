@@ -27,7 +27,7 @@ export const RequeteTableauHeader: React.FC<RequeteTableauHeaderProps> = props =
     <TableHead>
       <TableRow>
         <RequeteTableauHeaderCell
-          column="identifiant"
+          column="idSagaDila"
           order={order}
           orderBy={orderBy}
           sortHandler={createSortHandler}
@@ -39,7 +39,7 @@ export const RequeteTableauHeader: React.FC<RequeteTableauHeaderProps> = props =
           sortHandler={createSortHandler}
         />
         <RequeteTableauHeaderCell
-          column="canalProvenance"
+          column="provenance"
           order={order}
           orderBy={orderBy}
           sortHandler={createSortHandler}
@@ -69,7 +69,7 @@ export const RequeteTableauHeader: React.FC<RequeteTableauHeaderProps> = props =
           sortHandler={createSortHandler}
         />
         <RequeteTableauHeaderCell
-          column="statutRequete"
+          column="statut"
           order={order}
           orderBy={orderBy}
           sortHandler={createSortHandler}

@@ -20,9 +20,9 @@ test("renders titre de l'application", () => {
 
 test("renders identitiant inconnu", () => {
   const { getByText } = render(
-    <Text messageId={"un.identifiant.inconnu.label"} />
+    <Text messageId={"un.idSagaDila.inconnu.label"} />
   );
-  const linkElement = getByText(/⚠ un.identifiant.inconnu.label/i);
+  const linkElement = getByText(/⚠ un.idSagaDila.inconnu.label/i);
   expect(linkElement).toBeInTheDocument();
 });
 

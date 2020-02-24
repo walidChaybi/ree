@@ -4,71 +4,20 @@ import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 import Toolbar from "@material-ui/core/Toolbar";
 import Paper from "@material-ui/core/Paper";
-import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
-import { TypeRequete } from "../../../model/requete/TypeRequete";
-import { CanalProvenance } from "../../../model/requete/CanalProvenance";
-import { NatureActe } from "../../../model/requete/NatureActe";
-import { StatutRequete } from "../../../model/requete/StatutRequete";
-import { Text, getText } from "../../common/widget/Text";
-import moment from "moment";
-import { RequeteTableauHeader } from "./RequeteTableauHeader";
+import {
+  SortOrder,
+  getPaginatedData,
+  processDataStorting
+} from "./tableau/TableUtils";
 import { DataTable } from "./RequeteTableauHeaderCell";
-import TablePagination from "@material-ui/core/TablePagination";
-import { RequeteTableauBody } from "./RequeteTableauBody";
-import { SortOrder } from "./tableau/TableUtils";
-import { BoutonRetour } from "../../common/widget/BoutonRetour";
-import { QualiteRequerant } from "../../../model/requete/QualiteRequerant";
-import { SousQualiteRequerant } from "../../../model/requete/SousQualiteRequerant";
 import { useRequeteApi } from "./RequeteHook";
 import { BoutonSignature } from "./BoutonSignature";
-
-export interface RequeteData {
-  identifiant: string;
-  typeRequete: TypeRequete;
-  sousTypeRequete: SousTypeRequete;
-  canalProvenance: CanalProvenance;
-  natureActe: NatureActe;
-  requerant: string;
-  dateCreation: moment.Moment;
-  dateStatut: moment.Moment;
-  statutRequete: StatutRequete;
-}
-
-export interface IRequerantApi {
-  adresse: string;
-  idRequerant: string;
-  nomOuRaisonSociale: string;
-  nomUsage: string;
-  prenomUsage: string;
-  qualiteRequerant: QualiteRequerant;
-  requete: any;
-  telephone: string;
-  typeRequerant: SousQualiteRequerant;
-}
-
-export interface IRequeteApi {
-  anneeEvenement: number;
-  dateCreation: number;
-  dateDerniereMaj: number;
-  dateStatut: number;
-  idRequete: string;
-  idSagaDila: number;
-  jourEvenement: number;
-  moisEvenement: number;
-  natureActe: NatureActe;
-  nbExemplaire: number;
-  paysEvenement: string;
-  picesJustificatives: any;
-  provenance: CanalProvenance;
-  reponses: any;
-  requerant: IRequerantApi;
-  sousTypeRequete: SousTypeRequete;
-  statut: StatutRequete;
-  titulaires: any;
-  typeActe: any;
-  typeRequete: TypeRequete;
-  villeEvenement: "string;";
-}
+import { RequeteTableauHeader } from "./RequeteTableauHeader";
+import { RequeteTableauBody } from "./RequeteTableauBody";
+import { TablePagination } from "@material-ui/core";
+import { Text, getText } from "../../common/widget/Text";
+import { BoutonRetour } from "../../common/widget/BoutonRetour";
+import { StatutRequete } from "../../../model/requete/StatutRequete";
 
 export const RequeteTableau: React.FC = () => {
   const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("asc");
@@ -77,14 +26,19 @@ export const RequeteTableau: React.FC = () => {
   );
   const [rowsPerPageState, setRowsPerPageState] = React.useState(20);
   const [pageState, setPageState] = React.useState(0);
-  const { dataState = [], errorState } = useRequeteApi();
+  const { dataState = [], rowsNumberState, errorState } = useRequeteApi({
+    nomOec: "Garisson",
+    prenomOec: "Juliette",
+    statut: StatutRequete.ASigner,
+    tri: sortOrderByState,
+    sens: sortOrderState
+  });
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: DataTable
   ) => {
-    const isAsc = sortOrderByState === property && sortOrderState === "asc";
-    setSortOrderState(isAsc ? "desc" : "asc");
+    setSortOrderState(getSortOrder(property, sortOrderByState, sortOrderState));
     setSortOrderByState(property);
   };
 
@@ -98,6 +52,19 @@ export const RequeteTableau: React.FC = () => {
     setRowsPerPageState(parseInt(event.target.value, 10));
     setPageState(0);
   };
+
+  function processData() {
+    if (rowsNumberState && rowsNumberState <= 100) {
+      const dataTriee = processDataStorting(
+        dataState,
+        sortOrderState,
+        sortOrderByState
+      );
+      return getPaginatedData(dataTriee, pageState, rowsPerPageState);
+    } else {
+      return getPaginatedData(dataState, pageState, rowsPerPageState);
+    }
+  }
 
   return (
     <>
@@ -120,7 +87,7 @@ export const RequeteTableau: React.FC = () => {
             orderBy={sortOrderByState}
             onRequestSort={handleRequestSort}
           />
-          <RequeteTableauBody data={dataState} />
+          <RequeteTableauBody data={processData()} />
         </Box>
       </TableContainer>
       <TablePagination
@@ -139,3 +106,19 @@ export const RequeteTableau: React.FC = () => {
     </>
   );
 };
+
+function getSortOrder(
+  property: DataTable,
+  sortOrderBy: DataTable,
+  sortOrder: SortOrder
+): SortOrder {
+  let result: SortOrder = "asc";
+  if (sortOrderBy !== property) {
+    result = "asc";
+  } else if (sortOrder === "asc") {
+    result = "desc";
+  } else if (sortOrder === "desc") {
+    result = "asc";
+  }
+  return result;
+}

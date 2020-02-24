@@ -10,7 +10,7 @@ export const RouterComponent: React.FC = () => {
         <Redirect to="/mesrequetes" />
       </Route>
       <Route exact path="/mesrequetes" component={MesRequetesPage} />
-      <Route exact path="/requetes/:identifiant" component={RequetePage} />
+      <Route exact path="/requetes/:idSagaDila" component={RequetePage} />
     </Switch>
   );
 };
