@@ -46,7 +46,7 @@ export const RequeteTableauHeaderCell: React.FC<RequeteTableauHeaderCellProps> =
   sortHandler
 }) => {
   const styles = classNames({
-    OrderedHeaderCell: true,
+    OrderedHeaderCell: orderBy === column,
     tableauFontHeader: true
   });
   return (
