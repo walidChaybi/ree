@@ -3,6 +3,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { Text } from "../../common/widget/Text";
 import { SortOrder } from "./tableau/TableUtils";
+import classNames from "classnames";
 import "../../../sass/_library.scss";
 import "../requete/sass/RequeteTableau.scss";
 
@@ -44,6 +45,10 @@ export const RequeteTableauHeaderCell: React.FC<RequeteTableauHeaderCellProps> =
   column,
   sortHandler
 }) => {
+  const styles = classNames({
+    OrderedHeaderCell: true,
+    tableauFontHeader: true
+  });
   return (
     <TableCell
       align="center"
@@ -51,7 +56,7 @@ export const RequeteTableauHeaderCell: React.FC<RequeteTableauHeaderCellProps> =
       className="ColonneTableauRequete"
     >
       <TableSortLabel
-        className="tableauFontHeader"
+        className={styles}
         active={orderBy === column}
         direction={orderBy === column ? order : "asc"}
         onClick={sortHandler(column)}

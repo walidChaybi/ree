@@ -24,7 +24,7 @@ export const RequeteTableau: React.FC = () => {
   const [sortOrderByState, setSortOrderByState] = React.useState<DataTable>(
     "dateStatut"
   );
-  const [rowsPerPageState, setRowsPerPageState] = React.useState(20);
+  const [rowsPerPageState, setRowsPerPageState] = React.useState(15);
   const [pageState, setPageState] = React.useState(0);
   const {
     dataState = [],
@@ -106,7 +106,7 @@ export const RequeteTableau: React.FC = () => {
         </Box>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 20]}
+        rowsPerPageOptions={[5, 10, 15, 20]}
         component="div"
         count={rowsNumberState}
         rowsPerPage={rowsPerPageState}

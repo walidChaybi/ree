@@ -63,6 +63,11 @@ button {
 .tableauFontHeader {
   font-family: "NotoSansUI-Bold" !important;
   color: #0579be !important;
+  text-decoration: underline !important;
+}
+
+.OrderedHeaderCell {
+  font-weight: bold !important;
 }
 
 .tableauFontBody {
