@@ -9,6 +9,6 @@ test("renders titre de l'application", () => {
       <BoutonRetour />
     </Router>
   );
-  const linkElement = getByText(/Retour à l'accueil/i);
+  const linkElement = getByText(/ACCUEIL/i);
   expect(linkElement).toBeInTheDocument();
 });

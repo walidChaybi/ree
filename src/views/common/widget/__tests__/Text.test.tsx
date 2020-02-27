@@ -4,17 +4,15 @@ import { Text } from "../Text";
 
 test("renders titre de l'application", () => {
   const { getByText } = render(<Text messageId={"header"} />);
-  const linkElement = getByText(
-    /Télé-Service de Vérification de l'état civil/i
-  );
+  const linkElement = getByText(/Registre d'État Civil Électronique/i);
   expect(linkElement).toBeInTheDocument();
 });
 
 test("renders titre de l'application", () => {
   const { getByText } = render(
-    <Text messageId={"pages.verification.form.champs.acte.titre"} />
+    <Text messageId={"pages.requetes.enCours.titre"} />
   );
-  const linkElement = getByText(/Nature de l'acte à vérifier/i);
+  const linkElement = getByText(/Requêtes en cours/i);
   expect(linkElement).toBeInTheDocument();
 });
 
@@ -28,13 +26,8 @@ test("renders identitiant inconnu", () => {
 
 test("renders text avec parametres", () => {
   const { getByText } = render(
-    <Text
-      messageId="pages.valide.info"
-      values={["05/02/2020", "Gerard Bouldon"]}
-    />
+    <Text messageId="pagination.rowsPerPage" values={["15"]} />
   );
-  const linkElement = getByText(
-    /Un acte valide a bien été délivré le 05\/02\/2020 pour ce titulaire par l'Officier d'Etat-Civil Gerard Bouldon/i
-  );
+  const linkElement = getByText(/15 par page/i);
   expect(linkElement).toBeInTheDocument();
 });
