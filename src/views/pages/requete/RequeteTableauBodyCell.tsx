@@ -7,25 +7,17 @@ import "../requete/sass/RequeteTableau.scss";
 interface RequeteTableauBodyCellProps {
   data: any;
   formater?: (data: any) => string;
-  idSagaDila?: string;
 }
 
 export const RequeteTableauBodyCell: React.FC<RequeteTableauBodyCellProps> = ({
   data,
-  formater,
-  idSagaDila
+  formater
 }) => {
   const dataToDisplay = formater ? formater(data) : data;
 
   return (
     <TableCell className="tableauFontBody ColonneTableauRequete" align="center">
-      {idSagaDila !== null && idSagaDila !== undefined
-        ? renderWithLink(dataToDisplay, idSagaDila)
-        : dataToDisplay}
+      {dataToDisplay}
     </TableCell>
   );
 };
-
-function renderWithLink(dataToDisplay: any, idSagaDila: string): JSX.Element {
-  return <Link to={`/requete/${idSagaDila}`}>{dataToDisplay}</Link>;
-}

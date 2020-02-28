@@ -34,6 +34,7 @@ export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
           <TableRow
             key={row.idSagaDila}
             onClick={() => onClickRequeteHandler(row.idSagaDila)}
+            data-testid={row.idSagaDila}
           >
             <RequeteTableauBodyCell data={row.idSagaDila} />
             <RequeteTableauBodyCell
