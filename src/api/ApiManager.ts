@@ -35,6 +35,11 @@ interface HttpRequestConfig {
   headers?: HttpRequestHeader[];
 }
 
+export interface IHttpResponse {
+  body?: any;
+  status: number;
+}
+
 export class ApiManager {
   public url: string;
   public ports: number;
@@ -108,7 +113,10 @@ export class ApiManager {
 
     return request
       .then(response => {
-        return Promise.resolve(response.body);
+        return Promise.resolve({
+          body: response.body,
+          status: response.status
+        });
       })
       .catch(error => {
         return Promise.reject(error);
