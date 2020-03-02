@@ -7,6 +7,7 @@ import {
   DialogDisclosureHTMLProps
 } from "reakit/Dialog";
 import { Button } from "reakit/Button";
+import "./sass/BoutonSignature.scss";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {}
 export const BoutonSignature: React.FC<BoutonSignatureProps> = () => {
@@ -16,7 +17,12 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = () => {
       <DialogDisclosure {...dialog} as={Button}>
         {getText("pages.requetes.action.signature")}
       </DialogDisclosure>
-      <Dialog {...dialog} tabIndex={0} aria-label="Welcome" className="Toast">
+      <Dialog
+        {...dialog}
+        tabIndex={0}
+        aria-label="Welcome"
+        className="toast error"
+      >
         {getText("errors.pages.requetes.B01")}
       </Dialog>
     </>

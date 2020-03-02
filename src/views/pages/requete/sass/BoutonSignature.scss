@@ -1,0 +1,14 @@
+.toast {
+  background-color: #ffffff;
+  left: 50%;
+  position: fixed;
+  padding: 1em;
+  max-height: calc(-56px + 100vh);
+  border-style: solid;
+  z-index: 999;
+  top: 75px;
+  outline: currentColor none 0px;
+  transform: translateX(-50%);
+  border-radius: 0.25rem;
+  border-width: 1px;
+}
