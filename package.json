@@ -100,9 +100,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --watchAll --env=jest-environment-jsdom-sixteen",
-    "test:ci": "node scripts/test.js --testResultsProcessor=jest-sonar-reporter",
-    "test:ci:coverage": "CI=true node scripts/test.js --coverage --env=jest-environment-jsdom-sixteen --testResultsProcessor=jest-sonar-reporter"
+    "test:dev": "node scripts/test.js --watchAll",
+    "test": "CI=true node scripts/test.js --coverage",
+    "package": "node scripts/build.js"
   },
   "jest": {
     "roots": [
@@ -120,8 +120,7 @@
       "<rootDir>/src/setupTests.ts"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/src/**/__tests__/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen",
     "transform": {

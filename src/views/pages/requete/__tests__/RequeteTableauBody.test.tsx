@@ -3,6 +3,8 @@ import * as renderer from "react-test-renderer";
 import { RequeteTableauBody } from "../RequeteTableauBody";
 import { BrowserRouter as Router } from "react-router-dom";
 import { render } from "@testing-library/react";
+import moment from "moment";
+import { FormatDate } from "../../../../ressources/FormatDate";
 
 const DONNEES = [
   {
@@ -12,7 +14,9 @@ const DONNEES = [
     natureActe: "NAISSANCE",
     requerant: "TRIBUNAL NANTES",
     dateCreation: "20/02/2020",
-    dateStatut: "25/02/2020",
+    dateStatut: moment()
+      .subtract(3, "day")
+      .format(FormatDate.DDMMYYYY),
     statut: "A_SIGNER",
     prioriteRequete: ""
   },
@@ -23,7 +27,7 @@ const DONNEES = [
     natureActe: "NAISSANCE",
     requerant: "TRIBUNAL NANTES",
     dateCreation: "20/02/2020",
-    dateStatut: "27/02/2020",
+    dateStatut: moment().format(FormatDate.DDMMYYYY),
     statut: "A_SIGNER",
     prioriteRequete: ""
   },
@@ -34,22 +38,13 @@ const DONNEES = [
     natureActe: "NAISSANCE",
     requerant: "TRIBUNAL NANTES",
     dateCreation: "15/02/2020",
-    dateStatut: "18/02/2020",
+    dateStatut: moment()
+      .subtract(6, "day")
+      .format(FormatDate.DDMMYYYY),
     statut: "A_SIGNER",
     prioriteRequete: ""
   }
 ];
-
-test("renders body tableau des requêtes de l'application", () => {
-  const component = renderer.create(
-    <>
-      <Router>
-        <RequeteTableauBody data={DONNEES}></RequeteTableauBody>
-      </Router>
-    </>
-  );
-  expect(component.toJSON()).toMatchSnapshot();
-});
 
 test("test des prioritées des requêtes", () => {
   const { getByTestId } = render(
