@@ -7,7 +7,6 @@ import {
   DialogDisclosureHTMLProps
 } from "reakit/Dialog";
 import { Button } from "reakit/Button";
-import "./sass/BoutonSignature.scss";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {}
 export const BoutonSignature: React.FC<BoutonSignatureProps> = () => {
