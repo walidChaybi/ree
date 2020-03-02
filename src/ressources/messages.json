@@ -48,6 +48,17 @@
           "donneePaginee": "Requêtes"
         }
       }
+    },
+    "accueil": {
+      "titre": "Accueil",
+      "bienvenue": "Bienvenue",
+      "boutons": {
+        "requetes": "Mes requêtes",
+        "service": "Requêtes de service",
+        "messagerie": "Messagerie",
+        "multicriteres": "Recherche multicritères",
+        "saisie": "Saisie d'une requête"
+      }
     }
   }
 }
