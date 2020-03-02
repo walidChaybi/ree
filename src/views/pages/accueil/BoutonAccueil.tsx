@@ -27,17 +27,11 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   }
 
   return (
-    <>
-      <Badge className="BadgeBouton" badgeContent={badge}>
+    <div className="BoutonAccueil">
+      <Badge badgeContent={badge}>
         {iconFA && <FontAwesomeIcon className="IconeBouton" icon={iconFA} />}
-
-        <Button
-          className="BoutonAccueil"
-          onClick={() => onClickButton(pageUrl)}
-        >
-          {getText(texte)}
-        </Button>
+        <Button onClick={() => onClickButton(pageUrl)}>{getText(texte)}</Button>
       </Badge>
-    </>
+    </div>
   );
 };

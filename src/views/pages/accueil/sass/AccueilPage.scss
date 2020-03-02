@@ -3,3 +3,10 @@
   color: #03476e;
   font-weight: bold;
 }
+
+.MenuAccueil {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

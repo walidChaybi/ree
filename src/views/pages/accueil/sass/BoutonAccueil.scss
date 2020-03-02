@@ -1,29 +1,40 @@
 .BoutonAccueil {
-  font-size: 1.5rem;
-  background: #0579be;
-  padding: 1.5rem 1.5rem 1.5rem 2.5rem;
-  margin: 0;
-  border-radius: 10px;
-  text-transform: none;
-  font-weight: 500;
-}
+  margin: 2rem;
 
-.BadgeBouton .MuiBadge-badge {
-  color: white;
-  background: red;
-  padding: 0 9px;
-  font-size: 1.2rem;
-  height: 28px;
-  border-radius: 30px;
-  font-weight: bold;
-}
+  button {
+    font-size: 1.5rem;
+    background: #0579be;
+    padding: 1.5rem 1.5rem 1.5rem 2.5rem;
+    margin: 0;
+    border-radius: 10px;
+    text-transform: none;
+    font-weight: 500;
+    width: 250px;
+    max-width: 250px;
+    height: 120px;
+    max-height: 120px;
+  }
 
-.IconeBouton {
-  font-size: 3rem;
-  color: white;
-  background-color: #03476e;
-  padding: 0.5rem;
-  border-radius: 5rem;
-  margin: 0.6rem -2rem 0 0;
-  z-index: 1;
+  .MuiBadge-badge {
+    color: white;
+    background: red;
+    padding: 0 9px;
+    font-size: 1.2rem;
+    height: 28px;
+    border-radius: 30px;
+    font-weight: bold;
+  }
+
+  .IconeBouton {
+    font-size: 3rem;
+    color: white;
+    background-color: #03476e;
+    padding: 1rem;
+    border-radius: 5rem;
+    border: solid white 4px;
+    margin: 1.2rem -2.6rem 0 0;
+    z-index: 1;
+    max-width: 42px;
+    max-height: 42px;
+  }
 }
