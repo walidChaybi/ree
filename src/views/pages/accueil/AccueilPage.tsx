@@ -2,6 +2,7 @@ import React from "react";
 import { Text } from "../../common/widget/Text";
 import { BoutonAccueil } from "./BoutonAccueil";
 import "../accueil/sass/AccueilPage.scss";
+import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 
 export const AccueilPage: React.FC = () => {
   // Mock de données
@@ -21,7 +22,8 @@ export const AccueilPage: React.FC = () => {
         texte="pages.accueil.boutons.requetes"
         pageUrl="mesrequetes"
         badge={nombreRequete}
-      />
+        iconFA={faUserCircle}
+      ></BoutonAccueil>
     </>
   );
 };
