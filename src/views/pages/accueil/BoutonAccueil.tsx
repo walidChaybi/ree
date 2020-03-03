@@ -1,11 +1,11 @@
 import React from "react";
-import { getText } from "../../common/widget/Text";
-import { Button } from "reakit/Button";
 import { useHistory } from "react-router-dom";
-import Badge from "@material-ui/core/Badge";
-import "../accueil/sass/BoutonAccueil.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "reakit/Button";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Badge from "@material-ui/core/Badge";
+import { getText } from "../../common/widget/Text";
+import "../accueil/sass/BoutonAccueil.scss";
 
 interface BoutonAccueilProps {
   texte: string;
@@ -18,11 +18,10 @@ interface BoutonAccueilProps {
 export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   texte,
   pageUrl,
-  badge,
+  badge = 0,
   iconFA,
   disabled
 }) => {
-  badge = badge != null ? badge : 0;
   const history = useHistory();
 
   function onClickButton(paramURL: string) {
@@ -33,17 +32,17 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
 
   return (
     <div className="BoutonAccueil" onClick={() => onClickButton(pageUrl)}>
-      <Badge
-        invisible={(disabled && badge >= 0) || badge === 0}
-        badgeContent={badge}
-      >
+      <Badge invisible={disabled || badge === 0} badgeContent={badge}>
         {iconFA && (
           <FontAwesomeIcon
             className={"IconeBouton" + (disabled ? " Disabled" : "")}
             icon={iconFA}
+            title={disabled ? " Indisponible" : ""}
           />
         )}
-        <Button disabled={disabled}>{getText(texte)}</Button>
+        <Button disabled={disabled} title={disabled ? " Indisponible" : ""}>
+          {getText(texte)}
+        </Button>
       </Badge>
     </div>
   );
