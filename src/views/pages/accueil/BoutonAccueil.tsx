@@ -12,25 +12,38 @@ interface BoutonAccueilProps {
   pageUrl: string;
   badge?: number;
   iconFA?: IconDefinition;
+  disabled: boolean;
 }
 
 export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   texte,
   pageUrl,
   badge,
-  iconFA
+  iconFA,
+  disabled
 }) => {
+  badge = badge != null ? badge : 0;
   const history = useHistory();
 
   function onClickButton(paramURL: string) {
-    history.push(`${paramURL}`);
+    if (!disabled) {
+      history.push(`${paramURL}`);
+    }
   }
 
   return (
-    <div className="BoutonAccueil">
-      <Badge badgeContent={badge}>
-        {iconFA && <FontAwesomeIcon className="IconeBouton" icon={iconFA} />}
-        <Button onClick={() => onClickButton(pageUrl)}>{getText(texte)}</Button>
+    <div className="BoutonAccueil" onClick={() => onClickButton(pageUrl)}>
+      <Badge
+        invisible={(disabled && badge >= 0) || badge === 0}
+        badgeContent={badge}
+      >
+        {iconFA && (
+          <FontAwesomeIcon
+            className={"IconeBouton" + (disabled ? " Disabled" : "")}
+            icon={iconFA}
+          />
+        )}
+        <Button disabled={disabled}>{getText(texte)}</Button>
       </Badge>
     </div>
   );
