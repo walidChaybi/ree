@@ -1,3 +1,5 @@
+@import "colors";
+
 @font-face {
   font-family: "NotoSansUI-Regular";
   src: url("../fonts/NotoSansUI-Regular.ttf") format("truetype");
@@ -28,7 +30,7 @@ a {
 
 button {
   margin: 0.3em 0.3em 0.3em 0.6em;
-  background: #03476e;
+  background: $button-application-color;
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   padding: 0.3em;
@@ -62,7 +64,7 @@ button {
 
 .tableauFontHeader {
   font-family: "NotoSansUI-Bold" !important;
-  color: #0579be !important;
+  color: $application-color !important;
   text-decoration: underline !important;
 }
 
@@ -76,4 +78,25 @@ button {
 
 .BoutonRetour {
   float: left;
+}
+
+.error {
+  color: $error;
+  background-color: $error-background;
+  border-color: $error-border;
+}
+
+.toast {
+  background-color: #ffffff;
+  left: 50%;
+  position: fixed;
+  padding: 1em;
+  max-height: calc(-56px + 100vh);
+  border-style: solid;
+  z-index: 999;
+  top: 75px;
+  outline: currentColor none 0px;
+  transform: translateX(-50%);
+  border-radius: 0.25rem;
+  border-width: 1px;
 }

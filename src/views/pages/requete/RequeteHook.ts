@@ -110,25 +110,25 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
       })
       .then(result => {
         // <http://10.110.204.59:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=asc&range=2-50>;rel="next",<http://10.110.204.59:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=asc&range=0-50>;rel="prev"
-        setDataState(reponseRequeteMapper(result.data));
-        const rowsNumber: number = +(result.httpHeaders[
+        setDataState(reponseRequeteMapper(result.body.data));
+        const rowsNumber: number = +(result.body.httpHeaders[
           "Content-Range"
         ][0] as string).split("/")[1];
         setRowsNumberState(rowsNumber);
-        const minRange: number = +(result.httpHeaders[
+        const minRange: number = +(result.body.httpHeaders[
           "Content-Range"
         ][0] as string)
           .split("/")[0]
           .split("-")[0];
         setMinRangeState(minRange);
-        const maxRange: number = +(result.httpHeaders[
+        const maxRange: number = +(result.body.httpHeaders[
           "Content-Range"
         ][0] as string)
           .split("/")[0]
           .split("-")[1];
         setMaxRangeState(maxRange);
         const { nextLink, prevLink } = parseLink(
-          result.httpHeaders["Link"][0],
+          result.body.httpHeaders["Link"][0],
           api
         );
         setPreviousDataLinkState(prevLink);

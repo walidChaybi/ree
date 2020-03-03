@@ -1,10 +1,12 @@
+@import "./../../sass/colors";
+
 .App {
   text-align: center;
   font-family: "NotoSansUI-Regular";
 }
 
 .AppHeader {
-  background: #0579be no-repeat scroll 0 0;
+  background: $application-color no-repeat scroll 0 0;
   height: 4em;
   width: 100%;
   display: grid;
@@ -87,17 +89,17 @@ h2 {
   text-align: left;
   font-family: "NotoSansUI-Bold";
   font-size: 1.575em;
-  color: #024056;
+  color: $title-application-color;
 }
 
 h3 {
-  color: #0579be;
+  color: $application-color;
   font-family: "NotoSansUI-Regular";
   font-size: 1.0625em;
 }
 
 h4 {
-  color: #0579be;
+  color: $application-color;
   font-family: "NotoSansUI-Regular";
   font-size: 0.6725em;
 }
