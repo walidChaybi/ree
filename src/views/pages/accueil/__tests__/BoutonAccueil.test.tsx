@@ -51,3 +51,42 @@ test("renders présence de l'icône du bouton d'accueil", () => {
   const iconElement = getByTestId("IconAccueil");
   expect(iconElement).toBeInTheDocument();
 });
+
+test("renders des 2 tooltip Indisponible du bouton d'accueil", () => {
+  const { getByText, getByTestId } = render(
+    <>
+      <Router>
+        <BoutonAccueil
+          texte="Bouton Menu"
+          pageUrl="pagesuivante"
+          iconFA={faCoffee}
+          disabled={true}
+        ></BoutonAccueil>
+      </Router>
+    </>
+  );
+  const boutonElement = getByText(/Bouton Menu/i);
+  const iconElement = getByTestId("IconAccueil");
+  expect(boutonElement.title).toBe("Indisponible");
+  expect(iconElement.textContent).toBe("Indisponible");
+});
+
+test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
+  const handleClickButton = jest.fn();
+  const { getByTestId } = render(
+    <>
+      <Router>
+        <BoutonAccueil
+          texte="Bouton Menu"
+          pageUrl="pagesuivante"
+          onClickHandler={handleClickButton}
+        ></BoutonAccueil>
+      </Router>
+    </>
+  );
+  const boutonElement = getByTestId("BtnAccueil");
+  fireEvent.click(boutonElement);
+  expect(handleClickButton).toHaveBeenCalledTimes(1);
+});
+
+afterEach(cleanup);
