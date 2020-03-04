@@ -24,7 +24,7 @@ export const AccueilPage: React.FC = () => {
       <h2>
         <Text messageId={"pages.accueil.titre"} />
       </h2>
-      <img src={logoRece} />
+      <img src={logoRece} alt="logo RECE" />
       <div className="Titre">
         <Text messageId={"pages.accueil.bienvenue"} />
         {" " + nom + " " + prenom}
@@ -33,7 +33,7 @@ export const AccueilPage: React.FC = () => {
         <BoutonAccueil
           texte="pages.accueil.boutons.requetes"
           pageUrl="mesrequetes"
-          badge={3}
+          badge={rowsNumberState}
           iconFA={faUser}
         ></BoutonAccueil>
         <BoutonAccueil
