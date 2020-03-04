@@ -13,6 +13,7 @@ interface BoutonAccueilProps {
   badge?: number;
   iconFA?: IconDefinition;
   disabled?: boolean;
+  onClickHandler?: (event: React.MouseEvent, paramURL: string) => void;
 }
 
 export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
@@ -20,12 +21,16 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   pageUrl,
   badge = 0,
   iconFA,
-  disabled = false
+  disabled = false,
+  onClickHandler
 }) => {
   const history = useHistory();
 
-  function onClickButton(paramURL: string) {
+  function onClickDefaultHandler(event: React.MouseEvent, paramURL: string) {
     if (!disabled) {
+      if (onClickHandler) {
+        onClickHandler(event, paramURL);
+      }
       history.push(`${paramURL}`);
     }
   }
@@ -33,7 +38,7 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   return (
     <div
       className="BoutonAccueil"
-      onClick={() => onClickButton(pageUrl)}
+      onClick={event => onClickDefaultHandler(event, pageUrl)}
       data-testid="BtnAccueil"
     >
       <Badge invisible={disabled || badge === 0} badgeContent={badge}>
