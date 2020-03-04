@@ -35,13 +35,11 @@ export const AccueilPage: React.FC = () => {
           pageUrl="mesrequetes"
           badge={3}
           iconFA={faUser}
-          disabled={false}
         ></BoutonAccueil>
         <BoutonAccueil
           texte="pages.accueil.boutons.service"
           pageUrl="requeteservice"
           iconFA={faUsers}
-          disabled={false}
         ></BoutonAccueil>
         <BoutonAccueil
           texte="pages.accueil.boutons.messagerie"
