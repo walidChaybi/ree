@@ -14,7 +14,6 @@ test("renders bouton d'accueil", () => {
           pageUrl="pagesuivante"
           titleId="Title Bouton Menu"
           badge={3}
-          iconFA={faCoffee}
         ></BoutonAccueil>
       </Router>
     </>

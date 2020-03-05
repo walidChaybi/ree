@@ -50,6 +50,7 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
             icon={iconFA}
             title={getText(titleId)}
             data-testid="IconAccueil"
+            aria-labelledby={getText(titleId)}
           />
         )}
         <Button disabled={disabled} title={getText(titleId)}>
