@@ -8,20 +8,22 @@ import { getText } from "../../common/widget/Text";
 import "../accueil/sass/BoutonAccueil.scss";
 
 interface BoutonAccueilProps {
-  texte: string;
+  messageId: string;
   pageUrl: string;
   badge?: number;
   iconFA?: IconDefinition;
   disabled?: boolean;
+  titleId: string;
   onClickHandler?: (event: React.MouseEvent, paramURL: string) => void;
 }
 
 export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
-  texte,
+  messageId,
   pageUrl,
   badge = 0,
   iconFA,
   disabled = false,
+  titleId,
   onClickHandler
 }) => {
   const history = useHistory();
@@ -46,12 +48,12 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
           <FontAwesomeIcon
             className={"IconeBouton" + (disabled ? " Disabled" : "")}
             icon={iconFA}
-            title={disabled ? "Indisponible" : ""}
+            title={getText(titleId)}
             data-testid="IconAccueil"
           />
         )}
-        <Button disabled={disabled} title={disabled ? "Indisponible" : ""}>
-          {getText(texte)}
+        <Button disabled={disabled} title={getText(titleId)}>
+          {getText(messageId)}
         </Button>
       </Badge>
     </div>

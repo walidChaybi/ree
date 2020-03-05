@@ -31,33 +31,38 @@ export const AccueilPage: React.FC = () => {
       </div>
       <div className="MenuAccueil">
         <BoutonAccueil
-          texte="pages.accueil.boutons.requetes"
+          messageId="pages.accueil.boutons.requetes"
           pageUrl="mesrequetes"
           badge={rowsNumberState}
           iconFA={faUser}
+          titleId="pages.accueil.titles.requetes"
         ></BoutonAccueil>
         <BoutonAccueil
-          texte="pages.accueil.boutons.service"
+          messageId="pages.accueil.boutons.service"
           pageUrl="requeteservice"
           iconFA={faUsers}
+          titleId="pages.accueil.titles.service"
         ></BoutonAccueil>
         <BoutonAccueil
-          texte="pages.accueil.boutons.messagerie"
+          messageId="pages.accueil.boutons.messagerie"
           pageUrl="messagerie"
           iconFA={faEnvelope}
           disabled={true}
+          titleId="pages.accueil.titles.messagerie"
         ></BoutonAccueil>
         <BoutonAccueil
-          texte="pages.accueil.boutons.multicriteres"
+          messageId="pages.accueil.boutons.multicriteres"
           pageUrl="multicriteres"
           iconFA={faSearch}
           disabled={true}
+          titleId="pages.accueil.titles.multicriteres"
         ></BoutonAccueil>
         <BoutonAccueil
-          texte="pages.accueil.boutons.saisie"
+          messageId="pages.accueil.boutons.saisie"
           pageUrl="saisierequete"
           iconFA={faKeyboard}
           disabled={true}
+          titleId="pages.accueil.titles.saisie"
         ></BoutonAccueil>
       </div>
     </>

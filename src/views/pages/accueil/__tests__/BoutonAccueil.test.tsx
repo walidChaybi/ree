@@ -10,8 +10,9 @@ test("renders bouton d'accueil", () => {
     <>
       <Router>
         <BoutonAccueil
-          texte="Bouton Menu"
+          messageId="Bouton Menu"
           pageUrl="pagesuivante"
+          titleId="Title Bouton Menu"
           badge={3}
           iconFA={faCoffee}
         ></BoutonAccueil>
@@ -26,8 +27,9 @@ test("renders texte du bouton d'accueil", () => {
     <>
       <Router>
         <BoutonAccueil
-          texte="Bouton Menu"
+          messageId="Bouton Menu"
           pageUrl="pagesuivante"
+          titleId="Title Bouton Menu"
         ></BoutonAccueil>
       </Router>
     </>
@@ -41,8 +43,9 @@ test("renders présence de l'icône du bouton d'accueil", () => {
     <>
       <Router>
         <BoutonAccueil
-          texte="Bouton Menu"
+          messageId="Bouton Menu"
           pageUrl="pagesuivante"
+          titleId="Title Bouton Menu"
           iconFA={faCoffee}
         ></BoutonAccueil>
       </Router>
@@ -52,23 +55,24 @@ test("renders présence de l'icône du bouton d'accueil", () => {
   expect(iconElement).toBeInTheDocument();
 });
 
-test("renders des 2 tooltip Indisponible du bouton d'accueil", () => {
-  const { getByText, getByTestId } = render(
+test("renders des 2 titles du bouton d'accueil", () => {
+  const { getAllByText, getByTestId } = render(
     <>
       <Router>
         <BoutonAccueil
-          texte="Bouton Menu"
+          messageId="Bouton Menu"
           pageUrl="pagesuivante"
+          titleId="Title Bouton Menu"
           iconFA={faCoffee}
           disabled={true}
         ></BoutonAccueil>
       </Router>
     </>
   );
-  const boutonElement = getByText(/Bouton Menu/i);
+  const boutonElement = getAllByText(/Bouton Menu/i);
   const iconElement = getByTestId("IconAccueil");
-  expect(boutonElement.title).toBe("Indisponible");
-  expect(iconElement.textContent).toBe("Indisponible");
+  expect(boutonElement[0].textContent).toBe("⚠ Title Bouton Menu");
+  expect(iconElement.textContent).toBe("⚠ Title Bouton Menu");
 });
 
 test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
@@ -77,8 +81,9 @@ test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
     <>
       <Router>
         <BoutonAccueil
-          texte="Bouton Menu"
+          messageId="Bouton Menu"
           pageUrl="pagesuivante"
+          titleId="Title Bouton Menu"
           onClickHandler={handleClickButton}
         ></BoutonAccueil>
       </Router>
