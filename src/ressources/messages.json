@@ -48,6 +48,24 @@
           "donneePaginee": "Requêtes"
         }
       }
+    },
+    "accueil": {
+      "titre": "Accueil",
+      "bienvenue": "Bienvenue",
+      "boutons": {
+        "requetes": "Mes requêtes",
+        "service": "Requêtes de service",
+        "messagerie": "Messagerie",
+        "multicriteres": "Recherche multicritères",
+        "saisie": "Saisie d'une requête"
+      },
+      "titles": {
+        "requetes": "Bouton pour accèder à mes requêtes",
+        "service": "Bouton pour accèder aux requêtes de service",
+        "messagerie": "Bouton pour accèder à la Messagerie",
+        "multicriteres": "Bouton pour accèder à la recherche multicritères",
+        "saisie": "Bouton pour accèder à la saisie d'une requête"
+      }
     }
   }
 }

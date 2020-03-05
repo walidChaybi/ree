@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders bouton d'accueil 1`] = `
+<div
+  className="BoutonAccueil"
+  data-testid="BtnAccueil"
+  onClick={[Function]}
+>
+  <span
+    className="MuiBadge-root"
+  >
+    <button
+      aria-disabled={false}
+      disabled={false}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      onMouseDown={[Function]}
+      title="⚠ Title Bouton Menu"
+      type="button"
+    >
+      ⚠ Bouton Menu
+    </button>
+    <span
+      className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle"
+    >
+      3
+    </span>
+  </span>
+</div>
+`;
