@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "../../common/widget/Text";
 import { BoutonAccueil } from "./BoutonAccueil";
-import { useRequeteApi } from "../requete/RequeteHook";
+import { useRequeteApi } from "../requete/DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import "../accueil/sass/AccueilPage.scss";
 import { faEnvelope, faKeyboard } from "@fortawesome/free-regular-svg-icons";

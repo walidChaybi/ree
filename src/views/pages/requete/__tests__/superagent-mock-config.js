@@ -1,3 +1,4 @@
+import DONNEES_REQUETE from "./data/requete";
 // ./superagent-mock-config.js file
 module.exports = [
   {
@@ -23,6 +24,20 @@ module.exports = [
 
       if (match[1] === "/requetes") {
         return true;
+      }
+
+      if (
+        match[1] ===
+        "/requetes/req1?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        return { data: [DONNEES_REQUETE] };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/req2?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        return { status: 404 };
       }
     },
 

@@ -8,13 +8,17 @@ import {
 } from "reakit/Dialog";
 import { Button } from "reakit/Button";
 
-interface BoutonSignatureProps extends DialogDisclosureHTMLProps {}
-export const BoutonSignature: React.FC<BoutonSignatureProps> = () => {
+interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
+  libelle: string;
+}
+export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
+  libelle
+}) => {
   const dialog = useDialogState();
   return (
     <>
       <DialogDisclosure {...dialog} as={Button}>
-        {getText("pages.requetes.action.signature")}
+        {getText(libelle)}
       </DialogDisclosure>
       <Dialog
         {...dialog}

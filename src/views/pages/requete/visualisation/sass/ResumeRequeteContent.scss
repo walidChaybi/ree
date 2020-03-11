@@ -1,0 +1,21 @@
+@import "../../../../../sass/colors";
+
+.resume-requete-content {
+  text-align: justify;
+  padding: 4px;
+
+  .bloc-info {
+    div {
+      &.label {
+        width: 55%;
+        color: $application-libelle;
+        vertical-align: top;
+      }
+
+      &.personnal-info {
+        width: 45%;
+      }
+      display: inline-block;
+    }
+  }
+}

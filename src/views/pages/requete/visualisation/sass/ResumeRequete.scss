@@ -1,0 +1,21 @@
+@import "../../../../../sass/colors";
+
+.resume-requete {
+  border: 1px solid;
+  border-color: $border-array;
+  border-radius: 0.25rem;
+  width: 100%;
+
+  .title {
+    background-color: $application-color;
+    color: white;
+    font-weight: bold;
+    svg {
+      color: white;
+    }
+
+    span {
+      text-align: justify;
+    }
+  }
+}

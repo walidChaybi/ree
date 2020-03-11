@@ -4,7 +4,7 @@ import { act } from "react-dom/test-utils";
 import request from "superagent";
 import config from "./superagent-mock-config";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { useRequeteApi } from "../RequeteHook";
+import { useRequeteApi } from "../DonneesRequeteHook";
 import { cleanup, render, fireEvent } from "@testing-library/react";
 const superagentMock = require("superagent-mock")(request, config);
 

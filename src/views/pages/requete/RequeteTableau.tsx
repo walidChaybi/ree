@@ -10,7 +10,7 @@ import {
   processDataStorting
 } from "./tableau/TableUtils";
 import { DataTable } from "./RequeteTableauHeaderCell";
-import { useRequeteApi } from "./RequeteHook";
+import { useRequeteApi } from "./DonneesRequeteHook";
 import { BoutonSignature } from "./BoutonSignature";
 import { RequeteTableauHeader } from "./RequeteTableauHeader";
 import { RequeteTableauBody } from "./RequeteTableauBody";
@@ -91,7 +91,7 @@ export const RequeteTableau: React.FC = () => {
             </h3>
           </div>
           <div className="RequetesToolbarSignature">
-            <BoutonSignature />
+            <BoutonSignature libelle={"pages.requetes.action.signature"} />
           </div>
         </div>
       </Toolbar>

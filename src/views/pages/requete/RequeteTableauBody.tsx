@@ -23,8 +23,10 @@ export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
 }) => {
   const history = useHistory();
 
-  function onClickRequeteHandler(identifiantRequete: number) {
-    history.push(`/requetes/${identifiantRequete}`);
+  function onClickRequeteHandler(identifiantRequete: string) {
+    history.push(`/requetes/${identifiantRequete}`, {
+      data
+    });
   }
 
   return (
@@ -33,7 +35,7 @@ export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
         {data.map(row => (
           <TableRow
             key={row.idSagaDila}
-            onClick={() => onClickRequeteHandler(row.idSagaDila)}
+            onClick={() => onClickRequeteHandler(row.idRequete)}
             data-testid={row.idSagaDila}
           >
             <RequeteTableauBodyCell data={row.idSagaDila} />
@@ -48,7 +50,7 @@ export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
             <RequeteTableauBodyCell
               data={getText(`referentiel.natureActe.${row.natureActe}`)}
             />
-            <RequeteTableauBodyCell data={row.requerant} />
+            <RequeteTableauBodyCell data={row.requerant.nomOuRaisonSociale} />
             <RequeteTableauBodyCell data={row.dateCreation} />
             <RequeteTableauBodyCell data={row.dateStatut} />
             <RequeteTableauBodyCell

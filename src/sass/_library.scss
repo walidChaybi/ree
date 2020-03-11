@@ -1,4 +1,4 @@
-@import "colors";
+@import "./colors";
 
 @font-face {
   font-family: "NotoSansUI-Regular";
@@ -43,6 +43,7 @@ button {
   text-align: center;
   cursor: pointer;
   border: medium none;
+  border-radius: 0.25rem;
   text-transform: uppercase;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
   -webkit-appearance: button;
@@ -200,6 +201,19 @@ select {
   transform: translateX(-50%);
   border-radius: 0.25rem;
   border-width: 1px;
+}
+
+.todo {
+  color: $todo;
+  label,
+  textarea,
+  button {
+    color: $todo;
+  }
+}
+
+.capital {
+  text-transform: capitalize;
 }
 
 .LinkFilAriane {

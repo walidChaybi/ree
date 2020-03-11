@@ -1,5 +1,4 @@
 import React from "react";
-import * as renderer from "react-test-renderer";
 import { RequeteTableauBody } from "../RequeteTableauBody";
 import { BrowserRouter as Router } from "react-router-dom";
 import { render } from "@testing-library/react";
