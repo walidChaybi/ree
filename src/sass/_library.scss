@@ -201,3 +201,15 @@ select {
   border-radius: 0.25rem;
   border-width: 1px;
 }
+
+.LinkFilAriane {
+  color: rgba(0, 0, 0, 0.54);
+  text-decoration: none;
+  &:hover {
+    color: $application-color;
+  }
+}
+
+.TextFilAriane {
+  color: $application-color;
+}
