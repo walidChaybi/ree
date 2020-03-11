@@ -6,6 +6,10 @@ import { SortOrder } from "./tableau/TableUtils";
 import classNames from "classnames";
 import "../../../sass/_library.scss";
 import "../requete/sass/RequeteTableau.scss";
+import { IRequerantApi, IReponseApi } from "./DonneesRequeteHook";
+import { ITitulaire } from "./visualisation/RequeteType";
+import { NatureActe } from "../../../model/requete/NatureActe";
+import { Canal } from "../../../model/Canal";
 
 export type DataTable =
   | "idSagaDila"
@@ -19,15 +23,21 @@ export type DataTable =
   | "prioriteRequete";
 
 export interface IDataTable {
+  idRequete: string;
   idSagaDila: number;
   sousTypeRequete: string;
   provenance: string;
-  natureActe: string;
-  requerant: string;
+  natureActe: NatureActe;
   dateCreation: string;
   dateStatut: string;
   statut: string;
   prioriteRequete: string;
+  villeEvenement: string;
+  paysEvenement: string;
+  canal: Canal;
+  requerant: IRequerantApi;
+  titulaires: ITitulaire[];
+  reponse: IReponseApi;
 }
 
 interface RequeteTableauHeaderCellProps {

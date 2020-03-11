@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders informations sur l'état de la requete 1`] = `
+<div
+  className="etat-requete"
+>
+  <h1>
+    Délivrance d'extrait d'acte de naissance dématérialisé
+  </h1>
+  <div>
+    <span>
+      Requête n°
+      11982
+    </span>
+    <span
+      className="title"
+    >
+      Canal
+      : 
+    </span>
+    <span>
+      Internet
+    </span>
+    <span
+      className="title"
+    >
+      Etat
+      : 
+    </span>
+    <span>
+      A signer
+    </span>
+  </div>
+</div>
+`;

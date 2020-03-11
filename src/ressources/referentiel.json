@@ -21,23 +21,23 @@
     "MandataireHabilite": "Mandataire habilité"
   },
   "sousQualiteRequerant": {
-    "Titulaire": "Titulaire",
-    "Parent": "Parent",
-    "Enfant": "Enfant",
-    "EpouxEpouse": "Epoux/Epouse",
-    "GrandParent": "Grand parent",
-    "PetitEnfant": "Petit enfant",
-    "AutreRequerant": "Autre requerant",
-    "Tribunal": "Tribunal",
-    "ProcureurRepublique": "Procureur de la république",
-    "Service": "Service",
-    "EtablissementPublic": "Etablissement public",
-    "OrganismeCaisseControleEtat": "Organisme de caisse controlé par l'état",
-    "Avocat": "Avocat",
-    "Tuteur": "Tuteur",
-    "Huissier": "Huissier",
-    "Genealogiste": "Genealogiste",
-    "Notaire": "Notaire"
+    "TITULAIRE": "Titulaire",
+    "PARENT": "Parent",
+    "ENFANT": "Enfant",
+    "EPOUXEPOUSE": "Epoux/Epouse",
+    "GRANDPARENT": "Grand parent",
+    "PETITENFANT": "Petit enfant",
+    "AUTREREQURANT": "Autre requerant",
+    "TRIBUNAL": "Tribunal",
+    "PROCUREURDELAREPUBLIQUE": "Procureur de la république",
+    "SERVICE": "Service",
+    "ETABLISSEMENTPUBLIC": "Etablissement public",
+    "ORGANISMECAISSECONTROLEETA": "Organisme de caisse controlé par l'état",
+    "AVOCAT": "Avocat",
+    "TUTEUR": "Tuteur",
+    "HUISSIER": "Huissier",
+    "GENEALOGISTE": "Genealogiste",
+    "NOTAIRE": "Notaire"
   },
   "sousTypeRequete": {
     "DELIVRANCE_DEMAT": "Délivrance Démat",
@@ -56,5 +56,9 @@
     "Delivrance": "Délivrance",
     "CreationActe": "Création d'acte",
     "MiseAJour": "Mise à jour"
+  },
+  "canal": {
+    "INTERNET": "Internet",
+    "COURRIER": "Courrier"
   }
 }

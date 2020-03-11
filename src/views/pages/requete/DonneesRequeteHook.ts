@@ -10,18 +10,7 @@ import { NatureActe } from "../../../model/requete/NatureActe";
 import { QualiteRequerant } from "../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../model/requete/SousQualiteRequerant";
 import { SortOrder } from "./tableau/TableUtils";
-
-export interface RequeteData {
-  idSagaDila: string;
-  typeRequete: TypeRequete;
-  sousTypeRequete: SousTypeRequete;
-  canalProvenance: CanalProvenance;
-  natureActe: NatureActe;
-  requerant: string;
-  dateCreation: moment.Moment;
-  dateStatut: moment.Moment;
-  statutRequete: StatutRequete;
-}
+import { Canal } from "../../../model/Canal";
 
 export interface IRequerantApi {
   adresse: string;
@@ -35,6 +24,23 @@ export interface IRequerantApi {
   typeRequerant: SousQualiteRequerant;
 }
 
+export interface IReponseApi {
+  idReponse: string;
+  dateTraitementDemat: number;
+  dateDelivrance: number;
+  natureAct: NatureActe;
+  jourEvenement: number;
+  moisEvenement: number;
+  anneeEvenement: number;
+  villeEvenement: string;
+  paysEvenement: string;
+  nomOec: string;
+  prenomOec: string;
+  commentaire: string;
+  documentDelivre: any[];
+  requete: string;
+}
+
 export interface IRequeteApi {
   anneeEvenement: number;
   dateCreation: number;
@@ -45,11 +51,12 @@ export interface IRequeteApi {
   jourEvenement: number;
   moisEvenement: number;
   natureActe: NatureActe;
+  canal: Canal;
   nbExemplaire: number;
   paysEvenement: string;
   picesJustificatives: any;
   provenance: CanalProvenance;
-  reponses: any;
+  reponse: IReponseApi;
   requerant: IRequerantApi;
   sousTypeRequete: SousTypeRequete;
   statut: StatutRequete;
@@ -161,17 +168,23 @@ function reponseRequeteMapper(data: IRequeteApi[]): IDataTable[] {
   return result;
 }
 
-function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
+export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
   return {
+    idRequete: data.idRequete,
     idSagaDila: +data.idSagaDila,
-    sousTypeRequete: data.sousTypeRequete,
-    provenance: data.provenance,
-    natureActe: data.natureActe,
     dateCreation: moment.unix(data.dateCreation).format("DD/MM/YYYY"),
-    dateStatut: moment.unix(data.dateStatut).format("DD/MM/YYYY"),
+    provenance: data.provenance,
     statut: data.statut,
+    dateStatut: moment.unix(data.dateStatut).format("DD/MM/YYYY"),
+    sousTypeRequete: data.sousTypeRequete,
+    natureActe: data.natureActe,
     prioriteRequete: "TODO",
-    requerant: data.requerant.nomOuRaisonSociale
+    villeEvenement: data.villeEvenement,
+    paysEvenement: data.paysEvenement,
+    requerant: data.requerant,
+    titulaires: data.titulaires,
+    canal: data.canal,
+    reponse: data.reponse
   };
 }
 

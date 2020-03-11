@@ -1,0 +1,20 @@
+@import "../../../../../sass/colors";
+
+.etat-requete {
+  border-radius: 0.25rem;
+  text-align: justify;
+  padding-top: 15px;
+  h1 {
+    margin: 0px;
+    padding-bottom: 8px;
+  }
+  div {
+    span {
+      padding-right: 16px;
+      &.title {
+        font-weight: bold;
+        padding-right: 0px;
+      }
+    }
+  }
+}

@@ -14,7 +14,8 @@
     "pagePrecedente": "Page précédente"
   },
   "boutons": {
-    "accueil": "<< Accueil"
+    "accueil": "<< Accueil",
+    "retourMesRequetes": "Retour à mes requêtes"
   },
   "fildariane": {
     "accueil": "Accueil",
@@ -25,6 +26,34 @@
   },
   "pages": {
     "requetes": {
+      "apercu": {
+        "titre": "Aperçu de la requête",
+        "commentaires": "Commentaires",
+        "signatureElectronique": "Signer électroniquement",
+        "etat": {
+          "titre": {
+            "MARIAGE": "Délivrance d'extrait d'acte de mariage dématérialisé",
+            "NAISSANCE": "Délivrance d'extrait d'acte de naissance dématérialisé",
+            "DECES": "Délivrance d'extrait d'acte de décès dématérialisé"
+          },
+          "numeroRequete": "Requête n°",
+          "canal": "Canal",
+          "etat": "Etat",
+          "service": "Service"
+        },
+        "resume": {
+          "titre": "Résumé de la requête",
+          "raisSoc": "Requérant/raison sociale",
+          "dateEvent": "Date de l'évenement",
+          "lieuEvent": "Lieu de l'évenement",
+          "titulaire": "Titulaire",
+          "lienTitulaire": "Lien avec le titulaire"
+        },
+        "bouton": {
+          "left": "Requête précédente",
+          "right": "Requête suivante"
+        }
+      },
       "enCours": {
         "titre": "Requêtes en cours"
       },

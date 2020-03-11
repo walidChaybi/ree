@@ -1,0 +1,35 @@
+@import "../../../../../sass/colors";
+
+.button-navigation-request {
+  padding: 0px;
+  min-width: 0px;
+  color: $button-application-color;
+  background-color: white;
+  font-size: 40px;
+  vertical-align: middle;
+
+  &:disabled {
+    background-color: transparent;
+    color: $disabled-button;
+  }
+}
+
+.button-request {
+  display: inline-block;
+  span {
+    display: inline-block;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .button-request {
+    display: flex;
+    flex-flow: column;
+    span {
+      order: 1;
+    }
+    button {
+      order: 2;
+    }
+  }
+}

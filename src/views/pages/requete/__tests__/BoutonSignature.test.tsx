@@ -3,13 +3,17 @@ import { cleanup, render, fireEvent } from "@testing-library/react";
 import { BoutonSignature } from "../BoutonSignature";
 
 test("renders titre bouton signature", () => {
-  const { getByText } = render(<BoutonSignature />);
+  const { getByText } = render(
+    <BoutonSignature libelle={"pages.requetes.action.signature"} />
+  );
   const linkElement = getByText(/Signer tous les documents/i);
   expect(linkElement).toBeInTheDocument();
 });
 
 test("renders message indisponibilité", () => {
-  const { getByText } = render(<BoutonSignature />);
+  const { getByText } = render(
+    <BoutonSignature libelle={"pages.requetes.action.signature"} />
+  );
   const linkElement = getByText(
     /Le service de signature électronique est indisponible/i
   );
@@ -20,7 +24,12 @@ test("renders message indisponibilité après click", () => {
   function handleClick() {
     console.log("test");
   }
-  const { getByText } = render(<BoutonSignature onClick={handleClick} />);
+  const { getByText } = render(
+    <BoutonSignature
+      libelle={"pages.requetes.action.signature"}
+      onClick={handleClick}
+    />
+  );
   const linkElement = getByText(
     /Le service de signature électronique est indisponible/i
   );
