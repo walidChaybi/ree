@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders composant FilAriane 1`] = `
+<nav
+  aria-label="breadcrumb"
+  className="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+>
+  <ol
+    className="MuiBreadcrumbs-ol"
+  >
+    <li
+      className="MuiBreadcrumbs-li"
+    >
+      <a
+        className="LinkFilAriane"
+        href="/"
+        onClick={[Function]}
+      >
+        Accueil
+      </a>
+    </li>
+    <li
+      aria-hidden={true}
+      className="MuiBreadcrumbs-separator"
+    >
+      <svg
+        aria-hidden="true"
+        className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+        focusable="false"
+        role="presentation"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+        />
+      </svg>
+    </li>
+    <li
+      className="MuiBreadcrumbs-li"
+    >
+      <div
+        className="TextFilAriane"
+      >
+        Mes requêtes
+      </div>
+    </li>
+  </ol>
+</nav>
+`;

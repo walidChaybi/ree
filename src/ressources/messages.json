@@ -16,6 +16,13 @@
   "boutons": {
     "accueil": "<< Accueil"
   },
+  "fildariane": {
+    "accueil": "Accueil",
+    "mesrequetes": "Mes requêtes",
+    "requetes": "Requêtes",
+    "apercurequete": "Aperçu de requête",
+    "messagerie": "Messagerie"
+  },
   "pages": {
     "requetes": {
       "enCours": {
