@@ -13,7 +13,7 @@ exports[`renders composant FilAriane 1`] = `
     >
       <a
         className="LinkFilAriane"
-        href="/"
+        href="/rece-ui/accueil"
         onClick={[Function]}
       >
         Accueil
