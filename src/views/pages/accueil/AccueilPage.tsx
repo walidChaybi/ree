@@ -13,7 +13,7 @@ export const AccueilPage: React.FC = () => {
   const nom = "Garisson";
   const prenom = "Juliette";
 
-  const { dataState = [], rowsNumberState = 0, errorState } = useRequeteApi({
+  const { rowsNumberState = 0 } = useRequeteApi({
     nomOec: nom,
     prenomOec: prenom,
     statut: StatutRequete.ASigner
@@ -41,6 +41,7 @@ export const AccueilPage: React.FC = () => {
           messageId="pages.accueil.boutons.service"
           pageUrl="requeteservice"
           iconFA={faUsers}
+          disabled={true}
           titleId="pages.accueil.titles.service"
         ></BoutonAccueil>
         <BoutonAccueil

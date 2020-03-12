@@ -4,26 +4,33 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { Route, MemoryRouter } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Categorie } from "./Categorie";
+import { AccueilUrl, SeparateurUrl } from "../../../router/UrlManager";
+import { getText } from "../Text";
 
 export const FilAriane: React.FC = () => {
   const history = useHistory();
-  let pathnames = history.location.pathname.split("/").filter(x => x);
+  let pathnames = history.location.pathname.split(SeparateurUrl).filter(x => x);
+  pathnames.shift();
+  const accueilString = getText("fildariane.accueil").toLowerCase();
+  const accueilFirst = pathnames[0] === accueilString;
 
   return (
-    <MemoryRouter initialEntries={["/"]} initialIndex={0}>
+    <MemoryRouter initialEntries={[SeparateurUrl]} initialIndex={0}>
       <Route>
         <Breadcrumbs
           separator={<NavigateNextIcon fontSize="small" />}
           aria-label="breadcrumb"
         >
           <Categorie
-            url={"/"}
-            messageId={"accueil"}
-            last={pathnames.length === 0}
+            url={AccueilUrl}
+            messageId={accueilString}
+            last={accueilFirst}
           />
-          {pathnames.length > 0 &&
+          {!accueilFirst &&
             pathnames.map((value: string, index: number) => {
-              const to = `/${pathnames.slice(0, index + 1).join("/")}`;
+              const to = `/${pathnames
+                .slice(0, index + 1)
+                .join(SeparateurUrl)}`;
               return (
                 <Categorie
                   url={to}
