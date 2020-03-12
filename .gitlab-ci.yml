@@ -1,10 +1,36 @@
 # Sélection du template Gitlab
 include:
-  - project: "rece/gitlab-ci/rece-jobs-lib"
-    file: "rece-pipeline-js.yml"
-    ref: "master"
+  - project: "hornet.js/gitlab-ci/hornet-jobs-lib"
+    file: "pipeline-js.yml"
+    ref: feat-js-pure-react
 
 # Tag du runner à utiliser pour tous les jobs
 .commun:
   tags:
-    - rece
+    - dmz500
+
+deploy_docker_dmz400:
+  extends: deploy_docker
+  environment:
+    name: recette
+    url: http://hfgdj
+  tags:
+    - dmz400
+  # Notre pipeline prévoit du déploiement en DMZ400
+  # On adapte les variables CI dont le nom finit en 'DMZ400' vers leur version classique
+  # pour réutiliser le job de déploiement du pipeline standard
+  before_script:
+    - cat /etc/hosts
+    - echo "172.25.36.154           miroir.app.diplomatie.gouv.fr entrepot.app.diplomatie.gouv.fr" >> /etc/hosts
+    - |
+      DEPLOY_DOCKER_HOSTNAME_CIBLE=$DEPLOY_DOCKER_HOSTNAME_CIBLE_DMZ400
+      echo DEPLOY_DOCKER_HOSTNAME_CIBLE=$DEPLOY_DOCKER_HOSTNAME_CIBLE
+
+      DEPLOY_DOCKER_SSH_PRIVATE_KEY=$DEPLOY_DOCKER_SSH_PRIVATE_KEY_DMZ400
+      echo DEPLOY_DOCKER_SSH_PRIVATE_KEY=$DEPLOY_DOCKER_SSH_PRIVATE_KEY
+
+      DEPLOY_DOCKER_HOST_USERNAME=$DEPLOY_DOCKER_HOST_USERNAME_DMZ400
+      echo DEPLOY_DOCKER_HOST_USERNAME=$DEPLOY_DOCKER_HOST_USERNAME
+
+      DEPLOY_DOCKER_SSH_KNOWN_HOSTS=$DEPLOY_DOCKER_SSH_KNOWN_HOSTS_DMZ400
+      echo DEPLOY_DOCKER_SSH_KNOWN_HOSTS=$DEPLOY_DOCKER_SSH_KNOWN_HOSTS
