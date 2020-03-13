@@ -34,7 +34,7 @@ export function useRequeteDatumApi(
           }
         })
         .then(result => {
-          setDataState([reponseRequeteMapperUnitaire(result.body.data[0])]);
+          setDataState([reponseRequeteMapperUnitaire(result.body.data)]);
           setErrorState(undefined);
         })
         .catch(error => {
