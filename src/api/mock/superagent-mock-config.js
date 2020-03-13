@@ -95,7 +95,18 @@ module.exports = [
         };
         return "Hundred percent!";
       }
-
+      if (
+        match[1] ===
+        "/requetes/104b8563-c7f8-4748-9daa-f26558985894?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        return { data: mockRequetes.data[0] };
+      }
+      if (
+        match[1] ===
+        "/requetes/104b8564-c7f9-4749-9dab-f26558985895?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        return { data: mockRequetes.data[1] };
+      }
       if (
         match[1] ===
           "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=asc" ||

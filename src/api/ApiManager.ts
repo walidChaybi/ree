@@ -3,7 +3,7 @@ import * as superagent from "superagent";
 import request from "superagent";
 const apis: IApis = require("../ressources/api.json");
 
-require("superagent-mock")(request, config);
+// require("superagent-mock")(request, config);
 
 type ApisAutorisees = "rece-requete-api" | "rece-auth-api";
 

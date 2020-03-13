@@ -16,7 +16,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   maxRequetes
 }) => {
   return (
-    <div className="actions-buttons">
+    <div className="ActionsButtons">
       <NavigationButton
         direction={"left"}
         indexRequete={indexRequete}
