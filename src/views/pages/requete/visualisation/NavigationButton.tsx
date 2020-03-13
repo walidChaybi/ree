@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "../../../common/widget/Text";
+import { getText } from "../../../common/widget/Text";
 import { Button } from "reakit/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -33,15 +33,11 @@ export const NavigationButton: React.FC<NavigationProps> = ({
         );
       }}
     >
-      {direction === "right" && (
-        <span>
-          <Text messageId={"pages.requetes.apercu.bouton.right"} />
-        </span>
-      )}
       <Button
         className="button-navigation-request"
         id={`button-navigation-${direction}`}
         disabled={isDisabled(direction, indexRequete, maxRequetes)}
+        title={getText(`pages.requetes.apercu.bouton.${direction}`)}
       >
         <FontAwesomeIcon
           icon={
@@ -49,11 +45,6 @@ export const NavigationButton: React.FC<NavigationProps> = ({
           }
         />
       </Button>
-      {direction === "left" && (
-        <span>
-          <Text messageId={"pages.requetes.apercu.bouton.left"} />
-        </span>
-      )}
     </div>
   );
 };

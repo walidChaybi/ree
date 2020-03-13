@@ -1,5 +1,9 @@
 export enum NatureActe {
   Naissance = "NAISSANCE",
   Mariage = "MARIAGE",
-  Deces = "DECES"
+  Deces = "DECES",
+  AdoptionSimple = "ADOPTION_SIMPLE",
+  Absence = "ABSENCE",
+  Reconnaissance = "RECONNAISSANCE",
+  Pacs = "PACS"
 }

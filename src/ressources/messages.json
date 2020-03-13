@@ -33,7 +33,11 @@
           "titre": {
             "MARIAGE": "Délivrance d'extrait d'acte de mariage dématérialisé",
             "NAISSANCE": "Délivrance d'extrait d'acte de naissance dématérialisé",
-            "DECES": "Délivrance d'extrait d'acte de décès dématérialisé"
+            "DECES": "Délivrance d'extrait d'acte de décès dématérialisé",
+            "ADOPTION_SIMPLE": "Délivrance d'extrait d'acte d'adoption simple",
+            "ABSENCE": "Délivrance d'extrait d'acte d'abscence",
+            "RECONNAISSANCE": "Délivrance d'extrait d'acte de reconnaissance",
+            "PACS": "Délivrance d'extrait d'acte de PACS"
           },
           "numeroRequete": "Requête n°",
           "canal": "Canal",

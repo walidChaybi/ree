@@ -16,6 +16,6 @@ test("renders boutons d'actions d'une requête", () => {
     </Router>
   );
   expect(getAllByRole("button").length).toBe(4);
-  expect(getByText("Requête précédente")).not.toBeNull();
-  expect(getByText("Requête suivante")).not.toBeNull();
+  expect(getByText("Retour à mes requêtes")).not.toBeNull();
+  expect(getByText("Signer électroniquement")).not.toBeNull();
 });

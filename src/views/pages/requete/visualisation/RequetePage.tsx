@@ -54,17 +54,15 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
         <Text messageId={"pages.requetes.apercu.titre"} />
       </h2>
       {dataState.length > 0 && indexRequete >= 0 && (
-        <EtatRequete requete={dataState[indexRequete]} />
-      )}
-      {dataState.length > 0 && indexRequete >= 0 && (
-        <ContenuRequete requete={dataState[indexRequete]} />
-      )}
-      {dataState.length > 0 && indexRequete >= 0 && (
-        <ActionsButtonsRequestPage
-          maxRequetes={dataState.length}
-          indexRequete={indexRequete}
-          setIndexRequete={changeIndex}
-        />
+        <>
+          <ActionsButtonsRequestPage
+            maxRequetes={dataState.length}
+            indexRequete={indexRequete}
+            setIndexRequete={changeIndex}
+          />
+          <EtatRequete requete={dataState[indexRequete]} />
+          <ContenuRequete requete={dataState[indexRequete]} />
+        </>
       )}
     </>
   );
