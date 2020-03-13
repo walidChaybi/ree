@@ -1,5 +1,9 @@
+import config from "./mock/superagent-mock-config";
 import * as superagent from "superagent";
+import request from "superagent";
 const apis: IApis = require("../ressources/api.json");
+
+require("superagent-mock")(request, config);
 
 type ApisAutorisees = "rece-requete-api" | "rece-auth-api";
 
@@ -7,7 +11,7 @@ interface IApi {
   url: string;
   ports: number;
   name: string;
-  version: string[];
+  usedVersions: string[];
 }
 
 interface IApis {
@@ -33,6 +37,7 @@ interface HttpRequestConfig {
   parameters?: any;
   data?: any;
   headers?: HttpRequestHeader[];
+  responseType?: "blob";
 }
 
 export interface IHttpResponse {
@@ -52,7 +57,7 @@ export class ApiManager {
       (api: IApi) => api.name === name
     );
     if (foundApis.length === 1) {
-      const versionTrouve: string[] = foundApis[0].version.filter(
+      const versionTrouve: string[] = foundApis[0].usedVersions.filter(
         (versionItem: string) => versionItem === version
       );
       if (versionTrouve.length === 1) {
@@ -109,6 +114,10 @@ export class ApiManager {
 
     if (httpRequestConfig.headers) {
       request = this.processRequestHeaders(httpRequestConfig.headers, request);
+    }
+
+    if (httpRequestConfig.responseType) {
+      request = request.responseType(httpRequestConfig.responseType);
     }
 
     return request

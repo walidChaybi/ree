@@ -4,6 +4,7 @@ import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { IDataTable } from "../RequeteTableauHeaderCell";
 import { reponseRequeteMapperUnitaire } from "../DonneesRequeteHook";
 import { RequestsInformations } from "./RequetePage";
+import { ApiEndpoints } from "../../../router/UrlManager";
 export interface IQueryParametersPourRequete {
   nomOec: string;
   prenomOec: string;
@@ -25,7 +26,7 @@ export function useRequeteDatumApi(
       api
         .fetch({
           method: HttpMethod.GET,
-          uri: `/requetes/${queryParameters.idRequete}`,
+          uri: `${ApiEndpoints.RequetesUrl}/${queryParameters.idRequete}`,
           parameters: {
             nomOec: queryParameters.nomOec,
             prenomOec: queryParameters.prenomOec,
@@ -33,7 +34,7 @@ export function useRequeteDatumApi(
           }
         })
         .then(result => {
-          setDataState([reponseRequeteMapperUnitaire(result.body.data)]);
+          setDataState([reponseRequeteMapperUnitaire(result.body.data[0])]);
           setErrorState(undefined);
         })
         .catch(error => {

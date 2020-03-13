@@ -4,7 +4,9 @@ exports[`renders informations sur l'état de la requete 1`] = `
 <div
   className="etat-requete"
 >
-  <h1>
+  <h1
+    className="Entete"
+  >
     Délivrance d'extrait d'acte de naissance dématérialisé
   </h1>
   <div>

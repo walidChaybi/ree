@@ -3,18 +3,27 @@
 .etat-requete {
   border-radius: 0.25rem;
   text-align: justify;
-  padding-top: 15px;
+  width: 100%;
   h1 {
-    margin: 0px;
-    padding-bottom: 8px;
+    background-color: $application-color;
+    padding: 0.5em 1em 0.5em 1.325em;
+    margin: 0em;
+    color: white;
   }
   div {
+    padding: 0.5em 1em 0.5em 1em;
+    border: 1px solid;
+    border-color: #8080805c;
+    border-radius: 0 0 0.25em 0.25em;
     span {
-      padding-right: 16px;
+      padding-right: 1.5em;
       &.title {
         font-weight: bold;
         padding-right: 0px;
       }
     }
+  }
+  .Entete {
+    border-radius: 0.25em 0.25em 0 0;
   }
 }

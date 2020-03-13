@@ -7,6 +7,7 @@ import { EtatRequete } from "./EtatRequete";
 import { ContenuRequete } from "./ContenuRequete";
 import { ActionsButtonsRequestPage } from "./ActionsButtonsRequestPage";
 import { useRequeteDatumApi } from "./DonneeRequeteHook";
+import { getAppUrl, MesRequetesUrl } from "../../../router/UrlManager";
 
 export interface RequestsInformations {
   data: IDataTable[];
@@ -34,7 +35,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
 
   const changeIndex = useCallback(
     (idx: number) => {
-      history.push(`/requetes/${dataState[idx].idRequete}`);
+      history.push(`${getAppUrl(MesRequetesUrl)}/${dataState[idx].idRequete}`);
       setIndexRequete(idx);
     },
     [dataState, history]

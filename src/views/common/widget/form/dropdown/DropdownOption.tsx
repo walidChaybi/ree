@@ -1,9 +1,9 @@
 import React from "react";
-import { getText } from "../../Text";
+import { getText, MessageId } from "../../Text";
 
 export interface IDropdownOptionProps {
   value: string | number;
-  messageId: string;
+  messageId: MessageId;
 }
 export const DropdownOption: React.FC<IDropdownOptionProps> = ({
   value,

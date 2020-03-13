@@ -10,7 +10,7 @@ interface EtatRequeteProps {
 export const EtatRequete: React.FC<EtatRequeteProps> = props => {
   return (
     <div className="etat-requete">
-      <h1>
+      <h1 className="Entete">
         <Text
           messageId={`pages.requetes.apercu.etat.titre.${props.requete.natureActe}`}
         />

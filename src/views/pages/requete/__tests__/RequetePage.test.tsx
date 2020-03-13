@@ -10,7 +10,7 @@ import { mount } from "enzyme";
 test("renders Page requete with all elements", () => {
   act(() => {
     const history = createMemoryHistory();
-    history.push("requetes/req2", {
+    history.push("mesrequetes/req2", {
       data: [
         { ...DONNEES_REQUETE, idRequete: "req1" },
         { ...DONNEES_REQUETE, idRequete: "req2" },
@@ -44,7 +44,7 @@ test("renders Page requete with all elements", () => {
 test("renders Page requete with no elements", () => {
   act(() => {
     const history = createMemoryHistory();
-    history.push("requetes/req2", {
+    history.push("/rece-ui/mesrequetes/req2", {
       data: []
     });
 
@@ -74,7 +74,7 @@ test("renders Page requete with no elements", () => {
 test("renders Page requete change url", () => {
   act(() => {
     const history = createMemoryHistory();
-    history.push("requetes/req2", {
+    history.push("/rece-ui/mesrequetes/req2", {
       data: [
         { ...DONNEES_REQUETE, idRequete: "req1" },
         { ...DONNEES_REQUETE, idRequete: "req2" },
@@ -109,10 +109,10 @@ test("renders Page requete change url", () => {
       button => button.id === "button-navigation-right"
     );
 
-    expect(history.location.pathname).toBe("/requetes/req2");
+    expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
     fireEvent.click(leftButton!);
-    expect(history.location.pathname).toBe("/requetes/req1");
+    expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req1");
     fireEvent.click(rightButton!);
-    expect(history.location.pathname).toBe("/requetes/req2");
+    expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
   });
 });

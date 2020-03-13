@@ -15,3 +15,21 @@ export interface ITitulaire {
   parent2?: string;
   requete: string;
 }
+
+export interface IPieceJustificative {
+  idPieceJustificative: string;
+  nom: string;
+  mimeType: string;
+  taille: number;
+  identifiantSwift: string;
+}
+
+export interface IDocumentDelivre {
+  idDocumentDelivre: string;
+  nom: string;
+  mimeType: string;
+  typeDocument: string;
+  taille: number;
+  identifiantSwift: string;
+  reponse: any;
+}

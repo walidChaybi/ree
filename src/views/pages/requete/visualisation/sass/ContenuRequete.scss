@@ -2,7 +2,6 @@
 
 .contenu-requete {
   display: flex;
-  margin-top: 20px;
   .side {
     &.left {
       width: 25%;
@@ -11,6 +10,7 @@
     &.right {
       width: 75%;
       min-width: 500px;
+      margin-left: 0.5em;
     }
     display: inline-block;
   }
@@ -20,7 +20,7 @@
   }
 
   .commentaires {
-    margin-top: 20px;
+    margin-top: 1em;
     width: 100%;
     label: {
       color: $application-libelle;

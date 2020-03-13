@@ -1,14 +1,15 @@
 import React from "react";
-import { Text } from "./Text";
+import { Text, MessageId } from "./Text";
 import { Link } from "react-router-dom";
 import { Button } from "reakit/Button";
+import { getAppUrl, AppUrls } from "../../router/UrlManager";
 
 interface BoutonRetourProps {
   url?: string;
-  messageId?: string;
+  messageId?: MessageId;
 }
 export const BoutonRetour: React.FC<BoutonRetourProps> = ({
-  url = "/accueil",
+  url = getAppUrl(AppUrls.AccueilUrl),
   messageId = "boutons.accueil"
 }) => {
   return (

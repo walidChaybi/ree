@@ -5,8 +5,10 @@ const regex = require("../../../ressources/regex.json");
 const referentiel = require("../../../ressources/referentiel.json");
 const ressources = { ...messages, errors, regex, referentiel };
 
+export type MessageId = string;
+
 export interface ITextProps {
-  messageId: string;
+  messageId: MessageId;
   values?: string[];
 }
 

@@ -1,0 +1,26 @@
+.DocumentDetailHeader {
+}
+
+.DocumentDetailPanel {
+  .DocumentDetailRow {
+    width: 100%;
+    display: flex;
+  }
+}
+
+.MuiTypography-body1,
+.MuiTypography-body2 {
+  font-family: "NotoSansUI-Regular" !important;
+}
+
+.MuiTypography-body1 {
+  font-size: 0.9rem !important;
+}
+
+.MuiTypography-body2 {
+  font-size: 0.8rem !important;
+}
+
+.MuiExpansionPanelSummary-root {
+  min-height: auto !important;
+}

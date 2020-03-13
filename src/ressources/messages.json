@@ -20,7 +20,6 @@
   "fildariane": {
     "accueil": "Accueil",
     "mesrequetes": "Mes requêtes",
-    "requetes": "Requêtes",
     "apercurequete": "Aperçu de requête",
     "messagerie": "Messagerie"
   },
@@ -67,7 +66,7 @@
           "sousTypeRequete": "Type",
           "provenance": "Provenance",
           "natureActe": "Nature d'acte",
-          "requerant": "Requerant",
+          "requerant": "Requérant",
           "dateCreation": "Date de création",
           "dateStatut": "Dernière mise à jour",
           "statut": "Statut",
@@ -82,6 +81,38 @@
         },
         "pagination": {
           "donneePaginee": "Requêtes"
+        }
+      }
+    },
+    "requete": {
+      "consultation": {
+        "pieceJustificative": {
+          "titre": "Pièces justificatives de la requête",
+          "nomFichier": "Pièce justificative ${0}"
+        },
+        "courrierAccompagnement": {
+          "titre": "Courrier d'accompagnement"
+        },
+        "documentASigner": {
+          "titre": "Document à signer"
+        },
+        "icon": {
+          "pdf": "Fichier au format PDF",
+          "png": "Image au format PNG",
+          "visualiser": "Ouvrir le fichier dans un nouvel onglet"
+        },
+        "extrait": {
+          "titre": "Extrait"
+        },
+        "documentDelivre": {
+          "type": {
+            "COPIE_INTEGRALE": "Copie intégrale",
+            "EXTRAIT_AVEC_FILIATION": "Extrait avec filiation",
+            "EXTRAIT_SANS_FILIATION": "Extrait sans filiation",
+            "EXTRAIT_PLURILINGUE": "Extrait plurilingue",
+            "FA50": "Formulaire FA50",
+            "FA116": "Formulaire FA116"
+          }
         }
       }
     },

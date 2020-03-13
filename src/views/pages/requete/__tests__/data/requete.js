@@ -15,7 +15,8 @@ export default {
   prioriteRequete: "",
   villeEvenement: "fez",
   paysEvenement: "maroc",
-  canal: Canal.INTERNET,
+  canal: Canal.Internet,
+  piecesJustificatives: [],
   requerant: {
     adresse: "",
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
@@ -76,7 +77,7 @@ export default {
     nomOec: "Garisson",
     prenomOec: "Juliette",
     commentaire: "",
-    documentDelivre: [],
+    documentsDelivres: [],
     requete: ""
   }
 };
