@@ -1,6 +1,5 @@
 import React from "react";
 import TableCell from "@material-ui/core/TableCell";
-import { Link } from "react-router-dom";
 import "../../../sass/_library.scss";
 import "../requete/sass/RequeteTableau.scss";
 

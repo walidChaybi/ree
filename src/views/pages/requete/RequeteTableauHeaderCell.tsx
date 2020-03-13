@@ -6,10 +6,10 @@ import { SortOrder } from "./tableau/TableUtils";
 import classNames from "classnames";
 import "../../../sass/_library.scss";
 import "../requete/sass/RequeteTableau.scss";
-import { IRequerantApi, IReponseApi } from "./DonneesRequeteHook";
-import { ITitulaire } from "./visualisation/RequeteType";
+import { ITitulaire, IPieceJustificative } from "./visualisation/RequeteType";
 import { NatureActe } from "../../../model/requete/NatureActe";
 import { Canal } from "../../../model/Canal";
+import { IRequerantApi, IReponseApi } from "./DonneesRequeteHook";
 
 export type DataTable =
   | "idSagaDila"
@@ -37,6 +37,7 @@ export interface IDataTable {
   canal: Canal;
   requerant: IRequerantApi;
   titulaires: ITitulaire[];
+  piecesJustificatives: IPieceJustificative[];
   reponse: IReponseApi;
 }
 

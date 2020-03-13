@@ -21,9 +21,7 @@ test("renders message indisponibilité", () => {
 });
 
 test("renders message indisponibilité après click", () => {
-  function handleClick() {
-    console.log("test");
-  }
+  function handleClick() {}
   const { getByText } = render(
     <BoutonSignature
       libelle={"pages.requetes.action.signature"}

@@ -1,11 +1,11 @@
 import React from "react";
-import { Text, getText } from "../Text";
+import { Text, getText, MessageId } from "../Text";
 import { Link } from "react-router-dom";
 import { getAppUrl } from "../../../router/UrlManager";
 
 interface CategorieProps {
   url: string;
-  messageId: string;
+  messageId: MessageId;
   last: boolean;
 }
 
@@ -19,15 +19,16 @@ export const Categorie: React.FC<CategorieProps> = ({
   if (last && uuidRegex.test(messageId)) {
     messageId = "apercurequete";
   }
+  const message = `fildariane.${messageId}`;
   return (
     <>
       {last ? (
         <div className="TextFilAriane">
-          <Text messageId={"fildariane." + messageId} />
+          <Text messageId={message} />
         </div>
       ) : (
         <Link className="LinkFilAriane" to={getAppUrl(url)}>
-          <Text messageId={"fildariane." + messageId} />
+          <Text messageId={message} />
         </Link>
       )}
     </>

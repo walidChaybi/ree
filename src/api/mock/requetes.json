@@ -1,0 +1,211 @@
+{
+  "hasTechnicalError": false,
+  "hasBusinessError": false,
+  "status": 200,
+  "url": "/rece-requete-api/v1/requetes",
+  "data": [
+    {
+      "idRequete": "104b8563-c7f8-4748-9daa-f26558985894",
+      "idSagaDila": 11982,
+      "dateCreation": 1583225141.221132,
+      "dateDerniereMaj": 1583225141.221132,
+      "provenance": "DILA",
+      "canal": "INTERNET",
+      "statut": "A_SIGNER",
+      "dateStatut": 1583225292.518094,
+      "typeRequete": "DELIVRANCE",
+      "sousTypeRequete": "DELIVRANCE_COURRIER",
+      "natureActe": "NAISSANCE",
+      "typeActe": "EXTRAIT_AVEC_FILIATION",
+      "jourEvenement": 25,
+      "moisEvenement": 3,
+      "anneeEvenement": 1983,
+      "villeEvenement": "fez",
+      "paysEvenement": "maroc",
+      "nbExemplaire": null,
+      "piecesJustificatives": [
+        {
+          "idPieceJustificative": "e496f1d1-18c3-48ca-ae87-e97582fbf188",
+          "nom": "11984-pi-j-3.PNG",
+          "mimeType": "image/png",
+          "taille": 47790,
+          "identifiantSwift": "d48c76f3a27153a70e0e34b1d5646120",
+          "requete": null
+        },
+        {
+          "idPieceJustificative": "a70237ca-83e5-4f6f-ac86-ec15086c5e3e",
+          "nom": "11984-pi-j-3.pdf",
+          "mimeType": "application/pdf",
+          "taille": 151807,
+          "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
+          "requete": null
+        }
+      ],
+      "reponse": {
+        "idReponse": "d2ec498c-5d2b-11ea-bc55-0242ac130003",
+        "dateTraitementDemat": 1581721200.0,
+        "dateDelivrance": 1581721200.0,
+        "natureActe": "NAISSANCE",
+        "jourEvenement": 1,
+        "moisEvenement": 1,
+        "anneeEvenement": 1983,
+        "villeEvenement": "fez",
+        "paysEvenement": "maroc",
+        "nomOec": "Garisson",
+        "prenomOec": "Juliette",
+        "documentsDelivres": [
+          {
+            "idDocumentDelivre": "f9279c00-5d2b-11ea-bc55-0242ac130003",
+            "typeDocument": "COPIE_INTEGRALE",
+            "nom": "document copie",
+            "mimeType": "application/pdf",
+            "taille": 12,
+            "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
+            "reponse": null
+          },
+          {
+            "idDocumentDelivre": "24557a3c-60e3-432e-82fb-0ac8f160590a",
+            "typeDocument": "FA50",
+            "nom": "nom à modifier",
+            "mimeType": "application/pdf",
+            "taille": 12,
+            "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94208",
+            "reponse": null
+          }
+        ],
+        "commentaire": "Le titulaire n'a pas été poli lors de la demande",
+        "requete": null
+      },
+      "requerant": {
+        "idRequerant": "f275d357-14ec-42ac-a219-d481cbcbbc61",
+        "typeRequerant": "TITULAIRE",
+        "qualiteRequerant": "PARTICULIER",
+        "nomOuRaisonSociale": "aubin",
+        "nomUsage": null,
+        "prenomUsage": "nicolas",
+        "telephone": "0777327569",
+        "adresse": null,
+        "requete": null
+      },
+      "titulaires": [
+        {
+          "idTitulaire": "31a63e6a-b4de-4e4f-8bd4-2a53835a417b",
+          "position": 1,
+          "nomNaissance": "aubin",
+          "nomUsage": null,
+          "prenom1": "nicolas",
+          "prenom2": null,
+          "prenom3": null,
+          "jourNaissance": 25,
+          "moisNaissance": 3,
+          "anneeNaissance": 1983,
+          "villeNaissance": "fez",
+          "paysNaissance": "maroc",
+          "parent1": null,
+          "parent2": null,
+          "requete": null
+        }
+      ]
+    },
+    {
+      "idRequete": "104b8564-c7f9-4749-9dab-f26558985895",
+      "idSagaDila": 11985,
+      "dateCreation": 1583225141.221132,
+      "dateDerniereMaj": 1583225141.221132,
+      "provenance": "DILA",
+      "canal": "INTERNET",
+      "statut": "A_SIGNER",
+      "dateStatut": 1583225292.518094,
+      "typeRequete": "DELIVRANCE",
+      "sousTypeRequete": "DELIVRANCE_COURRIER",
+      "natureActe": "NAISSANCE",
+      "typeActe": "EXTRAIT_AVEC_FILIATION",
+      "jourEvenement": 17,
+      "moisEvenement": 11,
+      "anneeEvenement": 1991,
+      "villeEvenement": "Nantes",
+      "paysEvenement": "France",
+      "nbExemplaire": null,
+      "piecesJustificatives": [
+        {
+          "idPieceJustificative": "e496f1d1-18c3-48ca-ae87-e97582fbf188",
+          "nom": "11984-pi-j-3.PNG",
+          "mimeType": "image/png",
+          "taille": 47790,
+          "identifiantSwift": "d48c76f3a27153a70e0e34b1d5646120",
+          "requete": null
+        },
+        {
+          "idPieceJustificative": "a70237ca-83e5-4f6f-ac86-ec15086c5e3e",
+          "nom": "11984-pi-j-3.pdf",
+          "mimeType": "application/pdf",
+          "taille": 151807,
+          "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
+          "requete": null
+        }
+      ],
+      "reponse": {
+        "idReponse": "d2ec498c-5d2b-11ea-bc55-0242ac130003",
+        "dateTraitementDemat": 1581721200.0,
+        "dateDelivrance": 1581721200.0,
+        "natureActe": "NAISSANCE",
+        "jourEvenement": 17,
+        "moisEvenement": 11,
+        "anneeEvenement": 1991,
+        "villeEvenement": "Nantes",
+        "paysEvenement": "France",
+        "nomOec": "Garisson",
+        "prenomOec": "Juliette",
+        "commentaire": "",
+        "documentsDelivres": [
+          {
+            "idDocumentDelivre": "f9279c00-5d2b-11ea-bc55-0242ac130003",
+            "typeDocument": "COPIE_INTEGRALE",
+            "nom": "Naissance copie",
+            "mimeType": "application/pdf",
+            "taille": 12,
+            "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
+            "reponse": null
+          }
+        ],
+        "requete": null
+      },
+      "requerant": {
+        "idRequerant": "f275d357-14ec-42ac-a219-d481cbcbbc61",
+        "typeRequerant": "TITULAIRE",
+        "qualiteRequerant": "PARTICULIER",
+        "nomOuRaisonSociale": "Gauthier",
+        "nomUsage": null,
+        "prenomUsage": "Hector",
+        "telephone": "0652809893",
+        "adresse": null,
+        "requete": null
+      },
+      "titulaires": [
+        {
+          "idTitulaire": "31a63e6b-b4df-4e4g-8bd5-2a53835a417c",
+          "position": 1,
+          "nomNaissance": "Gauthier",
+          "nomUsage": null,
+          "prenom1": "Hector",
+          "prenom2": null,
+          "prenom3": null,
+          "jourNaissance": 17,
+          "moisNaissance": 11,
+          "anneeNaissance": 1991,
+          "villeNaissance": "Nantes",
+          "paysNaissance": "France",
+          "parent1": null,
+          "parent2": null,
+          "requete": null
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "httpHeaders": {
+    "Content-Range": ["0-50/1"],
+    "Accept-Range": ["requete 100"],
+    "Link": [""]
+  }
+}

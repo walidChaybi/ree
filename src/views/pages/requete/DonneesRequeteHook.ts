@@ -11,6 +11,11 @@ import { QualiteRequerant } from "../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../model/requete/SousQualiteRequerant";
 import { SortOrder } from "./tableau/TableUtils";
 import { Canal } from "../../../model/Canal";
+import {
+  IPieceJustificative,
+  IDocumentDelivre
+} from "./visualisation/RequeteType";
+import { ApiEndpoints } from "../../router/UrlManager";
 
 export interface IRequerantApi {
   adresse: string;
@@ -28,7 +33,7 @@ export interface IReponseApi {
   idReponse: string;
   dateTraitementDemat: number;
   dateDelivrance: number;
-  natureAct: NatureActe;
+  natureActe: NatureActe;
   jourEvenement: number;
   moisEvenement: number;
   anneeEvenement: number;
@@ -37,7 +42,7 @@ export interface IReponseApi {
   nomOec: string;
   prenomOec: string;
   commentaire: string;
-  documentDelivre: any[];
+  documentsDelivres: IDocumentDelivre[];
   requete: string;
 }
 
@@ -54,7 +59,7 @@ export interface IRequeteApi {
   canal: Canal;
   nbExemplaire: number;
   paysEvenement: string;
-  picesJustificatives: any;
+  piecesJustificatives: IPieceJustificative[];
   provenance: CanalProvenance;
   reponse: IReponseApi;
   requerant: IRequerantApi;
@@ -92,18 +97,10 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     setPreviousDataLinkState(undefined);
     setNextDataLinkState(undefined);
     const api = ApiManager.getInstance("rece-requete-api", "v1");
-    console.log(
-      "Call API /requetes",
-      queryParameters.nomOec,
-      queryParameters.prenomOec,
-      queryParameters.statut,
-      queryParameters.tri,
-      queryParameters.sens
-    );
     api
       .fetch({
         method: HttpMethod.GET,
-        uri: "/requetes",
+        uri: ApiEndpoints.RequetesUrl,
         parameters: {
           nomOec: queryParameters.nomOec,
           prenomOec: queryParameters.prenomOec,
@@ -116,7 +113,6 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
         }
       })
       .then(result => {
-        // <http://10.110.204.59:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=asc&range=2-50>;rel="next",<http://10.110.204.59:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=asc&range=0-50>;rel="prev"
         setDataState(reponseRequeteMapper(result.body.data));
         const rowsNumber: number = +(result.body.httpHeaders[
           "Content-Range"
@@ -184,6 +180,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     requerant: data.requerant,
     titulaires: data.titulaires,
     canal: data.canal,
+    piecesJustificatives: data.piecesJustificatives,
     reponse: data.reponse
   };
 }
