@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
@@ -9,24 +9,40 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
 import Image from "@material-ui/icons/Image";
 import { getText } from "../../../../common/widget/Text";
-import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 import { IDocumentDetail } from "./interfaces/IDocumentDetail";
+import { lectureDuDocument } from "./DocumentPresentation";
+import { requestDocumentApi } from "./DocumentRequeteHook";
 const byteSize = require("byte-size");
 
 interface IDocumentDetailProps {
   document: IDocumentDetail;
   onClickHandler: (
     event: React.MouseEvent,
-    identifiantDocument: string,
-    groupement: GroupementDocument,
-    mimeType: string
+    document: IDocumentDetail,
+    stateSetter: ((document: IDocumentDetail) => void) | undefined
   ) => void;
+  openedInViewer?: IDocumentDetail;
+  stateSetter?: (document: IDocumentDetail) => void;
 }
 
 export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
   document,
-  onClickHandler
+  onClickHandler,
+  openedInViewer,
+  stateSetter,
 }) => {
+  useEffect(() => {
+    if (openedInViewer === document) {
+      requestDocumentApi(
+        document.identifiantDocument,
+        document.groupement,
+        document.mimeType
+      ).then((result) => {
+        lectureDuDocument(URL.createObjectURL(result));
+      });
+    }
+  }, [document, openedInViewer]);
+
   return (
     <ListItem>
       <ListItemAvatar>
@@ -51,15 +67,11 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
       <ListItemSecondaryAction>
         <IconButton
           title={getText("pages.requete.consultation.icon.visualiser")}
+          color={openedInViewer === document ? "primary" : "default"}
           edge="end"
           aria-label="consulter"
-          onClick={event => {
-            onClickHandler(
-              event,
-              document.identifiantDocument,
-              document.groupement,
-              document.mimeType
-            );
+          onClick={(event) => {
+            onClickHandler(event, document, stateSetter);
           }}
         >
           <VisibilityIcon />

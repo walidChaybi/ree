@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DocumentPresentation } from "./DocumentPresentation";
 import { TypeDocument } from "../../../../../model/requete/TypeDocument";
 import { IPieceJustificative, IDocumentDelivre } from "../RequeteType";
@@ -18,11 +18,14 @@ interface IDocumentsRequeteProps {
 
 export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
   piecesJustificatives,
-  documentsDelivres
+  documentsDelivres,
 }) => {
   const { courriersAccompagnement, documentsASigner } = parseDocumentsDelivres(
     documentsDelivres
   );
+  const [extraitVisibleState, setExtraitVisibleState] = useState<
+    IDocumentDetail
+  >(extraitALireParDefault(documentsASigner));
   return (
     <>
       <DocumentPresentation
@@ -37,6 +40,8 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
         titre={"pages.requete.consultation.documentASigner.titre"}
         documents={documentsASigner}
         highlighted={true}
+        documentVisible={extraitVisibleState}
+        setDocumentVisibleFct={setExtraitVisibleState}
       />
     </>
   );
@@ -52,9 +57,9 @@ function parsePiecesJustificatives(
       groupement: GroupementDocument.PieceJustificative,
       mimeType: element.mimeType as "image/png" | "application/pdf",
       nom: getText("pages.requete.consultation.pieceJustificative.nomFichier", [
-        `${index}`
+        `${index}`,
       ]),
-      taille: element.taille
+      taille: element.taille,
     });
   });
   return documentsDetails;
@@ -65,7 +70,7 @@ function parseDocumentsDelivres(
 ): IDocumentsDelivres {
   const courriersAccompagnement: IDocumentDetail[] = [];
   const documentsASigner: IDocumentDetail[] = [];
-  documentsDelivres.forEach(element => {
+  documentsDelivres.forEach((element) => {
     if (
       element.typeDocument === TypeDocument.FA116 ||
       element.typeDocument === TypeDocument.FA50
@@ -93,6 +98,39 @@ function parseDocumentDelivre(
       `pages.requete.consultation.documentDelivre.type.${documentDelivre.typeDocument}`
     ),
     mimeType: documentDelivre.mimeType as "image/png" | "application/pdf",
-    taille: documentDelivre.taille
+    taille: documentDelivre.taille,
   };
+}
+
+function extraitALireParDefault(documents: IDocumentDetail[]): IDocumentDetail {
+  const copieIntegralePresente = isCopieIntegralePresente(documents);
+  const documentsALire = documents.filter((element, index) => {
+    if (documents.length === 1) {
+      return true;
+    } else if (
+      copieIntegralePresente &&
+      element.nom ===
+        getText(
+          "pages.requete.consultation.documentDelivre.type.COPIE_INTEGRALE"
+        )
+    ) {
+      return true;
+    } else if (!copieIntegralePresente && index === 0) {
+      return true;
+    }
+    return false;
+  });
+  return documentsALire[0];
+}
+
+function isCopieIntegralePresente(documents: IDocumentDetail[]): boolean {
+  return (
+    documents.filter(
+      (element) =>
+        element.nom ===
+        getText(
+          "pages.requete.consultation.documentDelivre.type.COPIE_INTEGRALE"
+        )
+    ).length > 0
+  );
 }
