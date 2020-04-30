@@ -109,13 +109,19 @@ module.exports = [
       }
       if (
         match[1] ===
+        "/requetes/104b8563-c7f8-4748-9daa-f26558985896?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        return { data: mockRequetes.data[2] };
+      }
+      if (
+        match[1] ===
           "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=asc" ||
         match[1] ===
           "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
       ) {
         return {
           data: mockRequetes.data,
-          httpHeaders: { "Content-Range": ["0-15/2"] },
+          httpHeaders: { "Content-Range": ["0-15/3"] },
         };
       }
 
@@ -130,142 +136,26 @@ module.exports = [
           "/documentsdelivres/a70237ca-83e5-4f6f-ac86-ec15086c5e3e" ||
         match[1] ===
           "/documentsdelivres/24557a3c-60e3-432e-82fb-0ac8f160590a" ||
-        match[1] === "/documentsdelivres/f9279c00-5d2b-11ea-bc55-0242ac130003"
+        match[1] ===
+          "/documentsdelivres/f9279c00-5d2b-11ea-bc55-0242ac130003" ||
+        match[1] ===
+          "/documentsdelivres/g9279c00-5d2b-11ea-bc55-0242ac130003" ||
+        match[1] ===
+          "/documentsdelivres/f9279c00-5d2b-11ea-bc55-0242ac139998" ||
+        match[1] ===
+          "/documentsdelivres/g9279c00-5d2b-11ea-bc55-0242ac139999" ||
+        match[1] === "/documentsdelivres/24557a3c-60e3-432e-82fb-0ac8f1609997"
       ) {
         return { data: mockResponse.data };
       }
 
-      // if (
-      //   match[1] ===
-      //   "/requetes/1?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
-      // ) {
-      //   return {
-      //     hasTechnicalError: false,
-      //     hasBusinessError: false,
-      //     status: 200,
-      //     url: "/rece-requete-api/v1/requetes",
-      //     data: [
-      //       {
-      //         idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-      //         idSagaDila: 11982,
-      //         dateCreation: 1583225141.221132,
-      //         dateDerniereMaj: 1583225141.221132,
-      //         provenance: "DILA",
-      //         canal: "INTERNET",
-      //         statut: "A_SIGNER",
-      //         dateStatut: 1583225292.518094,
-      //         typeRequete: "DELIVRANCE",
-      //         sousTypeRequete: "DELIVRANCE_COURRIER",
-      //         natureActe: "NAISSANCE",
-      //         typeActe: "EXTRAIT_AVEC_FILIATION",
-      //         jourEvenement: 25,
-      //         moisEvenement: 3,
-      //         anneeEvenement: 1983,
-      //         villeEvenement: "fez",
-      //         paysEvenement: "maroc",
-      //         nbExemplaire: null,
-      //         piecesJustificatives: [
-      //           {
-      //             idPieceJustificative: "e496f1d1-18c3-48ca-ae87-e97582fbf188",
-      //             nom: "11984-pi-j-3.PNG",
-      //             mimeType: "image/png",
-      //             taille: 47790,
-      //             identifiantSwift: "d48c76f3a27153a70e0e34b1d5646120",
-      //             requete: null,
-      //           },
-      //           {
-      //             idPieceJustificative: "a70237ca-83e5-4f6f-ac86-ec15086c5e3e",
-      //             nom: "11984-pi-j-3.pdf",
-      //             mimeType: "application/pdf",
-      //             taille: 151807,
-      //             identifiantSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
-      //             requete: null,
-      //           },
-      //         ],
-      //         reponse: {
-      //           idReponse: "d2ec498c-5d2b-11ea-bc55-0242ac130003",
-      //           dateTraitementDemat: 1581721200.0,
-      //           dateDelivrance: 1581721200.0,
-      //           natureActe: "NAISSANCE",
-      //           jourEvenement: 1,
-      //           moisEvenement: 1,
-      //           anneeEvenement: 1983,
-      //           villeEvenement: "fez",
-      //           paysEvenement: "maroc",
-      //           nomOec: "Garisson",
-      //           prenomOec: "Juliette",
-      //           commentaire: null,
-      //           documentsDelivres: [
-      //             {
-      //               idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130003",
-      //               typeDocument: "COPIE_INTEGRALE",
-      //               nom: "Naissance mock copie",
-      //               mimeType: "application/pdf",
-      //               taille: 12,
-      //               identifiantSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
-      //               reponse: null,
-      //             },
-      //             {
-      //               idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130003",
-      //               typeDocument: "EXTRAIT_PLURILINGUE",
-      //               nom: "Naissance mock copie plurilingue",
-      //               mimeType: "application/pdf",
-      //               taille: 12,
-      //               identifiantSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
-      //               reponse: null,
-      //             },
-      //             {
-      //               idDocumentDelivre: "24557a3c-60e3-432e-82fb-0ac8f160590a",
-      //               typeDocument: "FA50",
-      //               nom: "nom à modifier",
-      //               mimeType: "application/pdf",
-      //               taille: 12,
-      //               identifiantSwift: "b9bc2637eb612d9e0cd5d7bfb1a94208",
-      //               reponse: null,
-      //             },
-      //           ],
-      //           requete: null,
-      //         },
-      //         requerant: {
-      //           idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
-      //           typeRequerant: "TITULAIRE",
-      //           qualiteRequerant: "PARTICULIER",
-      //           nomOuRaisonSociale: "aubin",
-      //           nomUsage: null,
-      //           prenomUsage: "nicolas",
-      //           telephone: "0777327569",
-      //           adresse: null,
-      //           requete: null,
-      //         },
-      //         titulaires: [
-      //           {
-      //             idTitulaire: "31a63e6a-b4de-4e4f-8bd4-2a53835a417b",
-      //             position: 1,
-      //             nomNaissance: "aubin",
-      //             nomUsage: null,
-      //             prenom1: "nicolas",
-      //             prenom2: null,
-      //             prenom3: null,
-      //             jourNaissance: 25,
-      //             moisNaissance: 3,
-      //             anneeNaissance: 1983,
-      //             villeNaissance: "fez",
-      //             paysNaissance: "maroc",
-      //             parent1: null,
-      //             parent2: null,
-      //             requete: null,
-      //           },
-      //         ],
-      //       },
-      //     ],
-      //     errors: [],
-      //     httpHeaders: {
-      //       "Content-Range": ["0-50/1"],
-      //       "Accept-Range": ["requete 100"],
-      //       Link: [""],
-      //     },
-      //   };
-      // }
+      if (
+        match[1] ===
+        "/requetes/1?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        console.log("DATA MISSING");
+        return undefined;
+      }
     },
 
     /**
