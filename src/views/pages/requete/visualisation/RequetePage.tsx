@@ -15,11 +15,13 @@ export interface RequestsInformations {
 
 type RequetePageProps = RouteComponentProps<{ idRequete: string }>;
 
-export const RequetePage: React.FC<RequetePageProps> = props => {
+export const RequetePage: React.FC<RequetePageProps> = (props) => {
   const history = useHistory();
-  const [indexRequete, setIndexRequete] = useState<number>(0);
   const [histoReq] = useState<RequestsInformations>(
     history.location.state as RequestsInformations
+  );
+  const [indexRequete, setIndexRequete] = useState<number>(
+    getIndexRequete(props.match.params.idRequete, histoReq.data)
   );
 
   // TODO mettre les vraies valeurs quand on aura le WS d'auth
@@ -28,7 +30,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
       nomOec: "Garisson",
       prenomOec: "Juliette",
       statut: StatutRequete.ASigner,
-      idRequete: props.match.params.idRequete
+      idRequete: props.match.params.idRequete,
     },
     histoReq
   );
@@ -42,7 +44,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
   );
 
   useEffect(() => {
-    const idx = dataState.findIndex(datum => {
+    const idx = dataState.findIndex((datum) => {
       return datum.idRequete === props.match.params.idRequete;
     });
     setIndexRequete(idx);
@@ -67,3 +69,15 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
     </>
   );
 };
+
+function getIndexRequete(idRequete: string, data: IDataTable[]): number {
+  let position = 0;
+  data.find((element, index) => {
+    if (element.idRequete === idRequete) {
+      position = index;
+      return true;
+    }
+    return false;
+  });
+  return position;
+}

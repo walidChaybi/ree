@@ -67,7 +67,12 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
       <ListItemSecondaryAction>
         <IconButton
           title={getText("pages.requete.consultation.icon.visualiser")}
-          color={openedInViewer === document ? "primary" : "default"}
+          color={
+            openedInViewer &&
+            openedInViewer.identifiantDocument === document.identifiantDocument
+              ? "primary"
+              : "default"
+          }
           edge="end"
           aria-label="consulter"
           onClick={(event) => {
