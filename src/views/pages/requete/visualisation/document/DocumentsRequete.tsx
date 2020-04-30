@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DocumentPresentation } from "./DocumentPresentation";
 import { TypeDocument } from "../../../../../model/requete/TypeDocument";
 import { IPieceJustificative, IDocumentDelivre } from "../RequeteType";
@@ -26,6 +26,12 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
   const [extraitVisibleState, setExtraitVisibleState] = useState<
     IDocumentDetail
   >(extraitALireParDefault(documentsASigner));
+
+  useEffect(() => {
+    const { documentsASigner } = parseDocumentsDelivres(documentsDelivres);
+    setExtraitVisibleState(extraitALireParDefault(documentsASigner));
+  }, [documentsDelivres]);
+
   return (
     <>
       <DocumentPresentation
