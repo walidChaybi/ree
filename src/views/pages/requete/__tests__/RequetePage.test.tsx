@@ -14,8 +14,8 @@ test("renders Page requete with all elements", () => {
       data: [
         { ...DONNEES_REQUETE, idRequete: "req1" },
         { ...DONNEES_REQUETE, idRequete: "req2" },
-        { ...DONNEES_REQUETE, idRequete: "req3" }
-      ]
+        { ...DONNEES_REQUETE, idRequete: "req3" },
+      ],
     });
 
     const component = mount(
@@ -26,7 +26,7 @@ test("renders Page requete with all elements", () => {
               isExact: true,
               path: "",
               url: "",
-              params: { idRequete: "req2" }
+              params: { idRequete: "req2" },
             }}
             history={history}
             location={history.location}
@@ -45,7 +45,7 @@ test("renders Page requete with no elements", () => {
   act(() => {
     const history = createMemoryHistory();
     history.push("/rece-ui/mesrequetes/req2", {
-      data: []
+      data: [],
     });
 
     const component = mount(
@@ -56,7 +56,7 @@ test("renders Page requete with no elements", () => {
               isExact: true,
               path: "",
               url: "",
-              params: { idRequete: "req2" }
+              params: { idRequete: "req2" },
             }}
             history={history}
             location={history.location}
@@ -78,8 +78,8 @@ test("renders Page requete change url", () => {
       data: [
         { ...DONNEES_REQUETE, idRequete: "req1" },
         { ...DONNEES_REQUETE, idRequete: "req2" },
-        { ...DONNEES_REQUETE, idRequete: "req3" }
-      ]
+        { ...DONNEES_REQUETE, idRequete: "req3" },
+      ],
     });
 
     const { getAllByRole } = render(
@@ -90,7 +90,7 @@ test("renders Page requete change url", () => {
               isExact: true,
               path: "",
               url: "",
-              params: { idRequete: "req2" }
+              params: { idRequete: "req2" },
             }}
             history={history}
             location={history.location}
@@ -102,17 +102,19 @@ test("renders Page requete change url", () => {
     const buttons = getAllByRole("button");
 
     const leftButton = buttons.find(
-      button => button.id === "button-navigation-left"
+      (button) => button.id === "button-navigation-left"
     );
 
     const rightButton = buttons.find(
-      button => button.id === "button-navigation-right"
+      (button) => button.id === "button-navigation-right"
     );
 
     expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
     fireEvent.click(leftButton!);
     expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req1");
     fireEvent.click(rightButton!);
-    expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
+    setTimeout(() => {
+      expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
+    }, 40);
   });
 });
