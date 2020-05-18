@@ -2,3 +2,6 @@ include:
   - project: rece/ci-cd/rece-jobs-lib
     file: pipeline-js.yml
     ref: master
+
+variables:
+  DEPLOY_TYPE: "k8s"

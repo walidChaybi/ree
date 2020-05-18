@@ -1,0 +1,6 @@
+commonLabels:
+  composant: apache
+
+resources:
+  - deploy.yaml
+  - service.yaml

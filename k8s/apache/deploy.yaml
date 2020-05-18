@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rece-ui
+spec:
+  selector:
+    matchLabels:
+      module: rece-ui
+      composant: apache
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - image: gitlab-registry.forge.diplomatie.gouv.fr/rece/ui/rece-ui/rece-ui-static:develop
+          name: rece-ui
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: pull-docker
+      restartPolicy: Always
