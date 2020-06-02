@@ -112,12 +112,12 @@
     "package": "node scripts/build.js"
   },
   "jest": {
+    "testResultsProcessor": "jest-sonar-reporter",
     "roots": [
       "<rootDir>/src"
     ],
     "collectCoverageFrom": [
       "!<rootDir>/src/serviceWorker.ts",
-      "!<rootDir>/src/**/superagent-mock-config.js",
       "**/*.{js,jsx,ts,tsx}",
       "!**/*.d.ts"
     ],
@@ -128,7 +128,8 @@
       "<rootDir>/src/setupTests.ts"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen",
     "transform": {
@@ -161,6 +162,10 @@
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
     ]
+  },
+  "jestSonar": {
+    "reportPath": "test_report/jest",
+    "reportFile": "test-report.xml"
   },
   "eslintConfig": {
     "extends": "react-app"
