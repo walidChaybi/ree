@@ -1,7 +1,7 @@
 {
   "apis": [
     {
-      "url": "http://10.110.192.130",
+      "url": "http://A_VALORISER",
       "ports": 80,
       "name": "rece-requete-api",
       "usedVersions": [
