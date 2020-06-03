@@ -92,7 +92,8 @@ export class ApiManager {
   }
 
   public getUri(): string {
-    return `${window.location.hostname}:${this.ports}/${this.name}/${this.version}`;
+    // TODO: à modifier une fois l'intégration terminée
+    return `http://${window.location.hostname}:${this.ports}/${this.name}/${this.version}`;
   }
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
