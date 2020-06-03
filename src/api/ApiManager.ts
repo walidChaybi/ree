@@ -92,7 +92,7 @@ export class ApiManager {
   }
 
   public getUri(): string {
-    return `${this.url}:${this.ports}/${this.name}`;
+    return `${this.url}:${this.ports}/${this.name}/${this.version}`;
   }
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
