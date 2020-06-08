@@ -113,6 +113,8 @@ test("renders Page requete change url", () => {
     fireEvent.click(leftButton!);
     expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req1");
     fireEvent.click(rightButton!);
-    expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
+    setTimeout(() => {
+      expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
+    }, 75);
   });
 });

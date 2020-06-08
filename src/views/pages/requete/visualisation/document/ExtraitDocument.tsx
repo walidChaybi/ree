@@ -2,7 +2,7 @@ import React from "react";
 import {
   useDisclosureState,
   Disclosure,
-  DisclosureRegion
+  DisclosureRegion,
 } from "reakit/Disclosure";
 import { MessageId, Text } from "../../../../common/widget/Text";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -21,13 +21,13 @@ interface IExtraitDocumentProps {
 // ce composant, ici c'est juste pour la démo
 export const ExtraitDocument: React.FC<IExtraitDocumentProps> = ({
   titre,
-  highlighted
+  highlighted,
 }) => {
   const disclosure = useDisclosureState({ visible: true });
 
   const titleStyles = classNames({
     title: true,
-    SpecificTitle: highlighted
+    SpecificTitle: highlighted,
   });
   return (
     <div className="resume-requete extrait">
@@ -41,11 +41,9 @@ export const ExtraitDocument: React.FC<IExtraitDocumentProps> = ({
         </ExpansionPanelSummary>
       </Disclosure>
       <DisclosureRegion {...disclosure} as={ExpansionPanelDetails}>
-        {props =>
+        {(props) =>
           disclosure.visible && (
-            <div {...props} className={"DocumentDetailPanel todo"}>
-              TODO
-            </div>
+            <div {...props} id="pdfViewer" className={"DocumentDetailPanel"} />
           )
         }
       </DisclosureRegion>
