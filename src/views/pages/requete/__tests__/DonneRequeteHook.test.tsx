@@ -5,7 +5,7 @@ import request from "superagent";
 import config from "./superagent-mock-config";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { cleanup } from "@testing-library/react";
-import { useRequeteDatumApi } from "../visualisation/DonneeRequeteHook";
+import { useRequeteDataApi } from "../visualisation/DonneeRequeteHook";
 import DONNEES_REQUETE from "./data/requete";
 import { IDataTable } from "../RequeteTableauHeaderCell";
 
@@ -16,7 +16,7 @@ let containerWithData: Element | null;
 let containerWithErrorWS: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const { dataState = [] } = useRequeteDatumApi({
+  const { dataState = [] } = useRequeteDataApi({
     nomOec: "Garisson",
     prenomOec: "Juliette",
     statut: StatutRequete.ASigner,
@@ -33,7 +33,7 @@ const HookConsummer: React.FC = () => {
 };
 
 const HookConsummerWithData: React.FC = () => {
-  const { dataState = [] } = useRequeteDatumApi(
+  const { dataState = [] } = useRequeteDataApi(
     {
       nomOec: "Garisson",
       prenomOec: "Juliette",
@@ -53,7 +53,7 @@ const HookConsummerWithData: React.FC = () => {
 };
 
 const HookConsummerWithErrorWS: React.FC = () => {
-  const { dataState = [] } = useRequeteDatumApi({
+  const { dataState = [] } = useRequeteDataApi({
     nomOec: "Garisson",
     prenomOec: "Juliette",
     statut: StatutRequete.ASigner,

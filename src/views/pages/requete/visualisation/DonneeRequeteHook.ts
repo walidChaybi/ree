@@ -12,7 +12,7 @@ export interface IQueryParametersPourRequete {
   idRequete: string;
 }
 
-export function useRequeteDatumApi(
+export function useRequeteDataApi(
   queryParameters: IQueryParametersPourRequete,
   requestsInformations?: RequestsInformations
 ) {
