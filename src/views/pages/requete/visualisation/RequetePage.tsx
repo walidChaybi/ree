@@ -75,7 +75,7 @@ function getIndexRequete(
   requetesInfos: RequestsInformations
 ): number {
   let position = 0;
-  if (requetesInfos != null) {
+  if (requetesInfos !== undefined) {
     requetesInfos.data.find((element, index) => {
       if (element.idRequete === idRequete) {
         position = index;
