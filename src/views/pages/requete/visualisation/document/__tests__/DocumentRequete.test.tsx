@@ -2,7 +2,6 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { DocumentsRequete } from "../DocumentsRequete";
 import requetes from "../../../../../../api/mock/requetes.json";
-window.URL.createObjectURL = jest.fn();
 
 test("renders documents d'une requete", async () => {
   const { getByText } = render(
