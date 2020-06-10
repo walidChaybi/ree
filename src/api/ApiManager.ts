@@ -3,7 +3,7 @@ import * as superagent from "superagent";
 import request from "superagent";
 const apis: IApis = require("../ressources/api.json");
 
-require("superagent-mock")(request, config);
+// require("superagent-mock")(request, config);
 
 type ApisAutorisees = "rece-requete-api" | "rece-auth-api";
 
@@ -23,7 +23,7 @@ export enum HttpMethod {
   DELETE,
   PATCH,
   POST,
-  PUT,
+  PUT
 }
 
 interface HttpRequestHeader {
@@ -122,13 +122,13 @@ export class ApiManager {
     }
 
     return request
-      .then((response) => {
+      .then(response => {
         return Promise.resolve({
           body: response.body,
-          status: response.status,
+          status: response.status
         });
       })
-      .catch((error) => {
+      .catch(error => {
         return Promise.reject(error);
       });
   }
@@ -138,7 +138,7 @@ export class ApiManager {
     request: superagent.SuperAgentRequest
   ): superagent.SuperAgentRequest {
     let res = request;
-    headers.forEach((element) => {
+    headers.forEach(element => {
       res = request.set(element.header, element.value);
     });
     return res;
