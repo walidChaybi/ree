@@ -61,7 +61,10 @@ export class ApiManager {
         (versionItem: string) => versionItem === version
       );
       if (versionTrouve.length === 1) {
-        this.url = foundApis[0].url;
+        this.url =
+          process.env.NODE_ENV === "production"
+            ? window.location.hostname
+            : foundApis[0].url;
         this.ports = foundApis[0].ports;
         this.name = foundApis[0].name;
         this.version = version;
@@ -92,8 +95,7 @@ export class ApiManager {
   }
 
   public getUri(): string {
-    // TODO: à modifier une fois l'intégration terminée
-    return `http://${window.location.hostname}:${this.ports}/${this.name}/${this.version}`;
+    return `${this.url}:${this.ports}/${this.name}/${this.version}`;
   }
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
