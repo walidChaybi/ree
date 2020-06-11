@@ -4,7 +4,7 @@ import { SousQualiteRequerant } from "../../../../../model/requete/SousQualiteRe
 import { Canal } from "../../../../../model/Canal";
 
 export default {
-  idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
+  idRequete: "204b8563-c7f8-4748-9daa-f26558985894",
   idSagaDila: 11982,
   sousTypeRequete: "DELIVRANCE_COURRIER",
   provenance: "DILA",
@@ -26,7 +26,7 @@ export default {
     qualiteRequerant: QualiteRequerant.PARTICULIER,
     requete: "",
     typeRequerant: SousQualiteRequerant.Titulaire,
-    telephone: "0777327569"
+    telephone: "0777327569",
   },
   titulaires: [
     {
@@ -44,7 +44,7 @@ export default {
       paysNaissance: "maroc",
       parent1: "",
       parent2: "",
-      requete: ""
+      requete: "",
     },
     {
       idTitulaire: "tutulaire2",
@@ -61,8 +61,8 @@ export default {
       paysNaissance: "france",
       parent1: "",
       parent2: "",
-      requete: ""
-    }
+      requete: "",
+    },
   ],
   reponse: {
     idReponse: "1d189cd9-0df0-45dc-a4cf-0174eb62cbbc",
@@ -78,6 +78,6 @@ export default {
     prenomOec: "Juliette",
     commentaire: "",
     documentsDelivres: [],
-    requete: ""
-  }
+    requete: "",
+  },
 };
