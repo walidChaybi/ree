@@ -6,7 +6,7 @@ module.exports = [
     /**
      * regular expression of URL
      */
-    pattern: "http://10.110.204.59:8082/rece-requete-api/v1(.*)",
+    pattern: "http://localhost:80/rece-requete-api/v1(.*)",
 
     /**
      * returns the data
