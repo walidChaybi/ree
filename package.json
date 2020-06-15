@@ -26,6 +26,7 @@
     "case-sensitive-paths-webpack-plugin": "2.3.0",
     "classnames": "2.2.6",
     "crc-32": "1.2.0",
+    "cross-env": "7.0.2",
     "css-loader": "3.4.2",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
@@ -105,8 +106,7 @@
     "typescript": "3.7.4"
   },
   "scripts": {
-    "start": "NODE_ENV=production node scripts/start.js",
-    "start:dev": "NODE_ENV=development node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test:dev": "node scripts/test.js --watchAll",
     "test": "CI=true node scripts/test.js --coverage",
