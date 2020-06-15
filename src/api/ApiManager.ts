@@ -61,9 +61,6 @@ export class ApiManager {
         (versionItem: string) => versionItem === version
       );
       if (versionTrouve.length === 1) {
-        console.log("NODE_ENV", process.env.NODE_ENV);
-        console.log("foundApis[0].url", foundApis[0].url);
-        console.log("fwindow.location.hostname", window.location.hostname);
         this.url =
           process.env.NODE_ENV === "development"
             ? foundApis[0].url
@@ -98,10 +95,6 @@ export class ApiManager {
   }
 
   public getUri(): string {
-    console.log(
-      "getUri",
-      `${this.url}:${this.ports}/${this.name}/${this.version}`
-    );
     return `${this.url}:${this.ports}/${this.name}/${this.version}`;
   }
 
@@ -174,9 +167,6 @@ export class ApiManager {
     let res: superagent.SuperAgentRequest;
     switch (method) {
       case HttpMethod.GET:
-        console.log("this.getUri()", this.getUri());
-        console.log("uri", uri);
-        console.log("this.getUri() + uri", this.getUri() + uri);
         res = superagent.get(this.getUri() + uri);
         break;
       case HttpMethod.DELETE:
