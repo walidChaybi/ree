@@ -67,7 +67,7 @@ export class ApiManager {
         this.url =
           process.env.NODE_ENV === "development"
             ? foundApis[0].url
-            : window.location.hostname;
+            : `http://${window.location.hostname}`;
         this.ports = foundApis[0].ports;
         this.name = foundApis[0].name;
         this.version = version;
@@ -174,6 +174,9 @@ export class ApiManager {
     let res: superagent.SuperAgentRequest;
     switch (method) {
       case HttpMethod.GET:
+        console.log("this.getUri()", this.getUri());
+        console.log("uri", uri);
+        console.log("this.getUri() + uri", this.getUri() + uri);
         res = superagent.get(this.getUri() + uri);
         break;
       case HttpMethod.DELETE:
