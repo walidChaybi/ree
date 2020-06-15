@@ -6,7 +6,7 @@ import { Text } from "../../../common/widget/Text";
 import { EtatRequete } from "./EtatRequete";
 import { ContenuRequete } from "./ContenuRequete";
 import { ActionsButtonsRequestPage } from "./ActionsButtonsRequestPage";
-import { useRequeteDatumApi } from "./DonneeRequeteHook";
+import { useRequeteDataApi } from "./DonneeRequeteHook";
 import { getAppUrl, MesRequetesUrl } from "../../../router/UrlManager";
 
 export interface RequestsInformations {
@@ -15,22 +15,22 @@ export interface RequestsInformations {
 
 type RequetePageProps = RouteComponentProps<{ idRequete: string }>;
 
-export const RequetePage: React.FC<RequetePageProps> = (props) => {
+export const RequetePage: React.FC<RequetePageProps> = props => {
   const history = useHistory();
   const [histoReq] = useState<RequestsInformations>(
     history.location.state as RequestsInformations
   );
   const [indexRequete, setIndexRequete] = useState<number>(
-    getIndexRequete(props.match.params.idRequete, histoReq.data)
+    getIndexRequete(props.match.params.idRequete, histoReq)
   );
 
   // TODO mettre les vraies valeurs quand on aura le WS d'auth
-  const { dataState } = useRequeteDatumApi(
+  const { dataState } = useRequeteDataApi(
     {
       nomOec: "Garisson",
       prenomOec: "Juliette",
       statut: StatutRequete.ASigner,
-      idRequete: props.match.params.idRequete,
+      idRequete: props.match.params.idRequete
     },
     histoReq
   );
@@ -44,8 +44,8 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
   );
 
   useEffect(() => {
-    const idx = dataState.findIndex((datum) => {
-      return datum.idRequete === props.match.params.idRequete;
+    const idx = dataState.findIndex(donnee => {
+      return donnee.idRequete === props.match.params.idRequete;
     });
     setIndexRequete(idx);
   }, [dataState, props.match.params.idRequete]);
@@ -70,14 +70,20 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
   );
 };
 
-function getIndexRequete(idRequete: string, data: IDataTable[]): number {
+function getIndexRequete(
+  idRequete: string,
+  requetesInfos: RequestsInformations
+): number {
   let position = 0;
-  data.find((element, index) => {
-    if (element.idRequete === idRequete) {
-      position = index;
-      return true;
-    }
-    return false;
-  });
+  if (requetesInfos !== undefined) {
+    requetesInfos.data.find((element, index) => {
+      if (element.idRequete === idRequete) {
+        position = index;
+        return true;
+      }
+      return false;
+    });
+  }
+
   return position;
 }
