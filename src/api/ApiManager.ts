@@ -61,10 +61,11 @@ export class ApiManager {
         (versionItem: string) => versionItem === version
       );
       if (versionTrouve.length === 1) {
+        console.log("NODE_ENV", process.env.NODE_ENV);
         this.url =
-          process.env.NODE_ENV === "production"
-            ? window.location.hostname
-            : foundApis[0].url;
+          process.env.NODE_ENV === "development"
+            ? foundApis[0].url
+            : window.location.hostname;
         this.ports = foundApis[0].ports;
         this.name = foundApis[0].name;
         this.version = version;
