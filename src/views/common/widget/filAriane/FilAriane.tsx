@@ -9,7 +9,9 @@ import { getText } from "../Text";
 
 export const FilAriane: React.FC = () => {
   const history = useHistory();
-  let pathnames = history.location.pathname.split(SeparateurUrl).filter(x => x);
+  const pathnames = history.location.pathname
+    .split(SeparateurUrl)
+    .filter(x => x);
   pathnames.shift();
   const accueilString = getText("fildariane.accueil").toLowerCase();
   const accueilFirst = pathnames[0] === accueilString;

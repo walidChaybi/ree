@@ -87,6 +87,7 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
   const [previousDataLinkState, setPreviousDataLinkState] = useState<string>();
   const [nextDataLinkState, setNextDataLinkState] = useState<string>();
   const [errorState, setErrorState] = useState(undefined);
+  const contentRange = "Content-Range";
 
   useEffect(() => {
     setDataState(undefined);
@@ -115,17 +116,17 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
       .then(result => {
         setDataState(reponseRequeteMapper(result.body.data));
         const rowsNumber: number = +(result.body.httpHeaders[
-          "Content-Range"
+          contentRange
         ][0] as string).split("/")[1];
         setRowsNumberState(rowsNumber);
         const minRange: number = +(result.body.httpHeaders[
-          "Content-Range"
+          contentRange
         ][0] as string)
           .split("/")[0]
           .split("-")[0];
         setMinRangeState(minRange);
         const maxRange: number = +(result.body.httpHeaders[
-          "Content-Range"
+          contentRange
         ][0] as string)
           .split("/")[0]
           .split("-")[1];
@@ -159,7 +160,7 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
 }
 
 function reponseRequeteMapper(data: IRequeteApi[]): IDataTable[] {
-  let result: IDataTable[] = [];
+  const result: IDataTable[] = [];
   data.forEach(element => result.push(reponseRequeteMapperUnitaire(element)));
   return result;
 }

@@ -2,17 +2,15 @@
 
 .App {
   text-align: center;
-  font-family: "NotoSansUI-Regular";
+  font-family: "NotoSansUI-Regular", sans-serif;
 }
 
 .AppHeader {
   background: $application-color no-repeat scroll 0 0;
   height: 4em;
   width: 100%;
-  display: grid;
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.55);
   color: white;
-  display: flex;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   position: sticky;

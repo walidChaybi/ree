@@ -38,7 +38,7 @@ button {
   position: relative;
   min-width: 4vw;
   color: white;
-  font-family: "NotoSansUI-Bold";
+  font-family: "NotoSansUI-Bold", sans-serif;
   font-size: initial;
   text-align: center;
   cursor: pointer;
@@ -77,7 +77,7 @@ h1 {
 
 h2 {
   text-align: left;
-  font-family: "NotoSansUI-Bold";
+  font-family: "NotoSansUI-Bold", sans-serif;
   font-size: 1.575em;
   color: #024056;
   font-weight: 500;
@@ -85,13 +85,13 @@ h2 {
 
 h3 {
   color: #0579be;
-  font-family: "NotoSansUI-Regular";
+  font-family: "NotoSansUI-Regular", sans-serif;
   font-size: 1.0625em;
 }
 
 h4 {
   color: #0579be;
-  font-family: "NotoSansUI-Regular";
+  font-family: "NotoSansUI-Regular", sans-serif;
   font-size: 0.6725em;
 }
 
@@ -138,7 +138,7 @@ select {
 
 .FormContent {
   color: #232425;
-  font-family: "NotoSansUI-Regular";
+  font-family: "NotoSansUI-Regular", sans-serif;
   font-size: 1.6rem;
   line-height: 1.5;
   background-color: #f4f4f4;
@@ -165,7 +165,7 @@ select {
 }
 
 .tableauFontHeader {
-  font-family: "NotoSansUI-Bold" !important;
+  font-family: "NotoSansUI-Bold", sans-serif !important;
   color: $application-color !important;
   text-decoration: underline !important;
 }
@@ -175,7 +175,7 @@ select {
 }
 
 .tableauFontBody {
-  font-family: "NotoSansUI-Regular" !important;
+  font-family: "NotoSansUI-Regular", sans-serif !important;
 }
 
 .BoutonRetour {
