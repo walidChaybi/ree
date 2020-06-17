@@ -1,4 +1,4 @@
-import { name } from "../../../package.json";
+const name = "/rece-ui";
 
 export const SeparateurUrl = "/";
 export const AccueilUrl = "/accueil";
@@ -7,7 +7,10 @@ export const RequetesUrl = "/requetes";
 export const IdRequeteUrl = `${MesRequetesUrl}/:idRequete`;
 
 export const AppUrls = {
-  SeparateurUrl: SeparateurUrl,
+  SeparateurUrl:
+    process.env.NODE_ENV === "production"
+      ? `${name}${SeparateurUrl}`
+      : SeparateurUrl,
   AccueilUrl: AccueilUrl,
   MesRequetesUrl: MesRequetesUrl,
   IdRequeteUrl: IdRequeteUrl
