@@ -13,7 +13,7 @@ import moment from "moment";
 
 import "./tableau/sass/Table.scss";
 import "./sass/RequeteTableauBody.scss";
-import { getAppUrl, MesRequetesUrl } from "../../router/UrlManager";
+import { AppUrls } from "../../router/UrlManager";
 
 interface RequeteTableauBodyProps {
   data: IDataTable[];
@@ -25,7 +25,7 @@ export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
   const history = useHistory();
 
   function onClickRequeteHandler(identifiantRequete: string) {
-    history.push(`${getAppUrl(MesRequetesUrl)}/${identifiantRequete}`, {
+    history.push(`${AppUrls.ctxMesRequetesUrl}/${identifiantRequete}`, {
       data
     });
   }

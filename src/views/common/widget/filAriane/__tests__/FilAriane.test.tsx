@@ -4,11 +4,11 @@ import { Router } from "react-router-dom";
 import { FilAriane } from "../FilAriane";
 import { createMemoryHistory } from "history";
 import { render } from "@testing-library/react";
-import { getAppUrl, MesRequetesUrl } from "../../../../router/UrlManager";
+import { AppUrls } from "../../../../router/UrlManager";
 
 test("renders composant FilAriane", () => {
   const history = createMemoryHistory();
-  history.push(getAppUrl(MesRequetesUrl));
+  history.push(AppUrls.ctxMesRequetesUrl);
   const component = renderer.create(
     <Router history={history}>
       <FilAriane />
@@ -19,7 +19,7 @@ test("renders composant FilAriane", () => {
 
 test("renders de 2 éléments du FilAriane", () => {
   const history = createMemoryHistory();
-  history.push(getAppUrl(MesRequetesUrl));
+  history.push(AppUrls.ctxMesRequetesUrl);
   const { getByText } = render(
     <Router history={history}>
       <FilAriane />
@@ -34,7 +34,7 @@ test("renders de 2 éléments du FilAriane", () => {
 test("renders d'un uudi en dernier élément du FilAriane", () => {
   const history = createMemoryHistory();
   history.push(
-    getAppUrl(MesRequetesUrl) + "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
+    AppUrls.ctxMesRequetesUrl + "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
   );
 
   const { getByText } = render(

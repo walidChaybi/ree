@@ -3,7 +3,7 @@ import { NavigationButton } from "./NavigationButton";
 import { BoutonSignature } from "../BoutonSignature";
 import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
-import { getAppUrl, AppUrls } from "../../../router/UrlManager";
+import { AppUrls } from "../../../router/UrlManager";
 export interface ActionsProps {
   indexRequete: number;
   maxRequetes: number;
@@ -26,7 +26,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
       <div className="event-button">
         <div>
           <BoutonRetour
-            url={getAppUrl(AppUrls.MesRequetesUrl)}
+            url={AppUrls.ctxMesRequetesUrl}
             messageId={"boutons.retourMesRequetes"}
           />
         </div>

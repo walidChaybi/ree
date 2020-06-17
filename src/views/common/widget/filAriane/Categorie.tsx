@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, getText, MessageId } from "../Text";
 import { Link } from "react-router-dom";
-import { getAppUrl } from "../../../router/UrlManager";
+import { contextApp } from "../../../router/UrlManager";
 
 interface CategorieProps {
   url: string;
@@ -27,7 +27,7 @@ export const Categorie: React.FC<CategorieProps> = ({
           <Text messageId={message} />
         </div>
       ) : (
-        <Link className="LinkFilAriane" to={getAppUrl(url)}>
+        <Link className="LinkFilAriane" to={`${contextApp}${url}`}>
           <Text messageId={message} />
         </Link>
       )}
