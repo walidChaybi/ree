@@ -1,16 +1,15 @@
 const name = "/rece-ui";
 
 export const SeparateurUrl = "/";
+export const ctxSeparateurUrl = `${name}/`;
 export const AccueilUrl = "/accueil";
 export const MesRequetesUrl = "/mesrequetes";
 export const RequetesUrl = "/requetes";
 export const IdRequeteUrl = `${MesRequetesUrl}/:idRequete`;
 
 export const AppUrls = {
-  SeparateurUrl:
-    process.env.NODE_ENV === "production"
-      ? `${name}${SeparateurUrl}`
-      : SeparateurUrl,
+  SeparateurUrl: SeparateurUrl,
+  ctxSeparateurUrl: ctxSeparateurUrl,
   AccueilUrl: AccueilUrl,
   MesRequetesUrl: MesRequetesUrl,
   IdRequeteUrl: IdRequeteUrl

@@ -8,7 +8,14 @@ import { getAppUrl, AppUrls } from "./UrlManager";
 export const RouterComponent: React.FC = () => {
   return (
     <Switch>
-      <Route exact path={AppUrls.SeparateurUrl}>
+      <Route
+        exact
+        path={
+          process.env.NODE_ENV === "production"
+            ? AppUrls.ctxSeparateurUrl
+            : AppUrls.SeparateurUrl
+        }
+      >
         <Redirect to={getAppUrl(AppUrls.AccueilUrl)} />
       </Route>
       <Route
