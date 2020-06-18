@@ -36,7 +36,7 @@ test("renders texte du bouton d'accueil", () => {
   setTimeout(() => {
     const boutonElement = getByText(/Bouton Menu/i);
     expect(boutonElement).toBeInTheDocument();
-  }, 75);
+  }, 100);
 });
 
 test("renders présence de l'icône du bouton d'accueil", () => {
