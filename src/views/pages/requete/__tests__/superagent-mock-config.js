@@ -5,7 +5,7 @@ module.exports = [
     /**
      * regular expression of URL
      */
-    pattern: "http://10.110.204.59:8082/rece-requete-api/v1(.*)",
+    pattern: "http://10.110.192.130:80/rece-requete-api/v1(.*)",
 
     /**
      * returns the data
@@ -16,6 +16,7 @@ module.exports = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function(match, params, headers, context) {
+      console.log("match mock test", match[1]);
       if (
         match[1] === "/requetes?parametre1=titi&parametre2=3&parametre3=tutu"
       ) {

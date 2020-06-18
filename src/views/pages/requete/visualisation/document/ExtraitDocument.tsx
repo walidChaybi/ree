@@ -2,7 +2,7 @@ import React from "react";
 import {
   useDisclosureState,
   Disclosure,
-  DisclosureRegion,
+  DisclosureRegion
 } from "reakit/Disclosure";
 import { MessageId, Text } from "../../../../common/widget/Text";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -17,17 +17,15 @@ interface IExtraitDocumentProps {
   highlighted?: boolean;
 }
 
-// TODO ce composant est à faire entièrement dans la story 102 US72-C, le disclosure n'est pas adapté pour
-// ce composant, ici c'est juste pour la démo
 export const ExtraitDocument: React.FC<IExtraitDocumentProps> = ({
   titre,
-  highlighted,
+  highlighted
 }) => {
   const disclosure = useDisclosureState({ visible: true });
 
   const titleStyles = classNames({
     title: true,
-    SpecificTitle: highlighted,
+    SpecificTitle: highlighted
   });
   return (
     <div className="resume-requete extrait">
@@ -41,7 +39,7 @@ export const ExtraitDocument: React.FC<IExtraitDocumentProps> = ({
         </ExpansionPanelSummary>
       </Disclosure>
       <DisclosureRegion {...disclosure} as={ExpansionPanelDetails}>
-        {(props) =>
+        {props =>
           disclosure.visible && (
             <div {...props} id="pdfViewer" className={"DocumentDetailPanel"} />
           )

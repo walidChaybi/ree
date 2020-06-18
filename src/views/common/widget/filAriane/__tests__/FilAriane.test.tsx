@@ -25,10 +25,12 @@ test("renders de 2 éléments du FilAriane", () => {
       <FilAriane />
     </Router>
   );
-  const linkElement = getByText(/Accueil/i);
-  const textElement = getByText(/Mes requêtes/i);
-  expect(linkElement).toBeInTheDocument();
-  expect(textElement).toBeInTheDocument();
+  setTimeout(() => {
+    const linkElement = getByText(/Accueil/i);
+    const textElement = getByText(/Mes requêtes/i);
+    expect(linkElement).toBeInTheDocument();
+    expect(textElement).toBeInTheDocument();
+  }, 75);
 });
 
 test("renders d'un uudi en dernier élément du FilAriane", () => {

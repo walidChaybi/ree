@@ -64,7 +64,7 @@ export class ApiManager {
       );
       if (versionTrouve.length === 1) {
         this.url =
-          process.env.NODE_ENV === "development"
+          process.env.NODE_ENV !== "production"
             ? foundApis[0].url
             : `http://${window.location.hostname}`;
         this.ports = foundApis[0].ports;
@@ -124,7 +124,6 @@ export class ApiManager {
     if (httpRequestConfig.responseType) {
       request = request.responseType(httpRequestConfig.responseType);
     }
-
     return request
       .then(response => {
         return Promise.resolve({
