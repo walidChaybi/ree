@@ -1,6 +1,6 @@
 import moment from "moment";
 
-export type SortOrder = "asc" | "desc";
+export type SortOrder = "ASC" | "DESC";
 
 const formatDate = "DD/MM/YYYY";
 
@@ -38,7 +38,7 @@ export function getComparator<Key extends keyof any>(
   a: { [key in Key]: number | Date | string },
   b: { [key in Key]: number | Date | string }
 ) => number {
-  return order === "desc"
+  return order === "DESC"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }

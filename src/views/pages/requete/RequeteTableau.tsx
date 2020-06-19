@@ -10,7 +10,10 @@ import {
   processDataStorting
 } from "./tableau/TableUtils";
 import { DataTable } from "./RequeteTableauHeaderCell";
-import { useRequeteApi } from "./DonneesRequeteHook";
+import {
+  useRequeteApi,
+  IQueryParametersPourRequetes
+} from "./DonneesRequeteHook";
 import { BoutonSignature } from "./BoutonSignature";
 import { RequeteTableauHeader } from "./RequeteTableauHeader";
 import { RequeteTableauBody } from "./RequeteTableauBody";
@@ -18,29 +21,33 @@ import { TablePagination } from "@material-ui/core";
 import { Text, getText } from "../../common/widget/Text";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
+import { IDataTable } from "./RequeteTableauHeaderCell";
 
 export const RequeteTableau: React.FC = () => {
-  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("asc");
+  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("ASC");
   const [sortOrderByState, setSortOrderByState] = React.useState<DataTable>(
     "dateStatut"
   );
   const [rowsPerPageState, setRowsPerPageState] = React.useState(15);
   const [pageState, setPageState] = React.useState(0);
-  const {
-    dataState = [],
-    rowsNumberState = 0,
-    previousDataLinkState,
-    nextDataLinkState,
-    minRangeState = 0,
-    maxRangeState = 0,
-    errorState
-  } = useRequeteApi({
+  const [multiplicateur, setMultiplicateur] = React.useState(1);
+  const [linkParameters, setLinkParameters] = React.useState<
+    IQueryParametersPourRequetes
+  >({
     nomOec: "Garisson",
     prenomOec: "Juliette",
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
     sens: sortOrderState
   });
+  const {
+    dataState = [],
+    rowsNumberState = 0,
+    previousDataLinkState,
+    nextDataLinkState = "",
+    errorState
+  } = useRequeteApi(linkParameters);
+  const [dataTable, setDataTable] = React.useState<IDataTable[]>([]);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -51,15 +58,34 @@ export const RequeteTableau: React.FC = () => {
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    // TODO pagination server
-    // if (newPage > pageState && maxRangeState < pageState * rowsPerPageState) {
-    //   // TODO call api next
-    // }
-    // if (newPage < pageState && minRangeState > pageState * rowsPerPageState) {
-    //   // TODO call api prev
-    // }
+    if (
+      newPage > pageState &&
+      newPage * rowsPerPageState > 100 * multiplicateur &&
+      !(pageState * rowsPerPageState > 100 * multiplicateur) &&
+      nextDataLinkState
+    ) {
+      setMultiplicateur(multiplicateur + 1);
+      goToLink(nextDataLinkState);
+    }
     setPageState(newPage);
   };
+
+  function goToLink(link: string) {
+    let queryParameters: IQueryParametersPourRequetes;
+    if (link.indexOf("range") > 0) {
+      let params = [];
+      params = link.split("requetes?")[1].split("&");
+      queryParameters = {
+        nomOec: params[0].split("=")[1],
+        prenomOec: params[1].split("=")[1],
+        statut: params[2].split("=")[1] as StatutRequete,
+        tri: params[3].split("=")[1],
+        sens: params[4].split("=")[1] as SortOrder,
+        range: params[5].split("=")[1]
+      };
+      setLinkParameters(queryParameters);
+    }
+  }
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -69,15 +95,21 @@ export const RequeteTableau: React.FC = () => {
   };
 
   function processData() {
+    if (
+      dataState.length > 0 &&
+      dataTable[dataTable.length - 1] !== dataState[dataState.length - 1]
+    ) {
+      setDataTable([...dataTable, ...dataState]);
+    }
     if (rowsNumberState && rowsNumberState < 100) {
       const dataTriee = processDataStorting(
-        dataState,
+        dataTable,
         sortOrderState,
         sortOrderByState
       );
       return getPaginatedData(dataTriee, pageState, rowsPerPageState);
     } else {
-      return getPaginatedData(dataState, pageState, rowsPerPageState);
+      return getPaginatedData(dataTable, pageState, rowsPerPageState);
     }
   }
 
@@ -113,7 +145,7 @@ export const RequeteTableau: React.FC = () => {
         labelRowsPerPage={getText("pagination.rowsPerPage", [
           getText("pages.requetes.tableau.pagination.donneePaginee")
         ])}
-        page={pageState}
+        page={pageState > 0 && rowsNumberState === 0 ? 0 : pageState}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
@@ -127,13 +159,13 @@ function getSortOrder(
   sortOrderBy: DataTable,
   sortOrder: SortOrder
 ): SortOrder {
-  let result: SortOrder = "asc";
+  let result: SortOrder = "ASC";
   if (sortOrderBy !== property) {
-    result = "asc";
-  } else if (sortOrder === "asc") {
-    result = "desc";
-  } else if (sortOrder === "desc") {
-    result = "asc";
+    result = "ASC";
+  } else if (sortOrder === "ASC") {
+    result = "DESC";
+  } else if (sortOrder === "DESC") {
+    result = "ASC";
   }
   return result;
 }

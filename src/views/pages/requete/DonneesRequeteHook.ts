@@ -77,6 +77,7 @@ export interface IQueryParametersPourRequetes {
   statut: StatutRequete;
   tri?: string;
   sens?: SortOrder;
+  range?: string;
 }
 
 export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
@@ -110,7 +111,8 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
             queryParameters.tri !== "prioriteRequete"
               ? queryParameters.tri
               : "dateStatut",
-          sens: queryParameters.sens
+          sens: queryParameters.sens,
+          range: queryParameters.range
         }
       })
       .then(result => {
@@ -146,7 +148,8 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     queryParameters.prenomOec,
     queryParameters.statut,
     queryParameters.tri,
-    queryParameters.sens
+    queryParameters.sens,
+    queryParameters.range
   ]);
   return {
     dataState,

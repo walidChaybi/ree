@@ -13,7 +13,7 @@ test("renders header tableau des requêtes de l'application", () => {
     <>
       <RequeteTableauHeader
         onRequestSort={handleRequestSort}
-        order="asc"
+        order="ASC"
         orderBy="idSagaDila"
       ></RequeteTableauHeader>
     </>
@@ -27,7 +27,7 @@ test("renders click sur header tableau des requêtes de l'application", () => {
     <>
       <RequeteTableauHeader
         onRequestSort={handleRequestSort}
-        order="asc"
+        order="ASC"
         orderBy="idSagaDila"
       ></RequeteTableauHeader>
     </>
