@@ -188,7 +188,7 @@ test("Comparaison de deux objets par string par verif type", () => {
 });
 
 test("tri d'un array par prenom asc", () => {
-  const dataTriee = stableSort(data, getComparator("asc", "prenom"));
+  const dataTriee = stableSort(data, getComparator("ASC", "prenom"));
   expect(dataTriee[0].prenom).toBe("Diego");
   expect(dataTriee[1].prenom).toBe("Roger");
   expect(dataTriee[2].prenom).toBe("Thiago");
@@ -196,7 +196,7 @@ test("tri d'un array par prenom asc", () => {
 });
 
 test("tri d'un array par prenom desc", () => {
-  const dataTriee = stableSort(data, getComparator("desc", "prenom"));
+  const dataTriee = stableSort(data, getComparator("DESC", "prenom"));
   expect(dataTriee[0].prenom).toBe("Virginie");
   expect(dataTriee[1].prenom).toBe("Thiago");
   expect(dataTriee[2].prenom).toBe("Roger");
@@ -204,7 +204,7 @@ test("tri d'un array par prenom desc", () => {
 });
 
 test("tri d'un array par id asc", () => {
-  const dataTriee = stableSort(data, getComparator("asc", "id"));
+  const dataTriee = stableSort(data, getComparator("ASC", "id"));
   expect(dataTriee[0].id).toBe(1);
   expect(dataTriee[1].id).toBe(2);
   expect(dataTriee[2].id).toBe(3);
@@ -212,7 +212,7 @@ test("tri d'un array par id asc", () => {
 });
 
 test("tri d'un array par id desc", () => {
-  const dataTriee = stableSort(data, getComparator("desc", "id"));
+  const dataTriee = stableSort(data, getComparator("DESC", "id"));
   expect(dataTriee[0].id).toBe(11);
   expect(dataTriee[1].id).toBe(3);
   expect(dataTriee[2].id).toBe(2);
@@ -220,7 +220,7 @@ test("tri d'un array par id desc", () => {
 });
 
 test("tri d'un array par dateNaissance asc", () => {
-  const dataTriee = stableSort(data, getComparator("asc", "dateNaissance"));
+  const dataTriee = stableSort(data, getComparator("ASC", "dateNaissance"));
   expect(dataTriee[0].dateNaissance).toBe("17/07/1971");
   expect(dataTriee[1].dateNaissance).toBe("07/11/1972");
   expect(dataTriee[2].dateNaissance).toBe("26/03/1986");
@@ -228,7 +228,7 @@ test("tri d'un array par dateNaissance asc", () => {
 });
 
 test("tri d'un array par dateNaissance desc", () => {
-  const dataTriee = stableSort(data, getComparator("desc", "dateNaissance"));
+  const dataTriee = stableSort(data, getComparator("DESC", "dateNaissance"));
   expect(dataTriee[0].dateNaissance).toBe("26/03/1986");
   expect(dataTriee[1].dateNaissance).toBe("26/03/1986");
   expect(dataTriee[2].dateNaissance).toBe("07/11/1972");
@@ -236,7 +236,7 @@ test("tri d'un array par dateNaissance desc", () => {
 });
 
 test("tri d'un array par dateNaissance desc - processDataSorting", () => {
-  const dataTriee = processDataStorting(data, "desc", "dateNaissance");
+  const dataTriee = processDataStorting(data, "DESC", "dateNaissance");
   expect(dataTriee[0].dateNaissance).toBe("26/03/1986");
   expect(dataTriee[1].dateNaissance).toBe("26/03/1986");
   expect(dataTriee[2].dateNaissance).toBe("07/11/1972");
@@ -244,7 +244,7 @@ test("tri d'un array par dateNaissance desc - processDataSorting", () => {
 });
 
 test("tri d'un array par dateNaissance asc - processDataSorting", () => {
-  const dataTriee = processDataStorting(data, "asc", "dateNaissance");
+  const dataTriee = processDataStorting(data, "ASC", "dateNaissance");
   expect(dataTriee[3].dateNaissance).toBe("26/03/1986");
   expect(dataTriee[2].dateNaissance).toBe("26/03/1986");
   expect(dataTriee[1].dateNaissance).toBe("07/11/1972");
@@ -252,7 +252,7 @@ test("tri d'un array par dateNaissance asc - processDataSorting", () => {
 });
 
 test("tri et pagination d'un array par prenom asc", () => {
-  const dataTriee = processDataStorting(bigData, "asc", "prenom");
+  const dataTriee = processDataStorting(bigData, "ASC", "prenom");
   let paginatedData = getPaginatedData<IData>(dataTriee, 0, 2);
   expect(paginatedData[0].prenom).toBe("André");
   expect(paginatedData[1].prenom).toBe("Diego");

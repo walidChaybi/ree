@@ -1,6 +1,7 @@
 // ./superagent-mock-config.js file
 const mockResponse = require("./base64.json");
-const mockRequetes = require("./requetes.json");
+const mockRequetes = require("./generateurRequetes.ts").generateurRequetes();
+
 module.exports = [
   {
     /**
@@ -118,13 +119,52 @@ module.exports = [
       }
       if (
         match[1] ===
-          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=asc" ||
+          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC" ||
         match[1] ===
           "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
       ) {
         return {
-          data: mockRequetes.data,
-          httpHeaders: { "Content-Range": ["0-15/3"] }
+          data: mockRequetes.data.slice(0, 105),
+          httpHeaders: {
+            "Content-Range": ["0-15/" + mockRequetes.data.length],
+            Link: [
+              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"'
+            ]
+          }
+        };
+      }
+      if (
+        match[1] ===
+          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105" ||
+        match[1] ===
+          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        return {
+          data: mockRequetes.data.slice(105, 210),
+          httpHeaders: {
+            "Content-Range": ["106-15/" + mockRequetes.data.length],
+            Link: [
+              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
+              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"'
+            ]
+          }
+        };
+      }
+      if (
+        match[1] ===
+          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
+        match[1] ===
+          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        return {
+          data: mockRequetes.data.slice(210, 315),
+          httpHeaders: {
+            "Content-Range": ["211-15/" + mockRequetes.data.length],
+            Link: [
+              "",
+              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"'
+            ]
+          }
         };
       }
 

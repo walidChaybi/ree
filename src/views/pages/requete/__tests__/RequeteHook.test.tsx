@@ -24,7 +24,7 @@ const HookConsummer: React.FC = () => {
     prenomOec: "Juliette",
     statut: StatutRequete.ASigner,
     tri: "idSagaDila",
-    sens: "asc"
+    sens: "ASC"
   });
   return (
     <>

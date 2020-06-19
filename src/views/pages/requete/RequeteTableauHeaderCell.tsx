@@ -1,5 +1,6 @@
 import React from "react";
 import TableCell from "@material-ui/core/TableCell";
+import { SortDirection } from "@material-ui/core/TableCell";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { Text } from "../../common/widget/Text";
 import { SortOrder } from "./tableau/TableUtils";
@@ -60,16 +61,28 @@ export const RequeteTableauHeaderCell: React.FC<RequeteTableauHeaderCellProps> =
     OrderedHeaderCell: orderBy === column,
     tableauFontHeader: true
   });
+
+  let orderTableCell: SortDirection = false;
+  let orderTableLabel: "asc" | "desc" = "asc";
+
+  if (order === "ASC") {
+    orderTableCell = "asc";
+    orderTableLabel = "asc";
+  } else if (order === "DESC") {
+    orderTableCell = "desc";
+    orderTableLabel = "desc";
+  }
+
   return (
     <TableCell
       align="center"
-      sortDirection={orderBy === column ? order : false}
+      sortDirection={orderBy === column ? orderTableCell : false}
       className="ColonneTableauRequete"
     >
       <TableSortLabel
         className={styles}
         active={orderBy === column}
-        direction={orderBy === column ? order : "asc"}
+        direction={orderBy === column ? orderTableLabel : "asc"}
         onClick={sortHandler(column)}
       >
         <Text messageId={`pages.requetes.tableau.header.${column}`} />
