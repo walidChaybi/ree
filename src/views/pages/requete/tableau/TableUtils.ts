@@ -2,15 +2,13 @@ import moment from "moment";
 
 export type SortOrder = "asc" | "desc";
 
+const formatDate = "DD/MM/YYYY";
+
 export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (
-    moment(b[orderBy], "DD/MM/YYYY").isBefore(moment(a[orderBy], "DD/MM/YYYY"))
-  ) {
+  if (moment(b[orderBy], formatDate).isBefore(moment(a[orderBy], formatDate))) {
     return -1;
   }
-  if (
-    moment(b[orderBy], "DD/MM/YYYY").isAfter(moment(a[orderBy], "DD/MM/YYYY"))
-  ) {
+  if (moment(b[orderBy], formatDate).isAfter(moment(a[orderBy], formatDate))) {
     return 1;
   }
   return 0;
@@ -18,8 +16,8 @@ export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   const isDate =
-    moment(a[orderBy], "DD/MM/YYYY").isValid() &&
-    moment(b[orderBy], "DD/MM/YYYY").isValid();
+    moment(a[orderBy], formatDate).isValid() &&
+    moment(b[orderBy], formatDate).isValid();
   if (isDate) {
     return descendingDateComparator(a, b, orderBy);
   } else {
