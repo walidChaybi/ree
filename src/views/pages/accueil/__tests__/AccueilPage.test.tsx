@@ -2,6 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import { AccueilPage } from "../AccueilPage";
 import { Text } from "../../../common/widget/Text";
+import { Title } from "../../../core/title/Title";
 
 let container: Element | null;
 
@@ -19,8 +20,11 @@ afterEach(() => {
 
 test("renders page d'accueil", () => {
   const wrapper = shallow(<AccueilPage />);
-  expect(wrapper.find(Text)).toHaveLength(2);
+  const titleElements = wrapper.find(Title);
+  expect(titleElements).toHaveLength(1);
+  console.log("titleElements", titleElements);
+  expect(titleElements.get(0).props.titleId).toBe("pages.accueil.titre");
   const textElements = wrapper.find(Text);
-  expect(textElements.get(0).props.messageId).toBe("pages.accueil.titre");
-  expect(textElements.get(1).props.messageId).toBe("pages.accueil.bienvenue");
+  expect(textElements).toHaveLength(1);
+  expect(textElements.get(0).props.messageId).toBe("pages.accueil.bienvenue");
 });

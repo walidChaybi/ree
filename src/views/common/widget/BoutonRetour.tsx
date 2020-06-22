@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, MessageId } from "./Text";
 import { Link } from "react-router-dom";
-import { Button } from "reakit/Button";
 import { AppUrls } from "../../router/UrlManager";
 
 interface BoutonRetourProps {
@@ -13,10 +12,8 @@ export const BoutonRetour: React.FC<BoutonRetourProps> = ({
   messageId = "boutons.accueil"
 }) => {
   return (
-    <Link to={url} className="BoutonRetour">
-      <Button>
-        <Text messageId={messageId} />
-      </Button>
+    <Link to={url} className="BoutonRetour" role="button">
+      <Text messageId={messageId} />
     </Link>
   );
 };

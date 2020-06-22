@@ -1,13 +1,11 @@
 import React from "react";
 import { RequeteTableau } from "./RequeteTableau";
-import { Text } from "../../common/widget/Text";
+import { Title } from "../../core/title/Title";
 
 export const MesRequetesPage: React.FC = () => {
   return (
     <>
-      <h2>
-        <Text messageId={"pages.requetes.enCours.titre"} />
-      </h2>
+      <Title titleId={"pages.requetes.enCours.titre"} />
       <RequeteTableau />
     </>
   );

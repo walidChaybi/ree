@@ -58,12 +58,12 @@ export const RequeteTableauBody: React.FC<RequeteTableauBodyProps> = ({
               data={getText(`referentiel.statutRequete.${row.statut}`)}
             />
             <TableCell align="center">
-              <Box
-                title={getMessagePrioriteDeLaRequete(row.dateStatut)}
-                aria-label={getMessagePrioriteDeLaRequete(row.dateStatut)}
-                aria-hidden={true}
-              >
-                <LabelIcon className={prioriteDeLaRequete(row.dateStatut)} />
+              <Box title={getMessagePrioriteDeLaRequete(row.dateStatut)}>
+                <LabelIcon
+                  className={prioriteDeLaRequete(row.dateStatut)}
+                  aria-label={getMessagePrioriteDeLaRequete(row.dateStatut)}
+                  aria-hidden={false}
+                />
               </Box>
             </TableCell>
           </TableRow>

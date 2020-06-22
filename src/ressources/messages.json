@@ -65,6 +65,7 @@
       },
       "tableau": {
         "titre": "Mes requêtes",
+        "label": "Tableau de mes requetes",
         "header": {
           "idSagaDila": "N°",
           "sousTypeRequete": "Type",

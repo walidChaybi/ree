@@ -127,7 +127,10 @@ export const RequeteTableau: React.FC = () => {
           </div>
         </div>
       </Toolbar>
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        aria-label={getText("pages.requetes.tableau.label")}
+      >
         <Box as={Table} role="presentation" size="small">
           <RequeteTableauHeader
             order={sortOrderState}
