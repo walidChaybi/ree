@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, RouteComponentProps } from "react-router-dom";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { IDataTable } from "../RequeteTableauHeaderCell";
-import { Text } from "../../../common/widget/Text";
 import { EtatRequete } from "./EtatRequete";
 import { ContenuRequete } from "./ContenuRequete";
 import { ActionsButtonsRequestPage } from "./ActionsButtonsRequestPage";
 import { useRequeteDataApi } from "./DonneeRequeteHook";
 import { AppUrls } from "../../../router/UrlManager";
+import { Title } from "../../../core/title/Title";
 
 export interface RequestsInformations {
   data: IDataTable[];
@@ -52,9 +52,8 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
 
   return (
     <>
-      <h2>
-        <Text messageId={"pages.requetes.apercu.titre"} />
-      </h2>
+      <Title titleId={"pages.requetes.apercu.titre"} />
+
       {dataState.length > 0 && indexRequete >= 0 && (
         <>
           <ActionsButtonsRequestPage
@@ -84,6 +83,5 @@ function getIndexRequete(
       return false;
     });
   }
-
   return position;
 }

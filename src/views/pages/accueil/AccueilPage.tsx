@@ -7,6 +7,7 @@ import "../accueil/sass/AccueilPage.scss";
 import { faEnvelope, faKeyboard } from "@fortawesome/free-regular-svg-icons";
 import { faUser, faUsers, faSearch } from "@fortawesome/free-solid-svg-icons";
 import logoRece from "../../../img/logo-rece.svg";
+import { Title } from "../../core/title/Title";
 
 export const AccueilPage: React.FC = () => {
   // Mock de données
@@ -16,14 +17,13 @@ export const AccueilPage: React.FC = () => {
   const { rowsNumberState = 0 } = useRequeteApi({
     nomOec: nom,
     prenomOec: prenom,
-    statut: StatutRequete.ASigner
+    statut: StatutRequete.ASigner,
   });
 
   return (
     <>
-      <h2>
-        <Text messageId={"pages.accueil.titre"} />
-      </h2>
+      <Title titleId={"pages.accueil.titre"} />
+
       <img src={logoRece} alt="logo RECE" />
       <div className="Titre">
         <Text messageId={"pages.accueil.bienvenue"} />

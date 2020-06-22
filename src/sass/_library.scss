@@ -60,6 +60,11 @@ button {
   &:disabled {
     background-color: rgba(75, 75, 75, 0.87);
   }
+
+  &:focus,
+  &:hover {
+    box-shadow: 0 0 0 2pt $border-focus;
+  }
 }
 
 form {
@@ -180,6 +185,24 @@ select {
 
 .BoutonRetour {
   float: left;
+  background-color: $button-application-color;
+  color: #fff;
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  font-size: initial;
+  font-family: "NotoSansUI-Bold";
+  text-decoration: none;
+  padding: 0.3em;
+
+  &:link {
+    outline-style: none;
+  }
+
+  &:focus,
+  &:hover {
+    box-shadow: 0 0 0 2pt $border-focus;
+    border: none;
+  }
 }
 
 .error {
@@ -230,4 +253,14 @@ select {
 
 .MuiBreadcrumbs-root {
   margin: 1em 0 0 0 !important;
+}
+
+th {
+  span {
+    &:focus {
+      border-style: dotted;
+      border-color: grey;
+      border-width: 0.1rem;
+    }
+  }
 }

@@ -1,4 +1,6 @@
 {
+  "icon": "erreur",
+  "dialogLabel": "Message d'erreur",
   "pages": {
     "requetes": {
       "B01": "Le service de signature électronique est indisponible"
