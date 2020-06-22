@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   useDisclosureState,
   Disclosure,
-  DisclosureRegion,
+  DisclosureRegion
 } from "reakit/Disclosure";
-import { MessageId, Text, getText } from "../../../../common/widget/Text";
+import { MessageId, Text } from "../../../../common/widget/Text";
 import { DocumentDetail } from "./DocumentDetail";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -31,14 +31,14 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
   documents,
   highlighted,
   documentVisible,
-  setDocumentVisibleFct,
+  setDocumentVisibleFct
 }) => {
   const visible: boolean = documents.length > 0;
   const disclosure = useDisclosureState({ visible });
 
   const titleStyles = classNames({
     title: true,
-    SpecificTitle: highlighted,
+    SpecificTitle: highlighted
   });
 
   return (
@@ -56,7 +56,7 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
         </ExpansionPanelSummary>
       </Disclosure>
       <DisclosureRegion {...disclosure} as={ExpansionPanelDetails}>
-        {(props) =>
+        {props =>
           disclosure.visible && (
             <div {...props}>
               <List>
@@ -89,7 +89,7 @@ function onClickHandler(
     document.identifiantDocument,
     document.groupement,
     document.mimeType
-  ).then((result) => {
+  ).then(result => {
     const documentObjectURL = URL.createObjectURL(result);
     if (
       document.groupement === GroupementDocument.DocumentAsigner &&

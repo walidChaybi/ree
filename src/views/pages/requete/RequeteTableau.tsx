@@ -43,9 +43,7 @@ export const RequeteTableau: React.FC = () => {
   const {
     dataState = [],
     rowsNumberState = 0,
-    previousDataLinkState,
-    nextDataLinkState = "",
-    errorState
+    nextDataLinkState = ""
   } = useRequeteApi(linkParameters);
   const [dataTable, setDataTable] = React.useState<IDataTable[]>([]);
 
