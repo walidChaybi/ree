@@ -11,9 +11,6 @@ export const Title: React.FC<TitleProps> = ({ titleId }) => {
       <title>
         <Text messageId={titleId} />
       </title>
-      <h2>
-        <Text messageId={titleId} />
-      </h2>
     </>
   );
 };
