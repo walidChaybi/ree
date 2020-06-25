@@ -2,10 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "./superagent-mock-config";
+import config from "../../../../api/mock/superagent-mock-config";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteApi } from "../DonneesRequeteHook";
-import { cleanup, render, fireEvent } from "@testing-library/react";
 const superagentMock = require("superagent-mock")(request, config);
 
 let container: Element | null;
@@ -56,5 +55,3 @@ test("monter un composant de test pour vérifier que tout va bien", () => {
     }
   });
 });
-
-afterEach(cleanup);

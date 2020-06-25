@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import DONNEES_REQUETE from "./data/requete";
 import { ResumeRequete } from "../visualisation/ResumeRequete";
@@ -8,8 +8,8 @@ import { mount } from "enzyme";
 
 test("renders titre résumé requete", () => {
   act(() => {
-    const { getByText } = render(<ResumeRequete requete={DONNEES_REQUETE} />);
-    const titre = getByText(/Résumé de/i);
+    render(<ResumeRequete requete={DONNEES_REQUETE} />);
+    const titre = screen.getByText(/Résumé de/i);
     expect(titre.textContent).toBe("Résumé de la requête");
   });
 });

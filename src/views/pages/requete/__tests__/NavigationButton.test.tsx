@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import { NavigationButton } from "../visualisation/NavigationButton";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
@@ -7,7 +7,7 @@ import { act } from "react-dom/test-utils";
 test("renders fonction clic déclenchée au clic sur les boutons", () => {
   act(() => {
     const handleSetIndexRequete = jest.fn();
-    const { getAllByRole } = render(
+    render(
       <NavigationButton
         direction={"left"}
         indexRequete={1}
@@ -16,7 +16,7 @@ test("renders fonction clic déclenchée au clic sur les boutons", () => {
       />
     );
 
-    const buttonElement = getAllByRole("button");
+    const buttonElement = screen.getAllByRole("button");
 
     fireEvent.click(buttonElement[0]);
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { RequeteTableauBody } from "../RequeteTableauBody";
 import { BrowserRouter as Router } from "react-router-dom";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import moment from "moment";
 import { FormatDate } from "../../../../ressources/FormatDate";
 
@@ -46,22 +46,22 @@ const DONNEES = [
 ];
 
 test("test des prioritées des requêtes", () => {
-  const { getByTestId } = render(
+  render(
     <>
       <Router>
         <RequeteTableauBody data={DONNEES}></RequeteTableauBody>
       </Router>
     </>
   );
-  let colonnePrioriteElement = getByTestId("100");
+  let colonnePrioriteElement = screen.getByTestId("100");
   let element = (colonnePrioriteElement.lastChild as HTMLTableCellElement)
     .innerHTML;
   expect(element.indexOf("Priorité moyenne")).toBeGreaterThan(-1);
-  colonnePrioriteElement = getByTestId("101");
+  colonnePrioriteElement = screen.getByTestId("101");
   element = (colonnePrioriteElement.lastChild as HTMLTableCellElement)
     .innerHTML;
   expect(element.indexOf("Priorité basse")).toBeGreaterThan(-1);
-  colonnePrioriteElement = getByTestId("102");
+  colonnePrioriteElement = screen.getByTestId("102");
   element = (colonnePrioriteElement.lastChild as HTMLTableCellElement)
     .innerHTML;
   expect(element.indexOf("Priorité haute")).toBeGreaterThan(-1);
