@@ -1,5 +1,5 @@
 import React from "react";
-import { cleanup, render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import * as renderer from "react-test-renderer";
 import { BoutonAccueil } from "../BoutonAccueil";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -22,7 +22,7 @@ test("renders bouton d'accueil", () => {
 });
 
 test("renders texte du bouton d'accueil", () => {
-  const { getByText } = render(
+  render(
     <>
       <Router>
         <BoutonAccueil
@@ -33,14 +33,13 @@ test("renders texte du bouton d'accueil", () => {
       </Router>
     </>
   );
-  setTimeout(() => {
-    const boutonElement = getByText(/Bouton Menu/i);
-    expect(boutonElement).toBeInTheDocument();
-  }, 150);
+
+  const boutonElement = screen.getByText(/Bouton Menu/i);
+  expect(boutonElement).toBeInTheDocument();
 });
 
 test("renders présence de l'icône du bouton d'accueil", () => {
-  const { getByTestId } = render(
+  render(
     <>
       <Router>
         <BoutonAccueil
@@ -52,12 +51,12 @@ test("renders présence de l'icône du bouton d'accueil", () => {
       </Router>
     </>
   );
-  const iconElement = getByTestId("IconAccueil");
+  const iconElement = screen.getByTestId("IconAccueil");
   expect(iconElement).toBeInTheDocument();
 });
 
 test("renders des 2 titles du bouton d'accueil", () => {
-  const { getAllByText, getByTestId } = render(
+  render(
     <>
       <Router>
         <BoutonAccueil
@@ -70,15 +69,15 @@ test("renders des 2 titles du bouton d'accueil", () => {
       </Router>
     </>
   );
-  const boutonElement = getAllByText(/Bouton Menu/i);
-  const iconElement = getByTestId("IconAccueil");
+  const boutonElement = screen.getAllByText(/Bouton Menu/i);
+  const iconElement = screen.getByTestId("IconAccueil");
   expect(boutonElement[0].textContent).toBe("⚠ Title Bouton Menu");
   expect(iconElement.textContent).toBe("⚠ Title Bouton Menu");
 });
 
 test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
   const handleClickButton = jest.fn();
-  const { getByTestId } = render(
+  render(
     <>
       <Router>
         <BoutonAccueil
@@ -90,9 +89,7 @@ test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
       </Router>
     </>
   );
-  const boutonElement = getByTestId("BtnAccueil");
+  const boutonElement = screen.getByTestId("BtnAccueil");
   fireEvent.click(boutonElement);
   expect(handleClickButton).toHaveBeenCalledTimes(1);
 });
-
-afterEach(cleanup);

@@ -1,5 +1,5 @@
 import React from "react";
-import { cleanup, render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import * as renderer from "react-test-renderer";
 import { RequeteTableauHeader } from "../RequeteTableauHeader";
 import { DataTable } from "../RequeteTableauHeaderCell";
@@ -23,7 +23,7 @@ test("renders header tableau des requêtes de l'application", () => {
 
 test("renders click sur header tableau des requêtes de l'application", () => {
   const handleRequestSort = jest.fn();
-  const { getByText } = render(
+  render(
     <>
       <RequeteTableauHeader
         onRequestSort={handleRequestSort}
@@ -32,10 +32,8 @@ test("renders click sur header tableau des requêtes de l'application", () => {
       ></RequeteTableauHeader>
     </>
   );
-  const colonneElement = getByText(/N°/i);
+  const colonneElement = screen.getByText(/N°/i);
   fireEvent.click(colonneElement);
   expect(handleRequestSort).toHaveBeenCalledTimes(1);
   expect(handleRequestSort).not.toHaveBeenCalledTimes(2);
 });
-
-afterEach(cleanup);

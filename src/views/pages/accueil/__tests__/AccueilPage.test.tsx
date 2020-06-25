@@ -22,7 +22,6 @@ test("renders page d'accueil", () => {
   const wrapper = shallow(<AccueilPage />);
   const titleElements = wrapper.find(Title);
   expect(titleElements).toHaveLength(1);
-  console.log("titleElements", titleElements);
   expect(titleElements.get(0).props.titleId).toBe("pages.accueil.titre");
   const textElements = wrapper.find(Text);
   expect(textElements).toHaveLength(1);

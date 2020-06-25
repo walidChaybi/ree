@@ -4,7 +4,6 @@ import { act } from "react-dom/test-utils";
 import request from "superagent";
 import config from "./superagent-mock-config";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { cleanup } from "@testing-library/react";
 import { useRequeteDataApi } from "../visualisation/DonneeRequeteHook";
 import DONNEES_REQUETE from "./data/requete";
 import { IDataTable } from "../RequeteTableauHeaderCell";
@@ -140,8 +139,6 @@ test("pas d'erreur si retour WS en erreur", async () => {
     expect(containerWithErrorWS.childNodes.length).toBe(0);
   }
 });
-
-afterEach(cleanup);
 
 afterAll(() => {
   superagentMock.unset();

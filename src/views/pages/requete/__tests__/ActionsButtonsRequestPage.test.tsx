@@ -1,10 +1,10 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { ActionsButtonsRequestPage } from "../visualisation/ActionsButtonsRequestPage";
 import { BrowserRouter as Router } from "react-router-dom";
 
 test("renders boutons d'actions d'une requête", () => {
-  const { getAllByRole, getByText } = render(
+  render(
     <Router>
       <ActionsButtonsRequestPage
         indexRequete={2}
@@ -15,7 +15,7 @@ test("renders boutons d'actions d'une requête", () => {
       />
     </Router>
   );
-  expect(getAllByRole("button").length).toBe(4);
-  expect(getByText("Retour à mes requêtes")).not.toBeNull();
-  expect(getByText("Signer électroniquement")).not.toBeNull();
+  expect(screen.getAllByRole("button").length).toBe(4);
+  expect(screen.getByText("Retour à mes requêtes")).not.toBeNull();
+  expect(screen.getByText("Signer électroniquement")).not.toBeNull();
 });

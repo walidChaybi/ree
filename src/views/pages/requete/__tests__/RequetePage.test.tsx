@@ -2,7 +2,7 @@ import React from "react";
 import { RequetePage } from "../visualisation/RequetePage";
 import DONNEES_REQUETE from "./data/requete";
 import { Router } from "react-router-dom";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
@@ -82,7 +82,7 @@ test("renders Page requete change url", () => {
       ]
     });
 
-    const { getAllByRole } = render(
+    render(
       <>
         <Router history={history}>
           <RequetePage
@@ -99,7 +99,7 @@ test("renders Page requete change url", () => {
       </>
     );
 
-    const buttons = getAllByRole("button");
+    const buttons = screen.getAllByRole("button");
 
     const leftButton = buttons.find(
       button => button.id === "button-navigation-left"
