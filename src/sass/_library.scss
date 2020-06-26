@@ -75,9 +75,8 @@ form {
 }
 
 h1 {
-  font-size: large;
-  margin-top: 1.2em;
-  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 h2 {
@@ -150,23 +149,6 @@ select {
   border-radius: 0.3em;
   padding: 0.45em;
   position: relative;
-}
-
-.logoBox {
-  .logo {
-    margin-top: 0.15em;
-    // margin-right: 5em;
-    height: 3.7em;
-    @media (max-width: 850px) {
-      display: none;
-    }
-  }
-}
-
-.logo:nth-child(2) {
-  @media (max-width: 950px) {
-    display: none;
-  }
 }
 
 .tableauFontHeader {

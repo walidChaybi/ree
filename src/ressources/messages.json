@@ -3,6 +3,7 @@
   "titre": "Titre de l'application",
   "subtitre": "Sous-titre de l'application",
   "altLogoMariane": "Alternative au logo",
+  "altLogoRece": "Logo RECE",
   "form": {
     "champs": {
       "requis": "*"
@@ -15,7 +16,8 @@
   },
   "boutons": {
     "accueil": "<< Accueil",
-    "retourMesRequetes": "Retour à mes requêtes"
+    "retourMesRequetes": "Retour à mes requêtes",
+    "deconnexion": "Déconnexion"
   },
   "fildariane": {
     "accueil": "Accueil",
