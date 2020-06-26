@@ -6,34 +6,57 @@
 }
 
 .AppHeader {
-  background: $application-color no-repeat scroll 0 0;
+  background: $application-color;
   height: 4em;
-  width: 100%;
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.55);
   color: white;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
-  @media (max-width: 1250px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 850px) {
-    grid-template-columns: repeat(1, 1fr);
+  .LogoHeader {
+    margin: 0.8rem -8.5rem 0.8rem -9rem;
+    cursor: pointer;
   }
 
   h1 {
-    float: right;
-    @media (max-width: 1250px) {
-      text-align: left;
-      margin-left: 0em;
-      padding-left: 0em;
+    margin: 1.1rem;
+  }
+
+  .Utilisateur {
+    margin: 1.2rem 2rem;
+  }
+
+  .UtilisateurBouton {
+    margin: 0.7rem 2rem;
+    button span {
+      color: white;
+      text-transform: initial;
+      font-family: "NotoSansUI-Regular";
+      font-size: 1rem;
     }
-    @media (max-width: 850px) {
-      text-align: center;
+
+    button {
+      &:focus,
+      &:hover {
+        box-shadow: none;
+        background-color: $application-color;
+      }
+    }
+  }
+
+  @media (max-width: 720px) {
+    h1 {
+      display: none;
+    }
+  }
+}
+.Menu {
+  ul {
+    background-color: $button-application-color;
+    color: white;
+    li svg {
+      margin-right: 0.3rem;
     }
   }
 }

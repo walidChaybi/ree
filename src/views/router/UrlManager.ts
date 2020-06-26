@@ -23,7 +23,7 @@ export const AppUrls = {
 
 /** Attention à l'usage, la construction d'URL dynamique passant par une function pose des problèmes d'anti pattern */
 export function getAppUrl(path: string): string {
-  return `/${contextApp}${path}`;
+  return `${contextApp}${path}`;
 }
 
 export const ApiEndpoints = {
