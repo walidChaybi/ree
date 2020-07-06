@@ -221,16 +221,25 @@ select {
   text-transform: capitalize;
 }
 
+.MuiBreadcrumbs-li a,
+.MuiBreadcrumbs-li div {
+  border-radius: 1rem;
+  color: white;
+  font-size: 1rem;
+}
+
 .LinkFilAriane {
-  color: rgba(0, 0, 0, 0.54);
+  background-color: $button-application-color;
   text-decoration: none;
+  padding: 0.3rem 0.7rem;
   &:hover {
-    color: $application-color;
+    background-color: $application-color;
   }
 }
 
 .TextFilAriane {
-  color: $application-color;
+  background-color: $application-color;
+  padding: 0.2rem 0.7rem;
 }
 
 .MuiBreadcrumbs-root {
