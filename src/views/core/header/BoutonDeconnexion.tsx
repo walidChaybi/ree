@@ -37,8 +37,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
       <Button
         aria-controls="simple-menu"
         aria-haspopup="true"
-        onClick={handleClick}
-        data-testid="UtilisateurBouton"
+        onClick={event => handleClick(event)}
       >
         {prenom} {nom}
       </Button>
