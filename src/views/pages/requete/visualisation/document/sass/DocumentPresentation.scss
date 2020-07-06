@@ -1,21 +1,23 @@
-.DocumentDetailPanel {
-  width: 100%;
-  height: 100%;
-}
+.resume-requete {
+  .DocumentDetailPanel {
+    width: 100%;
+    height: 100%;
+  }
 
-.MuiTypography-body1,
-.MuiTypography-body2 {
-  font-family: "NotoSansUI-Regular", sans-serif !important;
-}
+  .MuiTypography-body1,
+  .MuiTypography-body2 {
+    font-family: "NotoSansUI-Regular" !important;
+  }
 
-.MuiTypography-body1 {
-  font-size: 0.9rem !important;
-}
+  .MuiTypography-body1 {
+    font-size: 0.9rem !important;
+  }
 
-.MuiTypography-body2 {
-  font-size: 0.8rem !important;
-}
+  .MuiTypography-body2 {
+    font-size: 0.8rem !important;
+  }
 
-.MuiExpansionPanelSummary-root {
-  min-height: auto !important;
+  .MuiExpansionPanelSummary-root {
+    min-height: auto !important;
+  }
 }
