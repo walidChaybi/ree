@@ -41,14 +41,8 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
         setDocumentVisibleFct={setExtraitVisibleState}
       />
       <DocumentPresentation
-        titre={"pages.requete.consultation.courrierAccompagnement.titre"}
-        documents={courriersAccompagnement}
-        documentVisible={extraitVisibleState}
-        setDocumentVisibleFct={setExtraitVisibleState}
-      />
-      <DocumentPresentation
-        titre={"pages.requete.consultation.documentASigner.titre"}
-        documents={documentsASigner}
+        titre={"pages.requete.consultation.documentsADelivres.titre"}
+        documents={[...courriersAccompagnement, ...documentsASigner]}
         documentVisible={extraitVisibleState}
         setDocumentVisibleFct={setExtraitVisibleState}
       />

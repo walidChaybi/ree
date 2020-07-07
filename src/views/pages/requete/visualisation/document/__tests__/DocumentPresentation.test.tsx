@@ -1,9 +1,15 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { DocumentPresentation } from "../DocumentPresentation";
-import requetes from "../../../../../../api/mock/requetes.json";
+import { IDocumentDetail } from "../interfaces/IDocumentDetail";
+import data from "./data/documentsDetails";
+import request from "superagent";
+import config from "../../../../../../api/mock/superagent-mock-config";
+window.URL.createObjectURL = jest.fn();
 
-test("renders pieces justificatives vide dans leur accordions", async () => {
+const superagentMock = require("superagent-mock")(request, config);
+
+test("renders pieces justificatives vide dans leur accordéon", async () => {
   render(
     <DocumentPresentation
       titre={"pages.requete.consultation.pieceJustificative.titre"}
@@ -17,18 +23,35 @@ test("renders pieces justificatives vide dans leur accordions", async () => {
   expect(nomFichier.length).toBe(0);
 });
 
-test("renders 2 pieces justificatives dans leur accordions", async () => {
+test("renders 2 pieces justificatives dans leur accordéon", async () => {
   render(
     <DocumentPresentation
       titre={"pages.requete.consultation.pieceJustificative.titre"}
-      documents={requetes.data[0].piecesJustificatives}
+      documents={data.documentsDetails as IDocumentDetail[]}
     />
   );
   const linkElement = screen.getByText(/Pièces Justificatives/i);
   expect(linkElement).toBeInTheDocument();
 
-  let nomFichier = await screen.queryAllByText(/11984-pi-j-3.PNG/i);
+  let nomFichier = await screen.queryAllByText(/Pièce justificative 0/i);
   expect(nomFichier.length).toBe(1);
-  nomFichier = await screen.queryAllByText(/11984-pi-j-3.pdf/i);
+  nomFichier = await screen.queryAllByText(/Pièce justificative 1/i);
   expect(nomFichier.length).toBe(1);
+});
+
+test("renders click piece justificative", () => {
+  const handleClickButton = jest.fn();
+  render(
+    <DocumentPresentation
+      titre={"pages.requete.consultation.pieceJustificative.titre"}
+      documents={data.documentsDetails as IDocumentDetail[]}
+      setDocumentVisibleFct={handleClickButton}
+    />
+  );
+
+  let nomFichier = screen.getByText(/Pièce justificative 0/i);
+  fireEvent.click(nomFichier);
+  setTimeout(() => {
+    expect(handleClickButton).toHaveBeenCalledTimes(1);
+  }, 75);
 });
