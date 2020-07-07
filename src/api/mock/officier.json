@@ -1,4 +1,9 @@
 {
   "nom": "Garisson",
-  "prenom": "Juliette"
+  "prenom": "Juliette",
+  "trigramme": "JGA",
+  "service": "SCEC",
+  "departement": "Exploitation",
+  "bureau": "Bureau 1",
+  "section": "Section 2"
 }

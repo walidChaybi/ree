@@ -24,6 +24,7 @@ test("renders page d'accueil", () => {
   expect(titleElements).toHaveLength(1);
   expect(titleElements.get(0).props.titleId).toBe("pages.accueil.titre");
   const textElements = wrapper.find(Text);
-  expect(textElements).toHaveLength(1);
+  expect(textElements).toHaveLength(2);
   expect(textElements.get(0).props.messageId).toBe("pages.accueil.bienvenue");
+  expect(textElements.get(1).props.messageId).toBe("pages.accueil.affectation");
 });

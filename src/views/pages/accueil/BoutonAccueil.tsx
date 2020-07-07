@@ -48,7 +48,7 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
           <FontAwesomeIcon
             className={"IconeBouton" + (disabled ? " Disabled" : "")}
             icon={iconFA}
-            title={getText(titleId)}
+            title={disabled ? "" : getText(titleId)}
             data-testid="IconAccueil"
             aria-labelledby={getText(titleId)}
           />

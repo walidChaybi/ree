@@ -4,9 +4,14 @@
   font-weight: bold;
 }
 
+.Affectation {
+  font-size: 1.3rem;
+}
+
 .MenuAccueil {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  padding-top: 3rem;
 }

@@ -71,8 +71,10 @@ test("renders des 2 titles du bouton d'accueil", () => {
   );
   const boutonElement = screen.getAllByText(/Bouton Menu/i);
   const iconElement = screen.getByTestId("IconAccueil");
-  expect(boutonElement[0].textContent).toBe("⚠ Title Bouton Menu");
-  expect(iconElement.textContent).toBe("⚠ Title Bouton Menu");
+  expect(boutonElement[0].title).toBe("⚠ Title Bouton Menu");
+  setTimeout(() => {
+    expect(iconElement.title).toBe("⚠ Title Bouton Menu");
+  }, 75);
 });
 
 test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
