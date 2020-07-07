@@ -13,7 +13,7 @@ test("Appel d'api retournant le contenu d'une pièce justificative", async () =>
     pieceJustificative.mimeType
   );
   expect(resultApi).toBeInstanceOf(Blob);
-  expect(resultApi.size).toBe(151807);
+  expect(resultApi.size).toBe(385179);
   expect(resultApi.type).toBe("image/png");
 });
 

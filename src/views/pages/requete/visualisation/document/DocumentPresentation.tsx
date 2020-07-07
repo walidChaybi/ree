@@ -14,14 +14,12 @@ import List from "@material-ui/core/List";
 import "./sass/DocumentPresentation.scss";
 import "../sass/ResumeRequete.scss";
 import { requestDocumentApi } from "./DocumentRequeteHook";
-import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 import classNames from "classnames";
 import { IDocumentDetail } from "./interfaces/IDocumentDetail";
 
 interface IDocumentPresentationProps {
   titre: MessageId;
   documents: IDocumentDetail[];
-  highlighted?: boolean;
   documentVisible?: IDocumentDetail;
   setDocumentVisibleFct?: (document: IDocumentDetail) => void;
 }
@@ -29,7 +27,6 @@ interface IDocumentPresentationProps {
 export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
   titre,
   documents,
-  highlighted,
   documentVisible,
   setDocumentVisibleFct
 }) => {
@@ -37,8 +34,7 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
   const disclosure = useDisclosureState({ visible });
 
   const titleStyles = classNames({
-    title: true,
-    SpecificTitle: highlighted
+    title: true
   });
 
   return (
@@ -91,29 +87,24 @@ function onClickHandler(
     document.mimeType
   ).then(result => {
     const documentObjectURL = URL.createObjectURL(result);
-    if (
-      document.groupement === GroupementDocument.DocumentAsigner &&
-      stateSetter
-    ) {
-      lectureDuDocument(documentObjectURL);
+    lectureDuDocument(documentObjectURL);
+    if (stateSetter) {
       stateSetter(document);
-    } else {
-      window.open(documentObjectURL);
     }
   });
 }
 
 export function lectureDuDocument(documentObjectURL: string) {
-  const pdfViewer = document.querySelector("#pdfViewer");
-  const oldPdfElement = document.querySelector("#pdfViewer iframe");
-  if (oldPdfElement) {
-    pdfViewer?.removeChild(oldPdfElement);
+  const docRequeteViewer = document.querySelector("#docRequeteViewer");
+  const oldDocElement = document.querySelector("#docRequeteViewer iframe");
+  if (oldDocElement) {
+    docRequeteViewer?.removeChild(oldDocElement);
   }
-  const pdfElement = document.createElement("iframe");
-  pdfElement.src = documentObjectURL;
-  pdfElement.style.width = "100%";
-  pdfElement.style.height = "100%";
-  if (pdfViewer) {
-    pdfViewer.appendChild(pdfElement);
+  const docElement = document.createElement("iframe");
+  docElement.src = documentObjectURL;
+  docElement.style.width = "100%";
+  docElement.style.height = "100%";
+  if (docRequeteViewer) {
+    docRequeteViewer.appendChild(docElement);
   }
 }

@@ -41,7 +41,11 @@ export const ExtraitDocument: React.FC<IExtraitDocumentProps> = ({
       <DisclosureRegion {...disclosure} as={ExpansionPanelDetails}>
         {props =>
           disclosure.visible && (
-            <div {...props} id="pdfViewer" className={"DocumentDetailPanel"} />
+            <div
+              {...props}
+              id="docRequeteViewer"
+              className={"DocumentDetailPanel"}
+            />
           )
         }
       </DisclosureRegion>

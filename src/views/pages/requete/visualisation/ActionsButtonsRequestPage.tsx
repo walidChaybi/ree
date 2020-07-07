@@ -30,7 +30,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
             messageId={"boutons.retourMesRequetes"}
           />
         </div>
-        <div className="todo">
+        <div>
           <BoutonSignature
             libelle={"pages.requetes.apercu.signatureElectronique"}
           />

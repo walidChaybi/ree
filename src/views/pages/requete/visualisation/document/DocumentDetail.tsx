@@ -3,15 +3,13 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import IconButton from "@material-ui/core/IconButton";
-import VisibilityIcon from "@material-ui/icons/Visibility";
 import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
 import Image from "@material-ui/icons/Image";
 import { getText } from "../../../../common/widget/Text";
 import { IDocumentDetail } from "./interfaces/IDocumentDetail";
 import { lectureDuDocument } from "./DocumentPresentation";
 import { requestDocumentApi } from "./DocumentRequeteHook";
+import "./sass/DocumentDetail.scss";
 const byteSize = require("byte-size");
 
 interface IDocumentDetailProps {
@@ -19,7 +17,7 @@ interface IDocumentDetailProps {
   onClickHandler: (
     event: React.MouseEvent,
     document: IDocumentDetail,
-    stateSetter: ((document: IDocumentDetail) => void) | undefined
+    stateSetter?: (document: IDocumentDetail) => void
   ) => void;
   openedInViewer?: IDocumentDetail;
   stateSetter?: (document: IDocumentDetail) => void;
@@ -29,7 +27,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
   document,
   onClickHandler,
   openedInViewer,
-  stateSetter,
+  stateSetter
 }) => {
   useEffect(() => {
     if (openedInViewer === document) {
@@ -37,14 +35,24 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         document.identifiantDocument,
         document.groupement,
         document.mimeType
-      ).then((result) => {
+      ).then(result => {
         lectureDuDocument(URL.createObjectURL(result));
       });
     }
   }, [document, openedInViewer]);
 
   return (
-    <ListItem>
+    <ListItem
+      className="ListeDocument"
+      selected={
+        openedInViewer &&
+        openedInViewer.identifiantDocument === document.identifiantDocument
+      }
+      onClick={event => {
+        onClickHandler(event, document, stateSetter);
+      }}
+      title={getText("pages.requete.consultation.icon.visualiser")}
+    >
       <ListItemAvatar>
         {document.mimeType === "application/pdf" ? (
           <Avatar title={getText("pages.requete.consultation.icon.pdf")}>
@@ -64,24 +72,6 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
           document.taille
         )}
       />
-      <ListItemSecondaryAction>
-        <IconButton
-          title={getText("pages.requete.consultation.icon.visualiser")}
-          color={
-            openedInViewer &&
-            openedInViewer.identifiantDocument === document.identifiantDocument
-              ? "primary"
-              : "default"
-          }
-          edge="end"
-          aria-label="consulter"
-          onClick={(event) => {
-            onClickHandler(event, document, stateSetter);
-          }}
-        >
-          <VisibilityIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
     </ListItem>
   );
 };

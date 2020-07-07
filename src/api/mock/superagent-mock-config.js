@@ -1,5 +1,6 @@
 // ./superagent-mock-config.js file
-const mockResponse = require("./base64.json");
+const mockPdf = require("./pdf-base64.json");
+const mockPng = require("./png-base64.json");
 const mockRequetes = require("./generateurRequetes.ts").generateurRequetes();
 
 module.exports = [
@@ -170,7 +171,12 @@ module.exports = [
 
       if (
         match[1] ===
-          "/piecesjustificatives/e496f1d1-18c3-48ca-ae87-e97582fbf188" ||
+        "/piecesjustificatives/e496f1d1-18c3-48ca-ae87-e97582fbf188"
+      ) {
+        return { data: mockPng.data };
+      }
+
+      if (
         match[1] ===
           "/piecesjustificatives/a70237ca-83e5-4f6f-ac86-ec15086c5e3e" ||
         match[1] ===
@@ -189,7 +195,7 @@ module.exports = [
           "/documentsdelivres/g9279c00-5d2b-11ea-bc55-0242ac139999" ||
         match[1] === "/documentsdelivres/24557a3c-60e3-432e-82fb-0ac8f1609997"
       ) {
-        return { data: mockResponse.data };
+        return { data: mockPdf.data };
       }
 
       if (
