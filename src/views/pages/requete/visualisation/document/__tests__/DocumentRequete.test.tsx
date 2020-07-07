@@ -11,11 +11,9 @@ test("renders documents d'une requete", async () => {
       documentsDelivres={requetes.data[0].reponse.documentsDelivres}
     />
   );
-  let nomAccordion = screen.getByText(/Pièces Justificatives/i);
-  expect(nomAccordion).toBeInTheDocument();
+  let nomAccordeon = screen.getByText(/Pièces Justificatives/i);
+  expect(nomAccordeon).toBeInTheDocument();
 
-  nomAccordion = screen.getByText(/Courrier d'accompagnement/i);
-  expect(nomAccordion).toBeInTheDocument();
-  nomAccordion = screen.getByText(/Document à signer/i);
-  expect(nomAccordion).toBeInTheDocument();
+  nomAccordeon = screen.getByText(/Document à délivrer/i);
+  expect(nomAccordeon).toBeInTheDocument();
 });

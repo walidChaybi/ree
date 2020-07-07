@@ -97,11 +97,8 @@
           "titre": "Pièces justificatives de la requête",
           "nomFichier": "Pièce justificative ${0}"
         },
-        "courrierAccompagnement": {
-          "titre": "Courrier d'accompagnement"
-        },
-        "documentASigner": {
-          "titre": "Document à signer"
+        "documentsADelivres": {
+          "titre": "Document à délivrer"
         },
         "icon": {
           "pdf": "Fichier au format PDF",
