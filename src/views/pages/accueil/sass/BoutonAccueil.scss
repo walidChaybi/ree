@@ -2,6 +2,7 @@
   margin: 2rem;
 
   button {
+    position: relative;
     font-size: 1.5rem;
     background-color: #0579be;
     padding: 1.5rem 1.5rem 1.5rem 2.5rem;
@@ -9,8 +10,8 @@
     border-radius: 10px;
     text-transform: none;
     font-weight: 500;
-    width: 250px;
-    max-width: 250px;
+    width: 275px;
+    max-width: 275px;
     height: 120px;
     max-height: 120px;
     text-shadow: 1px 1px 0px #03476e;
@@ -18,7 +19,6 @@
 
     &:disabled {
       background-color: #586980;
-      cursor: not-allowed;
     }
   }
 
@@ -47,7 +47,7 @@
 
     &.Disabled {
       background-color: #323e4a;
-      cursor: not-allowed;
+      cursor: default;
     }
   }
 

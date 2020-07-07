@@ -122,20 +122,25 @@
     },
     "accueil": {
       "titre": "Accueil",
-      "bienvenue": "Bienvenue",
+      "bienvenue": "Bienvenue ${0} ${1} - (${2})",
+      "affectation": "${0} - ${1} - ${2} - ${3}",
       "boutons": {
-        "requetes": "Mes requêtes",
-        "service": "Requêtes de service",
-        "messagerie": "Messagerie",
-        "multicriteres": "Recherche multicritères",
-        "saisie": "Saisie d'une requête"
+        "delivrance": "Espace délivrance",
+        "miseAJour": "Espace mise à jour",
+        "creation": "Espace création",
+        "communication": "Communication avec les usagers",
+        "requete": "Rechercher une requête",
+        "acte": "Rechercher un acte",
+        "tableau": "Tableau de bord"
       },
       "titles": {
-        "requetes": "Bouton pour accèder à mes requêtes",
-        "service": "Bouton pour accèder aux requêtes de service",
-        "messagerie": "Bouton pour accèder à la Messagerie",
-        "multicriteres": "Bouton pour accèder à la recherche multicritères",
-        "saisie": "Bouton pour accèder à la saisie d'une requête"
+        "delivrance": "Bouton pour accèder à l'espace délivrance",
+        "miseAJour": "Bouton pour accèder à l'espace mise à jour",
+        "creation": "Bouton pour accèder à l'espace création",
+        "communication": "Bouton pour accèder à la communication avec les usagers",
+        "requete": "Bouton pour accèder à la recherche d'une requête",
+        "acte": "Bouton pour accèder à la recherche d'un acte",
+        "tableau": "Bouton pour accèder au tableau de bord"
       }
     }
   }
