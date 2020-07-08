@@ -16,6 +16,7 @@ import {
   IDocumentDelivre
 } from "./visualisation/RequeteType";
 import { ApiEndpoints } from "../../router/UrlManager";
+import { Motif } from "../../../model/requete/Motif";
 
 export interface IRequerantApi {
   adresse: string;
@@ -57,6 +58,7 @@ export interface IRequeteApi {
   moisEvenement: number;
   natureActe: NatureActe;
   canal: Canal;
+  motif: Motif;
   nbExemplaire: number;
   paysEvenement: string;
   piecesJustificatives: IPieceJustificative[];
@@ -184,6 +186,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     requerant: data.requerant,
     titulaires: data.titulaires,
     canal: data.canal,
+    motif: data.motif,
     piecesJustificatives: data.piecesJustificatives,
     reponse: data.reponse
   };

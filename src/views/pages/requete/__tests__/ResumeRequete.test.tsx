@@ -10,13 +10,13 @@ test("renders titre résumé requete", () => {
   act(() => {
     render(<ResumeRequete requete={DONNEES_REQUETE} />);
     const titre = screen.getByText(/Résumé de/i);
-    expect(titre.textContent).toBe("Résumé de la requête");
+    expect(titre.textContent).toBe("Résumé de la requête11982");
   });
 });
 
 test("renders résumé requete hidding", () => {
   const resumeRequete = mount(<ResumeRequete requete={DONNEES_REQUETE} />);
-  expect(resumeRequete.find(".resume-requete-content")).toHaveLength(1);
+  expect(resumeRequete.find(".resume-requete-content")).toHaveLength(2);
 
   resumeRequete
     .find(".MuiExpansionPanelSummary-expandIcon")

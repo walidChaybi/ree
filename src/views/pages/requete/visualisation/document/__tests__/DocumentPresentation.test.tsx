@@ -19,7 +19,7 @@ test("renders pieces justificatives vide dans leur accordéon", async () => {
   const linkElement = screen.getByText(/Pièces Justificatives/i);
   expect(linkElement).toBeInTheDocument();
 
-  const nomFichier = await screen.queryAllByText(/Pièce Justificative 0/i);
+  const nomFichier = screen.queryAllByText(/Pièce Justificative 0/i);
   expect(nomFichier.length).toBe(0);
 });
 
@@ -33,9 +33,9 @@ test("renders 2 pieces justificatives dans leur accordéon", async () => {
   const linkElement = screen.getByText(/Pièces Justificatives/i);
   expect(linkElement).toBeInTheDocument();
 
-  let nomFichier = await screen.queryAllByText(/Pièce justificative 0/i);
+  let nomFichier = screen.queryAllByText(/Pièce justificative 0/i);
   expect(nomFichier.length).toBe(1);
-  nomFichier = await screen.queryAllByText(/Pièce justificative 1/i);
+  nomFichier = screen.queryAllByText(/Pièce justificative 1/i);
   expect(nomFichier.length).toBe(1);
 });
 

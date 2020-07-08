@@ -8,6 +8,6 @@ import { act } from "react-dom/test-utils";
 test("renders contenu requete avec resumé requete", () => {
   act(() => {
     const contenuRequete = mount(<ContenuRequete requete={DONNEES_REQUETE} />);
-    expect(contenuRequete.find(".resume-requete-content")).toHaveLength(1);
+    expect(contenuRequete.find(".resume-requete-content")).toHaveLength(2);
   });
 });

@@ -139,13 +139,20 @@ export const RequeteTableau: React.FC = () => {
         </Box>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 15, 20]}
+        rowsPerPageOptions={[15, 20, 30]}
         component="div"
         count={rowsNumberState}
         rowsPerPage={rowsPerPageState}
         labelRowsPerPage={getText("pagination.rowsPerPage", [
           getText("pages.requetes.tableau.pagination.donneePaginee")
         ])}
+        labelDisplayedRows={({ from, to, count }) =>
+          getText("pages.requetes.tableau.pagination.navigationLabel", [
+            from,
+            to,
+            count
+          ])
+        }
         page={pageState > 0 && rowsNumberState === 0 ? 0 : pageState}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}

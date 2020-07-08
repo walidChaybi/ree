@@ -10,6 +10,20 @@
     "GRECO": "GRECO",
     "MICADO": "MICADO"
   },
+  "motif": {
+    "AUTRE": "Autre",
+    "CERTIFICAT_NATIONALITE_FRANCAISE": "Certificat de nationalité française",
+    "DECLARATION_ACQUISITION_NATIONALITE_FRANCAISE": "Déclaration d'acquisition de nationalité française",
+    "DIVORCE_CONTENTIEUX": "Divorce / Contentieux",
+    "GENEALOGIE": "Généalogie",
+    "MARIAGE_PACS": "Mariage / Pacs",
+    "PAPIERS_IDENTITE_PASSEPORT": "Papiers d'identité / Passeport",
+    "PENSION_REVERSION": "Pension de réversion",
+    "PRESTATIONS_SOCIALES_FAMILIALES": "Prestations sociales ou familiales",
+    "RETRAITE": "Retraite",
+    "TITRE_SEJOUR_VISA_ETRANGER": "Titre de séjour / Visa étranger",
+    "SUCCESSION": "Succession"
+  },
   "natureActe": {
     "NAISSANCE": "Naissance",
     "MARIAGE": "Mariage",

@@ -110,6 +110,8 @@
     "start:mock": "REACT_APP_MOCK=true node scripts/start.js",
     "build": "node scripts/build.js",
     "test:dev": "node scripts/test.js --watchAll",
+    "test:dev:update": "node scripts/test.js --watchAll -u",
+    "test:dev:coverage": "node scripts/test.js --watchAll --coverage",
     "test": "CI=true node scripts/test.js --coverage",
     "package": "node scripts/build.js"
   },
@@ -120,8 +122,7 @@
     ],
     "collectCoverageFrom": [
       "!<rootDir>/src/serviceWorker.ts",
-      "!<rootDir>/src/**/superagent-mock-config.js",
-      "**/*.{js,jsx,ts,tsx}",
+      "**/*.{ts,tsx}",
       "!**/*.d.ts"
     ],
     "setupFiles": [

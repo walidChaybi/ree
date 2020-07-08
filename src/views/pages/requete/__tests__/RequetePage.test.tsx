@@ -115,6 +115,6 @@ test("renders Page requete change url", () => {
     fireEvent.click(rightButton!);
     setTimeout(() => {
       expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
-    }, 75);
+    }, 175);
   });
 });

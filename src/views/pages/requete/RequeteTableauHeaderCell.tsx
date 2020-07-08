@@ -11,6 +11,7 @@ import { ITitulaire, IPieceJustificative } from "./visualisation/RequeteType";
 import { NatureActe } from "../../../model/requete/NatureActe";
 import { Canal } from "../../../model/Canal";
 import { IRequerantApi, IReponseApi } from "./DonneesRequeteHook";
+import { Motif } from "../../../model/requete/Motif";
 
 export type DataTable =
   | "idSagaDila"
@@ -36,6 +37,7 @@ export interface IDataTable {
   villeEvenement: string;
   paysEvenement: string;
   canal: Canal;
+  motif: Motif;
   requerant: IRequerantApi;
   titulaires: ITitulaire[];
   piecesJustificatives: IPieceJustificative[];

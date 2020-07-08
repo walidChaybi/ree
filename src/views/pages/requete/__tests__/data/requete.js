@@ -2,6 +2,7 @@ import { NatureActe } from "../../../../../model/requete/NatureActe";
 import { QualiteRequerant } from "../../../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../../../model/requete/SousQualiteRequerant";
 import { Canal } from "../../../../../model/Canal";
+import { Motif } from "../../../../../model/requete/Motif";
 
 export default {
   idRequete: "204b8563-c7f8-4748-9daa-f26558985894",
@@ -16,6 +17,7 @@ export default {
   villeEvenement: "fez",
   paysEvenement: "maroc",
   canal: Canal.Internet,
+  motif: Motif.PapiersIdentitePasseport,
   piecesJustificatives: [],
   requerant: {
     adresse: "",
@@ -26,7 +28,7 @@ export default {
     qualiteRequerant: QualiteRequerant.PARTICULIER,
     requete: "",
     typeRequerant: SousQualiteRequerant.Titulaire,
-    telephone: "0777327569",
+    telephone: "0777327569"
   },
   titulaires: [
     {
@@ -44,7 +46,7 @@ export default {
       paysNaissance: "maroc",
       parent1: "",
       parent2: "",
-      requete: "",
+      requete: ""
     },
     {
       idTitulaire: "tutulaire2",
@@ -61,8 +63,8 @@ export default {
       paysNaissance: "france",
       parent1: "",
       parent2: "",
-      requete: "",
-    },
+      requete: ""
+    }
   ],
   reponse: {
     idReponse: "1d189cd9-0df0-45dc-a4cf-0174eb62cbbc",
@@ -78,6 +80,6 @@ export default {
     prenomOec: "Juliette",
     commentaire: "",
     documentsDelivres: [],
-    requete: "",
-  },
+    requete: ""
+  }
 };

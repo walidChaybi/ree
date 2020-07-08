@@ -42,17 +42,26 @@
             "PACS": "Délivrance d'extrait d'acte de PACS"
           },
           "numeroRequete": "Requête n°",
-          "canal": "Canal",
           "etat": "Etat",
-          "service": "Service"
+          "service": "Service",
+          "canal": "Canal"
         },
         "resume": {
           "titre": "Résumé de la requête",
-          "raisSoc": "Requérant/raison sociale",
+          "sousType": "Sous-type",
+          "nom": "Nom",
+          "prenom": "Prénom",
+          "dateNaissance": "Né(e) le :",
+          "titulaire1": "Info titulaire 1",
+          "titulaire2": "Info titulaire 2",
+          "nature": "Nature",
           "dateEvent": "Date de l'évenement",
           "lieuEvent": "Lieu de l'évenement",
-          "titulaire": "Titulaire",
-          "lienTitulaire": "Lien avec le titulaire"
+          "document": "Document",
+          "motif": "Motif",
+          "canal": "Canal",
+          "nomRequerant": "Nom requérant",
+          "prenomRequerant": "Prénom requérant"
         },
         "bouton": {
           "left": "Requête précédente",
@@ -87,7 +96,8 @@
           }
         },
         "pagination": {
-          "donneePaginee": "Requêtes"
+          "donneePaginee": "Requêtes",
+          "navigationLabel": "${0}-${1} sur ${2}"
         }
       }
     },

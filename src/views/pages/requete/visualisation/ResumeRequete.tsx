@@ -31,10 +31,10 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = ({ requete }) => {
           expandIcon={<ExpandMoreIcon />}
         >
           <Text messageId={"pages.requetes.apercu.resume.titre"} />
+          <div className="identifiantRequete">{requete.idSagaDila}</div>
         </ExpansionPanelSummary>
       </Disclosure>
 
-      {/* instead of {disclosure.visible && <DisclosureRegion {...disclosure}>Content</DisclosureRegion>} */}
       <DisclosureRegion {...disclosure} as={ExpansionPanelDetails}>
         {props =>
           disclosure.visible && <ResumeRequeteContent requete={requete} />

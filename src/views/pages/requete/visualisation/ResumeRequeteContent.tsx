@@ -2,6 +2,7 @@ import React from "react";
 import { Text } from "../../../common/widget/Text";
 import "./sass/ResumeRequeteContent.scss";
 import { IDataTable } from "../RequeteTableauHeaderCell";
+import { TitulaireInformation } from "./TitulaireInformation";
 
 interface ResumeRequeteContentProps {
   requete: IDataTable;
@@ -9,50 +10,86 @@ interface ResumeRequeteContentProps {
 
 export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props => {
   return (
-    <div className="resume-requete-content">
-      <div className="bloc-info">
-        <div className="label">
-          <Text messageId={"pages.requetes.apercu.resume.raisSoc"} />
+    <>
+      <div className="resume-requete-content">
+        <div className="bloc-info">
+          <div className="label">
+            <Text messageId={"pages.requetes.apercu.resume.sousType"} />
+          </div>
+          <div className="capital personnal-info">
+            <Text
+              messageId={`referentiel.sousTypeRequete.${props.requete.sousTypeRequete}`}
+            />
+          </div>
         </div>
-        <div className="capital personnal-info">{`${props.requete.requerant.nomOuRaisonSociale} ${props.requete.requerant.prenomUsage}`}</div>
+        {props.requete.titulaires.map((titulaire, index) => {
+          return (
+            <TitulaireInformation
+              key={`titulaire${index + 1}Information`}
+              titulaire={titulaire}
+              position={index + 1}
+            />
+          );
+        })}
+        <div className="bloc-info">
+          <div className="label">
+            <Text messageId={"pages.requetes.apercu.resume.nature"} />
+          </div>
+          <div className="capital personnal-info">
+            <Text
+              messageId={`referentiel.natureActe.${props.requete.natureActe}`}
+            />
+          </div>
+        </div>
+        <div className="bloc-info">
+          <div className="label">
+            <Text messageId={"pages.requetes.apercu.resume.dateEvent"} />
+          </div>
+          <div className="personnal-info">{props.requete.dateCreation}</div>
+        </div>
+        <div className="bloc-info">
+          <div className="label">
+            <Text messageId={"pages.requetes.apercu.resume.lieuEvent"} />
+          </div>
+          <div className="capital personnal-info no-justify-info">{`${props.requete.villeEvenement}, ${props.requete.paysEvenement}`}</div>
+        </div>
+        <div className="bloc-info">
+          <div className="label">
+            <Text messageId={"pages.requetes.apercu.resume.motif"} />
+          </div>
+          <div className="personnal-info no-justify-info">
+            {props.requete.motif && (
+              <Text messageId={`referentiel.motif.${props.requete.motif}`} />
+            )}
+          </div>
+        </div>
+        <div className="bloc-info">
+          <div className="label">
+            <Text messageId={"pages.requetes.apercu.resume.canal"} />
+          </div>
+          <div className="capital personnal-info">
+            <Text messageId={`referentiel.canal.${props.requete.canal}`} />
+          </div>
+        </div>
       </div>
-      <div className="bloc-info">
-        <div className="label">
-          <Text messageId={"pages.requetes.apercu.resume.dateEvent"} />
+      <div className="resume-requete-content">
+        <div className="bloc-info">
+          <div className="label">
+            <Text messageId={"pages.requetes.apercu.resume.nomRequerant"} />
+          </div>
+          <div className="capital personnal-info">
+            {props.requete.requerant.nomOuRaisonSociale}
+          </div>
         </div>
-        <div className="personnal-info">{props.requete.dateCreation}</div>
-      </div>
-      <div className="bloc-info">
-        <div className="label">
-          <Text messageId={"pages.requetes.apercu.resume.lieuEvent"} />
-        </div>
-        <div className="capital personnal-info">{`${props.requete.villeEvenement}, ${props.requete.paysEvenement}`}</div>
-      </div>
-      {props.requete.titulaires.map(titulaire => {
-        return (
-          <React.Fragment
-            key={`${titulaire.nomUsage}-${titulaire.moisNaissance}-${titulaire.paysNaissance}`}
-          >
-            <div className="bloc-info">
-              <div className="label">
-                <Text messageId={"pages.requetes.apercu.resume.titulaire"} />
-                {` ${titulaire.position} `}
-              </div>
-              <div className="capital personnal-info">{`${titulaire.nomNaissance} ${titulaire.prenom1}`}</div>
-            </div>
-          </React.Fragment>
-        );
-      })}
-      <div className="bloc-info">
-        <div className="label">
-          <Text messageId={"pages.requetes.apercu.resume.lienTitulaire"} />
-        </div>
-        <div className="personnal-info">
-          <Text
-            messageId={`referentiel.sousQualiteRequerant.${props.requete.requerant.typeRequerant}`}
-          />
+        <div className="bloc-info">
+          <div className="label">
+            <Text messageId={"pages.requetes.apercu.resume.prenomRequerant"} />
+          </div>
+          <div className="capital personnal-info">
+            {props.requete.requerant.prenomUsage}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
