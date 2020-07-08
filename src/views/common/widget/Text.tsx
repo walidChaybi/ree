@@ -16,7 +16,10 @@ export const Text: React.FC<ITextProps> = ({ messageId, values }) => {
   return <>{getText(messageId, values)}</>;
 };
 
-export function getText(messageId: string, values?: string[]): string {
+export function getText(
+  messageId: string,
+  values?: string[] | number[]
+): string {
   const keys = messageId.split(".");
   let node: any = ressources;
   keys.forEach((element: string) => {
@@ -24,8 +27,9 @@ export function getText(messageId: string, values?: string[]): string {
   });
   let message: string = node;
   if (values && node) {
-    values.forEach((value, index) => {
-      message = message.replace("${" + index + "}", value);
+    values.forEach((value: string | number, index: number) => {
+      const valueToUse = typeof value === "number" ? value.toString() : value;
+      message = message.replace("${" + index + "}", valueToUse);
     });
   }
   return message || `⚠ ${messageId}`;

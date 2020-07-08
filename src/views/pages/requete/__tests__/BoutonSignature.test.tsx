@@ -10,10 +10,12 @@ test("renders titre bouton signature", () => {
 
 test("renders message indisponibilité", () => {
   render(<BoutonSignature libelle={"pages.requetes.action.signature"} />);
-  const linkElement = screen.getByText(
-    /Le service de signature électronique est indisponible/i
-  );
-  expect(linkElement).toBeInTheDocument();
+  setTimeout(() => {
+    const linkElement = screen.getByText(
+      /Le service de signature électronique est indisponible/i
+    );
+    expect(linkElement).toBeInTheDocument();
+  }, 175);
 });
 
 test("renders message indisponibilité après click", () => {

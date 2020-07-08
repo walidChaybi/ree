@@ -61,8 +61,7 @@ button {
     background-color: rgba(75, 75, 75, 0.87);
   }
 
-  &:focus,
-  &:hover {
+  &:focus {
     box-shadow: 0 0 0 2pt $border-focus;
   }
 }

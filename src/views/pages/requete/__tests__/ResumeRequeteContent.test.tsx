@@ -16,7 +16,7 @@ test("renders raison sociale, lieu évenement", () => {
   render(<ResumeRequeteContent requete={DONNEES_REQUETE} />);
   const raisonSociale = screen.getByText(/aubin/i);
   const fez = screen.getByText(/fez/i);
-  expect(raisonSociale.textContent).toBe("aubin nicolas");
+  expect(raisonSociale.textContent).toBe("aubin");
   expect(fez.textContent).toBe("fez, maroc");
 });
 
