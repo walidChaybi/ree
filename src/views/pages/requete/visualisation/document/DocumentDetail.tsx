@@ -30,7 +30,10 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
   stateSetter
 }) => {
   useEffect(() => {
-    if (openedInViewer === document) {
+    if (
+      openedInViewer &&
+      openedInViewer.identifiantDocument === document.identifiantDocument
+    ) {
       requestDocumentApi(
         document.identifiantDocument,
         document.groupement,
