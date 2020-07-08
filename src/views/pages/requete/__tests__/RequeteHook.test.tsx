@@ -5,22 +5,16 @@ import request from "superagent";
 import config from "../../../../api/mock/superagent-mock-config";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteApi } from "../DonneesRequeteHook";
+import officier from "../../../../api/mock/officier.json";
+
 const superagentMock = require("superagent-mock")(request, config);
 
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const {
-    dataState = [],
-    rowsNumberState = 0,
-    previousDataLinkState,
-    nextDataLinkState,
-    minRangeState = 0,
-    maxRangeState = 0,
-    errorState
-  } = useRequeteApi({
-    nomOec: "Garisson",
-    prenomOec: "Juliette",
+  const { dataState = [] } = useRequeteApi({
+    nomOec: officier.nom,
+    prenomOec: officier.prenom,
     statut: StatutRequete.ASigner,
     tri: "idSagaDila",
     sens: "ASC"

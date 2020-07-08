@@ -22,6 +22,7 @@ import { Text, getText } from "../../common/widget/Text";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { IDataTable } from "./RequeteTableauHeaderCell";
+import officier from "../../../api/mock/officier.json";
 
 export const RequeteTableau: React.FC = () => {
   const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("ASC");
@@ -34,8 +35,8 @@ export const RequeteTableau: React.FC = () => {
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    nomOec: "Garisson",
-    prenomOec: "Juliette",
+    nomOec: officier.nom,
+    prenomOec: officier.prenom,
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
     sens: sortOrderState

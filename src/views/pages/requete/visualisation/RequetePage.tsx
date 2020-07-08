@@ -8,6 +8,7 @@ import { ActionsButtonsRequestPage } from "./ActionsButtonsRequestPage";
 import { useRequeteDataApi } from "./DonneeRequeteHook";
 import { AppUrls } from "../../../router/UrlManager";
 import { Title } from "../../../core/title/Title";
+import officier from "../../../../api/mock/officier.json";
 
 export interface RequestsInformations {
   data: IDataTable[];
@@ -27,8 +28,8 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
   // TODO mettre les vraies valeurs quand on aura le WS d'auth
   const { dataState } = useRequeteDataApi(
     {
-      nomOec: "Garisson",
-      prenomOec: "Juliette",
+      nomOec: officier.nom,
+      prenomOec: officier.prenom,
       statut: StatutRequete.ASigner,
       idRequete: props.match.params.idRequete
     },
