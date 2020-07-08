@@ -4,6 +4,13 @@
   border-radius: 0.25rem;
   text-align: justify;
   width: 100%;
+
+  .bleu {
+    background-color: #0579be;
+  }
+  .gris {
+    background-color: gray;
+  }
   h1 {
     background-color: $application-color;
     padding: 0.5em 1em 0.5em 1.325em;
@@ -25,5 +32,6 @@
   }
   .Entete {
     border-radius: 0.25em 0.25em 0 0;
+    text-transform: none;
   }
 }

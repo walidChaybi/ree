@@ -29,23 +29,18 @@
     "requetes": {
       "apercu": {
         "titre": "Aperçu de la requête",
+        "entete": {
+          "libelle": "${0} Le ${3} par ${1} ${2}",
+          "traitee": "Requête traitée par : ${0} ${1} - Le : ${2}",
+          "priseEnCharge": "Requête prise en charge par : ${0} ${1} - Le : ${2}",
+          "aTraiterAttribuee": "Requête à traiter, attribuée à ${0} ${1} - Le ${2}",
+          "aTraiterNonAttribuee": "Requête à traiter non attribuée - Créée le ${0}",
+          "enDoublon": "Requête en doublon, requête déjà en cours avec le N° suivant : ${0} - Le ${1}",
+          "transferee": "Requête transférée à ${0} ${1} - Le ${2}",
+          "aSigner": "Requête à signer le ${2} par ${0} ${1}"
+        },
         "commentaires": "Commentaires",
         "signatureElectronique": "Signer électroniquement",
-        "etat": {
-          "titre": {
-            "MARIAGE": "Délivrance d'extrait d'acte de mariage dématérialisé",
-            "NAISSANCE": "Délivrance d'extrait d'acte de naissance dématérialisé",
-            "DECES": "Délivrance d'extrait d'acte de décès dématérialisé",
-            "ADOPTION_SIMPLE": "Délivrance d'extrait d'acte d'adoption simple",
-            "ABSENCE": "Délivrance d'extrait d'acte d'abscence",
-            "RECONNAISSANCE": "Délivrance d'extrait d'acte de reconnaissance",
-            "PACS": "Délivrance d'extrait d'acte de PACS"
-          },
-          "numeroRequete": "Requête n°",
-          "etat": "Etat",
-          "service": "Service",
-          "canal": "Canal"
-        },
         "resume": {
           "titre": "Résumé de la requête",
           "sousType": "Sous-type",

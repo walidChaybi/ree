@@ -1,9 +1,12 @@
 export enum StatutRequete {
+  Brouillon = "BROUILLON",
   Doublon = "DOUBLON",
   ATraiter = "A_TRAITER",
+  PriseEnCharge = "PRISE_EN_CHARGE",
+  Transferee = "TRANSFEREE",
   ASigner = "A_SIGNER",
-  ATraiterDemat = "A_TRAITER_DEMAT",
-  TraiteDemat = "TRAITE_DEMAT",
-  AImprimer = "A_IMPRIMER",
+  TraiteADelivrerDemat = "TRAITE_A_DELIVRER_DEMAT",
+  TraiteDelivreDemat = "TRAITE_DELIVRE_DEMAT",
+  TraiteAImprimer = "TRAITE_A_IMPRIMER",
   TraiteImprime = "TRAITE_IMPRIME"
 }
