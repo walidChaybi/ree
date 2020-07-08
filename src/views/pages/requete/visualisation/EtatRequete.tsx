@@ -1,43 +1,109 @@
 import React from "react";
 import "./sass/EtatRequete.scss";
-import { Text } from "../../../common/widget/Text";
+import { getText } from "../../../common/widget/Text";
 import { IDataTable } from "../RequeteTableauHeaderCell";
+import { StatutRequete } from "../../../../model/requete/StatutRequete";
+import { IReponseApi } from "../DonneesRequeteHook";
+import classNames from "classnames";
 
 interface EtatRequeteProps {
   requete: IDataTable;
 }
 
 export const EtatRequete: React.FC<EtatRequeteProps> = props => {
+  const statut = props.requete.statut as StatutRequete;
+  const styles = classNames({
+    bleu:
+      statut === StatutRequete.ATraiter ||
+      statut === StatutRequete.PriseEnCharge ||
+      statut === StatutRequete.Transferee,
+    gris:
+      statut === StatutRequete.Doublon ||
+      statut === StatutRequete.TraiteADelivrerDemat ||
+      statut === StatutRequete.TraiteAImprimer ||
+      statut === StatutRequete.TraiteDelivreDemat ||
+      statut === StatutRequete.TraiteImprime,
+    Entete: true
+  });
   return (
     <div className="etat-requete">
-      <h1 className="Entete">
-        <Text
-          messageId={`pages.requetes.apercu.etat.titre.${props.requete.natureActe}`}
-        />
-      </h1>
-
-      <div>
-        <span>
-          <Text messageId={"pages.requetes.apercu.etat.numeroRequete"} />
-          {props.requete.idSagaDila}
-        </span>
-        <span className={"title"}>
-          <Text messageId={"pages.requetes.apercu.etat.canal"} />
-          {`: `}
-        </span>
-        <span>
-          <Text messageId={`referentiel.canal.${props.requete.canal}`} />
-        </span>
-        <span className={"title"}>
-          <Text messageId={"pages.requetes.apercu.etat.etat"} />
-          {`: `}
-        </span>
-        <span>
-          <Text
-            messageId={`referentiel.statutRequete.${props.requete.statut}`}
-          />
-        </span>
-      </div>
+      <h1 className={styles}>{getStatutLibelle(props.requete)}</h1>
     </div>
   );
+};
+
+const getRequeteTraiteeLibelle = (data: IDataTable) => {
+  return getText("pages.requetes.apercu.entete.traitee", [
+    data.reponse.prenomOec,
+    data.reponse.nomOec,
+    data.dateStatut
+  ]);
+};
+
+const isReponseAttribuee = (reponse: IReponseApi) => {
+  return reponse.prenomOec && reponse.nomOec;
+};
+
+const getStatutLibelle = (data: IDataTable) => {
+  switch (data.statut as StatutRequete) {
+    case StatutRequete.TraiteADelivrerDemat: {
+      return getRequeteTraiteeLibelle(data);
+    }
+    case StatutRequete.TraiteDelivreDemat: {
+      return getRequeteTraiteeLibelle(data);
+    }
+    case StatutRequete.TraiteAImprimer: {
+      return getRequeteTraiteeLibelle(data);
+    }
+    case StatutRequete.TraiteImprime: {
+      return getRequeteTraiteeLibelle(data);
+    }
+    case StatutRequete.PriseEnCharge: {
+      if (isReponseAttribuee(data.reponse)) {
+        return getText("pages.requetes.apercu.entete.priseEnCharge", [
+          data.reponse.prenomOec,
+          data.reponse.nomOec,
+          data.dateStatut
+        ]);
+      } else {
+        return "WARN ! Non spécifié";
+      }
+    }
+    case StatutRequete.ATraiter: {
+      if (isReponseAttribuee(data.reponse)) {
+        return getText("pages.requetes.apercu.entete.aTraiterAttribuee", [
+          data.reponse.prenomOec,
+          data.reponse.nomOec,
+          data.dateStatut
+        ]);
+      } else {
+        return getText("pages.requetes.apercu.entete.aTraiterNonAttribuee", [
+          data.dateCreation
+        ]);
+      }
+    }
+    case StatutRequete.Doublon: {
+      if (data.idRequeteInitiale) {
+        return getText("pages.requetes.apercu.entete.enDoublon", [
+          data.idRequeteInitiale.toString(),
+          data.dateCreation
+        ]);
+      }
+      break;
+    }
+    case StatutRequete.Transferee: {
+      return getText("pages.requetes.apercu.entete.transferee", [
+        data.reponse.prenomOec,
+        data.reponse.nomOec,
+        data.dateStatut
+      ]);
+    }
+    case StatutRequete.ASigner: {
+      return getText("pages.requetes.apercu.entete.aSigner", [
+        data.reponse.prenomOec,
+        data.reponse.nomOec,
+        data.dateStatut
+      ]);
+    }
+  }
 };

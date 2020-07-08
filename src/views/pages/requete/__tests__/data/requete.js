@@ -7,6 +7,7 @@ import { Motif } from "../../../../../model/requete/Motif";
 export default {
   idRequete: "204b8563-c7f8-4748-9daa-f26558985894",
   idSagaDila: 11982,
+  idRequeteInitiale: 11900,
   sousTypeRequete: "DELIVRANCE_COURRIER",
   provenance: "DILA",
   natureActe: NatureActe.Naissance,

@@ -27,6 +27,7 @@ export type DataTable =
 export interface IDataTable {
   idRequete: string;
   idSagaDila: number;
+  idRequeteInitiale?: number;
   sousTypeRequete: string;
   provenance: string;
   natureActe: NatureActe;

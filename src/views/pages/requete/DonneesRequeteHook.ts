@@ -54,6 +54,7 @@ export interface IRequeteApi {
   dateStatut: number;
   idRequete: string;
   idSagaDila: number;
+  idRequeteInitiale: number;
   jourEvenement: number;
   moisEvenement: number;
   natureActe: NatureActe;
@@ -178,6 +179,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     provenance: data.provenance,
     statut: data.statut,
     dateStatut: moment.unix(data.dateStatut).format("DD/MM/YYYY"),
+    idRequeteInitiale: data.idRequeteInitiale,
     sousTypeRequete: data.sousTypeRequete,
     natureActe: data.natureActe,
     prioriteRequete: "TODO",
