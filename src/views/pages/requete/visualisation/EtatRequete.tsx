@@ -34,8 +34,8 @@ export const EtatRequete: React.FC<EtatRequeteProps> = props => {
 
 const getRequeteTraiteeLibelle = (data: IDataTable) => {
   return getText("pages.delivrance.apercu.entete.traitee", [
-    data.reponse.prenomOec,
-    data.reponse.nomOec,
+    data.reponse?.prenomOec || "",
+    data.reponse?.nomOec || "",
     data.dateStatut
   ]);
 };
@@ -59,7 +59,7 @@ const getStatutLibelle = (data: IDataTable) => {
       return getRequeteTraiteeLibelle(data);
     }
     case StatutRequete.PriseEnCharge: {
-      if (isReponseAttribuee(data.reponse)) {
+      if (data.reponse && isReponseAttribuee(data.reponse)) {
         return getText("pages.delivrance.apercu.entete.priseEnCharge", [
           data.reponse.prenomOec,
           data.reponse.nomOec,
@@ -70,7 +70,7 @@ const getStatutLibelle = (data: IDataTable) => {
       }
     }
     case StatutRequete.ATraiter: {
-      if (isReponseAttribuee(data.reponse)) {
+      if (data.reponse && isReponseAttribuee(data.reponse)) {
         return getText("pages.delivrance.apercu.entete.aTraiterAttribuee", [
           data.reponse.prenomOec,
           data.reponse.nomOec,
@@ -93,15 +93,15 @@ const getStatutLibelle = (data: IDataTable) => {
     }
     case StatutRequete.Transferee: {
       return getText("pages.delivrance.apercu.entete.transferee", [
-        data.reponse.prenomOec,
-        data.reponse.nomOec,
+        data.reponse?.prenomOec || "",
+        data.reponse?.nomOec || "",
         data.dateStatut
       ]);
     }
     case StatutRequete.ASigner: {
       return getText("pages.delivrance.apercu.entete.aSigner", [
-        data.reponse.prenomOec,
-        data.reponse.nomOec,
+        data.reponse?.prenomOec || "",
+        data.reponse?.nomOec || "",
         data.dateStatut
       ]);
     }

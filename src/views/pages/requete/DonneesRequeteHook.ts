@@ -196,7 +196,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     canal: data.canal,
     motif: data.motif,
     piecesJustificatives: data.piecesJustificatives,
-    nomOec: `${data.reponse.prenomOec} ${data.reponse.nomOec}`,
+    nomOec: `${data.reponse?.prenomOec} ${data.reponse?.nomOec}`,
     typeActe: data.typeActe,
     reponse: data.reponse
   };

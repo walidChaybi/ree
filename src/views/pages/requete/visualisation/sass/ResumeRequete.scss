@@ -30,4 +30,15 @@
 
 .extrait {
   height: 100%;
+  border-radius: 0.25rem;
+  text-align: justify;
+  width: 100%;
+  .Panel {
+    background-color: $application-color;
+    padding: 0.5em 1em 0.5em 1.325em;
+    margin: 0em;
+    color: white;
+    font-weight: bold;
+    border-radius: 0.25em 0.25em 0 0;
+  }
 }

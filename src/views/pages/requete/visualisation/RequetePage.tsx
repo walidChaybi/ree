@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, RouteComponentProps } from "react-router-dom";
-import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { EtatRequete } from "./EtatRequete";
 import { ContenuRequete } from "./ContenuRequete";
 import { ActionsButtonsRequestPage } from "./ActionsButtonsRequestPage";
@@ -29,7 +28,6 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
     {
       nomOec: "Garisson",
       prenomOec: "Juliette",
-      statut: StatutRequete.ASigner,
       idRequete: props.match.params.idRequete
     },
     histoReq

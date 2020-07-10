@@ -8,7 +8,7 @@ import { IDataTable } from "../MesRequetesPage";
 export interface IQueryParametersPourRequete {
   nomOec: string;
   prenomOec: string;
-  statut: StatutRequete;
+  statut?: StatutRequete;
   idRequete: string;
 }
 
@@ -21,8 +21,10 @@ export function useRequeteDataApi(
   );
   const [errorState, setErrorState] = useState(undefined);
   useEffect(() => {
+    setErrorState(undefined);
+    setDataState([]);
     const api = ApiManager.getInstance("rece-requete-api", "v1");
-    if (requestsInformations == null) {
+    if (requestsInformations === undefined) {
       api
         .fetch({
           method: HttpMethod.GET,
@@ -30,16 +32,15 @@ export function useRequeteDataApi(
           parameters: {
             nomOec: queryParameters.nomOec,
             prenomOec: queryParameters.prenomOec,
-            statut: queryParameters.statut,
-          },
+            statut: queryParameters.statut
+          }
         })
-        .then((result) => {
-          setDataState([reponseRequeteMapperUnitaire(result.body.data)]);
-          setErrorState(undefined);
+        .then(result => {
+          const tmp = reponseRequeteMapperUnitaire(result.body.data);
+          setDataState([tmp]);
         })
-        .catch((error) => {
+        .catch(error => {
           setErrorState(error);
-          setDataState([]);
         });
     } else {
       setDataState(requestsInformations.data);
@@ -47,12 +48,11 @@ export function useRequeteDataApi(
   }, [
     queryParameters.nomOec,
     queryParameters.prenomOec,
-    queryParameters.statut,
     queryParameters.idRequete,
-    requestsInformations,
+    requestsInformations
   ]);
   return {
     dataState,
-    errorState,
+    errorState
   };
 }

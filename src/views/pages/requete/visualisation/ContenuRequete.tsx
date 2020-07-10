@@ -16,14 +16,11 @@ export const ContenuRequete: React.FC<ContenuRequeteProps> = props => {
         <ResumeRequete requete={props.requete} />
         <DocumentsRequete
           piecesJustificatives={props.requete.piecesJustificatives}
-          documentsDelivres={props.requete.reponse.documentsDelivres}
+          documentsDelivres={props.requete.reponse?.documentsDelivres || []}
         />
       </div>
       <div className="side right">
-        <ExtraitDocument
-          titre="pages.requete.consultation.extrait.titre"
-          highlighted={true}
-        />
+        <ExtraitDocument titre="pages.requete.consultation.extrait.titre" />
       </div>
     </div>
   );
