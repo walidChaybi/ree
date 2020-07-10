@@ -51,7 +51,7 @@ export interface IDataTable {
   piecesJustificatives: IPieceJustificative[];
   nomOec: string;
   typeActe: string;
-  reponse: IReponseApi;
+  reponse?: IReponseApi;
 }
 
 const columnsTableau = [

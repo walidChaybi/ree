@@ -7,6 +7,6 @@ export enum StatutRequete {
   ASigner = "A_SIGNER",
   TraiteADelivrerDemat = "TRAITE_A_DELIVRER_DEMAT",
   TraiteDelivreDemat = "TRAITE_DELIVRE_DEMAT",
-  TraiteAImprimer = "TRAITE_A_IMPRIMER",
+  TraiteAImprimer = "A_IMPRIMER",
   TraiteImprime = "TRAITE_IMPRIME"
 }
