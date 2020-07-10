@@ -109,12 +109,16 @@ test("renders Page requete change url", () => {
       button => button.id === "button-navigation-right"
     );
 
-    expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
-    fireEvent.click(leftButton!);
-    expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req1");
-    fireEvent.click(rightButton!);
     setTimeout(() => {
       expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
-    }, 175);
+      fireEvent.click(leftButton!);
+      setTimeout(() => {
+        expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req1");
+        fireEvent.click(rightButton!);
+        setTimeout(() => {
+          expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
+        }, 75);
+      }, 75);
+    }, 75);
   });
 });

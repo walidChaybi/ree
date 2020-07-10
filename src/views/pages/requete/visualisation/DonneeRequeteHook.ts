@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { ApiManager, HttpMethod } from "../../../../api/ApiManager";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { IDataTable } from "../RequeteTableauHeaderCell";
 import { reponseRequeteMapperUnitaire } from "../DonneesRequeteHook";
 import { RequestsInformations } from "./RequetePage";
 import { ApiEndpoints } from "../../../router/UrlManager";
+import { IDataTable } from "../MesRequetesPage";
 export interface IQueryParametersPourRequete {
   nomOec: string;
   prenomOec: string;
@@ -30,14 +30,14 @@ export function useRequeteDataApi(
           parameters: {
             nomOec: queryParameters.nomOec,
             prenomOec: queryParameters.prenomOec,
-            statut: queryParameters.statut
-          }
+            statut: queryParameters.statut,
+          },
         })
-        .then(result => {
+        .then((result) => {
           setDataState([reponseRequeteMapperUnitaire(result.body.data)]);
           setErrorState(undefined);
         })
-        .catch(error => {
+        .catch((error) => {
           setErrorState(error);
           setDataState([]);
         });
@@ -49,10 +49,10 @@ export function useRequeteDataApi(
     queryParameters.prenomOec,
     queryParameters.statut,
     queryParameters.idRequete,
-    requestsInformations
+    requestsInformations,
   ]);
   return {
     dataState,
-    errorState
+    errorState,
   };
 }

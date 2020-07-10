@@ -3,13 +3,15 @@
 exports[`renders header tableau des requêtes de l'application 1`] = `
 <thead
   className="MuiTableHead-root"
+  role={null}
 >
   <tr
     className="MuiTableRow-root MuiTableRow-head"
+    role={null}
   >
     <th
       aria-sort="ascending"
-      className="MuiTableCell-root MuiTableCell-head ColonneTableauRequete MuiTableCell-alignCenter"
+      className="MuiTableCell-root MuiTableCell-head ColonneTableau MuiTableCell-alignCenter"
       scope="col"
     >
       <span
@@ -32,10 +34,9 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         N°
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path
@@ -46,7 +47,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
     </th>
     <th
       aria-sort={null}
-      className="MuiTableCell-root MuiTableCell-head ColonneTableauRequete MuiTableCell-alignCenter"
+      className="MuiTableCell-root MuiTableCell-head ColonneTableau MuiTableCell-alignCenter"
       scope="col"
     >
       <span
@@ -69,10 +70,9 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         Type
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path
@@ -83,7 +83,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
     </th>
     <th
       aria-sort={null}
-      className="MuiTableCell-root MuiTableCell-head ColonneTableauRequete MuiTableCell-alignCenter"
+      className="MuiTableCell-root MuiTableCell-head ColonneTableau MuiTableCell-alignCenter"
       scope="col"
     >
       <span
@@ -106,10 +106,9 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         Provenance
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path
@@ -120,7 +119,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
     </th>
     <th
       aria-sort={null}
-      className="MuiTableCell-root MuiTableCell-head ColonneTableauRequete MuiTableCell-alignCenter"
+      className="MuiTableCell-root MuiTableCell-head ColonneTableau MuiTableCell-alignCenter"
       scope="col"
     >
       <span
@@ -143,10 +142,9 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         Nature d'acte
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path
@@ -157,7 +155,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
     </th>
     <th
       aria-sort={null}
-      className="MuiTableCell-root MuiTableCell-head ColonneTableauRequete MuiTableCell-alignCenter"
+      className="MuiTableCell-root MuiTableCell-head ColonneTableau MuiTableCell-alignCenter"
       scope="col"
     >
       <span
@@ -180,10 +178,9 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         Requérant
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path
@@ -194,7 +191,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
     </th>
     <th
       aria-sort={null}
-      className="MuiTableCell-root MuiTableCell-head ColonneTableauRequete MuiTableCell-alignCenter"
+      className="MuiTableCell-root MuiTableCell-head ColonneTableau MuiTableCell-alignCenter"
       scope="col"
     >
       <span
@@ -217,10 +214,9 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         Date de création
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path
@@ -231,7 +227,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
     </th>
     <th
       aria-sort={null}
-      className="MuiTableCell-root MuiTableCell-head ColonneTableauRequete MuiTableCell-alignCenter"
+      className="MuiTableCell-root MuiTableCell-head ColonneTableau MuiTableCell-alignCenter"
       scope="col"
     >
       <span
@@ -254,10 +250,9 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         Dernière mise à jour
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path
@@ -268,7 +263,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
     </th>
     <th
       aria-sort={null}
-      className="MuiTableCell-root MuiTableCell-head ColonneTableauRequete MuiTableCell-alignCenter"
+      className="MuiTableCell-root MuiTableCell-head ColonneTableau MuiTableCell-alignCenter"
       scope="col"
     >
       <span
@@ -291,10 +286,9 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         Statut
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path
@@ -305,7 +299,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
     </th>
     <th
       aria-sort={null}
-      className="MuiTableCell-root MuiTableCell-head ColonneTableauRequete MuiTableCell-alignCenter"
+      className="MuiTableCell-root MuiTableCell-head ColonneTableau MuiTableCell-alignCenter"
       scope="col"
     >
       <span
@@ -328,10 +322,9 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         Priorité
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
           focusable="false"
-          role="presentation"
           viewBox="0 0 24 24"
         >
           <path

@@ -6,7 +6,7 @@ import config from "./superagent-mock-config";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteDataApi } from "../visualisation/DonneeRequeteHook";
 import DONNEES_REQUETE from "./data/requete";
-import { IDataTable } from "../RequeteTableauHeaderCell";
+import { IDataTable } from "../MesRequetesPage";
 
 const superagentMock = require("superagent-mock")(request, config);
 
@@ -19,12 +19,12 @@ const HookConsummer: React.FC = () => {
     nomOec: "Garisson",
     prenomOec: "Juliette",
     statut: StatutRequete.ASigner,
-    idRequete: "req1"
+    idRequete: "req1",
   });
 
   return (
     <>
-      {dataState.map(element => {
+      {dataState.map((element) => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
@@ -37,14 +37,14 @@ const HookConsummerWithData: React.FC = () => {
       nomOec: "Garisson",
       prenomOec: "Juliette",
       statut: StatutRequete.ASigner,
-      idRequete: "req1"
+      idRequete: "req1",
     },
     { data: [DONNEES_REQUETE as IDataTable, DONNEES_REQUETE as IDataTable] }
   );
 
   return (
     <>
-      {dataState.map(element => {
+      {dataState.map((element) => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
@@ -56,12 +56,12 @@ const HookConsummerWithErrorWS: React.FC = () => {
     nomOec: "Garisson",
     prenomOec: "Juliette",
     statut: StatutRequete.ASigner,
-    idRequete: "req2"
+    idRequete: "req2",
   });
 
   return (
     <>
-      {dataState.map(element => {
+      {dataState.map((element) => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
@@ -101,7 +101,7 @@ afterEach(() => {
   containerWithErrorWS = null;
 });
 
-test("l'appel au WS de récvupération d'une requete fonctionne correctement", async () => {
+test("l'appel au WS de récupération d'une requete fonctionne correctement", async () => {
   await act(() => {
     expect(container).toBeInstanceOf(Element);
     if (container instanceof Element) {

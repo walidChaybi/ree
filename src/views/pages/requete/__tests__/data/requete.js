@@ -2,6 +2,8 @@ import { NatureActe } from "../../../../../model/requete/NatureActe";
 import { QualiteRequerant } from "../../../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../../../model/requete/SousQualiteRequerant";
 import { Canal } from "../../../../../model/Canal";
+import { TypeDocument } from "../../../../../model/requete/TypeDocument";
+import { TypeRequete } from "../../../../../model/requete/TypeRequete";
 import { Motif } from "../../../../../model/requete/Motif";
 
 export default {
@@ -9,14 +11,18 @@ export default {
   idSagaDila: 11982,
   idRequeteInitiale: 11900,
   sousTypeRequete: "DELIVRANCE_COURRIER",
+  typeRequete: TypeRequete.Delivrance,
   provenance: "DILA",
   natureActe: NatureActe.Naissance,
   dateCreation: "01/01/2020",
+  dateDerniereMaj: "04/01/2020",
   dateStatut: "02/01/2020",
   statut: "A_SIGNER",
   prioriteRequete: "",
   villeEvenement: "fez",
   paysEvenement: "maroc",
+  officierEtatCivil: "Garisson Juliette",
+  document: TypeDocument.CopieIntegrale,
   canal: Canal.Internet,
   motif: Motif.PapiersIdentitePasseport,
   piecesJustificatives: [],

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { ApiManager, HttpMethod } from "../../../api/ApiManager";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
-import { IDataTable } from "./RequeteTableauHeaderCell";
 import moment from "moment";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
@@ -9,13 +8,14 @@ import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { NatureActe } from "../../../model/requete/NatureActe";
 import { QualiteRequerant } from "../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../model/requete/SousQualiteRequerant";
-import { SortOrder } from "./tableau/TableUtils";
+import { SortOrder } from "../../common/widget/tableau/TableUtils";
 import { Canal } from "../../../model/Canal";
 import {
   IPieceJustificative,
   IDocumentDelivre
 } from "./visualisation/RequeteType";
 import { ApiEndpoints } from "../../router/UrlManager";
+import { IDataTable } from "./MesRequetesPage";
 import { Motif } from "../../../model/requete/Motif";
 
 export interface IRequerantApi {
@@ -75,9 +75,10 @@ export interface IRequeteApi {
 }
 
 export interface IQueryParametersPourRequetes {
-  nomOec: string;
-  prenomOec: string;
   statut: StatutRequete;
+  nomOec?: string;
+  prenomOec?: string;
+  service?: string;
   tri?: string;
   sens?: SortOrder;
   range?: string;
@@ -109,6 +110,7 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
         parameters: {
           nomOec: queryParameters.nomOec,
           prenomOec: queryParameters.prenomOec,
+          service: queryParameters.service,
           statut: queryParameters.statut,
           tri:
             queryParameters.tri !== "prioriteRequete"
@@ -152,8 +154,10 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     queryParameters.statut,
     queryParameters.tri,
     queryParameters.sens,
-    queryParameters.range
+    queryParameters.range,
+    queryParameters.service
   ]);
+
   return {
     dataState,
     previousDataLinkState,
@@ -176,11 +180,13 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     idRequete: data.idRequete,
     idSagaDila: +data.idSagaDila,
     dateCreation: moment.unix(data.dateCreation).format("DD/MM/YYYY"),
+    dateDerniereMaj: moment.unix(data.dateDerniereMaj).format("DD/MM/YYYY"),
     provenance: data.provenance,
     statut: data.statut,
     dateStatut: moment.unix(data.dateStatut).format("DD/MM/YYYY"),
     idRequeteInitiale: data.idRequeteInitiale,
     sousTypeRequete: data.sousTypeRequete,
+    typeRequete: data.typeRequete,
     natureActe: data.natureActe,
     prioriteRequete: "TODO",
     villeEvenement: data.villeEvenement,
@@ -190,6 +196,8 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     canal: data.canal,
     motif: data.motif,
     piecesJustificatives: data.piecesJustificatives,
+    nomOec: `${data.reponse.prenomOec} ${data.reponse.nomOec}`,
+    typeActe: data.typeActe,
     reponse: data.reponse
   };
 }
