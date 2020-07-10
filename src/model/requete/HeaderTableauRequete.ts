@@ -1,0 +1,15 @@
+export enum HeaderTableauRequete {
+  IdSagaDila = "idSagaDila",
+  SousTypeRequete = "sousTypeRequete",
+  Provenance = "provenance",
+  NatureActe = "natureActe",
+  TypeActe = "typeActe",
+  Requerant = "requerant",
+  NomOec = "nomOec",
+  NomOuRaisonSociale = "nomOuRaisonSociale",
+  DateCreation = "dateCreation",
+  DateDerniereMaj = "dateDerniereMaj",
+  Statut = "statut",
+  PrioriteRequete = "prioriteRequete",
+  DateStatut = "dateStatut",
+}

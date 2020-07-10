@@ -9,8 +9,8 @@ test("renders titre de l'application", () => {
 });
 
 test("renders titre de l'application", () => {
-  render(<Text messageId={"pages.requetes.enCours.titre"} />);
-  const linkElement = screen.getByText(/Requêtes en cours/i);
+  render(<Text messageId={"pages.delivrance.titre"} />);
+  const linkElement = screen.getByText(/Espace délivrance/i);
   expect(linkElement).toBeInTheDocument();
 });
 

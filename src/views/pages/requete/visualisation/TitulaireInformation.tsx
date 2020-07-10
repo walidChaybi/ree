@@ -15,25 +15,25 @@ export const TitulaireInformation: React.FC<LocalProps> = ({
       <div className="bloc-info">
         <div className="label">
           <Text
-            messageId={`pages.requetes.apercu.resume.titulaire${position}`}
+            messageId={`pages.delivrance.apercu.resume.titulaire${position}`}
           />
         </div>
       </div>
       <div className="bloc-info">
         <div className="label sub-label">
-          <Text messageId={"pages.requetes.apercu.resume.nom"} />
+          <Text messageId={"pages.delivrance.apercu.resume.nom"} />
         </div>
         <div className="capital personnal-info">{titulaire.nomNaissance}</div>
       </div>
       <div className="bloc-info">
         <div className="label sub-label">
-          <Text messageId={"pages.requetes.apercu.resume.prenom"} />
+          <Text messageId={"pages.delivrance.apercu.resume.prenom"} />
         </div>
         <div className="capital personnal-info">{titulaire.prenom1}</div>
       </div>
       <div className="bloc-info">
         <div className="label sub-label">
-          <Text messageId={"pages.requetes.apercu.resume.dateNaissance"} />
+          <Text messageId={"pages.delivrance.apercu.resume.dateNaissance"} />
         </div>
         <div className="capital personnal-info">
           {getDate(

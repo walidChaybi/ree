@@ -1,5 +1,5 @@
 {
-  "canalProvenance": {
+  "provenance": {
     "DILA": "DILA",
     "DALI": "DALI",
     "CORIDA": "CORIDA",
@@ -71,9 +71,9 @@
     "TRAITE_IMPRIME": "Traité imprimé"
   },
   "typeRequete": {
-    "Delivrance": "Délivrance",
-    "CreationActe": "Création d'acte",
-    "MiseAJour": "Mise à jour"
+    "DELIVRANCE": "Délivrance",
+    "CREATION_ACTE": "Création d'acte",
+    "MISE_A_JOUR": "Mise à jour"
   },
   "canal": {
     "INTERNET": "Internet",

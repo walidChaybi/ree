@@ -14,7 +14,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Text } from "../../../common/widget/Text";
 import { ResumeRequeteContent } from "./ResumeRequeteContent";
-import { IDataTable } from "../RequeteTableauHeaderCell";
+import { IDataTable } from "../MesRequetesPage";
 
 interface ResumeRequeteProps {
   requete: IDataTable;
@@ -30,7 +30,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = ({ requete }) => {
           className="title"
           expandIcon={<ExpandMoreIcon />}
         >
-          <Text messageId={"pages.requetes.apercu.resume.titre"} />
+          <Text messageId={"pages.delivrance.apercu.resume.titre"} />
           <div className="identifiantRequete">{requete.idSagaDila}</div>
         </ExpansionPanelSummary>
       </Disclosure>

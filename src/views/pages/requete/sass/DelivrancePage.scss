@@ -1,0 +1,11 @@
+@import "../../../../sass/colors";
+
+.headerOngletDelivrance {
+  margin-top: 1em;
+  .ongletDelivrance {
+    background-color: $application-color;
+    .MuiTabs-indicator {
+      background-color: lightgreen !important;
+    }
+  }
+}

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, RouteComponentProps } from "react-router-dom";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { IDataTable } from "../RequeteTableauHeaderCell";
 import { EtatRequete } from "./EtatRequete";
 import { ContenuRequete } from "./ContenuRequete";
 import { ActionsButtonsRequestPage } from "./ActionsButtonsRequestPage";
 import { useRequeteDataApi } from "./DonneeRequeteHook";
+import { IDataTable } from "../MesRequetesPage";
 import { AppUrls } from "../../../router/UrlManager";
 import { Title } from "../../../core/title/Title";
 
@@ -52,7 +52,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
 
   return (
     <>
-      <Title titleId={"pages.requetes.apercu.titre"} />
+      <Title titleId={"pages.delivrance.apercu.titre"} />
 
       {dataState.length > 0 && indexRequete >= 0 && (
         <>

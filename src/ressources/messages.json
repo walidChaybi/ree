@@ -22,11 +22,13 @@
   "fildariane": {
     "accueil": "Accueil",
     "mesrequetes": "Mes requêtes",
+    "requetesservice": "Requêtes du service",
     "apercurequete": "Aperçu de requête",
     "messagerie": "Messagerie"
   },
   "pages": {
-    "requetes": {
+    "delivrance": {
+      "titre": "Espace délivrance",
       "apercu": {
         "titre": "Aperçu de la requête",
         "entete": {
@@ -63,36 +65,48 @@
           "right": "Requête suivante"
         }
       },
-      "enCours": {
-        "titre": "Requêtes en cours"
-      },
       "action": {
         "signature": "Signer tous les documents"
       },
-      "tableau": {
-        "titre": "Mes requêtes",
-        "label": "Tableau de mes requetes",
-        "header": {
-          "idSagaDila": "N°",
-          "sousTypeRequete": "Type",
-          "provenance": "Provenance",
-          "natureActe": "Nature d'acte",
-          "requerant": "Requérant",
-          "dateCreation": "Date de création",
-          "dateStatut": "Dernière mise à jour",
-          "statut": "Statut",
-          "prioriteRequete": "Priorité"
-        },
-        "body": {
-          "priorite": {
-            "basse": "Priorité basse",
-            "moyenne": "Priorité moyenne",
-            "haute": "Priorité haute"
+      "mesRequetes": {
+        "tableau": {
+          "titre": "Mes requêtes de délivrance",
+          "label": "Tableau de mes requetes",
+          "header": {
+            "idSagaDila": "N°",
+            "sousTypeRequete": "Type",
+            "typeRequete": "Type",
+            "provenance": "Provenance",
+            "natureActe": "Nature d'acte",
+            "requerant": "Requérant",
+            "dateCreation": "Date de création",
+            "dateStatut": "Dernière mise à jour",
+            "statut": "Statut",
+            "prioriteRequete": "Priorité",
+            "typeActe": "Document",
+            "nomOec": "Attribué à",
+            "dateDerniereMaj": "Dernière mise à jour"
+          },
+          "body": {
+            "priorite": {
+              "basse": "Priorité basse",
+              "moyenne": "Priorité moyenne",
+              "haute": "Priorité haute"
+            }
+          },
+          "pagination": {
+            "donneePaginee": "Requêtes",
+            "navigationLabel": "${0}-${1} sur ${2}"
           }
+        }
+      },
+      "monService": {
+        "officierEtatCivilSelect": {
+          "title": "Changer la personne attribuée à la requête",
+          "libelle": "Attribuer à : "
         },
-        "pagination": {
-          "donneePaginee": "Requêtes",
-          "navigationLabel": "${0}-${1} sur ${2}"
+        "tableau": {
+          "titre": "Requêtes de mon service"
         }
       }
     },

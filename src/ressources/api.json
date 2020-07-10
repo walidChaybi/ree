@@ -5,6 +5,12 @@
       "ports": 80,
       "name": "rece-requete-api",
       "usedVersions": ["v1"]
+    },
+    {
+      "url": "http://10.110.192.130",
+      "ports": 80,
+      "name": "rece-securite-api",
+      "usedVersions": ["v1"]
     }
   ]
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import "./sass/EtatRequete.scss";
 import { getText } from "../../../common/widget/Text";
-import { IDataTable } from "../RequeteTableauHeaderCell";
+import { IDataTable } from "../MesRequetesPage";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { IReponseApi } from "../DonneesRequeteHook";
 import classNames from "classnames";
@@ -33,7 +33,7 @@ export const EtatRequete: React.FC<EtatRequeteProps> = props => {
 };
 
 const getRequeteTraiteeLibelle = (data: IDataTable) => {
-  return getText("pages.requetes.apercu.entete.traitee", [
+  return getText("pages.delivrance.apercu.entete.traitee", [
     data.reponse.prenomOec,
     data.reponse.nomOec,
     data.dateStatut
@@ -60,7 +60,7 @@ const getStatutLibelle = (data: IDataTable) => {
     }
     case StatutRequete.PriseEnCharge: {
       if (isReponseAttribuee(data.reponse)) {
-        return getText("pages.requetes.apercu.entete.priseEnCharge", [
+        return getText("pages.delivrance.apercu.entete.priseEnCharge", [
           data.reponse.prenomOec,
           data.reponse.nomOec,
           data.dateStatut
@@ -71,20 +71,20 @@ const getStatutLibelle = (data: IDataTable) => {
     }
     case StatutRequete.ATraiter: {
       if (isReponseAttribuee(data.reponse)) {
-        return getText("pages.requetes.apercu.entete.aTraiterAttribuee", [
+        return getText("pages.delivrance.apercu.entete.aTraiterAttribuee", [
           data.reponse.prenomOec,
           data.reponse.nomOec,
           data.dateStatut
         ]);
       } else {
-        return getText("pages.requetes.apercu.entete.aTraiterNonAttribuee", [
+        return getText("pages.delivrance.apercu.entete.aTraiterNonAttribuee", [
           data.dateCreation
         ]);
       }
     }
     case StatutRequete.Doublon: {
       if (data.idRequeteInitiale) {
-        return getText("pages.requetes.apercu.entete.enDoublon", [
+        return getText("pages.delivrance.apercu.entete.enDoublon", [
           data.idRequeteInitiale.toString(),
           data.dateCreation
         ]);
@@ -92,14 +92,14 @@ const getStatutLibelle = (data: IDataTable) => {
       break;
     }
     case StatutRequete.Transferee: {
-      return getText("pages.requetes.apercu.entete.transferee", [
+      return getText("pages.delivrance.apercu.entete.transferee", [
         data.reponse.prenomOec,
         data.reponse.nomOec,
         data.dateStatut
       ]);
     }
     case StatutRequete.ASigner: {
-      return getText("pages.requetes.apercu.entete.aSigner", [
+      return getText("pages.delivrance.apercu.entete.aSigner", [
         data.reponse.prenomOec,
         data.reponse.nomOec,
         data.dateStatut

@@ -24,10 +24,9 @@ exports[`renders composant FilAriane 1`] = `
       className="MuiBreadcrumbs-separator"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
         focusable="false"
-        role="presentation"
         viewBox="0 0 24 24"
       >
         <path

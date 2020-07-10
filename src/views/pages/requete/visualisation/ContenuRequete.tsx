@@ -1,7 +1,7 @@
 import React from "react";
 import { ResumeRequete } from "./ResumeRequete";
 import "./sass/ContenuRequete.scss";
-import { IDataTable } from "../RequeteTableauHeaderCell";
+import { IDataTable } from "../MesRequetesPage";
 import { DocumentsRequete } from "./document/DocumentsRequete";
 import { ExtraitDocument } from "./document/ExtraitDocument";
 
