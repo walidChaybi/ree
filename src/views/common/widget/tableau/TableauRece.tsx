@@ -134,7 +134,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
         </Box>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 15, 20]}
+        rowsPerPageOptions={[15]}
         component="div"
         count={props.rowsNumberState || 0}
         rowsPerPage={rowsPerPageState}
