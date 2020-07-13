@@ -49,6 +49,7 @@ export function useRequeteDataApi(
     queryParameters.nomOec,
     queryParameters.prenomOec,
     queryParameters.idRequete,
+    queryParameters.statut,
     requestsInformations
   ]);
   return {

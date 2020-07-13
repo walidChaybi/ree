@@ -67,10 +67,10 @@ const columnsTableau = [
     "referentiel.sousTypeRequete"
   ),
   new TableauTypeColumn(
-    [HeaderTableauRequete.Provenance],
+    [HeaderTableauRequete.Canal],
     true,
     "pages.delivrance.mesRequetes.tableau.header",
-    "referentiel.provenance"
+    "referentiel.canal"
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.NatureActe],
