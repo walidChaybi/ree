@@ -10,7 +10,7 @@ export default {
   idRequete: "204b8563-c7f8-4748-9daa-f26558985894",
   idSagaDila: 11982,
   idRequeteInitiale: 11900,
-  sousTypeRequete: "DELIVRANCE_COURRIER",
+  sousTypeRequete: "RDC",
   typeRequete: TypeRequete.Delivrance,
   provenance: "DILA",
   natureActe: NatureActe.Naissance,
