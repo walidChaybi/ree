@@ -80,7 +80,7 @@ export const RequetesServicePage: React.FC = () => {
         [HeaderTableauRequete.SousTypeRequete],
         true,
         "pages.delivrance.mesRequetes.tableau.header",
-        "referentiel.sousTypeRequete"
+        "referentiel.sousTypeRequete.court"
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.Canal],

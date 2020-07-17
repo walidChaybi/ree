@@ -18,7 +18,7 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
           </div>
           <div className="capital personnal-info">
             <Text
-              messageId={`referentiel.sousTypeRequete.${props.requete.sousTypeRequete}`}
+              messageId={`referentiel.sousTypeRequete.long.${props.requete.sousTypeRequete}`}
             />
           </div>
         </div>

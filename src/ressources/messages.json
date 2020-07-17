@@ -74,7 +74,7 @@
           "label": "Tableau de mes requetes",
           "header": {
             "idSagaDila": "N°",
-            "sousTypeRequete": "Type",
+            "sousTypeRequete": "Sous-type",
             "typeRequete": "Type",
             "provenance": "Provenance",
             "canal": "Canal",

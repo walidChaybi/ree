@@ -1,4 +1,11 @@
 export enum SousTypeRequete {
-  DelivranceDemat = "DELIVRANCE_DEMAT",
-  DelivranceCourrier = "DELIVRANCE_COURRIER"
+  RequeteDelivranceDemat = "RDD",
+  RequeteDelivranceCourrier = "RDC",
+  RequeteDelivranceAttestationPacsDemat = "RDAPD",
+  RequeteDelivranceAttestationPacsCourrier = "RDAPC",
+  RequeteDelivranceCertificatDemat = "RDCSD",
+  RequeteDelivranceCertificatCourrier = "RDCSC",
+  RequeteDelivranceDematCOMEDEC = "RDDCO",
+  RequeteDelivranceDematPLANETE = "RDDP",
+  RequeteDelivranceCertificatCapaciteMariageRECE = "RDCCAMR"
 }
