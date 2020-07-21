@@ -19,15 +19,25 @@ import { IDataTable } from "./MesRequetesPage";
 import { Motif } from "../../../model/requete/Motif";
 
 export interface IRequerantApi {
-  adresse: string;
-  idRequerant: string;
-  nomOuRaisonSociale: string;
-  nomUsage: string;
-  prenomUsage: string;
-  qualiteRequerant: QualiteRequerant;
-  requete: any;
-  telephone: string;
+  uidRequerant: string;
+  qualite: QualiteRequerant;
   typeRequerant: SousQualiteRequerant;
+  nomAdrministration: string;
+  identite: string;
+  raisonSociale: string;
+  nomFamille: string;
+  nomUsage: string;
+  prenom: string;
+  adresse: string;
+  ligne2: string;
+  ligne3: string;
+  ligne4: string;
+  ligne5: string;
+  codePostale: number;
+  ville: string;
+  pays: string;
+  mail: string;
+  telephone: string;
 }
 
 export interface IReponseApi {
