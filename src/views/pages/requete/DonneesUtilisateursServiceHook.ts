@@ -3,13 +3,13 @@ import { ApiManager, HttpMethod } from "../../../api/ApiManager";
 import { ApiEndpoints } from "../../router/UrlManager";
 
 export interface IUtilisateurApi {
-  idArobas: string;
+  idUtilisateur: string;
   nom: string;
   prenom: string;
 }
 
 export interface IQueryParametersUtilisateursService {
-  service: string;
+  idArobas: string;
 }
 
 export function useUtilisateurApi(
@@ -28,7 +28,7 @@ export function useUtilisateurApi(
         method: HttpMethod.GET,
         uri: ApiEndpoints.UtilisateursUrl,
         parameters: {
-          service: queryParameters.service,
+          idArobas: queryParameters.idArobas,
         },
       })
       .then((result) => {
@@ -37,7 +37,7 @@ export function useUtilisateurApi(
       .catch((error) => {
         setErrorState(error);
       });
-  }, [queryParameters.service]);
+  }, [queryParameters.idArobas]);
 
   return {
     dataState,

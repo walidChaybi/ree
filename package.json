@@ -43,6 +43,7 @@
     "formik": "2.1.4",
     "fs-extra": "8.1.0",
     "html-webpack-plugin": "4.0.0-beta.11",
+    "http-proxy-middleware": "1.0.5",
     "http-status-codes": "1.4.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "24.9.0",
