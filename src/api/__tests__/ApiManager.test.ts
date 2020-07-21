@@ -9,16 +9,16 @@ test("instanciation d'une api définie dans le fichier api.json", () => {
 
   expect(api).not.toBe(isNullOrUndefined);
   if (process.env.NODE_ENV !== "production") {
-    expect(api.url).toBe("http://10.110.192.130");
+    expect(api.url).toBe("http://localhost");
   } else {
     expect(api.url).toBe("http://localhost");
   }
 
-  expect(api.ports).toBe(80);
+  expect(api.ports).toBe(3000);
   expect(api.name).toBe("rece-requete-api");
   expect("v1").toBe(api.version);
   if (process.env.NODE_ENV !== "production") {
-    expect(api.getUri()).toBe("http://10.110.192.130:80/rece-requete-api/v1");
+    expect(api.getUri()).toBe("http://localhost:3000/rece-requete-api/v1");
   } else {
     expect(api.getUri()).toBe("http://localhost:80/rece-requete-api/v1");
   }

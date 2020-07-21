@@ -1,7 +1,10 @@
 const proxy = require("http-proxy-middleware");
 
 module.exports = function (app) {
-  if (process.env.NODE_ENV === "development") {
+  if (
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "test"
+  ) {
     app.use(
       "/rece-requete-api/v1",
       proxy.createProxyMiddleware({
