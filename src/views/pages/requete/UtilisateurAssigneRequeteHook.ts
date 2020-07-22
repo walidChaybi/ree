@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { ApiManager, HttpMethod } from "../../../api/ApiManager";
 import { ApiEndpoints } from "../../router/UrlManager";
 import { IDataTable } from "./MesRequetesPage";
+import { IRequeteApi } from "./DonneesRequeteHook";
+import { FormatDate } from "../../../ressources/FormatDate";
+import moment from "moment";
 
 export interface IQueryParametersAssigneRequetes {
   idRequete: string;
@@ -19,13 +22,59 @@ export function useUtilisateurRequeteApi(
   useEffect(() => {
     if (queryParameters !== undefined) {
       const api = ApiManager.getInstance("rece-requete-api", "v1");
+
+      const requetesToSend: IRequeteApi[] = requetes
+        ? requetes.map((requete) => {
+            const newRequest = {
+              dateCreation: moment(
+                requete.dateCreation,
+                FormatDate.DDMMYYYY
+              ).unix(),
+              dateDerniereMaj: moment(
+                requete.dateDerniereMaj,
+                FormatDate.DDMMYYYY
+              ).unix(),
+              dateStatut: moment(
+                requete.dateStatut,
+                FormatDate.DDMMYYYY
+              ).unix(),
+              anneeEvenement: requete.anneeEvenement,
+              idRequete: requete.idRequete,
+              idSagaDila: requete.idSagaDila,
+              idRequeteInitiale: requete.idRequeteInitiale,
+              jourEvenement: requete.jourEvenement,
+              moisEvenement: requete.moisEvenement,
+              natureActe: requete.natureActe,
+              canal: requete.canal,
+              motif: requete.motif,
+              nbExemplaire: requete.nbExemplaire,
+              paysEvenement: requete.paysEvenement,
+              piecesJustificatives: requete.piecesJustificatives,
+              provenance: requete.provenance,
+              reponse: requete.reponse!,
+              requerant: requete.requerant,
+              sousTypeRequete: requete.sousTypeRequete,
+              statut: requete.statut,
+              titulaires: requete.titulaires,
+              typeActe: requete.typeActe,
+              typeRequete: requete.typeRequete,
+              villeEvenement: requete.villeEvenement,
+            };
+            if (newRequest.reponse !== undefined) {
+              newRequest.reponse.nomOec = queryParameters.nomOec;
+              newRequest.reponse.prenomOec = queryParameters.prenomOec;
+            }
+
+            return newRequest;
+          })
+        : [];
+
       api
         .fetch({
-          method: HttpMethod.POST,
+          method: HttpMethod.PUT,
           uri: ApiEndpoints.RequetesUrl,
-          data: {
-            ...queryParameters,
-          },
+          data: [...requetesToSend],
+          headers: [],
         })
         .then(() => {
           if (requetes !== undefined) {

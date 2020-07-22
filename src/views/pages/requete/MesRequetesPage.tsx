@@ -3,13 +3,13 @@ import React from "react";
 import { Text } from "../../common/widget/Text";
 import {
   TableauRece,
-  TableauTypeColumn
+  TableauTypeColumn,
 } from "../../common/widget/tableau/TableauRece";
 import {
   useRequeteApi,
   IRequerantApi,
   IReponseApi,
-  IQueryParametersPourRequetes
+  IQueryParametersPourRequetes,
 } from "./DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
@@ -23,24 +23,27 @@ import { BoutonRetour } from "../../common/widget/BoutonRetour";
 import "./sass/RequeteTableau.scss";
 import {
   getMessagePrioriteDeLaRequete,
-  prioriteDeLaRequete
+  prioriteDeLaRequete,
 } from "./RequetesUtils";
 import LabelIcon from "@material-ui/icons/Label";
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
 import { Motif } from "../../../model/requete/Motif";
+import { CanalProvenance } from "../../../model/requete/CanalProvenance";
+import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
+import { TypeRequete } from "../../../model/requete/TypeRequete";
 
 export interface IDataTable {
   idRequete: string;
   idSagaDila: number;
-  idRequeteInitiale?: number;
-  sousTypeRequete: string;
-  typeRequete: string;
-  provenance: string;
+  idRequeteInitiale: number;
+  sousTypeRequete: SousTypeRequete;
+  typeRequete: TypeRequete;
+  provenance: CanalProvenance;
   natureActe: NatureActe;
   dateCreation: string;
   dateDerniereMaj: string;
   dateStatut: string;
-  statut: string;
+  statut: StatutRequete;
   prioriteRequete: string;
   villeEvenement: string;
   paysEvenement: string;
@@ -52,6 +55,10 @@ export interface IDataTable {
   nomOec: string;
   typeActe: string;
   reponse?: IReponseApi;
+  anneeEvenement: number;
+  jourEvenement: number;
+  moisEvenement: number;
+  nbExemplaire: number;
 }
 
 const columnsTableau = [
@@ -105,7 +112,7 @@ const columnsTableau = [
     "pages.delivrance.mesRequetes.tableau.header",
     "",
     getIconPrioriteMesRequetes
-  )
+  ),
 ];
 
 function getIconPrioriteMesRequetes(row: IDataTable): JSX.Element {
@@ -130,17 +137,17 @@ export const MesRequetesPage: React.FC = () => {
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    nomOec: "Garisson",
-    prenomOec: "Juliette",
+    nomOec: "CAFFERINI",
+    prenomOec: "Lionel",
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
-    sens: sortOrderState
+    sens: sortOrderState,
   });
 
   const {
     dataState = [],
     rowsNumberState = 0,
-    nextDataLinkState = ""
+    nextDataLinkState = "",
   } = useRequeteApi(linkParameters);
 
   function goToLink(link: string) {
@@ -154,7 +161,7 @@ export const MesRequetesPage: React.FC = () => {
         statut: params[2].split("=")[1] as StatutRequete,
         tri: params[3].split("=")[1],
         sens: params[4].split("=")[1] as SortOrder,
-        range: params[5].split("=")[1]
+        range: params[5].split("=")[1],
       };
       setLinkParameters(queryParameters);
     }
