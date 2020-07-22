@@ -64,7 +64,12 @@ export const SelectDialog: React.FC<SelectDialogProps> = (props) => {
         ev.stopPropagation();
       }}
     >
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        data-testid={"icon-dialog"}
+        variant="outlined"
+        color="primary"
+        onClick={handleClickOpen}
+      >
         <FontAwesomeIcon icon={faUserAlt} />
       </Button>
       <Dialog

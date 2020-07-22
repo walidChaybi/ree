@@ -26,6 +26,12 @@ export default {
   canal: Canal.Internet,
   motif: Motif.PapiersIdentitePasseport,
   piecesJustificatives: [],
+  nomOec: "nomOec",
+  typeActe: "",
+  anneeEvenement: 0,
+  jourEvenement: 0,
+  moisEvenement: 0,
+  nbExemplaire: 0,
   requerant: {
     adresse: "",
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
@@ -35,7 +41,7 @@ export default {
     qualiteRequerant: QualiteRequerant.PARTICULIER,
     requete: "",
     typeRequerant: SousQualiteRequerant.Titulaire,
-    telephone: "0777327569"
+    telephone: "0777327569",
   },
   titulaires: [
     {
@@ -53,7 +59,7 @@ export default {
       paysNaissance: "maroc",
       parent1: "",
       parent2: "",
-      requete: ""
+      requete: "",
     },
     {
       idTitulaire: "tutulaire2",
@@ -70,8 +76,8 @@ export default {
       paysNaissance: "france",
       parent1: "",
       parent2: "",
-      requete: ""
-    }
+      requete: "",
+    },
   ],
   reponse: {
     idReponse: "1d189cd9-0df0-45dc-a4cf-0174eb62cbbc",
@@ -87,6 +93,6 @@ export default {
     prenomOec: "Juliette",
     commentaire: "",
     documentsDelivres: [],
-    requete: ""
-  }
+    requete: "",
+  },
 };

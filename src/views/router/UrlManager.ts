@@ -38,5 +38,6 @@ export function getAppUrl(path: string): string {
 
 export const ApiEndpoints = {
   RequetesUrl: RequetesUrl,
+  RequetesServiceUrl: "/requetes/requetesService",
   UtilisateursUrl: UtilisateursUrl
 };
