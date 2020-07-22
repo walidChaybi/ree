@@ -166,7 +166,7 @@ export const RequetesServicePage: React.FC = () => {
     const utilisateurs = convertUsersToSelect(users.dataState);
 
     const utilisateurParDefaut = utilisateurs.find(
-      (u) => u.value === row.nomOec
+      (uilisateur) => uilisateur.value === row.nomOec
     );
 
     return (

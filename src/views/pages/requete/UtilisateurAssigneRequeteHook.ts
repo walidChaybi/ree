@@ -3,6 +3,7 @@ import { ApiManager, HttpMethod } from "../../../api/ApiManager";
 import { ApiEndpoints } from "../../router/UrlManager";
 import { IDataTable } from "./MesRequetesPage";
 import { IRequeteApi } from "./DonneesRequeteHook";
+import { FormatDate } from "../../../ressources/FormatDate";
 import moment from "moment";
 
 export interface IQueryParametersAssigneRequetes {
@@ -23,32 +24,41 @@ export function useUtilisateurRequeteApi(
       const api = ApiManager.getInstance("rece-requete-api", "v1");
 
       const requetesToSend: IRequeteApi[] = requetes
-        ? requetes.map((r) => {
+        ? requetes.map((requete) => {
             const newRequest = {
-              dateCreation: moment(r.dateCreation, "DD/MM/YYYY").unix(),
-              dateDerniereMaj: moment(r.dateDerniereMaj, "DD/MM/YYYY").unix(),
-              dateStatut: moment(r.dateStatut, "DD/MM/YYYY").unix(),
-              anneeEvenement: r.anneeEvenement,
-              idRequete: r.idRequete,
-              idSagaDila: r.idSagaDila,
-              idRequeteInitiale: r.idRequeteInitiale,
-              jourEvenement: r.jourEvenement,
-              moisEvenement: r.moisEvenement,
-              natureActe: r.natureActe,
-              canal: r.canal,
-              motif: r.motif,
-              nbExemplaire: r.nbExemplaire,
-              paysEvenement: r.paysEvenement,
-              piecesJustificatives: r.piecesJustificatives,
-              provenance: r.provenance,
-              reponse: r.reponse!,
-              requerant: r.requerant,
-              sousTypeRequete: r.sousTypeRequete,
-              statut: r.statut,
-              titulaires: r.titulaires,
-              typeActe: r.typeActe,
-              typeRequete: r.typeRequete,
-              villeEvenement: r.villeEvenement,
+              dateCreation: moment(
+                requete.dateCreation,
+                FormatDate.DDMMYYYY
+              ).unix(),
+              dateDerniereMaj: moment(
+                requete.dateDerniereMaj,
+                FormatDate.DDMMYYYY
+              ).unix(),
+              dateStatut: moment(
+                requete.dateStatut,
+                FormatDate.DDMMYYYY
+              ).unix(),
+              anneeEvenement: requete.anneeEvenement,
+              idRequete: requete.idRequete,
+              idSagaDila: requete.idSagaDila,
+              idRequeteInitiale: requete.idRequeteInitiale,
+              jourEvenement: requete.jourEvenement,
+              moisEvenement: requete.moisEvenement,
+              natureActe: requete.natureActe,
+              canal: requete.canal,
+              motif: requete.motif,
+              nbExemplaire: requete.nbExemplaire,
+              paysEvenement: requete.paysEvenement,
+              piecesJustificatives: requete.piecesJustificatives,
+              provenance: requete.provenance,
+              reponse: requete.reponse!,
+              requerant: requete.requerant,
+              sousTypeRequete: requete.sousTypeRequete,
+              statut: requete.statut,
+              titulaires: requete.titulaires,
+              typeActe: requete.typeActe,
+              typeRequete: requete.typeRequete,
+              villeEvenement: requete.villeEvenement,
             };
             if (newRequest.reponse !== undefined) {
               newRequest.reponse.nomOec = queryParameters.nomOec;
