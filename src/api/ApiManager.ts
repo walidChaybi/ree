@@ -144,27 +144,27 @@ export class ApiManager {
 
   public processRequestHeaders(
     headers: HttpRequestHeader[],
-    request: superagent.SuperAgentRequest
+    httpRequest: superagent.SuperAgentRequest
   ): superagent.SuperAgentRequest {
-    let res = request;
+    let res = httpRequest;
     headers.forEach(element => {
-      res = request.set(element.header, element.value);
+      res = httpRequest.set(element.header, element.value);
     });
     return res;
   }
 
   public processRequestQueyParameters(
     parameters: any,
-    request: superagent.SuperAgentRequest
+    httpRequest: superagent.SuperAgentRequest
   ) {
-    return request.query(parameters);
+    return httpRequest.query(parameters);
   }
 
   public processRequestData(
     data: any,
-    request: superagent.SuperAgentRequest
+    httpRequest: superagent.SuperAgentRequest
   ): superagent.SuperAgentRequest {
-    return request.send(data);
+    return httpRequest.send(data);
   }
 
   public processRequestMethod(
