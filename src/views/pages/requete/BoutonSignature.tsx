@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { getText, Text } from "../../common/widget/Text";
 import {
   useDialogState,
@@ -19,6 +19,21 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   const dialog = useDialogState();
   const isError = false;
 
+  useEffect(() => {
+    // Ajout du listener pour communiquer avec la webextension
+    window.top.addEventListener(
+      "signWebextResponse",
+      handleBackFromWebExtension
+    );
+
+    return () => {
+      window.top.removeEventListener(
+        "signWebextResponse",
+        handleBackFromWebExtension
+      );
+    };
+  }, []);
+
   const handleClickSignature = () => {
     let detail = {
       function: "SIGN",
@@ -27,6 +42,21 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     };
     window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
     dialog.hide();
+  };
+
+  /**
+   * @description Handler concernant les communications avec la webextension
+   *
+   * @event l'événement de retour de la webext
+   */
+  const handleBackFromWebExtension = (event: Event): void => {
+    const customEvent = event as CustomEvent;
+    if (
+      customEvent.detail.direction &&
+      customEvent.detail.direction === "to-call-app"
+    ) {
+      window.alert(customEvent.detail.message);
+    }
   };
 
   return (
