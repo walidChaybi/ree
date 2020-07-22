@@ -17,12 +17,12 @@ export function useUtilisateurApi(
 ) {
   const [dataState, setDataState] = useState<IUtilisateurApi[]>([]);
   const [errorState, setErrorState] = useState(undefined);
-
   useEffect(() => {
     setDataState([]);
     setErrorState(undefined);
 
     const api = ApiManager.getInstance("rece-securite-api", "v1");
+
     api
       .fetch({
         method: HttpMethod.GET,

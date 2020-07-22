@@ -26,6 +26,8 @@ export default {
   canal: Canal.Internet,
   motif: Motif.PapiersIdentitePasseport,
   piecesJustificatives: [],
+  nomOec: "nomOec",
+  typeActe: "",
   anneeEvenement: 0,
   jourEvenement: 0,
   moisEvenement: 0,
