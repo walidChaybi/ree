@@ -1,19 +1,21 @@
 import React from "react";
 import { Text, MessageId } from "./Text";
 import { Link } from "react-router-dom";
-import { AppUrls } from "../../router/UrlManager";
+import { RetourContext } from "../../core/body/Body";
 
 interface BoutonRetourProps {
-  url?: string;
   messageId?: MessageId;
 }
 export const BoutonRetour: React.FC<BoutonRetourProps> = ({
-  url = AppUrls.ctxAccueilUrl,
   messageId = "boutons.accueil"
 }) => {
   return (
-    <Link to={url} className="BoutonRetour" role="button">
-      <Text messageId={messageId} />
-    </Link>
+    <RetourContext.Consumer>
+      {retourUrl => (
+        <Link to={retourUrl} className="BoutonRetour" role="button">
+          <Text messageId={messageId} />
+        </Link>
+      )}
+    </RetourContext.Consumer>
   );
 };

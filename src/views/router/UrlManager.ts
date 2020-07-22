@@ -16,6 +16,7 @@ export const IdRequeteServiceUrl = `${RequetesServiceUrl}/:idRequete`;
 export const ctxIdRequeteServiceUrl = `${contextApp}${IdRequeteServiceUrl}`;
 
 export const AppUrls = {
+  contextApp: contextApp,
   SeparateurUrl: SeparateurUrl,
   ctxSeparateurUrl: ctxSeparateurUrl,
   AccueilUrl: AccueilUrl,
@@ -27,7 +28,7 @@ export const AppUrls = {
   IdRequeteUrl: IdRequeteUrl,
   ctxIdRequeteUrl: ctxIdRequeteUrl,
   IdRequeteServiceUrl: IdRequeteServiceUrl,
-  ctxIdRequeteServiceUrl: ctxIdRequeteServiceUrl,
+  ctxIdRequeteServiceUrl: ctxIdRequeteServiceUrl
 };
 
 /** Attention à l'usage, la construction d'URL dynamique passant par une function pose des problèmes d'anti pattern */
@@ -38,5 +39,5 @@ export function getAppUrl(path: string): string {
 export const ApiEndpoints = {
   RequetesUrl: RequetesUrl,
   RequetesServiceUrl: "/requetes/requetesService",
-  UtilisateursUrl: UtilisateursUrl,
+  UtilisateursUrl: UtilisateursUrl
 };
