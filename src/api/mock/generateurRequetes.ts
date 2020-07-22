@@ -1,10 +1,10 @@
 const mockRequetes = require("./requetes.json");
 
 export function generateurRequetes() {
-  let newDatas = [];
-  let model = mockRequetes.data[0];
+  const newDatas = [];
+  const model = mockRequetes.data[0];
   for (let i = 4; i < 250; i++) {
-    let dataRequete = { ...model };
+    const dataRequete = { ...model };
     let code = "";
     if (i < 10) {
       code = "00";
