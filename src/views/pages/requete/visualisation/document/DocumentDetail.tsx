@@ -27,7 +27,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
   document,
   onClickHandler,
   openedInViewer,
-  stateSetter
+  stateSetter,
 }) => {
   useEffect(() => {
     if (
@@ -38,8 +38,10 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         document.identifiantDocument,
         document.groupement,
         document.mimeType
-      ).then(result => {
-        lectureDuDocument(URL.createObjectURL(result));
+      ).then((result) => {
+        lectureDuDocument(
+          URL.createObjectURL(convertToBlob(result.base64, result.mimeType))
+        );
       });
     }
   }, [document, openedInViewer]);
@@ -51,7 +53,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         openedInViewer &&
         openedInViewer.identifiantDocument === document.identifiantDocument
       }
-      onClick={event => {
+      onClick={(event) => {
         onClickHandler(event, document, stateSetter);
       }}
       title={getText("pages.requete.consultation.icon.visualiser")}
@@ -89,4 +91,14 @@ function getDetailMimeTypeEtTaille(
 ) {
   const defaultMimeType: string = mimeType ? mimeType : "application/pdf";
   return `${defaultMimeType} ${convertirBytesEnKiloOctet(taille)}`;
+}
+
+function convertToBlob(base64: string, mimeType: string): Blob {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: mimeType });
 }
