@@ -60,7 +60,11 @@ export function useUtilisateurRequeteApi(
               typeRequete: requete.typeRequete,
               villeEvenement: requete.villeEvenement,
             };
-            if (newRequest.reponse !== undefined) {
+
+            if (
+              newRequest.reponse !== undefined &&
+              newRequest.idRequete === queryParameters.idRequete
+            ) {
               newRequest.reponse.nomOec = queryParameters.nomOec;
               newRequest.reponse.prenomOec = queryParameters.prenomOec;
             }
@@ -86,6 +90,7 @@ export function useUtilisateurRequeteApi(
               idxRequete
             ].nomOec = `${queryParameters.prenomOec} ${queryParameters.nomOec}`;
           }
+
           setDataState(queryParameters);
         })
         .catch((error) => {

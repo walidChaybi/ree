@@ -137,8 +137,8 @@ export const MesRequetesPage: React.FC = () => {
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    nomOec: "CAFFERINI",
-    prenomOec: "Lionel",
+    nomOec: "Garisson",
+    prenomOec: "Juliette",
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
     sens: sortOrderState,
