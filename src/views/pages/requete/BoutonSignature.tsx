@@ -9,6 +9,7 @@ import {
 import { Button } from "reakit/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import messageManager from "../../common/util/messageManager";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
@@ -57,11 +58,14 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
    */
   const handleBackFromWebExtension = (event: Event): void => {
     const customEvent = event as CustomEvent;
-    if (
-      customEvent.detail.direction &&
-      customEvent.detail.direction === "to-call-app"
-    ) {
-      window.alert(customEvent.detail.message);
+    const result = customEvent.detail;
+    if (result.direction && result.direction === "to-call-app") {
+      if (result.hasTechnicalError || result.hasBusinessError) {
+        messageManager.showErrorsAndClose(result.errors);
+      } else {
+        // window.alert(result.message);
+        messageManager.showSuccessAndClose("Signature effectuée");
+      }
     }
   };
 
