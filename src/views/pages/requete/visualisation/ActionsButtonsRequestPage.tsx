@@ -11,18 +11,20 @@ export interface ActionsProps {
   indexRequete: number;
   maxRequetes: number;
   setIndexRequete: (index: number) => void;
+  contenuDesDocuments: string[];
 }
 
 export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   indexRequete,
   setIndexRequete,
-  maxRequetes
+  maxRequetes,
+  contenuDesDocuments,
 }) => {
   const history = useHistory();
 
   const pathnames = history.location.pathname
     .split(SeparateurUrl)
-    .filter(x => x);
+    .filter((x) => x);
   pathnames.shift();
 
   return (
@@ -47,6 +49,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
         <div>
           <BoutonSignature
             libelle={"pages.delivrance.apercu.signatureElectronique"}
+            contenuDesDocuments={contenuDesDocuments}
           />
         </div>
       </div>

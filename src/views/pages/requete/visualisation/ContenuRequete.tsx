@@ -7,9 +7,10 @@ import { ExtraitDocument } from "./document/ExtraitDocument";
 
 interface ContenuRequeteProps {
   requete: IDataTable;
+  setContenuDocumentFct: (doc: string) => void;
 }
 
-export const ContenuRequete: React.FC<ContenuRequeteProps> = props => {
+export const ContenuRequete: React.FC<ContenuRequeteProps> = (props) => {
   return (
     <div className="contenu-requete">
       <div className="side left">
@@ -17,6 +18,7 @@ export const ContenuRequete: React.FC<ContenuRequeteProps> = props => {
         <DocumentsRequete
           piecesJustificatives={props.requete.piecesJustificatives}
           documentsDelivres={props.requete.reponse?.documentsDelivres || []}
+          setContenuDocumentFct={props.setContenuDocumentFct}
         />
       </div>
       <div className="side right">

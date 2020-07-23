@@ -21,6 +21,7 @@ interface IDocumentDetailProps {
   ) => void;
   openedInViewer?: IDocumentDetail;
   stateSetter?: (document: IDocumentDetail) => void;
+  setContenuDocumentFct: (doc: string) => void;
 }
 
 export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
@@ -28,6 +29,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
   onClickHandler,
   openedInViewer,
   stateSetter,
+  setContenuDocumentFct,
 }) => {
   useEffect(() => {
     if (
@@ -42,9 +44,10 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         lectureDuDocument(
           URL.createObjectURL(convertToBlob(result.base64, result.mimeType))
         );
+        setContenuDocumentFct(result.base64);
       });
     }
-  }, [document, openedInViewer]);
+  }, [document, openedInViewer, setContenuDocumentFct]);
 
   return (
     <ListItem

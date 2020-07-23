@@ -12,14 +12,20 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
+  contenuDesDocuments: string[];
 }
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
+  contenuDesDocuments,
 }) => {
   const dialog = useDialogState();
   const isError = false;
+  let validerButtonRef = React.createRef<HTMLButtonElement>();
 
   useEffect(() => {
+    if (validerButtonRef.current) {
+      validerButtonRef.current.focus();
+    }
     // Ajout du listener pour communiquer avec la webextension
     window.top.addEventListener(
       "signWebextResponse",
@@ -32,12 +38,12 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         handleBackFromWebExtension
       );
     };
-  }, []);
+  }, [validerButtonRef]);
 
   const handleClickSignature = () => {
     let detail = {
       function: "SIGN",
-      img: "image base64",
+      img: contenuDesDocuments[0], // FIXME loop on document content
       direction: "to-webextension",
     };
     window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
@@ -86,7 +92,10 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
           className="toast"
         >
           <Text messageId="signature.confirmation" />
-          <Button onClick={handleClickSignature}>OK</Button>
+          <Button ref={validerButtonRef} onClick={handleClickSignature}>
+            Valider
+          </Button>
+          <Button onClick={() => dialog.hide()}>Annuler</Button>
         </Dialog>
       )}
     </>

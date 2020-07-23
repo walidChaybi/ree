@@ -14,11 +14,13 @@ interface IDocumentsDelivres {
 interface IDocumentsRequeteProps {
   piecesJustificatives: IPieceJustificative[];
   documentsDelivres: IDocumentDelivre[];
+  setContenuDocumentFct: (doc: string) => void;
 }
 
 export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
   piecesJustificatives,
-  documentsDelivres
+  documentsDelivres,
+  setContenuDocumentFct,
 }) => {
   const { courriersAccompagnement, documentsASigner } = parseDocumentsDelivres(
     documentsDelivres
@@ -39,12 +41,14 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
         documents={parsePiecesJustificatives(piecesJustificatives)}
         documentVisible={extraitVisibleState}
         setDocumentVisibleFct={setExtraitVisibleState}
+        setContenuDocumentFct={(doc: string) => {}} // FIXME
       />
       <DocumentPresentation
         titre={"pages.requete.consultation.documentsADelivres.titre"}
         documents={[...courriersAccompagnement, ...documentsASigner]}
         documentVisible={extraitVisibleState}
         setDocumentVisibleFct={setExtraitVisibleState}
+        setContenuDocumentFct={setContenuDocumentFct}
       />
     </>
   );
@@ -60,9 +64,9 @@ function parsePiecesJustificatives(
       groupement: GroupementDocument.PieceJustificative,
       mimeType: element.mimeType as "image/png" | "application/pdf",
       nom: getText("pages.requete.consultation.pieceJustificative.nomFichier", [
-        `${index}`
+        `${index}`,
       ]),
-      taille: element.taille
+      taille: element.taille,
     });
   });
   return documentsDetails;
@@ -73,7 +77,7 @@ function parseDocumentsDelivres(
 ): IDocumentsDelivres {
   const courriersAccompagnement: IDocumentDetail[] = [];
   const documentsASigner: IDocumentDetail[] = [];
-  documentsDelivres.forEach(element => {
+  documentsDelivres.forEach((element) => {
     if (
       element.typeDocument === TypeDocument.FA116 ||
       element.typeDocument === TypeDocument.FA50
@@ -101,7 +105,7 @@ function parseDocumentDelivre(
       `pages.requete.consultation.documentDelivre.type.${documentDelivre.typeDocument}`
     ),
     mimeType: documentDelivre.mimeType as "image/png" | "application/pdf",
-    taille: documentDelivre.taille
+    taille: documentDelivre.taille,
   };
 }
 
@@ -129,7 +133,7 @@ function extraitALireParDefault(documents: IDocumentDetail[]): IDocumentDetail {
 function isCopieIntegralePresente(documents: IDocumentDetail[]): boolean {
   return (
     documents.filter(
-      element =>
+      (element) =>
         element.nom ===
         getText(
           "pages.requete.consultation.documentDelivre.type.COPIE_INTEGRALE"

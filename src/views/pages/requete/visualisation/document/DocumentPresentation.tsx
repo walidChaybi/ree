@@ -2,7 +2,7 @@ import React from "react";
 import {
   useDisclosureState,
   Disclosure,
-  DisclosureRegion
+  DisclosureRegion,
 } from "reakit/Disclosure";
 import { MessageId, Text } from "../../../../common/widget/Text";
 import { DocumentDetail } from "./DocumentDetail";
@@ -22,19 +22,21 @@ interface IDocumentPresentationProps {
   documents: IDocumentDetail[];
   documentVisible?: IDocumentDetail;
   setDocumentVisibleFct?: (document: IDocumentDetail) => void;
+  setContenuDocumentFct: (doc: string) => void;
 }
 
 export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
   titre,
   documents,
   documentVisible,
-  setDocumentVisibleFct
+  setDocumentVisibleFct,
+  setContenuDocumentFct,
 }) => {
   const visible: boolean = documents.length > 0;
   const disclosure = useDisclosureState({ visible });
 
   const titleStyles = classNames({
-    title: true
+    title: true,
   });
 
   return (
@@ -52,7 +54,7 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
         </ExpansionPanelSummary>
       </Disclosure>
       <DisclosureRegion {...disclosure} as={ExpansionPanelDetails}>
-        {props =>
+        {(props) =>
           disclosure.visible && (
             <div {...props}>
               <List>
@@ -64,6 +66,7 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
                       onClickHandler={onClickHandler}
                       openedInViewer={documentVisible}
                       stateSetter={setDocumentVisibleFct}
+                      setContenuDocumentFct={setContenuDocumentFct}
                     />
                   );
                 })}
@@ -85,7 +88,7 @@ function onClickHandler(
     document.identifiantDocument,
     document.groupement,
     document.mimeType
-  ).then(result => {
+  ).then((result) => {
     const documentObjectURL = URL.createObjectURL(result);
     lectureDuDocument(documentObjectURL);
     if (stateSetter) {
