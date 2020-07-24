@@ -44,9 +44,10 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   const handleClickSignature = () => {
     let detail = {
       function: "SIGN",
-      img: contenuDesDocuments[0], // FIXME loop on document content
+      contenu: contenuDesDocuments[0], // FIXME loop on document content
       direction: "to-webextension",
     };
+    console.log(detail.contenu);
     window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
     dialog.hide();
   };
@@ -59,11 +60,13 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   const handleBackFromWebExtension = (event: Event): void => {
     const customEvent = event as CustomEvent;
     const result = customEvent.detail;
+    console.log("result: ", result);
     if (result.direction && result.direction === "to-call-app") {
       if (result.hasTechnicalError || result.hasBusinessError) {
         messageManager.showErrorsAndClose(result.errors);
       } else {
         // window.alert(result.message);
+        console.log(result.message);
         messageManager.showSuccessAndClose("Signature effectuée");
       }
     }
