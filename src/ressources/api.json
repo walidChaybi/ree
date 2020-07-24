@@ -1,7 +1,7 @@
 {
   "apis": [
     {
-      "url": "http://http://10.110.192.130",
+      "url": "http://10.110.192.130",
       "ports": 80,
       "name": "rece-requete-api",
       "usedVersions": ["v1"]

@@ -12,7 +12,7 @@ module.exports = [
     pattern:
       process.env.NODE_ENV === "production"
         ? "http://localhost:80/rece-requete-api/v1(.*)"
-        : "http://localhost:3000/rece-requete-api/v1(.*)",
+        : "http://10.110.192.130:80/rece-requete-api/v1(.*)",
 
     /**
      * returns the data
@@ -295,7 +295,7 @@ module.exports = [
     pattern:
       process.env.NODE_ENV === "production"
         ? "http://localhost:80/rece-securite-api/v1(.*)"
-        : "http://localhost:3000/rece-securite-api/v1(.*)",
+        : "http://10.110.192.130:80/rece-securite-api/v1(.*)",
 
     /**
      * returns the data
