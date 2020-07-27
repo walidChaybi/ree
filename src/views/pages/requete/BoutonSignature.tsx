@@ -52,12 +52,13 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     };
   }, [validerButtonRef]);
 
-  const { errorState } = useUpdateDocumentApi(updateDocumentQueryParamState);
+  let { errorState }: any = useUpdateDocumentApi(updateDocumentQueryParamState);
 
   useEffect(() => {
     if (errorState) {
-      messageManager.showErrorAndClose(
-        "Une erreur est survenue lors de la mise à jour du document signé"
+      messageManager.showError(
+        "Une erreur est survenue lors de la mise à jour du document signé: " +
+          errorState.message
       );
     }
   }, [errorState]);
@@ -84,7 +85,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     console.log("result: ", result);
     if (result.direction && result.direction === "to-call-app") {
       if (result.hasTechnicalError || result.hasBusinessError) {
-        messageManager.showErrorsAndClose(result.errors);
+        messageManager.showErrors(result.errors);
       } else {
         // window.alert(result.message);
         console.log(result.message);

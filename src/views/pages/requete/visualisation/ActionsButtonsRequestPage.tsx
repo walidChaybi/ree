@@ -3,7 +3,6 @@ import { NavigationButton } from "./NavigationButton";
 import { BoutonSignature } from "../BoutonSignature";
 import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
-import { AppUrls } from "../../../router/UrlManager";
 import { useHistory } from "react-router-dom";
 import { SeparateurUrl } from "../../../router/UrlManager";
 
@@ -37,14 +36,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
       />
       <div className="event-button">
         <div>
-          <BoutonRetour
-            url={
-              pathnames.includes("requetesservice")
-                ? AppUrls.ctxRequetesServiceUrl
-                : AppUrls.ctxMesRequetesUrl
-            }
-            messageId={"boutons.retourMesRequetes"}
-          />
+          <BoutonRetour messageId={"boutons.retourMesRequetes"} />
         </div>
         <div>
           <BoutonSignature

@@ -130,10 +130,16 @@
         },
         "documentDelivre": {
           "type": {
+            "ATTESTATION_PACS": "Attestation de PACS",
+            "CERTIFICAT_SITUATION_RC": "Certificat de situation au RC",
+            "CERTIFICAT_SITUATION_RCA": "Certificat de situation au RCA",
+            "CERTIFICAT_SITUATION_RC_RCA": "Certificat de situation au RC et RCA",
+            "CERTIFICAT_SITUATION_PACS": "Certificat de situation de PACS",
             "COPIE_INTEGRALE": "Copie intégrale",
             "EXTRAIT_AVEC_FILIATION": "Extrait avec filiation",
             "EXTRAIT_SANS_FILIATION": "Extrait sans filiation",
             "EXTRAIT_PLURILINGUE": "Extrait plurilingue",
+            "COPIE_NON_SIGNEE": "Copie non signée",
             "FA50": "Formulaire FA50",
             "FA116": "Formulaire FA116",
             "FA117": "Formulaire FA117",

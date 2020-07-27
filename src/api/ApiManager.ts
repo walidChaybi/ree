@@ -101,30 +101,36 @@ export class ApiManager {
   }
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
-    let request = this.processRequestMethod(
+    let httpRequete = this.processRequestMethod(
       httpRequestConfig.method,
       httpRequestConfig.uri
     );
 
     if (httpRequestConfig.parameters) {
-      request = this.processRequestQueyParameters(
+      httpRequete = this.processRequestQueyParameters(
         httpRequestConfig.parameters,
-        request
+        httpRequete
       );
     }
 
     if (httpRequestConfig.data) {
-      request = this.processRequestData(httpRequestConfig.data, request);
+      httpRequete = this.processRequestData(
+        httpRequestConfig.data,
+        httpRequete
+      );
     }
 
     if (httpRequestConfig.headers) {
-      request = this.processRequestHeaders(httpRequestConfig.headers, request);
+      httpRequete = this.processRequestHeaders(
+        httpRequestConfig.headers,
+        httpRequete
+      );
     }
 
     if (httpRequestConfig.responseType) {
-      request = request.responseType(httpRequestConfig.responseType);
+      httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
-    return request
+    return httpRequete
       .then(response => {
         return Promise.resolve({
           body: response.body,
@@ -138,27 +144,27 @@ export class ApiManager {
 
   public processRequestHeaders(
     headers: HttpRequestHeader[],
-    request: superagent.SuperAgentRequest
+    httpRequest: superagent.SuperAgentRequest
   ): superagent.SuperAgentRequest {
-    let res = request;
+    let res = httpRequest;
     headers.forEach(element => {
-      res = request.set(element.header, element.value);
+      res = httpRequest.set(element.header, element.value);
     });
     return res;
   }
 
   public processRequestQueyParameters(
     parameters: any,
-    request: superagent.SuperAgentRequest
+    httpRequest: superagent.SuperAgentRequest
   ) {
-    return request.query(parameters);
+    return httpRequest.query(parameters);
   }
 
   public processRequestData(
     data: any,
-    request: superagent.SuperAgentRequest
+    httpRequest: superagent.SuperAgentRequest
   ): superagent.SuperAgentRequest {
-    return request.send(data);
+    return httpRequest.send(data);
   }
 
   public processRequestMethod(

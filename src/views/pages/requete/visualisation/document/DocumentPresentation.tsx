@@ -16,11 +16,13 @@ import "../sass/ResumeRequete.scss";
 import { requestDocumentApi } from "./DocumentRequeteHook";
 import classNames from "classnames";
 import { IDocumentDetail } from "./interfaces/IDocumentDetail";
+import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 
 interface IDocumentPresentationProps {
   titre: MessageId;
   documents: IDocumentDetail[];
   documentVisible?: IDocumentDetail;
+  groupement: GroupementDocument;
   setDocumentVisibleFct?: (document: IDocumentDetail) => void;
   setContenuDocumentFct: (doc: string) => void;
 }
@@ -29,8 +31,9 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
   titre,
   documents,
   documentVisible,
+  groupement,
   setDocumentVisibleFct,
-  setContenuDocumentFct,
+  setContenuDocumentFct
 }) => {
   const visible: boolean = documents.length > 0;
   const disclosure = useDisclosureState({ visible });
@@ -63,6 +66,7 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
                     <DocumentDetail
                       key={index}
                       document={element}
+                      groupement={groupement}
                       onClickHandler={onClickHandler}
                       openedInViewer={documentVisible}
                       stateSetter={setDocumentVisibleFct}
@@ -82,11 +86,12 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
 function onClickHandler(
   event: React.MouseEvent,
   document: IDocumentDetail,
+  groupement: GroupementDocument,
   stateSetter?: (document: IDocumentDetail) => void
 ) {
   requestDocumentApi(
     document.identifiantDocument,
-    document.groupement,
+    groupement,
     document.mimeType
   ).then((result) => {
     const documentObjectURL = URL.createObjectURL(result);

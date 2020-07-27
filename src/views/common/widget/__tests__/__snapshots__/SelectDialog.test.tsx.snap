@@ -6,6 +6,7 @@ exports[`renders composant SelectDialog 1`] = `
 >
   <button
     className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
+    data-testid="icon-dialog"
     disabled={false}
     onBlur={[Function]}
     onClick={[Function]}

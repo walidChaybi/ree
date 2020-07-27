@@ -47,3 +47,31 @@ test("renders d'un uudi en dernier élément du FilAriane", () => {
   const uuidElement = screen.getByText(/Aperçu de requête/i);
   expect(uuidElement).toBeInTheDocument();
 });
+
+test("renders de 2 éléments du FilAriane et mise à jour context", () => {
+  const history = createMemoryHistory();
+  history.push(AppUrls.ctxMesRequetesUrl);
+  function setRetourContext(retourUrl: string) {
+    expect(retourUrl).toBe(AppUrls.ctxAccueilUrl);
+  }
+  render(
+    <Router history={history}>
+      <FilAriane setRetourState={setRetourContext} />
+    </Router>
+  );
+});
+
+test("renders d'un uudi en dernier élément du FilAriane et maj context", () => {
+  const history = createMemoryHistory();
+  history.push(
+    AppUrls.ctxMesRequetesUrl + "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
+  );
+  function setRetourContext(retourUrl: string) {
+    expect(retourUrl).toBe(AppUrls.ctxMesRequetesUrl);
+  }
+  render(
+    <Router history={history}>
+      <FilAriane setRetourState={setRetourContext} />
+    </Router>
+  );
+});

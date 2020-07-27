@@ -5,29 +5,50 @@ import "react-toastify/dist/ReactToastify.css";
 import "./sass/Message.scss";
 
 const DURATION_BEFORE_CLOSE = 3000;
+const DURATION_BEFORE_CLOSE_ERROR = 5000;
 
 const getDurationForAutoClose = (autoClose?: number) =>
   autoClose ? autoClose : DURATION_BEFORE_CLOSE;
+
+const getDurationErrorForAutoClose = (autoClose?: number) =>
+  autoClose ? autoClose : DURATION_BEFORE_CLOSE_ERROR;
 
 const messageManager = {
   showErrorAndClose: (errorMessage: string, autoClose?: number) => {
     //FIXME : CSS
     toast(
-      <div className="block-attention">
-        <div className="strong">ERROR :</div>
+      <div className="message-manager">
+        <div className="error">ERROR :</div>
 
-        {errorMessage}
+        <p className="error">{errorMessage}</p>
       </div>,
 
       {
-        autoClose: getDurationForAutoClose(autoClose),
+        autoClose: getDurationErrorForAutoClose(autoClose),
         closeButton: false,
+        hideProgressBar: false,
+      }
+    );
+  },
+
+  showError: (errorMessage: string) => {
+    //FIXME : CSS
+    toast(
+      <div className="message-manager">
+        <div className="error">ERROR :</div>
+
+        <p className="error">{errorMessage}</p>
+      </div>,
+
+      {
+        autoClose: false,
+        closeButton: true,
         hideProgressBar: true,
       }
     );
   },
 
-  showErrorsAndClose: (errorMessage: string[]) => {
+  showErrors: (errorMessage: string[]) => {
     //FIXME : CSS
     const htmlErrorMessage = errorMessage
       .map((message) => message + "\n")
@@ -35,13 +56,12 @@ const messageManager = {
       .replace(/,/g, "");
 
     toast(
-      <div className="block-attention">
-        <div className="strong">ERROR :</div>
-
-        {htmlErrorMessage}
+      <div className="message-manager">
+        <div className="error">ERROR :</div>
+        <p className="error">{htmlErrorMessage}</p>
       </div>,
 
-      { closeButton: false, hideProgressBar: true }
+      { autoClose: false, closeButton: true, hideProgressBar: true }
     );
   },
 
