@@ -5,6 +5,7 @@ import { IDocumentDetail } from "../interfaces/IDocumentDetail";
 import data from "./data/documentsDetails";
 import request from "superagent";
 import config from "../../../../../../api/mock/superagent-mock-config";
+import { GroupementDocument } from "../../../../../../model/requete/GroupementDocument";
 window.URL.createObjectURL = jest.fn();
 
 const superagentMock = require("superagent-mock")(request, config);
@@ -14,6 +15,7 @@ test("renders pieces justificatives vide dans leur accordéon", async () => {
     <DocumentPresentation
       titre={"pages.requete.consultation.pieceJustificative.titre"}
       documents={[]}
+      groupement={GroupementDocument.PieceJustificative}
     />
   );
   const linkElement = screen.getByText(/Pièces Justificatives/i);
@@ -28,6 +30,7 @@ test("renders 2 pieces justificatives dans leur accordéon", async () => {
     <DocumentPresentation
       titre={"pages.requete.consultation.pieceJustificative.titre"}
       documents={data.documentsDetails as IDocumentDetail[]}
+      groupement={GroupementDocument.PieceJustificative}
     />
   );
   const linkElement = screen.getByText(/Pièces Justificatives/i);
@@ -45,6 +48,7 @@ test("renders click piece justificative", () => {
     <DocumentPresentation
       titre={"pages.requete.consultation.pieceJustificative.titre"}
       documents={data.documentsDetails as IDocumentDetail[]}
+      groupement={GroupementDocument.PieceJustificative}
       setDocumentVisibleFct={handleClickButton}
     />
   );

@@ -20,16 +20,12 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
   piecesJustificatives,
   documentsDelivres
 }) => {
-  const { courriersAccompagnement, documentsASigner } = parseDocumentsDelivres(
-    documentsDelivres
-  );
   const [extraitVisibleState, setExtraitVisibleState] = useState<
-    IDocumentDetail
-  >(extraitALireParDefault(documentsASigner));
+    IDocumentDetail | undefined
+  >(extraitALireParDefault(documentsDelivres));
 
   useEffect(() => {
-    const { documentsASigner } = parseDocumentsDelivres(documentsDelivres);
-    setExtraitVisibleState(extraitALireParDefault(documentsASigner));
+    setExtraitVisibleState(extraitALireParDefault(documentsDelivres));
   }, [documentsDelivres]);
 
   return (
@@ -37,12 +33,14 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
       <DocumentPresentation
         titre={"pages.requete.consultation.pieceJustificative.titre"}
         documents={parsePiecesJustificatives(piecesJustificatives)}
+        groupement={GroupementDocument.PieceJustificative}
         documentVisible={extraitVisibleState}
         setDocumentVisibleFct={setExtraitVisibleState}
       />
       <DocumentPresentation
         titre={"pages.requete.consultation.documentsADelivres.titre"}
-        documents={[...courriersAccompagnement, ...documentsASigner]}
+        documents={parseDocumentsDelivres(documentsDelivres)}
+        groupement={GroupementDocument.DocumentDelivre}
         documentVisible={extraitVisibleState}
         setDocumentVisibleFct={setExtraitVisibleState}
       />
@@ -57,7 +55,6 @@ function parsePiecesJustificatives(
   piecesJustificatives.forEach((element, index) => {
     documentsDetails.push({
       identifiantDocument: element.idPieceJustificative,
-      groupement: GroupementDocument.PieceJustificative,
       mimeType: element.mimeType as "image/png" | "application/pdf",
       nom: getText("pages.requete.consultation.pieceJustificative.nomFichier", [
         `${index}`
@@ -70,33 +67,19 @@ function parsePiecesJustificatives(
 
 function parseDocumentsDelivres(
   documentsDelivres: IDocumentDelivre[]
-): IDocumentsDelivres {
-  const courriersAccompagnement: IDocumentDetail[] = [];
-  const documentsASigner: IDocumentDetail[] = [];
+): IDocumentDetail[] {
+  const documentsResult: IDocumentDetail[] = [];
   documentsDelivres.forEach(element => {
-    if (
-      element.typeDocument === TypeDocument.FA116 ||
-      element.typeDocument === TypeDocument.FA50
-    ) {
-      courriersAccompagnement.push(
-        parseDocumentDelivre(element, GroupementDocument.CourrierAccompagnement)
-      );
-    } else {
-      documentsASigner.push(
-        parseDocumentDelivre(element, GroupementDocument.DocumentAsigner)
-      );
-    }
+    documentsResult.push(parseDocumentDelivre(element));
   });
-  return { courriersAccompagnement, documentsASigner };
+  return documentsResult;
 }
 
 function parseDocumentDelivre(
-  documentDelivre: IDocumentDelivre,
-  groupement: GroupementDocument
+  documentDelivre: IDocumentDelivre
 ): IDocumentDetail {
   return {
     identifiantDocument: documentDelivre.idDocumentDelivre,
-    groupement,
     nom: getText(
       `pages.requete.consultation.documentDelivre.type.${documentDelivre.typeDocument}`
     ),
@@ -105,35 +88,73 @@ function parseDocumentDelivre(
   };
 }
 
-function extraitALireParDefault(documents: IDocumentDetail[]): IDocumentDetail {
-  const copieIntegralePresente = isCopieIntegralePresente(documents);
-  const documentsALire = documents.filter((element, index) => {
-    if (documents.length === 1) {
-      return true;
-    } else if (
-      copieIntegralePresente &&
-      element.nom ===
-        getText(
-          "pages.requete.consultation.documentDelivre.type.COPIE_INTEGRALE"
-        )
-    ) {
-      return true;
-    } else if (!copieIntegralePresente && index === 0) {
-      return true;
-    }
-    return false;
-  });
-  return documentsALire[0];
+export function extraitALireParDefault(
+  documents: IDocumentDelivre[]
+): IDocumentDetail | undefined {
+  if (documents.length > 0) {
+    const copieIntegraleDocuments = getDocumentsByTypeDocument(
+      documents,
+      TypeDocument.CopieIntegrale
+    );
+    const extraitDocuments = [
+      ...getDocumentsByTypeDocument(
+        documents,
+        TypeDocument.ExtraitAvecFiliation
+      ),
+      ...getDocumentsByTypeDocument(
+        documents,
+        TypeDocument.ExtraitSansFiliation
+      ),
+      ...getDocumentsByTypeDocument(documents, TypeDocument.ExtraitPlurilingue)
+    ];
+    const certificatDocuments = [
+      ...getDocumentsByTypeDocument(
+        documents,
+        TypeDocument.CertificatSituationRC
+      ),
+      ...getDocumentsByTypeDocument(
+        documents,
+        TypeDocument.CertificatSituationRCA
+      ),
+      ...getDocumentsByTypeDocument(
+        documents,
+        TypeDocument.CertificatSituationRCetRCA
+      ),
+      ...getDocumentsByTypeDocument(
+        documents,
+        TypeDocument.CertificatSituationPACS
+      )
+    ];
+    const attestationDocuments = getDocumentsByTypeDocument(
+      documents,
+      TypeDocument.AtestationPACS
+    );
+    const courriersAccompagnementDocuments = [
+      ...getDocumentsByTypeDocument(documents, TypeDocument.FA50),
+      ...getDocumentsByTypeDocument(documents, TypeDocument.FA116),
+      ...getDocumentsByTypeDocument(documents, TypeDocument.FA117),
+      ...getDocumentsByTypeDocument(documents, TypeDocument.FA118)
+    ];
+    const autresDocuments = getDocumentsByTypeDocument(
+      documents,
+      TypeDocument.CopieNonSignee
+    );
+    return parseDocumentDelivre(
+      copieIntegraleDocuments[0] ||
+        extraitDocuments[0] ||
+        certificatDocuments[0] ||
+        attestationDocuments[0] ||
+        courriersAccompagnementDocuments[0] ||
+        autresDocuments[0] ||
+        undefined
+    );
+  }
+  return undefined;
 }
 
-function isCopieIntegralePresente(documents: IDocumentDetail[]): boolean {
-  return (
-    documents.filter(
-      element =>
-        element.nom ===
-        getText(
-          "pages.requete.consultation.documentDelivre.type.COPIE_INTEGRALE"
-        )
-    ).length > 0
-  );
-}
+const getDocumentsByTypeDocument = (
+  documents: IDocumentDelivre[],
+  type: TypeDocument
+): IDocumentDelivre[] => {
+  return documents.filter(element => element.typeDocument === type);
+};

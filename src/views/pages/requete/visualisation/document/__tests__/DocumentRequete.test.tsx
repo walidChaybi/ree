@@ -1,7 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { DocumentsRequete } from "../DocumentsRequete";
+import { DocumentsRequete, extraitALireParDefault } from "../DocumentsRequete";
 import requetes from "../../../../../../api/mock/requetes.json";
+import { IDocumentDelivre } from "../../RequeteType";
 window.URL.createObjectURL = jest.fn();
 
 test("renders documents d'une requete", async () => {
