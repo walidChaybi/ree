@@ -1,5 +1,6 @@
 export enum GroupementDocument {
   PieceJustificative = "piecesjustificatives",
   CourrierAccompagnement = "documentsdelivres",
-  DocumentAsigner = "documentasigner"
+  DocumentAsigner = "documentasigner",
+  DocumentDelivre = "documentsdelivres"
 }
