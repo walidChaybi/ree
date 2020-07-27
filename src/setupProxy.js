@@ -8,7 +8,7 @@ module.exports = function (app) {
     app.use(
       "/rece-requete-api/v1",
       proxy.createProxyMiddleware({
-        target: "http://localhost:8081",
+        target: "http://10.110.192.130:80",
         changeOrigin: true,
       })
     );
