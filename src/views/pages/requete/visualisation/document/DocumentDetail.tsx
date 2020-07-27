@@ -10,13 +10,16 @@ import { IDocumentDetail } from "./interfaces/IDocumentDetail";
 import { lectureDuDocument } from "./DocumentPresentation";
 import { requestDocumentApi } from "./DocumentRequeteHook";
 import "./sass/DocumentDetail.scss";
+import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 const byteSize = require("byte-size");
 
 interface IDocumentDetailProps {
   document: IDocumentDetail;
+  groupement: GroupementDocument;
   onClickHandler: (
     event: React.MouseEvent,
     document: IDocumentDetail,
+    groupement: GroupementDocument,
     stateSetter?: (document: IDocumentDetail) => void
   ) => void;
   openedInViewer?: IDocumentDetail;
@@ -25,6 +28,7 @@ interface IDocumentDetailProps {
 
 export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
   document,
+  groupement,
   onClickHandler,
   openedInViewer,
   stateSetter
@@ -36,13 +40,13 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
     ) {
       requestDocumentApi(
         document.identifiantDocument,
-        document.groupement,
+        groupement,
         document.mimeType
       ).then(result => {
         lectureDuDocument(URL.createObjectURL(result));
       });
     }
-  }, [document, openedInViewer]);
+  }, [document, groupement, openedInViewer]);
 
   return (
     <ListItem
@@ -52,7 +56,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         openedInViewer.identifiantDocument === document.identifiantDocument
       }
       onClick={event => {
-        onClickHandler(event, document, stateSetter);
+        onClickHandler(event, document, groupement, stateSetter);
       }}
       title={getText("pages.requete.consultation.icon.visualiser")}
     >
