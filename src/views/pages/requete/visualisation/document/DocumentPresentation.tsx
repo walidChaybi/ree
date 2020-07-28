@@ -17,6 +17,7 @@ import { requestDocumentApi } from "./DocumentRequeteHook";
 import classNames from "classnames";
 import { IDocumentDetail } from "./interfaces/IDocumentDetail";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { IDocumentDelivre } from "../RequeteType";
 
 interface IDocumentPresentationProps {
   titre: MessageId;
@@ -24,7 +25,7 @@ interface IDocumentPresentationProps {
   documentVisible?: IDocumentDetail;
   groupement: GroupementDocument;
   setDocumentVisibleFct?: (document: IDocumentDetail) => void;
-  setContenuDocumentFct: (doc: string) => void;
+  setDocumentDelivreFct: (doc: IDocumentDelivre) => void;
 }
 
 export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
@@ -33,7 +34,7 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
   documentVisible,
   groupement,
   setDocumentVisibleFct,
-  setContenuDocumentFct
+  setDocumentDelivreFct,
 }) => {
   const visible: boolean = documents.length > 0;
   const disclosure = useDisclosureState({ visible });
@@ -70,7 +71,7 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
                       onClickHandler={onClickHandler}
                       openedInViewer={documentVisible}
                       stateSetter={setDocumentVisibleFct}
-                      setContenuDocumentFct={setContenuDocumentFct}
+                      setDocumentDelivreFct={setDocumentDelivreFct}
                     />
                   );
                 })}
@@ -94,12 +95,24 @@ function onClickHandler(
     groupement,
     document.mimeType
   ).then((result) => {
-    const documentObjectURL = URL.createObjectURL(result);
+    const documentObjectURL = URL.createObjectURL(
+      convertToBlob(result.documentDelivre.contenu, result.mimeType)
+    );
     lectureDuDocument(documentObjectURL);
     if (stateSetter) {
       stateSetter(document);
     }
   });
+}
+
+export function convertToBlob(base64: string, mimeType: string): Blob {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: mimeType });
 }
 
 export function lectureDuDocument(documentObjectURL: string) {

@@ -88,7 +88,7 @@ const DelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
         <div className="RequetesToolbarSignature">
           <BoutonSignature
             libelle={"pages.delivrance.action.signature"}
-            contenuDesDocuments={[]} // FIXME get all documents content
+            documentsDelivres={[]} // FIXME get all documents content
           />
         </div>
         <AppBar position="static" className="headerOngletDelivrance">

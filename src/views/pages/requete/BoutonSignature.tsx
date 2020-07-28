@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getText, Text } from "../../common/widget/Text";
 import {
   useDialogState,
@@ -14,14 +14,16 @@ import {
   useUpdateDocumentApi,
   IQueryParameterUpdateDocument,
 } from "./UpdateDocumentHook";
+import { CircularProgress } from "@material-ui/core";
+import { IDocumentDelivre } from "./visualisation/RequeteType";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
-  contenuDesDocuments: string[];
+  documentsDelivres: IDocumentDelivre[];
 }
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
-  contenuDesDocuments,
+  documentsDelivres,
 }) => {
   const dialog = useDialogState();
   const isError = false;
@@ -30,6 +32,8 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     updateDocumentQueryParamState,
     setUpdateDocumentQueryParamState,
   ] = React.useState<IQueryParameterUpdateDocument>();
+
+  const [showWaitState, setShowWaitState] = useState<boolean>();
 
   useEffect(() => {
     if (validerButtonRef.current) {
@@ -50,26 +54,27 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         handleBackFromWebExtension
       );
     };
-  }, [validerButtonRef]);
+  });
 
-  let { errorState }: any = useUpdateDocumentApi(updateDocumentQueryParamState);
-
-  useEffect(() => {
-    if (errorState) {
-      messageManager.showError(
-        "Une erreur est survenue lors de la mise à jour du document signé: " +
-          errorState.message
-      );
-    }
-  }, [errorState]);
+  useUpdateDocumentApi(updateDocumentQueryParamState);
+  // let { errorState }: any = useUpdateDocumentApi(updateDocumentQueryParamState);
+  // useEffect(() => {
+  //   if (errorState) {
+  //     messageManager.showError(
+  //       "Une erreur est survenue lors de la mise à jour du document signé: " +
+  //         errorState.message
+  //     );
+  //   }
+  // }, [errorState]);
 
   const handleClickSignature = () => {
     let detail = {
       function: "SIGN",
-      contenu: contenuDesDocuments[0], // FIXME loop on document content
+      contenu: documentsDelivres[0], // FIXME loop on document content
       direction: "to-webextension",
     };
     console.log(detail.contenu);
+    setShowWaitState(true);
     window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
     dialog.hide();
   };
@@ -83,6 +88,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     const customEvent = event as CustomEvent;
     const result = customEvent.detail;
     console.log("result: ", result);
+    setShowWaitState(false);
     if (result.direction && result.direction === "to-call-app") {
       if (result.hasTechnicalError || result.hasBusinessError) {
         messageManager.showErrors(result.errors);
@@ -92,9 +98,9 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         messageManager.showSuccessAndClose("Signature effectuée");
 
         setUpdateDocumentQueryParamState({
-          nom: "",
-          conteneurSwift: "",
-          contenu: "",
+          nom: documentsDelivres[0].nom,
+          conteneurSwift: documentsDelivres[0].conteneurSwift,
+          contenu: documentsDelivres[0].contenu,
         });
       }
     }
@@ -102,6 +108,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
 
   return (
     <>
+      {showWaitState && <CircularProgress />}
       <DialogDisclosure {...dialog} as={Button}>
         {getText(libelle)}
       </DialogDisclosure>

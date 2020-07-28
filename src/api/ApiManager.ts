@@ -1,6 +1,7 @@
 import config from "./mock/superagent-mock-config";
 import * as superagent from "superagent";
 import request from "superagent";
+import messageManager from "../views/common/util/messageManager";
 const apis: IApis = require("../ressources/api.json");
 
 if (process.env.REACT_APP_MOCK) {
@@ -25,7 +26,7 @@ export enum HttpMethod {
   DELETE,
   PATCH,
   POST,
-  PUT
+  PUT,
 }
 
 interface HttpRequestHeader {
@@ -131,13 +132,16 @@ export class ApiManager {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
     return httpRequete
-      .then(response => {
+      .then((response) => {
         return Promise.resolve({
           body: response.body,
-          status: response.status
+          status: response.status,
         });
       })
-      .catch(error => {
+      .catch((error) => {
+        messageManager.showError(
+          "Une erreur est survenue: " + (error ? error.message : "inconnue")
+        );
         return Promise.reject(error);
       });
   }
@@ -147,7 +151,7 @@ export class ApiManager {
     httpRequest: superagent.SuperAgentRequest
   ): superagent.SuperAgentRequest {
     let res = httpRequest;
-    headers.forEach(element => {
+    headers.forEach((element) => {
       res = httpRequest.set(element.header, element.value);
     });
     return res;

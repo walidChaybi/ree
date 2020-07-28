@@ -4,10 +4,11 @@ import "./sass/ContenuRequete.scss";
 import { IDataTable } from "../MesRequetesPage";
 import { DocumentsRequete } from "./document/DocumentsRequete";
 import { ExtraitDocument } from "./document/ExtraitDocument";
+import { IDocumentDelivre } from "./RequeteType";
 
 interface ContenuRequeteProps {
   requete: IDataTable;
-  setContenuDocumentFct: (doc: string) => void;
+  setDocumentDelivreFct: (doc: IDocumentDelivre) => void;
 }
 
 export const ContenuRequete: React.FC<ContenuRequeteProps> = (props) => {
@@ -18,7 +19,7 @@ export const ContenuRequete: React.FC<ContenuRequeteProps> = (props) => {
         <DocumentsRequete
           piecesJustificatives={props.requete.piecesJustificatives}
           documentsDelivres={props.requete.reponse?.documentsDelivres || []}
-          setContenuDocumentFct={props.setContenuDocumentFct}
+          setDocumentDelivreFct={props.setDocumentDelivreFct}
         />
       </div>
       <div className="side right">

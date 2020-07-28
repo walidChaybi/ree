@@ -7,10 +7,11 @@ import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
 import Image from "@material-ui/icons/Image";
 import { getText } from "../../../../common/widget/Text";
 import { IDocumentDetail } from "./interfaces/IDocumentDetail";
-import { lectureDuDocument } from "./DocumentPresentation";
+import { lectureDuDocument, convertToBlob } from "./DocumentPresentation";
 import { requestDocumentApi } from "./DocumentRequeteHook";
 import "./sass/DocumentDetail.scss";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { IDocumentDelivre } from "../RequeteType";
 const byteSize = require("byte-size");
 
 interface IDocumentDetailProps {
@@ -24,7 +25,7 @@ interface IDocumentDetailProps {
   ) => void;
   openedInViewer?: IDocumentDetail;
   stateSetter?: (document: IDocumentDetail) => void;
-  setContenuDocumentFct: (doc: string) => void;
+  setDocumentDelivreFct: (doc: IDocumentDelivre) => void;
 }
 
 export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
@@ -33,7 +34,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
   onClickHandler,
   openedInViewer,
   stateSetter,
-  setContenuDocumentFct,
+  setDocumentDelivreFct,
 }) => {
   useEffect(() => {
     if (
@@ -46,12 +47,20 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         document.mimeType
       ).then((result) => {
         lectureDuDocument(
-          URL.createObjectURL(convertToBlob(result.base64, result.mimeType))
+          URL.createObjectURL(
+            convertToBlob(result.documentDelivre.contenu, result.mimeType)
+          )
         );
-        setContenuDocumentFct(result.base64);
+        setDocumentDelivreFct(result.documentDelivre);
       });
     }
-  }, [document, groupement, openedInViewer, setContenuDocumentFct]);
+  }, [
+    document.identifiantDocument,
+    document.mimeType,
+    groupement,
+    openedInViewer,
+    setDocumentDelivreFct,
+  ]);
 
   return (
     <ListItem
@@ -98,14 +107,4 @@ function getDetailMimeTypeEtTaille(
 ) {
   const defaultMimeType: string = mimeType ? mimeType : "application/pdf";
   return `${defaultMimeType} ${convertirBytesEnKiloOctet(taille)}`;
-}
-
-function convertToBlob(base64: string, mimeType: string): Blob {
-  const byteCharacters = atob(base64);
-  const byteNumbers = new Array(byteCharacters.length);
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  const byteArray = new Uint8Array(byteNumbers);
-  return new Blob([byteArray], { type: mimeType });
 }

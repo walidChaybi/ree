@@ -1,8 +1,9 @@
 import { ApiManager, HttpMethod } from "../../../../../api/ApiManager";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { IDocumentDelivre } from "../RequeteType";
 
 export interface IRequestDocumentApiResult {
-  base64: string;
+  documentDelivre: IDocumentDelivre;
   mimeType: string;
 }
 
@@ -22,8 +23,9 @@ export async function requestDocumentApi(
       uri: `/${groupementEndPoint}/${identifiantDocument}`,
     })
     .then((result) => {
+      const documentDelivre: IDocumentDelivre = result.body.data;
       const requestDocumentApiResult: IRequestDocumentApiResult = {
-        base64: result.body.data,
+        documentDelivre,
         mimeType,
       };
       return Promise.resolve(requestDocumentApiResult);

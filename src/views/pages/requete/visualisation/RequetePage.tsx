@@ -7,6 +7,7 @@ import { useRequeteDataApi } from "./DonneeRequeteHook";
 import { IDataTable } from "../MesRequetesPage";
 import { AppUrls } from "../../../router/UrlManager";
 import { Title } from "../../../core/title/Title";
+import { IDocumentDelivre } from "./RequeteType";
 
 export interface RequestsInformations {
   data: IDataTable[];
@@ -34,7 +35,9 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
   );
 
   // Contenu du document en base 64
-  const [contenuDocumentState, setContenuDocumentState] = useState<string>("");
+  const [documentDelivreState, setDocumentDelivreState] = useState<
+    IDocumentDelivre
+  >();
 
   const changeIndex = useCallback(
     (idx: number) => {
@@ -61,12 +64,14 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
             maxRequetes={dataState.length}
             indexRequete={indexRequete}
             setIndexRequete={changeIndex}
-            contenuDesDocuments={[contenuDocumentState]}
+            documentsDelivres={
+              documentDelivreState ? [documentDelivreState] : []
+            }
           />
           <EtatRequete requete={dataState[indexRequete]} />
           <ContenuRequete
             requete={dataState[indexRequete]}
-            setContenuDocumentFct={setContenuDocumentState}
+            setDocumentDelivreFct={setDocumentDelivreState}
           />
         </>
       )}

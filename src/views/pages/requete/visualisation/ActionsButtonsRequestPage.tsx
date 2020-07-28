@@ -5,19 +5,20 @@ import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
 import { useHistory } from "react-router-dom";
 import { SeparateurUrl } from "../../../router/UrlManager";
+import { IDocumentDelivre } from "./RequeteType";
 
 export interface ActionsProps {
   indexRequete: number;
   maxRequetes: number;
   setIndexRequete: (index: number) => void;
-  contenuDesDocuments: string[];
+  documentsDelivres: IDocumentDelivre[];
 }
 
 export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   indexRequete,
   setIndexRequete,
   maxRequetes,
-  contenuDesDocuments,
+  documentsDelivres,
 }) => {
   const history = useHistory();
 
@@ -41,7 +42,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
         <div>
           <BoutonSignature
             libelle={"pages.delivrance.apercu.signatureElectronique"}
-            contenuDesDocuments={contenuDesDocuments}
+            documentsDelivres={documentsDelivres}
           />
         </div>
       </div>

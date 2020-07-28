@@ -22,7 +22,7 @@ export function useUpdateDocumentApi(
     if (queryParameters) {
       api
         .fetch({
-          method: HttpMethod.POST,
+          method: HttpMethod.PATCH,
           uri: ApiEndpoints.DocumentsdelivresUrl,
         })
         .then((result) => {
