@@ -26,7 +26,6 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   documentsDelivres,
 }) => {
   const dialog = useDialogState();
-  const isError = false;
   let validerButtonRef = React.createRef<HTMLButtonElement>();
   const [
     updateDocumentQueryParamState,
@@ -70,7 +69,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   const handleClickSignature = () => {
     let detail = {
       function: "SIGN",
-      contenu: documentsDelivres[0], // FIXME loop on document content
+      contenu: documentsDelivres[0].contenu, // FIXME loop on document content
       direction: "to-webextension",
     };
     console.log(detail.contenu);
@@ -94,13 +93,13 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         messageManager.showErrors(result.errors);
       } else {
         // window.alert(result.message);
-        console.log(result.message);
+        console.log(result.contenu);
         messageManager.showSuccessAndClose("Signature effectuée");
 
         setUpdateDocumentQueryParamState({
           nom: documentsDelivres[0].nom,
           conteneurSwift: documentsDelivres[0].conteneurSwift,
-          contenu: documentsDelivres[0].contenu,
+          contenu: result.contenu,
         });
       }
     }
@@ -112,7 +111,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
       <DialogDisclosure {...dialog} as={Button}>
         {getText(libelle)}
       </DialogDisclosure>
-      {isError ? (
+      {documentsDelivres.length === 0 ? (
         <Dialog
           {...dialog}
           tabIndex={0}

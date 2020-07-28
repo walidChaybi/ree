@@ -24,6 +24,8 @@ export function useUpdateDocumentApi(
         .fetch({
           method: HttpMethod.PATCH,
           uri: ApiEndpoints.DocumentsdelivresUrl,
+          data: [{ ...queryParameters }],
+          headers: [],
         })
         .then((result) => {
           // doNothing
