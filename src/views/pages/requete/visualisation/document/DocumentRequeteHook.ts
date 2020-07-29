@@ -25,7 +25,7 @@ export async function requestDocumentApi(
     .then((result) => {
       let requestDocumentApiResult: IRequestDocumentApiResult;
       if (typeof result.body.data === "string") {
-        // FIXME: changer le retour du back ou faire une deuxième api côté front
+        // FIXME: changer le retour du back ou faire une deuxième api côté front (en effet /piecesjustificatives renvoie une string alors que /documentsdelivres renvoie un DocumentDelivre)
         const documentDelivre = {
           contenu: result.body.data,
           nom: "",
