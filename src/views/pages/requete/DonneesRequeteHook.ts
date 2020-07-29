@@ -19,19 +19,26 @@ import { IDataTable } from "./MesRequetesPage";
 import { Motif } from "../../../model/requete/Motif";
 
 export interface IRequerantApi {
-  adresse: string;
-  idRequerant: string;
-  identite: string;
-  libelleRequerant: string;
+  uidRequerant: string;
+  qualite: QualiteRequerant;
+  typeRequerant: SousQualiteRequerant;
   nomAdministration: string;
+  identite: string;
+  raisonSociale: string;
   nomFamille: string;
   nomUsage: string;
   prenom: string;
-  qualiteRequerant: QualiteRequerant;
-  raisonSociale: string;
-  requete: any;
+  libelleRequerant: string;
+  adresse: string;
+  ligne2: string;
+  ligne3: string;
+  ligne4: string;
+  ligne5: string;
+  codePostale: number;
+  ville: string;
+  pays: string;
+  mail: string;
   telephone: string;
-  typeRequerant: SousQualiteRequerant;
 }
 
 export interface IReponseApi {
@@ -207,11 +214,11 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
 }
 
 function createLibelleRequerant(data: IRequerantApi) {
-  if (data.qualiteRequerant === QualiteRequerant.MandataireHabilite) {
+  if (data.qualite === QualiteRequerant.MandataireHabilite) {
     data.libelleRequerant = data.raisonSociale + " / " + data.identite;
-  } else if (data.qualiteRequerant === QualiteRequerant.Administration) {
+  } else if (data.qualite === QualiteRequerant.Administration) {
     data.libelleRequerant = data.nomAdministration;
-  } else if (data.qualiteRequerant === QualiteRequerant.Particulier) {
+  } else if (data.qualite === QualiteRequerant.Particulier) {
     data.libelleRequerant = data.prenom + " " + data.nomFamille;
   }
   return data;
