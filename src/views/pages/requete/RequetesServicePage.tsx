@@ -101,10 +101,7 @@ export const RequetesServicePage: React.FC = () => {
         "pages.requete.consultation.documentDelivre.type"
       ),
       new TableauTypeColumn(
-        [
-          HeaderTableauRequete.Requerant,
-          HeaderTableauRequete.NomOuRaisonSociale
-        ],
+        [HeaderTableauRequete.Requerant, HeaderTableauRequete.LibelleRequerant],
         false,
         "pages.delivrance.mesRequetes.tableau.header"
       ),

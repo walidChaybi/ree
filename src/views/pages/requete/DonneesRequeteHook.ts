@@ -21,10 +21,14 @@ import { Motif } from "../../../model/requete/Motif";
 export interface IRequerantApi {
   adresse: string;
   idRequerant: string;
-  nomOuRaisonSociale: string;
+  identite: string;
+  libelleRequerant: string;
+  nomAdministration: string;
+  nomFamille: string;
   nomUsage: string;
-  prenomUsage: string;
+  prenom: string;
   qualiteRequerant: QualiteRequerant;
+  raisonSociale: string;
   requete: any;
   telephone: string;
   typeRequerant: SousQualiteRequerant;
@@ -191,7 +195,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     prioriteRequete: "TODO",
     villeEvenement: data.villeEvenement,
     paysEvenement: data.paysEvenement,
-    requerant: data.requerant,
+    requerant: createLibelleRequerant(data.requerant),
     titulaires: data.titulaires,
     canal: data.canal,
     motif: data.motif,
@@ -200,6 +204,17 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     typeActe: data.typeActe,
     reponse: data.reponse
   };
+}
+
+function createLibelleRequerant(data: IRequerantApi) {
+  if (data.qualiteRequerant === QualiteRequerant.MandataireHabilite) {
+    data.libelleRequerant = data.raisonSociale + " / " + data.identite;
+  } else if (data.qualiteRequerant === QualiteRequerant.Administration) {
+    data.libelleRequerant = data.nomAdministration;
+  } else if (data.qualiteRequerant === QualiteRequerant.Particulier) {
+    data.libelleRequerant = data.prenom + " " + data.nomFamille;
+  }
+  return data;
 }
 
 function parseLink(linkHeader: string, api: ApiManager) {

@@ -84,7 +84,7 @@ test("test des prioritées des requêtes", () => {
               "referentiel.natureActe"
             ),
             new TableauTypeColumn(
-              ["requerant", "nomOuRaisonSociale"],
+              ["requerant", "libelleRequerant"],
               false,
               "pages.delivrance.mesRequetes.tableau.header"
             ),

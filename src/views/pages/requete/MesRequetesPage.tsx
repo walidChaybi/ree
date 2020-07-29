@@ -79,7 +79,7 @@ const columnsTableau = [
     "referentiel.natureActe"
   ),
   new TableauTypeColumn(
-    [HeaderTableauRequete.Requerant, HeaderTableauRequete.NomOuRaisonSociale],
+    [HeaderTableauRequete.Requerant, HeaderTableauRequete.LibelleRequerant],
     false,
     "pages.delivrance.mesRequetes.tableau.header"
   ),
