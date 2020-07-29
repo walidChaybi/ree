@@ -89,7 +89,7 @@
       "requerant": {
         "idRequerant": "f275d357-14ec-42ac-a219-d481cbcbbc61",
         "typeRequerant": "TITULAIRE",
-        "qualiteRequerant": "PARTICULIER",
+        "qualite": "PARTICULIER",
         "identite": "",
         "raisonSociale": "",
         "nomAdministration": "",
@@ -188,7 +188,7 @@
       "requerant": {
         "idRequerant": "f275d357-14ec-42ac-a219-d481cbcbbc61",
         "typeRequerant": "TITULAIRE",
-        "qualiteRequerant": "ADMINISTRATION",
+        "qualite": "ADMINISTRATION",
         "identite": "",
         "raisonSociale": "",
         "nomAdministration": "HECTOR",
@@ -304,7 +304,7 @@
       "requerant": {
         "idRequerant": "f275d357-14ec-42ac-a219-d481cbcbbc61",
         "typeRequerant": "TITULAIRE",
-        "qualiteRequerant": "MANDATAIRE_HABILITE",
+        "qualite": "MANDATAIRE_HABILITE",
         "identite": "andrew richard",
         "raisonSociale": "Maitre",
         "nomAdministration": "",
