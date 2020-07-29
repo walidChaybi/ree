@@ -2,7 +2,7 @@ import React from "react";
 import {
   useDisclosureState,
   Disclosure,
-  DisclosureRegion
+  DisclosureRegion,
 } from "reakit/Disclosure";
 import { MessageId, Text } from "../../../../common/widget/Text";
 import { DocumentDetail } from "./DocumentDetail";
@@ -17,6 +17,7 @@ import { requestDocumentApi } from "./DocumentRequeteHook";
 import classNames from "classnames";
 import { IDocumentDetail } from "./interfaces/IDocumentDetail";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { IDocumentDelivre } from "../RequeteType";
 
 interface IDocumentPresentationProps {
   titre: MessageId;
@@ -24,6 +25,7 @@ interface IDocumentPresentationProps {
   documentVisible?: IDocumentDetail;
   groupement: GroupementDocument;
   setDocumentVisibleFct?: (document: IDocumentDetail) => void;
+  setDocumentDelivreFct?: (doc: IDocumentDelivre) => void;
 }
 
 export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
@@ -31,13 +33,14 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
   documents,
   documentVisible,
   groupement,
-  setDocumentVisibleFct
+  setDocumentVisibleFct,
+  setDocumentDelivreFct,
 }) => {
   const visible: boolean = documents.length > 0;
   const disclosure = useDisclosureState({ visible });
 
   const titleStyles = classNames({
-    title: true
+    title: true,
   });
 
   return (
@@ -55,7 +58,7 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
         </ExpansionPanelSummary>
       </Disclosure>
       <DisclosureRegion {...disclosure} as={ExpansionPanelDetails}>
-        {props =>
+        {(props) =>
           disclosure.visible && (
             <div {...props}>
               <List>
@@ -68,6 +71,7 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
                       onClickHandler={onClickHandler}
                       openedInViewer={documentVisible}
                       stateSetter={setDocumentVisibleFct}
+                      setDocumentDelivreFct={setDocumentDelivreFct}
                     />
                   );
                 })}
@@ -90,13 +94,25 @@ function onClickHandler(
     document.identifiantDocument,
     groupement,
     document.mimeType
-  ).then(result => {
-    const documentObjectURL = URL.createObjectURL(result);
+  ).then((result) => {
+    const documentObjectURL = URL.createObjectURL(
+      convertToBlob(result.documentDelivre.contenu, result.mimeType)
+    );
     lectureDuDocument(documentObjectURL);
     if (stateSetter) {
       stateSetter(document);
     }
   });
+}
+
+export function convertToBlob(base64: string, mimeType: string): Blob {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: mimeType });
 }
 
 export function lectureDuDocument(documentObjectURL: string) {

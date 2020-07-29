@@ -14,11 +14,13 @@ interface IDocumentsDelivres {
 interface IDocumentsRequeteProps {
   piecesJustificatives: IPieceJustificative[];
   documentsDelivres: IDocumentDelivre[];
+  setDocumentDelivreFct?: (doc: IDocumentDelivre) => void;
 }
 
 export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
   piecesJustificatives,
-  documentsDelivres
+  documentsDelivres,
+  setDocumentDelivreFct,
 }) => {
   const [extraitVisibleState, setExtraitVisibleState] = useState<
     IDocumentDetail | undefined
@@ -28,6 +30,8 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
     setExtraitVisibleState(extraitALireParDefault(documentsDelivres));
   }, [documentsDelivres]);
 
+  const mockFct = (doc: IDocumentDelivre) => {}; // FIXME
+
   return (
     <>
       <DocumentPresentation
@@ -36,6 +40,7 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
         groupement={GroupementDocument.PieceJustificative}
         documentVisible={extraitVisibleState}
         setDocumentVisibleFct={setExtraitVisibleState}
+        setDocumentDelivreFct={mockFct} // FIXME
       />
       <DocumentPresentation
         titre={"pages.requete.consultation.documentsADelivres.titre"}
@@ -43,6 +48,7 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
         groupement={GroupementDocument.DocumentDelivre}
         documentVisible={extraitVisibleState}
         setDocumentVisibleFct={setExtraitVisibleState}
+        setDocumentDelivreFct={setDocumentDelivreFct}
       />
     </>
   );
@@ -57,9 +63,9 @@ function parsePiecesJustificatives(
       identifiantDocument: element.idPieceJustificative,
       mimeType: element.mimeType as "image/png" | "application/pdf",
       nom: getText("pages.requete.consultation.pieceJustificative.nomFichier", [
-        `${index}`
+        `${index}`,
       ]),
-      taille: element.taille
+      taille: element.taille,
     });
   });
   return documentsDetails;
@@ -69,7 +75,7 @@ function parseDocumentsDelivres(
   documentsDelivres: IDocumentDelivre[]
 ): IDocumentDetail[] {
   const documentsResult: IDocumentDetail[] = [];
-  documentsDelivres.forEach(element => {
+  documentsDelivres.forEach((element) => {
     documentsResult.push(parseDocumentDelivre(element));
   });
   return documentsResult;
@@ -84,7 +90,7 @@ function parseDocumentDelivre(
       `pages.requete.consultation.documentDelivre.type.${documentDelivre.typeDocument}`
     ),
     mimeType: documentDelivre.mimeType as "image/png" | "application/pdf",
-    taille: documentDelivre.taille
+    taille: documentDelivre.taille,
   };
 }
 
@@ -105,7 +111,7 @@ export function extraitALireParDefault(
         documents,
         TypeDocument.ExtraitSansFiliation
       ),
-      ...getDocumentsByTypeDocument(documents, TypeDocument.ExtraitPlurilingue)
+      ...getDocumentsByTypeDocument(documents, TypeDocument.ExtraitPlurilingue),
     ];
     const certificatDocuments = [
       ...getDocumentsByTypeDocument(
@@ -123,7 +129,7 @@ export function extraitALireParDefault(
       ...getDocumentsByTypeDocument(
         documents,
         TypeDocument.CertificatSituationPACS
-      )
+      ),
     ];
     const attestationDocuments = getDocumentsByTypeDocument(
       documents,
@@ -133,7 +139,7 @@ export function extraitALireParDefault(
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA50),
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA116),
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA117),
-      ...getDocumentsByTypeDocument(documents, TypeDocument.FA118)
+      ...getDocumentsByTypeDocument(documents, TypeDocument.FA118),
     ];
     const autresDocuments = getDocumentsByTypeDocument(
       documents,
@@ -156,5 +162,5 @@ const getDocumentsByTypeDocument = (
   documents: IDocumentDelivre[],
   type: TypeDocument
 ): IDocumentDelivre[] => {
-  return documents.filter(element => element.typeDocument === type);
+  return documents.filter((element) => element.typeDocument === type);
 };

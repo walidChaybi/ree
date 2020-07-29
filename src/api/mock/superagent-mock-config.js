@@ -247,7 +247,12 @@ module.exports = [
           "/documentsdelivres/g9279c00-5d2b-11ea-bc55-0242ac139999" ||
         match[1] === "/documentsdelivres/24557a3c-60e3-432e-82fb-0ac8f1609997"
       ) {
-        return { data: mockPdf.data };
+        let documentDelivre = {
+          nom: "nomMock",
+          conteneurSwift: "conteneurSwiftMock",
+          contenu: mockPdf.data,
+        };
+        return { data: documentDelivre };
       }
 
       if (

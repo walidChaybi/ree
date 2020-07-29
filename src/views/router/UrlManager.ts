@@ -15,6 +15,8 @@ export const ctxIdRequeteUrl = `${contextApp}${IdRequeteUrl}`;
 export const IdRequeteServiceUrl = `${RequetesServiceUrl}/:idRequete`;
 export const ctxIdRequeteServiceUrl = `${contextApp}${IdRequeteServiceUrl}`;
 
+export const DocumentsdelivresUrl = "/documentsdelivres";
+
 export const AppUrls = {
   contextApp: contextApp,
   SeparateurUrl: SeparateurUrl,
@@ -39,5 +41,6 @@ export function getAppUrl(path: string): string {
 export const ApiEndpoints = {
   RequetesUrl: RequetesUrl,
   RequetesServiceUrl: "/requetes/requetesService",
-  UtilisateursUrl: UtilisateursUrl
+  UtilisateursUrl: UtilisateursUrl,
+  DocumentsdelivresUrl: DocumentsdelivresUrl,
 };
