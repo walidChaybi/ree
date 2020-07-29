@@ -26,18 +26,13 @@ export async function requestDocumentApi(
       let requestDocumentApiResult: IRequestDocumentApiResult;
       if (typeof result.body.data === "string") {
         // FIXME: changer le retour du back ou faire une deuxième api côté front
+        const documentDelivre = {
+          contenu: result.body.data,
+          nom: "",
+          conteneurSwift: "",
+        } as IDocumentDelivre;
         requestDocumentApiResult = {
-          documentDelivre: {
-            contenu: result.body.data,
-            nom: "",
-            conteneurSwift: "",
-            idDocumentDelivre: "",
-            identifiantSwift: "",
-            typeDocument: "",
-            taille: -1,
-            reponse: "",
-            mimeType: "",
-          },
+          documentDelivre,
           mimeType,
         };
       } else {
