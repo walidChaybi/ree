@@ -27,15 +27,18 @@ export default {
   motif: Motif.PapiersIdentitePasseport,
   piecesJustificatives: [],
   requerant: {
-    adresse: "",
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
-    nomOuRaisonSociale: "aubin",
-    nomUsage: "",
-    prenomUsage: "nicolas",
-    qualiteRequerant: QualiteRequerant.PARTICULIER,
-    requete: "",
     typeRequerant: SousQualiteRequerant.Titulaire,
-    telephone: "0777327569"
+    qualiteRequerant: QualiteRequerant.PARTICULIER,
+    identite: "",
+    raisonSociale: "",
+    nomAdministration: "",
+    nomUsage: "",
+    nomFamille: "aubin",
+    prenom: "nicolas",
+    telephone: "0777327569",
+    mail: "",
+    adresse: null
   },
   titulaires: [
     {

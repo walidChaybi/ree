@@ -78,7 +78,7 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
             <Text messageId={"pages.delivrance.apercu.resume.nomRequerant"} />
           </div>
           <div className="capital personnal-info">
-            {props.requete.requerant.nomUsage}
+            {props.requete.requerant.nomFamille}
           </div>
         </div>
         <div className="bloc-info">
