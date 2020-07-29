@@ -1,20 +1,28 @@
 import request from "superagent";
 import config from "../../../../../../api/mock/superagent-mock-config.js";
-import { requestDocumentApi } from "../DocumentRequeteHook";
+import {
+  requestDocumentApi,
+  IRequestDocumentApiResult,
+} from "../DocumentRequeteHook";
 import requetes from "../../../../../../api/mock/requetes.json";
 import { GroupementDocument } from "../../../../../../model/requete/GroupementDocument";
+import { convertToBlob } from "../DocumentPresentation";
+
 const superagentMock = require("superagent-mock")(request, config);
 
 test("Appel d'api retournant le contenu d'une pièce justificative", async () => {
   const pieceJustificative = requetes.data[0].piecesJustificatives[0];
-  const resultApi = await requestDocumentApi(
+  const resultApi: IRequestDocumentApiResult = await requestDocumentApi(
     pieceJustificative.idPieceJustificative,
     GroupementDocument.PieceJustificative,
     pieceJustificative.mimeType
   );
-  expect(resultApi).toBeInstanceOf(Blob);
-  expect(resultApi.size).toBe(385179);
-  expect(resultApi.type).toBe("image/png");
+
+  const base64 = resultApi.documentDelivre.contenu;
+  const blob = convertToBlob(base64, "image/png");
+  expect(blob).toBeInstanceOf(Blob);
+  expect(blob.size).toBe(385179);
+  expect(blob.type).toBe("image/png");
 });
 
 test("Appel d'api retournant le contenu d'un courrier d'accompagnement", async () => {
@@ -23,9 +31,11 @@ test("Appel d'api retournant le contenu d'un courrier d'accompagnement", async (
     courrierAccompagnement.idDocumentDelivre,
     GroupementDocument.CourrierAccompagnement
   );
-  expect(resultApi).toBeInstanceOf(Blob);
-  expect(resultApi.size).toBe(151807);
-  expect(resultApi.type).toBe("application/pdf");
+  const base64 = resultApi.documentDelivre.contenu;
+  const blob = convertToBlob(base64, "application/pdf");
+  expect(blob).toBeInstanceOf(Blob);
+  expect(blob.size).toBe(151807);
+  expect(blob.type).toBe("application/pdf");
 });
 
 test("Appel d'api retournant le contenu d'un courrier d'accompagnement KO", async () => {
@@ -34,10 +44,10 @@ test("Appel d'api retournant le contenu d'un courrier d'accompagnement KO", asyn
     `${courrierAccompagnement.idDocumentDelivre}fakedoc`,
     GroupementDocument.CourrierAccompagnement
   )
-    .then(result => {
+    .then((result) => {
       expect(result).toBe("ko");
     })
-    .catch(error => {
+    .catch((error) => {
       expect(error).toBeTruthy();
     });
 });

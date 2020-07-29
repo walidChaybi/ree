@@ -23,11 +23,30 @@ export async function requestDocumentApi(
       uri: `/${groupementEndPoint}/${identifiantDocument}`,
     })
     .then((result) => {
-      const documentDelivre: IDocumentDelivre = result.body.data;
-      const requestDocumentApiResult: IRequestDocumentApiResult = {
-        documentDelivre,
-        mimeType,
-      };
+      let requestDocumentApiResult: IRequestDocumentApiResult;
+      if (typeof result.body.data === "string") {
+        // FIXME: changer le retour du back ou faire une deuxième api côté front
+        requestDocumentApiResult = {
+          documentDelivre: {
+            contenu: result.body.data,
+            nom: "",
+            conteneurSwift: "",
+            idDocumentDelivre: "",
+            identifiantSwift: "",
+            typeDocument: "",
+            taille: -1,
+            reponse: "",
+            mimeType: "",
+          },
+          mimeType,
+        };
+      } else {
+        const documentDelivre: IDocumentDelivre = result.body.data;
+        requestDocumentApiResult = {
+          documentDelivre,
+          mimeType,
+        };
+      }
       return Promise.resolve(requestDocumentApiResult);
     })
     .catch((error) => {

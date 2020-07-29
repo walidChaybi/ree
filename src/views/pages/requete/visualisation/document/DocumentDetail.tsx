@@ -25,7 +25,7 @@ interface IDocumentDetailProps {
   ) => void;
   openedInViewer?: IDocumentDetail;
   stateSetter?: (document: IDocumentDetail) => void;
-  setDocumentDelivreFct: (doc: IDocumentDelivre) => void;
+  setDocumentDelivreFct?: (doc: IDocumentDelivre) => void;
 }
 
 export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
@@ -51,7 +51,9 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
             convertToBlob(result.documentDelivre.contenu, result.mimeType)
           )
         );
-        setDocumentDelivreFct(result.documentDelivre);
+        if (setDocumentDelivreFct) {
+          setDocumentDelivreFct(result.documentDelivre);
+        }
       });
     }
   }, [

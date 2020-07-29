@@ -25,7 +25,7 @@ interface IDocumentPresentationProps {
   documentVisible?: IDocumentDetail;
   groupement: GroupementDocument;
   setDocumentVisibleFct?: (document: IDocumentDetail) => void;
-  setDocumentDelivreFct: (doc: IDocumentDelivre) => void;
+  setDocumentDelivreFct?: (doc: IDocumentDelivre) => void;
 }
 
 export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({

@@ -8,7 +8,7 @@ import { IDocumentDelivre } from "./RequeteType";
 
 interface ContenuRequeteProps {
   requete: IDataTable;
-  setDocumentDelivreFct: (doc: IDocumentDelivre) => void;
+  setDocumentDelivreFct?: (doc: IDocumentDelivre) => void;
 }
 
 export const ContenuRequete: React.FC<ContenuRequeteProps> = (props) => {

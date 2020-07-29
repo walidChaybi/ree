@@ -14,7 +14,7 @@ interface IDocumentsDelivres {
 interface IDocumentsRequeteProps {
   piecesJustificatives: IPieceJustificative[];
   documentsDelivres: IDocumentDelivre[];
-  setDocumentDelivreFct: (doc: IDocumentDelivre) => void;
+  setDocumentDelivreFct?: (doc: IDocumentDelivre) => void;
 }
 
 export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
