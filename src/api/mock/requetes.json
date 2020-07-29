@@ -89,7 +89,7 @@
       "requerant": {
         "idRequerant": "f275d357-14ec-42ac-a219-d481cbcbbc61",
         "typeRequerant": "TITULAIRE",
-        "qualite": "PARTICULIER",
+        "qualiteRequerant": "PARTICULIER",
         "identite": "",
         "raisonSociale": "",
         "nomAdministration": "",
@@ -97,6 +97,7 @@
         "nomFamille": "aubin",
         "prenom": "nicolas",
         "telephone": "0777327569",
+        "mail": "",
         "adresse": null,
         "requete": null
       },
@@ -188,7 +189,7 @@
       "requerant": {
         "idRequerant": "f275d357-14ec-42ac-a219-d481cbcbbc61",
         "typeRequerant": "TITULAIRE",
-        "qualite": "ADMINISTRATION",
+        "qualiteRequerant": "ADMINISTRATION",
         "identite": "",
         "raisonSociale": "",
         "nomAdministration": "HECTOR",
@@ -196,6 +197,7 @@
         "nomFamille": "",
         "prenom": "",
         "telephone": "0652809893",
+        "mail": "",
         "adresse": null,
         "requete": null
       },
@@ -304,7 +306,7 @@
       "requerant": {
         "idRequerant": "f275d357-14ec-42ac-a219-d481cbcbbc61",
         "typeRequerant": "TITULAIRE",
-        "qualite": "MANDATAIRE_HABILITE",
+        "qualiteRequerant": "MANDATAIRE_HABILITE",
         "identite": "andrew richard",
         "raisonSociale": "Maitre",
         "nomAdministration": "",
@@ -312,6 +314,7 @@
         "nomFamille": "",
         "prenom": "",
         "telephone": "0777327569",
+        "mail": "",
         "adresse": null,
         "requete": null
       },
