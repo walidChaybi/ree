@@ -26,6 +26,12 @@ export default {
   canal: Canal.Internet,
   motif: Motif.PapiersIdentitePasseport,
   piecesJustificatives: [],
+  nomOec: "nomOec",
+  typeActe: "",
+  anneeEvenement: 0,
+  jourEvenement: 0,
+  moisEvenement: 0,
+  nbExemplaire: 0,
   requerant: {
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
     typeRequerant: SousQualiteRequerant.Titulaire,

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Page requete with all elements 1`] = `ReactWrapper {}`;

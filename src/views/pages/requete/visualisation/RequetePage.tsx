@@ -7,6 +7,7 @@ import { useRequeteDataApi } from "./DonneeRequeteHook";
 import { IDataTable } from "../MesRequetesPage";
 import { AppUrls } from "../../../router/UrlManager";
 import { Title } from "../../../core/title/Title";
+import { IDocumentDelivre } from "./RequeteType";
 
 export interface RequestsInformations {
   data: IDataTable[];
@@ -14,7 +15,7 @@ export interface RequestsInformations {
 
 type RequetePageProps = RouteComponentProps<{ idRequete: string }>;
 
-export const RequetePage: React.FC<RequetePageProps> = props => {
+export const RequetePage: React.FC<RequetePageProps> = (props) => {
   const history = useHistory();
   const [histoReq] = useState<RequestsInformations>(
     history.location.state as RequestsInformations
@@ -28,10 +29,15 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
     {
       nomOec: "Garisson",
       prenomOec: "Juliette",
-      idRequete: props.match.params.idRequete
+      idRequete: props.match.params.idRequete,
     },
     histoReq
   );
+
+  // Contenu du document en base 64
+  const [documentDelivreState, setDocumentDelivreState] = useState<
+    IDocumentDelivre
+  >();
 
   const changeIndex = useCallback(
     (idx: number) => {
@@ -42,7 +48,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
   );
 
   useEffect(() => {
-    const idx = dataState.findIndex(donnee => {
+    const idx = dataState.findIndex((donnee) => {
       return donnee.idRequete === props.match.params.idRequete;
     });
     setIndexRequete(idx);
@@ -58,9 +64,15 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
             maxRequetes={dataState.length}
             indexRequete={indexRequete}
             setIndexRequete={changeIndex}
+            documentsDelivres={
+              documentDelivreState ? [documentDelivreState] : []
+            }
           />
           <EtatRequete requete={dataState[indexRequete]} />
-          <ContenuRequete requete={dataState[indexRequete]} />
+          <ContenuRequete
+            requete={dataState[indexRequete]}
+            setDocumentDelivreFct={setDocumentDelivreState}
+          />
         </>
       )}
     </>

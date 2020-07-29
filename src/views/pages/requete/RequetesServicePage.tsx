@@ -66,7 +66,9 @@ export const RequetesServicePage: React.FC = () => {
     prenomOec: "Juliette",
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
-    sens: sortOrderState
+    sens: sortOrderState,
+    range: undefined,
+    idArobas: "25648596"
   });
 
   const getColumnHeaders = (utilisateurs: SelectElements[]) => {
@@ -120,7 +122,7 @@ export const RequetesServicePage: React.FC = () => {
         "pages.delivrance.mesRequetes.tableau.header"
       ),
       new TableauTypeColumn(
-        [HeaderTableauRequete.DateDerniereMaj],
+        [HeaderTableauRequete.DateStatut],
         false,
         "pages.delivrance.mesRequetes.tableau.header"
       ),
@@ -151,7 +153,7 @@ export const RequetesServicePage: React.FC = () => {
 
   // TODO : utiliser les vrai pasramètre quand le ws sera mis à jour
   const users = useUtilisateurApi({
-    service: "servicemock"
+    idArobas: "25648596"
   });
 
   const getIconOfficierEtatCivil = (
@@ -160,7 +162,9 @@ export const RequetesServicePage: React.FC = () => {
   ): JSX.Element => {
     const utilisateurs = convertUsersToSelect(users.dataState);
 
-    const utilisateurParDefaut = utilisateurs.find(u => u.value === row.nomOec);
+    const utilisateurParDefaut = utilisateurs.find(
+      uilisateur => uilisateur.value === row.nomOec
+    );
 
     return (
       <div className={"SelectOfficierEtatCivil"}>
@@ -181,7 +185,7 @@ export const RequetesServicePage: React.FC = () => {
           validate={(req: FormValues) => {
             const utilisateur = users.dataState.find(
               u =>
-                u.idArobas ===
+                u.idUtilisateur ===
                 (req.selectedItem !== undefined
                   ? req.selectedItem.key
                   : undefined)
@@ -251,7 +255,7 @@ function convertUsersToSelect(
   const elements = [];
   for (const utilisateur of utilisateurs) {
     elements.push({
-      key: utilisateur.idArobas,
+      key: utilisateur.idUtilisateur,
       value: `${utilisateur.prenom} ${utilisateur.nom}`
     });
   }

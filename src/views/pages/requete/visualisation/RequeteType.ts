@@ -27,6 +27,8 @@ export interface IPieceJustificative {
 export interface IDocumentDelivre {
   idDocumentDelivre: string;
   nom: string;
+  conteneurSwift: string;
+  contenu: string;
   mimeType: string;
   typeDocument: string;
   taille: number;

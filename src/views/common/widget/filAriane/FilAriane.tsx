@@ -4,10 +4,13 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { Route, MemoryRouter } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Categorie } from "./Categorie";
-import { AccueilUrl, SeparateurUrl } from "../../../router/UrlManager";
+import { AccueilUrl, SeparateurUrl, AppUrls } from "../../../router/UrlManager";
 import { getText } from "../Text";
 
-export const FilAriane: React.FC = () => {
+interface FilArianeProps {
+  setRetourState?: (retourUrl: string) => void;
+}
+export const FilAriane: React.FC<FilArianeProps> = ({ setRetourState }) => {
   const history = useHistory();
   const pathnames = history.location.pathname
     .split(SeparateurUrl)
@@ -15,6 +18,9 @@ export const FilAriane: React.FC = () => {
   pathnames.shift();
   const accueilString = getText("fildariane.accueil").toLowerCase();
   const accueilFirst = pathnames[0] === accueilString;
+  if (setRetourState !== undefined) {
+    setRetourContextValue(pathnames, setRetourState);
+  }
 
   return (
     <MemoryRouter initialEntries={[SeparateurUrl]} initialIndex={0}>
@@ -47,3 +53,20 @@ export const FilAriane: React.FC = () => {
     </MemoryRouter>
   );
 };
+
+export function setRetourContextValue(
+  pathnames: string[],
+  setRetourState: (retourUrl: string) => void
+) {
+  if (pathnames.length === 1) {
+    setRetourState(AppUrls.ctxAccueilUrl);
+  } else {
+    let retourUrl: string = AppUrls.contextApp;
+    pathnames.forEach((element: string, index: number) => {
+      if (index !== pathnames.length - 1) {
+        retourUrl = `${retourUrl}/${element}`;
+      }
+    });
+    setRetourState(retourUrl);
+  }
+}

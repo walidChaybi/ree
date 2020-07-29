@@ -22,7 +22,7 @@ module.exports = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function(match, params, headers, context) {
       /**
        * Returning error codes example:
        *   request.get('http://10.110.204.59:8082/rece-requete-api/v1/404').end(function(err, res){
@@ -97,7 +97,7 @@ module.exports = [
           //   (default is 0 unless context.delay specified, then it's [delay/parts])
           total: 100, // [optional] The total as it will appear in the progress event (default is 100)
           lengthComputable: true, // [optional] The same as it will appear in the progress event (default is true)
-          direction: "upload", // [optional] superagent adds 'download'/'upload' direction to the event (default is 'upload')
+          direction: "upload" // [optional] superagent adds 'download'/'upload' direction to the event (default is 'upload')
         };
         return "Hundred percent!";
       }
@@ -130,9 +130,9 @@ module.exports = [
           httpHeaders: {
             "Content-Range": ["0-15/" + mockRequetes.data.length],
             Link: [
-              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"',
-            ],
-          },
+              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"'
+            ]
+          }
         };
       }
       if (
@@ -147,9 +147,9 @@ module.exports = [
             "Content-Range": ["106-15/" + mockRequetes.data.length],
             Link: [
               '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
-              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
-            ],
-          },
+              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"'
+            ]
+          }
         };
       }
       if (
@@ -164,47 +164,50 @@ module.exports = [
             "Content-Range": ["211-15/" + mockRequetes.data.length],
             Link: [
               "",
-              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
-            ],
-          },
+              '<http://localhost:8082/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"'
+            ]
+          }
         };
       }
 
       if (
         match[1] ===
-          "/requetes?service=servicemock&statut=A_SIGNER&tri=dateStatut&sens=ASC" ||
-        match[1] === "/requetes?service=servicemock&statut=A_SIGNER"
+          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596" ||
+        match[1] ===
+          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&idArobas=25648596"
       ) {
         return {
           data: mockRequetes.data.slice(0, 105),
           httpHeaders: {
             "Content-Range": ["0-15/" + mockRequetes.data.length],
             Link: [
-              '<http://localhost:8082/rece-requete-api/v1/requetes?service=servicemock&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"',
-            ],
-          },
+              '<http://localhost:8082/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596&range=1-105>;rel="next"'
+            ]
+          }
         };
       }
       if (
         match[1] ===
-          "/requetes?service=servicemock&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105" ||
-        match[1] === "/requetes?service=servicemock&statut=A_SIGNER"
+          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105&idArobas=25648596" ||
+        match[1] ===
+          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&idArobas=25648596"
       ) {
         return {
           data: mockRequetes.data.slice(105, 210),
           httpHeaders: {
             "Content-Range": ["106-15/" + mockRequetes.data.length],
             Link: [
-              '<http://localhost:8082/rece-requete-api/v1/requetes?service=servicemock&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
-              '<http://localhost:8082/rece-requete-api/v1/requetes?service=servicemock&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
-            ],
-          },
+              '<http://localhost:8082/rece-requete-api/v1//requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
+              '<http://localhost:8082/rece-requete-api/v1/requetes/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"'
+            ]
+          }
         };
       }
       if (
         match[1] ===
-          "/requetes?service=servicemock&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
-        match[1] === "/requetes?service=servicemock&statut=A_SIGNER"
+          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
+        match[1] ===
+          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
       ) {
         return {
           data: mockRequetes.data.slice(210, 315),
@@ -212,9 +215,9 @@ module.exports = [
             "Content-Range": ["211-15/" + mockRequetes.data.length],
             Link: [
               "",
-              '<http://localhost:8082/rece-requete-api/v1/requetes?service=servicemock&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
-            ],
-          },
+              '<http://localhost:8082/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"'
+            ]
+          }
         };
       }
 
@@ -244,7 +247,12 @@ module.exports = [
           "/documentsdelivres/g9279c00-5d2b-11ea-bc55-0242ac139999" ||
         match[1] === "/documentsdelivres/24557a3c-60e3-432e-82fb-0ac8f1609997"
       ) {
-        return { data: mockPdf.data };
+        let documentDelivre = {
+          nom: "nomMock",
+          conteneurSwift: "conteneurSwiftMock",
+          contenu: mockPdf.data,
+        };
+        return { data: documentDelivre };
       }
 
       if (
@@ -270,9 +278,9 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function(match, data) {
       return {
-        body: data,
+        body: data
       };
     },
 
@@ -282,11 +290,11 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function(match, data) {
       return {
-        status: 201,
+        status: 201
       };
-    },
+    }
   },
   {
     /**
@@ -305,7 +313,7 @@ module.exports = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function(match, params, headers, context) {
       /**
        * Returning error codes example:
        *   request.get('http://10.110.204.59:8082/rece-securite-api/v1/404').end(function(err, res){
@@ -380,7 +388,7 @@ module.exports = [
           //   (default is 0 unless context.delay specified, then it's [delay/parts])
           total: 100, // [optional] The total as it will appear in the progress event (default is 100)
           lengthComputable: true, // [optional] The same as it will appear in the progress event (default is true)
-          direction: "upload", // [optional] superagent adds 'download'/'upload' direction to the event (default is 'upload')
+          direction: "upload" // [optional] superagent adds 'download'/'upload' direction to the event (default is 'upload')
         };
         return "Hundred percent!";
       }
@@ -396,9 +404,9 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function(match, data) {
       return {
-        body: data,
+        body: data
       };
     },
 
@@ -408,10 +416,10 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function(match, data) {
       return {
-        status: 201,
+        status: 201
       };
-    },
-  },
+    }
+  }
 ];

@@ -41,7 +41,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: any) {
   return {
     id: `nav-tab-${index}`,
-    "aria-controls": `nav-tabpanel-${index}`
+    "aria-controls": `nav-tabpanel-${index}`,
   };
 }
 
@@ -86,7 +86,10 @@ const DelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
       <Title titleId={"pages.delivrance.titre"} />
       <div>
         <div className="RequetesToolbarSignature">
-          <BoutonSignature libelle={"pages.delivrance.action.signature"} />
+          <BoutonSignature
+            libelle={"pages.delivrance.action.signature"}
+            documentsDelivres={[]} // FIXME get all documents content
+          />
         </div>
         <AppBar position="static" className="headerOngletDelivrance">
           <Tabs

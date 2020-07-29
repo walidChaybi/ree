@@ -9,7 +9,6 @@ export enum HeaderTableauRequete {
   NomOec = "nomOec",
   LibelleRequerant = "libelleRequerant",
   DateCreation = "dateCreation",
-  DateDerniereMaj = "dateDerniereMaj",
   Statut = "statut",
   PrioriteRequete = "prioriteRequete",
   DateStatut = "dateStatut"

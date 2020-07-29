@@ -7,27 +7,34 @@ import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
 import Image from "@material-ui/icons/Image";
 import { getText } from "../../../../common/widget/Text";
 import { IDocumentDetail } from "./interfaces/IDocumentDetail";
-import { lectureDuDocument } from "./DocumentPresentation";
+import { lectureDuDocument, convertToBlob } from "./DocumentPresentation";
 import { requestDocumentApi } from "./DocumentRequeteHook";
 import "./sass/DocumentDetail.scss";
+import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { IDocumentDelivre } from "../RequeteType";
 const byteSize = require("byte-size");
 
 interface IDocumentDetailProps {
   document: IDocumentDetail;
+  groupement: GroupementDocument;
   onClickHandler: (
     event: React.MouseEvent,
     document: IDocumentDetail,
+    groupement: GroupementDocument,
     stateSetter?: (document: IDocumentDetail) => void
   ) => void;
   openedInViewer?: IDocumentDetail;
   stateSetter?: (document: IDocumentDetail) => void;
+  setDocumentDelivreFct?: (doc: IDocumentDelivre) => void;
 }
 
 export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
   document,
+  groupement,
   onClickHandler,
   openedInViewer,
-  stateSetter
+  stateSetter,
+  setDocumentDelivreFct,
 }) => {
   useEffect(() => {
     if (
@@ -36,13 +43,26 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
     ) {
       requestDocumentApi(
         document.identifiantDocument,
-        document.groupement,
+        groupement,
         document.mimeType
-      ).then(result => {
-        lectureDuDocument(URL.createObjectURL(result));
+      ).then((result) => {
+        lectureDuDocument(
+          URL.createObjectURL(
+            convertToBlob(result.documentDelivre.contenu, result.mimeType)
+          )
+        );
+        if (setDocumentDelivreFct) {
+          setDocumentDelivreFct(result.documentDelivre);
+        }
       });
     }
-  }, [document, openedInViewer]);
+  }, [
+    document.identifiantDocument,
+    document.mimeType,
+    groupement,
+    openedInViewer,
+    setDocumentDelivreFct,
+  ]);
 
   return (
     <ListItem
@@ -51,8 +71,8 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         openedInViewer &&
         openedInViewer.identifiantDocument === document.identifiantDocument
       }
-      onClick={event => {
-        onClickHandler(event, document, stateSetter);
+      onClick={(event) => {
+        onClickHandler(event, document, groupement, stateSetter);
       }}
       title={getText("pages.requete.consultation.icon.visualiser")}
     >
