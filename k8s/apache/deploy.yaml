@@ -13,7 +13,7 @@ spec:
   template:
     spec:
       containers:
-        - image: gitlab-registry.forge.diplomatie.gouv.fr/rece/ui/rece-ui/rece-ui-static:ano_fil_ariane
+        - image: gitlab-registry.forge.diplomatie.gouv.fr/rece/ui/rece-ui/rece-ui-static:develop
           name: rece-ui
           imagePullPolicy: Always
           ports:
