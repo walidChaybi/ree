@@ -10,7 +10,7 @@ export default {
   idRequete: "204b8563-c7f8-4748-9daa-f26558985894",
   idSagaDila: 11982,
   idRequeteInitiale: 11900,
-  sousTypeRequete: "DELIVRANCE_COURRIER",
+  sousTypeRequete: "RDC",
   typeRequete: TypeRequete.Delivrance,
   provenance: "DILA",
   natureActe: NatureActe.Naissance,
@@ -33,15 +33,18 @@ export default {
   moisEvenement: 0,
   nbExemplaire: 0,
   requerant: {
-    adresse: "",
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
-    nomOuRaisonSociale: "aubin",
-    nomUsage: "",
-    prenomUsage: "nicolas",
-    qualiteRequerant: QualiteRequerant.PARTICULIER,
-    requete: "",
     typeRequerant: SousQualiteRequerant.Titulaire,
+    qualiteRequerant: QualiteRequerant.PARTICULIER,
+    identite: "",
+    raisonSociale: "",
+    nomAdministration: "",
+    nomUsage: "",
+    nomFamille: "aubin",
+    prenom: "nicolas",
     telephone: "0777327569",
+    mail: "",
+    adresse: null
   },
   titulaires: [
     {
@@ -59,7 +62,7 @@ export default {
       paysNaissance: "maroc",
       parent1: "",
       parent2: "",
-      requete: "",
+      requete: ""
     },
     {
       idTitulaire: "tutulaire2",
@@ -76,8 +79,8 @@ export default {
       paysNaissance: "france",
       parent1: "",
       parent2: "",
-      requete: "",
-    },
+      requete: ""
+    }
   ],
   reponse: {
     idReponse: "1d189cd9-0df0-45dc-a4cf-0174eb62cbbc",
@@ -93,6 +96,6 @@ export default {
     prenomOec: "Juliette",
     commentaire: "",
     documentsDelivres: [],
-    requete: "",
-  },
+    requete: ""
+  }
 };

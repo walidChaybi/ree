@@ -12,11 +12,11 @@ test("renders resumé du contenu de la requete", () => {
   expect(component.toJSON()).toMatchSnapshot();
 });
 
-test("renders raison sociale, lieu évenement", () => {
+test("renders nom de famille, lieu évenement", () => {
   render(<ResumeRequeteContent requete={DONNEES_REQUETE} />);
-  const raisonSociale = screen.getByText(/aubin/i);
+  const nomFamille = screen.getByText(/aubin/i);
   const fez = screen.getByText(/fez/i);
-  expect(raisonSociale.textContent).toBe("aubin");
+  expect(nomFamille.textContent).toBe("aubin");
   expect(fez.textContent).toBe("fez, maroc");
 });
 

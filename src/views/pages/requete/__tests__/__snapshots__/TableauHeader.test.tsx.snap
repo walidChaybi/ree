@@ -68,7 +68,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
         role="button"
         tabIndex={0}
       >
-        Type
+        Sous-type
         <svg
           aria-hidden={true}
           className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"

@@ -71,7 +71,7 @@ const columnsTableau = [
     [HeaderTableauRequete.SousTypeRequete],
     true,
     "pages.delivrance.mesRequetes.tableau.header",
-    "referentiel.sousTypeRequete"
+    "referentiel.sousTypeRequete.court"
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.Canal],
@@ -86,7 +86,7 @@ const columnsTableau = [
     "referentiel.natureActe"
   ),
   new TableauTypeColumn(
-    [HeaderTableauRequete.Requerant, HeaderTableauRequete.NomOuRaisonSociale],
+    [HeaderTableauRequete.Requerant, HeaderTableauRequete.LibelleRequerant],
     false,
     "pages.delivrance.mesRequetes.tableau.header"
   ),
