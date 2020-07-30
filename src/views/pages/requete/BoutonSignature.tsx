@@ -4,7 +4,7 @@ import {
   useDialogState,
   Dialog,
   DialogDisclosure,
-  DialogDisclosureHTMLProps,
+  DialogDisclosureHTMLProps
 } from "reakit/Dialog";
 import { Button } from "reakit/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +12,7 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import messageManager from "../../common/util/messageManager";
 import {
   useUpdateDocumentApi,
-  IQueryParameterUpdateDocument,
+  IQueryParameterUpdateDocument
 } from "./UpdateDocumentHook";
 import { CircularProgress } from "@material-ui/core";
 import { IDocumentDelivre } from "./visualisation/RequeteType";
@@ -23,13 +23,13 @@ interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
 }
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
-  documentsDelivres,
+  documentsDelivres
 }) => {
   const dialog = useDialogState();
-  let validerButtonRef = React.createRef<HTMLButtonElement>();
+  const validerButtonRef = React.createRef<HTMLButtonElement>();
   const [
     updateDocumentQueryParamState,
-    setUpdateDocumentQueryParamState,
+    setUpdateDocumentQueryParamState
   ] = React.useState<IQueryParameterUpdateDocument>();
 
   const [showWaitState, setShowWaitState] = useState<boolean>();
@@ -67,10 +67,10 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   // }, [errorState]);
 
   const handleClickSignature = () => {
-    let detail = {
+    const detail = {
       function: "SIGN",
       contenu: documentsDelivres[0].contenu, // FIXME loop on document content
-      direction: "to-webextension",
+      direction: "to-webextension"
     };
     console.log(detail.contenu);
     setShowWaitState(true);
@@ -99,7 +99,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         setUpdateDocumentQueryParamState({
           nom: documentsDelivres[0].nom,
           conteneurSwift: documentsDelivres[0].conteneurSwift,
-          contenu: result.contenu,
+          contenu: result.contenu
         });
       }
     }
