@@ -17,6 +17,7 @@ import {
 import { ApiEndpoints } from "../../router/UrlManager";
 import { IDataTable } from "./MesRequetesPage";
 import { MotifRequete } from "../../../model/requete/MotifRequete";
+import { FormatDate } from "../../../ressources/FormatDate";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -187,11 +188,13 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
   return {
     idRequete: data.idRequete,
     idSagaDila: +data.idSagaDila,
-    dateCreation: moment.unix(data.dateCreation).format("DD/MM/YYYY"),
-    dateDerniereMaj: moment.unix(data.dateDerniereMaj).format("DD/MM/YYYY"),
+    dateCreation: moment.unix(data.dateCreation).format(FormatDate.DDMMYYYY),
+    dateDerniereMaj: moment
+      .unix(data.dateDerniereMaj)
+      .format(FormatDate.DDMMYYYY),
     provenance: data.provenance,
     statut: data.statut,
-    dateStatut: moment.unix(data.dateStatut).format("DD/MM/YYYY"),
+    dateStatut: moment.unix(data.dateStatut).format(FormatDate.DDMMYYYY),
     idRequeteInitiale: data.idRequeteInitiale,
     sousTypeRequete: data.sousTypeRequete,
     typeRequete: data.typeRequete,

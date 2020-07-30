@@ -1,9 +1,13 @@
 import moment from "moment";
 import classNames from "classnames";
 import { getText } from "../../common/widget/Text";
+import { FormatDate } from "../../../ressources/FormatDate";
 
 export function prioriteDeLaRequete(dateStatut: string): string {
-  const ecartEnJours = moment().diff(moment(dateStatut, "DD/MM/YYYY"), "days");
+  const ecartEnJours = moment().diff(
+    moment(dateStatut, FormatDate.DDMMYYYY),
+    "days"
+  );
 
   return classNames({
     PrioriteBasse: ecartEnJours <= 2,
@@ -13,7 +17,10 @@ export function prioriteDeLaRequete(dateStatut: string): string {
 }
 
 export function getMessagePrioriteDeLaRequete(dateStatut: string): string {
-  const ecartEnJours = moment().diff(moment(dateStatut, "DD/MM/YYYY"), "days");
+  const ecartEnJours = moment().diff(
+    moment(dateStatut, FormatDate.DDMMYYYY),
+    "days"
+  );
   if (ecartEnJours <= 2) {
     return getText("pages.delivrance.mesRequetes.tableau.body.priorite.basse");
   } else if (ecartEnJours > 2 && ecartEnJours <= 5) {

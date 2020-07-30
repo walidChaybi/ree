@@ -1,14 +1,21 @@
 import moment from "moment";
+import { FormatDate } from "../../../../ressources/FormatDate";
 
 export type SortOrder = "ASC" | "DESC";
 
-const formatDate = "DD/MM/YYYY";
-
 export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (moment(b[orderBy], formatDate).isBefore(moment(a[orderBy], formatDate))) {
+  if (
+    moment(b[orderBy], FormatDate.DDMMYYYY).isBefore(
+      moment(a[orderBy], FormatDate.DDMMYYYY)
+    )
+  ) {
     return -1;
   }
-  if (moment(b[orderBy], formatDate).isAfter(moment(a[orderBy], formatDate))) {
+  if (
+    moment(b[orderBy], FormatDate.DDMMYYYY).isAfter(
+      moment(a[orderBy], FormatDate.DDMMYYYY)
+    )
+  ) {
     return 1;
   }
   return 0;
@@ -16,8 +23,8 @@ export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   const isDate =
-    moment(a[orderBy], formatDate).isValid() &&
-    moment(b[orderBy], formatDate).isValid();
+    moment(a[orderBy], FormatDate.DDMMYYYY).isValid() &&
+    moment(b[orderBy], FormatDate.DDMMYYYY).isValid();
   if (isDate) {
     return descendingDateComparator(a, b, orderBy);
   } else {
@@ -53,7 +60,7 @@ export function stableSort<T>(
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  return stabilizedThis.map(el => el[0]);
 }
 
 export function processDataStorting<Key extends keyof any>(
