@@ -1,6 +1,8 @@
+import { MimeType } from "../../../../../../ressources/MimeType";
+
 export interface IDocumentDetail {
   nom: string;
-  mimeType: "image/png" | "application/pdf";
+  mimeType: MimeType.IMAGE_PNG | MimeType.APPLI_PDF;
   taille: number;
   identifiantDocument: string;
 }

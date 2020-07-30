@@ -12,6 +12,7 @@ import { requestDocumentApi } from "./DocumentRequeteHook";
 import "./sass/DocumentDetail.scss";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 import { IDocumentDelivre } from "../RequeteType";
+import { MimeType } from "../../../../../ressources/MimeType";
 const byteSize = require("byte-size");
 
 interface IDocumentDetailProps {
@@ -34,7 +35,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
   onClickHandler,
   openedInViewer,
   stateSetter,
-  setDocumentDelivreFct,
+  setDocumentDelivreFct
 }) => {
   useEffect(() => {
     if (
@@ -45,7 +46,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         document.identifiantDocument,
         groupement,
         document.mimeType
-      ).then((result) => {
+      ).then(result => {
         lectureDuDocument(
           URL.createObjectURL(
             convertToBlob(result.documentDelivre.contenu, result.mimeType)
@@ -61,7 +62,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
     document.mimeType,
     groupement,
     openedInViewer,
-    setDocumentDelivreFct,
+    setDocumentDelivreFct
   ]);
 
   return (
@@ -71,13 +72,13 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         openedInViewer &&
         openedInViewer.identifiantDocument === document.identifiantDocument
       }
-      onClick={(event) => {
+      onClick={event => {
         onClickHandler(event, document, groupement, stateSetter);
       }}
       title={getText("pages.requete.consultation.icon.visualiser")}
     >
       <ListItemAvatar>
-        {document.mimeType === "application/pdf" ? (
+        {document.mimeType === MimeType.APPLI_PDF ? (
           <Avatar title={getText("pages.requete.consultation.icon.pdf")}>
             <PictureAsPdf />
           </Avatar>
@@ -104,9 +105,9 @@ function convertirBytesEnKiloOctet(bytes: number): number {
 }
 
 function getDetailMimeTypeEtTaille(
-  mimeType: "image/png" | "application/pdf" | undefined,
+  mimeType: MimeType.IMAGE_PNG | MimeType.APPLI_PDF | undefined,
   taille: number
 ) {
-  const defaultMimeType: string = mimeType ? mimeType : "application/pdf";
+  const defaultMimeType: string = mimeType ? mimeType : MimeType.APPLI_PDF;
   return `${defaultMimeType} ${convertirBytesEnKiloOctet(taille)}`;
 }
