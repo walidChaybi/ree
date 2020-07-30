@@ -21,13 +21,13 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   data,
   idKey,
   columnHeaders,
-  onClickOnLine,
+  onClickOnLine
 }) => {
   const history = useHistory();
 
   function onClickRowHandler(identifiant: string) {
     history.push(onClickOnLine(identifiant), {
-      data,
+      data
     });
   }
 
@@ -56,7 +56,7 @@ function getRowRender(
   const tableauBodyCellList = [];
 
   for (const column of columnHeaders) {
-    if (column.getText === true) {
+    if (column.getTextRefentiel === true) {
       tableauBodyCellList.push(
         <TableauBodyCell
           key={`row-${idx}-${column.keys[0]}`}

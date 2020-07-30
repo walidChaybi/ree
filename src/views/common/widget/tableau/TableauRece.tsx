@@ -26,20 +26,20 @@ export interface RequeteTableauHeaderProps {
 
 export class TableauTypeColumn {
   public keys: string[];
-  public getText: boolean;
+  public getTextRefentiel: boolean;
   public colLibelle: string;
   public rowLibelle?: string;
   public getIcon?: (value: any, selectedValue?: string) => JSX.Element;
 
   constructor(
     keys: string[],
-    getText: boolean,
+    getTextRefentiel: boolean,
     colLibelle: string,
     rowLibelle?: string,
     getIcon?: (value: any, selectedValue?: string) => JSX.Element
   ) {
     this.keys = keys;
-    this.getText = getText;
+    this.getTextRefentiel = getTextRefentiel;
     this.rowLibelle = rowLibelle;
     this.colLibelle = colLibelle;
     this.getIcon = getIcon;
