@@ -4,7 +4,7 @@ import { SousQualiteRequerant } from "../../../../../model/requete/SousQualiteRe
 import { Canal } from "../../../../../model/Canal";
 import { TypeDocument } from "../../../../../model/requete/TypeDocument";
 import { TypeRequete } from "../../../../../model/requete/TypeRequete";
-import { Motif } from "../../../../../model/requete/Motif";
+import { MotifRequete } from "../../../../../model/requete/MotifRequete";
 
 export default {
   idRequete: "204b8563-c7f8-4748-9daa-f26558985894",
@@ -24,7 +24,7 @@ export default {
   officierEtatCivil: "Garisson Juliette",
   document: TypeDocument.CopieIntegrale,
   canal: Canal.Internet,
-  motif: Motif.PapiersIdentitePasseport,
+  motifRequete: MotifRequete.PapiersIdentitePasseport,
   piecesJustificatives: [],
   nomOec: "nomOec",
   typeActe: "",
