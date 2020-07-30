@@ -71,46 +71,48 @@ export const RequetesServicePage: React.FC = () => {
     idArobas: "25648596"
   });
 
+  const tableauHeader = "pages.delivrance.mesRequetes.tableau.header";
+
   const getColumnHeaders = (utilisateurs: SelectElements[]) => {
     return [
       new TableauTypeColumn(
         [HeaderTableauRequete.IdSagaDila],
         false,
-        "pages.delivrance.mesRequetes.tableau.header"
+        tableauHeader
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.SousTypeRequete],
         true,
-        "pages.delivrance.mesRequetes.tableau.header",
+        tableauHeader,
         "referentiel.sousTypeRequete.court"
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.Canal],
         true,
-        "pages.delivrance.mesRequetes.tableau.header",
+        tableauHeader,
         "referentiel.canal"
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.NatureActe],
         true,
-        "pages.delivrance.mesRequetes.tableau.header",
+        tableauHeader,
         "referentiel.natureActe"
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.TypeActe],
         true,
-        "pages.delivrance.mesRequetes.tableau.header",
+        tableauHeader,
         "pages.requete.consultation.documentDelivre.type"
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.Requerant, HeaderTableauRequete.LibelleRequerant],
         false,
-        "pages.delivrance.mesRequetes.tableau.header"
+        tableauHeader
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.NomOec],
         false,
-        "pages.delivrance.mesRequetes.tableau.header",
+        tableauHeader,
         "",
         (row: IDataTable, selectedUser?: string) => {
           return getIconOfficierEtatCivil(row, setQueryChangeOecRequest);
@@ -119,23 +121,23 @@ export const RequetesServicePage: React.FC = () => {
       new TableauTypeColumn(
         [HeaderTableauRequete.DateCreation],
         false,
-        "pages.delivrance.mesRequetes.tableau.header"
+        tableauHeader
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.DateStatut],
         false,
-        "pages.delivrance.mesRequetes.tableau.header"
+        tableauHeader
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.Statut],
         true,
-        "pages.delivrance.mesRequetes.tableau.header",
+        tableauHeader,
         "referentiel.statutRequete"
       ),
       new TableauTypeColumn(
         [HeaderTableauRequete.PrioriteRequete],
         false,
-        "pages.delivrance.mesRequetes.tableau.header",
+        tableauHeader,
         "",
         getIconPrioriteRequeteService
       )
