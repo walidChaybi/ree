@@ -24,7 +24,7 @@ export function useUtilisateurRequeteApi(
       const api = ApiManager.getInstance("rece-requete-api", "v1");
 
       const requetesToSend: IRequeteApi[] = requetes
-        ? requetes.map((requete) => {
+        ? requetes.map(requete => {
             const newRequest = {
               dateCreation: moment(
                 requete.dateCreation,
@@ -46,7 +46,7 @@ export function useUtilisateurRequeteApi(
               moisEvenement: requete.moisEvenement,
               natureActe: requete.natureActe,
               canal: requete.canal,
-              motif: requete.motif,
+              motifRequete: requete.motifRequete,
               nbExemplaire: requete.nbExemplaire,
               paysEvenement: requete.paysEvenement,
               piecesJustificatives: requete.piecesJustificatives,
@@ -58,7 +58,7 @@ export function useUtilisateurRequeteApi(
               titulaires: requete.titulaires,
               typeActe: requete.typeActe,
               typeRequete: requete.typeRequete,
-              villeEvenement: requete.villeEvenement,
+              villeEvenement: requete.villeEvenement
             };
 
             if (
@@ -78,12 +78,12 @@ export function useUtilisateurRequeteApi(
           method: HttpMethod.PUT,
           uri: ApiEndpoints.RequetesUrl,
           data: [...requetesToSend],
-          headers: [],
+          headers: []
         })
         .then(() => {
           if (requetes !== undefined) {
             const idxRequete = requetes.findIndex(
-              (r) => r.idRequete === queryParameters.idRequete
+              r => r.idRequete === queryParameters.idRequete
             );
 
             requetes[
@@ -93,7 +93,7 @@ export function useUtilisateurRequeteApi(
 
           setDataState(queryParameters);
         })
-        .catch((error) => {
+        .catch(error => {
           setErrorState(error);
         });
     }
@@ -101,6 +101,6 @@ export function useUtilisateurRequeteApi(
 
   return {
     dataState,
-    errorState,
+    errorState
   };
 }

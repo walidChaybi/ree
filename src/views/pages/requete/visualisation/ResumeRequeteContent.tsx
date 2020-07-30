@@ -58,8 +58,10 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
             <Text messageId={"pages.delivrance.apercu.resume.motif"} />
           </div>
           <div className="personnal-info no-justify-info">
-            {props.requete.motif && (
-              <Text messageId={`referentiel.motif.${props.requete.motif}`} />
+            {props.requete.motifRequete && (
+              <Text
+                messageId={`referentiel.motifRequete.${props.requete.motifRequete}`}
+              />
             )}
           </div>
         </div>
