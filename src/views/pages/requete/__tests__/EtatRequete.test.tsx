@@ -3,7 +3,7 @@ import * as renderer from "react-test-renderer";
 import { render, screen } from "@testing-library/react";
 import { EtatRequete } from "../visualisation/EtatRequete";
 import requete from "./data/requete";
-import { IDataTable } from "../RequeteTableauHeaderCell";
+import { IDataTable } from "../../requete/MesRequetesPage";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 
 test("renders informations sur l'état de la requete", () => {
@@ -75,8 +75,8 @@ test("récupérer le libellé d'une requête prise en charge et attribuée", () 
 test("récupérer le libellé d'une requête prise en charge non attribuée", () => {
   const innerRequete = requete;
   innerRequete.statut = StatutRequete.PriseEnCharge;
-  innerRequete.reponse.nomOec = undefined;
-  innerRequete.reponse.prenomOec = undefined;
+  innerRequete.reponse.nomOec = "";
+  innerRequete.reponse.prenomOec = "";
   render(<EtatRequete requete={requete as IDataTable} />);
   screen.getByText(/WARN ! Non spécifié/i);
 });
@@ -84,8 +84,8 @@ test("récupérer le libellé d'une requête prise en charge non attribuée", ()
 test("récupérer le libellé d'une requête à traiter non attribuée", () => {
   const innerRequete = requete;
   innerRequete.statut = StatutRequete.ATraiter;
-  innerRequete.reponse.nomOec = undefined;
-  innerRequete.reponse.prenomOec = undefined;
+  innerRequete.reponse.nomOec = "";
+  innerRequete.reponse.prenomOec = "";
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
     /Requête à traiter non attribuée - Créée le 01\/01\/2020/i

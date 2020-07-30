@@ -122,7 +122,7 @@ const getStatutLibelle = (data: IDataTable) => {
       return getRequeteTransferee(data);
     }
     case StatutRequete.ASigner: {
-      return getRequeteTransferee(data);
+      return getRequeteASigner(data);
     }
   }
 };
