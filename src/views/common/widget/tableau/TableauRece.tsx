@@ -58,7 +58,11 @@ export class TableauTypeColumn {
 }
 
 export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
-  const [rowsPerPageState, setRowsPerPageState] = React.useState(15);
+  const nbRequeteParAppel = 100;
+  const nbRequetParPage = 15;
+  const [rowsPerPageState, setRowsPerPageState] = React.useState(
+    nbRequetParPage
+  );
   const [pageState, setPageState] = React.useState(0);
   const [multiplicateur, setMultiplicateur] = React.useState(1);
   const [dataTable, setDataTable] = React.useState<IDataTable[]>([]);
@@ -76,8 +80,8 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
   const handleChangePage = (event: unknown, newPage: number) => {
     if (
       newPage > pageState &&
-      newPage * rowsPerPageState > 100 * multiplicateur &&
-      !(pageState * rowsPerPageState > 100 * multiplicateur) &&
+      newPage * rowsPerPageState > nbRequeteParAppel * multiplicateur &&
+      !(pageState * rowsPerPageState > nbRequeteParAppel * multiplicateur) &&
       props.nextDataLinkState
     ) {
       setMultiplicateur(multiplicateur + 1);
@@ -103,7 +107,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
       setDataTable([...dataTable, ...props.dataState]);
     }
 
-    if (props.rowsNumberState && props.rowsNumberState < 100) {
+    if (props.rowsNumberState && props.rowsNumberState < nbRequeteParAppel) {
       const dataTriee = processDataStorting(
         props.dataState || [],
         props.sortOrderState,
@@ -134,7 +138,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
         </Box>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[15]}
+        rowsPerPageOptions={[nbRequetParPage]}
         component="div"
         count={props.rowsNumberState || 0}
         rowsPerPage={rowsPerPageState}

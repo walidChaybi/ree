@@ -52,13 +52,14 @@ const getDate = (
   mois: number | undefined,
   annee: number
 ): string => {
-  let res: string = "";
+  let res = "";
+  const dix = 10;
   if (jour) {
-    const jourFormate = jour < 10 ? `0${jour.toString()}` : jour.toString();
+    const jourFormate = jour < dix ? `0${jour.toString()}` : jour.toString();
     res = `${jourFormate}/`;
   }
   if (mois) {
-    const moisFormate = mois < 10 ? `0${mois.toString()}` : mois.toString();
+    const moisFormate = mois < dix ? `0${mois.toString()}` : mois.toString();
     res = res !== "" ? `${res}${moisFormate}/` : `${moisFormate}/`;
   }
   return res !== "" ? `${res}${annee.toString()}` : annee.toString();

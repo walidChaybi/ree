@@ -20,6 +20,7 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
+  const paddingBox = 3;
 
   return (
     <div
@@ -30,7 +31,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box p={paddingBox}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -41,7 +42,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: any) {
   return {
     id: `nav-tab-${index}`,
-    "aria-controls": `nav-tabpanel-${index}`,
+    "aria-controls": `nav-tabpanel-${index}`
   };
 }
 
