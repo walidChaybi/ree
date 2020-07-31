@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "reakit/Box";
-import { Text, getText } from "../../common/widget/Text";
+import { getText } from "../../common/widget/Text";
 import {
   TableauRece,
   TableauTypeColumn
@@ -224,9 +224,6 @@ export const RequetesServicePage: React.FC = () => {
   // TODO droit sur le bouton signature ?
   return (
     <>
-      <h3 id="TableauRequetesTitre" hidden={true}>
-        <Text messageId="pages.delivrance.monService.tableau.titre" />
-      </h3>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={getUrlBack}
