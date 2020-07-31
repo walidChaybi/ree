@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { ApiManager, HttpMethod } from "../../../../api/ApiManager";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { IDataTable } from "../RequeteTableauHeaderCell";
 import { reponseRequeteMapperUnitaire } from "../DonneesRequeteHook";
 import { RequestsInformations } from "./RequetePage";
 import { ApiEndpoints } from "../../../router/UrlManager";
+import { IDataTable } from "../MesRequetesPage";
 export interface IQueryParametersPourRequete {
   nomOec: string;
   prenomOec: string;
-  statut: StatutRequete;
+  statut?: StatutRequete;
   idRequete: string;
 }
 
@@ -21,8 +21,10 @@ export function useRequeteDataApi(
   );
   const [errorState, setErrorState] = useState(undefined);
   useEffect(() => {
+    setErrorState(undefined);
+    setDataState([]);
     const api = ApiManager.getInstance("rece-requete-api", "v1");
-    if (requestsInformations == null) {
+    if (requestsInformations === undefined) {
       api
         .fetch({
           method: HttpMethod.GET,
@@ -34,12 +36,11 @@ export function useRequeteDataApi(
           }
         })
         .then(result => {
-          setDataState([reponseRequeteMapperUnitaire(result.body.data)]);
-          setErrorState(undefined);
+          const tmp = reponseRequeteMapperUnitaire(result.body.data);
+          setDataState([tmp]);
         })
         .catch(error => {
           setErrorState(error);
-          setDataState([]);
         });
     } else {
       setDataState(requestsInformations.data);
@@ -47,8 +48,8 @@ export function useRequeteDataApi(
   }, [
     queryParameters.nomOec,
     queryParameters.prenomOec,
-    queryParameters.statut,
     queryParameters.idRequete,
+    queryParameters.statut,
     requestsInformations
   ]);
   return {

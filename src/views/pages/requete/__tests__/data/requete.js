@@ -2,33 +2,49 @@ import { NatureActe } from "../../../../../model/requete/NatureActe";
 import { QualiteRequerant } from "../../../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../../../model/requete/SousQualiteRequerant";
 import { Canal } from "../../../../../model/Canal";
-import { Motif } from "../../../../../model/requete/Motif";
+import { TypeDocument } from "../../../../../model/requete/TypeDocument";
+import { TypeRequete } from "../../../../../model/requete/TypeRequete";
+import { MotifRequete } from "../../../../../model/requete/MotifRequete";
 
 export default {
   idRequete: "204b8563-c7f8-4748-9daa-f26558985894",
   idSagaDila: 11982,
-  sousTypeRequete: "DELIVRANCE_COURRIER",
+  idRequeteInitiale: 11900,
+  sousTypeRequete: "RDC",
+  typeRequete: TypeRequete.Delivrance,
   provenance: "DILA",
   natureActe: NatureActe.Naissance,
   dateCreation: "01/01/2020",
+  dateDerniereMaj: "04/01/2020",
   dateStatut: "02/01/2020",
   statut: "A_SIGNER",
   prioriteRequete: "",
   villeEvenement: "fez",
   paysEvenement: "maroc",
+  officierEtatCivil: "Garisson Juliette",
+  document: TypeDocument.CopieIntegrale,
   canal: Canal.Internet,
-  motif: Motif.PapiersIdentitePasseport,
+  motifRequete: MotifRequete.PapiersIdentitePasseport,
   piecesJustificatives: [],
+  nomOec: "nomOec",
+  typeActe: "",
+  anneeEvenement: 0,
+  jourEvenement: 0,
+  moisEvenement: 0,
+  nbExemplaire: 0,
   requerant: {
-    adresse: "",
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
-    nomOuRaisonSociale: "aubin",
-    nomUsage: "",
-    prenomUsage: "nicolas",
-    qualiteRequerant: QualiteRequerant.PARTICULIER,
-    requete: "",
     typeRequerant: SousQualiteRequerant.Titulaire,
-    telephone: "0777327569"
+    qualiteRequerant: QualiteRequerant.PARTICULIER,
+    identite: "",
+    raisonSociale: "",
+    nomAdministration: "",
+    nomUsage: "",
+    nomFamille: "aubin",
+    prenom: "nicolas",
+    telephone: "0777327569",
+    mail: "",
+    adresse: null
   },
   titulaires: [
     {

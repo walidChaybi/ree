@@ -7,31 +7,7 @@ exports[`renders informations sur l'état de la requete 1`] = `
   <h1
     className="Entete"
   >
-    Délivrance d'extrait d'acte de naissance dématérialisé
+    Requête à signer le 02/01/2020 par Juliette Garisson
   </h1>
-  <div>
-    <span>
-      Requête n°
-      11982
-    </span>
-    <span
-      className="title"
-    >
-      Canal
-      : 
-    </span>
-    <span>
-      Internet
-    </span>
-    <span
-      className="title"
-    >
-      Etat
-      : 
-    </span>
-    <span>
-      A signer
-    </span>
-  </div>
 </div>
 `;

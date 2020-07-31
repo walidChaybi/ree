@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { ApiManager, HttpMethod } from "../../../api/ApiManager";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
-import { IDataTable } from "./RequeteTableauHeaderCell";
 import moment from "moment";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
@@ -9,25 +8,31 @@ import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { NatureActe } from "../../../model/requete/NatureActe";
 import { QualiteRequerant } from "../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../model/requete/SousQualiteRequerant";
-import { SortOrder } from "./tableau/TableUtils";
+import { SortOrder } from "../../common/widget/tableau/TableUtils";
 import { Canal } from "../../../model/Canal";
 import {
   IPieceJustificative,
   IDocumentDelivre
 } from "./visualisation/RequeteType";
 import { ApiEndpoints } from "../../router/UrlManager";
-import { Motif } from "../../../model/requete/Motif";
+import { IDataTable } from "./MesRequetesPage";
+import { MotifRequete } from "../../../model/requete/MotifRequete";
 
 export interface IRequerantApi {
-  adresse: string;
   idRequerant: string;
-  nomOuRaisonSociale: string;
-  nomUsage: string;
-  prenomUsage: string;
-  qualiteRequerant: QualiteRequerant;
-  requete: any;
-  telephone: string;
   typeRequerant: SousQualiteRequerant;
+  qualiteRequerant: QualiteRequerant;
+  nomAdministration: string;
+  identite: string;
+  raisonSociale: string;
+  nomFamille: string;
+  nomUsage: string;
+  prenom: string;
+  libelleRequerant: string;
+  mail: string;
+  telephone: string;
+  adresse: any;
+  requete: any;
 }
 
 export interface IReponseApi {
@@ -54,11 +59,12 @@ export interface IRequeteApi {
   dateStatut: number;
   idRequete: string;
   idSagaDila: number;
+  idRequeteInitiale: number;
   jourEvenement: number;
   moisEvenement: number;
   natureActe: NatureActe;
   canal: Canal;
-  motif: Motif;
+  motifRequete: MotifRequete;
   nbExemplaire: number;
   paysEvenement: string;
   piecesJustificatives: IPieceJustificative[];
@@ -70,16 +76,17 @@ export interface IRequeteApi {
   titulaires: any;
   typeActe: any;
   typeRequete: TypeRequete;
-  villeEvenement: "string;";
+  villeEvenement: string;
 }
 
 export interface IQueryParametersPourRequetes {
-  nomOec: string;
-  prenomOec: string;
   statut: StatutRequete;
+  nomOec?: string;
+  prenomOec?: string;
   tri?: string;
   sens?: SortOrder;
   range?: string;
+  idArobas?: string;
 }
 
 export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
@@ -104,7 +111,10 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     api
       .fetch({
         method: HttpMethod.GET,
-        uri: ApiEndpoints.RequetesUrl,
+        uri:
+          queryParameters.idArobas !== undefined
+            ? ApiEndpoints.RequetesServiceUrl
+            : ApiEndpoints.RequetesUrl,
         parameters: {
           nomOec: queryParameters.nomOec,
           prenomOec: queryParameters.prenomOec,
@@ -114,7 +124,8 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
               ? queryParameters.tri
               : "dateStatut",
           sens: queryParameters.sens,
-          range: queryParameters.range
+          range: queryParameters.range,
+          idArobas: queryParameters.idArobas
         }
       })
       .then(result => {
@@ -151,8 +162,10 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     queryParameters.statut,
     queryParameters.tri,
     queryParameters.sens,
-    queryParameters.range
+    queryParameters.range,
+    queryParameters.idArobas
   ]);
+
   return {
     dataState,
     previousDataLinkState,
@@ -175,21 +188,41 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     idRequete: data.idRequete,
     idSagaDila: +data.idSagaDila,
     dateCreation: moment.unix(data.dateCreation).format("DD/MM/YYYY"),
+    dateDerniereMaj: moment.unix(data.dateDerniereMaj).format("DD/MM/YYYY"),
     provenance: data.provenance,
     statut: data.statut,
     dateStatut: moment.unix(data.dateStatut).format("DD/MM/YYYY"),
+    idRequeteInitiale: data.idRequeteInitiale,
     sousTypeRequete: data.sousTypeRequete,
+    typeRequete: data.typeRequete,
     natureActe: data.natureActe,
     prioriteRequete: "TODO",
     villeEvenement: data.villeEvenement,
     paysEvenement: data.paysEvenement,
-    requerant: data.requerant,
+    requerant: createLibelleRequerant(data.requerant),
     titulaires: data.titulaires,
     canal: data.canal,
-    motif: data.motif,
+    motifRequete: data.motifRequete,
     piecesJustificatives: data.piecesJustificatives,
-    reponse: data.reponse
+    nomOec: `${data.reponse?.prenomOec} ${data.reponse?.nomOec}`,
+    typeActe: data.typeActe,
+    reponse: data.reponse,
+    anneeEvenement: data.anneeEvenement,
+    jourEvenement: data.jourEvenement,
+    moisEvenement: data.moisEvenement,
+    nbExemplaire: data.nbExemplaire
   };
+}
+
+function createLibelleRequerant(data: IRequerantApi) {
+  if (data.qualiteRequerant === QualiteRequerant.MandataireHabilite) {
+    data.libelleRequerant = data.raisonSociale + " / " + data.identite;
+  } else if (data.qualiteRequerant === QualiteRequerant.Administration) {
+    data.libelleRequerant = data.nomAdministration;
+  } else if (data.qualiteRequerant === QualiteRequerant.Particulier) {
+    data.libelleRequerant = data.prenom + " " + data.nomFamille;
+  }
+  return data;
 }
 
 function parseLink(linkHeader: string, api: ApiManager) {

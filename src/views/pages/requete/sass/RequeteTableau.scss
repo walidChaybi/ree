@@ -1,6 +1,4 @@
-.ColonneTableauRequete {
-  width: 11.11%;
-}
+@import "../../../../sass/colors";
 
 .RequetesToolbar {
   width: 100%;
@@ -14,4 +12,18 @@
 
 .RequetesToolbarSignature {
   text-align: right;
+}
+
+.SelectOfficierEtatCivil {
+  display: flex;
+  text-align: justify;
+  button {
+    padding: 5px;
+    min-width: auto;
+    color: $button-application-color;
+  }
+  .AttributionOEC {
+    margin-right: 0.5em;
+    width: 75%;
+  }
 }

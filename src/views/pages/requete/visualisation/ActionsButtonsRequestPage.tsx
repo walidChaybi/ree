@@ -3,18 +3,30 @@ import { NavigationButton } from "./NavigationButton";
 import { BoutonSignature } from "../BoutonSignature";
 import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
-import { AppUrls } from "../../../router/UrlManager";
+import { useHistory } from "react-router-dom";
+import { SeparateurUrl } from "../../../router/UrlManager";
+import { IDocumentDelivre } from "./RequeteType";
+
 export interface ActionsProps {
   indexRequete: number;
   maxRequetes: number;
   setIndexRequete: (index: number) => void;
+  documentsDelivres: IDocumentDelivre[];
 }
 
 export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   indexRequete,
   setIndexRequete,
-  maxRequetes
+  maxRequetes,
+  documentsDelivres,
 }) => {
+  const history = useHistory();
+
+  const pathnames = history.location.pathname
+    .split(SeparateurUrl)
+    .filter((x) => x);
+  pathnames.shift();
+
   return (
     <div className="ActionsButtons">
       <NavigationButton
@@ -25,14 +37,12 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
       />
       <div className="event-button">
         <div>
-          <BoutonRetour
-            url={AppUrls.ctxMesRequetesUrl}
-            messageId={"boutons.retourMesRequetes"}
-          />
+          <BoutonRetour messageId={"boutons.retourMesRequetes"} />
         </div>
         <div>
           <BoutonSignature
-            libelle={"pages.requetes.apercu.signatureElectronique"}
+            libelle={"pages.delivrance.apercu.signatureElectronique"}
+            documentsDelivres={documentsDelivres}
           />
         </div>
       </div>

@@ -1,4 +1,4 @@
-export enum Motif {
+export enum MotifRequete {
   Autre = "AUTRE",
   CertificatNationaliteFrancaise = "CERTIFICAT_NATIONALITE_FRANCAISE",
   DeclarationAcquisitionNationaliteFrancaise = "DECLARATION_ACQUISITION_NATIONALITE_FRANCAISE",

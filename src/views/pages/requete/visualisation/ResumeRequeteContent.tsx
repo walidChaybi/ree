@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "../../../common/widget/Text";
 import "./sass/ResumeRequeteContent.scss";
-import { IDataTable } from "../RequeteTableauHeaderCell";
+import { IDataTable } from "../MesRequetesPage";
 import { TitulaireInformation } from "./TitulaireInformation";
 
 interface ResumeRequeteContentProps {
@@ -14,11 +14,11 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
       <div className="resume-requete-content">
         <div className="bloc-info">
           <div className="label">
-            <Text messageId={"pages.requetes.apercu.resume.sousType"} />
+            <Text messageId={"pages.delivrance.apercu.resume.sousType"} />
           </div>
           <div className="capital personnal-info">
             <Text
-              messageId={`referentiel.sousTypeRequete.${props.requete.sousTypeRequete}`}
+              messageId={`referentiel.sousTypeRequete.long.${props.requete.sousTypeRequete}`}
             />
           </div>
         </div>
@@ -33,7 +33,7 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
         })}
         <div className="bloc-info">
           <div className="label">
-            <Text messageId={"pages.requetes.apercu.resume.nature"} />
+            <Text messageId={"pages.delivrance.apercu.resume.nature"} />
           </div>
           <div className="capital personnal-info">
             <Text
@@ -43,29 +43,31 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
         </div>
         <div className="bloc-info">
           <div className="label">
-            <Text messageId={"pages.requetes.apercu.resume.dateEvent"} />
+            <Text messageId={"pages.delivrance.apercu.resume.dateEvent"} />
           </div>
           <div className="personnal-info">{props.requete.dateCreation}</div>
         </div>
         <div className="bloc-info">
           <div className="label">
-            <Text messageId={"pages.requetes.apercu.resume.lieuEvent"} />
+            <Text messageId={"pages.delivrance.apercu.resume.lieuEvent"} />
           </div>
           <div className="capital personnal-info no-justify-info">{`${props.requete.villeEvenement}, ${props.requete.paysEvenement}`}</div>
         </div>
         <div className="bloc-info">
           <div className="label">
-            <Text messageId={"pages.requetes.apercu.resume.motif"} />
+            <Text messageId={"pages.delivrance.apercu.resume.motif"} />
           </div>
           <div className="personnal-info no-justify-info">
-            {props.requete.motif && (
-              <Text messageId={`referentiel.motif.${props.requete.motif}`} />
+            {props.requete.motifRequete && (
+              <Text
+                messageId={`referentiel.motifRequete.${props.requete.motifRequete}`}
+              />
             )}
           </div>
         </div>
         <div className="bloc-info">
           <div className="label">
-            <Text messageId={"pages.requetes.apercu.resume.canal"} />
+            <Text messageId={"pages.delivrance.apercu.resume.canal"} />
           </div>
           <div className="capital personnal-info">
             <Text messageId={`referentiel.canal.${props.requete.canal}`} />
@@ -75,18 +77,20 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
       <div className="resume-requete-content">
         <div className="bloc-info">
           <div className="label">
-            <Text messageId={"pages.requetes.apercu.resume.nomRequerant"} />
+            <Text messageId={"pages.delivrance.apercu.resume.nomRequerant"} />
           </div>
           <div className="capital personnal-info">
-            {props.requete.requerant.nomOuRaisonSociale}
+            {props.requete.requerant.nomFamille}
           </div>
         </div>
         <div className="bloc-info">
           <div className="label">
-            <Text messageId={"pages.requetes.apercu.resume.prenomRequerant"} />
+            <Text
+              messageId={"pages.delivrance.apercu.resume.prenomRequerant"}
+            />
           </div>
           <div className="capital personnal-info">
-            {props.requete.requerant.prenomUsage}
+            {props.requete.requerant.prenom}
           </div>
         </div>
       </div>

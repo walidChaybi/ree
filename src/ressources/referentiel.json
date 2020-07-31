@@ -1,5 +1,5 @@
 {
-  "canalProvenance": {
+  "provenance": {
     "DILA": "DILA",
     "DALI": "DALI",
     "CORIDA": "CORIDA",
@@ -10,7 +10,7 @@
     "GRECO": "GRECO",
     "MICADO": "MICADO"
   },
-  "motif": {
+  "motifRequete": {
     "AUTRE": "Autre",
     "CERTIFICAT_NATIONALITE_FRANCAISE": "Certificat de nationalité française",
     "DECLARATION_ACQUISITION_NATIONALITE_FRANCAISE": "Déclaration d'acquisition de nationalité française",
@@ -58,8 +58,28 @@
     "NOTAIRE": "Notaire"
   },
   "sousTypeRequete": {
-    "DELIVRANCE_DEMAT": "Délivrance Démat",
-    "DELIVRANCE_COURRIER": "Délivrance Courrier"
+    "court": {
+      "RDD": "Délivrance E/C (d)",
+      "RDC": "Délivrance E/C (c)",
+      "RDAPD": "Délivrance AP (d)",
+      "RDAPC": "Délivrance AP (c)",
+      "RDCSD": "Délivrance CS (d)",
+      "RDCSC": "Délivrance CS (c)",
+      "RDDCO": "Délivrance",
+      "RDDP": "Délivrance",
+      "RDCCAMR": "Délivrance CCAM"
+    },
+    "long": {
+      "RDD": "Requête Délivrance Extrait/Copie Dématérialisée",
+      "RDC": "Requête Délivrance Extrait/Copie Courrier",
+      "RDAPD": "Requête de Délivrance Attestation de PACS Démat",
+      "RDAPC": "Requête de Délivrance Attestation de PACS Courrier",
+      "RDCSD": "Requête de Délivrance de Certificat de Situation Démat",
+      "RDCSC": "Requête de Délivrance de Certificat de Situation Courrier",
+      "RDDCO": "Requête de Délivrance Démat COMEDEC",
+      "RDDP": "Requête de Délivrance Démat PLANETE",
+      "RDCCAMR": "Requête de Délivrance Certificat de Capacité A Mariage RECE"
+    }
   },
   "statutRequete": {
     "DOUBLON": "Doublon",
@@ -71,9 +91,9 @@
     "TRAITE_IMPRIME": "Traité imprimé"
   },
   "typeRequete": {
-    "Delivrance": "Délivrance",
-    "CreationActe": "Création d'acte",
-    "MiseAJour": "Mise à jour"
+    "DELIVRANCE": "Délivrance",
+    "CREATION_ACTE": "Création d'acte",
+    "MISE_A_JOUR": "Mise à jour"
   },
   "canal": {
     "INTERNET": "Internet",

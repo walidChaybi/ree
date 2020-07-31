@@ -22,30 +22,27 @@
   "fildariane": {
     "accueil": "Accueil",
     "mesrequetes": "Mes requêtes",
+    "requetesservice": "Requêtes du service",
     "apercurequete": "Aperçu de requête",
     "messagerie": "Messagerie"
   },
   "pages": {
-    "requetes": {
+    "delivrance": {
+      "titre": "Espace délivrance",
       "apercu": {
         "titre": "Aperçu de la requête",
+        "entete": {
+          "libelle": "${0} Le ${3} par ${1} ${2}",
+          "traitee": "Requête traitée par : ${0} ${1} - Le : ${2}",
+          "priseEnCharge": "Requête prise en charge par : ${0} ${1} - Le : ${2}",
+          "aTraiterAttribuee": "Requête à traiter, attribuée à ${0} ${1} - Le ${2}",
+          "aTraiterNonAttribuee": "Requête à traiter non attribuée - Créée le ${0}",
+          "enDoublon": "Requête en doublon, requête déjà en cours avec le N° suivant : ${0} - Le ${1}",
+          "transferee": "Requête transférée à ${0} ${1} - Le ${2}",
+          "aSigner": "Requête à signer le ${2} par ${0} ${1}"
+        },
         "commentaires": "Commentaires",
         "signatureElectronique": "Signer électroniquement",
-        "etat": {
-          "titre": {
-            "MARIAGE": "Délivrance d'extrait d'acte de mariage dématérialisé",
-            "NAISSANCE": "Délivrance d'extrait d'acte de naissance dématérialisé",
-            "DECES": "Délivrance d'extrait d'acte de décès dématérialisé",
-            "ADOPTION_SIMPLE": "Délivrance d'extrait d'acte d'adoption simple",
-            "ABSENCE": "Délivrance d'extrait d'acte d'abscence",
-            "RECONNAISSANCE": "Délivrance d'extrait d'acte de reconnaissance",
-            "PACS": "Délivrance d'extrait d'acte de PACS"
-          },
-          "numeroRequete": "Requête n°",
-          "etat": "Etat",
-          "service": "Service",
-          "canal": "Canal"
-        },
         "resume": {
           "titre": "Résumé de la requête",
           "sousType": "Sous-type",
@@ -68,36 +65,49 @@
           "right": "Requête suivante"
         }
       },
-      "enCours": {
-        "titre": "Requêtes en cours"
-      },
       "action": {
         "signature": "Signer tous les documents"
       },
-      "tableau": {
-        "titre": "Mes requêtes",
-        "label": "Tableau de mes requetes",
-        "header": {
-          "idSagaDila": "N°",
-          "sousTypeRequete": "Type",
-          "provenance": "Provenance",
-          "natureActe": "Nature d'acte",
-          "requerant": "Requérant",
-          "dateCreation": "Date de création",
-          "dateStatut": "Dernière mise à jour",
-          "statut": "Statut",
-          "prioriteRequete": "Priorité"
-        },
-        "body": {
-          "priorite": {
-            "basse": "Priorité basse",
-            "moyenne": "Priorité moyenne",
-            "haute": "Priorité haute"
+      "mesRequetes": {
+        "tableau": {
+          "titre": "Mes requêtes de délivrance",
+          "label": "Tableau de mes requetes",
+          "header": {
+            "idSagaDila": "N°",
+            "sousTypeRequete": "Sous-type",
+            "typeRequete": "Type",
+            "provenance": "Provenance",
+            "canal": "Canal",
+            "natureActe": "Nature d'acte",
+            "requerant": "Requérant",
+            "dateCreation": "Date de création",
+            "dateStatut": "Dernière mise à jour",
+            "statut": "Statut",
+            "prioriteRequete": "Priorité",
+            "typeActe": "Document",
+            "nomOec": "Attribué à",
+            "dateDerniereMaj": "Dernière mise à jour"
+          },
+          "body": {
+            "priorite": {
+              "basse": "Priorité basse",
+              "moyenne": "Priorité moyenne",
+              "haute": "Priorité haute"
+            }
+          },
+          "pagination": {
+            "donneePaginee": "Requêtes",
+            "navigationLabel": "${0}-${1} sur ${2}"
           }
+        }
+      },
+      "monService": {
+        "officierEtatCivilSelect": {
+          "title": "Changer la personne attribuée à la requête",
+          "libelle": "Attribuer à : "
         },
-        "pagination": {
-          "donneePaginee": "Requêtes",
-          "navigationLabel": "${0}-${1} sur ${2}"
+        "tableau": {
+          "titre": "Requêtes de mon service"
         }
       }
     },
@@ -120,12 +130,20 @@
         },
         "documentDelivre": {
           "type": {
+            "ATTESTATION_PACS": "Attestation de PACS",
+            "CERTIFICAT_SITUATION_RC": "Certificat de situation au RC",
+            "CERTIFICAT_SITUATION_RCA": "Certificat de situation au RCA",
+            "CERTIFICAT_SITUATION_RC_RCA": "Certificat de situation au RC et RCA",
+            "CERTIFICAT_SITUATION_PACS": "Certificat de situation de PACS",
             "COPIE_INTEGRALE": "Copie intégrale",
             "EXTRAIT_AVEC_FILIATION": "Extrait avec filiation",
             "EXTRAIT_SANS_FILIATION": "Extrait sans filiation",
             "EXTRAIT_PLURILINGUE": "Extrait plurilingue",
+            "COPIE_NON_SIGNEE": "Copie non signée",
             "FA50": "Formulaire FA50",
-            "FA116": "Formulaire FA116"
+            "FA116": "Formulaire FA116",
+            "FA117": "Formulaire FA117",
+            "FA118": "Formulaire FA118"
           }
         }
       }
@@ -153,5 +171,8 @@
         "tableau": "Bouton pour accèder au tableau de bord"
       }
     }
+  },
+  "signature": {
+    "confirmation": "Êtes-vous sûr de vouloir signer électroniquement le document ?"
   }
 }

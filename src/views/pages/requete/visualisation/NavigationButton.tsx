@@ -37,7 +37,7 @@ export const NavigationButton: React.FC<NavigationProps> = ({
         className="button-navigation-request"
         id={`button-navigation-${direction}`}
         disabled={isDisabled(direction, indexRequete, maxRequetes)}
-        title={getText(`pages.requetes.apercu.bouton.${direction}`)}
+        title={getText(`pages.delivrance.apercu.bouton.${direction}`)}
       >
         <FontAwesomeIcon
           icon={
