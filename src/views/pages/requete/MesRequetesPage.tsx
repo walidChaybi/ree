@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Text } from "../../common/widget/Text";
 import {
   TableauRece,
   TableauTypeColumn
@@ -171,9 +170,6 @@ export const MesRequetesPage: React.FC = () => {
 
   return (
     <>
-      <h3 id="TableauRequetesTitre" hidden={true}>
-        <Text messageId="pages.delivrance.mesRequetes.tableau.titre" />
-      </h3>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={getUrlBack}
