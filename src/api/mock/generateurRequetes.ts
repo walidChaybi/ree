@@ -4,13 +4,13 @@ export function generateurRequetes() {
   const newDatas = [];
   const model = mockRequetes.data[0];
 
-  const indexDébut = 4;
+  const indexDebut = 4;
   const nBMaxRequete = 250;
   const dix = 10;
   const cent = 100;
   const preIdSagaDila = 11000;
 
-  for (let i = indexDébut; i < nBMaxRequete; i++) {
+  for (let i = indexDebut; i < nBMaxRequete; i++) {
     const dataRequete = { ...model };
     let code = "";
     if (i < dix) {

@@ -53,13 +53,15 @@ const getDate = (
   annee: number
 ): string => {
   let res = "";
-  const dix = 10;
+  const limiteZeroPrecision = 10;
   if (jour) {
-    const jourFormate = jour < dix ? `0${jour.toString()}` : jour.toString();
+    const jourFormate =
+      jour < limiteZeroPrecision ? `0${jour.toString()}` : jour.toString();
     res = `${jourFormate}/`;
   }
   if (mois) {
-    const moisFormate = mois < dix ? `0${mois.toString()}` : mois.toString();
+    const moisFormate =
+      mois < limiteZeroPrecision ? `0${mois.toString()}` : mois.toString();
     res = res !== "" ? `${res}${moisFormate}/` : `${moisFormate}/`;
   }
   return res !== "" ? `${res}${annee.toString()}` : annee.toString();
