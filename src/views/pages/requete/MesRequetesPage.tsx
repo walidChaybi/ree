@@ -152,16 +152,22 @@ export const MesRequetesPage: React.FC = () => {
 
   function goToLink(link: string) {
     let queryParameters: IQueryParametersPourRequetes;
+    const indexNomOec = 0;
+    const indexPrenomOec = 1;
+    const indexStatut = 2;
+    const indexTri = 3;
+    const indexSens = 4;
+    const indexRange = 5;
     if (link.indexOf("range") > 0) {
       let params = [];
       params = link.split("requetes?")[1].split("&");
       queryParameters = {
-        nomOec: params[0].split("=")[1],
-        prenomOec: params[1].split("=")[1],
-        statut: params[2].split("=")[1] as StatutRequete,
-        tri: params[3].split("=")[1],
-        sens: params[4].split("=")[1] as SortOrder,
-        range: params[5].split("=")[1]
+        nomOec: params[indexNomOec].split("=")[1],
+        prenomOec: params[indexPrenomOec].split("=")[1],
+        statut: params[indexStatut].split("=")[1] as StatutRequete,
+        tri: params[indexTri].split("=")[1],
+        sens: params[indexSens].split("=")[1] as SortOrder,
+        range: params[indexRange].split("=")[1]
       };
       setLinkParameters(queryParameters);
     }

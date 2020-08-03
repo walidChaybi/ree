@@ -4,7 +4,7 @@ import { DropdownOption } from "./DropdownOption";
 export interface IDropdownProps {
   name: string;
   isBlankAllowed?: boolean;
-  onChangeFct?: ((event: ChangeEvent<HTMLSelectElement>) => void) | undefined;
+  onChangeFct?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export const Dropdown: React.FC<IDropdownProps> = ({
