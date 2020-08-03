@@ -19,6 +19,7 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
+  const paddingBox = 3;
 
   return (
     <div
@@ -28,7 +29,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`nav-tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box p={paddingBox}>{children}</Box>}
     </div>
   );
 }

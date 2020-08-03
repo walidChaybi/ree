@@ -42,9 +42,11 @@ export default {
     nomUsage: "",
     nomFamille: "aubin",
     prenom: "nicolas",
+    libelleRequerant: "nicolas aubin",
     telephone: "0777327569",
     mail: "",
-    adresse: null
+    adresse: null,
+    requete: null
   },
   titulaires: [
     {

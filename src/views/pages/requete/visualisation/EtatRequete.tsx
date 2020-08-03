@@ -44,6 +44,57 @@ const isReponseAttribuee = (reponse: IReponseApi) => {
   return reponse.prenomOec && reponse.nomOec;
 };
 
+const getRequetePriseEnCharge = (data: IDataTable) => {
+  if (data.reponse && isReponseAttribuee(data.reponse)) {
+    return getText("pages.delivrance.apercu.entete.priseEnCharge", [
+      data.reponse.prenomOec,
+      data.reponse.nomOec,
+      data.dateStatut
+    ]);
+  } else {
+    return "WARN ! Non spécifié";
+  }
+};
+
+const getRequeteATraiter = (data: IDataTable) => {
+  if (data.reponse && isReponseAttribuee(data.reponse)) {
+    return getText("pages.delivrance.apercu.entete.aTraiterAttribuee", [
+      data.reponse.prenomOec,
+      data.reponse.nomOec,
+      data.dateStatut
+    ]);
+  } else {
+    return getText("pages.delivrance.apercu.entete.aTraiterNonAttribuee", [
+      data.dateCreation
+    ]);
+  }
+};
+
+const getRequeteDoublon = (data: IDataTable) => {
+  if (data.idRequeteInitiale) {
+    return getText("pages.delivrance.apercu.entete.enDoublon", [
+      data.idRequeteInitiale.toString(),
+      data.dateCreation
+    ]);
+  }
+};
+
+const getRequeteTransferee = (data: IDataTable) => {
+  return getText("pages.delivrance.apercu.entete.transferee", [
+    data.reponse?.prenomOec || "",
+    data.reponse?.nomOec || "",
+    data.dateStatut
+  ]);
+};
+
+const getRequeteASigner = (data: IDataTable) => {
+  return getText("pages.delivrance.apercu.entete.aSigner", [
+    data.reponse?.prenomOec || "",
+    data.reponse?.nomOec || "",
+    data.dateStatut
+  ]);
+};
+
 const getStatutLibelle = (data: IDataTable) => {
   switch (data.statut as StatutRequete) {
     case StatutRequete.TraiteADelivrerDemat: {
@@ -59,51 +110,19 @@ const getStatutLibelle = (data: IDataTable) => {
       return getRequeteTraiteeLibelle(data);
     }
     case StatutRequete.PriseEnCharge: {
-      if (data.reponse && isReponseAttribuee(data.reponse)) {
-        return getText("pages.delivrance.apercu.entete.priseEnCharge", [
-          data.reponse.prenomOec,
-          data.reponse.nomOec,
-          data.dateStatut
-        ]);
-      } else {
-        return "WARN ! Non spécifié";
-      }
+      return getRequetePriseEnCharge(data);
     }
     case StatutRequete.ATraiter: {
-      if (data.reponse && isReponseAttribuee(data.reponse)) {
-        return getText("pages.delivrance.apercu.entete.aTraiterAttribuee", [
-          data.reponse.prenomOec,
-          data.reponse.nomOec,
-          data.dateStatut
-        ]);
-      } else {
-        return getText("pages.delivrance.apercu.entete.aTraiterNonAttribuee", [
-          data.dateCreation
-        ]);
-      }
+      return getRequeteATraiter(data);
     }
     case StatutRequete.Doublon: {
-      if (data.idRequeteInitiale) {
-        return getText("pages.delivrance.apercu.entete.enDoublon", [
-          data.idRequeteInitiale.toString(),
-          data.dateCreation
-        ]);
-      }
-      break;
+      return getRequeteDoublon(data);
     }
     case StatutRequete.Transferee: {
-      return getText("pages.delivrance.apercu.entete.transferee", [
-        data.reponse?.prenomOec || "",
-        data.reponse?.nomOec || "",
-        data.dateStatut
-      ]);
+      return getRequeteTransferee(data);
     }
     case StatutRequete.ASigner: {
-      return getText("pages.delivrance.apercu.entete.aSigner", [
-        data.reponse?.prenomOec || "",
-        data.reponse?.nomOec || "",
-        data.dateStatut
-      ]);
+      return getRequeteASigner(data);
     }
   }
 };

@@ -60,55 +60,57 @@ export interface IDataTable {
   nbExemplaire: number;
 }
 
+const tableauHeader = "pages.delivrance.mesRequetes.tableau.header";
+
 const columnsTableau = [
   new TableauTypeColumn(
     [HeaderTableauRequete.IdSagaDila],
     false,
-    "pages.delivrance.mesRequetes.tableau.header"
+    tableauHeader
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.SousTypeRequete],
     true,
-    "pages.delivrance.mesRequetes.tableau.header",
+    tableauHeader,
     "referentiel.sousTypeRequete.court"
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.Canal],
     true,
-    "pages.delivrance.mesRequetes.tableau.header",
+    tableauHeader,
     "referentiel.canal"
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.NatureActe],
     true,
-    "pages.delivrance.mesRequetes.tableau.header",
+    tableauHeader,
     "referentiel.natureActe"
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.Requerant, HeaderTableauRequete.LibelleRequerant],
     false,
-    "pages.delivrance.mesRequetes.tableau.header"
+    tableauHeader
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.DateCreation],
     false,
-    "pages.delivrance.mesRequetes.tableau.header"
+    tableauHeader
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.DateStatut],
     false,
-    "pages.delivrance.mesRequetes.tableau.header"
+    tableauHeader
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.Statut],
     true,
-    "pages.delivrance.mesRequetes.tableau.header",
+    tableauHeader,
     "referentiel.statutRequete"
   ),
   new TableauTypeColumn(
     [HeaderTableauRequete.PrioriteRequete],
     false,
-    "pages.delivrance.mesRequetes.tableau.header",
+    tableauHeader,
     "",
     getIconPrioriteMesRequetes
   )

@@ -2,11 +2,12 @@ import request from "superagent";
 import config from "../../../../../../api/mock/superagent-mock-config.js";
 import {
   requestDocumentApi,
-  IRequestDocumentApiResult,
+  IRequestDocumentApiResult
 } from "../DocumentRequeteHook";
 import requetes from "../../../../../../api/mock/requetes.json";
 import { GroupementDocument } from "../../../../../../model/requete/GroupementDocument";
 import { convertToBlob } from "../DocumentPresentation";
+import { MimeType } from "../../../../../../ressources/MimeType";
 
 const superagentMock = require("superagent-mock")(request, config);
 
@@ -19,10 +20,10 @@ test("Appel d'api retournant le contenu d'une pièce justificative", async () =>
   );
 
   const base64 = resultApi.documentDelivre.contenu;
-  const blob = convertToBlob(base64, "image/png");
+  const blob = convertToBlob(base64, MimeType.IMAGE_PNG);
   expect(blob).toBeInstanceOf(Blob);
   expect(blob.size).toBe(385179);
-  expect(blob.type).toBe("image/png");
+  expect(blob.type).toBe(MimeType.IMAGE_PNG);
 });
 
 test("Appel d'api retournant le contenu d'un courrier d'accompagnement", async () => {
@@ -32,10 +33,10 @@ test("Appel d'api retournant le contenu d'un courrier d'accompagnement", async (
     GroupementDocument.CourrierAccompagnement
   );
   const base64 = resultApi.documentDelivre.contenu;
-  const blob = convertToBlob(base64, "application/pdf");
+  const blob = convertToBlob(base64, MimeType.APPLI_PDF);
   expect(blob).toBeInstanceOf(Blob);
   expect(blob.size).toBe(151807);
-  expect(blob.type).toBe("application/pdf");
+  expect(blob.type).toBe(MimeType.APPLI_PDF);
 });
 
 test("Appel d'api retournant le contenu d'un courrier d'accompagnement KO", async () => {
@@ -44,10 +45,10 @@ test("Appel d'api retournant le contenu d'un courrier d'accompagnement KO", asyn
     `${courrierAccompagnement.idDocumentDelivre}fakedoc`,
     GroupementDocument.CourrierAccompagnement
   )
-    .then((result) => {
+    .then(result => {
       expect(result).toBe("ko");
     })
-    .catch((error) => {
+    .catch(error => {
       expect(error).toBeTruthy();
     });
 });
