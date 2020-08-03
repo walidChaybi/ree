@@ -7,6 +7,7 @@ import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteDataApi } from "../visualisation/DonneeRequeteHook";
 import DONNEES_REQUETE from "./data/requete";
 import { IDataTable } from "../MesRequetesPage";
+import officier from "../../../../api/mock/officier.json";
 
 const superagentMock = require("superagent-mock")(request, config);
 
@@ -16,15 +17,15 @@ let containerWithErrorWS: Element | null;
 
 const HookConsummer: React.FC = () => {
   const { dataState = [] } = useRequeteDataApi({
-    nomOec: "Garisson",
-    prenomOec: "Juliette",
+    nomOec: officier.nom,
+    prenomOec: officier.prenom,
     statut: StatutRequete.ASigner,
-    idRequete: "req1",
+    idRequete: "req1"
   });
 
   return (
     <>
-      {dataState.map((element) => {
+      {dataState.map(element => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
@@ -34,17 +35,17 @@ const HookConsummer: React.FC = () => {
 const HookConsummerWithData: React.FC = () => {
   const { dataState = [] } = useRequeteDataApi(
     {
-      nomOec: "Garisson",
-      prenomOec: "Juliette",
+      nomOec: officier.nom,
+      prenomOec: officier.prenom,
       statut: StatutRequete.ASigner,
-      idRequete: "req1",
+      idRequete: "req1"
     },
     { data: [DONNEES_REQUETE as IDataTable, DONNEES_REQUETE as IDataTable] }
   );
 
   return (
     <>
-      {dataState.map((element) => {
+      {dataState.map(element => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
@@ -53,15 +54,15 @@ const HookConsummerWithData: React.FC = () => {
 
 const HookConsummerWithErrorWS: React.FC = () => {
   const { dataState = [] } = useRequeteDataApi({
-    nomOec: "Garisson",
-    prenomOec: "Juliette",
+    nomOec: officier.nom,
+    prenomOec: officier.prenom,
     statut: StatutRequete.ASigner,
-    idRequete: "req2",
+    idRequete: "req2"
   });
 
   return (
     <>
-      {dataState.map((element) => {
+      {dataState.map(element => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
