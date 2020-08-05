@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, getText, MessageId } from "../Text";
-import { Link } from "react-router-dom";
 import { contextApp } from "../../../router/UrlManager";
 
 interface CategorieProps {
