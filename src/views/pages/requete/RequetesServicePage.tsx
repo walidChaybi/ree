@@ -18,7 +18,9 @@ import { IDataTable } from "./MesRequetesPage";
 import LabelIcon from "@material-ui/icons/Label";
 import {
   getMessagePrioriteDeLaRequete,
-  prioriteDeLaRequete
+  prioriteDeLaRequete,
+  tableauHeader,
+  indexParamsReq
 } from "./RequetesUtils";
 import {
   SelectDialog,
@@ -70,8 +72,6 @@ export const RequetesServicePage: React.FC = () => {
     range: undefined,
     idArobas: "25648596"
   });
-
-  const tableauHeader = "pages.delivrance.mesRequetes.tableau.header";
 
   const getColumnHeaders = (utilisateurs: SelectElements[]) => {
     return [
@@ -212,12 +212,12 @@ export const RequetesServicePage: React.FC = () => {
       let params = [];
       params = link.split("requetes?")[1].split("&");
       queryParameters = {
-        nomOec: params[0].split("=")[1],
-        prenomOec: params[1].split("=")[1],
-        statut: params[2].split("=")[1] as StatutRequete,
-        tri: params[3].split("=")[1],
-        sens: params[4].split("=")[1] as SortOrder,
-        range: params[5].split("=")[1]
+        nomOec: params[indexParamsReq.NomOec].split("=")[1],
+        prenomOec: params[indexParamsReq.PrenomOec].split("=")[1],
+        statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
+        tri: params[indexParamsReq.Tri].split("=")[1],
+        sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,
+        range: params[indexParamsReq.Range].split("=")[1]
       };
       setLinkParameters(queryParameters);
     }

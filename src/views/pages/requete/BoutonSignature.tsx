@@ -56,15 +56,6 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   });
 
   useUpdateDocumentApi(updateDocumentQueryParamState);
-  // let { errorState }: any = useUpdateDocumentApi(updateDocumentQueryParamState);
-  // useEffect(() => {
-  //   if (errorState) {
-  //     messageManager.showError(
-  //       "Une erreur est survenue lors de la mise à jour du document signé: " +
-  //         errorState.message
-  //     );
-  //   }
-  // }, [errorState]);
 
   const handleClickSignature = () => {
     const detail = {
@@ -72,7 +63,6 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
       contenu: documentsDelivres[0].contenu, // FIXME loop on document content
       direction: "to-webextension"
     };
-    console.log(detail.contenu);
     setShowWaitState(true);
     window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
     dialog.hide();
@@ -86,14 +76,11 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   const handleBackFromWebExtension = (event: Event): void => {
     const customEvent = event as CustomEvent;
     const result = customEvent.detail;
-    console.log("result: ", result);
     setShowWaitState(false);
     if (result.direction && result.direction === "to-call-app") {
       if (result.hasTechnicalError || result.hasBusinessError) {
         messageManager.showErrors(result.errors);
       } else {
-        // window.alert(result.message);
-        console.log(result.contenu);
         messageManager.showSuccessAndClose("Signature effectuée");
 
         setUpdateDocumentQueryParamState({

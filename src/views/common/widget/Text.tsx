@@ -29,7 +29,7 @@ export function getText(
   if (values && node) {
     values.forEach((value: string | number, index: number) => {
       const valueToUse = typeof value === "number" ? value.toString() : value;
-      message = message.replace("${" + index + "}", valueToUse);
+      message = message.replace(`$\{${index}}`, valueToUse);
     });
   }
   return message || `⚠ ${messageId}`;
