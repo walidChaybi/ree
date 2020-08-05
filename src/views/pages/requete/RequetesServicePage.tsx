@@ -18,7 +18,9 @@ import { IDataTable } from "./MesRequetesPage";
 import LabelIcon from "@material-ui/icons/Label";
 import {
   getMessagePrioriteDeLaRequete,
-  prioriteDeLaRequete
+  prioriteDeLaRequete,
+  tableauHeader,
+  indexParamsReq
 } from "./RequetesUtils";
 import {
   SelectDialog,
@@ -70,8 +72,6 @@ export const RequetesServicePage: React.FC = () => {
     range: undefined,
     idArobas: "25648596"
   });
-
-  const tableauHeader = "pages.delivrance.mesRequetes.tableau.header";
 
   const getColumnHeaders = (utilisateurs: SelectElements[]) => {
     return [
@@ -208,22 +208,16 @@ export const RequetesServicePage: React.FC = () => {
 
   function goToLink(link: string) {
     let queryParameters: IQueryParametersPourRequetes;
-    const indexNomOec = 0;
-    const indexPrenomOec = 1;
-    const indexStatut = 2;
-    const indexTri = 3;
-    const indexSens = 4;
-    const indexRange = 5;
     if (link.indexOf("range") > 0) {
       let params = [];
       params = link.split("requetes?")[1].split("&");
       queryParameters = {
-        nomOec: params[indexNomOec].split("=")[1],
-        prenomOec: params[indexPrenomOec].split("=")[1],
-        statut: params[indexStatut].split("=")[1] as StatutRequete,
-        tri: params[indexTri].split("=")[1],
-        sens: params[indexSens].split("=")[1] as SortOrder,
-        range: params[indexRange].split("=")[1]
+        nomOec: params[indexParamsReq.NomOec].split("=")[1],
+        prenomOec: params[indexParamsReq.PrenomOec].split("=")[1],
+        statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
+        tri: params[indexParamsReq.Tri].split("=")[1],
+        sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,
+        range: params[indexParamsReq.Range].split("=")[1]
       };
       setLinkParameters(queryParameters);
     }

@@ -3,6 +3,17 @@ import classNames from "classnames";
 import { getText } from "../../common/widget/Text";
 import { FormatDate } from "../../../ressources/FormatDate";
 
+export const tableauHeader = "pages.delivrance.mesRequetes.tableau.header";
+
+export const indexParamsReq = {
+  NomOec: 0,
+  PrenomOec: 1,
+  Statut: 2,
+  Tri: 3,
+  Sens: 4,
+  Range: 5
+};
+
 const limiteBasse = 2;
 const limiteHaute = 5;
 
