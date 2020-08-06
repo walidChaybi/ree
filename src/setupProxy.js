@@ -1,6 +1,6 @@
 const proxy = require("http-proxy-middleware");
 
-module.exports = function (app) {
+module.exports = function(app) {
   if (
     process.env.NODE_ENV === "development" ||
     process.env.NODE_ENV === "test"
@@ -8,8 +8,8 @@ module.exports = function (app) {
     app.use(
       "/rece-requete-api/v1",
       proxy.createProxyMiddleware({
-        target: "http://10.110.192.130:80",
-        changeOrigin: true,
+        target: "http://10.110.204.59:80",
+        changeOrigin: true
       })
     );
   }

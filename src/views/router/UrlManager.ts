@@ -14,7 +14,7 @@ export const IdRequeteUrl = `${MesRequetesUrl}/:idRequete`;
 export const ctxIdRequeteUrl = `${contextApp}${IdRequeteUrl}`;
 export const IdRequeteServiceUrl = `${RequetesServiceUrl}/:idRequete`;
 export const ctxIdRequeteServiceUrl = `${contextApp}${IdRequeteServiceUrl}`;
-export const SecuriteUrl = "/rece-securite-api";
+export const SecuriteUrl = "utilisateurs/login";
 
 export const DocumentsdelivresUrl = "/documentsdelivres";
 
