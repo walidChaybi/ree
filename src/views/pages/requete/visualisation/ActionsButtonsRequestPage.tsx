@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationButton } from "./NavigationButton";
 import { BoutonSignature } from "../BoutonSignature";
+import { BoutonRetourSaga } from "../BoutonRetourSaga";
 import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
 import { useHistory } from "react-router-dom";
@@ -18,13 +19,13 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   indexRequete,
   setIndexRequete,
   maxRequetes,
-  documentsDelivres,
+  documentsDelivres
 }) => {
   const history = useHistory();
 
   const pathnames = history.location.pathname
     .split(SeparateurUrl)
-    .filter((x) => x);
+    .filter(x => x);
   pathnames.shift();
 
   return (
@@ -38,6 +39,9 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
       <div className="event-button">
         <div>
           <BoutonRetour messageId={"boutons.retourMesRequetes"} />
+        </div>
+        <div>
+          <BoutonRetourSaga pageUrl={pathnames[pathnames.length - 1]} />
         </div>
         <div>
           <BoutonSignature
