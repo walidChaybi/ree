@@ -6,12 +6,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Header } from "./header/Header";
 import { Body } from "./body/Body";
 import { ToastContainer } from "react-toastify";
+import { useLoginApi } from "./LoginHook";
 
 const App: React.FC = () => {
+  const login = useLoginApi();
+
   return (
     <Router>
       <div className="App">
-        <Header />
+        <Header officier={login.dataState[0]} />
         <Body />
         <ToastContainer
           className={"toast-container"}

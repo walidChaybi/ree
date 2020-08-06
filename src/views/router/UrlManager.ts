@@ -14,23 +14,24 @@ export const IdRequeteUrl = `${MesRequetesUrl}/:idRequete`;
 export const ctxIdRequeteUrl = `${contextApp}${IdRequeteUrl}`;
 export const IdRequeteServiceUrl = `${RequetesServiceUrl}/:idRequete`;
 export const ctxIdRequeteServiceUrl = `${contextApp}${IdRequeteServiceUrl}`;
+export const SecuriteUrl = "/rece-securite-api";
 
 export const DocumentsdelivresUrl = "/documentsdelivres";
 
 export const AppUrls = {
-  contextApp: contextApp,
-  SeparateurUrl: SeparateurUrl,
-  ctxSeparateurUrl: ctxSeparateurUrl,
-  AccueilUrl: AccueilUrl,
-  ctxAccueilUrl: ctxAccueilUrl,
-  MesRequetesUrl: MesRequetesUrl,
-  ctxMesRequetesUrl: ctxMesRequetesUrl,
-  RequetesServiceUrl: RequetesServiceUrl,
-  ctxRequetesServiceUrl: ctxRequetesServiceUrl,
-  IdRequeteUrl: IdRequeteUrl,
-  ctxIdRequeteUrl: ctxIdRequeteUrl,
-  IdRequeteServiceUrl: IdRequeteServiceUrl,
-  ctxIdRequeteServiceUrl: ctxIdRequeteServiceUrl
+  contextApp,
+  SeparateurUrl,
+  ctxSeparateurUrl,
+  AccueilUrl,
+  ctxAccueilUrl,
+  MesRequetesUrl,
+  ctxMesRequetesUrl,
+  RequetesServiceUrl,
+  ctxRequetesServiceUrl,
+  IdRequeteUrl,
+  ctxIdRequeteUrl,
+  IdRequeteServiceUrl,
+  ctxIdRequeteServiceUrl
 };
 
 /** Attention à l'usage, la construction d'URL dynamique passant par une function pose des problèmes d'anti pattern */
@@ -39,8 +40,9 @@ export function getAppUrl(path: string): string {
 }
 
 export const ApiEndpoints = {
-  RequetesUrl: RequetesUrl,
+  RequetesUrl,
   RequetesServiceUrl: "/requetes/requetesService",
-  UtilisateursUrl: UtilisateursUrl,
-  DocumentsdelivresUrl: DocumentsdelivresUrl,
+  UtilisateursUrl,
+  DocumentsdelivresUrl,
+  SecuriteUrl
 };
