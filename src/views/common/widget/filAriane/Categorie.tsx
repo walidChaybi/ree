@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, getText, MessageId } from "../Text";
-import { Link } from "react-router-dom";
 import { contextApp } from "../../../router/UrlManager";
 
 interface CategorieProps {
@@ -12,7 +11,7 @@ interface CategorieProps {
 export const Categorie: React.FC<CategorieProps> = ({
   url,
   messageId,
-  last
+  last,
 }) => {
   const uuidRegex = new RegExp(getText("regex.pages.common.uuid"), "i");
 
@@ -27,9 +26,9 @@ export const Categorie: React.FC<CategorieProps> = ({
           <Text messageId={message} />
         </div>
       ) : (
-        <Link className="LinkFilAriane" to={`${contextApp}${url}`}>
+        <a className="LinkFilAriane" href={`${contextApp}${url}`}>
           <Text messageId={message} />
-        </Link>
+        </a>
       )}
     </>
   );
