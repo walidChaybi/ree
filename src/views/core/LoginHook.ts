@@ -28,7 +28,7 @@ export function useLoginApi() {
       })
       .then(result => {
         // console.log(result.body.httpHeaders);
-        setDataState(result.body.httpHeaders);
+        setDataState(setUtilisateurSSOApi(result.body.httpHeaders));
       })
       .catch(error => {
         setErrorState(error);
@@ -38,5 +38,20 @@ export function useLoginApi() {
   return {
     dataState,
     errorState
+  };
+}
+
+function setUtilisateurSSOApi(result: any) {
+  return {
+    idSSO: result.body.httpHeaders.idSSO,
+    nom: result.body.httpHeaders.nom,
+    prenom: result.body.httpHeaders.prenom,
+    trigramme: result.body.httpHeaders.trigramme,
+    mail: result.body.httpHeaders.mail,
+    telephone: result.body.httpHeaders.telephone,
+    section: result.body.httpHeaders.section,
+    bureau: result.body.httpHeaders.bureau,
+    departement: result.body.httpHeaders.departement,
+    service: result.body.httpHeaders.service
   };
 }

@@ -38,18 +38,12 @@ export const OfficierContext = React.createContext(officier);
 
 const App: React.FC = () => {
   const login = useLoginApi();
-  const officierAct: IUtilisateurSSOApi;
-  if (login.dataState) {
-    officierAct = login.dataState.nom;
-  }
-
-
 
   return (
     <Router>
       <div className="App">
         <OfficierContext.Provider
-          value={officierAct ? officierAct : officierMock}
+          value={login.dataState ? login.dataState : officierMock}
         >
           <Header />
           <Body />
