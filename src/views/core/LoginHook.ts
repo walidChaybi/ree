@@ -6,7 +6,8 @@ export interface IUtilisateurSSOApi {
   idSSO: string;
   nom: string;
   prenom: string;
-  maail: string;
+  trigramme: string;
+  mail: string;
   telephone: string;
   section: string;
   bureau: string;

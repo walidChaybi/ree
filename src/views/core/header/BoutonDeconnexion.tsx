@@ -5,17 +5,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { getText } from "../../common/widget/Text";
+import { OfficierContext } from "../App";
 const ressource = require("../../../ressources/ressource.json");
 
 interface BoutonDeconnexionProps {
-  nom: string;
-  prenom: string;
   onClick?: (event: React.MouseEvent) => void;
 }
 
 export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
-  nom,
-  prenom,
   onClick
 }) => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
@@ -33,37 +30,41 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   };
 
   return (
-    <div className="UtilisateurBouton">
-      <Button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={event => handleClick(event)}
-      >
-        {prenom} {nom}
-      </Button>
-      {accessible && (
-        <Menu
-          className="Menu"
-          anchorEl={menu}
-          keepMounted
-          open={Boolean(menu)}
-          onClose={handleClose}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center"
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "center"
-          }}
-        >
-          <MenuItem onClick={handleClose}>
-            <FontAwesomeIcon icon={faTimes} />
-            {getText("boutons.deconnexion")}
-          </MenuItem>
-        </Menu>
+    <OfficierContext.Consumer>
+      {officier => (
+        <div className="UtilisateurBouton">
+          <Button
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={event => handleClick(event)}
+          >
+            {officier.prenom} {officier.nom}
+          </Button>
+          {accessible && (
+            <Menu
+              className="Menu"
+              anchorEl={menu}
+              keepMounted
+              open={Boolean(menu)}
+              onClose={handleClose}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center"
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center"
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                <FontAwesomeIcon icon={faTimes} />
+                {getText("boutons.deconnexion")}
+              </MenuItem>
+            </Menu>
+          )}
+        </div>
       )}
-    </div>
+    </OfficierContext.Consumer>
   );
 };

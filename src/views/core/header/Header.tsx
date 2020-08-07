@@ -4,11 +4,8 @@ import { useHistory } from "react-router-dom";
 import { contextApp, AccueilUrl } from "../../router/UrlManager";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
 import { BoutonDeconnexion } from "./BoutonDeconnexion";
-import officierMock from "../../../api/mock/officier.json";
-import { IUtilisateurSSOApi } from "../LoginHook";
 
 interface HeaderProps {
-  officier: IUtilisateurSSOApi;
   onClick?: (event: React.MouseEvent, paramURL: string) => void;
 }
 
@@ -34,7 +31,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
       <h1>
         <Text messageId={"header"} />
       </h1>
-      <BoutonDeconnexion nom={officierMock.nom} prenom={officierMock.prenom} />
+      <BoutonDeconnexion />
     </header>
   );
 };

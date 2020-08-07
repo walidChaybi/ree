@@ -13,7 +13,7 @@ import {
 import logoRece from "../../../img/logo-rece.svg";
 import { Title } from "../../core/title/Title";
 import { getText } from "../../common/widget/Text";
-import officier from "../../../api/mock/officier.json";
+import { OfficierContext } from "../../core/App";
 
 export const AccueilPage: React.FC = () => {
   return (
@@ -21,23 +21,29 @@ export const AccueilPage: React.FC = () => {
       <Title titleId={"pages.accueil.titre"} />
 
       <img src={logoRece} alt={getText("altLogoRece")} />
-      <div className="Titre">
-        <Text
-          messageId={"pages.accueil.bienvenue"}
-          values={[officier.prenom, officier.nom, officier.trigramme]}
-        />
-      </div>
-      <div className="Affectation">
-        <Text
-          messageId={"pages.accueil.affectation"}
-          values={[
-            officier.service,
-            officier.departement,
-            officier.bureau,
-            officier.section
-          ]}
-        />
-      </div>
+      <OfficierContext.Consumer>
+        {officier => (
+          <>
+            <div className="Titre">
+              <Text
+                messageId={"pages.accueil.bienvenue"}
+                values={[officier.prenom, officier.nom, officier.trigramme]}
+              />
+            </div>
+            <div className="Affectation">
+              <Text
+                messageId={"pages.accueil.affectation"}
+                values={[
+                  officier.service,
+                  officier.departement,
+                  officier.bureau,
+                  officier.section
+                ]}
+              />
+            </div>
+          </>
+        )}
+      </OfficierContext.Consumer>
       <div className="MenuAccueil">
         <BoutonAccueil
           messageId="pages.accueil.boutons.delivrance"
