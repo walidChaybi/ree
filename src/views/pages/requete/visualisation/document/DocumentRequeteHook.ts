@@ -13,7 +13,7 @@ export async function requestDocumentApi(
   groupement: GroupementDocument,
   mimeType: string = MimeType.APPLI_PDF
 ): Promise<IRequestDocumentApiResult> {
-  const api = ApiManager.getInstance("rece-requete-api", "v1");
+  const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
   const groupementEndPoint: string =
     groupement !== GroupementDocument.DocumentAsigner
       ? groupement

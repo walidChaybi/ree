@@ -108,7 +108,7 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     setMaxRangeState(undefined);
     setPreviousDataLinkState(undefined);
     setNextDataLinkState(undefined);
-    const api = ApiManager.getInstance("rece-requete-api", "v1");
+    const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
     api
       .fetch({
         method: HttpMethod.GET,

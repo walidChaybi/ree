@@ -18,7 +18,7 @@ export function useUpdateDocumentApi(
   const [errorState, setErrorState] = useState(undefined);
 
   useEffect(() => {
-    const api = ApiManager.getInstance("rece-requete-api", "v1");
+    const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
     if (queryParameters) {
       api
         .fetch({

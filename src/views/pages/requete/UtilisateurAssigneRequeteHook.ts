@@ -21,56 +21,56 @@ export function useUtilisateurRequeteApi(
 
   useEffect(() => {
     if (queryParameters !== undefined) {
-      const api = ApiManager.getInstance("rece-requete-api", "v1");
+      const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
 
       const requetesToSend: IRequeteApi[] = requetes
         ? requetes.map(requete => {
-            const newRequest = {
-              dateCreation: moment(
-                requete.dateCreation,
-                FormatDate.DDMMYYYY
-              ).unix(),
-              dateDerniereMaj: moment(
-                requete.dateDerniereMaj,
-                FormatDate.DDMMYYYY
-              ).unix(),
-              dateStatut: moment(
-                requete.dateStatut,
-                FormatDate.DDMMYYYY
-              ).unix(),
-              anneeEvenement: requete.anneeEvenement,
-              idRequete: requete.idRequete,
-              idSagaDila: requete.idSagaDila,
-              idRequeteInitiale: requete.idRequeteInitiale,
-              jourEvenement: requete.jourEvenement,
-              moisEvenement: requete.moisEvenement,
-              natureActe: requete.natureActe,
-              canal: requete.canal,
-              motifRequete: requete.motifRequete,
-              nbExemplaire: requete.nbExemplaire,
-              paysEvenement: requete.paysEvenement,
-              piecesJustificatives: requete.piecesJustificatives,
-              provenance: requete.provenance,
-              reponse: requete.reponse!,
-              requerant: requete.requerant,
-              sousTypeRequete: requete.sousTypeRequete,
-              statut: requete.statut,
-              titulaires: requete.titulaires,
-              typeActe: requete.typeActe,
-              typeRequete: requete.typeRequete,
-              villeEvenement: requete.villeEvenement
-            };
+          const newRequest = {
+            dateCreation: moment(
+              requete.dateCreation,
+              FormatDate.DDMMYYYY
+            ).unix(),
+            dateDerniereMaj: moment(
+              requete.dateDerniereMaj,
+              FormatDate.DDMMYYYY
+            ).unix(),
+            dateStatut: moment(
+              requete.dateStatut,
+              FormatDate.DDMMYYYY
+            ).unix(),
+            anneeEvenement: requete.anneeEvenement,
+            idRequete: requete.idRequete,
+            idSagaDila: requete.idSagaDila,
+            idRequeteInitiale: requete.idRequeteInitiale,
+            jourEvenement: requete.jourEvenement,
+            moisEvenement: requete.moisEvenement,
+            natureActe: requete.natureActe,
+            canal: requete.canal,
+            motifRequete: requete.motifRequete,
+            nbExemplaire: requete.nbExemplaire,
+            paysEvenement: requete.paysEvenement,
+            piecesJustificatives: requete.piecesJustificatives,
+            provenance: requete.provenance,
+            reponse: requete.reponse!,
+            requerant: requete.requerant,
+            sousTypeRequete: requete.sousTypeRequete,
+            statut: requete.statut,
+            titulaires: requete.titulaires,
+            typeActe: requete.typeActe,
+            typeRequete: requete.typeRequete,
+            villeEvenement: requete.villeEvenement
+          };
 
-            if (
-              newRequest.reponse !== undefined &&
-              newRequest.idRequete === queryParameters.idRequete
-            ) {
-              newRequest.reponse.nomOec = queryParameters.nomOec;
-              newRequest.reponse.prenomOec = queryParameters.prenomOec;
-            }
+          if (
+            newRequest.reponse !== undefined &&
+            newRequest.idRequete === queryParameters.idRequete
+          ) {
+            newRequest.reponse.nomOec = queryParameters.nomOec;
+            newRequest.reponse.prenomOec = queryParameters.prenomOec;
+          }
 
-            return newRequest;
-          })
+          return newRequest;
+        })
         : [];
 
       api

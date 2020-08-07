@@ -23,7 +23,7 @@ export function useRequeteDataApi(
   useEffect(() => {
     setErrorState(undefined);
     setDataState([]);
-    const api = ApiManager.getInstance("rece-requete-api", "v1");
+    const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
     if (requestsInformations === undefined) {
       api
         .fetch({

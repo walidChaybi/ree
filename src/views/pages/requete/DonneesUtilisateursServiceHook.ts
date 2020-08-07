@@ -21,7 +21,7 @@ export function useUtilisateurApi(
     setDataState([]);
     setErrorState(undefined);
 
-    const api = ApiManager.getInstance("rece-securite-api", "v1");
+    const api = ApiManager.getInstance("rece/rece-securite-api", "v1");
 
     api
       .fetch({

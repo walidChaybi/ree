@@ -16,19 +16,19 @@ export interface IUtilisateurSSOApi {
 }
 
 export function useLoginApi() {
-  const [dataState, setDataState] = useState<IUtilisateurSSOApi[]>([]);
+  const [dataState, setDataState] = useState<IUtilisateurSSOApi>();
   const [errorState, setErrorState] = useState(undefined);
-  console.log("LoginAPI");
+  // console.log("LoginAPI");
   useEffect(() => {
-    const api = ApiManager.getInstance("rece-securite-api", "v1");
+    const api = ApiManager.getInstance("rece/rece-securite-api", "v1");
     api
       .fetch({
         method: HttpMethod.GET,
         uri: ApiEndpoints.SecuriteUrl
       })
       .then(result => {
-        console.log(result);
-        setDataState(result.body.data);
+        // console.log(result.body.httpHeaders);
+        setDataState(result.body.httpHeaders);
       })
       .catch(error => {
         setErrorState(error);
