@@ -5,7 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { getText } from "../../common/widget/Text";
-import { OfficierContext } from "../App";
+import { OfficierContext } from "../contexts/OfficierContext";
 const ressource = require("../../../ressources/ressource.json");
 
 interface BoutonDeconnexionProps {

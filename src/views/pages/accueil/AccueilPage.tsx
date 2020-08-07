@@ -13,7 +13,7 @@ import {
 import logoRece from "../../../img/logo-rece.svg";
 import { Title } from "../../core/title/Title";
 import { getText } from "../../common/widget/Text";
-import { OfficierContext } from "../../core/App";
+import { OfficierContext } from "../../core/contexts/OfficierContext";
 
 export const AccueilPage: React.FC = () => {
   return (

@@ -18,7 +18,6 @@ export interface IUtilisateurSSOApi {
 export function useLoginApi() {
   const [dataState, setDataState] = useState<IUtilisateurSSOApi>();
   const [errorState, setErrorState] = useState(undefined);
-  // console.log("LoginAPI");
   useEffect(() => {
     const api = ApiManager.getInstance("rece/rece-securite-api", "v1");
     api
@@ -27,7 +26,6 @@ export function useLoginApi() {
         uri: ApiEndpoints.SecuriteUrl
       })
       .then(result => {
-        // console.log(result.body.httpHeaders);
         setDataState(setUtilisateurSSOApi(result.body.httpHeaders));
       })
       .catch(error => {
@@ -41,17 +39,17 @@ export function useLoginApi() {
   };
 }
 
-function setUtilisateurSSOApi(result: any) {
+function setUtilisateurSSOApi(httpHeaders: any) {
   return {
-    idSSO: result.body.httpHeaders.idSSO,
-    nom: result.body.httpHeaders.nom,
-    prenom: result.body.httpHeaders.prenom,
-    trigramme: result.body.httpHeaders.trigramme,
-    mail: result.body.httpHeaders.mail,
-    telephone: result.body.httpHeaders.telephone,
-    section: result.body.httpHeaders.section,
-    bureau: result.body.httpHeaders.bureau,
-    departement: result.body.httpHeaders.departement,
-    service: result.body.httpHeaders.service
+    idSSO: httpHeaders.idSSO,
+    nom: httpHeaders.nom,
+    prenom: httpHeaders.prenom,
+    trigramme: httpHeaders.trigramme,
+    mail: httpHeaders.mail,
+    telephone: httpHeaders.telephone,
+    section: httpHeaders.section,
+    bureau: httpHeaders.bureau,
+    departement: httpHeaders.departement,
+    service: httpHeaders.service
   };
 }

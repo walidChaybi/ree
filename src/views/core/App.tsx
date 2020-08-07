@@ -6,35 +6,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Header } from "./header/Header";
 import { Body } from "./body/Body";
 import { ToastContainer } from "react-toastify";
-import { useLoginApi, IUtilisateurSSOApi } from "./LoginHook";
-
-const officier: IUtilisateurSSOApi = {
-  idSSO: "",
-  nom: "",
-  prenom: "",
-  trigramme: "",
-  mail: "",
-  telephone: "",
-  section: "",
-  bureau: "",
-  departement: "",
-  service: ""
-};
-
-const officierMock: IUtilisateurSSOApi = {
-  idSSO: "",
-  nom: "Garisson",
-  prenom: "Juliette",
-  trigramme: "JGA",
-  mail: "",
-  telephone: "",
-  service: "SCEC",
-  departement: "Exploitation",
-  bureau: "Bureau A38",
-  section: "Section 2"
-};
-
-export const OfficierContext = React.createContext(officier);
+import { useLoginApi } from "./LoginHook";
+import {
+  OfficierContext,
+  officierContextMock
+} from "./contexts/OfficierContext";
 
 const App: React.FC = () => {
   const login = useLoginApi();
@@ -43,7 +19,7 @@ const App: React.FC = () => {
     <Router>
       <div className="App">
         <OfficierContext.Provider
-          value={login.dataState ? login.dataState : officierMock}
+          value={login.dataState ? login.dataState : officierContextMock}
         >
           <Header />
           <Body />
