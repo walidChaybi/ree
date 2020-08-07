@@ -3,6 +3,7 @@
   "maeGroup": "fr.gouv.diplomatie.rece",
   "version": "0.3.0",
   "private": true,
+  "homepage": "rece/rece-ui/",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.12.1",
     "@fortawesome/fontawesome-svg-core": "1.2.27",

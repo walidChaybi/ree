@@ -23,7 +23,7 @@ export function useLoginApi() {
     const api = ApiManager.getInstance("rece-securite-api", "v1");
     api
       .fetch({
-        method: HttpMethod.POST,
+        method: HttpMethod.GET,
         uri: ApiEndpoints.SecuriteUrl
       })
       .then(result => {

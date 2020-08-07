@@ -1,4 +1,4 @@
-export const contextApp = "/rece-ui";
+export const contextApp = "/rece/rece-ui";
 
 export const SeparateurUrl = "/";
 export const ctxSeparateurUrl = `${contextApp}/`;
