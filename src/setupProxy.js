@@ -1,6 +1,5 @@
 const proxy = require("http-proxy-middleware");
 
-console.log("process.env.NODE_ENV ", process.env.NODE_ENV);
 module.exports = function (app) {
   if (process.env.NODE_ENV === "development") {
     if (process.env.API_MODE === "localhost") {

@@ -130,7 +130,6 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
         },
       })
       .then((result) => {
-        console.log("coucou", result);
         setDataState(reponseRequeteMapper(result.body.data));
         const rowsNumber: number = +(result.body.httpHeaders[
           contentRange

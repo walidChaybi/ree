@@ -133,7 +133,6 @@ export class ApiManager {
     }
     return httpRequete
       .then((response) => {
-        console.log("response", response);
         return Promise.resolve({
           body: response.body,
           status: response.status,
