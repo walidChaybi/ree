@@ -110,7 +110,8 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "API_MODE='DMZ501' node scripts/start.js",
+    "start:local": "API_MODE='localhost' node scripts/start.js",
     "start:mock": "REACT_APP_MOCK=true node scripts/start.js",
     "build": "node scripts/build.js",
     "test:dev": "node scripts/test.js --watchAll",
