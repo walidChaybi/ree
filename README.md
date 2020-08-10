@@ -12,10 +12,28 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
+All api calls will be proceed on DMZ 501
+
+### `npm run start:local`
+
+The application will be start with APi calls on localhost
+
+### `npm run start:mock`
+
+The application will be start with mock. No API calls will be made
+
+### `npm run test:dev`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run test:dev:update`
+
+All snapchots will be updates
+
+### `npm run test:dev:coverage`
+
+Will generate an index.html in wich we can see the coverage of all the files
 
 ### `npm run build`
 
