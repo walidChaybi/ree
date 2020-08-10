@@ -5,7 +5,7 @@ import { isNullOrUndefined } from "util";
 const superagentMock = require("superagent-mock")(request, config);
 
 test("instanciation d'une api définie dans le fichier api.json", () => {
-  const api = ApiManager.getInstance("rece-requete-api", "v1");
+  const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
 
   expect(api).not.toBe(isNullOrUndefined);
   if (process.env.NODE_ENV !== "production") {
@@ -15,29 +15,33 @@ test("instanciation d'une api définie dans le fichier api.json", () => {
   }
 
   expect(api.ports).toBe(80);
-  expect(api.name).toBe("rece-requete-api");
+  expect(api.name).toBe("rece/rece-requete-api");
   expect("v1").toBe(api.version);
   if (process.env.NODE_ENV !== "production") {
-    expect(api.getUri()).toBe("http://10.110.192.130:80/rece-requete-api/v1");
+    expect(api.getUri()).toBe(
+      "http://10.110.192.130:80/rece/rece-requete-api/v1"
+    );
   } else {
-    expect(api.getUri()).toBe("http://localhost:80/rece-requete-api/v1");
+    expect(api.getUri()).toBe("http://localhost:80/rece/rece-requete-api/v1");
   }
 });
 
 test("instanciation d'une api définie dans le fichier api.json avec une mauvaise version", () => {
-  expect(() => ApiManager.getInstance("rece-requete-api", "v3")).toThrow(Error);
+  expect(() => ApiManager.getInstance("rece/rece-requete-api", "v3")).toThrow(
+    Error
+  );
 });
 
 test("instanciation d'une api non définie dans le fichier api.json", () => {
   expect(() =>
-    ApiManager.getInstance("rece-televerification-api", "v3")
+    ApiManager.getInstance("rece/rece-televerification-api", "v3")
   ).toThrow(Error);
 });
 
 // TODO revoir le fonctionnement du mock de test - Ne fonctionne plus depuis la mise en place
 // du mock applicatif
 // test("fetch d'une requête http GET", () => {
-//   const api = ApiManager.getInstance("rece-requete-api", "v1");
+//   const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
 
 //   const parametre1 = "titi";
 //   const parametre2 = 3;
@@ -63,7 +67,7 @@ test("instanciation d'une api non définie dans le fichier api.json", () => {
 // });
 
 // test("fetch d'une requête http POST avec passage de data on récupère un 201", () => {
-//   const api = ApiManager.getInstance("rece-requete-api", "v1");
+//   const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
 
 //   return api
 //     .fetch({

@@ -2,7 +2,7 @@
   "hasTechnicalError": false,
   "hasBusinessError": false,
   "status": 200,
-  "url": "/rece-requete-api/v1/requetes",
+  "url": "/rece/rece-requete-api/v1/requetes",
   "data": [
     {
       "idRequete": "104b8563-c7f8-4748-9daa-f26558985894",
