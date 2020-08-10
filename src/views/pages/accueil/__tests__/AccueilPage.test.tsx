@@ -1,8 +1,12 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
+
 import { AccueilPage } from "../AccueilPage";
-import { Text } from "../../../common/widget/Text";
-import { Title } from "../../../core/title/Title";
+import {
+  OfficierContext,
+  officierContextMock
+} from "../../../core/contexts/OfficierContext";
 
 let container: Element | null;
 
@@ -19,12 +23,18 @@ afterEach(() => {
 });
 
 test("renders page d'accueil", () => {
-  const wrapper = shallow(<AccueilPage />);
-  const titleElements = wrapper.find(Title);
-  expect(titleElements).toHaveLength(1);
-  expect(titleElements.get(0).props.titleId).toBe("pages.accueil.titre");
-  const textElements = wrapper.find(Text);
-  expect(textElements).toHaveLength(2);
-  expect(textElements.get(0).props.messageId).toBe("pages.accueil.bienvenue");
-  expect(textElements.get(1).props.messageId).toBe("pages.accueil.affectation");
+  render(
+    <>
+      <Router>
+        <OfficierContext.Provider value={officierContextMock}>
+          <AccueilPage />
+        </OfficierContext.Provider>
+      </Router>
+    </>
+  );
+
+  const titleElements = screen.getByText(/Accueil/i);
+  expect(titleElements).toBeInTheDocument();
+  const textElements = screen.getByText(/Bienvenue*/i);
+  expect(textElements).toBeInTheDocument();
 });
