@@ -7,7 +7,7 @@ module.exports = [
     /**
      * regular expression of URL
      */
-    pattern: "http://10.110.192.130:80/rece-requete-api/v1(.*)",
+    pattern: "http://localhost:3000/rece-requete-api/v1(.*)",
 
     /**
      * returns the data
@@ -87,7 +87,7 @@ module.exports = [
     /**
      * regular expression of URL
      */
-    pattern: "http://10.110.192.130:80/rece-securite-api/v1(.*)",
+    pattern: "http://localhost:3000/rece-securite-api/v1(.*)",
 
     /**
      * returns the data
