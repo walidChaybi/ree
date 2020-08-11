@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Text, MessageId } from "../../common/widget/Text";
 import { Button } from "reakit/Button";
 import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { RetourContext } from "../../core/body/Body";
 import {
   IQueryParameterUpdateStatutRequete,
   useUpdateStatutRequeteApi
@@ -28,17 +26,16 @@ export const BoutonRetourSaga: React.FC<BoutonRetourSagaProps> = ({
   });
 
   const handleClickRetourSaga = () => {
-    console.log("clic", updateStatutRequeteQueryParamState);
     setUpdateStatutRequeteQueryParamState({
       statut: StatutRequete.ARetraiterSaga
     });
   };
 
-  useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState, goToListe);
-
-  function goToListe() {
+  const goToListe = useCallback(() => {
     history.push(`${pageUrl}`);
-  }
+  }, [history, pageUrl]);
+
+  useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState, goToListe);
 
   return (
     <Button onClick={handleClickRetourSaga}>
