@@ -7,7 +7,8 @@ module.exports = [
     /**
      * regular expression of URL
      */
-    pattern: "http://10.110.192.130:80/rece/rece-requete-api/v1(.*)",
+
+    pattern: "http://localhost:3000/rece/rece-requete-api/v1(.*)",
 
     /**
      * returns the data
@@ -17,7 +18,7 @@ module.exports = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function(match, params, headers, context) {
+    fixtures: function (match, params, headers, context) {
       if (
         match[1] === "/requetes?parametre1=titi&parametre2=3&parametre3=tutu"
       ) {
@@ -53,9 +54,9 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function(match, data) {
+    get: function (match, data) {
       return {
-        body: data
+        body: data,
       };
     },
 
@@ -65,9 +66,9 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function(match, data) {
+    post: function (match, data) {
       return {
-        status: 201
+        status: 201,
       };
     },
 
@@ -77,17 +78,18 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    put: function(match, data) {
+    put: function (match, data) {
       return {
-        status: 201
+        status: 201,
       };
-    }
+    },
   },
   {
     /**
      * regular expression of URL
      */
-    pattern: "http://10.110.192.130:80/rece/rece-securite-api/v1(.*)",
+
+    pattern: "http://localhost:3000/rece/rece-securite-api/v1(.*)",
 
     /**
      * returns the data
@@ -97,7 +99,7 @@ module.exports = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function(match, params, headers, context) {
+    fixtures: function (match, params, headers, context) {
       if (match[1] === "/utilisateurs?idArobas=5ef4b1da1e3ee4adf9615ec7") {
         return { data: DONNEES_UTILISATEURS };
       }
@@ -109,9 +111,9 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function(match, data) {
+    get: function (match, data) {
       return {
-        body: data
+        body: data,
       };
     },
 
@@ -121,10 +123,10 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function(match, data) {
+    post: function (match, data) {
       return {
-        status: 201
+        status: 201,
       };
-    }
-  }
+    },
+  },
 ];

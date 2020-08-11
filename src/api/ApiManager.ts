@@ -8,7 +8,10 @@ if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, config);
 }
 
-type ApisAutorisees = "rece/rece-requete-api" | "rece/rece-securite-api";
+type ApisAutorisees =
+  | "rece/rece-requete-api"
+  | "rece/rece-securite-api"
+  | "rece/rece-televerification-api";
 
 interface IApi {
   url: string;
@@ -135,7 +138,7 @@ export class ApiManager {
       .then((response) => {
         return Promise.resolve({
           body: response.body,
-          status: response.status
+          status: response.status,
         });
       })
       .catch((error) => {
