@@ -26,7 +26,7 @@ export function useLoginApi() {
         uri: ApiEndpoints.SecuriteUrl
       })
       .then(result => {
-        setDataState(setUtilisateurSSOApi(result.body.httpHeaders));
+        setDataState(setUtilisateurSSOApi(result.headers));
       })
       .catch(error => {
         setErrorState(error);
@@ -39,17 +39,17 @@ export function useLoginApi() {
   };
 }
 
-function setUtilisateurSSOApi(httpHeaders: any) {
+function setUtilisateurSSOApi(headers: any) {
   return {
-    idSSO: httpHeaders.idSSO,
-    nom: httpHeaders.nom,
-    prenom: httpHeaders.prenom,
-    trigramme: httpHeaders.trigramme,
-    mail: httpHeaders.mail,
-    telephone: httpHeaders.telephone,
-    section: httpHeaders.section,
-    bureau: httpHeaders.bureau,
-    departement: httpHeaders.departement,
-    service: httpHeaders.service
+    idSSO: headers.idSSO,
+    nom: headers.nom,
+    prenom: headers.prenom,
+    trigramme: headers.trigramme,
+    mail: headers.mail,
+    telephone: headers.telephone,
+    section: headers.section,
+    bureau: headers.bureau,
+    departement: headers.departement,
+    service: headers.service
   };
 }
