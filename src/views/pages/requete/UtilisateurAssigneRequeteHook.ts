@@ -5,6 +5,7 @@ import { IDataTable } from "./MesRequetesPage";
 import { IRequeteApi } from "./DonneesRequeteHook";
 import { FormatDate } from "../../../ressources/FormatDate";
 import moment from "moment";
+import { getText } from "../../common/widget/Text";
 
 export interface IQueryParametersAssigneRequetes {
   idRequete: string;
@@ -18,13 +19,17 @@ export function useUtilisateurRequeteApi(
 ) {
   const [dataState, setDataState] = useState<IQueryParametersAssigneRequetes>();
   const [errorState, setErrorState] = useState(undefined);
+  const [sucessState, setSuccessState] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     if (queryParameters !== undefined) {
       const api = ApiManager.getInstance("rece-requete-api", "v1");
 
+      setSuccessState(undefined);
       const requetesToSend: IRequeteApi[] = requetes
-        ? requetes.map(requete => {
+        ? requetes.map((requete) => {
             const newRequest = {
               dateCreation: moment(
                 requete.dateCreation,
@@ -58,7 +63,7 @@ export function useUtilisateurRequeteApi(
               titulaires: requete.titulaires,
               typeActe: requete.typeActe,
               typeRequete: requete.typeRequete,
-              villeEvenement: requete.villeEvenement
+              villeEvenement: requete.villeEvenement,
             };
 
             if (
@@ -78,22 +83,28 @@ export function useUtilisateurRequeteApi(
           method: HttpMethod.PUT,
           uri: ApiEndpoints.RequetesUrl,
           data: [...requetesToSend],
-          headers: []
+          headers: [],
         })
         .then(() => {
           if (requetes !== undefined) {
             const idxRequete = requetes.findIndex(
-              r => r.idRequete === queryParameters.idRequete
+              (r) => r.idRequete === queryParameters.idRequete
             );
 
             requetes[
               idxRequete
             ].nomOec = `${queryParameters.prenomOec} ${queryParameters.nomOec}`;
+
+            setSuccessState(
+              `${getText("success.pages.requetes.assigneDebut")}${
+                requetes[idxRequete].idSagaDila
+              } ${getText("success.pages.requetes.assigneFin")}`
+            );
           }
 
           setDataState(queryParameters);
         })
-        .catch(error => {
+        .catch((error) => {
           setErrorState(error);
         });
     }
@@ -101,6 +112,7 @@ export function useUtilisateurRequeteApi(
 
   return {
     dataState,
-    errorState
+    errorState,
+    sucessState,
   };
 }
