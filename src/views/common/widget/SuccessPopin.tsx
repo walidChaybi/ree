@@ -1,7 +1,7 @@
 import React from "react";
 import { Snackbar, SnackbarOrigin } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
-
+import "./sass/SuccessPopin.scss";
 interface SuccessPopinProps {
   message?: string;
   isOpen: boolean;
@@ -28,6 +28,7 @@ export const SuccessPopin: React.FC<SuccessPopinProps> = ({
       open={isOpen && message !== undefined}
       onClose={handleClose}
       message="I love snacks"
+      className={"SuccessPopin"}
     >
       <MuiAlert elevation={6} variant="filled" severity="success">
         {message}
