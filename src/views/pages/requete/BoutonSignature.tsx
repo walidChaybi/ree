@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getText, Text } from "../../common/widget/Text";
-import {
-  useDialogState,
-  Dialog,
-  DialogDisclosure,
-  DialogDisclosureHTMLProps
-} from "reakit/Dialog";
-import { Button } from "reakit/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { useDialogState, DialogDisclosureHTMLProps } from "reakit/Dialog";
 import messageManager from "../../common/util/messageManager";
 import {
   useUpdateDocumentApi,
-  IQueryParameterUpdateDocument
+  IQueryParameterUpdateDocument,
 } from "./UpdateDocumentHook";
 import { CircularProgress } from "@material-ui/core";
 import { IDocumentDelivre } from "./visualisation/RequeteType";
+import { ValidationPopin } from "../../common/widget/ValidationPopin";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
@@ -23,13 +15,13 @@ interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
 }
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
-  documentsDelivres
+  documentsDelivres,
 }) => {
   const dialog = useDialogState();
   const validerButtonRef = React.createRef<HTMLButtonElement>();
   const [
     updateDocumentQueryParamState,
-    setUpdateDocumentQueryParamState
+    setUpdateDocumentQueryParamState,
   ] = React.useState<IQueryParameterUpdateDocument>();
 
   const [showWaitState, setShowWaitState] = useState<boolean>();
@@ -61,7 +53,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     const detail = {
       function: "SIGN",
       contenu: documentsDelivres[0].contenu, // FIXME loop on document content
-      direction: "to-webextension"
+      direction: "to-webextension",
     };
     setShowWaitState(true);
     window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
@@ -86,7 +78,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         setUpdateDocumentQueryParamState({
           nom: documentsDelivres[0].nom,
           conteneurSwift: documentsDelivres[0].conteneurSwift,
-          contenu: result.contenu
+          contenu: result.contenu,
         });
       }
     }
@@ -95,37 +87,13 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   return (
     <>
       {showWaitState && <CircularProgress />}
-      <DialogDisclosure {...dialog} as={Button}>
-        {getText(libelle)}
-      </DialogDisclosure>
-      {documentsDelivres.length === 0 ? (
-        <Dialog
-          {...dialog}
-          tabIndex={0}
-          aria-label={getText("errors.dialogLabel")}
-          className="toast error"
-        >
-          <FontAwesomeIcon
-            icon={faTimesCircle}
-            title={getText("errors.icon")}
-            aria-label={getText("errors.icon")}
-          />
-          <Text messageId={"errors.pages.requetes.B01"} />
-        </Dialog>
-      ) : (
-        <Dialog
-          {...dialog}
-          tabIndex={0}
-          aria-label={getText("errors.dialogLabel")}
-          className="toast"
-        >
-          <Text messageId="signature.confirmation" />
-          <Button ref={validerButtonRef} onClick={handleClickSignature}>
-            Valider
-          </Button>
-          <Button onClick={() => dialog.hide()}>Annuler</Button>
-        </Dialog>
-      )}
+      <ValidationPopin
+        buttonMessageId={libelle}
+        canValidate={documentsDelivres.length === 0}
+        messageId={"signature.confirmation"}
+        errorMessageId={"errors.pages.requetes.B01"}
+        onValid={handleClickSignature}
+      />
     </>
   );
 };

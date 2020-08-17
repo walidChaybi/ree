@@ -37,7 +37,10 @@ import {
   useUtilisateurRequeteApi,
   IQueryParametersAssigneRequetes,
 } from "./UtilisateurAssigneRequeteHook";
-import { SuccessPopin } from "../../common/widget/SuccessPopin";
+import {
+  MessagePopin,
+  PopinMessageType,
+} from "../../common/widget/MessagePopin";
 
 function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
   return (
@@ -251,8 +254,9 @@ export const RequetesServicePage: React.FC = () => {
         goToLink={goToLink}
       />
       <BoutonRetour />
-      <SuccessPopin
+      <MessagePopin
         message={sucessState}
+        messageType={PopinMessageType.Success}
         isOpen={isSuccessAssigne}
         setIsOpen={setIsSuccessAssigne}
       />

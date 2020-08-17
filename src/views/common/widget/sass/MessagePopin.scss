@@ -1,0 +1,50 @@
+@import "../../../../sass/colors";
+
+div {
+  &.MessagePopin {
+    top: 75px;
+  }
+
+  &.SuccessPopin {
+    div.MuiPaper-root {
+      color: $success;
+      background-color: $success-background;
+    }
+
+    svg {
+      color: $success-icon-color;
+    }
+  }
+
+  &.WarningPopin {
+    div.MuiPaper-root {
+      color: $warning;
+      background-color: $warning-background;
+    }
+
+    svg {
+      color: $warning-icon-color;
+    }
+  }
+
+  &.ErrorPopin {
+    div.MuiPaper-root {
+      color: $error;
+      background-color: $error-background;
+    }
+    svg {
+      color: $error-icon-color;
+    }
+  }
+
+  &.InfoPopin {
+    div.MuiPaper-root {
+      color: $info;
+      background-color: $info-background;
+    }
+
+    svg {
+      color: $info-icon-color;
+    }
+  }
+}
