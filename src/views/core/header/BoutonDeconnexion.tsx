@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { getText } from "../../common/widget/Text";
 import { OfficierContext } from "../contexts/OfficierContext";
+import { useHistory } from "react-router-dom";
+import { DeconnexionAppUrl } from "../../router/UrlManager";
+
 const ressource = require("../../../ressources/ressource.json");
 
 interface BoutonDeconnexionProps {
@@ -18,6 +21,8 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
   const accessible = ressource.boutonDeconnexion.accessible;
 
+  const history = useHistory();
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       onClick(event);
@@ -26,6 +31,8 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   };
 
   const handleClose = () => {
+    history.push(DeconnexionAppUrl);
+    history.go(0);
     setMenu(null);
   };
 

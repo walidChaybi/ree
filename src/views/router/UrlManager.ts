@@ -1,4 +1,5 @@
 export const contextApp = "/rece/rece-ui";
+export const DeconnexionAppUrl = "/rece/Shibboleth.sso/Logout";
 
 export const SeparateurUrl = "/";
 export const ctxSeparateurUrl = `${contextApp}/`;
@@ -20,6 +21,7 @@ export const DocumentsdelivresUrl = "/documentsdelivres";
 
 export const AppUrls = {
   contextApp,
+  DeconnexionAppUrl,
   SeparateurUrl,
   ctxSeparateurUrl,
   AccueilUrl,
