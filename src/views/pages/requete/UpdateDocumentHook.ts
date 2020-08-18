@@ -18,25 +18,25 @@ export function useUpdateDocumentApi(
   const [errorState, setErrorState] = useState(undefined);
 
   useEffect(() => {
-    const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
+    const api = ApiManager.getInstance("rece-requete-api", "v1");
     if (queryParameters) {
       api
         .fetch({
           method: HttpMethod.PATCH,
           uri: ApiEndpoints.DocumentsdelivresUrl,
           data: [{ ...queryParameters }],
-          headers: [],
+          headers: []
         })
-        .then((result) => {
+        .then(result => {
           // doNothing
         })
-        .catch((error) => {
+        .catch(error => {
           setErrorState(error);
         });
     }
   }, [queryParameters]);
 
   return {
-    errorState,
+    errorState
   };
 }

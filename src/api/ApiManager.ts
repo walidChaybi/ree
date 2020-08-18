@@ -8,14 +8,12 @@ if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, config);
 }
 
-type ApisAutorisees =
-  | "rece/rece-requete-api"
-  | "rece/rece-securite-api"
-  | "rece/rece-televerification-api";
+type ApisAutorisees = "rece-requete-api" | "rece-securite-api";
 
 interface IApi {
   url: string;
   ports: number;
+  domain: string;
   name: string;
   usedVersions: string[];
 }
@@ -54,6 +52,7 @@ export interface IHttpResponse {
 export class ApiManager {
   public url: string;
   public ports: number;
+  public domain: string;
   public name: string;
   public version: string;
   private static instance: ApiManager;
@@ -72,6 +71,7 @@ export class ApiManager {
             ? foundApis[0].url
             : `http://${window.location.hostname}`;
         this.ports = foundApis[0].ports;
+        this.domain = foundApis[0].domain;
         this.name = foundApis[0].name;
         this.version = version;
       } else {
@@ -101,7 +101,7 @@ export class ApiManager {
   }
 
   public getUri(): string {
-    return `${this.url}:${this.ports}/${this.name}/${this.version}`;
+    return `${this.url}:${this.ports}/${this.domain}/${this.name}/${this.version}`;
   }
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {

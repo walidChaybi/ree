@@ -12,7 +12,7 @@ import { SortOrder } from "../../common/widget/tableau/TableUtils";
 import { Canal } from "../../../model/Canal";
 import {
   IPieceJustificative,
-  IDocumentDelivre,
+  IDocumentDelivre
 } from "./visualisation/RequeteType";
 import { ApiEndpoints } from "../../router/UrlManager";
 import { IDataTable } from "./MesRequetesPage";
@@ -108,7 +108,7 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     setMaxRangeState(undefined);
     setPreviousDataLinkState(undefined);
     setNextDataLinkState(undefined);
-    const api = ApiManager.getInstance("rece/rece-requete-api", "v1");
+    const api = ApiManager.getInstance("rece-requete-api", "v1");
     api
       .fetch({
         method: HttpMethod.GET,
@@ -126,10 +126,10 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
               : "dateStatut",
           sens: queryParameters.sens,
           range: queryParameters.range,
-          idArobas: queryParameters.idArobas,
-        },
+          idArobas: queryParameters.idArobas
+        }
       })
-      .then((result) => {
+      .then(result => {
         setDataState(reponseRequeteMapper(result.body.data));
         const rowsNumber: number = +(result.body.httpHeaders[
           contentRange
@@ -154,7 +154,7 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
         setPreviousDataLinkState(prevLink);
         setNextDataLinkState(nextLink);
       })
-      .catch((error) => {
+      .catch(error => {
         setErrorState(error);
       });
   }, [
@@ -164,7 +164,7 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     queryParameters.tri,
     queryParameters.sens,
     queryParameters.range,
-    queryParameters.idArobas,
+    queryParameters.idArobas
   ]);
 
   return {
@@ -174,13 +174,13 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     rowsNumberState,
     minRangeState,
     maxRangeState,
-    errorState,
+    errorState
   };
 }
 
 function reponseRequeteMapper(data: IRequeteApi[]): IDataTable[] {
   const result: IDataTable[] = [];
-  data.forEach((element) => result.push(reponseRequeteMapperUnitaire(element)));
+  data.forEach(element => result.push(reponseRequeteMapperUnitaire(element)));
   return result;
 }
 
@@ -213,7 +213,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     anneeEvenement: data.anneeEvenement,
     jourEvenement: data.jourEvenement,
     moisEvenement: data.moisEvenement,
-    nbExemplaire: data.nbExemplaire,
+    nbExemplaire: data.nbExemplaire
   };
 }
 

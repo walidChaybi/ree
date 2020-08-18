@@ -19,7 +19,7 @@ export function useLoginApi() {
   const [dataState, setDataState] = useState<IUtilisateurSSOApi>();
   const [errorState, setErrorState] = useState(undefined);
   useEffect(() => {
-    const api = ApiManager.getInstance("rece/rece-securite-api", "v1");
+    const api = ApiManager.getInstance("rece-securite-api", "v1");
     api
       .fetch({
         method: HttpMethod.GET,
