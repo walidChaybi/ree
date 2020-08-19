@@ -36,8 +36,8 @@ export const MessagePopin: React.FC<MessagePopinProps> = ({
       anchorOrigin={position}
       open={isOpen && message !== undefined}
       onClose={handleClose}
-      message="I love snacks"
       className={`MessagePopin ${getPopinClass(messageType)}`}
+      data-testid={`popin-${messageType}`}
     >
       <MuiAlert elevation={6} variant="filled" severity={messageType}>
         {message}
@@ -49,7 +49,7 @@ export const MessagePopin: React.FC<MessagePopinProps> = ({
 function getPopinClass(messageType: PopinMessageType): string {
   switch (messageType) {
     case PopinMessageType.Success:
-      return "MessagePopin";
+      return "SuccessPopin";
     case PopinMessageType.Error:
       return "ErrorPopin";
     case PopinMessageType.Warning:

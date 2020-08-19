@@ -34,7 +34,7 @@ export const ValidationPopin: React.FC<ValidationPopinProps> = ({
       <DialogDisclosure {...dialog} as={Button}>
         {getText(buttonMessageId)}
       </DialogDisclosure>
-      {canValidate ? (
+      {!canValidate ? (
         <Dialog
           {...dialog}
           tabIndex={0}

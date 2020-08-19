@@ -89,7 +89,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
       {showWaitState && <CircularProgress />}
       <ValidationPopin
         buttonMessageId={libelle}
-        canValidate={documentsDelivres.length === 0}
+        canValidate={documentsDelivres.length !== 0}
         messageId={"signature.confirmation"}
         errorMessageId={"errors.pages.requetes.B01"}
         onValid={handleClickSignature}
