@@ -158,7 +158,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
   } = useRequeteApi(linkParameters);
 
   useUtilisateurRequeteApi(queryChangeOecRequest, dataState);
-
+  console.log("alors ?", props.officier);
   const users = useUtilisateurApi({
     idArobas: props.officier.idSSO,
   });

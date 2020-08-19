@@ -51,8 +51,9 @@ export function useLoginApi() {
 }
 
 function setUtilisateurSSOApi(headers: any) {
+  console.log("headers", headers);
   return {
-    idSSO: headers.idSSO,
+    idSSO: headers.id_sso,
     nom: headers.nom,
     prenom: headers.prenom,
     trigramme: headers.trigramme,

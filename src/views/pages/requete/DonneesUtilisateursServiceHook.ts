@@ -22,25 +22,25 @@ export function useUtilisateurApi(
     setErrorState(undefined);
 
     const api = ApiManager.getInstance("rece-securite-api", "v1");
-
+    console.log("coucou", queryParameters);
     api
       .fetch({
         method: HttpMethod.GET,
         uri: ApiEndpoints.UtilisateursUrl,
         parameters: {
-          idArobas: queryParameters.idArobas
-        }
+          idArobas: queryParameters.idArobas,
+        },
       })
-      .then(result => {
+      .then((result) => {
         setDataState(result.body.data);
       })
-      .catch(error => {
+      .catch((error) => {
         setErrorState(error);
       });
   }, [queryParameters.idArobas]);
 
   return {
     dataState,
-    errorState
+    errorState,
   };
 }
