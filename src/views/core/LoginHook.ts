@@ -16,26 +16,37 @@ export interface IUtilisateurSSOApi {
 }
 
 export function useLoginApi() {
-  const [dataState, setDataState] = useState<IUtilisateurSSOApi>();
+  const [dataState, setDataState] = useState<IUtilisateurSSOApi>({
+    idSSO: "",
+    nom: "",
+    prenom: "",
+    trigramme: "",
+    mail: "",
+    telephone: "",
+    section: "",
+    bureau: "",
+    departement: "",
+    service: "",
+  });
   const [errorState, setErrorState] = useState(undefined);
   useEffect(() => {
     const api = ApiManager.getInstance("rece-securite-api", "v1");
     api
       .fetch({
         method: HttpMethod.GET,
-        uri: ApiEndpoints.SecuriteUrl
+        uri: ApiEndpoints.SecuriteUrl,
       })
-      .then(result => {
+      .then((result) => {
         setDataState(setUtilisateurSSOApi(result.headers));
       })
-      .catch(error => {
+      .catch((error) => {
         setErrorState(error);
       });
   }, []);
 
   return {
     dataState,
-    errorState
+    errorState,
   };
 }
 
@@ -50,6 +61,6 @@ function setUtilisateurSSOApi(headers: any) {
     section: headers.section,
     bureau: headers.bureau,
     departement: headers.departement,
-    service: headers.service
+    service: headers.service,
   };
 }

@@ -2,13 +2,13 @@ import React from "react";
 
 import {
   TableauRece,
-  TableauTypeColumn
+  TableauTypeColumn,
 } from "../../common/widget/tableau/TableauRece";
 import {
   useRequeteApi,
   IRequerantApi,
   IReponseApi,
-  IQueryParametersPourRequetes
+  IQueryParametersPourRequetes,
 } from "./DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
@@ -23,7 +23,7 @@ import {
   getMessagePrioriteDeLaRequete,
   prioriteDeLaRequete,
   tableauHeader,
-  indexParamsReq
+  indexParamsReq,
 } from "./RequetesUtils";
 import LabelIcon from "@material-ui/icons/Label";
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
@@ -31,6 +31,7 @@ import { MotifRequete } from "../../../model/requete/MotifRequete";
 import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
+import { IUtilisateurSSOApi } from "../../core/LoginHook";
 
 export interface IDataTable {
   idRequete: string;
@@ -112,7 +113,7 @@ const columnsTableau = [
     tableauHeader,
     "",
     getIconPrioriteMesRequetes
-  )
+  ),
 ];
 
 function getIconPrioriteMesRequetes(row: IDataTable): JSX.Element {
@@ -126,8 +127,11 @@ function getIconPrioriteMesRequetes(row: IDataTable): JSX.Element {
     </Box>
   );
 }
+interface MesRequetesPageProps {
+  officier: IUtilisateurSSOApi;
+}
 
-export const MesRequetesPage: React.FC = () => {
+export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
   const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("ASC");
   const [sortOrderByState, setSortOrderByState] = React.useState<string>(
     "dateStatut"
@@ -137,17 +141,17 @@ export const MesRequetesPage: React.FC = () => {
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    nomOec: "Garisson",
-    prenomOec: "Juliette",
+    nomOec: props.officier.nom,
+    prenomOec: props.officier.prenom,
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
-    sens: sortOrderState
+    sens: sortOrderState,
   });
 
   const {
     dataState = [],
     rowsNumberState = 0,
-    nextDataLinkState = ""
+    nextDataLinkState = "",
   } = useRequeteApi(linkParameters);
 
   function goToLink(link: string) {
@@ -161,7 +165,7 @@ export const MesRequetesPage: React.FC = () => {
         statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
         tri: params[indexParamsReq.Tri].split("=")[1],
         sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,
-        range: params[indexParamsReq.Range].split("=")[1]
+        range: params[indexParamsReq.Range].split("=")[1],
       };
       setLinkParameters(queryParameters);
     }

@@ -7,10 +7,7 @@ import { Header } from "./header/Header";
 import { Body } from "./body/Body";
 import { ToastContainer } from "react-toastify";
 import { useLoginApi } from "./LoginHook";
-import {
-  OfficierContext,
-  officierContextMock
-} from "./contexts/OfficierContext";
+import { OfficierContext } from "./contexts/OfficierContext";
 
 const App: React.FC = () => {
   const login = useLoginApi();
@@ -18,9 +15,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="App">
-        <OfficierContext.Provider
-          value={login.dataState ? login.dataState : officierContextMock}
-        >
+        <OfficierContext.Provider value={login.dataState}>
           <Header />
           <Body />
           <ToastContainer

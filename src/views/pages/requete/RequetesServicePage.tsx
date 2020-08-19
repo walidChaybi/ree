@@ -3,11 +3,11 @@ import { Box } from "reakit/Box";
 import { getText } from "../../common/widget/Text";
 import {
   TableauRece,
-  TableauTypeColumn
+  TableauTypeColumn,
 } from "../../common/widget/tableau/TableauRece";
 import {
   useRequeteApi,
-  IQueryParametersPourRequetes
+  IQueryParametersPourRequetes,
 } from "./DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
@@ -20,23 +20,24 @@ import {
   getMessagePrioriteDeLaRequete,
   prioriteDeLaRequete,
   tableauHeader,
-  indexParamsReq
+  indexParamsReq,
 } from "./RequetesUtils";
 import {
   SelectDialog,
   SelectElements,
-  FormValues
+  FormValues,
 } from "../../common/widget/form/SelectDialog";
 import "./sass/RequeteTableau.scss";
 import {
   useUtilisateurApi,
-  IUtilisateurApi
+  IUtilisateurApi,
 } from "./DonneesUtilisateursServiceHook";
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
 import {
   useUtilisateurRequeteApi,
-  IQueryParametersAssigneRequetes
+  IQueryParametersAssigneRequetes,
 } from "./UtilisateurAssigneRequeteHook";
+import { IUtilisateurSSOApi } from "../../core/LoginHook";
 
 function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
   return (
@@ -50,7 +51,13 @@ function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
   );
 }
 
-export const RequetesServicePage: React.FC = () => {
+interface MesRequetesServicePageProps {
+  officier: IUtilisateurSSOApi;
+}
+
+export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
+  props
+) => {
   const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("ASC");
   const [sortOrderByState, setSortOrderByState] = React.useState<string>(
     "dateStatut"
@@ -64,13 +71,13 @@ export const RequetesServicePage: React.FC = () => {
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    nomOec: "Garisson",
-    prenomOec: "Juliette",
+    nomOec: props.officier.nom,
+    prenomOec: props.officier.prenom,
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
     sens: sortOrderState,
     range: undefined,
-    idArobas: "25648596"
+    idArobas: props.officier.idSSO,
   });
 
   const getColumnHeaders = (utilisateurs: SelectElements[]) => {
@@ -140,22 +147,20 @@ export const RequetesServicePage: React.FC = () => {
         tableauHeader,
         "",
         getIconPrioriteRequeteService
-      )
+      ),
     ];
   };
 
-  // TODO : utiliser les vrai pasramètre quand le ws sera mis à jour
   const {
     dataState = [],
     rowsNumberState = 0,
-    nextDataLinkState = ""
+    nextDataLinkState = "",
   } = useRequeteApi(linkParameters);
 
   useUtilisateurRequeteApi(queryChangeOecRequest, dataState);
 
-  // TODO : utiliser les vrai pasramètre quand le ws sera mis à jour
   const users = useUtilisateurApi({
-    idArobas: "25648596"
+    idArobas: props.officier.idSSO,
   });
 
   const getIconOfficierEtatCivil = (
@@ -165,7 +170,7 @@ export const RequetesServicePage: React.FC = () => {
     const utilisateurs = convertUsersToSelect(users.dataState);
 
     const utilisateurParDefaut = utilisateurs.find(
-      uilisateur => uilisateur.value === row.nomOec
+      (uilisateur) => uilisateur.value === row.nomOec
     );
 
     return (
@@ -186,7 +191,7 @@ export const RequetesServicePage: React.FC = () => {
           )}
           validate={(req: FormValues) => {
             const utilisateur = users.dataState.find(
-              u =>
+              (u) =>
                 u.idUtilisateur ===
                 (req.selectedItem !== undefined
                   ? req.selectedItem.key
@@ -197,7 +202,7 @@ export const RequetesServicePage: React.FC = () => {
               functionCallBack({
                 idRequete: row.idRequete,
                 nomOec: utilisateur.nom,
-                prenomOec: utilisateur.prenom
+                prenomOec: utilisateur.prenom,
               });
             }
           }}
@@ -217,7 +222,7 @@ export const RequetesServicePage: React.FC = () => {
         statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
         tri: params[indexParamsReq.Tri].split("=")[1],
         sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,
-        range: params[indexParamsReq.Range].split("=")[1]
+        range: params[indexParamsReq.Range].split("=")[1],
       };
       setLinkParameters(queryParameters);
     }
@@ -255,7 +260,7 @@ function convertUsersToSelect(
   for (const utilisateur of utilisateurs) {
     elements.push({
       key: utilisateur.idUtilisateur,
-      value: `${utilisateur.prenom} ${utilisateur.nom}`
+      value: `${utilisateur.prenom} ${utilisateur.nom}`,
     });
   }
   return elements;

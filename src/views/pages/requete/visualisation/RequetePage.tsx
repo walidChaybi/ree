@@ -7,16 +7,20 @@ import { useRequeteDataApi } from "./DonneeRequeteHook";
 import { IDataTable } from "../MesRequetesPage";
 import { AppUrls } from "../../../router/UrlManager";
 import { Title } from "../../../core/title/Title";
-import officier from "../../../../api/mock/officier.json";
 import { IDocumentDelivre } from "./RequeteType";
+import { IUtilisateurSSOApi } from "../../../core/LoginHook";
 
 export interface RequestsInformations {
   data: IDataTable[];
 }
 
-type RequetePageProps = RouteComponentProps<{ idRequete: string }>;
+export interface Test {
+  officier: IUtilisateurSSOApi;
+}
 
-export const RequetePage: React.FC<RequetePageProps> = props => {
+type RequetePageProps = RouteComponentProps<{ idRequete: string }> & Test;
+
+export const RequetePage: React.FC<RequetePageProps> = (props) => {
   const history = useHistory();
   const [histoReq] = useState<RequestsInformations>(
     history.location.state as RequestsInformations
@@ -28,9 +32,9 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
   // TODO mettre les vraies valeurs quand on aura le WS d'auth
   const { dataState } = useRequeteDataApi(
     {
-      nomOec: officier.nom,
-      prenomOec: officier.prenom,
-      idRequete: props.match.params.idRequete
+      nomOec: props.officier.nom,
+      prenomOec: props.officier.prenom,
+      idRequete: props.match.params.idRequete,
     },
     histoReq
   );
@@ -49,7 +53,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
   );
 
   useEffect(() => {
-    const idx = dataState.findIndex(donnee => {
+    const idx = dataState.findIndex((donnee) => {
       return donnee.idRequete === props.match.params.idRequete;
     });
     setIndexRequete(idx);
