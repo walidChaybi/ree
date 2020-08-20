@@ -2,5 +2,6 @@ commonLabels:
   composant: apache
 
 resources:
+  - configmap-apache.yaml
   - deploy.yaml
   - service.yaml
