@@ -1,30 +1,28 @@
 import React from "react";
 import { IUtilisateurSSOApi } from "../LoginHook";
 
-const officier: IUtilisateurSSOApi = {
-  idSSO: "",
-  nom: "",
-  prenom: "",
-  trigramme: "",
-  mail: "",
-  telephone: "",
-  section: "",
-  bureau: "",
-  departement: "",
-  service: ""
-};
+export const OfficierInLocalStorage = "officierData";
 
-export const officierContextMock: IUtilisateurSSOApi = {
-  idSSO: "",
-  nom: "Garisson",
-  prenom: "Juliette",
-  trigramme: "JGA",
-  mail: "",
-  telephone: "",
-  service: "SCEC",
-  departement: "Exploitation",
-  bureau: "Bureau A38",
-  section: "Section 2"
-};
+export function getDefaultOfficier(): IUtilisateurSSOApi {
+  const defaultOfficier: IUtilisateurSSOApi = {
+    idSSO: "",
+    nom: "",
+    prenom: "",
+    trigramme: "",
+    mail: "",
+    telephone: "",
+    section: "",
+    bureau: "",
+    departement: "",
+    service: "",
+  };
 
-export const OfficierContext = React.createContext(officier);
+  const officierLocalStorage = localStorage.getItem(OfficierInLocalStorage);
+
+  const officier: IUtilisateurSSOApi = officierLocalStorage
+    ? JSON.parse(officierLocalStorage)
+    : defaultOfficier;
+  return officier;
+}
+
+export const OfficierContext = React.createContext(getDefaultOfficier());

@@ -21,22 +21,26 @@ export function useUtilisateurApi(
     setDataState([]);
     setErrorState(undefined);
 
-    const api = ApiManager.getInstance("rece-securite-api", "v1");
-    console.log("coucou", queryParameters);
-    api
-      .fetch({
-        method: HttpMethod.GET,
-        uri: ApiEndpoints.UtilisateursUrl,
-        parameters: {
-          idArobas: queryParameters.idArobas,
-        },
-      })
-      .then((result) => {
-        setDataState(result.body.data);
-      })
-      .catch((error) => {
-        setErrorState(error);
-      });
+    if (
+      queryParameters.idArobas !== undefined &&
+      queryParameters.idArobas !== ""
+    ) {
+      const api = ApiManager.getInstance("rece-securite-api", "v1");
+      api
+        .fetch({
+          method: HttpMethod.GET,
+          uri: ApiEndpoints.UtilisateursUrl,
+          parameters: {
+            idArobas: queryParameters.idArobas,
+          },
+        })
+        .then((result) => {
+          setDataState(result.body.data);
+        })
+        .catch((error) => {
+          setErrorState(error);
+        });
+    }
   }, [queryParameters.idArobas]);
 
   return {
