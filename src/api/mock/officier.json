@@ -1,7 +1,10 @@
 {
+  "idSSO": "",
   "nom": "Garisson",
   "prenom": "Juliette",
   "trigramme": "JGA",
+  "mail": "",
+  "telephone": "",
   "service": "SCEC",
   "departement": "Exploitation",
   "bureau": "Bureau 1",

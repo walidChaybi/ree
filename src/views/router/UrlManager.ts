@@ -1,4 +1,5 @@
-export const contextApp = "/rece-ui";
+export const contextApp = "/rece/rece-ui";
+export const DeconnexionAppUrl = "/rece/Shibboleth.sso/Logout";
 
 export const SeparateurUrl = "/";
 export const ctxSeparateurUrl = `${contextApp}/`;
@@ -14,23 +15,25 @@ export const IdRequeteUrl = `${MesRequetesUrl}/:idRequete`;
 export const ctxIdRequeteUrl = `${contextApp}${IdRequeteUrl}`;
 export const IdRequeteServiceUrl = `${RequetesServiceUrl}/:idRequete`;
 export const ctxIdRequeteServiceUrl = `${contextApp}${IdRequeteServiceUrl}`;
+export const SecuriteUrl = "/utilisateurs/login";
 
 export const DocumentsdelivresUrl = "/documentsdelivres";
 
 export const AppUrls = {
-  contextApp: contextApp,
-  SeparateurUrl: SeparateurUrl,
-  ctxSeparateurUrl: ctxSeparateurUrl,
-  AccueilUrl: AccueilUrl,
-  ctxAccueilUrl: ctxAccueilUrl,
-  MesRequetesUrl: MesRequetesUrl,
-  ctxMesRequetesUrl: ctxMesRequetesUrl,
-  RequetesServiceUrl: RequetesServiceUrl,
-  ctxRequetesServiceUrl: ctxRequetesServiceUrl,
-  IdRequeteUrl: IdRequeteUrl,
-  ctxIdRequeteUrl: ctxIdRequeteUrl,
-  IdRequeteServiceUrl: IdRequeteServiceUrl,
-  ctxIdRequeteServiceUrl: ctxIdRequeteServiceUrl
+  contextApp,
+  DeconnexionAppUrl,
+  SeparateurUrl,
+  ctxSeparateurUrl,
+  AccueilUrl,
+  ctxAccueilUrl,
+  MesRequetesUrl,
+  ctxMesRequetesUrl,
+  RequetesServiceUrl,
+  ctxRequetesServiceUrl,
+  IdRequeteUrl,
+  ctxIdRequeteUrl,
+  IdRequeteServiceUrl,
+  ctxIdRequeteServiceUrl
 };
 
 /** Attention à l'usage, la construction d'URL dynamique passant par une function pose des problèmes d'anti pattern */
@@ -39,8 +42,9 @@ export function getAppUrl(path: string): string {
 }
 
 export const ApiEndpoints = {
-  RequetesUrl: RequetesUrl,
+  RequetesUrl,
   RequetesServiceUrl: "/requetes/requetesService",
-  UtilisateursUrl: UtilisateursUrl,
-  DocumentsdelivresUrl: DocumentsdelivresUrl,
+  UtilisateursUrl,
+  DocumentsdelivresUrl,
+  SecuriteUrl
 };

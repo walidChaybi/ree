@@ -13,6 +13,7 @@ type ApisAutorisees = "rece-requete-api" | "rece-securite-api";
 interface IApi {
   url: string;
   ports: number;
+  domain: string;
   name: string;
   usedVersions: string[];
 }
@@ -26,7 +27,7 @@ export enum HttpMethod {
   DELETE,
   PATCH,
   POST,
-  PUT,
+  PUT
 }
 
 interface HttpRequestHeader {
@@ -51,6 +52,7 @@ export interface IHttpResponse {
 export class ApiManager {
   public url: string;
   public ports: number;
+  public domain: string;
   public name: string;
   public version: string;
   private static instance: ApiManager;
@@ -69,6 +71,7 @@ export class ApiManager {
             ? foundApis[0].url
             : `http://${window.location.hostname}`;
         this.ports = foundApis[0].ports;
+        this.domain = foundApis[0].domain;
         this.name = foundApis[0].name;
         this.version = version;
       } else {
@@ -98,7 +101,7 @@ export class ApiManager {
   }
 
   public getUri(): string {
-    return `${this.url}:${this.ports}/${this.name}/${this.version}`;
+    return `${this.url}:${this.ports}/${this.domain}/${this.name}/${this.version}`;
   }
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
@@ -132,13 +135,14 @@ export class ApiManager {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
     return httpRequete
-      .then((response) => {
+      .then(response => {
         return Promise.resolve({
           body: response.body,
           status: response.status,
+          headers: response.header
         });
       })
-      .catch((error) => {
+      .catch(error => {
         messageManager.showError(
           "Une erreur est survenue: " + (error ? error.message : "inconnue")
         );
@@ -151,7 +155,7 @@ export class ApiManager {
     httpRequest: superagent.SuperAgentRequest
   ): superagent.SuperAgentRequest {
     let res = httpRequest;
-    headers.forEach((element) => {
+    headers.forEach(element => {
       res = httpRequest.set(element.header, element.value);
     });
     return res;

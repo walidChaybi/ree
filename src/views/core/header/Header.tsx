@@ -1,11 +1,10 @@
 import React from "react";
-import { Text } from "../../common/widget/Text";
+import { Text, getText } from "../../common/widget/Text";
 import { useHistory } from "react-router-dom";
 import { contextApp, AccueilUrl } from "../../router/UrlManager";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
 import { BoutonDeconnexion } from "./BoutonDeconnexion";
-import { getText } from "../../common/widget/Text";
-import officier from "../../../api/mock/officier.json";
+import { Tooltip } from "@material-ui/core";
 
 interface HeaderProps {
   onClick?: (event: React.MouseEvent, paramURL: string) => void;
@@ -13,6 +12,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const history = useHistory();
+  const version = "[AIV]{version}_{date}[/AIV]";
 
   function onClickLogo(event: React.MouseEvent) {
     if (onClick) {
@@ -27,13 +27,16 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
         className="LogoHeader"
         src={logoReceBlanc}
         alt={getText("altLogoRece")}
-        onClick={event => onClickLogo(event)}
+        onClick={(event) => onClickLogo(event)}
         data-testid="LogoHeader"
       />
-      <h1>
-        <Text messageId={"header"} />
-      </h1>
-      <BoutonDeconnexion nom={officier.nom} prenom={officier.prenom} />
+      <Tooltip title={`Version de dévelopement numéro: ${version}`}>
+        <h1>
+          <Text messageId={"header"} />
+        </h1>
+      </Tooltip>
+
+      <BoutonDeconnexion />
     </header>
   );
 };

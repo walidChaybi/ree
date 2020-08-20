@@ -18,6 +18,7 @@ import { ApiEndpoints } from "../../router/UrlManager";
 import { IDataTable } from "./MesRequetesPage";
 import { MotifRequete } from "../../../model/requete/MotifRequete";
 import { FormatDate } from "../../../ressources/FormatDate";
+import { IUtilisateurSSOApi } from "../../core/LoginHook";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -78,19 +79,26 @@ export interface IRequeteApi {
   typeActe: any;
   typeRequete: TypeRequete;
   villeEvenement: string;
+  documentsDelivres: IDocumentDelivre[];
 }
 
 export interface IQueryParametersPourRequetes {
   statut: StatutRequete;
-  nomOec?: string;
-  prenomOec?: string;
   tri?: string;
   sens?: SortOrder;
   range?: string;
-  idArobas?: string;
 }
 
-export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
+export enum TypeAppelRequete {
+  REQUETE_SERVICE = "requeteService",
+  MES_REQUETES = "mesRequetes",
+}
+
+export function useRequeteApi(
+  queryParameters: IQueryParametersPourRequetes,
+  typeRequete: TypeAppelRequete,
+  officier?: IUtilisateurSSOApi
+) {
   const [dataState, setDataState] = useState<IDataTable[]>();
   const [rowsNumberState, setRowsNumberState] = useState<number>();
   const [minRangeState, setMinRangeState] = useState<number>();
@@ -98,7 +106,7 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
   const [previousDataLinkState, setPreviousDataLinkState] = useState<string>();
   const [nextDataLinkState, setNextDataLinkState] = useState<string>();
   const [errorState, setErrorState] = useState(undefined);
-  const contentRange = "Content-Range";
+  const contentRange = "content-range";
 
   useEffect(() => {
     setDataState(undefined);
@@ -109,62 +117,58 @@ export function useRequeteApi(queryParameters: IQueryParametersPourRequetes) {
     setPreviousDataLinkState(undefined);
     setNextDataLinkState(undefined);
     const api = ApiManager.getInstance("rece-requete-api", "v1");
-    api
-      .fetch({
-        method: HttpMethod.GET,
-        uri:
-          queryParameters.idArobas !== undefined
-            ? ApiEndpoints.RequetesServiceUrl
-            : ApiEndpoints.RequetesUrl,
-        parameters: {
-          nomOec: queryParameters.nomOec,
-          prenomOec: queryParameters.prenomOec,
-          statut: queryParameters.statut,
-          tri:
-            queryParameters.tri !== "prioriteRequete"
-              ? queryParameters.tri
-              : "dateStatut",
-          sens: queryParameters.sens,
-          range: queryParameters.range,
-          idArobas: queryParameters.idArobas,
-        },
-      })
-      .then((result) => {
-        setDataState(reponseRequeteMapper(result.body.data));
-        const rowsNumber: number = +(result.body.httpHeaders[
-          contentRange
-        ][0] as string).split("/")[1];
-        setRowsNumberState(rowsNumber);
-        const minRange: number = +(result.body.httpHeaders[
-          contentRange
-        ][0] as string)
-          .split("/")[0]
-          .split("-")[0];
-        setMinRangeState(minRange);
-        const maxRange: number = +(result.body.httpHeaders[
-          contentRange
-        ][0] as string)
-          .split("/")[0]
-          .split("-")[1];
-        setMaxRangeState(maxRange);
-        const { nextLink, prevLink } = parseLink(
-          result.body.httpHeaders["Link"][0],
-          api
-        );
-        setPreviousDataLinkState(prevLink);
-        setNextDataLinkState(nextLink);
-      })
-      .catch((error) => {
-        setErrorState(error);
-      });
+
+    if (officier !== undefined) {
+      api
+        .fetch({
+          method: HttpMethod.GET,
+          uri:
+            typeRequete === TypeAppelRequete.REQUETE_SERVICE
+              ? ApiEndpoints.RequetesServiceUrl
+              : ApiEndpoints.RequetesUrl,
+          parameters: {
+            nomOec: officier.nom,
+            prenomOec: officier.prenom,
+            statut: queryParameters.statut,
+            tri:
+              queryParameters.tri !== "prioriteRequete"
+                ? queryParameters.tri
+                : "dateStatut",
+            sens: queryParameters.sens,
+            range: queryParameters.range,
+            idArobas: officier.idSSO,
+          },
+        })
+        .then((result) => {
+          setDataState(reponseRequeteMapper(result.body.data));
+          const rowsNumber: number = +(result.headers[
+            contentRange
+          ] as string).split("/")[1];
+          setRowsNumberState(rowsNumber);
+          const minRange: number = +(result.headers[contentRange] as string)
+            .split("/")[0]
+            .split("-")[0];
+          setMinRangeState(minRange);
+          const maxRange: number = +(result.headers[contentRange] as string)
+            .split("/")[0]
+            .split("-")[1];
+          setMaxRangeState(maxRange);
+          const { nextLink, prevLink } = parseLink(result.headers["link"], api);
+
+          setPreviousDataLinkState(prevLink);
+          setNextDataLinkState(nextLink);
+        })
+        .catch((error) => {
+          setErrorState(error);
+        });
+    }
   }, [
-    queryParameters.nomOec,
-    queryParameters.prenomOec,
     queryParameters.statut,
     queryParameters.tri,
     queryParameters.sens,
     queryParameters.range,
-    queryParameters.idArobas,
+    officier,
+    typeRequete,
   ]);
 
   return {
@@ -214,6 +218,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     jourEvenement: data.jourEvenement,
     moisEvenement: data.moisEvenement,
     nbExemplaire: data.nbExemplaire,
+    documentsDelivres: data.documentsDelivres,
   };
 }
 
