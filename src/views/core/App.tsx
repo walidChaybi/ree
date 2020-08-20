@@ -11,7 +11,6 @@ import { OfficierContext } from "./contexts/OfficierContext";
 
 const App: React.FC = () => {
   const login = useLoginApi();
-
   return (
     <Router>
       <div className="App">
