@@ -143,7 +143,6 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
     "dateStatut"
   );
 
-  // TODO : unmock nomOec, prenomOec
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({

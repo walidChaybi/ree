@@ -123,6 +123,5 @@ function getHierarchie(officier?: OfficierContextProps): string[] {
     }
   }
 
-  console.log("hierarchie", hierarchie);
   return hierarchie;
 }

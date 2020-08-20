@@ -106,7 +106,7 @@ export function useRequeteApi(
   const [previousDataLinkState, setPreviousDataLinkState] = useState<string>();
   const [nextDataLinkState, setNextDataLinkState] = useState<string>();
   const [errorState, setErrorState] = useState(undefined);
-  const contentRange = "Content-Range";
+  const contentRange = "content-range";
 
   useEffect(() => {
     setDataState(undefined);
@@ -141,26 +141,20 @@ export function useRequeteApi(
         })
         .then((result) => {
           setDataState(reponseRequeteMapper(result.body.data));
-          const rowsNumber: number = +(result.body.httpHeaders[
+          const rowsNumber: number = +(result.headers[
             contentRange
-          ][0] as string).split("/")[1];
+          ] as string).split("/")[1];
           setRowsNumberState(rowsNumber);
-          const minRange: number = +(result.body.httpHeaders[
-            contentRange
-          ][0] as string)
+          const minRange: number = +(result.headers[contentRange] as string)
             .split("/")[0]
             .split("-")[0];
           setMinRangeState(minRange);
-          const maxRange: number = +(result.body.httpHeaders[
-            contentRange
-          ][0] as string)
+          const maxRange: number = +(result.headers[contentRange] as string)
             .split("/")[0]
             .split("-")[1];
           setMaxRangeState(maxRange);
-          const { nextLink, prevLink } = parseLink(
-            result.body.httpHeaders["Link"][0],
-            api
-          );
+          const { nextLink, prevLink } = parseLink(result.headers["link"], api);
+
           setPreviousDataLinkState(prevLink);
           setNextDataLinkState(nextLink);
         })
