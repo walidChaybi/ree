@@ -79,6 +79,7 @@ export interface IRequeteApi {
   typeActe: any;
   typeRequete: TypeRequete;
   villeEvenement: string;
+  documentsDelivres: IDocumentDelivre[];
 }
 
 export interface IQueryParametersPourRequetes {
@@ -223,6 +224,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     jourEvenement: data.jourEvenement,
     moisEvenement: data.moisEvenement,
     nbExemplaire: data.nbExemplaire,
+    documentsDelivres: data.documentsDelivres,
   };
 }
 

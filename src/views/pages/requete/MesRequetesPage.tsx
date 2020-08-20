@@ -15,7 +15,11 @@ import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
 import { NatureActe } from "../../../model/requete/NatureActe";
 import { Canal } from "../../../model/Canal";
-import { IPieceJustificative, ITitulaire } from "./visualisation/RequeteType";
+import {
+  IPieceJustificative,
+  ITitulaire,
+  IDocumentDelivre,
+} from "./visualisation/RequeteType";
 import { AppUrls } from "../../router/UrlManager";
 import { Box } from "@material-ui/core";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
@@ -61,6 +65,7 @@ export interface IDataTable {
   jourEvenement: number;
   moisEvenement: number;
   nbExemplaire: number;
+  documentsDelivres: IDocumentDelivre[];
 }
 
 const columnsTableau = [
