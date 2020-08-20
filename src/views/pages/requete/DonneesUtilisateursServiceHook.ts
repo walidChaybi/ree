@@ -9,7 +9,7 @@ export interface IUtilisateurApi {
 }
 
 export interface IQueryParametersUtilisateursService {
-  idArobas: string;
+  idArobas?: string;
 }
 
 export function useUtilisateurApi(
@@ -21,10 +21,7 @@ export function useUtilisateurApi(
     setDataState([]);
     setErrorState(undefined);
 
-    if (
-      queryParameters.idArobas !== undefined &&
-      queryParameters.idArobas !== ""
-    ) {
+    if (queryParameters.idArobas !== undefined) {
       const api = ApiManager.getInstance("rece-securite-api", "v1");
       api
         .fetch({

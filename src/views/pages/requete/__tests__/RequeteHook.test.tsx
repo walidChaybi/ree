@@ -4,7 +4,7 @@ import { act } from "react-dom/test-utils";
 import request from "superagent";
 import config from "../../../../api/mock/superagent-mock-config";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { useRequeteApi } from "../DonneesRequeteHook";
+import { useRequeteApi, TypeAppelRequete } from "../DonneesRequeteHook";
 import officier from "../../../../api/mock/officier.json";
 
 const superagentMock = require("superagent-mock")(request, config);
@@ -12,16 +12,17 @@ const superagentMock = require("superagent-mock")(request, config);
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const { dataState = [] } = useRequeteApi({
-    nomOec: officier.nom,
-    prenomOec: officier.prenom,
-    statut: StatutRequete.ASigner,
-    tri: "idSagaDila",
-    sens: "ASC"
-  });
+  const { dataState = [] } = useRequeteApi(
+    {
+      statut: StatutRequete.ASigner,
+      tri: "idSagaDila",
+      sens: "ASC",
+    },
+    TypeAppelRequete.MES_REQUETES
+  );
   return (
     <>
-      {dataState.map(element => {
+      {dataState.map((element) => {
         return <div data-testid={element.idSagaDila}>{element.requerant}</div>;
       })}
     </>

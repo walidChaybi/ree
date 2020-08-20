@@ -15,7 +15,7 @@ export interface RequestsInformations {
 }
 
 export interface Test {
-  officier: IUtilisateurSSOApi;
+  officier?: IUtilisateurSSOApi;
 }
 
 type RequetePageProps = RouteComponentProps<{ idRequete: string }> & Test;
@@ -32,10 +32,9 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
   // TODO mettre les vraies valeurs quand on aura le WS d'auth
   const { dataState } = useRequeteDataApi(
     {
-      nomOec: props.officier.nom,
-      prenomOec: props.officier.prenom,
       idRequete: props.match.params.idRequete,
     },
+    props.officier,
     histoReq
   );
 

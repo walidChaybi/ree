@@ -9,6 +9,7 @@ import {
   IRequerantApi,
   IReponseApi,
   IQueryParametersPourRequetes,
+  TypeAppelRequete,
 } from "./DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
@@ -128,7 +129,7 @@ function getIconPrioriteMesRequetes(row: IDataTable): JSX.Element {
   );
 }
 interface MesRequetesPageProps {
-  officier: IUtilisateurSSOApi;
+  officier?: IUtilisateurSSOApi;
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
@@ -141,8 +142,6 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    nomOec: props.officier.nom,
-    prenomOec: props.officier.prenom,
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
     sens: sortOrderState,
@@ -152,7 +151,11 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
     dataState = [],
     rowsNumberState = 0,
     nextDataLinkState = "",
-  } = useRequeteApi(linkParameters);
+  } = useRequeteApi(
+    linkParameters,
+    TypeAppelRequete.MES_REQUETES,
+    props.officier
+  );
 
   function goToLink(link: string) {
     let queryParameters: IQueryParametersPourRequetes;
@@ -160,8 +163,6 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
       let params = [];
       params = link.split("requetes?")[1].split("&");
       queryParameters = {
-        nomOec: params[indexParamsReq.NomOec].split("=")[1],
-        prenomOec: params[indexParamsReq.PrenomOec].split("=")[1],
         statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
         tri: params[indexParamsReq.Tri].split("=")[1],
         sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,

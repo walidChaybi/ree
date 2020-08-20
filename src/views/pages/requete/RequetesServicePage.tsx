@@ -8,6 +8,7 @@ import {
 import {
   useRequeteApi,
   IQueryParametersPourRequetes,
+  TypeAppelRequete,
 } from "./DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
@@ -52,7 +53,7 @@ function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
 }
 
 interface MesRequetesServicePageProps {
-  officier: IUtilisateurSSOApi;
+  officier?: IUtilisateurSSOApi;
 }
 
 export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
@@ -67,17 +68,13 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
     IQueryParametersAssigneRequetes
   >();
 
-  // TODO : unmock nomOec, prenomOec, add service
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    nomOec: props.officier.nom,
-    prenomOec: props.officier.prenom,
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
     sens: sortOrderState,
     range: undefined,
-    idArobas: props.officier.idSSO,
   });
 
   const getColumnHeaders = (utilisateurs: SelectElements[]) => {
@@ -155,12 +152,16 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
     dataState = [],
     rowsNumberState = 0,
     nextDataLinkState = "",
-  } = useRequeteApi(linkParameters);
+  } = useRequeteApi(
+    linkParameters,
+    TypeAppelRequete.REQUETE_SERVICE,
+    props.officier
+  );
 
   useUtilisateurRequeteApi(queryChangeOecRequest, dataState);
 
   const users = useUtilisateurApi({
-    idArobas: props.officier.idSSO,
+    idArobas: props.officier?.idSSO,
   });
 
   const getIconOfficierEtatCivil = (
@@ -217,8 +218,6 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
       let params = [];
       params = link.split("requetes?")[1].split("&");
       queryParameters = {
-        nomOec: params[indexParamsReq.NomOec].split("=")[1],
-        prenomOec: params[indexParamsReq.PrenomOec].split("=")[1],
         statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
         tri: params[indexParamsReq.Tri].split("=")[1],
         sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,

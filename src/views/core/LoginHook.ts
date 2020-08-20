@@ -1,10 +1,6 @@
 import { ApiManager, HttpMethod } from "../../api/ApiManager";
 import { ApiEndpoints } from "../router/UrlManager";
 import { useState, useEffect } from "react";
-import {
-  OfficierInLocalStorage,
-  getDefaultOfficier,
-} from "./contexts/OfficierContext";
 
 export interface IUtilisateurSSOApi {
   idSSO: string;
@@ -20,9 +16,7 @@ export interface IUtilisateurSSOApi {
 }
 
 export function useLoginApi() {
-  const [dataState, setDataState] = useState<IUtilisateurSSOApi>(
-    getDefaultOfficier()
-  );
+  const [dataState, setDataState] = useState<IUtilisateurSSOApi>();
   const [errorState, setErrorState] = useState(undefined);
   useEffect(() => {
     const api = ApiManager.getInstance("rece-securite-api", "v1");
@@ -34,7 +28,6 @@ export function useLoginApi() {
       .then((result) => {
         const officier = getUtilisateurSSOApiFromHeaders(result.headers);
         setDataState(officier);
-        setUtilisateurSSOApiInLocalStorage(officier);
       })
       .catch((error) => {
         setErrorState(error);
@@ -60,8 +53,4 @@ function getUtilisateurSSOApiFromHeaders(headers: any): IUtilisateurSSOApi {
     departement: headers.departement,
     service: headers.service,
   };
-}
-
-function setUtilisateurSSOApiInLocalStorage(headers: any) {
-  localStorage.setItem(OfficierInLocalStorage, JSON.stringify(headers));
 }

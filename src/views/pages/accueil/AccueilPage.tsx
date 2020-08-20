@@ -8,12 +8,15 @@ import {
   faSearch,
   faGavel,
   faChartBar,
-  faSync
+  faSync,
 } from "@fortawesome/free-solid-svg-icons";
 import logoRece from "../../../img/logo-rece.svg";
 import { Title } from "../../core/title/Title";
 import { getText } from "../../common/widget/Text";
-import { OfficierContext } from "../../core/contexts/OfficierContext";
+import {
+  OfficierContext,
+  OfficierContextProps,
+} from "../../core/contexts/OfficierContext";
 
 export const AccueilPage: React.FC = () => {
   return (
@@ -22,23 +25,22 @@ export const AccueilPage: React.FC = () => {
 
       <img src={logoRece} alt={getText("altLogoRece")} />
       <OfficierContext.Consumer>
-        {officier => (
+        {(officier) => (
           <>
             <div className="Titre">
               <Text
                 messageId={"pages.accueil.bienvenue"}
-                values={[officier.prenom, officier.nom, officier.trigramme]}
+                values={
+                  officier !== undefined
+                    ? [officier.prenom, officier.nom, officier.trigramme]
+                    : []
+                }
               />
             </div>
             <div className="Affectation">
               <Text
                 messageId={"pages.accueil.affectation"}
-                values={[
-                  officier.service,
-                  officier.departement,
-                  officier.bureau,
-                  officier.section
-                ]}
+                values={getHierarchie(officier)}
               />
             </div>
           </>
@@ -97,3 +99,27 @@ export const AccueilPage: React.FC = () => {
     </>
   );
 };
+
+function getHierarchie(officier?: OfficierContextProps): string[] {
+  const hierarchie = [];
+
+  if (officier !== undefined) {
+    if (officier.service !== "") {
+      hierarchie.push(officier.service);
+    }
+
+    if (officier.departement !== "") {
+      hierarchie.push(officier.departement);
+    }
+
+    if (officier.bureau !== "") {
+      hierarchie.push(officier.bureau);
+    }
+
+    if (officier.section !== "") {
+      hierarchie.push(officier.section);
+    }
+  }
+
+  return hierarchie;
+}
