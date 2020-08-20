@@ -20,7 +20,6 @@ export function useUtilisateurApi(
   useEffect(() => {
     setDataState([]);
     setErrorState(undefined);
-
     if (queryParameters.idArobas !== undefined) {
       const api = ApiManager.getInstance("rece-securite-api", "v1");
       api

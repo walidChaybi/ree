@@ -39,7 +39,9 @@ export const AccueilPage: React.FC = () => {
             </div>
             <div className="Affectation">
               <Text
-                messageId={"pages.accueil.affectation"}
+                messageId={`pages.accueil.affectation.${
+                  getHierarchie(officier).length
+                }`}
                 values={getHierarchie(officier)}
               />
             </div>
@@ -104,22 +106,23 @@ function getHierarchie(officier?: OfficierContextProps): string[] {
   const hierarchie = [];
 
   if (officier !== undefined) {
-    if (officier.service !== "") {
+    if (officier.service !== undefined) {
       hierarchie.push(officier.service);
     }
 
-    if (officier.departement !== "") {
+    if (officier.departement !== undefined) {
       hierarchie.push(officier.departement);
     }
 
-    if (officier.bureau !== "") {
+    if (officier.bureau !== undefined) {
       hierarchie.push(officier.bureau);
     }
 
-    if (officier.section !== "") {
+    if (officier.section !== undefined) {
       hierarchie.push(officier.section);
     }
   }
 
+  console.log("hierarchie", hierarchie);
   return hierarchie;
 }

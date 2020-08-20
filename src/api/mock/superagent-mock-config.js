@@ -12,7 +12,7 @@ module.exports = [
     pattern:
       process.env.NODE_ENV === "production"
         ? "http://localhost:80/rece/rece-requete-api/v1(.*)"
-        : "http://localhost:3000/rece/rece-requete-api/v1(.*)",
+        : "http://localhost:80/rece/rece-requete-api/v1(.*)",
 
     /**
      * returns the data
@@ -25,7 +25,7 @@ module.exports = [
     fixtures: function (match, params, headers, context) {
       /**
        * Returning error codes example:
-       *   request.get('http://10.110.204.59:3000/rece/rece-requete-api/v1/404').end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/404').end(function(err, res){
        *     console.log(err); // 404
        *     console.log(res.notFound); // true
        *   })
@@ -36,14 +36,14 @@ module.exports = [
 
       /**
        * Checking on parameters example:
-       *   request.get('http://10.110.204.59:3000/rece/rece-requete-api/v1/hero').send({superhero: "superman"}).end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/hero').send({superhero: "superman"}).end(function(err, res){
        *     console.logtruednt choose a hero";
         }
       }
 
       /**
        * Checking on headers example:
-       *   request.get('http://10.110.204.59:3000/rece/rece-requete-api/v1/authorized_endpoint').set({Authorization: "9382hfih1834h"}).end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/authorized_endpoint').set({Authorization: "9382hfih1834h"}).end(function(err, res){
        *     console.log(res.body); // "Authenticated!"
        *   })
        */
@@ -58,7 +58,7 @@ module.exports = [
 
       /**
        * Cancelling the mocking for a specific matched route example:
-       *   request.get('http://10.110.204.59:3000/rece/rece-requete-api/v1/server_test').end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/server_test').end(function(err, res){
        *     console.log(res.body); // (whatever the actual server would have returned)
        *   })
        */
@@ -70,7 +70,7 @@ module.exports = [
 
       /**
        * Delaying the response with a specific number of milliseconds:
-       *   request.get('http://10.110.204.59:3000/rece/rece-requete-api/v1/delay_test').end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/delay_test').end(function(err, res){
        *     console.log(res.body); // This log will be written after the delay time has passed
        *   })
        */
@@ -82,7 +82,7 @@ module.exports = [
 
       /**
        * Mocking progress events:
-       *   request.get('http://10.110.204.59:3000/rece/rece-requete-api/v1/progress_test')
+       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/progress_test')
        *     .on('progress', function (e) { console.log(e.percent + '%'); })
        *     .end(function(err, res){
        *       console.log(res.body); // This log will be written after all progress events emitted
@@ -130,7 +130,7 @@ module.exports = [
           httpHeaders: {
             "Content-Range": ["0-15/" + mockRequetes.data.length],
             Link: [
-              '<http://localhost:3000/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"',
+              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"',
             ],
           },
         };
@@ -146,8 +146,8 @@ module.exports = [
           httpHeaders: {
             "Content-Range": ["106-15/" + mockRequetes.data.length],
             Link: [
-              '<http://localhost:3000/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
-              '<http://localhost:3000/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
+              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
+              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
             ],
           },
         };
@@ -164,7 +164,7 @@ module.exports = [
             "Content-Range": ["211-15/" + mockRequetes.data.length],
             Link: [
               "",
-              '<http://localhost:3000/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
+              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
             ],
           },
         };
@@ -181,7 +181,7 @@ module.exports = [
           httpHeaders: {
             "Content-Range": ["0-15/" + mockRequetes.data.length],
             Link: [
-              '<http://localhost:3000/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596&range=1-105>;rel="next"',
+              '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596&range=1-105>;rel="next"',
             ],
           },
         };
@@ -197,8 +197,8 @@ module.exports = [
           httpHeaders: {
             "Content-Range": ["106-15/" + mockRequetes.data.length],
             Link: [
-              '<http://localhost:3000/rece-requete-api/v1//requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
-              '<http://localhost:3000/rece-requete-api/v1/requetes/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
+              '<http://localhost:80/rece-requete-api/v1//requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
+              '<http://localhost:80/rece-requete-api/v1/requetes/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
             ],
           },
         };
@@ -215,7 +215,7 @@ module.exports = [
             "Content-Range": ["211-15/" + mockRequetes.data.length],
             Link: [
               "",
-              '<http://localhost:3000/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
+              '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
             ],
           },
         };
@@ -303,7 +303,7 @@ module.exports = [
     pattern:
       process.env.NODE_ENV === "production"
         ? "http://localhost:80/rece/rece-securite-api/v1(.*)"
-        : "http://localhost:3000/rece/rece-securite-api/v1(.*)",
+        : "http://localhost:80/rece/rece-securite-api/v1(.*)",
 
     /**
      * returns the data
@@ -316,7 +316,7 @@ module.exports = [
     fixtures: function (match, params, headers, context) {
       /**
        * Returning error codes example:
-       *   request.get('http://10.110.204.59:3000/rece/rece-securite-api/v1/404').end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/404').end(function(err, res){
        *     console.log(err); // 404
        *     console.log(res.notFound); // true
        *   })
@@ -327,14 +327,14 @@ module.exports = [
 
       /**
        * Checking on parameters example:
-       *   request.get('http://10.110.204.59:3000/rece/rece-securite-api/v1/hero').send({superhero: "superman"}).end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/hero').send({superhero: "superman"}).end(function(err, res){
        *     console.logtruednt choose a hero";
         }
       }
 
       /**
        * Checking on headers example:
-       *   request.get('http://10.110.204.59:3000/rece/rece-securite-api/v1/authorized_endpoint').set({Authorization: "9382hfih1834h"}).end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/authorized_endpoint').set({Authorization: "9382hfih1834h"}).end(function(err, res){
        *     console.log(res.body); // "Authenticated!"
        *   })
        */
@@ -349,7 +349,7 @@ module.exports = [
 
       /**
        * Cancelling the mocking for a specific matched route example:
-       *   request.get('http://10.110.204.59:3000/rece/rece-securite-api/v1/server_test').end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/server_test').end(function(err, res){
        *     console.log(res.body); // (whatever the actual server would have returned)
        *   })
        */
@@ -361,7 +361,7 @@ module.exports = [
 
       /**
        * Delaying the response with a specific number of milliseconds:
-       *   request.get('http://10.110.204.59:3000/rece/rece-securite-api/v1/delay_test').end(function(err, res){
+       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/delay_test').end(function(err, res){
        *     console.log(res.body); // This log will be written after the delay time has passed
        *   })
        */
@@ -373,7 +373,7 @@ module.exports = [
 
       /**
        * Mocking progress events:
-       *   request.get('http://10.110.204.59:3000/rece/rece-securite-api/v1/progress_test')
+       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/progress_test')
        *     .on('progress', function (e) { console.log(e.percent + '%'); })
        *     .end(function(err, res){
        *       console.log(res.body); // This log will be written after all progress events emitted

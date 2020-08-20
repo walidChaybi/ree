@@ -1,28 +1,42 @@
 import React from "react";
 import { BoutonDeconnexion } from "../BoutonDeconnexion";
 import { screen, render, fireEvent } from "@testing-library/react";
-import {
-  OfficierContext,
-  officierContextMock
-} from "../../../core/contexts/OfficierContext";
-const ressource = require("../../../../ressources/ressource.json");
+import { OfficierContext } from "../../../core/contexts/OfficierContext";
+import { createMemoryHistory } from "history";
+import { AppUrls } from "../../../router/UrlManager";
+import { Router } from "react-router-dom";
 
-test("renders bouton utilisateur", () => {
+const ressource = require("../../../../ressources/ressource.json");
+const officier = require("../../../../api/mock/officier.json");
+
+test("renders BoutonDeconnexion", () => {
+  const history = createMemoryHistory();
+  history.push(AppUrls.ctxMesRequetesUrl);
+
   render(
-    <OfficierContext.Provider value={officierContextMock}>
-      <BoutonDeconnexion />
-    </OfficierContext.Provider>
+    <Router history={history}>
+      <OfficierContext.Provider value={officier}>
+        <BoutonDeconnexion />
+      </OfficierContext.Provider>
+    </Router>
   );
   const boutonElement = screen.getByText(/Juliette Garisson/i);
   expect(boutonElement).toBeInTheDocument();
 });
 
-test("renders click bouton utilisateur", () => {
+test("renders click BoutonDeconnexion", () => {
+  const history = createMemoryHistory();
+  history.push(AppUrls.ctxMesRequetesUrl);
+
   const handleClickButton = jest.fn();
   render(
-    <OfficierContext.Provider value={officierContextMock}>
-      <BoutonDeconnexion onClick={handleClickButton}></BoutonDeconnexion>
-    </OfficierContext.Provider>
+    <Router history={history}>
+      <>
+        <OfficierContext.Provider value={officier}>
+          <BoutonDeconnexion onClick={handleClickButton}></BoutonDeconnexion>
+        </OfficierContext.Provider>
+      </>
+    </Router>
   );
   const boutonElement = screen.getByText(/Juliette Garisson/i);
   fireEvent.click(boutonElement);

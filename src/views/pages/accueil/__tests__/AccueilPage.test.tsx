@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { AccueilPage } from "../AccueilPage";
 import {
   OfficierContext,
-  officierContextMock
+  officierContextMock,
 } from "../../../core/contexts/OfficierContext";
 
 let container: Element | null;
@@ -33,7 +33,7 @@ test("renders page d'accueil", () => {
     </>
   );
 
-  const titleElements = screen.getByText(/Accueil/i);
+  const titleElements = screen.getByText("Accueil");
   expect(titleElements).toBeInTheDocument();
   const textElements = screen.getByText(/Bienvenue*/i);
   expect(textElements).toBeInTheDocument();
