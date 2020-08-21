@@ -4,8 +4,6 @@ import { BoutonSignature } from "../BoutonSignature";
 import { BoutonRetourSaga } from "../BoutonRetourSaga";
 import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
-import { useHistory } from "react-router-dom";
-import { SeparateurUrl } from "../../../router/UrlManager";
 import { IDocumentDelivre } from "./RequeteType";
 
 export interface ActionsProps {
@@ -13,21 +11,16 @@ export interface ActionsProps {
   maxRequetes: number;
   setIndexRequete: (index: number) => void;
   documentsDelivres: IDocumentDelivre[];
+  idRequete: string;
 }
 
 export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   indexRequete,
   setIndexRequete,
   maxRequetes,
-  documentsDelivres
+  documentsDelivres,
+  idRequete,
 }) => {
-  const history = useHistory();
-
-  const pathnames = history.location.pathname
-    .split(SeparateurUrl)
-    .filter(x => x);
-  pathnames.shift();
-
   return (
     <div className="ActionsButtons">
       <NavigationButton
@@ -41,7 +34,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
           <BoutonRetour messageId={"boutons.retourMesRequetes"} />
         </div>
         <div>
-          <BoutonRetourSaga pageUrl={pathnames[pathnames.length - 1]} />
+          <BoutonRetourSaga idRequete={idRequete} />
         </div>
         <div>
           <BoutonSignature

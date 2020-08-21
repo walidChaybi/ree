@@ -4,38 +4,37 @@ import { Button } from "reakit/Button";
 import { useHistory } from "react-router-dom";
 import {
   IQueryParameterUpdateStatutRequete,
-  useUpdateStatutRequeteApi
+  useUpdateStatutRequeteApi,
 } from "./UpdateStatutRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 
 interface BoutonRetourSagaProps {
-  pageUrl: string;
   messageId?: MessageId;
+  idRequete: string;
 }
 
 export const BoutonRetourSaga: React.FC<BoutonRetourSagaProps> = ({
   messageId = "pages.delivrance.action.retourSaga",
-  pageUrl = ""
+  idRequete,
 }) => {
   const history = useHistory();
   const [
     updateStatutRequeteQueryParamState,
-    setUpdateStatutRequeteQueryParamState
-  ] = React.useState<IQueryParameterUpdateStatutRequete>({
-    statut: StatutRequete.ASigner
-  });
+    setUpdateStatutRequeteQueryParamState,
+  ] = React.useState<IQueryParameterUpdateStatutRequete>();
 
   const handleClickRetourSaga = () => {
     setUpdateStatutRequeteQueryParamState({
-      statut: StatutRequete.ARetraiterSaga
+      statut: StatutRequete.ARetraiterSaga,
+      idRequete: idRequete,
     });
   };
 
   const goToListe = useCallback(() => {
-    history.push(`${pageUrl}`);
-  }, [history, pageUrl]);
+    history.goBack();
+  }, [history]);
 
-  useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState, goToListe);
+  useUpdateStatutRequeteApi(goToListe, updateStatutRequeteQueryParamState);
 
   return (
     <Button onClick={handleClickRetourSaga}>

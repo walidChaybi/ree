@@ -16,7 +16,7 @@ export interface RequestsInformations {
 
 type RequetePageProps = RouteComponentProps<{ idRequete: string }>;
 
-export const RequetePage: React.FC<RequetePageProps> = props => {
+export const RequetePage: React.FC<RequetePageProps> = (props) => {
   const history = useHistory();
   const [histoReq] = useState<RequestsInformations>(
     history.location.state as RequestsInformations
@@ -30,7 +30,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
     {
       nomOec: officier.nom,
       prenomOec: officier.prenom,
-      idRequete: props.match.params.idRequete
+      idRequete: props.match.params.idRequete,
     },
     histoReq
   );
@@ -49,7 +49,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
   );
 
   useEffect(() => {
-    const idx = dataState.findIndex(donnee => {
+    const idx = dataState.findIndex((donnee) => {
       return donnee.idRequete === props.match.params.idRequete;
     });
     setIndexRequete(idx);
@@ -68,6 +68,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
             documentsDelivres={
               documentDelivreState ? [documentDelivreState] : []
             }
+            idRequete={props.match.params.idRequete}
           />
           <EtatRequete requete={dataState[indexRequete]} />
           <ContenuRequete

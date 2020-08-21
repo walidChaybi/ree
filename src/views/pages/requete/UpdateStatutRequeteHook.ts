@@ -5,11 +5,12 @@ import { StatutRequete } from "../../../model/requete/StatutRequete";
 
 export interface IQueryParameterUpdateStatutRequete {
   statut: StatutRequete;
+  idRequete: string;
 }
 
 export function useUpdateStatutRequeteApi(
-  queryParameters: IQueryParameterUpdateStatutRequete,
-  callback: () => void
+  callback: () => void,
+  queryParameters?: IQueryParameterUpdateStatutRequete
 ) {
   const [errorState, setErrorState] = useState(undefined);
 
@@ -20,20 +21,19 @@ export function useUpdateStatutRequeteApi(
         .fetch({
           method: HttpMethod.PATCH,
           uri: ApiEndpoints.RequetesUrl,
-          data: [{ ...queryParameters }],
-          headers: []
+          parameters: { ...queryParameters },
+          headers: [],
         })
-        .then(result => {
-          console.log(result);
+        .then((result) => {
           callback();
         })
-        .catch(error => {
+        .catch((error) => {
           setErrorState(error);
         });
     }
   }, [queryParameters, callback]);
 
   return {
-    errorState
+    errorState,
   };
 }
