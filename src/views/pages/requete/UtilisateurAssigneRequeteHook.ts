@@ -34,7 +34,7 @@ export function useUtilisateurRequeteApi(
 
       const requetesToSend = [];
       if (requete != null) {
-        requetesToSend.push({
+        const requeteToSend = {
           dateCreation: moment(
             requete.dateCreation,
             FormatDate.DDMMYYYY
@@ -65,10 +65,10 @@ export function useUtilisateurRequeteApi(
           typeActe: requete.typeActe,
           typeRequete: requete.typeRequete,
           villeEvenement: requete.villeEvenement,
-          documentsDelivres: requete.documentsDelivres,
-          nomOec: queryParameters.nomOec,
-          prenomOec: queryParameters.prenomOec,
-        });
+        };
+        requeteToSend.reponse.nomOec = queryParameters.nomOec;
+        requeteToSend.reponse.prenomOec = queryParameters.prenomOec;
+        requetesToSend.push(requeteToSend);
       }
 
       api
