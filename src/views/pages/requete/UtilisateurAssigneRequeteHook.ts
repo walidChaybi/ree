@@ -4,6 +4,7 @@ import { ApiEndpoints } from "../../router/UrlManager";
 import { IDataTable } from "./MesRequetesPage";
 import { FormatDate } from "../../../ressources/FormatDate";
 import moment from "moment";
+import { getText } from "../../common/widget/Text";
 
 export interface IQueryParametersAssigneRequetes {
   idRequete: string;
@@ -17,10 +18,15 @@ export function useUtilisateurRequeteApi(
 ) {
   const [dataState, setDataState] = useState<IQueryParametersAssigneRequetes>();
   const [errorState, setErrorState] = useState(undefined);
+  const [sucessState, setSuccessState] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     if (queryParameters !== undefined) {
       const api = ApiManager.getInstance("rece-requete-api", "v1");
+
+      setSuccessState(undefined);
 
       const requete = requetes
         ? requetes.find((requ) => requ.idRequete === queryParameters.idRequete)
@@ -81,6 +87,12 @@ export function useUtilisateurRequeteApi(
             requetes[
               idxRequete
             ].nomOec = `${queryParameters.prenomOec} ${queryParameters.nomOec}`;
+
+            setSuccessState(
+              `${getText("success.pages.requetes.assigneDebut")}${
+                requetes[idxRequete].idSagaDila
+              } ${getText("success.pages.requetes.assigneFin")}`
+            );
           }
 
           setDataState(queryParameters);
@@ -94,5 +106,6 @@ export function useUtilisateurRequeteApi(
   return {
     dataState,
     errorState,
+    sucessState,
   };
 }

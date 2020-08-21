@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box } from "reakit/Box";
 import { getText } from "../../common/widget/Text";
 import {
@@ -38,6 +38,11 @@ import {
   useUtilisateurRequeteApi,
   IQueryParametersAssigneRequetes,
 } from "./UtilisateurAssigneRequeteHook";
+import {
+  MessagePopin,
+  PopinMessageType,
+} from "../../common/widget/MessagePopin";
+
 import { IUtilisateurSSOApi } from "../../core/LoginHook";
 
 function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
@@ -59,6 +64,10 @@ interface MesRequetesServicePageProps {
 export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
   props
 ) => {
+  const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(
+    false
+  );
+
   const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("ASC");
   const [sortOrderByState, setSortOrderByState] = React.useState<string>(
     "dateStatut"
@@ -158,7 +167,14 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
     props.officier
   );
 
-  useUtilisateurRequeteApi(queryChangeOecRequest, dataState);
+  const { sucessState } = useUtilisateurRequeteApi(
+    queryChangeOecRequest,
+    dataState
+  );
+
+  useEffect(() => {
+    setIsSuccessAssigne(true);
+  }, [sucessState]);
 
   const users = useUtilisateurApi({
     idArobas: props.officier?.idSSO,
@@ -244,6 +260,12 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
         goToLink={goToLink}
       />
       <BoutonRetour />
+      <MessagePopin
+        message={sucessState}
+        messageType={PopinMessageType.Success}
+        isOpen={isSuccessAssigne}
+        setIsOpen={setIsSuccessAssigne}
+      />
     </>
   );
 };
