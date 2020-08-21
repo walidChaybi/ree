@@ -71,6 +71,7 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
             documentsDelivres={
               documentDelivreState ? [documentDelivreState] : []
             }
+            idRequete={props.match.params.idRequete}
           />
           <EtatRequete requete={dataState[indexRequete]} />
           <ContenuRequete
