@@ -4,7 +4,7 @@ module.exports = [
     /**
      * regular expression of URL
      */
-    pattern: "http://10.110.204.59:8082/rece-requete-api/v1(.*)",
+    pattern: "http://10.110.204.59:8082/rece/rece-requete-api/v1(.*)",
 
     /**
      * returns the data
@@ -17,7 +17,7 @@ module.exports = [
     fixtures: function(match, params, headers, context) {
       /**
        * Returning error codes example:
-       *   request.get('http://10.110.204.59:8082/rece-requete-api/v1/404').end(function(err, res){
+       *   request.get('http://10.110.204.59:8082/rece/rece-requete-api/v1/404').end(function(err, res){
        *     console.log(err); // 404
        *     console.log(res.notFound); // true
        *   })
@@ -28,7 +28,7 @@ module.exports = [
 
       /**
        * Checking on parameters example:
-       *   request.get('http://10.110.204.59:8082/rece-requete-api/v1/hero').send({superhero: "superman"}).end(function(err, res){
+       *   request.get('http://10.110.204.59:8082/rece/rece-requete-api/v1/hero').send({superhero: "superman"}).end(function(err, res){
        *     console.log(res.body); // "Your hero: superman"
        *   })
        */
@@ -43,7 +43,7 @@ module.exports = [
 
       /**
        * Checking on headers example:
-       *   request.get('http://10.110.204.59:8082/rece-requete-api/v1/authorized_endpoint').set({Authorization: "9382hfih1834h"}).end(function(err, res){
+       *   request.get('http://10.110.204.59:8082/rece/rece-requete-api/v1/authorized_endpoint').set({Authorization: "9382hfih1834h"}).end(function(err, res){
        *     console.log(res.body); // "Authenticated!"
        *   })
        */
@@ -58,7 +58,7 @@ module.exports = [
 
       /**
        * Cancelling the mocking for a specific matched route example:
-       *   request.get('http://10.110.204.59:8082/rece-requete-api/v1/server_test').end(function(err, res){
+       *   request.get('http://10.110.204.59:8082/rece/rece-requete-api/v1/server_test').end(function(err, res){
        *     console.log(res.body); // (whatever the actual server would have returned)
        *   })
        */
@@ -70,7 +70,7 @@ module.exports = [
 
       /**
        * Delaying the response with a specific number of milliseconds:
-       *   request.get('http://10.110.204.59:8082/rece-requete-api/v1/delay_test').end(function(err, res){
+       *   request.get('http://10.110.204.59:8082/rece/rece-requete-api/v1/delay_test').end(function(err, res){
        *     console.log(res.body); // This log will be written after the delay time has passed
        *   })
        */
@@ -82,7 +82,7 @@ module.exports = [
 
       /**
        * Mocking progress events:
-       *   request.get('http://10.110.204.59:8082/rece-requete-api/v1/progress_test')
+       *   request.get('http://10.110.204.59:8082/rece/rece-requete-api/v1/progress_test')
        *     .on('progress', function (e) { console.log(e.percent + '%'); })
        *     .end(function(err, res){
        *       console.log(res.body); // This log will be written after all progress events emitted

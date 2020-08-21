@@ -8,12 +8,15 @@ import {
   faSearch,
   faGavel,
   faChartBar,
-  faSync
+  faSync,
 } from "@fortawesome/free-solid-svg-icons";
 import logoRece from "../../../img/logo-rece.svg";
 import { Title } from "../../core/title/Title";
 import { getText } from "../../common/widget/Text";
-import officier from "../../../api/mock/officier.json";
+import {
+  OfficierContext,
+  OfficierContextProps,
+} from "../../core/contexts/OfficierContext";
 
 export const AccueilPage: React.FC = () => {
   return (
@@ -21,23 +24,30 @@ export const AccueilPage: React.FC = () => {
       <Title titleId={"pages.accueil.titre"} />
 
       <img src={logoRece} alt={getText("altLogoRece")} />
-      <div className="Titre">
-        <Text
-          messageId={"pages.accueil.bienvenue"}
-          values={[officier.prenom, officier.nom, officier.trigramme]}
-        />
-      </div>
-      <div className="Affectation">
-        <Text
-          messageId={"pages.accueil.affectation"}
-          values={[
-            officier.service,
-            officier.departement,
-            officier.bureau,
-            officier.section
-          ]}
-        />
-      </div>
+      <OfficierContext.Consumer>
+        {(officier) => (
+          <>
+            <div className="Titre">
+              <Text
+                messageId={"pages.accueil.bienvenue"}
+                values={
+                  officier !== undefined
+                    ? [officier.prenom, officier.nom, officier.trigramme]
+                    : []
+                }
+              />
+            </div>
+            <div className="Affectation">
+              <Text
+                messageId={`pages.accueil.affectation.${
+                  getHierarchie(officier).length
+                }`}
+                values={getHierarchie(officier)}
+              />
+            </div>
+          </>
+        )}
+      </OfficierContext.Consumer>
       <div className="MenuAccueil">
         <BoutonAccueil
           messageId="pages.accueil.boutons.delivrance"
@@ -91,3 +101,27 @@ export const AccueilPage: React.FC = () => {
     </>
   );
 };
+
+function getHierarchie(officier?: OfficierContextProps): string[] {
+  const hierarchie = [];
+
+  if (officier !== undefined) {
+    if (officier.service !== undefined) {
+      hierarchie.push(officier.service);
+    }
+
+    if (officier.departement !== undefined) {
+      hierarchie.push(officier.departement);
+    }
+
+    if (officier.bureau !== undefined) {
+      hierarchie.push(officier.bureau);
+    }
+
+    if (officier.section !== undefined) {
+      hierarchie.push(officier.section);
+    }
+  }
+
+  return hierarchie;
+}

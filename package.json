@@ -3,6 +3,7 @@
   "maeGroup": "fr.gouv.diplomatie.rece",
   "version": "0.3.0",
   "private": true,
+  "homepage": "rece/rece-ui/",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.12.1",
     "@fortawesome/fontawesome-svg-core": "1.2.27",
@@ -50,7 +51,8 @@
     "superagent": "5.2.2",
     "ts-pnp": "1.1.5",
     "url-loader": "2.3.0",
-    "react-toastify": "6.0.8"
+    "react-toastify": "6.0.8",
+    "webpack-auto-inject-version": "1.2.2"
   },
   "devDependencies": {
     "@babel/core": "7.8.4",
@@ -110,8 +112,7 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "API_MODE='DMZ501' node scripts/start.js",
-    "start:local": "API_MODE='localhost' node scripts/start.js",
+    "start": "node scripts/start.js",
     "start:mock": "REACT_APP_MOCK=true node scripts/start.js",
     "build": "node scripts/build.js",
     "test:dev": "node scripts/test.js --watchAll",

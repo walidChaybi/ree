@@ -10,6 +10,7 @@ import "./sass/DelivrancePage.scss";
 import { BoutonSignature } from "./BoutonSignature";
 import { AppUrls } from "../../router/UrlManager";
 import { useHistory } from "react-router-dom";
+import { OfficierContext } from "../../core/contexts/OfficierContext";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -37,7 +38,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: any) {
   return {
     id: `nav-tab-${index}`,
-    "aria-controls": `nav-tabpanel-${index}`
+    "aria-controls": `nav-tabpanel-${index}`,
   };
 }
 
@@ -109,10 +110,18 @@ const DelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
           </Tabs>
         </AppBar>
         <TabPanel value={selectedTabState} index={0}>
-          {selectedTabState === 0 && <MesRequetesPage />}
+          {selectedTabState === 0 && (
+            <OfficierContext.Consumer>
+              {(officier) => <MesRequetesPage officier={officier} />}
+            </OfficierContext.Consumer>
+          )}
         </TabPanel>
         <TabPanel value={selectedTabState} index={1}>
-          {selectedTabState === 1 && <RequetesServicePage />}
+          {selectedTabState === 1 && (
+            <OfficierContext.Consumer>
+              {(officier) => <RequetesServicePage officier={officier} />}
+            </OfficierContext.Consumer>
+          )}
         </TabPanel>
       </div>
     </>

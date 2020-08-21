@@ -5,15 +5,15 @@ import { reponseRequeteMapperUnitaire } from "../DonneesRequeteHook";
 import { RequestsInformations } from "./RequetePage";
 import { ApiEndpoints } from "../../../router/UrlManager";
 import { IDataTable } from "../MesRequetesPage";
+import { IUtilisateurSSOApi } from "../../../core/LoginHook";
 export interface IQueryParametersPourRequete {
-  nomOec: string;
-  prenomOec: string;
   statut?: StatutRequete;
   idRequete: string;
 }
 
 export function useRequeteDataApi(
   queryParameters: IQueryParametersPourRequete,
+  officier?: IUtilisateurSSOApi,
   requestsInformations?: RequestsInformations
 ) {
   const [dataState, setDataState] = useState<IDataTable[]>(
@@ -25,35 +25,36 @@ export function useRequeteDataApi(
     setDataState([]);
     const api = ApiManager.getInstance("rece-requete-api", "v1");
     if (requestsInformations === undefined) {
-      api
-        .fetch({
-          method: HttpMethod.GET,
-          uri: `${ApiEndpoints.RequetesUrl}/${queryParameters.idRequete}`,
-          parameters: {
-            nomOec: queryParameters.nomOec,
-            prenomOec: queryParameters.prenomOec,
-            statut: queryParameters.statut
-          }
-        })
-        .then(result => {
-          const tmp = reponseRequeteMapperUnitaire(result.body.data);
-          setDataState([tmp]);
-        })
-        .catch(error => {
-          setErrorState(error);
-        });
+      if (officier !== undefined) {
+        api
+          .fetch({
+            method: HttpMethod.GET,
+            uri: `${ApiEndpoints.RequetesUrl}/${queryParameters.idRequete}`,
+            parameters: {
+              nomOec: officier.nom,
+              prenomOec: officier.prenom,
+              statut: queryParameters.statut,
+            },
+          })
+          .then((result) => {
+            const tmp = reponseRequeteMapperUnitaire(result.body.data);
+            setDataState([tmp]);
+          })
+          .catch((error) => {
+            setErrorState(error);
+          });
+      }
     } else {
       setDataState(requestsInformations.data);
     }
   }, [
-    queryParameters.nomOec,
-    queryParameters.prenomOec,
     queryParameters.idRequete,
     queryParameters.statut,
-    requestsInformations
+    requestsInformations,
+    officier,
   ]);
   return {
     dataState,
-    errorState
+    errorState,
   };
 }
