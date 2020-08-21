@@ -8,6 +8,7 @@ import {
 import {
   useRequeteApi,
   IQueryParametersPourRequetes,
+  TypeAppelRequete,
 } from "./DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
@@ -42,6 +43,8 @@ import {
   PopinMessageType,
 } from "../../common/widget/MessagePopin";
 
+import { IUtilisateurSSOApi } from "../../core/LoginHook";
+
 function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
   return (
     <Box
@@ -54,7 +57,13 @@ function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
   );
 }
 
-export const RequetesServicePage: React.FC = () => {
+interface MesRequetesServicePageProps {
+  officier?: IUtilisateurSSOApi;
+}
+
+export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
+  props
+) => {
   const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(
     false
   );
@@ -68,17 +77,13 @@ export const RequetesServicePage: React.FC = () => {
     IQueryParametersAssigneRequetes
   >();
 
-  // TODO : unmock nomOec, prenomOec, add service
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    nomOec: "Garisson",
-    prenomOec: "Juliette",
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
     sens: sortOrderState,
     range: undefined,
-    idArobas: "25648596",
   });
 
   const getColumnHeaders = (utilisateurs: SelectElements[]) => {
@@ -152,12 +157,15 @@ export const RequetesServicePage: React.FC = () => {
     ];
   };
 
-  // TODO : utiliser les vrai pasramètre quand le ws sera mis à jour
   const {
     dataState = [],
     rowsNumberState = 0,
     nextDataLinkState = "",
-  } = useRequeteApi(linkParameters);
+  } = useRequeteApi(
+    linkParameters,
+    TypeAppelRequete.REQUETE_SERVICE,
+    props.officier
+  );
 
   const { sucessState } = useUtilisateurRequeteApi(
     queryChangeOecRequest,
@@ -167,9 +175,9 @@ export const RequetesServicePage: React.FC = () => {
   useEffect(() => {
     setIsSuccessAssigne(true);
   }, [sucessState]);
-  // TODO : utiliser les vrai pasramètre quand le ws sera mis à jour
+
   const users = useUtilisateurApi({
-    idArobas: "25648596",
+    idArobas: props.officier?.idSSO,
   });
 
   const getIconOfficierEtatCivil = (
@@ -226,8 +234,6 @@ export const RequetesServicePage: React.FC = () => {
       let params = [];
       params = link.split("requetes?")[1].split("&");
       queryParameters = {
-        nomOec: params[indexParamsReq.NomOec].split("=")[1],
-        prenomOec: params[indexParamsReq.PrenomOec].split("=")[1],
         statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
         tri: params[indexParamsReq.Tri].split("=")[1],
         sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,

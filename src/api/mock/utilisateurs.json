@@ -2,7 +2,7 @@
   "hasTechnicalError": false,
   "hasBusinessError": false,
   "status": 200,
-  "url": "/rece-securite-api/v1/utilisateurs",
+  "url": "/rece/rece-securite-api/v1/utilisateurs",
   "data": [
     {
       "idArobas": "5ef4b1da1e3ee4adf9615ec7",

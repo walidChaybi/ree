@@ -13,10 +13,11 @@ test("renders boutons d'actions d'une requête", () => {
           return;
         }}
         documentsDelivres={[]}
+        idRequete={"idRequeteTest"}
       />
     </Router>
   );
-  expect(screen.getAllByRole("button").length).toBe(4);
+  expect(screen.getAllByRole("button").length).toBe(5);
   expect(screen.getByText("Retour à mes requêtes")).not.toBeNull();
   expect(screen.getByText("Signer électroniquement")).not.toBeNull();
 });

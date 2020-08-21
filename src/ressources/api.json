@@ -2,13 +2,15 @@
   "apis": [
     {
       "url": "http://localhost",
-      "ports": 3000,
+      "ports": 80,
+      "domain": "rece",
       "name": "rece-requete-api",
       "usedVersions": ["v1"]
     },
     {
       "url": "http://localhost",
-      "ports": 3000,
+      "ports": 80,
+      "domain": "rece",
       "name": "rece-securite-api",
       "usedVersions": ["v1"]
     }

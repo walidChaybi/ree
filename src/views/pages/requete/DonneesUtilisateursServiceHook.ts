@@ -9,7 +9,7 @@ export interface IUtilisateurApi {
 }
 
 export interface IQueryParametersUtilisateursService {
-  idArobas: string;
+  idArobas?: string;
 }
 
 export function useUtilisateurApi(
@@ -20,23 +20,23 @@ export function useUtilisateurApi(
   useEffect(() => {
     setDataState([]);
     setErrorState(undefined);
-
-    const api = ApiManager.getInstance("rece-securite-api", "v1");
-
-    api
-      .fetch({
-        method: HttpMethod.GET,
-        uri: ApiEndpoints.UtilisateursUrl,
-        parameters: {
-          idArobas: queryParameters.idArobas,
-        },
-      })
-      .then((result) => {
-        setDataState(result.body.data);
-      })
-      .catch((error) => {
-        setErrorState(error);
-      });
+    if (queryParameters.idArobas !== undefined) {
+      const api = ApiManager.getInstance("rece-securite-api", "v1");
+      api
+        .fetch({
+          method: HttpMethod.GET,
+          uri: ApiEndpoints.UtilisateursUrl,
+          parameters: {
+            idArobas: queryParameters.idArobas,
+          },
+        })
+        .then((result) => {
+          setDataState(result.body.data);
+        })
+        .catch((error) => {
+          setErrorState(error);
+        });
+    }
   }, [queryParameters.idArobas]);
 
   return {
