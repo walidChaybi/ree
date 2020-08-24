@@ -10,11 +10,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configmap-apache
+  name: rece-apache
 data:
   rece-ui.conf: |
-
-
     # Chargement des modules Apache nécessaires
     LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
     LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
@@ -32,18 +30,27 @@ data:
 
     # Apache exige qu'on notifie explicitement le répertoire (disque) à servir
     # Nous exposons ici les resources statiques (.js, images, .html...)
-    <Directory /var/www/rece/rece-ui>   
-      Order allow,deny
-      Allow from all
+    <Directory /var/www/rece>   
+
+      # Requis par mod_rewrite, https://httpd.apache.org/docs/2.4/fr/mod/mod_rewrite.html
+      Options FollowSymLinks
+
+      # Attention : mod_rewrite fait ses comparaisons sans '/rece' car on est dans un <Directory>
+      RewriteEngine On
+      
+      # Si on arrive sur /rece, on fait un redirect vers /rece-ui
+      RewriteRule ^$ /rece/rece-ui [L,R]
+
+      # Si l'URL est index.html, on sort
+      RewriteRule ^/rece-ui/index\.html$ - [L]
+
       # Réécriture des URLS pour prendre en compte les URL
       # issues de react-router (chemins 'virtuels') qui doivent tous pointer vers /index.html
-      RewriteEngine On
-      RewriteBase /
-      RewriteRule ^index\.html$ - [L]
+      # Si l'URL ne pointe pas vers un fichier ou un répertoire, on renvoie sur index.html
       RewriteCond %{REQUEST_FILENAME} !-f
       RewriteCond %{REQUEST_FILENAME} !-d
       RewriteCond %{REQUEST_FILENAME} !-l
-      RewriteRule . /index.html [L]    
+      RewriteRule rece-ui/.* /rece/rece-ui/index.html [L]    
     </Directory>
 
     # Pour chaque API appelable depuis le navigateur, on prévoit une redirection (depuis cet Apache) vers le Tomcat
@@ -60,3 +67,4 @@ data:
       ShibUseHeaders On
       require valid-user
     </Location>
+
