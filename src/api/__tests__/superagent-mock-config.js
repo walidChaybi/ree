@@ -14,7 +14,7 @@ module.exports = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function(match, params, headers, context) {
+    fixtures: function (match, params, headers, context) {
       /**
        * Returning error codes example:
        *   request.get('http://10.110.204.59:8082/rece/rece-requete-api/v1/404').end(function(err, res){
@@ -97,7 +97,7 @@ module.exports = [
           //   (default is 0 unless context.delay specified, then it's [delay/parts])
           total: 100, // [optional] The total as it will appear in the progress event (default is 100)
           lengthComputable: true, // [optional] The same as it will appear in the progress event (default is true)
-          direction: "upload" // [optional] superagent adds 'download'/'upload' direction to the event (default is 'upload')
+          direction: "upload", // [optional] superagent adds 'download'/'upload' direction to the event (default is 'upload')
         };
         return "Hundred percent!";
       }
@@ -119,9 +119,10 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function(match, data) {
+    get: function (match, data) {
       return {
-        body: data
+        body: data,
+        header: data.headers,
       };
     },
 
@@ -131,10 +132,10 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function(match, data) {
+    post: function (match, data) {
       return {
-        status: 201
+        status: 201,
       };
-    }
-  }
+    },
+  },
 ];

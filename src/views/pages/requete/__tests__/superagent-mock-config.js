@@ -57,6 +57,7 @@ module.exports = [
     get: function (match, data) {
       return {
         body: data,
+        header: data.headers,
       };
     },
 
@@ -114,6 +115,7 @@ module.exports = [
     get: function (match, data) {
       return {
         body: data,
+        header: data.headers,
       };
     },
 
