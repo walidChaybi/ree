@@ -3,16 +3,14 @@ const mockPdf = require("./pdf-base64.json");
 const mockPng = require("./png-base64.json");
 const mockRequetes = require("./generateurRequetes.ts").generateurRequetes();
 const mockUtilisateurs = require("./utilisateurs.json");
+const mockConnectedUser = require("./connectedUser.json");
 
 module.exports = [
   {
     /**
      * regular expression of URL
      */
-    pattern:
-      process.env.NODE_ENV === "production"
-        ? "http://localhost:80/rece/rece-requete-api/v1(.*)"
-        : "http://localhost:80/rece/rece-requete-api/v1(.*)",
+    pattern: "http://localhost:80/rece/rece-requete-api/v1(.*)",
 
     /**
      * returns the data
@@ -123,13 +121,15 @@ module.exports = [
         match[1] ===
           "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC" ||
         match[1] ===
-          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER" ||
+        match[1] ===
+          "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=idSagaDila&sens=ASC&idArobas=idSSOConnectedUser"
       ) {
         return {
           data: mockRequetes.data.slice(0, 105),
-          httpHeaders: {
-            "Content-Range": ["0-15/" + mockRequetes.data.length],
-            Link: [
+          headers: {
+            "content-range": "0-15/" + mockRequetes.data.length,
+            link: [
               '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"',
             ],
           },
@@ -143,9 +143,9 @@ module.exports = [
       ) {
         return {
           data: mockRequetes.data.slice(105, 210),
-          httpHeaders: {
-            "Content-Range": ["106-15/" + mockRequetes.data.length],
-            Link: [
+          headers: {
+            "content-range": "106-15/" + mockRequetes.data.length,
+            link: [
               '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
               '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
             ],
@@ -160,9 +160,9 @@ module.exports = [
       ) {
         return {
           data: mockRequetes.data.slice(210, 315),
-          httpHeaders: {
-            "Content-Range": ["211-15/" + mockRequetes.data.length],
-            Link: [
+          headers: {
+            "content-range": "211-15/" + mockRequetes.data.length,
+            link: [
               "",
               '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
             ],
@@ -178,9 +178,9 @@ module.exports = [
       ) {
         return {
           data: mockRequetes.data.slice(0, 105),
-          httpHeaders: {
-            "Content-Range": ["0-15/" + mockRequetes.data.length],
-            Link: [
+          headers: {
+            "content-range": "0-15/" + mockRequetes.data.length,
+            link: [
               '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596&range=1-105>;rel="next"',
             ],
           },
@@ -194,9 +194,9 @@ module.exports = [
       ) {
         return {
           data: mockRequetes.data.slice(105, 210),
-          httpHeaders: {
-            "Content-Range": ["106-15/" + mockRequetes.data.length],
-            Link: [
+          headers: {
+            "content-range": "106-15/" + mockRequetes.data.length,
+            link: [
               '<http://localhost:80/rece-requete-api/v1//requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
               '<http://localhost:80/rece-requete-api/v1/requetes/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
             ],
@@ -211,9 +211,9 @@ module.exports = [
       ) {
         return {
           data: mockRequetes.data.slice(210, 315),
-          httpHeaders: {
-            "Content-Range": ["211-15/" + mockRequetes.data.length],
-            Link: [
+          headers: {
+            "content-range": "211-15/" + mockRequetes.data.length,
+            link: [
               "",
               '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
             ],
@@ -259,7 +259,6 @@ module.exports = [
         match[1] ===
         "/requetes/1?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
       ) {
-        console.log("DATA MISSING");
         return undefined;
       }
 
@@ -278,9 +277,10 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function (match, data, test1, test2, test3) {
       return {
         body: data,
+        header: data.headers,
       };
     },
 
@@ -300,10 +300,7 @@ module.exports = [
     /**
      * regular expression of URL
      */
-    pattern:
-      process.env.NODE_ENV === "production"
-        ? "http://localhost:80/rece/rece-securite-api/v1(.*)"
-        : "http://localhost:80/rece/rece-securite-api/v1(.*)",
+    pattern: "http://localhost:80/rece/rece-securite-api/v1(.*)",
 
     /**
      * returns the data
@@ -396,6 +393,10 @@ module.exports = [
       if (match[1] === "/utilisateurs?service=servicemock") {
         return { data: mockUtilisateurs.data };
       }
+
+      if (match[1] === "/login") {
+        return { headers: mockConnectedUser };
+      }
     },
 
     /**
@@ -407,6 +408,7 @@ module.exports = [
     get: function (match, data) {
       return {
         body: data,
+        headers: data.headers,
       };
     },
 

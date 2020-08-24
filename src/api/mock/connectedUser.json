@@ -1,0 +1,12 @@
+{
+  "idSSO": "idSSOConnectedUser",
+  "nom": "nomConnectedUser",
+  "prenom": "prenomConnectedUser",
+  "trigramme": "trigrammeConnectedUser",
+  "mail": "mailConnectedUser",
+  "telephone": "telephoneConnectedUser",
+  "section": "sectionConnectedUser",
+  "bureau": "bureauConnectedUser",
+  "departement": "departementConnectedUser",
+  "service": "serviceConnectedUser"
+}

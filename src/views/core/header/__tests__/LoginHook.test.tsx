@@ -3,29 +3,18 @@ import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import config from "../../../../api/mock/superagent-mock-config";
-import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { useRequeteApi, TypeAppelRequete } from "../DonneesRequeteHook";
-const officierMock = require("../../../../api/mock/connectedUser.json");
+import { useLoginApi } from "../../LoginHook";
+
 const superagentMock = require("superagent-mock")(request, config);
 
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const { dataState = [] } = useRequeteApi(
-    {
-      statut: StatutRequete.ASigner,
-      tri: "idSagaDila",
-      sens: "ASC",
-    },
-    TypeAppelRequete.MES_REQUETES,
-    officierMock
-  );
+  const { dataState } = useLoginApi();
   return (
-    <>
-      {dataState.map((element) => {
-        return <div data-testid={element.idRequete}>{element.idRequete}</div>;
-      })}
-    </>
+    <div
+      data-testid={dataState?.idSSO}
+    >{`${dataState?.nom} ${dataState?.prenom}`}</div>
   );
 };
 
@@ -49,4 +38,8 @@ test("monter un composant de test pour vérifier que tout va bien", () => {
       expect(container.querySelector).toBeTruthy();
     }
   });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });
