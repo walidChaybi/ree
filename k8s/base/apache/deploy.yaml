@@ -49,19 +49,19 @@ spec:
       volumes:
         - name: config-shibboleth
           configMap:
-            name: configmap-shibboleth
+            name: rece-shibboleth
         - name: config-shibboleth-idp-metatada
           configMap:
-            name: configmap-shibboleth
+            name: rece-shibboleth
         - name: config-shibboleth-attribute-map
           configMap:
-            name: configmap-shibboleth
+            name: rece-shibboleth
         - name: config-shibboleth-rece-signature-crt
           configMap:
-            name: configmap-shibboleth
+            name: rece-shibboleth
         - name: config-shibboleth-rece-signature-key
           configMap:
-            name: configmap-shibboleth
+            name: rece-shibboleth
         - name: config-shibboleth-rece-chiffrement-crt
           configMap:
             name: rece-shibboleth

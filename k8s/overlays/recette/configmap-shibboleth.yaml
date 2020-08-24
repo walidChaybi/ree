@@ -1,402 +1,402 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configmap-shibboleth
+    name: rece-shibboleth
 data:
-  shibboleth2.xml:  |
-    <SPConfig
-    xmlns="urn:mace:shibboleth:3.0:native:sp:config"
-    xmlns:conf="urn:mace:shibboleth:3.0:native:sp:config" clockSkew="180">
-    <ApplicationDefaults entityID="http://tech.rece.rec.dsi.diplomatie.gouv.fr/shibboleth">
-    <Sessions lifetime="28800" timeout="3600" relayState="ss:mem" checkAddress="false" handlerSSL="false" cookieProps="https">
-    <SSO entityID="https://idparobas.dev.diplomatie.gouv.fr/idp" discoveryProtocol="SAMLDS">
-    SAML2 SAML1
-    </SSO>
-    <Logout>SAML2 Local</Logout>
-    <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
-    <Handler type="Status" Location="/Status" acl="127.0.0.1 ::1"/>
-    <Handler type="Session" Location="/Session" showAttributeValues="false"/>
-    <Handler type="DiscoveryFeed" Location="/DiscoFeed"/>
-    </Sessions>
-    <Errors supportContact="root@localhost" helpLocation="/about.html" styleSheet="/shibboleth-sp/main.css"/>
-    <MetadataProvider type="XML" path="/etc/shibboleth/idp-metadata.xml"/>
-    <AttributeExtractor type="XML" validate="true" reloadChanges="false" path="attribute-map.xml"/>
-    <AttributeResolver type="Query" subjectMatch="true"/>
-    <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
-    <ApplicationOverride id="rece" entityID="http://tech.rece.rec.dsi.diplomatie.gouv.fr/rece">
-    <Sessions lifetime="28800" timeout="3600" checkAddress="false" handlerURL="/rece/Shibboleth.sso" handlerSSL="false" cookieProps="; path=/rece; HttpOnly"/>
-    <CredentialResolver type="Chaining">
-    <CredentialResolver type="File" key="rece_signature.key" certificate="rece_signature.crt" use="signing"/>
-    <CredentialResolver type="File" key="rece_chiffrement.key" certificate="rece_chiffrement.crt" use="encryption"/></CredentialResolver>
-    </ApplicationOverride>
-    </ApplicationDefaults>
-    <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml"/>
-    <ProtocolProvider type="XML" validate="true" reloadChanges="false" path="protocols.xml"/>
-    </SPConfig>
+    shibboleth2.xml: |
+        <SPConfig
+        xmlns="urn:mace:shibboleth:3.0:native:sp:config"
+        xmlns:conf="urn:mace:shibboleth:3.0:native:sp:config" clockSkew="180">
+        <ApplicationDefaults entityID="http://tech.rece.rec.dsi.diplomatie.gouv.fr/shibboleth">
+        <Sessions lifetime="28800" timeout="3600" relayState="ss:mem" checkAddress="false" handlerSSL="false" cookieProps="https">
+        <SSO entityID="https://idparobas.dev.diplomatie.gouv.fr/idp" discoveryProtocol="SAMLDS">
+        SAML2 SAML1
+        </SSO>
+        <Logout>SAML2 Local</Logout>
+        <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
+        <Handler type="Status" Location="/Status" acl="127.0.0.1 ::1"/>
+        <Handler type="Session" Location="/Session" showAttributeValues="false"/>
+        <Handler type="DiscoveryFeed" Location="/DiscoFeed"/>
+        </Sessions>
+        <Errors supportContact="root@localhost" helpLocation="/about.html" styleSheet="/shibboleth-sp/main.css"/>
+        <MetadataProvider type="XML" path="/etc/shibboleth/idp-metadata.xml"/>
+        <AttributeExtractor type="XML" validate="true" reloadChanges="false" path="attribute-map.xml"/>
+        <AttributeResolver type="Query" subjectMatch="true"/>
+        <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
+        <ApplicationOverride id="rece" entityID="http://tech.rece.rec.dsi.diplomatie.gouv.fr/rece">
+        <Sessions lifetime="28800" timeout="3600" checkAddress="false" handlerURL="/rece/Shibboleth.sso" handlerSSL="false" cookieProps="; path=/rece; HttpOnly"/>
+        <CredentialResolver type="Chaining">
+        <CredentialResolver type="File" key="rece_signature.key" certificate="rece_signature.crt" use="signing"/>
+        <CredentialResolver type="File" key="rece_chiffrement.key" certificate="rece_chiffrement.crt" use="encryption"/></CredentialResolver>
+        </ApplicationOverride>
+        </ApplicationDefaults>
+        <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml"/>
+        <ProtocolProvider type="XML" validate="true" reloadChanges="false" path="protocols.xml"/>
+        </SPConfig>
 
-  attribute-map.xml:  |
-    <Attributes xmlns="urn:mace:shibboleth:2.0:attribute-map" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <!--
-    The mappings are a mix of SAML 1.1 and SAML 2.0 attribute names agreed to within the Shibboleth
-    community. The non-OID URNs are SAML 1.1 names and most of the OIDs are SAML 2.0 names, with a
-    few exceptions for newer attributes where the name is the same for both versions. You will
-    usually want to uncomment or map the names for both SAML versions as a unit.
-    -->
-    <!-- New standard identifier attributes for SAML. -->
-    <Attribute name="urn:oasis:names:tc:SAML:attribute:subject-id" id="subject-id">
-        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oasis:names:tc:SAML:attribute:pairwise-id" id="pairwise-id">
-        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <!-- The most typical eduPerson attributes. -->
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" id="eppn">
-        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:mace:dir:attribute-def:eduPersonPrincipalName" id="eppn">
-        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.9" id="affiliation">
-        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:mace:dir:attribute-def:eduPersonScopedAffiliation" id="affiliation">
-        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.7" id="entitlement"/>
-    <Attribute name="urn:mace:dir:attribute-def:eduPersonEntitlement" id="entitlement"/>
-    <!--
-    Legacy pairwise identifier attribute / NameID format, intended to be replaced by the
-    simpler pairwise-id attribute (see top of file).
-    -->
-    <!-- The eduPerson attribute version (note the OID-style name)-->
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" id="persistent-id">
-        <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
-    </Attribute>
-    <!-- The SAML 2.0 NameID Format -->
-    <Attribute name="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" id="persistent-id">
-        <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
-    </Attribute>
-    <Attribute name="Administration" id="Administration"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Id_SSO" id="Id_SSO"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Nom" id="Nom"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Prenom" id="Prenom"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Mail" id="Mail"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Login" id="Login"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Id_Service" id="Id_Service"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Type_Service" id="Type_Service"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Nom_Service" id="Nom_Service"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Grade" id="Grade"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Profil" id="Profil"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Telephone" id="Telephone"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Fax" id="Fax"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <Attribute name="Mobile" id="Mobile"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
-    <!-- Other eduPerson attributes (SAML 2 names followed by SAML 1 names)... -->
-    <!--
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.11" id="assurance"/>    
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.5.1.1" id="member"/>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.6.1.1" id="eduCourseOffering"/>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.6.1.2" id="eduCourseMember"/>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.1" id="unscoped-affiliation">
+    attribute-map.xml: |
+        <Attributes xmlns="urn:mace:shibboleth:2.0:attribute-map" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <!--
+        The mappings are a mix of SAML 1.1 and SAML 2.0 attribute names agreed to within the Shibboleth
+        community. The non-OID URNs are SAML 1.1 names and most of the OIDs are SAML 2.0 names, with a
+        few exceptions for newer attributes where the name is the same for both versions. You will
+        usually want to uncomment or map the names for both SAML versions as a unit.
+        -->
+        <!-- New standard identifier attributes for SAML. -->
+        <Attribute name="urn:oasis:names:tc:SAML:attribute:subject-id" id="subject-id">
+            <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oasis:names:tc:SAML:attribute:pairwise-id" id="pairwise-id">
+            <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <!-- The most typical eduPerson attributes. -->
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" id="eppn">
+            <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:mace:dir:attribute-def:eduPersonPrincipalName" id="eppn">
+            <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.9" id="affiliation">
+            <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:mace:dir:attribute-def:eduPersonScopedAffiliation" id="affiliation">
+            <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.7" id="entitlement"/>
+        <Attribute name="urn:mace:dir:attribute-def:eduPersonEntitlement" id="entitlement"/>
+        <!--
+        Legacy pairwise identifier attribute / NameID format, intended to be replaced by the
+        simpler pairwise-id attribute (see top of file).
+        -->
+        <!-- The eduPerson attribute version (note the OID-style name)-->
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" id="persistent-id">
+            <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
+        </Attribute>
+        <!-- The SAML 2.0 NameID Format -->
+        <Attribute name="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" id="persistent-id">
+            <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
+        </Attribute>
+        <Attribute name="Administration" id="Administration"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Id_SSO" id="Id_SSO"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Nom" id="Nom"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Prenom" id="Prenom"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Mail" id="Mail"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Login" id="Login"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Id_Service" id="Id_Service"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Type_Service" id="Type_Service"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Nom_Service" id="Nom_Service"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Grade" id="Grade"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Profil" id="Profil"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Telephone" id="Telephone"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Fax" id="Fax"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <Attribute name="Mobile" id="Mobile"><AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/></Attribute>
+        <!-- Other eduPerson attributes (SAML 2 names followed by SAML 1 names)... -->
+        <!--
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.11" id="assurance"/>    
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.5.1.1" id="member"/>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.6.1.1" id="eduCourseOffering"/>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.6.1.2" id="eduCourseMember"/>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.1" id="unscoped-affiliation">
+            <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.5" id="primary-affiliation">
+            <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.2" id="nickname"/>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.8" id="primary-orgunit-dn"/>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.4" id="orgunit-dn"/>
+        <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.3" id="org-dn"/>
+        <Attribute name="urn:mace:dir:attribute-def:eduPersonAffiliation" id="unscoped-affiliation">
+            <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:mace:dir:attribute-def:eduPersonPrimaryAffiliation" id="primary-affiliation">
         <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.5" id="primary-affiliation">
-        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.2" id="nickname"/>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.8" id="primary-orgunit-dn"/>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.4" id="orgunit-dn"/>
-    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.3" id="org-dn"/>
-    <Attribute name="urn:mace:dir:attribute-def:eduPersonAffiliation" id="unscoped-affiliation">
-        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:mace:dir:attribute-def:eduPersonPrimaryAffiliation" id="primary-affiliation">
-    <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:mace:dir:attribute-def:eduPersonNickname" id="nickname"/>
-    <Attribute name="urn:mace:dir:attribute-def:eduPersonPrimaryOrgUnitDN" id="primary-orgunit-dn"/>
-    <Attribute name="urn:mace:dir:attribute-def:eduPersonOrgUnitDN" id="orgunit-dn"/>
-    <Attribute name="urn:mace:dir:attribute-def:eduPersonOrgDN" id="org-dn"/>
-    -->
-    <!-- Older LDAP-defined attributes (SAML 2.0 names followed by SAML 1 names)... -->
-    <!--
-    <Attribute name="urn:oid:2.5.4.3" id="cn"/>
-    <Attribute name="urn:oid:2.5.4.4" id="sn"/>
-    <Attribute name="urn:oid:2.5.4.42" id="givenName"/>
-    <Attribute name="urn:oid:2.16.840.1.113730.3.1.241" id="displayName"/>
-    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="uid"/>
-    <Attribute name="urn:oid:0.9.2342.19200300.100.1.3" id="mail"/>
-    <Attribute name="urn:oid:2.5.4.20" id="telephoneNumber"/>
-    <Attribute name="urn:oid:2.5.4.12" id="title"/>
-    <Attribute name="urn:oid:2.5.4.43" id="initials"/>
-    <Attribute name="urn:oid:2.5.4.13" id="description"/>
-    <Attribute name="urn:oid:2.16.840.1.113730.3.1.1" id="carLicense"/>
-    <Attribute name="urn:oid:2.16.840.1.113730.3.1.2" id="departmentNumber"/>
-    <Attribute name="urn:oid:2.16.840.1.113730.3.1.3" id="employeeNumber"/>
-    <Attribute name="urn:oid:2.16.840.1.113730.3.1.4" id="employeeType"/>
-    <Attribute name="urn:oid:2.16.840.1.113730.3.1.39" id="preferredLanguage"/>
-    <Attribute name="urn:oid:0.9.2342.19200300.100.1.10" id="manager"/>
-    <Attribute name="urn:oid:2.5.4.34" id="seeAlso"/>
-    <Attribute name="urn:oid:2.5.4.23" id="facsimileTelephoneNumber"/>
-    <Attribute name="urn:oid:2.5.4.9" id="street"/>
-    <Attribute name="urn:oid:2.5.4.18" id="postOfficeBox"/>
-    <Attribute name="urn:oid:2.5.4.17" id="postalCode"/>
-    <Attribute name="urn:oid:2.5.4.8" id="st"/>
-    <Attribute name="urn:oid:2.5.4.7" id="l"/>
-    <Attribute name="urn:oid:2.5.4.10" id="o"/>
-    <Attribute name="urn:oid:2.5.4.11" id="ou"/>
-    <Attribute name="urn:oid:2.5.4.15" id="businessCategory"/>
-    <Attribute name="urn:oid:2.5.4.19" id="physicalDeliveryOfficeName"/>
-    <Attribute name="urn:mace:dir:attribute-def:cn" id="cn"/>
-    <Attribute name="urn:mace:dir:attribute-def:sn" id="sn"/>
-    <Attribute name="urn:mace:dir:attribute-def:givenName" id="givenName"/>
-    <Attribute name="urn:mace:dir:attribute-def:displayName" id="displayName"/>
-    <Attribute name="urn:mace:dir:attribute-def:uid" id="uid"/>
-    <Attribute name="urn:mace:dir:attribute-def:mail" id="mail"/>
-    <Attribute name="urn:mace:dir:attribute-def:telephoneNumber" id="telephoneNumber"/>
-    <Attribute name="urn:mace:dir:attribute-def:title" id="title"/>
-    <Attribute name="urn:mace:dir:attribute-def:initials" id="initials"/>
-    <Attribute name="urn:mace:dir:attribute-def:description" id="description"/>
-    <Attribute name="urn:mace:dir:attribute-def:carLicense" id="carLicense"/>
-    <Attribute name="urn:mace:dir:attribute-def:departmentNumber" id="departmentNumber"/>
-    <Attribute name="urn:mace:dir:attribute-def:employeeNumber" id="employeeNumber"/>
-    <Attribute name="urn:mace:dir:attribute-def:employeeType" id="employeeType"/>
-    <Attribute name="urn:mace:dir:attribute-def:preferredLanguage" id="preferredLanguage"/>
-    <Attribute name="urn:mace:dir:attribute-def:manager" id="manager"/>
-    <Attribute name="urn:mace:dir:attribute-def:seeAlso" id="seeAlso"/>
-    <Attribute name="urn:mace:dir:attribute-def:facsimileTelephoneNumber" id="facsimileTelephoneNumber"/>
-    <Attribute name="urn:mace:dir:attribute-def:street" id="street"/>
-    <Attribute name="urn:mace:dir:attribute-def:postOfficeBox" id="postOfficeBox"/>
-    <Attribute name="urn:mace:dir:attribute-def:postalCode" id="postalCode"/>
-    <Attribute name="urn:mace:dir:attribute-def:st" id="st"/>
-    <Attribute name="urn:mace:dir:attribute-def:l" id="l"/>
-    <Attribute name="urn:mace:dir:attribute-def:o" id="o"/>
-    <Attribute name="urn:mace:dir:attribute-def:ou" id="ou"/>
-    <Attribute name="urn:mace:dir:attribute-def:businessCategory" id="businessCategory"/>
-    <Attribute name="urn:mace:dir:attribute-def:physicalDeliveryOfficeName" id="physicalDeliveryOfficeName"/>
-    -->
-    <!-- SCHAC attributes... -->
-    <!--
-    <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.9" id="schacHomeOrganization">
-        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.10" id="schacHomeOrganizationType">
-        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.14" id="schacPersonalUniqueCode">
-        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.15" id="schacPersonalUniqueID"/>
-    <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.19" id="schacUserStatus">
-        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.20" id="schacProjectMembership">
-        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.21" id="schacProjectSpecificRole">
-        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
-    </Attribute>
-    -->
-    </Attributes>
+        </Attribute>
+        <Attribute name="urn:mace:dir:attribute-def:eduPersonNickname" id="nickname"/>
+        <Attribute name="urn:mace:dir:attribute-def:eduPersonPrimaryOrgUnitDN" id="primary-orgunit-dn"/>
+        <Attribute name="urn:mace:dir:attribute-def:eduPersonOrgUnitDN" id="orgunit-dn"/>
+        <Attribute name="urn:mace:dir:attribute-def:eduPersonOrgDN" id="org-dn"/>
+        -->
+        <!-- Older LDAP-defined attributes (SAML 2.0 names followed by SAML 1 names)... -->
+        <!--
+        <Attribute name="urn:oid:2.5.4.3" id="cn"/>
+        <Attribute name="urn:oid:2.5.4.4" id="sn"/>
+        <Attribute name="urn:oid:2.5.4.42" id="givenName"/>
+        <Attribute name="urn:oid:2.16.840.1.113730.3.1.241" id="displayName"/>
+        <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="uid"/>
+        <Attribute name="urn:oid:0.9.2342.19200300.100.1.3" id="mail"/>
+        <Attribute name="urn:oid:2.5.4.20" id="telephoneNumber"/>
+        <Attribute name="urn:oid:2.5.4.12" id="title"/>
+        <Attribute name="urn:oid:2.5.4.43" id="initials"/>
+        <Attribute name="urn:oid:2.5.4.13" id="description"/>
+        <Attribute name="urn:oid:2.16.840.1.113730.3.1.1" id="carLicense"/>
+        <Attribute name="urn:oid:2.16.840.1.113730.3.1.2" id="departmentNumber"/>
+        <Attribute name="urn:oid:2.16.840.1.113730.3.1.3" id="employeeNumber"/>
+        <Attribute name="urn:oid:2.16.840.1.113730.3.1.4" id="employeeType"/>
+        <Attribute name="urn:oid:2.16.840.1.113730.3.1.39" id="preferredLanguage"/>
+        <Attribute name="urn:oid:0.9.2342.19200300.100.1.10" id="manager"/>
+        <Attribute name="urn:oid:2.5.4.34" id="seeAlso"/>
+        <Attribute name="urn:oid:2.5.4.23" id="facsimileTelephoneNumber"/>
+        <Attribute name="urn:oid:2.5.4.9" id="street"/>
+        <Attribute name="urn:oid:2.5.4.18" id="postOfficeBox"/>
+        <Attribute name="urn:oid:2.5.4.17" id="postalCode"/>
+        <Attribute name="urn:oid:2.5.4.8" id="st"/>
+        <Attribute name="urn:oid:2.5.4.7" id="l"/>
+        <Attribute name="urn:oid:2.5.4.10" id="o"/>
+        <Attribute name="urn:oid:2.5.4.11" id="ou"/>
+        <Attribute name="urn:oid:2.5.4.15" id="businessCategory"/>
+        <Attribute name="urn:oid:2.5.4.19" id="physicalDeliveryOfficeName"/>
+        <Attribute name="urn:mace:dir:attribute-def:cn" id="cn"/>
+        <Attribute name="urn:mace:dir:attribute-def:sn" id="sn"/>
+        <Attribute name="urn:mace:dir:attribute-def:givenName" id="givenName"/>
+        <Attribute name="urn:mace:dir:attribute-def:displayName" id="displayName"/>
+        <Attribute name="urn:mace:dir:attribute-def:uid" id="uid"/>
+        <Attribute name="urn:mace:dir:attribute-def:mail" id="mail"/>
+        <Attribute name="urn:mace:dir:attribute-def:telephoneNumber" id="telephoneNumber"/>
+        <Attribute name="urn:mace:dir:attribute-def:title" id="title"/>
+        <Attribute name="urn:mace:dir:attribute-def:initials" id="initials"/>
+        <Attribute name="urn:mace:dir:attribute-def:description" id="description"/>
+        <Attribute name="urn:mace:dir:attribute-def:carLicense" id="carLicense"/>
+        <Attribute name="urn:mace:dir:attribute-def:departmentNumber" id="departmentNumber"/>
+        <Attribute name="urn:mace:dir:attribute-def:employeeNumber" id="employeeNumber"/>
+        <Attribute name="urn:mace:dir:attribute-def:employeeType" id="employeeType"/>
+        <Attribute name="urn:mace:dir:attribute-def:preferredLanguage" id="preferredLanguage"/>
+        <Attribute name="urn:mace:dir:attribute-def:manager" id="manager"/>
+        <Attribute name="urn:mace:dir:attribute-def:seeAlso" id="seeAlso"/>
+        <Attribute name="urn:mace:dir:attribute-def:facsimileTelephoneNumber" id="facsimileTelephoneNumber"/>
+        <Attribute name="urn:mace:dir:attribute-def:street" id="street"/>
+        <Attribute name="urn:mace:dir:attribute-def:postOfficeBox" id="postOfficeBox"/>
+        <Attribute name="urn:mace:dir:attribute-def:postalCode" id="postalCode"/>
+        <Attribute name="urn:mace:dir:attribute-def:st" id="st"/>
+        <Attribute name="urn:mace:dir:attribute-def:l" id="l"/>
+        <Attribute name="urn:mace:dir:attribute-def:o" id="o"/>
+        <Attribute name="urn:mace:dir:attribute-def:ou" id="ou"/>
+        <Attribute name="urn:mace:dir:attribute-def:businessCategory" id="businessCategory"/>
+        <Attribute name="urn:mace:dir:attribute-def:physicalDeliveryOfficeName" id="physicalDeliveryOfficeName"/>
+        -->
+        <!-- SCHAC attributes... -->
+        <!--
+        <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.9" id="schacHomeOrganization">
+            <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.10" id="schacHomeOrganizationType">
+            <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.14" id="schacPersonalUniqueCode">
+            <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.15" id="schacPersonalUniqueID"/>
+        <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.19" id="schacUserStatus">
+            <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.20" id="schacProjectMembership">
+            <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        <Attribute name="urn:oid:1.3.6.1.4.1.25178.1.2.21" id="schacProjectSpecificRole">
+            <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+        </Attribute>
+        -->
+        </Attributes>
 
-  idp-metadata.xml:  |
-    <?xml version="1.0" encoding="UTF-8"?>
-    <EntityDescriptor  xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui" entityID="https://idparobas.dev.diplomatie.gouv.fr/idp">
-    <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-    <Extensions>
-    <shibmd:Scope regexp="false">dev.diplomatie.gouv.fr</shibmd:Scope>
-    <mdui:UIInfo>
-    <mdui:DisplayName xml:lang="fr">IdP MAE idparobas.dev.diplomatie.gouv.fr</mdui:DisplayName>
-    <mdui:DisplayName xml:lang="en">IdP MAE idparobas.dev.diplomatie.gouv.fr</mdui:DisplayName>
-    <mdui:Description xml:lang="fr">IdP MAE idparobas.dev.diplomatie.gouv.fr</mdui:Description>
-    <mdui:Description xml:lang="en">IdP MAE idparobas.dev.diplomatie.gouv.fr</mdui:Description>
-    <mdui:Keywords xml:lang="fr">MAE</mdui:Keywords>
-    <mdui:Keywords xml:lang="en">MAE</mdui:Keywords>
-    <mdui:Logo height="80" width="60">https://idparobas.dev.diplomatie.gouv.fr/idp/images/logo-marianne.jpg</mdui:Logo>
-    <mdui:Logo height="16" width="16">https://idparobas.dev.diplomatie.gouv.fr/idp/images/logo-marianne.jpg</mdui:Logo>                
-    </mdui:UIInfo>
-    </Extensions>
-    <KeyDescriptor use="signing"><ds:KeyInfo><ds:X509Data><ds:X509Certificate>
-    MIIFsDCCA5igAwIBAgIBWTANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJGUjEq
-    MCgGA1UECgwhTUlOSVNURVJFIERFUyBBRkZBSVJFUyBFVFJBTkdFUkVTMRwwGgYD
-    VQQLDBMwMDAyIDEyMDAwNjAxMDAwMDI1MSMwIQYDVQQDDBpBQyBRVUFMSUYgSU5G
-    UkFTVFJVQ1RVUkUgMjAeFw0xNzAxMTAwOTMxNDJaFw0yMDAxMTAwOTMxNDJaMIGG
-    MQswCQYDVQQGEwJGUjEqMCgGA1UECgwhTUlOSVNURVJFIERFUyBBRkZBSVJFUyBF
-    VFJBTkdFUkVTMRwwGgYDVQQLDBMwMDAyIDEyMDAwNjAxMDAwMDI1MS0wKwYDVQQD
-    DCRpZHAuaWRwYXJvYmFzLmRldi5kaXBsb21hdGllLmdvdXYuZnIwggEiMA0GCSqG
-    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDUaEVzZyhv9KOVkmDPkN/piO6ZhsW/dBU9
-    buWyTJEXW3otVlX9ch1usH7RuZEurWIcWJEevyhRfwiz0H/dgq+f7HRH2/FbivOQ
-    pZ0Esm2saLzUHkUhfoe+vh1Tr/yMXJDQDXaa29qKrJIyQdoZp3PlDhyREd9MIUWM
-    l7sie8NJ4lBnH2dD/AyyKY4EaZtwTmYZAVxqsIKXtw3W43zE3jphQrDxUqHtovda
-    0R1K8NDzBKVaTgKQO0OT77RuGAV/AAQwpPA7L/qG6/tm6FnUniovQBjV/l9EYbzk
-    /RyWaQBHswsAmerqoRC8gXy/9EjJ/8AUnW5pFPCFEwjqwgyfoSuJAgMBAAGjggEw
-    MIIBLDAdBgNVHQ4EFgQUS9SpuGrwuyG+b+vFqWJ1Lazxc10wHwYDVR0jBBgwFoAU
-    4Xk2iIQgezoYS9UpMPxj00BJMUQwGgYDVR0gBBMwETAPBg0qgXoBgVZFAwECAQEB
-    MA4GA1UdDwEB/wQEAwIHgDBZBgNVHREEUjBQhixodHRwczovL2lkcGFyb2Jhcy5k
-    ZXYuZGlwbG9tYXRpZS5nb3V2LmZyL2lkcIIgaWRwYXJvYmFzLmRldi5kaXBsb21h
-    dGllLmdvdXYuZnIwYwYDVR0fBFwwWjBYoFagVIZSaHR0cDovL2NybC5wcmVwLmRp
-    cGxvbWF0aWUuZ291di5mci9BQ19JbmZyYXN0cnVjdHVyZV8yL0NybC9BQ19JTkZS
-    QVNUUlVDVFVSRV8yLmNybDANBgkqhkiG9w0BAQsFAAOCAgEAUHalYvyeUAwJpELb
-    HTazwwTfYmBEyXWy051OvTX5JCJB70hmnunNBU4li/yMXj/SPBk5lCRckFbprYiA
-    WE+Axi84zarUh97Eh7qDhATUVHGcwTwxvOCBIHat8oI89bJbsk4mMHI0eIA3PuQq
-    Q6ZZbdqYruz7nMvEsshkGzUz4WnDXXtvVL/HFwnK7RV5fOVhjOnXXBMfJimK5fUo
-    /Mz68AoPlqSw3bb5EBnGcv9xdNOWmEnKkOCaw0Z52Z0G57LJ4xkVbL7MfXglM9+Y
-    nnFUfwywtLG3sP3fDsd8XncLz7pq/iCprVN838LZHM+WVPFKDCaxer790azxDNmF
-    gIW6WSdFbIHNtTDaX2qwxqCRqegZ6z+g665HCxFXRG8/0zTjjROGrmdeI5rkn+at
-    OLClXRgVjliXRiyHf9c4h5BDCDyPz9D3SHqYtKh2aIS9GKFg2/RvsbZ5NwWjlK1x
-    IeTMPnx8sEalqYkzm9zQOG+wbcbemJI1SsBnCCeyZbdA4yLv2ZYmZwqvZBMie3b8
-    5tXDtr5sHUhwJmLiCl3yRfKgWLZlZ4RukFqlmBcuEJR2X3X1fNU2YlBsRtii8smb
-    8wXSEIb6wz9eJ3yxXCFeYljaqcyVs3RsucFp8mQ5VDwHv/Ua0UZU/0wD0M5A+Rtr
-    B2HDcwW7ZCoBjMaMWexnqrHWik8=
-    </ds:X509Certificate></ds:X509Data></ds:KeyInfo></KeyDescriptor>
-    <KeyDescriptor use="encryption"><ds:KeyInfo><ds:X509Data><ds:X509Certificate>
-    MIIFwzCCA6ugAwIBAgIBWDANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJGUjEq
-    MCgGA1UECgwhTUlOSVNURVJFIERFUyBBRkZBSVJFUyBFVFJBTkdFUkVTMRwwGgYD
-    VQQLDBMwMDAyIDEyMDAwNjAxMDAwMDI1MSMwIQYDVQQDDBpBQyBRVUFMSUYgSU5G
-    UkFTVFJVQ1RVUkUgMjAeFw0xNzAxMTAwOTMwNTRaFw0yMDAxMTAwOTMwNTRaMIGG
-    MQswCQYDVQQGEwJGUjEqMCgGA1UECgwhTUlOSVNURVJFIERFUyBBRkZBSVJFUyBF
-    VFJBTkdFUkVTMRwwGgYDVQQLDBMwMDAyIDEyMDAwNjAxMDAwMDI1MS0wKwYDVQQD
-    DCRpZHAuaWRwYXJvYmFzLmRldi5kaXBsb21hdGllLmdvdXYuZnIwggEiMA0GCSqG
-    SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCkTs8KdisYi87Xg1J6GnFOGqxjFct81KKc
-    1mg55sk413VSBxbeAbuPHvfFSBu1dEgy+klt+2nZ88MFE0eWIdJ5osYRupFQCBws
-    4ntJyhfcaXOWMQ9DmyT0l2t8oFc5ZlESx2+Rwhz1u1cEiZuXyyyK/jdqBBX3+rt3
-    HAcboV+aHg+nKlBlNEv+/xW+yX+5NIYG0F6jbAxOdxKcRd4sEsYmcFyEwo0NfB2S
-    9wmOZldxHBSbM/LuAkIU2wZG9dE75h/8JwXNfsn7SjlCN/8WriIbJyt2xDZdduCu
-    6mTmNdeZf1T461FzzEbfGbKFayJ11Uk9WeRx01MMfev1+1soyTpZAgMBAAGjggFD
-    MIIBPzAdBgNVHQ4EFgQUY8CB85rMWSstS3lMNE8Hf2Yb8IYwHwYDVR0jBBgwFoAU
-    4Xk2iIQgezoYS9UpMPxj00BJMUQwGgYDVR0gBBMwETAPBg0qgXoBgVZFAwECAQMB
-    MBEGCWCGSAGG+EIBAQQEAwIFIDAOBgNVHQ8BAf8EBAMCBBAwWQYDVR0RBFIwUIYs
-    aHR0cHM6Ly9pZHBhcm9iYXMuZGV2LmRpcGxvbWF0aWUuZ291di5mci9pZHCCIGlk
-    cGFyb2Jhcy5kZXYuZGlwbG9tYXRpZS5nb3V2LmZyMGMGA1UdHwRcMFowWKBWoFSG
-    Umh0dHA6Ly9jcmwucHJlcC5kaXBsb21hdGllLmdvdXYuZnIvQUNfSW5mcmFzdHJ1
-    Y3R1cmVfMi9DcmwvQUNfSU5GUkFTVFJVQ1RVUkVfMi5jcmwwDQYJKoZIhvcNAQEL
-    BQADggIBACL7PPlwyufrZ6ytUZogOq5K1sLiIUQtcHiL/Ih5vw2dPd9Cgd7elKYI
-    lEbRuxMOJh77GXwMMtNrD37ekAzut36Gdljm8EoASQTB1jyiAuHXXfvNZURZsQcd
-    LDmHeUqvjTj9O4JaW1jlviB3Rqmb5HiNacOy2OzjGONQeVrASJe+lZhih+EGPsAP
-    bJahMAOhQ9RtQMecp7GOKuTTkujud0jYVJUJ/ect+KqlBhaGJWR3dCkmBTDvuft+
-    nYgvDU1XazpNGhB/zQa4tJmYWYPMhP8M9VrPwEY09rTpCUkAWtqbvLlD4fUBWn3L
-    SxfoY0EAlLp9Ng/fMS7aNHXql102p5029piJxRW5vR/34nk75w1s6lutjXjzt9bT
-    goyjHl9XORJTPxYUbtqTCe8qM7/54wT2ObRrVqQ9/CgiQkEUOkssW9ERXtA334RB
-    YFtDPAEwYeINGeFiAkfv/0Mf1Z7kjmBssME+doW7VqXdryhkFPt/e7UkKTWEEWJb
-    WSSCIiYUPl3ALFVLQiIWgy4X01AVthGuU8B7IWETlVRWAzUXt+CW9iT3pJx1bsao
-    aYb9Eju3dPXxDhagU2Srv6zAXdNRi3t1oiJbZpmBHx2TGdpEhO6ApnQUWjAw0mDx
-    MBCh8ZzACdr2zFNA4XFF7qFMqkZz6flOPt8IEQ/eEuh9Yhh4QqQf
-    </ds:X509Certificate></ds:X509Data></ds:KeyInfo></KeyDescriptor>
-    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/POST/SSO"/>
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/POST-SimpleSign/SSO"/>
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/Redirect/SSO"/>
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/Redirect/SLO"/>
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/POST/SLO"/>
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/POST-SimpleSign/SLO"/>
-    </IDPSSODescriptor>
-    </EntityDescriptor>
-  
-  rece_chiffrement.crt: |
-    -----BEGIN CERTIFICATE-----
-    MIID5zCCAs+gAwIBAgIUfghDKOyNlrs1Bcglw+4zzlo2SiwwDQYJKoZIhvcNAQEL
-    BQAwgYIxCzAJBgNVBAYTAkZSMQ8wDQYDVQQIDAZOYW50ZXMxDzANBgNVBAcMBk5h
-    bnRlczENMAsGA1UECgwETUVBRTENMAsGA1UECwwETUVBRTEQMA4GA1UEAwwHc2xh
-    b3VpbjEhMB8GCSqGSIb3DQEJARYSbnNsYW91aUBzb2RpZnJhbmNlMB4XDTIwMDgw
-    NTEzMTA1NVoXDTQwMDczMTEzMTA1NVowgYIxCzAJBgNVBAYTAkZSMQ8wDQYDVQQI
-    DAZOYW50ZXMxDzANBgNVBAcMBk5hbnRlczENMAsGA1UECgwETUVBRTENMAsGA1UE
-    CwwETUVBRTEQMA4GA1UEAwwHc2xhb3VpbjEhMB8GCSqGSIb3DQEJARYSbnNsYW91
-    aUBzb2RpZnJhbmNlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzvhW
-    xFScErQPAKPybhscPy8s21DQPdDvI38AFOez/7s8cNT9TSTRHv3D6I1mJJoRprwX
-    NRDUXk0pDXpWmVHPULRT28RysAYsHv4Pnp2DejmKgO1bXIeOAvsftSy9vtBRxdcX
-    yaf9MOunP8hnOYHpcrSjs7pYMa19P0iUR4OCBCxGHdA/a475VLz2sx17fY9jGjwS
-    tWXNLxA/nL/GwdS3Qa4s7Yl6vjaSG+LeW0LPEiexgN2Vk0CVQL7K9sep79xCZ2k9
-    vB1etGOwmx+PVoRCKIoZqClGNEd6AUBMyf2W/StmJFPr1YdtTJxhiBdPQW5v87YT
-    ZNrRC3aVDeT/hijbEwIDAQABo1MwUTAdBgNVHQ4EFgQU1Cg/YwGT4xC7R8fdAptx
-    rwvaxGMwHwYDVR0jBBgwFoAU1Cg/YwGT4xC7R8fdAptxrwvaxGMwDwYDVR0TAQH/
-    BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAXyFwV7GNI8MCReffvFV+26N9oN/0
-    KPn18lDkad8dFw5REagkxh/CqsI20BXfd/GLmDQM2aKDX2N23B93n6FO0YrKNa2S
-    cgB3FKyZEllSl+D4qP6/acgLneO0TTSfx7BhBlHf8Q34PTy+IqM1GT9rIua/Bq90
-    Yr83iQeTUmdf8EDKE4uM623MS9fpnNY5M58oXNSGO2gXJgD9D0L+/Z6vc18D64pI
-    bNYHjycSVHz1/mr6xBWvZGUYvXnppXH5mtsvSWarurYdT3G4IlyndQPTDbU+z+Ql
-    aFUOFa+DBYq4g70phsjJ5yyX8XoEtqLHHD8+bTOK2lorLhRH9Bx3g+bmZg==
-    -----END CERTIFICATE-----	
+    idp-metadata.xml: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <EntityDescriptor  xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui" entityID="https://idparobas.dev.diplomatie.gouv.fr/idp">
+        <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <Extensions>
+        <shibmd:Scope regexp="false">dev.diplomatie.gouv.fr</shibmd:Scope>
+        <mdui:UIInfo>
+        <mdui:DisplayName xml:lang="fr">IdP MAE idparobas.dev.diplomatie.gouv.fr</mdui:DisplayName>
+        <mdui:DisplayName xml:lang="en">IdP MAE idparobas.dev.diplomatie.gouv.fr</mdui:DisplayName>
+        <mdui:Description xml:lang="fr">IdP MAE idparobas.dev.diplomatie.gouv.fr</mdui:Description>
+        <mdui:Description xml:lang="en">IdP MAE idparobas.dev.diplomatie.gouv.fr</mdui:Description>
+        <mdui:Keywords xml:lang="fr">MAE</mdui:Keywords>
+        <mdui:Keywords xml:lang="en">MAE</mdui:Keywords>
+        <mdui:Logo height="80" width="60">https://idparobas.dev.diplomatie.gouv.fr/idp/images/logo-marianne.jpg</mdui:Logo>
+        <mdui:Logo height="16" width="16">https://idparobas.dev.diplomatie.gouv.fr/idp/images/logo-marianne.jpg</mdui:Logo>                
+        </mdui:UIInfo>
+        </Extensions>
+        <KeyDescriptor use="signing"><ds:KeyInfo><ds:X509Data><ds:X509Certificate>
+        MIIFsDCCA5igAwIBAgIBWTANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJGUjEq
+        MCgGA1UECgwhTUlOSVNURVJFIERFUyBBRkZBSVJFUyBFVFJBTkdFUkVTMRwwGgYD
+        VQQLDBMwMDAyIDEyMDAwNjAxMDAwMDI1MSMwIQYDVQQDDBpBQyBRVUFMSUYgSU5G
+        UkFTVFJVQ1RVUkUgMjAeFw0xNzAxMTAwOTMxNDJaFw0yMDAxMTAwOTMxNDJaMIGG
+        MQswCQYDVQQGEwJGUjEqMCgGA1UECgwhTUlOSVNURVJFIERFUyBBRkZBSVJFUyBF
+        VFJBTkdFUkVTMRwwGgYDVQQLDBMwMDAyIDEyMDAwNjAxMDAwMDI1MS0wKwYDVQQD
+        DCRpZHAuaWRwYXJvYmFzLmRldi5kaXBsb21hdGllLmdvdXYuZnIwggEiMA0GCSqG
+        SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDUaEVzZyhv9KOVkmDPkN/piO6ZhsW/dBU9
+        buWyTJEXW3otVlX9ch1usH7RuZEurWIcWJEevyhRfwiz0H/dgq+f7HRH2/FbivOQ
+        pZ0Esm2saLzUHkUhfoe+vh1Tr/yMXJDQDXaa29qKrJIyQdoZp3PlDhyREd9MIUWM
+        l7sie8NJ4lBnH2dD/AyyKY4EaZtwTmYZAVxqsIKXtw3W43zE3jphQrDxUqHtovda
+        0R1K8NDzBKVaTgKQO0OT77RuGAV/AAQwpPA7L/qG6/tm6FnUniovQBjV/l9EYbzk
+        /RyWaQBHswsAmerqoRC8gXy/9EjJ/8AUnW5pFPCFEwjqwgyfoSuJAgMBAAGjggEw
+        MIIBLDAdBgNVHQ4EFgQUS9SpuGrwuyG+b+vFqWJ1Lazxc10wHwYDVR0jBBgwFoAU
+        4Xk2iIQgezoYS9UpMPxj00BJMUQwGgYDVR0gBBMwETAPBg0qgXoBgVZFAwECAQEB
+        MA4GA1UdDwEB/wQEAwIHgDBZBgNVHREEUjBQhixodHRwczovL2lkcGFyb2Jhcy5k
+        ZXYuZGlwbG9tYXRpZS5nb3V2LmZyL2lkcIIgaWRwYXJvYmFzLmRldi5kaXBsb21h
+        dGllLmdvdXYuZnIwYwYDVR0fBFwwWjBYoFagVIZSaHR0cDovL2NybC5wcmVwLmRp
+        cGxvbWF0aWUuZ291di5mci9BQ19JbmZyYXN0cnVjdHVyZV8yL0NybC9BQ19JTkZS
+        QVNUUlVDVFVSRV8yLmNybDANBgkqhkiG9w0BAQsFAAOCAgEAUHalYvyeUAwJpELb
+        HTazwwTfYmBEyXWy051OvTX5JCJB70hmnunNBU4li/yMXj/SPBk5lCRckFbprYiA
+        WE+Axi84zarUh97Eh7qDhATUVHGcwTwxvOCBIHat8oI89bJbsk4mMHI0eIA3PuQq
+        Q6ZZbdqYruz7nMvEsshkGzUz4WnDXXtvVL/HFwnK7RV5fOVhjOnXXBMfJimK5fUo
+        /Mz68AoPlqSw3bb5EBnGcv9xdNOWmEnKkOCaw0Z52Z0G57LJ4xkVbL7MfXglM9+Y
+        nnFUfwywtLG3sP3fDsd8XncLz7pq/iCprVN838LZHM+WVPFKDCaxer790azxDNmF
+        gIW6WSdFbIHNtTDaX2qwxqCRqegZ6z+g665HCxFXRG8/0zTjjROGrmdeI5rkn+at
+        OLClXRgVjliXRiyHf9c4h5BDCDyPz9D3SHqYtKh2aIS9GKFg2/RvsbZ5NwWjlK1x
+        IeTMPnx8sEalqYkzm9zQOG+wbcbemJI1SsBnCCeyZbdA4yLv2ZYmZwqvZBMie3b8
+        5tXDtr5sHUhwJmLiCl3yRfKgWLZlZ4RukFqlmBcuEJR2X3X1fNU2YlBsRtii8smb
+        8wXSEIb6wz9eJ3yxXCFeYljaqcyVs3RsucFp8mQ5VDwHv/Ua0UZU/0wD0M5A+Rtr
+        B2HDcwW7ZCoBjMaMWexnqrHWik8=
+        </ds:X509Certificate></ds:X509Data></ds:KeyInfo></KeyDescriptor>
+        <KeyDescriptor use="encryption"><ds:KeyInfo><ds:X509Data><ds:X509Certificate>
+        MIIFwzCCA6ugAwIBAgIBWDANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJGUjEq
+        MCgGA1UECgwhTUlOSVNURVJFIERFUyBBRkZBSVJFUyBFVFJBTkdFUkVTMRwwGgYD
+        VQQLDBMwMDAyIDEyMDAwNjAxMDAwMDI1MSMwIQYDVQQDDBpBQyBRVUFMSUYgSU5G
+        UkFTVFJVQ1RVUkUgMjAeFw0xNzAxMTAwOTMwNTRaFw0yMDAxMTAwOTMwNTRaMIGG
+        MQswCQYDVQQGEwJGUjEqMCgGA1UECgwhTUlOSVNURVJFIERFUyBBRkZBSVJFUyBF
+        VFJBTkdFUkVTMRwwGgYDVQQLDBMwMDAyIDEyMDAwNjAxMDAwMDI1MS0wKwYDVQQD
+        DCRpZHAuaWRwYXJvYmFzLmRldi5kaXBsb21hdGllLmdvdXYuZnIwggEiMA0GCSqG
+        SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCkTs8KdisYi87Xg1J6GnFOGqxjFct81KKc
+        1mg55sk413VSBxbeAbuPHvfFSBu1dEgy+klt+2nZ88MFE0eWIdJ5osYRupFQCBws
+        4ntJyhfcaXOWMQ9DmyT0l2t8oFc5ZlESx2+Rwhz1u1cEiZuXyyyK/jdqBBX3+rt3
+        HAcboV+aHg+nKlBlNEv+/xW+yX+5NIYG0F6jbAxOdxKcRd4sEsYmcFyEwo0NfB2S
+        9wmOZldxHBSbM/LuAkIU2wZG9dE75h/8JwXNfsn7SjlCN/8WriIbJyt2xDZdduCu
+        6mTmNdeZf1T461FzzEbfGbKFayJ11Uk9WeRx01MMfev1+1soyTpZAgMBAAGjggFD
+        MIIBPzAdBgNVHQ4EFgQUY8CB85rMWSstS3lMNE8Hf2Yb8IYwHwYDVR0jBBgwFoAU
+        4Xk2iIQgezoYS9UpMPxj00BJMUQwGgYDVR0gBBMwETAPBg0qgXoBgVZFAwECAQMB
+        MBEGCWCGSAGG+EIBAQQEAwIFIDAOBgNVHQ8BAf8EBAMCBBAwWQYDVR0RBFIwUIYs
+        aHR0cHM6Ly9pZHBhcm9iYXMuZGV2LmRpcGxvbWF0aWUuZ291di5mci9pZHCCIGlk
+        cGFyb2Jhcy5kZXYuZGlwbG9tYXRpZS5nb3V2LmZyMGMGA1UdHwRcMFowWKBWoFSG
+        Umh0dHA6Ly9jcmwucHJlcC5kaXBsb21hdGllLmdvdXYuZnIvQUNfSW5mcmFzdHJ1
+        Y3R1cmVfMi9DcmwvQUNfSU5GUkFTVFJVQ1RVUkVfMi5jcmwwDQYJKoZIhvcNAQEL
+        BQADggIBACL7PPlwyufrZ6ytUZogOq5K1sLiIUQtcHiL/Ih5vw2dPd9Cgd7elKYI
+        lEbRuxMOJh77GXwMMtNrD37ekAzut36Gdljm8EoASQTB1jyiAuHXXfvNZURZsQcd
+        LDmHeUqvjTj9O4JaW1jlviB3Rqmb5HiNacOy2OzjGONQeVrASJe+lZhih+EGPsAP
+        bJahMAOhQ9RtQMecp7GOKuTTkujud0jYVJUJ/ect+KqlBhaGJWR3dCkmBTDvuft+
+        nYgvDU1XazpNGhB/zQa4tJmYWYPMhP8M9VrPwEY09rTpCUkAWtqbvLlD4fUBWn3L
+        SxfoY0EAlLp9Ng/fMS7aNHXql102p5029piJxRW5vR/34nk75w1s6lutjXjzt9bT
+        goyjHl9XORJTPxYUbtqTCe8qM7/54wT2ObRrVqQ9/CgiQkEUOkssW9ERXtA334RB
+        YFtDPAEwYeINGeFiAkfv/0Mf1Z7kjmBssME+doW7VqXdryhkFPt/e7UkKTWEEWJb
+        WSSCIiYUPl3ALFVLQiIWgy4X01AVthGuU8B7IWETlVRWAzUXt+CW9iT3pJx1bsao
+        aYb9Eju3dPXxDhagU2Srv6zAXdNRi3t1oiJbZpmBHx2TGdpEhO6ApnQUWjAw0mDx
+        MBCh8ZzACdr2zFNA4XFF7qFMqkZz6flOPt8IEQ/eEuh9Yhh4QqQf
+        </ds:X509Certificate></ds:X509Data></ds:KeyInfo></KeyDescriptor>
+        <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/POST/SSO"/>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/POST-SimpleSign/SSO"/>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/Redirect/SSO"/>
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/Redirect/SLO"/>
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/POST/SLO"/>
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://idparobas.dev.diplomatie.gouv.fr/idp/profile/SAML2/POST-SimpleSign/SLO"/>
+        </IDPSSODescriptor>
+        </EntityDescriptor>
 
-  rece_chiffrement.key: |
-    -----BEGIN PRIVATE KEY-----
-     MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDO+FbEVJwStA8A
-    o/JuGxw/LyzbUNA90O8jfwAU57P/uzxw1P1NJNEe/cPojWYkmhGmvBc1ENReTSkN
-    elaZUc9QtFPbxHKwBiwe/g+enYN6OYqA7Vtch44C+x+1LL2+0FHF1xfJp/0w66c/
-    yGc5gelytKOzulgxrX0/SJRHg4IELEYd0D9rjvlUvPazHXt9j2MaPBK1Zc0vED+c
-    v8bB1LdBriztiXq+NpIb4t5bQs8SJ7GA3ZWTQJVAvsr2x6nv3EJnaT28HV60Y7Cb
-    H49WhEIoihmoKUY0R3oBQEzJ/Zb9K2YkU+vVh21MnGGIF09Bbm/zthNk2tELdpUN
-    5P+GKNsTAgMBAAECggEAXQe/aIxngviwbadDxz4kWjpIPWR71e1eMGRbkwn7HI36
-    wvTZzp0n6nhCYPt92CHwoTOWcuHXs3OXall9J3lgaHRF5VjN/FUp69xjBPbkLEJF
-    AWKvWE4OBUT/oZ40w9o7h2QBa0E5S44BJWhdDbpZRpfvpU+zaNEEpTdofySbgmfd
-    L7Jhvjsce7mVpcFVVMq9GU9Dds4uYrP/PZ+wdpBHkcDJ6hCmOxrqesRMelx0tj2Y
-    wr4nN7LzJmL/ACqIgS4qyM8S3RZdNjNREjYx8AUgpCLyxqr5LFvInR7xX7XmeGFQ
-    4Brzgt1x+gbYUsTCM/luctvv/saHli4SCNy2f4FkQQKBgQDs81Yb96xTJo8wq20/
-    Qql//vZ8BLnFrROpzfuyitk3dm+PWUnp1jMCr/9YNWm/U7Raa4vQmj+OJmC4Crxt
-    kmLizqjx93MR1X5qz3IhCBGBHmVGSj7xU1c8xmDb4YL/H+72WQ16ATSyvFdIyI91
-    iOhsHgbWToUSSMTRXd6wJ1+RkQKBgQDfm/oHxv4I7hzv5+QAvCPeGbjH8kUOS8Fw
-    cUjZZXgih2eaIVtsuMxLFVf2t31nY36p5jW3pJocABYs5WQh08vCFaHvTTbsu7Zn
-    PXmimmAL9Oz0yxF086qfAXxVBhoTpZ6pT83puQ/bpMEsnh2YDNuTjZGY3k/9L410
-    TUvAXDKQYwKBgQDQTRa83V0rd/FXGsyeWS8C65Op8MmTYpSvqPoEuhU8saxe+2KD
-    457SVQAHfmUpIh+hgXvW9VK71zcdc6q0NIUj2AMjO6J34hQRN66gJSSmOp9TTH/K
-    zLYbIlYR1ky/lUYQYLb9M0QtgG7G+DFNZP7V1QuzqDFJopkLaRcUCnj0UQKBgQDQ
-    U79Uc57FryIimUchMCeyiwBOuHaB5S5plgGrGRAeC00Imj9VQa6D3XTAlR8urdGa
-    dLJjT+WMZMBEP8tUgMB7KDBghO3BDPnZobqrNWx6d0w0nOS8sy+pSHcPt8mfuFPj
-    pkhPkm0l049uBDnKKWCBTgnyBF09o4oEaudCZiNtxQKBgQCaPx+k83FRzuDJWfVY
-    zeTUk8bwzuHnxkZaSfWZPNNLLUa4IlMSJE9Z84HLWQGDaa4p2T9MfgpfXXJ4MO3x
-    yazAUqyflAIiwedP1huLt0a0ta9mb9kn0hwnYSCkd5EZ+E9jlszVmsDvWq4X9SJm
-    Kky2KHd+a8DDULwiHfprAp2+UQ==
-    -----END PRIVATE KEY-----	
+    rece_chiffrement.crt: |
+        -----BEGIN CERTIFICATE-----
+        MIID5zCCAs+gAwIBAgIUfghDKOyNlrs1Bcglw+4zzlo2SiwwDQYJKoZIhvcNAQEL
+        BQAwgYIxCzAJBgNVBAYTAkZSMQ8wDQYDVQQIDAZOYW50ZXMxDzANBgNVBAcMBk5h
+        bnRlczENMAsGA1UECgwETUVBRTENMAsGA1UECwwETUVBRTEQMA4GA1UEAwwHc2xh
+        b3VpbjEhMB8GCSqGSIb3DQEJARYSbnNsYW91aUBzb2RpZnJhbmNlMB4XDTIwMDgw
+        NTEzMTA1NVoXDTQwMDczMTEzMTA1NVowgYIxCzAJBgNVBAYTAkZSMQ8wDQYDVQQI
+        DAZOYW50ZXMxDzANBgNVBAcMBk5hbnRlczENMAsGA1UECgwETUVBRTENMAsGA1UE
+        CwwETUVBRTEQMA4GA1UEAwwHc2xhb3VpbjEhMB8GCSqGSIb3DQEJARYSbnNsYW91
+        aUBzb2RpZnJhbmNlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzvhW
+        xFScErQPAKPybhscPy8s21DQPdDvI38AFOez/7s8cNT9TSTRHv3D6I1mJJoRprwX
+        NRDUXk0pDXpWmVHPULRT28RysAYsHv4Pnp2DejmKgO1bXIeOAvsftSy9vtBRxdcX
+        yaf9MOunP8hnOYHpcrSjs7pYMa19P0iUR4OCBCxGHdA/a475VLz2sx17fY9jGjwS
+        tWXNLxA/nL/GwdS3Qa4s7Yl6vjaSG+LeW0LPEiexgN2Vk0CVQL7K9sep79xCZ2k9
+        vB1etGOwmx+PVoRCKIoZqClGNEd6AUBMyf2W/StmJFPr1YdtTJxhiBdPQW5v87YT
+        ZNrRC3aVDeT/hijbEwIDAQABo1MwUTAdBgNVHQ4EFgQU1Cg/YwGT4xC7R8fdAptx
+        rwvaxGMwHwYDVR0jBBgwFoAU1Cg/YwGT4xC7R8fdAptxrwvaxGMwDwYDVR0TAQH/
+        BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAXyFwV7GNI8MCReffvFV+26N9oN/0
+        KPn18lDkad8dFw5REagkxh/CqsI20BXfd/GLmDQM2aKDX2N23B93n6FO0YrKNa2S
+        cgB3FKyZEllSl+D4qP6/acgLneO0TTSfx7BhBlHf8Q34PTy+IqM1GT9rIua/Bq90
+        Yr83iQeTUmdf8EDKE4uM623MS9fpnNY5M58oXNSGO2gXJgD9D0L+/Z6vc18D64pI
+        bNYHjycSVHz1/mr6xBWvZGUYvXnppXH5mtsvSWarurYdT3G4IlyndQPTDbU+z+Ql
+        aFUOFa+DBYq4g70phsjJ5yyX8XoEtqLHHD8+bTOK2lorLhRH9Bx3g+bmZg==
+        -----END CERTIFICATE-----
 
-  rece_signature.crt: |
-    -----BEGIN CERTIFICATE-----
-    MIID6zCCAtOgAwIBAgIUNaLvCFMzuWgY7FAPnrJqBzeoWK4wDQYJKoZIhvcNAQEL
-    BQAwgYQxCzAJBgNVBAYTAkZSMQ8wDQYDVQQIDAZOYW50ZXMxDzANBgNVBAcMBk5h
-    bnRlczEPMA0GA1UECgwGTmFudGVzMQ0wCwYDVQQLDARNRUFFMQ0wCwYDVQQDDARN
-    RUFFMSQwIgYJKoZIhvcNAQkBFhVuc2xhb3VpQHNvZGlmcmFuY2UuZnIwHhcNMjAw
-    ODA1MTMwOTQwWhcNNDAwNzMxMTMwOTQwWjCBhDELMAkGA1UEBhMCRlIxDzANBgNV
-    BAgMBk5hbnRlczEPMA0GA1UEBwwGTmFudGVzMQ8wDQYDVQQKDAZOYW50ZXMxDTAL
-    BgNVBAsMBE1FQUUxDTALBgNVBAMMBE1FQUUxJDAiBgkqhkiG9w0BCQEWFW5zbGFv
-    dWlAc29kaWZyYW5jZS5mcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
-    AMtaX0It/3jVx0qV1RPK/iYkG41XNy4Rhj1k1Xp7tbZfz7EepDk0opTQzvR47Pot
-    iTOP0Eg4V95pcvVMwx7skr0S9B2HAfMi2Sd4RyIg3wt8mfYYAgBWkXi30MCsxBDY
-    /3QNU7u1db2X8rOh17/3nrIPRH9t5/djya/Q8HEOR0FGiCOndwL2DLetzXgj1g+3
-    4IKeBHY7l7i+Hx75ZTzrmU20CsLgWWeg6Is26noaQfSjpQU3XB1KRiQXI3CCSK5A
-    4Vyn3EUnOIoAgekebDmP5YtwAENTigeGZbJ380Hv0R5HoxgaHHWFORQp8YzPBWHn
-    fgpNKppsPvR9lht0fMQmX4kCAwEAAaNTMFEwHQYDVR0OBBYEFFH/JtYYnGQ4XV37
-    o/irTgd9nM+CMB8GA1UdIwQYMBaAFFH/JtYYnGQ4XV37o/irTgd9nM+CMA8GA1Ud
-    EwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBALHCTYtwor8rpnbW7q6el77f
-    P129JZ3cmiqEMUu+WG0p9bqr3sYyxTPjVdYrdt8cZl3CC2x3SvA0Wt4hgm6v5XUv
-    U4uijJc81iWYRnENp5+A4atfruYi9qk5TSDjyjhFb6Y2nCA5gv+c7eaqVf72a8pB
-    IL+JAt5xzvoCEIqgp1X14GBZ1/6gIAeaNjyAn4OmmZ4NsUKJc20Azv+XkN0SSgmC
-    e5QaIu47UFHcuTEGmkhcvYHfUfMcz7+94eTVg7wEPBa5Ko0b7k0oE1oEw4KEJyQT
-    Zy2GERIW++DJBZP6lH1+PD9Ak/kWENmuhlKQVw+yfMePufS1GaD2f3jueqMpcrU=
-    -----END CERTIFICATE-----	
+    rece_chiffrement.key: |
+        -----BEGIN PRIVATE KEY-----
+         MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDO+FbEVJwStA8A
+        o/JuGxw/LyzbUNA90O8jfwAU57P/uzxw1P1NJNEe/cPojWYkmhGmvBc1ENReTSkN
+        elaZUc9QtFPbxHKwBiwe/g+enYN6OYqA7Vtch44C+x+1LL2+0FHF1xfJp/0w66c/
+        yGc5gelytKOzulgxrX0/SJRHg4IELEYd0D9rjvlUvPazHXt9j2MaPBK1Zc0vED+c
+        v8bB1LdBriztiXq+NpIb4t5bQs8SJ7GA3ZWTQJVAvsr2x6nv3EJnaT28HV60Y7Cb
+        H49WhEIoihmoKUY0R3oBQEzJ/Zb9K2YkU+vVh21MnGGIF09Bbm/zthNk2tELdpUN
+        5P+GKNsTAgMBAAECggEAXQe/aIxngviwbadDxz4kWjpIPWR71e1eMGRbkwn7HI36
+        wvTZzp0n6nhCYPt92CHwoTOWcuHXs3OXall9J3lgaHRF5VjN/FUp69xjBPbkLEJF
+        AWKvWE4OBUT/oZ40w9o7h2QBa0E5S44BJWhdDbpZRpfvpU+zaNEEpTdofySbgmfd
+        L7Jhvjsce7mVpcFVVMq9GU9Dds4uYrP/PZ+wdpBHkcDJ6hCmOxrqesRMelx0tj2Y
+        wr4nN7LzJmL/ACqIgS4qyM8S3RZdNjNREjYx8AUgpCLyxqr5LFvInR7xX7XmeGFQ
+        4Brzgt1x+gbYUsTCM/luctvv/saHli4SCNy2f4FkQQKBgQDs81Yb96xTJo8wq20/
+        Qql//vZ8BLnFrROpzfuyitk3dm+PWUnp1jMCr/9YNWm/U7Raa4vQmj+OJmC4Crxt
+        kmLizqjx93MR1X5qz3IhCBGBHmVGSj7xU1c8xmDb4YL/H+72WQ16ATSyvFdIyI91
+        iOhsHgbWToUSSMTRXd6wJ1+RkQKBgQDfm/oHxv4I7hzv5+QAvCPeGbjH8kUOS8Fw
+        cUjZZXgih2eaIVtsuMxLFVf2t31nY36p5jW3pJocABYs5WQh08vCFaHvTTbsu7Zn
+        PXmimmAL9Oz0yxF086qfAXxVBhoTpZ6pT83puQ/bpMEsnh2YDNuTjZGY3k/9L410
+        TUvAXDKQYwKBgQDQTRa83V0rd/FXGsyeWS8C65Op8MmTYpSvqPoEuhU8saxe+2KD
+        457SVQAHfmUpIh+hgXvW9VK71zcdc6q0NIUj2AMjO6J34hQRN66gJSSmOp9TTH/K
+        zLYbIlYR1ky/lUYQYLb9M0QtgG7G+DFNZP7V1QuzqDFJopkLaRcUCnj0UQKBgQDQ
+        U79Uc57FryIimUchMCeyiwBOuHaB5S5plgGrGRAeC00Imj9VQa6D3XTAlR8urdGa
+        dLJjT+WMZMBEP8tUgMB7KDBghO3BDPnZobqrNWx6d0w0nOS8sy+pSHcPt8mfuFPj
+        pkhPkm0l049uBDnKKWCBTgnyBF09o4oEaudCZiNtxQKBgQCaPx+k83FRzuDJWfVY
+        zeTUk8bwzuHnxkZaSfWZPNNLLUa4IlMSJE9Z84HLWQGDaa4p2T9MfgpfXXJ4MO3x
+        yazAUqyflAIiwedP1huLt0a0ta9mb9kn0hwnYSCkd5EZ+E9jlszVmsDvWq4X9SJm
+        Kky2KHd+a8DDULwiHfprAp2+UQ==
+        -----END PRIVATE KEY-----
 
-  rece_signature.key: |
-   -----BEGIN PRIVATE KEY-----
-   MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDLWl9CLf941cdK
-   ldUTyv4mJBuNVzcuEYY9ZNV6e7W2X8+xHqQ5NKKU0M70eOz6LYkzj9BIOFfeaXL1
-   TMMe7JK9EvQdhwHzItkneEciIN8LfJn2GAIAVpF4t9DArMQQ2P90DVO7tXW9l/Kz
-   ode/956yD0R/bef3Y8mv0PBxDkdBRogjp3cC9gy3rc14I9YPt+CCngR2O5e4vh8e
-   +WU865lNtArC4FlnoOiLNup6GkH0o6UFN1wdSkYkFyNwgkiuQOFcp9xFJziKAIHp
-   Hmw5j+WLcABDU4oHhmWyd/NB79EeR6MYGhx1hTkUKfGMzwVh534KTSqabD70fZYb
-   dHzEJl+JAgMBAAECggEATc0ruPREVATmlMCynzoA9rLF39PIhtWpmH+ltZDzOu15
-   Vvi0ODbNJUamh55kfGtDnPie5aK4651IoFVYKdK1aaWAxHNM6ashjhpUjNgqvghU
-   F3Wj/mEgkyEwuybedNuxEMOwj5ajj4A9GUEIfKfOja2NtXtlTp9dIOk9tOOTm4Mk
-   GbGGb1G/1je+ldIHlInpeP7BP453sDEJjiLGJ/K6QRvd3QsiJ5QGqnvwDMR1GDKt
-   6Xi3xb8ZpH5a/HnpPpgVRo3Rd0kphsYZiEA4/LVUAuxQCoecge3Fv0H7XattztaH
-   PRI8DBf6LjzG3XYnBTobMiXZ5ksU2mrgDcL9tnz4AQKBgQDqBbzMWmB0TVD5pa8e
-   uy2yL68rejbcEJnIvcNm7bKbHtHFkmplJVYaCpNPp758Lu5xy0jmjoJhaIts7Zt6
-   BWL7UQ4xmnNGzLUfewcWL1n/zWw4wwDCIraWlOqUW2QQmx49F2jRjQ8NNQ3FpRyc
-   n4Z4zLDyc/lRE2VufmLDJT3ICQKBgQDec0tvAR8mbxA5uFp7rcyA6Ww92pg19pYj
-   YU9FE4b5HuofMxrpWP82AQf2IXql+OwgqdMAq+PlGrNvLWVPLNhi/HASYwtU6voS
-   GI5elg+VPuuNRsjbRtKhWD2leV/1FwlmdL4F4vfvU0mdOy6d0M3aNszBkoUHl7WQ
-   diOOhTa7gQKBgQC7zSjq0ahQDO/rt/Ol9M5CDZREjspRphzThL237w8C/yOWqt4p
-   F2JWeaAoL1RlMgB2X428QCcPZqdlHfVEYehCCJUcZ3cVHRhJECDqw8s0xjSQBKWq
-   JdNjWlQ6BHF0BhepLQ0YBVxL3ASWVN92LWrrrFBf8YPldWxT1KcLNeqziQKBgQDH
-   4ASZewKIQCbuFg2HL4SfGB2f/jfh1OzWYWsegAs48GQhIIQ/wy2dUpPavf47/0v7
-   lVv4MHqWssUjUkDDQWI0nun8O25FINUNSW8y4dainWR9DmsPS7WaL3VEp6hmygoy
-   Oxc6ptNsAQQV+MVMG/+64J5eF87cIZ6MbPpJ5rxlAQKBgBvrMr43ypP1eEFdTdpV
-   4UIlBDFv/fQ8UQ0/44kesCrLMnsKtEk3c3AlMBCq721OjACjRibW9fQqBVtbKrtl
-   03zEGIOyh/8Bx2n8Ilc/pk+wC/jx0xkGbQ9IbbXL0iarWgsi9c9QVp3viyywlpXs
-   j4uxijQ0UQMBzZJ9P3Ms9mZM
-   -----END PRIVATE KEY-----
+    rece_signature.crt: |
+        -----BEGIN CERTIFICATE-----
+        MIID6zCCAtOgAwIBAgIUNaLvCFMzuWgY7FAPnrJqBzeoWK4wDQYJKoZIhvcNAQEL
+        BQAwgYQxCzAJBgNVBAYTAkZSMQ8wDQYDVQQIDAZOYW50ZXMxDzANBgNVBAcMBk5h
+        bnRlczEPMA0GA1UECgwGTmFudGVzMQ0wCwYDVQQLDARNRUFFMQ0wCwYDVQQDDARN
+        RUFFMSQwIgYJKoZIhvcNAQkBFhVuc2xhb3VpQHNvZGlmcmFuY2UuZnIwHhcNMjAw
+        ODA1MTMwOTQwWhcNNDAwNzMxMTMwOTQwWjCBhDELMAkGA1UEBhMCRlIxDzANBgNV
+        BAgMBk5hbnRlczEPMA0GA1UEBwwGTmFudGVzMQ8wDQYDVQQKDAZOYW50ZXMxDTAL
+        BgNVBAsMBE1FQUUxDTALBgNVBAMMBE1FQUUxJDAiBgkqhkiG9w0BCQEWFW5zbGFv
+        dWlAc29kaWZyYW5jZS5mcjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+        AMtaX0It/3jVx0qV1RPK/iYkG41XNy4Rhj1k1Xp7tbZfz7EepDk0opTQzvR47Pot
+        iTOP0Eg4V95pcvVMwx7skr0S9B2HAfMi2Sd4RyIg3wt8mfYYAgBWkXi30MCsxBDY
+        /3QNU7u1db2X8rOh17/3nrIPRH9t5/djya/Q8HEOR0FGiCOndwL2DLetzXgj1g+3
+        4IKeBHY7l7i+Hx75ZTzrmU20CsLgWWeg6Is26noaQfSjpQU3XB1KRiQXI3CCSK5A
+        4Vyn3EUnOIoAgekebDmP5YtwAENTigeGZbJ380Hv0R5HoxgaHHWFORQp8YzPBWHn
+        fgpNKppsPvR9lht0fMQmX4kCAwEAAaNTMFEwHQYDVR0OBBYEFFH/JtYYnGQ4XV37
+        o/irTgd9nM+CMB8GA1UdIwQYMBaAFFH/JtYYnGQ4XV37o/irTgd9nM+CMA8GA1Ud
+        EwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBALHCTYtwor8rpnbW7q6el77f
+        P129JZ3cmiqEMUu+WG0p9bqr3sYyxTPjVdYrdt8cZl3CC2x3SvA0Wt4hgm6v5XUv
+        U4uijJc81iWYRnENp5+A4atfruYi9qk5TSDjyjhFb6Y2nCA5gv+c7eaqVf72a8pB
+        IL+JAt5xzvoCEIqgp1X14GBZ1/6gIAeaNjyAn4OmmZ4NsUKJc20Azv+XkN0SSgmC
+        e5QaIu47UFHcuTEGmkhcvYHfUfMcz7+94eTVg7wEPBa5Ko0b7k0oE1oEw4KEJyQT
+        Zy2GERIW++DJBZP6lH1+PD9Ak/kWENmuhlKQVw+yfMePufS1GaD2f3jueqMpcrU=
+        -----END CERTIFICATE-----
+
+    rece_signature.key: |
+        -----BEGIN PRIVATE KEY-----
+        MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDLWl9CLf941cdK
+        ldUTyv4mJBuNVzcuEYY9ZNV6e7W2X8+xHqQ5NKKU0M70eOz6LYkzj9BIOFfeaXL1
+        TMMe7JK9EvQdhwHzItkneEciIN8LfJn2GAIAVpF4t9DArMQQ2P90DVO7tXW9l/Kz
+        ode/956yD0R/bef3Y8mv0PBxDkdBRogjp3cC9gy3rc14I9YPt+CCngR2O5e4vh8e
+        +WU865lNtArC4FlnoOiLNup6GkH0o6UFN1wdSkYkFyNwgkiuQOFcp9xFJziKAIHp
+        Hmw5j+WLcABDU4oHhmWyd/NB79EeR6MYGhx1hTkUKfGMzwVh534KTSqabD70fZYb
+        dHzEJl+JAgMBAAECggEATc0ruPREVATmlMCynzoA9rLF39PIhtWpmH+ltZDzOu15
+        Vvi0ODbNJUamh55kfGtDnPie5aK4651IoFVYKdK1aaWAxHNM6ashjhpUjNgqvghU
+        F3Wj/mEgkyEwuybedNuxEMOwj5ajj4A9GUEIfKfOja2NtXtlTp9dIOk9tOOTm4Mk
+        GbGGb1G/1je+ldIHlInpeP7BP453sDEJjiLGJ/K6QRvd3QsiJ5QGqnvwDMR1GDKt
+        6Xi3xb8ZpH5a/HnpPpgVRo3Rd0kphsYZiEA4/LVUAuxQCoecge3Fv0H7XattztaH
+        PRI8DBf6LjzG3XYnBTobMiXZ5ksU2mrgDcL9tnz4AQKBgQDqBbzMWmB0TVD5pa8e
+        uy2yL68rejbcEJnIvcNm7bKbHtHFkmplJVYaCpNPp758Lu5xy0jmjoJhaIts7Zt6
+        BWL7UQ4xmnNGzLUfewcWL1n/zWw4wwDCIraWlOqUW2QQmx49F2jRjQ8NNQ3FpRyc
+        n4Z4zLDyc/lRE2VufmLDJT3ICQKBgQDec0tvAR8mbxA5uFp7rcyA6Ww92pg19pYj
+        YU9FE4b5HuofMxrpWP82AQf2IXql+OwgqdMAq+PlGrNvLWVPLNhi/HASYwtU6voS
+        GI5elg+VPuuNRsjbRtKhWD2leV/1FwlmdL4F4vfvU0mdOy6d0M3aNszBkoUHl7WQ
+        diOOhTa7gQKBgQC7zSjq0ahQDO/rt/Ol9M5CDZREjspRphzThL237w8C/yOWqt4p
+        F2JWeaAoL1RlMgB2X428QCcPZqdlHfVEYehCCJUcZ3cVHRhJECDqw8s0xjSQBKWq
+        JdNjWlQ6BHF0BhepLQ0YBVxL3ASWVN92LWrrrFBf8YPldWxT1KcLNeqziQKBgQDH
+        4ASZewKIQCbuFg2HL4SfGB2f/jfh1OzWYWsegAs48GQhIIQ/wy2dUpPavf47/0v7
+        lVv4MHqWssUjUkDDQWI0nun8O25FINUNSW8y4dainWR9DmsPS7WaL3VEp6hmygoy
+        Oxc6ptNsAQQV+MVMG/+64J5eF87cIZ6MbPpJ5rxlAQKBgBvrMr43ypP1eEFdTdpV
+        4UIlBDFv/fQ8UQ0/44kesCrLMnsKtEk3c3AlMBCq721OjACjRibW9fQqBVtbKrtl
+        03zEGIOyh/8Bx2n8Ilc/pk+wC/jx0xkGbQ9IbbXL0iarWgsi9c9QVp3viyywlpXs
+        j4uxijQ0UQMBzZJ9P3Ms9mZM
+        -----END PRIVATE KEY-----
