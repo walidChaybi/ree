@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { getText, Text } from "./Text";
 import { useDialogState, Dialog, DialogDisclosure } from "reakit/Dialog";
 import { Button } from "reakit/Button";
@@ -29,6 +29,11 @@ export const ValidationPopin: React.FC<ValidationPopinProps> = ({
     }
   }, [validerButtonRef]);
 
+  const validPopin = useCallback(() => {
+    onValid();
+    dialog.hide();
+  }, [dialog, onValid]);
+
   return (
     <>
       <DialogDisclosure {...dialog} as={Button}>
@@ -56,7 +61,7 @@ export const ValidationPopin: React.FC<ValidationPopinProps> = ({
           className="toast"
         >
           <Text messageId={messageId} />
-          <Button ref={validerButtonRef} onClick={onValid}>
+          <Button ref={validerButtonRef} onClick={validPopin}>
             Valider
           </Button>
           <Button onClick={() => dialog.hide()}>Annuler</Button>
