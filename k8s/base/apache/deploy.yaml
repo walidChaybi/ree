@@ -64,10 +64,10 @@ spec:
             name: configmap-shibboleth
         - name: config-shibboleth-rece-chiffrement-crt
           configMap:
-            name: configmap-shibboleth
+            name: rece-shibboleth
         - name: config-shibboleth-rece-chiffrement-key
           configMap:
-            name: configmap-shibboleth
+            name: rece-shibboleth
         - name: config-apache-rece-ui
           configMap:
-            name: configmap-apache
+            name: rece-apache
