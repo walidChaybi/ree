@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDialogState, DialogDisclosureHTMLProps } from "reakit/Dialog";
+import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import messageManager from "../../common/util/messageManager";
 import {
   useUpdateDocumentApi,
@@ -17,7 +17,6 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
   documentsDelivres,
 }) => {
-  const dialog = useDialogState();
   const validerButtonRef = React.createRef<HTMLButtonElement>();
   const [
     updateDocumentQueryParamState,
@@ -57,7 +56,6 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     };
     setShowWaitState(true);
     window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
-    dialog.hide();
   };
 
   /**
