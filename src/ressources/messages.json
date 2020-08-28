@@ -67,7 +67,7 @@
         }
       },
       "action": {
-        "signature": "Signer tous les documents",
+        "signature": "Signer le lot",
         "retourSaga": "Retour dans SAGA"
       },
       "mesRequetes": {

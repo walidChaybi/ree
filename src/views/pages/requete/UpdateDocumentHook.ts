@@ -25,18 +25,18 @@ export function useUpdateDocumentApi(
           method: HttpMethod.PATCH,
           uri: ApiEndpoints.DocumentsdelivresUrl,
           data: [{ ...queryParameters }],
-          headers: []
+          headers: [],
         })
-        .then(result => {
+        .then((result) => {
           // doNothing
         })
-        .catch(error => {
+        .catch((error) => {
           setErrorState(error);
         });
     }
   }, [queryParameters]);
 
   return {
-    errorState
+    errorState,
   };
 }

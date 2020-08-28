@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   TableauRece,
@@ -15,7 +15,11 @@ import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
 import { NatureActe } from "../../../model/requete/NatureActe";
 import { Canal } from "../../../model/Canal";
-import { IPieceJustificative, ITitulaire } from "./visualisation/RequeteType";
+import {
+  IPieceJustificative,
+  ITitulaire,
+  IDocumentDelivre,
+} from "./visualisation/RequeteType";
 import { AppUrls } from "../../router/UrlManager";
 import { Box } from "@material-ui/core";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
@@ -33,6 +37,7 @@ import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
 import { IUtilisateurSSOApi } from "../../core/LoginHook";
+import { BoutonSignature } from "./BoutonSignature";
 
 export interface IDataTable {
   idRequete: string;
@@ -156,6 +161,14 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
     props.officier
   );
 
+  const [documentsDelivres, setDocumentsDelivres] = React.useState<
+    IDocumentDelivre[]
+  >(getAllDocumentsDelivres(dataState));
+
+  useEffect(() => {
+    setDocumentsDelivres(getAllDocumentsDelivres(dataState));
+  }, [dataState]);
+
   function goToLink(link: string) {
     let queryParameters: IQueryParametersPourRequetes;
     if (link.indexOf("range") > 0) {
@@ -187,10 +200,33 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
         setSortOrderByState={setSortOrderByState}
       />
       <BoutonRetour />
+      <div className="RequetesToolbarSignature">
+        <BoutonSignature
+          libelle={"pages.delivrance.action.signature"}
+          documentsDelivres={documentsDelivres}
+        />
+      </div>
     </>
   );
 };
 
 function getUrlBack(identifiantRequete: string): string {
   return `${AppUrls.ctxMesRequetesUrl}/${identifiantRequete}`;
+}
+
+function getAllDocumentsDelivres(requetes: IDataTable[]): IDocumentDelivre[] {
+  let documentsDelivres: IDocumentDelivre[] = [];
+
+  requetes.forEach((requete) => {
+    if (
+      requete.reponse !== undefined &&
+      requete.statut === StatutRequete.ASigner
+    ) {
+      documentsDelivres = [
+        ...documentsDelivres,
+        ...requete.reponse.documentsDelivres,
+      ];
+    }
+  });
+  return documentsDelivres;
 }

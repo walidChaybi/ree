@@ -7,7 +7,6 @@ import Box from "@material-ui/core/Box";
 import { MesRequetesPage } from "./MesRequetesPage";
 import { RequetesServicePage } from "./RequetesServicePage";
 import "./sass/DelivrancePage.scss";
-import { BoutonSignature } from "./BoutonSignature";
 import { AppUrls } from "../../router/UrlManager";
 import { useHistory } from "react-router-dom";
 import { OfficierContext } from "../../core/contexts/OfficierContext";
@@ -82,12 +81,6 @@ const DelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
     <>
       <Title titleId={"pages.delivrance.titre"} />
       <div>
-        <div className="RequetesToolbarSignature">
-          <BoutonSignature
-            libelle={"pages.delivrance.action.signature"}
-            documentsDelivres={[]} // FIXME get all documents content
-          />
-        </div>
         <AppBar position="static" className="headerOngletDelivrance">
           <Tabs
             variant="fullWidth"
