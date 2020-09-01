@@ -9,6 +9,7 @@ import { TablePagination } from "@material-ui/core";
 import { getText } from "../Text";
 import { TableauBody } from "./TableauBody";
 import { IDataTable } from "../../../pages/requete/MesRequetesPage";
+import { BoutonSignature } from "../../../pages/requete/BoutonSignature";
 
 export interface RequeteTableauHeaderProps {
   idKey: string;
@@ -18,6 +19,7 @@ export interface RequeteTableauHeaderProps {
   dataState: IDataTable[];
   rowsNumberState: number;
   nextDataLinkState: string;
+  canUseSignature?: boolean;
   setSortOrderState: (order: SortOrder) => void;
   setSortOrderByState: (order: string) => void;
   onClickOnLine: (id: string) => string;
@@ -57,7 +59,7 @@ export class TableauTypeColumn {
   }
 }
 
-export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
+export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
   const nbRequeteParAppel = 100;
   const nbRequetParPage = 15;
   const [rowsPerPageState, setRowsPerPageState] = React.useState(
@@ -145,7 +147,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
         labelRowsPerPage={getText("pagination.rowsPerPage", [
           getText(
             "pages.delivrance.mesRequetes.tableau.pagination.donneePaginee"
-          )
+          ),
         ])}
         labelDisplayedRows={({ from, to, count }) =>
           getText(
@@ -157,6 +159,14 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
+      {props.canUseSignature === true && (
+        <div className="RequetesToolbarSignature">
+          <BoutonSignature
+            libelle={"pages.delivrance.action.signature"}
+            requetes={processData()}
+          />
+        </div>
+      )}
     </>
   );
 };

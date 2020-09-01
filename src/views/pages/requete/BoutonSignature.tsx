@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
-import { IDocumentDelivre } from "./visualisation/RequeteType";
 import { ValidationPopin } from "../../common/widget/ValidationPopin";
-import { PopinSignature, DocumentToSign } from "./PopinSignature";
+import { PopinSignature, DocumentToSign } from "./signature/PopinSignature";
+import { IDataTable } from "./MesRequetesPage";
+import { StatutRequete } from "../../../model/requete/StatutRequete";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
-  documentsDelivres: IDocumentDelivre[];
+  requetes: IDataTable[];
 }
 
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
-  documentsDelivres,
+  requetes,
 }) => {
   const validerButtonRef = React.createRef<HTMLButtonElement>();
 
@@ -28,14 +29,22 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     setShowWaitState(true);
 
     const documentToSign: DocumentToSign[] = [];
-    documentsDelivres.forEach((document) => {
-      documentToSign.push({
-        idDocumentDelivre: document.idDocumentDelivre,
-        mimeType: document.mimeType,
-        infos: document.idDocumentDelivre,
-        nomDocument: document.nom,
-        conteneurSwift: document.conteneurSwift,
-      });
+    requetes.forEach((requete) => {
+      if (
+        requete.reponse !== undefined &&
+        requete.statut === StatutRequete.ASigner
+      ) {
+        requete.reponse.documentsDelivres.forEach((document) => {
+          documentToSign.push({
+            idDocumentDelivre: document.idDocumentDelivre,
+            mimeType: document.mimeType,
+            infos: [{ idRequete: document.idDocumentDelivre }],
+            nomDocument: document.nom,
+            conteneurSwift: document.conteneurSwift,
+            idRequete: requete.idRequete,
+          });
+        });
+      }
     });
 
     setDocumentsToSign(documentToSign);
@@ -45,7 +54,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     <>
       <ValidationPopin
         buttonMessageId={libelle}
-        canValidate={documentsDelivres.length !== 0}
+        canValidate={requetes.length !== 0}
         messageId={"signature.confirmation"}
         errorMessageId={"errors.pages.requetes.B01"}
         onValid={handleClickSignature}

@@ -39,9 +39,7 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
   );
 
   // Contenu du document en base 64
-  const [documentDelivreState, setDocumentDelivreState] = useState<
-    IDocumentDelivre
-  >();
+  const [requeteState, setRequeteState] = useState<IDataTable>();
 
   const changeIndex = useCallback(
     (idx: number) => {
@@ -58,6 +56,16 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
     setIndexRequete(idx);
   }, [dataState, props.match.params.idRequete]);
 
+  const setDocumentDelivreFct = useCallback(
+    (newDocumentsDelivres: IDocumentDelivre) => {
+      const newRequete: IDataTable = { ...histoReq.data[indexRequete] };
+      newRequete.documentsDelivres = [newDocumentsDelivres];
+
+      setRequeteState(newRequete);
+    },
+    [histoReq, indexRequete]
+  );
+
   return (
     <>
       <Title titleId={"pages.delivrance.apercu.titre"} />
@@ -68,15 +76,13 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
             maxRequetes={dataState.length}
             indexRequete={indexRequete}
             setIndexRequete={changeIndex}
-            documentsDelivres={
-              documentDelivreState ? [documentDelivreState] : []
-            }
+            requetes={requeteState !== undefined ? [requeteState] : []}
             idRequete={props.match.params.idRequete}
           />
           <EtatRequete requete={dataState[indexRequete]} />
           <ContenuRequete
             requete={dataState[indexRequete]}
-            setDocumentDelivreFct={setDocumentDelivreState}
+            setDocumentDelivreFct={setDocumentDelivreFct}
           />
         </>
       )}

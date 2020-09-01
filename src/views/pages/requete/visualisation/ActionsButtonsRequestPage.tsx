@@ -4,13 +4,13 @@ import { BoutonSignature } from "../BoutonSignature";
 import { BoutonRetourSaga } from "../BoutonRetourSaga";
 import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
-import { IDocumentDelivre } from "./RequeteType";
+import { IDataTable } from "../MesRequetesPage";
 
 export interface ActionsProps {
   indexRequete: number;
   maxRequetes: number;
   setIndexRequete: (index: number) => void;
-  documentsDelivres: IDocumentDelivre[];
+  requetes: IDataTable[];
   idRequete: string;
 }
 
@@ -18,7 +18,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   indexRequete,
   setIndexRequete,
   maxRequetes,
-  documentsDelivres,
+  requetes,
   idRequete,
 }) => {
   return (
@@ -39,7 +39,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
         <div>
           <BoutonSignature
             libelle={"pages.delivrance.apercu.signatureElectronique"}
-            documentsDelivres={documentsDelivres}
+            requetes={requetes}
           />
         </div>
       </div>

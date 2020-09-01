@@ -34,7 +34,7 @@ export const BoutonRetourSaga: React.FC<BoutonRetourSagaProps> = ({
     history.goBack();
   }, [history]);
 
-  useUpdateStatutRequeteApi(goToListe, updateStatutRequeteQueryParamState);
+  useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState, goToListe);
 
   return (
     <Button onClick={handleClickRetourSaga}>

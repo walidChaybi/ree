@@ -217,6 +217,17 @@
           "parent2": null,
           "requete": null
         }
+      ],
+      "documentsDelivres": [
+        {
+          "idDocumentDelivre": "f9279c00-5d2b-11ea-bc55-0242ac130004",
+          "typeDocument": "COPIE_INTEGRALE",
+          "nom": "Naissance copie",
+          "mimeType": "application/pdf",
+          "taille": 12,
+          "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
+          "reponse": null
+        }
       ]
     },
     {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import {
   TableauRece,
@@ -37,7 +37,6 @@ import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
 import { IUtilisateurSSOApi } from "../../core/LoginHook";
-import { BoutonSignature } from "./BoutonSignature";
 
 export interface IDataTable {
   idRequete: string;
@@ -66,6 +65,7 @@ export interface IDataTable {
   jourEvenement: number;
   moisEvenement: number;
   nbExemplaire: number;
+  documentsDelivres: IDocumentDelivre[];
 }
 
 const columnsTableau = [
@@ -161,14 +161,6 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
     props.officier
   );
 
-  const [documentsDelivres, setDocumentsDelivres] = React.useState<
-    IDocumentDelivre[]
-  >(getAllDocumentsDelivres(dataState));
-
-  useEffect(() => {
-    setDocumentsDelivres(getAllDocumentsDelivres(dataState));
-  }, [dataState]);
-
   function goToLink(link: string) {
     let queryParameters: IQueryParametersPourRequetes;
     if (link.indexOf("range") > 0) {
@@ -198,35 +190,13 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
         goToLink={goToLink}
         setSortOrderState={setSortOrderState}
         setSortOrderByState={setSortOrderByState}
+        canUseSignature={true}
       />
       <BoutonRetour />
-      <div className="RequetesToolbarSignature">
-        <BoutonSignature
-          libelle={"pages.delivrance.action.signature"}
-          documentsDelivres={documentsDelivres}
-        />
-      </div>
     </>
   );
 };
 
 function getUrlBack(identifiantRequete: string): string {
   return `${AppUrls.ctxMesRequetesUrl}/${identifiantRequete}`;
-}
-
-function getAllDocumentsDelivres(requetes: IDataTable[]): IDocumentDelivre[] {
-  let documentsDelivres: IDocumentDelivre[] = [];
-
-  requetes.forEach((requete) => {
-    if (
-      requete.reponse !== undefined &&
-      requete.statut === StatutRequete.ASigner
-    ) {
-      documentsDelivres = [
-        ...documentsDelivres,
-        ...requete.reponse.documentsDelivres,
-      ];
-    }
-  });
-  return documentsDelivres;
 }

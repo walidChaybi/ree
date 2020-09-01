@@ -218,6 +218,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     jourEvenement: data.jourEvenement,
     moisEvenement: data.moisEvenement,
     nbExemplaire: data.nbExemplaire,
+    documentsDelivres: data.documentsDelivres,
   };
 }
 
