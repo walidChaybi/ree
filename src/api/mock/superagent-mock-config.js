@@ -228,6 +228,10 @@ module.exports = [
         return { data: mockPng.data };
       }
 
+      console.log(
+        "dqjbgfqlkjbgqlkfjbglkqsdfbglqkdbgflkqdbgflkqdbglkdfgklb",
+        match
+      );
       if (
         match[1] ===
           "/piecesjustificatives/a70237ca-83e5-4f6f-ac86-ec15086c5e3e" ||

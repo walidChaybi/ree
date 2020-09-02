@@ -81,7 +81,6 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
     SignatureErrors[]
   >([]);
 
-  console.log("documentsToSign", documentsToSign);
   useEffect(() => {
     if (documentsToSignWating.length > 0 && pinCode !== undefined) {
       requestDocumentApi(
@@ -162,7 +161,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
           if (
             newDocumentsToSign.find(
               (doc) => doc.idRequete === idRequeteAModifier
-            ) !== undefined
+            ) === undefined
           ) {
             setUpdateStatutRequeteQueryParamState({
               idRequete: idRequeteAModifier,
