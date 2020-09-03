@@ -1,4 +1,4 @@
 include:
   - project: rece/ci-cd/rece-jobs-lib
     file: pipeline-js.yml
-    ref: master
+    ref: test-ci
