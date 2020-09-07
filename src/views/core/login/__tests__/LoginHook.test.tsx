@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import config from "../../../../api/mock/superagent-mock-config";
-import { useLoginApi } from "../../LoginHook";
+import { useLoginApi } from "../LoginHook";
 
 const superagentMock = require("superagent-mock")(request, config);
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "../../common/widget/Text";
+import { Text, getText } from "../../common/widget/Text";
 import { BoutonAccueil } from "./BoutonAccueil";
 import "../accueil/sass/AccueilPage.scss";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
@@ -8,14 +8,13 @@ import {
   faSearch,
   faGavel,
   faChartBar,
-  faSync,
+  faSync
 } from "@fortawesome/free-solid-svg-icons";
 import logoRece from "../../../img/logo-rece.svg";
 import { Title } from "../../core/title/Title";
-import { getText } from "../../common/widget/Text";
 import {
   OfficierContext,
-  OfficierContextProps,
+  OfficierContextProps
 } from "../../core/contexts/OfficierContext";
 
 export const AccueilPage: React.FC = () => {
@@ -25,14 +24,18 @@ export const AccueilPage: React.FC = () => {
 
       <img src={logoRece} alt={getText("altLogoRece")} />
       <OfficierContext.Consumer>
-        {(officier) => (
+        {officier => (
           <>
             <div className="Titre">
               <Text
                 messageId={"pages.accueil.bienvenue"}
                 values={
-                  officier !== undefined
-                    ? [officier.prenom, officier.nom, officier.trigramme]
+                  officier?.officierDataState !== undefined
+                    ? [
+                        officier.officierDataState.prenom,
+                        officier.officierDataState.nom,
+                        officier.officierDataState.trigramme
+                      ]
                     : []
                 }
               />
@@ -104,22 +107,23 @@ export const AccueilPage: React.FC = () => {
 
 function getHierarchie(officier?: OfficierContextProps): string[] {
   const hierarchie = [];
+  const officierData = officier?.officierDataState;
 
-  if (officier !== undefined) {
-    if (officier.service !== undefined) {
-      hierarchie.push(officier.service);
+  if (officier !== undefined && officierData !== undefined) {
+    if (officierData.service !== undefined) {
+      hierarchie.push(officierData.service);
     }
 
-    if (officier.departement !== undefined) {
-      hierarchie.push(officier.departement);
+    if (officierData.departement !== undefined) {
+      hierarchie.push(officierData.departement);
     }
 
-    if (officier.bureau !== undefined) {
-      hierarchie.push(officier.bureau);
+    if (officierData.bureau !== undefined) {
+      hierarchie.push(officierData.bureau);
     }
 
-    if (officier.section !== undefined) {
-      hierarchie.push(officier.section);
+    if (officierData.section !== undefined) {
+      hierarchie.push(officierData.section);
     }
   }
 

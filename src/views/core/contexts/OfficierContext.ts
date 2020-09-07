@@ -1,9 +1,9 @@
 import React from "react";
-import { IUtilisateurSSOApi } from "../LoginHook";
+import { ILoginApi } from "../login/LoginHook";
 
 export const OfficierInLocalStorage = "officierData";
 
-export type OfficierContextProps = IUtilisateurSSOApi | undefined;
+export type OfficierContextProps = ILoginApi | undefined;
 
 export const OfficierContext = React.createContext<OfficierContextProps>(
   undefined

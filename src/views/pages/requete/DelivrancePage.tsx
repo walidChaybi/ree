@@ -38,7 +38,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: any) {
   return {
     id: `nav-tab-${index}`,
-    "aria-controls": `nav-tabpanel-${index}`,
+    "aria-controls": `nav-tabpanel-${index}`
   };
 }
 
@@ -112,14 +112,18 @@ const DelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
         <TabPanel value={selectedTabState} index={0}>
           {selectedTabState === 0 && (
             <OfficierContext.Consumer>
-              {(officier) => <MesRequetesPage officier={officier} />}
+              {officier => (
+                <MesRequetesPage officier={officier?.officierDataState} />
+              )}
             </OfficierContext.Consumer>
           )}
         </TabPanel>
         <TabPanel value={selectedTabState} index={1}>
           {selectedTabState === 1 && (
             <OfficierContext.Consumer>
-              {(officier) => <RequetesServicePage officier={officier} />}
+              {officier => (
+                <RequetesServicePage officier={officier?.officierDataState} />
+              )}
             </OfficierContext.Consumer>
           )}
         </TabPanel>
