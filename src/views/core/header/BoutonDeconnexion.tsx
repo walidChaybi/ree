@@ -16,7 +16,7 @@ interface BoutonDeconnexionProps {
 }
 
 export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
-  onClick,
+  onClick
 }) => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
   const accessible = ressource.boutonDeconnexion.accessible;
@@ -38,15 +38,18 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   return (
     <OfficierContext.Consumer>
-      {(officier) => (
+      {officier => (
         <div className="UtilisateurBouton">
-          <Button
-            aria-controls="simple-menu"
-            aria-haspopup="true"
-            onClick={(event) => handleClick(event)}
-          >
-            {officier !== undefined ? `${officier.prenom} ${officier.nom}` : ""}
-          </Button>
+          {officier !== undefined && officier.officierDataState !== undefined && (
+            <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={event => handleClick(event)}
+            >
+              {`${officier.officierDataState.prenom} 
+              ${officier.officierDataState.nom}`}
+            </Button>
+          )}
           {accessible && (
             <Menu
               className="Menu"
@@ -57,11 +60,11 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
               getContentAnchorEl={null}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "center",
+                horizontal: "center"
               }}
               transformOrigin={{
                 vertical: "top",
-                horizontal: "center",
+                horizontal: "center"
               }}
             >
               <MenuItem onClick={handleClose}>

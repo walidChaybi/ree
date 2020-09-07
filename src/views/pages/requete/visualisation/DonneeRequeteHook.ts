@@ -5,7 +5,7 @@ import { reponseRequeteMapperUnitaire } from "../DonneesRequeteHook";
 import { RequestsInformations } from "./RequetePage";
 import { ApiEndpoints } from "../../../router/UrlManager";
 import { IDataTable } from "../MesRequetesPage";
-import { IUtilisateurSSOApi } from "../../../core/LoginHook";
+import { IOfficierSSOApi } from "../../../core/login/LoginHook";
 export interface IQueryParametersPourRequete {
   statut?: StatutRequete;
   idRequete: string;
@@ -13,7 +13,7 @@ export interface IQueryParametersPourRequete {
 
 export function useRequeteDataApi(
   queryParameters: IQueryParametersPourRequete,
-  officier?: IUtilisateurSSOApi,
+  officier?: IOfficierSSOApi,
   requestsInformations?: RequestsInformations
 ) {
   const [dataState, setDataState] = useState<IDataTable[]>(
@@ -33,14 +33,14 @@ export function useRequeteDataApi(
             parameters: {
               nomOec: officier.nom,
               prenomOec: officier.prenom,
-              statut: queryParameters.statut,
-            },
+              statut: queryParameters.statut
+            }
           })
-          .then((result) => {
+          .then(result => {
             const tmp = reponseRequeteMapperUnitaire(result.body.data);
             setDataState([tmp]);
           })
-          .catch((error) => {
+          .catch(error => {
             setErrorState(error);
           });
       }
@@ -51,10 +51,10 @@ export function useRequeteDataApi(
     queryParameters.idRequete,
     queryParameters.statut,
     requestsInformations,
-    officier,
+    officier
   ]);
   return {
     dataState,
-    errorState,
+    errorState
   };
 }
