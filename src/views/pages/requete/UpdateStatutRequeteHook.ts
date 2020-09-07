@@ -12,7 +12,7 @@ export function useUpdateStatutRequeteApi(
   queryParameters?: IQueryParameterUpdateStatutRequete,
   callback?: () => void
 ) {
-  const [errorState, setErrorState] = useState(undefined);
+  const [errorState, setErrorState] = useState();
 
   useEffect(() => {
     const api = ApiManager.getInstance("rece-requete-api", "v1");

@@ -1,11 +1,23 @@
-.PopinSignaturePinCodeActions {
-  button {
-    margin-bottom: 0px;
+.PopinSignature {
+  .h2 {
+    text-align: center;
+  }
+  .PopinSignaturePinCodeActions {
+    button {
+      margin-bottom: 0px;
+      margin-top: 1em;
+    }
+  }
+
+  .CloseButtonSignature {
+    float: right;
     margin-top: 1em;
   }
-}
 
-.CloseButtonSignature {
-  float: right;
-  margin-top: 1em;
+  .MuiPaper-root {
+    li.MuiListItem-root {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+  }
 }

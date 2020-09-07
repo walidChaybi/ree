@@ -66,6 +66,10 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
     [histoReq, indexRequete]
   );
 
+  const reloadData = useCallback(() => {
+    history.goBack();
+  }, [history]);
+
   return (
     <>
       <Title titleId={"pages.delivrance.apercu.titre"} />
@@ -78,6 +82,7 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
             setIndexRequete={changeIndex}
             requetes={requeteState !== undefined ? [requeteState] : []}
             idRequete={props.match.params.idRequete}
+            reloadData={reloadData}
           />
           <EtatRequete requete={dataState[indexRequete]} />
           <ContenuRequete

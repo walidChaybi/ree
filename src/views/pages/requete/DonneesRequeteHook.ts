@@ -87,6 +87,7 @@ export interface IQueryParametersPourRequetes {
   tri?: string;
   sens?: SortOrder;
   range?: string;
+  lastDateReaload?: string;
 }
 
 export enum TypeAppelRequete {
@@ -162,14 +163,7 @@ export function useRequeteApi(
           setErrorState(error);
         });
     }
-  }, [
-    queryParameters.statut,
-    queryParameters.tri,
-    queryParameters.sens,
-    queryParameters.range,
-    officier,
-    typeRequete,
-  ]);
+  }, [queryParameters, officier, typeRequete]);
 
   return {
     dataState,

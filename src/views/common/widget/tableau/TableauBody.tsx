@@ -21,13 +21,13 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   data,
   idKey,
   columnHeaders,
-  onClickOnLine
+  onClickOnLine,
 }) => {
   const history = useHistory();
 
   function onClickRowHandler(identifiant: string) {
     history.push(onClickOnLine(identifiant), {
-      data
+      data,
     });
   }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { Box } from "reakit/Box";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -24,6 +24,7 @@ export interface RequeteTableauHeaderProps {
   setSortOrderByState: (order: string) => void;
   onClickOnLine: (id: string) => string;
   goToLink: (value: string) => void;
+  reloadData?: () => void;
 }
 
 export class TableauTypeColumn {
@@ -69,6 +70,42 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
   const [multiplicateur, setMultiplicateur] = React.useState(1);
   const [dataTable, setDataTable] = React.useState<IDataTable[]>([]);
 
+  const processData = useCallback(() => {
+    if (
+      props.dataState !== undefined &&
+      props.dataState.length > 0 &&
+      dataTable[dataTable.length - 1] !==
+        props.dataState[props.dataState.length - 1]
+    ) {
+      setDataTable([...dataTable, ...props.dataState]);
+    } else if (dataTable.length > 0 && props.dataState.length === 0) {
+      setDataTable([]);
+    }
+
+    if (props.rowsNumberState && props.rowsNumberState < nbRequeteParAppel) {
+      const dataTriee = processDataStorting(
+        props.dataState || [],
+        props.sortOrderState,
+        props.sortOrderByState
+      );
+      return getPaginatedData(dataTriee, pageState, rowsPerPageState);
+    } else {
+      return getPaginatedData(dataTable, pageState, rowsPerPageState);
+    }
+  }, [
+    props.dataState,
+    props.rowsNumberState,
+    dataTable,
+    pageState,
+    rowsPerPageState,
+    props.sortOrderState,
+    props.sortOrderByState,
+  ]);
+
+  const [dataTableS, setDataTableS] = React.useState<IDataTable[]>(
+    processData()
+  );
+
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: string
@@ -99,27 +136,9 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
     setPageState(0);
   };
 
-  function processData() {
-    if (
-      props.dataState !== undefined &&
-      props.dataState.length > 0 &&
-      dataTable[dataTable.length - 1] !==
-        props.dataState[props.dataState.length - 1]
-    ) {
-      setDataTable([...dataTable, ...props.dataState]);
-    }
-
-    if (props.rowsNumberState && props.rowsNumberState < nbRequeteParAppel) {
-      const dataTriee = processDataStorting(
-        props.dataState || [],
-        props.sortOrderState,
-        props.sortOrderByState
-      );
-      return getPaginatedData(dataTriee, pageState, rowsPerPageState);
-    } else {
-      return getPaginatedData(dataTable, pageState, rowsPerPageState);
-    }
-  }
+  useEffect(() => {
+    setDataTableS(processData());
+  }, [processData, props.dataState]);
 
   return (
     <>
@@ -132,7 +151,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
             columnHeaders={props.columnHeaders}
           />
           <TableauBody
-            data={processData()}
+            data={dataTableS}
             idKey={props.idKey}
             columnHeaders={props.columnHeaders}
             onClickOnLine={props.onClickOnLine}
@@ -159,11 +178,12 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      {props.canUseSignature === true && (
+      {props.canUseSignature === true && props.reloadData !== undefined && (
         <div className="RequetesToolbarSignature">
           <BoutonSignature
             libelle={"pages.delivrance.action.signature"}
-            requetes={processData()}
+            requetes={dataTableS}
+            onClose={props.reloadData}
           />
         </div>
       )}

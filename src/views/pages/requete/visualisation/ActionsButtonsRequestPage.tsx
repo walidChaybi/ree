@@ -12,6 +12,7 @@ export interface ActionsProps {
   setIndexRequete: (index: number) => void;
   requetes: IDataTable[];
   idRequete: string;
+  reloadData: () => void;
 }
 
 export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
@@ -20,6 +21,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   maxRequetes,
   requetes,
   idRequete,
+  reloadData,
 }) => {
   return (
     <div className="ActionsButtons">
@@ -40,6 +42,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
           <BoutonSignature
             libelle={"pages.delivrance.apercu.signatureElectronique"}
             requetes={requetes}
+            onClose={reloadData}
           />
         </div>
       </div>

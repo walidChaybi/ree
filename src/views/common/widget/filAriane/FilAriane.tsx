@@ -14,7 +14,7 @@ export const FilAriane: React.FC<FilArianeProps> = ({ setRetourState }) => {
   const history = useHistory();
   const pathnames = history.location.pathname
     .split(SeparateurUrl)
-    .filter(x => x);
+    .filter((x) => x);
   pathnames.splice(0, 2);
   const accueilString = getText("fildariane.accueil").toLowerCase();
   const accueilFirst = pathnames[0] === accueilString;

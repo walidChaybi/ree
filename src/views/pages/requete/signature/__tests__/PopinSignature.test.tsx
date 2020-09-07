@@ -15,16 +15,22 @@ const superagentMock = require("superagent-mock")(request, config);
 test("renders PopinSignature, signature event is received and success displayed", () => {
   render(
     <PopinSignature
-      documentsToSign={[
-        {
-          conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
-          idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130004",
-          idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-          infos: [],
-          mimeType: "application/pdf",
-          nomDocument: "Naissance copie",
+      documentsByRequete={{
+        "104b8563-c7f8-4748-9daa-f26558985894": {
+          documentsToSign: [
+            {
+              infos: [],
+              idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130004",
+              mimeType: "application/pdf",
+              nomDocument: "Naissance copie",
+              conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
+              idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
+              numeroRequete: 1,
+            },
+          ],
+          documentsToSave: [],
         },
-      ]}
+      }}
       open={true}
       onClose={() => {
         return;
@@ -47,7 +53,7 @@ test("renders PopinSignature, signature event is received and success displayed"
     )
   );
   const successMsg = screen.getByText(
-    "Tous les documents ont été signés avec succès"
+    /La requête n°1 a été signée avec succès/i
   );
   expect(successMsg).toBeDefined();
 });
@@ -55,16 +61,22 @@ test("renders PopinSignature, signature event is received and success displayed"
 test("renders PopinSignature, signature event is received and error displayed", () => {
   render(
     <PopinSignature
-      documentsToSign={[
-        {
-          conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
-          idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130004",
-          idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-          infos: [],
-          mimeType: "application/pdf",
-          nomDocument: "Naissance copie",
+      documentsByRequete={{
+        "104b8563-c7f8-4748-9daa-f26558985894": {
+          documentsToSign: [
+            {
+              infos: [],
+              idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130004",
+              mimeType: "application/pdf",
+              nomDocument: "Naissance copie",
+              conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
+              idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
+              numeroRequete: 1,
+            },
+          ],
+          documentsToSave: [],
         },
-      ]}
+      }}
       open={true}
       onClose={() => {
         return;

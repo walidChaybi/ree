@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { ValidationPopin } from "../../common/widget/ValidationPopin";
-import { PopinSignature, DocumentToSign } from "./signature/PopinSignature";
+import { PopinSignature } from "./signature/PopinSignature";
+import {
+  DocumentsATraiter,
+  DocumentsByRequete,
+} from "./signature/SignatureDocumentHook";
 import { IDataTable } from "./MesRequetesPage";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
   requetes: IDataTable[];
+  onClose: () => void;
 }
 
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
   requetes,
+  onClose,
 }) => {
   const validerButtonRef = React.createRef<HTMLButtonElement>();
 
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
-  const [documentsToSign, setDocumentsToSign] = useState<DocumentToSign[]>([]);
+  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<
+    DocumentsByRequete
+  >({});
 
   useEffect(() => {
     if (validerButtonRef.current) {
@@ -25,29 +33,46 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     }
   }, [validerButtonRef]);
 
+  const closePopin = useCallback(
+    (showPopin: boolean) => {
+      setShowWaitState(showPopin);
+      onClose();
+    },
+    [onClose]
+  );
+
   const handleClickSignature = () => {
     setShowWaitState(true);
 
-    const documentToSign: DocumentToSign[] = [];
+    const newDocumentsByRequeteToSign: DocumentsByRequete = {};
     requetes.forEach((requete) => {
       if (
         requete.reponse !== undefined &&
-        requete.statut === StatutRequete.ASigner
+        requete.statut === StatutRequete.ASigner &&
+        requete.reponse.documentsDelivres.length > 0
       ) {
+        const documentsATraiter: DocumentsATraiter = {
+          documentsToSign: [],
+          documentsToSave: [],
+        };
+
         requete.reponse.documentsDelivres.forEach((document) => {
-          documentToSign.push({
+          documentsATraiter.documentsToSign.push({
             idDocumentDelivre: document.idDocumentDelivre,
             mimeType: document.mimeType,
             infos: [{ idRequete: document.idDocumentDelivre }],
             nomDocument: document.nom,
             conteneurSwift: document.conteneurSwift,
             idRequete: requete.idRequete,
+            numeroRequete: requete.idSagaDila,
           });
         });
+
+        newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;
       }
     });
 
-    setDocumentsToSign(documentToSign);
+    setDocumentsByRequeteToSign(newDocumentsByRequeteToSign);
   };
 
   return (
@@ -61,9 +86,9 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
       />
 
       <PopinSignature
-        documentsToSign={documentsToSign}
+        documentsByRequete={documentsByRequeteToSign}
         open={showWaitState}
-        onClose={setShowWaitState}
+        onClose={closePopin}
       />
     </>
   );

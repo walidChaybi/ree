@@ -35,13 +35,16 @@ test("renders message indisponibilité après click", () => {
       libelle={"pages.delivrance.action.signature"}
       onClick={handleClick}
       requetes={[]}
+      onClose={() => {
+        return;
+      }}
     />
   );
-  const linkElement = screen.getByText(
+  const linkElement = screen.getAllByText(
     /Le service de signature électronique est indisponible/i
   );
-  expect(linkElement.hidden).toBeTruthy();
+  expect(linkElement[0].hidden).toBeTruthy();
   const buttonElement = screen.getByText(/Signer le lot/i);
   fireEvent.click(buttonElement);
-  expect(linkElement.hidden).toBeFalsy();
+  expect(linkElement[0].hidden).toBeFalsy();
 });

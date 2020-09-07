@@ -6,29 +6,27 @@ import { mount } from "enzyme";
 test("renders progresse bar", () => {
   const component = mount(
     <ProgressSignature
+      errors={false}
+      idsRequetesToSign={["idRequete1"]}
       onClose={() => {
         return;
       }}
-      documentsToSign={[
-        {
-          conteneurSwift: "",
-          idDocumentDelivre: "",
-          idRequete: "",
-          infos: [],
-          mimeType: "",
-          nomDocument: "",
+      documentsByRequete={{
+        idRequete1: {
+          documentsToSign: [
+            {
+              infos: [],
+              idDocumentDelivre: "",
+              mimeType: "",
+              nomDocument: "",
+              conteneurSwift: "",
+              idRequete: "",
+              numeroRequete: 1,
+            },
+          ],
+          documentsToSave: [],
         },
-      ]}
-      documentsToSignWating={[
-        {
-          conteneurSwift: "",
-          idDocumentDelivre: "",
-          idRequete: "",
-          infos: [],
-          mimeType: "",
-          nomDocument: "",
-        },
-      ]}
+      }}
     />
   );
   expect(component).toMatchSnapshot();
@@ -39,18 +37,25 @@ test("renders progress bar, close function is called", () => {
 
   render(
     <ProgressSignature
+      errors={false}
+      idsRequetesToSign={[]}
       onClose={handleClickButton}
-      documentsToSign={[
-        {
-          conteneurSwift: "",
-          idDocumentDelivre: "",
-          idRequete: "",
-          infos: [],
-          mimeType: "",
-          nomDocument: "",
+      documentsByRequete={{
+        idRequete1: {
+          documentsToSign: [
+            {
+              infos: [],
+              idDocumentDelivre: "",
+              mimeType: "",
+              nomDocument: "",
+              conteneurSwift: "",
+              idRequete: "",
+              numeroRequete: 1,
+            },
+          ],
+          documentsToSave: [],
         },
-      ]}
-      documentsToSignWating={[]}
+      }}
     />
   );
 
@@ -64,27 +69,39 @@ test("renders progress bar, close function can't be called", () => {
 
   render(
     <ProgressSignature
+      errors={false}
       onClose={handleClickButton}
-      documentsToSign={[
-        {
-          conteneurSwift: "",
-          idDocumentDelivre: "",
-          idRequete: "",
-          infos: [],
-          mimeType: "",
-          nomDocument: "",
+      idsRequetesToSign={["idRequete1", "idRequete2"]}
+      documentsByRequete={{
+        idRequete1: {
+          documentsToSign: [
+            {
+              infos: [],
+              idDocumentDelivre: "",
+              mimeType: "",
+              nomDocument: "",
+              conteneurSwift: "",
+              idRequete: "",
+              numeroRequete: 1,
+            },
+          ],
+          documentsToSave: [],
         },
-      ]}
-      documentsToSignWating={[
-        {
-          conteneurSwift: "",
-          idDocumentDelivre: "",
-          idRequete: "",
-          infos: [],
-          mimeType: "",
-          nomDocument: "",
+        idRequete2: {
+          documentsToSign: [
+            {
+              infos: [],
+              idDocumentDelivre: "",
+              mimeType: "",
+              nomDocument: "",
+              conteneurSwift: "",
+              idRequete: "",
+              numeroRequete: 2,
+            },
+          ],
+          documentsToSave: [],
         },
-      ]}
+      }}
     />
   );
 

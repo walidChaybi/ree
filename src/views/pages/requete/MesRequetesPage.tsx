@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useCallback } from "react";
+import moment from "moment";
 import {
   TableauRece,
   TableauTypeColumn,
@@ -37,6 +37,7 @@ import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
 import { IUtilisateurSSOApi } from "../../core/LoginHook";
+import { FormatDate } from "../../../ressources/FormatDate";
 
 export interface IDataTable {
   idRequete: string;
@@ -176,10 +177,19 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
     }
   }
 
+  const reloadData = useCallback(() => {
+    const toto = Object.assign(
+      {},
+      { ...linkParameters },
+      { lastReload: moment().format(FormatDate.DDMMYYYHHmm) }
+    );
+    setLinkParameters(toto);
+  }, [linkParameters]);
+
   return (
     <>
       <TableauRece
-        idKey={"idRequete"}
+        idKey={`idRequete`}
         onClickOnLine={getUrlBack}
         sortOrderByState={sortOrderByState}
         sortOrderState={sortOrderState}
@@ -191,6 +201,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
         setSortOrderState={setSortOrderState}
         setSortOrderByState={setSortOrderByState}
         canUseSignature={true}
+        reloadData={reloadData}
       />
       <BoutonRetour />
     </>

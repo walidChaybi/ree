@@ -185,6 +185,6 @@
     "annuler": "Annuler",
     "fermer": "Fermer",
     "titrePopIn": "Signature des documents",
-    "success": "Tous les documents ont été signés avec succès"
+    "success": "La requête n°${0} a été signée avec succès le ${1}"
   }
 }

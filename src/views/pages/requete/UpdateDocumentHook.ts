@@ -13,7 +13,7 @@ export interface IUpdateDocumentApiResult {
 }
 
 export function useUpdateDocumentApi(
-  queryParameters?: IQueryParameterUpdateDocument
+  queryParameters?: IQueryParameterUpdateDocument[]
 ) {
   const [errorState, setErrorState] = useState(undefined);
 
@@ -24,7 +24,7 @@ export function useUpdateDocumentApi(
         .fetch({
           method: HttpMethod.PATCH,
           uri: ApiEndpoints.DocumentsdelivresUrl,
-          data: [{ ...queryParameters }],
+          data: queryParameters,
           headers: [],
         })
         .then((result) => {

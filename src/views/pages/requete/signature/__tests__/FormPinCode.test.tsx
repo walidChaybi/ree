@@ -20,7 +20,7 @@ test("renders form popin", () => {
 test("renders form popin, setPinCode function called on validation", async () => {
   const handleClickButton = jest.fn();
 
-  render(
+  const { getByText } = render(
     <FormPinCode
       onClose={() => {
         return;
@@ -34,7 +34,7 @@ test("renders form popin, setPinCode function called on validation", async () =>
     fireEvent.change(pinCodeInput, { target: { value: "1234" } });
   }
 
-  const validateButton = screen.getByText("Valider");
+  const validateButton = getByText("Valider");
   fireEvent.click(validateButton);
   await waitFor(() => {
     expect(handleClickButton).toHaveBeenCalledTimes(1);
@@ -44,7 +44,7 @@ test("renders form popin, setPinCode function called on validation", async () =>
 test("renders form popin, close function called on cancel", () => {
   const handleClickButton = jest.fn();
 
-  render(
+  const { getByText } = render(
     <FormPinCode
       onClose={handleClickButton}
       setPinCode={() => {
@@ -52,7 +52,7 @@ test("renders form popin, close function called on cancel", () => {
       }}
     />
   );
-  const closeButton = screen.getByText("Annuler");
+  const closeButton = getByText("Annuler");
   fireEvent.click(closeButton);
   expect(handleClickButton).toHaveBeenCalledTimes(1);
 });
