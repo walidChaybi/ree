@@ -1,0 +1,886 @@
+I, [2020-09-08T09:57:39.184109 #23456]  INFO -- : Registered expected interaction GET rece-requete-api/v1/requetes?statut=A_SIGNER&tri=dateStatus&sens=ASC&nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913
+D, [2020-09-08T09:57:39.189703 #23456] DEBUG -- : {
+  "description": "get all requests of an oec",
+  "providerState": "request exists",
+  "request": {
+    "method": "GET",
+    "path": "rece-requete-api/v1/requetes",
+    "query": {
+      "statut": [
+        "A_SIGNER"
+      ],
+      "tri": [
+        "dateStatus"
+      ],
+      "sens": [
+        "ASC"
+      ],
+      "nomOec": [
+        "SLAOUI"
+      ],
+      "prenomOec": [
+        "Nabil"
+      ],
+      "idArobas": [
+        "03901913"
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "hasTechnicalError": false,
+      "hasBusinessError": false,
+      "status": 200,
+      "url": "/rece-requete-api/v1/requetes",
+      "data": [
+        {
+          "idRequete": "c456358c-6e4c-4a5f-adc3-083e692f72ab",
+          "idSagaDilaImpression": null,
+          "idSagaDila": 1,
+          "idRequeteInitiale": null,
+          "identifiantPartenaire": "A-1-XZ1WOMAX",
+          "dateCreation": 1591803760,
+          "dateDerniereMaj": 1591803760,
+          "canal": "INTERNET",
+          "provenance": "DILA",
+          "statut": "A_SIGNER",
+          "dateStatut": 1599472699.838561,
+          "dateTrtDemat": null,
+          "dateDelivranceDemat": null,
+          "typeRequete": "DELIVRANCE",
+          "sousTypeRequete": "RDD",
+          "natureActe": "NAISSANCE",
+          "typeActe": "EXTRAIT_AVEC_FILIATION",
+          "jourEvenement": 25,
+          "moisEvenement": 3,
+          "anneeEvenement": 1983,
+          "villeEvenement": "paris",
+          "paysEvenement": "france",
+          "nbExemplaire": null,
+          "motifRequete": "PENSION_REVERSION",
+          "lienRequerant": null,
+          "mandantType": null,
+          "mandantIdentite": null,
+          "mandantLien": null,
+          "piecesJustificatives": [
+            {
+              "idPieceJustificative": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
+              "nom": "1_c45606fb-f0e3-4647-ab4a-a6c5c416e809.pdf",
+              "mimeType": "application/pdf",
+              "typePieceJustificative": "cpro",
+              "extension": null,
+              "taille": 207836,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            },
+            {
+              "idPieceJustificative": "c456099d-619a-4675-88ba-af66b82461e5",
+              "nom": "1_c45670ee-59f4-4ca1-92df-1083a5cbc8ab.PNG",
+              "mimeType": "image/png",
+              "typePieceJustificative": "man",
+              "extension": null,
+              "taille": 294658,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            }
+          ],
+          "reponse": {
+            "idReponse": "c45640ba-364e-4bd5-a8e7-4d4a0066ef87",
+            "dateTraitementDemat": null,
+            "dateDelivrance": 1591862400,
+            "natureActe": "NAISSANCE",
+            "referenceActe": "(COL) ORAN.1961.RET ..12404",
+            "jourEvenement": 11,
+            "moisEvenement": 3,
+            "anneeEvenement": 1960,
+            "villeEvenement": "fez",
+            "paysEvenement": "maroc",
+            "nomOec": "SLAOUI",
+            "prenomOec": "Nabil",
+            "commentaire": "commentaire",
+            "documentsDelivres": [
+              {
+                "idDocumentDelivre": "c456bb58-04f5-40dd-8c33-599306cafb7d",
+                "typeDocument": "EXTRAIT_SANS_FILIATION",
+                "nom": "1_c4565512-1193-4f7d-88fd-042f75ca8364.pdf",
+                "mimeType": "application/pdf",
+                "taille": 207836,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/EXTRAIT.pdf"
+              },
+              {
+                "idDocumentDelivre": "c4565af0-73e3-4cd1-961e-441fa9ebccb2",
+                "typeDocument": "FA116",
+                "nom": "1_c4562b5b-5856-4a46-ac90-4de772a880e4.pdf",
+                "mimeType": "application/pdf",
+                "taille": 36521,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/FA116.pdf"
+              },
+              {
+                "idDocumentDelivre": "c4563062-229a-4a76-b275-97c15cc8127a",
+                "typeDocument": "COPIE_INTEGRALE",
+                "nom": "1_c456786a-8537-4eda-8d10-d3996acc4022.pdf",
+                "mimeType": "application/pdf",
+                "taille": 207836,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/COPIE_INTEGRALE.pdf"
+              }
+            ],
+            "requete": null
+          },
+          "requerant": {
+            "idRequerant": "c456e268-34c9-45df-9ffc-817d2ba081f2",
+            "typeRequerant": "TITULAIRE",
+            "qualiteRequerant": "PARTICULIER",
+            "nomAdministration": null,
+            "identite": null,
+            "raisonSociale": null,
+            "nomFamille": "aubin",
+            "nomUsage": null,
+            "prenom": "nicolas",
+            "mail": null,
+            "telephone": "1777327569",
+            "adresse": null,
+            "requete": null
+          },
+          "titulaires": [
+            {
+              "idTitulaire": "c4562f1c-08ad-45d9-b63e-4a3c391496d1",
+              "position": 1,
+              "nomNaissance": "aubin",
+              "nomUsage": null,
+              "prenom1": "nicolas",
+              "prenom2": "",
+              "prenom3": "",
+              "jourNaissance": 25,
+              "moisNaissance": 3,
+              "anneeNaissance": 1983,
+              "villeNaissance": "fez",
+              "paysNaissance": "maroc",
+              "adoption": null,
+              "sexe": null,
+              "parent1": null,
+              "parent2": null,
+              "requete": null
+            }
+          ]
+        },
+        {
+          "idRequete": "c45626f6-88dc-4a72-adbc-0b2ed38207e5",
+          "idSagaDilaImpression": null,
+          "idSagaDila": 2,
+          "idRequeteInitiale": null,
+          "identifiantPartenaire": "A-2-XZ1WOMAX",
+          "dateCreation": 1591803760,
+          "dateDerniereMaj": 1591803760,
+          "canal": "INTERNET",
+          "provenance": "DILA",
+          "statut": "A_SIGNER",
+          "dateStatut": 1599472699.980256,
+          "dateTrtDemat": null,
+          "dateDelivranceDemat": null,
+          "typeRequete": "DELIVRANCE",
+          "sousTypeRequete": "RDD",
+          "natureActe": "NAISSANCE",
+          "typeActe": "COPIE_INTEGRALE",
+          "jourEvenement": 3,
+          "moisEvenement": 7,
+          "anneeEvenement": 1982,
+          "villeEvenement": "nantes",
+          "paysEvenement": "france",
+          "nbExemplaire": null,
+          "motifRequete": "PENSION_REVERSION",
+          "lienRequerant": null,
+          "mandantType": null,
+          "mandantIdentite": null,
+          "mandantLien": null,
+          "piecesJustificatives": [
+            {
+              "idPieceJustificative": "c4565120-8d36-4fec-9fb5-cd2b9fc6f3f6",
+              "nom": "2_c456ca31-a4aa-413e-9f04-8e2f1edd2da5.pdf",
+              "mimeType": "application/pdf",
+              "typePieceJustificative": "cpro",
+              "extension": null,
+              "taille": 207836,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            },
+            {
+              "idPieceJustificative": "c4563aa6-551a-4961-88e9-10e1d50c5058",
+              "nom": "2_c4562b14-933a-4344-9527-dc5bdc36623d.PNG",
+              "mimeType": "image/png",
+              "typePieceJustificative": "man",
+              "extension": null,
+              "taille": 294658,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            }
+          ],
+          "reponse": {
+            "idReponse": "c456aa8a-ac95-446b-b671-9bceebadf396",
+            "dateTraitementDemat": null,
+            "dateDelivrance": 1591862400,
+            "natureActe": "NAISSANCE",
+            "referenceActe": "(COL) ORAN.1961.RET ..22404",
+            "jourEvenement": 11,
+            "moisEvenement": 3,
+            "anneeEvenement": 1960,
+            "villeEvenement": "fez",
+            "paysEvenement": "maroc",
+            "nomOec": "SLAOUI",
+            "prenomOec": "Nabil",
+            "commentaire": "commentaire",
+            "documentsDelivres": [
+              {
+                "idDocumentDelivre": "c456a35c-411c-41ea-9930-da61048d0c74",
+                "typeDocument": "FA116",
+                "nom": "2_c456db8b-7ab7-48af-9304-767ea6f2af88.pdf",
+                "mimeType": "application/pdf",
+                "taille": 36521,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/FA116.pdf"
+              },
+              {
+                "idDocumentDelivre": "c4565204-761c-4b02-981a-82a2cbac6685",
+                "typeDocument": "COPIE_INTEGRALE",
+                "nom": "2_c456185e-69aa-4e13-8aff-e7468eea28a3.pdf",
+                "mimeType": "application/pdf",
+                "taille": 207836,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/COPIE_INTEGRALE.pdf"
+              }
+            ],
+            "requete": null
+          },
+          "requerant": {
+            "idRequerant": "c456764a-fdc7-49ad-b00f-23a4802d978c",
+            "typeRequerant": "TITULAIRE",
+            "qualiteRequerant": "ADMINISTRATION",
+            "nomAdministration": "MINISTERE JUSTICE",
+            "identite": "IDENTITE-MJ",
+            "raisonSociale": null,
+            "nomFamille": null,
+            "nomUsage": null,
+            "prenom": null,
+            "mail": null,
+            "telephone": "2777327569",
+            "adresse": null,
+            "requete": null
+          },
+          "titulaires": [
+            {
+              "idTitulaire": "c456f23f-2b2f-4b97-8fd6-c6ef5ddcdf36",
+              "position": 1,
+              "nomNaissance": "garisson",
+              "nomUsage": null,
+              "prenom1": "juliette",
+              "prenom2": "",
+              "prenom3": "",
+              "jourNaissance": 25,
+              "moisNaissance": 3,
+              "anneeNaissance": 1983,
+              "villeNaissance": "fez",
+              "paysNaissance": "maroc",
+              "adoption": null,
+              "sexe": null,
+              "parent1": null,
+              "parent2": null,
+              "requete": null
+            },
+            {
+              "idTitulaire": "c456b989-44f4-477e-a5ef-98eedf64e5e2",
+              "position": 2,
+              "nomNaissance": "martin",
+              "nomUsage": null,
+              "prenom1": "Gabriel",
+              "prenom2": "",
+              "prenom3": "",
+              "jourNaissance": 25,
+              "moisNaissance": 3,
+              "anneeNaissance": 1983,
+              "villeNaissance": "fez",
+              "paysNaissance": "maroc",
+              "adoption": null,
+              "sexe": null,
+              "parent1": null,
+              "parent2": null,
+              "requete": null
+            }
+          ]
+        },
+        {
+          "idRequete": "c456748f-3d82-4e05-beea-590983fc1f49",
+          "idSagaDilaImpression": null,
+          "idSagaDila": 3,
+          "idRequeteInitiale": null,
+          "identifiantPartenaire": "A-3-XZ1WOMAX",
+          "dateCreation": 1591803760,
+          "dateDerniereMaj": 1591803760,
+          "canal": "INTERNET",
+          "provenance": "DILA",
+          "statut": "A_SIGNER",
+          "dateStatut": 1599472700.07749,
+          "dateTrtDemat": null,
+          "dateDelivranceDemat": null,
+          "typeRequete": "DELIVRANCE",
+          "sousTypeRequete": "RDD",
+          "natureActe": "MARIAGE",
+          "typeActe": "COPIE_INTEGRALE",
+          "jourEvenement": 3,
+          "moisEvenement": 7,
+          "anneeEvenement": 1981,
+          "villeEvenement": "nice",
+          "paysEvenement": "france",
+          "nbExemplaire": null,
+          "motifRequete": "PENSION_REVERSION",
+          "lienRequerant": null,
+          "mandantType": null,
+          "mandantIdentite": null,
+          "mandantLien": null,
+          "piecesJustificatives": [
+            {
+              "idPieceJustificative": "c45651ed-9ab7-4680-bfa6-9b1cb33faecf",
+              "nom": "3_c456d5b1-6677-47e6-93d0-5a68487ac230.PNG",
+              "mimeType": "image/png",
+              "typePieceJustificative": "man",
+              "extension": null,
+              "taille": 294658,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            },
+            {
+              "idPieceJustificative": "c456fb3e-b085-4c99-b9d7-ca6295fededa",
+              "nom": "3_c4569ddc-3754-4939-9efb-f1beac769e60.pdf",
+              "mimeType": "application/pdf",
+              "typePieceJustificative": "cpro",
+              "extension": null,
+              "taille": 207836,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            }
+          ],
+          "reponse": {
+            "idReponse": "c4564d18-d0d8-47d4-b107-44478dab6508",
+            "dateTraitementDemat": null,
+            "dateDelivrance": 1591862400,
+            "natureActe": "NAISSANCE",
+            "referenceActe": "(COL) ORAN.1961.RET ..32404",
+            "jourEvenement": 11,
+            "moisEvenement": 3,
+            "anneeEvenement": 1960,
+            "villeEvenement": "fez",
+            "paysEvenement": "maroc",
+            "nomOec": "SLAOUI",
+            "prenomOec": "Nabil",
+            "commentaire": "commentaire",
+            "documentsDelivres": [
+              {
+                "idDocumentDelivre": "c45607da-e1a5-4cc6-9547-a2d0d204841d",
+                "typeDocument": "FA116",
+                "nom": "3_c456a145-7793-4697-bd81-a545e2bfb172.pdf",
+                "mimeType": "application/pdf",
+                "taille": 36521,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/FA116.pdf"
+              },
+              {
+                "idDocumentDelivre": "c456983f-a1f9-4bd2-a0bb-9280101038db",
+                "typeDocument": "COPIE_INTEGRALE",
+                "nom": "3_c4566885-b4c0-4a2b-8b67-900453efda98.pdf",
+                "mimeType": "application/pdf",
+                "taille": 207836,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/COPIE_INTEGRALE.pdf"
+              }
+            ],
+            "requete": null
+          },
+          "requerant": {
+            "idRequerant": "c4564432-021f-424c-b6f3-20dd546139ed",
+            "typeRequerant": "TITULAIRE",
+            "qualiteRequerant": "MANDATAIRE_HABILITE",
+            "nomAdministration": null,
+            "identite": "martin",
+            "raisonSociale": "Gabriel",
+            "nomFamille": null,
+            "nomUsage": null,
+            "prenom": null,
+            "mail": null,
+            "telephone": "3777327569",
+            "adresse": null,
+            "requete": null
+          },
+          "titulaires": [
+            {
+              "idTitulaire": "c45684c0-effd-43d1-a48f-8c6a32687e18",
+              "position": 1,
+              "nomNaissance": "slaoui_",
+              "nomUsage": null,
+              "prenom1": "nabil_",
+              "prenom2": "",
+              "prenom3": "",
+              "jourNaissance": 25,
+              "moisNaissance": 3,
+              "anneeNaissance": 1983,
+              "villeNaissance": "fez",
+              "paysNaissance": "maroc",
+              "adoption": null,
+              "sexe": null,
+              "parent1": null,
+              "parent2": null,
+              "requete": null
+            },
+            {
+              "idTitulaire": "c4560c0b-aa6b-4e08-8d33-e42a425ff3b0",
+              "position": 2,
+              "nomNaissance": "slaoui_",
+              "nomUsage": null,
+              "prenom1": "sara_",
+              "prenom2": "",
+              "prenom3": "",
+              "jourNaissance": 25,
+              "moisNaissance": 3,
+              "anneeNaissance": 1983,
+              "villeNaissance": "fez",
+              "paysNaissance": "maroc",
+              "adoption": null,
+              "sexe": null,
+              "parent1": null,
+              "parent2": null,
+              "requete": null
+            }
+          ]
+        },
+        {
+          "idRequete": "c456d9a2-0fe6-4886-8a34-6d4ffcb80f72",
+          "idSagaDilaImpression": null,
+          "idSagaDila": 4,
+          "idRequeteInitiale": null,
+          "identifiantPartenaire": "A-4-XZ1WOMAX",
+          "dateCreation": 1591803760,
+          "dateDerniereMaj": 1591803760,
+          "canal": "INTERNET",
+          "provenance": "DILA",
+          "statut": "A_SIGNER",
+          "dateStatut": 1599472700.168225,
+          "dateTrtDemat": null,
+          "dateDelivranceDemat": null,
+          "typeRequete": "DELIVRANCE",
+          "sousTypeRequete": "RDD",
+          "natureActe": "DECES",
+          "typeActe": "EXTRAIT_AVEC_FILIATION",
+          "jourEvenement": 25,
+          "moisEvenement": 3,
+          "anneeEvenement": 1980,
+          "villeEvenement": "toulouse",
+          "paysEvenement": "france",
+          "nbExemplaire": null,
+          "motifRequete": "PENSION_REVERSION",
+          "lienRequerant": null,
+          "mandantType": null,
+          "mandantIdentite": null,
+          "mandantLien": null,
+          "piecesJustificatives": [
+            {
+              "idPieceJustificative": "c4566a9b-5d0c-4855-961d-f89f69a5b041",
+              "nom": "4_c4566673-93d4-4c7c-afb6-37af7266e59f.pdf",
+              "mimeType": "application/pdf",
+              "typePieceJustificative": "cpro",
+              "extension": null,
+              "taille": 207836,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            },
+            {
+              "idPieceJustificative": "c4563efb-83ee-441f-af21-9e6cadf6ebf3",
+              "nom": "4_c4562838-5374-4ced-8e11-faa908da679c.PNG",
+              "mimeType": "image/png",
+              "typePieceJustificative": "man",
+              "extension": null,
+              "taille": 294658,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            }
+          ],
+          "reponse": {
+            "idReponse": "c4560f64-06ea-4f37-80a1-e164f3c24690",
+            "dateTraitementDemat": null,
+            "dateDelivrance": 1591862400,
+            "natureActe": "NAISSANCE",
+            "referenceActe": "(COL) ORAN.1961.RET ..42404",
+            "jourEvenement": 11,
+            "moisEvenement": 3,
+            "anneeEvenement": 1960,
+            "villeEvenement": "fez",
+            "paysEvenement": "maroc",
+            "nomOec": "SLAOUI",
+            "prenomOec": "Nabil",
+            "commentaire": "commentaire",
+            "documentsDelivres": [
+              {
+                "idDocumentDelivre": "c45658d3-7087-4761-853e-92c1bda83b3f",
+                "typeDocument": "COPIE_INTEGRALE",
+                "nom": "4_c4569626-14ac-40ec-aba3-d927c1bbb3c3.pdf",
+                "mimeType": "application/pdf",
+                "taille": 207836,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/COPIE_INTEGRALE.pdf"
+              },
+              {
+                "idDocumentDelivre": "c456473b-d57a-4f71-9be9-cd247034c932",
+                "typeDocument": "FA116",
+                "nom": "4_c456c96c-2894-40a9-a481-4380386fdb94.pdf",
+                "mimeType": "application/pdf",
+                "taille": 36521,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/FA116.pdf"
+              }
+            ],
+            "requete": null
+          },
+          "requerant": {
+            "idRequerant": "c456581a-1361-41a5-bbcd-870203b1cbc1",
+            "typeRequerant": "TITULAIRE",
+            "qualiteRequerant": "PARTICULIER",
+            "nomAdministration": null,
+            "identite": null,
+            "raisonSociale": null,
+            "nomFamille": "LEFEBVRE",
+            "nomUsage": null,
+            "prenom": "Élisabeth",
+            "mail": null,
+            "telephone": "4777327569",
+            "adresse": null,
+            "requete": null
+          },
+          "titulaires": [
+            {
+              "idTitulaire": "c456b56a-9400-4d7d-af5f-ac19f296859b",
+              "position": 1,
+              "nomNaissance": "aubin_",
+              "nomUsage": null,
+              "prenom1": "nicolas_",
+              "prenom2": "",
+              "prenom3": "",
+              "jourNaissance": 25,
+              "moisNaissance": 3,
+              "anneeNaissance": 1983,
+              "villeNaissance": "fez",
+              "paysNaissance": "maroc",
+              "adoption": null,
+              "sexe": null,
+              "parent1": {
+                "idTitulaire": "c456b3b8-a96f-41de-bea2-0182aeed0a52",
+                "position": 1,
+                "nomNaissance": "aubin",
+                "nomUsage": null,
+                "prenom1": "thomas",
+                "prenom2": "",
+                "prenom3": "",
+                "jourNaissance": 10,
+                "moisNaissance": 2,
+                "anneeNaissance": 1940,
+                "villeNaissance": "fez",
+                "paysNaissance": "maroc",
+                "adoption": null,
+                "sexe": null,
+                "parent1": null,
+                "parent2": null,
+                "requete": null
+              },
+              "parent2": null,
+              "requete": null
+            }
+          ]
+        },
+        {
+          "idRequete": "c456ce40-b070-45df-abfb-adb850f9c636",
+          "idSagaDilaImpression": null,
+          "idSagaDila": 5,
+          "idRequeteInitiale": null,
+          "identifiantPartenaire": "A-5-XZ1WOMAX",
+          "dateCreation": 1591803760,
+          "dateDerniereMaj": 1591803760,
+          "canal": "INTERNET",
+          "provenance": "DILA",
+          "statut": "A_SIGNER",
+          "dateStatut": 1599472700.302241,
+          "dateTrtDemat": null,
+          "dateDelivranceDemat": null,
+          "typeRequete": "DELIVRANCE",
+          "sousTypeRequete": "RDD",
+          "natureActe": "MARIAGE",
+          "typeActe": "EXTRAIT_AVEC_FILIATION",
+          "jourEvenement": 25,
+          "moisEvenement": 3,
+          "anneeEvenement": 1970,
+          "villeEvenement": "bordeaux",
+          "paysEvenement": "france",
+          "nbExemplaire": null,
+          "motifRequete": "PENSION_REVERSION",
+          "lienRequerant": null,
+          "mandantType": null,
+          "mandantIdentite": null,
+          "mandantLien": null,
+          "piecesJustificatives": [
+            {
+              "idPieceJustificative": "c45609bb-f887-4341-97e3-6644f182854c",
+              "nom": "5_c4566c4a-2ca1-4d58-8b96-ecc8ce0691be.pdf",
+              "mimeType": "application/pdf",
+              "typePieceJustificative": "cpro",
+              "extension": null,
+              "taille": 207836,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            },
+            {
+              "idPieceJustificative": "c4566e1a-69ad-4972-9000-ea39ca309fc6",
+              "nom": "5_c4562900-84df-4ddf-a3b0-10480f224112.PNG",
+              "mimeType": "image/png",
+              "typePieceJustificative": "man",
+              "extension": null,
+              "taille": 294658,
+              "contenu": null,
+              "conteneurSwift": "pieces-justificatives-2020-6",
+              "requete": null
+            }
+          ],
+          "reponse": {
+            "idReponse": "c45633ca-325a-4151-b303-0f49faeda64b",
+            "dateTraitementDemat": null,
+            "dateDelivrance": 1591862400,
+            "natureActe": "NAISSANCE",
+            "referenceActe": "(COL) ORAN.1961.RET ..52404",
+            "jourEvenement": 11,
+            "moisEvenement": 3,
+            "anneeEvenement": 1960,
+            "villeEvenement": "fez",
+            "paysEvenement": "maroc",
+            "nomOec": "SLAOUI",
+            "prenomOec": "Nabil",
+            "commentaire": "commentaire",
+            "documentsDelivres": [
+              {
+                "idDocumentDelivre": "c456004c-1a05-4106-a935-a2cf851ed897",
+                "typeDocument": "COPIE_INTEGRALE",
+                "nom": "5_c4564a34-b711-4a1f-8d97-4a5c98909a94.pdf",
+                "mimeType": "application/pdf",
+                "taille": 207836,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/COPIE_INTEGRALE.pdf"
+              },
+              {
+                "idDocumentDelivre": "c456866c-562c-41d3-ad95-6937c601e815",
+                "typeDocument": "FA116",
+                "nom": "5_c4569585-30ba-4b1b-a969-ddead3a90ce5.pdf",
+                "mimeType": "application/pdf",
+                "taille": 36521,
+                "contenu": null,
+                "conteneurSwift": "documents-delivres-2020-6",
+                "reponse": null,
+                "cheminFs": "/saga-docinternet-fs/FA116.pdf"
+              }
+            ],
+            "requete": null
+          },
+          "requerant": {
+            "idRequerant": "c456be92-1b89-4e63-9299-67696a108667",
+            "typeRequerant": "TITULAIRE",
+            "qualiteRequerant": "PARTICULIER",
+            "nomAdministration": null,
+            "identite": null,
+            "raisonSociale": null,
+            "nomFamille": "DUPONT",
+            "nomUsage": null,
+            "prenom": "Angélique",
+            "mail": null,
+            "telephone": "5777327569",
+            "adresse": null,
+            "requete": null
+          },
+          "titulaires": [
+            {
+              "idTitulaire": "c456edf1-2328-4a03-90de-16d45e80979b",
+              "position": 1,
+              "nomNaissance": "aubin__",
+              "nomUsage": null,
+              "prenom1": "nicolas__",
+              "prenom2": "",
+              "prenom3": "",
+              "jourNaissance": 25,
+              "moisNaissance": 3,
+              "anneeNaissance": 1983,
+              "villeNaissance": "fez",
+              "paysNaissance": "maroc",
+              "adoption": null,
+              "sexe": null,
+              "parent1": {
+                "idTitulaire": "c456d6ac-f985-494e-80c5-06b45fbf54bd",
+                "position": 1,
+                "nomNaissance": "aubin_",
+                "nomUsage": null,
+                "prenom1": "thomas_",
+                "prenom2": "",
+                "prenom3": "",
+                "jourNaissance": 10,
+                "moisNaissance": 2,
+                "anneeNaissance": 1940,
+                "villeNaissance": "fez",
+                "paysNaissance": "maroc",
+                "adoption": null,
+                "sexe": null,
+                "parent1": null,
+                "parent2": null,
+                "requete": null
+              },
+              "parent2": {
+                "idTitulaire": "c4564c57-b608-4552-a8b0-143eea837c7e",
+                "position": 2,
+                "nomNaissance": "aubin_",
+                "nomUsage": null,
+                "prenom1": "sylvie_",
+                "prenom2": "",
+                "prenom3": "",
+                "jourNaissance": 10,
+                "moisNaissance": 2,
+                "anneeNaissance": 1950,
+                "villeNaissance": "fez",
+                "paysNaissance": "maroc",
+                "adoption": null,
+                "sexe": null,
+                "parent1": null,
+                "parent2": null,
+                "requete": null
+              },
+              "requete": null
+            },
+            {
+              "idTitulaire": "c45672b9-931a-4a58-93e8-6ab82009ee2b",
+              "position": 2,
+              "nomNaissance": "aubin_",
+              "nomUsage": null,
+              "prenom1": "sara_",
+              "prenom2": "",
+              "prenom3": "",
+              "jourNaissance": 25,
+              "moisNaissance": 3,
+              "anneeNaissance": 1983,
+              "villeNaissance": "fez",
+              "paysNaissance": "maroc",
+              "adoption": null,
+              "sexe": null,
+              "parent1": {
+                "idTitulaire": "c4569668-c805-45d0-94b0-84d6ebffadf9",
+                "position": 1,
+                "nomNaissance": "aubin_",
+                "nomUsage": null,
+                "prenom1": "mathieu_",
+                "prenom2": "",
+                "prenom3": "",
+                "jourNaissance": 10,
+                "moisNaissance": 2,
+                "anneeNaissance": 1940,
+                "villeNaissance": "fez",
+                "paysNaissance": "maroc",
+                "adoption": null,
+                "sexe": null,
+                "parent1": null,
+                "parent2": null,
+                "requete": null
+              },
+              "parent2": {
+                "idTitulaire": "c4566099-21bb-4945-9e2f-65a026c0220f",
+                "position": 2,
+                "nomNaissance": "aubin_",
+                "nomUsage": null,
+                "prenom1": "nadine_",
+                "prenom2": "",
+                "prenom3": "",
+                "jourNaissance": 10,
+                "moisNaissance": 2,
+                "anneeNaissance": 1950,
+                "villeNaissance": "fez",
+                "paysNaissance": "maroc",
+                "adoption": null,
+                "sexe": null,
+                "parent1": null,
+                "parent2": null,
+                "requete": null
+              },
+              "requete": null
+            }
+          ]
+        }
+      ],
+      "errors": [
+
+      ]
+    }
+  },
+  "metadata": null
+}
+I, [2020-09-08T09:57:39.197524 #23456]  INFO -- : Received request GET /?statut=A_SIGNER&tri=dateStatus&sens=ASC&nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913
+D, [2020-09-08T09:57:39.197838 #23456] DEBUG -- : {
+  "path": "/",
+  "query": "statut=A_SIGNER&tri=dateStatus&sens=ASC&nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913",
+  "method": "get",
+  "headers": {
+    "Host": "127.0.0.1:36787",
+    "Accept-Encoding": "gzip, deflate",
+    "Connection": "close",
+    "Version": "HTTP/1.1"
+  }
+}
+E, [2020-09-08T09:57:39.198190 #23456] ERROR -- : No matching interaction found for GET /?statut=A_SIGNER&tri=dateStatus&sens=ASC&nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913
+E, [2020-09-08T09:57:39.198252 #23456] ERROR -- : Interaction diffs for that route:
+E, [2020-09-08T09:57:39.198295 #23456] ERROR -- : 
+W, [2020-09-08T09:57:39.280232 #23456]  WARN -- : Verifying - actual interactions do not match expected interactions. 
+Missing requests:
+	GET rece-requete-api/v1/requetes?statut=A_SIGNER&tri=dateStatus&sens=ASC&nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913
+
+Unexpected requests:
+	GET /?statut=A_SIGNER&tri=dateStatus&sens=ASC&nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913
+
+
+W, [2020-09-08T09:57:39.280307 #23456]  WARN -- : Missing requests:
+	GET rece-requete-api/v1/requetes?statut=A_SIGNER&tri=dateStatus&sens=ASC&nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913
+
+Unexpected requests:
+	GET /?statut=A_SIGNER&tri=dateStatus&sens=ASC&nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913
+
+
+I, [2020-09-08T09:57:39.314463 #23456]  INFO -- : Cleared interactions
