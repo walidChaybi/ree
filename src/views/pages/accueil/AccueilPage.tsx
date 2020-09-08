@@ -24,7 +24,7 @@ export const AccueilPage: React.FC = () => {
 
       <img src={logoRece} alt={getText("altLogoRece")} />
       <OfficierContext.Consumer>
-        {officier => (
+        {(officier) => (
           <>
             <div className="Titre">
               <Text

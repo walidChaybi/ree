@@ -135,17 +135,20 @@ export class ApiManager {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
     return httpRequete
-      .then(response => {
+      .then((response) => {
         return Promise.resolve({
           body: response.body,
           status: response.status,
           headers: response.header
         });
       })
-      .catch(error => {
-        messageManager.showError(
-          "Une erreur est survenue: " + (error ? error.message : "inconnue")
-        );
+      .catch((error) => {
+        if (process.env.NODE_ENV === "development") {
+          messageManager.showError(
+            "Une erreur est survenue: " + (error ? error.message : "inconnue")
+          );
+        }
+
         return Promise.reject(error);
       });
   }
@@ -155,7 +158,7 @@ export class ApiManager {
     httpRequest: superagent.SuperAgentRequest
   ): superagent.SuperAgentRequest {
     let res = httpRequest;
-    headers.forEach(element => {
+    headers.forEach((element) => {
       res = httpRequest.set(element.header, element.value);
     });
     return res;
