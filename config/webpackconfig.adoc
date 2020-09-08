@@ -1,0 +1,87 @@
+Webpack config doc
+------------------
+Doc de référence:
+
+https://webpack.js.org/configuration/
+
+https://webpack.js.org/plugins/
+
+Configuation
+^^^^^^^^^^^
+.Conf du fichier webpack.config.js
+[options="header"]
+|=======================
+|attribut   |value      |comment
+|*`mode`*       |isEnvProduction ? "production" : isEnvDevelopment && "development"         |dev/prod Mode
+|*`bail`*       |isEnvProduction                                                            |Fail out on the first error instead of tolerating it
+|*`devtool`*    |isEnvProduction ? shouldUseSourceMap ? "source-map" : false : isEnvDevelopment && "cheap-module-source-map"   |This option controls if and how source maps are generated
+|*`entry`*      |isEnvDevelopment && require.resolve("react-dev-utils/webpackHotDevClient") |Include an alternative client for WebpackDevServer
+|           |paths.appIndexJs                                                           |app's code: 'src/index'        
+|*`output`*     |*path*: isEnvProduction ? paths.appBuild : undefined                       |'build'
+|           |*pathinfo*: isEnvDevelopment                                               |Tells webpack to include comments in bundles with information about the contained modules
+|           |*filename*: isEnvProduction ? "static/js/[name].[contenthash:8].js" : isEnvDevelopment && "static/js/bundle.js" |This option determines the name of each output bundle. The bundle is written to the directory specified by the output.path option.
+|           |*futureEmitAssets*: true  /remove this when upgrading to webpack 5/        |https://webpack.js.org/configuration/output/#outputfutureemitassets
+|           |*chunkFilename*: isEnvProduction ? "static/js/[name].[contenthash:8].chunk.js" : isEnvDevelopment && "static/js/[name].chunk.js" | This option determines the name of non-entry chunk files (in case of lazy loading) cf. *output.filename*
+|           |*publicPath*: isEnvProduction ? "/rece/rece-ui/" : paths.publicUrlOrPath   |To determine where the app is being served from and for on-demand-loading or loading external resources like images
+|           |*devtoolModuleFilenameTemplate*                | ? https://webpack.js.org/configuration/output/#outputdevtoolmodulefilenametemplate
+|           |*jsonpFunction*                                |jsonp callback name
+|           |*globalObject*: "this"                         |Global object used to mount libraries
+|*`optimization`*|*minimize*: isEnvProduction                   |
+|           |*minimizer*: [new *TerserPlugin*(..), new *OptimizeCSSAssetsPlugin*(...)]            |terser (https://github.com/terser/terser), cssano(https://github.com/cssnano/cssnano) with safePostCssParser (https://github.com/postcss/postcss-safe-parser) css parser
+|           |*splitChunks*: { chunks: "all", name: false}   |Automatically split vendor and commons 
+|           |*runtimeChunk*: { name: (entrypoint) => `runtime-${entrypoint.name}`}           |Keep the runtime chunk separated to enable long term caching
+|*`resolve`*
+
+(These options change how modules are resolved: https://webpack.js.org/configuration/resolve/#root)   |*modules*: ["node_modules", paths.appNodeModules].concat(modules.additionalModulePaths \|\| []|*paths.appNodeModules*='node_modules' *additionalModulePaths* : *cf. modules.js*, check if there additional modules in tsconfig.json or jsconfig.json
+|           |*extensions*: paths.moduleFileExtensions.map(...).filter(...)|moduleFileExtensions = ['web.mjs', 'mjs', 'web.js', 'js', 'web.ts', 'ts', 'web.tsx',tsx', 'json', 'web.jsx', 'jsx']
+|           |*alias*: {"react-native": "react-native-web",...(isEnvProductionProfile && {"react-dom$": "react-dom/profiling","scheduler/tracing":"scheduler/tracing-profiling",}),...(modules.webpackAliases \|\| {}),}|alias for import (cf. *modules.js*, check if there additional modules in tsconfig.json or jsconfig.json)
+|           |*plugins*:[PnpWebpackPlugin,new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])]           |A list of additional resolve plugins which should be applied (https://github.com/arcanis/pnp-webpack-plugin), *ModuleScopePlugin*: Prevents users from importing files from outside of src/ (or node_modules/).
+|*`resolveLoader`*|plugins: [PnpWebpackPlugin.moduleLoader(module)]|Also related to Plug'n'Play, but this time it tells webpack to load its loaders
+        // from the current package
+|*`module`*     |*strictExportPresence*: true|Makes missing exports an error instead of warning
+|           |*rules:[*|
+|           |{ *parser*: { requireEnsure: false } },|Disable require.ensure as it's not a standard language feature
+|           |{ ... *loader*: require.resolve("*eslint-loader*")}|First, run the linter
+|           |{*oneOf: [*           |"oneOf" will traverse all following loaders until one will match the requirements. When no loader matches it will fall back to the "file" loader at the end of the loader list.
+|           |{... *loader*: require.resolve("*url-loader*")}           |
+|           |{... *loader*: require.resolve("*babel-loader*")}           |compilation to ES5
+|           |*getStyleLoaders*    |function wich returns loaders: *style-loader or MiniCssExtractPlugin.loader, css-loader, postcss-loader, resolve-url-loader, sass-loader*
+|           |{... *loader*: require.resolve("*file-loader*")}           |When no loader matches it will fall back to the "file". "file" loader makes sure those assets get served by WebpackDevServer loaderjs
+|           |         *]*}|
+|           |*]*|
+|*`plugins`*           |new *WebpackAutoInject*          |Inject version from package.json (https://github.com/sinoon/html-webpack-auto-inject-plugin)
+|           |new *HtmlWebpackPlugin*           |Generates an `index.html` file with the <script> injected
+|           |new *InlineChunkHtmlPlugin*(*HtmlWebpackPlugin*, [/runtime-.+[.]js/])           |Mode prod and shouldInlineRuntimeChunk: Inlines the webpack runtime script
+|           |new *InterpolateHtmlPlugin*(*HtmlWebpackPlugin*,  env.raw)           |Makes some environment variables available in index.html
+|           |new *ModuleNotFoundPlugin*(paths.appPath)           |This gives some necessary context to module not found errors
+|           |new *webpack.DefinePlugin*(env.stringified)           |Makes some environment variables available to the JS code
+|           |new *HotModuleReplacementPlugin*       |Mode Dev only: emit hot updates (currently CSS only)
+|           |new *CaseSensitivePathsPlugin*         |Mod dev only: error when wrong casing in a path
+|           |new *WatchMissingNodeModulesPlugin*    |Mod dev only: new module with 'npm install' then discovery it automaticaly
+|           |new *MiniCssExtractPlugin*           |Mode prod only
+|           |new *ManifestPlugin*           |Generate an asset manifest file
+|           |new *webpack.IgnorePlugin*        |Ignore importing 'locale' directory of 'moment-js'
+|           |new *WorkboxWebpackPlugin.GenerateSW*           |Mode prod only: Generate a service worker script that will precache, and keep up to date, the HTML & assets that are part of the webpack build.
+|           |new *ForkTsCheckerWebpackPlugin*           |TypeScript type checking
+|*`node`*   |{
+      
+      module: "empty",
+      
+      dgram: "empty",
+      
+      dns: "mock",
+      
+      fs: "empty",
+      
+      http2: "empty",
+      
+      net: "empty",
+      
+      tls: "empty",
+      
+      child_process: "empty",
+      
+    }           |Some libraries import Node modules but don't use them in the browser. Tell webpack to provide empty mocks for them so importing them works.
+|           |           |
+|=======================
+
