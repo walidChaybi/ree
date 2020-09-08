@@ -28,7 +28,7 @@ describe("API Pact test", () => {
   });
 
   describe("getting all requests of an oec", () => {
-    const path = "/rece-requete-api/v1" + ApiEndpoints.RequetesUrl;
+    const uri = "/rece-requete-api/v1" + ApiEndpoints.RequetesUrl;
 
     const queryParameters = {
       statut: StatutRequete.ASigner,
@@ -51,12 +51,12 @@ describe("API Pact test", () => {
     test("requests exist", async () => {
       // set up Pact interactions
 
-      let interaction: InteractionObject | Interaction = {
+      const interaction: InteractionObject | Interaction = {
         state: "requests exist",
         uponReceiving: "get all requests of an oec",
         withRequest: {
           method: "GET",
-          path,
+          path: uri,
           query: queryParameters,
         },
         willRespondWith: {
@@ -70,8 +70,8 @@ describe("API Pact test", () => {
 
       await provider.addInteraction(interaction);
 
-      let result = await new ApiPact(provider)
-        .get(path)
+      const result = await new ApiPact(provider)
+        .get(uri)
         .queryParameters(queryParameters)
         .execute()
         .then((res) => {
