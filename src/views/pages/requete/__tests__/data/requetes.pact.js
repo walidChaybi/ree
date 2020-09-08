@@ -1,6 +1,6 @@
 import { eachLike } from "@pact-foundation/pact/dsl/matchers";
 
-export const requetePact = eachLike({
+export const requetesPact = eachLike({
   idRequete: "c456358c-6e4c-4a5f-adc3-083e692f72ab",
   idSagaDilaImpression: null,
   idSagaDila: 1,

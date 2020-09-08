@@ -2,9 +2,8 @@ import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import path from "path";
 import { Pact, InteractionObject, Interaction } from "@pact-foundation/pact";
 import { ApiEndpoints } from "../../../router/UrlManager";
-import { requetePact } from "./data/requete.pact";
-//import { ApiPact } from "../../../../api/__tests__/ApiPact";
-import * as superagent from "superagent";
+import { requetesPact } from "./data/requetes.pact";
+import { ApiPact } from "../../../../api/__tests__/ApiPact";
 
 const provider = new Pact({
   consumer: "ReceUiMesRequetes",
@@ -29,7 +28,9 @@ describe("API Pact test", () => {
   });
 
   describe("getting all requests of an oec", () => {
-    let queryParameters = {
+    const path = "/rece-requete-api/v1" + ApiEndpoints.RequetesUrl;
+
+    const queryParameters = {
       statut: StatutRequete.ASigner,
       tri: "dateStatus",
       sens: "ASC",
@@ -38,12 +39,12 @@ describe("API Pact test", () => {
       idArobas: "03901913",
     };
 
-    let expectedResult = {
+    const expectedResult = {
       hasTechnicalError: false,
       hasBusinessError: false,
       status: 200,
       url: "/rece-requete-api/v1/requetes",
-      data: requetePact,
+      data: requetesPact,
       errors: [],
     };
 
@@ -55,7 +56,7 @@ describe("API Pact test", () => {
         uponReceiving: "get all requests of an oec",
         withRequest: {
           method: "GET",
-          path: "/rece-requete-api/v1" + ApiEndpoints.RequetesUrl,
+          path,
           query: queryParameters,
         },
         willRespondWith: {
@@ -69,19 +70,13 @@ describe("API Pact test", () => {
 
       await provider.addInteraction(interaction);
 
-      let result = (await superagent
-        .get(provider.mockService.baseUrl + "/" + interaction.withRequest.path)
-        .query(queryParameters)
+      let result = await new ApiPact(provider)
+        .get(path)
+        .queryParameters(queryParameters)
+        .execute()
         .then((res) => {
           return res;
-        })) as superagent.Response;
-
-      // let result = await new ApiPact(provider)
-      //   .get(interaction.withRequest.path)
-      //   .queryParameters(queryParameters)
-      //   .then((res) => {
-      //     return res;
-      //   });
+        });
 
       expect(result.body).not.toBeNull();
       expect(result.body.data).not.toBeNull();
