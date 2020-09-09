@@ -187,5 +187,11 @@
   },
   "signature": {
     "confirmation": "Êtes-vous sûr de vouloir signer électroniquement le document ?"
+  },
+  "messageManager": {
+    "error": "Erreur",
+    "success": "Succès",
+    "info": "Information",
+    "warning": "Attention"
   }
 }

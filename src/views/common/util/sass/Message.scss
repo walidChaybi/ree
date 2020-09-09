@@ -1,8 +1,31 @@
-.message-manager {
-  .success {
-    color: green;
+@import "./../../../../sass/colors";
+
+.Toastify__toast-container {
+  width: auto;
+  top: 75px;
+  max-width: 500px;
+
+  div {
+    padding: 0px;
   }
+
+  .success {
+    color: $success;
+    background-color: $success-background;
+  }
+
   .error {
-    color: red;
+    color: $error;
+    background-color: $error-background;
+  }
+
+  .info {
+    color: $info;
+    background-color: $info-background;
+  }
+
+  .warning {
+    color: $warning;
+    background-color: $warning-background;
   }
 }
