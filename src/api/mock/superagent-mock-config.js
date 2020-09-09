@@ -21,84 +21,6 @@ module.exports = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
-      /**
-       * Returning error codes example:
-       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/404').end(function(err, res){
-       *     console.log(err); // 404
-       *     console.log(res.notFound); // true
-       *   })
-       */
-      if (match[1] === "/404") {
-        throw new Error(404);
-      }
-
-      /**
-       * Checking on parameters example:
-       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/hero').send({superhero: "superman"}).end(function(err, res){
-       *     console.logtruednt choose a hero";
-        }
-      }
-
-      /**
-       * Checking on headers example:
-       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/authorized_endpoint').set({Authorization: "9382hfih1834h"}).end(function(err, res){
-       *     console.log(res.body); // "Authenticated!"
-       *   })
-       */
-
-      if (match[1] === "/authorized_endpoint") {
-        if (headers["Authorization"]) {
-          return "Authenticated!";
-        } else {
-          throw new Error(401); // Unauthorized
-        }
-      }
-
-      /**
-       * Cancelling the mocking for a specific matched route example:
-       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/server_test').end(function(err, res){
-       *     console.log(res.body); // (whatever the actual server would have returned)
-       *   })
-       */
-
-      if (match[1] === "/server_test") {
-        context.cancel = true; // This will cancel the mock process and continue as usual (unmocked)
-        return null;
-      }
-
-      /**
-       * Delaying the response with a specific number of milliseconds:
-       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/delay_test').end(function(err, res){
-       *     console.log(res.body); // This log will be written after the delay time has passed
-       *   })
-       */
-
-      if (match[1] === "/delay_test") {
-        context.delay = 3000; // This will delay the response by 3 seconds
-        return "zzZ";
-      }
-
-      /**
-       * Mocking progress events:
-       *   request.get('http://10.110.204.59:80/rece/rece-requete-api/v1/progress_test')
-       *     .on('progress', function (e) { console.log(e.percent + '%'); })
-       *     .end(function(err, res){
-       *       console.log(res.body); // This log will be written after all progress events emitted
-       *     })
-       */
-
-      if (match[1] === "/progress_test") {
-        context.progress = {
-          parts: 3, // The number of progress events to emit one after the other with linear progress
-          //   (Meaning, loaded will be [total/parts])
-          delay: 1000, // [optional] The delay of emitting each of the progress events by ms
-          //   (default is 0 unless context.delay specified, then it's [delay/parts])
-          total: 100, // [optional] The total as it will appear in the progress event (default is 100)
-          lengthComputable: true, // [optional] The same as it will appear in the progress event (default is true)
-          direction: "upload", // [optional] superagent adds 'download'/'upload' direction to the event (default is 'upload')
-        };
-        return "Hundred percent!";
-      }
       if (
         match[1] ===
         "/requetes/104b8563-c7f8-4748-9daa-f26558985894?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
@@ -123,7 +45,9 @@ module.exports = [
         match[1] ===
           "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER" ||
         match[1] ===
-          "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=idSagaDila&sens=ASC&idArobas=idSSOConnectedUser"
+          "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=idSagaDila&sens=ASC&idArobas=idSSOConnectedUser" ||
+        match[1] ===
+          "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=idSSOConnectedUser"
       ) {
         return {
           data: mockRequetes.data.slice(0, 105),
@@ -311,90 +235,11 @@ module.exports = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
-      /**
-       * Returning error codes example:
-       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/404').end(function(err, res){
-       *     console.log(err); // 404
-       *     console.log(res.notFound); // true
-       *   })
-       */
-      if (match[1] === "/404") {
-        throw new Error(404);
-      }
-
-      /**
-       * Checking on parameters example:
-       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/hero').send({superhero: "superman"}).end(function(err, res){
-       *     console.logtruednt choose a hero";
-        }
-      }
-
-      /**
-       * Checking on headers example:
-       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/authorized_endpoint').set({Authorization: "9382hfih1834h"}).end(function(err, res){
-       *     console.log(res.body); // "Authenticated!"
-       *   })
-       */
-
-      if (match[1] === "/authorized_endpoint") {
-        if (headers["Authorization"]) {
-          return "Authenticated!";
-        } else {
-          throw new Error(401); // Unauthorized
-        }
-      }
-
-      /**
-       * Cancelling the mocking for a specific matched route example:
-       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/server_test').end(function(err, res){
-       *     console.log(res.body); // (whatever the actual server would have returned)
-       *   })
-       */
-
-      if (match[1] === "/server_test") {
-        context.cancel = true; // This will cancel the mock process and continue as usual (unmocked)
-        return null;
-      }
-
-      /**
-       * Delaying the response with a specific number of milliseconds:
-       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/delay_test').end(function(err, res){
-       *     console.log(res.body); // This log will be written after the delay time has passed
-       *   })
-       */
-
-      if (match[1] === "/delay_test") {
-        context.delay = 3000; // This will delay the response by 3 seconds
-        return "zzZ";
-      }
-
-      /**
-       * Mocking progress events:
-       *   request.get('http://10.110.204.59:80/rece/rece-securite-api/v1/progress_test')
-       *     .on('progress', function (e) { console.log(e.percent + '%'); })
-       *     .end(function(err, res){
-       *       console.log(res.body); // This log will be written after all progress events emitted
-       *     })
-       */
-
-      if (match[1] === "/progress_test") {
-        context.progress = {
-          parts: 3, // The number of progress events to emit one after the other with linear progress
-          //   (Meaning, loaded will be [total/parts])
-          delay: 1000, // [optional] The delay of emitting each of the progress events by ms
-          //   (default is 0 unless context.delay specified, then it's [delay/parts])
-          total: 100, // [optional] The total as it will appear in the progress event (default is 100)
-          lengthComputable: true, // [optional] The same as it will appear in the progress event (default is true)
-          direction: "upload", // [optional] superagent adds 'download'/'upload' direction to the event (default is 'upload')
-        };
-        return "Hundred percent!";
-      }
-
       if (match[1] === "/utilisateurs?service=servicemock") {
         return { data: mockUtilisateurs.data };
       }
 
-      if (match[1] === "/login") {
+      if (match[1] === "/utilisateurs/login") {
         return { headers: mockConnectedUser };
       }
     },
@@ -408,7 +253,7 @@ module.exports = [
     get: function (match, data) {
       return {
         body: data,
-        headers: data.headers,
+        header: data.headers,
       };
     },
 
