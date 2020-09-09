@@ -4,7 +4,7 @@ import { ValidationPopin } from "../../common/widget/ValidationPopin";
 import { PopinSignature } from "./signature/PopinSignature";
 import {
   DocumentsATraiter,
-  DocumentsByRequete,
+  DocumentsByRequete
 } from "./signature/SignatureDocumentHook";
 import { IDataTable } from "./MesRequetesPage";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
@@ -18,7 +18,7 @@ interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
   requetes,
-  onClose,
+  onClose
 }) => {
   const validerButtonRef = React.createRef<HTMLButtonElement>();
 
@@ -54,6 +54,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         const documentsATraiter: DocumentsATraiter = {
           documentsToSign: [],
           documentsToSave: [],
+          sousTypeRequete: requete.sousTypeRequete
         };
 
         requete.reponse.documentsDelivres.forEach((document) => {
@@ -64,7 +65,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
             nomDocument: document.nom,
             conteneurSwift: document.conteneurSwift,
             idRequete: requete.idRequete,
-            numeroRequete: requete.idSagaDila,
+            numeroRequete: requete.idSagaDila
           });
         });
 

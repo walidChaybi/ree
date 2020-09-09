@@ -4,20 +4,21 @@ import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { SignatureErrors } from "./ErrorsSignature";
 import {
   IQueryParameterUpdateDocument,
-  useUpdateDocumentApi,
+  useUpdateDocumentApi
 } from "../UpdateDocumentHook";
 import {
   IQueryParameterUpdateStatutRequete,
-  useUpdateStatutRequeteApi,
+  useUpdateStatutRequeteApi
 } from "../UpdateStatutRequeteHook";
 import {
   requestDocumentApi,
-  IRequestDocumentApiResult,
+  IRequestDocumentApiResult
 } from "../visualisation/document/DocumentRequeteHook";
 import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
 import { ModeSignature } from "../../../../model/requete/ModeSignature";
 import { SuccessSignatureType } from "./SuccessSignature";
 import { FormatDate } from "../../../../ressources/FormatDate";
+import { SousTypeRequete } from "../../../../model/requete/SousTypeRequete";
 
 export interface IQueryParametersPourRequete {
   statut?: StatutRequete;
@@ -50,6 +51,7 @@ interface InfosSignature {
 export interface DocumentsATraiter {
   documentsToSign: DocumentToSign[];
   documentsToSave: DocumentToSave[];
+  sousTypeRequete: SousTypeRequete;
 }
 
 interface DocumentToSave {
@@ -81,12 +83,12 @@ export function useSignatureDocumentHook(
 
   const [
     updateDocumentQueryParamState,
-    setUpdateDocumentQueryParamState,
+    setUpdateDocumentQueryParamState
   ] = useState<IQueryParameterUpdateDocument[]>([]);
 
   const [
     updateStatutRequeteQueryParamState,
-    setUpdateStatutRequeteQueryParamState,
+    setUpdateStatutRequeteQueryParamState
   ] = useState<IQueryParameterUpdateStatutRequete>();
 
   useUpdateDocumentApi(updateDocumentQueryParamState);
@@ -115,7 +117,7 @@ export function useSignatureDocumentHook(
           idDocumentDelivre: document.idDocument,
           contenu: document.contenu,
           conteneurSwift: document.conteneurSwift,
-          nom: document.nomDocument,
+          nom: document.nomDocument
         };
       })
     );
@@ -138,9 +140,10 @@ export function useSignatureDocumentHook(
     (currentRequeteProcessing: DocumentsATraiter) => {
       if (currentRequeteProcessing.documentsToSign.length === 0) {
         setDocumentsToSave(currentRequeteProcessing.documentsToSave);
+
         setUpdateStatutRequeteQueryParamState({
           idRequete: idRequetesToSign[0],
-          statut: StatutRequete.ATraiterDemat,
+          statut: getNewStatusRequete(currentRequeteProcessing.sousTypeRequete)
         });
 
         const newSuccesses: SuccessSignatureType[] = [
@@ -148,8 +151,8 @@ export function useSignatureDocumentHook(
           {
             messageId: "signature.success",
             date: moment().format(FormatDate.DDMMYYYHHmm),
-            numeroRequete: `${currentRequeteProcessing.documentsToSave[0].numeroRequete}`,
-          },
+            numeroRequete: `${currentRequeteProcessing.documentsToSave[0].numeroRequete}`
+          }
         ];
 
         const newRequetesId = [...idRequetesToSign];
@@ -195,7 +198,7 @@ export function useSignatureDocumentHook(
   return {
     successSignature,
     errorsSignature,
-    idRequetesToSign,
+    idRequetesToSign
   };
 }
 
@@ -217,8 +220,8 @@ function changeDocumentToSign(
         mimeType: doc.mimeType,
         nomDocument: doc.nomDocument,
         conteneurSwift: doc.conteneurSwift,
-        numeroRequete: doc.numeroRequete,
-      },
+        numeroRequete: doc.numeroRequete
+      }
     ];
 
     documentsToSignWating[idRequetesToSign[0]].documentsToSign.shift();
@@ -246,7 +249,7 @@ function sendDocumentToSignature(
       process.env.NODE_ENV === "development"
         ? ModeSignature.Self
         : ModeSignature.Certigna,
-    infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos,
+    infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos
   };
   window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
 }
@@ -270,5 +273,13 @@ function getDocumentAndSendToSignature(
         idRequetesToSign
       );
     });
+  }
+}
+
+function getNewStatusRequete(sousTypeRequete: SousTypeRequete) {
+  if (sousTypeRequete === SousTypeRequete.RequeteDelivranceCourrier) {
+    return StatutRequete.TraiteAImprimer;
+  } else {
+    return StatutRequete.ATraiterDemat;
   }
 }
