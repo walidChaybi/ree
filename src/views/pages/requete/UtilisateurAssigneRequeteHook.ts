@@ -5,7 +5,7 @@ import { IDataTable } from "./MesRequetesPage";
 import { getText } from "../../common/widget/Text";
 
 export interface IQueryParametersAssigneRequetes {
-  idRequete: string;
+  idReponse?: string;
   nomOec: string;
   prenomOec: string;
 }
@@ -29,14 +29,17 @@ export function useUtilisateurRequeteApi(
       api
         .fetch({
           method: HttpMethod.PATCH,
-          uri: ApiEndpoints.RequetesUrl,
-          data: [{ ...queryParameters }],
+          uri: `/${ApiEndpoints.ReponsesUrl}/${queryParameters.idReponse}`,
+          parameters: {
+            nomOec: queryParameters.nomOec,
+            prenomOec: queryParameters.prenomOec
+          },
           headers: []
         })
         .then(() => {
           if (requetes !== undefined) {
             const idxRequete = requetes.findIndex(
-              r => r.idRequete === queryParameters.idRequete
+              r => r.reponse?.idReponse === queryParameters.idReponse
             );
 
             requetes[

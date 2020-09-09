@@ -215,7 +215,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
 
             if (utilisateur !== undefined && functionCallBack !== undefined) {
               functionCallBack({
-                idRequete: row.idRequete,
+                idReponse: row.reponse?.idReponse,
                 nomOec: utilisateur.nom,
                 prenomOec: utilisateur.prenom
               });

@@ -29,7 +29,7 @@ module.exports = [
         return true;
       }
 
-      if (match[1] === "/requetes" && context.method === "patch") {
+      if (match[1] === "/reponses" && context.method === "patch") {
         return this.patch;
       }
 
