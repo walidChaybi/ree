@@ -18,15 +18,19 @@ module.exports = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function(match, params, headers, context) {
       if (
         match[1] === "/requetes?parametre1=titi&parametre2=3&parametre3=tutu"
       ) {
         return true;
       }
 
-      if (match[1] === "/requetes") {
+      if (match[1] === "/requetes" && context.method !== "patch") {
         return true;
+      }
+
+      if (match[1] === "/requetes" && context.method === "patch") {
+        return this.patch;
       }
 
       if (
@@ -42,10 +46,6 @@ module.exports = [
       ) {
         return { status: 404 };
       }
-
-      if (match[1] === "/requetes" && context.method === "put") {
-        return this.put;
-      }
     },
 
     /**
@@ -54,10 +54,10 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function(match, data) {
       return {
         body: data,
-        header: data.headers,
+        header: data.headers
       };
     },
 
@@ -67,23 +67,23 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function(match, data) {
       return {
-        status: 201,
+        status: 201
       };
     },
 
     /**
-     * returns the result of the PUT request
+     * returns the result of the PATCH request
      *
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    put: function (match, data) {
+    patch: function(match, data) {
       return {
-        status: 201,
+        status: 201
       };
-    },
+    }
   },
   {
     /**
@@ -100,7 +100,7 @@ module.exports = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function (match, params, headers, context) {
+    fixtures: function(match, params, headers, context) {
       if (match[1] === "/utilisateurs?idArobas=5ef4b1da1e3ee4adf9615ec7") {
         return { data: DONNEES_UTILISATEURS };
       }
@@ -112,10 +112,10 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
+    get: function(match, data) {
       return {
         body: data,
-        header: data.headers,
+        header: data.headers
       };
     },
 
@@ -125,10 +125,10 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function (match, data) {
+    post: function(match, data) {
       return {
-        status: 201,
+        status: 201
       };
-    },
-  },
+    }
+  }
 ];
