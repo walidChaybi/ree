@@ -1,8 +1,12 @@
-import { ApiManager, HttpMethod } from "../../api/ApiManager";
-import { ApiEndpoints } from "../router/UrlManager";
+import { ApiManager, HttpMethod } from "../../../api/ApiManager";
+import { ApiEndpoints } from "../../router/UrlManager";
 import { useState, useEffect } from "react";
 
-export interface IUtilisateurSSOApi {
+export interface ILoginApi {
+  officierDataState?: IOfficierSSOApi;
+  erreurState?: any;
+}
+export interface IOfficierSSOApi {
   idSSO: string;
   nom: string;
   prenom: string;
@@ -16,31 +20,32 @@ export interface IUtilisateurSSOApi {
 }
 
 export function useLoginApi() {
-  const [dataState, setDataState] = useState<IUtilisateurSSOApi>();
-  const [errorState, setErrorState] = useState(undefined);
+  const [officierDataState, setOfficierDataState] = useState<IOfficierSSOApi>();
+  const [erreurState, setErreurState] = useState(undefined);
+
   useEffect(() => {
     const api = ApiManager.getInstance("rece-securite-api", "v1");
     api
       .fetch({
         method: HttpMethod.GET,
-        uri: ApiEndpoints.SecuriteUrl,
+        uri: ApiEndpoints.SecuriteUrl
       })
-      .then((result) => {
+      .then(result => {
         const officier = getUtilisateurSSOApiFromHeaders(result.headers);
-        setDataState(officier);
+        setOfficierDataState(officier);
       })
-      .catch((error) => {
-        setErrorState(error);
+      .catch(error => {
+        setErreurState(error);
       });
   }, []);
 
   return {
-    dataState,
-    errorState,
+    officierDataState,
+    erreurState
   };
 }
 
-function getUtilisateurSSOApiFromHeaders(headers: any): IUtilisateurSSOApi {
+function getUtilisateurSSOApiFromHeaders(headers: any): IOfficierSSOApi {
   return {
     idSSO: headers.id_sso,
     nom: headers.nom,
@@ -51,6 +56,6 @@ function getUtilisateurSSOApiFromHeaders(headers: any): IUtilisateurSSOApi {
     section: headers.section,
     bureau: headers.bureau,
     departement: headers.departement,
-    service: headers.service,
+    service: headers.service
   };
 }

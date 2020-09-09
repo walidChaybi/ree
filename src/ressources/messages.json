@@ -20,7 +20,7 @@
     "deconnexion": "Déconnexion"
   },
   "fildariane": {
-    "Logout": "Déconnexion",
+    "deconnexion": "Logout",
     "accueil": "Accueil",
     "mesrequetes": "Mes requêtes",
     "requetesservice": "Requêtes du service",
@@ -177,9 +177,21 @@
         "acte": "Bouton pour accèder à la recherche d'un acte",
         "tableau": "Bouton pour accèder au tableau de bord"
       }
+    },
+    "login": {
+      "connexion": "Connexion en cours ...",
+      "deconnexion": "Déconnexion en cours ...",
+      "erreurAuthentifacition": "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BAG.",
+      "erreurSysteme": "Erreur Système"
     }
   },
   "signature": {
     "confirmation": "Êtes-vous sûr de vouloir signer électroniquement le document ?"
+  },
+  "messageManager": {
+    "error": "Erreur",
+    "success": "Succès",
+    "info": "Information",
+    "warning": "Attention"
   }
 }

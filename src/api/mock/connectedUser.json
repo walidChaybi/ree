@@ -1,5 +1,5 @@
 {
-  "idSSO": "idSSOConnectedUser",
+  "id_sso": "idSSOConnectedUser",
   "nom": "nomConnectedUser",
   "prenom": "prenomConnectedUser",
   "trigramme": "trigrammeConnectedUser",
