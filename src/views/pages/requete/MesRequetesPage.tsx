@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import {
   TableauRece,
@@ -132,31 +132,27 @@ interface MesRequetesPageProps {
   officier?: IOfficierSSOApi;
 }
 
-export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
-  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("ASC");
-  const [sortOrderByState, setSortOrderByState] = React.useState<string>(
-    "dateStatut"
-  );
-
+export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
     statut: StatutRequete.ASigner,
-    tri: sortOrderByState,
-    sens: sortOrderState
+    tri: "dateStatut",
+    sens: "ASC"
   });
 
   const {
     dataState = [],
     rowsNumberState = 0,
-    nextDataLinkState = ""
+    nextDataLinkState = "",
+    previousDataLinkState = ""
   } = useRequeteApi(
     linkParameters,
     TypeAppelRequete.MES_REQUETES,
     props.officier
   );
 
-  function goToLink(link: string) {
+  const goToLink = useCallback((link: string) => {
     let queryParameters: IQueryParametersPourRequetes;
     if (link.indexOf("range") > 0) {
       let params = [];
@@ -169,22 +165,32 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
       };
       setLinkParameters(queryParameters);
     }
-  }
+  }, []);
+
+  const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
+    const queryParameters = {
+      statut: StatutRequete.ASigner,
+      tri: tri,
+      sens: sens
+    };
+
+    setLinkParameters(queryParameters);
+  }, []);
 
   return (
     <>
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={getUrlBack}
-        sortOrderByState={sortOrderByState}
-        sortOrderState={sortOrderState}
+        sortOrderByState={linkParameters.tri}
+        sortOrderState={linkParameters.sens}
         columnHeaders={columnsTableau}
         dataState={dataState}
         rowsNumberState={rowsNumberState}
         nextDataLinkState={nextDataLinkState}
+        previousDataLinkState={previousDataLinkState}
         goToLink={goToLink}
-        setSortOrderState={setSortOrderState}
-        setSortOrderByState={setSortOrderByState}
+        handleChangeSort={handleChangeSort}
       />
       <BoutonRetour />
     </>

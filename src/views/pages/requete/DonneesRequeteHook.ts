@@ -84,8 +84,8 @@ export interface IRequeteApi {
 
 export interface IQueryParametersPourRequetes {
   statut: StatutRequete;
-  tri?: string;
-  sens?: SortOrder;
+  tri: string;
+  sens: SortOrder;
   range?: string;
 }
 
@@ -139,7 +139,7 @@ export function useRequeteApi(
             idArobas: officier.idSSO
           }
         })
-        .then(result => {
+        .then((result) => {
           setDataState(reponseRequeteMapper(result.body.data));
           const rowsNumber: number = +(result.headers[
             contentRange
@@ -158,18 +158,11 @@ export function useRequeteApi(
           setPreviousDataLinkState(prevLink);
           setNextDataLinkState(nextLink);
         })
-        .catch(error => {
+        .catch((error) => {
           setErrorState(error);
         });
     }
-  }, [
-    queryParameters.statut,
-    queryParameters.tri,
-    queryParameters.sens,
-    queryParameters.range,
-    officier,
-    typeRequete
-  ]);
+  }, [queryParameters, officier, typeRequete]);
 
   return {
     dataState,
@@ -184,7 +177,7 @@ export function useRequeteApi(
 
 function reponseRequeteMapper(data: IRequeteApi[]): IDataTable[] {
   const result: IDataTable[] = [];
-  data.forEach(element => result.push(reponseRequeteMapperUnitaire(element)));
+  data.forEach((element) => result.push(reponseRequeteMapperUnitaire(element)));
   return result;
 }
 
@@ -240,7 +233,7 @@ function parseLink(linkHeader: string, api: ApiManager) {
       .split(`;rel="next"`)[0]
       .replace("<", "")
       .replace(">", "");
-    nextLink = `${api.url}:${api.ports}${nextLink}`;
+    nextLink = `${nextLink}`;
   }
   if (linkHeader.indexOf(`rel="prev"`) > 0) {
     prevLink = linkHeader

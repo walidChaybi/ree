@@ -9,7 +9,6 @@ module.exports = [
      */
 
     pattern: "http://localhost:80/rece/rece-requete-api/v1(.*)",
-
     /**
      * returns the data
      *
@@ -57,7 +56,7 @@ module.exports = [
     get: function (match, data) {
       return {
         body: data,
-        header: data.headers,
+        header: data.headers
       };
     },
 
@@ -69,7 +68,7 @@ module.exports = [
      */
     post: function (match, data) {
       return {
-        status: 201,
+        status: 201
       };
     },
 
@@ -81,9 +80,9 @@ module.exports = [
      */
     put: function (match, data) {
       return {
-        status: 201,
+        status: 201
       };
-    },
+    }
   },
   {
     /**
@@ -115,7 +114,7 @@ module.exports = [
     get: function (match, data) {
       return {
         body: data,
-        header: data.headers,
+        header: data.headers
       };
     },
 
@@ -127,8 +126,8 @@ module.exports = [
      */
     post: function (match, data) {
       return {
-        status: 201,
+        status: 201
       };
-    },
-  },
+    }
+  }
 ];

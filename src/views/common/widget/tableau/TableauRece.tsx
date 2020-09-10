@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { Box } from "reakit/Box";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 import Paper from "@material-ui/core/Paper";
-import { SortOrder, getPaginatedData, processDataStorting } from "./TableUtils";
+import { SortOrder, getPaginatedData } from "./TableUtils";
 import { TableauHeader } from "./TableauHeader";
 import { TablePagination } from "@material-ui/core";
 import { getText } from "../Text";
@@ -18,8 +18,8 @@ export interface RequeteTableauHeaderProps {
   dataState: IDataTable[];
   rowsNumberState: number;
   nextDataLinkState: string;
-  setSortOrderState: (order: SortOrder) => void;
-  setSortOrderByState: (order: string) => void;
+  previousDataLinkState: string;
+  handleChangeSort: (tri: string, sens: SortOrder) => void;
   onClickOnLine: (id: string) => string;
   goToLink: (value: string) => void;
 }
@@ -57,24 +57,25 @@ export class TableauTypeColumn {
   }
 }
 
-export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
-  const nbRequeteParAppel = 100;
+export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
+  const nbRequeteParAppel = 105;
   const nbRequetParPage = 15;
   const [rowsPerPageState, setRowsPerPageState] = React.useState(
     nbRequetParPage
   );
   const [pageState, setPageState] = React.useState(0);
   const [multiplicateur, setMultiplicateur] = React.useState(1);
-  const [dataTable, setDataTable] = React.useState<IDataTable[]>([]);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: string
   ) => {
-    props.setSortOrderState(
+    setPageState(0);
+    setMultiplicateur(1);
+    props.handleChangeSort(
+      property,
       getSortOrder(property, props.sortOrderByState, props.sortOrderState)
     );
-    props.setSortOrderByState(property);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -86,6 +87,14 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
     ) {
       setMultiplicateur(multiplicateur + 1);
       props.goToLink(props.nextDataLinkState);
+    } else if (
+      newPage < pageState &&
+      newPage * rowsPerPageState < nbRequeteParAppel * multiplicateur &&
+      pageState * rowsPerPageState < nbRequeteParAppel * multiplicateur &&
+      props.previousDataLinkState
+    ) {
+      setMultiplicateur(multiplicateur - 1);
+      props.goToLink(props.previousDataLinkState);
     }
     setPageState(newPage);
   };
@@ -97,27 +106,15 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
     setPageState(0);
   };
 
-  function processData() {
-    if (
-      props.dataState !== undefined &&
-      props.dataState.length > 0 &&
-      dataTable[dataTable.length - 1] !==
-        props.dataState[props.dataState.length - 1]
-    ) {
-      setDataTable([...dataTable, ...props.dataState]);
-    }
+  const processData = useCallback(() => {
+    return getPaginatedData(props.dataState, pageState, rowsPerPageState);
+  }, [props.dataState, pageState, rowsPerPageState]);
 
-    if (props.rowsNumberState && props.rowsNumberState < nbRequeteParAppel) {
-      const dataTriee = processDataStorting(
-        props.dataState || [],
-        props.sortOrderState,
-        props.sortOrderByState
-      );
-      return getPaginatedData(dataTriee, pageState, rowsPerPageState);
-    } else {
-      return getPaginatedData(dataTable, pageState, rowsPerPageState);
-    }
-  }
+  const [dataBody, setdataBody] = React.useState<IDataTable[]>(processData());
+
+  useEffect(() => {
+    setdataBody(processData());
+  }, [props.dataState, processData]);
 
   return (
     <>
@@ -130,7 +127,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
             columnHeaders={props.columnHeaders}
           />
           <TableauBody
-            data={processData()}
+            data={dataBody}
             idKey={props.idKey}
             columnHeaders={props.columnHeaders}
             onClickOnLine={props.onClickOnLine}
