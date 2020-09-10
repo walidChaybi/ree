@@ -58,7 +58,7 @@ const HookConsummerWithErrorWS: React.FC = () => {
       statut: StatutRequete.ASigner,
       idRequete: "req2"
     },
-    officier
+    officier.officierDataState
   );
 
   return (

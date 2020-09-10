@@ -18,6 +18,7 @@ export const ctxIdRequeteServiceUrl = `${contextApp}${IdRequeteServiceUrl}`;
 export const SecuriteUrl = "/utilisateurs/login";
 
 export const DocumentsdelivresUrl = "/documentsdelivres";
+export const ReponsesUrl = "/reponses";
 
 export const AppUrls = {
   contextApp,
@@ -46,5 +47,6 @@ export const ApiEndpoints = {
   RequetesServiceUrl: "/requetes/requetesService",
   UtilisateursUrl,
   DocumentsdelivresUrl,
-  SecuriteUrl
+  SecuriteUrl,
+  ReponsesUrl
 };
