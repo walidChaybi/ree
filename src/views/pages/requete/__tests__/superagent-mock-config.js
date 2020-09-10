@@ -9,7 +9,6 @@ module.exports = [
      */
 
     pattern: "http://localhost:80/rece/rece-requete-api/v1(.*)",
-
     /**
      * returns the data
      *

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Box } from "reakit/Box";
 import { getText } from "../../common/widget/Text";
 import {
@@ -61,14 +61,11 @@ interface MesRequetesServicePageProps {
   officier?: IOfficierSSOApi;
 }
 
-export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
+export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
+  props
+) => {
   const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(
     false
-  );
-
-  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("ASC");
-  const [sortOrderByState, setSortOrderByState] = React.useState<string>(
-    "dateStatut"
   );
 
   const [queryChangeOecRequest, setQueryChangeOecRequest] = React.useState<
@@ -79,8 +76,8 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     IQueryParametersPourRequetes
   >({
     statut: StatutRequete.ASigner,
-    tri: sortOrderByState,
-    sens: sortOrderState,
+    tri: "dateStatut",
+    sens: "ASC",
     range: undefined
   });
 
@@ -158,7 +155,8 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   const {
     dataState = [],
     rowsNumberState = 0,
-    nextDataLinkState = ""
+    nextDataLinkState = "",
+    previousDataLinkState = ""
   } = useRequeteApi(
     linkParameters,
     TypeAppelRequete.REQUETE_SERVICE,
@@ -185,7 +183,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     const utilisateurs = convertUsersToSelect(users.dataState);
 
     const utilisateurParDefaut = utilisateurs.find(
-      uilisateur => uilisateur.value === row.nomOec
+      (uilisateur) => uilisateur.value === row.nomOec
     );
 
     return (
@@ -206,7 +204,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
           )}
           validate={(req: FormValues) => {
             const utilisateur = users.dataState.find(
-              u =>
+              (u) =>
                 u.idUtilisateur ===
                 (req.selectedItem !== undefined
                   ? req.selectedItem.key
@@ -241,21 +239,31 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     }
   }
 
+  const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
+    const queryParameters = {
+      statut: StatutRequete.ASigner,
+      tri: tri,
+      sens: sens
+    };
+
+    setLinkParameters(queryParameters);
+  }, []);
+
   // TODO droit sur le bouton signature ?
   return (
     <>
       <TableauRece
         idKey={"idRequete"}
+        sortOrderByState={linkParameters.tri}
+        sortOrderState={linkParameters.sens}
         onClickOnLine={getUrlBack}
-        sortOrderByState={sortOrderByState}
-        sortOrderState={sortOrderState}
         columnHeaders={getColumnHeaders(convertUsersToSelect(users.dataState))}
         dataState={dataState}
         rowsNumberState={rowsNumberState}
         nextDataLinkState={nextDataLinkState}
-        setSortOrderState={setSortOrderState}
-        setSortOrderByState={setSortOrderByState}
+        previousDataLinkState={previousDataLinkState}
         goToLink={goToLink}
+        handleChangeSort={handleChangeSort}
       />
       <BoutonRetour />
       <MessagePopin

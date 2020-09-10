@@ -23,29 +23,29 @@ module.exports = [
     fixtures: function (match, params, headers, context) {
       if (
         match[1] ===
-        "/requetes/104b8563-c7f8-4748-9daa-f26558985894?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+        "/requetes/104b8563-c7f8-4748-9daa-f26558985894?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser"
       ) {
         return { data: mockRequetes.data[0] };
       }
       if (
         match[1] ===
-        "/requetes/104b8564-c7f9-4749-9dab-f26558985895?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+        "/requetes/104b8564-c7f9-4749-9dab-f26558985895?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser"
       ) {
         return { data: mockRequetes.data[1] };
       }
       if (
         match[1] ===
-        "/requetes/104b8563-c7f8-4748-9daa-f26558985896?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+        "/requetes/104b8563-c7f8-4748-9daa-f26558985896?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser"
       ) {
         return { data: mockRequetes.data[2] };
       }
       if (
         match[1] ===
-          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC" ||
-        match[1] ===
-          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER" ||
-        match[1] ===
           "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=idSagaDila&sens=ASC&idArobas=idSSOConnectedUser" ||
+        match[1] ===
+          "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=idSagaDila&sens=DESC&idArobas=idSSOConnectedUser" ||
+        match[1] ===
+          "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105&idArobas=idSSOConnectedUser" ||
         match[1] ===
           "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=idSSOConnectedUser"
       ) {
@@ -53,95 +53,84 @@ module.exports = [
           data: mockRequetes.data.slice(0, 105),
           headers: {
             "content-range": "0-15/" + mockRequetes.data.length,
-            link: [
-              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"',
-            ],
-          },
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"'
+          }
         };
       }
       if (
         match[1] ===
-          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105" ||
-        match[1] ===
-          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+        "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105&idArobas=idSSOConnectedUser"
       ) {
         return {
           data: mockRequetes.data.slice(105, 210),
           headers: {
             "content-range": "106-15/" + mockRequetes.data.length,
-            link: [
-              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
-              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
-            ],
-          },
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next",<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"'
+          }
         };
       }
       if (
         match[1] ===
-          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
-        match[1] ===
-          "/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+        "/requetes?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105&idArobas=idSSOConnectedUser"
       ) {
         return {
           data: mockRequetes.data.slice(210, 315),
           headers: {
             "content-range": "211-15/" + mockRequetes.data.length,
-            link: [
-              "",
-              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
-            ],
-          },
+            link:
+              ',<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"'
+          }
         };
       }
 
       if (
         match[1] ===
-          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596" ||
+          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596" ||
         match[1] ===
-          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&idArobas=25648596"
+          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&idArobas=25648596"
       ) {
         return {
           data: mockRequetes.data.slice(0, 105),
           headers: {
             "content-range": "0-15/" + mockRequetes.data.length,
             link: [
-              '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596&range=1-105>;rel="next"',
-            ],
-          },
+              '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596&range=1-105>;rel="next"'
+            ]
+          }
         };
       }
       if (
         match[1] ===
-          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105&idArobas=25648596" ||
+          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105&idArobas=25648596" ||
         match[1] ===
-          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&idArobas=25648596"
+          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&idArobas=25648596"
       ) {
         return {
           data: mockRequetes.data.slice(105, 210),
           headers: {
             "content-range": "106-15/" + mockRequetes.data.length,
             link: [
-              '<http://localhost:80/rece-requete-api/v1//requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next"',
-              '<http://localhost:80/rece-requete-api/v1/requetes/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"',
-            ],
-          },
+              '<http://localhost:80/rece-requete-api/v1//requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next",<http://localhost:80/rece-requete-api/v1/requetes/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"'
+            ]
+          }
         };
       }
       if (
         match[1] ===
-          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
+          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
         match[1] ===
-          "/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER"
       ) {
         return {
           data: mockRequetes.data.slice(210, 315),
           headers: {
             "content-range": "211-15/" + mockRequetes.data.length,
             link: [
-              "",
-              '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"',
-            ],
-          },
+              ',<http://localhost:80/rece-requete-api/v1/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"'
+            ]
+          }
         };
       }
 
@@ -174,14 +163,14 @@ module.exports = [
         let documentDelivre = {
           nom: "nomMock",
           conteneurSwift: "conteneurSwiftMock",
-          contenu: mockPdf.data,
+          contenu: mockPdf.data
         };
         return { data: documentDelivre };
       }
 
       if (
         match[1] ===
-        "/requetes/1?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+        "/requetes/1?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER"
       ) {
         return undefined;
       }
@@ -204,7 +193,7 @@ module.exports = [
     get: function (match, data, test1, test2, test3) {
       return {
         body: data,
-        header: data.headers,
+        header: data.headers
       };
     },
 
@@ -216,9 +205,9 @@ module.exports = [
      */
     post: function (match, data) {
       return {
-        status: 201,
+        status: 201
       };
-    },
+    }
   },
   {
     /**
@@ -253,7 +242,7 @@ module.exports = [
     get: function (match, data) {
       return {
         body: data,
-        header: data.headers,
+        header: data.headers
       };
     },
 
@@ -265,8 +254,8 @@ module.exports = [
      */
     post: function (match, data) {
       return {
-        status: 201,
+        status: 201
       };
-    },
-  },
+    }
+  }
 ];

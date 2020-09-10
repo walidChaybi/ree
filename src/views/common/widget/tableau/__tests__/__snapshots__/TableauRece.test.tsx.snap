@@ -58,7 +58,47 @@ Array [
       <tbody
         className="MuiTableBody-root"
         role={null}
-      />
+      >
+        <tr
+          className="MuiTableRow-root"
+          data-testid={11982}
+          onClick={[Function]}
+          role={null}
+        >
+          <td
+            aria-sort={null}
+            className="MuiTableCell-root MuiTableCell-body tableauFontBody ColonneTableau MuiTableCell-alignCenter MuiTableCell-sizeSmall"
+          >
+            11982
+          </td>
+        </tr>
+        <tr
+          className="MuiTableRow-root"
+          data-testid={11985}
+          onClick={[Function]}
+          role={null}
+        >
+          <td
+            aria-sort={null}
+            className="MuiTableCell-root MuiTableCell-body tableauFontBody ColonneTableau MuiTableCell-alignCenter MuiTableCell-sizeSmall"
+          >
+            11985
+          </td>
+        </tr>
+        <tr
+          className="MuiTableRow-root"
+          data-testid={11991}
+          onClick={[Function]}
+          role={null}
+        >
+          <td
+            aria-sort={null}
+            className="MuiTableCell-root MuiTableCell-body tableauFontBody ColonneTableau MuiTableCell-alignCenter MuiTableCell-sizeSmall"
+          >
+            11991
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>,
   <div
