@@ -11,7 +11,7 @@ export const indexParamsReq = {
   Statut: 2,
   Tri: 3,
   Sens: 4,
-  Range: 5
+  Range: 6
 };
 
 const limiteBasse = 2;

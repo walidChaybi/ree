@@ -109,7 +109,6 @@ export function useRequeteApi(
   const contentRange = "content-range";
 
   useEffect(() => {
-    setDataState(undefined);
     setErrorState(undefined);
     setRowsNumberState(undefined);
     setMinRangeState(undefined);

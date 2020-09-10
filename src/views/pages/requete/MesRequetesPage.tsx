@@ -2,7 +2,8 @@ import React, { useCallback } from "react";
 
 import {
   TableauRece,
-  TableauTypeColumn
+  TableauTypeColumn,
+  nbRequeteParAppel
 } from "../../common/widget/tableau/TableauRece";
 import {
   useRequeteApi,
@@ -138,7 +139,8 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
   >({
     statut: StatutRequete.ASigner,
     tri: "dateStatut",
-    sens: "ASC"
+    sens: "ASC",
+    range: `0-${nbRequeteParAppel}`
   });
 
   const {
@@ -171,7 +173,8 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
     const queryParameters = {
       statut: StatutRequete.ASigner,
       tri: tri,
-      sens: sens
+      sens: sens,
+      range: `0-${nbRequeteParAppel}`
     };
 
     setLinkParameters(queryParameters);

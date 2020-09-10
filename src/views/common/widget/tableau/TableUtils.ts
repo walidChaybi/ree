@@ -81,7 +81,7 @@ export function getPaginatedData<T>(
   rowsPerPage: number
 ): T[] {
   return array.slice(
-    (currentPage % 7) * rowsPerPage,
-    (currentPage % 7) * rowsPerPage + rowsPerPage
+    (currentPage % 3) * rowsPerPage,
+    (currentPage % 3) * rowsPerPage + rowsPerPage
   );
 }

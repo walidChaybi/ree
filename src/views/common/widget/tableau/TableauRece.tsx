@@ -10,6 +10,8 @@ import { getText } from "../Text";
 import { TableauBody } from "./TableauBody";
 import { IDataTable } from "../../../pages/requete/MesRequetesPage";
 
+export const nbRequeteParAppel = 15;
+
 export interface RequeteTableauHeaderProps {
   idKey: string;
   sortOrderByState: string;
@@ -58,8 +60,7 @@ export class TableauTypeColumn {
 }
 
 export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
-  const nbRequeteParAppel = 105;
-  const nbRequetParPage = 15;
+  const nbRequetParPage = 5;
   const [rowsPerPageState, setRowsPerPageState] = React.useState(
     nbRequetParPage
   );
@@ -81,7 +82,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
   const handleChangePage = (event: unknown, newPage: number) => {
     if (
       newPage > pageState &&
-      newPage * rowsPerPageState > nbRequeteParAppel * multiplicateur &&
+      newPage * rowsPerPageState >= nbRequeteParAppel * multiplicateur &&
       !(pageState * rowsPerPageState > nbRequeteParAppel * multiplicateur) &&
       props.nextDataLinkState
     ) {
