@@ -29,7 +29,7 @@ export function useUtilisateurRequeteApi(
       api
         .fetch({
           method: HttpMethod.PATCH,
-          uri: `/${ApiEndpoints.ReponsesUrl}/${queryParameters.idReponse}`,
+          uri: `${ApiEndpoints.ReponsesUrl}/${queryParameters.idReponse}`,
           parameters: {
             nomOec: queryParameters.nomOec,
             prenomOec: queryParameters.prenomOec

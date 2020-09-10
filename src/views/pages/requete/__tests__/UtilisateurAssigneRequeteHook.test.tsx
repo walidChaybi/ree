@@ -16,16 +16,16 @@ const HookConsummer: React.FC = () => {
 
   useUtilisateurRequeteApi(
     {
-      idRequete: "204b8563-c7f8-4748-9daa-f26558985894",
+      idReponse: "1d189cd9-0df0-45dc-a4cf-0174eb62cbbc",
       nomOec: "nouveauNom",
-      prenomOec: "nouveauPrenom",
+      prenomOec: "nouveauPrenom"
     },
     data
   );
 
   return (
     <>
-      {data.map((element) => {
+      {data.map(element => {
         return <div data-testid={element.idRequete}>{element.nomOec}</div>;
       })}
     </>
@@ -71,7 +71,7 @@ afterAll(() => {
 
 function useRequete() {
   const [data, setData] = useState<IDataTable[]>([
-    DONNEE_REQUETE as IDataTable,
+    DONNEE_REQUETE as IDataTable
   ]);
 
   return { data, setData };
