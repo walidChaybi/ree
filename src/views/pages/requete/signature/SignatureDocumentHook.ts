@@ -45,7 +45,8 @@ interface DocumentToSign {
 }
 
 interface InfosSignature {
-  [key: string]: string;
+  cle: string;
+  valeur: string;
 }
 
 export interface DocumentsATraiter {
@@ -247,7 +248,7 @@ function sendDocumentToSignature(
     pin: pinCode,
     mode:
       process.env.NODE_ENV === "development"
-        ? ModeSignature.Self
+        ? ModeSignature.Dry
         : ModeSignature.Certigna,
     infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos
   };

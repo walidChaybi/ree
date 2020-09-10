@@ -19,14 +19,14 @@ const HookConsummer: React.FC = () => {
   const { dataState = [] } = useRequeteDataApi(
     {
       statut: StatutRequete.ASigner,
-      idRequete: "req1",
+      idRequete: "req1"
     },
-    officier
+    officier.officierDataState
   );
 
   return (
     <>
-      {dataState.map((element) => {
+      {dataState.map(element => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
@@ -37,15 +37,15 @@ const HookConsummerWithData: React.FC = () => {
   const { dataState = [] } = useRequeteDataApi(
     {
       statut: StatutRequete.ASigner,
-      idRequete: "req1",
+      idRequete: "req1"
     },
-    officier,
+    officier.officierDataState,
     { data: [DONNEES_REQUETE as IDataTable, DONNEES_REQUETE as IDataTable] }
   );
 
   return (
     <>
-      {dataState.map((element) => {
+      {dataState.map(element => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
@@ -56,14 +56,14 @@ const HookConsummerWithErrorWS: React.FC = () => {
   const { dataState = [] } = useRequeteDataApi(
     {
       statut: StatutRequete.ASigner,
-      idRequete: "req2",
+      idRequete: "req2"
     },
     officier
   );
 
   return (
     <>
-      {dataState.map((element) => {
+      {dataState.map(element => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>

@@ -2,14 +2,14 @@ import React, { useCallback } from "react";
 import moment from "moment";
 import {
   TableauRece,
-  TableauTypeColumn,
+  TableauTypeColumn
 } from "../../common/widget/tableau/TableauRece";
 import {
   useRequeteApi,
   IRequerantApi,
   IReponseApi,
   IQueryParametersPourRequetes,
-  TypeAppelRequete,
+  TypeAppelRequete
 } from "./DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
@@ -18,7 +18,7 @@ import { Canal } from "../../../model/Canal";
 import {
   IPieceJustificative,
   ITitulaire,
-  IDocumentDelivre,
+  IDocumentDelivre
 } from "./visualisation/RequeteType";
 import { AppUrls } from "../../router/UrlManager";
 import { Box } from "@material-ui/core";
@@ -28,7 +28,7 @@ import {
   getMessagePrioriteDeLaRequete,
   prioriteDeLaRequete,
   tableauHeader,
-  indexParamsReq,
+  indexParamsReq
 } from "./RequetesUtils";
 import LabelIcon from "@material-ui/icons/Label";
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
@@ -36,8 +36,8 @@ import { MotifRequete } from "../../../model/requete/MotifRequete";
 import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
-import { IUtilisateurSSOApi } from "../../core/LoginHook";
 import { FormatDate } from "../../../ressources/FormatDate";
+import { IOfficierSSOApi } from "../../core/login/LoginHook";
 
 export interface IDataTable {
   idRequete: string;
@@ -120,7 +120,7 @@ const columnsTableau = [
     tableauHeader,
     "",
     getIconPrioriteMesRequetes
-  ),
+  )
 ];
 
 function getIconPrioriteMesRequetes(row: IDataTable): JSX.Element {
@@ -135,7 +135,7 @@ function getIconPrioriteMesRequetes(row: IDataTable): JSX.Element {
   );
 }
 interface MesRequetesPageProps {
-  officier?: IUtilisateurSSOApi;
+  officier?: IOfficierSSOApi;
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
@@ -149,13 +149,13 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
   >({
     statut: StatutRequete.ASigner,
     tri: sortOrderByState,
-    sens: sortOrderState,
+    sens: sortOrderState
   });
 
   const {
     dataState = [],
     rowsNumberState = 0,
-    nextDataLinkState = "",
+    nextDataLinkState = ""
   } = useRequeteApi(
     linkParameters,
     TypeAppelRequete.MES_REQUETES,
@@ -171,7 +171,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
         statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
         tri: params[indexParamsReq.Tri].split("=")[1],
         sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,
-        range: params[indexParamsReq.Range].split("=")[1],
+        range: params[indexParamsReq.Range].split("=")[1]
       };
       setLinkParameters(queryParameters);
     }

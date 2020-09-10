@@ -61,7 +61,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
           documentsATraiter.documentsToSign.push({
             idDocumentDelivre: document.idDocumentDelivre,
             mimeType: document.mimeType,
-            infos: [{ idRequete: document.idDocumentDelivre }],
+            infos: [{ cle: "idRequete", valeur: document.idDocumentDelivre }],
             nomDocument: document.nom,
             conteneurSwift: document.conteneurSwift,
             idRequete: requete.idRequete,

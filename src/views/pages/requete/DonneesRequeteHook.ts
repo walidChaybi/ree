@@ -12,13 +12,13 @@ import { SortOrder } from "../../common/widget/tableau/TableUtils";
 import { Canal } from "../../../model/Canal";
 import {
   IPieceJustificative,
-  IDocumentDelivre,
+  IDocumentDelivre
 } from "./visualisation/RequeteType";
 import { ApiEndpoints } from "../../router/UrlManager";
 import { IDataTable } from "./MesRequetesPage";
 import { MotifRequete } from "../../../model/requete/MotifRequete";
 import { FormatDate } from "../../../ressources/FormatDate";
-import { IUtilisateurSSOApi } from "../../core/LoginHook";
+import { IOfficierSSOApi } from "../../core/login/LoginHook";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -92,13 +92,13 @@ export interface IQueryParametersPourRequetes {
 
 export enum TypeAppelRequete {
   REQUETE_SERVICE = "requeteService",
-  MES_REQUETES = "mesRequetes",
+  MES_REQUETES = "mesRequetes"
 }
 
 export function useRequeteApi(
   queryParameters: IQueryParametersPourRequetes,
   typeRequete: TypeAppelRequete,
-  officier?: IUtilisateurSSOApi
+  officier?: IOfficierSSOApi
 ) {
   const [dataState, setDataState] = useState<IDataTable[]>();
   const [rowsNumberState, setRowsNumberState] = useState<number>();
@@ -137,8 +137,8 @@ export function useRequeteApi(
                 : "dateStatut",
             sens: queryParameters.sens,
             range: queryParameters.range,
-            idArobas: officier.idSSO,
-          },
+            idArobas: officier.idSSO
+          }
         })
         .then((result) => {
           setDataState(reponseRequeteMapper(result.body.data));
@@ -172,7 +172,7 @@ export function useRequeteApi(
     rowsNumberState,
     minRangeState,
     maxRangeState,
-    errorState,
+    errorState
   };
 }
 
@@ -212,7 +212,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     jourEvenement: data.jourEvenement,
     moisEvenement: data.moisEvenement,
     nbExemplaire: data.nbExemplaire,
-    documentsDelivres: data.documentsDelivres,
+    documentsDelivres: data.documentsDelivres
   };
 }
 

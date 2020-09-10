@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { AccueilPage } from "../pages/accueil/AccueilPage";
+import { LoginPage } from "../core/login/LoginPage";
 import { RequetePage } from "../pages/requete/visualisation/RequetePage";
 import { AppUrls } from "./UrlManager";
 import DelivrancePage from "../pages/requete/DelivrancePage";
@@ -25,19 +26,27 @@ export const RouterComponent: React.FC = () => {
       <Route
         exact
         path={AppUrls.ctxIdRequeteUrl}
-        render={(props) => (
+        render={props => (
           <OfficierContext.Consumer>
-            {(officier) => <RequetePage {...props} officier={officier} />}
+            {officier => (
+              <RequetePage {...props} officier={officier?.officierDataState} />
+            )}
           </OfficierContext.Consumer>
         )}
       />
 
+      <Route exact path={AppUrls.DeconnexionAppUrl}>
+        <LoginPage messageLogin="pages.login.deconnexion" />
+      </Route>
+
       <Route
         exact
         path={AppUrls.ctxIdRequeteServiceUrl}
-        render={(props) => (
+        render={props => (
           <OfficierContext.Consumer>
-            {(officier) => <RequetePage {...props} officier={officier} />}
+            {officier => (
+              <RequetePage {...props} officier={officier?.officierDataState} />
+            )}
           </OfficierContext.Consumer>
         )}
       />

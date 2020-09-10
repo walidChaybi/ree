@@ -12,12 +12,17 @@ interface FilArianeProps {
 }
 export const FilAriane: React.FC<FilArianeProps> = ({ setRetourState }) => {
   const history = useHistory();
+  const pathSupprimer = 2;
   const pathnames = history.location.pathname
     .split(SeparateurUrl)
     .filter((x) => x);
-  pathnames.splice(0, 2);
+  pathnames.splice(0, pathSupprimer);
   const accueilString = getText("fildariane.accueil").toLowerCase();
   const accueilFirst = pathnames[0] === accueilString;
+
+  const deconnexionString = getText("fildariane.deconnexion");
+  const deconnexionPath = pathnames[0] === deconnexionString;
+
   if (setRetourState !== undefined) {
     setRetourContextValue(pathnames, setRetourState);
   }
@@ -25,30 +30,32 @@ export const FilAriane: React.FC<FilArianeProps> = ({ setRetourState }) => {
   return (
     <MemoryRouter initialEntries={[SeparateurUrl]} initialIndex={0}>
       <Route>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Categorie
-            url={AccueilUrl}
-            messageId={accueilString}
-            last={accueilFirst}
-          />
-          {!accueilFirst &&
-            pathnames.map((value: string, index: number) => {
-              const to = `/${pathnames
-                .slice(0, index + 1)
-                .join(SeparateurUrl)}`;
-              return (
-                <Categorie
-                  url={to}
-                  messageId={value}
-                  last={index === pathnames.length - 1}
-                  key={value + index}
-                />
-              );
-            })}
-        </Breadcrumbs>
+        {deconnexionPath === false && (
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <Categorie
+              url={AccueilUrl}
+              messageId={accueilString}
+              last={accueilFirst}
+            />
+            {accueilFirst === false &&
+              pathnames.map((value: string, index: number) => {
+                const to = `/${pathnames
+                  .slice(0, index + 1)
+                  .join(SeparateurUrl)}`;
+                return (
+                  <Categorie
+                    url={to}
+                    messageId={value}
+                    last={index === pathnames.length - 1}
+                    key={value + index}
+                  />
+                );
+              })}
+          </Breadcrumbs>
+        )}
       </Route>
     </MemoryRouter>
   );
