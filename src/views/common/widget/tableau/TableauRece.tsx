@@ -10,7 +10,7 @@ import { getText } from "../Text";
 import { TableauBody } from "./TableauBody";
 import { IDataTable } from "../../../pages/requete/MesRequetesPage";
 
-export const nbRequeteParAppel = 15;
+export const nbRequeteParAppel = 105;
 
 export interface RequeteTableauHeaderProps {
   idKey: string;
@@ -60,7 +60,7 @@ export class TableauTypeColumn {
 }
 
 export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
-  const nbRequetParPage = 5;
+  const nbRequetParPage = 15;
   const [rowsPerPageState, setRowsPerPageState] = React.useState(
     nbRequetParPage
   );
@@ -108,7 +108,12 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
   };
 
   const processData = useCallback(() => {
-    return getPaginatedData(props.dataState, pageState, rowsPerPageState);
+    return getPaginatedData(
+      props.dataState,
+      pageState,
+      rowsPerPageState,
+      nbRequeteParAppel / nbRequetParPage
+    );
   }, [props.dataState, pageState, rowsPerPageState]);
 
   const [dataBody, setdataBody] = React.useState<IDataTable[]>(processData());

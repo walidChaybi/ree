@@ -4,7 +4,7 @@ import {
   stableSort,
   getComparator,
   processDataStorting,
-  getPaginatedData,
+  getPaginatedData
 } from "../TableUtils";
 
 interface IData {
@@ -17,81 +17,81 @@ const data: IData[] = [
   {
     id: 1,
     prenom: "Diego",
-    dateNaissance: "26/03/1986",
+    dateNaissance: "26/03/1986"
   },
   {
     id: 2,
     prenom: "Thiago",
-    dateNaissance: "26/03/1986",
+    dateNaissance: "26/03/1986"
   },
   {
     id: 11,
     prenom: "Roger",
-    dateNaissance: "07/11/1972",
+    dateNaissance: "07/11/1972"
   },
   {
     id: 3,
     prenom: "Virginie",
-    dateNaissance: "17/07/1971",
-  },
+    dateNaissance: "17/07/1971"
+  }
 ];
 
 const bigData: IData[] = [
   {
     id: 1,
     prenom: "Diego",
-    dateNaissance: "26/03/1986",
+    dateNaissance: "26/03/1986"
   },
   {
     id: 2,
     prenom: "Thiago",
-    dateNaissance: "26/03/1986",
+    dateNaissance: "26/03/1986"
   },
   {
     id: 11,
     prenom: "Roger",
-    dateNaissance: "07/11/1972",
+    dateNaissance: "07/11/1972"
   },
   {
     id: 3,
     prenom: "Virginie",
-    dateNaissance: "17/07/1971",
+    dateNaissance: "17/07/1971"
   },
   {
     id: 4,
     prenom: "Mélodie",
-    dateNaissance: "17/07/2004",
+    dateNaissance: "17/07/2004"
   },
   {
     id: 5,
     prenom: "Francis",
-    dateNaissance: "23/11/1954",
+    dateNaissance: "23/11/1954"
   },
   {
     id: 6,
     prenom: "André",
-    dateNaissance: "23/11/1951",
+    dateNaissance: "23/11/1951"
   },
   {
     id: 7,
     prenom: "Michel",
-    dateNaissance: "08/07/1964",
+    dateNaissance: "08/07/1964"
   },
   {
     id: 8,
     prenom: "Fabienne",
-    dateNaissance: "14/08/1974",
+    dateNaissance: "14/08/1974"
   },
   {
     id: 9,
     prenom: "Hector",
-    dateNaissance: "04/01/1999",
+    dateNaissance: "04/01/1999"
   },
   {
     id: 10,
     prenom: "Paris",
-    dateNaissance: "04/03/2008",
-  },
+    dateNaissance: "04/03/2008"
+  }
 ];
 
 test("Comparaison de deux objets par date", () => {
@@ -253,10 +253,10 @@ test("tri d'un array par dateNaissance asc - processDataSorting", () => {
 
 test("tri et pagination d'un array par prenom asc", () => {
   const dataTriee = processDataStorting(bigData, "ASC", "prenom");
-  let paginatedData = getPaginatedData<IData>(dataTriee, 0, 2);
+  let paginatedData = getPaginatedData<IData>(dataTriee, 0, 2, 100);
   expect(paginatedData[0].prenom).toBe("André");
   expect(paginatedData[1].prenom).toBe("Diego");
-  paginatedData = getPaginatedData<IData>(dataTriee, 1, 2);
+  paginatedData = getPaginatedData<IData>(dataTriee, 1, 2, 100);
   expect(paginatedData[0].prenom).toBe("Fabienne");
   expect(paginatedData[1].prenom).toBe("Francis");
 });
