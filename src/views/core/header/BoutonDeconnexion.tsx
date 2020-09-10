@@ -46,8 +46,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
               aria-haspopup="true"
               onClick={event => handleClick(event)}
             >
-              {`${officier.officierDataState.prenom} 
-              ${officier.officierDataState.nom}`}
+              {`${officier.officierDataState.prenom} ${officier.officierDataState.nom}`}
             </Button>
           )}
           {accessible && (

@@ -19,6 +19,25 @@ module.exports = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function(match, params, headers, context) {
+      if (match[1] === "/requetes" && context.method !== "patch") {
+        return true;
+      }
+
+      if (
+        match[1] ===
+        "/requetes/req1?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        return { data: DONNEES_REQUETE };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/req2?nomOec=Garisson&prenomOec=Juliette&statut=A_SIGNER"
+      ) {
+        return { status: 404 };
+      }
+
+      // Utilisé dans UtilisateurAssigneRequeteHook.test
       if (
         match[1] ===
         "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc?nomOec=nouveauNom&prenomOec=nouveauPrenom"
