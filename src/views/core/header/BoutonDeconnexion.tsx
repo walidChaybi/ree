@@ -23,14 +23,20 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   const history = useHistory();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickBoutonOfficer = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     if (onClick) {
       onClick(event);
     }
     setMenu(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleCloseMenu = () => {
+    setMenu(null);
+  };
+
+  const handleClickDeconnexion = () => {
     history.push(DeconnexionAppUrl);
     history.go(0);
     setMenu(null);
@@ -44,7 +50,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
             <Button
               aria-controls="simple-menu"
               aria-haspopup="true"
-              onClick={event => handleClick(event)}
+              onClick={event => handleClickBoutonOfficer(event)}
             >
               {`${officier.officierDataState.prenom} ${officier.officierDataState.nom}`}
             </Button>
@@ -55,7 +61,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
               anchorEl={menu}
               keepMounted
               open={Boolean(menu)}
-              onClose={handleClose}
+              onClose={handleCloseMenu}
               getContentAnchorEl={null}
               anchorOrigin={{
                 vertical: "bottom",
@@ -66,7 +72,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
                 horizontal: "center"
               }}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleClickDeconnexion}>
                 <FontAwesomeIcon icon={faTimes} />
                 {getText("boutons.deconnexion")}
               </MenuItem>
