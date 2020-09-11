@@ -48,11 +48,11 @@ import { IOfficierSSOApi } from "../../core/login/LoginHook";
 function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
   return (
     <Box
-      title={getMessagePrioriteDeLaRequete(row.dateDerniereMaj)}
-      aria-label={getMessagePrioriteDeLaRequete(row.dateDerniereMaj)}
+      title={getMessagePrioriteDeLaRequete(row.dateStatut)}
+      aria-label={getMessagePrioriteDeLaRequete(row.dateStatut)}
       aria-hidden={true}
     >
-      <LabelIcon className={prioriteDeLaRequete(row.dateDerniereMaj)} />
+      <LabelIcon className={prioriteDeLaRequete(row.dateStatut)} />
     </Box>
   );
 }
