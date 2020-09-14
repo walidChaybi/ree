@@ -87,6 +87,7 @@ export interface IQueryParametersPourRequetes {
   tri: string;
   sens: SortOrder;
   range?: string;
+  lastDateReaload?: string;
 }
 
 export enum TypeAppelRequete {
@@ -209,7 +210,8 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     anneeEvenement: data.anneeEvenement,
     jourEvenement: data.jourEvenement,
     moisEvenement: data.moisEvenement,
-    nbExemplaire: data.nbExemplaire
+    nbExemplaire: data.nbExemplaire,
+    documentsDelivres: data.documentsDelivres
   };
 }
 

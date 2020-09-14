@@ -21,7 +21,7 @@ interface IDocumentsRequeteProps {
 export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
   piecesJustificatives,
   documentsDelivres,
-  setDocumentDelivreFct
+  setDocumentDelivreFct,
 }) => {
   const [extraitVisibleState, setExtraitVisibleState] = useState<
     IDocumentDetail | undefined
@@ -64,9 +64,9 @@ function parsePiecesJustificatives(
       identifiantDocument: element.idPieceJustificative,
       mimeType: element.mimeType as MimeType.IMAGE_PNG | MimeType.APPLI_PDF,
       nom: getText("pages.requete.consultation.pieceJustificative.nomFichier", [
-        `${index}`
+        `${index}`,
       ]),
-      taille: element.taille
+      taille: element.taille,
     });
   });
   return documentsDetails;
@@ -76,7 +76,7 @@ function parseDocumentsDelivres(
   documentsDelivres: IDocumentDelivre[]
 ): IDocumentDetail[] {
   const documentsResult: IDocumentDetail[] = [];
-  documentsDelivres.forEach(element => {
+  documentsDelivres.forEach((element) => {
     documentsResult.push(parseDocumentDelivre(element));
   });
   return documentsResult;
@@ -93,7 +93,7 @@ function parseDocumentDelivre(
     mimeType: documentDelivre.mimeType as
       | MimeType.IMAGE_PNG
       | MimeType.APPLI_PDF,
-    taille: documentDelivre.taille
+    taille: documentDelivre.taille,
   };
 }
 
@@ -114,7 +114,7 @@ export function extraitALireParDefault(
         documents,
         TypeDocument.ExtraitSansFiliation
       ),
-      ...getDocumentsByTypeDocument(documents, TypeDocument.ExtraitPlurilingue)
+      ...getDocumentsByTypeDocument(documents, TypeDocument.ExtraitPlurilingue),
     ];
     const certificatDocuments = [
       ...getDocumentsByTypeDocument(
@@ -132,7 +132,7 @@ export function extraitALireParDefault(
       ...getDocumentsByTypeDocument(
         documents,
         TypeDocument.CertificatSituationPACS
-      )
+      ),
     ];
     const attestationDocuments = getDocumentsByTypeDocument(
       documents,
@@ -142,7 +142,7 @@ export function extraitALireParDefault(
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA50),
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA116),
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA117),
-      ...getDocumentsByTypeDocument(documents, TypeDocument.FA118)
+      ...getDocumentsByTypeDocument(documents, TypeDocument.FA118),
     ];
     const autresDocuments = getDocumentsByTypeDocument(
       documents,
@@ -165,5 +165,5 @@ const getDocumentsByTypeDocument = (
   documents: IDocumentDelivre[],
   type: TypeDocument
 ): IDocumentDelivre[] => {
-  return documents.filter(element => element.typeDocument === type);
+  return documents.filter((element) => element.typeDocument === type);
 };

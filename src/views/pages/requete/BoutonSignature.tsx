@@ -1,29 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
-import messageManager from "../../common/util/messageManager";
-import {
-  useUpdateDocumentApi,
-  IQueryParameterUpdateDocument,
-} from "./UpdateDocumentHook";
-import { CircularProgress } from "@material-ui/core";
-import { IDocumentDelivre } from "./visualisation/RequeteType";
 import { ValidationPopin } from "../../common/widget/ValidationPopin";
+import { PopinSignature } from "./signature/PopinSignature";
+import {
+  DocumentsATraiter,
+  DocumentsByRequete
+} from "./signature/SignatureDocumentHook";
+import { IDataTable } from "./MesRequetesPage";
+import { StatutRequete } from "../../../model/requete/StatutRequete";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
-  documentsDelivres: IDocumentDelivre[];
+  requetes: IDataTable[];
+  reloadData: () => void;
 }
+
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
-  documentsDelivres,
+  requetes,
+  reloadData
 }) => {
   const validerButtonRef = React.createRef<HTMLButtonElement>();
-  const [
-    updateDocumentQueryParamState,
-    setUpdateDocumentQueryParamState,
-  ] = React.useState<IQueryParameterUpdateDocument>();
 
-  const [showWaitState, setShowWaitState] = useState<boolean>();
+  const [showWaitState, setShowWaitState] = useState<boolean>(false);
+  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<
+    DocumentsByRequete
+  >({});
 
   useEffect(() => {
     if (validerButtonRef.current) {
@@ -31,66 +33,66 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     }
   }, [validerButtonRef]);
 
-  useEffect(() => {
-    // Ajout du listener pour communiquer avec la webextension
-    window.top.addEventListener(
-      "signWebextResponse",
-      handleBackFromWebExtension
-    );
+  const closePopin = useCallback(
+    (showPopin: boolean, changePage: boolean) => {
+      setShowWaitState(showPopin);
 
-    return () => {
-      window.top.removeEventListener(
-        "signWebextResponse",
-        handleBackFromWebExtension
-      );
-    };
-  });
-
-  useUpdateDocumentApi(updateDocumentQueryParamState);
+      if (changePage === true) {
+        reloadData();
+      }
+    },
+    [reloadData]
+  );
 
   const handleClickSignature = () => {
-    const detail = {
-      function: "SIGN",
-      contenu: documentsDelivres[0].contenu, // FIXME loop on document content
-      direction: "to-webextension",
-    };
     setShowWaitState(true);
-    window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
-  };
 
-  /**
-   * @description Handler concernant les communications avec la webextension
-   *
-   * @event l'événement de retour de la webext
-   */
-  const handleBackFromWebExtension = (event: Event): void => {
-    const customEvent = event as CustomEvent;
-    const result = customEvent.detail;
-    setShowWaitState(false);
-    if (result.direction && result.direction === "to-call-app") {
-      if (result.hasTechnicalError || result.hasBusinessError) {
-        messageManager.showErrors(result.errors);
-      } else {
-        messageManager.showSuccessAndClose("Signature effectuée");
+    const newDocumentsByRequeteToSign: DocumentsByRequete = {};
+    requetes.forEach((requete) => {
+      if (
+        requete.reponse !== undefined &&
+        requete.statut === StatutRequete.ASigner &&
+        requete.reponse.documentsDelivres.length > 0
+      ) {
+        const documentsATraiter: DocumentsATraiter = {
+          documentsToSign: [],
+          documentsToSave: [],
+          sousTypeRequete: requete.sousTypeRequete
+        };
 
-        setUpdateDocumentQueryParamState({
-          nom: documentsDelivres[0].nom,
-          conteneurSwift: documentsDelivres[0].conteneurSwift,
-          contenu: result.contenu,
+        requete.reponse.documentsDelivres.forEach((document) => {
+          documentsATraiter.documentsToSign.push({
+            idDocumentDelivre: document.idDocumentDelivre,
+            mimeType: document.mimeType,
+            infos: [{ cle: "idRequete", valeur: document.idDocumentDelivre }],
+            nomDocument: document.nom,
+            conteneurSwift: document.conteneurSwift,
+            idRequete: requete.idRequete,
+            numeroRequete: requete.idSagaDila
+          });
         });
+
+        newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;
       }
-    }
+    });
+
+    setDocumentsByRequeteToSign(newDocumentsByRequeteToSign);
   };
 
   return (
     <>
-      {showWaitState && <CircularProgress />}
       <ValidationPopin
         buttonMessageId={libelle}
-        canValidate={documentsDelivres.length !== 0}
+        canValidate={requetes.length !== 0}
         messageId={"signature.confirmation"}
         errorMessageId={"errors.pages.requetes.B01"}
         onValid={handleClickSignature}
+      />
+
+      <PopinSignature
+        documentsByRequete={documentsByRequeteToSign}
+        open={showWaitState}
+        onClose={closePopin}
       />
     </>
   );

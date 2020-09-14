@@ -67,7 +67,7 @@
         }
       },
       "action": {
-        "signature": "Signer tous les documents",
+        "signature": "Signer le lot",
         "retourSaga": "Retour dans SAGA"
       },
       "mesRequetes": {
@@ -186,7 +186,14 @@
     }
   },
   "signature": {
-    "confirmation": "Êtes-vous sûr de vouloir signer électroniquement le document ?"
+    "confirmation": "Êtes-vous sûr de vouloir signer électroniquement le document ?",
+    "valider": "Valider",
+    "annuler": "Annuler",
+    "fermer": "Fermer",
+    "titrePopIn": "Signature des documents",
+    "success": "La requête n°${0} a été signée avec succès le ${1}",
+    "titreErreur": "Requête n°",
+    "successAllSignature": "Signature des documents effectuée avec succès"
   },
   "messageManager": {
     "error": "Erreur",

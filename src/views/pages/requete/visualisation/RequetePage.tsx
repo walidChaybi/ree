@@ -20,7 +20,7 @@ export interface Test {
 
 type RequetePageProps = RouteComponentProps<{ idRequete: string }> & Test;
 
-export const RequetePage: React.FC<RequetePageProps> = props => {
+export const RequetePage: React.FC<RequetePageProps> = (props) => {
   const history = useHistory();
   const [histoReq] = useState<RequestsInformations>(
     history.location.state as RequestsInformations
@@ -29,7 +29,6 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
     getIndexRequete(props.match.params.idRequete, histoReq)
   );
 
-  // TODO mettre les vraies valeurs quand on aura le WS d'auth
   const { dataState } = useRequeteDataApi(
     {
       idRequete: props.match.params.idRequete
@@ -39,9 +38,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
   );
 
   // Contenu du document en base 64
-  const [documentDelivreState, setDocumentDelivreState] = useState<
-    IDocumentDelivre
-  >();
+  const [requeteState, setRequeteState] = useState<IDataTable>();
 
   const changeIndex = useCallback(
     (idx: number) => {
@@ -52,11 +49,25 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
   );
 
   useEffect(() => {
-    const idx = dataState.findIndex(donnee => {
+    const idx = dataState.findIndex((donnee) => {
       return donnee.idRequete === props.match.params.idRequete;
     });
     setIndexRequete(idx);
   }, [dataState, props.match.params.idRequete]);
+
+  const setDocumentDelivreFct = useCallback(
+    (newDocumentsDelivres: IDocumentDelivre) => {
+      const newRequete: IDataTable = { ...histoReq.data[indexRequete] };
+      newRequete.documentsDelivres = [newDocumentsDelivres];
+
+      setRequeteState(newRequete);
+    },
+    [histoReq, indexRequete]
+  );
+
+  const reloadData = useCallback(() => {
+    history.goBack();
+  }, [history]);
 
   return (
     <>
@@ -68,15 +79,14 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
             maxRequetes={dataState.length}
             indexRequete={indexRequete}
             setIndexRequete={changeIndex}
-            documentsDelivres={
-              documentDelivreState ? [documentDelivreState] : []
-            }
+            requetes={requeteState !== undefined ? [requeteState] : []}
             idRequete={props.match.params.idRequete}
+            reloadData={reloadData}
           />
           <EtatRequete requete={dataState[indexRequete]} />
           <ContenuRequete
             requete={dataState[indexRequete]}
-            setDocumentDelivreFct={setDocumentDelivreState}
+            setDocumentDelivreFct={setDocumentDelivreFct}
           />
         </>
       )}

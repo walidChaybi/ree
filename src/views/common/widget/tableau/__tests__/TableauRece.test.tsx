@@ -39,6 +39,7 @@ test("renders composant TableauRece", () => {
         goToLink={handleClickGoToLink}
         setSortOrderState={handleClickSetSortOrder}
         setSortOrderByState={handleClickSetSortOrderByState}
+        canUseSignature={false}
       />
     </Router>
   );

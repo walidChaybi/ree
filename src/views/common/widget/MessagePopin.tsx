@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Snackbar, SnackbarOrigin } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import "./sass/MessagePopin.scss";
@@ -6,7 +6,6 @@ interface MessagePopinProps {
   message?: string;
   messageType: PopinMessageType;
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
 }
 
 export enum PopinMessageType {
@@ -20,21 +19,26 @@ export const MessagePopin: React.FC<MessagePopinProps> = ({
   message,
   messageType,
   isOpen,
-  setIsOpen,
 }) => {
   const position: SnackbarOrigin = {
     vertical: "top",
     horizontal: "center",
   };
 
+  const [isPopinOpen, setIsPopinOpen] = React.useState<boolean>(isOpen);
+
+  useEffect(() => {
+    setIsPopinOpen(isOpen);
+  }, [isOpen]);
+
   const handleClose = () => {
-    setIsOpen(false);
+    setIsPopinOpen(false);
   };
 
   return (
     <Snackbar
       anchorOrigin={position}
-      open={isOpen && message !== undefined}
+      open={isPopinOpen && message !== undefined}
       onClose={handleClose}
       className={`MessagePopin ${getPopinClass(messageType)}`}
       data-testid={`popin-${messageType}`}

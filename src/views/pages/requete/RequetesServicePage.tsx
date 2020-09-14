@@ -270,7 +270,6 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
         message={sucessState}
         messageType={PopinMessageType.Success}
         isOpen={isSuccessAssigne}
-        setIsOpen={setIsSuccessAssigne}
       />
     </>
   );

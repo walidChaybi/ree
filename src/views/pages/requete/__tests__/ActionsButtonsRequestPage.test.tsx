@@ -12,7 +12,7 @@ test("renders boutons d'actions d'une requête", () => {
         setIndexRequete={() => {
           return;
         }}
-        documentsDelivres={[]}
+        requetes={[]}
         idRequete={"idRequeteTest"}
       />
     </Router>

@@ -9,10 +9,10 @@ export interface IQueryParameterUpdateStatutRequete {
 }
 
 export function useUpdateStatutRequeteApi(
-  callback: () => void,
-  queryParameters?: IQueryParameterUpdateStatutRequete
+  queryParameters?: IQueryParameterUpdateStatutRequete,
+  callback?: () => void
 ) {
-  const [errorState, setErrorState] = useState(undefined);
+  const [errorState, setErrorState] = useState();
 
   useEffect(() => {
     const api = ApiManager.getInstance("rece-requete-api", "v1");
@@ -25,7 +25,9 @@ export function useUpdateStatutRequeteApi(
           headers: [],
         })
         .then((result) => {
-          callback();
+          if (callback !== undefined) {
+            callback();
+          }
         })
         .catch((error) => {
           setErrorState(error);

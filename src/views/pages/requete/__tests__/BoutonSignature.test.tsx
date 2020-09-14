@@ -6,10 +6,10 @@ test("renders titre bouton signature", () => {
   render(
     <BoutonSignature
       libelle={"pages.delivrance.action.signature"}
-      documentsDelivres={[]}
+      requetes={[]}
     />
   );
-  const linkElement = screen.getByText(/Signer tous les documents/i);
+  const linkElement = screen.getByText(/Signer le lot/i);
   expect(linkElement).toBeInTheDocument();
 });
 
@@ -17,7 +17,7 @@ test("renders message indisponibilité", () => {
   render(
     <BoutonSignature
       libelle={"pages.delivrance.action.signature"}
-      documentsDelivres={[]}
+      requetes={[]}
     />
   );
   setTimeout(() => {
@@ -34,14 +34,17 @@ test("renders message indisponibilité après click", () => {
     <BoutonSignature
       libelle={"pages.delivrance.action.signature"}
       onClick={handleClick}
-      documentsDelivres={[]}
+      requetes={[]}
+      onClose={() => {
+        return;
+      }}
     />
   );
-  const linkElement = screen.getByText(
+  const linkElement = screen.getAllByText(
     /Le service de signature électronique est indisponible/i
   );
-  expect(linkElement.hidden).toBeTruthy();
-  const buttonElement = screen.getByText(/Signer tous les documents/i);
+  expect(linkElement[0].hidden).toBeTruthy();
+  const buttonElement = screen.getByText(/Signer le lot/i);
   fireEvent.click(buttonElement);
-  expect(linkElement.hidden).toBeFalsy();
+  expect(linkElement[0].hidden).toBeFalsy();
 });

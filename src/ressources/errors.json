@@ -4,6 +4,20 @@
   "pages": {
     "requetes": {
       "B01": "Le service de signature électronique est indisponible"
+    },
+    "signature": {
+      "TECH_1": "Erreur technique inconnue",
+      "TECH_2": "Problème en chargeant la lib PKCS#11",
+      "TECH_3": "Erreur technique en scannant les slots",
+      "FONC_1": "Aucune carte RECE détectée",
+      "FONC_2": "Votre carte est bloquée dans RECE, veuillez contacter votre administrateur",
+      "FONC_3": "Code PIN invalide, doit être un entier",
+      "FONC_4": "Document à signer vide ou null",
+      "FONC_5": "Le document n'est pas au format PDF",
+      "FONC_6": "Mode de signature inconnu",
+      "FONC_7": "Mode de signature vide ou null",
+      "FONC_8": "Carte bloquée après trois tentatives erronées du code PIN",
+      "FONC_9": "Requête json invalide"
     }
   }
 }

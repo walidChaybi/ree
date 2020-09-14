@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Box } from "reakit/Box";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -9,6 +9,7 @@ import { TablePagination } from "@material-ui/core";
 import { getText } from "../Text";
 import { TableauBody } from "./TableauBody";
 import { IDataTable } from "../../../pages/requete/MesRequetesPage";
+import { BoutonSignature } from "../../../pages/requete/BoutonSignature";
 
 export const nbRequeteParAppel = 105;
 
@@ -20,6 +21,7 @@ export interface RequeteTableauHeaderProps {
   dataState: IDataTable[];
   rowsNumberState: number;
   nextDataLinkState: string;
+  canUseSignature?: boolean;
   previousDataLinkState: string;
   handleChangeSort: (tri: string, sens: SortOrder) => void;
   onClickOnLine: (id: string) => string;
@@ -116,6 +118,16 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
     );
   }, [props.dataState, pageState, rowsPerPageState]);
 
+  const reloadData = () => {
+    let newPageState = pageState;
+    if (props.nextDataLinkState) {
+      newPageState++;
+    } else if (props.previousDataLinkState) {
+      newPageState--;
+    }
+    handleChangePage(undefined, newPageState);
+  };
+
   const [dataBody, setdataBody] = React.useState<IDataTable[]>(processData());
 
   useEffect(() => {
@@ -160,6 +172,15 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
+      {props.canUseSignature === true && (
+        <div className="RequetesToolbarSignature">
+          <BoutonSignature
+            libelle={"pages.delivrance.action.signature"}
+            requetes={dataBody}
+            reloadData={reloadData}
+          />
+        </div>
+      )}
     </>
   );
 };
