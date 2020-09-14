@@ -188,10 +188,6 @@ export function useSignatureDocumentHook(
       const customEvent = event as CustomEvent;
       const result = customEvent.detail;
       if (result.direction && result.direction === "to-call-app") {
-        if (process.env.NODE_ENV === "development") {
-          addErrorsMock(result);
-        }
-
         if (result.erreurs !== undefined && result.erreurs.length > 0) {
           setErrorsSignature({
             numeroRequete:
@@ -268,7 +264,8 @@ function sendDocumentToSignature(
       process.env.NODE_ENV === "development"
         ? ModeSignature.Dry
         : ModeSignature.Certigna,
-    infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos
+    infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos,
+    erreursSimulees: getErrorsMock()
   };
   window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
 }
@@ -303,16 +300,16 @@ function getNewStatusRequete(sousTypeRequete: SousTypeRequete) {
   }
 }
 
-function addErrorsMock(detail: any) {
+function getErrorsMock(): string[] {
+  const erreurs: string[] = [];
   const erreursMockTest = document.cookie.replace(
     /(?:(?:^|.*;\s*)receTestErreur\s*=\s*([^;]*).*$)|^.*$/,
     "$1"
   );
 
   if (erreursMockTest !== "" && erreursMockTest !== undefined) {
-    if (detail.erreurs === undefined) {
-      detail.erreurs = [];
-    }
-    detail.erreurs.push({ code: erreursMockTest });
+    erreurs.push(erreursMockTest);
   }
+
+  return erreurs;
 }
