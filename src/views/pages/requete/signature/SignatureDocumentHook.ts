@@ -188,6 +188,10 @@ export function useSignatureDocumentHook(
       const customEvent = event as CustomEvent;
       const result = customEvent.detail;
       if (result.direction && result.direction === "to-call-app") {
+        if (process.env.NODE_ENV === "development") {
+          addErrorsMock(result);
+        }
+
         if (result.erreurs !== undefined && result.erreurs.length > 0) {
           setErrorsSignature({
             numeroRequete:
@@ -296,5 +300,19 @@ function getNewStatusRequete(sousTypeRequete: SousTypeRequete) {
     return StatutRequete.TraiteAImprimer;
   } else {
     return StatutRequete.ATraiterDemat;
+  }
+}
+
+function addErrorsMock(detail: any) {
+  const erreursMockTest = document.cookie.replace(
+    /(?:(?:^|.*;\s*)receTestErreur\s*=\s*([^;]*).*$)|^.*$/,
+    "$1"
+  );
+
+  if (erreursMockTest !== "" && erreursMockTest !== undefined) {
+    if (detail.erreurs === undefined) {
+      detail.erreurs = [];
+    }
+    detail.erreurs.push({ code: erreursMockTest });
   }
 }

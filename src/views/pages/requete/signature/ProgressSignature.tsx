@@ -46,11 +46,11 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
       </Box>
       <Button
         onClick={() => {
-          onClose(false, true);
+          onClose(false, errors === false);
         }}
         disabled={
-          getSignatureProgress() !== totalPercentageToComplete ||
-          errors === true
+          getSignatureProgress() !== totalPercentageToComplete &&
+          errors === false
         }
         className={"CloseButtonSignature"}
       >

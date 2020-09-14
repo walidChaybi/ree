@@ -36,6 +36,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   const closePopin = useCallback(
     (showPopin: boolean, changePage: boolean) => {
       setShowWaitState(showPopin);
+
       if (changePage === true) {
         reloadData();
       }
