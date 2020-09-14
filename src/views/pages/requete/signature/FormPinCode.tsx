@@ -8,7 +8,7 @@ import "./sass/PopinSignature.scss";
 import { getText } from "../../../common/widget/Text";
 
 interface FormPinCodePros {
-  onClose: (isOpen: boolean) => void;
+  onClose: (isOpen: boolean, changePage: boolean) => void;
   setPinCode: (pinCode?: number) => void;
 }
 
@@ -18,13 +18,13 @@ interface FormValues {
 
 export const FormPinCode: React.FC<FormPinCodePros> = ({
   onClose,
-  setPinCode,
+  setPinCode
 }) => {
   const formik = useFormik({
     initialValues: {},
     onSubmit: (values: FormValues) => {
       setPinCode(values.pinCode);
-    },
+    }
   });
 
   return (
@@ -46,7 +46,7 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
         >
           {getText("signature.valider")}
         </Button>
-        <Button onClick={() => onClose(false)}>
+        <Button onClick={() => onClose(false, false)}>
           {getText("signature.annuler")}
         </Button>
       </div>

@@ -5,9 +5,12 @@ import { ErrorsSignature } from "../ErrorsSignature";
 test("renders error signature", () => {
   const component = mount(
     <ErrorsSignature
-      errors={[
-        { code: "codeTest1", libelle: "LibelleTest1", detail: "DetailTest1" },
-      ]}
+      errors={{
+        numeroRequete: 125,
+        erreurs: [
+          { code: "codeTest1", libelle: "LibelleTest1", detail: "DetailTest1" }
+        ]
+      }}
     />
   );
   expect(component).toMatchSnapshot();

@@ -22,7 +22,7 @@ test("renders composant TableauRece", () => {
       [HeaderTableauRequete.IdSagaDila],
       false,
       "pages.delivrance.mesRequetes.tableau.header"
-    ),
+    )
   ];
 
   const component = renderer.create(
@@ -33,7 +33,7 @@ test("renders composant TableauRece", () => {
         sortOrderByState={""}
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
-        dataState={requetes}
+        dataState={requetes.data}
         rowsNumberState={0}
         nextDataLinkState={""}
         goToLink={handleClickGoToLink}
@@ -52,8 +52,7 @@ test("TableauRece can be sort", () => {
   history.push(AppUrls.ctxMesRequetesUrl);
 
   const handleClickOnLine = jest.fn();
-  const handleClickSetSortOrderByState = jest.fn();
-  const handleClickSetSortOrder = jest.fn();
+  const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
 
   const columnsTableau = [
@@ -61,7 +60,7 @@ test("TableauRece can be sort", () => {
       [HeaderTableauRequete.IdSagaDila],
       false,
       "pages.delivrance.mesRequetes.tableau.header"
-    ),
+    )
   ];
 
   render(
@@ -76,13 +75,12 @@ test("TableauRece can be sort", () => {
         rowsNumberState={0}
         nextDataLinkState={""}
         goToLink={handleClickGoToLink}
-        setSortOrderState={handleClickSetSortOrder}
-        setSortOrderByState={handleClickSetSortOrderByState}
+        handleChangeSort={handleChangeSort}
       />
     </Router>
   );
 
   const changeOrderButton = screen.getByText("N°");
   fireEvent.click(changeOrderButton);
-  expect(handleClickSetSortOrder).toHaveBeenCalledTimes(1);
+  expect(handleChangeSort).toHaveBeenCalledTimes(1);
 });

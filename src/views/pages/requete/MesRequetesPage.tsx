@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
-import moment from "moment";
 import {
   TableauRece,
-  TableauTypeColumn
+  TableauTypeColumn,
+  nbRequeteParAppel
 } from "../../common/widget/tableau/TableauRece";
 import {
   useRequeteApi,
@@ -36,7 +36,6 @@ import { MotifRequete } from "../../../model/requete/MotifRequete";
 import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
-import { FormatDate } from "../../../ressources/FormatDate";
 import { IOfficierSSOApi } from "../../core/login/LoginHook";
 
 export interface IDataTable {
@@ -139,30 +138,27 @@ interface MesRequetesPageProps {
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
-  const [sortOrderState, setSortOrderState] = React.useState<SortOrder>("ASC");
-  const [sortOrderByState, setSortOrderByState] = React.useState<string>(
-    "dateStatut"
-  );
-
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
     statut: StatutRequete.ASigner,
-    tri: sortOrderByState,
-    sens: sortOrderState
+    tri: "dateStatut",
+    sens: "ASC",
+    range: `0-${nbRequeteParAppel}`
   });
 
   const {
     dataState = [],
     rowsNumberState = 0,
-    nextDataLinkState = ""
+    nextDataLinkState = "",
+    previousDataLinkState = ""
   } = useRequeteApi(
     linkParameters,
     TypeAppelRequete.MES_REQUETES,
     props.officier
   );
 
-  function goToLink(link: string) {
+  const goToLink = useCallback((link: string) => {
     let queryParameters: IQueryParametersPourRequetes;
     if (link.indexOf("range") > 0) {
       let params = [];
@@ -175,33 +171,34 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
       };
       setLinkParameters(queryParameters);
     }
-  }
+  }, []);
 
-  const reloadData = useCallback(() => {
-    const toto = Object.assign(
-      {},
-      { ...linkParameters },
-      { lastReload: moment().format(FormatDate.DDMMYYYHHmm) }
-    );
-    setLinkParameters(toto);
-  }, [linkParameters]);
+  const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
+    const queryParameters = {
+      statut: StatutRequete.ASigner,
+      tri: tri,
+      sens: sens,
+      range: `0-${nbRequeteParAppel}`
+    };
+
+    setLinkParameters(queryParameters);
+  }, []);
 
   return (
     <>
       <TableauRece
         idKey={`idRequete`}
         onClickOnLine={getUrlBack}
-        sortOrderByState={sortOrderByState}
-        sortOrderState={sortOrderState}
+        sortOrderByState={linkParameters.tri}
+        sortOrderState={linkParameters.sens}
         columnHeaders={columnsTableau}
         dataState={dataState}
         rowsNumberState={rowsNumberState}
         nextDataLinkState={nextDataLinkState}
+        previousDataLinkState={previousDataLinkState}
         goToLink={goToLink}
-        setSortOrderState={setSortOrderState}
-        setSortOrderByState={setSortOrderByState}
         canUseSignature={true}
-        reloadData={reloadData}
+        handleChangeSort={handleChangeSort}
       />
       <BoutonRetour />
     </>

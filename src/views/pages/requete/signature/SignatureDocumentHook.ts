@@ -19,6 +19,8 @@ import { ModeSignature } from "../../../../model/requete/ModeSignature";
 import { SuccessSignatureType } from "./SuccessSignature";
 import { FormatDate } from "../../../../ressources/FormatDate";
 import { SousTypeRequete } from "../../../../model/requete/SousTypeRequete";
+import messageManager from "../../../common/util/messageManager";
+import { getText } from "../../../common/widget/Text";
 
 export interface IQueryParametersPourRequete {
   statut?: StatutRequete;
@@ -80,7 +82,7 @@ export function useSignatureDocumentHook(
   const [successSignature, setSuccessSignature] = useState<
     SuccessSignatureType[]
   >([]);
-  const [errorsSignature, setErrorsSignature] = useState<SignatureErrors[]>([]);
+  const [errorsSignature, setErrorsSignature] = useState<SignatureErrors>();
 
   const [
     updateDocumentQueryParamState,
@@ -92,7 +94,37 @@ export function useSignatureDocumentHook(
     setUpdateStatutRequeteQueryParamState
   ] = useState<IQueryParameterUpdateStatutRequete>();
 
-  useUpdateDocumentApi(updateDocumentQueryParamState);
+  const callBackMajStatusRequete = useCallback(() => {
+    setUpdateDocumentQueryParamState([]);
+
+    const currentRequeteProcessing = documentsToSignWating[idRequetesToSign[0]];
+    setUpdateStatutRequeteQueryParamState({
+      idRequete: idRequetesToSign[0],
+      statut: getNewStatusRequete(currentRequeteProcessing.sousTypeRequete)
+    });
+
+    const newSuccesses: SuccessSignatureType[] = [
+      ...successSignature,
+      {
+        messageId: "signature.success",
+        date: moment().format(FormatDate.DDMMYYYHHmm),
+        numeroRequete: `${currentRequeteProcessing.documentsToSave[0].numeroRequete}`
+      }
+    ];
+
+    const newRequetesId = [...idRequetesToSign];
+    newRequetesId.shift();
+    setIdRequetesToSign(newRequetesId);
+    if (newRequetesId.length === 0) {
+      messageManager.showSuccessAndClose(
+        getText("signature.successAllSignature")
+      );
+    }
+
+    setSuccessSignature(newSuccesses);
+  }, [documentsToSignWating, idRequetesToSign, successSignature]);
+
+  useUpdateDocumentApi(updateDocumentQueryParamState, callBackMajStatusRequete);
 
   useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState);
 
@@ -141,29 +173,9 @@ export function useSignatureDocumentHook(
     (currentRequeteProcessing: DocumentsATraiter) => {
       if (currentRequeteProcessing.documentsToSign.length === 0) {
         setDocumentsToSave(currentRequeteProcessing.documentsToSave);
-
-        setUpdateStatutRequeteQueryParamState({
-          idRequete: idRequetesToSign[0],
-          statut: getNewStatusRequete(currentRequeteProcessing.sousTypeRequete)
-        });
-
-        const newSuccesses: SuccessSignatureType[] = [
-          ...successSignature,
-          {
-            messageId: "signature.success",
-            date: moment().format(FormatDate.DDMMYYYHHmm),
-            numeroRequete: `${currentRequeteProcessing.documentsToSave[0].numeroRequete}`
-          }
-        ];
-
-        const newRequetesId = [...idRequetesToSign];
-        newRequetesId.shift();
-        setIdRequetesToSign(newRequetesId);
-
-        setSuccessSignature(newSuccesses);
       }
     },
-    [successSignature, idRequetesToSign]
+    []
   );
 
   /**
@@ -177,12 +189,17 @@ export function useSignatureDocumentHook(
       const result = customEvent.detail;
       if (result.direction && result.direction === "to-call-app") {
         if (result.erreurs !== undefined && result.erreurs.length > 0) {
-          setErrorsSignature(result.erreurs);
+          setErrorsSignature({
+            numeroRequete:
+              documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
+                .numeroRequete,
+            erreurs: result.erreurs
+          });
         } else {
           changeDocumentToSign(
             documentsToSignWating,
             idRequetesToSign,
-            result.contenu,
+            result.document,
             setDocumentsToSignWating
           );
 
@@ -240,10 +257,7 @@ function sendDocumentToSignature(
 ) {
   const detail = {
     function: "SIGN",
-    contenu: result.documentDelivre.contenu, // TODO supprimer
     direction: "to-webextension",
-    conteneurSwift: result.documentDelivre.conteneurSwift, // TODO supprimer
-    nom: result.documentDelivre.nom, // TODO supprimer
     document: result.documentDelivre.contenu,
     pin: pinCode,
     mode:

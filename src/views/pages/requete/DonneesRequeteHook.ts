@@ -84,8 +84,8 @@ export interface IRequeteApi {
 
 export interface IQueryParametersPourRequetes {
   statut: StatutRequete;
-  tri?: string;
-  sens?: SortOrder;
+  tri: string;
+  sens: SortOrder;
   range?: string;
   lastDateReaload?: string;
 }
@@ -110,7 +110,6 @@ export function useRequeteApi(
   const contentRange = "content-range";
 
   useEffect(() => {
-    setDataState(undefined);
     setErrorState(undefined);
     setRowsNumberState(undefined);
     setMinRangeState(undefined);
@@ -235,7 +234,7 @@ function parseLink(linkHeader: string, api: ApiManager) {
       .split(`;rel="next"`)[0]
       .replace("<", "")
       .replace(">", "");
-    nextLink = `${api.url}:${api.ports}${nextLink}`;
+    nextLink = `${nextLink}`;
   }
   if (linkHeader.indexOf(`rel="prev"`) > 0) {
     prevLink = linkHeader

@@ -1,12 +1,18 @@
 import React, { useCallback } from "react";
 import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
 import "./sass/ErrorsSignature.scss";
+import { getText } from "../../../common/widget/Text";
 
 interface ErrorsSignatureProps {
-  errors: SignatureErrors[];
+  errors: SignatureErrors;
 }
 
 export interface SignatureErrors {
+  numeroRequete: number;
+  erreurs: TypeErreur[];
+}
+
+export interface TypeErreur {
   code: string;
   libelle: string;
   detail: string;
@@ -16,13 +22,19 @@ export const ErrorsSignature: React.FC<ErrorsSignatureProps> = ({ errors }) => {
   const getErrorsDisplay = useCallback(() => {
     const errorsToDisplay: JSX.Element[] = [];
 
-    errors.forEach((error) => {
+    errors.erreurs.forEach((error) => {
       errorsToDisplay.push(
-        <ListItem alignItems="flex-start" key={error.code}>
+        <ListItem alignItems="flex-start" key={errors.numeroRequete}>
           <ListItemText
             className={"ErrorItem"}
-            primary={error.libelle}
-            secondary={<React.Fragment>{error.detail}</React.Fragment>}
+            primary={`${getText(`signature.titreErreur`)}${
+              errors.numeroRequete
+            }`}
+            secondary={
+              <React.Fragment>
+                {getText(`errors.pages.signature.${error.code}`)}
+              </React.Fragment>
+            }
           />
         </ListItem>
       );

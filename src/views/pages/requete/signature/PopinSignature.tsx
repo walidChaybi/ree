@@ -3,7 +3,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
+  DialogActions
 } from "@material-ui/core";
 
 import { getText } from "../../../common/widget/Text";
@@ -14,27 +14,27 @@ import { ErrorsSignature } from "./ErrorsSignature";
 import "./sass/PopinSignature.scss";
 import {
   useSignatureDocumentHook,
-  DocumentsByRequete,
+  DocumentsByRequete
 } from "./SignatureDocumentHook";
 import { SuccessSignature } from "./SuccessSignature";
 
 interface PopinSignatureProps {
   documentsByRequete: DocumentsByRequete;
   open: boolean;
-  onClose: (isOpen: boolean) => void;
+  onClose: (isOpen: boolean, changePage: boolean) => void;
 }
 
 export const PopinSignature: React.FC<PopinSignatureProps> = ({
   documentsByRequete,
   open,
-  onClose,
+  onClose
 }) => {
   const [pinCode, setPinCode] = React.useState<number>();
 
   const {
     successSignature,
     errorsSignature,
-    idRequetesToSign,
+    idRequetesToSign
   } = useSignatureDocumentHook(documentsByRequete, pinCode);
 
   useEffect(() => {
@@ -55,12 +55,14 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
         <DialogContent>
           <SuccessSignature successes={successSignature} />
 
-          <ErrorsSignature errors={errorsSignature} />
+          {errorsSignature !== undefined && (
+            <ErrorsSignature errors={errorsSignature} />
+          )}
           {pinCode !== undefined ? (
             <>
               <ProgressSignature
                 onClose={onClose}
-                errors={false}
+                errors={errorsSignature !== undefined}
                 documentsByRequete={documentsByRequete}
                 idsRequetesToSign={idRequetesToSign}
               />

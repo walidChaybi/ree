@@ -191,7 +191,9 @@
     "annuler": "Annuler",
     "fermer": "Fermer",
     "titrePopIn": "Signature des documents",
-    "success": "La requête n°${0} a été signée avec succès le ${1}"
+    "success": "La requête n°${0} a été signée avec succès le ${1}",
+    "titreErreur": "Requête n°",
+    "successAllSignature": "Signature des documents effectuée avec succès"
   },
   "messageManager": {
     "error": "Erreur",

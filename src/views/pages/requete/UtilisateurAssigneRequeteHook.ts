@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { ApiManager, HttpMethod } from "../../../api/ApiManager";
 import { ApiEndpoints } from "../../router/UrlManager";
 import { IDataTable } from "./MesRequetesPage";
-import { FormatDate } from "../../../ressources/FormatDate";
-import moment from "moment";
 import { getText } from "../../common/widget/Text";
 
 export interface IQueryParametersAssigneRequetes {
-  idRequete: string;
+  idReponse?: string;
   nomOec: string;
   prenomOec: string;
 }
@@ -28,60 +26,20 @@ export function useUtilisateurRequeteApi(
 
       setSuccessState(undefined);
 
-      const requete = requetes
-        ? requetes.find((requ) => requ.idRequete === queryParameters.idRequete)
-        : null;
-
-      const requetesToSend = [];
-      if (requete != null) {
-        const requeteToSend = {
-          dateCreation: moment(
-            requete.dateCreation,
-            FormatDate.DDMMYYYY
-          ).unix(),
-          dateDerniereMaj: moment(
-            requete.dateDerniereMaj,
-            FormatDate.DDMMYYYY
-          ).unix(),
-          dateStatut: moment(requete.dateStatut, FormatDate.DDMMYYYY).unix(),
-          anneeEvenement: requete.anneeEvenement,
-          idRequete: requete.idRequete,
-          idSagaDila: requete.idSagaDila,
-          idRequeteInitiale: requete.idRequeteInitiale,
-          jourEvenement: requete.jourEvenement,
-          moisEvenement: requete.moisEvenement,
-          natureActe: requete.natureActe,
-          canal: requete.canal,
-          motifRequete: requete.motifRequete,
-          nbExemplaire: requete.nbExemplaire,
-          paysEvenement: requete.paysEvenement,
-          piecesJustificatives: requete.piecesJustificatives,
-          provenance: requete.provenance,
-          reponse: requete.reponse!,
-          requerant: requete.requerant,
-          sousTypeRequete: requete.sousTypeRequete,
-          statut: requete.statut,
-          titulaires: requete.titulaires,
-          typeActe: requete.typeActe,
-          typeRequete: requete.typeRequete,
-          villeEvenement: requete.villeEvenement,
-        };
-        requeteToSend.reponse.nomOec = queryParameters.nomOec;
-        requeteToSend.reponse.prenomOec = queryParameters.prenomOec;
-        requetesToSend.push(requeteToSend);
-      }
-
       api
         .fetch({
-          method: HttpMethod.PUT,
-          uri: ApiEndpoints.RequetesUrl,
-          data: [...requetesToSend],
-          headers: [],
+          method: HttpMethod.PATCH,
+          uri: `${ApiEndpoints.ReponsesUrl}/${queryParameters.idReponse}`,
+          parameters: {
+            nomOec: queryParameters.nomOec,
+            prenomOec: queryParameters.prenomOec
+          },
+          headers: []
         })
         .then(() => {
           if (requetes !== undefined) {
             const idxRequete = requetes.findIndex(
-              (r) => r.idRequete === queryParameters.idRequete
+              r => r.reponse?.idReponse === queryParameters.idReponse
             );
 
             requetes[
@@ -97,7 +55,7 @@ export function useUtilisateurRequeteApi(
 
           setDataState(queryParameters);
         })
-        .catch((error) => {
+        .catch(error => {
           setErrorState(error);
         });
     }
@@ -106,6 +64,6 @@ export function useUtilisateurRequeteApi(
   return {
     dataState,
     errorState,
-    sucessState,
+    sucessState
   };
 }

@@ -12,13 +12,13 @@ import { StatutRequete } from "../../../model/requete/StatutRequete";
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
   requetes: IDataTable[];
-  onClose: () => void;
+  reloadData: () => void;
 }
 
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
   requetes,
-  onClose
+  reloadData
 }) => {
   const validerButtonRef = React.createRef<HTMLButtonElement>();
 
@@ -34,11 +34,13 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   }, [validerButtonRef]);
 
   const closePopin = useCallback(
-    (showPopin: boolean) => {
+    (showPopin: boolean, changePage: boolean) => {
       setShowWaitState(showPopin);
-      onClose();
+      if (changePage === true) {
+        reloadData();
+      }
     },
-    [onClose]
+    [reloadData]
   );
 
   const handleClickSignature = () => {

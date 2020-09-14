@@ -21,7 +21,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   maxRequetes,
   requetes,
   idRequete,
-  reloadData,
+  reloadData
 }) => {
   return (
     <div className="ActionsButtons">
@@ -42,7 +42,7 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
           <BoutonSignature
             libelle={"pages.delivrance.apercu.signatureElectronique"}
             requetes={requetes}
-            onClose={reloadData}
+            reloadData={reloadData}
           />
         </div>
       </div>

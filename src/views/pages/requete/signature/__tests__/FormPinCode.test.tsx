@@ -1,7 +1,7 @@
 import React from "react";
 import { FormPinCode } from "../FormPinCode";
 import { mount } from "enzyme";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 
 test("renders form popin", () => {
   const component = mount(

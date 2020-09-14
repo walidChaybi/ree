@@ -13,30 +13,33 @@ export interface IUpdateDocumentApiResult {
 }
 
 export function useUpdateDocumentApi(
-  queryParameters?: IQueryParameterUpdateDocument[]
+  queryParameters?: IQueryParameterUpdateDocument[],
+  callBack?: () => void
 ) {
   const [errorState, setErrorState] = useState(undefined);
 
   useEffect(() => {
     const api = ApiManager.getInstance("rece-requete-api", "v1");
-    if (queryParameters) {
+    if (queryParameters !== undefined && queryParameters.length > 0) {
       api
         .fetch({
           method: HttpMethod.PATCH,
           uri: ApiEndpoints.DocumentsdelivresUrl,
           data: queryParameters,
-          headers: [],
+          headers: []
         })
         .then((result) => {
-          // doNothing
+          if (callBack !== undefined) {
+            callBack();
+          }
         })
         .catch((error) => {
           setErrorState(error);
         });
     }
-  }, [queryParameters]);
+  }, [queryParameters, callBack]);
 
   return {
-    errorState,
+    errorState
   };
 }

@@ -20,7 +20,7 @@ export interface Test {
 
 type RequetePageProps = RouteComponentProps<{ idRequete: string }> & Test;
 
-export const RequetePage: React.FC<RequetePageProps> = props => {
+export const RequetePage: React.FC<RequetePageProps> = (props) => {
   const history = useHistory();
   const [histoReq] = useState<RequestsInformations>(
     history.location.state as RequestsInformations
@@ -29,7 +29,6 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
     getIndexRequete(props.match.params.idRequete, histoReq)
   );
 
-  // TODO mettre les vraies valeurs quand on aura le WS d'auth
   const { dataState } = useRequeteDataApi(
     {
       idRequete: props.match.params.idRequete
@@ -50,7 +49,7 @@ export const RequetePage: React.FC<RequetePageProps> = props => {
   );
 
   useEffect(() => {
-    const idx = dataState.findIndex(donnee => {
+    const idx = dataState.findIndex((donnee) => {
       return donnee.idRequete === props.match.params.idRequete;
     });
     setIndexRequete(idx);

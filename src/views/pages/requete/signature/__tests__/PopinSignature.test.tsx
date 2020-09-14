@@ -4,15 +4,15 @@ import {
   fireEvent,
   screen,
   render,
-  waitFor,
   createEvent,
+  waitFor
 } from "@testing-library/react";
 import config from "../../../../../views/pages/requete/__tests__/superagent-mock-config";
 import request from "superagent";
 
 const superagentMock = require("superagent-mock")(request, config);
 
-test("renders PopinSignature, signature event is received and success displayed", () => {
+test("renders PopinSignature, signature event is received and success displayed", async () => {
   render(
     <PopinSignature
       documentsByRequete={{
@@ -25,11 +25,11 @@ test("renders PopinSignature, signature event is received and success displayed"
               nomDocument: "Naissance copie",
               conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
               idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-              numeroRequete: 1,
-            },
+              numeroRequete: 1
+            }
           ],
-          documentsToSave: [],
-        },
+          documentsToSave: []
+        }
       }}
       open={true}
       onClose={() => {
@@ -46,19 +46,21 @@ test("renders PopinSignature, signature event is received and success displayed"
       {
         detail: {
           direction: "to-call-app",
-          erreurs: [],
-        },
+          erreurs: []
+        }
       },
       { EventType: "CustomEvent" }
     )
   );
-  const successMsg = screen.getByText(
-    /La requête n°1 a été signée avec succès/i
-  );
-  expect(successMsg).toBeDefined();
+  await waitFor(() => {
+    const successMsg = screen.getByText(
+      /La requête n°1 a été signée avec succès/i
+    );
+    expect(successMsg).toBeDefined();
+  });
 });
 
-test("renders PopinSignature, signature event is received and error displayed", () => {
+test("renders PopinSignature, signature event is received and error displayed", async () => {
   render(
     <PopinSignature
       documentsByRequete={{
@@ -71,11 +73,11 @@ test("renders PopinSignature, signature event is received and error displayed", 
               nomDocument: "Naissance copie",
               conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
               idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-              numeroRequete: 1,
-            },
+              numeroRequete: 1
+            }
           ],
-          documentsToSave: [],
-        },
+          documentsToSave: []
+        }
       }}
       open={true}
       onClose={() => {
@@ -94,20 +96,20 @@ test("renders PopinSignature, signature event is received and error displayed", 
           direction: "to-call-app",
           erreurs: [
             {
-              code: "Error1",
-              libelle: "ErrorLibelle1",
-              detail: "ErrorDetail1",
-            },
-          ],
-        },
+              code: "TECH_1"
+            }
+          ]
+        }
       },
       { EventType: "CustomEvent" }
     )
   );
-  const errorCode = screen.getByText("ErrorLibelle1");
-  const errorMsg = screen.getByText("ErrorLibelle1");
-  expect(errorCode).toBeDefined();
-  expect(errorMsg).toBeDefined();
+  await waitFor(() => {
+    const errorCode = screen.getByText("Requête n°1");
+    const errorMsg = screen.getByText("Erreur technique inconnue");
+    expect(errorCode).toBeDefined();
+    expect(errorMsg).toBeDefined();
+  });
 });
 
 afterAll(() => {

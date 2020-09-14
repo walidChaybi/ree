@@ -78,10 +78,11 @@ export function processDataStorting<Key extends keyof any>(
 export function getPaginatedData<T>(
   array: T[],
   currentPage: number,
-  rowsPerPage: number
+  rowsPerPage: number,
+  numberOfPagesPerRequetes: number
 ): T[] {
   return array.slice(
-    currentPage * rowsPerPage,
-    currentPage * rowsPerPage + rowsPerPage
+    (currentPage % numberOfPagesPerRequetes) * rowsPerPage,
+    (currentPage % numberOfPagesPerRequetes) * rowsPerPage + rowsPerPage
   );
 }
