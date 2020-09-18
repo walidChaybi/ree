@@ -21,6 +21,7 @@ import { FormatDate } from "../../../../ressources/FormatDate";
 import { SousTypeRequete } from "../../../../model/requete/SousTypeRequete";
 import messageManager from "../../../common/util/messageManager";
 import { getText } from "../../../common/widget/Text";
+import { TypeDocument } from "../../../../model/requete/TypeDocument";
 
 export interface IQueryParametersPourRequete {
   statut?: StatutRequete;
@@ -65,6 +66,8 @@ interface DocumentToSave {
   conteneurSwift: string;
   numeroRequete: number;
 }
+
+const MaxLengthDocumentToSign = 950000;
 
 export function useSignatureDocumentHook(
   documentsByRequete: DocumentsByRequete,
@@ -160,6 +163,9 @@ export function useSignatureDocumentHook(
     getDocumentAndSendToSignature(
       idRequetesToSign,
       documentsToSignWating,
+      setErrorsSignature,
+      setDocumentsToSignWating,
+      processResultWebExtension,
       pinCode
     );
   }, [pinCode, idRequetesToSign, documentsToSignWating]);
@@ -167,17 +173,17 @@ export function useSignatureDocumentHook(
   useEffect(() => {
     setDocumentsToSignWating(documentsByRequete);
     setIdRequetesToSign(Object.keys(documentsByRequete));
+    setSuccessSignature([]);
+    setErrorsSignature(undefined);
   }, [documentsByRequete]);
 
-  const processResultWebExtension = useCallback(
-    (currentRequeteProcessing: DocumentsATraiter) => {
-      if (currentRequeteProcessing.documentsToSign.length === 0) {
-        setDocumentsToSave(currentRequeteProcessing.documentsToSave);
-      }
-    },
-    []
-  );
-
+  const processResultWebExtension = (
+    currentRequeteProcessing: DocumentsATraiter
+  ) => {
+    if (currentRequeteProcessing.documentsToSign.length === 0) {
+      setDocumentsToSave(currentRequeteProcessing.documentsToSave);
+    }
+  };
   /**
    * @description Handler concernant les communications avec la webextension
    *
@@ -187,6 +193,7 @@ export function useSignatureDocumentHook(
     (event: Event): void => {
       const customEvent = event as CustomEvent;
       const result = customEvent.detail;
+
       if (result.direction && result.direction === "to-call-app") {
         if (result.erreurs !== undefined && result.erreurs.length > 0) {
           setErrorsSignature({
@@ -210,7 +217,7 @@ export function useSignatureDocumentHook(
         }
       }
     },
-    [documentsToSignWating, idRequetesToSign, processResultWebExtension]
+    [documentsToSignWating, idRequetesToSign]
   );
 
   return {
@@ -267,12 +274,18 @@ function sendDocumentToSignature(
     infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos,
     erreursSimulees: getErrorsMock()
   };
+
   window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
 }
 
 function getDocumentAndSendToSignature(
   idRequetesToSign: string[],
   documentsToSignWating: DocumentsByRequete,
+  setErrorsSignature: (errors: SignatureErrors) => void,
+  setDocumentsToSignWating: (documentByRequete: DocumentsByRequete) => void,
+  processResultWebExtension: (
+    currentRequeteProcessing: DocumentsATraiter
+  ) => void,
   pinCode?: number
 ) {
   if (idRequetesToSign.length > 0 && pinCode !== undefined) {
@@ -282,14 +295,48 @@ function getDocumentAndSendToSignature(
       GroupementDocument.DocumentDelivre,
       documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].mimeType
     ).then((result) => {
-      sendDocumentToSignature(
-        result,
-        pinCode,
-        documentsToSignWating,
-        idRequetesToSign
-      );
+      if (result.documentDelivre.taille > MaxLengthDocumentToSign) {
+        setErrorsSignature({
+          numeroRequete:
+            documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
+              .numeroRequete,
+          erreurs: [{ code: "WEB_EXT1", libelle: "", detail: "" }]
+        });
+      } else if (
+        isAllowedTypeDocumentToBeSigned(result.documentDelivre.typeDocument)
+      ) {
+        sendDocumentToSignature(
+          result,
+          pinCode,
+          documentsToSignWating,
+          idRequetesToSign
+        );
+      } else {
+        changeDocumentToSign(
+          documentsToSignWating,
+          idRequetesToSign,
+          result.documentDelivre.contenu,
+          setDocumentsToSignWating
+        );
+
+        const currentRequeteProcessing =
+          documentsToSignWating[idRequetesToSign[0]];
+
+        processResultWebExtension(currentRequeteProcessing);
+      }
     });
   }
+}
+
+function isAllowedTypeDocumentToBeSigned(typeDocument: string): boolean {
+  return (
+    [
+      TypeDocument.ExtraitAvecFiliation,
+      TypeDocument.ExtraitSansFiliation,
+      TypeDocument.ExtraitPlurilingue,
+      TypeDocument.CopieIntegrale
+    ].find((type) => type === typeDocument) !== undefined
+  );
 }
 
 function getNewStatusRequete(sousTypeRequete: SousTypeRequete) {

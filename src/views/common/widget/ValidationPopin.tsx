@@ -18,8 +18,9 @@ export const ValidationPopin: React.FC<ValidationPopinProps> = ({
   messageId,
   errorMessageId,
   onValid,
-  canValidate,
+  canValidate
 }) => {
+  const openDialogAferMs = 75;
   const dialog = useDialogState();
   const validerButtonRef = React.createRef<HTMLButtonElement>();
 
@@ -30,13 +31,16 @@ export const ValidationPopin: React.FC<ValidationPopinProps> = ({
   }, [validerButtonRef]);
 
   const validPopin = useCallback(() => {
-    onValid();
     dialog.hide();
+
+    setTimeout(() => {
+      onValid();
+    }, openDialogAferMs);
   }, [dialog, onValid]);
 
   return (
     <>
-      <DialogDisclosure {...dialog} as={Button}>
+      <DialogDisclosure {...dialog} as={Button} disabled={!canValidate}>
         {getText(buttonMessageId)}
       </DialogDisclosure>
       {!canValidate ? (

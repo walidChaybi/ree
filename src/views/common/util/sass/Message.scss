@@ -5,6 +5,14 @@
   top: 75px;
   max-width: 500px;
 
+  .Toastify__toast {
+    padding-right: 10px;
+  }
+
+  .Toastify__close-button {
+    min-width: max-content;
+  }
+
   div {
     padding: 0px;
   }

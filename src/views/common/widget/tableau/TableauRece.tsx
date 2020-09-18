@@ -26,6 +26,7 @@ export interface RequeteTableauHeaderProps {
   handleChangeSort: (tri: string, sens: SortOrder) => void;
   onClickOnLine: (id: string) => string;
   goToLink: (value: string) => void;
+  handleReload?: () => void;
 }
 
 export class TableauTypeColumn {
@@ -118,14 +119,28 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
     );
   }, [props.dataState, pageState, rowsPerPageState]);
 
-  const reloadData = () => {
+  const reloadData = (allRequestSigned: boolean) => {
+    if (props.handleReload !== undefined) {
+      props.handleReload();
+    }
     let newPageState = pageState;
-    if (props.nextDataLinkState) {
-      newPageState++;
-    } else if (props.previousDataLinkState) {
+
+    if (
+      newPageState > 0 &&
+      props.nextDataLinkState === undefined &&
+      newPageState - 1 * rowsPerPageState >= props.dataState.length
+    ) {
       newPageState--;
     }
-    handleChangePage(undefined, newPageState);
+    if (
+      allRequestSigned &&
+      newPageState * rowsPerPageState >=
+        props.dataState.length - rowsPerPageState &&
+      props.nextDataLinkState !== undefined
+    ) {
+      newPageState--;
+    }
+    setPageState(newPageState);
   };
 
   const [dataBody, setdataBody] = React.useState<IDataTable[]>(processData());
