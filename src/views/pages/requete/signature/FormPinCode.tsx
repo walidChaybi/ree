@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { TextField } from "@material-ui/core";
 import { Button } from "reakit/Button";
 
-import "./sass/PopinSignature.scss";
+import "./sass/FormPinCode.scss";
 import { getText } from "../../../common/widget/Text";
 
 interface FormPinCodePros {
@@ -16,12 +16,28 @@ interface FormValues {
   pinCode?: number;
 }
 
+interface FormValuesErrors {
+  pinCode?: string;
+}
+
 export const FormPinCode: React.FC<FormPinCodePros> = ({
   onClose,
   setPinCode
 }) => {
+  const validate = (values: FormValues) => {
+    const errors: FormValuesErrors = {};
+    if (!values.pinCode) {
+      errors.pinCode = "Le code pin de la carte doit être fournit";
+    } else if (isNaN(values.pinCode)) {
+      errors.pinCode = "Le code pin doit être un nombre";
+    }
+
+    return errors;
+  };
+
   const formik = useFormik({
     initialValues: {},
+    validate,
     onSubmit: (values: FormValues) => {
       setPinCode(values.pinCode);
     }
@@ -36,13 +52,17 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
         type="password"
         variant="filled"
         onChange={formik.handleChange}
+        autoFocus
       />
+      {formik.errors.pinCode ? (
+        <div className={"ErrorField"}>{formik.errors.pinCode}</div>
+      ) : null}
       <div className="PopinSignaturePinCodeActions">
         <Button
           color="primary"
           type="submit"
           name={"validate"}
-          disabled={formik.values.pinCode === undefined}
+          disabled={formik.errors.pinCode !== undefined}
         >
           {getText("signature.valider")}
         </Button>

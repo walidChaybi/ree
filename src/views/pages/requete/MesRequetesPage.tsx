@@ -176,13 +176,17 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
   const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
     const queryParameters = {
       statut: StatutRequete.ASigner,
-      tri: tri,
-      sens: sens,
+      tri,
+      sens,
       range: `0-${nbRequeteParAppel}`
     };
 
     setLinkParameters(queryParameters);
   }, []);
+
+  const handleReload = useCallback(() => {
+    setLinkParameters({ ...linkParameters });
+  }, [linkParameters]);
 
   return (
     <>
@@ -199,6 +203,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
         goToLink={goToLink}
         canUseSignature={true}
         handleChangeSort={handleChangeSort}
+        handleReload={handleReload}
       />
       <BoutonRetour />
     </>

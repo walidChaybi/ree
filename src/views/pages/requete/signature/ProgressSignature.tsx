@@ -19,6 +19,7 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
   errors
 }) => {
   const totalPercentageToComplete = 100;
+  const minWidthForProgressBar = 35;
 
   const getSignatureProgress = useCallback((): number => {
     const numberOfRequetes = Object.keys(documentsByRequete).length;
@@ -38,7 +39,7 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
             value={getSignatureProgress()}
           />
         </Box>
-        <Box minWidth={35}>
+        <Box minWidth={minWidthForProgressBar}>
           <Typography variant="body2" color="textSecondary">{`${Math.round(
             getSignatureProgress()
           )}%`}</Typography>

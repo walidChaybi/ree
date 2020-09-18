@@ -12,7 +12,7 @@ import { StatutRequete } from "../../../model/requete/StatutRequete";
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
   requetes: IDataTable[];
-  reloadData: () => void;
+  reloadData: (allRequestSigned: boolean) => void;
 }
 
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
@@ -36,12 +36,13 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   const closePopin = useCallback(
     (showPopin: boolean, changePage: boolean) => {
       setShowWaitState(showPopin);
-
       if (changePage === true) {
-        reloadData();
+        reloadData(
+          Object.keys(documentsByRequeteToSign).length === requetes.length
+        );
       }
     },
-    [reloadData]
+    [reloadData, documentsByRequeteToSign, requetes]
   );
 
   const handleClickSignature = () => {
