@@ -59,7 +59,9 @@
           "motif": "Motif",
           "canal": "Canal",
           "nomRequerant": "Nom requérant",
-          "prenomRequerant": "Prénom requérant"
+          "prenomRequerant": "Prénom requérant",
+          "raisonSociale": "Raison sociale",
+          "nomAdministration": "Nom administration"
         },
         "bouton": {
           "left": "Requête précédente",

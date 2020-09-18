@@ -3,12 +3,34 @@ import { Text } from "../../../common/widget/Text";
 import "./sass/ResumeRequeteContent.scss";
 import { IDataTable } from "../MesRequetesPage";
 import { TitulaireInformation } from "./TitulaireInformation";
+import { QualiteRequerant } from "../../../../model/requete/QualiteRequerant";
 
-interface ResumeRequeteContentProps {
+export interface ResumeRequeteContentProps {
   requete: IDataTable;
 }
 
 export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props => {
+  const dataRequerant = props.requete.requerant;
+  let labelNomRequerant = "";
+  let labelPrenomRequerant = "";
+  let valueNomRequerant = "";
+  let valuePrenomRequerant = "";
+
+  if (dataRequerant.qualiteRequerant === QualiteRequerant.MandataireHabilite) {
+    labelNomRequerant = "pages.delivrance.apercu.resume.raisonSociale";
+    valueNomRequerant = `${dataRequerant.raisonSociale}`;
+  } else if (
+    dataRequerant.qualiteRequerant === QualiteRequerant.Administration
+  ) {
+    labelNomRequerant = "pages.delivrance.apercu.resume.nomAdministration";
+    valueNomRequerant = `${dataRequerant.nomAdministration}`;
+  } else if (dataRequerant.qualiteRequerant === QualiteRequerant.Particulier) {
+    labelNomRequerant = "pages.delivrance.apercu.resume.nomRequerant";
+    labelPrenomRequerant = "pages.delivrance.apercu.resume.prenomRequerant";
+    valueNomRequerant = `${dataRequerant.nomFamille}`;
+    valuePrenomRequerant = `${dataRequerant.prenom}`;
+  }
+
   return (
     <>
       <div className="resume-requete-content">
@@ -75,24 +97,22 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
         </div>
       </div>
       <div className="resume-requete-content">
-        <div className="bloc-info">
-          <div className="label">
-            <Text messageId={"pages.delivrance.apercu.resume.nomRequerant"} />
+        {labelNomRequerant !== "" && valueNomRequerant !== "" && (
+          <div className="bloc-info">
+            <div className="label">
+              <Text messageId={labelNomRequerant} />
+            </div>
+            <div className="capital personnal-info">{valueNomRequerant}</div>
           </div>
-          <div className="capital personnal-info">
-            {props.requete.requerant.nomFamille}
+        )}
+        {labelPrenomRequerant !== "" && valuePrenomRequerant !== "" && (
+          <div className="bloc-info">
+            <div className="label">
+              <Text messageId={labelPrenomRequerant} />
+            </div>
+            <div className="capital personnal-info">{valuePrenomRequerant}</div>
           </div>
-        </div>
-        <div className="bloc-info">
-          <div className="label">
-            <Text
-              messageId={"pages.delivrance.apercu.resume.prenomRequerant"}
-            />
-          </div>
-          <div className="capital personnal-info">
-            {props.requete.requerant.prenom}
-          </div>
-        </div>
+        )}
       </div>
     </>
   );
