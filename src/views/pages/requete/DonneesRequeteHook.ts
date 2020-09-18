@@ -139,7 +139,7 @@ export function useRequeteApi(
             idArobas: officier.idSSO
           }
         })
-        .then((result) => {
+        .then(result => {
           setDataState(reponseRequeteMapper(result.body.data));
           const rowsNumber: number = +(result.headers[
             contentRange
@@ -158,7 +158,7 @@ export function useRequeteApi(
           setPreviousDataLinkState(prevLink);
           setNextDataLinkState(nextLink);
         })
-        .catch((error) => {
+        .catch(error => {
           setErrorState(error);
         });
     }
@@ -177,7 +177,7 @@ export function useRequeteApi(
 
 function reponseRequeteMapper(data: IRequeteApi[]): IDataTable[] {
   const result: IDataTable[] = [];
-  data.forEach((element) => result.push(reponseRequeteMapperUnitaire(element)));
+  data.forEach(element => result.push(reponseRequeteMapperUnitaire(element)));
   return result;
 }
 
@@ -217,11 +217,11 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
 
 function createLibelleRequerant(data: IRequerantApi) {
   if (data.qualiteRequerant === QualiteRequerant.MandataireHabilite) {
-    data.libelleRequerant = data.raisonSociale + " / " + data.identite;
+    data.libelleRequerant = `${data.raisonSociale} / ${data.identite}`;
   } else if (data.qualiteRequerant === QualiteRequerant.Administration) {
     data.libelleRequerant = data.nomAdministration;
   } else if (data.qualiteRequerant === QualiteRequerant.Particulier) {
-    data.libelleRequerant = data.prenom + " " + data.nomFamille;
+    data.libelleRequerant = `${data.prenom} ${data.nomFamille}`;
   }
   return data;
 }

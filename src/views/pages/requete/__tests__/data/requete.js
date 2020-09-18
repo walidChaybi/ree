@@ -35,7 +35,7 @@ export default {
   requerant: {
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
     typeRequerant: SousQualiteRequerant.Titulaire,
-    qualiteRequerant: QualiteRequerant.PARTICULIER,
+    qualiteRequerant: QualiteRequerant.Particulier,
     identite: "",
     raisonSociale: "",
     nomAdministration: "",
