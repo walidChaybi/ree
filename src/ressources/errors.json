@@ -18,7 +18,7 @@
       "FONC_7": "Mode de signature vide ou null",
       "FONC_8": "Carte bloquée après trois tentatives erronées du code PIN",
       "FONC_9": "Requête json invalide",
-      "FONC_10": "Document à signer trop gros (> 950 Kio)",
+      "FONC_10": "Document à signer trop gros (> 600 Kio)",
       "WEB_EXT1": "La signature électronique est actuellement indisponible.\nMerci de recommencer l'appel plus tard."
     }
   }

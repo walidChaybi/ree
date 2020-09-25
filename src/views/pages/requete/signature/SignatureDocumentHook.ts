@@ -67,7 +67,7 @@ interface DocumentToSave {
   numeroRequete: number;
 }
 
-const MaxLengthDocumentToSign = 950000;
+const MaxLengthDocumentToSign = 600000;
 
 export function useSignatureDocumentHook(
   documentsByRequete: DocumentsByRequete,
