@@ -27,7 +27,7 @@ export const ErrorsSignature: React.FC<ErrorsSignatureProps> = ({ errors }) => {
         <ListItem alignItems="flex-start" key={errors.numeroRequete}>
           <ListItemText
             className={"ErrorItem"}
-            primary={`${getText(`signature.titreErreur`)}${
+            primary={`${getText("signature.titreErreur")}${
               errors.numeroRequete
             }`}
             secondary={
