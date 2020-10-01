@@ -70,4 +70,4 @@ spec:
             name: rece-shibboleth
         - name: config-apache-rece-ui
           configMap:
-            name: rece-apache
+            name: rece-ui
