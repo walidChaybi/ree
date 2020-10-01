@@ -1,5 +1,5 @@
 export enum QualiteRequerant {
   Particulier = "PARTICULIER",
-  Administration = "ADMINISTRATION",
+  Institutionnel = "INSTITUTIONNEL",
   MandataireHabilite = "MANDATAIRE_HABILITE"
 }

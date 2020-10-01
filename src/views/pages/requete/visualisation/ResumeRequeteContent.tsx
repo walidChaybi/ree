@@ -20,10 +20,10 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
     labelNomRequerant = "pages.delivrance.apercu.resume.raisonSociale";
     valueNomRequerant = `${dataRequerant.raisonSociale}`;
   } else if (
-    dataRequerant.qualiteRequerant === QualiteRequerant.Administration
+    dataRequerant.qualiteRequerant === QualiteRequerant.Institutionnel
   ) {
-    labelNomRequerant = "pages.delivrance.apercu.resume.nomAdministration";
-    valueNomRequerant = `${dataRequerant.nomAdministration}`;
+    labelNomRequerant = "pages.delivrance.apercu.resume.nomInstitutionnel";
+    valueNomRequerant = `${dataRequerant.nomInstitutionnel}`;
   } else if (dataRequerant.qualiteRequerant === QualiteRequerant.Particulier) {
     labelNomRequerant = "pages.delivrance.apercu.resume.nomRequerant";
     labelPrenomRequerant = "pages.delivrance.apercu.resume.prenomRequerant";

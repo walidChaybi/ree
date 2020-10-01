@@ -35,7 +35,7 @@
   },
   "qualiteRequerant": {
     "Particulier": "Particulier",
-    "Administration": "Administration",
+    "Institutionnel": "Institutionnel",
     "MandataireHabilite": "Mandataire habilité"
   },
   "sousQualiteRequerant": {
