@@ -61,7 +61,7 @@
           "nomRequerant": "Nom requérant",
           "prenomRequerant": "Prénom requérant",
           "raisonSociale": "Raison sociale",
-          "nomAdministration": "Nom administration"
+          "nomInstitutionnel": "Nom institutionnel"
         },
         "bouton": {
           "left": "Requête précédente",

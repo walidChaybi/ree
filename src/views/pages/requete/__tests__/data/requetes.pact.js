@@ -38,7 +38,7 @@ export const requetesPact = eachLike({
     taille: 207836,
     contenu: null,
     conteneurSwift: "pieces-justificatives-2020-6",
-    requete: null,
+    requete: null
   }),
   reponse: {
     idReponse: "c45640ba-364e-4bd5-a8e7-4d4a0066ef87",
@@ -63,15 +63,15 @@ export const requetesPact = eachLike({
       contenu: null,
       conteneurSwift: "documents-delivres-2020-6",
       reponse: null,
-      cheminFs: "/saga-docinternet-fs/EXTRAIT.pdf",
+      cheminFs: "/saga-docinternet-fs/EXTRAIT.pdf"
     }),
-    requete: null,
+    requete: null
   },
   requerant: {
     idRequerant: "c456e268-34c9-45df-9ffc-817d2ba081f2",
     typeRequerant: "TITULAIRE",
     qualiteRequerant: "PARTICULIER",
-    nomAdministration: null,
+    nomInstitutionnel: null,
     identite: null,
     raisonSociale: null,
     nomFamille: "aubin",
@@ -80,7 +80,7 @@ export const requetesPact = eachLike({
     mail: null,
     telephone: "1777327569",
     adresse: null,
-    requete: null,
+    requete: null
   },
   titulaires: eachLike({
     idTitulaire: "c4562f1c-08ad-45d9-b63e-4a3c391496d1",
@@ -99,6 +99,6 @@ export const requetesPact = eachLike({
     sexe: null,
     parent1: null,
     parent2: null,
-    requete: null,
-  }),
+    requete: null
+  })
 });

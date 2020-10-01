@@ -38,7 +38,7 @@ export default {
     qualiteRequerant: QualiteRequerant.Particulier,
     identite: "",
     raisonSociale: "",
-    nomAdministration: "",
+    nomInstitutionnel: "",
     nomUsage: "",
     nomFamille: "aubin",
     prenom: "nicolas",

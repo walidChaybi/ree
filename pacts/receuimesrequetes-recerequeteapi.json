@@ -100,7 +100,7 @@
                 "idRequerant": "c456e268-34c9-45df-9ffc-817d2ba081f2",
                 "typeRequerant": "TITULAIRE",
                 "qualiteRequerant": "PARTICULIER",
-                "nomAdministration": null,
+                "nomInstitutionnel": null,
                 "identite": null,
                 "raisonSociale": null,
                 "nomFamille": "aubin",

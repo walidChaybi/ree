@@ -24,7 +24,7 @@ export interface IRequerantApi {
   idRequerant: string;
   typeRequerant: SousQualiteRequerant;
   qualiteRequerant: QualiteRequerant;
-  nomAdministration: string;
+  nomInstitutionnel: string;
   identite: string;
   raisonSociale: string;
   nomFamille: string;
@@ -225,8 +225,8 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
 function createLibelleRequerant(data: IRequerantApi) {
   if (data.qualiteRequerant === QualiteRequerant.MandataireHabilite) {
     data.libelleRequerant = `${data.raisonSociale} / ${data.identite}`;
-  } else if (data.qualiteRequerant === QualiteRequerant.Administration) {
-    data.libelleRequerant = data.nomAdministration;
+  } else if (data.qualiteRequerant === QualiteRequerant.Institutionnel) {
+    data.libelleRequerant = data.nomInstitutionnel;
   } else if (data.qualiteRequerant === QualiteRequerant.Particulier) {
     data.libelleRequerant = `${data.prenom} ${data.nomFamille}`;
   }
