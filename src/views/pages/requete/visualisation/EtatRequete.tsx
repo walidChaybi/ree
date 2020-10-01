@@ -19,10 +19,10 @@ export const EtatRequete: React.FC<EtatRequeteProps> = props => {
       statut === StatutRequete.Transferee,
     gris:
       statut === StatutRequete.Doublon ||
-      statut === StatutRequete.TraiteADelivrerDemat ||
-      statut === StatutRequete.TraiteAImprimer ||
-      statut === StatutRequete.TraiteDelivreDemat ||
-      statut === StatutRequete.TraiteImprime,
+      statut === StatutRequete.ATraiterDemat ||
+      statut === StatutRequete.AImprimer ||
+      statut === StatutRequete.TraiteDemat ||
+      statut === StatutRequete.Imprime,
     Entete: true
   });
   return (
@@ -97,16 +97,16 @@ const getRequeteASigner = (data: IDataTable) => {
 
 const getStatutLibelle = (data: IDataTable) => {
   switch (data.statut as StatutRequete) {
-    case StatutRequete.TraiteADelivrerDemat: {
+    case StatutRequete.ATraiterDemat: {
       return getRequeteTraiteeLibelle(data);
     }
-    case StatutRequete.TraiteDelivreDemat: {
+    case StatutRequete.TraiteDemat: {
       return getRequeteTraiteeLibelle(data);
     }
-    case StatutRequete.TraiteAImprimer: {
+    case StatutRequete.AImprimer: {
       return getRequeteTraiteeLibelle(data);
     }
-    case StatutRequete.TraiteImprime: {
+    case StatutRequete.Imprime: {
       return getRequeteTraiteeLibelle(data);
     }
     case StatutRequete.PriseEnCharge: {

@@ -4,7 +4,7 @@ import { Button } from "reakit/Button";
 import { useHistory } from "react-router-dom";
 import {
   IQueryParameterUpdateStatutRequete,
-  useUpdateStatutRequeteApi,
+  useUpdateStatutRequeteApi
 } from "./UpdateStatutRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 
@@ -15,18 +15,18 @@ interface BoutonRetourSagaProps {
 
 export const BoutonRetourSaga: React.FC<BoutonRetourSagaProps> = ({
   messageId = "pages.delivrance.action.retourSaga",
-  idRequete,
+  idRequete
 }) => {
   const history = useHistory();
   const [
     updateStatutRequeteQueryParamState,
-    setUpdateStatutRequeteQueryParamState,
+    setUpdateStatutRequeteQueryParamState
   ] = React.useState<IQueryParameterUpdateStatutRequete>();
 
   const handleClickRetourSaga = () => {
     setUpdateStatutRequeteQueryParamState({
-      statut: StatutRequete.ARetraiterSaga,
-      idRequete: idRequete,
+      statut: StatutRequete.ARetraiter,
+      idRequete: idRequete
     });
   };
 

@@ -137,11 +137,15 @@ interface MesRequetesPageProps {
   officier?: IOfficierSSOApi;
 }
 
-export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
+export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    statut: StatutRequete.ASigner,
+    statuts: [
+      StatutRequete.ASigner,
+      StatutRequete.ATraiterDemat,
+      StatutRequete.AImprimer
+    ],
     tri: "dateStatut",
     sens: "ASC",
     range: `0-${nbRequeteParAppel}`
@@ -164,7 +168,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
       let params = [];
       params = link.split("requetes?")[1].split("&");
       queryParameters = {
-        statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
+        statuts: [params[indexParamsReq.Statut].split("=")[1] as StatutRequete],
         tri: params[indexParamsReq.Tri].split("=")[1],
         sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,
         range: params[indexParamsReq.Range].split("=")[1]
@@ -175,7 +179,11 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = (props) => {
 
   const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
     const queryParameters = {
-      statut: StatutRequete.ASigner,
+      statuts: [
+        StatutRequete.ASigner,
+        StatutRequete.ATraiterDemat,
+        StatutRequete.AImprimer
+      ],
       tri,
       sens,
       range: `0-${nbRequeteParAppel}`

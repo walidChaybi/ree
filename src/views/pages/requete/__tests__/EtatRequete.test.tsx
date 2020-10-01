@@ -25,7 +25,7 @@ test("renders titre et numero requete", () => {
 
 test("récupérer le libellé d'une requête traité à délivrer démat", () => {
   const innerRequete = requete;
-  innerRequete.statut = StatutRequete.TraiteADelivrerDemat;
+  innerRequete.statut = StatutRequete.ATraiterDemat;
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
     /Requête traitée par : Juliette Garisson - Le : 02\/01\/2020/i
@@ -35,7 +35,7 @@ test("récupérer le libellé d'une requête traité à délivrer démat", () =>
 
 test("récupérer le libellé d'une requête traité délivré démat", () => {
   const innerRequete = requete;
-  innerRequete.statut = StatutRequete.TraiteDelivreDemat;
+  innerRequete.statut = StatutRequete.TraiteDemat;
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
     /Requête traitée par : Juliette Garisson - Le : 02\/01\/2020/i
@@ -45,7 +45,7 @@ test("récupérer le libellé d'une requête traité délivré démat", () => {
 
 test("récupérer le libellé d'une requête traité à imprimer", () => {
   const innerRequete = requete;
-  innerRequete.statut = StatutRequete.TraiteAImprimer;
+  innerRequete.statut = StatutRequete.AImprimer;
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
     /Requête traitée par : Juliette Garisson - Le : 02\/01\/2020/i
@@ -55,7 +55,7 @@ test("récupérer le libellé d'une requête traité à imprimer", () => {
 
 test("récupérer le libellé d'une requête traité imprimé", () => {
   const innerRequete = requete;
-  innerRequete.statut = StatutRequete.TraiteImprime;
+  innerRequete.statut = StatutRequete.Imprime;
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
     /Requête traitée par : Juliette Garisson - Le : 02\/01\/2020/i

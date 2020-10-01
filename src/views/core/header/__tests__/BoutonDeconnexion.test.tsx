@@ -1,6 +1,6 @@
 import React from "react";
 import { BoutonDeconnexion } from "../BoutonDeconnexion";
-import { screen, render, fireEvent } from "@testing-library/react";
+import { screen, render, fireEvent, waitFor } from "@testing-library/react";
 import { OfficierContext } from "../../../core/contexts/OfficierContext";
 import { createMemoryHistory } from "history";
 import { AppUrls } from "../../../router/UrlManager";
@@ -24,7 +24,7 @@ test("renders BoutonDeconnexion", () => {
   expect(boutonElement).toBeInTheDocument();
 });
 
-test("renders click BoutonDeconnexion", () => {
+test("renders click BoutonDeconnexion", async () => {
   const history = createMemoryHistory();
   history.push(AppUrls.ctxMesRequetesUrl);
 
@@ -41,8 +41,10 @@ test("renders click BoutonDeconnexion", () => {
   const boutonElement = screen.getByText(/Juliette Garisson/i);
   fireEvent.click(boutonElement);
   expect(handleClickButton).toHaveBeenCalledTimes(1);
-  if (ressource.boutonDeconnexion.visible) {
-    const linkElement = screen.getByText(/Déconnexion/i);
-    expect(linkElement).toBeInTheDocument();
-  }
+  await waitFor(() => {
+    if (ressource.boutonDeconnexion.visible) {
+      const linkElement = screen.getByText(/Déconnexion/i);
+      expect(linkElement).toBeInTheDocument();
+    }
+  });
 });
