@@ -10,7 +10,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: rece-apache
+  name: rece-ui
 data:
   rece-ui.conf: |
     # Chargement des modules Apache nécessaires
