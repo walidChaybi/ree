@@ -148,7 +148,7 @@ export function useSignatureDocumentHook(
 
   useEffect(() => {
     setUpdateDocumentQueryParamState(
-      documentsToSave.map((document) => {
+      documentsToSave.map(document => {
         return {
           idDocumentDelivre: document.idDocument,
           contenu: document.contenu,
@@ -294,7 +294,7 @@ function getDocumentAndSendToSignature(
         .idDocumentDelivre,
       GroupementDocument.DocumentDelivre,
       documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].mimeType
-    ).then((result) => {
+    ).then(result => {
       if (result.documentDelivre.taille > MaxLengthDocumentToSign) {
         setErrorsSignature({
           numeroRequete:
@@ -335,13 +335,13 @@ function isAllowedTypeDocumentToBeSigned(typeDocument: string): boolean {
       TypeDocument.ExtraitSansFiliation,
       TypeDocument.ExtraitPlurilingue,
       TypeDocument.CopieIntegrale
-    ].find((type) => type === typeDocument) !== undefined
+    ].find(type => type === typeDocument) !== undefined
   );
 }
 
 function getNewStatusRequete(sousTypeRequete: SousTypeRequete) {
   if (sousTypeRequete === SousTypeRequete.RequeteDelivranceCourrier) {
-    return StatutRequete.TraiteAImprimer;
+    return StatutRequete.AImprimer;
   } else {
     return StatutRequete.ATraiterDemat;
   }

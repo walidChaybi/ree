@@ -61,9 +61,7 @@ interface MesRequetesServicePageProps {
   officier?: IOfficierSSOApi;
 }
 
-export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
-  props
-) => {
+export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
   const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(
     false
   );
@@ -75,7 +73,11 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
-    statut: StatutRequete.ASigner,
+    statuts: [
+      StatutRequete.ASigner,
+      StatutRequete.ATraiterDemat,
+      StatutRequete.AImprimer
+    ],
     tri: "dateStatut",
     sens: "ASC",
     range: undefined
@@ -183,7 +185,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
     const utilisateurs = convertUsersToSelect(users.dataState);
 
     const utilisateurParDefaut = utilisateurs.find(
-      (uilisateur) => uilisateur.value === row.nomOec
+      utilisateur => utilisateur.value === row.nomOec
     );
 
     return (
@@ -204,7 +206,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
           )}
           validate={(req: FormValues) => {
             const utilisateur = users.dataState.find(
-              (u) =>
+              u =>
                 u.idUtilisateur ===
                 (req.selectedItem !== undefined
                   ? req.selectedItem.key
@@ -230,7 +232,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
       let params = [];
       params = link.split("requetes?")[1].split("&");
       queryParameters = {
-        statut: params[indexParamsReq.Statut].split("=")[1] as StatutRequete,
+        statuts: [params[indexParamsReq.Statut].split("=")[1] as StatutRequete],
         tri: params[indexParamsReq.Tri].split("=")[1],
         sens: params[indexParamsReq.Sens].split("=")[1] as SortOrder,
         range: params[indexParamsReq.Range].split("=")[1]
@@ -241,7 +243,11 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
 
   const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
     const queryParameters = {
-      statut: StatutRequete.ASigner,
+      statuts: [
+        StatutRequete.ASigner,
+        StatutRequete.ATraiterDemat,
+        StatutRequete.AImprimer
+      ],
       tri: tri,
       sens: sens
     };

@@ -83,7 +83,7 @@ export interface IRequeteApi {
 }
 
 export interface IQueryParametersPourRequetes {
-  statut: StatutRequete;
+  statuts: StatutRequete[];
   tri: string;
   sens: SortOrder;
   range?: string;
@@ -118,6 +118,13 @@ export function useRequeteApi(
     setNextDataLinkState(undefined);
     const api = ApiManager.getInstance("rece-requete-api", "v1");
 
+    let listeStatuts = "";
+
+    queryParameters.statuts.map((statut, i) => {
+      listeStatuts += statut;
+      listeStatuts += i < queryParameters.statuts.length - 1 ? "," : "";
+    });
+
     if (officier !== undefined) {
       api
         .fetch({
@@ -129,7 +136,7 @@ export function useRequeteApi(
           parameters: {
             nomOec: officier.nom,
             prenomOec: officier.prenom,
-            statut: queryParameters.statut,
+            statuts: listeStatuts,
             tri:
               queryParameters.tri !== "prioriteRequete"
                 ? queryParameters.tri

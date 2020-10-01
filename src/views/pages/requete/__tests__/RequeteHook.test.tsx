@@ -13,16 +13,16 @@ let container: Element | null;
 const HookConsummer: React.FC = () => {
   const { dataState = [] } = useRequeteApi(
     {
-      statut: StatutRequete.ASigner,
+      statuts: [StatutRequete.ASigner],
       tri: "idSagaDila",
-      sens: "ASC",
+      sens: "ASC"
     },
     TypeAppelRequete.MES_REQUETES,
     officierMock
   );
   return (
     <>
-      {dataState.map((element) => {
+      {dataState.map(element => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
