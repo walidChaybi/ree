@@ -14,12 +14,24 @@ const getDurationForAutoClose = (autoClose?: number) =>
 const getDurationErrorForAutoClose = (autoClose?: number) =>
   autoClose ? autoClose : DURATION_BEFORE_CLOSE_ERROR;
 
+const toString = (messages: string[]) => {
+  return messages
+    .map((message) => message + "\n")
+    .toString()
+    .replace(/,/g, "");
+};
+
+const infoTitle = getText("messageManager.info");
+const successTitle = getText("messageManager.success");
+const warnTitle = getText("messageManager.warning");
+const errorTitle = getText("messageManager.error");
+
 const messageManager = {
   showErrorAndClose: (errorMessage: string, autoClose?: number) => {
     toast(
       <div className="message-manager">
         <Alert severity="error">
-          <AlertTitle>{getText("messageManager.error")}</AlertTitle>
+          <AlertTitle>{errorTitle}</AlertTitle>
           {errorMessage}
         </Alert>
       </div>,
@@ -28,7 +40,7 @@ const messageManager = {
         autoClose: getDurationErrorForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "error"
+        className: "error",
       }
     );
   },
@@ -37,7 +49,7 @@ const messageManager = {
     toast(
       <div className="message-manager error">
         <Alert severity="error">
-          <AlertTitle>{getText("messageManager.error")}</AlertTitle>
+          <AlertTitle>{errorTitle}</AlertTitle>
           {errorMessage}
         </Alert>
       </div>,
@@ -45,7 +57,7 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "error"
+        className: "error",
       }
     );
   },
@@ -59,7 +71,7 @@ const messageManager = {
     toast(
       <div className="message-manager">
         <Alert severity="error">
-          <AlertTitle>{getText("messageManager.error")}</AlertTitle>
+          <AlertTitle>{errorTitle}</AlertTitle>
           {htmlErrorMessage}
         </Alert>
       </div>,
@@ -67,7 +79,7 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "error"
+        className: "error",
       }
     );
   },
@@ -76,7 +88,7 @@ const messageManager = {
     toast(
       <div className="message-manager">
         <Alert severity="success">
-          <AlertTitle>{getText("messageManager.success")}</AlertTitle>
+          <AlertTitle>{successTitle}</AlertTitle>
           {successMessage}
         </Alert>
       </div>,
@@ -84,7 +96,7 @@ const messageManager = {
         autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "success"
+        className: "success",
       }
     );
   },
@@ -93,7 +105,7 @@ const messageManager = {
     toast(
       <div className="message-manager">
         <Alert severity="success">
-          <AlertTitle>{getText("messageManager.success")}</AlertTitle>
+          <AlertTitle>{successTitle}</AlertTitle>
           {successMessage}
         </Alert>
       </div>,
@@ -101,7 +113,7 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "success"
+        className: "success",
       }
     );
   },
@@ -115,7 +127,7 @@ const messageManager = {
     toast(
       <div className="message-manager">
         <Alert severity="success">
-          <AlertTitle>{getText("messageManager.success")}</AlertTitle>
+          <AlertTitle>{successTitle}</AlertTitle>
           {htmlErrorMessage}
         </Alert>
       </div>,
@@ -123,7 +135,7 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "success"
+        className: "success",
       }
     );
   },
@@ -132,7 +144,7 @@ const messageManager = {
     toast(
       <div className="message-manager">
         <Alert severity="info">
-          <AlertTitle>{getText("messageManager.info")}</AlertTitle>
+          <AlertTitle>{infoTitle}</AlertTitle>
           {infoMessage}
         </Alert>
       </div>,
@@ -141,7 +153,7 @@ const messageManager = {
         autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "info"
+        className: "info",
       }
     );
   },
@@ -150,7 +162,7 @@ const messageManager = {
     toast(
       <div className="message-manager">
         <Alert severity="info">
-          <AlertTitle>{getText("messageManager.info")}</AlertTitle>
+          <AlertTitle>{infoTitle}</AlertTitle>
           {infoMessage}
         </Alert>
       </div>,
@@ -158,29 +170,26 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "info"
+        className: "info",
       }
     );
   },
 
-  showInfos: (infoMessage: string[]) => {
-    const htmlErrorMessage = infoMessage
-      .map((message) => message + "\n")
-      .toString()
-      .replace(/,/g, "");
+  showInfos: (infoMessages: string[]) => {
+    const message = toString(infoMessages);
 
     toast(
       <div className="message-manager error">
         <Alert severity="info">
-          <AlertTitle>{getText("messageManager.info")}</AlertTitle>
-          {htmlErrorMessage}
+          <AlertTitle>{infoTitle}</AlertTitle>
+          {message}
         </Alert>
       </div>,
       {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "info"
+        className: "info",
       }
     );
   },
@@ -189,7 +198,7 @@ const messageManager = {
     toast(
       <div className="message-manager">
         <Alert severity="warning">
-          <AlertTitle>{getText("messageManager.warning")}</AlertTitle>
+          <AlertTitle>{warnTitle}</AlertTitle>
           {warningMessage}
         </Alert>
       </div>,
@@ -198,7 +207,7 @@ const messageManager = {
         autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "warning"
+        className: "warning",
       }
     );
   },
@@ -207,7 +216,7 @@ const messageManager = {
     toast(
       <div className="message-manager">
         <Alert severity="warning">
-          <AlertTitle>{getText("messageManager.warning")}</AlertTitle>
+          <AlertTitle>{warnTitle}</AlertTitle>
           {warningMessage}
         </Alert>
       </div>,
@@ -215,32 +224,29 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "warning"
+        className: "warning",
       }
     );
   },
 
-  showWarnings: (infoMessage: string[]) => {
-    const htmlErrorMessage = infoMessage
-      .map((message) => message + "\n")
-      .toString()
-      .replace(/,/g, "");
+  showWarnings: (warningMessages: string[]) => {
+    const message = toString(warningMessages);
 
     toast(
       <div className="message-manager">
         <Alert severity="warning">
-          <AlertTitle>{getText("messageManager.warning")}</AlertTitle>
-          {htmlErrorMessage}
+          <AlertTitle>{warnTitle}</AlertTitle>
+          {message}
         </Alert>
       </div>,
       {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "warning"
+        className: "warning",
       }
     );
-  }
+  },
 };
 
 export default messageManager;

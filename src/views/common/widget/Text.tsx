@@ -1,9 +1,10 @@
 import React from "react";
-const messages = require("../../../ressources/messages.json");
-const errors = require("../../../ressources/errors.json");
-const success = require("../../../ressources/success.json");
-const regex = require("../../../ressources/regex.json");
-const referentiel = require("../../../ressources/referentiel.json");
+import messages from "../../../ressources/messages.json";
+import errors from "../../../ressources/errors.json";
+import success from "../../../ressources/success.json";
+import regex from "../../../ressources/regex.json";
+import referentiel from "../../../ressources/referentiel.json";
+
 const ressources = { ...messages, errors, regex, referentiel, success };
 
 export type MessageId = string;

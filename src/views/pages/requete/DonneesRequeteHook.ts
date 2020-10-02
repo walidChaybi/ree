@@ -120,7 +120,7 @@ export function useRequeteApi(
 
     let listeStatuts = "";
 
-    queryParameters.statuts.map((statut, i) => {
+    queryParameters.statuts.forEach((statut, i) => {
       listeStatuts += statut;
       listeStatuts += i < queryParameters.statuts.length - 1 ? "," : "";
     });
