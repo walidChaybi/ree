@@ -43,7 +43,7 @@
           "aSigner": "Requête à signer le ${2} par ${0} ${1}"
         },
         "commentaires": "Commentaires",
-        "signatureElectronique": "Signer électroniquement",
+        "signatureElectronique": "Signer et terminer",
         "resume": {
           "titre": "Résumé de la requête",
           "sousType": "Sous-type",
@@ -59,9 +59,7 @@
           "motif": "Motif",
           "canal": "Canal",
           "nomRequerant": "Nom requérant",
-          "prenomRequerant": "Prénom requérant",
-          "raisonSociale": "Raison sociale",
-          "nomInstitutionnel": "Nom institutionnel"
+          "prenomRequerant": "Prénom requérant"
         },
         "bouton": {
           "left": "Requête précédente",
@@ -122,7 +120,7 @@
           "nomFichier": "Pièce justificative ${0}"
         },
         "documentsADelivres": {
-          "titre": "Document à délivrer"
+          "titre": "Documents à délivrer"
         },
         "icon": {
           "pdf": "Fichier au format PDF",
@@ -188,14 +186,18 @@
     }
   },
   "signature": {
-    "confirmation": "Êtes-vous sûr de vouloir signer électroniquement le document ?",
+    "confirmation": "Êtes-vous sûr de vouloir signer électroniquement les documents ?",
     "valider": "Valider",
     "annuler": "Annuler",
     "fermer": "Fermer",
     "titrePopIn": "Signature des documents",
-    "success": "La requête n°${0} a été signée avec succès le ${1}",
+    "success": "Le(s) document(s) de la requête n°${0} a (ont) été signé(s) le ${1}",
     "titreErreur": "Requête n°",
-    "successAllSignature": "Signature des documents effectuée avec succès"
+    "successAllSignature": "Signature des documents effectuée avec succès",
+    "validate": {
+      "require": "Le code pin de la carte doit être fourni",
+      "isNaN": "Le code pin doit être un nombre"
+    }
   },
   "messageManager": {
     "error": "Erreur",

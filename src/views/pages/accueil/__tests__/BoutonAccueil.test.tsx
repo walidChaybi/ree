@@ -55,28 +55,6 @@ test("renders présence de l'icône du bouton d'accueil", () => {
   expect(iconElement).toBeInTheDocument();
 });
 
-test("renders des 2 titles du bouton d'accueil", () => {
-  render(
-    <>
-      <Router>
-        <BoutonAccueil
-          messageId="Bouton Menu"
-          pageUrl="pagesuivante"
-          titleId="Title Bouton Menu"
-          iconFA={faCoffee}
-          disabled={true}
-        ></BoutonAccueil>
-      </Router>
-    </>
-  );
-  const boutonElement = screen.getAllByText(/Bouton Menu/i);
-  const iconElement = screen.getByTestId("IconAccueil");
-  expect(boutonElement[0].title).toBe("⚠ Title Bouton Menu");
-  setTimeout(() => {
-    expect(iconElement.title).toBe("⚠ Title Bouton Menu");
-  }, 75);
-});
-
 test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
   const handleClickButton = jest.fn();
   render(

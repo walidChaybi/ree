@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { BoutonSignature } from "../BoutonSignature";
 
 test("renders titre bouton signature", () => {
@@ -16,7 +16,7 @@ test("renders titre bouton signature", () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test("renders message indisponibilité", () => {
+test("renders message indisponibilité", async () => {
   render(
     <BoutonSignature
       libelle={"pages.delivrance.action.signature"}
@@ -26,10 +26,10 @@ test("renders message indisponibilité", () => {
       }}
     />
   );
-  setTimeout(() => {
+  await waitFor(() => {
     const linkElement = screen.getByText(
       /Le service de signature électronique est indisponible/i
     );
     expect(linkElement).toBeInTheDocument();
-  }, 175);
+  });
 });

@@ -275,7 +275,7 @@ Array [
         className="MuiTablePagination-actions"
       >
         <button
-          aria-label="Previous page"
+          aria-label="Page précédente"
           className="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit Mui-disabled Mui-disabled"
           disabled={true}
           onBlur={[Function]}
@@ -291,7 +291,7 @@ Array [
           onTouchMove={[Function]}
           onTouchStart={[Function]}
           tabIndex={-1}
-          title="Previous page"
+          title="Page précédente"
           type="button"
         >
           <span
@@ -310,7 +310,7 @@ Array [
           </span>
         </button>
         <button
-          aria-label="Next page"
+          aria-label="Page suivante"
           className="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit Mui-disabled Mui-disabled"
           disabled={true}
           onBlur={[Function]}
@@ -326,7 +326,7 @@ Array [
           onTouchMove={[Function]}
           onTouchStart={[Function]}
           tabIndex={-1}
-          title="Next page"
+          title="Page suivante"
           type="button"
         >
           <span

@@ -14,10 +14,11 @@ test("renders boutons d'actions d'une requête", () => {
         }}
         requetes={[]}
         idRequete={"idRequeteTest"}
+        reloadData={() => {}}
       />
     </Router>
   );
   expect(screen.getAllByRole("button").length).toBe(5);
   expect(screen.getByText("Retour à mes requêtes")).not.toBeNull();
-  expect(screen.getByText("Signer électroniquement")).not.toBeNull();
+  expect(screen.getByText("Signer et terminer")).not.toBeNull();
 });

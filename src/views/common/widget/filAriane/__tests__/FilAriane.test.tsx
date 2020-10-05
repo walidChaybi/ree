@@ -3,7 +3,7 @@ import * as renderer from "react-test-renderer";
 import { Router } from "react-router-dom";
 import { FilAriane } from "../FilAriane";
 import { createMemoryHistory } from "history";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { AppUrls } from "../../../../router/UrlManager";
 
 test("renders composant FilAriane", () => {
@@ -17,7 +17,7 @@ test("renders composant FilAriane", () => {
   expect(component.toJSON()).toMatchSnapshot();
 });
 
-test("renders de 2 éléments du FilAriane", () => {
+test("renders de 2 éléments du FilAriane", async () => {
   const history = createMemoryHistory();
   history.push(AppUrls.ctxMesRequetesUrl);
   render(
@@ -25,12 +25,12 @@ test("renders de 2 éléments du FilAriane", () => {
       <FilAriane />
     </Router>
   );
-  setTimeout(() => {
+  await waitFor(() => {
     const linkElement = screen.getByText(/Accueil/i);
     const textElement = screen.getByText(/Mes requêtes/i);
     expect(linkElement).toBeInTheDocument();
     expect(textElement).toBeInTheDocument();
-  }, 175);
+  });
 });
 
 test("renders d'un uudi en dernier élément du FilAriane", () => {

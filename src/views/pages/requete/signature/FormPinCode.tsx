@@ -27,9 +27,9 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
   const validate = (values: FormValues) => {
     const errors: FormValuesErrors = {};
     if (!values.pinCode) {
-      errors.pinCode = "Le code pin de la carte doit être fournit";
+      errors.pinCode = getText("signature.validate.require");
     } else if (isNaN(values.pinCode)) {
-      errors.pinCode = "Le code pin doit être un nombre";
+      errors.pinCode = getText("signature.validate.isNaN");
     }
 
     return errors;

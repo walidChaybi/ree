@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { DocumentPresentation } from "../DocumentPresentation";
 import { IDocumentDetail } from "../interfaces/IDocumentDetail";
 import data from "./data/documentsDetails";
@@ -42,7 +42,7 @@ test("renders 2 pieces justificatives dans leur accordéon", async () => {
   expect(nomFichier.length).toBe(1);
 });
 
-test("renders click piece justificative", () => {
+test("renders click piece justificative", async () => {
   const handleClickButton = jest.fn();
   render(
     <DocumentPresentation
@@ -55,7 +55,7 @@ test("renders click piece justificative", () => {
 
   let nomFichier = screen.getByText(/Pièce justificative 0/i);
   fireEvent.click(nomFichier);
-  setTimeout(() => {
+  await waitFor(() => {
     expect(handleClickButton).toHaveBeenCalledTimes(1);
-  }, 75);
+  });
 });
