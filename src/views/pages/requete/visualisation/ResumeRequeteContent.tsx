@@ -25,6 +25,15 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
     valuePrenomRequerant = `${dataRequerant.prenom}`;
   }
 
+  let jourEvent =
+    props.requete.jourEvenement < 10
+      ? "0" + props.requete.jourEvenement
+      : props.requete.jourEvenement;
+  let moisEvent =
+    props.requete.moisEvenement < 10
+      ? "0" + props.requete.moisEvenement
+      : props.requete.moisEvenement;
+
   return (
     <>
       <div className="resume-requete-content">
@@ -61,7 +70,9 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
           <div className="label">
             <Text messageId={"pages.delivrance.apercu.resume.dateEvent"} />
           </div>
-          <div className="personnal-info">{props.requete.dateCreation}</div>
+          <div className="personnal-info">
+            {`${jourEvent}/${moisEvent}/${props.requete.anneeEvenement}`}
+          </div>
         </div>
         <div className="bloc-info">
           <div className="label">
