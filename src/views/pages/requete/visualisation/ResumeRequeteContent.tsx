@@ -104,15 +104,15 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
       <div className="resume-requete-content">
         <div className="bloc-info">
           <div className="label">
-            <Text
-              messageId={"pages.delivrance.apercu.resume.prenomRequerant"}
-            />
+            <Text messageId={"pages.delivrance.apercu.resume.nomRequerant"} />
           </div>
           <div className="capital personnal-info">{valueNomRequerant}</div>
         </div>
         <div className="bloc-info">
           <div className="label">
-            <Text messageId={"pages.delivrance.apercu.resume.nomRequerant"} />
+            <Text
+              messageId={"pages.delivrance.apercu.resume.prenomRequerant"}
+            />
           </div>
           <div className="capital personnal-info">{valuePrenomRequerant}</div>
         </div>

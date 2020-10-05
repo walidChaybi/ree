@@ -209,7 +209,7 @@ Array [
       <div
         className="label"
       >
-        Prénom requérant
+        Nom requérant
       </div>
       <div
         className="capital personnal-info"
@@ -223,7 +223,7 @@ Array [
       <div
         className="label"
       >
-        Nom requérant
+        Prénom requérant
       </div>
       <div
         className="capital personnal-info"
