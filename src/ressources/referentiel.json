@@ -85,9 +85,9 @@
     "DOUBLON": "Doublon",
     "A_TRAITER": "A traiter",
     "A_SIGNER": "A signer",
-    "A_TRAITER_DEMAT": "A traiter démat",
+    "A_TRAITER_DEMAT": "Traité - à délivrer démat",
     "TRAITE_DEMAT": "Traité démat",
-    "A_IMPRIMER": "A imprimer",
+    "A_IMPRIMER": "Traité - à imprimer",
     "TRAITE_IMPRIME": "Traité imprimé"
   },
   "typeRequete": {
