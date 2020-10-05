@@ -62,7 +62,7 @@ export class TableauTypeColumn {
   }
 }
 
-export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
+export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
   const nbRequetParPage = 15;
   const [rowsPerPageState, setRowsPerPageState] = React.useState(
     nbRequetParPage
@@ -186,6 +186,8 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
         page={pageState > 0 && props.rowsNumberState === 0 ? 0 : pageState}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
+        backIconButtonText={getText("pagination.pagePrecedente")}
+        nextIconButtonText={getText("pagination.pageSuivante")}
       />
       {props.canUseSignature === true && (
         <div className="RequetesToolbarSignature">

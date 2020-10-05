@@ -13,7 +13,7 @@ import request from "superagent";
 const superagentMock = require("superagent-mock")(request, config);
 
 test("renders PopinSignature, signature event is received and success displayed", async () => {
-  render(
+  const { findByText } = render(
     <PopinSignature
       documentsByRequete={{
         "104b8563-c7f8-4748-9daa-f26558985894": {
@@ -53,8 +53,8 @@ test("renders PopinSignature, signature event is received and success displayed"
     )
   );
   await waitFor(() => {
-    const successMsg = screen.getByText(
-      /La requête n°1 a été signée avec succès/i
+    const successMsg = findByText(
+      /Le(s) document(s) de la requête n°1 a (ont) été signé(s) le/i
     );
     expect(successMsg).toBeDefined();
   });

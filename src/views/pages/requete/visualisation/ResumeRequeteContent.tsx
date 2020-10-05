@@ -11,22 +11,16 @@ export interface ResumeRequeteContentProps {
 
 export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props => {
   const dataRequerant = props.requete.requerant;
-  let labelNomRequerant = "";
-  let labelPrenomRequerant = "";
   let valueNomRequerant = "";
   let valuePrenomRequerant = "";
 
   if (dataRequerant.qualiteRequerant === QualiteRequerant.MandataireHabilite) {
-    labelNomRequerant = "pages.delivrance.apercu.resume.raisonSociale";
     valueNomRequerant = `${dataRequerant.raisonSociale}`;
   } else if (
     dataRequerant.qualiteRequerant === QualiteRequerant.Institutionnel
   ) {
-    labelNomRequerant = "pages.delivrance.apercu.resume.nomInstitutionnel";
     valueNomRequerant = `${dataRequerant.nomInstitutionnel}`;
   } else if (dataRequerant.qualiteRequerant === QualiteRequerant.Particulier) {
-    labelNomRequerant = "pages.delivrance.apercu.resume.nomRequerant";
-    labelPrenomRequerant = "pages.delivrance.apercu.resume.prenomRequerant";
     valueNomRequerant = `${dataRequerant.nomFamille}`;
     valuePrenomRequerant = `${dataRequerant.prenom}`;
   }
@@ -97,22 +91,20 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
         </div>
       </div>
       <div className="resume-requete-content">
-        {labelNomRequerant !== "" && valueNomRequerant !== "" && (
-          <div className="bloc-info">
-            <div className="label">
-              <Text messageId={labelNomRequerant} />
-            </div>
-            <div className="capital personnal-info">{valueNomRequerant}</div>
+        <div className="bloc-info">
+          <div className="label">
+            <Text
+              messageId={"pages.delivrance.apercu.resume.prenomRequerant"}
+            />
           </div>
-        )}
-        {labelPrenomRequerant !== "" && valuePrenomRequerant !== "" && (
-          <div className="bloc-info">
-            <div className="label">
-              <Text messageId={labelPrenomRequerant} />
-            </div>
-            <div className="capital personnal-info">{valuePrenomRequerant}</div>
+          <div className="capital personnal-info">{valueNomRequerant}</div>
+        </div>
+        <div className="bloc-info">
+          <div className="label">
+            <Text messageId={"pages.delivrance.apercu.resume.nomRequerant"} />
           </div>
-        )}
+          <div className="capital personnal-info">{valuePrenomRequerant}</div>
+        </div>
       </div>
     </>
   );
