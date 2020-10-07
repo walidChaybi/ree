@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 
 import { ResumeRequeteContent } from "../visualisation/ResumeRequeteContent";
 import { IDataTable } from "../MesRequetesPage";
-import DONNEES_REQUETE from "./data/requete";
+import DONNEES_REQUETE from "../../../../api/mock/data/requete";
 
 test("renders resumé du contenu de la requete", () => {
   const component = renderer.create(

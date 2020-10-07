@@ -5,9 +5,7 @@ import { OfficierContext } from "../../../core/contexts/OfficierContext";
 import { createMemoryHistory } from "history";
 import { AppUrls } from "../../../router/UrlManager";
 import { Router } from "react-router-dom";
-
-const ressource = require("../../../../ressources/ressource.json");
-const officier = require("../../../../api/mock/officier.json");
+import officier from "../../../../api/mock/data/connectedUser.json";
 
 test("renders BoutonDeconnexion", () => {
   const history = createMemoryHistory();
@@ -15,11 +13,15 @@ test("renders BoutonDeconnexion", () => {
 
   render(
     <Router history={history}>
-      <OfficierContext.Provider value={officier}>
+      <OfficierContext.Provider
+        value={{ officierDataState: { idSSO: officier.id_sso, ...officier } }}
+      >
         <Body />
       </OfficierContext.Provider>
     </Router>
   );
-  const boutonElement = screen.getByText(/Juliette Garisson/i);
+  const boutonElement = screen.getByText(
+    /prenomConnectedUser nomConnectedUser/i
+  );
   expect(boutonElement).toBeInTheDocument();
 });

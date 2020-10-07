@@ -1,6 +1,6 @@
 import React from "react";
 
-import DONNEES_REQUETE from "./data/requete";
+import DONNEES_REQUETE from "../../../../api/mock/data/requete";
 import { ContenuRequete } from "../visualisation/ContenuRequete";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";

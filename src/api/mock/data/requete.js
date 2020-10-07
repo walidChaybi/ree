@@ -1,19 +1,11 @@
-import { NatureActe } from "../../../../../model/requete/NatureActe";
-import { QualiteRequerant } from "../../../../../model/requete/QualiteRequerant";
-import { SousQualiteRequerant } from "../../../../../model/requete/SousQualiteRequerant";
-import { Canal } from "../../../../../model/Canal";
-import { TypeDocument } from "../../../../../model/requete/TypeDocument";
-import { TypeRequete } from "../../../../../model/requete/TypeRequete";
-import { MotifRequete } from "../../../../../model/requete/MotifRequete";
-
 export default {
   idRequete: "204b8563-c7f8-4748-9daa-f26558985894",
   idSagaDila: 11982,
   idRequeteInitiale: 11900,
   sousTypeRequete: "RDC",
-  typeRequete: TypeRequete.Delivrance,
+  typeRequete: "DELIVRANCE",
   provenance: "DILA",
-  natureActe: NatureActe.Naissance,
+  natureActe: "NAISSANCE",
   dateCreation: "01/01/2020",
   dateDerniereMaj: "04/01/2020",
   dateStatut: "02/01/2020",
@@ -22,9 +14,9 @@ export default {
   villeEvenement: "fez",
   paysEvenement: "maroc",
   officierEtatCivil: "Garisson Juliette",
-  document: TypeDocument.CopieIntegrale,
-  canal: Canal.Internet,
-  motifRequete: MotifRequete.PapiersIdentitePasseport,
+  document: "COPIE_INTEGRALE",
+  canal: "INTERNET",
+  motifRequete: "PAPIERS_IDENTITE_PASSEPORT",
   piecesJustificatives: [],
   nomOec: "nomOec",
   typeActe: "",
@@ -34,8 +26,8 @@ export default {
   nbExemplaire: 0,
   requerant: {
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
-    typeRequerant: SousQualiteRequerant.Titulaire,
-    qualiteRequerant: QualiteRequerant.Particulier,
+    typeRequerant: "TITULAIRE",
+    qualiteRequerant: "PARTICULIER",
     identite: "",
     raisonSociale: "",
     nomInstitutionnel: "",
@@ -88,7 +80,7 @@ export default {
     idReponse: "1d189cd9-0df0-45dc-a4cf-0174eb62cbbc",
     dateTraitementDemat: 1583831941.329563,
     dateDelivrance: 1583831941.329563,
-    natureActe: NatureActe.NAISSANCE,
+    natureActe: "NAISSANCE",
     jourEvenement: 25,
     moisEvenement: 3,
     anneeEvenement: 2010,

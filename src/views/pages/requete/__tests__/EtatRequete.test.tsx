@@ -2,7 +2,7 @@ import React from "react";
 import * as renderer from "react-test-renderer";
 import { render, screen } from "@testing-library/react";
 import { EtatRequete } from "../visualisation/EtatRequete";
-import requete from "./data/requete";
+import requete from "../../../../api/mock/data/requete";
 import { IDataTable } from "../../requete/MesRequetesPage";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 

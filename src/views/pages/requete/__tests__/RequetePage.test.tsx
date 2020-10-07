@@ -1,6 +1,6 @@
 import React from "react";
 import { RequetePage } from "../visualisation/RequetePage";
-import DONNEES_REQUETE from "./data/requete";
+import DONNEES_REQUETE from "../../../../api/mock/data/requete";
 import { Router } from "react-router-dom";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
@@ -102,11 +102,11 @@ test("renders Page requete change url", () => {
     const buttons = screen.getAllByRole("button");
 
     const leftButton = buttons.find(
-      button => button.id === "button-navigation-left"
+      (button) => button.id === "button-navigation-left"
     );
 
     const rightButton = buttons.find(
-      button => button.id === "button-navigation-right"
+      (button) => button.id === "button-navigation-right"
     );
 
     setTimeout(() => {

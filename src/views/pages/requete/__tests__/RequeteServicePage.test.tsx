@@ -1,5 +1,5 @@
 import React from "react";
-import DONNEES_REQUETE from "./data/requete";
+import DONNEES_REQUETE from "../../../../api/mock/data/requete";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { act } from "react-dom/test-utils";
@@ -13,8 +13,8 @@ test("renders Page requete with all elements", () => {
       data: [
         { ...DONNEES_REQUETE, idRequete: "req1" },
         { ...DONNEES_REQUETE, idRequete: "req2" },
-        { ...DONNEES_REQUETE, idRequete: "req3" },
-      ],
+        { ...DONNEES_REQUETE, idRequete: "req3" }
+      ]
     });
 
     const component = mount(
@@ -25,7 +25,7 @@ test("renders Page requete with all elements", () => {
               isExact: true,
               path: "",
               url: "",
-              params: { idRequete: "req2" },
+              params: { idRequete: "req2" }
             }}
             history={history}
             location={history.location}

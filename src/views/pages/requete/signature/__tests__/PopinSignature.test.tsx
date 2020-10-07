@@ -7,7 +7,7 @@ import {
   createEvent,
   waitFor
 } from "@testing-library/react";
-import config from "../../../../../views/pages/requete/__tests__/superagent-mock-config";
+import config from "../../../../../api/mock/superagent-config/superagent-mock-requetes";
 import request from "superagent";
 
 const superagentMock = require("superagent-mock")(request, config);

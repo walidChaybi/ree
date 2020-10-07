@@ -132,23 +132,8 @@ export function useSignatureDocumentHook(
   useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState);
 
   useEffect(() => {
-    // Ajout du listener pour communiquer avec la webextension
-    window.top.addEventListener(
-      "signWebextResponse",
-      handleBackFromWebExtension
-    );
-
-    return () => {
-      window.top.removeEventListener(
-        "signWebextResponse",
-        handleBackFromWebExtension
-      );
-    };
-  });
-
-  useEffect(() => {
     setUpdateDocumentQueryParamState(
-      documentsToSave.map(document => {
+      documentsToSave.map((document) => {
         return {
           idDocumentDelivre: document.idDocument,
           contenu: document.contenu,
@@ -219,6 +204,21 @@ export function useSignatureDocumentHook(
     },
     [documentsToSignWating, idRequetesToSign]
   );
+
+  useEffect(() => {
+    // Ajout du listener pour communiquer avec la webextension
+    window.top.addEventListener(
+      "signWebextResponse",
+      handleBackFromWebExtension
+    );
+
+    return () => {
+      window.top.removeEventListener(
+        "signWebextResponse",
+        handleBackFromWebExtension
+      );
+    };
+  }, [handleBackFromWebExtension]);
 
   return {
     successSignature,
@@ -294,7 +294,7 @@ function getDocumentAndSendToSignature(
         .idDocumentDelivre,
       GroupementDocument.DocumentDelivre,
       documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].mimeType
-    ).then(result => {
+    ).then((result) => {
       if (result.documentDelivre.taille > MaxLengthDocumentToSign) {
         setErrorsSignature({
           numeroRequete:
@@ -335,7 +335,7 @@ function isAllowedTypeDocumentToBeSigned(typeDocument: string): boolean {
       TypeDocument.ExtraitSansFiliation,
       TypeDocument.ExtraitPlurilingue,
       TypeDocument.CopieIntegrale
-    ].find(type => type === typeDocument) !== undefined
+    ].find((type) => type === typeDocument) !== undefined
   );
 }
 

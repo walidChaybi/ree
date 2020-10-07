@@ -1,4 +1,4 @@
-import config from "./mock/superagent-mock-config";
+import config from "./mock/superagent-config/superagent-mock-fake-url";
 import * as superagent from "superagent";
 import request from "superagent";
 import messageManager from "../views/common/util/messageManager";

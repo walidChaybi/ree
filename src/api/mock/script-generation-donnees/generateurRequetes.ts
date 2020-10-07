@@ -1,4 +1,4 @@
-const mockRequetes = require("./requetes.json");
+const mockRequetes = require("../data/requetes.json");
 
 export function generateurRequetes() {
   const newDatas = [];

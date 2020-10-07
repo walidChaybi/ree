@@ -1,10 +1,10 @@
 import request from "superagent";
-import config from "../../../../../../api/mock/superagent-mock-config.js";
+import config from "../../../../../../api/mock/superagent-config/superagent-mock-requetes";
 import {
   requestDocumentApi,
   IRequestDocumentApiResult
 } from "../DocumentRequeteHook";
-import requetes from "../../../../../../api/mock/requetes.json";
+import requetes from "../../../../../../api/mock/data/requetes.json";
 import { GroupementDocument } from "../../../../../../model/requete/GroupementDocument";
 import { convertToBlob } from "../DocumentPresentation";
 import { MimeType } from "../../../../../../ressources/MimeType";
@@ -45,10 +45,10 @@ test("Appel d'api retournant le contenu d'un courrier d'accompagnement KO", asyn
     `${courrierAccompagnement.idDocumentDelivre}fakedoc`,
     GroupementDocument.CourrierAccompagnement
   )
-    .then(result => {
+    .then((result) => {
       expect(result).toBe("ko");
     })
-    .catch(error => {
+    .catch((error) => {
       expect(error).toBeTruthy();
     });
 });

@@ -2,12 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "./superagent-mock-config";
+import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteDataApi } from "../visualisation/DonneeRequeteHook";
-import DONNEES_REQUETE from "./data/requete";
+import DONNEES_REQUETE from "../../../../api/mock/data/requete";
 import { IDataTable } from "../MesRequetesPage";
-import officier from "../../../../api/mock/officier.json";
+import connectedUser from "../../../../api/mock/data/connectedUser.json";
+
+const off = { idSSO: connectedUser.id_sso, ...connectedUser };
 
 const superagentMock = require("superagent-mock")(request, config);
 
@@ -21,12 +23,12 @@ const HookConsummer: React.FC = () => {
       statut: StatutRequete.ASigner,
       idRequete: "req1"
     },
-    officier.officierDataState
+    off
   );
 
   return (
     <>
-      {dataState.map(element => {
+      {dataState.map((element) => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
@@ -39,13 +41,13 @@ const HookConsummerWithData: React.FC = () => {
       statut: StatutRequete.ASigner,
       idRequete: "req1"
     },
-    officier.officierDataState,
+    off,
     { data: [DONNEES_REQUETE as IDataTable, DONNEES_REQUETE as IDataTable] }
   );
 
   return (
     <>
-      {dataState.map(element => {
+      {dataState.map((element) => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>
@@ -58,12 +60,12 @@ const HookConsummerWithErrorWS: React.FC = () => {
       statut: StatutRequete.ASigner,
       idRequete: "req2"
     },
-    officier.officierDataState
+    off
   );
 
   return (
     <>
-      {dataState.map(element => {
+      {dataState.map((element) => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "../../../../api/mock/superagent-mock-config";
+import config from "../../../../api/mock/superagent-config/superagent-mock-securite";
 import { useLoginApi } from "../LoginHook";
 
 const superagentMock = require("superagent-mock")(request, config);

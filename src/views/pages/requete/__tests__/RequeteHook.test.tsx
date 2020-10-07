@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "../../../../api/mock/superagent-mock-config";
+import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteApi, TypeAppelRequete } from "../DonneesRequeteHook";
-const officierMock = require("../../../../api/mock/connectedUser.json");
+import officierMock from "../../../../api/mock/data/connectedUser.json";
 const superagentMock = require("superagent-mock")(request, config);
 
 let container: Element | null;
@@ -18,11 +18,11 @@ const HookConsummer: React.FC = () => {
       sens: "ASC"
     },
     TypeAppelRequete.MES_REQUETES,
-    officierMock
+    { idSSO: officierMock.id_sso, ...officierMock }
   );
   return (
     <>
-      {dataState.map(element => {
+      {dataState.map((element) => {
         return <div data-testid={element.idRequete}>{element.idRequete}</div>;
       })}
     </>

@@ -4,7 +4,7 @@ import { DocumentPresentation } from "../DocumentPresentation";
 import { IDocumentDetail } from "../interfaces/IDocumentDetail";
 import data from "./data/documentsDetails";
 import request from "superagent";
-import config from "../../../../../../api/mock/superagent-mock-config";
+import config from "../../../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { GroupementDocument } from "../../../../../../model/requete/GroupementDocument";
 window.URL.createObjectURL = jest.fn();
 

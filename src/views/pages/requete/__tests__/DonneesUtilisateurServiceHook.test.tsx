@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "./superagent-mock-config";
+import config from "../../../../api/mock/superagent-config/superagent-mock-securite";
 
 import { useUtilisateurApi } from "../DonneesUtilisateursServiceHook";
 
@@ -12,7 +12,7 @@ let container: Element | null;
 
 const HookConsummer: React.FC = () => {
   const { dataState = [] } = useUtilisateurApi({
-    idArobas: "5ef4b1da1e3ee4adf9615ec7",
+    idArobas: "5ef4b1da1e3ee4adf9615ec7"
   });
 
   return (
@@ -50,7 +50,7 @@ test("l'appel au WS de récupération d'une requete fonctionne correctement", as
   });
   expect(container).not.toBeNull();
   if (container instanceof Element) {
-    expect(container.childNodes.length).toBe(8);
+    expect(container.childNodes.length).toBe(31);
   }
 });
 

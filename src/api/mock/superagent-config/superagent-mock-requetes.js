@@ -1,9 +1,7 @@
-// ./superagent-mock-config.js file
-const mockPdf = require("./pdf-base64.json");
-const mockPng = require("./png-base64.json");
-const mockRequetes = require("./generateurRequetes.ts").generateurRequetes();
-const mockUtilisateurs = require("./utilisateurs.json");
-const mockConnectedUser = require("./connectedUser.json");
+import DONNEES_REQUETE from "../data/requete";
+const mockPdf = require("../data/pdf-base64.json");
+const mockPng = require("../data/png-base64.json");
+const mockRequetes = require("../script-generation-donnees/generateurRequetes.ts").generateurRequetes();
 
 module.exports = [
   {
@@ -21,6 +19,10 @@ module.exports = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
+      console.log("________________________________________");
+
+      console.log(match[1]);
+      // Récupération des des requetes
       if (
         match[1] ===
         "/requetes/104b8563-c7f8-4748-9daa-f26558985894?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser"
@@ -133,7 +135,28 @@ module.exports = [
           }
         };
       }
+      if (
+        match[1] ===
+        "/requetes/1?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER"
+      ) {
+        return undefined;
+      }
 
+      if (
+        match[1] ===
+        "/requetes/req1?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER"
+      ) {
+        return { data: DONNEES_REQUETE };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/req2?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statut=A_SIGNER"
+      ) {
+        return { status: 404 };
+      }
+
+      //Récupération de pièces justufucatives
       if (
         match[1] ===
         "/piecesjustificatives/e496f1d1-18c3-48ca-ae87-e97582fbf188"
@@ -168,19 +191,17 @@ module.exports = [
         return { data: documentDelivre };
       }
 
-      if (
-        match[1] ===
-        "/requetes/1?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER"
-      ) {
-        return undefined;
-      }
-
-      if (match[1] === "/404") {
-        throw new Error(404);
-      }
-
+      // Modification des requetes
       if (match[1] === "/requetes" && context.method === "post") {
         return this.post;
+      }
+
+      // Utilisé dans UtilisateurAssigneRequeteHook.test
+      if (
+        match[1] ===
+        "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc?nomOec=nouveauNom&prenomOec=nouveauPrenom"
+      ) {
+        return this.patch;
       }
     },
 
@@ -207,52 +228,15 @@ module.exports = [
       return {
         status: 201
       };
-    }
-  },
-  {
-    /**
-     * regular expression of URL
-     */
-    pattern: "http://localhost:80/rece/rece-securite-api/v1(.*)",
-
-    /**
-     * returns the data
-     *
-     * @param match array Result of the resolution of the regular expression
-     * @param params object sent by 'send' function
-     * @param headers object set by 'set' function
-     * @param context object the context of running the fixtures function
-     */
-    fixtures: function (match, params, headers, context) {
-      if (match[1] === "/utilisateurs?service=servicemock") {
-        return { data: mockUtilisateurs.data };
-      }
-
-      if (match[1] === "/utilisateurs/login") {
-        return { headers: mockConnectedUser };
-      }
     },
 
     /**
-     * returns the result of the GET request
+     * returns the result of the PATCH request
      *
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
-      return {
-        body: data,
-        header: data.headers
-      };
-    },
-
-    /**
-     * returns the result of the POST request
-     *
-     * @param match array Result of the resolution of the regular expression
-     * @param data  mixed Data returns by `fixtures` attribute
-     */
-    post: function (match, data) {
+    patch: function (match, data) {
       return {
         status: 201
       };

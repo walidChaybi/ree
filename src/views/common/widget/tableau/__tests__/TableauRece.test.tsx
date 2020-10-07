@@ -3,7 +3,7 @@ import * as renderer from "react-test-renderer";
 import { screen, render, fireEvent } from "@testing-library/react";
 import { TableauRece, TableauTypeColumn } from "../TableauRece";
 import { HeaderTableauRequete } from "../../../../../model/requete/HeaderTableauRequete";
-import requetes from "../../../../../api/mock/requetes.json";
+import requetes from "../../../../../api/mock/data/requetes.json";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { AppUrls } from "../../../../router/UrlManager";

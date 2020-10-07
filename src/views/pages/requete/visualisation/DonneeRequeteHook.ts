@@ -36,11 +36,11 @@ export function useRequeteDataApi(
               statut: queryParameters.statut
             }
           })
-          .then(result => {
+          .then((result) => {
             const tmp = reponseRequeteMapperUnitaire(result.body.data);
             setDataState([tmp]);
           })
-          .catch(error => {
+          .catch((error) => {
             setErrorState(error);
           });
       }

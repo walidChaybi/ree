@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "./superagent-mock-config";
+import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { useUtilisateurRequeteApi } from "../UtilisateurAssigneRequeteHook";
-import { useState } from "react";
-import DONNEE_REQUETE from "../__tests__/data/requete";
+import DONNEE_REQUETE from "../../../../api/mock/data/requete";
 import { IDataTable } from "../MesRequetesPage";
 const superagentMock = require("superagent-mock")(request, config);
 
@@ -25,7 +24,7 @@ const HookConsummer: React.FC = () => {
 
   return (
     <>
-      {data.map(element => {
+      {data.map((element) => {
         return <div data-testid={element.idRequete}>{element.nomOec}</div>;
       })}
     </>
