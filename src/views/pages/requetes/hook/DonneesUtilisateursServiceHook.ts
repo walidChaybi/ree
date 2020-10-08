@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
-import { ApiManager, HttpMethod } from "../../../../api/ApiManager";
-import { ApiEndpoints } from "../../../router/UrlManager";
+import { IQueryParametersUtilisateursService } from "../../../../api/appels/securiteApi";
+import { getUtilisateurs } from "../../../../api/appels/securiteApi";
 
 export interface IUtilisateurApi {
   idUtilisateur: string;
   nom: string;
   prenom: string;
-}
-
-export interface IQueryParametersUtilisateursService {
-  idArobas?: string;
 }
 
 export function useUtilisateurApi(
@@ -21,15 +17,7 @@ export function useUtilisateurApi(
     setDataState([]);
     setErrorState(undefined);
     if (queryParameters.idArobas !== undefined) {
-      const api = ApiManager.getInstance("rece-securite-api", "v1");
-      api
-        .fetch({
-          method: HttpMethod.GET,
-          uri: ApiEndpoints.UtilisateursUrl,
-          parameters: {
-            idArobas: queryParameters.idArobas
-          }
-        })
+      getUtilisateurs(queryParameters.idArobas)
         .then((result) => {
           setDataState(result.body.data);
         })

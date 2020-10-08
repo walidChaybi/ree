@@ -10,8 +10,8 @@ import { QualiteRequerant } from "../../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../../model/requete/SousQualiteRequerant";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import { Canal } from "../../../../model/Canal";
+
 import { ApiEndpoints } from "../../../router/UrlManager";
-import { IDataTable } from "../MesRequetesDelivrancePage";
 import { MotifRequete } from "../../../../model/requete/MotifRequete";
 import { FormatDate } from "../../../../ressources/FormatDate";
 import { IOfficierSSOApi } from "../../../core/login/LoginHook";
@@ -19,6 +19,7 @@ import {
   IDocumentDelivre,
   IPieceJustificative
 } from "../../../common/types/RequeteType";
+import { IDataTable } from "../MesRequetesDelivrancePage";
 
 export interface IRequerantApi {
   idRequerant: string;

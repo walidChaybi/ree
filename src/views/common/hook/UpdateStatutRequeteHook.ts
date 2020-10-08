@@ -1,7 +1,6 @@
-import { ApiManager, HttpMethod } from "../../../api/ApiManager";
-import { ApiEndpoints } from "../../router/UrlManager";
 import { useState, useEffect } from "react";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
+import { patchStatutRequete } from "../../../api/appels/requeteApi";
 
 export interface IQueryParameterUpdateStatutRequete {
   statut: StatutRequete;
@@ -12,18 +11,11 @@ export function useUpdateStatutRequeteApi(
   queryParameters?: IQueryParameterUpdateStatutRequete,
   callback?: () => void
 ) {
-  const [errorState, setErrorState] = useState();
+  const [errorState, setErrorState] = useState<any>();
 
   useEffect(() => {
-    const api = ApiManager.getInstance("rece-requete-api", "v1");
     if (queryParameters) {
-      api
-        .fetch({
-          method: HttpMethod.PATCH,
-          uri: ApiEndpoints.RequetesUrl,
-          parameters: { ...queryParameters },
-          headers: []
-        })
+      patchStatutRequete(queryParameters)
         .then((result) => {
           if (callback !== undefined) {
             callback();

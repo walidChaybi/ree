@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
-import { ApiManager, HttpMethod } from "../../../../../api/ApiManager";
-import { ApiEndpoints } from "../../../../router/UrlManager";
-
-export interface IQueryParameterUpdateDocument {
-  contenu: string;
-  nom: string;
-  conteneurSwift: string;
-}
+import {
+  patchDocumentsDelivresRequetes,
+  IQueryParameterUpdateDocument
+} from "../../../../../api/appels/requeteApi";
 
 export interface IUpdateDocumentApiResult {
   url: string;
@@ -19,15 +15,8 @@ export function useUpdateDocumentApi(
   const [errorState, setErrorState] = useState(undefined);
 
   useEffect(() => {
-    const api = ApiManager.getInstance("rece-requete-api", "v1");
     if (queryParameters !== undefined && queryParameters.length > 0) {
-      api
-        .fetch({
-          method: HttpMethod.PATCH,
-          uri: ApiEndpoints.DocumentsdelivresUrl,
-          data: queryParameters,
-          headers: []
-        })
+      patchDocumentsDelivresRequetes(queryParameters)
         .then((result) => {
           if (callBack !== undefined) {
             callBack();

@@ -5,11 +5,7 @@ import {
   TableauRece,
   TableauTypeColumn
 } from "../../common/widget/tableau/TableauRece";
-import {
-  useRequeteApi,
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "./hook/DonneesRequeteHook";
+import { useRequeteApi } from "./hook/DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
 
@@ -28,10 +24,7 @@ import {
   IUtilisateurApi
 } from "./hook/DonneesUtilisateursServiceHook";
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
-import {
-  useUtilisateurRequeteApi,
-  IQueryParametersAssigneRequetes
-} from "./hook/UtilisateurAssigneRequeteHook";
+import { useUtilisateurRequeteApi } from "./hook/UtilisateurAssigneRequeteHook";
 import {
   MessagePopin,
   PopinMessageType
@@ -44,6 +37,11 @@ import {
   indexParamsReq,
   tableauHeader
 } from "../../common/util/RequetesUtils";
+import {
+  IQueryParametersPourRequetes,
+  TypeAppelRequete,
+  IQueryParametersAssigneRequetes
+} from "../../../api/appels/requeteApi";
 
 function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
   return (

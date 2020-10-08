@@ -4,11 +4,9 @@ import { act } from "react-dom/test-utils";
 import request from "superagent";
 import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import {
-  useRequeteApi,
-  TypeAppelRequete
-} from "../../../../views/pages/requetes/hook/DonneesRequeteHook";
+import { useRequeteApi } from "../../../../views/pages/requetes/hook/DonneesRequeteHook";
 import officierMock from "../../../../api/mock/data/connectedUser.json";
+import { TypeAppelRequete } from "../../../../api/appels/requeteApi";
 const superagentMock = require("superagent-mock")(request, config);
 
 let container: Element | null;
@@ -52,4 +50,8 @@ test("monter un composant de test pour vérifier que tout va bien", () => {
       expect(container.querySelector).toBeTruthy();
     }
   });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

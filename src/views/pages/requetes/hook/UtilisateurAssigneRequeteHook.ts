@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
-import { ApiManager, HttpMethod } from "../../../../api/ApiManager";
-import { ApiEndpoints } from "../../../router/UrlManager";
 import { IDataTable } from "../MesRequetesDelivrancePage";
 import { getText } from "../../../common/widget/Text";
-
-export interface IQueryParametersAssigneRequetes {
-  idReponse?: string;
-  nomOec: string;
-  prenomOec: string;
-}
+import {
+  patchUtilisateurAssigneRequete,
+  IQueryParametersAssigneRequetes
+} from "../../../../api/appels/requeteApi";
 
 export function useUtilisateurRequeteApi(
   queryParameters?: IQueryParametersAssigneRequetes,
@@ -22,20 +18,9 @@ export function useUtilisateurRequeteApi(
 
   useEffect(() => {
     if (queryParameters !== undefined) {
-      const api = ApiManager.getInstance("rece-requete-api", "v1");
-
       setSuccessState(undefined);
 
-      api
-        .fetch({
-          method: HttpMethod.PATCH,
-          uri: `${ApiEndpoints.ReponsesUrl}/${queryParameters.idReponse}`,
-          parameters: {
-            nomOec: queryParameters.nomOec,
-            prenomOec: queryParameters.prenomOec
-          },
-          headers: []
-        })
+      patchUtilisateurAssigneRequete(queryParameters)
         .then(() => {
           if (requetes !== undefined) {
             const idxRequete = requetes.findIndex(

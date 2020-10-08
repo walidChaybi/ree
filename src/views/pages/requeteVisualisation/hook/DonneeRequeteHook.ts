@@ -1,15 +1,10 @@
 import { useState, useEffect } from "react";
-import { ApiManager, HttpMethod } from "../../../../api/ApiManager";
-import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { reponseRequeteMapperUnitaire } from "../../requetes/hook/DonneesRequeteHook";
 import { RequestsInformations } from "../RequetePage";
-import { ApiEndpoints } from "../../../router/UrlManager";
 import { IDataTable } from "../../requetes/MesRequetesDelivrancePage";
 import { IOfficierSSOApi } from "../../../core/login/LoginHook";
-export interface IQueryParametersPourRequete {
-  statut?: StatutRequete;
-  idRequete: string;
-}
+import { getRequete } from "../../../../api/appels/requeteApi";
+import { IQueryParametersPourRequete } from "../../../common/widget/signature/hook/SignatureDocumentHook";
 
 export function useRequeteDataApi(
   queryParameters: IQueryParametersPourRequete,
@@ -23,19 +18,9 @@ export function useRequeteDataApi(
   useEffect(() => {
     setErrorState(undefined);
     setDataState([]);
-    const api = ApiManager.getInstance("rece-requete-api", "v1");
     if (requestsInformations === undefined) {
       if (officier !== undefined) {
-        api
-          .fetch({
-            method: HttpMethod.GET,
-            uri: `${ApiEndpoints.RequetesUrl}/${queryParameters.idRequete}`,
-            parameters: {
-              nomOec: officier.nom,
-              prenomOec: officier.prenom,
-              statut: queryParameters.statut
-            }
-          })
+        getRequete(officier, queryParameters.idRequete, queryParameters.statut)
           .then((result) => {
             const tmp = reponseRequeteMapperUnitaire(result.body.data);
             setDataState([tmp]);

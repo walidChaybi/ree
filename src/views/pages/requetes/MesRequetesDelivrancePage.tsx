@@ -7,9 +7,7 @@ import {
 import {
   useRequeteApi,
   IRequerantApi,
-  IReponseApi,
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
+  IReponseApi
 } from "./hook/DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
@@ -37,6 +35,10 @@ import {
   tableauHeader,
   indexParamsReq
 } from "../../common/util/RequetesUtils";
+import {
+  IQueryParametersPourRequetes,
+  TypeAppelRequete
+} from "../../../api/appels/requeteApi";
 
 export interface IDataTable {
   idRequete: string;

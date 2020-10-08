@@ -15,11 +15,11 @@ import {
   useUpdateStatutRequeteApi
 } from "../../../hook/UpdateStatutRequeteHook";
 import { requestDocumentApi } from "../../../hook/DocumentRequeteHook";
+import { useUpdateDocumentApi } from "./UpdateDocumentHook";
 import {
-  useUpdateDocumentApi,
+  IRequestDocumentApiResult,
   IQueryParameterUpdateDocument
-} from "./UpdateDocumentHook";
-import { IRequestDocumentApiResult } from "../../../../../api/appels/requete";
+} from "../../../../../api/appels/requeteApi";
 
 export interface IQueryParametersPourRequete {
   statut?: StatutRequete;
