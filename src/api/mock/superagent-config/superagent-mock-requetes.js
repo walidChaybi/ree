@@ -19,9 +19,6 @@ module.exports = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
-      console.log("________________________________________");
-
-      console.log(match[1]);
       // Récupération des des requetes
       if (
         match[1] ===

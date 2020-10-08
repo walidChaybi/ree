@@ -1,0 +1,18 @@
+@import "../../../../../sass/colors";
+
+.ListeDocument {
+  &:hover {
+    cursor: pointer;
+    background-color: $application-hoover !important;
+  }
+
+  &.Mui-selected,
+  &.Mui-selected:hover {
+    background-color: $button-application-color !important;
+    color: white;
+
+    .MuiTypography-colorTextSecondary {
+      color: white !important;
+    }
+  }
+}
