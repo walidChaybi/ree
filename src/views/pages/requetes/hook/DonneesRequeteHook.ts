@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ApiManager, HttpMethod } from "../../../../api/ApiManager";
+import { ApiManager } from "../../../../api/ApiManager";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import moment from "moment";
 import { TypeRequete } from "../../../../model/requete/TypeRequete";
@@ -10,8 +10,6 @@ import { QualiteRequerant } from "../../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../../model/requete/SousQualiteRequerant";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import { Canal } from "../../../../model/Canal";
-
-import { ApiEndpoints } from "../../../router/UrlManager";
 import { MotifRequete } from "../../../../model/requete/MotifRequete";
 import { FormatDate } from "../../../../ressources/FormatDate";
 import { IOfficierSSOApi } from "../../../core/login/LoginHook";
@@ -20,6 +18,7 @@ import {
   IPieceJustificative
 } from "../../../common/types/RequeteType";
 import { IDataTable } from "../MesRequetesDelivrancePage";
+import { getRequetes } from "../../../../api/appels/requeteApi";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -127,26 +126,14 @@ export function useRequeteApi(
     });
 
     if (officier !== undefined) {
-      api
-        .fetch({
-          method: HttpMethod.GET,
-          uri:
-            typeRequete === TypeAppelRequete.REQUETE_SERVICE
-              ? ApiEndpoints.RequetesServiceUrl
-              : ApiEndpoints.RequetesUrl,
-          parameters: {
-            nomOec: officier.nom,
-            prenomOec: officier.prenom,
-            statuts: listeStatuts,
-            tri:
-              queryParameters.tri !== "prioriteRequete"
-                ? queryParameters.tri
-                : "dateStatut",
-            sens: queryParameters.sens,
-            range: queryParameters.range,
-            idArobas: officier.idSSO
-          }
-        })
+      getRequetes(
+        typeRequete,
+        officier,
+        listeStatuts,
+        queryParameters.tri,
+        queryParameters.sens,
+        queryParameters.range
+      )
         .then((result) => {
           setDataState(reponseRequeteMapper(result.body.data));
           const rowsNumber: number = +(result.headers[
