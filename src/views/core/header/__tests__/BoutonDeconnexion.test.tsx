@@ -6,7 +6,6 @@ import { createMemoryHistory } from "history";
 import { AppUrls } from "../../../router/UrlManager";
 import { Router } from "react-router-dom";
 
-const ressource = require("../../../../ressources/ressource.json");
 const officier = require("../../../../api/mock/officier.json");
 
 test("renders BoutonDeconnexion", () => {
@@ -42,9 +41,7 @@ test("renders click BoutonDeconnexion", async () => {
   fireEvent.click(boutonElement);
   expect(handleClickButton).toHaveBeenCalledTimes(1);
   await waitFor(() => {
-    if (ressource.boutonDeconnexion.visible) {
-      const linkElement = screen.getByText(/Déconnexion/i);
-      expect(linkElement).toBeInTheDocument();
-    }
+    const linkElement = screen.getByText(/Déconnexion/i);
+    expect(linkElement).toBeInTheDocument();
   });
 });

@@ -101,7 +101,8 @@
             "donneePaginee": "Requêtes",
             "navigationLabel": "${0}-${1} sur ${2}"
           }
-        }
+        },
+        "resteASigner": "Il reste ${0} requête(s) à signer"
       },
       "monService": {
         "officierEtatCivilSelect": {

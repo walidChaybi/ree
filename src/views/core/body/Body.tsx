@@ -4,12 +4,11 @@ import { FilAriane } from "../../common/widget/filAriane/FilAriane";
 import { AppUrls } from "../../router/UrlManager";
 import {
   OfficierContext,
-  OfficierContextProps
+  OfficierContextProps,
 } from "../contexts/OfficierContext";
 import { LoginPage } from "../login/LoginPage";
 
 export const RetourContext = React.createContext(AppUrls.ctxAccueilUrl);
-
 export const Body: React.FC = () => {
   const [retourState, setRetourState] = useState<string>(AppUrls.ctxAccueilUrl);
 
@@ -17,7 +16,7 @@ export const Body: React.FC = () => {
     <>
       <div className="AppBody">
         <OfficierContext.Consumer>
-          {officier =>
+          {(officier) =>
             officier?.officierDataState?.idSSO !== undefined ? (
               <RetourContext.Provider value={retourState}>
                 <FilAriane setRetourState={setRetourState} />
