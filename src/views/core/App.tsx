@@ -8,6 +8,12 @@ import { Body } from "./body/Body";
 import { ToastContainer } from "react-toastify";
 import { useLoginApi } from "./login/LoginHook";
 import { OfficierContext } from "./contexts/OfficierContext";
+import {
+  GestionnaireFermeture,
+  appelRequetesASigner,
+  traiteAppelRequeteASigner,
+} from "../common/util/GestionnaireFermeture";
+import { AppUrls } from "../router/UrlManager";
 
 const App: React.FC = () => {
   const login = useLoginApi();
@@ -16,6 +22,16 @@ const App: React.FC = () => {
     <Router>
       <div className="App">
         <OfficierContext.Provider value={login}>
+          <OfficierContext.Consumer>
+            {(officier) => (
+              <GestionnaireFermeture
+                paramsFctAAppler={officier}
+                fctAAppeler={appelRequetesASigner}
+                fctTraitementResultat={traiteAppelRequeteASigner}
+                urlRedirection={AppUrls.ctxMesRequetesUrl}
+              ></GestionnaireFermeture>
+            )}
+          </OfficierContext.Consumer>
           <Header />
           <Body />
           <ToastContainer

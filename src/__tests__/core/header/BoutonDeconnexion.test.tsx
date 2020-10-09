@@ -3,7 +3,6 @@ import { screen, render, fireEvent, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import officier from "../../../api/mock/data/connectedUser.json";
-import ressource from "../../../ressources/ressource.json";
 import { BoutonDeconnexion } from "../../../views/core/header/BoutonDeconnexion";
 import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
 import { AppUrls } from "../../../views/router/UrlManager";
@@ -49,9 +48,7 @@ test("renders click BoutonDeconnexion", async () => {
   fireEvent.click(boutonElement);
   expect(handleClickButton).toHaveBeenCalledTimes(1);
   await waitFor(() => {
-    if (ressource.boutonDeconnexion.visible) {
-      const linkElement = screen.getByText(/Déconnexion/i);
-      expect(linkElement).toBeInTheDocument();
-    }
+    const linkElement = screen.getByText(/Déconnexion/i);
+    expect(linkElement).toBeInTheDocument();
   });
 });

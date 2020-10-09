@@ -9,23 +9,16 @@ import { OfficierContext } from "../contexts/OfficierContext";
 import { useHistory } from "react-router-dom";
 import { DeconnexionAppUrl } from "../../router/UrlManager";
 
-const ressource = require("../../../ressources/ressource.json");
-
 interface BoutonDeconnexionProps {
   onClick?: (event: React.MouseEvent) => void;
 }
 
-export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
-  onClick
-}) => {
+export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({ onClick }) => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
-  const accessible = ressource.boutonDeconnexion.accessible;
 
   const history = useHistory();
 
-  const handleClickBoutonOfficer = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleClickBoutonOfficer = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       onClick(event);
     }
@@ -44,39 +37,36 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   return (
     <OfficierContext.Consumer>
-      {officier => (
+      {(officier) => (
         <div className="UtilisateurBouton">
           {officier !== undefined && officier.officierDataState !== undefined && (
-            <Button
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={event => handleClickBoutonOfficer(event)}
-            >
-              {`${officier.officierDataState.prenom} ${officier.officierDataState.nom}`}
-            </Button>
-          )}
-          {accessible && (
-            <Menu
-              className="Menu"
-              anchorEl={menu}
-              keepMounted
-              open={Boolean(menu)}
-              onClose={handleCloseMenu}
-              getContentAnchorEl={null}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center"
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "center"
-              }}
-            >
-              <MenuItem onClick={handleClickDeconnexion}>
-                <FontAwesomeIcon icon={faTimes} />
-                {getText("boutons.deconnexion")}
-              </MenuItem>
-            </Menu>
+            <>
+              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={(event) => handleClickBoutonOfficer(event)}>
+                {`${officier.officierDataState.prenom} ${officier.officierDataState.nom}`}
+              </Button>
+
+              <Menu
+                className="Menu"
+                anchorEl={menu}
+                keepMounted
+                open={Boolean(menu)}
+                onClose={handleCloseMenu}
+                getContentAnchorEl={null}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+              >
+                <MenuItem onClick={handleClickDeconnexion}>
+                  <FontAwesomeIcon icon={faTimes} />
+                  {getText("boutons.deconnexion")}
+                </MenuItem>
+              </Menu>
+            </>
           )}
         </div>
       )}

@@ -1,6 +1,5 @@
 import * as superagent from "superagent";
-import { Pact, InteractionObject, Interaction } from "@pact-foundation/pact";
-import { MatcherResult } from "@pact-foundation/pact/dsl/matchers";
+import { Pact } from "@pact-foundation/pact";
 
 export class ApiPact {
   private path: string;
