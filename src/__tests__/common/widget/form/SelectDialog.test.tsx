@@ -1,11 +1,11 @@
 import React from "react";
-import * as renderer from "react-test-renderer";
+import { create } from "react-test-renderer";
 import { screen, render, fireEvent, waitFor } from "@testing-library/react";
 import { SelectDialog } from "../../../../views/common/widget/form/SelectDialog";
 import { getText } from "../../../../views/common/widget/Text";
 
 test("renders composant SelectDialog", () => {
-  const component = renderer.create(
+  const component = create(
     <SelectDialog
       listOfElements={[
         { key: "k1", value: "v1" },
