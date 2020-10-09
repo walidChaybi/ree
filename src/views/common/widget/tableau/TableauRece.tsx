@@ -8,8 +8,8 @@ import { TableauHeader } from "./TableauHeader";
 import { TablePagination } from "@material-ui/core";
 import { getText } from "../Text";
 import { TableauBody } from "./TableauBody";
-import { IDataTable } from "../../../pages/requete/MesRequetesPage";
-import { BoutonSignature } from "../../../pages/requete/BoutonSignature";
+import { IDataTable } from "../../../pages/requetes/MesRequetesDelivrancePage";
+import { BoutonSignature } from "../signature/BoutonSignature";
 
 export const nbRequeteParAppel = 105;
 
@@ -62,7 +62,7 @@ export class TableauTypeColumn {
   }
 }
 
-export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
+export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
   const nbRequetParPage = 15;
   const [rowsPerPageState, setRowsPerPageState] = React.useState(
     nbRequetParPage

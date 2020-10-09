@@ -1,0 +1,25 @@
+@import "../../../../../sass/colors";
+
+.resume-requete {
+  .DocumentDetailPanel {
+    width: 99.7%;
+    height: 92rem;
+  }
+
+  .MuiTypography-body1,
+  .MuiTypography-body2 {
+    font-family: "NotoSansUI-Regular", sans-serif !important;
+  }
+
+  .MuiTypography-body1 {
+    font-size: 0.9rem !important;
+  }
+
+  .MuiTypography-body2 {
+    font-size: 0.8rem !important;
+  }
+
+  .MuiExpansionPanelSummary-root {
+    min-height: auto !important;
+  }
+}

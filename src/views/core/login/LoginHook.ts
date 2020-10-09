@@ -1,6 +1,5 @@
-import { ApiManager, HttpMethod } from "../../../api/ApiManager";
-import { ApiEndpoints } from "../../router/UrlManager";
 import { useState, useEffect } from "react";
+import { getLogin } from "../../../api/appels/securiteApi";
 
 export interface ILoginApi {
   officierDataState?: IOfficierSSOApi;
@@ -24,17 +23,12 @@ export function useLoginApi() {
   const [erreurState, setErreurState] = useState(undefined);
 
   useEffect(() => {
-    const api = ApiManager.getInstance("rece-securite-api", "v1");
-    api
-      .fetch({
-        method: HttpMethod.GET,
-        uri: ApiEndpoints.SecuriteUrl
-      })
-      .then(result => {
+    getLogin()
+      .then((result) => {
         const officier = getUtilisateurSSOApiFromHeaders(result.headers);
         setOfficierDataState(officier);
       })
-      .catch(error => {
+      .catch((error) => {
         setErreurState(error);
       });
   }, []);
