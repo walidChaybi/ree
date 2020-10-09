@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback } from "react";
+import React, { /*useEffect,*/ useCallback } from "react";
 import { Box } from "reakit/Box";
-import { getText } from "../../common/widget/Text";
 import {
   TableauRece,
   TableauTypeColumn
@@ -13,22 +12,10 @@ import { AppUrls } from "../../router/UrlManager";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
 import { IDataTable } from "./MesRequetesDelivrancePage";
 import LabelIcon from "@material-ui/icons/Label";
-import {
-  SelectDialog,
-  SelectElements,
-  FormValues
-} from "../../common/widget/form/SelectDialog";
+
 import "./sass/RequeteTableau.scss";
-import {
-  useUtilisateurApi,
-  IUtilisateurApi
-} from "./hook/DonneesUtilisateursServiceHook";
+
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
-import { useUtilisateurRequeteApi } from "./hook/UtilisateurAssigneRequeteHook";
-import {
-  MessagePopin,
-  PopinMessageType
-} from "../../common/widget/MessagePopin";
 
 import { IOfficierSSOApi } from "../../core/login/LoginHook";
 import {
@@ -39,9 +26,30 @@ import {
 } from "../../common/util/RequetesUtils";
 import {
   IQueryParametersPourRequetes,
-  TypeAppelRequete,
-  IQueryParametersAssigneRequetes
+  TypeAppelRequete
 } from "../../../api/appels/requeteApi";
+
+/** TODO ETAPE 2 : Bouton "Attribué à" */
+// import {
+//   useUtilisateurApi,
+//   IUtilisateurApi
+// } from "./DonneesUtilisateursServiceHook";
+// import {
+//   SelectDialog,
+//   FormValues,
+//   SelectElements
+// } from "../../common/widget/form/SelectDialog";
+// import { getText } from "../../common/widget/Text";
+// import {
+//   useUtilisateurRequeteApi,
+//   IQueryParametersAssigneRequetes
+// } from "./UtilisateurAssigneRequeteHook";
+// import {
+//   MessagePopin,
+//   PopinMessageType
+// } from "../../common/widget/MessagePopin";
+
+/** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
 function getIconPrioriteRequeteService(row: IDataTable): JSX.Element {
   return (
@@ -62,13 +70,15 @@ interface MesRequetesServicePageProps {
 export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
   props
 ) => {
-  const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(
-    false
-  );
+  /** TODO ETAPE 2 : Bouton "Attribué à" */
+  // const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(
+  //   false
+  // );
 
-  const [queryChangeOecRequest, setQueryChangeOecRequest] = React.useState<
-    IQueryParametersAssigneRequetes
-  >();
+  // const [queryChangeOecRequest, setQueryChangeOecRequest] = React.useState<
+  //   IQueryParametersAssigneRequetes
+  // >();
+  /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
@@ -83,76 +93,77 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
     range: undefined
   });
 
-  const getColumnHeaders = (utilisateurs: SelectElements[]) => {
-    return [
-      new TableauTypeColumn(
-        [HeaderTableauRequete.IdSagaDila],
-        false,
-        tableauHeader
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.SousTypeRequete],
-        true,
-        tableauHeader,
-        "referentiel.sousTypeRequete.court"
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.Canal],
-        true,
-        tableauHeader,
-        "referentiel.canal"
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.NatureActe],
-        true,
-        tableauHeader,
-        "referentiel.natureActe"
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.TypeActe],
-        true,
-        tableauHeader,
-        "pages.requete.consultation.documentDelivre.type"
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.Requerant, HeaderTableauRequete.LibelleRequerant],
-        false,
-        tableauHeader
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.NomOec],
-        false,
-        tableauHeader,
+  const columnHeaders = [
+    new TableauTypeColumn(
+      [HeaderTableauRequete.IdSagaDila],
+      false,
+      tableauHeader
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.SousTypeRequete],
+      true,
+      tableauHeader,
+      "referentiel.sousTypeRequete.court"
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.Canal],
+      true,
+      tableauHeader,
+      "referentiel.canal"
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.NatureActe],
+      true,
+      tableauHeader,
+      "referentiel.natureActe"
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.TypeActe],
+      true,
+      tableauHeader,
+      "pages.requete.consultation.documentDelivre.type"
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.Requerant, HeaderTableauRequete.LibelleRequerant],
+      false,
+      tableauHeader
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.NomOec],
+      false,
+      tableauHeader
+      /** TODO ETAPE 2 : Bouton "Attribué à" */
+      /*,
         "",
         (row: IDataTable, selectedUser?: string) => {
           return getIconOfficierEtatCivil(row, setQueryChangeOecRequest);
-        }
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.DateCreation],
-        false,
-        tableauHeader
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.DateStatut],
-        false,
-        tableauHeader
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.Statut],
-        true,
-        tableauHeader,
-        "referentiel.statutRequete"
-      ),
-      new TableauTypeColumn(
-        [HeaderTableauRequete.PrioriteRequete],
-        false,
-        tableauHeader,
-        "",
-        getIconPrioriteRequeteService
-      )
-    ];
-  };
+        }*/
+      /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.DateCreation],
+      false,
+      tableauHeader
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.DateStatut],
+      false,
+      tableauHeader
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.Statut],
+      true,
+      tableauHeader,
+      "referentiel.statutRequete"
+    ),
+    new TableauTypeColumn(
+      [HeaderTableauRequete.PrioriteRequete],
+      false,
+      tableauHeader,
+      "",
+      getIconPrioriteRequeteService
+    )
+  ];
 
   const {
     dataState = [],
@@ -165,66 +176,64 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
     props.officier
   );
 
-  const { sucessState } = useUtilisateurRequeteApi(
-    queryChangeOecRequest,
-    dataState
-  );
+  /** TODO ETAPE 2 : Bouton "Attribué à" */
+  // const users = useUtilisateurApi({
+  //   idArobas: props.officier?.idSSO
+  // });
+  // const { sucessState } = useUtilisateurRequeteApi(
+  //   queryChangeOecRequest,
+  //   dataState
+  // );
+  // useEffect(() => {
+  //   setIsSuccessAssigne(true);
+  // }, [sucessState]);
+  // const getIconOfficierEtatCivil = (
+  //   row: IDataTable,
+  //   functionCallBack?: (queryParam: IQueryParametersAssigneRequetes) => void
+  // ): JSX.Element => {
+  //   const utilisateurs = convertUsersToSelect(users.dataState);
+  //   const utilisateurParDefaut = utilisateurs.find(
+  //     utilisateur => utilisateur.value === row.nomOec
+  //   );
+  //   return (
+  //     <div className={"SelectOfficierEtatCivil"}>
+  //       <span className="AttributionOEC">{row.nomOec}</span>
+  //       <SelectDialog
+  //         listOfElements={utilisateurs}
+  //         defaultElementId={
+  //           utilisateurParDefaut !== undefined
+  //             ? utilisateurParDefaut.key
+  //             : undefined
+  //         }
+  //         title={getText(
+  //           "pages.delivrance.monService.officierEtatCivilSelect.title"
+  //         )}
+  //         libelle={getText(
+  //           "pages.delivrance.monService.officierEtatCivilSelect.libelle"
+  //         )}
+  //         validate={(req: FormValues) => {
+  //           const utilisateur = users.dataState.find(
+  //             u =>
+  //               u.idUtilisateur ===
+  //               (req.selectedItem !== undefined
+  //                 ? req.selectedItem.key
+  //                 : undefined)
+  //           );
 
-  useEffect(() => {
-    setIsSuccessAssigne(true);
-  }, [sucessState]);
+  //           if (utilisateur !== undefined && functionCallBack !== undefined) {
+  //             functionCallBack({
+  //               idReponse: row.reponse?.idReponse,
+  //               nomOec: utilisateur.nom,
+  //               prenomOec: utilisateur.prenom
+  //             });
+  //           }
+  //         }}
+  //       />
+  //     </div>
+  //   );
+  // };
 
-  const users = useUtilisateurApi({
-    idArobas: props.officier?.idSSO
-  });
-
-  const getIconOfficierEtatCivil = (
-    row: IDataTable,
-    functionCallBack?: (queryParam: IQueryParametersAssigneRequetes) => void
-  ): JSX.Element => {
-    const utilisateurs = convertUsersToSelect(users.dataState);
-
-    const utilisateurParDefaut = utilisateurs.find(
-      (utilisateur) => utilisateur.value === row.nomOec
-    );
-
-    return (
-      <div className={"SelectOfficierEtatCivil"}>
-        <span className="AttributionOEC">{row.nomOec}</span>
-        <SelectDialog
-          listOfElements={utilisateurs}
-          defaultElementId={
-            utilisateurParDefaut !== undefined
-              ? utilisateurParDefaut.key
-              : undefined
-          }
-          title={getText(
-            "pages.delivrance.monService.officierEtatCivilSelect.title"
-          )}
-          libelle={getText(
-            "pages.delivrance.monService.officierEtatCivilSelect.libelle"
-          )}
-          validate={(req: FormValues) => {
-            const utilisateur = users.dataState.find(
-              (u) =>
-                u.idUtilisateur ===
-                (req.selectedItem !== undefined
-                  ? req.selectedItem.key
-                  : undefined)
-            );
-
-            if (utilisateur !== undefined && functionCallBack !== undefined) {
-              functionCallBack({
-                idReponse: row.reponse?.idReponse,
-                nomOec: utilisateur.nom,
-                prenomOec: utilisateur.prenom
-              });
-            }
-          }}
-        />
-      </div>
-    );
-  };
+  /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
   function goToLink(link: string) {
     let queryParameters: IQueryParametersPourRequetes;
@@ -263,7 +272,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
         onClickOnLine={getUrlBack}
-        columnHeaders={getColumnHeaders(convertUsersToSelect(users.dataState))}
+        columnHeaders={columnHeaders}
         dataState={dataState}
         rowsNumberState={rowsNumberState}
         nextDataLinkState={nextDataLinkState}
@@ -272,11 +281,13 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
         handleChangeSort={handleChangeSort}
       />
       <BoutonRetour />
-      <MessagePopin
+      {/* TODO ETAPE 2 : Bouton "Attribué à"  */}
+      {/* <MessagePopin
         message={sucessState}
         messageType={PopinMessageType.Success}
         isOpen={isSuccessAssigne}
-      />
+      /> */}
+      {/* FIN TODO ETAPE 2 : Bouton "Attribué à"  */}
     </>
   );
 };
@@ -285,15 +296,18 @@ function getUrlBack(identifiantRequete: string): string {
   return `${AppUrls.ctxRequetesServiceUrl}/${identifiantRequete}`;
 }
 
-function convertUsersToSelect(
-  utilisateurs: IUtilisateurApi[]
-): SelectElements[] {
-  const elements = [];
-  for (const utilisateur of utilisateurs) {
-    elements.push({
-      key: utilisateur.idUtilisateur,
-      value: `${utilisateur.prenom} ${utilisateur.nom}`
-    });
-  }
-  return elements;
-}
+/** TODO ETAPE 2 : Bouton "Attribué à" */
+// function convertUsersToSelect(
+//   utilisateurs: IUtilisateurApi[]
+// ): SelectElements[] {
+//   const elements = [];
+//   for (const utilisateur of utilisateurs) {
+//     elements.push({
+//       key: utilisateur.idUtilisateur,
+//       value: `${utilisateur.prenom} ${utilisateur.nom}`
+//     });
+//   }
+//   return elements;
+// }
+
+/** FIN TODO ETAPE 2 : Bouton "Attribué à" */

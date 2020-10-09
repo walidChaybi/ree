@@ -105,6 +105,7 @@ export class ApiManager {
   }
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
+    const codeErreurForbidden = 403;
     let httpRequete = this.processRequestMethod(
       httpRequestConfig.method,
       httpRequestConfig.uri
@@ -135,15 +136,18 @@ export class ApiManager {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
     return httpRequete
-      .then((response) => {
+      .then(response => {
         return Promise.resolve({
           body: response.body,
           status: response.status,
           headers: response.header
         });
       })
-      .catch((error) => {
-        if (process.env.NODE_ENV === "development") {
+      .catch(error => {
+        if (
+          process.env.NODE_ENV === "development" &&
+          error.status !== codeErreurForbidden
+        ) {
           messageManager.showError(
             "Une erreur est survenue: " + (error ? error.message : "inconnue")
           );
@@ -158,7 +162,7 @@ export class ApiManager {
     httpRequest: superagent.SuperAgentRequest
   ): superagent.SuperAgentRequest {
     let res = httpRequest;
-    headers.forEach((element) => {
+    headers.forEach(element => {
       res = httpRequest.set(element.header, element.value);
     });
     return res;
