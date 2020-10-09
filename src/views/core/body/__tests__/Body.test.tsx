@@ -6,8 +6,7 @@ import { createMemoryHistory } from "history";
 import { AppUrls } from "../../../router/UrlManager";
 import { Router } from "react-router-dom";
 
-const ressource = require("../../../../ressources/ressource.json");
-const officier = require("../../../../api/mock/officier.json");
+import officier from "../../../../api/mock/officier.json";
 
 test("renders BoutonDeconnexion", () => {
   const history = createMemoryHistory();
