@@ -100,6 +100,18 @@ export function getRequete(
   });
 }
 
+export function getCompteurRequetes(officier: IOfficierSSOApi): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${ApiEndpoints.RequetesCountUrl}`,
+    parameters: {
+      nomOec: officier.nom,
+      prenomOec: officier.prenom,
+      statuts: "A_SIGNER"
+    }
+  });
+}
+
 export function patchStatutRequete(
   queryParameters: IQueryParameterUpdateStatutRequete
 ): Promise<any> {

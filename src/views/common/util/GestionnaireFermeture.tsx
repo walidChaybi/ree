@@ -15,7 +15,9 @@ interface GestionnaireFermetureProps {
   urlRedirection?: string;
 }
 
-export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = (props) => {
+export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = (
+  props
+) => {
   const history = useHistory();
   useEffect(() => {
     const handleBackBeforUnload = (event: any) => {
@@ -60,7 +62,9 @@ export const appelRequetesASigner = (officier: OfficierContextProps) => {
   const officierPayload = officier?.officierDataState;
   const req = appelApi(officierPayload);
   const response = JSON.parse(req.response !== undefined ? req.response : null);
-  return req.status === HTTP_STATUS_OK && response && response.data ? response.data : 0;
+  return req.status === HTTP_STATUS_OK && response && response.data
+    ? response.data
+    : 0;
 };
 
 const appelApi = (officierPayload: IOfficierSSOApi | undefined) => {
@@ -68,7 +72,7 @@ const appelApi = (officierPayload: IOfficierSSOApi | undefined) => {
   const api = apiResources.apis[0];
   const version = api.usedVersions[0];
 
-  const params = `nomOec=${officierPayload?.nom}&prenomOec=${officierPayload?.prenom}&statuts=A_TRAITER_DEMAT`;
+  const params = `nomOec=${officierPayload?.nom}&prenomOec=${officierPayload?.prenom}&statuts=A_SIGNER`;
   const url = `${window.origin}/${api.domain}/${api.name}/${version}${ApiEndpoints.RequetesCountUrl}?${params}`;
   req.open("GET", url, false);
   req.send();
@@ -79,7 +83,9 @@ const appelApi = (officierPayload: IOfficierSSOApi | undefined) => {
 export const traiteAppelRequeteASigner = (nbRequeteASigner: number) => {
   if (nbRequeteASigner > 0) {
     executeEnDiffere(function () {
-      const msg = getText("pages.delivrance.mesRequetes.resteASigner", [nbRequeteASigner]);
+      const msg = getText("pages.delivrance.mesRequetes.resteASigner", [
+        nbRequeteASigner
+      ]);
       messageManager.showWarningAndClose(msg);
     });
   }
