@@ -13,17 +13,8 @@ export default {
   prioriteRequete: "",
   villeEvenement: "fez",
   paysEvenement: "maroc",
-  officierEtatCivil: "Garisson Juliette",
-  document: "COPIE_INTEGRALE",
   canal: "INTERNET",
   motifRequete: "PAPIERS_IDENTITE_PASSEPORT",
-  piecesJustificatives: [],
-  nomOec: "nomOec",
-  typeActe: "",
-  anneeEvenement: 0,
-  jourEvenement: 0,
-  moisEvenement: 0,
-  nbExemplaire: 0,
   requerant: {
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
     typeRequerant: "TITULAIRE",
@@ -76,6 +67,9 @@ export default {
       requete: ""
     }
   ],
+  piecesJustificatives: [],
+  nomOec: "nomOec",
+  typeActe: "",
   reponse: {
     idReponse: "1d189cd9-0df0-45dc-a4cf-0174eb62cbbc",
     dateTraitementDemat: 1583831941.329563,
@@ -91,5 +85,10 @@ export default {
     commentaire: "",
     documentsDelivres: [],
     requete: ""
-  }
+  },
+  anneeEvenement: 0,
+  jourEvenement: 0,
+  moisEvenement: 0,
+  nbExemplaire: 0,
+  documentsDelivres: []
 };

@@ -24,7 +24,11 @@ const HookConsummer: React.FC = () => {
   return (
     <>
       {dataState.map((element) => {
-        return <div data-testid={element.idRequete}>{element.idRequete}</div>;
+        return (
+          <div key={element.idRequete} data-testid={element.idRequete}>
+            {element.idRequete}
+          </div>
+        );
       })}
     </>
   );

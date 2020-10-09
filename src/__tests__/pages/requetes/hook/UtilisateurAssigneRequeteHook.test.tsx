@@ -25,7 +25,11 @@ const HookConsummer: React.FC = () => {
   return (
     <>
       {data.map((element) => {
-        return <div data-testid={element.idRequete}>{element.nomOec}</div>;
+        return (
+          <div key={element.idRequete} data-testid={element.idRequete}>
+            {element.nomOec}
+          </div>
+        );
       })}
     </>
   );

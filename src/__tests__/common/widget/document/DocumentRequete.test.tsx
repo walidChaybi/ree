@@ -2,6 +2,11 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { DocumentsRequete } from "../../../../views/common/widget/document/DocumentsRequete";
 import requetes from "../../../../api/mock/data/requetes.json";
+import request from "superagent";
+import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+
+const superagentMock = require("superagent-mock")(request, config);
+
 window.URL.createObjectURL = jest.fn();
 
 test("renders documents d'une requete", async () => {
@@ -16,4 +21,8 @@ test("renders documents d'une requete", async () => {
 
   nomAccordeon = screen.getByText(/Documents à délivrer/i);
   expect(nomAccordeon).toBeInTheDocument();
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

@@ -28,8 +28,15 @@ const HookConsummer: React.FC = () => {
 
   return (
     <>
-      {dataState.map((element) => {
-        return <div data-testid={element.idRequete}>{element.idRequete}</div>;
+      {dataState.map((element, index) => {
+        return (
+          <div
+            key={`HookConsummer-${element.idRequete}-${index}`}
+            data-testid={element.idRequete}
+          >
+            {element.idRequete}
+          </div>
+        );
       })}
     </>
   );
@@ -47,8 +54,15 @@ const HookConsummerWithData: React.FC = () => {
 
   return (
     <>
-      {dataState.map((element) => {
-        return <div data-testid={element.idRequete}>{element.idRequete}</div>;
+      {dataState.map((element, index) => {
+        return (
+          <div
+            key={`HookConsummerWithData-${element.idRequete}-${index}-${index}`}
+            data-testid={element.idRequete}
+          >
+            {element.idRequete}
+          </div>
+        );
       })}
     </>
   );
@@ -65,14 +79,21 @@ const HookConsummerWithErrorWS: React.FC = () => {
 
   return (
     <>
-      {dataState.map((element) => {
-        return <div data-testid={element.idRequete}>{element.idRequete}</div>;
+      {dataState.map((element, index) => {
+        return (
+          <div
+            key={`HookConsummerWithErrorWS-${element.idRequete}-${index}`}
+            data-testid={element.idRequete}
+          >
+            {element.idRequete}
+          </div>
+        );
       })}
     </>
   );
 };
 
-beforeEach(() => {
+beforeEach(async () => {
   container = document.createElement("div");
   document.body.appendChild(container);
 
@@ -81,7 +102,7 @@ beforeEach(() => {
 
   containerWithErrorWS = document.createElement("div");
   document.body.appendChild(containerWithErrorWS);
-  act(() => {
+  await act(async () => {
     ReactDOM.render(<HookConsummer />, container);
 
     ReactDOM.render(<HookConsummerWithData />, containerWithData);
@@ -105,39 +126,33 @@ afterEach(() => {
   containerWithErrorWS = null;
 });
 
-test("l'appel au WS de récupération d'une requete fonctionne correctement", async () => {
-  await act(() => {
-    expect(container).toBeInstanceOf(Element);
-    if (container instanceof Element) {
-      expect(container.querySelector).toBeTruthy();
-    }
-  });
+test("l'appel au WS de récupération d'une requete fonctionne correctement", () => {
+  expect(container).toBeInstanceOf(Element);
+  if (container instanceof Element) {
+    expect(container.querySelector).toBeTruthy();
+  }
   expect(container).not.toBeNull();
   if (container instanceof Element) {
     expect(container.childNodes.length).toBe(1);
   }
 });
 
-test("pas d'appel WS si tableau de données passé en paramètre", async () => {
-  await act(() => {
-    expect(containerWithData).toBeInstanceOf(Element);
-    if (containerWithData instanceof Element) {
-      expect(containerWithData.querySelector).toBeTruthy();
-    }
-  });
+test("pas d'appel WS si tableau de données passé en paramètre", () => {
+  expect(containerWithData).toBeInstanceOf(Element);
+  if (containerWithData instanceof Element) {
+    expect(containerWithData.querySelector).toBeTruthy();
+  }
   expect(containerWithData).not.toBeNull();
   if (containerWithData instanceof Element) {
     expect(containerWithData.childNodes.length).toBe(2);
   }
 });
 
-test("pas d'erreur si retour WS en erreur", async () => {
-  await act(() => {
-    expect(containerWithErrorWS).toBeInstanceOf(Element);
-    if (containerWithErrorWS instanceof Element) {
-      expect(containerWithErrorWS.querySelector).toBeTruthy();
-    }
-  });
+test("pas d'erreur si retour WS en erreur", () => {
+  expect(containerWithErrorWS).toBeInstanceOf(Element);
+  if (containerWithErrorWS instanceof Element) {
+    expect(containerWithErrorWS.querySelector).toBeTruthy();
+  }
   expect(containerWithErrorWS).not.toBeNull();
   if (containerWithErrorWS instanceof Element) {
     expect(containerWithErrorWS.childNodes.length).toBe(0);

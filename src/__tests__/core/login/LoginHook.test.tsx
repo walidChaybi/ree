@@ -1,20 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { act } from "react-dom/test-utils";
 import request from "superagent";
 import config from "../../../api/mock/superagent-config/superagent-mock-securite";
 import { useLoginApi } from "../../../views/core/login/LoginHook";
+import { act } from "@testing-library/react";
 
 const superagentMock = require("superagent-mock")(request, config);
 
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const { dataState } = useLoginApi();
+  const { officierDataState } = useLoginApi();
   return (
     <div
-      data-testid={dataState?.idSSO}
-    >{`${dataState?.nom} ${dataState?.prenom}`}</div>
+      data-testid={officierDataState?.idSSO}
+    >{`${officierDataState?.nom} ${officierDataState?.prenom}`}</div>
   );
 };
 
@@ -30,14 +30,14 @@ afterEach(() => {
   container = null;
 });
 
-test("monter un composant de test pour vérifier que tout va bien", () => {
-  act(() => {
+test("monter un composant de test pour vérifier que tout va bien", async () => {
+  await act(async () => {
     ReactDOM.render(<HookConsummer />, container);
-    expect(container).toBeInstanceOf(Element);
-    if (container instanceof Element) {
-      expect(container.querySelector).toBeTruthy();
-    }
   });
+  expect(container).toBeInstanceOf(Element);
+  if (container instanceof Element) {
+    expect(container.querySelector).toBeTruthy();
+  }
 });
 
 afterAll(() => {

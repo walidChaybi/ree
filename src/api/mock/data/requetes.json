@@ -57,8 +57,10 @@
         "documentsDelivres": [
           {
             "idDocumentDelivre": "g9279c00-5d2b-11ea-bc55-0242ac130003",
-            "typeDocument": "EXTRAIT_PLURILINGUE",
             "nom": "Naissance mock copie plurilingue",
+            "conteneurSwift": "",
+            "contenu": "",
+            "typeDocument": "EXTRAIT_PLURILINGUE",
             "mimeType": "application/pdf",
             "taille": 12,
             "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
@@ -69,6 +71,8 @@
             "typeDocument": "COPIE_INTEGRALE",
             "nom": "document copie",
             "mimeType": "application/pdf",
+            "conteneurSwift": "",
+            "contenu": "",
             "taille": 12,
             "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
             "reponse": null
@@ -78,6 +82,8 @@
             "typeDocument": "FA50",
             "nom": "nom à modifier",
             "mimeType": "application/pdf",
+            "conteneurSwift": "",
+            "contenu": "",
             "taille": 12,
             "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94208",
             "reponse": null
@@ -176,6 +182,8 @@
           {
             "idDocumentDelivre": "f9279c00-5d2b-11ea-bc55-0242ac130004",
             "typeDocument": "COPIE_INTEGRALE",
+            "conteneurSwift": "",
+            "contenu": "",
             "nom": "Naissance copie",
             "mimeType": "application/pdf",
             "taille": 12,
@@ -225,6 +233,8 @@
           "nom": "Naissance copie",
           "mimeType": "application/pdf",
           "taille": 12,
+          "conteneurSwift": "",
+          "contenu": "",
           "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
           "reponse": null
         }
@@ -287,6 +297,8 @@
             "nom": "Naissance mock copie plurilingue",
             "mimeType": "application/pdf",
             "taille": 12,
+            "conteneurSwift": "",
+            "contenu": "",
             "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
             "reponse": null
           },
@@ -295,6 +307,8 @@
             "typeDocument": "COPIE_INTEGRALE",
             "nom": "document copie",
             "mimeType": "application/pdf",
+            "conteneurSwift": "",
+            "contenu": "",
             "taille": 12,
             "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94207",
             "reponse": null
@@ -303,6 +317,8 @@
             "idDocumentDelivre": "24557a3c-60e3-432e-82fb-0ac8f1609997",
             "typeDocument": "FA50",
             "nom": "nom à modifier",
+            "conteneurSwift": "",
+            "contenu": "",
             "mimeType": "application/pdf",
             "taille": 12,
             "identifiantSwift": "b9bc2637eb612d9e0cd5d7bfb1a94208",

@@ -18,17 +18,21 @@ const HookConsummer: React.FC = () => {
   return (
     <>
       {dataState.map((element) => {
-        return <div data-testid={element.idUtilisateur}>{element.nom}</div>;
+        return (
+          <div key={element.idUtilisateur} data-testid={element.idUtilisateur}>
+            {element.nom}
+          </div>
+        );
       })}
     </>
   );
 };
 
-beforeEach(() => {
+beforeEach(async () => {
   container = document.createElement("div");
   document.body.appendChild(container);
 
-  act(() => {
+  await act(async () => {
     ReactDOM.render(<HookConsummer />, container);
   });
 });
@@ -41,13 +45,12 @@ afterEach(() => {
   container = null;
 });
 
-test("l'appel au WS de récupération d'une requete fonctionne correctement", async () => {
-  await act(() => {
-    expect(container).toBeInstanceOf(Element);
-    if (container instanceof Element) {
-      expect(container.querySelector).toBeTruthy();
-    }
-  });
+test("l'appel au WS de récupération d'une requete fonctionne correctement", () => {
+  expect(container).toBeInstanceOf(Element);
+  if (container instanceof Element) {
+    expect(container.querySelector).toBeTruthy();
+  }
+
   expect(container).not.toBeNull();
   if (container instanceof Element) {
     expect(container.childNodes.length).toBe(31);
