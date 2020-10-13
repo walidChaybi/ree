@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import { OfficierContext } from "../../core/contexts/OfficierContext";
 import { MesRequetesDelivrancePage } from "./MesRequetesDelivrancePage";
 import { CompteurRequete } from "./contenu/CompteurRequete";
+import { getText } from "../../common/widget/Text";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -93,17 +94,17 @@ const RequetesPage: React.FC<LocalProps> = ({ selectedTab }) => {
                   variant="fullWidth"
                   value={selectedTabState}
                   onChange={handleChange}
-                  aria-label="Menu espace délivrance"
+                  aria-label={getText("pages.onglets")}
                   className="ongletDelivrance"
                   indicatorColor="primary"
                 >
                   <LinkTab
-                    label="Mes requêtes de délivrance"
+                    label={getText("pages.delivrance.onglet")}
                     href="/mesrequetes"
                     {...a11yProps(0)}
                   />
                   <LinkTab
-                    label="Requêtes de mon service"
+                    label={getText("pages.service.onglet")}
                     href="/requetesservice"
                     {...a11yProps(1)}
                   />
