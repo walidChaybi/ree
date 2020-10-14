@@ -153,6 +153,13 @@ module.exports = [
         return { status: 404 };
       }
 
+      if (
+        match[1] ===
+        "/requetes/count?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statuts=A_SIGNER"
+      ) {
+        return { data: 20 };
+      }
+
       //Récupération de pièces justufucatives
       if (
         match[1] ===

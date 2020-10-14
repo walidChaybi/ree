@@ -5,11 +5,13 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import { RequetesServicePage } from "./RequetesServicePage";
-import "./sass/DelivrancePage.scss";
+import "./sass/RequetesPage.scss";
 import { AppUrls } from "../../router/UrlManager";
 import { useHistory } from "react-router-dom";
 import { OfficierContext } from "../../core/contexts/OfficierContext";
 import { MesRequetesDelivrancePage } from "./MesRequetesDelivrancePage";
+import { CompteurRequete } from "./contenu/CompteurRequete";
+import { getText } from "../../common/widget/Text";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -81,47 +83,49 @@ const RequetesPage: React.FC<LocalProps> = ({ selectedTab }) => {
     <>
       <Title titleId={"pages.delivrance.titre"} />
       <div>
-        <AppBar position="static" className="headerOngletDelivrance">
-          <Tabs
-            variant="fullWidth"
-            value={selectedTabState}
-            onChange={handleChange}
-            aria-label="Menu espace délivrance"
-            className="ongletDelivrance"
-            indicatorColor="primary"
-          >
-            <LinkTab
-              label="Mes requêtes de délivrance"
-              href="/mesrequetes"
-              {...a11yProps(0)}
-            />
-            <LinkTab
-              label="Requêtes de mon service"
-              href="/requetesservice"
-              {...a11yProps(1)}
-            />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={selectedTabState} index={0}>
-          {selectedTabState === 0 && (
-            <OfficierContext.Consumer>
-              {(officier) => (
-                <MesRequetesDelivrancePage
-                  officier={officier?.officierDataState}
-                />
+        <OfficierContext.Consumer>
+          {(officier) => (
+            <>
+              {officier && officier.officierDataState && (
+                <CompteurRequete officier={officier.officierDataState} />
               )}
-            </OfficierContext.Consumer>
+              <AppBar position="static" className="headerOngletDelivrance">
+                <Tabs
+                  variant="fullWidth"
+                  value={selectedTabState}
+                  onChange={handleChange}
+                  aria-label={getText("pages.delivrance.onglets.menu")}
+                  className="ongletDelivrance"
+                  indicatorColor="primary"
+                >
+                  <LinkTab
+                    label={getText("pages.delivrance.onglets.mesRequetes")}
+                    href="/mesrequetes"
+                    {...a11yProps(0)}
+                  />
+                  <LinkTab
+                    label={getText("pages.delivrance.onglets.monService")}
+                    href="/requetesservice"
+                    {...a11yProps(1)}
+                  />
+                </Tabs>
+              </AppBar>
+
+              <TabPanel value={selectedTabState} index={0}>
+                {selectedTabState === 0 && (
+                  <MesRequetesDelivrancePage
+                    officier={officier?.officierDataState}
+                  />
+                )}
+              </TabPanel>
+              <TabPanel value={selectedTabState} index={1}>
+                {selectedTabState === 1 && (
+                  <RequetesServicePage officier={officier?.officierDataState} />
+                )}
+              </TabPanel>
+            </>
           )}
-        </TabPanel>
-        <TabPanel value={selectedTabState} index={1}>
-          {selectedTabState === 1 && (
-            <OfficierContext.Consumer>
-              {(officier) => (
-                <RequetesServicePage officier={officier?.officierDataState} />
-              )}
-            </OfficierContext.Consumer>
-          )}
-        </TabPanel>
+        </OfficierContext.Consumer>
       </div>
     </>
   );
