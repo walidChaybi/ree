@@ -4,7 +4,7 @@ import { BoutonSignature } from "../../../common/widget/signature/BoutonSignatur
 import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
 import { IDataTable } from "../../requetes/MesRequetesDelivrancePage";
-import { BoutonRetourSaga } from "./BoutonRetourSaga";
+import { BoutonARetraiterSaga } from "./BoutonARetraiterSaga";
 
 export interface ActionsProps {
   indexRequete: number;
@@ -36,14 +36,14 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
           <BoutonRetour messageId={"boutons.retourMesRequetes"} />
         </div>
         <div>
-          <BoutonRetourSaga idRequete={idRequete} />
-        </div>
-        <div>
           <BoutonSignature
             libelle={"pages.delivrance.apercu.signatureElectronique"}
             requetes={requetes}
             reloadData={reloadData}
           />
+        </div>
+        <div className="boutonARetraiterSaga">
+          <BoutonARetraiterSaga idRequete={idRequete} />
         </div>
       </div>
 
