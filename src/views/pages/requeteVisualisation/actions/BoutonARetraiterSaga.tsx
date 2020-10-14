@@ -9,13 +9,13 @@ import {
   useUpdateStatutRequeteApi
 } from "../../../common/hook/UpdateStatutRequeteHook";
 
-interface BoutonRetourSagaProps {
+interface BoutonARetraiterSagaProps {
   messageId?: MessageId;
   idRequete: string;
 }
 
-export const BoutonRetourSaga: React.FC<BoutonRetourSagaProps> = ({
-  messageId = "pages.delivrance.action.retourSaga",
+export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
+  messageId = "pages.delivrance.action.aRetraiterSaga",
   idRequete
 }) => {
   const history = useHistory();
@@ -24,7 +24,7 @@ export const BoutonRetourSaga: React.FC<BoutonRetourSagaProps> = ({
     setUpdateStatutRequeteQueryParamState
   ] = React.useState<IQueryParameterUpdateStatutRequete>();
 
-  const handleClickRetourSaga = () => {
+  const handleClickARetraiterSaga = () => {
     setUpdateStatutRequeteQueryParamState({
       statut: StatutRequete.ARetraiter,
       idRequete
@@ -38,7 +38,7 @@ export const BoutonRetourSaga: React.FC<BoutonRetourSagaProps> = ({
   useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState, goToListe);
 
   return (
-    <Button onClick={handleClickRetourSaga}>
+    <Button onClick={handleClickARetraiterSaga}>
       <Text messageId={messageId} />
     </Button>
   );
