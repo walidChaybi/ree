@@ -42,7 +42,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
   }, [documentsByRequete]);
 
   return (
-    <div>
+    <>
       <Dialog
         open={open}
         aria-labelledby="alert-dialog-title"
@@ -73,6 +73,6 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
         </DialogContent>
         <DialogActions></DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };

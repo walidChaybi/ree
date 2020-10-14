@@ -29,6 +29,11 @@
   },
   "pages": {
     "delivrance": {
+        "onglets": {
+            "menu": "Menu espace délivrance",
+            "mesRequetes": "Mes requêtes de délivrance",
+            "monService": "Requêtes de mon service"
+        },
       "titre": "Espace délivrance",
       "apercu": {
         "titre": "Aperçu de la requête",
@@ -68,7 +73,7 @@
       },
       "action": {
         "signature": "Signer le lot",
-        "retourSaga": "Retour dans SAGA"
+        "aRetraiterSaga": "À retraiter dans SAGA"
       },
       "mesRequetes": {
         "tableau": {
@@ -102,7 +107,8 @@
             "navigationLabel": "${0}-${1} sur ${2}"
           }
         },
-        "resteASigner": "Il reste ${0} requête(s) à signer"
+        "resteASigner": "Il reste ${0} requête(s) à signer",
+        "totalRequetesASigner": "Total de requêtes à signer : ${0}"
       },
       "monService": {
         "officierEtatCivilSelect": {
