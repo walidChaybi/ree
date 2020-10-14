@@ -3,9 +3,9 @@ import config from "../../../../api/mock/superagent-config/superagent-mock-reque
 import { requestDocumentApi } from "../../../../views/common/hook/DocumentRequeteHook";
 import requetes from "../../../../api/mock/data/requetes.json";
 import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
-import { convertToBlob } from "../../../../views/common/widget/document/DocumentPresentation";
 import { MimeType } from "../../../../ressources/MimeType";
 import { IRequestDocumentApiResult } from "../../../../api/appels/requeteApi";
+import { convertToBlob } from "../../../../views/pages/requeteVisualisation/contenu/document/DocumentPresentation";
 
 const superagentMock = require("superagent-mock")(request, config);
 

@@ -2,9 +2,9 @@ import React from "react";
 import { ResumeRequete } from "./ResumeRequete";
 import "./sass/ContenuRequete.scss";
 import { IDataTable } from "../../requetes/MesRequetesDelivrancePage";
-import { DocumentsRequete } from "../../../common/widget/document/DocumentsRequete";
 import { ExtraitDocument } from "../../../common/widget/document/ExtraitDocument";
 import { IDocumentDelivre } from "../../../common/types/RequeteType";
+import { DocumentsRequete } from "./document/DocumentsRequete";
 
 interface ContenuRequeteProps {
   requete: IDataTable;
