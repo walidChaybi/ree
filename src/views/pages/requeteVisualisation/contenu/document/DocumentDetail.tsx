@@ -5,14 +5,15 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
 import Image from "@material-ui/icons/Image";
-import { getText } from "../Text";
 import { lectureDuDocument, convertToBlob } from "./DocumentPresentation";
-import { requestDocumentApi } from "../../hook/DocumentRequeteHook";
 import "./sass/DocumentDetail.scss";
-import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
-import { IDocumentDelivre } from "../../types/RequeteType";
-import { MimeType } from "../../../../ressources/MimeType";
-import { IDocumentDetail } from "../../types/IDocumentDetail";
+import { IDocumentDetail } from "../../../../common/types/IDocumentDetail";
+import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { requestDocumentApi } from "../../../../common/hook/DocumentRequeteHook";
+import { getText } from "../../../../common/widget/Text";
+import { IDocumentDelivre } from "../../../../common/types/RequeteType";
+import { MimeType } from "../../../../../ressources/MimeType";
+
 const byteSize = require("byte-size");
 
 interface IDocumentDetailProps {

@@ -4,7 +4,6 @@ import {
   Disclosure,
   DisclosureRegion
 } from "reakit/Disclosure";
-import { MessageId, Text } from "../Text";
 import { DocumentDetail } from "./DocumentDetail";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -12,11 +11,12 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
 import "./sass/DocumentPresentation.scss";
-import { requestDocumentApi } from "../../hook/DocumentRequeteHook";
 import classNames from "classnames";
-import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
-import { IDocumentDelivre } from "../../types/RequeteType";
-import { IDocumentDetail } from "../../types/IDocumentDetail";
+import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { IDocumentDetail } from "../../../../common/types/IDocumentDetail";
+import { requestDocumentApi } from "../../../../common/hook/DocumentRequeteHook";
+import { Text, MessageId } from "../../../../common/widget/Text";
+import { IDocumentDelivre } from "../../../../common/types/RequeteType";
 
 interface IDocumentPresentationProps {
   titre: MessageId;

@@ -2,7 +2,6 @@ import React from "react";
 import { useDisclosureState, DisclosureRegion } from "reakit/Disclosure";
 import { MessageId, Text } from "../Text";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import "./sass/DocumentPresentation.scss";
 import "./sass/ExtraitDocument.scss";
 
 interface IExtraitDocumentProps {

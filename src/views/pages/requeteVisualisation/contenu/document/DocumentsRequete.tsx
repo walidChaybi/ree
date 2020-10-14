@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { DocumentPresentation } from "./DocumentPresentation";
-import { TypeDocument } from "../../../../model/requete/TypeDocument";
-import { IPieceJustificative, IDocumentDelivre } from "../../types/RequeteType";
-import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
-import { getText } from "../Text";
-import { MimeType } from "../../../../ressources/MimeType";
-import { IDocumentDetail } from "../../types/IDocumentDetail";
+import { IDocumentDetail } from "../../../../common/types/IDocumentDetail";
+import {
+  IPieceJustificative,
+  IDocumentDelivre
+} from "../../../../common/types/RequeteType";
+import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { MimeType } from "../../../../../ressources/MimeType";
+import { TypeDocument } from "../../../../../model/requete/TypeDocument";
+import { getText } from "../../../../common/widget/Text";
 
 interface IDocumentsDelivres {
   courriersAccompagnement: IDocumentDetail[];

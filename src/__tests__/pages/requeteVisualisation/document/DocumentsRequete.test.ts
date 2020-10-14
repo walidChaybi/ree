@@ -1,5 +1,5 @@
 import { IDocumentDelivre } from "../../../../views/common/types/RequeteType";
-import { extraitALireParDefault } from "../../../../views/common/widget/document/DocumentsRequete";
+import { extraitALireParDefault } from "../../../../views/pages/requeteVisualisation/contenu/document/DocumentsRequete";
 
 test("Vérification ordre de sélection des documents par défaut visible si copie intégrale", () => {
   let documentsDelivres: IDocumentDelivre[] = [
