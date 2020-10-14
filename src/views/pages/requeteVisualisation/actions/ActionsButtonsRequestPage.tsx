@@ -5,6 +5,8 @@ import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
 import { IDataTable } from "../../requetes/MesRequetesDelivrancePage";
 import { BoutonRetourSaga } from "./BoutonRetourSaga";
+import { IOfficierSSOApi } from "../../../core/login/LoginHook";
+import { StatutRequete } from "../../../../model/requete/StatutRequete";
 
 export interface ActionsProps {
   indexRequete: number;
@@ -13,6 +15,7 @@ export interface ActionsProps {
   requetes: IDataTable[];
   idRequete: string;
   reloadData: () => void;
+  connectedUser?: IOfficierSSOApi;
 }
 
 export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
@@ -21,7 +24,8 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   maxRequetes,
   requetes,
   idRequete,
-  reloadData
+  reloadData,
+  connectedUser
 }) => {
   return (
     <div className="ActionsButtons">
@@ -39,11 +43,15 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
           <BoutonRetourSaga idRequete={idRequete} />
         </div>
         <div>
-          <BoutonSignature
-            libelle={"pages.delivrance.apercu.signatureElectronique"}
-            requetes={requetes}
-            reloadData={reloadData}
-          />
+          {canSign(requetes, indexRequete) === true && (
+            <BoutonSignature
+              libelle={"pages.delivrance.apercu.signatureElectronique"}
+              requetes={[requetes[indexRequete]]}
+              reloadData={reloadData}
+              uniqueSignature={true}
+              connectedUser={connectedUser}
+            />
+          )}
         </div>
       </div>
 
@@ -54,5 +62,12 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
         setIndexRequete={setIndexRequete}
       />
     </div>
+  );
+};
+
+const canSign = (requetes: IDataTable[], indexRequete: number): boolean => {
+  return (
+    requetes.length > 0 &&
+    requetes[indexRequete].statut === StatutRequete.ASigner
   );
 };
