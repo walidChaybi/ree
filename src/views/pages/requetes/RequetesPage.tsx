@@ -86,9 +86,11 @@ const RequetesPage: React.FC<LocalProps> = ({ selectedTab }) => {
         <OfficierContext.Consumer>
           {(officier) => (
             <>
-              {officier && officier.officierDataState && (
-                <CompteurRequete officier={officier.officierDataState} />
-              )}
+              {officier &&
+                officier.officierDataState &&
+                selectedTabState === 0 && (
+                  <CompteurRequete officier={officier.officierDataState} />
+                )}
               <AppBar position="static" className="headerOngletDelivrance">
                 <Tabs
                   variant="fullWidth"
