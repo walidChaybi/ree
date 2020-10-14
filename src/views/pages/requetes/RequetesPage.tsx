@@ -94,17 +94,17 @@ const RequetesPage: React.FC<LocalProps> = ({ selectedTab }) => {
                   variant="fullWidth"
                   value={selectedTabState}
                   onChange={handleChange}
-                  aria-label={getText("pages.onglets")}
+                  aria-label={getText("pages.delivrance.onglets.menu")}
                   className="ongletDelivrance"
                   indicatorColor="primary"
                 >
                   <LinkTab
-                    label={getText("pages.delivrance.onglet")}
+                    label={getText("pages.delivrance.onglets.mesRequetes")}
                     href="/mesrequetes"
                     {...a11yProps(0)}
                   />
                   <LinkTab
-                    label={getText("pages.service.onglet")}
+                    label={getText("pages.delivrance.onglets.monService")}
                     href="/requetesservice"
                     {...a11yProps(1)}
                   />
