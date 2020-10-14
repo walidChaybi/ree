@@ -28,9 +28,12 @@
     "messagerie": "Messagerie"
   },
   "pages": {
-    "onglets": "Menu espace délivrance",
     "delivrance": {
-      "onglet": "Mes requêtes de délivrance",
+        "onglets": {
+            "menu": "Menu espace délivrance",
+            "mesRequetes": "Mes requêtes de délivrance",
+            "monService": "Requêtes de mon service"
+        },
       "titre": "Espace délivrance",
       "apercu": {
         "titre": "Aperçu de la requête",
@@ -116,9 +119,6 @@
           "titre": "Requêtes de mon service"
         }
       }
-    },
-    "service": {
-      "onglet": "Requêtes de mon service"
     },
     "requete": {
       "consultation": {
