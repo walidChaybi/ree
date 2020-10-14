@@ -8,17 +8,22 @@ import {
 } from "./hook/SignatureDocumentHook";
 import { IDataTable } from "../../../pages/requetes/MesRequetesDelivrancePage";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
+import { IOfficierSSOApi } from "../../../core/login/LoginHook";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
   requetes: IDataTable[];
   reloadData: (allRequestSigned: boolean) => void;
+  uniqueSignature?: boolean;
+  connectedUser?: IOfficierSSOApi;
 }
 
 export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   libelle,
   requetes,
-  reloadData
+  reloadData,
+  uniqueSignature,
+  connectedUser
 }) => {
   const validerButtonRef = React.createRef<HTMLButtonElement>();
 
@@ -84,7 +89,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     <>
       <ValidationPopin
         buttonMessageId={libelle}
-        canValidate={requetes.length !== 0}
+        canValidate={canValidate(requetes, uniqueSignature, connectedUser)}
         messageId={"signature.confirmation"}
         errorMessageId={"errors.pages.requetes.B01"}
         onValid={handleClickSignature}
@@ -97,4 +102,19 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
       />
     </>
   );
+};
+
+const canValidate = (
+  requetes: IDataTable[],
+  uniqueSignature = false,
+  connectedUser?: IOfficierSSOApi
+): boolean => {
+  if (uniqueSignature === true) {
+    return (
+      connectedUser !== undefined &&
+      requetes[0].nomOec === `${connectedUser.prenom} ${connectedUser.nom}`
+    );
+  } else {
+    return requetes.some((req) => req.statut === StatutRequete.ASigner);
+  }
 };

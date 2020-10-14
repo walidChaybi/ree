@@ -79,9 +79,10 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
             maxRequetes={dataState.length}
             indexRequete={indexRequete}
             setIndexRequete={changeIndex}
-            requetes={requeteState !== undefined ? [requeteState] : []}
+            requetes={dataState !== undefined ? dataState : []}
             idRequete={props.match.params.idRequete}
             reloadData={reloadData}
+            connectedUser={props.officier}
           />
           <EtatRequete requete={dataState[indexRequete]} />
           <ContenuRequete

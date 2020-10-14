@@ -4,6 +4,8 @@ import { BoutonSignature } from "../../../common/widget/signature/BoutonSignatur
 import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
 import { IDataTable } from "../../requetes/MesRequetesDelivrancePage";
+import { IOfficierSSOApi } from "../../../core/login/LoginHook";
+import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { BoutonARetraiterSaga } from "./BoutonARetraiterSaga";
 
 export interface ActionsProps {
@@ -13,6 +15,7 @@ export interface ActionsProps {
   requetes: IDataTable[];
   idRequete: string;
   reloadData: () => void;
+  connectedUser?: IOfficierSSOApi;
 }
 
 export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
@@ -21,7 +24,8 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   maxRequetes,
   requetes,
   idRequete,
-  reloadData
+  reloadData,
+  connectedUser
 }) => {
   return (
     <div className="ActionsButtons">
@@ -36,11 +40,15 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
           <BoutonRetour messageId={"boutons.retourMesRequetes"} />
         </div>
         <div>
-          <BoutonSignature
-            libelle={"pages.delivrance.apercu.signatureElectronique"}
-            requetes={requetes}
-            reloadData={reloadData}
-          />
+          {canSign(requetes, indexRequete) === true && (
+            <BoutonSignature
+              libelle={"pages.delivrance.apercu.signatureElectronique"}
+              requetes={[requetes[indexRequete]]}
+              reloadData={reloadData}
+              uniqueSignature={true}
+              connectedUser={connectedUser}
+            />
+          )}
         </div>
         <div className="boutonARetraiterSaga">
           <BoutonARetraiterSaga idRequete={idRequete} />
@@ -54,5 +62,12 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
         setIndexRequete={setIndexRequete}
       />
     </div>
+  );
+};
+
+const canSign = (requetes: IDataTable[], indexRequete: number): boolean => {
+  return (
+    requetes.length > 0 &&
+    requetes[indexRequete].statut === StatutRequete.ASigner
   );
 };
