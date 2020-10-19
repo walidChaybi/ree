@@ -1,26 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { useRequeteApi } from "../../../../views/pages/requetes/hook/DonneesRequeteHook";
+import { useRequeteApi, IQueryParametersPourRequetes } from "../../../../views/pages/requetes/hook/DonneesRequeteHook";
 import officierMock from "../../../../api/mock/data/connectedUser.json";
 import { TypeAppelRequete } from "../../../../api/appels/requeteApi";
-const superagentMock = require("superagent-mock")(request, config);
+import request from "superagent";
 
+const config = require("../../../../api/mock/superagent-config/superagent-mock-requetes");
+const superagentMock = require("superagent-mock")(request, config);
+const officier = { idSSO: officierMock.id_sso, ...officierMock };
+const queryParam: IQueryParametersPourRequetes = {
+  statuts: [StatutRequete.ASigner],
+  tri: "idSagaDila",
+  sens: "ASC",
+};
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const { dataState = [] } = useRequeteApi(
-    {
-      statuts: [StatutRequete.ASigner],
-      tri: "idSagaDila",
-      sens: "ASC"
-    },
-    TypeAppelRequete.MES_REQUETES,
-    { idSSO: officierMock.id_sso, ...officierMock }
-  );
+  const { dataState = [] } = useRequeteApi(queryParam, TypeAppelRequete.MES_REQUETES, officier);
   return (
     <>
       {dataState.map((element) => {
@@ -46,8 +44,8 @@ afterEach(() => {
   container = null;
 });
 
-test("monter un composant de test pour vérifier que tout va bien", () => {
-  act(() => {
+test("monter un composant de test pour vérifier que tout va bien", async () => {
+  await act(async () => {
     ReactDOM.render(<HookConsummer />, container);
     expect(container).toBeInstanceOf(Element);
     if (container instanceof Element) {

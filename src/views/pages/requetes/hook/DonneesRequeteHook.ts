@@ -13,10 +13,7 @@ import { Canal } from "../../../../model/Canal";
 import { MotifRequete } from "../../../../model/requete/MotifRequete";
 import { FormatDate } from "../../../../ressources/FormatDate";
 import { IOfficierSSOApi } from "../../../core/login/LoginHook";
-import {
-  IDocumentDelivre,
-  IPieceJustificative
-} from "../../../common/types/RequeteType";
+import { IDocumentDelivre, IPieceJustificative } from "../../../common/types/RequeteType";
 import { IDataTable } from "../MesRequetesDelivrancePage";
 import { getRequetes } from "../../../../api/appels/requeteApi";
 
@@ -92,14 +89,10 @@ export interface IQueryParametersPourRequetes {
 
 export enum TypeAppelRequete {
   REQUETE_SERVICE = "requeteService",
-  MES_REQUETES = "mesRequetes"
+  MES_REQUETES = "mesRequetes",
 }
 
-export function useRequeteApi(
-  queryParameters: IQueryParametersPourRequetes,
-  typeRequete: TypeAppelRequete,
-  officier?: IOfficierSSOApi
-) {
+export function useRequeteApi(queryParameters: IQueryParametersPourRequetes, typeRequete: TypeAppelRequete, officier?: IOfficierSSOApi) {
   const [dataState, setDataState] = useState<IDataTable[]>();
   const [rowsNumberState, setRowsNumberState] = useState<number>();
   const [minRangeState, setMinRangeState] = useState<number>();
@@ -126,27 +119,14 @@ export function useRequeteApi(
     });
 
     if (officier !== undefined) {
-      getRequetes(
-        typeRequete,
-        officier,
-        listeStatuts,
-        queryParameters.tri,
-        queryParameters.sens,
-        queryParameters.range
-      )
+      getRequetes(typeRequete, officier, listeStatuts, queryParameters.tri, queryParameters.sens, queryParameters.range)
         .then((result) => {
           setDataState(reponseRequeteMapper(result.body.data));
-          const rowsNumber: number = +(result.headers[
-            contentRange
-          ] as string).split("/")[1];
+          const rowsNumber: number = +(result.headers[contentRange] as string).split("/")[1];
           setRowsNumberState(rowsNumber);
-          const minRange: number = +(result.headers[contentRange] as string)
-            .split("/")[0]
-            .split("-")[0];
+          const minRange: number = +(result.headers[contentRange] as string).split("/")[0].split("-")[0];
           setMinRangeState(minRange);
-          const maxRange: number = +(result.headers[contentRange] as string)
-            .split("/")[0]
-            .split("-")[1];
+          const maxRange: number = +(result.headers[contentRange] as string).split("/")[0].split("-")[1];
           setMaxRangeState(maxRange);
           const { nextLink, prevLink } = parseLink(result.headers["link"], api);
 
@@ -166,7 +146,7 @@ export function useRequeteApi(
     rowsNumberState,
     minRangeState,
     maxRangeState,
-    errorState
+    errorState,
   };
 }
 
@@ -181,9 +161,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     idRequete: data.idRequete,
     idSagaDila: +data.idSagaDila,
     dateCreation: moment.unix(data.dateCreation).format(FormatDate.DDMMYYYY),
-    dateDerniereMaj: moment
-      .unix(data.dateDerniereMaj)
-      .format(FormatDate.DDMMYYYY),
+    dateDerniereMaj: moment.unix(data.dateDerniereMaj).format(FormatDate.DDMMYYYY),
     provenance: data.provenance,
     statut: data.statut,
     dateStatut: moment.unix(data.dateStatut).format(FormatDate.DDMMYYYY),
@@ -206,7 +184,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     jourEvenement: data.jourEvenement,
     moisEvenement: data.moisEvenement,
     nbExemplaire: data.nbExemplaire,
-    documentsDelivres: data.documentsDelivres
+    documentsDelivres: data.documentsDelivres,
   };
 }
 
@@ -225,18 +203,11 @@ function parseLink(linkHeader: string, api: ApiManager) {
   let nextLink;
   let prevLink;
   if (linkHeader.indexOf(`rel="next"`) > 0) {
-    nextLink = linkHeader
-      .split(`;rel="next"`)[0]
-      .replace("<", "")
-      .replace(">", "");
+    nextLink = linkHeader.split(`;rel="next"`)[0].replace("<", "").replace(">", "");
     nextLink = `${nextLink}`;
   }
   if (linkHeader.indexOf(`rel="prev"`) > 0) {
-    prevLink = linkHeader
-      .replace(`<${nextLink}>;rel="next",`, "")
-      .split(`;rel="prev"`)[0]
-      .replace("<", "")
-      .replace(">", "");
+    prevLink = linkHeader.replace(`<${nextLink}>;rel="next",`, "").split(`;rel="prev"`)[0].replace("<", "").replace(">", "");
     prevLink = `${api.url}:${api.ports}${prevLink}`;
   }
 
