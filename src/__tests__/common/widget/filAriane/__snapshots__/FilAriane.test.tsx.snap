@@ -11,12 +11,12 @@ exports[`renders composant FilAriane 1`] = `
     <li
       className="MuiBreadcrumbs-li"
     >
-      <a
+      <div
         className="LinkFilAriane"
-        href="/rece/rece-ui/accueil"
+        onClick={[Function]}
       >
         Accueil
-      </a>
+      </div>
     </li>
     <li
       aria-hidden={true}
