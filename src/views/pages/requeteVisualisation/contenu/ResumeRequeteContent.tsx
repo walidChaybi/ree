@@ -9,9 +9,7 @@ export interface ResumeRequeteContentProps {
   requete: IDataTable;
 }
 
-export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = (
-  props
-) => {
+export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props => {
   const dataRequerant = props.requete.requerant;
   let valueNomRequerant = "";
   let valuePrenomRequerant = "";
@@ -27,12 +25,14 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = (
     valuePrenomRequerant = `${dataRequerant.prenom}`;
   }
 
-  let jourEvent =
-    props.requete.jourEvenement < 10
+  const dixiemeJour = 10;
+  const octobre = 10;
+  const jourEvent =
+    props.requete.jourEvenement < dixiemeJour
       ? "0" + props.requete.jourEvenement
       : props.requete.jourEvenement;
-  let moisEvent =
-    props.requete.moisEvenement < 10
+  const moisEvent =
+    props.requete.moisEvenement < octobre
       ? "0" + props.requete.moisEvenement
       : props.requete.moisEvenement;
 
