@@ -2,9 +2,22 @@
 
 .headerOngletDelivrance {
   margin-top: 1em;
+  background: none !important;
+
   .ongletDelivrance {
-    background-color: $application-color;
+    a {
+      background-color: $application-color;
+      opacity: 1 !important;
+    }
+    a.Mui-selected {
+      cursor: default;
+    }
+    a.Mui-disabled {
+      background-color: $disabled-button;
+      cursor: not-allowed;
+    }
     .MuiTabs-indicator {
+      width: 50% !important;
       background-color: lightgreen !important;
     }
   }
