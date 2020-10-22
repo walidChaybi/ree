@@ -8,6 +8,13 @@ import {
   IQueryParameterUpdateStatutRequete,
   useUpdateStatutRequeteApi
 } from "../../../common/hook/UpdateStatutRequeteHook";
+import {
+  SeparateurUrl,
+  ctxMesRequetesUrl,
+  MesRequetesUrl,
+  RequetesServiceUrl,
+  ctxRequetesServiceUrl
+} from "../../../router/UrlManager";
 
 interface BoutonARetraiterSagaProps {
   messageId?: MessageId;
@@ -32,7 +39,16 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
   };
 
   const goToListe = useCallback(() => {
-    history.goBack();
+    const pathnames = history.location.pathname
+      .split(SeparateurUrl)
+      .filter(x => x);
+    const indexPage = 2;
+    if (`${SeparateurUrl}${pathnames[indexPage]}` === MesRequetesUrl) {
+      history.push(ctxMesRequetesUrl);
+    }
+    if (`${SeparateurUrl}${pathnames[indexPage]}` === RequetesServiceUrl) {
+      history.push(ctxRequetesServiceUrl);
+    }
   }, [history]);
 
   useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState, goToListe);
