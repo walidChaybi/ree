@@ -12,6 +12,8 @@ import { OfficierContext } from "../../core/contexts/OfficierContext";
 import { MesRequetesDelivrancePage } from "./MesRequetesDelivrancePage";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import { getText } from "../../common/widget/Text";
+import { Droit } from "../../../model/Droit";
+import { officierHabiliter } from "../../common/util/Habilitation";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -46,6 +48,7 @@ function a11yProps(index: any) {
 interface LinkTabProps {
   label?: string;
   href?: string;
+  disabled?: boolean;
 }
 
 function LinkTab(props: LinkTabProps) {
@@ -56,6 +59,7 @@ function LinkTab(props: LinkTabProps) {
         event.preventDefault();
       }}
       {...props}
+      className={props.disabled ? "tab-disabled" : ""}
     />
   );
 }
@@ -84,47 +88,62 @@ const RequetesPage: React.FC<LocalProps> = ({ selectedTab }) => {
       <Title titleId={"pages.delivrance.titre"} />
       <div>
         <OfficierContext.Consumer>
-          {(officier) => (
+          {officier => (
             <>
-              {officier &&
-                officier.officierDataState &&
-                selectedTabState === 0 && (
-                  <CompteurRequete officier={officier.officierDataState} />
-                )}
-              <AppBar position="static" className="headerOngletDelivrance">
-                <Tabs
-                  variant="fullWidth"
-                  value={selectedTabState}
-                  onChange={handleChange}
-                  aria-label={getText("pages.delivrance.onglets.menu")}
-                  className="ongletDelivrance"
-                  indicatorColor="primary"
-                >
-                  <LinkTab
-                    label={getText("pages.delivrance.onglets.mesRequetes")}
-                    href="/mesrequetes"
-                    {...a11yProps(0)}
-                  />
-                  <LinkTab
-                    label={getText("pages.delivrance.onglets.monService")}
-                    href="/requetesservice"
-                    {...a11yProps(1)}
-                  />
-                </Tabs>
-              </AppBar>
+              {officier && officier.officierDataState && (
+                <>
+                  {selectedTabState === 0 && (
+                    <CompteurRequete officier={officier.officierDataState} />
+                  )}
+                  <AppBar position="static" className="headerOngletDelivrance">
+                    <Tabs
+                      variant="fullWidth"
+                      value={selectedTabState}
+                      onChange={handleChange}
+                      aria-label={getText("pages.delivrance.onglets.menu")}
+                      className="ongletDelivrance"
+                      indicatorColor="primary"
+                    >
+                      <LinkTab
+                        label={getText("pages.delivrance.onglets.mesRequetes")}
+                        href={AppUrls.MesRequetesUrl}
+                        {...a11yProps(0)}
+                      />
+                      <LinkTab
+                        label={getText("pages.delivrance.onglets.monService")}
+                        href={AppUrls.RequetesServiceUrl}
+                        {...a11yProps(1)}
+                        disabled={
+                          !officierHabiliter(
+                            officier.officierDataState,
+                            Droit.Attribuer
+                          )
+                        }
+                      />
+                    </Tabs>
+                  </AppBar>
 
-              <TabPanel value={selectedTabState} index={0}>
-                {selectedTabState === 0 && (
-                  <MesRequetesDelivrancePage
-                    officier={officier?.officierDataState}
-                  />
-                )}
-              </TabPanel>
-              <TabPanel value={selectedTabState} index={1}>
-                {selectedTabState === 1 && (
-                  <RequetesServicePage officier={officier?.officierDataState} />
-                )}
-              </TabPanel>
+                  <TabPanel value={selectedTabState} index={0}>
+                    {selectedTabState === 0 && (
+                      <MesRequetesDelivrancePage
+                        officier={officier.officierDataState}
+                      />
+                    )}
+                  </TabPanel>
+                  {officierHabiliter(
+                    officier.officierDataState,
+                    Droit.Attribuer
+                  ) && (
+                    <TabPanel value={selectedTabState} index={1}>
+                      {selectedTabState === 1 && (
+                        <RequetesServicePage
+                          officier={officier.officierDataState}
+                        />
+                      )}
+                    </TabPanel>
+                  )}
+                </>
+              )}
             </>
           )}
         </OfficierContext.Consumer>

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { getLogin } from "../../../api/appels/securiteApi";
+import { IHabilitation, IDroit, IProfil } from "../../common/util/Habilitation";
 
 export interface ILoginApi {
   officierDataState?: IOfficierSSOApi;
   erreurState?: any;
 }
+
 export interface IOfficierSSOApi {
   idSSO: string;
   nom: string;
@@ -16,6 +18,7 @@ export interface IOfficierSSOApi {
   bureau: string;
   departement: string;
   service: string;
+  habilitations: IHabilitation[];
 }
 
 export function useLoginApi() {
@@ -24,11 +27,14 @@ export function useLoginApi() {
 
   useEffect(() => {
     getLogin()
-      .then((result) => {
-        const officier = getUtilisateurSSOApiFromHeaders(result.headers);
+      .then(result => {
+        const officier = setUtilisateurSSOApiFromHeaders(result.headers);
+        officier.habilitations = setHabilitationsUtilisateur(
+          result.body.data.habilitations
+        );
         setOfficierDataState(officier);
       })
-      .catch((error) => {
+      .catch(error => {
         setErreurState(error);
       });
   }, []);
@@ -39,7 +45,7 @@ export function useLoginApi() {
   };
 }
 
-function getUtilisateurSSOApiFromHeaders(headers: any): IOfficierSSOApi {
+function setUtilisateurSSOApiFromHeaders(headers: any): IOfficierSSOApi {
   return {
     idSSO: headers.id_sso,
     nom: headers.nom,
@@ -50,6 +56,29 @@ function getUtilisateurSSOApiFromHeaders(headers: any): IOfficierSSOApi {
     section: headers.section,
     bureau: headers.bureau,
     departement: headers.departement,
-    service: headers.service
+    service: headers.service,
+    habilitations: []
   };
+}
+
+function setHabilitationsUtilisateur(habilitations: any[]): IHabilitation[] {
+  const habilitationsUtilisateur: IHabilitation[] = [];
+  if (habilitations.length !== 0) {
+    habilitations.forEach(h => {
+      const habilitation: IHabilitation = {} as IHabilitation;
+      habilitation.idHabilitation = h.idHabilitation;
+      habilitation.droit = {} as IDroit;
+      if (h.droit !== null) {
+        habilitation.droit.idDroit = h.droit.idDroit;
+        habilitation.droit.nom = h.droit.nom;
+      }
+      habilitation.profil = {} as IProfil;
+      if (h.profil !== null) {
+        habilitation.profil.idProfil = h.profil.idDroit;
+        habilitation.profil.nom = h.profil.nom;
+      }
+      habilitationsUtilisateur.push(habilitation);
+    });
+  }
+  return habilitationsUtilisateur;
 }
