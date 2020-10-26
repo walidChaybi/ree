@@ -25,22 +25,19 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   requetes,
   idRequete,
   reloadData,
-  connectedUser
+  connectedUser,
 }) => {
+  const estRequeteASigner = estASigner(requetes, indexRequete);
+  const estRequeteATraiter = estATraiter(requetes, indexRequete);
   return (
     <div className="ActionsButtons">
-      <NavigationButton
-        direction={"left"}
-        indexRequete={indexRequete}
-        maxRequetes={maxRequetes}
-        setIndexRequete={setIndexRequete}
-      />
+      <NavigationButton direction={"left"} indexRequete={indexRequete} maxRequetes={maxRequetes} setIndexRequete={setIndexRequete} />
       <div className="event-button">
         <div>
           <BoutonRetour messageId={"boutons.retourMesRequetes"} />
         </div>
         <div>
-          {canSign(requetes, indexRequete) === true && (
+          {estRequeteASigner && (
             <BoutonSignature
               libelle={"pages.delivrance.apercu.signatureElectronique"}
               requetes={[requetes[indexRequete]]}
@@ -50,24 +47,26 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
             />
           )}
         </div>
-        <div className="boutonARetraiterSaga">
-          <BoutonARetraiterSaga idRequete={idRequete} />
-        </div>
+        {!estRequeteATraiter && (
+          <div className="boutonARetraiterSaga">
+            <BoutonARetraiterSaga idRequete={idRequete} />
+          </div>
+        )}
       </div>
 
-      <NavigationButton
-        direction={"right"}
-        indexRequete={indexRequete}
-        maxRequetes={maxRequetes}
-        setIndexRequete={setIndexRequete}
-      />
+      <NavigationButton direction={"right"} indexRequete={indexRequete} maxRequetes={maxRequetes} setIndexRequete={setIndexRequete} />
     </div>
   );
 };
 
-const canSign = (requetes: IDataTable[], indexRequete: number): boolean => {
-  return (
-    requetes.length > 0 &&
-    requetes[indexRequete].statut === StatutRequete.ASigner
-  );
+const estASigner = (requetes: IDataTable[], indexRequete: number): boolean => {
+  return estRequeteStatut(requetes, indexRequete, StatutRequete.ASigner);
+};
+
+const estATraiter = (requetes: IDataTable[], indexRequete: number): boolean => {
+  return estRequeteStatut(requetes, indexRequete, StatutRequete.ATraiter);
+};
+
+const estRequeteStatut = (requetes: IDataTable[], indexRequete: number, statut: StatutRequete): boolean => {
+  return requetes.length > 0 && requetes[indexRequete].statut === statut;
 };
