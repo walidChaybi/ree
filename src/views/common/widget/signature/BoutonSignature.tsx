@@ -1,14 +1,12 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
-import { ValidationPopin } from "../ValidationPopin";
 import { PopinSignature } from "../signature/PopinSignature";
-import {
-  DocumentsATraiter,
-  DocumentsByRequete
-} from "./hook/SignatureDocumentHook";
+import { DocumentsATraiter, DocumentsByRequete } from "./hook/SignatureDocumentHook";
 import { IDataTable } from "../../../pages/requetes/MesRequetesDelivrancePage";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { IOfficierSSOApi } from "../../../core/login/LoginHook";
+import { getText } from "../Text";
+import { Button } from "reakit/Button";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
@@ -23,28 +21,16 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   requetes,
   reloadData,
   uniqueSignature,
-  connectedUser
+  connectedUser,
 }) => {
-  const validerButtonRef = React.createRef<HTMLButtonElement>();
-
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
-  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<
-    DocumentsByRequete
-  >({});
-
-  useEffect(() => {
-    if (validerButtonRef.current) {
-      validerButtonRef.current.focus();
-    }
-  }, [validerButtonRef]);
+  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<DocumentsByRequete>({});
 
   const closePopin = useCallback(
     (showPopin: boolean, changePage: boolean) => {
       setShowWaitState(showPopin);
       if (changePage === true) {
-        reloadData(
-          Object.keys(documentsByRequeteToSign).length === requetes.length
-        );
+        reloadData(Object.keys(documentsByRequeteToSign).length === requetes.length);
       }
     },
     [reloadData, documentsByRequeteToSign, requetes]
@@ -63,7 +49,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         const documentsATraiter: DocumentsATraiter = {
           documentsToSign: [],
           documentsToSave: [],
-          sousTypeRequete: requete.sousTypeRequete
+          sousTypeRequete: requete.sousTypeRequete,
         };
 
         requete.reponse.documentsDelivres.forEach((document) => {
@@ -74,7 +60,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
             nomDocument: document.nom,
             conteneurSwift: document.conteneurSwift,
             idRequete: requete.idRequete,
-            numeroRequete: requete.idSagaDila
+            numeroRequete: requete.idSagaDila,
           });
         });
 
@@ -87,33 +73,22 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
 
   return (
     <>
-      <ValidationPopin
-        buttonMessageId={libelle}
-        canValidate={canValidate(requetes, uniqueSignature, connectedUser)}
-        messageId={"signature.confirmation"}
-        errorMessageId={"errors.pages.requetes.B01"}
-        onValid={handleClickSignature}
-      />
+      <Button disabled={!signaturePossible(requetes, uniqueSignature, connectedUser)} onClick={handleClickSignature}>
+        {getText(libelle)}
+      </Button>
 
-      <PopinSignature
-        documentsByRequete={documentsByRequeteToSign}
-        open={showWaitState}
-        onClose={closePopin}
-      />
+      <PopinSignature documentsByRequete={documentsByRequeteToSign} open={showWaitState} onClose={closePopin} />
     </>
   );
 };
 
-const canValidate = (
+const signaturePossible = (
   requetes: IDataTable[],
   uniqueSignature = false,
   connectedUser?: IOfficierSSOApi
 ): boolean => {
   if (uniqueSignature === true) {
-    return (
-      connectedUser !== undefined &&
-      requetes[0].nomOec === `${connectedUser.prenom} ${connectedUser.nom}`
-    );
+    return connectedUser !== undefined && requetes[0].nomOec === `${connectedUser.prenom} ${connectedUser.nom}`;
   } else {
     return requetes.some((req) => req.statut === StatutRequete.ASigner);
   }

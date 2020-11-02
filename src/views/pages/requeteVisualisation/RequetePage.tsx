@@ -22,23 +22,16 @@ type RequetePageProps = RouteComponentProps<{ idRequete: string }> & Test;
 
 export const RequetePage: React.FC<RequetePageProps> = (props) => {
   const history = useHistory();
-  const [histoReq] = useState<RequestsInformations>(
-    history.location.state as RequestsInformations
-  );
-  const [indexRequete, setIndexRequete] = useState<number>(
-    getIndexRequete(props.match.params.idRequete, histoReq)
-  );
+  const [histoReq] = useState<RequestsInformations>(history.location.state as RequestsInformations);
+  const [indexRequete, setIndexRequete] = useState<number>(getIndexRequete(props.match.params.idRequete, histoReq));
 
   const { dataState } = useRequeteDataApi(
     {
-      idRequete: props.match.params.idRequete
+      idRequete: props.match.params.idRequete,
     },
     props.officier,
     histoReq
   );
-
-  // Contenu du document en base 64
-  const [requeteState, setRequeteState] = useState<IDataTable>();
 
   const changeIndex = useCallback(
     (idx: number) => {
@@ -59,8 +52,6 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
     (newDocumentsDelivres: IDocumentDelivre) => {
       const newRequete: IDataTable = { ...histoReq.data[indexRequete] };
       newRequete.documentsDelivres = [newDocumentsDelivres];
-
-      setRequeteState(newRequete);
     },
     [histoReq, indexRequete]
   );
@@ -85,20 +76,14 @@ export const RequetePage: React.FC<RequetePageProps> = (props) => {
             connectedUser={props.officier}
           />
           <EtatRequete requete={dataState[indexRequete]} />
-          <ContenuRequete
-            requete={dataState[indexRequete]}
-            setDocumentDelivreFct={setDocumentDelivreFct}
-          />
+          <ContenuRequete requete={dataState[indexRequete]} setDocumentDelivreFct={setDocumentDelivreFct} />
         </>
       )}
     </>
   );
 };
 
-function getIndexRequete(
-  idRequete: string,
-  requetesInfos: RequestsInformations
-): number {
+function getIndexRequete(idRequete: string, requetesInfos: RequestsInformations): number {
   let position = 0;
   if (requetesInfos !== undefined) {
     position = requetesInfos.data.findIndex((element, index) => {

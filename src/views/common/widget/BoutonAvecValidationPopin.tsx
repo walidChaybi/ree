@@ -13,12 +13,12 @@ interface ValidationPopinProps {
   canValidate: boolean;
 }
 
-export const ValidationPopin: React.FC<ValidationPopinProps> = ({
+export const BoutonAvecValidationPopin: React.FC<ValidationPopinProps> = ({
   buttonMessageId,
   messageId,
   errorMessageId,
   onValid,
-  canValidate
+  canValidate,
 }) => {
   const openDialogAferMs = 75;
   const dialog = useDialogState();
@@ -44,26 +44,12 @@ export const ValidationPopin: React.FC<ValidationPopinProps> = ({
         {getText(buttonMessageId)}
       </DialogDisclosure>
       {!canValidate ? (
-        <Dialog
-          {...dialog}
-          tabIndex={0}
-          aria-label={getText("errors.dialogLabel")}
-          className="toast error"
-        >
-          <FontAwesomeIcon
-            icon={faTimesCircle}
-            title={getText("errors.icon")}
-            aria-label={getText("errors.icon")}
-          />
+        <Dialog {...dialog} tabIndex={0} aria-label={getText("errors.dialogLabel")} className="toast error">
+          <FontAwesomeIcon icon={faTimesCircle} title={getText("errors.icon")} aria-label={getText("errors.icon")} />
           <Text messageId={errorMessageId} />
         </Dialog>
       ) : (
-        <Dialog
-          {...dialog}
-          tabIndex={0}
-          aria-label={getText("errors.dialogLabel")}
-          className="toast"
-        >
+        <Dialog {...dialog} tabIndex={0} aria-label={getText("errors.dialogLabel")} className="toast">
           <Text messageId={messageId} />
           <Button ref={validerButtonRef} onClick={validPopin}>
             Valider
