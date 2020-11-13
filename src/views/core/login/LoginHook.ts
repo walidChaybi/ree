@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getLogin } from "../../../api/appels/securiteApi";
-import { IHabilitation, IDroit, IProfil } from "../../common/util/Habilitation";
+import { IHabilitation, IDroit, IProfil } from "../../../model/Habilitation";
 
 export interface ILoginApi {
   officierDataState?: IOfficierSSOApi;
@@ -63,22 +63,22 @@ function setUtilisateurSSOApiFromHeaders(headers: any): IOfficierSSOApi {
 
 function setHabilitationsUtilisateur(habilitations: any[]): IHabilitation[] {
   const habilitationsUtilisateur: IHabilitation[] = [];
-  if (habilitations.length !== 0) {
-    habilitations.forEach(h => {
-      const habilitation: IHabilitation = {} as IHabilitation;
-      habilitation.idHabilitation = h.idHabilitation;
-      habilitation.droit = {} as IDroit;
-      if (h.droit !== null) {
-        habilitation.droit.idDroit = h.droit.idDroit;
-        habilitation.droit.nom = h.droit.nom;
-      }
-      habilitation.profil = {} as IProfil;
-      if (h.profil !== null) {
-        habilitation.profil.idProfil = h.profil.idDroit;
-        habilitation.profil.nom = h.profil.nom;
-      }
-      habilitationsUtilisateur.push(habilitation);
-    });
-  }
+  habilitations.forEach(h => {
+    const habilitation: IHabilitation = {} as IHabilitation;
+    habilitation.idHabilitation = h.idHabilitation;
+    habilitation.profil = {} as IProfil;
+    habilitation.profil.idProfil = h.profil.idProfil;
+    habilitation.profil.nom = h.profil.nom;
+    habilitation.profil.droits =
+      habilitation.profil &&
+      h.profil.profilDroit.map(
+        (profilDroit: any) =>
+          ({
+            idDroit: profilDroit.droit.idDroit,
+            nom: profilDroit.droit.nom
+          } as IDroit)
+      );
+    habilitationsUtilisateur.push(habilitation);
+  });
   return habilitationsUtilisateur;
 }

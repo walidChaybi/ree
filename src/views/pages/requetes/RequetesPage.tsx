@@ -13,7 +13,7 @@ import { MesRequetesDelivrancePage } from "./MesRequetesDelivrancePage";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import { getText } from "../../common/widget/Text";
 import { Droit } from "../../../model/Droit";
-import { officierHabiliter } from "../../common/util/Habilitation";
+import { officierHabiliter } from "../../../model/Habilitation";
 
 interface TabPanelProps {
   children?: React.ReactNode;
