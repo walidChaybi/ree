@@ -10,6 +10,7 @@ import officier from "../../../api/mock/data/connectedUser.json";
 test("renders BoutonDeconnexion", () => {
   const history = createMemoryHistory();
   history.push(AppUrls.ctxAccueilUrl);
+  officier.profils.push("RECE_ADMIN");
 
   render(
     <Router history={history}>

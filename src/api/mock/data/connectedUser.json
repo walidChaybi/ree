@@ -4,6 +4,7 @@
   "prenom": "prenomConnectedUser",
   "trigramme": "trigrammeConnectedUser",
   "mail": "mailConnectedUser",
+  "profils": ["profilConnectedUser"],
   "telephone": "telephoneConnectedUser",
   "section": "sectionConnectedUser",
   "bureau": "bureauConnectedUser",

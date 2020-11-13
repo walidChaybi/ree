@@ -1,5 +1,6 @@
 export const contextApp = "/rece/rece-ui";
 export const DeconnexionAppUrl = "/rece/Shibboleth.sso/Logout";
+export const AccueilReceAdminUrl = "/rece/rece-admin-ui/accueil";
 
 // Url de navigation dans l'application
 export const SeparateurUrl = "/";
@@ -18,6 +19,7 @@ export const ctxIdRequeteServiceUrl = `${contextApp}${IdRequeteServiceUrl}`;
 export const AppUrls = {
   contextApp,
   DeconnexionAppUrl,
+  AccueilReceAdminUrl,
   SeparateurUrl,
   ctxSeparateurUrl,
   AccueilUrl,
@@ -29,7 +31,7 @@ export const AppUrls = {
   IdRequeteUrl,
   ctxIdRequeteUrl,
   IdRequeteServiceUrl,
-  ctxIdRequeteServiceUrl,
+  ctxIdRequeteServiceUrl
 };
 
 // Url APIs
@@ -47,7 +49,7 @@ export const ApiEndpoints = {
   UtilisateursUrl,
   DocumentsdelivresUrl,
   SecuriteUrl,
-  ReponsesUrl,
+  ReponsesUrl
 };
 
 /** Attention à l'usage, la construction d'URL dynamique passant par une function pose des problèmes d'anti pattern */
