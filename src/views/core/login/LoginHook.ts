@@ -13,6 +13,7 @@ export interface IOfficierSSOApi {
   prenom: string;
   trigramme: string;
   mail: string;
+  profils: string[];
   telephone: string;
   section: string;
   bureau: string;
@@ -52,6 +53,7 @@ function setUtilisateurSSOApiFromHeaders(headers: any): IOfficierSSOApi {
     prenom: headers.prenom,
     trigramme: headers.trigramme,
     mail: headers.mail,
+    profils: setProfilsUtilisateur(headers.profil),
     telephone: headers.telephone,
     section: headers.section,
     bureau: headers.bureau,
@@ -81,4 +83,12 @@ function setHabilitationsUtilisateur(habilitations: any[]): IHabilitation[] {
     });
   }
   return habilitationsUtilisateur;
+}
+
+function setProfilsUtilisateur(profils: string): string[] {
+  let profilsUtilisateur: string[] = [];
+  if (profils !== "") {
+    profilsUtilisateur = profils.split("\\; ").filter(x => x);
+  }
+  return profilsUtilisateur;
 }
