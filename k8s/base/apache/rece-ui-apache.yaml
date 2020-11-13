@@ -18,7 +18,6 @@ data:
     LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
     LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
     LoadModule headers_module /usr/lib/apache2/modules/mod_headers.so
-    LoadModule mod_shib /usr/lib/apache2/modules/mod_shib.so
 
     # Log sur sortie standard, plus facile à lire en Kubernetes
     ErrorLog /dev/stderr
@@ -52,19 +51,3 @@ data:
       RewriteCond %{REQUEST_FILENAME} !-l
       RewriteRule rece-ui/.* /rece/rece-ui/index.html [L]    
     </Directory>
-
-    # Pour chaque API appelable depuis le navigateur, on prévoit une redirection (depuis cet Apache) vers le Tomcat
-    # Note: pas besoin de ProxyPassReverse uniquement utile pour les redirect (code 301 ou 302), pas utilisé sur RECE
-    ProxyPass /rece/rece-requete-api http://rece-requete-api/rece-requete-api
-    ProxyPass /rece/rece-securite-api http://rece-securite-api/rece-securite-api
-
-    # On protége en SAML les URL commencant par '/rece', y compris les URLS vers les resources statiques (/rece/rece-ui)
-    <Location /rece>
-      AuthType shibboleth
-      ShibRequestSetting applicationId rece
-      ShibRequestSetting requireSession 1
-      # On a besoin coté backend des headers (nom, prenom...) fixé par shibboleth
-      ShibUseHeaders On
-      require valid-user
-    </Location>
-
