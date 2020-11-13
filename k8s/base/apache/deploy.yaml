@@ -17,27 +17,6 @@ spec:
           name: rece-ui
           imagePullPolicy: Always
           volumeMounts:
-            - name: config-shibboleth
-              mountPath: "/etc/shibboleth/shibboleth2.xml"
-              subPath: shibboleth2.xml
-            - name: config-shibboleth-idp-metatada
-              mountPath: "/etc/shibboleth/idp-metadata.xml"
-              subPath: idp-metadata.xml
-            - name: config-shibboleth-attribute-map
-              mountPath: "/etc/shibboleth/attribute-map.xml"
-              subPath: attribute-map.xml
-            - name: config-shibboleth-rece-signature-crt
-              mountPath: "/etc/shibboleth/rece_signature.crt"
-              subPath: rece_signature.crt
-            - name: config-shibboleth-rece-signature-key
-              mountPath: "/etc/shibboleth/rece_signature.key"
-              subPath: rece_signature.key
-            - name: config-shibboleth-rece-chiffrement-crt
-              mountPath: "/etc/shibboleth/rece_chiffrement.crt"
-              subPath: rece_chiffrement.crt
-            - name: config-shibboleth-rece-chiffrement-key
-              mountPath: "/etc/shibboleth/rece_chiffrement.key"
-              subPath: rece_chiffrement.key
             - name: config-apache-rece-ui
               mountPath: "/etc/apache2/sites-enabled/rece-ui.conf"
               subPath: rece-ui.conf
@@ -47,27 +26,6 @@ spec:
         - name: pull-docker
       restartPolicy: Always
       volumes:
-        - name: config-shibboleth
-          configMap:
-            name: rece-shibboleth
-        - name: config-shibboleth-idp-metatada
-          configMap:
-            name: rece-shibboleth
-        - name: config-shibboleth-attribute-map
-          configMap:
-            name: rece-shibboleth
-        - name: config-shibboleth-rece-signature-crt
-          configMap:
-            name: rece-shibboleth
-        - name: config-shibboleth-rece-signature-key
-          configMap:
-            name: rece-shibboleth
-        - name: config-shibboleth-rece-chiffrement-crt
-          configMap:
-            name: rece-shibboleth
-        - name: config-shibboleth-rece-chiffrement-key
-          configMap:
-            name: rece-shibboleth
         - name: config-apache-rece-ui
           configMap:
             name: rece-ui
