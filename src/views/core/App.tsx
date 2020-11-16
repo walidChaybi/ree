@@ -11,19 +11,18 @@ import { OfficierContext } from "./contexts/OfficierContext";
 import {
   GestionnaireFermeture,
   appelRequetesASigner,
-  traiteAppelRequeteASigner,
+  traiteAppelRequeteASigner
 } from "../common/util/GestionnaireFermeture";
 import { AppUrls } from "../router/UrlManager";
 
 const App: React.FC = () => {
   const login = useLoginApi();
-
   return (
     <Router>
       <div className="App">
         <OfficierContext.Provider value={login}>
           <OfficierContext.Consumer>
-            {(officier) => (
+            {officier => (
               <GestionnaireFermeture
                 paramsFctAAppler={officier}
                 fctAAppeler={appelRequetesASigner}

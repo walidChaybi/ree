@@ -1,4 +1,4 @@
-const mockRequetes = require("../data/requetes.json");
+import mockRequetes from "../data/requetes.json";
 
 export function generateurRequetes() {
   const newDatas = [];
@@ -18,8 +18,8 @@ export function generateurRequetes() {
     } else if (i >= dix && i < cent) {
       code = "0";
     }
-    code = code + i;
-    dataRequete.idRequete = "104b8563-c7f8-4748-9daa-f26558985" + code;
+
+    dataRequete.idRequete = `104b8563-c7f8-4748-9daa-f26558985"${code}${i}`;
     dataRequete.idSagaDila = preIdSagaDila + i;
     newDatas.push(dataRequete);
   }

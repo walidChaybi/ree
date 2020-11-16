@@ -40,7 +40,6 @@ export function useLoginApi() {
         messageManager.showErrorAndClose(
           "Impossible récupérer les informations utilisateur via le service de login"
         );
-        console.log("Erreur survenue: ", error);
         setErreurState(error);
       });
   }, []);

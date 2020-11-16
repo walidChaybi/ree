@@ -2,7 +2,7 @@ import config from "./mock/superagent-config/superagent-mock-fake-url";
 import * as superagent from "superagent";
 import request from "superagent";
 import messageManager from "../views/common/util/messageManager";
-const apis: IApis = require("../ressources/api.json");
+import apiModule from "../ressources/api.json";
 
 if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, config);
@@ -58,7 +58,7 @@ export class ApiManager {
   private static instance: ApiManager;
 
   private constructor(name: ApisAutorisees, version: string) {
-    const foundApis: IApi[] = apis.apis.filter(
+    const foundApis: IApi[] = apiModule.apis.filter(
       (api: IApi) => api.name === name
     );
     if (foundApis.length === 1) {
@@ -149,7 +149,7 @@ export class ApiManager {
           error.status !== codeErreurForbidden
         ) {
           messageManager.showError(
-            "Une erreur est survenue: " + (error ? error.message : "inconnue")
+            `Une erreur est survenue: ${error ? error.message : "inconnue"}`
           );
         }
 
