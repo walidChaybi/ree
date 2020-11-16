@@ -37,7 +37,7 @@ export function useLoginApi() {
         setOfficierDataState(officier);
       })
       .catch(error => {
-        messageManager.showError(
+        messageManager.showErrorAndClose(
           "Impossible récupérer les informations utilisateur via le service de login"
         );
         console.log("Erreur survenue: ", error);
