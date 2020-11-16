@@ -4,7 +4,7 @@ import { Pact } from "@pact-foundation/pact";
 export class ApiPact {
   private path: string;
   private queryParams: Object;
-  constructor(private provider: Pact) {
+  constructor(private readonly provider: Pact) {
     this.path = "";
     this.queryParams = "";
   }
@@ -21,9 +21,9 @@ export class ApiPact {
 
   public execute() {
     return superagent
-      .get(this.provider.mockService.baseUrl + "/" + this.path)
+      .get(`${this.provider.mockService.baseUrl}/${this.path}`)
       .query(this.queryParams)
-      .then((res) => {
+      .then(res => {
         return Promise.resolve(res);
       });
   }

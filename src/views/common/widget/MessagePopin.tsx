@@ -12,18 +12,19 @@ export enum PopinMessageType {
   Success = "success",
   Error = "error",
   Warning = "warning",
-  Info = "info",
+  Info = "info"
 }
 
 export const MessagePopin: React.FC<MessagePopinProps> = ({
   message,
   messageType,
-  isOpen,
+  isOpen
 }) => {
   const position: SnackbarOrigin = {
     vertical: "top",
-    horizontal: "center",
+    horizontal: "center"
   };
+  const ALERT_SHADOW_DEPTH = 6;
 
   const [isPopinOpen, setIsPopinOpen] = React.useState<boolean>(isOpen);
 
@@ -43,7 +44,11 @@ export const MessagePopin: React.FC<MessagePopinProps> = ({
       className={`MessagePopin ${getPopinClass(messageType)}`}
       data-testid={`popin-${messageType}`}
     >
-      <MuiAlert elevation={6} variant="filled" severity={messageType}>
+      <MuiAlert
+        elevation={ALERT_SHADOW_DEPTH}
+        variant="filled"
+        severity={messageType}
+      >
         {message}
       </MuiAlert>
     </Snackbar>
