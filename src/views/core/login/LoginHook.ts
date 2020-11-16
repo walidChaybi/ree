@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getLogin } from "../../../api/appels/securiteApi";
 import { IHabilitation, IDroit, IProfil } from "../../../model/Habilitation";
+import messageManager from "../../common/util/messageManager";
 
 export interface ILoginApi {
   officierDataState?: IOfficierSSOApi;
@@ -36,6 +37,10 @@ export function useLoginApi() {
         setOfficierDataState(officier);
       })
       .catch(error => {
+        messageManager.showError(
+          "Impossible récupérer les informations utilisateur via le service de login"
+        );
+        console.log("Erreur survenue: ", error);
         setErreurState(error);
       });
   }, []);
