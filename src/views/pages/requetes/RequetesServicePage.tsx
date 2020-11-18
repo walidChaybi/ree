@@ -21,8 +21,7 @@ import { IOfficierSSOApi } from "../../core/login/LoginHook";
 import {
   getMessagePrioriteDeLaRequete,
   prioriteDeLaRequete,
-  indexParamsReq,
-  tableauHeader
+  indexParamsReq
 } from "../../common/util/RequetesUtils";
 import {
   IQueryParametersPourRequetes,
@@ -67,9 +66,7 @@ interface MesRequetesServicePageProps {
   officier?: IOfficierSSOApi;
 }
 
-export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
-  props
-) => {
+export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
   /** TODO ETAPE 2 : Bouton "Attribué à" */
   // const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(
   //   false
@@ -92,46 +89,60 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
     sens: "ASC",
     range: undefined
   });
-
+  const style = {
+    width: "5em"
+  };
   const columnHeaders = [
-    new TableauTypeColumn(
-      [HeaderTableauRequete.IdSagaDila],
-      false,
-      tableauHeader
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.SousTypeRequete],
-      true,
-      tableauHeader,
-      "referentiel.sousTypeRequete.court"
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.Canal],
-      true,
-      tableauHeader,
-      "referentiel.canal"
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.NatureActe],
-      true,
-      tableauHeader,
-      "referentiel.natureActe"
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.TypeActe],
-      true,
-      tableauHeader,
-      "pages.requete.consultation.documentDelivre.type"
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.Requerant, HeaderTableauRequete.LibelleRequerant],
-      false,
-      tableauHeader
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.NomOec],
-      false,
-      tableauHeader
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.IdSagaDila],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila",
+      align: "center",
+      style
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.SousTypeRequete],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
+      getTextRefentiel: true,
+      rowLibelle: "referentiel.sousTypeRequete.court",
+      align: "center",
+      style: {
+        width: "8.5em"
+      }
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.Canal],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.canal",
+      getTextRefentiel: true,
+      rowLibelle: "referentiel.canal",
+      align: "center",
+      style
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.NatureActe],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.natureActe",
+      getTextRefentiel: true,
+      rowLibelle: "referentiel.natureActe",
+      align: "center"
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.TypeActe],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.typeActe",
+      getTextRefentiel: true,
+      rowLibelle: "pages.requete.consultation.documentDelivre.type",
+      align: "center"
+    }),
+    new TableauTypeColumn({
+      keys: [
+        HeaderTableauRequete.Requerant,
+        HeaderTableauRequete.LibelleRequerant
+      ],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.requerant",
+      align: "center"
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.NomOec],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.nomOec",
+      align: "center"
       /** TODO ETAPE 2 : Bouton "Attribué à" */
       /*,
         "",
@@ -139,30 +150,31 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = (
           return getIconOfficierEtatCivil(row, setQueryChangeOecRequest);
         }*/
       /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.DateCreation],
-      false,
-      tableauHeader
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.DateStatut],
-      false,
-      tableauHeader
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.Statut],
-      true,
-      tableauHeader,
-      "referentiel.statutRequete"
-    ),
-    new TableauTypeColumn(
-      [HeaderTableauRequete.PrioriteRequete],
-      false,
-      tableauHeader,
-      "",
-      getIconPrioriteRequeteService
-    )
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.DateCreation],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.dateCreation",
+      align: "center"
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.DateStatut],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.dateStatut",
+      align: "center"
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.Statut],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.statut",
+      getTextRefentiel: true,
+      rowLibelle: "referentiel.statutRequete",
+      align: "center"
+    }),
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.PrioriteRequete],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete",
+      getIcon: getIconPrioriteRequeteService,
+      align: "center",
+      style
+    })
   ];
 
   const {

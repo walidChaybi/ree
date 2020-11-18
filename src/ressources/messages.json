@@ -12,7 +12,9 @@
   "pagination": {
     "rowsPerPage": "${0} par page",
     "pageSuivante": "Page suivante",
-    "pagePrecedente": "Page précédente"
+    "pagePrecedente": "Page précédente",
+    "donneePaginee": "Requêtes",
+    "navigationLabel": "${0}-${1} sur ${2}"
   },
   "boutons": {
     "accueil": "<< Accueil",
@@ -29,11 +31,11 @@
   },
   "pages": {
     "delivrance": {
-        "onglets": {
-            "menu": "Menu espace délivrance",
-            "mesRequetes": "Mes requêtes de délivrance",
-            "monService": "Requêtes de mon service"
-        },
+      "onglets": {
+        "menu": "Menu espace délivrance",
+        "mesRequetes": "Mes requêtes de délivrance",
+        "monService": "Requêtes de mon service"
+      },
       "titre": "Espace délivrance",
       "apercu": {
         "titre": "Aperçu de la requête",
@@ -101,10 +103,6 @@
               "moyenne": "Priorité moyenne",
               "haute": "Priorité haute"
             }
-          },
-          "pagination": {
-            "donneePaginee": "Requêtes",
-            "navigationLabel": "${0}-${1} sur ${2}"
           }
         },
         "resteASigner": "Il reste ${0} requête(s) à signer",
@@ -149,6 +147,7 @@
             "EXTRAIT_SANS_FILIATION": "Extrait sans filiation",
             "EXTRAIT_PLURILINGUE": "Extrait plurilingue",
             "COPIE_NON_SIGNEE": "Copie non signée",
+            "COPIE_NON_SIGNE": "Copie non signée",
             "FA50": "Formulaire FA50",
             "FA116": "Formulaire FA116",
             "FA117": "Formulaire FA117",
