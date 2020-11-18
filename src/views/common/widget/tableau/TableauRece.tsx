@@ -46,7 +46,6 @@ export class TableauTypeColumn {
   public getTextRefentiel?: boolean;
   public align?: alignType;
   public style?: React.CSSProperties;
-  public width?: string | number;
   public rowLibelle?: string;
   public getIcon?: (value: any, selectedValue?: string) => JSX.Element;
 
@@ -56,7 +55,6 @@ export class TableauTypeColumn {
     this.getTextRefentiel = params.getTextRefentiel;
     this.align = params.align;
     this.style = params.style;
-    this.width = params.width;
     this.rowLibelle = params.rowLibelle;
     this.getIcon = params.getIcon;
   }

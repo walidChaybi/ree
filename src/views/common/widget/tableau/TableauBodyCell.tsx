@@ -23,7 +23,6 @@ export const TableauBodyCell: React.FC<TableauBodyCellProps> = ({
       // className="ColonneTableau"
       className="tableauFontBody"
       style={column?.style}
-      width={column?.width}
       align={column?.align ? column?.align : "left"}
       title={column?.style ? dataToDisplay : undefined}
     >
