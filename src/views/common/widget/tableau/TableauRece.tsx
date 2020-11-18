@@ -8,17 +8,16 @@ import { TableauHeader } from "./TableauHeader";
 import { TablePagination } from "@material-ui/core";
 import { getText } from "../Text";
 import { TableauBody } from "./TableauBody";
-import { IDataTable } from "../../../pages/requetes/MesRequetesDelivrancePage";
 import { BoutonSignature } from "../signature/BoutonSignature";
 
-export const nbRequeteParAppel = 105;
+export const NB_LIGNES_PAR_APPEL = 105;
 
 export interface RequeteTableauHeaderProps {
   idKey: string;
   sortOrderByState: string;
   sortOrderState: SortOrder;
   columnHeaders: TableauTypeColumn[];
-  dataState: IDataTable[];
+  dataState: any[];
   rowsNumberState: number;
   nextDataLinkState: string;
   canUseSignature?: boolean;
@@ -29,25 +28,37 @@ export interface RequeteTableauHeaderProps {
   handleReload?: () => void;
 }
 
+type alignType = "left" | "center" | "right" | "justify" | "inherit";
+export interface ITableauTypeColumnParam {
+  keys: string[];
+  colLibelle: string;
+  getTextRefentiel?: boolean;
+  align?: alignType;
+  style?: React.CSSProperties;
+  width?: string | number;
+  rowLibelle?: string;
+  getIcon?: (value: any, selectedValue?: string) => JSX.Element;
+}
+
 export class TableauTypeColumn {
   public keys: string[];
-  public getTextRefentiel: boolean;
   public colLibelle: string;
+  public getTextRefentiel?: boolean;
+  public align?: alignType;
+  public style?: React.CSSProperties;
+  public width?: string | number;
   public rowLibelle?: string;
   public getIcon?: (value: any, selectedValue?: string) => JSX.Element;
 
-  constructor(
-    keys: string[],
-    getTextRefentiel: boolean,
-    colLibelle: string,
-    rowLibelle?: string,
-    getIcon?: (value: any, selectedValue?: string) => JSX.Element
-  ) {
-    this.keys = keys;
-    this.getTextRefentiel = getTextRefentiel;
-    this.rowLibelle = rowLibelle;
-    this.colLibelle = colLibelle;
-    this.getIcon = getIcon;
+  constructor(params: ITableauTypeColumnParam) {
+    this.keys = params.keys;
+    this.colLibelle = params.colLibelle;
+    this.getTextRefentiel = params.getTextRefentiel;
+    this.align = params.align;
+    this.style = params.style;
+    this.width = params.width;
+    this.rowLibelle = params.rowLibelle;
+    this.getIcon = params.getIcon;
   }
 
   public getValueAtKey(object: any): any {
@@ -62,7 +73,7 @@ export class TableauTypeColumn {
   }
 }
 
-export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
+export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
   const nbRequetParPage = 15;
   const [rowsPerPageState, setRowsPerPageState] = React.useState(
     nbRequetParPage
@@ -70,31 +81,37 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
   const [pageState, setPageState] = React.useState(0);
   const [multiplicateur, setMultiplicateur] = React.useState(1);
 
-  const handleRequestSort = (
+  const handleColumnSort = (
     event: React.MouseEvent<unknown>,
-    property: string
+    columnKey: string
   ) => {
     setPageState(0);
     setMultiplicateur(1);
     props.handleChangeSort(
-      property,
-      getSortOrder(property, props.sortOrderByState, props.sortOrderState)
+      columnKey,
+      getSortOrder(columnKey, props.sortOrderByState, props.sortOrderState)
     );
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
     if (
-      newPage > pageState &&
-      newPage * rowsPerPageState >= nbRequeteParAppel * multiplicateur &&
-      !(pageState * rowsPerPageState > nbRequeteParAppel * multiplicateur) &&
+      laProchainePageEstEnDehors(
+        newPage,
+        pageState,
+        rowsPerPageState,
+        multiplicateur
+      ) &&
       props.nextDataLinkState
     ) {
       setMultiplicateur(multiplicateur + 1);
       props.goToLink(props.nextDataLinkState);
     } else if (
-      newPage < pageState &&
-      newPage * rowsPerPageState < nbRequeteParAppel * multiplicateur &&
-      pageState * rowsPerPageState < nbRequeteParAppel * multiplicateur &&
+      laPageDAvantEstEnDehors(
+        pageState,
+        newPage,
+        rowsPerPageState,
+        multiplicateur
+      ) &&
       props.previousDataLinkState
     ) {
       setMultiplicateur(multiplicateur - 1);
@@ -115,7 +132,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
       props.dataState,
       pageState,
       rowsPerPageState,
-      nbRequeteParAppel / nbRequetParPage
+      NB_LIGNES_PAR_APPEL / nbRequetParPage
     );
   }, [props.dataState, pageState, rowsPerPageState]);
 
@@ -143,7 +160,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
     setPageState(newPageState);
   };
 
-  const [dataBody, setdataBody] = React.useState<IDataTable[]>(processData());
+  const [dataBody, setdataBody] = React.useState<any[]>(processData());
 
   useEffect(() => {
     setdataBody(processData());
@@ -156,7 +173,7 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
           <TableauHeader
             order={props.sortOrderState}
             orderBy={props.sortOrderByState}
-            onRequestSort={handleRequestSort}
+            onRequestSort={handleColumnSort}
             columnHeaders={props.columnHeaders}
           />
           <TableauBody
@@ -173,15 +190,10 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
         count={props.rowsNumberState || 0}
         rowsPerPage={rowsPerPageState}
         labelRowsPerPage={getText("pagination.rowsPerPage", [
-          getText(
-            "pages.delivrance.mesRequetes.tableau.pagination.donneePaginee"
-          )
+          getText("pagination.donneePaginee")
         ])}
         labelDisplayedRows={({ from, to, count }) =>
-          getText(
-            "pages.delivrance.mesRequetes.tableau.pagination.navigationLabel",
-            [from, to, count]
-          )
+          getText("pagination.navigationLabel", [from, to, count])
         }
         page={pageState > 0 && props.rowsNumberState === 0 ? 0 : pageState}
         onChangePage={handleChangePage}
@@ -202,13 +214,48 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = (props) => {
   );
 };
 
+/**
+ * Regarde si la page d'après qui va s'afficher est en dehors des données stockée actuellement dans props.dataState
+ * Si c'est le cas il faudra refaire un appel serveur
+ */
+function laProchainePageEstEnDehors(
+  newPage: number,
+  pageState: number,
+  rowsPerPageState: number,
+  multiplicateur: number
+) {
+  return (
+    newPage > pageState &&
+    newPage * rowsPerPageState >= NB_LIGNES_PAR_APPEL * multiplicateur &&
+    !(pageState * rowsPerPageState > NB_LIGNES_PAR_APPEL * multiplicateur)
+  );
+}
+
+/**
+ * Regarde si la page d'avant qui va s'afficher est en dehors des données stockée actuellement dans props.dataState
+ * Si c'est le cas il faudra refaire un appel serveur
+ */
+function laPageDAvantEstEnDehors(
+  pageState: number,
+  newPage: number,
+  rowsPerPageState: number,
+  multiplicateur: number
+) {
+  return (
+    pageState > 0 &&
+    newPage < pageState &&
+    // La numérotation des pages commence à zéro donc c'est newPage+1 qu'il faut tester (= pageState car newPage < pageState)
+    pageState * rowsPerPageState <= NB_LIGNES_PAR_APPEL * (multiplicateur - 1)
+  );
+}
+
 function getSortOrder(
-  property: string,
+  columnKey: string,
   sortOrderBy: string,
   sortOrder: SortOrder
 ): SortOrder {
   let result: SortOrder = "ASC";
-  if (sortOrderBy !== property) {
+  if (sortOrderBy !== columnKey) {
     result = "ASC";
   } else if (sortOrder === "ASC") {
     result = "DESC";

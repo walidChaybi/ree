@@ -3,8 +3,6 @@ import classNames from "classnames";
 import { getText } from "../../common/widget/Text";
 import { FormatDate } from "../../../ressources/FormatDate";
 
-export const tableauHeader = "pages.delivrance.mesRequetes.tableau.header";
-
 export const indexParamsReq = {
   NomOec: 0,
   PrenomOec: 1,

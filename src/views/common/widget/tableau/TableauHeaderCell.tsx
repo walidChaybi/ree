@@ -19,11 +19,11 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
   order,
   orderBy,
   column,
-  sortHandler,
+  sortHandler
 }) => {
   const styles = classNames({
     OrderedHeaderCell: orderBy === column.keys[0],
-    tableauFontHeader: true,
+    tableauFontHeader: true
   });
 
   let orderTableCell: SortDirection = false;
@@ -39,9 +39,12 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
 
   return (
     <TableCell
-      align="center"
+      align={column?.align ? column?.align : "left"}
       sortDirection={orderBy === column.keys[0] ? orderTableCell : false}
-      className="ColonneTableau"
+      // A ajouter dans TableauHeader cell si besoin d'une classe générique:
+      //   className="HeaderColonneTableau"
+      width={column?.width}
+      style={column?.style}
     >
       <TableSortLabel
         className={styles}
@@ -49,7 +52,7 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
         direction={orderBy === column.keys[0] ? orderTableLabel : "asc"}
         onClick={sortHandler(column.keys[0])}
       >
-        <Text messageId={`${column.colLibelle}.${column.keys[0]}`} />
+        <Text messageId={`${column.colLibelle}`} />
       </TableSortLabel>
     </TableCell>
   );

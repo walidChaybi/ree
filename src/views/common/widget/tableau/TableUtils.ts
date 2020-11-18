@@ -60,7 +60,7 @@ export function stableSort<T>(
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  return stabilizedThis.map(el => el[0]);
 }
 
 export function processDataStorting<Key extends keyof any>(
@@ -76,12 +76,12 @@ export function processDataStorting<Key extends keyof any>(
 }
 
 export function getPaginatedData<T>(
-  array: T[],
+  data: T[],
   currentPage: number,
   rowsPerPage: number,
   numberOfPagesPerRequetes: number
 ): T[] {
-  return array.slice(
+  return data.slice(
     (currentPage % numberOfPagesPerRequetes) * rowsPerPage,
     (currentPage % numberOfPagesPerRequetes) * rowsPerPage + rowsPerPage
   );

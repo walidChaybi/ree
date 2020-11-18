@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { ApiManager } from "../../../../api/ApiManager";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import moment from "moment";
 import { TypeRequete } from "../../../../model/requete/TypeRequete";
@@ -19,6 +18,12 @@ import {
 } from "../../../common/types/RequeteType";
 import { IDataTable } from "../MesRequetesDelivrancePage";
 import { getRequetes } from "../../../../api/appels/requeteApi";
+import {
+  parseLink,
+  getMaxRange,
+  getMinRange,
+  getRowsNumber
+} from "../../../../__tests__/common/util/GestionDesLiensApi";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -107,7 +112,6 @@ export function useRequeteApi(
   const [previousDataLinkState, setPreviousDataLinkState] = useState<string>();
   const [nextDataLinkState, setNextDataLinkState] = useState<string>();
   const [errorState, setErrorState] = useState(undefined);
-  const contentRange = "content-range";
 
   useEffect(() => {
     setErrorState(undefined);
@@ -116,7 +120,6 @@ export function useRequeteApi(
     setMaxRangeState(undefined);
     setPreviousDataLinkState(undefined);
     setNextDataLinkState(undefined);
-    const api = ApiManager.getInstance("rece-requete-api", "v1");
 
     let listeStatuts = "";
 
@@ -136,19 +139,10 @@ export function useRequeteApi(
       )
         .then(result => {
           setDataState(reponseRequeteMapper(result.body.data));
-          const rowsNumber: number = +(result.headers[
-            contentRange
-          ] as string).split("/")[1];
-          setRowsNumberState(rowsNumber);
-          const minRange: number = +(result.headers[contentRange] as string)
-            .split("/")[0]
-            .split("-")[0];
-          setMinRangeState(minRange);
-          const maxRange: number = +(result.headers[contentRange] as string)
-            .split("/")[0]
-            .split("-")[1];
-          setMaxRangeState(maxRange);
-          const { nextLink, prevLink } = parseLink(result.headers["link"], api);
+          setRowsNumberState(getRowsNumber(result));
+          setMinRangeState(getMinRange(result));
+          setMaxRangeState(getMaxRange(result));
+          const { nextLink, prevLink } = parseLink(result.headers["link"]);
 
           setPreviousDataLinkState(prevLink);
           setNextDataLinkState(nextLink);
@@ -227,26 +221,4 @@ function createNomOec(reponse: IReponseApi) {
     nomOec = `${reponse?.prenomOec} ${reponse?.nomOec}`;
   }
   return nomOec;
-}
-
-function parseLink(linkHeader: string, api: ApiManager) {
-  let nextLink;
-  let prevLink;
-  if (linkHeader.indexOf(`rel="next"`) > 0) {
-    nextLink = linkHeader
-      .split(`;rel="next"`)[0]
-      .replace("<", "")
-      .replace(">", "");
-    nextLink = `${nextLink}`;
-  }
-  if (linkHeader.indexOf(`rel="prev"`) > 0) {
-    prevLink = linkHeader
-      .replace(`<${nextLink}>;rel="next",`, "")
-      .split(`;rel="prev"`)[0]
-      .replace("<", "")
-      .replace(">", "");
-    prevLink = `${api.url}:${api.ports}${prevLink}`;
-  }
-
-  return { nextLink, prevLink };
 }

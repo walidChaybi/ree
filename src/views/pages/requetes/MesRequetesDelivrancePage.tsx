@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import {
   TableauRece,
   TableauTypeColumn,
-  nbRequeteParAppel
+  NB_LIGNES_PAR_APPEL
 } from "../../common/widget/tableau/TableauRece";
 import {
   useRequeteApi,
@@ -32,7 +32,6 @@ import {
 import {
   getMessagePrioriteDeLaRequete,
   prioriteDeLaRequete,
-  tableauHeader,
   indexParamsReq
 } from "../../common/util/RequetesUtils";
 import {
@@ -69,59 +68,69 @@ export interface IDataTable {
   nbExemplaire: number;
   documentsDelivres: IDocumentDelivre[];
 }
-
+const style = {
+  width: "7.6em"
+};
 const columnsTableau = [
-  new TableauTypeColumn(
-    [HeaderTableauRequete.IdSagaDila],
-    false,
-    tableauHeader
-  ),
-  new TableauTypeColumn(
-    [HeaderTableauRequete.SousTypeRequete],
-    true,
-    tableauHeader,
-    "referentiel.sousTypeRequete.court"
-  ),
-  new TableauTypeColumn(
-    [HeaderTableauRequete.Canal],
-    true,
-    tableauHeader,
-    "referentiel.canal"
-  ),
-  new TableauTypeColumn(
-    [HeaderTableauRequete.NatureActe],
-    true,
-    tableauHeader,
-    "referentiel.natureActe"
-  ),
-  new TableauTypeColumn(
-    [HeaderTableauRequete.Requerant, HeaderTableauRequete.LibelleRequerant],
-    false,
-    tableauHeader
-  ),
-  new TableauTypeColumn(
-    [HeaderTableauRequete.DateCreation],
-    false,
-    tableauHeader
-  ),
-  new TableauTypeColumn(
-    [HeaderTableauRequete.DateStatut],
-    false,
-    tableauHeader
-  ),
-  new TableauTypeColumn(
-    [HeaderTableauRequete.Statut],
-    true,
-    tableauHeader,
-    "referentiel.statutRequete"
-  ),
-  new TableauTypeColumn(
-    [HeaderTableauRequete.PrioriteRequete],
-    false,
-    tableauHeader,
-    "",
-    getIconPrioriteMesRequetes
-  )
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.IdSagaDila],
+    colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila",
+    align: "center",
+    style
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.SousTypeRequete],
+    colLibelle: "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
+    getTextRefentiel: true,
+    rowLibelle: "referentiel.sousTypeRequete.court",
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.Canal],
+    colLibelle: "pages.delivrance.mesRequetes.tableau.header.canal",
+    getTextRefentiel: true,
+    rowLibelle: "referentiel.canal",
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.NatureActe],
+    colLibelle: "pages.delivrance.mesRequetes.tableau.header.natureActe",
+    getTextRefentiel: true,
+    rowLibelle: "referentiel.natureActe",
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [
+      HeaderTableauRequete.Requerant,
+      HeaderTableauRequete.LibelleRequerant
+    ],
+    colLibelle: "pages.delivrance.mesRequetes.tableau.header.requerant",
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.DateCreation],
+    colLibelle: "pages.delivrance.mesRequetes.tableau.header.dateCreation",
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.DateStatut],
+    colLibelle: "pages.delivrance.mesRequetes.tableau.header.dateStatut",
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.Statut],
+    colLibelle: "pages.delivrance.mesRequetes.tableau.header.statut",
+    getTextRefentiel: true,
+
+    rowLibelle: "referentiel.statutRequete",
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.PrioriteRequete],
+    colLibelle: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete",
+    getIcon: getIconPrioriteMesRequetes,
+    align: "center"
+  })
 ];
 
 function getIconPrioriteMesRequetes(row: IDataTable): JSX.Element {
@@ -139,9 +148,7 @@ interface MesRequetesPageProps {
   officier?: IOfficierSSOApi;
 }
 
-export const MesRequetesDelivrancePage: React.FC<MesRequetesPageProps> = (
-  props
-) => {
+export const MesRequetesDelivrancePage: React.FC<MesRequetesPageProps> = props => {
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
   >({
@@ -152,7 +159,7 @@ export const MesRequetesDelivrancePage: React.FC<MesRequetesPageProps> = (
     ],
     tri: "dateStatut",
     sens: "ASC",
-    range: `0-${nbRequeteParAppel}`
+    range: `0-${NB_LIGNES_PAR_APPEL}`
   });
 
   const {
@@ -190,7 +197,7 @@ export const MesRequetesDelivrancePage: React.FC<MesRequetesPageProps> = (
       ],
       tri,
       sens,
-      range: `0-${nbRequeteParAppel}`
+      range: `0-${NB_LIGNES_PAR_APPEL}`
     };
 
     setLinkParameters(queryParameters);
@@ -203,7 +210,7 @@ export const MesRequetesDelivrancePage: React.FC<MesRequetesPageProps> = (
   return (
     <>
       <TableauRece
-        idKey={`idRequete`}
+        idKey={"idRequete"}
         onClickOnLine={getUrlBack}
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}

@@ -16,16 +16,14 @@ test("renders composant TableauRece", () => {
   history.push(AppUrls.ctxMesRequetesUrl);
 
   const handleClickOnLine = jest.fn();
-  const handleClickSetSortOrderByState = jest.fn();
-  const handleClickSetSortOrder = jest.fn();
+  const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
 
   const columnsTableau = [
-    new TableauTypeColumn(
-      [HeaderTableauRequete.IdSagaDila],
-      false,
-      "pages.delivrance.mesRequetes.tableau.header"
-    )
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.IdSagaDila],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+    })
   ];
 
   const component = renderer.create(
@@ -39,9 +37,9 @@ test("renders composant TableauRece", () => {
         dataState={requetes.data}
         rowsNumberState={0}
         nextDataLinkState={""}
+        previousDataLinkState={""}
         goToLink={handleClickGoToLink}
-        setSortOrderState={handleClickSetSortOrder}
-        setSortOrderByState={handleClickSetSortOrderByState}
+        handleChangeSort={handleChangeSort}
         canUseSignature={false}
       />
     </Router>
@@ -59,11 +57,10 @@ test("TableauRece can be sort", () => {
   const handleClickGoToLink = jest.fn();
 
   const columnsTableau = [
-    new TableauTypeColumn(
-      [HeaderTableauRequete.IdSagaDila],
-      false,
-      "pages.delivrance.mesRequetes.tableau.header"
-    )
+    new TableauTypeColumn({
+      keys: [HeaderTableauRequete.IdSagaDila],
+      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+    })
   ];
 
   render(
@@ -77,6 +74,7 @@ test("TableauRece can be sort", () => {
         dataState={requetes.data}
         rowsNumberState={0}
         nextDataLinkState={""}
+        previousDataLinkState={""}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
       />

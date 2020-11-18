@@ -21,13 +21,13 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   data,
   idKey,
   columnHeaders,
-  onClickOnLine,
+  onClickOnLine
 }) => {
   const history = useHistory();
 
   function onClickRowHandler(identifiant: string) {
     history.push(onClickOnLine(identifiant), {
-      data,
+      data
     });
   }
 
@@ -36,9 +36,9 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
       <TableBody>
         {data.map((row: any, idx: number) => (
           <TableRow
-            key={row.idSagaDila}
+            key={row[idKey]}
             onClick={() => onClickRowHandler(row[idKey])}
-            data-testid={row.idSagaDila}
+            data-testid={row[idKey]}
           >
             {getRowRender(columnHeaders, row, idx)}
           </TableRow>
@@ -61,11 +61,17 @@ function getRowRender(
         <TableauBodyCell
           key={`row-${idx}-${column.keys[0]}`}
           data={getText(`${column.rowLibelle}.${column.getValueAtKey(row)}`)}
+          column={column}
         />
       );
     } else if (column.getIcon !== undefined) {
       tableauBodyCellList.push(
-        <TableCell align="center" key={`row-${idx}-${column.keys[0]}`}>
+        <TableCell
+          style={column.style}
+          width={column?.width}
+          align={column?.align ? column?.align : "center"}
+          key={`row-${idx}-${column.keys[0]}`}
+        >
           {column.getIcon(row)}
         </TableCell>
       );
@@ -74,6 +80,7 @@ function getRowRender(
         <TableauBodyCell
           key={`row-${idx}-${column.keys[0]}`}
           data={column.getValueAtKey(row)}
+          column={column}
         />
       );
     }
