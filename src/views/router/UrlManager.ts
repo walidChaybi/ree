@@ -15,6 +15,8 @@ export const IdRequeteUrl = `${MesRequetesUrl}/:idRequete`;
 export const ctxIdRequeteUrl = `${contextApp}${IdRequeteUrl}`;
 export const IdRequeteServiceUrl = `${RequetesServiceUrl}/:idRequete`;
 export const ctxIdRequeteServiceUrl = `${contextApp}${IdRequeteServiceUrl}`;
+export const RcRcaUrl = "/rcrca";
+export const ctxRcRcaUrl = `${contextApp}${RcRcaUrl}`;
 
 export const AppUrls = {
   contextApp,
@@ -31,7 +33,9 @@ export const AppUrls = {
   IdRequeteUrl,
   ctxIdRequeteUrl,
   IdRequeteServiceUrl,
-  ctxIdRequeteServiceUrl
+  ctxIdRequeteServiceUrl,
+  RcRcaUrl,
+  ctxRcRcaUrl
 };
 
 // Url APIs

@@ -6,6 +6,7 @@ import { RequetePage } from "../pages/requeteVisualisation/RequetePage";
 import { AppUrls } from "./UrlManager";
 import DelivrancePage from "../pages/requetes/RequetesPage";
 import { OfficierContext } from "../core/contexts/OfficierContext";
+import { RcRcaPage } from "../pages/RcRcaPage";
 
 export const RouterComponent: React.FC = () => {
   return (
@@ -26,9 +27,9 @@ export const RouterComponent: React.FC = () => {
       <Route
         exact
         path={AppUrls.ctxIdRequeteUrl}
-        render={(props) => (
+        render={props => (
           <OfficierContext.Consumer>
-            {(officier) => (
+            {officier => (
               <RequetePage {...props} officier={officier?.officierDataState} />
             )}
           </OfficierContext.Consumer>
@@ -42,15 +43,19 @@ export const RouterComponent: React.FC = () => {
       <Route
         exact
         path={AppUrls.ctxIdRequeteServiceUrl}
-        render={(props) => (
+        render={props => (
           <OfficierContext.Consumer>
-            {(officier) => (
+            {officier => (
               <RequetePage {...props} officier={officier?.officierDataState} />
             )}
           </OfficierContext.Consumer>
         )}
       />
       <Route exact path={AppUrls.ctxAccueilUrl} component={AccueilPage} />
+
+      <Route exact path={AppUrls.ctxRcRcaUrl}>
+        <RcRcaPage />
+      </Route>
     </Switch>
   );
 };
