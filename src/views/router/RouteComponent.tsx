@@ -2,9 +2,9 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { AccueilPage } from "../pages/accueil/AccueilPage";
 import { LoginPage } from "../core/login/LoginPage";
-import { RequetePage } from "../pages/requeteVisualisation/RequetePage";
+import { ApercuRequetePage } from "../pages/apercuRequete/ApercuRequetePage";
 import { AppUrls } from "./UrlManager";
-import DelivrancePage from "../pages/requetes/RequetesPage";
+import DelivrancePage from "../pages/espaceDelivrance/EspaceDelivrancePage";
 import { OfficierContext } from "../core/contexts/OfficierContext";
 
 export const RouterComponent: React.FC = () => {
@@ -26,10 +26,13 @@ export const RouterComponent: React.FC = () => {
       <Route
         exact
         path={AppUrls.ctxIdRequeteUrl}
-        render={(props) => (
+        render={props => (
           <OfficierContext.Consumer>
-            {(officier) => (
-              <RequetePage {...props} officier={officier?.officierDataState} />
+            {officier => (
+              <ApercuRequetePage
+                {...props}
+                officier={officier?.officierDataState}
+              />
             )}
           </OfficierContext.Consumer>
         )}
@@ -42,10 +45,13 @@ export const RouterComponent: React.FC = () => {
       <Route
         exact
         path={AppUrls.ctxIdRequeteServiceUrl}
-        render={(props) => (
+        render={props => (
           <OfficierContext.Consumer>
-            {(officier) => (
-              <RequetePage {...props} officier={officier?.officierDataState} />
+            {officier => (
+              <ApercuRequetePage
+                {...props}
+                officier={officier?.officierDataState}
+              />
             )}
           </OfficierContext.Consumer>
         )}

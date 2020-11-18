@@ -1,0 +1,107 @@
+import React, { useState, useEffect, useCallback } from "react";
+import { useHistory, RouteComponentProps } from "react-router-dom";
+import { useRequeteDataApi } from "./hook/DonneeRequeteHook";
+import { IDataTable } from "../espaceDelivrance/MesRequetesPage";
+import { AppUrls } from "../../router/UrlManager";
+import { Title } from "../../core/title/Title";
+import { IOfficierSSOApi } from "../../core/login/LoginHook";
+import { ActionsButtonsRequestPage } from "./actions/ActionsButtonsRequestPage";
+import { EtatRequete } from "./contenu/EtatRequete";
+import { ContenuRequete } from "./contenu/ContenuRequete";
+import { IDocumentDelivre } from "../../common/types/RequeteType";
+
+export interface RequestsInformations {
+  data: IDataTable[];
+}
+
+export interface Test {
+  officier?: IOfficierSSOApi;
+}
+
+type ApercuRequetePageProps = RouteComponentProps<{ idRequete: string }> & Test;
+
+export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = props => {
+  const history = useHistory();
+  const [histoReq] = useState<RequestsInformations>(
+    history.location.state as RequestsInformations
+  );
+  const [indexRequete, setIndexRequete] = useState<number>(
+    getIndexRequete(props.match.params.idRequete, histoReq)
+  );
+
+  const { dataState } = useRequeteDataApi(
+    {
+      idRequete: props.match.params.idRequete
+    },
+    props.officier,
+    histoReq
+  );
+
+  const changeIndex = useCallback(
+    (idx: number) => {
+      history.push(`${AppUrls.ctxMesRequetesUrl}/${dataState[idx].idRequete}`);
+      setIndexRequete(idx);
+    },
+    [dataState, history]
+  );
+
+  useEffect(() => {
+    const idx = dataState.findIndex(donnee => {
+      return donnee.idRequete === props.match.params.idRequete;
+    });
+    setIndexRequete(idx);
+  }, [dataState, props.match.params.idRequete]);
+
+  const setDocumentDelivreFct = useCallback(
+    (newDocumentsDelivres: IDocumentDelivre) => {
+      const newRequete: IDataTable = { ...histoReq.data[indexRequete] };
+      newRequete.documentsDelivres = [newDocumentsDelivres];
+    },
+    [histoReq, indexRequete]
+  );
+
+  const reloadData = useCallback(() => {
+    history.goBack();
+  }, [history]);
+
+  return (
+    <>
+      <Title titleId={"pages.delivrance.apercu.titre"} />
+
+      {dataState.length > 0 && indexRequete >= 0 && (
+        <>
+          <ActionsButtonsRequestPage
+            maxRequetes={dataState.length}
+            indexRequete={indexRequete}
+            setIndexRequete={changeIndex}
+            requetes={dataState !== undefined ? dataState : []}
+            idRequete={props.match.params.idRequete}
+            reloadData={reloadData}
+            connectedUser={props.officier}
+          />
+          <EtatRequete requete={dataState[indexRequete]} />
+          <ContenuRequete
+            requete={dataState[indexRequete]}
+            setDocumentDelivreFct={setDocumentDelivreFct}
+          />
+        </>
+      )}
+    </>
+  );
+};
+
+function getIndexRequete(
+  idRequete: string,
+  requetesInfos: RequestsInformations
+): number {
+  let position = 0;
+  if (requetesInfos !== undefined) {
+    position = requetesInfos.data.findIndex((element, index) => {
+      if (element.idRequete === idRequete) {
+        return true;
+      }
+      return false;
+    });
+  }
+  return position;
+}
