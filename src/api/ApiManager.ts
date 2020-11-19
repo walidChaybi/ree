@@ -8,7 +8,10 @@ if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, config);
 }
 
-type ApisAutorisees = "rece-requete-api" | "rece-securite-api";
+type ApisAutorisees =
+  | "rece-requete-api"
+  | "rece-securite-api"
+  | "rece-etatcivil-api";
 
 interface IApi {
   url: string;
