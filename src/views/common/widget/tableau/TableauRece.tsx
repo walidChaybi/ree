@@ -136,29 +136,33 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
     );
   }, [props.dataState, pageState, rowsPerPageState]);
 
-  const reloadData = (allRequestSigned: boolean) => {
-    if (props.handleReload !== undefined) {
-      props.handleReload();
-    }
-    let newPageState = pageState;
+  const reloadData = useCallback(
+    (allRequestSigned: boolean) => {
+      if (props.handleReload !== undefined) {
+        props.handleReload();
+      }
 
-    if (
-      newPageState > 0 &&
-      props.nextDataLinkState === undefined &&
-      newPageState - 1 * rowsPerPageState >= props.dataState.length
-    ) {
-      newPageState--;
-    }
-    if (
-      allRequestSigned &&
-      newPageState * rowsPerPageState >=
-        props.dataState.length - rowsPerPageState &&
-      props.nextDataLinkState !== undefined
-    ) {
-      newPageState--;
-    }
-    setPageState(newPageState);
-  };
+      if (allRequestSigned) {
+        // Si toutes les requêtes de la page étaient à signer et qu'elles ont été signées alors on revient sur la page d'avant
+        let newPageState = pageState;
+        if (
+          newPageState > 0 &&
+          props.nextDataLinkState === undefined &&
+          newPageState - 1 * rowsPerPageState >= props.dataState.length
+        ) {
+          newPageState--;
+        } else if (
+          newPageState * rowsPerPageState >=
+            props.dataState.length - rowsPerPageState &&
+          props.nextDataLinkState !== undefined
+        ) {
+          newPageState--;
+        }
+        setPageState(newPageState);
+      }
+    },
+    [pageState, props, rowsPerPageState]
+  );
 
   const [dataBody, setdataBody] = React.useState<any[]>(processData());
 

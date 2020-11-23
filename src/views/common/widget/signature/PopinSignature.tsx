@@ -21,7 +21,7 @@ import { SuccessSignature } from "./messages/SuccessSignature";
 interface PopinSignatureProps {
   documentsByRequete: DocumentsByRequete;
   open: boolean;
-  onClose: (isOpen: boolean, changePage: boolean) => void;
+  onClose: (isOpen: boolean) => void;
 }
 
 export const PopinSignature: React.FC<PopinSignatureProps> = ({
