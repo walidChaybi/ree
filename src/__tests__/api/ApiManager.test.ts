@@ -17,16 +17,6 @@ test("instanciation d'une api définie dans le fichier api.json", () => {
   expect(api.getUri()).toBe("http://localhost:80/rece/rece-requete-api/v1");
 });
 
-test("instanciation d'une api définie dans le fichier api.json avec une mauvaise version", () => {
-  expect(() => ApiManager.getInstance("rece-requete-api", "v3")).toThrow(Error);
-});
-
-test("instanciation d'une api non définie dans le fichier api.json", () => {
-  expect(() =>
-    ApiManager.getInstance("rece-televerification-api", "v3")
-  ).toThrow(Error);
-});
-
 test("fetch d'une requête http GET", () => {
   const api = ApiManager.getInstance("rece-requete-api", "v1");
   const parametre1 = "titi";
@@ -43,10 +33,10 @@ test("fetch d'une requête http GET", () => {
       },
       headers: [{ header: "custom-header", value: "custom-header-value" }]
     })
-    .then((result) => {
+    .then(result => {
       expect(result).toBeTruthy();
     })
-    .catch((error) => {
+    .catch(error => {
       expect(error).toBe("ERRRRRRRRROR");
     });
 });
