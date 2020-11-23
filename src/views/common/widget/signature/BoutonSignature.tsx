@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from "react";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { PopinSignature } from "../signature/PopinSignature";
-import { DocumentsATraiter, DocumentsByRequete } from "./hook/SignatureDocumentHook";
-import { IDataTable } from "../../../pages/requetes/MesRequetesDelivrancePage";
+import {
+  DocumentsATraiter,
+  DocumentsByRequete
+} from "./hook/SignatureDocumentHook";
+import { IDataTable } from "../../../pages/espaceDelivrance/MesRequetesPage";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { IOfficierSSOApi } from "../../../core/login/LoginHook";
 import { getText } from "../Text";
@@ -21,16 +24,20 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   requetes,
   reloadData,
   uniqueSignature,
-  connectedUser,
+  connectedUser
 }) => {
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
-  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<DocumentsByRequete>({});
+  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<
+    DocumentsByRequete
+  >({});
 
   const closePopin = useCallback(
     (showPopin: boolean, changePage: boolean) => {
       setShowWaitState(showPopin);
       if (changePage === true) {
-        reloadData(Object.keys(documentsByRequeteToSign).length === requetes.length);
+        reloadData(
+          Object.keys(documentsByRequeteToSign).length === requetes.length
+        );
       }
     },
     [reloadData, documentsByRequeteToSign, requetes]
@@ -40,7 +47,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
     setShowWaitState(true);
 
     const newDocumentsByRequeteToSign: DocumentsByRequete = {};
-    requetes.forEach((requete) => {
+    requetes.forEach(requete => {
       if (
         requete.reponse !== undefined &&
         requete.statut === StatutRequete.ASigner &&
@@ -49,10 +56,10 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         const documentsATraiter: DocumentsATraiter = {
           documentsToSign: [],
           documentsToSave: [],
-          sousTypeRequete: requete.sousTypeRequete,
+          sousTypeRequete: requete.sousTypeRequete
         };
 
-        requete.reponse.documentsDelivres.forEach((document) => {
+        requete.reponse.documentsDelivres.forEach(document => {
           documentsATraiter.documentsToSign.push({
             idDocumentDelivre: document.idDocumentDelivre,
             mimeType: document.mimeType,
@@ -60,7 +67,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
             nomDocument: document.nom,
             conteneurSwift: document.conteneurSwift,
             idRequete: requete.idRequete,
-            numeroRequete: requete.idSagaDila,
+            numeroRequete: requete.idSagaDila
           });
         });
 
@@ -73,11 +80,18 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
 
   return (
     <>
-      <Button disabled={!signaturePossible(requetes, uniqueSignature, connectedUser)} onClick={handleClickSignature}>
+      <Button
+        disabled={!signaturePossible(requetes, uniqueSignature, connectedUser)}
+        onClick={handleClickSignature}
+      >
         {getText(libelle)}
       </Button>
 
-      <PopinSignature documentsByRequete={documentsByRequeteToSign} open={showWaitState} onClose={closePopin} />
+      <PopinSignature
+        documentsByRequete={documentsByRequeteToSign}
+        open={showWaitState}
+        onClose={closePopin}
+      />
     </>
   );
 };
@@ -88,8 +102,11 @@ const signaturePossible = (
   connectedUser?: IOfficierSSOApi
 ): boolean => {
   if (uniqueSignature === true) {
-    return connectedUser !== undefined && requetes[0].nomOec === `${connectedUser.prenom} ${connectedUser.nom}`;
+    return (
+      connectedUser !== undefined &&
+      requetes[0].nomOec === `${connectedUser.prenom} ${connectedUser.nom}`
+    );
   } else {
-    return requetes.some((req) => req.statut === StatutRequete.ASigner);
+    return requetes.some(req => req.statut === StatutRequete.ASigner);
   }
 };

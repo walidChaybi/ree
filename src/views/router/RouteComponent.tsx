@@ -2,9 +2,9 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { AccueilPage } from "../pages/accueil/AccueilPage";
 import { LoginPage } from "../core/login/LoginPage";
-import { RequetePage } from "../pages/requeteVisualisation/RequetePage";
+import { ApercuRequetePage } from "../pages/apercuRequete/ApercuRequetePage";
 import { AppUrls } from "./UrlManager";
-import DelivrancePage from "../pages/requetes/RequetesPage";
+import DelivrancePage from "../pages/espaceDelivrance/EspaceDelivrancePage";
 import { OfficierContext } from "../core/contexts/OfficierContext";
 import { RcRcaPage } from "../pages/RcRcaPage";
 
@@ -30,7 +30,10 @@ export const RouterComponent: React.FC = () => {
         render={props => (
           <OfficierContext.Consumer>
             {officier => (
-              <RequetePage {...props} officier={officier?.officierDataState} />
+              <ApercuRequetePage
+                {...props}
+                officier={officier?.officierDataState}
+              />
             )}
           </OfficierContext.Consumer>
         )}
@@ -46,7 +49,10 @@ export const RouterComponent: React.FC = () => {
         render={props => (
           <OfficierContext.Consumer>
             {officier => (
-              <RequetePage {...props} officier={officier?.officierDataState} />
+              <ApercuRequetePage
+                {...props}
+                officier={officier?.officierDataState}
+              />
             )}
           </OfficierContext.Consumer>
         )}
