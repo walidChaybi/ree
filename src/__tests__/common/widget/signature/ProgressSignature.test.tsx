@@ -33,13 +33,13 @@ test("renders progresse bar", () => {
 });
 
 test("renders progress bar, close function is called", () => {
-  const handleClickButton = jest.fn();
+  const handleClose = jest.fn();
 
   render(
     <ProgressSignature
       errors={false}
       idsRequetesToSign={[]}
-      onClose={handleClickButton}
+      onClose={handleClose}
       documentsByRequete={{
         idRequete1: {
           documentsToSign: [
@@ -59,9 +59,9 @@ test("renders progress bar, close function is called", () => {
     />
   );
 
-  const closeButton = screen.getByText("Fermer");
-  fireEvent.click(closeButton);
-  expect(handleClickButton).toHaveBeenCalledTimes(1);
+  screen.getByText("Fermer");
+  // Fermeture automatique si toutes les requêtes ont été signées sans erreur
+  expect(handleClose).toHaveBeenCalledTimes(1);
 });
 
 test("renders progress bar, close function can't be called", () => {
