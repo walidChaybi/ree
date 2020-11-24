@@ -1,13 +1,12 @@
 import path from "path";
 import { Pact, InteractionObject, Interaction } from "@pact-foundation/pact";
 import { ApiEndpoints } from "../../views/router/UrlManager";
-import { StatutRequete } from "../../model/requete/StatutRequete";
 import { ApiPact } from "./ApiPact";
-import { requetesPact } from "./requetes.pact";
+import { rcPact } from "./rc.pact";
 
 const provider = new Pact({
-  consumer: "ReceUiMesRequetes",
-  provider: "ReceRequeteApi",
+  consumer: "rece-rc-ui",
+  provider: "rece-rc-ui",
   log: path.resolve(process.cwd(), "logs", "pact.log"),
   logLevel: "warn",
   dir: path.resolve(process.cwd(), "pact/publish/pacts"),
@@ -27,13 +26,10 @@ describe("API Pact test", () => {
     return provider.finalize();
   });
 
-  describe("getting all requests of an oec", () => {
-    const uri = "/rece-requete-api/v1" + ApiEndpoints.RequetesUrl;
+  describe("getting rc", () => {
+    const uri = "/rece-rcrca-api/v1" + ApiEndpoints.RequetesUrl;
 
     const queryParameters = {
-      statut: StatutRequete.ASigner,
-      tri: "dateStatus",
-      sens: "ASC",
       nomOec: "SLAOUI",
       prenomOec: "Nabil",
       idArobas: "03901913"
@@ -43,17 +39,17 @@ describe("API Pact test", () => {
       hasTechnicalError: false,
       hasBusinessError: false,
       status: 200,
-      url: "/rece-requete-api/v1/requetes",
-      data: requetesPact,
+      url: "/rece-rcrca-api/v1/rc",
+      data: rcPact,
       errors: []
     };
 
-    test("requests exist", async () => {
+    test("rc exist", async () => {
       // set up Pact interactions
 
       const interaction: InteractionObject | Interaction = {
-        state: "requests exist",
-        uponReceiving: "get all requests of an oec",
+        state: "rc exist",
+        uponReceiving: "get an rc",
         withRequest: {
           method: "GET",
           path: uri,
@@ -80,10 +76,6 @@ describe("API Pact test", () => {
 
       expect(result.body).not.toBeNull();
       expect(result.body.data).not.toBeNull();
-      expect(result.body.data.length).toBe(1);
-      expect(result.body.data[0].idRequete).toBe(
-        expectedResult.data.contents.idRequete
-      );
     });
   });
 });

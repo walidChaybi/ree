@@ -1,16 +1,15 @@
 import React from "react";
-import { DataAccordion, AccordionContent } from "./AccordionPart";
+import { AccordionPartProps, AccordionPart } from "./AccordionPart";
 
-export interface AccordionPart {
-  contents: DataAccordion[];
-  title: string;
+export interface AccordionPanelProps {
+  parts: AccordionPartProps[];
 }
 
-export const AccordionPanel: React.FC<AccordionPart> = ({ contents }) => {
+export const AccordionPanel: React.FC<AccordionPanelProps> = ({ parts }) => {
   return (
     <div>
-      {contents.map(content => {
-        return <AccordionContent {...content} />;
+      {parts.map(part => {
+        return <AccordionPart {...part} />;
       })}
     </div>
   );

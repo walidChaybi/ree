@@ -1,13 +1,21 @@
 import React from "react";
+import { AccordionContent, AccordionContentProps } from "./AccordionContent";
 
-export interface DataAccordion {
-  libelle: JSX.Element;
-  value: JSX.Element;
+export interface AccordionPartProps {
+  contents: AccordionContentProps[];
+  title: string;
 }
 
-export const AccordionContent: React.FC<DataAccordion> = ({
-  libelle,
-  value
+export const AccordionPart: React.FC<AccordionPartProps> = ({
+  contents,
+  title
 }) => {
-  return <div>{`${libelle} : ${value}`}</div>;
+  return (
+    <>
+      <div>{title}</div>
+      {contents.map(content => {
+        return <AccordionContent {...content} />;
+      })}
+    </>
+  );
 };

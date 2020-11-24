@@ -1,0 +1,148 @@
+{
+  "consumer": {
+    "name": "rece-rc-ui"
+  },
+  "provider": {
+    "name": "rece-rc-ui"
+  },
+  "interactions": [
+    {
+      "description": "get an rc",
+      "providerState": "rc exist",
+      "request": {
+        "method": "GET",
+        "path": "/rece-rcrca-api/v1/requetes",
+        "query": "nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+          "hasTechnicalError": false,
+          "hasBusinessError": false,
+          "status": 200,
+          "url": "/rece-rcrca-api/v1/rc",
+          "data": {
+            "nature": "Curatelle aménagée",
+            "typeInscription": "Renouvellement (RC n° 2015 - 36547)",
+            "numeroRc": "253",
+            "dateInscription": 1518652800,
+            "dureeInscriptionRc": {
+              "nombreDuree": 2,
+              "uniteDuree": "ans",
+              "dateFinDeMesure": 1581724800
+            },
+            "mandataires": [
+              [
+                "Mandataire judiciaire à la protection des majeurs association",
+                "Préposé d'établissement"
+              ]
+            ],
+            "inscriptionsLiees": [
+              {
+                "typeInscription": "Modification",
+                "numeroRc": "2017 - 145235",
+                "idInscription": ""
+              }
+            ],
+            "interesses": [
+              {
+                "nomFamille": "FAVARO",
+                "autresNoms": [
+                  "FAVAROTTI"
+                ],
+                "prenoms": [
+                  {
+                    "prenom": "Enrico",
+                    "numeroOrdre": 0
+                  }
+                ],
+                "autresPrenoms": [
+                  [
+
+                  ]
+                ],
+                "dateDeNaissance": -777168000,
+                "lieuDeNaissance": "San remo (Italie)",
+                "nationalite": "Etrangère",
+                "sexe": "Masculin"
+              }
+            ],
+            "decisionRc": {
+              "type": "Jugement",
+              "dateDecision": 1577059200,
+              "enrolementRg": "",
+              "enrolementPortalis": "",
+              "autorite": {
+                "type": "Tribunal de grande instance",
+                "ville": "Lyon",
+                "arrondissement": "8",
+                "departement": "Rhône(69)"
+              },
+              "confirmation": {
+                "type": "Arrêt",
+                "dateDecision": 1584403200,
+                "enrolementRg": "",
+                "enrolementPortalis": "",
+                "autorite": {
+                  "type": "Cour d'appel",
+                  "ville": "Marseille",
+                  "arrondissement": "10",
+                  "departement": "Bouches-du-Rhône(13)"
+                }
+              }
+            }
+          },
+          "errors": [
+
+          ]
+        },
+        "matchingRules": {
+          "$.body.data.mandataires": {
+            "min": 1
+          },
+          "$.body.data.mandataires[*].*": {
+            "match": "type"
+          },
+          "$.body.data.inscriptionsLiees": {
+            "min": 1
+          },
+          "$.body.data.inscriptionsLiees[*].*": {
+            "match": "type"
+          },
+          "$.body.data.interesses": {
+            "min": 1
+          },
+          "$.body.data.interesses[*].*": {
+            "match": "type"
+          },
+          "$.body.data.interesses[*].autresNoms": {
+            "min": 1
+          },
+          "$.body.data.interesses[*].autresNoms[*].*": {
+            "match": "type"
+          },
+          "$.body.data.interesses[*].prenoms": {
+            "min": 1
+          },
+          "$.body.data.interesses[*].prenoms[*].*": {
+            "match": "type"
+          },
+          "$.body.data.interesses[*].autresPrenoms": {
+            "min": 1
+          },
+          "$.body.data.interesses[*].autresPrenoms[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

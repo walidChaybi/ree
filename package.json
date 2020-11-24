@@ -126,7 +126,8 @@
     "test:dev:update": "node scripts/test.js --watchAll -u",
     "test:dev:coverage": "node scripts/test.js --watchAll --coverage",
     "test": "CI=true node scripts/test.js --coverage",
-    "package": "node scripts/build.js"
+    "package": "node scripts/build.js",
+    "publish:pact": "node pact/publish/publish.js"
   },
   "jest": {
     "testResultsProcessor": "jest-sonar-reporter",
