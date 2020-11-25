@@ -1,10 +1,20 @@
 import { eachLike } from "@pact-foundation/pact/dsl/matchers";
 
 export const rcPact = {
+  annee: "2018",
+  numeroRc: "56533",
   nature: "Curatelle aménagée",
   typeInscription: "Renouvellement (RC n° 2015 - 36547)",
-  numeroRc: "253",
   dateInscription: 1518652800,
+  dateDerniereMaj: 1583971200,
+  dateDerniereDelivrance: 1592092800,
+  statutFicheRc: {
+    statut: "Actif"
+  },
+  alertesRc: eachLike({
+    alerte: "Date de fin de mesure dépassée",
+    dateCreation: 1581807600
+  }),
   dureeInscriptionRc: {
     nombreDuree: 2,
     uniteDuree: "ans",

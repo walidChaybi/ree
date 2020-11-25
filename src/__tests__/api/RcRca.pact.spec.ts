@@ -27,19 +27,18 @@ describe("API Pact test", () => {
   });
 
   describe("getting rc", () => {
-    const uri = "/rece-rcrca-api/v1" + ApiEndpoints.RequetesUrl;
+    const uri = "/rece-etatcivil-api/v1" + ApiEndpoints.FicheUrl;
 
     const queryParameters = {
-      nomOec: "SLAOUI",
-      prenomOec: "Nabil",
-      idArobas: "03901913"
+      type: "rc",
+      id: "7566e16c-2b0e-11eb-adc1-0242ac120002"
     };
 
     const expectedResult = {
       hasTechnicalError: false,
       hasBusinessError: false,
       status: 200,
-      url: "/rece-rcrca-api/v1/rc",
+      url: "/rece-rcrca-api/v1/fiche/rc",
       data: rcPact,
       errors: []
     };
