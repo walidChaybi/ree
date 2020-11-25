@@ -8,7 +8,7 @@ import {
   waitFor,
   act
 } from "@testing-library/react";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+import config from "../../../../mock/superagent-config/superagent-mock-requetes";
 import request from "superagent";
 
 const superagentMock = require("superagent-mock")(request, config);

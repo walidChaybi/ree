@@ -1,45 +1,40 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useHistory, RouteComponentProps } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useRequeteDataApi } from "./hook/DonneeRequeteHook";
 import { IDataTable } from "../espaceDelivrance/MesRequetesPage";
-import { AppUrls } from "../../router/UrlManager";
+import { URL_MES_REQUETES } from "../../router/ReceUrls";
 import { Title } from "../../core/title/Title";
-import { IOfficierSSOApi } from "../../core/login/LoginHook";
 import { ActionsButtonsRequestPage } from "./actions/ActionsButtonsRequestPage";
 import { EtatRequete } from "./contenu/EtatRequete";
 import { ContenuRequete } from "./contenu/ContenuRequete";
 import { IDocumentDelivre } from "../../common/types/RequeteType";
+import { storeRece } from "../../common/util/storeRece";
 
 export interface RequestsInformations {
   data: IDataTable[];
 }
 
-export interface Test {
-  officier?: IOfficierSSOApi;
-}
-
-type ApercuRequetePageProps = RouteComponentProps<{ idRequete: string }> & Test;
-
-export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = props => {
+export const ApercuRequetePage: React.FC = props => {
+  const { idRequete } = useParams();
   const history = useHistory();
   const [histoReq] = useState<RequestsInformations>(
     history.location.state as RequestsInformations
   );
   const [indexRequete, setIndexRequete] = useState<number>(
-    getIndexRequete(props.match.params.idRequete, histoReq)
+    getIndexRequete(idRequete, histoReq)
   );
 
   const { dataState } = useRequeteDataApi(
     {
-      idRequete: props.match.params.idRequete
+      idRequete
     },
-    props.officier,
+    storeRece.utilisateurCourant,
     histoReq
   );
 
   const changeIndex = useCallback(
     (idx: number) => {
-      history.push(`${AppUrls.ctxMesRequetesUrl}/${dataState[idx].idRequete}`);
+      history.push(`${URL_MES_REQUETES}/${dataState[idx].idRequete}`);
       setIndexRequete(idx);
     },
     [dataState, history]
@@ -47,10 +42,10 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = props => {
 
   useEffect(() => {
     const idx = dataState.findIndex(donnee => {
-      return donnee.idRequete === props.match.params.idRequete;
+      return donnee.idRequete === idRequete;
     });
     setIndexRequete(idx);
-  }, [dataState, props.match.params.idRequete]);
+  }, [dataState, idRequete]);
 
   const setDocumentDelivreFct = useCallback(
     (newDocumentsDelivres: IDocumentDelivre) => {
@@ -75,9 +70,9 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = props => {
             indexRequete={indexRequete}
             setIndexRequete={changeIndex}
             requetes={dataState !== undefined ? dataState : []}
-            idRequete={props.match.params.idRequete}
+            idRequete={idRequete}
             reloadData={reloadData}
-            connectedUser={props.officier}
+            connectedUser={storeRece.utilisateurCourant}
           />
           <EtatRequete requete={dataState[indexRequete]} />
           <ContenuRequete

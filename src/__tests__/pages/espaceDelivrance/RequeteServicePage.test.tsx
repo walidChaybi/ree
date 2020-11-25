@@ -1,5 +1,5 @@
 import React from "react";
-import DONNEES_REQUETE from "../../../api/mock/data/requete";
+import DONNEES_REQUETE from "../../../mock/data/requete";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { act } from "react-dom/test-utils";

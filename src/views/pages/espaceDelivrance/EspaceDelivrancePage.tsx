@@ -2,67 +2,20 @@ import React from "react";
 import { Title } from "../../core/title/Title";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Box from "@material-ui/core/Box";
 import { RequetesServicePage } from "./RequetesServicePage";
 import "./sass/EspaceDelivrancePage.scss";
-import { AppUrls } from "../../router/UrlManager";
+import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
 import { useHistory } from "react-router-dom";
 import { OfficierContext } from "../../core/contexts/OfficierContext";
 import { MesRequetesPage } from "./MesRequetesPage";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import { getText } from "../../common/widget/Text";
-import { Droit } from "../../../model/Droit";
-import { officierHabiliter } from "../../../model/Habilitation";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-  const paddingBox = 3;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`nav-tabpanel-${index}`}
-      aria-labelledby={`nav-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={paddingBox}>{children}</Box>}
-    </div>
-  );
-}
-
-function a11yProps(index: any) {
-  return {
-    id: `nav-tab-${index}`,
-    "aria-controls": `nav-tabpanel-${index}`
-  };
-}
-
-interface LinkTabProps {
-  label?: string;
-  href?: string;
-  disabled?: boolean;
-}
-
-function LinkTab(props: LinkTabProps) {
-  return (
-    <Tab
-      component="a"
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        event.preventDefault();
-      }}
-      {...props}
-      className={props.disabled ? "tab-disabled" : ""}
-    />
-  );
-}
+import {
+  LinkTabMesRequetesWithHabilitation,
+  LinkTabMesRequetes,
+  a11yProps
+} from "./contenu/LinkTabMesRequetes";
+import { TabPanel } from "./contenu/TabPanel";
 
 interface LocalProps {
   selectedTab?: number;
@@ -75,9 +28,9 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
   );
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    let targetUri: string = AppUrls.ctxMesRequetesUrl;
+    let targetUri: string = URL_MES_REQUETES;
     if (newValue === 1) {
-      targetUri = AppUrls.ctxRequetesServiceUrl;
+      targetUri = URL_REQUETES_SERVICE;
     }
     history.push(targetUri);
     setSelectedTabState(newValue);
@@ -104,21 +57,13 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       className="ongletDelivrance"
                       indicatorColor="primary"
                     >
-                      <LinkTab
+                      <LinkTabMesRequetes
                         label={getText("pages.delivrance.onglets.mesRequetes")}
-                        href={AppUrls.MesRequetesUrl}
                         {...a11yProps(0)}
                       />
-                      <LinkTab
+                      <LinkTabMesRequetesWithHabilitation
                         label={getText("pages.delivrance.onglets.monService")}
-                        href={AppUrls.RequetesServiceUrl}
                         {...a11yProps(1)}
-                        disabled={
-                          !officierHabiliter(
-                            officier.officierDataState,
-                            Droit.Attribuer
-                          )
-                        }
                       />
                     </Tabs>
                   </AppBar>
@@ -128,18 +73,13 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       <MesRequetesPage officier={officier.officierDataState} />
                     )}
                   </TabPanel>
-                  {officierHabiliter(
-                    officier.officierDataState,
-                    Droit.Attribuer
-                  ) && (
-                    <TabPanel value={selectedTabState} index={1}>
-                      {selectedTabState === 1 && (
-                        <RequetesServicePage
-                          officier={officier.officierDataState}
-                        />
-                      )}
-                    </TabPanel>
-                  )}
+                  <TabPanel value={selectedTabState} index={1}>
+                    {selectedTabState === 1 && (
+                      <RequetesServicePage
+                        officier={officier.officierDataState}
+                      />
+                    )}
+                  </TabPanel>
                 </>
               )}
             </>

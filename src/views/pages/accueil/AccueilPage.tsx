@@ -20,12 +20,12 @@ import {
 import { Badge } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
-import { AccueilReceAdminUrl } from "../../router/UrlManager";
+import { URL_ACCUEIL_RECE_ADMIN } from "../../router/ReceUrls";
 
 export const AccueilPage: React.FC = () => {
   const history = useHistory();
   const onClickBadgeAdmin = () => {
-    history.push(AccueilReceAdminUrl);
+    history.push(URL_ACCUEIL_RECE_ADMIN);
     history.go(0);
   };
 

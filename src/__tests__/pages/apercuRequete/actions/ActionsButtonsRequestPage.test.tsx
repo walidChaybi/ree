@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { ActionsButtonsRequestPage } from "../../../../views/pages/apercuRequete/actions/ActionsButtonsRequestPage";
 import { BrowserRouter as Router } from "react-router-dom";
-import requete from "../../../../api/mock/data/requete.js";
+import requete from "../../../../mock/data/requete.js";
 
 test("renders boutons d'actions d'une requête", () => {
   const { getAllByRole, getByText } = render(

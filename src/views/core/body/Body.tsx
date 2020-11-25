@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { RouterComponent } from "../../router/RouteComponent";
 import { FilAriane } from "../../common/widget/filAriane/FilAriane";
-import { AppUrls } from "../../router/UrlManager";
+import { URL_ACCUEIL } from "../../router/ReceUrls";
 import {
   OfficierContext,
-  OfficierContextProps,
+  OfficierContextProps
 } from "../contexts/OfficierContext";
 import { LoginPage } from "../login/LoginPage";
 
-export const RetourContext = React.createContext(AppUrls.ctxAccueilUrl);
+export const RetourContext = React.createContext(URL_ACCUEIL);
 export const Body: React.FC = () => {
-  const [retourState, setRetourState] = useState<string>(AppUrls.ctxAccueilUrl);
+  const [retourState, setRetourState] = useState<string>(URL_ACCUEIL);
 
   return (
     <>
       <div className="AppBody">
         <OfficierContext.Consumer>
-          {(officier) =>
+          {officier =>
             officier?.officierDataState?.idSSO !== undefined ? (
               <RetourContext.Provider value={retourState}>
                 <FilAriane setRetourState={setRetourState} />

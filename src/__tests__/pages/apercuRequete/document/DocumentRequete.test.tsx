@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import requetes from "../../../../api/mock/data/requetes.json";
+import requetes from "../../../../mock/data/requetes.json";
 import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+import config from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { DocumentsRequete } from "../../../../views/pages/apercuRequete/contenu/document/DocumentsRequete";
 
 const superagentMock = require("superagent-mock")(request, config);

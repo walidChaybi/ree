@@ -6,14 +6,14 @@ import {
   TableauTypeColumn
 } from "../../../../views/common/widget/tableau/TableauRece";
 import { HeaderTableauRequete } from "../../../../model/requete/HeaderTableauRequete";
-import requetes from "../../../../api/mock/data/requetes.json";
+import requetes from "../../../../mock/data/requetes.json";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
-import { AppUrls } from "../../../../views/router/UrlManager";
+import { URL_MES_REQUETES } from "../../../../views/router/ReceUrls";
 
 test("renders composant TableauRece", () => {
   const history = createMemoryHistory();
-  history.push(AppUrls.ctxMesRequetesUrl);
+  history.push(URL_MES_REQUETES);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
@@ -50,7 +50,7 @@ test("renders composant TableauRece", () => {
 
 test("TableauRece can be sort", () => {
   const history = createMemoryHistory();
-  history.push(AppUrls.ctxMesRequetesUrl);
+  history.push(URL_MES_REQUETES);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();

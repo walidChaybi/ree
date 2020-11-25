@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import request from "superagent";
-import config from "../../../api/mock/superagent-config/superagent-mock-securite";
+import config from "../../../mock/superagent-config/superagent-mock-securite";
 import { useLoginApi } from "../../../views/core/login/LoginHook";
 import { act } from "@testing-library/react";
 
