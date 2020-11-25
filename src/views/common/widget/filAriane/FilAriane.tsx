@@ -40,7 +40,7 @@ export const FilAriane: React.FC<FilArianeProps> = ({ setRetourState }) => {
             aria-label="breadcrumb"
           >
             <Categorie
-              url={URL_ACCUEIL}
+              url={"/accueil"}
               messageId={accueilString}
               last={accueilFirst}
             />
