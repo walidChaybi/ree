@@ -7,9 +7,9 @@ import {
 } from "./hook/SignatureDocumentHook";
 import { IDataTable } from "../../../pages/espaceDelivrance/MesRequetesPage";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { IOfficierSSOApi } from "../../../core/login/LoginHook";
 import { getText } from "../Text";
 import { Button } from "reakit/Button";
+import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;

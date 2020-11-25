@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+import config from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteDataApi } from "../../../../views/pages/apercuRequete/hook/DonneeRequeteHook";
-import DONNEES_REQUETE from "../../../../api/mock/data/requete";
+import DONNEES_REQUETE from "../../../../mock/data/requete";
 import { IDataTable } from "../../../../views/pages/espaceDelivrance/MesRequetesPage";
-import connectedUser from "../../../../api/mock/data/connectedUser.json";
+import connectedUser from "../../../../mock/data/connectedUser.json";
 
 const off = { idSSO: connectedUser.id_sso, ...connectedUser };
 

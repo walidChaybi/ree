@@ -4,8 +4,12 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { Route, MemoryRouter } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Categorie } from "./Categorie";
-import { AccueilUrl, SeparateurUrl, AppUrls } from "../../../router/UrlManager";
 import { getText } from "../Text";
+import {
+  URL_SEPARATEUR,
+  URL_CONTEXT_APP,
+  URL_ACCUEIL
+} from "../../../router/ReceUrls";
 
 interface FilArianeProps {
   setRetourState?: (retourUrl: string) => void;
@@ -14,8 +18,8 @@ export const FilAriane: React.FC<FilArianeProps> = ({ setRetourState }) => {
   const history = useHistory();
   const pathSupprimer = 2;
   const pathnames = history.location.pathname
-    .split(SeparateurUrl)
-    .filter((x) => x);
+    .split(URL_SEPARATEUR)
+    .filter(x => x);
   pathnames.splice(0, pathSupprimer);
   const accueilString = getText("fildariane.accueil").toLowerCase();
   const accueilFirst = pathnames[0] === accueilString;
@@ -28,7 +32,7 @@ export const FilAriane: React.FC<FilArianeProps> = ({ setRetourState }) => {
   }
 
   return (
-    <MemoryRouter initialEntries={[SeparateurUrl]} initialIndex={0}>
+    <MemoryRouter initialEntries={[URL_SEPARATEUR]} initialIndex={0}>
       <Route>
         {deconnexionPath === false && (
           <Breadcrumbs
@@ -36,7 +40,7 @@ export const FilAriane: React.FC<FilArianeProps> = ({ setRetourState }) => {
             aria-label="breadcrumb"
           >
             <Categorie
-              url={AccueilUrl}
+              url={URL_ACCUEIL}
               messageId={accueilString}
               last={accueilFirst}
             />
@@ -44,13 +48,13 @@ export const FilAriane: React.FC<FilArianeProps> = ({ setRetourState }) => {
               pathnames.map((value: string, index: number) => {
                 const to = `/${pathnames
                   .slice(0, index + 1)
-                  .join(SeparateurUrl)}`;
+                  .join(URL_SEPARATEUR)}`;
                 return (
                   <Categorie
                     url={to}
                     messageId={value}
                     last={index === pathnames.length - 1}
-                    key={value + index}
+                    key={`${value}${index}`}
                   />
                 );
               })}
@@ -66,9 +70,9 @@ export function setRetourContextValue(
   setRetourState: (retourUrl: string) => void
 ) {
   if (pathnames.length === 1) {
-    setRetourState(AppUrls.ctxAccueilUrl);
+    setRetourState(URL_ACCUEIL);
   } else {
-    let retourUrl: string = AppUrls.contextApp;
+    let retourUrl: string = URL_CONTEXT_APP;
     pathnames.forEach((element: string, index: number) => {
       if (index !== pathnames.length - 1) {
         retourUrl = `${retourUrl}/${element}`;

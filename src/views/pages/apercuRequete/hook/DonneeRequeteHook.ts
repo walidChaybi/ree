@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { reponseRequeteMapperUnitaire } from "../../espaceDelivrance/hook/DonneesRequeteHook";
 import { RequestsInformations } from "../ApercuRequetePage";
 import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
-import { IOfficierSSOApi } from "../../../core/login/LoginHook";
 import { getRequete } from "../../../../api/appels/requeteApi";
 import { IQueryParametersPourRequete } from "../../../common/widget/signature/hook/SignatureDocumentHook";
+import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
 export function useRequeteDataApi(
   queryParameters: IQueryParametersPourRequete,
@@ -15,6 +15,7 @@ export function useRequeteDataApi(
     requestsInformations ? requestsInformations.data : []
   );
   const [errorState, setErrorState] = useState(undefined);
+
   useEffect(() => {
     setErrorState(undefined);
     setDataState([]);

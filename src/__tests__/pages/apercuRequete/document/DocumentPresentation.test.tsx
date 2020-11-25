@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import data from "./data/documentsDetails";
 import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+import config from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
 import { IDocumentDetail } from "../../../../views/common/types/IDocumentDetail";
 import { DocumentPresentation } from "../../../../views/pages/apercuRequete/contenu/document/DocumentPresentation";

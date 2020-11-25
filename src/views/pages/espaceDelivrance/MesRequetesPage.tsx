@@ -13,7 +13,7 @@ import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
 import { NatureActe } from "../../../model/requete/NatureActe";
 import { Canal } from "../../../model/Canal";
-import { AppUrls } from "../../router/UrlManager";
+import { URL_MES_REQUETES } from "../../router/ReceUrls";
 import { Box } from "@material-ui/core";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
 import "./sass/RequeteTableau.scss";
@@ -23,7 +23,6 @@ import { MotifRequete } from "../../../model/requete/MotifRequete";
 import { CanalProvenance } from "../../../model/requete/CanalProvenance";
 import { SousTypeRequete } from "../../../model/requete/SousTypeRequete";
 import { TypeRequete } from "../../../model/requete/TypeRequete";
-import { IOfficierSSOApi } from "../../core/login/LoginHook";
 import {
   IDocumentDelivre,
   ITitulaire,
@@ -38,6 +37,7 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../api/appels/requeteApi";
+import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 
 export interface IDataTable {
   idRequete: string;
@@ -230,5 +230,5 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
 };
 
 function getUrlBack(identifiantRequete: string): string {
-  return `${AppUrls.ctxMesRequetesUrl}/${identifiantRequete}`;
+  return `${URL_MES_REQUETES}/${identifiantRequete}`;
 }

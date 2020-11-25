@@ -1,7 +1,7 @@
 import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+import config from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { requestDocumentApi } from "../../../../views/common/hook/DocumentRequeteHook";
-import requetes from "../../../../api/mock/data/requetes.json";
+import requetes from "../../../../mock/data/requetes.json";
 import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
 import { MimeType } from "../../../../ressources/MimeType";
 import { IRequestDocumentApiResult } from "../../../../api/appels/requeteApi";

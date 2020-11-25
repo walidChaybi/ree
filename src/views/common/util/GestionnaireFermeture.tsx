@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { OfficierContextProps } from "../../core/contexts/OfficierContext";
 import apiResources from "../../../ressources/api.json";
 import messageManager from "./messageManager";
-import { ApiEndpoints } from "../../router/UrlManager";
 import { useHistory } from "react-router-dom";
-import { IOfficierSSOApi } from "../../core/login/LoginHook";
 import { getText } from "../widget/Text";
+import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
+import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
 
 const TIME_OUT_MS = 500;
 interface GestionnaireFermetureProps {
@@ -15,9 +15,7 @@ interface GestionnaireFermetureProps {
   urlRedirection?: string;
 }
 
-export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = (
-  props
-) => {
+export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = props => {
   const history = useHistory();
   useEffect(() => {
     const handleBackBeforUnload = (event: any) => {
@@ -73,7 +71,7 @@ const appelApi = (officierPayload: IOfficierSSOApi | undefined) => {
   const version = api.usedVersions[0];
 
   const params = `nomOec=${officierPayload?.nom}&prenomOec=${officierPayload?.prenom}&statuts=A_SIGNER`;
-  const url = `${window.origin}/${api.domain}/${api.name}/${version}${ApiEndpoints.RequetesCountUrl}?${params}`;
+  const url = `${window.origin}/${api.domain}/${api.name}/${version}${URL_REQUETES_COUNT}?${params}`;
   req.open("GET", url, false);
   req.send();
 

@@ -7,18 +7,22 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { getText } from "../../common/widget/Text";
 import { OfficierContext } from "../contexts/OfficierContext";
 import { useHistory } from "react-router-dom";
-import { DeconnexionAppUrl } from "../../router/UrlManager";
+import { URL_DECONNEXION } from "../../router/ReceUrls";
 
 interface BoutonDeconnexionProps {
   onClick?: (event: React.MouseEvent) => void;
 }
 
-export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({ onClick }) => {
+export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
+  onClick
+}) => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
 
   const history = useHistory();
 
-  const handleClickBoutonOfficer = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickBoutonOfficer = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     if (onClick) {
       onClick(event);
     }
@@ -30,18 +34,22 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({ onClick })
   };
 
   const handleClickDeconnexion = () => {
-    history.push(DeconnexionAppUrl);
+    history.push(URL_DECONNEXION);
     history.go(0);
     setMenu(null);
   };
 
   return (
     <OfficierContext.Consumer>
-      {(officier) => (
+      {officier => (
         <div className="UtilisateurBouton">
           {officier !== undefined && officier.officierDataState !== undefined && (
             <>
-              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={(event) => handleClickBoutonOfficer(event)}>
+              <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={event => handleClickBoutonOfficer(event)}
+              >
                 {`${officier.officierDataState.prenom} ${officier.officierDataState.nom}`}
               </Button>
 
@@ -54,11 +62,11 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({ onClick })
                 getContentAnchorEl={null}
                 anchorOrigin={{
                   vertical: "bottom",
-                  horizontal: "center",
+                  horizontal: "center"
                 }}
                 transformOrigin={{
                   vertical: "top",
-                  horizontal: "center",
+                  horizontal: "center"
                 }}
               >
                 <MenuItem onClick={handleClickDeconnexion}>

@@ -11,7 +11,6 @@ import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import { Canal } from "../../../../model/Canal";
 import { MotifRequete } from "../../../../model/requete/MotifRequete";
 import { FormatDate } from "../../../../ressources/FormatDate";
-import { IOfficierSSOApi } from "../../../core/login/LoginHook";
 import {
   IDocumentDelivre,
   IPieceJustificative
@@ -23,7 +22,8 @@ import {
   getMaxRange,
   getMinRange,
   getRowsNumber
-} from "../../../../__tests__/common/util/GestionDesLiensApi";
+} from "../../../common/util/GestionDesLiensApi";
+import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
 export interface IRequerantApi {
   idRequerant: string;

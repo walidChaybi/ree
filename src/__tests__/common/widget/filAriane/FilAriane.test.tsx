@@ -4,11 +4,14 @@ import { Router } from "react-router-dom";
 import { FilAriane } from "../../../../views/common/widget/filAriane/FilAriane";
 import { createMemoryHistory } from "history";
 import { render, screen, waitFor } from "@testing-library/react";
-import { AppUrls } from "../../../../views/router/UrlManager";
+import {
+  URL_MES_REQUETES,
+  URL_ACCUEIL
+} from "../../../../views/router/ReceUrls";
 
 test("renders composant FilAriane", () => {
   const history = createMemoryHistory();
-  history.push(AppUrls.ctxMesRequetesUrl);
+  history.push(URL_MES_REQUETES);
   const component = renderer.create(
     <Router history={history}>
       <FilAriane />
@@ -19,7 +22,7 @@ test("renders composant FilAriane", () => {
 
 test("renders de 2 éléments du FilAriane", async () => {
   const history = createMemoryHistory();
-  history.push(AppUrls.ctxMesRequetesUrl);
+  history.push(URL_MES_REQUETES);
   render(
     <Router history={history}>
       <FilAriane />
@@ -35,9 +38,7 @@ test("renders de 2 éléments du FilAriane", async () => {
 
 test("renders d'un uudi en dernier élément du FilAriane", () => {
   const history = createMemoryHistory();
-  history.push(
-    AppUrls.ctxMesRequetesUrl + "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
-  );
+  history.push(URL_MES_REQUETES + "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e");
 
   render(
     <Router history={history}>
@@ -50,9 +51,9 @@ test("renders d'un uudi en dernier élément du FilAriane", () => {
 
 test("renders de 2 éléments du FilAriane et mise à jour context", () => {
   const history = createMemoryHistory();
-  history.push(AppUrls.ctxMesRequetesUrl);
+  history.push(URL_MES_REQUETES);
   function setRetourContext(retourUrl: string) {
-    expect(retourUrl).toBe(AppUrls.ctxAccueilUrl);
+    expect(retourUrl).toBe(URL_ACCUEIL);
   }
   render(
     <Router history={history}>
@@ -63,11 +64,9 @@ test("renders de 2 éléments du FilAriane et mise à jour context", () => {
 
 test("renders d'un uudi en dernier élément du FilAriane et maj context", () => {
   const history = createMemoryHistory();
-  history.push(
-    AppUrls.ctxMesRequetesUrl + "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
-  );
+  history.push(URL_MES_REQUETES + "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e");
   function setRetourContext(retourUrl: string) {
-    expect(retourUrl).toBe(AppUrls.ctxMesRequetesUrl);
+    expect(retourUrl).toBe(URL_MES_REQUETES);
   }
   render(
     <Router history={history}>

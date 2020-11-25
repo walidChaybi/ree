@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-securite";
+import config from "../../../../mock/superagent-config/superagent-mock-securite";
 
 import { useUtilisateurApi } from "../../../../views/pages/espaceDelivrance/hook/DonneesUtilisateursServiceHook";
 

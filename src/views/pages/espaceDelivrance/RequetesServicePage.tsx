@@ -8,7 +8,7 @@ import { useRequeteApi } from "./hook/DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
 
-import { AppUrls } from "../../router/UrlManager";
+import { URL_REQUETES_SERVICE } from "../../router/ReceUrls";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
 import { IDataTable } from "./MesRequetesPage";
 import LabelIcon from "@material-ui/icons/Label";
@@ -17,7 +17,6 @@ import "./sass/RequeteTableau.scss";
 
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
 
-import { IOfficierSSOApi } from "../../core/login/LoginHook";
 import {
   getMessagePrioriteDeLaRequete,
   prioriteDeLaRequete,
@@ -27,6 +26,7 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../api/appels/requeteApi";
+import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 
 /** TODO ETAPE 2 : Bouton "Attribué à" */
 // import {
@@ -305,7 +305,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
 };
 
 function getUrlBack(identifiantRequete: string): string {
-  return `${AppUrls.ctxRequetesServiceUrl}/${identifiantRequete}`;
+  return `${URL_REQUETES_SERVICE}/${identifiantRequete}`;
 }
 
 /** TODO ETAPE 2 : Bouton "Attribué à" */

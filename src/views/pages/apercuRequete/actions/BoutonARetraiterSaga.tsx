@@ -9,12 +9,9 @@ import {
   useUpdateStatutRequeteApi
 } from "../../../common/hook/UpdateStatutRequeteHook";
 import {
-  SeparateurUrl,
-  ctxMesRequetesUrl,
-  MesRequetesUrl,
-  RequetesServiceUrl,
-  ctxRequetesServiceUrl
-} from "../../../router/UrlManager";
+  URL_MES_REQUETES,
+  URL_REQUETES_SERVICE
+} from "../../../router/ReceUrls";
 
 interface BoutonARetraiterSagaProps {
   messageId?: MessageId;
@@ -39,15 +36,12 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
   };
 
   const goToListe = useCallback(() => {
-    const pathnames = history.location.pathname
-      .split(SeparateurUrl)
-      .filter(x => x);
-    const indexPage = 2;
-    if (`${SeparateurUrl}${pathnames[indexPage]}` === MesRequetesUrl) {
-      history.push(ctxMesRequetesUrl);
+    const pathname = history.location.pathname;
+    if (pathname.startsWith(URL_MES_REQUETES)) {
+      history.push(URL_MES_REQUETES);
     }
-    if (`${SeparateurUrl}${pathnames[indexPage]}` === RequetesServiceUrl) {
-      history.push(ctxRequetesServiceUrl);
+    if (pathname.startsWith(URL_REQUETES_SERVICE)) {
+      history.push(URL_REQUETES_SERVICE);
     }
   }, [history]);
 

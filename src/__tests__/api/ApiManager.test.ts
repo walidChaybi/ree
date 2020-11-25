@@ -1,5 +1,5 @@
 import request from "superagent";
-import config from "../../api/mock/superagent-config/superagent-mock-fake-url";
+import config from "../../mock/superagent-config/superagent-mock-fake-url";
 import { ApiManager, HttpMethod } from "../../api/ApiManager";
 import { isNullOrUndefined } from "util";
 const superagentMock = require("superagent-mock")(request, config);

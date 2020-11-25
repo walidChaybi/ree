@@ -4,9 +4,9 @@ import { BoutonSignature } from "../../../common/widget/signature/BoutonSignatur
 import { BoutonRetour } from "../../../common/widget/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
 import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
-import { IOfficierSSOApi } from "../../../core/login/LoginHook";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { BoutonARetraiterSaga } from "./BoutonARetraiterSaga";
+import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
 export interface ActionsProps {
   indexRequete: number;

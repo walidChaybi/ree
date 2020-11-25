@@ -3,7 +3,7 @@ import * as renderer from "react-test-renderer";
 import { render, screen } from "@testing-library/react";
 
 import { IDataTable } from "../../../../views/pages/espaceDelivrance/MesRequetesPage";
-import DONNEES_REQUETE from "../../../../api/mock/data/requete";
+import DONNEES_REQUETE from "../../../../mock/data/requete";
 import { ResumeRequeteContent } from "../../../../views/pages/apercuRequete/contenu/ResumeRequeteContent";
 
 test("renders resumé du contenu de la requete", () => {

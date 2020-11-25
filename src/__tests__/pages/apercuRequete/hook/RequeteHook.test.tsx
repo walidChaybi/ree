@@ -6,11 +6,11 @@ import {
   useRequeteApi,
   IQueryParametersPourRequetes
 } from "../../../../views/pages/espaceDelivrance/hook/DonneesRequeteHook";
-import officierMock from "../../../../api/mock/data/connectedUser.json";
+import officierMock from "../../../../mock/data/connectedUser.json";
 import { TypeAppelRequete } from "../../../../api/appels/requeteApi";
 import request from "superagent";
+import config from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const config = require("../../../../api/mock/superagent-config/superagent-mock-requetes");
 const superagentMock = require("superagent-mock")(request, config);
 const officier = { idSSO: officierMock.id_sso, ...officierMock };
 const queryParam: IQueryParametersPourRequetes = {

@@ -1,8 +1,8 @@
 import React from "react";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
-import connectedUser from "../../../../api/mock/data/connectedUser.json";
+import config from "../../../../mock/superagent-config/superagent-mock-requetes";
+import connectedUser from "../../../../mock/data/connectedUser.json";
 import { useCompteurRequeteHook } from "../../../../views/pages/espaceDelivrance/hook/CompteurRequeteHook";
 import { render } from "@testing-library/react";
 import { waitFor } from "@testing-library/react";
