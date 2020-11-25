@@ -12,23 +12,23 @@ export function useUpdateDocumentApi(
   queryParameters?: IQueryParameterUpdateDocument[],
   callBack?: () => void
 ) {
-  const [errorState, setErrorState] = useState(undefined);
+  const [errorUpdateDocument, setErrorUpdateDocument] = useState(undefined);
 
   useEffect(() => {
     if (queryParameters !== undefined && queryParameters.length > 0) {
       patchDocumentsDelivresRequetes(queryParameters)
-        .then((result) => {
+        .then(result => {
           if (callBack !== undefined) {
             callBack();
           }
         })
-        .catch((error) => {
-          setErrorState(error);
+        .catch(error => {
+          setErrorUpdateDocument(error);
         });
     }
   }, [queryParameters, callBack]);
 
   return {
-    errorState
+    errorUpdateDocument
   };
 }
