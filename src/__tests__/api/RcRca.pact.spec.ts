@@ -29,16 +29,11 @@ describe("API Pact test", () => {
   describe("getting rc", () => {
     const uri = "/rece-etatcivil-api/v1" + ApiEndpoints.FicheUrl;
 
-    const queryParameters = {
-      type: "rc",
-      id: "7566e16c-2b0e-11eb-adc1-0242ac120002"
-    };
-
     const expectedResult = {
       hasTechnicalError: false,
       hasBusinessError: false,
       status: 200,
-      url: "/rece-rcrca-api/v1/fiche/rc",
+      url: "/rece-rcrca-api/v1/fiche/rc/7566e16c-2b0e-11eb-adc1-0242ac120002",
       data: rcPact,
       errors: []
     };
@@ -51,8 +46,7 @@ describe("API Pact test", () => {
         uponReceiving: "get an rc",
         withRequest: {
           method: "GET",
-          path: uri,
-          query: queryParameters
+          path: uri
         },
         willRespondWith: {
           status: 200,
@@ -67,7 +61,6 @@ describe("API Pact test", () => {
 
       const result = await new ApiPact(provider)
         .get(uri)
-        .queryParameters(queryParameters)
         .execute()
         .then(res => {
           return res;

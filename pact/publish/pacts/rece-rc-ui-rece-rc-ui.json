@@ -11,8 +11,7 @@
       "providerState": "rc exist",
       "request": {
         "method": "GET",
-        "path": "/rece-etatcivil-api/v1/fiche",
-        "query": "type=rc&id=7566e16c-2b0e-11eb-adc1-0242ac120002"
+        "path": "/rece-etatcivil-api/v1/fiche"
       },
       "response": {
         "status": 200,
@@ -23,7 +22,7 @@
           "hasTechnicalError": false,
           "hasBusinessError": false,
           "status": 200,
-          "url": "/rece-rcrca-api/v1/fiche/rc",
+          "url": "/rece-rcrca-api/v1/fiche/rc/7566e16c-2b0e-11eb-adc1-0242ac120002",
           "data": {
             "annee": "2018",
             "numeroRc": "56533",
