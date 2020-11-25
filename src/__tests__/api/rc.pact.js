@@ -1,29 +1,31 @@
 import { eachLike } from "@pact-foundation/pact/dsl/matchers";
 
 export const rcPact = {
+  identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
+  categorie: "rc",
   annee: "2018",
-  numeroRc: "56533",
+  numero: "56533",
   nature: "Curatelle aménagée",
   typeInscription: "Renouvellement (RC n° 2015 - 36547)",
   dateInscription: 1518652800,
   dateDerniereMaj: 1583971200,
   dateDerniereDelivrance: 1592092800,
-  statutFicheRc: {
+  statutFiche: {
     statut: "Actif"
   },
-  alertesRc: eachLike({
+  alertes: eachLike({
     alerte: "Date de fin de mesure dépassée",
     dateCreation: 1581807600
   }),
-  dureeInscriptionRc: {
+  dureeInscription: {
     nombreDuree: 2,
     uniteDuree: "ans",
     dateFinDeMesure: 1581724800
   },
-  mandataires: eachLike([
+  mandataires: eachLike(
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"
-  ]),
+  ),
   inscriptionsLiees: eachLike({
     typeInscription: "Modification",
     numeroRc: "2017 - 145235",
@@ -33,13 +35,16 @@ export const rcPact = {
     nomFamille: "FAVARO",
     autresNoms: eachLike("FAVAROTTI"),
     prenoms: eachLike({ prenom: "Enrico", numeroOrdre: 0 }),
-    autresPrenoms: eachLike([]),
+    autresPrenoms: eachLike(),
     dateDeNaissance: -777168000,
-    lieuDeNaissance: "San remo (Italie)",
+    villeDeNaissance: "San remo",
+    paysDeNaissance: "Italie",
+    regionDeNaissance: "",
+    arrondissementDeNaissance: "",
     nationalite: "Etrangère",
     sexe: "Masculin"
   }),
-  decisionRc: {
+  decision: {
     type: "Jugement",
     dateDecision: 1577059200,
     enrolementRg: "",
