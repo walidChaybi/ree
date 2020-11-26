@@ -10,44 +10,48 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: rece-ui
+  name: rece-frontal
 data:
-  rece-ui.conf: |
+  rece-frontal.conf: |
+        
     # Chargement des modules Apache nécessaires
     LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
     LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
     LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
     LoadModule headers_module /usr/lib/apache2/modules/mod_headers.so
-
+    LoadModule mod_shib /usr/lib/apache2/modules/mod_shib.so
+    
     # Log sur sortie standard, plus facile à lire en Kubernetes
     ErrorLog /dev/stderr
     LogLevel debug
     LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" - %{ms}T ms" combinedandtime
     CustomLog /dev/stdout combinedandtime
-
-    DocumentRoot /var/www
-
-    # Apache exige qu'on notifie explicitement le répertoire (disque) à servir
-    # Nous exposons ici les resources statiques (.js, images, .html...)
-    <Directory /var/www/rece>   
-
-      # Requis par mod_rewrite, https://httpd.apache.org/docs/2.4/fr/mod/mod_rewrite.html
-      Options FollowSymLinks
-
-      # Attention : mod_rewrite fait ses comparaisons sans '/rece' car on est dans un <Directory>
+    
+    # On redirige vers l'UI par défaut sur /rece ou /rece/
+    # On utilise le header X-Forwarded-Host qui contient le hostname du client avant transformation
+    # par les reverse proxy, sinon, redirection vers un hostname inaccessible.
+    <Location />
       RewriteEngine On
-      
-      # Si on arrive sur /rece, on fait un redirect vers /rece-ui
-      RewriteRule ^$ /rece/rece-ui [L,R]
+      RewriteRule ^.*rece$  http://%{HTTP:X-Forwarded-Host}/rece/rece-ui/ [R=301,L]
+      RewriteRule ^.*rece/$  http://%{HTTP:X-Forwarded-Host}/rece/rece-ui/ [R=301,L]
+    </Location>
 
-      # Si l'URL est index.html, on sort
-      RewriteRule ^/rece-ui/index\.html$ - [L]
+    # Pour chaque API appelable depuis le navigateur, on prévoit une redirection (depuis cet Apache) vers le Tomcat
+    # Note: pas besoin de ProxyPassReverse uniquement utile pour les redirect (code 301 ou 302), pas utilisé sur RECE
+    
+    ProxyPass /rece/rece-ui http://rece-ui/rece/rece-ui
+    ProxyPass /rece/rece-admin-ui http://rece-admin-ui/rece/rece-admin-ui
 
-      # Réécriture des URLS pour prendre en compte les URL
-      # issues de react-router (chemins 'virtuels') qui doivent tous pointer vers /index.html
-      # Si l'URL ne pointe pas vers un fichier ou un répertoire, on renvoie sur index.html
-      RewriteCond %{REQUEST_FILENAME} !-f
-      RewriteCond %{REQUEST_FILENAME} !-d
-      RewriteCond %{REQUEST_FILENAME} !-l
-      RewriteRule rece-ui/.* /rece/rece-ui/index.html [L]    
-    </Directory>
+    ProxyPass /rece/rece-requete-api http://rece-requete-api/rece-requete-api
+    ProxyPass /rece/rece-securite-api http://rece-securite-api/rece-securite-api
+
+    # On protége en SAML les URL commencant par '/rece', y compris les URLS vers les resources statiques (/rece/rece-ui)
+    <Location /rece>
+      AuthType shibboleth
+      ShibRequestSetting applicationId rece
+      ShibRequestSetting requireSession 1
+      # On a besoin coté backend des headers (nom, prenom...) fixé par shibboleth
+      ShibUseHeaders On
+      require valid-user
+    </Location>
+
