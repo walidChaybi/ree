@@ -192,7 +192,7 @@
     },
     "vueRc": {
       "nature": "Nature",
-      "mandataire": "Mandataire(s)",
+      "mandataires": "Mandataire(s)",
       "typeInscription": "Type inscription",
       "rcNumero": "RC n°",
       "inscriptionsLiees": "Inscription(s) liée(s)",

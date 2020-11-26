@@ -1,11 +1,11 @@
 import React from "react";
 import { AccordionPanel, AccordionPanelProps } from "./AccordionPanel";
 import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { AccordionTitle } from "./AccordionTitle";
+import "./sass/AccordionRece.scss";
 
-interface AccordionReceProps {
+export interface AccordionReceProps {
   panels: AccordionPanelProps[];
 }
 
@@ -23,16 +23,13 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {
           <Accordion
             expanded={expanded === index}
             onChange={handleChange(index)}
+            key={`rece-accordion-${index}`}
+            className="accordionRece"
           >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-            >
-              {"vue du rc"}
-            </AccordionSummary>
+            <AccordionTitle title={panel.title} />
+
             <AccordionDetails>
-              <AccordionPanel parts={panel.parts} />
+              <AccordionPanel {...panel} />
             </AccordionDetails>
           </Accordion>
         );

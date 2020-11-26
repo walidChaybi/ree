@@ -1,0 +1,17 @@
+@import "../../../../../sass/colors";
+
+.libelleContent {
+  color: $application-color;
+  grid-column: 1;
+  text-align: left;
+}
+
+.valueContent {
+  grid-column: 2;
+  text-align: left;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 30% 70%);
+}

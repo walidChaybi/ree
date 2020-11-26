@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import { getText } from "../../common/widget/Text";
 import { FormatDate } from "../../../ressources/FormatDate";
 import moment from "moment";
-import { AccordionPanelProps } from "../../common/widget/accordion/AccordionPanel";
+import { AccordionReceProps } from "../../common/widget/accordion/AccordionRece";
 
 export interface RcRcaVue {
   nature: string;
   typeInscription: string;
-  numeroRc: string;
+  numeroRcImpactes: string[];
   mandataires: string[];
   inscriptionsLiees: InscriptionLie[];
   dateInscription: number;
@@ -74,8 +74,8 @@ export interface Autorite {
 
 const mockRc: RcRcaVue = {
   nature: "Curatelle aménagée",
-  typeInscription: "Renouvellement (RC n° 2015 - 36547)",
-  numeroRc: "253",
+  typeInscription: "Renouvellement",
+  numeroRcImpactes: ["2015 - 36547"],
   dateInscription: 1518652800,
   dureeInscriptionRc: {
     nombreDuree: 2,
@@ -174,7 +174,7 @@ const mockRc: RcRcaVue = {
 };
 
 export function useRcRcaHook() {
-  const [rc, setRc] = useState<AccordionPanelProps[]>([]);
+  const [rc, setRc] = useState<AccordionReceProps>();
   const [errorState, setErrorState] = useState<any>();
 
   useEffect(() => {
@@ -187,15 +187,20 @@ export function useRcRcaHook() {
   };
 }
 
-function getRcRcaVue(retourBack: RcRcaVue): AccordionPanelProps[] {
-  let accordionParts: AccordionPartProps[] = [];
-  accordionParts.push(getInscriptionRepertoireCivil(retourBack));
-  accordionParts = accordionParts
-    .concat(getInteresse(retourBack))
-    .concat(getDecision(retourBack))
-    .concat(getAutorite(retourBack));
-
-  return [{ parts: accordionParts }];
+function getRcRcaVue(retourBack: RcRcaVue): AccordionReceProps {
+  return {
+    panels: [
+      {
+        panelAreas: [
+          { parts: [getInscriptionRepertoireCivil(retourBack)] },
+          { parts: getInteresse(retourBack) },
+          { parts: getDecision(retourBack) },
+          { parts: getAutorite(retourBack) }
+        ],
+        title: "Vue du RC"
+      }
+    ]
+  };
 }
 
 function getInscriptionRepertoireCivil(
@@ -212,29 +217,36 @@ function getInscriptionRepertoireCivil(
       {
         libelleId: "pages.vueRc.typeInscription",
         value: (
-          <div>
+          <span>
             {`${retourBack.typeInscription} (${getText(
               "pages.vueRc.rcNumero"
             )}`}
-            <Link to={"/"} className="">
-              {retourBack.numeroRc}
-            </Link>
+            {retourBack.numeroRcImpactes.map(numero => {
+              return (
+                <Link to={"/"} className="">
+                  {numero}
+                </Link>
+              );
+            })}
+
             {`)`}
-          </div>
+          </span>
         )
       },
       {
         libelleId: "pages.vueRc.inscriptionsLiees",
-        value: retourBack.inscriptionsLiees.map(inscription => (
-          <div>
+        value: retourBack.inscriptionsLiees.map((inscription, index) => (
+          <span key={`inscription-liees-lien-${inscription.numeroRc}`}>
             {`${inscription.typeInscription} (${getText(
               "pages.vueRc.rcNumero"
             )}`}
             <Link to={`rcrca/${inscription.idInscription}`} className="">
               {inscription.numeroRc}
             </Link>
-            {`)`}
-          </div>
+            {`)${
+              index !== retourBack.inscriptionsLiees.length - 1 ? ", " : ""
+            }`}
+          </span>
         ))
       },
       {
@@ -272,7 +284,7 @@ function getInteresse(retourBack: RcRcaVue): AccordionPartProps[] {
         },
         {
           libelleId: "pages.vueRc.prenoms",
-          value: interesse.prenoms.join(", ")
+          value: interesse.prenoms.map(prenom => prenom.prenom).join(", ")
         },
         {
           libelleId: "pages.vueRc.autresPrenoms",
@@ -297,9 +309,7 @@ function getInteresse(retourBack: RcRcaVue): AccordionPartProps[] {
           value: interesse.sexe
         }
       ],
-      title: getText("pages.vueRc.inscriptionRepertoireCivil", [
-        indexInteresse + 1
-      ])
+      title: getText("pages.vueRc.interesse", [indexInteresse + 1])
     };
   });
 }
@@ -381,7 +391,7 @@ function getAutorite(retourBack: RcRcaVue): AccordionPartProps[] {
           value: retourBack.decisionRc.autorite.departement
         }
       ],
-      title: getText("pages.vueRc.decisionConfirme.autorite")
+      title: getText("pages.vueRc.autorite")
     }
   ];
 

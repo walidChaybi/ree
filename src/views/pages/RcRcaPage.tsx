@@ -4,9 +4,5 @@ import { useRcRcaHook } from "./hook/RcRcaHook";
 
 export const RcRcaPage: React.FC = () => {
   const { rc } = useRcRcaHook();
-  return (
-    <div>
-      <AccordionRece panels={rc} />
-    </div>
-  );
+  return <div>{rc && <AccordionRece panels={rc.panels} />}</div>;
 };
