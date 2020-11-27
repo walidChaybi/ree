@@ -1,5 +1,3 @@
-import React from "react";
-
 import { estOfficierHabiliterPourTousLesDroits } from "../../model/Habilitation";
 import { storeRece } from "../../views/common/util/storeRece";
 import mockConnectedUser from "../../mock/data/connectedUser.json";

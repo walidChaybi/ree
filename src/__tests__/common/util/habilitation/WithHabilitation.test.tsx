@@ -23,16 +23,19 @@ storeRece.utilisateurCourant = u as IOfficierSSOApi;
 
 const habsDesc: IHabiliationDescription[] = [
   {
+    // @ts-ignore
     nomComposant: "BoutonTest",
     tousLesDroits: [Droit.ATTRIBUER],
     comportementSiNonAutorise: { disabled: true }
   },
 
   {
+    // @ts-ignore
     nomComposant: "BoutonTest2",
     comportementSiNonAutorise: { disabled: true }
   },
   {
+    // @ts-ignore
     nomComposant: "BoutonTest3",
     unDesDroits: [Droit.ATTRIBUER, Droit.CONSULTER],
     comportementSiNonAutorise: { disabled: true }
@@ -42,11 +45,13 @@ const habsDesc: IHabiliationDescription[] = [
 const BoutonTestWithHab = WithHabilitation(BoutonTest, undefined, habsDesc);
 const BoutonTest2WithHab = WithHabilitation(
   BoutonTest,
+  // @ts-ignore
   "BoutonTest2",
   habsDesc
 );
 const BoutonTest3WithHab = WithHabilitation(
   BoutonTest,
+  // @ts-ignore
   "BoutonTest3",
   habsDesc
 );
@@ -58,6 +63,7 @@ test("Le bouton ne doit pas être grisé car l'utilisateur à le droit Attribuer
   };
   const { getByText, queryByTestId } = render(<BoutonTestWithHab />);
   expect(queryByTestId(/testid/i)).not.toBeNull();
+  // @ts-ignore
   expect(getByText(/Click me/i).closest("button")).not.toBeDisabled();
 });
 
@@ -68,6 +74,7 @@ test("Le bouton ne doit pas être grisé car l'utilisateur à un de ces droit à
   };
   const { getByText, queryByTestId } = render(<BoutonTest3WithHab />);
   expect(queryByTestId(/testid/i)).not.toBeNull();
+  // @ts-ignore
   expect(getByText(/Click me/i).closest("button")).not.toBeDisabled();
 });
 
@@ -75,6 +82,7 @@ test("Le bouton doit être grisé car l'utilisateur n'à pas le droit Attribuer"
   storeRece.utilisateurCourant!.habilitations[0].profil.droits = [];
   const { getByText, queryByTestId } = render(<BoutonTestWithHab />);
   expect(queryByTestId(/testid/i)).not.toBeNull();
+  // @ts-ignore
   expect(getByText(/Click me/i).closest("button")).toBeDisabled();
 });
 
@@ -89,5 +97,6 @@ test("Le bouton ne doit pas être grisé car il n'a aucun droit associé", () =>
   storeRece.utilisateurCourant!.habilitations[0].profil.droits = [];
   const { getByText, queryByTestId } = render(<BoutonTest2WithHab />);
   expect(queryByTestId(/testid/i)).not.toBeNull();
+  // @ts-ignore
   expect(getByText(/Click me/i).closest("button")).not.toBeDisabled();
 });
