@@ -11,8 +11,7 @@
       "providerState": "rc exist",
       "request": {
         "method": "GET",
-        "path": "/rece-rcrca-api/v1/requetes",
-        "query": "nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913"
+        "path": "/rece-etatcivil-api/v1/fiche"
       },
       "response": {
         "status": 200,
@@ -23,12 +22,24 @@
           "hasTechnicalError": false,
           "hasBusinessError": false,
           "status": 200,
-          "url": "/rece-rcrca-api/v1/rc",
+          "url": "/rece-rcrca-api/v1/fiche/rc/7566e16c-2b0e-11eb-adc1-0242ac120002",
           "data": {
+            "annee": "2018",
+            "numeroRc": "56533",
             "nature": "Curatelle aménagée",
             "typeInscription": "Renouvellement (RC n° 2015 - 36547)",
-            "numeroRc": "253",
             "dateInscription": 1518652800,
+            "dateDerniereMaj": 1583971200,
+            "dateDerniereDelivrance": 1592092800,
+            "statutFicheRc": {
+              "statut": "Actif"
+            },
+            "alertesRc": [
+              {
+                "alerte": "Date de fin de mesure dépassée",
+                "dateCreation": 1581807600
+              }
+            ],
             "dureeInscriptionRc": {
               "nombreDuree": 2,
               "uniteDuree": "ans",
@@ -100,6 +111,12 @@
           ]
         },
         "matchingRules": {
+          "$.body.data.alertesRc": {
+            "min": 1
+          },
+          "$.body.data.alertesRc[*].*": {
+            "match": "type"
+          },
           "$.body.data.mandataires": {
             "min": 1
           },
