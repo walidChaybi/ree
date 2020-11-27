@@ -40,7 +40,7 @@ export const routesRece: IRouteRece[] = [
     url: URL_REQUETES_SERVICE,
     component: EspaceDelivrancePage,
     props: { selectedTab: 1 },
-    droits: [Droit.Attribuer]
+    droits: [Droit.ATTRIBUER]
   },
   {
     url: URL_MES_REQUETES_ID,
