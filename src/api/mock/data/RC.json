@@ -1,0 +1,125 @@
+{
+  "hasTechnicalError": false,
+  "hasBusinessError": false,
+  "status": 200,
+  "url": "/rece/rece-requete-api/v1/repertoirecivil/rc/7566e16c-2b0e-11eb-adc1-0242ac120002",
+  "data": {
+    "idInscription": "7566e16c-2b0e-11eb-adc1-0242ac120002",
+    "categorie": "rc",
+    "annee": "2018",
+    "numero": "56533",
+    "nature": "Curatelle aménagée",
+    "typeInscription": "Renouvellement (RC n° 2015 - 36547)",
+    "dateInscription": 1518652800,
+    "dateDerniereMaj": 1583971200,
+    "dateDerniereDelivrance": 1592092800,
+    "statutsFiche": [
+      {
+        "statut": "ACTIF",
+        "dateEvenement": {
+          "jour": null,
+          "mois": null,
+          "annee": "2020"
+        },
+        "motif": "",
+        "villeEvenement": "nantes",
+        "departementEvenement": "Pays de la Loire",
+        "paysEvenement": "France",
+        "complementMotif": ""
+      }
+    ],
+    "alertes": [
+      {
+        "alerte": "DATE_DE_FIN_MESURE_DEPASSEE",
+        "dateCreation": 1581807600
+      }
+    ],
+    "dureeInscription": {
+      "nombreDuree": 2,
+      "uniteDuree": "ans",
+      "dateFinDeMesure": 1581724800
+    },
+    "mandataires": [
+      "Mandataire judiciaire à la protection des majeurs association",
+      "Préposé d'établissement"
+    ],
+    "inscriptionsLiees": [
+      {
+        "typeInscription": "Modification",
+        "numeroRc": "2017 - 145235",
+        "idInscription": ""
+      }
+    ],
+    "interesses": [
+      {
+        "numeroOrdreSaisi": null,
+        "nomFamille": "FAVARO",
+        "autresNoms": ["FAVAROTTI"],
+        "prenoms": [{ "prenom": "Enrico", "numeroOrdre": 0 }],
+        "autresPrenoms": [],
+        "dateNaissance": {
+          "jour": "17",
+          "mois": "05",
+          "annee": "1945"
+        },
+        "villeNaissance": "San remo",
+        "paysNaissance": "Italie",
+        "regionNaissance": "",
+        "arrondissementNaissance": "",
+        "nationalite": "Etrangère",
+        "sexe": "Masculin"
+      },
+      {
+        "numeroOrdreSaisi": null,
+        "nomFamille": "FAVARO",
+        "autresNoms": ["MAHMOUDI"],
+        "prenoms": [{ "prenom": "Ahmeda", "numeroOrdre": 0 }],
+        "autresPrenoms": [],
+        "dateNaissance": {
+          "jour": "17",
+          "mois": "05",
+          "annee": "1946"
+        },
+        "villeNaissance": "San remo",
+        "paysNaissance": "Italie",
+        "regionNaissance": "",
+        "arrondissementNaissance": "",
+        "nationalite": "Etrangère",
+        "sexe": "Féminin"
+      }
+    ],
+    "mariageInterresses": [
+      {
+        "villeMariage": "Caen",
+        "regionNaissance": "Normandie",
+        "paysNaissance": "France",
+        "dateMariage": {
+          "jour": null,
+          "mois": null,
+          "annee": "2020"
+        },
+        "aletranger": false
+      }
+    ],
+    "decision": {
+      "dateDecision": 1518652800.0,
+      "type": "JUGEMENT",
+      "autorite": {
+        "type": "TRIBUNAL_JUDICIAIRE",
+        "numeroDepartement": "75",
+        "libelleDepartement": "",
+        "pays": "France",
+        "arrondissement": "18",
+        "nomNotaire": null,
+        "prenomNotaire": null,
+        "numeroCrpcen": null,
+        "nomOnac": null,
+        "prenomOnac": null,
+        "enrolementRg": "1345",
+        "enrolementPortails": "789521545",
+        "dateDecisionEtrangere": null
+      },
+      "sourceConfirmation": null
+    }
+  }
+}

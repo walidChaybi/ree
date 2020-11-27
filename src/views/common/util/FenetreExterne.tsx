@@ -26,7 +26,6 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
     };
     this.htmlDivElement = document.createElement("div");
   }
-
   componentDidMount() {
     this.openWindow();
     this.setState({ mounted: true });

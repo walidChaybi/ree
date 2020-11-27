@@ -8,10 +8,10 @@ import {
   waitFor,
   act
 } from "@testing-library/react";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+import { configRequetes } from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import request from "superagent";
 
-const superagentMock = require("superagent-mock")(request, config);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("renders PopinSignature, signature event is received and success displayed", async () => {
   await act(async () => {

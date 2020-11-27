@@ -1,5 +1,5 @@
 import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+import { configRequetes } from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { requestDocumentApi } from "../../../../views/common/hook/DocumentRequeteHook";
 import requetes from "../../../../api/mock/data/requetes.json";
 import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
@@ -7,7 +7,7 @@ import { MimeType } from "../../../../ressources/MimeType";
 import { IRequestDocumentApiResult } from "../../../../api/appels/requeteApi";
 import { convertToBlob } from "../../../../views/pages/apercuRequete/contenu/document/DocumentPresentation";
 
-const superagentMock = require("superagent-mock")(request, config);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("Appel d'api retournant le contenu d'une pièce justificative", async () => {
   const pieceJustificative = requetes.data[0].piecesJustificatives[0];

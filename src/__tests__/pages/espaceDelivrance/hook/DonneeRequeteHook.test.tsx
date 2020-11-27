@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+import { configRequetes } from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteDataApi } from "../../../../views/pages/apercuRequete/hook/DonneeRequeteHook";
 import DONNEES_REQUETE from "../../../../api/mock/data/requete";
@@ -11,7 +11,7 @@ import connectedUser from "../../../../api/mock/data/connectedUser.json";
 
 const off = { idSSO: connectedUser.id_sso, ...connectedUser };
 
-const superagentMock = require("superagent-mock")(request, config);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 let container: Element | null;
 let containerWithData: Element | null;

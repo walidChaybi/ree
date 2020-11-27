@@ -1,0 +1,37 @@
+{
+  "hasTechnicalError": false,
+  "hasBusinessError": false,
+  "status": 200,
+  "url": "/rece/rece-requete-api/v1/repertoirecivil/rca/135e4dfe-9757-4d5d-8715-359c6e73289b",
+  "data": {
+    "idInscription": "135e4dfe-9757-4d5d-8715-359c6e73289b",
+    "categorie": "rca",
+    "annee": "2015",
+    "numero": "15987",
+    "nature": "",
+    "typeInscription": "",
+    "dateInscription": null,
+    "dateDerniereMaj": 1435183200,
+    "dateDerniereDelivrance": 1457046000,
+    "statutsFiche": [
+      {
+        "statut": "INACTIF"
+      }
+    ],
+    "alertes": [],
+    "dureeInscription": {},
+    "mandataires": [],
+    "inscriptionsLiees": [],
+    "interesses": [
+      {
+        "nomFamille": "FAVARO",
+        "prenoms": [{ "prenom": "Enrico", "numeroOrdre": 0 }]
+      },
+      {
+        "nomFamille": "MAHMOUDI",
+        "prenoms": [{ "prenom": "Ahmeda", "numeroOrdre": 0 }]
+      }
+    ],
+    "decision": {}
+  }
+}
