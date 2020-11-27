@@ -19,7 +19,7 @@ export const SuccessSignature: React.FC<SuccessSignatureProps> = ({
   const getErrorsDisplay = useCallback(() => {
     const successesToDisplay: JSX.Element[] = [];
 
-    successes.forEach((success) => {
+    successes.forEach(success => {
       successesToDisplay.push(
         <ListItem alignItems="flex-start" key={success.numeroRequete}>
           <ListItemText

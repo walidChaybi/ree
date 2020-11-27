@@ -1,9 +1,8 @@
 import React from "react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
-import { render } from "@testing-library/react";
+import { render, act } from "@testing-library/react";
 import officier from "../../../api/mock/data/connectedUser.json";
-import { act } from "react-dom/test-utils";
 import { AppUrls } from "../../../views/router/UrlManager";
 import {
   traiteAppelRequeteASigner,
@@ -29,7 +28,7 @@ test("renders GestionnaireFermeture", async () => {
   const history = createMemoryHistory();
   history.push(AppUrls.ctxAccueilUrl);
 
-  const fctAAppeler = jest.fn((data) => 3);
+  const fctAAppeler = jest.fn(data => 3);
   const fctTraitementResultat = traiteAppelRequeteASigner;
   appelRequetesASigner({});
 

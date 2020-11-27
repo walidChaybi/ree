@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "./sass/AccordionPanel.scss";
 import {
   AccordionPanelAreaProps,
@@ -7,22 +7,20 @@ import {
 export interface AccordionPanelProps {
   panelAreas: AccordionPanelAreaProps[];
   title: string;
+  id: string;
 }
 
 export const AccordionPanel: React.FC<AccordionPanelProps> = ({
   panelAreas,
-  title
+  title,
+  id
 }) => {
   return (
     <div className={"accrodionPanel"}>
       {panelAreas.map((panelArea, index) => {
         return (
-          <>
-            <AccordionPanelArea
-              key={`accordion-panel-area-${index}-${title}`}
-              id={title}
-              parts={panelArea.parts}
-            />
+          <Fragment key={`accordion-panel-area-${index}-${title}-${id}`}>
+            <AccordionPanelArea id={`${title}-${id}`} parts={panelArea.parts} />
             {index !== panelAreas.length - 1 && (
               <hr
                 style={{
@@ -33,7 +31,7 @@ export const AccordionPanel: React.FC<AccordionPanelProps> = ({
                 data-testid={`accordion-panel-hr-${title}-${index}`}
               />
             )}
-          </>
+          </Fragment>
         );
       })}
     </div>

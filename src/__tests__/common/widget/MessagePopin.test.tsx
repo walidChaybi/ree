@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent, act } from "@testing-library/react";
 import {
   MessagePopin,
   PopinMessageType
 } from "../../../views/common/widget/MessagePopin";
 import { useState } from "react";
-import { act } from "react-dom/test-utils";
 
 let containerSuccess: Element | null;
 let containerError: Element | null;

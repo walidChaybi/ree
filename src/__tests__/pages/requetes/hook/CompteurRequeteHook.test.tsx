@@ -1,11 +1,9 @@
 import React from "react";
-import { act } from "react-dom/test-utils";
 import request from "superagent";
 import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import connectedUser from "../../../../api/mock/data/connectedUser.json";
 import { useCompteurRequeteHook } from "../../../../views/pages/requetes/hook/CompteurRequeteHook";
-import { render } from "@testing-library/react";
-import { waitFor } from "@testing-library/react";
+import { render, act, waitFor } from "@testing-library/react";
 
 const off = { idSSO: connectedUser.id_sso, ...connectedUser };
 

@@ -1,8 +1,7 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 
 import DONNEES_REQUETE from "../../../../api/mock/data/requete";
-import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
 import { ResumeRequete } from "../../../../views/pages/requeteVisualisation/contenu/ResumeRequete";
 

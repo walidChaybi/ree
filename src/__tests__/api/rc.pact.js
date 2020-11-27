@@ -23,8 +23,7 @@ export const rcPact = {
     dateFinDeMesure: 1581724800
   },
   mandataires: eachLike(
-    "Mandataire judiciaire à la protection des majeurs association",
-    "Préposé d'établissement"
+    "Mandataire judiciaire à la protection des majeurs association"
   ),
   inscriptionsLiees: eachLike({
     typeInscription: "Modification",
@@ -35,7 +34,7 @@ export const rcPact = {
     nomFamille: "FAVARO",
     autresNoms: eachLike("FAVAROTTI"),
     prenoms: eachLike({ prenom: "Enrico", numeroOrdre: 0 }),
-    autresPrenoms: eachLike(),
+    autresPrenoms: eachLike("AutrePrenom"),
     dateDeNaissance: -777168000,
     villeDeNaissance: "San remo",
     paysDeNaissance: "Italie",

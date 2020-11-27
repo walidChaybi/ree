@@ -1,8 +1,7 @@
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen, act } from "@testing-library/react";
 import { NavigationButton } from "../../../../views/pages/requeteVisualisation/actions/NavigationButton";
 import { mount } from "enzyme";
-import { act } from "react-dom/test-utils";
 
 test("renders fonction clic déclenchée au clic sur les boutons", () => {
   act(() => {

@@ -29,7 +29,7 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {
             <AccordionTitle title={panel.title} />
 
             <AccordionDetails>
-              <AccordionPanel {...panel} />
+              <AccordionPanel {...panel} id={`${index}`} />
             </AccordionDetails>
           </Accordion>
         );
