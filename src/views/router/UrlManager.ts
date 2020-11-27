@@ -17,6 +17,7 @@ export const IdRequeteServiceUrl = `${RequetesServiceUrl}/:idRequete`;
 export const ctxIdRequeteServiceUrl = `${contextApp}${IdRequeteServiceUrl}`;
 export const RcRcaUrl = "/rcrca";
 export const ctxRcRcaUrl = `${contextApp}${RcRcaUrl}`;
+export const RepertoirecivilUrl = "/repertoirecivil";
 
 export const AppUrls = {
   contextApp,
@@ -35,7 +36,8 @@ export const AppUrls = {
   IdRequeteServiceUrl,
   ctxIdRequeteServiceUrl,
   RcRcaUrl,
-  ctxRcRcaUrl
+  ctxRcRcaUrl,
+  RepertoirecivilUrl
 };
 
 // Url APIs
@@ -53,7 +55,8 @@ export const ApiEndpoints = {
   UtilisateursUrl,
   DocumentsdelivresUrl,
   SecuriteUrl,
-  ReponsesUrl
+  ReponsesUrl,
+  RepertoirecivilUrl
 };
 
 /** Attention à l'usage, la construction d'URL dynamique passant par une function pose des problèmes d'anti pattern */

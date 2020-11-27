@@ -1,0 +1,45 @@
+.Bandeau {
+  background-color: #ffd966;
+  padding: 0.5rem;
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    // justify-content: space-around;
+    padding: 0.2rem 1rem;
+  }
+
+  .LigneNumero {
+    & div:first-child {
+      flex-grow: 1.7;
+      text-align: end;
+    }
+    & div:last-child {
+      flex-grow: 1;
+      text-align: end;
+    }
+  }
+
+  .LignePrenomNom,
+  .LigneDates {
+    div {
+      flex-grow: 1;
+    }
+    & div:first-child {
+      text-align: start;
+    }
+    & div:last-child {
+      text-align: end;
+    }
+  }
+
+  .InfoImportante {
+    font-weight: 700;
+  }
+
+  .IconeAlertes {
+    color: firebrick;
+    margin-right: 0.5rem;
+  }
+}

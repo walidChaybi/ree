@@ -61,6 +61,7 @@ test("renders progress bar, close function is called", () => {
 
   const closeButton = screen.getByText("Fermer");
   fireEvent.click(closeButton);
+  // Fermeture automatique si toutes les requêtes ont été signées sans erreur
   expect(handleClickButton).toHaveBeenCalledTimes(1);
 });
 

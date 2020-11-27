@@ -1,11 +1,17 @@
-import config from "./mock/superagent-config/superagent-mock-fake-url";
+import { configRequetes } from "./mock/superagent-config/superagent-mock-requetes";
+import { configSecurite } from "./mock/superagent-config/superagent-mock-securite";
+import { configEtatcivil } from "./mock/superagent-config/superagent-mock-etatcivil";
+
 import * as superagent from "superagent";
 import request from "superagent";
 import messageManager from "../views/common/util/messageManager";
-import apiModule from "../ressources/api.json";
 
 if (process.env.REACT_APP_MOCK) {
-  require("superagent-mock")(request, config);
+  require("superagent-mock")(request, [
+    configRequetes[0],
+    configSecurite[0],
+    configEtatcivil[0]
+  ]);
 }
 
 type ApisAutorisees =
@@ -52,41 +58,35 @@ export interface IHttpResponse {
   status: number;
 }
 
+const DEFAULT_PORT = 80;
+const DOMAIN = "rece";
+
 export class ApiManager {
-  public url: string;
-  public ports: number;
-  public domain: string;
-  public name: string;
-  public version: string;
+  private readonly url: string;
+  private readonly ports: number;
+  private readonly domain: string;
+  private readonly name: string;
+  private readonly version: string;
   private static instance: ApiManager;
 
   private constructor(name: ApisAutorisees, version: string) {
-    const foundApis: IApi[] = apiModule.apis.filter(
-      (api: IApi) => api.name === name
-    );
-    if (foundApis.length === 1) {
-      const versionTrouve: string[] = foundApis[0].usedVersions.filter(
-        (versionItem: string) => versionItem === version
-      );
-      if (versionTrouve.length === 1) {
-        this.url =
-          process.env.NODE_ENV !== "production"
-            ? foundApis[0].url
-            : `http://${window.location.hostname}`;
-        this.ports = foundApis[0].ports;
-        this.domain = foundApis[0].domain;
-        this.name = foundApis[0].name;
-        this.version = version;
-      } else {
-        throw Error(
-          `La version ${version} donnée pour l'api ${name} n'est pas référencée. Vérifiez votre fichier api.json !`
-        );
-      }
-    } else {
-      throw Error(
-        `Le nom d'Api ${name} n'a pas permis de trouver une api lui correspondant. Vérifiez votre fichier api.json !`
-      );
-    }
+    this.url = `${window.location.protocol}//${window.location.hostname}`;
+    this.ports = DEFAULT_PORT;
+    this.domain = DOMAIN;
+    this.name = name;
+    this.version = version;
+  }
+
+  public getName() {
+    return this.name;
+  }
+
+  public getVersion() {
+    return this.version;
+  }
+
+  public getUrl(): string {
+    return this.url;
   }
 
   public static getInstance(name: ApisAutorisees, version: string): ApiManager {

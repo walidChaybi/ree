@@ -1,4 +1,7 @@
-module.exports = [
+import mockRC from "../data/RC.json";
+import mockRCA from "../data/RCA.json";
+
+export const configEtatcivil = [
   {
     /**
      * regular expression of URL
@@ -14,8 +17,15 @@ module.exports = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function(match, params, headers, context) {
-      if (match[1] === "/repertoire/2018-56533") {
-        return { data: "" };
+      if (
+        match[1] === "/repertoirecivil/rc/7566e16c-2b0e-11eb-adc1-0242ac120002"
+      ) {
+        return { data: mockRC.data };
+      }
+      if (
+        match[1] === "/repertoirecivil/rca/135e4dfe-9757-4d5d-8715-359c6e73289b"
+      ) {
+        return { data: mockRCA.data };
       }
     },
 
