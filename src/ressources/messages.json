@@ -1,4 +1,5 @@
 {
+  "vue-rc-interesse": "Intéressé ${0}",
   "header": "Registre d'État Civil Électronique",
   "titre": "Titre de l'application",
   "subtitre": "Sous-titre de l'application",
@@ -189,36 +190,6 @@
       "deconnexion": "Déconnexion en cours ...",
       "erreurAuthentifacition": "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BAG.",
       "erreurSysteme": "Erreur Système"
-    },
-    "vueRc": {
-      "nature": "Nature",
-      "mandataires": "Mandataire(s)",
-      "typeInscription": "Type inscription",
-      "rcNumero": "RC n°",
-      "inscriptionsLiees": "Inscription(s) liée(s)",
-      "dateInscription": "Date d'inscription",
-      "dureeInscription": "Durée inscription",
-      "dateFinMesure": "Date fin de mesure",
-      "inscriptionRepertoireCivil": "Inscrition au répertoire civil",
-      "interesse": "Intéressé ${0}",
-      "nom": "Nom",
-      "autresNoms": "Autre(s) nom(s)",
-      "prenoms": "Prénom(s)",
-      "autresPrenoms": "Autre(s) prénom(s)",
-      "dateNaissance": "Date de naissance",
-      "lieuNaissance": "Lieu de naissance",
-      "nationalite": "Nationalité",
-      "sexe": "Sexe",
-      "decision": "Décision",
-      "decisionConfirme": "Confirmée par la décision",
-      "date": "date",
-      "type": "Type",
-      "enrolementRg": "Enrôlement RG",
-      "enrolementPortalis": "Enrôlement Portalis",
-      "autorite": "Autorité",
-      "ville": "Ville",
-      "arrondissement": "Arrondissement",
-      "departement": "Département"
     }
   },
   "signature": {

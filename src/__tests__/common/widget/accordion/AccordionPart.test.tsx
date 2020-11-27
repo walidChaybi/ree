@@ -3,18 +3,20 @@ import React from "react";
 import { render, waitFor } from "@testing-library/react";
 import request from "superagent";
 import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
-import { AccordionContent } from "../../../../views/common/widget/accordion/AccordionContent";
+import { AccordionPart } from "../../../../views/common/widget/accordion/AccordionPart";
 
 const superagentMock = require("superagent-mock")(request, config);
 
-test("render composant AccordionContent", async () => {
+test("render composant AccordionPart", async () => {
   const { getByText } = render(
-    <AccordionContent libelle="testLibelle" value="testValue" />
+    <AccordionPart
+      contents={[{ libelle: "testLibelle", value: "testValue" }]}
+      title={"titleTest"}
+    />
   );
 
   await waitFor(() => {
-    expect(getByText(/testLibelle/i)).toBeDefined();
-    expect(getByText(/testValue/i)).toBeDefined();
+    expect(getByText(/titleTest/i)).toBeDefined();
   });
 });
 

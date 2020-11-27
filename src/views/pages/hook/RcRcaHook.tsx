@@ -2,10 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { AccordionPartProps } from "../../common/widget/accordion/AccordionPart";
 import { Link } from "react-router-dom";
-import { getText } from "../../common/widget/Text";
 import { FormatDate } from "../../../ressources/FormatDate";
 import moment from "moment";
 import { AccordionReceProps } from "../../common/widget/accordion/AccordionRece";
+import { getText } from "../../common/widget/Text";
 
 export interface RcRcaVue {
   nature: string;
@@ -208,19 +208,17 @@ function getInscriptionRepertoireCivil(
 ): AccordionPartProps {
   return {
     contents: [
-      { libelleId: "pages.vueRc.nature", value: retourBack.nature },
+      { libelle: "Nature", value: retourBack.nature },
       {
-        libelleId: "pages.vueRc.mandataires",
+        libelle: "Mandataire(s)",
         value: retourBack.mandataires.join(" / ")
       },
       //TODO modifier le link
       {
-        libelleId: "pages.vueRc.typeInscription",
+        libelle: "Type inscription",
         value: (
           <span>
-            {`${retourBack.typeInscription} (${getText(
-              "pages.vueRc.rcNumero"
-            )}`}
+            {`${retourBack.typeInscription} (RC n°}`}
             {retourBack.numeroRcImpactes.map(numero => {
               return (
                 <Link to={"/"} className="">
@@ -234,12 +232,10 @@ function getInscriptionRepertoireCivil(
         )
       },
       {
-        libelleId: "pages.vueRc.inscriptionsLiees",
+        libelle: "Inscription(s) liée(s)",
         value: retourBack.inscriptionsLiees.map((inscription, index) => (
           <span key={`inscription-liees-lien-${inscription.numeroRc}`}>
-            {`${inscription.typeInscription} (${getText(
-              "pages.vueRc.rcNumero"
-            )}`}
+            {`${inscription.typeInscription} (${"RC n°"}`}
             <Link to={`rcrca/${inscription.idInscription}`} className="">
               {inscription.numeroRc}
             </Link>
@@ -250,23 +246,23 @@ function getInscriptionRepertoireCivil(
         ))
       },
       {
-        libelleId: "pages.vueRc.dateInscription",
+        libelle: "Date d'inscription",
         value: moment
           .unix(retourBack.dateInscription)
           .format(FormatDate.DDMMYYYY)
       },
       {
-        libelleId: "pages.vueRc.dureeInscription",
+        libelle: "Durée inscription",
         value: `${retourBack.dureeInscriptionRc.nombreDuree} ${retourBack.dureeInscriptionRc.uniteDuree}`
       },
       {
-        libelleId: "pages.vueRc.dateFinMesure",
+        libelle: "Date fin de mesure",
         value: moment
           .unix(retourBack.dureeInscriptionRc.dateFinDeMesure)
           .format(FormatDate.DDMMYYYY)
       }
     ],
-    title: getText("pages.vueRc.inscriptionRepertoireCivil")
+    title: "Inscrition au répertoire civil"
   };
 }
 
@@ -275,41 +271,41 @@ function getInteresse(retourBack: RcRcaVue): AccordionPartProps[] {
     return {
       contents: [
         {
-          libelleId: "pages.vueRc.nom",
+          libelle: "Nom",
           value: interesse.nomFamille
         },
         {
-          libelleId: "pages.vueRc.autresNoms",
+          libelle: "Autre(s) nom(s)",
           value: interesse.autresNoms.join(", ")
         },
         {
-          libelleId: "pages.vueRc.prenoms",
+          libelle: "Prénom(s)",
           value: interesse.prenoms.map(prenom => prenom.prenom).join(", ")
         },
         {
-          libelleId: "pages.vueRc.autresPrenoms",
+          libelle: "Autre(s) prénom(s)",
           value: interesse.autresPrenoms.join(", ")
         },
         {
-          libelleId: "pages.vueRc.dateNaissance",
+          libelle: "Date de naissance",
           value: moment
             .unix(interesse.dateDeNaissance)
             .format(FormatDate.DDMMYYYY)
         },
         {
-          libelleId: "pages.vueRc.lieuNaissance",
+          libelle: "Lieu de naissance",
           value: interesse.lieuDeNaissance
         },
         {
-          libelleId: "pages.vueRc.nationalite",
+          libelle: "Nationalité",
           value: interesse.nationalite
         },
         {
-          libelleId: "pages.vueRc.sexe",
+          libelle: "Sexe",
           value: interesse.sexe
         }
       ],
-      title: getText("pages.vueRc.interesse", [indexInteresse + 1])
+      title: getText("vue-rc-interesse", [indexInteresse + 1])
     };
   });
 }
@@ -319,25 +315,25 @@ function getDecision(retourBack: RcRcaVue): AccordionPartProps[] {
     {
       contents: [
         {
-          libelleId: "pages.vueRc.type",
+          libelle: "Type",
           value: retourBack.decisionRc.type
         },
         {
-          libelleId: "pages.vueRc.date",
+          libelle: "Date",
           value: moment
             .unix(retourBack.decisionRc.dateDecision)
             .format(FormatDate.DDMMYYYY)
         },
         {
-          libelleId: "pages.vueRc.enrolementRg",
+          libelle: "Enrôlement RG",
           value: retourBack.decisionRc.enrolementRg
         },
         {
-          libelleId: "pages.vueRc.enrolementPortalis",
+          libelle: "Enrôlement Portalis",
           value: retourBack.decisionRc.enrolementPortalis
         }
       ],
-      title: getText("pages.vueRc.decision")
+      title: "Décision"
     }
   ];
 
@@ -345,25 +341,25 @@ function getDecision(retourBack: RcRcaVue): AccordionPartProps[] {
     decision.push({
       contents: [
         {
-          libelleId: "pages.vueRc.type",
+          libelle: "Type",
           value: retourBack.decisionRc.confirmation.type
         },
         {
-          libelleId: "pages.vueRc.date",
+          libelle: "Date",
           value: moment
             .unix(retourBack.decisionRc.confirmation.dateDecision)
             .format(FormatDate.DDMMYYYY)
         },
         {
-          libelleId: "pages.vueRc.enrolementRg",
+          libelle: "Enrôlement RG",
           value: retourBack.decisionRc.confirmation.enrolementRg
         },
         {
-          libelleId: "pages.vueRc.enrolementPortalis",
+          libelle: "Enrôlement Portalis",
           value: retourBack.decisionRc.confirmation.enrolementPortalis
         }
       ],
-      title: getText("pages.vueRc.decisionConfirme")
+      title: "Confirmée par la décisio"
     });
   }
 
@@ -375,23 +371,23 @@ function getAutorite(retourBack: RcRcaVue): AccordionPartProps[] {
     {
       contents: [
         {
-          libelleId: "pages.vueRc.type",
+          libelle: "Type",
           value: retourBack.decisionRc.autorite.type
         },
         {
-          libelleId: "pages.vueRc.ville",
+          libelle: "Ville",
           value: retourBack.decisionRc.autorite.ville
         },
         {
-          libelleId: "pages.vueRc.arrondissement",
+          libelle: "Arrondissement",
           value: retourBack.decisionRc.autorite.arrondissement
         },
         {
-          libelleId: "pages.vueRc.departement",
+          libelle: "Département",
           value: retourBack.decisionRc.autorite.departement
         }
       ],
-      title: getText("pages.vueRc.autorite")
+      title: "Autorité"
     }
   ];
 
@@ -399,19 +395,19 @@ function getAutorite(retourBack: RcRcaVue): AccordionPartProps[] {
     autorite.push({
       contents: [
         {
-          libelleId: "pages.vueRc.type",
+          libelle: "Type",
           value: retourBack.decisionRc.confirmation.autorite.type
         },
         {
-          libelleId: "pages.vueRc.ville",
+          libelle: "Ville",
           value: retourBack.decisionRc.confirmation.autorite.ville
         },
         {
-          libelleId: "pages.vueRc.arrondissement",
+          libelle: "Arrondissement",
           value: retourBack.decisionRc.confirmation.autorite.arrondissement
         },
         {
-          libelleId: "pages.vueRc.departement",
+          libelle: "Département",
           value: retourBack.decisionRc.confirmation.autorite.departement
         }
       ],

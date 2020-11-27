@@ -13,10 +13,7 @@ export const AccordionPart: React.FC<AccordionPartProps> = ({
   columnIndex = 1
 }) => {
   return (
-    <div
-      className="wrapper part"
-      style={{ gridColumn: columnIndex < 0 ? "1/-1" : columnIndex }}
-    >
+    <div className="wrapper part" style={{ gridColumn: columnIndex }}>
       <span className="titlePart">{title}</span>
       {contents.map((content, index) => {
         return (

@@ -30,6 +30,7 @@ export const AccordionPanel: React.FC<AccordionPanelProps> = ({
                   marginTop: "20px",
                   marginBottom: "20px"
                 }}
+                data-testid={`accordion-panel-hr-${title}-${index}`}
               />
             )}
           </>
