@@ -3,7 +3,7 @@ import { IOfficierSSOApi } from "./IOfficierSSOApi";
 
 export interface IDroit {
   idDroit: string;
-  nom: string;
+  nom: Droit;
 }
 
 export interface IProfil {
@@ -30,12 +30,22 @@ export function officierHabiliterPourLeDroit(
   return droitTrouve != null;
 }
 
-export function estOfficierHabiliterPourLesDroits(
+export function estOfficierHabiliterPourTousLesDroits(
   officier: IOfficierSSOApi,
   droits: Droit[]
 ) {
-  if (droits.length === 0) {
+  if (!droits || droits.length === 0) {
     return true;
   }
   return droits.every(droit => officierHabiliterPourLeDroit(officier, droit));
+}
+
+export function estOfficierHabiliterPourUnDesDroits(
+  officier: IOfficierSSOApi,
+  droits: Droit[]
+) {
+  if (!droits || droits.length === 0) {
+    return true;
+  }
+  return droits.some(droit => officierHabiliterPourLeDroit(officier, droit));
 }

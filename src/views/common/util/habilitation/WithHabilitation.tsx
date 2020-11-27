@@ -1,9 +1,13 @@
 import * as React from "react";
-import { estOfficierHabiliterPourLesDroits } from "../../../../model/Habilitation";
+import {
+  estOfficierHabiliterPourTousLesDroits,
+  estOfficierHabiliterPourUnDesDroits
+} from "../../../../model/Habilitation";
 import { storeRece } from "../storeRece";
 import {
   habilitationsDescription,
-  IHabiliationDescription
+  IHabiliationDescription,
+  NomComposant
 } from "./habilitationsDescription";
 import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
@@ -18,10 +22,17 @@ function getComportement(
   habilitationPourLeComposant: IHabiliationDescription,
   utilisateurCourant: IOfficierSSOApi
 ) {
-  const authorise = estOfficierHabiliterPourLesDroits(
-    utilisateurCourant,
-    habilitationPourLeComposant.droits
-  );
+  const authorise = habilitationPourLeComposant.tousLesDroits
+    ? estOfficierHabiliterPourTousLesDroits(
+        utilisateurCourant,
+        habilitationPourLeComposant.tousLesDroits
+      )
+    : habilitationPourLeComposant.unDesDroits
+    ? estOfficierHabiliterPourUnDesDroits(
+        utilisateurCourant,
+        habilitationPourLeComposant.unDesDroits
+      )
+    : true;
   return authorise
     ? habilitationPourLeComposant.comportementSiAutorise
       ? habilitationPourLeComposant.comportementSiAutorise
@@ -31,10 +42,12 @@ function getComportement(
 /**
  * HOC permettant d'injecter un comportement à un composant en fonction des droits de l'utilisateur connecté
  * ComponentToWrap: composant recevant un comportement (props) en fonction des droits
- * specifiquesHabilitationsDescription: il est possible de passer des descriptions d'habilitations spécifiques qui remplacent celles de l'application (cf. habilitationsDescription.ts)
+ * specifiquesHabilitationsDescription: il est possible de passer des descriptions d'habilitations spécifiques qui
+ * remplacent celles de l'application (cf. habilitationsDescription.ts)
  */
 const WithHabilitation = (
   ComponentToWrap: any,
+  composantId?: NomComposant,
   specifiquesHabilitationsDescription?: IHabiliationDescription[]
 ) => {
   class Habilitation extends React.Component<any> {
@@ -43,7 +56,7 @@ const WithHabilitation = (
       let composantEstVisible = true;
       if (storeRece.utilisateurCourant) {
         const habilitationPourLeComposant = getHabilitationPourLeComposant(
-          ComponentToWrap.name,
+          composantId ? composantId : ComponentToWrap.name,
           specifiquesHabilitationsDescription
             ? specifiquesHabilitationsDescription
             : habilitationsDescription

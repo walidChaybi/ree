@@ -32,7 +32,7 @@ test("L'utilisateur est redirigé vers la page d'accueil car il n'a pa le droit 
 test("L'utilisateur accède à la page 'Espace délivrance' car il a le droit attribuer", () => {
   storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
     idDroit: "d12345",
-    nom: Droit.Attribuer
+    nom: Droit.ATTRIBUER
   };
   const history = createMemoryHistory();
   history.push(URL_REQUETES_SERVICE);
