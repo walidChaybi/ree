@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Badge from "@material-ui/core/Badge";
 import { getText } from "../../common/widget/Text";
 import "../accueil/sass/BoutonAccueil.scss";
+import WithHabilitation from "../../common/util/habilitation/WithHabilitation";
 
 interface BoutonAccueilProps {
   messageId: string;
@@ -60,3 +61,25 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
     </div>
   );
 };
+
+export const BoutonAccueilEspaceMiseAjour = WithHabilitation(
+  BoutonAccueil,
+  "BoutonAccueilEspaceMiseAjour"
+);
+
+export const BoutonAccueilEspaceCreation = WithHabilitation(
+  BoutonAccueil,
+  "BoutonAccueilEspaceCreation"
+);
+export const BoutonAccueilCommunication = WithHabilitation(
+  BoutonAccueil,
+  "BoutonAccueilCommunication"
+);
+export const BoutonAccueilRechercheRequete = WithHabilitation(
+  BoutonAccueil,
+  "BoutonAccueilRechercheRequete"
+);
+export const BoutonAccueilRechercheActeOuInscription = WithHabilitation(
+  BoutonAccueil,
+  "BoutonAccueilRechercheActeOuInscription"
+);

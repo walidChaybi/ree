@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, getText } from "../../common/widget/Text";
 import { useHistory } from "react-router-dom";
-import { contextApp, AccueilUrl } from "../../router/UrlManager";
+import { URL_ACCUEIL } from "../../router/ReceUrls";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
 import { BoutonDeconnexion } from "./BoutonDeconnexion";
 import { Tooltip } from "@material-ui/core";
@@ -16,9 +16,9 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
 
   function onClickLogo(event: React.MouseEvent) {
     if (onClick) {
-      onClick(event, contextApp + AccueilUrl);
+      onClick(event, URL_ACCUEIL);
     }
-    history.push(contextApp + AccueilUrl);
+    history.push(URL_ACCUEIL);
   }
 
   return (
@@ -27,7 +27,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
         className="LogoHeader"
         src={logoReceBlanc}
         alt={getText("altLogoRece")}
-        onClick={(event) => onClickLogo(event)}
+        onClick={event => onClickLogo(event)}
         data-testid="LogoHeader"
       />
       <Tooltip title={`Version de dévelopement numéro: ${version}`}>

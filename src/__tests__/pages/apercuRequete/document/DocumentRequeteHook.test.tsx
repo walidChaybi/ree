@@ -1,11 +1,11 @@
 import request from "superagent";
-import { configRequetes } from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { requestDocumentApi } from "../../../../views/common/hook/DocumentRequeteHook";
-import requetes from "../../../../api/mock/data/requetes.json";
+import requetes from "../../../../mock/data/requetes.json";
 import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
 import { MimeType } from "../../../../ressources/MimeType";
 import { IRequestDocumentApiResult } from "../../../../api/appels/requeteApi";
 import { convertToBlob } from "../../../../views/pages/apercuRequete/contenu/document/DocumentPresentation";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

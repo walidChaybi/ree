@@ -1,14 +1,14 @@
 import React from "react";
-import { IOfficierSSOApi } from "../../../core/login/LoginHook";
 import { useCompteurRequeteHook } from "../hook/CompteurRequeteHook";
 import { getText } from "../../../common/widget/Text";
 import "./sass/CompteurRequete.scss";
+import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
 interface CompteurRequeteProps {
   officier: IOfficierSSOApi;
 }
 
-export const CompteurRequete: React.FC<CompteurRequeteProps> = (props) => {
+export const CompteurRequete: React.FC<CompteurRequeteProps> = props => {
   const { nombreRequetesState } = useCompteurRequeteHook(props.officier);
 
   return (

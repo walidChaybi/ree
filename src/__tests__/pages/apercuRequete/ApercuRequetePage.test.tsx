@@ -1,16 +1,20 @@
 import React from "react";
-import DONNEES_REQUETE from "../../../api/mock/data/requete";
-import { Router } from "react-router-dom";
+import DONNEES_REQUETE from "../../../mock/data/requete";
+import { Router, Route } from "react-router-dom";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
 import { ApercuRequetePage } from "../../../views/pages/apercuRequete/ApercuRequetePage";
+import {
+  URL_MES_REQUETES,
+  URL_MES_REQUETES_ID
+} from "../../../views/router/ReceUrls";
 
 test("renders Page requete with all elements", () => {
   act(() => {
     const history = createMemoryHistory();
-    history.push("mesrequetes/req2", {
+    history.push(`${URL_MES_REQUETES}/req2`, {
       data: [
         { ...DONNEES_REQUETE, idRequete: "req1" },
         { ...DONNEES_REQUETE, idRequete: "req2" },
@@ -21,16 +25,9 @@ test("renders Page requete with all elements", () => {
     const component = mount(
       <>
         <Router history={history}>
-          <ApercuRequetePage
-            match={{
-              isExact: true,
-              path: "",
-              url: "",
-              params: { idRequete: "req2" }
-            }}
-            history={history}
-            location={history.location}
-          />
+          <Route exact={true} path={URL_MES_REQUETES_ID}>
+            <ApercuRequetePage />
+          </Route>
         </Router>
       </>
     );
@@ -44,23 +41,18 @@ test("renders Page requete with all elements", () => {
 test("renders Page requete with no elements", () => {
   act(() => {
     const history = createMemoryHistory();
-    history.push("/rece-ui/mesrequetes/req2", {
+    history.push(`${URL_MES_REQUETES}/req2`, {
       data: []
     });
 
     const component = mount(
       <>
         <Router history={history}>
-          <ApercuRequetePage
-            match={{
-              isExact: true,
-              path: "",
-              url: "",
-              params: { idRequete: "req2" }
-            }}
-            history={history}
-            location={history.location}
-          />
+          <Router history={history}>
+            <Route exact={true} path={URL_MES_REQUETES_ID}>
+              <ApercuRequetePage />
+            </Route>
+          </Router>
         </Router>
       </>
     );
@@ -74,7 +66,7 @@ test("renders Page requete with no elements", () => {
 test("renders Page requete change url", () => {
   act(() => {
     const history = createMemoryHistory();
-    history.push("/rece-ui/mesrequetes/req2", {
+    history.push(`${URL_MES_REQUETES}/req2`, {
       data: [
         { ...DONNEES_REQUETE, idRequete: "req1" },
         { ...DONNEES_REQUETE, idRequete: "req2" },
@@ -85,16 +77,9 @@ test("renders Page requete change url", () => {
     render(
       <>
         <Router history={history}>
-          <ApercuRequetePage
-            match={{
-              isExact: true,
-              path: "",
-              url: "",
-              params: { idRequete: "req2" }
-            }}
-            history={history}
-            location={history.location}
-          />
+          <Route exact={true} path={URL_MES_REQUETES_ID}>
+            <ApercuRequetePage />
+          </Route>
         </Router>
       </>
     );
@@ -110,13 +95,17 @@ test("renders Page requete change url", () => {
     );
 
     setTimeout(() => {
-      expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
+      expect(history.location.pathname).toBe("/rece/rece-ui/mesrequetes/req2");
       fireEvent.click(leftButton!);
       setTimeout(() => {
-        expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req1");
+        expect(history.location.pathname).toBe(
+          "/rece/rece-ui/mesrequetes/req1"
+        );
         fireEvent.click(rightButton!);
         setTimeout(() => {
-          expect(history.location.pathname).toBe("/rece-ui/mesrequetes/req2");
+          expect(history.location.pathname).toBe(
+            "/rece/rece-ui/mesrequetes/req2"
+          );
         }, 75);
       }, 75);
     }, 75);

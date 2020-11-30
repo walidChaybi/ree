@@ -6,14 +6,14 @@ import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import { RequetesServicePage } from "./RequetesServicePage";
 import "./sass/EspaceDelivrancePage.scss";
-import { AppUrls } from "../../router/UrlManager";
 import { useHistory } from "react-router-dom";
 import { OfficierContext } from "../../core/contexts/OfficierContext";
 import { MesRequetesPage } from "./MesRequetesPage";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import { getText } from "../../common/widget/Text";
 import { Droit } from "../../../model/Droit";
-import { officierHabiliter } from "../../../model/Habilitation";
+import { officierHabiliterPourLeDroit } from "../../../model/Habilitation";
+import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -75,9 +75,9 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
   );
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    let targetUri: string = AppUrls.ctxMesRequetesUrl;
+    let targetUri: string = URL_MES_REQUETES;
     if (newValue === 1) {
-      targetUri = AppUrls.ctxRequetesServiceUrl;
+      targetUri = URL_REQUETES_SERVICE;
     }
     history.push(targetUri);
     setSelectedTabState(newValue);
@@ -106,17 +106,17 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                     >
                       <LinkTab
                         label={getText("pages.delivrance.onglets.mesRequetes")}
-                        href={AppUrls.MesRequetesUrl}
+                        href={URL_MES_REQUETES}
                         {...a11yProps(0)}
                       />
                       <LinkTab
                         label={getText("pages.delivrance.onglets.monService")}
-                        href={AppUrls.RequetesServiceUrl}
+                        href={URL_REQUETES_SERVICE}
                         {...a11yProps(1)}
                         disabled={
-                          !officierHabiliter(
+                          !officierHabiliterPourLeDroit(
                             officier.officierDataState,
-                            Droit.Attribuer
+                            Droit.ATTRIBUER
                           )
                         }
                       />
@@ -128,9 +128,9 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       <MesRequetesPage officier={officier.officierDataState} />
                     )}
                   </TabPanel>
-                  {officierHabiliter(
+                  {officierHabiliterPourLeDroit(
                     officier.officierDataState,
-                    Droit.Attribuer
+                    Droit.ATTRIBUER
                   ) && (
                     <TabPanel value={selectedTabState} index={1}>
                       {selectedTabState === 1 && (

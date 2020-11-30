@@ -1,67 +1,48 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { AccueilPage } from "../pages/accueil/AccueilPage";
-import { LoginPage } from "../core/login/LoginPage";
-import { ApercuRequetePage } from "../pages/apercuRequete/ApercuRequetePage";
-import { AppUrls } from "./UrlManager";
-import DelivrancePage from "../pages/espaceDelivrance/EspaceDelivrancePage";
-import { OfficierContext } from "../core/contexts/OfficierContext";
-import { RcRcaPage } from "../pages/RcRcaPage";
+import { routesRece, IRouteRece } from "./ReceRoutes";
+import { storeRece } from "../common/util/storeRece";
+import messageManager from "../common/util/messageManager";
+import { estOfficierHabiliterPourTousLesDroits } from "../../model/Habilitation";
+import { Droit } from "../../model/Droit";
+import { URL_ACCUEIL } from "./ReceUrls";
 
 export const RouterComponent: React.FC = () => {
   return (
     <Switch>
-      <Route exact path={AppUrls.SeparateurUrl}>
-        <Redirect to={AppUrls.ctxAccueilUrl} />
-      </Route>
-      <Route exact path={AppUrls.ctxSeparateurUrl}>
-        <Redirect to={AppUrls.ctxAccueilUrl} />
-      </Route>
-      <Route exact path={AppUrls.ctxMesRequetesUrl}>
-        <DelivrancePage selectedTab={0} />
-      </Route>
-      <Route exact path={AppUrls.ctxRequetesServiceUrl}>
-        <DelivrancePage selectedTab={1} />
-      </Route>
-
-      <Route
-        exact
-        path={AppUrls.ctxIdRequeteUrl}
-        render={props => (
-          <OfficierContext.Consumer>
-            {officier => (
-              <ApercuRequetePage
-                {...props}
-                officier={officier?.officierDataState}
-              />
-            )}
-          </OfficierContext.Consumer>
-        )}
-      />
-
-      <Route exact path={AppUrls.DeconnexionAppUrl}>
-        <LoginPage messageLogin="pages.login.deconnexion" />
-      </Route>
-
-      <Route
-        exact
-        path={AppUrls.ctxIdRequeteServiceUrl}
-        render={props => (
-          <OfficierContext.Consumer>
-            {officier => (
-              <ApercuRequetePage
-                {...props}
-                officier={officier?.officierDataState}
-              />
-            )}
-          </OfficierContext.Consumer>
-        )}
-      />
-      <Route exact path={AppUrls.ctxAccueilUrl} component={AccueilPage} />
-
-      <Route exact path={AppUrls.ctxRcRcaUrl}>
-        <RcRcaPage />
-      </Route>
+      {routesRece.map((route: IRouteRece, index: number) => {
+        return (
+          <Route
+            key={index}
+            exact={true}
+            path={route.url}
+            render={props => {
+              if (!estAutorise(route.droits)) {
+                messageManager.showWarningAndClose(
+                  "La page demandée n'est pas autorisée, vous avez été redirigé sur la page d'accueil"
+                );
+                return <Redirect to={URL_ACCUEIL} />;
+              } else {
+                if (route.render) {
+                  return route.render(props);
+                }
+              }
+              return <route.component {...route.props} />;
+            }}
+          ></Route>
+        );
+      })}
     </Switch>
   );
 };
+
+function estAutorise(droits: Droit[] | undefined) {
+  return (
+    !droits ||
+    (storeRece.utilisateurCourant &&
+      estOfficierHabiliterPourTousLesDroits(
+        storeRece.utilisateurCourant,
+        droits
+      ))
+  );
+}

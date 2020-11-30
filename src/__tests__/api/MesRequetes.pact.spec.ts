@@ -1,9 +1,9 @@
 import path from "path";
 import { Pact, InteractionObject, Interaction } from "@pact-foundation/pact";
-import { ApiEndpoints } from "../../views/router/UrlManager";
 import { StatutRequete } from "../../model/requete/StatutRequete";
 import { ApiPact } from "./ApiPact";
 import { requetesPact } from "./requetes.pact";
+import { URL_REQUETES } from "../../api/appels/requeteApi";
 
 const provider = new Pact({
   consumer: "ReceUiMesRequetes",
@@ -28,7 +28,7 @@ describe("API Pact test", () => {
   });
 
   describe("getting all requests of an oec", () => {
-    const uri = "/rece-requete-api/v1" + ApiEndpoints.RequetesUrl;
+    const uri = "/rece-requete-api/v1" + URL_REQUETES;
 
     const queryParameters = {
       statut: StatutRequete.ASigner,
@@ -74,7 +74,7 @@ describe("API Pact test", () => {
         .get(uri)
         .queryParameters(queryParameters)
         .execute()
-        .then((res) => {
+        .then(res => {
           return res;
         });
 

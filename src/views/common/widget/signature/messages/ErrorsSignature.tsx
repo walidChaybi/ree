@@ -22,7 +22,7 @@ export const ErrorsSignature: React.FC<ErrorsSignatureProps> = ({ errors }) => {
   const getErrorsDisplay = useCallback(() => {
     const errorsToDisplay: JSX.Element[] = [];
 
-    errors.erreurs.forEach((error) => {
+    errors.erreurs.forEach(error => {
       errorsToDisplay.push(
         <ListItem alignItems="flex-start" key={errors.numeroRequete}>
           <ListItemText

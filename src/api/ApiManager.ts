@@ -1,10 +1,9 @@
-import { configRequetes } from "./mock/superagent-config/superagent-mock-requetes";
-import { configSecurite } from "./mock/superagent-config/superagent-mock-securite";
 import { configEtatcivil } from "./mock/superagent-config/superagent-mock-etatcivil";
-
 import * as superagent from "superagent";
 import request from "superagent";
 import messageManager from "../views/common/util/messageManager";
+import { configSecurite } from "../mock/superagent-config/superagent-mock-securite";
+import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
 
 if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, [

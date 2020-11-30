@@ -2,9 +2,9 @@ import React from "react";
 
 import { render, waitFor, screen } from "@testing-library/react";
 import { CompteurRequete } from "../../../../views/pages/espaceDelivrance/contenu/CompteurRequete";
-import connectedUser from "../../../../api/mock/data/connectedUser.json";
+import connectedUser from "../../../../mock/data/connectedUser.json";
 import request from "superagent";
-import { configRequetes } from "../../../../api/mock/superagent-config/superagent-mock-requetes";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const off = { idSSO: connectedUser.id_sso, ...connectedUser };
 

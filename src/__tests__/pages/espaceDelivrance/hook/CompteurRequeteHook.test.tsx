@@ -1,10 +1,10 @@
 import React from "react";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import { configRequetes } from "../../../../api/mock/superagent-config/superagent-mock-requetes";
-import connectedUser from "../../../../api/mock/data/connectedUser.json";
+import connectedUser from "../../../../mock/data/connectedUser.json";
 import { useCompteurRequeteHook } from "../../../../views/pages/espaceDelivrance/hook/CompteurRequeteHook";
 import { render, waitFor } from "@testing-library/react";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const off = { idSSO: connectedUser.id_sso, ...connectedUser };
 

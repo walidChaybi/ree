@@ -1,7 +1,8 @@
 import { HttpMethod, ApiManager } from "../ApiManager";
-import { ApiEndpoints } from "../../views/router/UrlManager";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
+
+const URL_ETAT_CIVIL = "/repertoirecivil";
 
 export function getInformationsFiche(
   categorie: string,
@@ -9,6 +10,6 @@ export function getInformationsFiche(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${ApiEndpoints.RepertoirecivilUrl}/${categorie}/${identifiant}`
+    uri: `${URL_ETAT_CIVIL}/${categorie}/${identifiant}`
   });
 }

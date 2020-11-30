@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import request from "superagent";
-import { configSecurite } from "../../../api/mock/superagent-config/superagent-mock-securite";
 import { useLoginApi } from "../../../views/core/login/LoginHook";
 import { act } from "@testing-library/react";
+import { configSecurite } from "../../../mock/superagent-config/superagent-mock-securite";
 
 const superagentMock = require("superagent-mock")(request, configSecurite);
 

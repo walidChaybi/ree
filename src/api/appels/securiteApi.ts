@@ -1,5 +1,8 @@
 import { HttpMethod, ApiManager } from "../ApiManager";
-import { ApiEndpoints } from "../../views/router/UrlManager";
+
+// Url APIs
+const URL_UTILISATEURS_LOGIN = "/utilisateurs/login";
+const URL_UTILISATEURS = "/utilisateurs";
 
 const api = ApiManager.getInstance("rece-securite-api", "v1");
 
@@ -10,14 +13,14 @@ export interface IQueryParametersUtilisateursService {
 export function getLogin(): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: ApiEndpoints.SecuriteUrl
+    uri: URL_UTILISATEURS_LOGIN
   });
 }
 
 export function getUtilisateurs(idArobas: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: ApiEndpoints.UtilisateursUrl,
+    uri: URL_UTILISATEURS,
     parameters: {
       idArobas
     }

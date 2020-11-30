@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Text, getText } from "../../common/widget/Text";
-import { BoutonAccueil } from "./BoutonAccueil";
+import {
+  BoutonAccueil,
+  BoutonAccueilEspaceMiseAjour,
+  BoutonAccueilEspaceCreation,
+  BoutonAccueilCommunication,
+  BoutonAccueilRechercheRequete,
+  BoutonAccueilRechercheActeOuInscription
+} from "./BoutonAccueil";
 import "../accueil/sass/AccueilPage.scss";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -20,15 +27,15 @@ import {
 import { Badge } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
-import { AccueilReceAdminUrl } from "../../router/UrlManager";
 import { BoutonAccueilTest } from "./BoutonAccueilTest";
 import { FenetreExterne } from "../../common/util/FenetreExterne";
 import { NewFenetreFC } from "./NewFenetreFC";
+import { URL_ACCUEIL_RECE_ADMIN } from "../../router/ReceUrls";
 
 export const AccueilPage: React.FC = () => {
   const history = useHistory();
   const onClickBadgeAdmin = () => {
-    history.push(AccueilReceAdminUrl);
+    history.push(URL_ACCUEIL_RECE_ADMIN);
     history.go(0);
   };
 
@@ -91,41 +98,36 @@ export const AccueilPage: React.FC = () => {
           iconFA={faGavel}
           titleId="pages.accueil.titles.delivrance"
         ></BoutonAccueil>
-        <BoutonAccueil
+        <BoutonAccueilEspaceMiseAjour
           messageId="pages.accueil.boutons.miseAJour"
           pageUrl="miseAJour"
           iconFA={faSync}
-          disabled={true}
           titleId="pages.accueil.titles.miseAJour"
-        ></BoutonAccueil>
-        <BoutonAccueil
+        ></BoutonAccueilEspaceMiseAjour>
+        <BoutonAccueilEspaceCreation
           messageId="pages.accueil.boutons.creation"
           pageUrl="creation"
           iconFA={faPlusCircle}
-          disabled={true}
           titleId="pages.accueil.titles.creation"
-        ></BoutonAccueil>
-        <BoutonAccueil
+        ></BoutonAccueilEspaceCreation>
+        <BoutonAccueilCommunication
           messageId="pages.accueil.boutons.communication"
           pageUrl="communication"
           iconFA={faEnvelope}
-          disabled={true}
           titleId="pages.accueil.titles.communication"
-        ></BoutonAccueil>
-        <BoutonAccueil
+        ></BoutonAccueilCommunication>
+        <BoutonAccueilRechercheRequete
           messageId="pages.accueil.boutons.requete"
           pageUrl="rechercheRequete"
           iconFA={faSearch}
-          disabled={true}
           titleId="pages.accueil.titles.requete"
-        ></BoutonAccueil>
-        <BoutonAccueil
+        ></BoutonAccueilRechercheRequete>
+        <BoutonAccueilRechercheActeOuInscription
           messageId="pages.accueil.boutons.acte"
           pageUrl="rechercheActe"
           iconFA={faSearch}
-          disabled={true}
           titleId="pages.accueil.titles.acte"
-        ></BoutonAccueil>
+        ></BoutonAccueilRechercheActeOuInscription>
         <BoutonAccueil
           messageId="pages.accueil.boutons.tableau"
           pageUrl="tableau"

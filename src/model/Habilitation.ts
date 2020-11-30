@@ -1,9 +1,9 @@
 import { Droit } from "./Droit";
-import { IOfficierSSOApi } from "../views/core/login/LoginHook";
+import { IOfficierSSOApi } from "./IOfficierSSOApi";
 
 export interface IDroit {
   idDroit: string;
-  nom: string;
+  nom: Droit;
 }
 
 export interface IProfil {
@@ -18,14 +18,34 @@ export interface IHabilitation {
 }
 
 /** Savoir si l'officier connecté à le droit ou le profilt demandé en paramètre */
-export function officierHabiliter(
+export function officierHabiliterPourLeDroit(
   officier: IOfficierSSOApi,
   droit: Droit
-): IDroit | undefined {
-  let droitTrouve: IDroit | undefined = undefined;
+) {
+  let droitTrouve: IDroit | undefined;
   officier.habilitations.forEach(
     h =>
       (droitTrouve = droitTrouve || h.profil.droits.find(d => d.nom === droit))
   );
-  return droitTrouve;
+  return droitTrouve != null;
+}
+
+export function estOfficierHabiliterPourTousLesDroits(
+  officier: IOfficierSSOApi,
+  droits: Droit[]
+) {
+  if (!droits || droits.length === 0) {
+    return true;
+  }
+  return droits.every(droit => officierHabiliterPourLeDroit(officier, droit));
+}
+
+export function estOfficierHabiliterPourUnDesDroits(
+  officier: IOfficierSSOApi,
+  droits: Droit[]
+) {
+  if (!droits || droits.length === 0) {
+    return true;
+  }
+  return droits.some(droit => officierHabiliterPourLeDroit(officier, droit));
 }

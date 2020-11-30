@@ -7,9 +7,9 @@ import {
 } from "./hook/SignatureDocumentHook";
 import { IDataTable } from "../../../pages/espaceDelivrance/MesRequetesPage";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { IOfficierSSOApi } from "../../../core/login/LoginHook";
 import { getText } from "../Text";
 import { Button } from "reakit/Button";
+import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
@@ -32,20 +32,19 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   >({});
 
   const closePopin = useCallback(
-    (showPopin: boolean, changePage: boolean) => {
-      setShowWaitState(showPopin);
-      if (changePage === true) {
+    (showPopin: boolean) => {
+      if (showWaitState) {
         reloadData(
           Object.keys(documentsByRequeteToSign).length === requetes.length
         );
       }
+      setShowWaitState(showPopin);
     },
-    [reloadData, documentsByRequeteToSign, requetes]
+    [reloadData, documentsByRequeteToSign, requetes, showWaitState]
   );
 
   const handleClickSignature = () => {
     setShowWaitState(true);
-
     const newDocumentsByRequeteToSign: DocumentsByRequete = {};
     requetes.forEach(requete => {
       if (
@@ -74,7 +73,6 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;
       }
     });
-
     setDocumentsByRequeteToSign(newDocumentsByRequeteToSign);
   };
 

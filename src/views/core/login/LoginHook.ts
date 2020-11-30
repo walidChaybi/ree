@@ -2,25 +2,11 @@ import { useState, useEffect } from "react";
 import { getLogin } from "../../../api/appels/securiteApi";
 import { IHabilitation, IDroit, IProfil } from "../../../model/Habilitation";
 import messageManager from "../../common/util/messageManager";
+import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 
 export interface ILoginApi {
   officierDataState?: IOfficierSSOApi;
   erreurState?: any;
-}
-
-export interface IOfficierSSOApi {
-  idSSO: string;
-  nom: string;
-  prenom: string;
-  trigramme: string;
-  mail: string;
-  profils: string[];
-  telephone: string;
-  section: string;
-  bureau: string;
-  departement: string;
-  service: string;
-  habilitations: IHabilitation[];
 }
 
 export function useLoginApi() {
