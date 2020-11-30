@@ -1,23 +1,52 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { AccordionPartProps } from "../../common/widget/accordion/AccordionPart";
 import { Link } from "react-router-dom";
-import { FormatDate } from "../../../ressources/FormatDate";
+import {
+  FormatDate,
+  DateCompose,
+  getDateString,
+  getDateFromDateCompose,
+  getDateFromTimestamp
+} from "../../../ressources/FormatDate";
 import moment from "moment";
 import { AccordionReceProps } from "../../common/widget/accordion/AccordionRece";
 import { getText } from "../../common/widget/Text";
 
 export interface RcRcaVue {
+  idInscription: string;
+  categorieInscription: string;
+  numero: string;
+  dateInscription: number;
+  dateDerniereMaj: number;
+  dateDerniereDelivrance: number;
+  alertes: Alerte[];
+  decision: DecisionRc;
+  mariageInteresses: MariageInteresse[];
+  interesses: Interesse[];
+  statutsFiche: StatutFiche[];
+
+  //en attente
   nature: string;
   typeInscription: string;
-  numeroRcImpactes: string[];
   mandataires: string[];
-  inscriptionsLiees: InscriptionLie[];
-  dateInscription: number;
   dureeInscriptionRc: DureeInscription;
-  interesses: Interesse[];
-  decisionRc: DecisionRc;
-  historique: Historique[];
+
+  //pas presents
+  numeroRcImpactes: string[];
+  inscriptionsLiees: InscriptionLie[];
+}
+
+export interface MariageInteresse {
+  villeMariage: string;
+  regionNaissance: string;
+  paysNaissance: string;
+  dateMariage: DateCompose;
+  aletranger: boolean;
+}
+
+export interface Alerte {
+  alerte: string;
+  dateCreation: string;
 }
 
 export interface DureeInscription {
@@ -27,12 +56,10 @@ export interface DureeInscription {
 }
 
 export interface DecisionRc {
-  type: string;
   dateDecision: number;
-  enrolementRg: string;
-  enrolementPortalis: string;
+  type: string;
   autorite: Autorite;
-  confirmation?: DecisionRc;
+  sourceConfirmation: Autorite;
 }
 
 export interface InscriptionLie {
@@ -41,22 +68,28 @@ export interface InscriptionLie {
   idInscription: string;
 }
 
-export interface Historique {
+export interface StatutFiche {
   statut: string;
-  date: string;
+  date: DateCompose;
   motif: string;
-  lieu: string;
-  complement: string;
+  villeEvenement: string;
+  departementEvenement: string;
+  paysEvenement: string;
+  complementMotif: string;
 }
 
 export interface Interesse {
+  numeroOrdreSaisi: number;
   nomFamille: string;
-  autresNoms: string[];
-  prenoms: Prenom[];
-  autresPrenoms: string[];
-  dateDeNaissance: number;
-  lieuDeNaissance: string;
+  villeNaissance: string;
+  paysNaissance: string;
+  regionNaissance: string;
+  arrondissementNaissance: string;
   nationalite: string;
+  autreNoms: string[];
+  autrePrenoms: string[];
+  prenoms: string[];
+  dateNaissance: DateCompose;
   sexe: string;
 }
 
@@ -67,25 +100,163 @@ export interface Prenom {
 
 export interface Autorite {
   type: string;
+  numeroDepartement: number;
+  libelleDepartement: string;
   ville: string;
-  arrondissement: string;
-  departement: string;
+  pays: string;
+  arrondissement: number;
+  nomNotaire: string;
+  prenomNotaire: string;
+  numeroCrpcen: string;
+  nomOnac: string;
+  prenomOnac: string;
+  enrolementRg: string;
+  enrolementPortails: string;
+  dateDecisionEtrangere: number;
 }
 
 const mockRc: RcRcaVue = {
+  idInscription: "",
+  categorieInscription: "rc",
+  numero: "2015-123456",
+  dateInscription: 1518652800,
+  dateDerniereMaj: 1518652800,
+  dateDerniereDelivrance: 1518652800,
+  alertes: [],
+  decision: {
+    dateDecision: 1577059200,
+    type: "Jugement",
+    autorite: {
+      type: "Tribunal de grande instance",
+      numeroDepartement: 69,
+      libelleDepartement: "Rhône",
+      ville: "Lyon",
+      pays: "France",
+      arrondissement: 8,
+      nomNotaire: "",
+      prenomNotaire: "",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: "",
+      enrolementRg: "",
+      enrolementPortails: "",
+      dateDecisionEtrangere: 1584403200
+    },
+    sourceConfirmation: {
+      type: "Arrêt",
+      dateDecisionEtrangere: 1584403200,
+      enrolementRg: "",
+      enrolementPortails: "",
+      ville: "Marseille",
+      arrondissement: 10,
+      numeroDepartement: 13,
+      libelleDepartement: "Bouches-du-Rhône",
+      pays: "France",
+      nomNotaire: "",
+      prenomNotaire: "",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: ""
+    }
+  },
+  mariageInteresses: [],
+  interesses: [
+    {
+      numeroOrdreSaisi: 0,
+      nomFamille: "FAVARO",
+      villeNaissance: "San remo",
+      paysNaissance: "Italie",
+      regionNaissance: "",
+      arrondissementNaissance: "",
+      nationalite: "Etrangère",
+      autreNoms: ["FAVAROTTI"],
+      autrePrenoms: [],
+      prenoms: ["Enrico", "Pablo", "Flavio"],
+      dateNaissance: {
+        jour: 25,
+        mois: 5,
+        annee: 1980
+      },
+
+      sexe: "Masculin"
+    },
+    {
+      numeroOrdreSaisi: 1,
+      nomFamille: "Nomfamille",
+      villeNaissance: "Ville Naissance",
+      paysNaissance: "France",
+      regionNaissance: "Ile de france",
+      arrondissementNaissance: "",
+      nationalite: "Française",
+      autreNoms: [],
+      autrePrenoms: ["AutreP1", "AutreP2"],
+      prenoms: ["P1"],
+      dateNaissance: {
+        jour: 7,
+        mois: 12,
+        annee: 1972
+      },
+
+      sexe: "Masculin"
+    }
+  ],
+  statutsFiche: [
+    {
+      statut: "Actif",
+      date: {
+        jour: 25,
+        mois: 7,
+        annee: 2020
+      },
+      motif: "Décision du procureur",
+      villeEvenement: "Marseille",
+      departementEvenement: "Bouches-du-rhône",
+      paysEvenement: "France",
+      complementMotif: ""
+    },
+    {
+      statut: "Inactif",
+      date: {
+        jour: 17,
+        mois: 3,
+        annee: 2020
+      },
+      motif: "Date de fin de mesure",
+      villeEvenement: "Lyon",
+      departementEvenement: "Rhône",
+      paysEvenement: "France",
+      complementMotif: ""
+    },
+    {
+      statut: "Actif",
+      date: {
+        jour: 15,
+        mois: 2,
+        annee: 2018
+      },
+      motif: "",
+      villeEvenement: "Lyon",
+      departementEvenement: "Rhône",
+      paysEvenement: "France",
+      complementMotif: ""
+    }
+  ],
+
+  //en attente
   nature: "Curatelle aménagée",
   typeInscription: "Renouvellement",
-  numeroRcImpactes: ["2015 - 36547"],
-  dateInscription: 1518652800,
+  mandataires: [
+    "Mandataire judiciaire à la protection des majeurs association",
+    "Préposé d'établissement"
+  ],
   dureeInscriptionRc: {
     nombreDuree: 2,
     uniteDuree: "ans",
     dateFinDeMesure: 1581724800
   },
-  mandataires: [
-    "Mandataire judiciaire à la protection des majeurs association",
-    "Préposé d'établissement"
-  ],
+
+  // pas presents
+  numeroRcImpactes: ["2015 - 36547"],
   inscriptionsLiees: [
     {
       typeInscription: "Modification",
@@ -96,79 +267,6 @@ const mockRc: RcRcaVue = {
       typeInscription: "Radiation",
       numeroRc: "2019 - 48596",
       idInscription: ""
-    }
-  ],
-  interesses: [
-    {
-      nomFamille: "FAVARO",
-      autresNoms: ["FAVAROTTI"],
-      prenoms: [
-        { prenom: "Enrico", numeroOrdre: 0 },
-        { prenom: "Pablo", numeroOrdre: 1 },
-        { prenom: "Flavio", numeroOrdre: 2 }
-      ],
-      autresPrenoms: [],
-      dateDeNaissance: -777168000,
-      lieuDeNaissance: "San remo (Italie)",
-      nationalite: "Etrangère",
-      sexe: "Masculin"
-    },
-    {
-      nomFamille: "Boncler",
-      autresNoms: [],
-      prenoms: [{ prenom: "Franck", numeroOrdre: 0 }],
-      autresPrenoms: ["Gérard", "Bernard"],
-      dateDeNaissance: 673574400,
-      lieuDeNaissance: "Saint Maurice",
-      nationalite: "Française",
-      sexe: "Masculin"
-    }
-  ],
-  decisionRc: {
-    type: "Jugement",
-    dateDecision: 1577059200,
-    enrolementRg: "",
-    enrolementPortalis: "",
-    autorite: {
-      type: "Tribunal de grande instance",
-      ville: "Lyon",
-      arrondissement: "8",
-      departement: "Rhône(69)"
-    },
-    confirmation: {
-      type: "Arrêt",
-      dateDecision: 1584403200,
-      enrolementRg: "",
-      enrolementPortalis: "",
-      autorite: {
-        type: "Cour d'appel",
-        ville: "Marseille",
-        arrondissement: "10",
-        departement: "Bouches-du-Rhône(13)"
-      }
-    }
-  },
-  historique: [
-    {
-      statut: "Actif",
-      date: "25/07/2020",
-      motif: "Décision du procureur",
-      lieu: "Marseille (Bouches-du-rhône)",
-      complement: ""
-    },
-    {
-      statut: "Inactif",
-      date: "17/03/2020",
-      motif: "Date de fin de mesure",
-      lieu: "Lyon (Rhône)",
-      complement: ""
-    },
-    {
-      statut: "Actif",
-      date: "15/02/2018",
-      motif: "",
-      lieu: "",
-      complement: ""
     }
   ]
 };
@@ -276,25 +374,23 @@ function getInteresse(retourBack: RcRcaVue): AccordionPartProps[] {
         },
         {
           libelle: "Autre(s) nom(s)",
-          value: interesse.autresNoms.join(", ")
+          value: interesse.autreNoms.join(", ")
         },
         {
           libelle: "Prénom(s)",
-          value: interesse.prenoms.map(prenom => prenom.prenom).join(", ")
+          value: interesse.prenoms.join(", ")
         },
         {
           libelle: "Autre(s) prénom(s)",
-          value: interesse.autresPrenoms.join(", ")
+          value: interesse.autrePrenoms.join(", ")
         },
         {
           libelle: "Date de naissance",
-          value: moment
-            .unix(interesse.dateDeNaissance)
-            .format(FormatDate.DDMMYYYY)
+          value: getDateString(getDateFromDateCompose(interesse.dateNaissance))
         },
         {
           libelle: "Lieu de naissance",
-          value: interesse.lieuDeNaissance
+          value: `${interesse.villeNaissance} (${interesse.paysNaissance})`
         },
         {
           libelle: "Nationalité",
@@ -316,47 +412,49 @@ function getDecision(retourBack: RcRcaVue): AccordionPartProps[] {
       contents: [
         {
           libelle: "Type",
-          value: retourBack.decisionRc.type
+          value: retourBack.decision.type
         },
         {
           libelle: "Date",
-          value: moment
-            .unix(retourBack.decisionRc.dateDecision)
-            .format(FormatDate.DDMMYYYY)
+          value: getDateString(
+            getDateFromTimestamp(retourBack.decision.dateDecision)
+          )
         },
         {
           libelle: "Enrôlement RG",
-          value: retourBack.decisionRc.enrolementRg
+          value: retourBack.decision.autorite.enrolementRg
         },
         {
           libelle: "Enrôlement Portalis",
-          value: retourBack.decisionRc.enrolementPortalis
+          value: retourBack.decision.autorite.enrolementPortails
         }
       ],
       title: "Décision"
     }
   ];
 
-  if (retourBack.decisionRc.confirmation != null) {
+  if (retourBack.decision.sourceConfirmation != null) {
     decision.push({
       contents: [
         {
           libelle: "Type",
-          value: retourBack.decisionRc.confirmation.type
+          value: retourBack.decision.sourceConfirmation.type
         },
         {
           libelle: "Date",
-          value: moment
-            .unix(retourBack.decisionRc.confirmation.dateDecision)
-            .format(FormatDate.DDMMYYYY)
+          value: getDateString(
+            getDateFromTimestamp(
+              retourBack.decision.sourceConfirmation.dateDecisionEtrangere
+            )
+          )
         },
         {
           libelle: "Enrôlement RG",
-          value: retourBack.decisionRc.confirmation.enrolementRg
+          value: retourBack.decision.sourceConfirmation.enrolementRg
         },
         {
           libelle: "Enrôlement Portalis",
-          value: retourBack.decisionRc.confirmation.enrolementPortalis
+          value: retourBack.decision.sourceConfirmation.enrolementPortails
         }
       ],
       title: "Confirmée par la décisio"
@@ -372,43 +470,43 @@ function getAutorite(retourBack: RcRcaVue): AccordionPartProps[] {
       contents: [
         {
           libelle: "Type",
-          value: retourBack.decisionRc.autorite.type
+          value: retourBack.decision.autorite.type
         },
         {
           libelle: "Ville",
-          value: retourBack.decisionRc.autorite.ville
+          value: retourBack.decision.autorite.ville
         },
         {
           libelle: "Arrondissement",
-          value: retourBack.decisionRc.autorite.arrondissement
+          value: `${retourBack.decision.autorite.arrondissement}`
         },
         {
           libelle: "Département",
-          value: retourBack.decisionRc.autorite.departement
+          value: `${retourBack.decision.autorite.libelleDepartement} (${retourBack.decision.autorite.numeroDepartement})`
         }
       ],
       title: "Autorité"
     }
   ];
 
-  if (retourBack.decisionRc.confirmation != null) {
+  if (retourBack.decision.sourceConfirmation != null) {
     autorite.push({
       contents: [
         {
           libelle: "Type",
-          value: retourBack.decisionRc.confirmation.autorite.type
+          value: retourBack.decision.sourceConfirmation.type
         },
         {
           libelle: "Ville",
-          value: retourBack.decisionRc.confirmation.autorite.ville
+          value: retourBack.decision.sourceConfirmation.ville
         },
         {
           libelle: "Arrondissement",
-          value: retourBack.decisionRc.confirmation.autorite.arrondissement
+          value: `${retourBack.decision.sourceConfirmation.arrondissement}`
         },
         {
           libelle: "Département",
-          value: retourBack.decisionRc.confirmation.autorite.departement
+          value: `${retourBack.decision.sourceConfirmation.libelleDepartement} (${retourBack.decision.sourceConfirmation.numeroDepartement})`
         }
       ],
       title: ""

@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  useDisclosureState,
-  Disclosure,
-  DisclosureRegion
-} from "reakit/Disclosure";
+
 import { DocumentDetail } from "./DocumentDetail";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
 import "./sass/DocumentPresentation.scss";
@@ -17,6 +10,11 @@ import { IDocumentDetail } from "../../../../common/types/IDocumentDetail";
 import { requestDocumentApi } from "../../../../common/hook/DocumentRequeteHook";
 import { Text, MessageId } from "../../../../common/widget/Text";
 import { IDocumentDelivre } from "../../../../common/types/RequeteType";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails
+} from "@material-ui/core";
 
 interface IDocumentPresentationProps {
   titre: MessageId;
@@ -35,8 +33,11 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
   setDocumentVisibleFct,
   setDocumentDelivreFct
 }) => {
-  const visible: boolean = documents.length > 0;
-  const disclosure = useDisclosureState({ visible });
+  const [expanded, setExpanded] = React.useState<boolean>(documents.length > 0);
+
+  const handleChange = () => (event: any, isExpanded: boolean) => {
+    setExpanded(!expanded);
+  };
 
   const titleStyles = classNames({
     title: true
@@ -44,41 +45,36 @@ export const DocumentPresentation: React.FC<IDocumentPresentationProps> = ({
 
   return (
     <div className="document-presentation">
-      <Disclosure
-        {...disclosure}
-        as={ExpansionPanel}
+      <Accordion
+        expanded={expanded}
         className={"DocumentDetailHeader"}
+        onChange={handleChange()}
       >
-        <ExpansionPanelSummary
+        <AccordionSummary
           className={titleStyles}
           expandIcon={<ExpandMoreIcon />}
         >
           <Text messageId={titre} />
-        </ExpansionPanelSummary>
-      </Disclosure>
-      <DisclosureRegion {...disclosure} as={ExpansionPanelDetails}>
-        {(props) =>
-          disclosure.visible && (
-            <div {...props}>
-              <List>
-                {documents.map((element: IDocumentDetail, index: number) => {
-                  return (
-                    <DocumentDetail
-                      key={index}
-                      document={element}
-                      groupement={groupement}
-                      onClickHandler={onClickHandler}
-                      openedInViewer={documentVisible}
-                      stateSetter={setDocumentVisibleFct}
-                      setDocumentDelivreFct={setDocumentDelivreFct}
-                    />
-                  );
-                })}
-              </List>
-            </div>
-          )
-        }
-      </DisclosureRegion>
+        </AccordionSummary>
+
+        <AccordionDetails>
+          <List>
+            {documents.map((element: IDocumentDetail, index: number) => {
+              return (
+                <DocumentDetail
+                  key={index}
+                  document={element}
+                  groupement={groupement}
+                  onClickHandler={onClickHandler}
+                  openedInViewer={documentVisible}
+                  stateSetter={setDocumentVisibleFct}
+                  setDocumentDelivreFct={setDocumentDelivreFct}
+                />
+              );
+            })}
+          </List>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };
@@ -93,7 +89,7 @@ function onClickHandler(
     document.identifiantDocument,
     groupement,
     document.mimeType
-  ).then((result) => {
+  ).then(result => {
     const documentObjectURL = URL.createObjectURL(
       convertToBlob(result.documentDelivre.contenu, result.mimeType)
     );

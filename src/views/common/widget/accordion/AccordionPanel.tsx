@@ -7,7 +7,7 @@ import {
 export interface AccordionPanelProps {
   panelAreas: AccordionPanelAreaProps[];
   title: string;
-  id: string;
+  id?: string;
 }
 
 export const AccordionPanel: React.FC<AccordionPanelProps> = ({

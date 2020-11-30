@@ -15,12 +15,12 @@ test("renders titre résumé requete", () => {
 
 test("renders résumé requete hidding", () => {
   const resumeRequete = mount(<ResumeRequete requete={DONNEES_REQUETE} />);
-  expect(resumeRequete.find(".resume-requete-content")).toHaveLength(2);
+  expect(resumeRequete.find(".Mui-expanded")).toBeDefined();
 
   resumeRequete
-    .find(".MuiExpansionPanelSummary-expandIcon")
+    .find(".MuiAccordionSummary-expandIcon")
     .first()
     .simulate("click");
 
-  expect(resumeRequete.find(".resume-requete-content")).toHaveLength(0);
+  expect(resumeRequete.find(".Mui-expanded")).toHaveLength(0);
 });

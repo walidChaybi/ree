@@ -12,7 +12,7 @@ export async function requestDocumentApi(
   mimeType: string = MimeType.APPLI_PDF
 ): Promise<IRequestDocumentApiResult> {
   return getDocumentASigner(identifiantDocument, groupement)
-    .then((result) => {
+    .then(result => {
       let requestDocumentApiResult: IRequestDocumentApiResult;
       if (typeof result.body.data === "string") {
         // FIXME: changer le retour du back ou faire une deuxième api côté front
@@ -35,7 +35,7 @@ export async function requestDocumentApi(
       }
       return Promise.resolve(requestDocumentApiResult);
     })
-    .catch((error) => {
+    .catch(error => {
       return Promise.reject(error);
     });
 }
