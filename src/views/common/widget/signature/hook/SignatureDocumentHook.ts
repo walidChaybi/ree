@@ -5,7 +5,7 @@ import { SignatureErrors } from "../messages/ErrorsSignature";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 import { ModeSignature } from "../../../../../model/requete/ModeSignature";
 import { SuccessSignatureType } from "../messages/SuccessSignature";
-import { FormatDate } from "../../../../../ressources/FormatDate";
+import { FormatDate } from "../../../util/DateUtils";
 import { SousTypeRequete } from "../../../../../model/requete/SousTypeRequete";
 import messageManager from "../../../util/messageManager";
 import { getText } from "../../Text";
@@ -125,13 +125,33 @@ export function useSignatureDocumentHook(
     setSuccessSignature(newSuccesses);
   }, [documentsToSignWating, idRequetesToSign, successSignature]);
 
-  useUpdateDocumentApi(updateDocumentQueryParamState, callBackMajStatusRequete);
+  const { errorUpdateDocument } = useUpdateDocumentApi(
+    updateDocumentQueryParamState,
+    callBackMajStatusRequete
+  );
+
+  useEffect(() => {
+    if (errorUpdateDocument != null) {
+      setErrorsSignature({
+        erreurs: [
+          {
+            code: "UPDATE_DOC",
+            libelle: "",
+            detail: ""
+          }
+        ],
+        numeroRequete:
+          documentsByRequete[idRequetesToSign[0]].documentsToSave[0]
+            .numeroRequete
+      });
+    }
+  }, [errorUpdateDocument, documentsByRequete, idRequetesToSign]);
 
   useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState);
 
   useEffect(() => {
     setUpdateDocumentQueryParamState(
-      documentsToSave.map((document) => {
+      documentsToSave.map(document => {
         return {
           idDocumentDelivre: document.idDocument,
           contenu: document.contenu,
@@ -292,7 +312,7 @@ function getDocumentAndSendToSignature(
         .idDocumentDelivre,
       GroupementDocument.DocumentDelivre,
       documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].mimeType
-    ).then((result) => {
+    ).then(result => {
       if (result.documentDelivre.taille > MaxLengthDocumentToSign) {
         setErrorsSignature({
           numeroRequete:
@@ -333,7 +353,7 @@ function isAllowedTypeDocumentToBeSigned(typeDocument: string): boolean {
       TypeDocument.ExtraitSansFiliation,
       TypeDocument.ExtraitPlurilingue,
       TypeDocument.CopieIntegrale
-    ].find((type) => type === typeDocument) !== undefined
+    ].find(type => type === typeDocument) !== undefined
   );
 }
 

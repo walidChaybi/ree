@@ -17,7 +17,7 @@ export const rcPact = {
     alerte: "Date de fin de mesure dépassée",
     dateCreation: 1581807600
   }),
-  dureeInscription: {
+  duree: {
     nombreDuree: 2,
     uniteDuree: "ans",
     dateFinDeMesure: 1581724800

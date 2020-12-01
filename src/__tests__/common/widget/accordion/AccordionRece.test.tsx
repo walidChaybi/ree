@@ -1,11 +1,7 @@
 import React from "react";
 
 import { render, waitFor } from "@testing-library/react";
-import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { AccordionRece } from "../../../../views/common/widget/accordion/AccordionRece";
-
-const superagentMock = require("superagent-mock")(request, config);
 
 test("render composant AccordionRece", async () => {
   const { getByText } = render(
@@ -51,8 +47,4 @@ test("render composant AccordionRece", async () => {
   await waitFor(() => {
     expect(getByText(/titlePanel/i)).toBeDefined();
   });
-});
-
-afterAll(() => {
-  superagentMock.unset();
 });

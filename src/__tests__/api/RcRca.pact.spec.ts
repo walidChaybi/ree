@@ -1,8 +1,8 @@
 import path from "path";
 import { Pact, InteractionObject, Interaction } from "@pact-foundation/pact";
-import { ApiEndpoints } from "../../views/router/UrlManager";
 import { ApiPact } from "./ApiPact";
 import { rcPact } from "./rc.pact";
+import { URL_ETAT_CIVIL } from "../../api/appels/etatcivilApi";
 
 const provider = new Pact({
   consumer: "rece-rc-ui",
@@ -27,7 +27,7 @@ describe("API Pact test", () => {
   });
 
   describe("getting rc", () => {
-    const uri = "/rece-etatcivil-api/v1" + ApiEndpoints.FicheUrl;
+    const uri = "/rece-etatcivil-api/v1" + URL_ETAT_CIVIL;
 
     const expectedResult = {
       hasTechnicalError: false,

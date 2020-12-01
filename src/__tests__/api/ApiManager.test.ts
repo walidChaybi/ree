@@ -1,8 +1,9 @@
 import request from "superagent";
-import config from "../../api/mock/superagent-config/superagent-mock-fake-url";
+
 import { ApiManager, HttpMethod } from "../../api/ApiManager";
 import { isNullOrUndefined } from "util";
-const superagentMock = require("superagent-mock")(request, config);
+import { configFakeUrl } from "../../mock/superagent-config/superagent-mock-fake-url";
+const superagentMock = require("superagent-mock")(request, configFakeUrl);
 
 test("instanciation d'une api définie dans le fichier api.json", () => {
   const api = ApiManager.getInstance("rece-requete-api", "v1");
@@ -15,16 +16,6 @@ test("instanciation d'une api définie dans le fichier api.json", () => {
   expect(api.name).toBe("rece-requete-api");
   expect("v1").toBe(api.version);
   expect(api.getUri()).toBe("http://localhost:80/rece/rece-requete-api/v1");
-});
-
-test("instanciation d'une api définie dans le fichier api.json avec une mauvaise version", () => {
-  expect(() => ApiManager.getInstance("rece-requete-api", "v3")).toThrow(Error);
-});
-
-test("instanciation d'une api non définie dans le fichier api.json", () => {
-  expect(() =>
-    ApiManager.getInstance("rece-televerification-api", "v3")
-  ).toThrow(Error);
 });
 
 test("fetch d'une requête http GET", () => {
@@ -43,10 +34,10 @@ test("fetch d'une requête http GET", () => {
       },
       headers: [{ header: "custom-header", value: "custom-header-value" }]
     })
-    .then((result) => {
+    .then(result => {
       expect(result).toBeTruthy();
     })
-    .catch((error) => {
+    .catch(error => {
       expect(error).toBe("ERRRRRRRRROR");
     });
 });

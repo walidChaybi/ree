@@ -1,12 +1,4 @@
-# Configuration Apache pour le frontal Apache. Comme vu avec ESU, ce composant a plusieurs fonctions :
-# - Simple Serveur Web pour les ressources statiques (.js, .html, .css, images…​) des modules d’UI (comme rece-ui)
-# - Reverse Proxy (RP) (avec mod_proxy)
-# - Service Provider SAML (avec mod_shibboleth)
-
-# Cette configuration est réutilisable pour un déploiement Salt
-# Une nouvelle fonction (actuellement portée par l'ingress K8S sera à ajouter : le Load Balancing
-# (avec mod_proxy_balancer et mod_lbmethod_byrequests ) vers les différents noeuds actifs-actifs des API
-
+# Configuration Apache pour les resources statiques 
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -37,8 +29,8 @@ data:
       # Attention : mod_rewrite fait ses comparaisons sans '/rece' car on est dans un <Directory>
       RewriteEngine On
       
-      # Si on arrive sur /rece, on fait un redirect vers /rece-ui
-      RewriteRule ^$ /rece/rece-ui [L,R]
+      # Ajout du slash si besoin
+      RewriteRule ^/rece-ui$ %{HTTP:X-Forwarded-Proto}://%{HTTP:X-Forwarded-Host}/rece/rece-ui/ [R=301,L]
 
       # Si l'URL est index.html, on sort
       RewriteRule ^/rece-ui/index\.html$ - [L]

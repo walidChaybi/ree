@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, getText, MessageId } from "../Text";
-import { contextApp } from "../../../router/UrlManager";
 import { useHistory } from "react-router-dom";
+import { URL_CONTEXT_APP } from "../../../router/ReceUrls";
 
 interface CategorieProps {
   url: string;
@@ -17,7 +17,7 @@ export const Categorie: React.FC<CategorieProps> = ({
   const history = useHistory();
   const uuidRegex = new RegExp(getText("regex.pages.common.uuid"), "i");
   const onClickLink = () => {
-    history.push(`${contextApp}${url}`);
+    history.push(`${URL_CONTEXT_APP}${url}`);
   };
 
   if (last && uuidRegex.test(messageId)) {

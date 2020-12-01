@@ -11,7 +11,7 @@
       "providerState": "rc exist",
       "request": {
         "method": "GET",
-        "path": "/rece-etatcivil-api/v1/fiche"
+        "path": "/rece-etatcivil-api/v1/repertoirecivil"
       },
       "response": {
         "status": 200,
@@ -42,7 +42,7 @@
                 "dateCreation": 1581807600
               }
             ],
-            "dureeInscription": {
+            "duree": {
               "nombreDuree": 2,
               "uniteDuree": "ans",
               "dateFinDeMesure": 1581724800

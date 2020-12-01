@@ -6,10 +6,11 @@ import {
   createEvent,
   waitFor
 } from "@testing-library/react";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
-import request from "superagent";
 
-const superagentMock = require("superagent-mock")(request, config);
+import request from "superagent";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("renders PopinSignature, signature event is received and success displayed", async () => {
   const { getByText } = render(

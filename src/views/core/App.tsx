@@ -13,7 +13,8 @@ import {
   appelRequetesASigner,
   traiteAppelRequeteASigner
 } from "../common/util/GestionnaireFermeture";
-import { AppUrls } from "../router/UrlManager";
+import { URL_MES_REQUETES } from "../router/ReceUrls";
+import { storeRece } from "../common/util/storeRece";
 
 const App: React.FC = () => {
   const login = useLoginApi();
@@ -22,12 +23,18 @@ const App: React.FC = () => {
       <div className="App">
         <OfficierContext.Provider value={login}>
           <OfficierContext.Consumer>
+            {officier => {
+              storeRece.utilisateurCourant = officier?.officierDataState;
+              return null;
+            }}
+          </OfficierContext.Consumer>
+          <OfficierContext.Consumer>
             {officier => (
               <GestionnaireFermeture
                 paramsFctAAppler={officier}
                 fctAAppeler={appelRequetesASigner}
                 fctTraitementResultat={traiteAppelRequeteASigner}
-                urlRedirection={AppUrls.ctxMesRequetesUrl}
+                urlRedirection={URL_MES_REQUETES}
               ></GestionnaireFermeture>
             )}
           </OfficierContext.Consumer>

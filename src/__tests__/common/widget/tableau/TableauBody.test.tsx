@@ -4,7 +4,7 @@ import { TableauTypeColumn } from "../../../../views/common/widget/tableau/Table
 import { BrowserRouter as Router } from "react-router-dom";
 import { render } from "@testing-library/react";
 import moment from "moment";
-import { FormatDate } from "../../../../ressources/FormatDate";
+import { FormatDate } from "../../../../views/common/util/DateUtils";
 import LabelIcon from "@material-ui/icons/Label";
 import { Box } from "@material-ui/core";
 import {

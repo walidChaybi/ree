@@ -2,25 +2,11 @@ import { useState, useEffect } from "react";
 import { getLogin } from "../../../api/appels/securiteApi";
 import { IHabilitation, IDroit, IProfil } from "../../../model/Habilitation";
 import messageManager from "../../common/util/messageManager";
+import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 
 export interface ILoginApi {
   officierDataState?: IOfficierSSOApi;
   erreurState?: any;
-}
-
-export interface IOfficierSSOApi {
-  idSSO: string;
-  nom: string;
-  prenom: string;
-  trigramme: string;
-  mail: string;
-  profils: string[];
-  telephone: string;
-  section: string;
-  bureau: string;
-  departement: string;
-  service: string;
-  habilitations: IHabilitation[];
 }
 
 export function useLoginApi() {
@@ -69,29 +55,32 @@ function setUtilisateurSSOApiFromHeaders(headers: any): IOfficierSSOApi {
 
 function setHabilitationsUtilisateur(habilitations: any[]): IHabilitation[] {
   const habilitationsUtilisateur: IHabilitation[] = [];
-  habilitations.forEach(h => {
-    const habilitation: IHabilitation = {} as IHabilitation;
-    habilitation.idHabilitation = h.idHabilitation;
-    habilitation.profil = {} as IProfil;
-    habilitation.profil.idProfil = h.profil.idProfil;
-    habilitation.profil.nom = h.profil.nom;
-    habilitation.profil.droits =
-      habilitation.profil &&
-      h.profil.profilDroit.map(
-        (profilDroit: any) =>
-          ({
-            idDroit: profilDroit.droit.idDroit,
-            nom: profilDroit.droit.nom
-          } as IDroit)
-      );
-    habilitationsUtilisateur.push(habilitation);
-  });
+
+  if (habilitations) {
+    habilitations.forEach(h => {
+      const habilitation: IHabilitation = {} as IHabilitation;
+      habilitation.idHabilitation = h.idHabilitation;
+      habilitation.profil = {} as IProfil;
+      habilitation.profil.idProfil = h.profil.idProfil;
+      habilitation.profil.nom = h.profil.nom;
+      habilitation.profil.droits =
+        habilitation.profil &&
+        h.profil.profilDroit.map(
+          (profilDroit: any) =>
+            ({
+              idDroit: profilDroit.droit.idDroit,
+              nom: profilDroit.droit.nom
+            } as IDroit)
+        );
+      habilitationsUtilisateur.push(habilitation);
+    });
+  }
   return habilitationsUtilisateur;
 }
 
 function setProfilsUtilisateur(profils: string): string[] {
   let profilsUtilisateur: string[] = [];
-  if (profils !== "") {
+  if (profils) {
     profilsUtilisateur = profils.split("\\; ").filter(x => x);
   }
   return profilsUtilisateur;

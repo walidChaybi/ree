@@ -2,14 +2,14 @@ import React from "react";
 import { screen, render, fireEvent, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
-import officier from "../../../api/mock/data/connectedUser.json";
+import officier from "../../../mock/data/connectedUser.json";
 import { BoutonDeconnexion } from "../../../views/core/header/BoutonDeconnexion";
 import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
-import { AppUrls } from "../../../views/router/UrlManager";
+import { URL_MES_REQUETES } from "../../../views/router/ReceUrls";
 
 test("renders BoutonDeconnexion", () => {
   const history = createMemoryHistory();
-  history.push(AppUrls.ctxMesRequetesUrl);
+  history.push(URL_MES_REQUETES);
 
   render(
     <Router history={history}>
@@ -28,7 +28,7 @@ test("renders BoutonDeconnexion", () => {
 
 test("renders click BoutonDeconnexion", async () => {
   const history = createMemoryHistory();
-  history.push(AppUrls.ctxMesRequetesUrl);
+  history.push(URL_MES_REQUETES);
 
   const handleClickButton = jest.fn();
   render(

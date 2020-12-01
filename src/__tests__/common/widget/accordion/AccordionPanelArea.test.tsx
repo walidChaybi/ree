@@ -1,11 +1,7 @@
 import React from "react";
 
 import { render, waitFor } from "@testing-library/react";
-import request from "superagent";
-import config from "../../../../api/mock/superagent-config/superagent-mock-requetes";
 import { AccordionPanelArea } from "../../../../views/common/widget/accordion/AccordionPanelArea";
-
-const superagentMock = require("superagent-mock")(request, config);
 
 test("render composant AccordionPanelArea", async () => {
   const { getByText } = render(
@@ -31,8 +27,4 @@ test("render composant AccordionPanelArea", async () => {
     expect(getByText(/testLibelle2/i)).toBeDefined();
     expect(getByText(/testValue2/i)).toBeDefined();
   });
-});
-
-afterAll(() => {
-  superagentMock.unset();
 });

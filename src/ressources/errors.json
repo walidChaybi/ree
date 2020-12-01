@@ -6,6 +6,7 @@
       "B01": "Le service de signature électronique est indisponible"
     },
     "signature": {
+      "UPDATE_DOC": "Impossible de mettre à jour les documents",
       "TECH_1": "Erreur technique inconnue",
       "TECH_2": "Problème en chargeant la lib PKCS#11",
       "TECH_3": "Erreur technique en scannant les slots",

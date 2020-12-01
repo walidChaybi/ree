@@ -2,8 +2,9 @@ import React from "react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { render, act } from "@testing-library/react";
-import officier from "../../../api/mock/data/connectedUser.json";
-import { AppUrls } from "../../../views/router/UrlManager";
+import officier from "../../../mock/data/connectedUser.json";
+import { URL_MES_REQUETES } from "../../../views/router/ReceUrls";
+
 import {
   traiteAppelRequeteASigner,
   appelRequetesASigner,
@@ -26,7 +27,7 @@ window.XMLHttpRequest = jest.fn().mockImplementation(xhrMockClass);
 
 test("renders GestionnaireFermeture", async () => {
   const history = createMemoryHistory();
-  history.push(AppUrls.ctxAccueilUrl);
+  history.push(URL_MES_REQUETES);
 
   const fctAAppeler = jest.fn(data => 3);
   const fctTraitementResultat = traiteAppelRequeteASigner;
@@ -36,7 +37,7 @@ test("renders GestionnaireFermeture", async () => {
     render(
       <Router history={history}>
         <GestionnaireFermeture
-          urlRedirection={AppUrls.ctxMesRequetesUrl}
+          urlRedirection={URL_MES_REQUETES}
           fctTraitementResultat={fctTraitementResultat}
           fctAAppeler={fctAAppeler}
           paramsFctAAppler={officier}

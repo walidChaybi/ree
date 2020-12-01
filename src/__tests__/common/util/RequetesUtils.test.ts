@@ -1,7 +1,7 @@
 import moment from "moment";
 
 import { getText } from "../../../views/common/widget/Text";
-import { FormatDate } from "../../../ressources/FormatDate";
+import { FormatDate } from "../../../views/common/util/DateUtils";
 import {
   prioriteDeLaRequete,
   getMessagePrioriteDeLaRequete

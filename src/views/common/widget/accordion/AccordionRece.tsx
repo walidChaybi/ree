@@ -10,10 +10,9 @@ export interface AccordionReceProps {
 }
 
 export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {
-  const [expanded, setExpanded] = React.useState<number>(-1);
-
-  const handleChange = (index: number) => (event: any, isExpanded: boolean) => {
-    setExpanded(isExpanded ? index : -1);
+  const [expanded, setExpanded] = React.useState<boolean>(true);
+  const handleChange = () => (event: any) => {
+    setExpanded(!expanded);
   };
 
   return (
@@ -21,8 +20,8 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {
       {panels.map((panel, index) => {
         return (
           <Accordion
-            expanded={expanded === index}
-            onChange={handleChange(index)}
+            expanded={expanded}
+            onChange={handleChange()}
             key={`rece-accordion-${index}`}
             className="accordionRece"
           >
