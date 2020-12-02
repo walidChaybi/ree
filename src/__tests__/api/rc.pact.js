@@ -1,7 +1,7 @@
 import { eachLike } from "@pact-foundation/pact/dsl/matchers";
 
 export const rcPact = {
-  identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
+  id: "7566e16c-2b0e-11eb-adc1-0242ac120002",
   categorie: "rc",
   annee: "2018",
   numero: "56533",

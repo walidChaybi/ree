@@ -1,7 +1,7 @@
-export interface DateCompose {
-  jour: number;
-  mois: number;
-  annee: number;
+export interface IDateCompose {
+  jour: string;
+  mois: string;
+  annee: string;
 }
 
 export enum FormatDate {
@@ -9,8 +9,16 @@ export enum FormatDate {
   DDMMYYYHHmm = "DD/MM/YYY HH:mm"
 }
 
-export function getDateFromDateCompose(date: DateCompose): Date {
-  return new Date(Date.UTC(date.annee, date.mois, date.jour, 0, 0));
+export function getDateFromDateCompose(date: IDateCompose): Date {
+  return new Date(
+    Date.UTC(
+      parseInt(date.annee, 10),
+      parseInt(date.mois),
+      parseInt(date.jour),
+      0,
+      0
+    )
+  );
 }
 
 export function getDateString(date: Date): string {

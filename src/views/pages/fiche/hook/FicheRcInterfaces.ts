@@ -1,62 +1,76 @@
-import { DateCompose } from "../../../common/util/DateUtils";
+import { IDateCompose } from "../../../common/util/DateUtils";
 
-export interface FicheRc {
-  idInscription: string;
-  categorieInscription: string;
+export interface IFicheRc {
+  id: string;
+  categorie: string;
+  annee: string;
   numero: string;
   dateInscription: number;
   dateDerniereMaj: number;
   dateDerniereDelivrance: number;
-  alertes: Alerte[];
-  decision: DecisionRc;
-  mariageInteresses: MariageInteresse;
-  interesses: Interesse[];
-  statutsFiche: StatutFiche[];
+  alertes: IAlerte[];
+  decision: IDecisionRc;
+  mariageInteresses: IMariageInteresse;
+  interesses: IInteresse[];
+  statutsFiche: IStatutFiche[];
   nature: string;
   typeInscription: string;
   mandataires: string[];
-  duree: DureeInscription;
-
-  //pas presents
-  numeroRcImpactes: string[];
-  inscriptionsLiees: InscriptionLie[];
+  duree: IDureeInscription;
+  inscriptionsImpactees: IInscriptionsImpactees[];
+  inscriptionsLiees: IInscriptionLie[];
 }
 
-export interface MariageInteresse {
+export interface IInscriptionsImpactees {
+  id: string;
+  numero: string;
+}
+
+export interface IMariageInteresse {
   villeMariage: string;
   regionMariage: string;
   paysMariage: string;
-  dateMariage: DateCompose;
+  dateMariage: IDateCompose;
   aletranger: boolean;
 }
 
-export interface Alerte {
+export interface IAlerte {
   alerte: string;
-  dateCreation: string;
+  dateCreation: number;
 }
 
-export interface DureeInscription {
+export interface IDureeInscription {
   nombreDuree: number;
   uniteDuree: string;
   dateFinDeMesure: number;
 }
 
-export interface DecisionRc {
+export interface IDecisionRc {
   dateDecision: number;
   type: string;
-  autorite: Autorite;
-  sourceConfirmation: Autorite;
+  autorite: IAutorite;
+  enrolementRg: string;
+  enrolementPortalis: string;
+  sourceConfirmation: ISourceConfirmation;
 }
 
-export interface InscriptionLie {
+export interface ISourceConfirmation {
+  autorite: IAutorite;
+  dateDecision: number;
+  type: string;
+  enrolementRg: string;
+  enrolementPortalis: string;
+}
+
+export interface IInscriptionLie {
   typeInscription: string;
   numeroRc: string;
   idInscription: string;
 }
 
-export interface StatutFiche {
+export interface IStatutFiche {
   statut: string;
-  date: DateCompose;
+  dateEvenement: IDateCompose;
   motif: string;
   villeEvenement: string;
   departementEvenement: string;
@@ -64,27 +78,26 @@ export interface StatutFiche {
   complementMotif: string;
 }
 
-export interface Interesse {
-  numeroOrdreSaisi: number;
+export interface IInteresse {
   nomFamille: string;
   villeNaissance: string;
   paysNaissance: string;
   regionNaissance: string;
   arrondissementNaissance: string;
   nationalite: string;
+  sexe: string;
   autreNoms: string[];
   autrePrenoms: string[];
-  prenoms: string[];
-  dateNaissance: DateCompose;
-  sexe: string;
+  prenoms: IPrenom[];
+  dateNaissance: IDateCompose;
 }
 
-export interface Prenom {
+export interface IPrenom {
   prenom: string;
   numeroOrdre: number;
 }
 
-export interface Autorite {
+export interface IAutorite {
   type: string;
   numeroDepartement: number;
   libelleDepartement: string;
@@ -96,7 +109,5 @@ export interface Autorite {
   numeroCrpcen: string;
   nomOnac: string;
   prenomOnac: string;
-  enrolementRg: string;
-  enrolementPortails: string;
-  dateDecisionEtrangere: number;
+  dateDecision: number;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { FicheRc } from "./FicheRcInterfaces";
+import { IFicheRc } from "./FicheRcInterfaces";
 import { AccordionPartProps } from "../../../common/widget/accordion/AccordionPart";
 import {
   getDateString,
@@ -10,7 +10,7 @@ import { AccordionReceProps } from "../../../common/widget/accordion/AccordionRe
 import { Link } from "react-router-dom";
 import { getText } from "../../../common/widget/Text";
 
-export function getRcRcaVue(retourBack: FicheRc): AccordionReceProps {
+export function getRcRcaVue(retourBack: IFicheRc): AccordionReceProps {
   return {
     panels: [
       {
@@ -27,7 +27,7 @@ export function getRcRcaVue(retourBack: FicheRc): AccordionReceProps {
 }
 
 function getInscriptionRepertoireCivil(
-  retourBack: FicheRc
+  retourBack: IFicheRc
 ): AccordionPartProps {
   return {
     contents: [
@@ -41,11 +41,15 @@ function getInscriptionRepertoireCivil(
         libelle: "Type inscription",
         value: (
           <span>
-            {`${retourBack.typeInscription} (RC n°}`}
-            {retourBack.numeroRcImpactes.map(numero => {
+            {`${retourBack.typeInscription} (RC n°`}
+            {retourBack.inscriptionsImpactees.map(inscription => {
               return (
-                <Link key={`link-fiche-rc-${numero}`} to={"/"} className="">
-                  {numero}
+                <Link
+                  key={`link-fiche-rc-${inscription.id}`}
+                  to={"/"}
+                  className=""
+                >
+                  {inscription.numero}
                 </Link>
               );
             })}
@@ -87,7 +91,7 @@ function getInscriptionRepertoireCivil(
   };
 }
 
-function getInteresse(retourBack: FicheRc): AccordionPartProps[] {
+function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
   return retourBack.interesses.map((interesse, indexInteresse) => {
     return {
       contents: [
@@ -101,7 +105,7 @@ function getInteresse(retourBack: FicheRc): AccordionPartProps[] {
         },
         {
           libelle: "Prénom(s)",
-          value: interesse.prenoms.join(", ")
+          value: interesse.prenoms.map(prenom => prenom.prenom).join(", ")
         },
         {
           libelle: "Autre(s) prénom(s)",
@@ -129,7 +133,7 @@ function getInteresse(retourBack: FicheRc): AccordionPartProps[] {
   });
 }
 
-function getDecision(retourBack: FicheRc): AccordionPartProps[] {
+function getDecision(retourBack: IFicheRc): AccordionPartProps[] {
   const decision = [
     {
       contents: [
@@ -145,11 +149,11 @@ function getDecision(retourBack: FicheRc): AccordionPartProps[] {
         },
         {
           libelle: "Enrôlement RG",
-          value: retourBack.decision.autorite.enrolementRg
+          value: retourBack.decision.enrolementRg
         },
         {
           libelle: "Enrôlement Portalis",
-          value: retourBack.decision.autorite.enrolementPortails
+          value: retourBack.decision.enrolementPortalis
         }
       ],
       title: "Décision"
@@ -167,7 +171,7 @@ function getDecision(retourBack: FicheRc): AccordionPartProps[] {
           libelle: "Date",
           value: getDateString(
             getDateFromTimestamp(
-              retourBack.decision.sourceConfirmation.dateDecisionEtrangere
+              retourBack.decision.sourceConfirmation.autorite.dateDecision
             )
           )
         },
@@ -177,7 +181,7 @@ function getDecision(retourBack: FicheRc): AccordionPartProps[] {
         },
         {
           libelle: "Enrôlement Portalis",
-          value: retourBack.decision.sourceConfirmation.enrolementPortails
+          value: retourBack.decision.sourceConfirmation.enrolementPortalis
         }
       ],
       title: "Confirmée par la décisio"
@@ -187,7 +191,7 @@ function getDecision(retourBack: FicheRc): AccordionPartProps[] {
   return decision;
 }
 
-function getAutorite(retourBack: FicheRc): AccordionPartProps[] {
+function getAutorite(retourBack: IFicheRc): AccordionPartProps[] {
   const autorite = [
     {
       contents: [
@@ -221,15 +225,15 @@ function getAutorite(retourBack: FicheRc): AccordionPartProps[] {
         },
         {
           libelle: "Ville",
-          value: retourBack.decision.sourceConfirmation.ville
+          value: retourBack.decision.sourceConfirmation.autorite.ville
         },
         {
           libelle: "Arrondissement",
-          value: `${retourBack.decision.sourceConfirmation.arrondissement}`
+          value: `${retourBack.decision.sourceConfirmation.autorite.arrondissement}`
         },
         {
           libelle: "Département",
-          value: `${retourBack.decision.sourceConfirmation.libelleDepartement} (${retourBack.decision.sourceConfirmation.numeroDepartement})`
+          value: `${retourBack.decision.sourceConfirmation.autorite.libelleDepartement} (${retourBack.decision.sourceConfirmation.autorite.numeroDepartement})`
         }
       ],
       title: ""

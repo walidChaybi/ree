@@ -1,7 +1,7 @@
 export default {
   dataBandeau: {
     categorie: "rc",
-    identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
+    id: "7566e16c-2b0e-11eb-adc1-0242ac120002",
     annee: "2018",
     numero: "56533",
     statut: "Actif",

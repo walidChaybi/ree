@@ -33,6 +33,7 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
           setErrorState(error);*/
           const dataFiche = {} as IFicheApi;
           dataFiche.dataBandeau = setDataBandeau(mockFicheRc);
+          console.log(mockFicheRc);
           dataFiche.ficheRc = getRcRcaVue(mockFicheRc);
           setDataFicheState(dataFiche);
         });
@@ -49,8 +50,8 @@ function setDataBandeau(data: any): IDataBandeauFicheProps {
   let dataBandeau = {} as IDataBandeauFicheProps;
   if (data) {
     dataBandeau = {
-      categorie: data.categorieInscription,
-      identifiant: data.idInscription,
+      categorie: data.categorie,
+      identifiant: data.id,
       registre: data.registre ? data.registre : undefined,
       annee: data.annee,
       numero: data.numero,

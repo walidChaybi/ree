@@ -1,6 +1,8 @@
-export const mockFicheRc = {
-  idInscription: "",
-  categorieInscription: "rc",
+import { IFicheRc } from "./FicheRcInterfaces";
+
+export const mockFicheRc: IFicheRc = {
+  id: "",
+  categorie: "rc",
   numero: "2015-123456",
   annee: "2019",
   dateInscription: 1518652800,
@@ -22,25 +24,30 @@ export const mockFicheRc = {
       numeroCrpcen: "",
       nomOnac: "",
       prenomOnac: "",
-      enrolementRg: "",
-      enrolementPortails: "",
-      dateDecisionEtrangere: 1584403200
+
+      dateDecision: 1584403200
     },
+    enrolementRg: "",
+    enrolementPortalis: "",
     sourceConfirmation: {
-      type: "Arrêt",
-      dateDecisionEtrangere: 1584403200,
+      autorite: {
+        type: "",
+        ville: "Marseille",
+        arrondissement: 10,
+        numeroDepartement: 13,
+        libelleDepartement: "Bouches-du-Rhône",
+        pays: "France",
+        nomNotaire: "",
+        prenomNotaire: "",
+        numeroCrpcen: "",
+        nomOnac: "",
+        prenomOnac: "",
+        dateDecision: 1584403200
+      },
+      dateDecision: 1584403200,
       enrolementRg: "",
-      enrolementPortails: "",
-      ville: "Marseille",
-      arrondissement: 10,
-      numeroDepartement: 13,
-      libelleDepartement: "Bouches-du-Rhône",
-      pays: "France",
-      nomNotaire: "",
-      prenomNotaire: "",
-      numeroCrpcen: "",
-      nomOnac: "",
-      prenomOnac: ""
+      enrolementPortalis: "",
+      type: "Arrêt"
     }
   },
   mariageInteresses: {
@@ -48,15 +55,14 @@ export const mockFicheRc = {
     regionMariage: "",
     paysMariage: "",
     dateMariage: {
-      jour: 1,
-      mois: 12,
-      annee: 2020
+      jour: "01",
+      mois: "12",
+      annee: "2020"
     },
     aletranger: false
   },
   interesses: [
     {
-      numeroOrdreSaisi: 0,
       nomFamille: "FAVARO",
       villeNaissance: "San remo",
       paysNaissance: "Italie",
@@ -65,17 +71,20 @@ export const mockFicheRc = {
       nationalite: "Etrangère",
       autreNoms: ["FAVAROTTI"],
       autrePrenoms: [],
-      prenoms: ["Enrico", "Pablo", "Flavio"],
+      prenoms: [
+        { prenom: "Enrico", numeroOrdre: 0 },
+        { prenom: "Pablo", numeroOrdre: 0 },
+        { prenom: "Flavio", numeroOrdre: 0 }
+      ],
       dateNaissance: {
-        jour: 25,
-        mois: 5,
-        annee: 1980
+        jour: "25",
+        mois: "05",
+        annee: "1980"
       },
 
       sexe: "Masculin"
     },
     {
-      numeroOrdreSaisi: 1,
       nomFamille: "Nomfamille",
       villeNaissance: "Ville Naissance",
       paysNaissance: "France",
@@ -84,11 +93,11 @@ export const mockFicheRc = {
       nationalite: "Française",
       autreNoms: [],
       autrePrenoms: ["AutreP1", "AutreP2"],
-      prenoms: ["P1"],
+      prenoms: [{ prenom: "P1", numeroOrdre: 0 }],
       dateNaissance: {
-        jour: 7,
-        mois: 12,
-        annee: 1972
+        jour: "07",
+        mois: "12",
+        annee: "1972"
       },
 
       sexe: "Masculin"
@@ -97,10 +106,10 @@ export const mockFicheRc = {
   statutsFiche: [
     {
       statut: "Actif",
-      date: {
-        jour: 25,
-        mois: 7,
-        annee: 2020
+      dateEvenement: {
+        jour: "25",
+        mois: "07",
+        annee: "2020"
       },
       motif: "Décision du procureur",
       villeEvenement: "Marseille",
@@ -110,10 +119,10 @@ export const mockFicheRc = {
     },
     {
       statut: "Inactif",
-      date: {
-        jour: 17,
-        mois: 3,
-        annee: 2020
+      dateEvenement: {
+        jour: "17",
+        mois: "03",
+        annee: "2020"
       },
       motif: "Date de fin de mesure",
       villeEvenement: "Lyon",
@@ -123,10 +132,10 @@ export const mockFicheRc = {
     },
     {
       statut: "Actif",
-      date: {
-        jour: 15,
-        mois: 2,
-        annee: 2018
+      dateEvenement: {
+        jour: "15",
+        mois: "02",
+        annee: "2018"
       },
       motif: "",
       villeEvenement: "Lyon",
@@ -148,7 +157,7 @@ export const mockFicheRc = {
   },
 
   // pas presents
-  numeroRcImpactes: ["2015 - 36547"],
+  inscriptionsImpactees: [{ id: "", numero: "2015 - 36547" }],
   inscriptionsLiees: [
     {
       typeInscription: "Modification",
