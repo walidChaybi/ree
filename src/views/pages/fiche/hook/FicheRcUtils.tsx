@@ -7,7 +7,6 @@ import {
   getDateStringFromDateCompose
 } from "../../../common/util/DateUtils";
 import { AccordionReceProps } from "../../../common/widget/accordion/AccordionRece";
-import { Link } from "react-router-dom";
 import { getText } from "../../../common/widget/Text";
 import { AutoriteUtil } from "../../../../model/ficheRcRca/TypeAutorite";
 import { DecisionUtil } from "../../../../model/ficheRcRca/TypeDecision";
@@ -89,7 +88,7 @@ function getInscriptionRepertoireCivil(
         libelle: "Durée inscription",
         value: retourBack.duree.uniteDuree
           ? `${retourBack.duree.nombreDuree} ${retourBack.duree.uniteDuree}`
-          : ""
+          : `${retourBack.duree.autreDuree}`
       },
       {
         libelle: "Date fin de mesure",

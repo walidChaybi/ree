@@ -152,7 +152,7 @@ export const mockFicheRc: IFicheRc = {
   ],
   duree: {
     nombreDuree: 2,
-    uniteDuree: "ans",
+    autreDuree: "Viager",
     dateFinDeMesure: 1581724800
   },
 

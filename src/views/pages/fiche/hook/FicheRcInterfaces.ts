@@ -43,9 +43,10 @@ export interface IAlerte {
 }
 
 export interface IDureeInscription {
-  nombreDuree: number;
-  uniteDuree: string;
-  dateFinDeMesure: number;
+  nombreDuree?: number;
+  uniteDuree?: string;
+  dateFinDeMesure?: number;
+  autreDuree?: string;
 }
 
 export interface IDecisionRc {
