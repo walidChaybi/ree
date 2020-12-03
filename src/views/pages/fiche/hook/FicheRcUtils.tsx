@@ -1,5 +1,5 @@
 import React from "react";
-import { IFicheRc } from "./FicheRcInterfaces";
+import { IFicheRc, IInteresse } from "./FicheRcInterfaces";
 import { AccordionPartProps } from "../../../common/widget/accordion/AccordionPart";
 import {
   getDateString,
@@ -129,7 +129,7 @@ function getInscriptionsImpactees(retourBack: IFicheRc): JSX.Element[] {
 }
 
 function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
-  return retourBack.interesses.map((interesse, indexInteresse) => {
+  return retourBack.interesses.sort(sortInteresse).map(interesse => {
     return {
       contents: [
         {
@@ -171,9 +171,19 @@ function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
           value: interesse.sexe || ""
         }
       ],
-      title: getText("vue-rc-interesse", [indexInteresse + 1])
+      title: getText("vue-rc-interesse", [interesse.numeroOrdreSaisi])
     };
   });
+}
+
+function sortInteresse(interesse1: IInteresse, interesse2: IInteresse) {
+  if (interesse1.numeroOrdreSaisi < interesse2.numeroOrdreSaisi) {
+    return -1;
+  } else if (interesse1.numeroOrdreSaisi > interesse2.numeroOrdreSaisi) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
 
 function getDecision(retourBack: IFicheRc): AccordionPartProps[] {

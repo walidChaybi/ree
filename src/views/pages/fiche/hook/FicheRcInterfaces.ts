@@ -83,6 +83,7 @@ export interface IStatutFiche {
 }
 
 export interface IInteresse {
+  numeroOrdreSaisi: number;
   nomFamille: string;
   villeNaissance: string;
   paysNaissance: string;

@@ -63,6 +63,7 @@ export const mockFicheRc: IFicheRc = {
   },
   interesses: [
     {
+      numeroOrdreSaisi: 1,
       nomFamille: "FAVARO",
       villeNaissance: "San remo",
       paysNaissance: "Italie",
@@ -85,6 +86,7 @@ export const mockFicheRc: IFicheRc = {
       sexe: "Masculin"
     },
     {
+      numeroOrdreSaisi: 2,
       nomFamille: "Nomfamille",
       villeNaissance: "Ville Naissance",
       paysNaissance: "France",
