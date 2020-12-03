@@ -105,11 +105,12 @@ export interface IPrenom {
 
 export interface IAutorite {
   type?: TypeAutorite;
-  numeroDepartement: number;
+  numeroDepartement: string;
   libelleDepartement: string;
   ville: string;
+  region: string;
   pays: string;
-  arrondissement: number;
+  arrondissement: string;
   nomNotaire: string;
   prenomNotaire: string;
   numeroCrpcen: string;

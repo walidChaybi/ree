@@ -16,4 +16,8 @@ export class DecisionUtil {
   public static getLibelle(decision?: TypeDecision): string {
     return decision ? this.libelles[decision] : "";
   }
+
+  public static isJugement(decision?: TypeDecision): boolean {
+    return decision === TypeDecision.JUGEMENT;
+  }
 }

@@ -6,8 +6,6 @@ import { sortObjectWithNumeroOrdre } from "../../../../../common/util/Utils";
 import { getText } from "../../../../../common/widget/Text";
 import { Mariage } from "./Mariage";
 
-import "./sass/Interesse.scss";
-
 const VILLES_NAISSANCE = ["MARSEILLE", "LYON", "PARIS"];
 
 export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
@@ -26,7 +24,7 @@ export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
           {
             libelle: "Autre(s) nom(s)",
             value: (
-              <span className="interesseAutreNom">
+              <span className="uppercase">
                 {interesse.autreNoms ? interesse.autreNoms.join(", ") : ""}
               </span>
             )

@@ -3,7 +3,7 @@ import { getInformationsFiche } from "../../../../api/appels/etatcivilApi";
 import messageManager from "../../../common/util/messageManager";
 import { IDataBandeauFicheProps } from "../contenu/BandeauFiche";
 import { AccordionReceProps } from "../../../common/widget/accordion/AccordionRece";
-import { getRcRcaVue } from "./utils/FicheRcUtils";
+import { getPanelsRc } from "./constructionComposants/FicheRcUtils";
 import { mockFicheRc } from "./mockFiche";
 
 export interface IFicheApi {
@@ -23,19 +23,17 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
         .then((result: any) => {
           const dataFiche = {} as IFicheApi;
           dataFiche.dataBandeau = setDataBandeau(result.body.data);
-          dataFiche.ficheRc = getRcRcaVue(result.body.data);
+          dataFiche.ficheRc = getPanelsRc(result.body.data);
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {
-          console.log(error);
           messageManager.showErrorAndClose(
             "Impossible récupérer les informations de la fiche"
           );
           setErrorState(error);
           const dataFiche = {} as IFicheApi;
           dataFiche.dataBandeau = setDataBandeau(mockFicheRc);
-          console.log(mockFicheRc);
-          dataFiche.ficheRc = getRcRcaVue(mockFicheRc);
+          dataFiche.ficheRc = getPanelsRc(mockFicheRc);
           setDataFicheState(dataFiche);
         });
     }
@@ -49,29 +47,7 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
 
 function setDataBandeau(data: any): IDataBandeauFicheProps {
   let dataBandeau = {} as IDataBandeauFicheProps;
-  console.log(
-    "data.categorie",
-    data.categorie,
-    "data.id ",
-    data.id,
-    "data.registre ",
-    data.registre,
-    "data.annee ",
-    data.annee,
-    "data.numero ",
-    data.numero,
-    "data.statutsFiche ",
-    data.statutsFiche,
-    "data.interesses ",
-    data.interesses,
 
-    "data.alertes ",
-    data.alertes,
-    "data.dateDerniereMaj ",
-    data.dateDerniereMaj,
-    "data.dateDerniereDelivrance ",
-    data.dateDerniereDelivrance
-  );
   if (data) {
     dataBandeau = {
       categorie: data.categorie,
