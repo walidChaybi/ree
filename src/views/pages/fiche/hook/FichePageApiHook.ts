@@ -3,7 +3,7 @@ import { getInformationsFiche } from "../../../../api/appels/etatcivilApi";
 import messageManager from "../../../common/util/messageManager";
 import { IDataBandeauFicheProps } from "../contenu/BandeauFiche";
 import { AccordionReceProps } from "../../../common/widget/accordion/AccordionRece";
-import { getRcRcaVue } from "./FicheRcUtils";
+import { getRcRcaVue } from "./utils/FicheRcUtils";
 import { mockFicheRc } from "./mockFiche";
 
 export interface IFicheApi {

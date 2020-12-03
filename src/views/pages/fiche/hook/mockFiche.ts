@@ -70,12 +70,12 @@ export const mockFicheRc: IFicheRc = {
       regionNaissance: "",
       arrondissementNaissance: "",
       nationalite: "Etrangère",
-      autreNoms: ["FAVAROTTI"],
+      autreNoms: ["favarotti"],
       autrePrenoms: [],
       prenoms: [
-        { prenom: "Enrico", numeroOrdre: 0 },
-        { prenom: "Pablo", numeroOrdre: 0 },
-        { prenom: "Flavio", numeroOrdre: 0 }
+        { prenom: "Enrico", numeroOrdre: 2 },
+        { prenom: "Pablo", numeroOrdre: 3 },
+        { prenom: "Flavio", numeroOrdre: 1 }
       ],
       dateNaissance: {
         jour: "25",
