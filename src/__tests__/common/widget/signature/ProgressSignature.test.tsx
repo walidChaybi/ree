@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ProgressSignature } from "../../../../views/common/widget/signature/ProgressSignature";
 import { mount } from "enzyme";
-import { getText } from "../../../../views/common/widget/Text";
 
 test("renders progresse bar", () => {
   const component = mount(
@@ -36,7 +35,7 @@ test("renders progresse bar", () => {
 test("renders progress bar, close function is called", () => {
   const handleClickButton = jest.fn();
 
-  const { getByText } = render(
+  render(
     <ProgressSignature
       errors={false}
       idsRequetesToSign={[]}
@@ -60,6 +59,8 @@ test("renders progress bar, close function is called", () => {
     />
   );
 
+  const closeButton = screen.getByText("Fermer");
+  fireEvent.click(closeButton);
   // Fermeture automatique si toutes les requêtes ont été signées sans erreur
   expect(handleClickButton).toHaveBeenCalledTimes(1);
 });

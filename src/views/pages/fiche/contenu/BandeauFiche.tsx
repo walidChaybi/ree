@@ -24,8 +24,8 @@ export interface IDataBandeauFicheProps {
   prenom2?: string;
   nom2?: string;
   alertes?: IAlerte[];
-  dateDerniereMaj: number;
-  dateDerniereDelivrance: number;
+  dateDerniereMaj: string;
+  dateDerniereDelivrance: string;
 }
 
 export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
@@ -43,8 +43,8 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
     const alertes = data.alertes;
     let titleAlertes = "";
     if (alertes != null && alertes.length >= 1) {
-      alertes.forEach(alerte => {
-        titleAlertes += `${alerte}\n`;
+      alertes.forEach(a => {
+        titleAlertes += `${a.alerte}\n`;
       });
     }
     return titleAlertes;
