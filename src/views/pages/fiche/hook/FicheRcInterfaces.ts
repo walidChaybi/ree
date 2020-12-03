@@ -1,4 +1,7 @@
 import { IDateCompose } from "../../../common/util/DateUtils";
+import { Statut } from "../../../../model/Statut";
+import { TypeAutorite } from "../../../../model/ficheRcRca/TypeAutorite";
+import { TypeDecision } from "../../../../model/ficheRcRca/TypeDecision";
 
 export interface IFicheRc {
   id: string;
@@ -47,7 +50,7 @@ export interface IDureeInscription {
 
 export interface IDecisionRc {
   dateDecision: number;
-  type: string;
+  type: TypeDecision;
   autorite: IAutorite;
   enrolementRg: string;
   enrolementPortalis: string;
@@ -57,7 +60,7 @@ export interface IDecisionRc {
 export interface ISourceConfirmation {
   autorite: IAutorite;
   dateDecision: number;
-  type: string;
+  type: TypeDecision;
   enrolementRg: string;
   enrolementPortalis: string;
 }
@@ -69,7 +72,7 @@ export interface IInscriptionLie {
 }
 
 export interface IStatutFiche {
-  statut: string;
+  statut: Statut;
   dateEvenement: IDateCompose;
   motif: string;
   villeEvenement: string;
@@ -98,7 +101,7 @@ export interface IPrenom {
 }
 
 export interface IAutorite {
-  type: string;
+  type?: TypeAutorite;
   numeroDepartement: number;
   libelleDepartement: string;
   ville: string;
@@ -109,5 +112,4 @@ export interface IAutorite {
   numeroCrpcen: string;
   nomOnac: string;
   prenomOnac: string;
-  dateDecision: number;
 }

@@ -9,12 +9,28 @@ export enum FormatDate {
   DDMMYYYHHmm = "DD/MM/YYY HH:mm"
 }
 
+export function getDateStringFromDateCompose(date: IDateCompose): string {
+  let dateString = "";
+  if (date.annee) {
+    dateString += date.annee;
+  }
+
+  if (date.mois) {
+    dateString = `${date.mois}/${dateString}`;
+  }
+
+  if (date.jour) {
+    dateString = `${date.jour}/${dateString}`;
+  }
+  return dateString;
+}
+
 export function getDateFromDateCompose(date: IDateCompose): Date {
   return new Date(
     Date.UTC(
       parseInt(date.annee, 10),
-      parseInt(date.mois),
-      parseInt(date.jour),
+      parseInt(date.mois, 10),
+      parseInt(date.jour, 10),
       0,
       0
     )

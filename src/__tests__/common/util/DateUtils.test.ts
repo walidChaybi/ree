@@ -6,9 +6,9 @@ import {
 
 test("getDateFromDateCompose", () => {
   const dateCompose = {
-    jour: 1,
-    mois: 2,
-    annee: 2020
+    jour: "01",
+    mois: "02",
+    annee: "2020"
   };
   const date = getDateFromDateCompose(dateCompose);
   expect(date.getDate()).toBe(1);

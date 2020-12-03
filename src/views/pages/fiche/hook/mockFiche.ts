@@ -1,4 +1,7 @@
 import { IFicheRc } from "./FicheRcInterfaces";
+import { TypeDecision } from "../../../../model/ficheRcRca/TypeDecision";
+import { TypeAutorite } from "../../../../model/ficheRcRca/TypeAutorite";
+import { Statut } from "../../../../model/Statut";
 
 export const mockFicheRc: IFicheRc = {
   id: "",
@@ -11,9 +14,9 @@ export const mockFicheRc: IFicheRc = {
   alertes: [],
   decision: {
     dateDecision: 1577059200,
-    type: "Jugement",
+    type: TypeDecision.JUGEMENT,
     autorite: {
-      type: "Tribunal de grande instance",
+      type: TypeAutorite.TRIBUNA_DE_GRANDE_INSTANCE,
       numeroDepartement: 69,
       libelleDepartement: "Rhône",
       ville: "Lyon",
@@ -23,15 +26,13 @@ export const mockFicheRc: IFicheRc = {
       prenomNotaire: "",
       numeroCrpcen: "",
       nomOnac: "",
-      prenomOnac: "",
-
-      dateDecision: 1584403200
+      prenomOnac: ""
     },
     enrolementRg: "",
     enrolementPortalis: "",
     sourceConfirmation: {
       autorite: {
-        type: "",
+        type: undefined,
         ville: "Marseille",
         arrondissement: 10,
         numeroDepartement: 13,
@@ -41,13 +42,12 @@ export const mockFicheRc: IFicheRc = {
         prenomNotaire: "",
         numeroCrpcen: "",
         nomOnac: "",
-        prenomOnac: "",
-        dateDecision: 1584403200
+        prenomOnac: ""
       },
       dateDecision: 1584403200,
       enrolementRg: "",
       enrolementPortalis: "",
-      type: "Arrêt"
+      type: TypeDecision.ARRET
     }
   },
   mariageInteresses: {
@@ -105,7 +105,7 @@ export const mockFicheRc: IFicheRc = {
   ],
   statutsFiche: [
     {
-      statut: "Actif",
+      statut: Statut.ACTIF,
       dateEvenement: {
         jour: "25",
         mois: "07",
@@ -118,7 +118,7 @@ export const mockFicheRc: IFicheRc = {
       complementMotif: ""
     },
     {
-      statut: "Inactif",
+      statut: Statut.INACTIF,
       dateEvenement: {
         jour: "17",
         mois: "03",
@@ -131,7 +131,7 @@ export const mockFicheRc: IFicheRc = {
       complementMotif: ""
     },
     {
-      statut: "Actif",
+      statut: Statut.ACTIF,
       dateEvenement: {
         jour: "15",
         mois: "02",
@@ -157,7 +157,10 @@ export const mockFicheRc: IFicheRc = {
   },
 
   // pas presents
-  inscriptionsImpactees: [{ id: "", numero: "2015 - 36547" }],
+  inscriptionsImpactees: [
+    { id: "0", numero: "2015 - 36547" },
+    { id: "1", numero: "2020- 36547" }
+  ],
   inscriptionsLiees: [
     {
       typeInscription: "Modification",

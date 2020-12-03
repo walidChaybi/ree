@@ -23,14 +23,15 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
         .then((result: any) => {
           const dataFiche = {} as IFicheApi;
           dataFiche.dataBandeau = setDataBandeau(result.body.data);
-          dataFiche.ficheRc = getRcRcaVue(mockFicheRc);
+          dataFiche.ficheRc = getRcRcaVue(result.body.data);
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {
-          /* messageManager.showErrorAndClose(
+          console.log(error);
+          messageManager.showErrorAndClose(
             "Impossible récupérer les informations de la fiche"
           );
-          setErrorState(error);*/
+          setErrorState(error);
           const dataFiche = {} as IFicheApi;
           dataFiche.dataBandeau = setDataBandeau(mockFicheRc);
           console.log(mockFicheRc);
@@ -48,6 +49,29 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
 
 function setDataBandeau(data: any): IDataBandeauFicheProps {
   let dataBandeau = {} as IDataBandeauFicheProps;
+  console.log(
+    "data.categorie",
+    data.categorie,
+    "data.id ",
+    data.id,
+    "data.registre ",
+    data.registre,
+    "data.annee ",
+    data.annee,
+    "data.numero ",
+    data.numero,
+    "data.statutsFiche ",
+    data.statutsFiche,
+    "data.interesses ",
+    data.interesses,
+
+    "data.alertes ",
+    data.alertes,
+    "data.dateDerniereMaj ",
+    data.dateDerniereMaj,
+    "data.dateDerniereDelivrance ",
+    data.dateDerniereDelivrance
+  );
   if (data) {
     dataBandeau = {
       categorie: data.categorie,
