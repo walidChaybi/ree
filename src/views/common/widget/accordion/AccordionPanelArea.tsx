@@ -18,7 +18,9 @@ export const AccordionPanelArea: React.FC<AccordionPanelAreaProps> = ({
           <AccordionPart
             key={`accordion-panel-area-${index}-${id}`}
             {...part}
-            columnIndex={index + 1}
+            columnIndex={
+              part.columnIndex != null ? part.columnIndex : index + 1
+            }
           />
         );
       })}

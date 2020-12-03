@@ -31,6 +31,7 @@ export interface IInscriptionsImpactees {
 
 export interface IMariageInteresse {
   villeMariage: string;
+  arrondissementMariage: string;
   regionMariage: string;
   paysMariage: string;
   dateMariage: IDateCompose;

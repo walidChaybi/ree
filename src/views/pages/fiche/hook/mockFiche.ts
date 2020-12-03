@@ -51,9 +51,10 @@ export const mockFicheRc: IFicheRc = {
     }
   },
   mariageInteresses: {
-    villeMariage: "",
-    regionMariage: "",
-    paysMariage: "",
+    villeMariage: "villeMariage",
+    arrondissementMariage: "08",
+    regionMariage: "regionMariage",
+    paysMariage: "paysMariage",
     dateMariage: {
       jour: "01",
       mois: "12",

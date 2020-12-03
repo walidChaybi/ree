@@ -1,11 +1,12 @@
 import React from "react";
-import { IFicheRc } from "../FicheRcInterfaces";
-import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
-import { LienFiche } from "../../LienFiche";
+import { IFicheRc } from "../../FicheRcInterfaces";
+import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
+import { LienFiche } from "../../../LienFiche";
 import {
   getDateString,
   getDateFromTimestamp
-} from "../../../../common/util/DateUtils";
+} from "../../../../../common/util/DateUtils";
+import { InscriptionsLiees } from "./InscriptionsLiees";
 
 export function getInscriptionRepertoireCivil(
   retourBack: IFicheRc
@@ -34,25 +35,7 @@ export function getInscriptionRepertoireCivil(
       {
         libelle: "Inscription(s) liée(s)",
         value: retourBack.inscriptionsLiees ? (
-          <span style={{ display: "flex" }}>
-            {retourBack.inscriptionsLiees.map((inscription, index) => (
-              <span
-                key={`inscription-liees-lien-${inscription.numeroRc}`}
-                style={{ display: "flex", whiteSpace: "pre" }}
-              >
-                {`${inscription.typeInscription} (${"RC n°"}`}
-                <LienFiche
-                  identifiant={inscription.idInscription}
-                  categorie={"rc"}
-                  numero={inscription.numeroRc}
-                />
-
-                {`)${
-                  index !== retourBack.inscriptionsLiees.length - 1 ? ", " : ""
-                }`}
-              </span>
-            ))}
-          </span>
+          <InscriptionsLiees inscriptionsLiees={retourBack.inscriptionsLiees} />
         ) : (
           ""
         )
