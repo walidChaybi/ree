@@ -10,7 +10,7 @@ interface EtatRequeteProps {
   requete: IDataTable;
 }
 
-export const EtatRequete: React.FC<EtatRequeteProps> = (props) => {
+export const EtatRequete: React.FC<EtatRequeteProps> = props => {
   const statut = props.requete.statut;
   const styles = classNames({
     bleu:

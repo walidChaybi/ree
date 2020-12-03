@@ -24,7 +24,7 @@ exports[`renders du bandeau d'une fiche RC 1`] = `
     </div>
     <div>
       <div
-        title="[object Object]
+        title="Date de fin de mesure dépassée
 "
       >
         <svg

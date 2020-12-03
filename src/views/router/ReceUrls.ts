@@ -10,4 +10,4 @@ export const URL_DECONNEXION = "/rece/Shibboleth.sso/Logout";
 
 export const URL_ACCUEIL_RECE_ADMIN = "/rece/rece-admin-ui/accueil";
 
-export const URL_RC_RCA = "/rcrca";
+export const URL_RC_RCA = `${URL_CONTEXT_APP}/rcrca`;
