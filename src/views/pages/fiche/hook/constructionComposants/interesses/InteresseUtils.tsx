@@ -94,11 +94,11 @@ function getLieuNaissance(interesse: IInteresse): string {
     } else if (!LieuxUtils.isVilleParis(interesse.villeNaissance)) {
       return `${interesse.villeNaissance} Arrdt${interesse.arrondissementNaissance} (${interesse.regionNaissance})`;
     } else {
-      return `${interesse.villeNaissance} Arrdt${interesse.arrondissementNaissance}`;
+      return `${interesse.villeNaissance} (Arrdt${interesse.arrondissementNaissance})`;
     }
   } else {
-    const region = `- ${interesse.regionNaissance}`;
-    return `${interesse.villeNaissance} ${
+    const region = ` - ${interesse.regionNaissance}`;
+    return `${interesse.villeNaissance}${
       interesse.regionNaissance ? region : ""
     } (${interesse.paysNaissance})`;
   }
