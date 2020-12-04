@@ -15,6 +15,8 @@ import {
   URL_RC_RCA
 } from "./ReceUrls";
 import { RcRcaPage } from "../pages/RcRcaPage";
+import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
 
 export interface IRouteRece {
   component?: any;
@@ -22,6 +24,7 @@ export interface IRouteRece {
   props?: Object;
   render?: (props: RouteComponentProps<any>) => React.ReactNode;
   droits?: Droit[];
+  canAccess?: boolean;
 }
 
 export const routesRece: IRouteRece[] = [
@@ -59,6 +62,7 @@ export const routesRece: IRouteRece[] = [
   },
   {
     url: URL_RC_RCA,
-    component: RcRcaPage
+    component: RcRcaPage,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2)
   }
 ];

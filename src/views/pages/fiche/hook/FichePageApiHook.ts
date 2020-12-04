@@ -12,7 +12,7 @@ import {
   getDateFromTimestamp,
   getDateString
 } from "../../../common/util/DateUtils";
-import { StatutFicheUtil } from "../../../../model/inscription/StatutFiche";
+import { StatutUtil } from "../../../../model/Statut";
 
 export interface IFicheApi {
   dataBandeau: IDataBandeauFicheProps;
@@ -58,7 +58,7 @@ function setDataBandeau(data: any): IDataBandeauFicheProps {
       registre: data.registre ? data.registre : undefined,
       annee: data.annee,
       numero: data.numero,
-      statut: StatutFicheUtil.getLibelle(data.statutsFiche[0].statut),
+      statut: StatutUtil.getLibelle(data.statutsFiche[0].statut),
       prenom1: setPrenomInteresse(data.interesses[0].prenoms),
       nom1: data.interesses[0].nomFamille,
       prenom2: data.interesses[1]

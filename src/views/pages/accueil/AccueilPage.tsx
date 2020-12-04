@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, getText } from "../../common/widget/Text";
 import {
   BoutonAccueil,
@@ -27,9 +27,6 @@ import {
 import { Badge } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
-import { BoutonAccueilTest } from "./BoutonAccueilTest";
-import { FenetreExterne } from "../../common/util/FenetreExterne";
-import { NewFenetreFC } from "./NewFenetreFC";
 import { URL_ACCUEIL_RECE_ADMIN } from "../../router/ReceUrls";
 
 export const AccueilPage: React.FC = () => {
@@ -37,12 +34,6 @@ export const AccueilPage: React.FC = () => {
   const onClickBadgeAdmin = () => {
     history.push(URL_ACCUEIL_RECE_ADMIN);
     history.go(0);
-  };
-
-  const [fenetreOuverteState, setFenetreOuverteState] = useState(false);
-
-  const toggleFenetre = () => {
-    setFenetreOuverteState(fenetreOuverteState ? false : true);
   };
 
   return (
@@ -135,24 +126,6 @@ export const AccueilPage: React.FC = () => {
           disabled={true}
           titleId="pages.accueil.titles.tableau"
         ></BoutonAccueil>
-        <BoutonAccueilTest
-          title="Ouverture nouvelle fenêtre avec React Portal"
-          onClickHandler={() => {
-            toggleFenetre();
-          }}
-          message={"Nouvelle Fenêtre"}
-        ></BoutonAccueilTest>
-
-        {fenetreOuverteState && (
-          <FenetreExterne
-            titre={"Nouvelle Fenêtre"}
-            onCloseHandler={() => {
-              toggleFenetre();
-            }}
-          >
-            <NewFenetreFC />
-          </FenetreExterne>
-        )}
       </div>
     </div>
   );
