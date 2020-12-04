@@ -6,7 +6,6 @@ import {
   createEvent,
   waitFor
 } from "@testing-library/react";
-
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 

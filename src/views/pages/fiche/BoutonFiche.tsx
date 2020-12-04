@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { FenetreExterne } from "../../common/util/FenetreExterne";
 import { FichePage } from "./FichePage";
+import "./BoutonFiche.scss";
 
 interface IDataBoutonFicheProps {
   identifiant: string;
   categorie: string;
-  nom: string;
+  nom1: string;
+  nom2?: string;
   annee: string;
   numero: string;
 }
@@ -16,7 +18,15 @@ interface IDataBoutonFicheProps {
 export const BoutonFiche: React.FC<IDataBoutonFicheProps> = props => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(false);
 
-  const titre = `${props.categorie.toLocaleUpperCase()} - ${props.nom} - N° ${
+  function getNom() {
+    let nom = `${props.nom1}`;
+    if (props.nom2 != null) {
+      nom = `${nom} et ${props.nom2}`;
+    }
+    return nom;
+  }
+
+  const titre = `${props.categorie.toLocaleUpperCase()} - ${getNom()} - N° ${
     props.annee
   } - ${props.numero}`;
 
@@ -34,7 +44,7 @@ export const BoutonFiche: React.FC<IDataBoutonFicheProps> = props => {
 
   return (
     <div>
-      <Button onClick={onClick} title={libelleBouton}>
+      <Button className={"BoutonFiche"} onClick={onClick} title={libelleBouton}>
         {libelleBouton}
       </Button>
 

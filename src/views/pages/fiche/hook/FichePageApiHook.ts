@@ -1,10 +1,18 @@
 import { useState, useEffect } from "react";
 import { getInformationsFiche } from "../../../../api/appels/etatcivilApi";
 import messageManager from "../../../common/util/messageManager";
-import { IDataBandeauFicheProps } from "../contenu/BandeauFiche";
 import { AccordionReceProps } from "../../../common/widget/accordion/AccordionRece";
 import { getPanelsRc } from "./constructionComposants/FicheRcUtils";
-import { mockFicheRc } from "./mockFiche";
+import { IDataBandeauFicheProps, IAlerte } from "../contenu/BandeauFiche";
+import {
+  AlerteInscriptionUtil,
+  AlerteInscription
+} from "../../../../model/inscription/AlerteInscription";
+import {
+  getDateFromTimestamp,
+  getDateString
+} from "../../../common/util/DateUtils";
+import { StatutFicheUtil } from "../../../../model/inscription/StatutFiche";
 
 export interface IFicheApi {
   dataBandeau: IDataBandeauFicheProps;
@@ -27,7 +35,6 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {
-          console.log(error);
           messageManager.showErrorAndClose(
             "Impossible récupérer les informations de la fiche"
           );
@@ -51,16 +58,20 @@ function setDataBandeau(data: any): IDataBandeauFicheProps {
       registre: data.registre ? data.registre : undefined,
       annee: data.annee,
       numero: data.numero,
-      statut: data.statutsFiche[0].statut,
+      statut: StatutFicheUtil.getLibelle(data.statutsFiche[0].statut),
       prenom1: setPrenomInteresse(data.interesses[0].prenoms),
       nom1: data.interesses[0].nomFamille,
       prenom2: data.interesses[1]
         ? setPrenomInteresse(data.interesses[1].prenoms)
         : undefined,
       nom2: data.interesses[1] ? data.interesses[1].nomFamille : undefined,
-      alertes: data.alertes,
-      dateDerniereMaj: data.dateDerniereMaj,
-      dateDerniereDelivrance: data.dateDerniereDelivrance
+      alertes: setAlertes(data.alertes),
+      dateDerniereMaj: getDateString(
+        getDateFromTimestamp(data.dateDerniereMaj)
+      ),
+      dateDerniereDelivrance: getDateString(
+        getDateFromTimestamp(data.dateDerniereDelivrance)
+      )
     };
   }
   return dataBandeau;
@@ -74,4 +85,17 @@ function setPrenomInteresse(prenoms: any[]) {
     }
   });
   return prenomInteresse;
+}
+
+function setAlertes(alertes: IAlerte[]) {
+  const alertesInscription: IAlerte[] = [];
+  if (alertes) {
+    alertes.forEach(a => {
+      a.alerte = AlerteInscriptionUtil.getLibelle(
+        a.alerte as AlerteInscription
+      );
+      alertesInscription.push(a);
+    });
+  }
+  return alertesInscription;
 }

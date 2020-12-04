@@ -1,5 +1,4 @@
 import React from "react";
-
 import { render, waitFor, screen } from "@testing-library/react";
 import { CompteurRequete } from "../../../../views/pages/espaceDelivrance/contenu/CompteurRequete";
 import connectedUser from "../../../../mock/data/connectedUser.json";

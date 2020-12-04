@@ -5,14 +5,14 @@ export const RcRcaPage: React.FC = () => {
   const identifiant = "76b62678-8b06-4442-ad5b-b9207627a6e3";
   const categorie = "rc";
   const annee = "2020";
-  const nom = "";
+  const nom = "Favaro";
   const numero = "213456789";
 
   const identifiant2 = "8244d136-729b-4fd3-b88a-fa1fe30a2214";
-  const categorie2 = "rc";
-  const annee2 = "2019";
-  const nom2 = "";
-  const numero2 = "213456789";
+  const categorie2 = "rca";
+  const annee2 = "1999";
+  const nom2 = "Michel";
+  const numero2 = "15987";
 
   const identifiant3 = "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918";
   const categorie3 = "rc";
@@ -31,7 +31,7 @@ export const RcRcaPage: React.FC = () => {
       <BoutonFiche
         identifiant={identifiant}
         categorie={categorie}
-        nom={nom}
+        nom1={nom}
         annee={annee}
         numero={numero}
       />
@@ -39,7 +39,8 @@ export const RcRcaPage: React.FC = () => {
       <BoutonFiche
         identifiant={identifiant2}
         categorie={categorie2}
-        nom={nom2}
+        nom1={nom}
+        nom2={nom2}
         annee={annee2}
         numero={numero2}
       />
@@ -47,7 +48,7 @@ export const RcRcaPage: React.FC = () => {
       <BoutonFiche
         identifiant={identifiant3}
         categorie={categorie3}
-        nom={nom3}
+        nom1={nom3}
         annee={annee3}
         numero={numero3}
       />
@@ -55,7 +56,7 @@ export const RcRcaPage: React.FC = () => {
       <BoutonFiche
         identifiant={identifiant4}
         categorie={categorie4}
-        nom={nom4}
+        nom1={nom4}
         annee={annee4}
         numero={numero4}
       />

@@ -1,5 +1,4 @@
 import { HttpMethod, ApiManager } from "../ApiManager";
-
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
 export const URL_ETAT_CIVIL = "/repertoirecivil";
