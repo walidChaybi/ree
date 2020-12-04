@@ -3,7 +3,10 @@ import { useState, useEffect, useCallback } from "react";
 import { StatutRequete } from "../../../../../model/requete/StatutRequete";
 import { SignatureErrors } from "../messages/ErrorsSignature";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
-import { ModeSignature } from "../../../../../model/requete/ModeSignature";
+import {
+  ModeSignature,
+  ModeSignatureUtil
+} from "../../../../../model/requete/ModeSignature";
 import { SuccessSignatureType } from "../messages/SuccessSignature";
 import { FormatDate } from "../../../../../ressources/FormatDate";
 import { SousTypeRequete } from "../../../../../model/requete/SousTypeRequete";
@@ -20,6 +23,7 @@ import {
   IRequestDocumentApiResult,
   IQueryParameterUpdateDocument
 } from "../../../../../api/appels/requeteApi";
+import { gestionnaireSignatureFlag } from "../../../util/signatureFlag/gestionnaireSignatureFlag";
 
 export interface IQueryParametersPourRequete {
   statut?: StatutRequete;
@@ -285,10 +289,11 @@ function sendDocumentToSignature(
     direction: "to-webextension",
     document: result.documentDelivre.contenu,
     pin: pinCode,
-    mode:
-      process.env.NODE_ENV === "development"
-        ? ModeSignature.Dry
-        : ModeSignature.Certigna,
+    mode: ModeSignatureUtil.isValid(
+      gestionnaireSignatureFlag.getSignatureMode()
+    )
+      ? gestionnaireSignatureFlag.getSignatureMode()
+      : ModeSignature.CERTIGNA_SIGNED,
     infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos,
     erreursSimulees: getErrorsMock()
   };
