@@ -27,14 +27,11 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {
+          console.log(error);
           messageManager.showErrorAndClose(
             "Impossible récupérer les informations de la fiche"
           );
           setErrorState(error);
-          const dataFiche = {} as IFicheApi;
-          dataFiche.dataBandeau = setDataBandeau(mockFicheRc);
-          dataFiche.ficheRc = getPanelsRc(mockFicheRc);
-          setDataFicheState(dataFiche);
         });
     }
   }, [categorie, identifiant]);
@@ -47,7 +44,6 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
 
 function setDataBandeau(data: any): IDataBandeauFicheProps {
   let dataBandeau = {} as IDataBandeauFicheProps;
-
   if (data) {
     dataBandeau = {
       categorie: data.categorie,

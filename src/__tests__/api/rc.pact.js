@@ -10,7 +10,7 @@ export const rcPact = {
   dateInscription: 1518652800,
   dateDerniereMaj: 1583971200,
   dateDerniereDelivrance: 1592092800,
-  statutFiche: {
+  statutsFiche: {
     statut: "Actif"
   },
   alertes: eachLike({

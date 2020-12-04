@@ -183,6 +183,7 @@ function addDepartementAutoriteContentIfPossible(
   contents: AccordionContentProps[]
 ): void {
   if (
+    autorite.ville &&
     autorite.ville.toUpperCase() !== "PARIS" &&
     autorite.ville.toUpperCase() === "FRANCE"
   ) {

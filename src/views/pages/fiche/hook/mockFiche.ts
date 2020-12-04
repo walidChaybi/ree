@@ -4,7 +4,7 @@ import { TypeAutorite } from "../../../../model/ficheRcRca/TypeAutorite";
 import { Statut } from "../../../../model/Statut";
 
 export const mockFicheRc: IFicheRc = {
-  id: "",
+  id: "7566e16c-2b0e-11eb-adc1-0242ac120002",
   categorie: "rc",
   numero: "2015-123456",
   annee: "2019",
@@ -160,8 +160,6 @@ export const mockFicheRc: IFicheRc = {
     autreDuree: "Viager",
     dateFinDeMesure: 1581724800
   },
-
-  // pas presents
   inscriptionsImpactees: [
     { id: "0", numero: "2015 - 36547" },
     { id: "1", numero: "2020- 36547" }
