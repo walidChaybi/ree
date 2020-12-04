@@ -6,8 +6,7 @@ import {
   TypeAutorite
 } from "../../../../../model/ficheRcRca/TypeAutorite";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
-
-const VILLES_AVEC_ARRONDISSEMENT = ["MARSEILLE", "LYON", "PARIS"];
+import { LieuxUtils } from "../../../../../model/Lieux";
 
 export function getAutorite(retourBack: IFicheRc): AccordionPartProps[] {
   const autorite: AccordionPartProps[] = [
@@ -37,22 +36,22 @@ export function getAutorite(retourBack: IFicheRc): AccordionPartProps[] {
 function getContentAutorite(autorite: IAutorite): AccordionContentProps[] {
   if (
     AutoriteUtil.isJuridiction(autorite.type) &&
-    autorite.pays.toUpperCase() === "FRANCE"
+    LieuxUtils.isPaysFrance(autorite.pays)
   ) {
     return getContentJuridictionEtFrance(autorite);
   } else if (
     AutoriteUtil.isNotaire(autorite.type) &&
-    autorite.pays.toUpperCase() === "FRANCE"
+    LieuxUtils.isPaysFrance(autorite.pays)
   ) {
     return getContentNotaireEtFrance(autorite);
   } else if (
     AutoriteUtil.isJuridiction(autorite.type) &&
-    autorite.pays.toUpperCase() !== "FRANCE"
+    !LieuxUtils.isPaysFrance(autorite.pays)
   ) {
     return getContentJuridictionEtEtranger(autorite);
   } else if (
     AutoriteUtil.isNotaire(autorite.type) &&
-    autorite.pays.toUpperCase() !== "FRANCE"
+    !LieuxUtils.isPaysFrance(autorite.pays)
   ) {
     return getContentNotaireEtEtranger(autorite);
   } else {
@@ -164,10 +163,7 @@ function addArrondissementAutoriteContentIfPossible(
   autorite: IAutorite,
   contents: AccordionContentProps[]
 ): void {
-  if (
-    autorite.ville &&
-    VILLES_AVEC_ARRONDISSEMENT.includes(autorite.ville.toUpperCase())
-  ) {
+  if (autorite.ville && LieuxUtils.isVilleAvecArrondissement(autorite.ville)) {
     contents.push({
       libelle: "Arrondissement",
       value: `${autorite.arrondissement || ""}`
@@ -180,9 +176,8 @@ function addDepartementAutoriteContentIfPossible(
   contents: AccordionContentProps[]
 ): void {
   if (
-    autorite.ville &&
-    autorite.ville.toUpperCase() !== "PARIS" &&
-    autorite.pays.toUpperCase() === "FRANCE"
+    !LieuxUtils.isVilleParis(autorite.ville) &&
+    LieuxUtils.isPaysFrance(autorite.pays)
   ) {
     contents.push({
       libelle: "Département",

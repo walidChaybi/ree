@@ -5,8 +5,7 @@ import { AccordionPartProps } from "../../../../../common/widget/accordion/Accor
 import { sortObjectWithNumeroOrdre } from "../../../../../common/util/Utils";
 import { getText } from "../../../../../common/widget/Text";
 import { Mariage } from "./Mariage";
-
-const VILLES_NAISSANCE = ["MARSEILLE", "LYON", "PARIS"];
+import { LieuxUtils } from "../../../../../../model/Lieux";
 
 export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
   const sortedInteresses = [...retourBack.interesses].sort((i1, i2) =>
@@ -86,13 +85,10 @@ export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
 }
 
 function getLieuNaissance(interesse: IInteresse): string {
-  if (
-    interesse.paysNaissance &&
-    interesse.paysNaissance.toUpperCase() === "FRANCE"
-  ) {
-    if (!VILLES_NAISSANCE.includes(interesse.villeNaissance.toUpperCase())) {
+  if (LieuxUtils.isPaysFrance(interesse.paysNaissance)) {
+    if (!LieuxUtils.isVilleAvecArrondissement(interesse.villeNaissance)) {
       return `${interesse.villeNaissance} (${interesse.regionNaissance})`;
-    } else if (interesse.villeNaissance.toUpperCase() !== "PARIS") {
+    } else if (!LieuxUtils.isVilleParis(interesse.villeNaissance)) {
       return `${interesse.villeNaissance} Arrdt${interesse.arrondissementNaissance} (${interesse.regionNaissance})`;
     } else {
       return `${interesse.villeNaissance} Arrdt${interesse.arrondissementNaissance}`;

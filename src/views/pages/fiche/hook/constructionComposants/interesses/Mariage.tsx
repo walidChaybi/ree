@@ -5,6 +5,7 @@ import {
   getDateStringFromDateCompose
 } from "../../../../../common/util/DateUtils";
 import "./sass/Mariage.scss";
+import { LieuxUtils } from "../../../../../../model/Lieux";
 
 export const Mariage: React.FC<IMariageInteresse> = props => {
   return (
@@ -32,7 +33,7 @@ export const Mariage: React.FC<IMariageInteresse> = props => {
 };
 
 function getLibelleLieuMariage(mariage: IMariageInteresse): string {
-  if (!mariage.aletranger && mariage.paysMariage.toUpperCase() !== "FRANCE") {
+  if (!mariage.aletranger && !LieuxUtils.isPaysFrance(mariage.paysMariage)) {
     return "Mariés";
   } else {
     return "Mariés à";
@@ -53,15 +54,13 @@ function getLieuMariage(mariage: IMariageInteresse) {
     return `${mariage.villeMariage} ${
       mariage.regionMariage ? regionMariage : ""
     } (${mariage.paysMariage})`;
-  } else if (mariage.paysMariage.toUpperCase() !== "FRANCE") {
+  } else if (!LieuxUtils.isPaysFrance(mariage.paysMariage)) {
     return `devant les autorités consulaires de ${mariage.villeMariage} en France`;
   } else if (!mariage.arrondissementMariage) {
     return `${mariage.villeMariage} (${mariage.regionMariage})`;
   } else {
     return `${mariage.villeMariage} (Arr.${mariage.arrondissementMariage} ${
-      mariage.villeMariage.toUpperCase() === "PARIS"
-        ? ""
-        : mariage.regionMariage
+      LieuxUtils.isVilleParis(mariage.villeMariage) ? "" : mariage.regionMariage
     })}`;
   }
 }
