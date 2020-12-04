@@ -8,6 +8,7 @@ test("render composant AccordionPart", async () => {
     <AccordionPart
       contents={[{ libelle: "testLibelle", value: "testValue" }]}
       title={"titleTest"}
+      classNameContent=""
     />
   );
 

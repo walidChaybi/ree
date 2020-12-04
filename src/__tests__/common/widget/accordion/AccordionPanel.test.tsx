@@ -33,6 +33,7 @@ test("render composant AccordionPanel", async () => {
         }
       ]}
       title={"titleArea"}
+      id="panelAreaTest"
     />
   );
 

@@ -13,7 +13,8 @@ test("render composant AccordionPanelArea", async () => {
         },
         {
           contents: [{ libelle: "testLibelle2", value: "testValue2" }],
-          title: "titleTest2"
+          title: "titleTest2",
+          columnIndex: 0
         }
       ]}
     />
@@ -26,5 +27,6 @@ test("render composant AccordionPanelArea", async () => {
     expect(getByText(/titleTest2/i)).toBeDefined();
     expect(getByText(/testLibelle2/i)).toBeDefined();
     expect(getByText(/testValue2/i)).toBeDefined();
+    expect(getByText("titleTest2").parentElement?.style.gridColumn).toBe("0");
   });
 });

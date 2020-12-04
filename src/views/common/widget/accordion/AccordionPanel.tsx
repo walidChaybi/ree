@@ -23,11 +23,7 @@ export const AccordionPanel: React.FC<AccordionPanelProps> = ({
             <AccordionPanelArea id={`${title}-${id}`} parts={panelArea.parts} />
             {index !== panelAreas.length - 1 && (
               <hr
-                style={{
-                  width: "80%",
-                  marginTop: "20px",
-                  marginBottom: "20px"
-                }}
+                className={"accordionPanelAreaSeparation"}
                 data-testid={`accordion-panel-hr-${title}-${index}`}
               />
             )}
