@@ -32,7 +32,7 @@ export class AutoriteUtil {
   }
 
   public static isJuridiction(autorite?: TypeAutorite): boolean {
-    return autorite !== TypeAutorite.NOTAIRE;
+    return autorite != null && autorite !== TypeAutorite.NOTAIRE;
   }
 
   public static isNotaire(autorite?: TypeAutorite): boolean {

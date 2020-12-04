@@ -63,30 +63,24 @@ function getContentAutorite(autorite: IAutorite): AccordionContentProps[] {
 function getContentNotaireEtEtranger(
   autorite: IAutorite
 ): AccordionContentProps[] {
-  const contents: AccordionContentProps[] = [
+  return [
     getTypeAutoriteContent(autorite.type),
     getPrenomNom(autorite),
     getVilleAutoriteContent(autorite.ville),
     getRegionAutoriteContent(autorite.region),
     getPaysAutoriteContent(autorite.pays)
   ];
-
-  contents.push(getNumeroCrpcen(autorite));
-
-  return contents;
 }
 
 function getContentJuridictionEtEtranger(
   autorite: IAutorite
 ): AccordionContentProps[] {
-  const contents: AccordionContentProps[] = [
+  return [
     getTypeAutoriteContent(autorite.type),
     getVilleAutoriteContent(autorite.ville),
     getRegionAutoriteContent(autorite.region),
     getPaysAutoriteContent(autorite.pays)
   ];
-
-  return contents;
 }
 
 function getContentJuridictionEtFrance(
@@ -136,7 +130,7 @@ function getPrenomNom(autorite: IAutorite): AccordionContentProps {
 
 function getNumeroCrpcen(autorite: IAutorite): AccordionContentProps {
   return {
-    libelle: "Prénom NOM",
+    libelle: "N° CRPCEN",
     value: autorite.numeroCrpcen
   };
 }
@@ -154,14 +148,14 @@ function getVilleAutoriteContent(ville: string): AccordionContentProps {
 
 function getRegionAutoriteContent(region: string): AccordionContentProps {
   return {
-    libelle: "Ville",
+    libelle: "Région",
     value: region || ""
   };
 }
 
 function getPaysAutoriteContent(pays: string): AccordionContentProps {
   return {
-    libelle: "Ville",
+    libelle: "Pays",
     value: pays || ""
   };
 }
@@ -170,7 +164,10 @@ function addArrondissementAutoriteContentIfPossible(
   autorite: IAutorite,
   contents: AccordionContentProps[]
 ): void {
-  if (VILLES_AVEC_ARRONDISSEMENT.includes(autorite.arrondissement)) {
+  if (
+    autorite.ville &&
+    VILLES_AVEC_ARRONDISSEMENT.includes(autorite.ville.toUpperCase())
+  ) {
     contents.push({
       libelle: "Arrondissement",
       value: `${autorite.arrondissement || ""}`
@@ -185,7 +182,7 @@ function addDepartementAutoriteContentIfPossible(
   if (
     autorite.ville &&
     autorite.ville.toUpperCase() !== "PARIS" &&
-    autorite.ville.toUpperCase() === "FRANCE"
+    autorite.pays.toUpperCase() === "FRANCE"
   ) {
     contents.push({
       libelle: "Département",

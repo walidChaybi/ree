@@ -1,0 +1,222 @@
+import { TypeDecision } from "../../../../../../model/ficheRcRca/TypeDecision";
+import { TypeAutorite } from "../../../../../../model/ficheRcRca/TypeAutorite";
+
+export const ficheAutoriteJuridictionFranceAvecConfirmation = {
+  decision: {
+    dateDecision: 1577059200,
+    type: TypeDecision.JUGEMENT,
+    autorite: {
+      type: TypeAutorite.TRIBUNAL_DE_PREMIERE_INSTANCE,
+      numeroDepartement: "69",
+      libelleDepartement: "Rhône",
+      ville: "Lyon",
+      pays: "France",
+      region: "Ile de france",
+      arrondissement: "8",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: ""
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: {
+      autorite: {
+        type: TypeAutorite.TRIBUNAL_DE_GRANDE_INSTANCE,
+        ville: "Marseille",
+        arrondissement: "10",
+        numeroDepartement: "13",
+        libelleDepartement: "Bouches-du-Rhône",
+        pays: "France",
+        region: "Ile de france",
+        nomNotaire: "nomnotaire",
+        prenomNotaire: "prenomnotaire",
+        numeroCrpcen: "",
+        nomOnac: "",
+        prenomOnac: ""
+      },
+      dateDecision: 1584403200,
+      enrolementRg: "enrolementRg",
+      enrolementPortalis: "enrolementPortalis",
+      type: TypeDecision.ARRET
+    }
+  }
+};
+
+export const ficheAutoriteJuridictionEtrangerAvecConfirmation = {
+  decision: {
+    dateDecision: 1577059200,
+    type: TypeDecision.JUGEMENT,
+    autorite: {
+      type: TypeAutorite.TRIBUNAL_DE_PREMIERE_INSTANCE,
+      numeroDepartement: "",
+      libelleDepartement: "",
+      ville: "Berlin",
+      pays: "Allemagne",
+      region: "Berlin-Brandebourg",
+      arrondissement: "",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: ""
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: {
+      autorite: {
+        type: TypeAutorite.TRIBUNAL_DE_GRANDE_INSTANCE,
+        ville: "Marseille",
+        arrondissement: "10",
+        numeroDepartement: "13",
+        libelleDepartement: "Bouches-du-Rhône",
+        pays: "France",
+        region: "Ile de france",
+        nomNotaire: "nomnotaire",
+        prenomNotaire: "prenomnotaire",
+        numeroCrpcen: "",
+        nomOnac: "",
+        prenomOnac: ""
+      },
+      dateDecision: 1584403200,
+      enrolementRg: "enrolementRg",
+      enrolementPortalis: "enrolementPortalis",
+      type: TypeDecision.ARRET
+    }
+  }
+};
+
+export const ficheAutoriteNotaireFranceAvecConfirmation = {
+  decision: {
+    dateDecision: 1577059200,
+    type: TypeDecision.ACTE_NOTARIE,
+    autorite: {
+      type: TypeAutorite.NOTAIRE,
+      numeroDepartement: "69",
+      libelleDepartement: "Rhône",
+      ville: "Lyon",
+      pays: "France",
+      region: "Ile de france",
+      arrondissement: "8",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: ""
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: {
+      autorite: {
+        type: undefined,
+        ville: "Marseille",
+        arrondissement: "10",
+        numeroDepartement: "13",
+        libelleDepartement: "Bouches-du-Rhône",
+        pays: "France",
+        region: "Ile de france",
+        nomNotaire: "nomnotaire",
+        prenomNotaire: "prenomnotaire",
+        numeroCrpcen: "",
+        nomOnac: "",
+        prenomOnac: ""
+      },
+      dateDecision: 1584403200,
+      enrolementRg: "enrolementRg",
+      enrolementPortalis: "enrolementPortalis",
+      type: TypeDecision.ARRET
+    }
+  }
+};
+
+export const ficheAutoriteNotaireEtrangerAvecConfirmation = {
+  decision: {
+    dateDecision: 1577059200,
+    type: TypeDecision.ACTE_NOTARIE,
+    autorite: {
+      type: TypeAutorite.NOTAIRE,
+      numeroDepartement: "69",
+      libelleDepartement: "Rhône",
+      ville: "Lausanne",
+      pays: "Suisse",
+      region: "Vaud",
+      arrondissement: "8",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: ""
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: {
+      autorite: {
+        type: undefined,
+        ville: "Marseille",
+        arrondissement: "10",
+        numeroDepartement: "13",
+        libelleDepartement: "Bouches-du-Rhône",
+        pays: "France",
+        region: "Ile de france",
+        nomNotaire: "nomnotaire",
+        prenomNotaire: "prenomnotaire",
+        numeroCrpcen: "",
+        nomOnac: "",
+        prenomOnac: ""
+      },
+      dateDecision: 1584403200,
+      enrolementRg: "enrolementRg",
+      enrolementPortalis: "enrolementPortalis",
+      type: TypeDecision.ARRET
+    }
+  }
+};
+
+export const ficheAutoriteSansConfirmation = {
+  decision: {
+    dateDecision: 1577059200,
+    type: TypeDecision.ACTE_NOTARIE,
+    autorite: {
+      type: TypeAutorite.TRIBUNAL_DE_GRANDE_INSTANCE,
+      numeroDepartement: "69",
+      libelleDepartement: "Rhône",
+      ville: "Lyon",
+      pays: "France",
+      region: "Ile de france",
+      arrondissement: "8",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: ""
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: null
+  }
+};
+
+export const ficheNonValide = {
+  decision: {
+    dateDecision: 1577059200,
+    type: null,
+    autorite: {
+      type: null,
+      numeroDepartement: "69",
+      libelleDepartement: "Rhône",
+      ville: "Lyon",
+      pays: "",
+      region: "Ile de france",
+      arrondissement: "8",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: ""
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: null
+  }
+};
