@@ -1,5 +1,5 @@
 import { getAutorite } from "../../../../../views/pages/fiche/hook/constructionComposants/AutoriteUtils";
-import { IFicheRc } from "../../../../../views/pages/fiche/hook/FicheRcInterfaces";
+import { IFicheRc } from "../../../../../model/ficheRcRca/FicheRcInterfaces";
 import {
   ficheAutoriteJuridictionEtrangerAvecConfirmation,
   ficheAutoriteJuridictionFranceAvecConfirmation,

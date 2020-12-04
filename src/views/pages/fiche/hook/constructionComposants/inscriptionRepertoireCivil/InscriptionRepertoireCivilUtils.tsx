@@ -1,5 +1,5 @@
 import React from "react";
-import { IFicheRc } from "../../FicheRcInterfaces";
+import { IFicheRc } from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { LienFiche } from "../../../LienFiche";
 import {

@@ -1,5 +1,5 @@
 import React from "react";
-import { IMariageInteresse } from "../../FicheRcInterfaces";
+import { IMariageInteresse } from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
 import {
   IDateCompose,
   getDateStringFromDateCompose
@@ -61,6 +61,6 @@ function getLieuMariage(mariage: IMariageInteresse) {
   } else {
     return `${mariage.villeMariage} (Arr.${mariage.arrondissementMariage} ${
       LieuxUtils.isVilleParis(mariage.villeMariage) ? "" : mariage.regionMariage
-    })}`;
+    })`;
   }
 }

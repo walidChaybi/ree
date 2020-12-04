@@ -1,4 +1,4 @@
-import { IFicheRc } from "../FicheRcInterfaces";
+import { IFicheRc } from "../../../../../model/ficheRcRca/FicheRcInterfaces";
 import { AccordionReceProps } from "../../../../common/widget/accordion/AccordionRece";
 import { getInscriptionRepertoireCivil } from "./inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
 import { getInteresse } from "./interesses/InteresseUtils";

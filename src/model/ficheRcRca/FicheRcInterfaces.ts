@@ -1,7 +1,7 @@
-import { IDateCompose } from "../../../common/util/DateUtils";
-import { Statut } from "../../../../model/Statut";
-import { TypeAutorite } from "../../../../model/ficheRcRca/TypeAutorite";
-import { TypeDecision } from "../../../../model/ficheRcRca/TypeDecision";
+import { IDateCompose } from "../../views/common/util/DateUtils";
+import { Statut } from "../Statut";
+import { TypeAutorite } from "./TypeAutorite";
+import { TypeDecision } from "./TypeDecision";
 
 export interface IFicheRc {
   id: string;

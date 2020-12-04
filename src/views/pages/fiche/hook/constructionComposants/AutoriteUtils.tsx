@@ -1,5 +1,8 @@
 import React from "react";
-import { IFicheRc, IAutorite } from "../FicheRcInterfaces";
+import {
+  IFicheRc,
+  IAutorite
+} from "../../../../../model/ficheRcRca/FicheRcInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import {
   AutoriteUtil,

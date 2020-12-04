@@ -3,7 +3,10 @@ import {
   getDateString,
   getDateFromTimestamp
 } from "../../../../common/util/DateUtils";
-import { IFicheRc, IDecisionRc } from "../FicheRcInterfaces";
+import {
+  IFicheRc,
+  IDecisionRc
+} from "../../../../../model/ficheRcRca/FicheRcInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
 import { AutoriteUtil } from "../../../../../model/ficheRcRca/TypeAutorite";

@@ -1,4 +1,4 @@
-import { IFicheRc } from "./FicheRcInterfaces";
+import { IFicheRc } from "../../../../model/ficheRcRca/FicheRcInterfaces";
 import { TypeDecision } from "../../../../model/ficheRcRca/TypeDecision";
 import { TypeAutorite } from "../../../../model/ficheRcRca/TypeAutorite";
 import { Statut } from "../../../../model/Statut";
