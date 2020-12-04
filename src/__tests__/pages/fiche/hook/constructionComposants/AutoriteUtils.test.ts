@@ -1,5 +1,3 @@
-import React from "react";
-
 import { getAutorite } from "../../../../../views/pages/fiche/hook/constructionComposants/AutoriteUtils";
 import { IFicheRc } from "../../../../../views/pages/fiche/hook/FicheRcInterfaces";
 import {
@@ -9,7 +7,7 @@ import {
   ficheAutoriteSansConfirmation,
   ficheAutoriteNotaireEtrangerAvecConfirmation,
   ficheNonValide
-} from "./mock/AutoriteMock";
+} from "./mock/DecisionAutoriteMock";
 
 test("Autorite utils get autorite : decision en France, de type Juridiction, la source de confirmation est présente", async () => {
   const components = getAutorite(
