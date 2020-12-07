@@ -11,15 +11,16 @@ export enum FormatDate {
 
 export function getDateStringFromDateCompose(date: IDateCompose): string {
   let dateString = "";
-  if (date.annee) {
+
+  if (date && date.annee) {
     dateString += date.annee;
   }
 
-  if (date.mois) {
+  if (date && date.mois) {
     dateString = `${date.mois}/${dateString}`;
   }
 
-  if (date.jour) {
+  if (date && date.jour) {
     dateString = `${date.jour}/${dateString}`;
   }
   return dateString;

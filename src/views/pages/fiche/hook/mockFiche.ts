@@ -167,12 +167,12 @@ export const mockFicheRc: IFicheRc = {
   inscriptionsLiees: [
     {
       typeInscription: "Modification",
-      numeroRc: "2017 - 145235",
+      numero: "2017 - 145235",
       idInscription: ""
     },
     {
       typeInscription: "Radiation",
-      numeroRc: "2019 - 48596",
+      numero: "2019 - 48596",
       idInscription: ""
     }
   ]
