@@ -4,8 +4,18 @@ import { getInscriptionRepertoireCivil } from "./inscriptionRepertoireCivil/Insc
 import { getInteresse } from "./interesses/InteresseUtils";
 import { getDecision } from "./DecisionUtils";
 import { getAutorite } from "./AutoriteUtils";
+import { getFicheTitle } from "../../FicheUtils";
 
 export function getPanelsRc(retourBack: IFicheRc): AccordionReceProps {
+  const nomInteresse1 =
+    retourBack.interesses && retourBack.interesses[0]
+      ? retourBack.interesses[0].nomFamille
+      : "";
+  const nomInteresse2 =
+    retourBack.interesses && retourBack.interesses[1]
+      ? retourBack.interesses[1].nomFamille
+      : "";
+
   return {
     panels: [
       {
@@ -17,6 +27,13 @@ export function getPanelsRc(retourBack: IFicheRc): AccordionReceProps {
         ],
         title: "Vue du RC"
       }
-    ]
+    ],
+    title: getFicheTitle(
+      retourBack.categorie,
+      retourBack.annee,
+      retourBack.numero,
+      nomInteresse1,
+      nomInteresse2
+    )
   };
 }

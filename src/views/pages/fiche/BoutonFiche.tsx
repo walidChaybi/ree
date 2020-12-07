@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
-import { FenetreExterne } from "../../common/util/FenetreExterne";
+import {
+  FenetreExterne,
+  FenetreExterneUtil
+} from "../../common/util/FenetreExterne";
 import { FichePage } from "./FichePage";
 import "./BoutonFiche.scss";
 
@@ -17,18 +20,9 @@ interface IDataBoutonFicheProps {
 
 export const BoutonFiche: React.FC<IDataBoutonFicheProps> = props => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(false);
-
-  function getNom() {
-    let nom = `${props.nom1}`;
-    if (props.nom2 != null) {
-      nom = `${nom} et ${props.nom2}`;
-    }
-    return nom;
-  }
-
-  const titre = `${props.categorie.toLocaleUpperCase()} - ${getNom()} - N° ${
-    props.annee
-  } - ${props.numero}`;
+  const [fenetreExterneUtil, setFenetreExterneUtil] = useState<
+    FenetreExterneUtil
+  >();
 
   const libelleBouton = `Fiche ${props.categorie.toLocaleUpperCase()} - N° ${
     props.annee
@@ -50,16 +44,17 @@ export const BoutonFiche: React.FC<IDataBoutonFicheProps> = props => {
 
       {fenetreOuverteState && (
         <FenetreExterne
-          titre={titre}
           onCloseHandler={() => {
             toggleFenetre();
           }}
+          setFenetreExterneUtil={setFenetreExterneUtil}
         >
           <FichePage
             dataFiche={{
               identifiant: props.identifiant,
               categorie: props.categorie
             }}
+            fenetreExterneUtil={fenetreExterneUtil}
           />
         </FenetreExterne>
       )}
