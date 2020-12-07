@@ -1,5 +1,8 @@
 import React from "react";
-import { IFicheRc } from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
+import {
+  IFicheRc,
+  IDureeInscription
+} from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { LienFiche } from "../../../LienFiche";
 import {
@@ -23,12 +26,18 @@ export function getInscriptionRepertoireCivil(
         libelle: "Type inscription",
         value: (
           <span style={{ display: "flex" }}>
-            {retourBack.typeInscription
-              ? `${retourBack.typeInscription} (`
-              : ""}
+            {`${retourBack.typeInscription} ${
+              retourBack.inscriptionsImpactees &&
+              retourBack.inscriptionsImpactees.length > 0
+                ? "("
+                : ""
+            }`}
 
             {getInscriptionsImpactees(retourBack)}
-            {")"}
+            {retourBack.inscriptionsImpactees &&
+            retourBack.inscriptionsImpactees.length > 0
+              ? ")"
+              : ""}
           </span>
         )
       },
@@ -48,26 +57,38 @@ export function getInscriptionRepertoireCivil(
       },
       {
         libelle: "Durée inscription",
-        value: retourBack.duree.uniteDuree
-          ? `${retourBack.duree.nombreDuree} ${retourBack.duree.uniteDuree}`
-          : `${retourBack.duree.autreDuree}`
+        value: getUniteDuree(retourBack.duree)
       },
       {
         libelle: "Date fin de mesure",
-        value: retourBack.duree.dateFinDeMesure
-          ? getDateString(
-              getDateFromTimestamp(retourBack.duree.dateFinDeMesure)
-            )
-          : ""
+        value:
+          retourBack.duree && retourBack.duree.dateFinDeMesure
+            ? getDateString(
+                getDateFromTimestamp(retourBack.duree.dateFinDeMesure)
+              )
+            : ""
       }
     ],
     title: "Inscrition au répertoire civil"
   };
 }
 
+function getUniteDuree(duree?: IDureeInscription) {
+  if (duree) {
+    if (duree.uniteDuree) {
+      return `${duree.nombreDuree} ${duree.uniteDuree}`;
+    } else {
+      return `${duree.autreDuree}`;
+    }
+  }
+  return "";
+}
 function getInscriptionsImpactees(retourBack: IFicheRc): JSX.Element[] {
   let inscriptionsImpactee: JSX.Element[] = [];
-  if (retourBack.inscriptionsImpactees) {
+  if (
+    retourBack.inscriptionsImpactees &&
+    retourBack.inscriptionsImpactees.length > 0
+  ) {
     inscriptionsImpactee = retourBack.inscriptionsImpactees.map(
       (inscription, index) => {
         const key = `link-fiche-rc-${inscription.id || ""}`;
