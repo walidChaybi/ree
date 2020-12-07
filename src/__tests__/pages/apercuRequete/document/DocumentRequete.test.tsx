@@ -2,10 +2,10 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import requetes from "../../../../mock/data/requetes.json";
 import request from "superagent";
-import config from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { DocumentsRequete } from "../../../../views/pages/apercuRequete/contenu/document/DocumentsRequete";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
-const superagentMock = require("superagent-mock")(request, config);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 window.URL.createObjectURL = jest.fn();
 

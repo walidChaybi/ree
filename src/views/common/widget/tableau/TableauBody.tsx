@@ -68,7 +68,6 @@ function getRowRender(
       tableauBodyCellList.push(
         <TableCell
           style={column.style}
-          width={column?.width}
           align={column?.align ? column?.align : "center"}
           key={`row-${idx}-${column.keys[0]}`}
         >

@@ -2,16 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteDataApi } from "../../../../views/pages/apercuRequete/hook/DonneeRequeteHook";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
 import { IDataTable } from "../../../../views/pages/espaceDelivrance/MesRequetesPage";
 import connectedUser from "../../../../mock/data/connectedUser.json";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const off = { idSSO: connectedUser.id_sso, ...connectedUser };
 
-const superagentMock = require("superagent-mock")(request, config);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 let container: Element | null;
 let containerWithData: Element | null;

@@ -1,0 +1,32 @@
+import React from "react";
+import { render } from "@testing-library/react";
+import { InscriptionsLiees } from "../../../../../../views/pages/fiche/hook/constructionComposants/inscriptionRepertoireCivil/InscriptionsLiees";
+
+test("Inscription liees: all rc link are displayed and separated bay coma", () => {
+  const { getAllByText, getByText } = render(
+    <InscriptionsLiees
+      inscriptionsLiees={[
+        {
+          typeInscription: "rc",
+          numeroRc: "01",
+          idInscription: "011"
+        },
+        {
+          typeInscription: "rc",
+          numeroRc: "02",
+          idInscription: "022"
+        },
+        {
+          typeInscription: "rc",
+          numeroRc: "03",
+          idInscription: "033"
+        }
+      ]}
+    />
+  );
+  expect(getAllByText(new RegExp("RC", "i"))).toHaveLength(3);
+  expect(getAllByText(new RegExp(",", "i"))).toHaveLength(2);
+  expect(getByText(new RegExp("01", "i"))).toBeDefined();
+  expect(getByText(new RegExp("02", "i"))).toBeDefined();
+  expect(getByText(new RegExp("03", "i"))).toBeDefined();
+});

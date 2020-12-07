@@ -1,10 +1,10 @@
 import React from "react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
-import { render } from "@testing-library/react";
+import { render, act } from "@testing-library/react";
 import officier from "../../../mock/data/connectedUser.json";
-import { act } from "react-dom/test-utils";
 import { URL_MES_REQUETES } from "../../../views/router/ReceUrls";
+
 import {
   traiteAppelRequeteASigner,
   appelRequetesASigner,

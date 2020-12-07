@@ -11,8 +11,12 @@ import {
   URL_REQUETES_SERVICE,
   URL_MES_REQUETES_ID,
   URL_REQUETES_SERVICE_ID,
-  URL_DECONNEXION
+  URL_DECONNEXION,
+  URL_RC_RCA
 } from "./ReceUrls";
+import { RcRcaPage } from "../pages/RcRcaPage";
+import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
 
 export interface IRouteRece {
   component?: any;
@@ -20,6 +24,7 @@ export interface IRouteRece {
   props?: Object;
   render?: (props: RouteComponentProps<any>) => React.ReactNode;
   droits?: Droit[];
+  canAccess?: boolean;
 }
 
 export const routesRece: IRouteRece[] = [
@@ -54,5 +59,10 @@ export const routesRece: IRouteRece[] = [
     url: URL_DECONNEXION,
     component: LoginPage,
     props: { messageLogin: "pages.login.deconnexion" }
+  },
+  {
+    url: URL_RC_RCA,
+    component: RcRcaPage,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2)
   }
 ];

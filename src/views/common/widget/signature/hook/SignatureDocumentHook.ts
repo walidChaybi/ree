@@ -5,7 +5,7 @@ import { SignatureErrors } from "../messages/ErrorsSignature";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 import { ModeSignature } from "../../../../../model/requete/ModeSignature";
 import { SuccessSignatureType } from "../messages/SuccessSignature";
-import { FormatDate } from "../../../../../ressources/FormatDate";
+import { FormatDate } from "../../../util/DateUtils";
 import { SousTypeRequete } from "../../../../../model/requete/SousTypeRequete";
 import messageManager from "../../../util/messageManager";
 import { getText } from "../../Text";

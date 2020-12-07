@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { LinearProgress, Box, Typography } from "@material-ui/core";
 import { Button } from "reakit/Button";
 import { getText } from "../../../common/widget/Text";
@@ -6,7 +6,7 @@ import "./sass/PopinSignature.scss";
 import { DocumentsByRequete } from "./hook/SignatureDocumentHook";
 
 interface ProgressSignature {
-  onClose: (isOpen: boolean) => void;
+  onClose: (isOpen: boolean, changePage: boolean) => void;
   documentsByRequete: DocumentsByRequete;
   idsRequetesToSign: string[];
   errors: boolean;
@@ -30,16 +30,6 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
       : totalPercentageToComplete;
   }, [idsRequetesToSign, documentsByRequete]);
 
-  useEffect(() => {
-    if (
-      getSignatureProgress() === totalPercentageToComplete &&
-      errors === false
-    ) {
-      // Fermture automatique de la fenêtre si tout à été signé sans erreur
-      onClose(false);
-    }
-  }, [getSignatureProgress, errors, onClose]);
-
   return (
     <>
       <Box display="flex" alignItems="center">
@@ -57,7 +47,7 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
       </Box>
       <Button
         onClick={() => {
-          onClose(false);
+          onClose(false, errors === false);
         }}
         disabled={
           getSignatureProgress() !== totalPercentageToComplete &&

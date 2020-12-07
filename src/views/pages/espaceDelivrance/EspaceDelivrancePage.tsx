@@ -2,20 +2,67 @@ import React from "react";
 import { Title } from "../../core/title/Title";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Box from "@material-ui/core/Box";
 import { RequetesServicePage } from "./RequetesServicePage";
 import "./sass/EspaceDelivrancePage.scss";
-import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
 import { useHistory } from "react-router-dom";
 import { OfficierContext } from "../../core/contexts/OfficierContext";
 import { MesRequetesPage } from "./MesRequetesPage";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import { getText } from "../../common/widget/Text";
-import {
-  LinkTabMesRequetesWithHabilitation,
-  LinkTabMesRequetes,
-  a11yProps
-} from "./contenu/LinkTabMesRequetes";
-import { TabPanel } from "./contenu/TabPanel";
+import { Droit } from "../../../model/Droit";
+import { officierHabiliterPourLeDroit } from "../../../model/Habilitation";
+import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+  const paddingBox = 3;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`nav-tabpanel-${index}`}
+      aria-labelledby={`nav-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={paddingBox}>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index: any) {
+  return {
+    id: `nav-tab-${index}`,
+    "aria-controls": `nav-tabpanel-${index}`
+  };
+}
+
+interface LinkTabProps {
+  label?: string;
+  href?: string;
+  disabled?: boolean;
+}
+
+function LinkTab(props: LinkTabProps) {
+  return (
+    <Tab
+      component="a"
+      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.preventDefault();
+      }}
+      {...props}
+      className={props.disabled ? "tab-disabled" : ""}
+    />
+  );
+}
 
 interface LocalProps {
   selectedTab?: number;
@@ -57,13 +104,21 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       className="ongletDelivrance"
                       indicatorColor="primary"
                     >
-                      <LinkTabMesRequetes
+                      <LinkTab
                         label={getText("pages.delivrance.onglets.mesRequetes")}
+                        href={URL_MES_REQUETES}
                         {...a11yProps(0)}
                       />
-                      <LinkTabMesRequetesWithHabilitation
+                      <LinkTab
                         label={getText("pages.delivrance.onglets.monService")}
+                        href={URL_REQUETES_SERVICE}
                         {...a11yProps(1)}
+                        disabled={
+                          !officierHabiliterPourLeDroit(
+                            officier.officierDataState,
+                            Droit.ATTRIBUER
+                          )
+                        }
                       />
                     </Tabs>
                   </AppBar>
@@ -73,13 +128,18 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       <MesRequetesPage officier={officier.officierDataState} />
                     )}
                   </TabPanel>
-                  <TabPanel value={selectedTabState} index={1}>
-                    {selectedTabState === 1 && (
-                      <RequetesServicePage
-                        officier={officier.officierDataState}
-                      />
-                    )}
-                  </TabPanel>
+                  {officierHabiliterPourLeDroit(
+                    officier.officierDataState,
+                    Droit.ATTRIBUER
+                  ) && (
+                    <TabPanel value={selectedTabState} index={1}>
+                      {selectedTabState === 1 && (
+                        <RequetesServicePage
+                          officier={officier.officierDataState}
+                        />
+                      )}
+                    </TabPanel>
+                  )}
                 </>
               )}
             </>

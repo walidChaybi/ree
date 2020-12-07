@@ -1,8 +1,6 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-
+import { render, screen, act } from "@testing-library/react";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
-import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
 import { ResumeRequete } from "../../../../views/pages/apercuRequete/contenu/ResumeRequete";
 
@@ -16,12 +14,12 @@ test("renders titre résumé requete", () => {
 
 test("renders résumé requete hidding", () => {
   const resumeRequete = mount(<ResumeRequete requete={DONNEES_REQUETE} />);
-  expect(resumeRequete.find(".resume-requete-content")).toHaveLength(2);
+  expect(resumeRequete.find(".Mui-expanded")).toBeDefined();
 
   resumeRequete
-    .find(".MuiExpansionPanelSummary-expandIcon")
+    .find(".MuiAccordionSummary-expandIcon")
     .first()
     .simulate("click");
 
-  expect(resumeRequete.find(".resume-requete-content")).toHaveLength(0);
+  expect(resumeRequete.find(".Mui-expanded")).toHaveLength(0);
 });

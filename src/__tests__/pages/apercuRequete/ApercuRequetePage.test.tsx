@@ -1,9 +1,8 @@
 import React from "react";
 import DONNEES_REQUETE from "../../../mock/data/requete";
 import { Router, Route } from "react-router-dom";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen, act } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
 import { ApercuRequetePage } from "../../../views/pages/apercuRequete/ApercuRequetePage";
 import {

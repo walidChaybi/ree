@@ -1,0 +1,14 @@
+@import "../../../../../sass/colors";
+
+.wrapper {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.titlePart {
+  grid-row: 1;
+  color: $title-application-color;
+  font-weight: bold;
+  text-align: left;
+  font-size: 20px;
+}

@@ -38,13 +38,13 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
           Object.keys(documentsByRequeteToSign).length === requetes.length
         );
       }
-      setShowWaitState(showPopin);
     },
     [reloadData, documentsByRequeteToSign, requetes, showWaitState]
   );
 
   const handleClickSignature = () => {
     setShowWaitState(true);
+
     const newDocumentsByRequeteToSign: DocumentsByRequete = {};
     requetes.forEach(requete => {
       if (
@@ -73,6 +73,7 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;
       }
     });
+
     setDocumentsByRequeteToSign(newDocumentsByRequeteToSign);
   };
 
