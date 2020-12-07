@@ -16,7 +16,7 @@ export const configEtatcivil = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function(match, params, headers, context) {
+    fixtures: function (match, params, headers, context) {
       if (
         match[1] === "/repertoirecivil/rc/7566e16c-2b0e-11eb-adc1-0242ac120002"
       ) {
@@ -35,7 +35,7 @@ export const configEtatcivil = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function(match, data) {
+    get: function (match, data) {
       return {
         body: data,
         header: data.headers
@@ -48,7 +48,7 @@ export const configEtatcivil = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function(match, data) {
+    post: function (match, data) {
       return {
         status: 201
       };
