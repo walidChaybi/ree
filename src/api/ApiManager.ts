@@ -1,13 +1,22 @@
-import config from "../mock/superagent-config/superagent-mock-fake-url";
+import { configEtatcivil } from "./mock/superagent-config/superagent-mock-etatcivil";
 import * as superagent from "superagent";
 import request from "superagent";
 import messageManager from "../views/common/util/messageManager";
+import { configSecurite } from "../mock/superagent-config/superagent-mock-securite";
+import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
 
 if (process.env.REACT_APP_MOCK) {
-  require("superagent-mock")(request, config);
+  require("superagent-mock")(request, [
+    configRequetes[0],
+    configSecurite[0],
+    configEtatcivil[0]
+  ]);
 }
 
-type ApisAutorisees = "rece-requete-api" | "rece-securite-api";
+type ApisAutorisees =
+  | "rece-requete-api"
+  | "rece-securite-api"
+  | "rece-etatcivil-api";
 
 interface IApi {
   url: string;

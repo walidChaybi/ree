@@ -1,4 +1,5 @@
 {
+  "vue-rc-interesse": "Intéressé ${0}",
   "header": "Registre d'État Civil Électronique",
   "titre": "Titre de l'application",
   "subtitre": "Sous-titre de l'application",
@@ -27,7 +28,8 @@
     "mesrequetes": "Mes requêtes",
     "requetesservice": "Requêtes du service",
     "apercurequete": "Aperçu de requête",
-    "messagerie": "Messagerie"
+    "messagerie": "Messagerie",
+    "rcrca": "Fiche RC / RCA"
   },
   "pages": {
     "delivrance": {

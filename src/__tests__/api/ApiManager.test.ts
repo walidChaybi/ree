@@ -1,8 +1,9 @@
 import request from "superagent";
-import config from "../../mock/superagent-config/superagent-mock-fake-url";
 import { ApiManager, HttpMethod } from "../../api/ApiManager";
 import { isNullOrUndefined } from "util";
-const superagentMock = require("superagent-mock")(request, config);
+import { configFakeUrl } from "../../mock/superagent-config/superagent-mock-fake-url";
+
+const superagentMock = require("superagent-mock")(request, configFakeUrl);
 
 test("instanciation d'une api définie dans le fichier api.json", () => {
   const api = ApiManager.getInstance("rece-requete-api", "v1");

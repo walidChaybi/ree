@@ -10,7 +10,7 @@ import { SousQualiteRequerant } from "../../../../model/requete/SousQualiteReque
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import { Canal } from "../../../../model/Canal";
 import { MotifRequete } from "../../../../model/requete/MotifRequete";
-import { FormatDate } from "../../../../ressources/FormatDate";
+import { FormatDate } from "../../../common/util/DateUtils";
 import {
   IDocumentDelivre,
   IPieceJustificative

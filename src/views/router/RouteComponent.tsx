@@ -17,7 +17,7 @@ export const RouterComponent: React.FC = () => {
             exact={true}
             path={route.url}
             render={props => {
-              if (!estAutorise(route.droits)) {
+              if (route.canAccess === false || !estAutorise(route.droits)) {
                 messageManager.showWarningAndClose(
                   "La page demandée n'est pas autorisée, vous avez été redirigé sur la page d'accueil"
                 );

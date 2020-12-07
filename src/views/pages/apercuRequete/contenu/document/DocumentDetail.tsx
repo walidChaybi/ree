@@ -47,7 +47,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         document.identifiantDocument,
         groupement,
         document.mimeType
-      ).then((result) => {
+      ).then(result => {
         lectureDuDocument(
           URL.createObjectURL(
             convertToBlob(result.documentDelivre.contenu, result.mimeType)
@@ -73,7 +73,7 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
         openedInViewer &&
         openedInViewer.identifiantDocument === document.identifiantDocument
       }
-      onClick={(event) => {
+      onClick={event => {
         onClickHandler(event, document, groupement, stateSetter);
       }}
       title={getText("pages.requete.consultation.icon.visualiser")}

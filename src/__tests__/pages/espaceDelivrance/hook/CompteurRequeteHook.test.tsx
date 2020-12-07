@@ -1,15 +1,13 @@
 import React from "react";
-import { act } from "react-dom/test-utils";
 import request from "superagent";
-import config from "../../../../mock/superagent-config/superagent-mock-requetes";
 import connectedUser from "../../../../mock/data/connectedUser.json";
 import { useCompteurRequeteHook } from "../../../../views/pages/espaceDelivrance/hook/CompteurRequeteHook";
-import { render } from "@testing-library/react";
-import { waitFor } from "@testing-library/react";
+import { render, waitFor, act } from "@testing-library/react";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const off = { idSSO: connectedUser.id_sso, ...connectedUser };
 
-const superagentMock = require("superagent-mock")(request, config);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsummer: React.FC = () => {
   const { nombreRequetesState } = useCompteurRequeteHook(off);

@@ -1,8 +1,8 @@
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
-import { NavigationButton } from "../../../../views/pages/apercuRequete/actions/NavigationButton";
+import { render, fireEvent, screen, act } from "@testing-library/react";
+
 import { mount } from "enzyme";
-import { act } from "react-dom/test-utils";
+import { NavigationButton } from "../../../../views/pages/apercuRequete/actions/NavigationButton";
 
 test("renders fonction clic déclenchée au clic sur les boutons", () => {
   act(() => {
@@ -37,12 +37,9 @@ test("renders bouton suivant disabled si index <=0", () => {
       />
     );
 
-    expect(
-      component
-        .find(".left-button")
-        .find("button")
-        .props().disabled
-    ).toBe(true);
+    expect(component.find(".left-button").find("button").props().disabled).toBe(
+      true
+    );
   });
 });
 
@@ -60,10 +57,7 @@ test("renders bouton precedent disabled si index >= mexRequetes", () => {
     );
 
     expect(
-      component
-        .find(".right-button")
-        .find("button")
-        .props().disabled
+      component.find(".right-button").find("button").props().disabled
     ).toBe(true);
   });
 });

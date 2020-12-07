@@ -14,7 +14,7 @@
     "@fortawesome/free-regular-svg-icons": "5.12.1",
     "@fortawesome/free-solid-svg-icons": "5.12.1",
     "@fortawesome/react-fontawesome": "0.1.8",
-    "@material-ui/core": "4.10.2",
+    "@material-ui/core": "4.11.0",
     "@material-ui/icons": "4.5.1",
     "@material-ui/lab": "4.0.0-alpha.56",
     "@reach/combobox": "0.7.2",
@@ -105,8 +105,6 @@
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.2",
     "optimize-css-assets-webpack-plugin": "5.0.3",
-    "@pact-foundation/pact": "9.11.1",
-    "@pact-foundation/pact-node": "10.10.1",
     "pnp-webpack-plugin": "1.6.0",
     "react-test-renderer": "16.13.1",
     "superagent-mock": "3.7.0",
@@ -126,7 +124,8 @@
     "test:dev:update": "node scripts/test.js --watchAll -u",
     "test:dev:coverage": "node scripts/test.js --watchAll --coverage",
     "test": "CI=true node scripts/test.js --coverage",
-    "package": "node scripts/build.js"
+    "package": "node scripts/build.js",
+    "publish:pact": "node pact/publish/publish.js"
   },
   "jest": {
     "testResultsProcessor": "jest-sonar-reporter",
@@ -177,6 +176,9 @@
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
+    ],
+    "testPathIgnorePatterns": [
+      ".*\\.pact\\.spec\\.ts"
     ]
   },
   "jestSonar": {

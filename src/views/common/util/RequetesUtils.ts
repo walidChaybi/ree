@@ -1,7 +1,7 @@
 import moment from "moment";
 import classNames from "classnames";
 import { getText } from "../../common/widget/Text";
-import { FormatDate } from "../../../ressources/FormatDate";
+import { FormatDate } from "./DateUtils";
 
 export const indexParamsReq = {
   NomOec: 0,

@@ -10,7 +10,7 @@ const provider = new Pact({
   provider: "ReceRequeteApi",
   log: path.resolve(process.cwd(), "logs", "pact.log"),
   logLevel: "warn",
-  dir: path.resolve(process.cwd(), "pacts"),
+  dir: path.resolve(process.cwd(), "pact/publish/pacts"),
   spec: 2
 });
 

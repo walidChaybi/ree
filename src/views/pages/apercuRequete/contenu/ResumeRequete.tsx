@@ -1,15 +1,10 @@
 import React from "react";
-import {
-  useDisclosureState,
-  Disclosure,
-  DisclosureRegion
-} from "reakit/Disclosure";
 
 import "./sass/ResumeRequete.scss";
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails
+  Accordion,
+  AccordionSummary,
+  AccordionDetails
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Text } from "../../../common/widget/Text";
@@ -21,25 +16,23 @@ interface ResumeRequeteProps {
 }
 
 export const ResumeRequete: React.FC<ResumeRequeteProps> = ({ requete }) => {
-  const disclosure = useDisclosureState({ visible: true });
+  const [expanded, setExpanded] = React.useState<boolean>(true);
+
+  const handleChange = () => (event: any) => {
+    setExpanded(!expanded);
+  };
 
   return (
     <div className="resume-requete">
-      <Disclosure {...disclosure} as={ExpansionPanel}>
-        <ExpansionPanelSummary
-          className="title"
-          expandIcon={<ExpandMoreIcon />}
-        >
+      <Accordion expanded={expanded} onChange={handleChange()}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} className="title">
           <Text messageId={"pages.delivrance.apercu.resume.titre"} />
           <div className="identifiantRequete">{requete.idSagaDila}</div>
-        </ExpansionPanelSummary>
-      </Disclosure>
-
-      <DisclosureRegion {...disclosure} as={ExpansionPanelDetails}>
-        {props =>
-          disclosure.visible && <ResumeRequeteContent requete={requete} />
-        }
-      </DisclosureRegion>
+        </AccordionSummary>
+        <AccordionDetails>
+          <ResumeRequeteContent requete={requete} />
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

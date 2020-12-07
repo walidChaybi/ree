@@ -43,7 +43,6 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
       sortDirection={orderBy === column.keys[0] ? orderTableCell : false}
       // A ajouter dans TableauHeader cell si besoin d'une classe générique:
       //   className="HeaderColonneTableau"
-      width={column?.width}
       style={column?.style}
     >
       <TableSortLabel
