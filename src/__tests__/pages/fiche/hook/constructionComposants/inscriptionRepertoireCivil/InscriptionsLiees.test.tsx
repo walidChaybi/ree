@@ -8,17 +8,17 @@ test("Inscription liees: all rc link are displayed and separated bay coma", () =
       inscriptionsLiees={[
         {
           typeInscription: "rc",
-          numeroRc: "01",
+          numero: "01",
           idInscription: "011"
         },
         {
           typeInscription: "rc",
-          numeroRc: "02",
+          numero: "02",
           idInscription: "022"
         },
         {
           typeInscription: "rc",
-          numeroRc: "03",
+          numero: "03",
           idInscription: "033"
         }
       ]}

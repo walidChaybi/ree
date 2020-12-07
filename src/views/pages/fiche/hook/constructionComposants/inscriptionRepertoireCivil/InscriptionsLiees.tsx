@@ -12,14 +12,14 @@ export const InscriptionsLiees: React.FC<IInscriptionsLieesProps> = props => {
     <div className="inscriptionsLiees">
       {props.inscriptionsLiees.map((inscription, index) => (
         <span
-          key={`inscription-liees-lien-${inscription.numeroRc}`}
+          key={`inscription-liees-lien-${inscription.numero}`}
           className="inscriptionsLiees separationInscription"
         >
           {`${inscription.typeInscription} (${"RC n°"}`}
           <LienFiche
             identifiant={inscription.idInscription}
             categorie={"rc"}
-            numero={inscription.numeroRc}
+            numero={inscription.numero}
           />
 
           {`)${index !== props.inscriptionsLiees.length - 1 ? ", " : ""}`}

@@ -41,7 +41,7 @@ function getLibelleLieuMariage(mariage: IMariageInteresse): string {
 }
 
 function getLibelleDateMariage(date: IDateCompose) {
-  if (date.jour) {
+  if (date && date.jour) {
     return "Le";
   } else {
     return "En";
