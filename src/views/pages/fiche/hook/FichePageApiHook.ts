@@ -38,6 +38,7 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {
+          console.log(error);
           messageManager.showErrorAndClose(
             "Impossible récupérer les informations de la fiche"
           );
@@ -82,11 +83,13 @@ function setDataBandeau(data: any): IDataBandeauFicheProps {
 
 function setPrenomInteresse(prenoms: any[]) {
   let prenomInteresse = "";
-  prenoms.forEach(p => {
-    if (p.numeroOrdre === 1) {
-      prenomInteresse = p.prenom;
-    }
-  });
+  if (prenoms) {
+    prenoms.forEach(p => {
+      if (p.numeroOrdre === 1) {
+        prenomInteresse = p.prenom;
+      }
+    });
+  }
   return prenomInteresse;
 }
 
