@@ -69,7 +69,7 @@ export interface ISourceConfirmation {
 
 export interface IInscriptionLie {
   typeInscription: string;
-  numeroRc: string;
+  numero: string;
   idInscription: string;
 }
 

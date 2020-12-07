@@ -31,6 +31,7 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
         .then((result: any) => {
           const dataFiche = {} as IFicheApi;
           dataFiche.dataBandeau = setDataBandeau(result.body.data);
+
           if (categorie === "rc") {
             dataFiche.ficheRc = getPanelsRc(result.body.data);
           }
