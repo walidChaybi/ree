@@ -21,25 +21,9 @@ export function getInscriptionRepertoireCivil(
         libelle: "Mandataire(s)",
         value: retourBack.mandataires ? retourBack.mandataires.join(" / ") : ""
       },
-      //TODO modifier le link
       {
         libelle: "Type inscription",
-        value: (
-          <span style={{ display: "flex" }}>
-            {`${retourBack.typeInscription} ${
-              retourBack.inscriptionsImpactees &&
-              retourBack.inscriptionsImpactees.length > 0
-                ? "("
-                : ""
-            }`}
-
-            {getInscriptionsImpactees(retourBack)}
-            {retourBack.inscriptionsImpactees &&
-            retourBack.inscriptionsImpactees.length > 0
-              ? ")"
-              : ""}
-          </span>
-        )
+        value: getTypeInscription(retourBack)
       },
       {
         libelle: "Inscription(s) liée(s)",
@@ -73,6 +57,25 @@ export function getInscriptionRepertoireCivil(
   };
 }
 
+function getTypeInscription(retourBack: IFicheRc): JSX.Element {
+  return (
+    <span style={{ display: "flex" }}>
+      {`${retourBack.typeInscription} ${
+        retourBack.inscriptionsImpactees &&
+        retourBack.inscriptionsImpactees.length > 0
+          ? "("
+          : ""
+      }`}
+
+      {getInscriptionsImpactees(retourBack)}
+      {retourBack.inscriptionsImpactees &&
+      retourBack.inscriptionsImpactees.length > 0
+        ? ")"
+        : ""}
+    </span>
+  );
+}
+
 function getUniteDuree(duree?: IDureeInscription) {
   if (duree) {
     if (duree.uniteDuree) {
@@ -83,6 +86,7 @@ function getUniteDuree(duree?: IDureeInscription) {
   }
   return "";
 }
+
 function getInscriptionsImpactees(retourBack: IFicheRc): JSX.Element[] {
   let inscriptionsImpactee: JSX.Element[] = [];
   if (

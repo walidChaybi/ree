@@ -31,7 +31,10 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
         .then((result: any) => {
           const dataFiche = {} as IFicheApi;
           dataFiche.dataBandeau = setDataBandeau(result.body.data);
-          dataFiche.ficheRc = getPanelsRc(result.body.data);
+
+          if (categorie === "rc") {
+            dataFiche.ficheRc = getPanelsRc(result.body.data);
+          }
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {
@@ -80,7 +83,7 @@ function setDataBandeau(data: any): IDataBandeauFicheProps {
 function setPrenomInteresse(prenoms: any[]) {
   let prenomInteresse = "";
   prenoms.forEach(p => {
-    if (p.numeroOrdre === 0) {
+    if (p.numeroOrdre === 1) {
       prenomInteresse = p.prenom;
     }
   });
