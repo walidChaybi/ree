@@ -6,7 +6,7 @@
   "homepage": "rece/rece-ui/",
   "config": {
     "pact_do_not_track": true,
-    "pact_binary_location": "./pacts/bin"
+    "pact_binary_location": "./pact/bin"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.12.1",
