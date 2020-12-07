@@ -2,17 +2,18 @@ import React from "react";
 import { BoutonFiche } from "./fiche/BoutonFiche";
 
 export const RcRcaPage: React.FC = () => {
+  const identifiantRca = "8c9ea77f-55dc-494f-8e75-b136ac7ce63c";
+  const categorieRca = "rca";
+  const anneeRca = "2019";
+  const nomRca = "Fleck";
+  const nomRca2 = "Quinzel";
+  const numeroRca = "4092";
+
   const identifiant = "76b62678-8b06-4442-ad5b-b9207627a6e3";
   const categorie = "rc";
   const annee = "2020";
   const nom = "Favaro";
   const numero = "213456789";
-
-  const identifiant2 = "8244d136-729b-4fd3-b88a-fa1fe30a2214";
-  const categorie2 = "rca";
-  const annee2 = "1999";
-  const nom2 = "Michel";
-  const numero2 = "15987";
 
   const identifiant3 = "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918";
   const categorie3 = "rc";
@@ -29,20 +30,20 @@ export const RcRcaPage: React.FC = () => {
   return (
     <div>
       <BoutonFiche
+        identifiant={identifiantRca}
+        categorie={categorieRca}
+        nom1={nomRca}
+        nom2={nomRca2}
+        annee={anneeRca}
+        numero={numeroRca}
+      />
+
+      <BoutonFiche
         identifiant={identifiant}
         categorie={categorie}
         nom1={nom}
         annee={annee}
         numero={numero}
-      />
-
-      <BoutonFiche
-        identifiant={identifiant2}
-        categorie={categorie2}
-        nom1={nom}
-        nom2={nom2}
-        annee={annee2}
-        numero={numero2}
       />
 
       <BoutonFiche
