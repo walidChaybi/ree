@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import * as superagent from "superagent";
 import { Pact } from "@pact-foundation/pact";
 

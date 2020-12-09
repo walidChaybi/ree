@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import React from "react";
 import "../../sass/_library.scss";
 import "../../sass/_colors.scss";

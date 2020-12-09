@@ -10,6 +10,7 @@ import {
   getDateFromTimestamp
 } from "../../../../../common/util/DateUtils";
 import { InscriptionsLiees } from "./InscriptionsLiees";
+import { getFicheTitle } from "../../../FicheUtils";
 
 export function getInscriptionRepertoireCivil(
   retourBack: IFicheRc
@@ -103,6 +104,13 @@ function getInscriptionsImpactees(retourBack: IFicheRc): JSX.Element[] {
               identifiant={inscription.id}
               categorie={"rc"}
               numero={inscription.numero}
+              title={getFicheTitle(
+                "categorie",
+                "props.annee",
+                "props.numero",
+                "props.nom1",
+                "props.nom2"
+              )}
             />
 
             {retourBack.inscriptionsImpactees.length - 1 === index ? "" : ", "}

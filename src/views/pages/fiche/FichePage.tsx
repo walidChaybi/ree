@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { useFichePageApiHook } from "./hook/FichePageApiHook";
 import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
+import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
 
 export interface FichePageProps {
   dataFiche: IDataFicheProps;
+  fenetreExterneUtil?: FenetreExterneUtil;
 }
 
 export interface IDataFicheProps {
@@ -24,7 +26,16 @@ export const FichePage: React.FC<FichePageProps> = props => {
       const event = new CustomEvent("refreshStyles");
       window.top.dispatchEvent(event);
     }
-  }, [dataFicheState]);
+
+    if (
+      props.fenetreExterneUtil &&
+      dataFicheState != null &&
+      dataFicheState.ficheRc
+    ) {
+      props.fenetreExterneUtil.ref.document.title =
+        dataFicheState.ficheRc.title;
+    }
+  }, [dataFicheState, props.fenetreExterneUtil]);
 
   return (
     <div>
@@ -33,9 +44,7 @@ export const FichePage: React.FC<FichePageProps> = props => {
         <BandeauFiche dataBandeau={dataFicheState.dataBandeau}></BandeauFiche>
       )}
       {/* Les Accordéons */}
-      {dataFicheState.ficheRc && (
-        <AccordionRece panels={dataFicheState.ficheRc.panels} />
-      )}
+      {dataFicheState.ficheRc && <AccordionRece {...dataFicheState.ficheRc} />}
     </div>
   );
 };

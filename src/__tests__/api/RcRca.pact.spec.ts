@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import path from "path";
 import { Pact, InteractionObject, Interaction } from "@pact-foundation/pact";
 import { ApiPact } from "./ApiPact";

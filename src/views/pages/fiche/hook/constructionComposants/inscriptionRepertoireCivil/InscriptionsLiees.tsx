@@ -2,6 +2,7 @@ import React from "react";
 import { IInscriptionLie } from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
 import { LienFiche } from "../../../LienFiche";
 import "./sass/InscriptionsLiees.scss";
+import { getFicheTitle } from "../../../FicheUtils";
 
 interface IInscriptionsLieesProps {
   inscriptionsLiees: IInscriptionLie[];

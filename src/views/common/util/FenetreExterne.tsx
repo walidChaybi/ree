@@ -3,12 +3,17 @@ import ReactDOM from "react-dom";
 import messageManager from "./messageManager";
 
 interface FenetreExterneProps {
+  setFenetreExterneUtil?: (fentreExterne?: FenetreExterneUtil) => void;
   onCloseHandler?: () => void;
   width?: number;
   height?: number;
   top?: number;
   left?: number;
-  titre: string;
+  titre?: string;
+}
+
+export interface FenetreExterneUtil {
+  ref: Window;
 }
 
 export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
@@ -97,6 +102,11 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
 
     const windowFetures = `width=${width},height=${height},left=${left},top=${top}`;
     this.fenetreExterne = window.open("", "", windowFetures);
+
+    if (this.fenetreExterne && this.props.setFenetreExterneUtil) {
+      this.props.setFenetreExterneUtil({ ref: this.fenetreExterne });
+    }
+
     if (this.fenetreExterne) {
       // Recopie des styles du parent dans l'enfant
       copyStyles(document, this.fenetreExterne.document);
@@ -105,7 +115,7 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
         this.handleBackBeforUnload
       );
       this.fenetreExterne.document.body.appendChild(this.htmlDivElement);
-      this.fenetreExterne.document.title = titre;
+      this.fenetreExterne.document.title = titre || "";
     }
   }
 }
