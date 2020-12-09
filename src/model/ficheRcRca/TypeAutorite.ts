@@ -13,18 +13,18 @@ export enum TypeAutorite {
 
 export class AutoriteUtil {
   private static readonly libelles = {
-    [TypeAutorite.NOTAIRE]: "Notaire",
-    [TypeAutorite.TRIBUNAL_JUDICIAIRE]: "Tribunal judiciaire",
-    [TypeAutorite.TRIBUNAL_INSTANCE]: "Tribunal d'instance",
+    [TypeAutorite.COUR_D_APPEL]: "Cours d'appel",
     [TypeAutorite.TRIBUNAL_DE_GRANDE_INSTANCE]: "Tribunal de grande instance",
-    [TypeAutorite.TRIBUNAL_DE_PROXIMITE]: "Tribunal de proximité",
-    [TypeAutorite.TRIBUNAL_JUDICIAIRE_DE_REFERENCE]:
-      "Tribunal judiciaire de référence",
+    [TypeAutorite.TRIBUNAL_INSTANCE]: "Tribunal d'instance",
     [TypeAutorite.TRIBUNAL_DE_PREMIERE_INSTANCE]:
       "Tribunal de première instance",
     [TypeAutorite.TRIBUNAL_SUPERIEUR_D_APPEL]: "Tribunal supérieur d'appel",
-    [TypeAutorite.COUR_D_APPEL]: "Cours d'appel",
-    [TypeAutorite.JURIDICTION_ETRANGERE]: "Juridiction étrangère"
+    [TypeAutorite.TRIBUNAL_JUDICIAIRE]: "Tribunal judiciaire",
+    [TypeAutorite.TRIBUNAL_DE_PROXIMITE]: "Tribunal de proximité",
+    [TypeAutorite.JURIDICTION_ETRANGERE]: "Juridiction étrangère",
+    [TypeAutorite.TRIBUNAL_JUDICIAIRE_DE_REFERENCE]:
+      "Tribunal judiciaire de référence",
+    [TypeAutorite.NOTAIRE]: "Notaire"
   };
 
   public static getLibelle(autorite?: TypeAutorite): string {

@@ -6,8 +6,11 @@ import { LienFiche } from "./fiche/LienFiche";
 export const RcRcaPage: React.FC = () => {
   const identifiantRca = "8c9ea77f-55dc-494f-8e75-b136ac7ce63c";
   const categorieRca = "rca";
-
   const numeroRca = "4092";
+
+  const identifiantRca2 = "8c9ea77f-55dc-494f-8e75-b136ac7ce63d";
+  const categorieRca2 = "rca";
+  const numeroRca2 = "4093";
 
   const identifiant = "76b62678-8b06-4442-ad5b-b9207627a6e3";
   const categorie = "rc";
@@ -35,6 +38,12 @@ export const RcRcaPage: React.FC = () => {
         identifiant={identifiantRca}
         categorie={categorieRca}
         numero={numeroRca}
+      />
+
+      <LienFiche
+        identifiant={identifiantRca2}
+        categorie={categorieRca2}
+        numero={numeroRca2}
       />
 
       <LienFiche

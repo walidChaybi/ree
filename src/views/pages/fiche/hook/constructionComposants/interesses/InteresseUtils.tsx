@@ -25,11 +25,7 @@ export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
           },
           {
             libelle: "Autre(s) nom(s)",
-            value: (
-              <span className="uppercase">
-                {interesse.autreNoms ? interesse.autreNoms.join(", ") : ""}
-              </span>
-            )
+            value: interesse.autreNoms ? interesse.autreNoms.join(", ") : ""
           },
           {
             libelle: "Prénom(s)",
@@ -72,17 +68,19 @@ export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
     }
   );
 
-  interessePart.push({
-    contents: [
-      {
-        libelle: "",
-        value: <Mariage {...retourBack.mariageInteresses} />,
-        className: "interesseMariage"
-      }
-    ],
-    title: "",
-    columnIndex: 0
-  });
+  if (retourBack.mariageInteresses) {
+    interessePart.push({
+      contents: [
+        {
+          libelle: "",
+          value: <Mariage {...retourBack.mariageInteresses} />,
+          className: "mariageContainer"
+        }
+      ],
+      title: "",
+      columnIndex: 0
+    });
+  }
 
   return interessePart;
 }

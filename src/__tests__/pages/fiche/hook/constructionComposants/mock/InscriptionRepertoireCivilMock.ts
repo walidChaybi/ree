@@ -1,10 +1,10 @@
 export const ficheInscriptionRepertoireCivil = {
-  nature: "Curatelle aménagée",
+  nature: "CURATELLE_AMENAGEE",
   mandataires: [
-    "Mandataire judiciaire à la protection des majeurs association",
-    "Préposé d'établissement"
+    "MANDATAIRE_JUDICIAIRE_ASSOCIATION",
+    "MANDATAIRE_JUDICIAIRE_INDIVIDUEL"
   ],
-  typeInscription: "Renouvellement",
+  typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [
     { id: "0", numero: "2015 - 36547" },
     { id: "1", numero: "2020- 36547" }
@@ -36,7 +36,7 @@ export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImp
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"
   ],
-  typeInscription: "Renouvellement",
+  typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [],
   inscriptionsLiees: [],
   dateInscription: 1518652800,
@@ -53,7 +53,7 @@ export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"
   ],
-  typeInscription: "Renouvellement",
+  typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [],
   inscriptionsLiees: [],
   dateInscription: 1518652800,

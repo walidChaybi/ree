@@ -57,10 +57,12 @@ function getLieuMariage(mariage: IMariageInteresse) {
   } else if (!LieuxUtils.isPaysFrance(mariage.paysMariage)) {
     return `devant les autorités consulaires de ${mariage.villeMariage} en France`;
   } else if (!mariage.arrondissementMariage) {
-    return `${mariage.villeMariage} (${mariage.regionMariage})`;
+    return `${mariage.villeMariage} (${mariage.regionMariage || ""})`;
   } else {
     return `${mariage.villeMariage} (Arr.${mariage.arrondissementMariage} ${
-      LieuxUtils.isVilleParis(mariage.villeMariage) ? "" : mariage.regionMariage
+      LieuxUtils.isVilleParis(mariage.villeMariage)
+        ? ""
+        : mariage.regionMariage || ""
     })`;
   }
 }
