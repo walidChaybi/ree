@@ -10,7 +10,7 @@ interface IDataLienFicheProps {
   identifiant: string;
   categorie: string;
   numero: string;
-  title: string;
+  title?: string;
 }
 
 /** Le BoutonFiche simule une ligne du futur tableau des resultats d'une RMC */

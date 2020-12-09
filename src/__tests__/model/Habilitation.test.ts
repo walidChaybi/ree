@@ -4,7 +4,7 @@ import mockConnectedUser from "../../mock/data/connectedUser.json";
 import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
 import { Droit } from "../../model/Droit";
 
-test("renders Page requete with all elements", () => {
+test("Habilitation model", () => {
   const u: any = mockConnectedUser;
   storeRece.utilisateurCourant = u as IOfficierSSOApi;
 

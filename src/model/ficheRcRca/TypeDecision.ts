@@ -8,7 +8,7 @@ export enum TypeDecision {
 export class DecisionUtil {
   private static readonly libelles = {
     [TypeDecision.JUGEMENT]: "Jugement",
-    [TypeDecision.ARRET]: "Arret",
+    [TypeDecision.ARRET]: "Arrêt",
     [TypeDecision.CONVENTION]: "Convention",
     [TypeDecision.ACTE_NOTARIE]: "Acte notarial"
   };
