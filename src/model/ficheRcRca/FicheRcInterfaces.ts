@@ -2,6 +2,9 @@ import { IDateCompose } from "../../views/common/util/DateUtils";
 import { Statut } from "../Statut";
 import { TypeAutorite } from "./TypeAutorite";
 import { TypeDecision } from "./TypeDecision";
+import { TypeNatureFiche } from "./Nature";
+import { TypeMandataire } from "./Mandataires";
+import { TypeInscriptionRc } from "./InscriptionRc";
 
 export interface IFicheRc {
   id: string;
@@ -16,9 +19,9 @@ export interface IFicheRc {
   mariageInteresses: IMariageInteresse;
   interesses: IInteresse[];
   statutsFiche: IStatutFiche[];
-  nature: string;
-  typeInscription: string;
-  mandataires: string[];
+  nature: TypeNatureFiche;
+  typeInscription: TypeInscriptionRc;
+  mandataires: TypeMandataire[];
   duree: IDureeInscription;
   inscriptionsImpactees: IInscriptionsImpactees[];
   inscriptionsLiees: IInscriptionLie[];
@@ -27,6 +30,7 @@ export interface IFicheRc {
 export interface IInscriptionsImpactees {
   id: string;
   numero: string;
+  annee: string;
 }
 
 export interface IMariageInteresse {
@@ -68,9 +72,10 @@ export interface ISourceConfirmation {
 }
 
 export interface IInscriptionLie {
-  typeInscription: string;
+  typeInscription: TypeInscriptionRc;
   numero: string;
-  idInscription: string;
+  annee: string;
+  id: string;
 }
 
 export interface IStatutFiche {

@@ -68,11 +68,7 @@ export function processDataStorting<Key extends keyof any>(
   sortOrder: SortOrder,
   sortOrderBy: Key
 ): any[] {
-  const dataTriee = stableSort(
-    array,
-    getComparator<Key>(sortOrder, sortOrderBy)
-  );
-  return dataTriee;
+  return stableSort(array, getComparator<Key>(sortOrder, sortOrderBy));
 }
 
 export function getPaginatedData<T>(

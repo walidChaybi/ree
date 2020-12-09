@@ -10,17 +10,26 @@ import {
   getDateFromTimestamp
 } from "../../../../../common/util/DateUtils";
 import { InscriptionsLiees } from "./InscriptionsLiees";
-import { getFicheTitle } from "../../../FicheUtils";
+import { NatureFicheUtil } from "../../../../../../model/ficheRcRca/Nature";
+import { MandataireUtil } from "../../../../../../model/ficheRcRca/Mandataires";
+import { InscriptionRcUtil } from "../../../../../../model/ficheRcRca/InscriptionRc";
 
 export function getInscriptionRepertoireCivil(
   retourBack: IFicheRc
 ): AccordionPartProps {
   return {
     contents: [
-      { libelle: "Nature", value: retourBack.nature || "" },
+      {
+        libelle: "Nature",
+        value: NatureFicheUtil.getLibelle(retourBack.nature)
+      },
       {
         libelle: "Mandataire(s)",
-        value: retourBack.mandataires ? retourBack.mandataires.join(" / ") : ""
+        value: retourBack.mandataires
+          ? retourBack.mandataires
+              .map(mandataire => MandataireUtil.getLibelle(mandataire))
+              .join(" / ")
+          : ""
       },
       {
         libelle: "Type inscription",
@@ -61,7 +70,7 @@ export function getInscriptionRepertoireCivil(
 function getTypeInscription(retourBack: IFicheRc): JSX.Element {
   return (
     <span style={{ display: "flex" }}>
-      {`${retourBack.typeInscription} ${
+      {`${InscriptionRcUtil.getLibelle(retourBack.typeInscription)} ${
         retourBack.inscriptionsImpactees &&
         retourBack.inscriptionsImpactees.length > 0
           ? "("
@@ -103,14 +112,7 @@ function getInscriptionsImpactees(retourBack: IFicheRc): JSX.Element[] {
             <LienFiche
               identifiant={inscription.id}
               categorie={"rc"}
-              numero={inscription.numero}
-              title={getFicheTitle(
-                "categorie",
-                "props.annee",
-                "props.numero",
-                "props.nom1",
-                "props.nom2"
-              )}
+              numero={`${inscription.annee} - ${inscription.numero}`}
             />
 
             {retourBack.inscriptionsImpactees.length - 1 === index ? "" : ", "}

@@ -5,7 +5,6 @@ import { Text } from "../Text";
 import { SortOrder } from "./TableUtils";
 import classNames from "classnames";
 import "../../../../sass/_library.scss";
-import "./sass/TableauHeader.scss";
 import { TableauTypeColumn } from "./TableauRece";
 
 interface TableauHeaderCellProps {

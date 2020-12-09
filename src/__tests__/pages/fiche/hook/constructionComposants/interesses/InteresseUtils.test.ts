@@ -32,11 +32,10 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", asy
     content => content.libelle === "Autre(s) nom(s)"
   );
   expect(idxAutresNom).toBeGreaterThan(-1);
-  const valueAutresNom: JSX.Element = components[0].contents[idxAutresNom]
-    .value as JSX.Element;
+  const valueAutresNom: JSX.Element =
+    components[0].contents[idxAutresNom].value;
 
-  expect(valueAutresNom.props.children).toBe("favarotti, favarotti2");
-  expect(valueAutresNom.props.className).toBe("uppercase");
+  expect(valueAutresNom).toBe("favarotti, favarotti2");
   expect(idxNom).toBeLessThan(idxAutresNom);
 
   const idxPrenoms = components[0].contents.findIndex(

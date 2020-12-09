@@ -2,6 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import messageManager from "./messageManager";
 
+const ratioWidth = 0.5;
+const ratioHeigth = 0.94;
+const minRandom = 50;
+const maxRandom = 100;
 interface FenetreExterneProps {
   setFenetreExterneUtil?: (fentreExterne?: FenetreExterneUtil) => void;
   onCloseHandler?: () => void;
@@ -79,7 +83,7 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
       ? document.documentElement.clientWidth
       : window.screen.width;
 
-    return width * 0.5;
+    return width * ratioWidth;
   };
 
   getHeight = () => {
@@ -88,15 +92,15 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
       : document.documentElement.clientHeight
       ? document.documentElement.clientHeight
       : window.screen.height;
-    return height * 0.94;
+    return height * ratioHeigth;
   };
 
   private openWindow() {
     const {
       width = this.getWidth(),
       height = this.getHeight(),
-      left = nombreAleatoire(50, 100),
-      top = nombreAleatoire(50, 100),
+      left = nombreAleatoire(minRandom, maxRandom),
+      top = nombreAleatoire(minRandom, maxRandom),
       titre
     } = this.props;
 
@@ -130,6 +134,7 @@ function copyStyles(sourceDoc: Document, targetDoc: Document) {
   removeStyles(targetDoc);
   Array.from(sourceDoc.styleSheets).forEach(styleSheet => {
     try {
+      // @suppresswarnin
       const cSSStyleSheet = styleSheet as CSSStyleSheet;
       if (cSSStyleSheet.cssRules) {
         const newStyleEl = sourceDoc.createElement("style");
@@ -157,9 +162,9 @@ function copyStyles(sourceDoc: Document, targetDoc: Document) {
 
 function removeStyles(targetDoc: Document) {
   const st = targetDoc.getElementsByTagName("style");
-  for (let i = 0; i < st.length; i++) {
-    if (st != null && st[i] != null && st[i].parentNode != null) {
-      st![i]!.parentNode!.removeChild(st[i]);
+  for (const index in st) {
+    if (st[index] != null && st[index].parentNode != null) {
+      st[index].parentNode!.removeChild(st[index]);
     }
   }
 }

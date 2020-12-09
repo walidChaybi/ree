@@ -1,4 +1,10 @@
-.mariage {
-  padding-left: 10px;
-  padding-right: 10px;
+.mariageContainer {
+  .mariage {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+div.wrapper {
+  grid-column: 1/3;
 }

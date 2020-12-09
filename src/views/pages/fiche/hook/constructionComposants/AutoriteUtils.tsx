@@ -122,10 +122,7 @@ function getPrenomNom(autorite: IAutorite): AccordionContentProps {
   return {
     libelle: "Prénom NOM",
     value: (
-      <span>
-        {`Maitre ${autorite.prenomNotaire} `}
-        <span className="uppercase">{autorite.nomNotaire}</span>
-      </span>
+      <span>{`Maitre ${autorite.prenomNotaire} ${autorite.nomNotaire}`}</span>
     )
   };
 }

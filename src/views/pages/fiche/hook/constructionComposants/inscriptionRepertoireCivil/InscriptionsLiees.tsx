@@ -2,7 +2,7 @@ import React from "react";
 import { IInscriptionLie } from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
 import { LienFiche } from "../../../LienFiche";
 import "./sass/InscriptionsLiees.scss";
-import { getFicheTitle } from "../../../FicheUtils";
+import { InscriptionRcUtil } from "../../../../../../model/ficheRcRca/InscriptionRc";
 
 interface IInscriptionsLieesProps {
   inscriptionsLiees: IInscriptionLie[];
@@ -16,11 +16,13 @@ export const InscriptionsLiees: React.FC<IInscriptionsLieesProps> = props => {
           key={`inscription-liees-lien-${inscription.numero}`}
           className="inscriptionsLiees separationInscription"
         >
-          {`${inscription.typeInscription} (${"RC n°"}`}
+          {`${InscriptionRcUtil.getLibelle(
+            inscription.typeInscription
+          )} (${"RC n°"}`}
           <LienFiche
-            identifiant={inscription.idInscription}
+            identifiant={inscription.id}
             categorie={"rc"}
-            numero={inscription.numero}
+            numero={`${inscription.annee} - ${inscription.numero}`}
           />
 
           {`)${index !== props.inscriptionsLiees.length - 1 ? ", " : ""}`}
