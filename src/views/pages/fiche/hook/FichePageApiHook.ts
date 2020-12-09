@@ -38,6 +38,7 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {
+          console.log(error);
           messageManager.showErrorAndClose(
             "Impossible récupérer les informations de la fiche"
           );
