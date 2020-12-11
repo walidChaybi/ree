@@ -1,12 +1,12 @@
 import mockConnectedUser from "../data/connectedUser.json";
 import DONNEES_UTILISATEURS from "../data/utilisateurs";
 
-export const configSecurite = [
+export const configAgent = [
   {
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost:80/rece/rece-securite-api/v1(.*)",
+    pattern: "http://localhost:80/rece/rece-agent-api/v1(.*)",
 
     /**
      * returns the data

@@ -4,7 +4,7 @@ import { HttpMethod, ApiManager } from "../ApiManager";
 const URL_UTILISATEURS_LOGIN = "/utilisateurs/login";
 const URL_UTILISATEURS = "/utilisateurs";
 
-const api = ApiManager.getInstance("rece-securite-api", "v1");
+const api = ApiManager.getInstance("rece-agent-api", "v1");
 
 export interface IQueryParametersUtilisateursService {
   idArobas?: string;

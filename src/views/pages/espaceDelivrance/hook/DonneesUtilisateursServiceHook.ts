@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { IQueryParametersUtilisateursService } from "../../../../api/appels/securiteApi";
-import { getUtilisateurs } from "../../../../api/appels/securiteApi";
+import { IQueryParametersUtilisateursService } from "../../../../api/appels/agentApi";
+import { getUtilisateurs } from "../../../../api/appels/agentApi";
 
 export interface IUtilisateurApi {
   idUtilisateur: string;
@@ -18,10 +18,10 @@ export function useUtilisateurApi(
     setErrorState(undefined);
     if (queryParameters.idArobas !== undefined) {
       getUtilisateurs(queryParameters.idArobas)
-        .then((result) => {
+        .then(result => {
           setDataState(result.body.data);
         })
-        .catch((error) => {
+        .catch(error => {
           setErrorState(error);
         });
     }

@@ -2,7 +2,7 @@
   "hasTechnicalError": false,
   "hasBusinessError": false,
   "status": 200,
-  "url": "/rece/rece-securite-api/v1/utilisateurs",
+  "url": "/rece/rece-agent-api/v1/utilisateurs",
   "data": [
     {
       "idUtilisateur": "5ef4b1da1e3ee4adf9615ec7",
