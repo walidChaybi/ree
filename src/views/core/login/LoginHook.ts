@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getLogin } from "../../../api/appels/securiteApi";
+import { getLogin } from "../../../api/appels/agentApi";
 import { IHabilitation, IDroit, IProfil } from "../../../model/Habilitation";
 import messageManager from "../../common/util/messageManager";
 import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";

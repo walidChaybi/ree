@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import { useUtilisateurApi } from "../../../../views/pages/espaceDelivrance/hook/DonneesUtilisateursServiceHook";
-import { configSecurite } from "../../../../mock/superagent-config/superagent-mock-securite";
+import { configAgent } from "../../../../mock/superagent-config/superagent-mock-agent";
 
-const superagentMock = require("superagent-mock")(request, configSecurite);
+const superagentMock = require("superagent-mock")(request, configAgent);
 
 let container: Element | null;
 
