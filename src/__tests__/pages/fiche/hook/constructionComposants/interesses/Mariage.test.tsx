@@ -58,7 +58,7 @@ test("renders mariage : l'arondissement n'est pas donné mais le mariage a lieu 
       aletranger={false}
     />
   );
-  expect(getByText("villeMariage (regionMariage)")).toBeDefined();
+  expect(getByText("VilleMariage (RegionMariage)")).toBeDefined();
 });
 
 test("renders mariage : l'arondissement est donné et le mariage a lieu en france", () => {
@@ -72,7 +72,7 @@ test("renders mariage : l'arondissement est donné et le mariage a lieu en franc
       aletranger={false}
     />
   );
-  expect(getByText("villeMariage (Arr.08 regionMariage)")).toBeDefined();
+  expect(getByText("VilleMariage (Arr.08 RegionMariage)")).toBeDefined();
 });
 
 test("renders mariage : le mariage a lieu à l'étranger", () => {
@@ -86,7 +86,7 @@ test("renders mariage : le mariage a lieu à l'étranger", () => {
       aletranger={true}
     />
   );
-  expect(getByText("Berlin - regionBerlin (Allemagne)")).toBeDefined();
+  expect(getByText("Berlin - RegionBerlin (Allemagne)")).toBeDefined();
 });
 
 test("renders mariage : le mariage a lieu à l'étranger mais on ne connais pas pas la région", () => {

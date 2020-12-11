@@ -49,20 +49,34 @@ function getLibelleDateMariage(date: IDateCompose) {
 }
 
 function getLieuMariage(mariage: IMariageInteresse) {
+  const villeString = mariage.villeMariage
+    ? `${mariage.villeMariage
+        .charAt(0)
+        .toUpperCase()}${mariage.villeMariage.slice(1)}`
+    : "";
+  const regionString = mariage.regionMariage
+    ? `${mariage.regionMariage
+        .charAt(0)
+        .toUpperCase()}${mariage.regionMariage.slice(1)}`
+    : "";
+  const paysString = mariage.paysMariage
+    ? `${mariage.paysMariage
+        .charAt(0)
+        .toUpperCase()}${mariage.paysMariage.slice(1)}`
+    : "";
+
   if (mariage.aletranger === true) {
-    const regionMariage = `- ${mariage.regionMariage}`;
-    return `${mariage.villeMariage} ${
-      mariage.regionMariage ? regionMariage : ""
-    } (${mariage.paysMariage})`;
-  } else if (!LieuxUtils.isPaysFrance(mariage.paysMariage)) {
-    return `devant les autorités consulaires de ${mariage.villeMariage} en France`;
+    const regionMariage = `- ${regionString}`;
+    return `${villeString} ${
+      regionString ? regionMariage : ""
+    } (${paysString})`;
+  } else if (!LieuxUtils.isPaysFrance(paysString)) {
+    return `devant les autorités consulaires de ${villeString} en France`;
   } else if (!mariage.arrondissementMariage) {
-    return `${mariage.villeMariage} (${mariage.regionMariage || ""})`;
+    return `${villeString} (${regionString})`;
   } else {
-    return `${mariage.villeMariage} (Arr.${mariage.arrondissementMariage} ${
-      LieuxUtils.isVilleParis(mariage.villeMariage)
-        ? ""
-        : mariage.regionMariage || ""
+    return `${villeString} (Arr.${mariage.arrondissementMariage} ${
+      LieuxUtils.isVilleParis(villeString) ? "" : regionString
     })`;
   }
 }

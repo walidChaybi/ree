@@ -19,6 +19,15 @@
       flex-grow: 1;
       text-align: end;
     }
+    font-size: 22px;
+  }
+
+  .statusFiche {
+    font-size: 20px;
+  }
+
+  .LignePrenomNom {
+    font-size: 20px;
   }
 
   .LignePrenomNom,
@@ -32,6 +41,10 @@
     & div:last-child {
       text-align: end;
     }
+  }
+
+  .alertes {
+    font-size: 18px;
   }
 
   .InfoImportante {

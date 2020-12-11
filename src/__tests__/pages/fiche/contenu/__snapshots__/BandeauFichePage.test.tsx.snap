@@ -10,7 +10,9 @@ exports[`renders du bandeau d'une fiche RC 1`] = `
     <div>
       RC N° 2018 - 56533
     </div>
-    <div>
+    <div
+      className="statusFiche"
+    >
       Statut de la fiche : Actif
     </div>
   </div>
@@ -22,7 +24,9 @@ exports[`renders du bandeau d'une fiche RC 1`] = `
     >
       Enrico FAVARO
     </div>
-    <div>
+    <div
+      className="alertes"
+    >
       <div
         title="Date de fin de mesure dépassée
 "

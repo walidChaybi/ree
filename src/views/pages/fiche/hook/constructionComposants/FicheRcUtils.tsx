@@ -5,16 +5,16 @@ import { getInteresse } from "./interesses/InteresseUtils";
 import { getDecision } from "./DecisionUtils";
 import { getAutorite } from "./AutoriteUtils";
 import { getFicheTitle } from "../../FicheUtils";
+import { sortObjectWithNumeroOrdre } from "../../../../common/util/Utils";
 
 export function getPanelsRc(retourBack: IFicheRc): AccordionReceProps {
+  const interesse = [...retourBack.interesses].sort((i1, i2) =>
+    sortObjectWithNumeroOrdre(i1, i2, "numeroOrdreSaisi")
+  );
   const nomInteresse1 =
-    retourBack.interesses && retourBack.interesses[0]
-      ? retourBack.interesses[0].nomFamille
-      : "";
+    interesse && interesse[0] ? interesse[0].nomFamille : "";
   const nomInteresse2 =
-    retourBack.interesses && retourBack.interesses[1]
-      ? retourBack.interesses[1].nomFamille
-      : "";
+    interesse && interesse[1] ? interesse[1].nomFamille : "";
 
   return {
     panels: [

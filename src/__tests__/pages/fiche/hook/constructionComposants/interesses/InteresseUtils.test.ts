@@ -35,7 +35,7 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", asy
   const valueAutresNom: JSX.Element =
     components[0].contents[idxAutresNom].value;
 
-  expect(valueAutresNom).toBe("favarotti, favarotti2");
+  expect(valueAutresNom.props.children).toBe("favarotti, favarotti2");
   expect(idxNom).toBeLessThan(idxAutresNom);
 
   const idxPrenoms = components[0].contents.findIndex(
@@ -43,7 +43,7 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", asy
   );
   expect(idxPrenoms).toBeGreaterThan(-1);
 
-  expect(components[0].contents[idxPrenoms].value).toBe(
+  expect(components[0].contents[idxPrenoms].value.props.children).toBe(
     "Flavio, Enrico, Pablo"
   );
   expect(idxAutresNom).toBeLessThan(idxPrenoms);
@@ -53,7 +53,7 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", asy
   );
   expect(idxAutrePrenoms).toBeGreaterThan(-1);
 
-  expect(components[0].contents[idxAutrePrenoms].value).toBe(
+  expect(components[0].contents[idxAutrePrenoms].value.props.children).toBe(
     "autreP1, autreP2"
   );
   expect(idxPrenoms).toBeLessThan(idxAutrePrenoms);
