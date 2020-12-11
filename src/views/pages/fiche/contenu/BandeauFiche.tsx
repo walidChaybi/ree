@@ -61,7 +61,7 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
             <div>{`${data.categorie.toLocaleUpperCase()} N° ${data.annee} - ${
               data.numero
             }`}</div>
-            <div>
+            <div className="statusFiche">
               {data.statut != null && (
                 <>{`Statut de la fiche : ${data.statut}`}</>
               )}
@@ -69,7 +69,7 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
           </div>
           <div className="LignePrenomNom">
             <div className="InfoImportante">{getPrenomNom()}</div>
-            <div>
+            <div className="alertes">
               {data.alertes != null && data.alertes?.length >= 1 && (
                 <div title={getAlertes()}>
                   <FontAwesomeIcon

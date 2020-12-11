@@ -13,6 +13,7 @@ import {
   getDateString
 } from "../../../common/util/DateUtils";
 import { StatutUtil } from "../../../../model/Statut";
+import { sortObjectWithNumeroOrdre } from "../../../common/util/Utils";
 
 export interface IFicheApi {
   dataBandeau: IDataBandeauFicheProps;
@@ -54,6 +55,10 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
 
 function setDataBandeau(data: any): IDataBandeauFicheProps {
   let dataBandeau = {} as IDataBandeauFicheProps;
+  const interesses = data.interesses.sort((i1: any, i2: any) =>
+    sortObjectWithNumeroOrdre(i1, i2, "numeroOrdreSaisi")
+  );
+
   if (data) {
     dataBandeau = {
       categorie: data.categorie,
@@ -63,11 +68,11 @@ function setDataBandeau(data: any): IDataBandeauFicheProps {
       numero: data.numero,
       statut: StatutUtil.getLibelle(data.statutsFiche[0].statut),
       prenom1: setPrenomInteresse(data.interesses[0].prenoms),
-      nom1: data.interesses[0].nomFamille,
+      nom1: interesses[0].nomFamille,
       prenom2: data.interesses[1]
         ? setPrenomInteresse(data.interesses[1].prenoms)
         : undefined,
-      nom2: data.interesses[1] ? data.interesses[1].nomFamille : undefined,
+      nom2: interesses[1] ? interesses[1].nomFamille : undefined,
       alertes: setAlertes(data.alertes),
       dateDerniereMaj: getDateString(
         getDateFromTimestamp(data.dateDerniereMaj)

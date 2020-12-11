@@ -5,7 +5,7 @@ import {
 } from "../../common/util/FenetreExterne";
 import { FichePage } from "./FichePage";
 import { Link } from "@material-ui/core";
-
+import "./sass/LienFiche.scss";
 interface IDataLienFicheProps {
   identifiant: string;
   categorie: string;
@@ -31,7 +31,12 @@ export const LienFiche: React.FC<IDataLienFicheProps> = props => {
 
   return (
     <div>
-      <Link href={"#"} onClick={onClick} title={props.numero}>
+      <Link
+        className={"lienFiche"}
+        href={"#"}
+        onClick={onClick}
+        title={props.numero}
+      >
         {`${props.numero}`}
       </Link>
 

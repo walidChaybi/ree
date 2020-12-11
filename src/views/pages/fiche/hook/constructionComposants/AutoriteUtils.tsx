@@ -122,7 +122,10 @@ function getPrenomNom(autorite: IAutorite): AccordionContentProps {
   return {
     libelle: "Prénom NOM",
     value: (
-      <span>{`Maitre ${autorite.prenomNotaire} ${autorite.nomNotaire}`}</span>
+      <span>{`Maitre ${autorite.prenomNotaire.charAt(
+        0
+      )}${autorite.prenomNotaire
+        .slice(1)} ${autorite.nomNotaire.toUpperCase()}`}</span>
     )
   };
 }
@@ -141,21 +144,21 @@ function getTypeAutoriteContent(type?: TypeAutorite): AccordionContentProps {
 function getVilleAutoriteContent(ville: string): AccordionContentProps {
   return {
     libelle: "Ville",
-    value: ville || ""
+    value: <span className="ville">{ville || ""}</span>
   };
 }
 
 function getRegionAutoriteContent(region: string): AccordionContentProps {
   return {
     libelle: "Région",
-    value: region || ""
+    value: <span className="region">{region || ""}</span>
   };
 }
 
 function getPaysAutoriteContent(pays: string): AccordionContentProps {
   return {
     libelle: "Pays",
-    value: pays || ""
+    value: <span className="pays">{pays || ""}</span>
   };
 }
 

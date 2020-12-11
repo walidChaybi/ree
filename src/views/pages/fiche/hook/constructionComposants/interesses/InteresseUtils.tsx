@@ -1,9 +1,6 @@
 import React from "react";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import {
-  IFicheRc,
-  IInteresse
-} from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
+import { IFicheRc } from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { sortObjectWithNumeroOrdre } from "../../../../../common/util/Utils";
 import { getText } from "../../../../../common/widget/Text";
@@ -21,28 +18,40 @@ export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
         contents: [
           {
             libelle: "Nom",
-            value: interesse.nomFamille || ""
+            value: <span className="nom">{interesse.nomFamille || ""}</span>
           },
           {
             libelle: "Autre(s) nom(s)",
-            value: interesse.autreNoms ? interesse.autreNoms.join(", ") : ""
+            value: (
+              <span className="nom">
+                {interesse.autreNoms ? interesse.autreNoms.join(", ") : ""}
+              </span>
+            )
           },
           {
             libelle: "Prénom(s)",
-            value: interesse.prenoms
-              ? [...interesse.prenoms]
-                  .sort((p1, p2) =>
-                    sortObjectWithNumeroOrdre(p1, p2, "numeroOrdre")
-                  )
-                  .map(prenom => prenom.prenom)
-                  .join(", ")
-              : ""
+            value: (
+              <span className="prenom">
+                {interesse.prenoms
+                  ? [...interesse.prenoms]
+                      .sort((p1, p2) =>
+                        sortObjectWithNumeroOrdre(p1, p2, "numeroOrdre")
+                      )
+                      .map(prenom => prenom.prenom)
+                      .join(", ")
+                  : ""}
+              </span>
+            )
           },
           {
             libelle: "Autre(s) prénom(s)",
-            value: interesse.autrePrenoms
-              ? interesse.autrePrenoms.join(", ")
-              : ""
+            value: (
+              <span className="prenom">
+                {interesse.autrePrenoms
+                  ? interesse.autrePrenoms.join(", ")
+                  : ""}
+              </span>
+            )
           },
           {
             libelle: "Date de naissance",
@@ -52,7 +61,12 @@ export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
           },
           {
             libelle: "Lieu de naissance",
-            value: getLieuNaissance(interesse)
+            value: LieuxUtils.getLieu(
+              interesse.villeNaissance,
+              interesse.regionNaissance,
+              interesse.paysNaissance,
+              interesse.arrondissementNaissance
+            )
           },
           {
             libelle: "Nationalité",
@@ -83,21 +97,4 @@ export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
   }
 
   return interessePart;
-}
-
-function getLieuNaissance(interesse: IInteresse): string {
-  if (LieuxUtils.isPaysFrance(interesse.paysNaissance)) {
-    if (!LieuxUtils.isVilleAvecArrondissement(interesse.villeNaissance)) {
-      return `${interesse.villeNaissance} (${interesse.regionNaissance})`;
-    } else if (!LieuxUtils.isVilleParis(interesse.villeNaissance)) {
-      return `${interesse.villeNaissance} Arrdt${interesse.arrondissementNaissance} (${interesse.regionNaissance})`;
-    } else {
-      return `${interesse.villeNaissance} (Arrdt${interesse.arrondissementNaissance})`;
-    }
-  } else {
-    const region = ` - ${interesse.regionNaissance}`;
-    return `${interesse.villeNaissance}${
-      interesse.regionNaissance ? region : ""
-    } (${interesse.paysNaissance})`;
-  }
 }
