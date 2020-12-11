@@ -15,8 +15,7 @@ import {
   faSearch,
   faGavel,
   faChartBar,
-  faSync,
-  faUsersCog
+  faSync
 } from "@fortawesome/free-solid-svg-icons";
 import logoRece from "../../../img/logo-rece.svg";
 import { Title } from "../../core/title/Title";
@@ -24,18 +23,8 @@ import {
   OfficierContext,
   OfficierContextProps
 } from "../../core/contexts/OfficierContext";
-import { Badge } from "@material-ui/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useHistory } from "react-router-dom";
-import { URL_ACCUEIL_RECE_ADMIN } from "../../router/ReceUrls";
 
 export const AccueilPage: React.FC = () => {
-  const history = useHistory();
-  const onClickBadgeAdmin = () => {
-    history.push(URL_ACCUEIL_RECE_ADMIN);
-    history.go(0);
-  };
-
   return (
     <div className="AccueilPage">
       <Title titleId={"pages.accueil.titre"} />
@@ -57,19 +46,6 @@ export const AccueilPage: React.FC = () => {
                     : []
                 }
               />
-              {officier &&
-                officier.officierDataState?.profils.includes("RECE_ADMIN") && (
-                  <Badge
-                    className={"BadgeAdmin"}
-                    badgeContent={0}
-                    onClick={onClickBadgeAdmin}
-                  >
-                    <FontAwesomeIcon
-                      className={"IconeBouton"}
-                      icon={faUsersCog}
-                    />
-                  </Badge>
-                )}
             </div>
             <div className="Affectation">
               <Text
