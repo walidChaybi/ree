@@ -10,6 +10,7 @@ import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { getText } from "../Text";
 import { Button } from "reakit/Button";
 import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
+import { normaliserNomOec } from "../../util/Utils";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
@@ -103,7 +104,8 @@ const signaturePossible = (
   if (uniqueSignature === true) {
     return (
       connectedUser !== undefined &&
-      requetes[0].nomOec === `${connectedUser.prenom} ${connectedUser.nom}`
+      normaliserNomOec(requetes[0].nomOec) ===
+        normaliserNomOec(`${connectedUser.prenom} ${connectedUser.nom}`)
     );
   } else {
     return requetes.some(req => req.statut === StatutRequete.ASigner);
