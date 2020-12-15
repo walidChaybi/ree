@@ -34,7 +34,8 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
 
   const closePopin = useCallback(
     (showPopin: boolean) => {
-      if (showWaitState) {
+      if (showWaitState && showPopin === false) {
+        setShowWaitState(showPopin);
         reloadData(
           Object.keys(documentsByRequeteToSign).length === requetes.length
         );
@@ -60,15 +61,17 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
         };
 
         requete.reponse.documentsDelivres.forEach(document => {
-          documentsATraiter.documentsToSign.push({
-            idDocumentDelivre: document.idDocumentDelivre,
-            mimeType: document.mimeType,
-            infos: [{ cle: "idRequete", valeur: document.idDocumentDelivre }],
-            nomDocument: document.nom,
-            conteneurSwift: document.conteneurSwift,
-            idRequete: requete.idRequete,
-            numeroRequete: requete.idSagaDila
-          });
+          if (document.avecCtv === true) {
+            documentsATraiter.documentsToSign.push({
+              idDocumentDelivre: document.idDocumentDelivre,
+              mimeType: document.mimeType,
+              infos: [{ cle: "idRequete", valeur: document.idDocumentDelivre }],
+              nomDocument: document.nom,
+              conteneurSwift: document.conteneurSwift,
+              idRequete: requete.idRequete,
+              numeroRequete: requete.idSagaDila
+            });
+          }
         });
 
         newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;

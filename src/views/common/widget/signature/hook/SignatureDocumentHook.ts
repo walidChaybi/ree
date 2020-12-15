@@ -112,7 +112,7 @@ export function useSignatureDocumentHook(
       ...successSignature,
       {
         messageId: "signature.success",
-        date: moment().format(FormatDate.DDMMYYYHHmm),
+        date: moment().format(FormatDate.DDMMYYYYHHmm),
         numeroRequete: `${currentRequeteProcessing.documentsToSave[0].numeroRequete}`
       }
     ];

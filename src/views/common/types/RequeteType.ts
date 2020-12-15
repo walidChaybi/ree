@@ -34,4 +34,5 @@ export interface IDocumentDelivre {
   taille: number;
   identifiantSwift: string;
   reponse: any;
+  avecCtv: boolean;
 }

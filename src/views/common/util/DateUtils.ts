@@ -6,7 +6,7 @@ export interface IDateCompose {
 
 export enum FormatDate {
   DDMMYYYY = "DD/MM/YYYY",
-  DDMMYYYHHmm = "DD/MM/YYY HH:mm"
+  DDMMYYYYHHmm = "DD/MM/YYYY HH:mm"
 }
 
 export function getDateStringFromDateCompose(date: IDateCompose): string {

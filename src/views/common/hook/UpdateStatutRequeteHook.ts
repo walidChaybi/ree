@@ -16,12 +16,12 @@ export function useUpdateStatutRequeteApi(
   useEffect(() => {
     if (queryParameters) {
       patchStatutRequete(queryParameters)
-        .then((result) => {
+        .then(result => {
           if (callback !== undefined) {
             callback();
           }
         })
-        .catch((error) => {
+        .catch(error => {
           setErrorState(error);
         });
     }
