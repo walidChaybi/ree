@@ -49,10 +49,11 @@ export const ApercuRequetePage: React.FC = props => {
 
   const setDocumentDelivreFct = useCallback(
     (newDocumentsDelivres: IDocumentDelivre) => {
-      const newRequete: IDataTable = { ...histoReq.data[indexRequete] };
+      const data = histoReq && histoReq.data ? histoReq.data : dataState;
+      const newRequete: IDataTable = { ...data[indexRequete] };
       newRequete.documentsDelivres = [newDocumentsDelivres];
     },
-    [histoReq, indexRequete]
+    [histoReq, indexRequete, dataState]
   );
 
   const reloadData = useCallback(() => {
