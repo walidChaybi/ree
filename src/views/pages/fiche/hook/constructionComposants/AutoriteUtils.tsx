@@ -2,12 +2,12 @@ import React from "react";
 import {
   IFicheRc,
   IAutorite
-} from "../../../../../model/ficheRcRca/FicheRcInterfaces";
+} from "../../../../../model/etatcivil/FicheRcInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import {
   AutoriteUtil,
   TypeAutorite
-} from "../../../../../model/ficheRcRca/TypeAutorite";
+} from "../../../../../model/etatcivil/TypeAutorite";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
 import { LieuxUtils } from "../../../../../model/Lieux";
 
@@ -124,8 +124,9 @@ function getPrenomNom(autorite: IAutorite): AccordionContentProps {
     value: (
       <span>{`Maitre ${autorite.prenomNotaire.charAt(
         0
-      )}${autorite.prenomNotaire
-        .slice(1)} ${autorite.nomNotaire.toUpperCase()}`}</span>
+      )}${autorite.prenomNotaire.slice(
+        1
+      )} ${autorite.nomNotaire.toUpperCase()}`}</span>
     )
   };
 }
@@ -184,9 +185,8 @@ function addDepartementAutoriteContentIfPossible(
   ) {
     contents.push({
       libelle: "Département",
-      value: `${autorite.libelleDepartement || ""} (${
-        autorite.numeroDepartement || ""
-      })`
+      value: `${autorite.libelleDepartement ||
+        ""} (${autorite.numeroDepartement || ""})`
     });
   }
 }

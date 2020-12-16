@@ -1,4 +1,4 @@
-import { DecisionUtil } from "../../../../../model/ficheRcRca/TypeDecision";
+import { DecisionUtil } from "../../../../../model/etatcivil/TypeDecision";
 import {
   getDateString,
   getDateFromTimestamp
@@ -6,10 +6,10 @@ import {
 import {
   IFicheRc,
   IDecisionRc
-} from "../../../../../model/ficheRcRca/FicheRcInterfaces";
+} from "../../../../../model/etatcivil/FicheRcInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
-import { AutoriteUtil } from "../../../../../model/ficheRcRca/TypeAutorite";
+import { AutoriteUtil } from "../../../../../model/etatcivil/TypeAutorite";
 
 export function getDecision(retourBack: IFicheRc): AccordionPartProps[] {
   let contentsDecision: AccordionContentProps[] = [];

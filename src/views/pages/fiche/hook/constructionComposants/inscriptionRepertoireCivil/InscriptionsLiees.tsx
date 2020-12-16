@@ -1,8 +1,8 @@
 import React from "react";
-import { IInscriptionLie } from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
+import { IInscriptionLie } from "../../../../../../model/etatcivil/FicheRcInterfaces";
 import { LienFiche } from "../../../LienFiche";
 import "./sass/InscriptionsLiees.scss";
-import { InscriptionRcUtil } from "../../../../../../model/ficheRcRca/InscriptionRc";
+import { InscriptionRcUtil } from "../../../../../../model/etatcivil/InscriptionRc";
 
 interface IInscriptionsLieesProps {
   inscriptionsLiees: IInscriptionLie[];

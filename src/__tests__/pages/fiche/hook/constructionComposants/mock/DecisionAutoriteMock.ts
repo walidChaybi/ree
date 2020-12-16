@@ -1,5 +1,5 @@
-import { TypeDecision } from "../../../../../../model/ficheRcRca/TypeDecision";
-import { TypeAutorite } from "../../../../../../model/ficheRcRca/TypeAutorite";
+import { TypeDecision } from "../../../../../../model/etatcivil/TypeDecision";
+import { TypeAutorite } from "../../../../../../model/etatcivil/TypeAutorite";
 
 const regionIleDeFrance = "Ile de france";
 const regionBoucheDuRhone = "Bouches-du-Rhône";
@@ -9,7 +9,7 @@ export const ficheAutoriteJuridictionFranceAvecConfirmation = {
     dateDecision: 1577059200,
     type: TypeDecision.JUGEMENT,
     autorite: {
-      type: TypeAutorite.TRIBUNAL_DE_PREMIERE_INSTANCE,
+      type: TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lyon",
@@ -27,7 +27,7 @@ export const ficheAutoriteJuridictionFranceAvecConfirmation = {
     enrolementPortalis: "enrolementPortalis",
     sourceConfirmation: {
       autorite: {
-        type: TypeAutorite.TRIBUNAL_DE_GRANDE_INSTANCE,
+        type: TypeAutorite.TRIBUNAL_GRANDE_INSTANCE,
         ville: "Marseille",
         arrondissement: "10",
         numeroDepartement: "13",
@@ -53,7 +53,7 @@ export const ficheAutoriteJuridictionEtrangerAvecConfirmation = {
     dateDecision: 1577059200,
     type: TypeDecision.JUGEMENT,
     autorite: {
-      type: TypeAutorite.TRIBUNAL_DE_PREMIERE_INSTANCE,
+      type: TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE,
       numeroDepartement: "",
       libelleDepartement: "",
       ville: "Berlin",
@@ -70,7 +70,7 @@ export const ficheAutoriteJuridictionEtrangerAvecConfirmation = {
     enrolementPortalis: "enrolementPortalis",
     sourceConfirmation: {
       autorite: {
-        type: TypeAutorite.TRIBUNAL_DE_GRANDE_INSTANCE,
+        type: TypeAutorite.TRIBUNAL_GRANDE_INSTANCE,
         ville: "Marseille",
         arrondissement: "10",
         numeroDepartement: "13",
@@ -182,7 +182,7 @@ export const ficheAutoriteSansConfirmation = {
     dateDecision: 1577059200,
     type: TypeDecision.ACTE_NOTARIE,
     autorite: {
-      type: TypeAutorite.TRIBUNAL_DE_GRANDE_INSTANCE,
+      type: TypeAutorite.TRIBUNAL_GRANDE_INSTANCE,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lyon",

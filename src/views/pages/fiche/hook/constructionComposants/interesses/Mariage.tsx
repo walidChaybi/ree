@@ -1,5 +1,5 @@
 import React from "react";
-import { IMariageInteresse } from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
+import { IMariageInteresse } from "../../../../../../model/etatcivil/FicheRcInterfaces";
 import {
   IDateCompose,
   getDateStringFromDateCompose

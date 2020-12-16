@@ -1,7 +1,7 @@
 import {
   AutoriteUtil,
   TypeAutorite
-} from "../../../model/ficheRcRca/TypeAutorite";
+} from "../../../model/etatcivil/TypeAutorite";
 
 test("TypeAutorite model", () => {
   expect(AutoriteUtil.isJuridiction(TypeAutorite.NOTAIRE)).toBe(false);
@@ -10,21 +10,21 @@ test("TypeAutorite model", () => {
   );
   expect(AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_INSTANCE)).toBe(true);
   expect(
-    AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_DE_GRANDE_INSTANCE)
+    AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_GRANDE_INSTANCE)
   ).toBe(true);
-  expect(AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_DE_PROXIMITE)).toBe(
+  expect(AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_PROXIMITE)).toBe(
     true
   );
   expect(
-    AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_JUDICIAIRE_DE_REFERENCE)
+    AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_JUDICIAIRE_REFERENCE)
   ).toBe(true);
   expect(
-    AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_DE_PREMIERE_INSTANCE)
+    AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE)
   ).toBe(true);
   expect(
-    AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_SUPERIEUR_D_APPEL)
+    AutoriteUtil.isJuridiction(TypeAutorite.TRIBUNAL_SUPERIEUR_APPEL)
   ).toBe(true);
-  expect(AutoriteUtil.isJuridiction(TypeAutorite.COUR_D_APPEL)).toBe(true);
+  expect(AutoriteUtil.isJuridiction(TypeAutorite.COUR_APPEL)).toBe(true);
   expect(AutoriteUtil.isJuridiction(TypeAutorite.JURIDICTION_ETRANGERE)).toBe(
     true
   );
@@ -32,22 +32,20 @@ test("TypeAutorite model", () => {
   expect(AutoriteUtil.isNotaire(TypeAutorite.NOTAIRE)).toBe(true);
   expect(AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_JUDICIAIRE)).toBe(false);
   expect(AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_INSTANCE)).toBe(false);
-  expect(AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_DE_GRANDE_INSTANCE)).toBe(
+  expect(AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_GRANDE_INSTANCE)).toBe(
     false
   );
-  expect(AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_DE_PROXIMITE)).toBe(
-    false
-  );
+  expect(AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_PROXIMITE)).toBe(false);
   expect(
-    AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_JUDICIAIRE_DE_REFERENCE)
+    AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_JUDICIAIRE_REFERENCE)
   ).toBe(false);
-  expect(
-    AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_DE_PREMIERE_INSTANCE)
-  ).toBe(false);
-  expect(AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_SUPERIEUR_D_APPEL)).toBe(
+  expect(AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE)).toBe(
     false
   );
-  expect(AutoriteUtil.isNotaire(TypeAutorite.COUR_D_APPEL)).toBe(false);
+  expect(AutoriteUtil.isNotaire(TypeAutorite.TRIBUNAL_SUPERIEUR_APPEL)).toBe(
+    false
+  );
+  expect(AutoriteUtil.isNotaire(TypeAutorite.COUR_APPEL)).toBe(false);
   expect(AutoriteUtil.isNotaire(TypeAutorite.JURIDICTION_ETRANGERE)).toBe(
     false
   );
