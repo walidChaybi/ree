@@ -2,7 +2,7 @@ export enum TypeMandataire {
   FAMILLE = "FAMILLE",
   MANDATAIRE_JUDICIAIRE_ASSOCIATION = "MANDATAIRE_JUDICIAIRE_ASSOCIATION",
   MANDATAIRE_JUDICIAIRE_INDIVIDUEL = "MANDATAIRE_JUDICIAIRE_INDIVIDUEL",
-  PREPOSE_D_ETABLISSEMENT = "PREPOSE_D_ETABLISSEMENT"
+  PREPOSE_ETABLISSEMENT = "PREPOSE_ETABLISSEMENT"
 }
 
 export class MandataireUtil {
@@ -12,7 +12,7 @@ export class MandataireUtil {
       "Mandataire judiciaire à la protection des majeurs association",
     [TypeMandataire.MANDATAIRE_JUDICIAIRE_INDIVIDUEL]:
       "Mandataire judiciaire à la protection des majeurs  individuel ",
-    [TypeMandataire.PREPOSE_D_ETABLISSEMENT]: "Préposé d’établissement "
+    [TypeMandataire.PREPOSE_ETABLISSEMENT]: "Préposé d’établissement "
   };
 
   public static getLibelle(nature?: TypeMandataire): string {

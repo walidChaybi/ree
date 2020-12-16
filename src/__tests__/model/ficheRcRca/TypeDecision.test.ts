@@ -1,7 +1,7 @@
 import {
   DecisionUtil,
   TypeDecision
-} from "../../../model/ficheRcRca/TypeDecision";
+} from "../../../model/etatcivil/TypeDecision";
 
 test("TypeDecision model", () => {
   expect(DecisionUtil.isJugement(TypeDecision.JUGEMENT)).toBe(true);

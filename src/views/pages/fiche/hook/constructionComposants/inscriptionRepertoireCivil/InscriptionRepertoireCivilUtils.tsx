@@ -2,7 +2,7 @@ import React from "react";
 import {
   IFicheRc,
   IDureeInscription
-} from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
+} from "../../../../../../model/etatcivil/FicheRcInterfaces";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { LienFiche } from "../../../LienFiche";
 import {
@@ -10,9 +10,9 @@ import {
   getDateFromTimestamp
 } from "../../../../../common/util/DateUtils";
 import { InscriptionsLiees } from "./InscriptionsLiees";
-import { NatureFicheUtil } from "../../../../../../model/ficheRcRca/Nature";
-import { MandataireUtil } from "../../../../../../model/ficheRcRca/Mandataires";
-import { InscriptionRcUtil } from "../../../../../../model/ficheRcRca/InscriptionRc";
+import { NatureFicheUtil } from "../../../../../../model/etatcivil/Nature";
+import { MandataireUtil } from "../../../../../../model/etatcivil/Mandataires";
+import { InscriptionRcUtil } from "../../../../../../model/etatcivil/InscriptionRc";
 
 export function getInscriptionRepertoireCivil(
   retourBack: IFicheRc

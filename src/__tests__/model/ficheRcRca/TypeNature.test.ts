@@ -1,7 +1,7 @@
 import {
   NatureFicheUtil,
   TypeNatureFiche
-} from "../../../model/ficheRcRca/Nature";
+} from "../../../model/etatcivil/Nature";
 
 test("TypeNature model", () => {
   expect(NatureFicheUtil.getLibelle(TypeNatureFiche.CURATELLE_AMENAGEE)).toBe(

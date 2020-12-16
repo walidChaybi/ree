@@ -1,5 +1,5 @@
 import { getInscriptionRepertoireCivil } from "../../../../../../views/pages/fiche/hook/constructionComposants/inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
-import { IFicheRc } from "../../../../../../model/ficheRcRca/FicheRcInterfaces";
+import { IFicheRc } from "../../../../../../model/etatcivil/FicheRcInterfaces";
 import {
   ficheInscriptionRepertoireCivil,
   ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes,
