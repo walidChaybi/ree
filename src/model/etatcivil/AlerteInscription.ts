@@ -1,13 +1,11 @@
 export enum AlerteInscription {
-  DATE_FIN_MESURE_DEPASSEE = "DATE_FIN_MESURE_DEPASSEE",
-  AUCUNE_ALERTE_IDENTIFIEE = "AUCUNE_ALERTE_IDENTIFIEE"
+  DATE_FIN_MESURE_DEPASSEE = "DATE_FIN_MESURE_DEPASSEE"
 }
 
 export class AlerteInscriptionUtil {
   private static readonly alerteInscriptionLibelle = {
     [AlerteInscription.DATE_FIN_MESURE_DEPASSEE]:
-      "Date de fin de mesure dépassée",
-    [AlerteInscription.AUCUNE_ALERTE_IDENTIFIEE]: "Aucune alerte identifiée"
+      "Date de fin de mesure dépassée"
   };
 
   public static getLibelle(alerte: AlerteInscription) {

@@ -1,10 +1,26 @@
 import { IDateCompose } from "../../views/common/util/DateUtils";
-import { Statut } from "../Statut";
 import { TypeAutorite } from "./TypeAutorite";
 import { TypeDecision } from "./TypeDecision";
 import { TypeNatureFiche } from "./Nature";
 import { TypeMandataire } from "./Mandataires";
 import { TypeInscriptionRc } from "./InscriptionRc";
+
+export interface IBandeauFiche {
+  titreFenetre: string;
+  categorie: string;
+  identifiant: string;
+  registre?: string;
+  annee: string;
+  numero: string;
+  statutsFiche: IStatutFiche[];
+  prenom1: string;
+  nom1: string;
+  prenom2?: string;
+  nom2?: string;
+  alertes?: IAlerte[];
+  dateDerniereMaj: string;
+  dateDerniereDelivrance: string;
+}
 
 export interface IFicheRc {
   id: string;
@@ -79,7 +95,7 @@ export interface IInscriptionLie {
 }
 
 export interface IStatutFiche {
-  statut: Statut;
+  statut: string;
   dateEvenement: IDateCompose;
   motif: string;
   villeEvenement: string;

@@ -2,7 +2,7 @@ import {
   ficheAutoriteJuridictionFranceAvecConfirmation,
   ficheAutoriteNotaireFranceAvecConfirmation
 } from "./mock/DecisionAutoriteMock";
-import { IFicheRc } from "../../../../../model/etatcivil/FicheRcInterfaces";
+import { IFicheRc } from "../../../../../model/etatcivil/FicheInterfaces";
 import { getDecision } from "../../../../../views/pages/fiche/hook/constructionComposants/DecisionUtils";
 
 test("Decision utils get decision : decision de type Juridiction, ", async () => {

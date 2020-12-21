@@ -2,39 +2,19 @@ import React from "react";
 import "./sass/Bandeau.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
 
 export interface BandeauFicheProps {
-  dataBandeau: IDataBandeauFicheProps;
-}
-
-export interface IAlerte {
-  alerte: string;
-  dateCreation: number;
-}
-
-export interface IDataBandeauFicheProps {
-  categorie: string;
-  identifiant: string;
-  registre?: string;
-  annee: string;
-  numero: string;
-  statut?: string;
-  prenom1: string;
-  nom1: string;
-  prenom2?: string;
-  nom2?: string;
-  alertes?: IAlerte[];
-  dateDerniereMaj: string;
-  dateDerniereDelivrance: string;
+  dataBandeau: IBandeauFiche;
 }
 
 export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
   const data = props.dataBandeau;
 
   function getPrenomNom() {
-    let prenomNom = `${data.prenom1} ${data.nom1}`;
+    let prenomNom = `${data.prenom1} ${data.nom1.toUpperCase()}`;
     if (data.prenom2 != null && data.nom2 != null) {
-      prenomNom = `${prenomNom} et ${data.prenom2} ${data.nom2}`;
+      prenomNom = `${prenomNom} et ${data.prenom2} ${data.nom2.toUpperCase()}`;
     }
     return prenomNom;
   }
@@ -55,15 +35,15 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
       {data && (
         <div className="Bandeau">
           {data.registre != null && (
-            <div className="InfoImportante">{`Registre : ${data.statut}`}</div>
+            <div className="InfoImportante">{`Registre : ${data.registre}`}</div>
           )}
           <div className="InfoImportante LigneNumero">
             <div>{`${data.categorie.toLocaleUpperCase()} N° ${data.annee} - ${
               data.numero
             }`}</div>
             <div className="statusFiche">
-              {data.statut != null && (
-                <>{`Statut de la fiche : ${data.statut}`}</>
+              {data.statutsFiche != null && (
+                <>{`Statut de la fiche : ${data.statutsFiche[0].statut}`}</>
               )}
             </div>
           </div>

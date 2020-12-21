@@ -1,5 +1,5 @@
 import { getAutorite } from "../../../../../views/pages/fiche/hook/constructionComposants/AutoriteUtils";
-import { IFicheRc } from "../../../../../model/etatcivil/FicheRcInterfaces";
+import { IFicheRc } from "../../../../../model/etatcivil/FicheInterfaces";
 import {
   ficheAutoriteJuridictionEtrangerAvecConfirmation,
   ficheAutoriteJuridictionFranceAvecConfirmation,
