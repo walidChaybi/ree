@@ -1,5 +1,5 @@
 import React from "react";
-import { IInscriptionLie } from "../../../../../../model/etatcivil/FicheRcInterfaces";
+import { IInscriptionLie } from "../../../../../../model/etatcivil/FicheInterfaces";
 import { LienFiche } from "../../../LienFiche";
 import "./sass/InscriptionsLiees.scss";
 import { InscriptionRcUtil } from "../../../../../../model/etatcivil/InscriptionRc";

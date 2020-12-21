@@ -7,7 +7,6 @@ import "./sass/AccordionRece.scss";
 
 export interface AccordionReceProps {
   panels: AccordionPanelProps[];
-  title: string;
 }
 
 export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {

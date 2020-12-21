@@ -1,6 +1,6 @@
 import React from "react";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import { IFicheRc } from "../../../../../../model/etatcivil/FicheRcInterfaces";
+import { IFicheRc } from "../../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { sortObjectWithNumeroOrdre } from "../../../../../common/util/Utils";
 import { getText } from "../../../../../common/widget/Text";

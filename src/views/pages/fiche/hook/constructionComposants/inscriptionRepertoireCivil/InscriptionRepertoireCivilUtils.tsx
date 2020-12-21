@@ -2,7 +2,7 @@ import React from "react";
 import {
   IFicheRc,
   IDureeInscription
-} from "../../../../../../model/etatcivil/FicheRcInterfaces";
+} from "../../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { LienFiche } from "../../../LienFiche";
 import {

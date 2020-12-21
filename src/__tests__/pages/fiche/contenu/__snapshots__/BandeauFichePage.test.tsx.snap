@@ -12,9 +12,7 @@ exports[`renders du bandeau d'une fiche RC 1`] = `
     </div>
     <div
       className="statusFiche"
-    >
-      Statut de la fiche : Actif
-    </div>
+    />
   </div>
   <div
     className="LignePrenomNom"

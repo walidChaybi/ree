@@ -2,7 +2,7 @@ import React from "react";
 import {
   IFicheRc,
   IAutorite
-} from "../../../../../model/etatcivil/FicheRcInterfaces";
+} from "../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import {
   AutoriteUtil,
@@ -185,8 +185,9 @@ function addDepartementAutoriteContentIfPossible(
   ) {
     contents.push({
       libelle: "Département",
-      value: `${autorite.libelleDepartement ||
-        ""} (${autorite.numeroDepartement || ""})`
+      value: `${autorite.libelleDepartement || ""} (${
+        autorite.numeroDepartement || ""
+      })`
     });
   }
 }
