@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useRequeteDataApi } from "./hook/DonneeRequeteHook";
 import { IDataTable } from "../espaceDelivrance/MesRequetesPage";
-import { URL_MES_REQUETES } from "../../router/ReceUrls";
+import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
 import { Title } from "../../core/title/Title";
 import { ActionsButtonsRequestPage } from "./actions/ActionsButtonsRequestPage";
 import { EtatRequete } from "./contenu/EtatRequete";
@@ -14,7 +14,7 @@ export interface RequestsInformations {
   data: IDataTable[];
 }
 
-export const ApercuRequetePage: React.FC = props => {
+export const ApercuRequetePage: React.FC = () => {
   const { idRequete } = useParams();
   const history = useHistory();
   const [histoReq] = useState<RequestsInformations>(
@@ -34,7 +34,13 @@ export const ApercuRequetePage: React.FC = props => {
 
   const changeIndex = useCallback(
     (idx: number) => {
-      history.push(`${URL_MES_REQUETES}/${dataState[idx].idRequete}`);
+      const pathname = history.location.pathname;
+      if (pathname.startsWith(URL_MES_REQUETES)) {
+        history.push(`${URL_MES_REQUETES}/${dataState[idx].idRequete}`);
+      }
+      if (pathname.startsWith(URL_REQUETES_SERVICE)) {
+        history.push(`${URL_REQUETES_SERVICE}/${dataState[idx].idRequete}`);
+      }
       setIndexRequete(idx);
     },
     [dataState, history]
