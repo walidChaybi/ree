@@ -16,10 +16,10 @@ test("renders informations sur l'état de la requete", () => {
 test("renders titre et numero requete", () => {
   render(<EtatRequete requete={requete as IDataTable} />);
   const titre = screen.getByText(
-    /Requête à signer le 02\/01\/2020 par Juliette Garisson/i
+    /Requête à signer le 02\/01\/2020 par Juliette GARISSON/i
   );
   expect(titre.textContent).toBe(
-    "Requête à signer le 02/01/2020 par Juliette Garisson"
+    "Requête à signer le 02/01/2020 par Juliette GARISSON"
   );
 });
 
@@ -28,7 +28,7 @@ test("récupérer le libellé d'une requête traité à délivrer démat", () =>
   innerRequete.statut = StatutRequete.ATraiterDemat;
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
-    /Requête traitée par : Juliette Garisson - Le : 02\/01\/2020/i
+    /Requête traitée par : Juliette GARISSON - Le : 02\/01\/2020/i
   );
   expect(element.className.indexOf("gris") > -1).toBeTruthy();
 });
@@ -38,7 +38,7 @@ test("récupérer le libellé d'une requête traité délivré démat", () => {
   innerRequete.statut = StatutRequete.TraiteDemat;
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
-    /Requête traitée par : Juliette Garisson - Le : 02\/01\/2020/i
+    /Requête traitée par : Juliette GARISSON - Le : 02\/01\/2020/i
   );
   expect(element.className.indexOf("gris") > -1).toBeTruthy();
 });
@@ -48,7 +48,7 @@ test("récupérer le libellé d'une requête traité à imprimer", () => {
   innerRequete.statut = StatutRequete.AImprimer;
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
-    /Requête traitée par : Juliette Garisson - Le : 02\/01\/2020/i
+    /Requête traitée par : Juliette GARISSON - Le : 02\/01\/2020/i
   );
   expect(element.className.indexOf("gris") > -1).toBeTruthy();
 });
@@ -58,7 +58,7 @@ test("récupérer le libellé d'une requête traité imprimé", () => {
   innerRequete.statut = StatutRequete.Imprime;
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
-    /Requête traitée par : Juliette Garisson - Le : 02\/01\/2020/i
+    /Requête traitée par : Juliette GARISSON - Le : 02\/01\/2020/i
   );
   expect(element.className.indexOf("gris") > -1).toBeTruthy();
 });
@@ -68,7 +68,7 @@ test("récupérer le libellé d'une requête prise en charge et attribuée", () 
   innerRequete.statut = StatutRequete.PriseEnCharge;
   render(<EtatRequete requete={requete as IDataTable} />);
   screen.getByText(
-    /Requête prise en charge par : Juliette Garisson - Le : 02\/01\/2020/i
+    /Requête prise en charge par : Juliette GARISSON - Le : 02\/01\/2020/i
   );
 });
 
@@ -96,11 +96,11 @@ test("récupérer le libellé d'une requête à traiter non attribuée", () => {
 test("récupérer le libellé d'une requête à traiter attribuée", () => {
   const innerRequete = requete;
   innerRequete.statut = StatutRequete.ATraiter;
-  innerRequete.reponse.nomOec = "Garisson";
+  innerRequete.reponse.nomOec = "GARISSON";
   innerRequete.reponse.prenomOec = "Juliette";
   render(<EtatRequete requete={requete as IDataTable} />);
   const element = screen.getByText(
-    /Requête à traiter, attribuée à Juliette Garisson - Le 02\/01\/2020/i
+    /Requête à traiter, attribuée à Juliette GARISSON - Le 02\/01\/2020/i
   );
   expect(element.className.indexOf("bleu") > -1).toBeTruthy();
 });
@@ -119,5 +119,5 @@ test("récupérer le libellé d'une requête transférée", () => {
   const innerRequete = requete;
   innerRequete.statut = StatutRequete.Transferee;
   render(<EtatRequete requete={requete as IDataTable} />);
-  screen.getByText(/Requête transférée à Juliette Garisson - Le 02\/01\/2020/i);
+  screen.getByText(/Requête transférée à Juliette GARISSON - Le 02\/01\/2020/i);
 });
