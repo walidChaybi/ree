@@ -18,7 +18,7 @@ export const configRequetes = [
      * @param headers object set by 'set' function
      * @param context object the context of running the fixtures function
      */
-    fixtures: function(match, params, headers, context) {
+    fixtures: function (match, params, headers, context) {
       // Récupération des des requetes
       if (
         match[1] ===
@@ -55,7 +55,7 @@ export const configRequetes = [
           headers: {
             "content-range": "0-15/" + mockRequetes.data.length,
             link:
-              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"'
+              '<http://localhost:80/rece/rece-requete-api/v1/requetes?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statuts=A_SIGNER&tri=dateStatut&sens=ASC&&range=1-105>;rel="next"'
           }
         };
       }
@@ -90,15 +90,18 @@ export const configRequetes = [
         match[1] ===
           "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596" ||
         match[1] ===
-          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&idArobas=25648596"
+          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=idSSOConnectedUser" ||
+        match[1] ===
+          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&idArobas=25648596" ||
+        match[1] ===
+          "/requetes/requetesService?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC&idArobas=idSSOConnectedUser"
       ) {
         return {
           data: mockRequetes.data.slice(0, 105),
           headers: {
             "content-range": "0-15/" + mockRequetes.data.length,
-            link: [
+            link:
               '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596&range=1-105>;rel="next"'
-            ]
           }
         };
       }
@@ -106,15 +109,18 @@ export const configRequetes = [
         match[1] ===
           "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105&idArobas=25648596" ||
         match[1] ===
-          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&idArobas=25648596"
+          "/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&idArobas=25648596" ||
+        match[1] ===
+          "requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&idArobas=25648596&range=1-105" ||
+        match[1] ===
+          "/requetes/requetesService?nomOec=nomConnectedUser&prenomOec=prenomConnectedUser&statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=idSagaDila&sens=ASC&idArobas=idSSOConnectedUser"
       ) {
         return {
           data: mockRequetes.data.slice(105, 210),
           headers: {
             "content-range": "106-15/" + mockRequetes.data.length,
-            link: [
-              '<http://localhost:80/rece-requete-api/v1//requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next",<http://localhost:80/rece-requete-api/v1/requetes/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"'
-            ]
+            link:
+              '<http://localhost:80/rece-requete-api/v1//requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&&range=2-105>;rel="next",<http://localhost:80/rece-requete-api/v1/requetes/requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&&range=0-105>;rel="prev"'
           }
         };
       }
@@ -192,7 +198,8 @@ export const configRequetes = [
         let documentDelivre = {
           nom: "nomMock",
           conteneurSwift: "conteneurSwiftMock",
-          contenu: mockPdf.data
+          contenu: mockPdf.data,
+          typeDocument: "EXTRAIT_PLURILINGUE"
         };
         return { data: documentDelivre };
       }
@@ -205,7 +212,9 @@ export const configRequetes = [
       // Utilisé dans UtilisateurAssigneRequeteHook.test
       if (
         match[1] ===
-        "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc?nomOec=nouveauNom&prenomOec=nouveauPrenom"
+          "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc?nomOec=nouveauNom&prenomOec=nouveauPrenom" ||
+        match[1] ===
+          "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc?nomOec=nouveauNom&prenomOec=nouveauPrenom"
       ) {
         return this.patch;
       }
@@ -217,10 +226,10 @@ export const configRequetes = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function(match, data, test1, test2, test3) {
+    get: function (match, data) {
       return {
         body: data,
-        header: data.headers
+        header: data ? data.headers : null
       };
     },
 
@@ -230,7 +239,7 @@ export const configRequetes = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    post: function(match, data) {
+    post: function (match, data) {
       return {
         status: 201
       };
@@ -242,7 +251,7 @@ export const configRequetes = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    patch: function(match, data) {
+    patch: function (match, data) {
       return {
         status: 201
       };

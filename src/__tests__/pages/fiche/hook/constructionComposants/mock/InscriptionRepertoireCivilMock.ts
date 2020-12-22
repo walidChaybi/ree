@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export const ficheInscriptionRepertoireCivil = {
   nature: "CURATELLE_AMENAGEE",
   mandataires: [

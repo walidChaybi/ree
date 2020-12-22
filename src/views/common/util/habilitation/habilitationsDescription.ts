@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { Droit } from "../../../../model/Droit";
 import { gestionnaireFeatureFlag } from "../featureFlag/gestionnaireFeatureFlag";
 import { FeatureFlag } from "../featureFlag/FeatureFlag";

@@ -1,3 +1,7 @@
+/* istanbul ignore file */
+/*
+ * fichier non testé car composant à supprimer dans étape 2
+ */
 import React, { useCallback } from "react";
 import { Text, MessageId } from "../../../common/widget/Text";
 import { Button } from "reakit/Button";

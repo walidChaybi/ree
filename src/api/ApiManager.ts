@@ -76,18 +76,6 @@ export class ApiManager {
     this.version = version;
   }
 
-  public getName() {
-    return this.name;
-  }
-
-  public getVersion() {
-    return this.version;
-  }
-
-  public getUrl(): string {
-    return this.url;
-  }
-
   public static getInstance(name: ApisAutorisees, version: string): ApiManager {
     if (
       !(

@@ -8,7 +8,7 @@ import { TableauHeader } from "./TableauHeader";
 import { TablePagination } from "@material-ui/core";
 import { getText } from "../Text";
 import { TableauBody } from "./TableauBody";
-import { BoutonSignature } from "../signature/BoutonSignature";
+import { IDataTable } from "../../../pages/espaceDelivrance/MesRequetesPage";
 
 export const NB_LIGNES_PAR_APPEL = 105;
 
@@ -26,6 +26,11 @@ export interface RequeteTableauHeaderProps {
   onClickOnLine: (id: string) => string;
   goToLink: (value: string) => void;
   handleReload?: () => void;
+}
+
+export interface TableauDataToUse {
+  requetes?: IDataTable[];
+  reloadData?: (allRequestSigned: boolean) => void;
 }
 
 type alignType = "left" | "center" | "right" | "justify" | "inherit";
@@ -73,9 +78,7 @@ export class TableauTypeColumn {
 
 export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
   const nbRequetParPage = 15;
-  const [rowsPerPageState, setRowsPerPageState] = React.useState(
-    nbRequetParPage
-  );
+  const [rowsPerPageState] = React.useState(nbRequetParPage);
   const [pageState, setPageState] = React.useState(0);
   const [multiplicateur, setMultiplicateur] = React.useState(1);
 
@@ -116,13 +119,6 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
       props.goToLink(props.previousDataLinkState);
     }
     setPageState(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPageState(parseInt(event.target.value, 10));
-    setPageState(0);
   };
 
   const processData = useCallback(() => {
@@ -199,19 +195,19 @@ export const TableauRece: React.FC<RequeteTableauHeaderProps> = props => {
         }
         page={pageState > 0 && props.rowsNumberState === 0 ? 0 : pageState}
         onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
         backIconButtonText={getText("pagination.pagePrecedente")}
         nextIconButtonText={getText("pagination.pageSuivante")}
       />
-      {props.canUseSignature === true && (
-        <div className="RequetesToolbarSignature">
-          <BoutonSignature
-            libelle={"pages.delivrance.action.signature"}
-            requetes={dataBody}
-            reloadData={reloadData}
-          />
-        </div>
-      )}
+
+      <div className="RequetesToolbarSignature">
+        {props.children &&
+          React.Children.map(props.children, (child: any) => {
+            return React.cloneElement(child, {
+              requetes: dataBody,
+              reloadData
+            });
+          })}
+      </div>
     </>
   );
 };

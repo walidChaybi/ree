@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import EspaceDelivrancePage from "../pages/espaceDelivrance/EspaceDelivrancePage";
 import { AccueilPage } from "../pages/accueil/AccueilPage";
 import { RouteComponentProps } from "react-router";

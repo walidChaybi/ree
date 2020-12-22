@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Extrait document 1`] = `
+<div
+  className="resume-requete extrait"
+>
+  <div
+    className="Panel"
+  >
+    Titre de l'application
+  </div>
+  <div
+    className="MuiPaper-root MuiAccordion-root MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+  >
+    <div
+      className="DocumentDetailPanel"
+      id="docRequeteViewer"
+    />
+    <div
+      className="MuiCollapse-container MuiCollapse-hidden"
+      style={
+        Object {
+          "minHeight": "0px",
+        }
+      }
+    >
+      <div
+        className="MuiCollapse-wrapper"
+      >
+        <div
+          className="MuiCollapse-wrapperInner"
+        >
+          <div
+            aria-labelledby="docRequeteViewer"
+            role="region"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

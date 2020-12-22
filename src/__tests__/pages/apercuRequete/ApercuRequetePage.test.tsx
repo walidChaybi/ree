@@ -63,50 +63,38 @@ test("renders Page requete with no elements", () => {
 });
 
 test("renders Page requete change url", () => {
-  act(() => {
-    const history = createMemoryHistory();
-    history.push(`${URL_MES_REQUETES}/req2`, {
-      data: [
-        { ...DONNEES_REQUETE, idRequete: "req1" },
-        { ...DONNEES_REQUETE, idRequete: "req2" },
-        { ...DONNEES_REQUETE, idRequete: "req3" }
-      ]
-    });
-
-    render(
-      <>
-        <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_ID}>
-            <ApercuRequetePage />
-          </Route>
-        </Router>
-      </>
-    );
-
-    const buttons = screen.getAllByRole("button");
-
-    const leftButton = buttons.find(
-      button => button.id === "button-navigation-left"
-    );
-
-    const rightButton = buttons.find(
-      button => button.id === "button-navigation-right"
-    );
-
-    setTimeout(() => {
-      expect(history.location.pathname).toBe("/rece/rece-ui/mesrequetes/req2");
-      fireEvent.click(leftButton!);
-      setTimeout(() => {
-        expect(history.location.pathname).toBe(
-          "/rece/rece-ui/mesrequetes/req1"
-        );
-        fireEvent.click(rightButton!);
-        setTimeout(() => {
-          expect(history.location.pathname).toBe(
-            "/rece/rece-ui/mesrequetes/req2"
-          );
-        }, 75);
-      }, 75);
-    }, 75);
+  const history = createMemoryHistory();
+  history.push(`${URL_MES_REQUETES}/req2`, {
+    data: [
+      { ...DONNEES_REQUETE, idRequete: "req1" },
+      { ...DONNEES_REQUETE, idRequete: "req2" },
+      { ...DONNEES_REQUETE, idRequete: "req3" }
+    ]
   });
+
+  render(
+    <>
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_ID}>
+          <ApercuRequetePage />
+        </Route>
+      </Router>
+    </>
+  );
+
+  const buttons = screen.getAllByRole("button");
+
+  const leftButton = buttons.find(
+    button => button.id === "button-navigation-left"
+  );
+
+  const rightButton = buttons.find(
+    button => button.id === "button-navigation-right"
+  );
+
+  expect(history.location.pathname).toBe("/rece/rece-ui/mesrequetes/req2");
+  fireEvent.click(leftButton!);
+  expect(history.location.pathname).toBe("/rece/rece-ui/mesrequetes/req1");
+  fireEvent.click(rightButton!);
+  expect(history.location.pathname).toBe("/rece/rece-ui/mesrequetes/req2");
 });

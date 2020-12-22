@@ -1,0 +1,19 @@
+{
+  "habilitations": [
+    {
+      "idHabilitation": "idHabilitation",
+      "profil": {
+        "idProfil": "idProfil",
+        "nom": "nom",
+        "profilDroit": [
+          {
+            "droit": {
+              "idDroit": "idDroit",
+              "nom": "nom"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

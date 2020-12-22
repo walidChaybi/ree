@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders header tableau des requêtes de l'application 1`] = `
+<table>
+  <td
+    aria-sort="ascending"
+    className="MuiTableCell-root MuiTableCell-alignLeft"
+  >
+    <span
+      aria-disabled={false}
+      className="MuiButtonBase-root MuiTableSortLabel-root OrderedHeaderCell tableauFontHeader MuiTableSortLabel-active"
+      onBlur={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      role="button"
+      tabIndex={0}
+    >
+      N°
+      <svg
+        aria-hidden={true}
+        className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
+        />
+      </svg>
+    </span>
+  </td>
+</table>
+`;

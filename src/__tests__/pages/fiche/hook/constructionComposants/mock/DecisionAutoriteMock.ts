@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { TypeDecision } from "../../../../../../model/etatcivil/TypeDecision";
 import { TypeAutorite } from "../../../../../../model/etatcivil/TypeAutorite";
 
