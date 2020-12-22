@@ -212,9 +212,7 @@ export const configRequetes = [
       // Utilisé dans UtilisateurAssigneRequeteHook.test
       if (
         match[1] ===
-          "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc?nomOec=nouveauNom&prenomOec=nouveauPrenom" ||
-        match[1] ===
-          "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc?nomOec=nouveauNom&prenomOec=nouveauPrenom"
+        "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc?nomOec=nouveauNom&prenomOec=nouveauPrenom"
       ) {
         return this.patch;
       }
