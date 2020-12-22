@@ -24,6 +24,7 @@ import {
   getRowsNumber
 } from "../../../common/util/GestionDesLiensApi";
 import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
+import { reecriturePrenom } from "../../../common/util/Utils";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -218,7 +219,8 @@ function createLibelleRequerant(data: IRequerantApi) {
 function createNomOec(reponse: IReponseApi) {
   let nomOec = "";
   if (reponse?.prenomOec !== undefined && reponse?.nomOec !== undefined) {
-    nomOec = `${reponse?.prenomOec} ${reponse?.nomOec}`;
+    const prenom = reecriturePrenom(reponse.prenomOec);
+    nomOec = `${prenom} ${reponse.nomOec.toLocaleUpperCase()}`;
   }
   return nomOec;
 }
