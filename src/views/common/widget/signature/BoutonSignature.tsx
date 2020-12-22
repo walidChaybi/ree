@@ -33,18 +33,23 @@ export const BoutonSignature: React.FC<
     DocumentsByRequete
   >({});
   const closePopin = useCallback(
-    (showPopin: boolean, hasError: boolean) => {
+    (showPopin: boolean, canReload: boolean) => {
       if (showWaitState && showPopin === false) {
         setShowWaitState(showPopin);
-        if (reloadData) {
+        if (reloadData && (canReload === true || uniqueSignature !== true)) {
           reloadData(
-            Object.keys(documentsByRequeteToSign).length === requetes.length,
-            hasError
+            Object.keys(documentsByRequeteToSign).length === requetes.length
           );
         }
       }
     },
-    [reloadData, documentsByRequeteToSign, requetes, showWaitState]
+    [
+      reloadData,
+      documentsByRequeteToSign,
+      requetes,
+      showWaitState,
+      uniqueSignature
+    ]
   );
 
   const handleClickSignature = () => {
