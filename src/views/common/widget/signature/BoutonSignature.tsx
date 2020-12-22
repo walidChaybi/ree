@@ -24,9 +24,7 @@ export const BoutonSignature: React.FC<
 > = ({
   libelle,
   requetes = [],
-  reloadData = () => {
-    return;
-  },
+  reloadData,
   uniqueSignature,
   connectedUser
 }) => {
@@ -35,12 +33,15 @@ export const BoutonSignature: React.FC<
     DocumentsByRequete
   >({});
   const closePopin = useCallback(
-    (showPopin: boolean) => {
+    (showPopin: boolean, hasError: boolean) => {
       if (showWaitState && showPopin === false) {
         setShowWaitState(showPopin);
-        reloadData(
-          Object.keys(documentsByRequeteToSign).length === requetes.length
-        );
+        if (reloadData) {
+          reloadData(
+            Object.keys(documentsByRequeteToSign).length === requetes.length,
+            hasError
+          );
+        }
       }
     },
     [reloadData, documentsByRequeteToSign, requetes, showWaitState]
