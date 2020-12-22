@@ -14,7 +14,7 @@ export interface ActionsProps {
   setIndexRequete: (index: number) => void;
   requetes: IDataTable[];
   idRequete: string;
-  reloadData: (allsigned: boolean, hasError: boolean) => void;
+  reloadData: (allsigned: boolean) => void;
   connectedUser?: IOfficierSSOApi;
 }
 

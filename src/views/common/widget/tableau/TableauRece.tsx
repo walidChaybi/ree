@@ -30,7 +30,7 @@ export interface RequeteTableauHeaderProps {
 
 export interface TableauDataToUse {
   requetes?: IDataTable[];
-  reloadData?: (allRequestSigned: boolean, hasError: boolean) => void;
+  reloadData?: (allRequestSigned: boolean) => void;
 }
 
 type alignType = "left" | "center" | "right" | "justify" | "inherit";

@@ -63,8 +63,8 @@ export const ApercuRequetePage: React.FC = () => {
   );
 
   const reloadData = useCallback(
-    (allsigned: boolean, hasErrors: boolean) => {
-      if (allsigned === true && hasErrors !== true) {
+    (allsigned: boolean) => {
+      if (allsigned === true) {
         history.goBack();
       }
     },

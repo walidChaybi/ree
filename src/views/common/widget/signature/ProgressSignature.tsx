@@ -35,7 +35,7 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
       errors === false &&
       getSignatureProgress() === totalPercentageToComplete
     ) {
-      onClose(false, errors);
+      onClose(false, true);
     }
   }, [getSignatureProgress, onClose, errors]);
 
@@ -56,7 +56,7 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
       </Box>
       <Button
         onClick={() => {
-          onClose(false, errors);
+          onClose(false, errors !== true);
         }}
         disabled={
           getSignatureProgress() !== totalPercentageToComplete &&

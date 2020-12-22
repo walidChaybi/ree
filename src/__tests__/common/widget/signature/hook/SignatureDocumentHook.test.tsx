@@ -4,9 +4,14 @@ import request from "superagent";
 import { useSignatureDocumentHook } from "../../../../../views/common/widget/signature/hook/SignatureDocumentHook";
 import { SousTypeRequete } from "../../../../../model/requete/SousTypeRequete";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { act, render, screen, waitFor } from "@testing-library/react";
-import { fireEvent } from "@testing-library/react";
-import { createEvent } from "@testing-library/react";
+import {
+  act,
+  render,
+  screen,
+  waitFor,
+  createEvent,
+  fireEvent
+} from "@testing-library/react";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

@@ -323,7 +323,7 @@ function getDocumentAndSendToSignature(
           numeroRequete:
             documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
               .numeroRequete,
-          erreurs: [{ code: "WEB_EXT1", libelle: "", detail: "" }]
+          erreurs: [{ code: "FONC_10", libelle: "", detail: "" }]
         });
       } else if (
         isAllowedTypeDocumentToBeSigned(result.documentDelivre.typeDocument)
