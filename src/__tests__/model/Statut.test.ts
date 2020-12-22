@@ -1,7 +1,10 @@
-import { StatutUtil, Statut } from "../../model/Statut";
+import {
+  StatutFicheUtil,
+  StatutFiche
+} from "../../model/etatcivil/StatutFiche";
 
 test("Statut model getLibelle", () => {
-  expect(StatutUtil.getLibelle()).toBe("");
-  expect(StatutUtil.getLibelle(Statut.ACTIF)).toBe("Actif");
-  expect(StatutUtil.getLibelle("toto")).toBeUndefined();
+  expect(StatutFicheUtil.getLibelle()).toBe("");
+  expect(StatutFicheUtil.getLibelle(StatutFiche.ACTIF)).toBe("Actif");
+  expect(StatutFicheUtil.getLibelle("toto")).toBeUndefined();
 });
