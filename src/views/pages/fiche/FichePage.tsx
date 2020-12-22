@@ -30,10 +30,10 @@ export const FichePage: React.FC<FichePageProps> = props => {
     if (
       props.fenetreExterneUtil &&
       dataFicheState != null &&
-      dataFicheState.ficheRc
+      dataFicheState.dataBandeau
     ) {
       props.fenetreExterneUtil.ref.document.title =
-        dataFicheState.ficheRc.title;
+        dataFicheState.dataBandeau.titreFenetre;
     }
   }, [dataFicheState, props.fenetreExterneUtil]);
 
@@ -44,7 +44,7 @@ export const FichePage: React.FC<FichePageProps> = props => {
         <BandeauFiche dataBandeau={dataFicheState.dataBandeau}></BandeauFiche>
       )}
       {/* Les Accordéons */}
-      {dataFicheState.ficheRc && <AccordionRece {...dataFicheState.ficheRc} />}
+      {dataFicheState.fiche && <AccordionRece {...dataFicheState.fiche} />}
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import classNames from "classnames";
 import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
 import { IReponseApi } from "../../espaceDelivrance/hook/DonneesRequeteHook";
+import { reecriturePrenom } from "../../../common/util/Utils";
 
 interface EtatRequeteProps {
   requete: IDataTable;
@@ -96,6 +97,10 @@ const getRequeteASigner = (data: IDataTable) => {
 };
 
 const getStatutLibelle = (data: IDataTable) => {
+  if (data.reponse) {
+    data.reponse.prenomOec = reecriturePrenom(data.reponse.prenomOec);
+    data.reponse.nomOec = data.reponse.nomOec.toLocaleUpperCase();
+  }
   switch (data.statut) {
     case StatutRequete.ATraiterDemat: {
       return getRequeteTraiteeLibelle(data);

@@ -14,7 +14,7 @@ export function getFicheTitle(
 function getNom(nom1: string, nom2?: string) {
   let nom = `${nom1}`;
   if (nom2 != null && nom2 !== "") {
-    nom = `${nom} et ${nom2}`;
+    nom = `${nom.toLocaleUpperCase()} et ${nom2.toLocaleUpperCase()}`;
   }
   return nom;
 }

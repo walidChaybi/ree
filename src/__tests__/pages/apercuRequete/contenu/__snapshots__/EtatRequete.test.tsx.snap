@@ -7,7 +7,7 @@ exports[`renders informations sur l'état de la requete 1`] = `
   <h1
     className="Entete"
   >
-    Requête à signer le 02/01/2020 par Juliette Garisson
+    Requête à signer le 02/01/2020 par Juliette GARISSON
   </h1>
 </div>
 `;

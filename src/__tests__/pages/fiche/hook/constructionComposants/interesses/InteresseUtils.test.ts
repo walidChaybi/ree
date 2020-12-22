@@ -8,7 +8,7 @@ import {
   ficheUnInteresseVilleNaissanceALEtrangerAvecRegion,
   ficheUnInteresseVilleNaissanceALEtrangerSansRegion
 } from "../mock/InteressesMock";
-import { IFicheRc } from "../../../../../../model/etatcivil/FicheRcInterfaces";
+import { IFicheRc } from "../../../../../../model/etatcivil/FicheInterfaces";
 
 test("Interesse utils get interesse : affichés suivant leur numero d'ordre ", async () => {
   const components = getInteresse(

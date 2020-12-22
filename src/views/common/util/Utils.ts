@@ -28,3 +28,12 @@ export function normaliserNomOec(nom: string) {
   result = result.toLowerCase().trim();
   return result;
 }
+
+export function reecriturePrenom(prenom: string) {
+  let result = prenom;
+  result = `${prenom.charAt(0).toLocaleUpperCase()}${prenom
+    .substring(1)
+    .toLocaleLowerCase()}`;
+
+  return result;
+}

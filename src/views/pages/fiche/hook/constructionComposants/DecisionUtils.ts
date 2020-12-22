@@ -6,7 +6,7 @@ import {
 import {
   IFicheRc,
   IDecisionRc
-} from "../../../../../model/etatcivil/FicheRcInterfaces";
+} from "../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
 import { AutoriteUtil } from "../../../../../model/etatcivil/TypeAutorite";
