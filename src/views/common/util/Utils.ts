@@ -14,7 +14,7 @@ export function sortObjectWithNumeroOrdre(
 
 export function normaliserNomOec(nom: string) {
   let result = nom;
-  result = result.normalize("NFC");
+  result = result.normalize("NFD");
   result = result.replace(/[\u0300-\u036F]/g, "");
   result = result.replace(/\s\s/g, " ");
   result = result.replace(/ -/g, "-");

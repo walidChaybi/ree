@@ -44,5 +44,5 @@ test("Utils normaliserNomOec ", async () => {
   expect(caractereColles).toBe("aeaeoeoe");
 
   const lowercase = normaliserNomOec(" AGHÉÀ ");
-  expect(lowercase).toBe("aghéà");
+  expect(lowercase).toBe("aghea");
 });

@@ -6,7 +6,7 @@ import "./sass/PopinSignature.scss";
 import { DocumentsByRequete } from "./hook/SignatureDocumentHook";
 
 interface ProgressSignature {
-  onClose: (isOpen: boolean) => void;
+  onClose: (isOpen: boolean, hasErrors: boolean) => void;
   documentsByRequete: DocumentsByRequete;
   idsRequetesToSign: string[];
   errors: boolean;
@@ -35,7 +35,7 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
       errors === false &&
       getSignatureProgress() === totalPercentageToComplete
     ) {
-      onClose(false);
+      onClose(false, errors);
     }
   }, [getSignatureProgress, onClose, errors]);
 
@@ -56,7 +56,7 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
       </Box>
       <Button
         onClick={() => {
-          onClose(false);
+          onClose(false, errors);
         }}
         disabled={
           getSignatureProgress() !== totalPercentageToComplete &&
