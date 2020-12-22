@@ -24,7 +24,6 @@ export function parseLink(linkHeader: string) {
       .replace(">", "");
     prevLink = `${prevLink}`; // FIXME suppressin de ${api.url}:${api.ports} (à vérifier)
   }
-
   return { nextLink, prevLink };
 }
 

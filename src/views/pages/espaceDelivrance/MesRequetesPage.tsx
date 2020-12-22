@@ -36,6 +36,7 @@ import {
   commonHeaders,
   getIconPrioriteRequete
 } from "./espaceDelivranceUtils";
+import { BoutonSignature } from "../../common/widget/signature/BoutonSignature";
 
 export interface IDataTable {
   idRequete: string;
@@ -144,7 +145,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   );
 
   const goToLink = useCallback((link: string) => {
-    const queryParametersPourRequetes = goToLinkCommon(link);
+    const queryParametersPourRequetes = goToLinkCommon(link, "requetes");
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }
@@ -182,10 +183,11 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         nextDataLinkState={nextDataLinkState}
         previousDataLinkState={previousDataLinkState}
         goToLink={goToLink}
-        canUseSignature={true}
         handleChangeSort={handleChangeSort}
         handleReload={handleReload}
-      />
+      >
+        <BoutonSignature libelle={"pages.delivrance.action.signature"} />
+      </TableauRece>
       <BoutonRetour />
     </>
   );

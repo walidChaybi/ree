@@ -11,19 +11,22 @@ import { getText } from "../Text";
 import { Button } from "reakit/Button";
 import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 import { normaliserNomOec } from "../../util/Utils";
+import { TableauDataToUse } from "../tableau/TableauRece";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
-  requetes: IDataTable[];
-  reloadData: (allRequestSigned: boolean) => void;
   uniqueSignature?: boolean;
   connectedUser?: IOfficierSSOApi;
 }
 
-export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
+export const BoutonSignature: React.FC<
+  BoutonSignatureProps & TableauDataToUse
+> = ({
   libelle,
-  requetes,
-  reloadData,
+  requetes = [],
+  reloadData = () => {
+    return;
+  },
   uniqueSignature,
   connectedUser
 }) => {
@@ -31,7 +34,6 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
   const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<
     DocumentsByRequete
   >({});
-
   const closePopin = useCallback(
     (showPopin: boolean) => {
       if (showWaitState && showPopin === false) {
@@ -73,8 +75,9 @@ export const BoutonSignature: React.FC<BoutonSignatureProps> = ({
             });
           }
         });
-
-        newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;
+        if (documentsATraiter.documentsToSign.length > 0) {
+          newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;
+        }
       }
     });
 

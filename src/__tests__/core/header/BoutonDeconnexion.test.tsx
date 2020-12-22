@@ -47,8 +47,12 @@ test("renders click BoutonDeconnexion", async () => {
   );
   fireEvent.click(boutonElement);
   expect(handleClickButton).toHaveBeenCalledTimes(1);
+  expect(history).toHaveLength(2);
   await waitFor(() => {
     const linkElement = screen.getByText(/Déconnexion/i);
     expect(linkElement).toBeInTheDocument();
+    fireEvent.click(linkElement);
+
+    expect(history).toHaveLength(3);
   });
 });

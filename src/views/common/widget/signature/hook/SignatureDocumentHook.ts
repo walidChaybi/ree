@@ -219,7 +219,6 @@ export function useSignatureDocumentHook(
 
           const currentRequeteProcessing =
             documentsToSignWating[idRequetesToSign[0]];
-
           processResultWebExtension(currentRequeteProcessing);
         }
       }
@@ -273,6 +272,7 @@ function changeDocumentToSign(
 
     documentsToSignWating[idRequetesToSign[0]].documentsToSign.shift();
   }
+
   if (documentsToSignWating[idRequetesToSign[0]].documentsToSign.length > 0) {
     setDocumentsToSignWating(Object.assign({}, documentsToSignWating));
   }

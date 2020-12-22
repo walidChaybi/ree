@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export const URL_SEPARATEUR = "/";
 
 export const URL_CONTEXT_APP = "/rece/rece-ui";

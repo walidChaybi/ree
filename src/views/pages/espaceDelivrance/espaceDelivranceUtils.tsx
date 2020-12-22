@@ -14,12 +14,13 @@ import React from "react";
 import { IDataTable } from "./MesRequetesPage";
 
 export function goToLinkCommon(
-  link: string
+  link: string,
+  separator: string
 ): IQueryParametersPourRequetes | undefined {
   let queryParameters: IQueryParametersPourRequetes | undefined = undefined;
   if (link.indexOf("range") > 0) {
     let params = [];
-    params = link.split("requetes?")[1].split("&");
+    params = link.split(`${separator}?`)[1].split("&");
     queryParameters = {
       statuts: [params[indexParamsReq.Statut].split("=")[1] as StatutRequete],
       tri: params[indexParamsReq.Tri].split("=")[1],

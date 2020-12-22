@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import mockRequetes from "../data/requetes.json";
 
 export function generateurRequetes() {

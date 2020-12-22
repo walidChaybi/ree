@@ -12,9 +12,10 @@ let container: Element | null;
 const HookConsummer: React.FC = () => {
   const { officierDataState } = useLoginApi();
   return (
-    <div
-      data-testid={officierDataState?.idSSO}
-    >{`${officierDataState?.nom} ${officierDataState?.prenom}`}</div>
+    <div data-testid={officierDataState?.idSSO}>
+      {`${officierDataState?.nom} ${officierDataState?.prenom}`}
+      <div>{`${officierDataState?.habilitations[0].profil.droits[0].idDroit}`}</div>
+    </div>
   );
 };
 

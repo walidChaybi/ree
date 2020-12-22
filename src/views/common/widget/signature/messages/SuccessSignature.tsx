@@ -25,8 +25,8 @@ export const SuccessSignature: React.FC<SuccessSignatureProps> = ({
           <ListItemText
             className={"SuccessItem"}
             primary={getText(success.messageId, [
-              `${success.numeroRequete}` || "",
-              success.date || ""
+              `${success.numeroRequete}`,
+              success.date
             ])}
           />
         </ListItem>

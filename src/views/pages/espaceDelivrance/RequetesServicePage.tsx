@@ -216,7 +216,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
   function goToLink(link: string) {
-    const queryParametersPourRequetes = goToLinkCommon(link);
+    const queryParametersPourRequetes = goToLinkCommon(link, "requetesService");
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }

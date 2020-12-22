@@ -42,25 +42,75 @@ test("fetch d'une requête http GET", () => {
     });
 });
 
-// test("fetch d'une requête http POST avec passage de data on récupère un 201", () => {
-//   const api = ApiManager.getInstance("rece-requete-api", "v1");
+test("fetch d'une requête http DELETE", () => {
+  const api = ApiManager.getInstance("rece-requete-api", "v1");
 
-//   return api
-//     .fetch({
-//       method: HttpMethod.POST,
-//       uri: "/requetes",
-//       data: {
-//         data1: "toto",
-//         data2: "tutu"
-//       }
-//     })
-//     .then((result: IHttpResponse) => {
-//       expect(result.status).toBe(201);
-//     })
-//     .catch(error => {
-//       expect(error).toBe("ERRRRRRRRROR");
-//     });
-// });
+  return api
+    .fetch({
+      method: HttpMethod.DELETE,
+      uri: "/fakes",
+      headers: [{ header: "custom-header", value: "custom-header-value" }]
+    })
+    .then(result => {
+      expect(result).toBeTruthy();
+    })
+    .catch(error => {
+      expect(error).toBe("ERRRRRRRRROR");
+    });
+});
+
+test("fetch d'une requête http PATCH", () => {
+  const api = ApiManager.getInstance("rece-requete-api", "v1");
+
+  return api
+    .fetch({
+      method: HttpMethod.PATCH,
+      uri: "/fakes",
+      headers: [{ header: "custom-header", value: "custom-header-value" }]
+    })
+    .then(result => {
+      expect(result).toBeTruthy();
+    })
+    .catch(error => {
+      expect(error).toBe("ERRRRRRRRROR");
+    });
+});
+
+test("fetch d'une requête http PUT", () => {
+  const api = ApiManager.getInstance("rece-requete-api", "v1");
+
+  return api
+    .fetch({
+      method: HttpMethod.PUT,
+      uri: "/fakes",
+      responseType: "blob",
+      headers: [{ header: "custom-header", value: "custom-header-value" }]
+    })
+    .then(result => {
+      expect(result).toBeTruthy();
+    })
+    .catch(error => {
+      expect(error).toBe("ERRRRRRRRROR");
+    });
+});
+
+test("fetch d'une requête http POST", () => {
+  const api = ApiManager.getInstance("rece-requete-api", "v1");
+
+  return api
+    .fetch({
+      method: HttpMethod.POST,
+      uri: "/fakes",
+      data: {},
+      headers: [{ header: "custom-header", value: "custom-header-value" }]
+    })
+    .then(result => {
+      expect(result).toBeTruthy();
+    })
+    .catch(error => {
+      expect(error).toBe("ERRRRRRRRROR");
+    });
+});
 
 afterAll(() => {
   superagentMock.unset();
