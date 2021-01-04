@@ -74,6 +74,8 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
     selectedTab || 0
   );
 
+  const [reloadCompteur, setReloadCompteur] = React.useState<boolean>(true);
+
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     let targetUri: string = URL_MES_REQUETES;
     if (newValue === 1) {
@@ -81,6 +83,10 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
     }
     history.push(targetUri);
     setSelectedTabState(newValue);
+  };
+
+  const miseAJourCompteur = () => {
+    setReloadCompteur(!reloadCompteur);
   };
 
   return (
@@ -93,7 +99,10 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
               {officier && officier.officierDataState && (
                 <>
                   {selectedTabState === 0 && (
-                    <CompteurRequete officier={officier.officierDataState} />
+                    <CompteurRequete
+                      officier={officier.officierDataState}
+                      reloadCompteur={reloadCompteur}
+                    />
                   )}
                   <AppBar position="static" className="headerOngletDelivrance">
                     <Tabs
@@ -125,7 +134,10 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
 
                   <TabPanel value={selectedTabState} index={0}>
                     {selectedTabState === 0 && (
-                      <MesRequetesPage officier={officier.officierDataState} />
+                      <MesRequetesPage
+                        officier={officier.officierDataState}
+                        miseAJourCompteur={miseAJourCompteur}
+                      />
                     )}
                   </TabPanel>
                   {officierHabiliterPourLeDroit(

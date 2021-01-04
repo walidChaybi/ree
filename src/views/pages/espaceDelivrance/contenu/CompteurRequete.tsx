@@ -6,10 +6,14 @@ import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
 interface CompteurRequeteProps {
   officier: IOfficierSSOApi;
+  reloadCompteur?: boolean;
 }
 
 export const CompteurRequete: React.FC<CompteurRequeteProps> = props => {
-  const { nombreRequetesState } = useCompteurRequeteHook(props.officier);
+  const { nombreRequetesState } = useCompteurRequeteHook(
+    props.officier,
+    props.reloadCompteur
+  );
 
   return (
     <span className={"compteur-requetes"}>
