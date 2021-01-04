@@ -4,7 +4,7 @@ import { TypeDecision } from "./TypeDecision";
 import { TypeNatureFiche } from "./Nature";
 import { TypeMandataire } from "./Mandataires";
 import { TypeInscriptionRc } from "./InscriptionRc";
-
+import { TypeFiche } from "./TypeFiche";
 export interface IBandeauFiche {
   titreFenetre: string;
   categorie: string;
@@ -22,9 +22,9 @@ export interface IBandeauFiche {
   dateDerniereDelivrance: string;
 }
 
-export interface IFicheRc {
+export interface IFicheRcRca {
   id: string;
-  categorie: string;
+  categorie: TypeFiche;
   annee: string;
   numero: string;
   dateInscription: number;
@@ -82,6 +82,7 @@ export interface IDecisionRc {
 export interface ISourceConfirmation {
   autorite: IAutorite;
   dateDecision: number;
+  dateDecisionEtrangere: number;
   type: TypeDecision;
   enrolementRg: string;
   enrolementPortalis: string;

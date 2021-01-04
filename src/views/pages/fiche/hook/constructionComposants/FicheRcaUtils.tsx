@@ -5,7 +5,7 @@ import { getInteresse } from "./interesses/InteresseUtils";
 import { getDecision } from "./DecisionUtils";
 import { getAutorite } from "./AutoriteUtils";
 
-export function getPanelsRc(retourBack: IFicheRcRca): AccordionReceProps {
+export function getPanelsRca(retourBack: IFicheRcRca): AccordionReceProps {
   return {
     panels: [
       {
@@ -15,7 +15,7 @@ export function getPanelsRc(retourBack: IFicheRcRca): AccordionReceProps {
           { parts: getDecision(retourBack) },
           { parts: getAutorite(retourBack) }
         ],
-        title: "Vue du RC"
+        title: "Vue du RCA"
       }
     ]
   };

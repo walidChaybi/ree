@@ -22,6 +22,7 @@ export const configEtatcivil = [
       ) {
         return { data: mockRC.data };
       }
+
       if (
         match[1] === "/repertoirecivil/rca/135e4dfe-9757-4d5d-8715-359c6e73289b"
       ) {

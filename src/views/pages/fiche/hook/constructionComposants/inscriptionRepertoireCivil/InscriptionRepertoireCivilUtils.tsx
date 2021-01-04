@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  IFicheRc,
+  IFicheRcRca,
   IDureeInscription
 } from "../../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
@@ -13,61 +13,91 @@ import { InscriptionsLiees } from "./InscriptionsLiees";
 import { NatureFicheUtil } from "../../../../../../model/etatcivil/Nature";
 import { MandataireUtil } from "../../../../../../model/etatcivil/Mandataires";
 import { InscriptionRcUtil } from "../../../../../../model/etatcivil/InscriptionRc";
+import { FicheUtil } from "../../../../../../model/etatcivil/TypeFiche";
+import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 
 export function getInscriptionRepertoireCivil(
-  retourBack: IFicheRc
+  retourBack: IFicheRcRca
 ): AccordionPartProps {
   return {
-    contents: [
-      {
-        libelle: "Nature",
-        value: NatureFicheUtil.getLibelle(retourBack.nature)
-      },
-      {
-        libelle: "Mandataire(s)",
-        value: retourBack.mandataires
-          ? retourBack.mandataires
-              .map(mandataire => MandataireUtil.getLibelle(mandataire))
-              .join(" / ")
-          : ""
-      },
-      {
-        libelle: "Type inscription",
-        value: getTypeInscription(retourBack)
-      },
-      {
-        libelle: "Inscription(s) liée(s)",
-        value: retourBack.inscriptionsLiees ? (
-          <InscriptionsLiees inscriptionsLiees={retourBack.inscriptionsLiees} />
-        ) : (
-          ""
-        )
-      },
-      {
-        libelle: "Date d'inscription",
-        value: retourBack.dateInscription
-          ? getDateString(getDateFromTimestamp(retourBack.dateInscription))
-          : ""
-      },
-      {
-        libelle: "Durée inscription",
-        value: getUniteDuree(retourBack.duree)
-      },
-      {
-        libelle: "Date fin de mesure",
-        value:
-          retourBack.duree && retourBack.duree.dateFinDeMesure
-            ? getDateString(
-                getDateFromTimestamp(retourBack.duree.dateFinDeMesure)
-              )
-            : ""
-      }
-    ],
-    title: "Inscrition au répertoire civil"
+    contents: FicheUtil.isFicheRca()
+      ? getInteresseRca(retourBack)
+      : getInteresseRc(retourBack),
+    title: FicheUtil.isFicheRca(retourBack.categorie)
+      ? "Inscrition au répertoire civil annexe"
+      : "Inscrition au répertoire civil"
   };
 }
 
-function getTypeInscription(retourBack: IFicheRc): JSX.Element {
+function getInteresseRc(retourBack: IFicheRcRca): AccordionContentProps[] {
+  return [
+    {
+      libelle: "Nature",
+      value: NatureFicheUtil.getLibelle(retourBack.nature)
+    },
+    {
+      libelle: "Mandataire(s)",
+      value: retourBack.mandataires
+        ? retourBack.mandataires
+            .map(mandataire => MandataireUtil.getLibelle(mandataire))
+            .join(" / ")
+        : ""
+    },
+    {
+      libelle: "Type inscription",
+      value: getTypeInscription(retourBack)
+    },
+    {
+      libelle: "Inscription(s) liée(s)",
+      value: retourBack.inscriptionsLiees ? (
+        <InscriptionsLiees inscriptionsLiees={retourBack.inscriptionsLiees} />
+      ) : (
+        ""
+      )
+    },
+    {
+      libelle: "Date d'inscription",
+      value: retourBack.dateInscription
+        ? getDateString(getDateFromTimestamp(retourBack.dateInscription))
+        : ""
+    },
+    {
+      libelle: "Durée inscription",
+      value: getUniteDuree(retourBack.duree)
+    },
+    {
+      libelle: "Date fin de mesure",
+      value:
+        retourBack.duree && retourBack.duree.dateFinDeMesure
+          ? getDateString(
+              getDateFromTimestamp(retourBack.duree.dateFinDeMesure)
+            )
+          : ""
+    }
+  ];
+}
+
+function getInteresseRca(retourBack: IFicheRcRca): AccordionContentProps[] {
+  return [
+    {
+      libelle: "Nature",
+      value: NatureFicheUtil.getLibelle(retourBack.nature)
+    },
+    {
+      libelle: "Type inscription",
+      value: getTypeInscription(retourBack)
+    },
+
+    {
+      libelle: "Date d'inscription",
+      value: retourBack.dateInscription
+        ? getDateString(getDateFromTimestamp(retourBack.dateInscription))
+        : ""
+    }
+  ];
+}
+
+function getTypeInscription(retourBack: IFicheRcRca): JSX.Element {
   return (
     <span style={{ display: "flex" }}>
       {`${InscriptionRcUtil.getLibelle(retourBack.typeInscription)} ${
@@ -97,7 +127,7 @@ function getUniteDuree(duree?: IDureeInscription) {
   return "";
 }
 
-function getInscriptionsImpactees(retourBack: IFicheRc): JSX.Element[] {
+function getInscriptionsImpactees(retourBack: IFicheRcRca): JSX.Element[] {
   let inscriptionsImpactee: JSX.Element[] = [];
   if (
     retourBack.inscriptionsImpactees &&

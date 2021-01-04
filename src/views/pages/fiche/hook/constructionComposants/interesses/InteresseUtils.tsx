@@ -1,13 +1,13 @@
 import React from "react";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import { IFicheRc } from "../../../../../../model/etatcivil/FicheInterfaces";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { sortObjectWithNumeroOrdre } from "../../../../../common/util/Utils";
 import { getText } from "../../../../../common/widget/Text";
 import { Mariage } from "./Mariage";
 import { LieuxUtils } from "../../../../../../model/Lieux";
 
-export function getInteresse(retourBack: IFicheRc): AccordionPartProps[] {
+export function getInteresse(retourBack: IFicheRcRca): AccordionPartProps[] {
   const sortedInteresses = [...retourBack.interesses].sort((i1, i2) =>
     sortObjectWithNumeroOrdre(i1, i2, "numeroOrdreSaisi")
   );

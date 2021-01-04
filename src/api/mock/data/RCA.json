@@ -4,7 +4,7 @@
   "status": 200,
   "url": "/rece/rece-requete-api/v1/repertoirecivil/rca/135e4dfe-9757-4d5d-8715-359c6e73289b",
   "data": {
-    "idInscription": "135e4dfe-9757-4d5d-8715-359c6e73289b",
+    "id": "135e4dfe-9757-4d5d-8715-359c6e73289b",
     "categorie": "rca",
     "annee": "2015",
     "numero": "15987",
@@ -32,6 +32,43 @@
         "prenoms": [{ "prenom": "Ahmeda", "numeroOrdre": 0 }]
       }
     ],
-    "decision": {}
+    "decision": {
+      "dateDecision": 1518652800.0,
+      "type": "JUGEMENT",
+      "autorite": {
+        "type": "TRIBUNAL_JUDICIAIRE",
+        "numeroDepartement": "75",
+        "libelleDepartement": "Seine",
+        "pays": "France",
+        "arrondissement": "18",
+        "nomNotaire": null,
+        "prenomNotaire": null,
+        "numeroCrpcen": null,
+        "nomOnac": null,
+        "prenomOnac": null
+      },
+      "enrolementRg": "1345",
+      "enrolementPortalis": "789521545",
+      "sourceConfirmation": {
+        "autorite": {
+          "type": null,
+          "ville": "Marseille",
+          "arrondissement": "10",
+          "numeroDepartement": "13",
+          "libelleDepartement": "Bouches-du-Rhône",
+          "pays": "France",
+          "region": "Ile de france",
+          "nomNotaire": "nomnotaire",
+          "prenomNotaire": "prenomnotaire",
+          "numeroCrpcen": "",
+          "nomOnac": "",
+          "prenomOnac": ""
+        },
+        "dateDecision": 1584403200,
+        "enrolementRg": "enrolementRg",
+        "enrolementPortalis": "enrolementPortalis",
+        "type": "ARRET"
+      }
+    }
   }
 }

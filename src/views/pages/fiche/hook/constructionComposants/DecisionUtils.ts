@@ -4,19 +4,27 @@ import {
   getDateFromTimestamp
 } from "../../../../common/util/DateUtils";
 import {
-  IFicheRc,
+  IFicheRcRca,
   IDecisionRc
 } from "../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
-import { AutoriteUtil } from "../../../../../model/etatcivil/TypeAutorite";
+import {
+  AutoriteUtil,
+  TypeAutorite
+} from "../../../../../model/etatcivil/TypeAutorite";
+import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
 
-export function getDecision(retourBack: IFicheRc): AccordionPartProps[] {
+export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
   let contentsDecision: AccordionContentProps[] = [];
 
   if (AutoriteUtil.isJuridiction(retourBack.decision.autorite.type)) {
     contentsDecision = [...getContentJuridiction(retourBack.decision)];
-  } else if (AutoriteUtil.isNotaire(retourBack.decision.autorite.type)) {
+  } else if (
+    AutoriteUtil.isNotaire(retourBack.decision.autorite.type) ||
+    (AutoriteUtil.isOnac(retourBack.decision.autorite.type) &&
+      FicheUtil.isFicheRca(retourBack.categorie))
+  ) {
     contentsDecision = [...getContentNotaire(retourBack.decision)];
   }
 
@@ -32,11 +40,15 @@ export function getDecision(retourBack: IFicheRc): AccordionPartProps[] {
     retourBack.decision.type != null
   ) {
     decision.push({
-      contents: [...getContentConfirmationDecision(retourBack.decision)],
+      contents: [
+        ...getContentConfirmationDecision(
+          retourBack.decision,
+          retourBack.categorie
+        )
+      ],
       title: "Confirmée par la décision"
     });
   }
-
   return decision;
 }
 
@@ -81,10 +93,11 @@ function getContentNotaire(decision: IDecisionRc): AccordionContentProps[] {
 }
 
 function getContentConfirmationDecision(
-  decision: IDecisionRc
+  decision: IDecisionRc,
+  typeFiche: TypeFiche
 ): AccordionContentProps[] {
   if (AutoriteUtil.isJuridiction(decision.sourceConfirmation.autorite.type)) {
-    return [
+    const confirmationDecision = [
       {
         libelle: "Type",
         value: DecisionUtil.getLibelle(decision.sourceConfirmation.type)
@@ -96,7 +109,26 @@ function getContentConfirmationDecision(
               getDateFromTimestamp(decision.sourceConfirmation.dateDecision)
             )
           : ""
-      },
+      }
+    ];
+
+    if (
+      FicheUtil.isFicheRca(typeFiche) &&
+      decision.sourceConfirmation.dateDecisionEtrangere != null
+    ) {
+      confirmationDecision.push({
+        libelle: "Date décision étrangère",
+        value: decision.sourceConfirmation.dateDecisionEtrangere
+          ? getDateString(
+              getDateFromTimestamp(
+                decision.sourceConfirmation.dateDecisionEtrangere
+              )
+            )
+          : ""
+      });
+    }
+
+    return confirmationDecision.concat([
       {
         libelle: "Enrôlement RG",
         value: decision.sourceConfirmation.enrolementRg || ""
@@ -105,7 +137,7 @@ function getContentConfirmationDecision(
         libelle: "Enrôlement Portalis",
         value: decision.sourceConfirmation.enrolementPortalis || ""
       }
-    ];
+    ]);
   } else {
     return [];
   }
