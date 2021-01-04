@@ -117,12 +117,14 @@ const columnsTableau = [
 
 interface MesRequetesPageProps {
   officier?: IOfficierSSOApi;
+  miseAJourCompteur: () => void;
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetes
-  >({
+  const [
+    linkParameters,
+    setLinkParameters
+  ] = React.useState<IQueryParametersPourRequetes>({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,
@@ -168,7 +170,10 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
 
   const handleReload = useCallback(() => {
     setLinkParameters({ ...linkParameters });
-  }, [linkParameters]);
+    if (props.miseAJourCompteur !== undefined) {
+      props.miseAJourCompteur();
+    }
+  }, [linkParameters, props]);
 
   return (
     <>

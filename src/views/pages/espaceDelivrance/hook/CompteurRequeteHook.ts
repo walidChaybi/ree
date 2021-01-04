@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { getCompteurRequetes } from "../../../../api/appels/requeteApi";
 import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
-export function useCompteurRequeteHook(officier: IOfficierSSOApi) {
+export function useCompteurRequeteHook(
+  officier: IOfficierSSOApi,
+  reloadCompteur?: boolean
+) {
   const [nombreRequetesState, setNombreRequetesState] = useState<number>(0);
   const [errorState, setErrorState] = useState<any>();
 
@@ -14,7 +17,7 @@ export function useCompteurRequeteHook(officier: IOfficierSSOApi) {
       .catch(error => {
         setErrorState(error);
       });
-  }, [officier]);
+  }, [officier, reloadCompteur]);
 
   return {
     nombreRequetesState,
