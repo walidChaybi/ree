@@ -19,38 +19,37 @@ import {
 import { sortObjectWithNumeroOrdre } from "../../../common/util/Utils";
 import { getFicheTitle } from "../FicheUtils";
 
-export function setDataBandeau(data: any): IBandeauFiche {
+export function setDataBandeau(data: any, categorie: string): IBandeauFiche {
   let dataBandeau = {} as IBandeauFiche;
 
-  if (data) {
-    const interesses = data.interesses.sort((i1: any, i2: any) =>
-      sortObjectWithNumeroOrdre(i1, i2, "numeroOrdreSaisi")
-    );
-    const nomInteresse1 =
-      interesses && interesses[0] ? interesses[0].nomFamille : "";
-    const nomInteresse2 =
-      interesses && interesses[1] ? interesses[1].nomFamille : "";
+  if (data && categorie != null) {
+    const personnes = getPersonnes(data, categorie);
+
+    const nom1 =
+      personnes && personnes[0] ? personnes[0].nomFamille : undefined;
+    const nom2 =
+      personnes && personnes[1] ? personnes[1].nomFamille : undefined;
 
     dataBandeau = {
       titreFenetre: getFicheTitle(
-        data.categorie,
+        categorie,
         data.annee,
         data.numero,
-        nomInteresse1,
-        nomInteresse2
+        nom1,
+        nom2
       ),
-      categorie: data.categorie,
+      categorie: categorie,
       identifiant: data.id,
       registre: data.registre ? data.registre : undefined,
       annee: data.annee,
       numero: data.numero,
       statutsFiche: setStatuts(data.statutsFiche),
-      prenom1: setPrenomInteresse(data.interesses[0].prenoms),
-      nom1: nomInteresse1,
-      prenom2: data.interesses[1]
-        ? setPrenomInteresse(data.interesses[1].prenoms)
+      prenom1: setPrenomInteresse(personnes[0].prenoms),
+      nom1: nom1,
+      prenom2: personnes[1]
+        ? setPrenomInteresse(personnes[1].prenoms)
         : undefined,
-      nom2: nomInteresse2 ? nomInteresse2 : undefined,
+      nom2: nom2,
       alertes: setAlertes(data.alertes),
       dateDerniereMaj: getDateString(
         getDateFromTimestamp(data.dateDerniereMaj)
@@ -60,7 +59,20 @@ export function setDataBandeau(data: any): IBandeauFiche {
       )
     };
   }
+
   return dataBandeau;
+}
+
+function getPersonnes(data: any, categorie: string) {
+  let personnes = [];
+  if (categorie === "pacs") {
+    personnes = data.partenaires;
+  } else {
+    personnes = data.interesses.sort((i1: any, i2: any) =>
+      sortObjectWithNumeroOrdre(i1, i2, "numeroOrdreSaisi")
+    );
+  }
+  return personnes;
 }
 
 function setStatuts(statuts: IStatutFiche[]) {
