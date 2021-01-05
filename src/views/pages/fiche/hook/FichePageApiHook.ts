@@ -22,7 +22,7 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
       getInformationsFiche(categorie, identifiant)
         .then((result: any) => {
           const dataFiche = {} as IFicheApi;
-          dataFiche.dataBandeau = setDataBandeau(result.body.data);
+          dataFiche.dataBandeau = setDataBandeau(result.body.data, categorie);
           if (categorie === "rc") {
             dataFiche.fiche = getPanelsRc(result.body.data);
           }
