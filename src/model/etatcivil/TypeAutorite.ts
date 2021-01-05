@@ -1,5 +1,6 @@
 export enum TypeAutorite {
   NOTAIRE = "NOTAIRE",
+  ONAC = "ONAC",
   TRIBUNAL_JUDICIAIRE = "TRIBUNAL_JUDICIAIRE",
   TRIBUNAL_INSTANCE = "TRIBUNAL_INSTANCE",
   TRIBUNAL_GRANDE_INSTANCE = "TRIBUNAL_GRANDE_INSTANCE",
@@ -23,7 +24,8 @@ export class AutoriteUtil {
     [TypeAutorite.JURIDICTION_ETRANGERE]: "Juridiction étrangère",
     [TypeAutorite.TRIBUNAL_JUDICIAIRE_REFERENCE]:
       "Tribunal judiciaire de référence",
-    [TypeAutorite.NOTAIRE]: "Notaire"
+    [TypeAutorite.NOTAIRE]: "Notaire",
+    [TypeAutorite.ONAC]: "ONAC"
   };
 
   public static getLibelle(autorite?: TypeAutorite): string {
@@ -31,10 +33,18 @@ export class AutoriteUtil {
   }
 
   public static isJuridiction(autorite?: TypeAutorite): boolean {
-    return autorite != null && autorite !== TypeAutorite.NOTAIRE;
+    return (
+      autorite != null &&
+      autorite !== TypeAutorite.NOTAIRE &&
+      autorite !== TypeAutorite.ONAC
+    );
   }
 
   public static isNotaire(autorite?: TypeAutorite): boolean {
     return autorite === TypeAutorite.NOTAIRE;
+  }
+
+  public static isOnac(autorite?: TypeAutorite): boolean {
+    return autorite === TypeAutorite.ONAC;
   }
 }

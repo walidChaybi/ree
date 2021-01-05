@@ -1,17 +1,18 @@
 import { getAutorite } from "../../../../../views/pages/fiche/hook/constructionComposants/AutoriteUtils";
-import { IFicheRc } from "../../../../../model/etatcivil/FicheInterfaces";
+import { IFicheRcRca } from "../../../../../model/etatcivil/FicheInterfaces";
 import {
   ficheAutoriteJuridictionEtrangerAvecConfirmation,
   ficheAutoriteJuridictionFranceAvecConfirmation,
   ficheAutoriteNotaireFranceAvecConfirmation,
   ficheAutoriteSansConfirmation,
   ficheAutoriteNotaireEtrangerAvecConfirmation,
-  ficheNonValide
+  ficheNonValide,
+  ficheAutoriteOnac
 } from "./mock/DecisionAutoriteMock";
 
 test("Autorite utils get autorite : decision en France, de type Juridiction, la source de confirmation est présente", async () => {
   const components = getAutorite(
-    ficheAutoriteJuridictionFranceAvecConfirmation as IFicheRc
+    ficheAutoriteJuridictionFranceAvecConfirmation as IFicheRcRcaRca
   );
 
   expect(components).toHaveLength(2);
@@ -61,7 +62,7 @@ test("Autorite utils get autorite : decision en France, de type Juridiction, la 
 
 test("Autorite utils get autorite : decision à l'étranger, de type Juridiction, la source de confirmation est présente", async () => {
   const components = getAutorite(
-    ficheAutoriteJuridictionEtrangerAvecConfirmation as IFicheRc
+    ficheAutoriteJuridictionEtrangerAvecConfirmation as IFicheRcRca
   );
 
   const idxType = components[0].contents.findIndex(
@@ -111,7 +112,7 @@ test("Autorite utils get autorite : decision à l'étranger, de type Juridiction
 
 test("Autorite utils get autorite : decision en France, de type Notaire ", async () => {
   const components = getAutorite(
-    ficheAutoriteNotaireFranceAvecConfirmation as IFicheRc
+    ficheAutoriteNotaireFranceAvecConfirmation as IFicheRcRca
   );
 
   const idxType = components[0].contents.findIndex(
@@ -166,7 +167,7 @@ test("Autorite utils get autorite : decision en France, de type Notaire ", async
 
 test("Autorite utils get autorite : decision à l'étranger, de type Notaire ", async () => {
   const components = getAutorite(
-    ficheAutoriteNotaireEtrangerAvecConfirmation as IFicheRc
+    ficheAutoriteNotaireEtrangerAvecConfirmation as IFicheRcRca
   );
 
   const idxType = components[0].contents.findIndex(
@@ -216,13 +217,19 @@ test("Autorite utils get autorite : decision à l'étranger, de type Notaire ", 
 });
 
 test("Autorite utils get autorite : la source de confirmation n'est pas présente", async () => {
-  const components = getAutorite(ficheAutoriteSansConfirmation as IFicheRc);
+  const components = getAutorite(ficheAutoriteSansConfirmation as IFicheRcRca);
 
   expect(components).toHaveLength(1);
 });
 
 test("Autorite utils get autorite : donnees non valides", async () => {
-  const components = getAutorite(ficheNonValide as IFicheRc);
+  const components = getAutorite(ficheNonValide as IFicheRcRca);
 
   expect(components[0].contents).toHaveLength(0);
+});
+
+test("Autorite utils get autorite : onac", async () => {
+  const components = getAutorite(ficheAutoriteOnac as IFicheRcRca);
+  const element = components[0].contents[1].value as JSX.Element;
+  expect(element.props.children).toBe("prenomOnac NOMONAC");
 });

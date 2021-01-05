@@ -136,6 +136,53 @@ export const ficheAutoriteNotaireFranceAvecConfirmation = {
   }
 };
 
+export const ficheAutoriteONACFranceAvecConfirmation = {
+  categorie: "RCA",
+  decision: {
+    dateDecision: 1577059200,
+    dateDecisionEtrangere: 1577059200,
+    type: TypeDecision.CONVENTION,
+    autorite: {
+      type: TypeAutorite.TRIBUNAL_JUDICIAIRE,
+      numeroDepartement: "69",
+      libelleDepartement: "Rhône",
+      ville: "Lyon",
+      pays: "France",
+      region: regionIleDeFrance,
+      arrondissement: "8",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "nomOnac",
+      prenomOnac: "enomOnac"
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: {
+      autorite: {
+        type: TypeAutorite.TRIBUNAL_JUDICIAIRE,
+        ville: "Marseille",
+        arrondissement: "10",
+        numeroDepartement: "13",
+        libelleDepartement: regionBoucheDuRhone,
+        pays: "France",
+        region: regionIleDeFrance,
+        nomNotaire: "nomnotaire",
+        prenomNotaire: "prenomnotaire",
+        numeroCrpcen: "",
+        nomOnac: "",
+        prenomOnac: ""
+      },
+      dateDecision: 1584403200,
+      dateDecisionEtrangere: 1577059200,
+
+      enrolementRg: "enrolementRg",
+      enrolementPortalis: "enrolementPortalis",
+      type: TypeDecision.ARRET
+    }
+  }
+};
+
 export const ficheAutoriteNotaireEtrangerAvecConfirmation = {
   decision: {
     dateDecision: 1577059200,
@@ -196,6 +243,31 @@ export const ficheAutoriteSansConfirmation = {
       numeroCrpcen: "",
       nomOnac: "",
       prenomOnac: ""
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: null
+  }
+};
+
+export const ficheAutoriteOnac = {
+  categorie: "RCA",
+  decision: {
+    dateDecision: 1577059200,
+    type: TypeDecision.ACTE_NOTARIE,
+    autorite: {
+      type: TypeAutorite.ONAC,
+      numeroDepartement: "69",
+      libelleDepartement: "Rhône",
+      ville: "Lyon",
+      pays: "France",
+      region: regionIleDeFrance,
+      arrondissement: "8",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "nomOnac",
+      prenomOnac: "prenomOnac"
     },
     enrolementRg: "enrolementRg",
     enrolementPortalis: "enrolementPortalis",

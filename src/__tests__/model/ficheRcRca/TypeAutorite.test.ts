@@ -55,4 +55,8 @@ test("TypeAutorite model", () => {
   );
 
   expect(AutoriteUtil.getLibelle()).toBe("");
+
+  expect(AutoriteUtil.isOnac("ONAC")).toBe(true);
+
+  expect(AutoriteUtil.isOnac("NOTAIRE")).toBe(false);
 });

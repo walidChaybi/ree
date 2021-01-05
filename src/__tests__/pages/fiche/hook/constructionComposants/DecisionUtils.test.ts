@@ -1,6 +1,7 @@
 import {
   ficheAutoriteJuridictionFranceAvecConfirmation,
-  ficheAutoriteNotaireFranceAvecConfirmation
+  ficheAutoriteNotaireFranceAvecConfirmation,
+  ficheAutoriteONACFranceAvecConfirmation
 } from "./mock/DecisionAutoriteMock";
 import { IFicheRc } from "../../../../../model/etatcivil/FicheInterfaces";
 import { getDecision } from "../../../../../views/pages/fiche/hook/constructionComposants/DecisionUtils";
@@ -65,4 +66,41 @@ test("Decision utils get decision : decision de type Notaire, ", async () => {
     content => content.libelle === "Enrôlement Portalis"
   );
   expect(idxEnrolementPortalis).toBe(-1);
+});
+
+test("Decision utils get decision : decision de type ONAC, ", async () => {
+  const componentsEtrangere = getDecision(
+    ficheAutoriteONACFranceAvecConfirmation as IFicheRc
+  );
+
+  expect(componentsEtrangere).toHaveLength(2);
+
+  const idxType = componentsEtrangere[1].contents.findIndex(
+    content => content.libelle === "Type"
+  );
+  expect(idxType).toBeGreaterThan(-1);
+
+  const idxDate = componentsEtrangere[1].contents.findIndex(
+    content => content.libelle === "Date"
+  );
+  expect(idxDate).toBeGreaterThan(-1);
+
+  expect(idxType).toBeLessThan(idxDate);
+
+  const idxDateEtrangere = componentsEtrangere[1].contents.findIndex(
+    content => content.libelle === "Date décision étrangère"
+  );
+  expect(idxDateEtrangere).toBeGreaterThan(-1);
+
+  expect(idxDate).toBeLessThan(idxDateEtrangere);
+
+  const idxEntolementRg = componentsEtrangere[1].contents.findIndex(
+    content => content.libelle === "Enrôlement RG"
+  );
+  expect(idxEntolementRg).toBeGreaterThan(-1);
+
+  const idxEnrolementPortalis = componentsEtrangere[1].contents.findIndex(
+    content => content.libelle === "Enrôlement Portalis"
+  );
+  expect(idxEnrolementPortalis).toBeGreaterThan(-1);
 });

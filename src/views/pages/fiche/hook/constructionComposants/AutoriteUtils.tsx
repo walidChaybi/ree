@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  IFicheRc,
-  IAutorite
+  IAutorite,
+  IFicheRcRca
 } from "../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import {
@@ -10,11 +10,15 @@ import {
 } from "../../../../../model/etatcivil/TypeAutorite";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
 import { LieuxUtils } from "../../../../../model/Lieux";
+import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
 
-export function getAutorite(retourBack: IFicheRc): AccordionPartProps[] {
+export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
   const autorite: AccordionPartProps[] = [
     {
-      contents: getContentAutorite(retourBack.decision.autorite),
+      contents: getContentAutorite(
+        retourBack.decision.autorite,
+        retourBack.categorie
+      ),
       title: "Autorité"
     }
   ];
@@ -27,7 +31,8 @@ export function getAutorite(retourBack: IFicheRc): AccordionPartProps[] {
   ) {
     autorite.push({
       contents: getContentAutorite(
-        retourBack.decision.sourceConfirmation.autorite
+        retourBack.decision.sourceConfirmation.autorite,
+        retourBack.categorie
       ),
       title: ""
     });
@@ -36,17 +41,12 @@ export function getAutorite(retourBack: IFicheRc): AccordionPartProps[] {
   return autorite;
 }
 
-function getContentAutorite(autorite: IAutorite): AccordionContentProps[] {
-  if (
-    AutoriteUtil.isJuridiction(autorite.type) &&
-    LieuxUtils.isPaysFrance(autorite.pays)
-  ) {
-    return getContentJuridictionEtFrance(autorite);
-  } else if (
-    AutoriteUtil.isNotaire(autorite.type) &&
-    LieuxUtils.isPaysFrance(autorite.pays)
-  ) {
-    return getContentNotaireEtFrance(autorite);
+function getContentAutorite(
+  autorite: IAutorite,
+  typeFiche: TypeFiche
+): AccordionContentProps[] {
+  if (LieuxUtils.isPaysFrance(autorite.pays)) {
+    return getContentAutoriteFrance(autorite, typeFiche);
   } else if (
     AutoriteUtil.isJuridiction(autorite.type) &&
     !LieuxUtils.isPaysFrance(autorite.pays)
@@ -62,12 +62,40 @@ function getContentAutorite(autorite: IAutorite): AccordionContentProps[] {
   }
 }
 
+function getContentAutoriteFrance(
+  autorite: IAutorite,
+  typeFiche: TypeFiche
+): AccordionContentProps[] {
+  if (AutoriteUtil.isJuridiction(autorite.type)) {
+    return getContentJuridictionEtFrance(autorite);
+  } else if (AutoriteUtil.isNotaire(autorite.type)) {
+    return getContentNotaireEtFrance(autorite);
+  } else if (
+    AutoriteUtil.isOnac(autorite.type) &&
+    FicheUtil.isFicheRca(typeFiche)
+  ) {
+    return getContentOnacEtFrance(autorite);
+  } else {
+    return [];
+  }
+}
+
+function getContentOnacEtFrance(autorite: IAutorite): AccordionContentProps[] {
+  return [
+    getTypeAutoriteContent(autorite.type),
+    getPrenomNomOnac(autorite),
+    getVilleAutoriteContent(autorite.ville),
+    getArrondissementAutoriteContent(autorite.arrondissement),
+    getDepartementAutoriteContent(autorite)
+  ];
+}
+
 function getContentNotaireEtEtranger(
   autorite: IAutorite
 ): AccordionContentProps[] {
   return [
     getTypeAutoriteContent(autorite.type),
-    getPrenomNom(autorite),
+    getPrenomNomNotaire(autorite),
     getVilleAutoriteContent(autorite.ville),
     getRegionAutoriteContent(autorite.region),
     getPaysAutoriteContent(autorite.pays)
@@ -105,7 +133,7 @@ function getContentNotaireEtFrance(
 ): AccordionContentProps[] {
   const contents: AccordionContentProps[] = [
     getTypeAutoriteContent(autorite.type),
-    getPrenomNom(autorite),
+    getPrenomNomNotaire(autorite),
     getVilleAutoriteContent(autorite.ville)
   ];
 
@@ -118,7 +146,7 @@ function getContentNotaireEtFrance(
   return contents;
 }
 
-function getPrenomNom(autorite: IAutorite): AccordionContentProps {
+function getPrenomNomNotaire(autorite: IAutorite): AccordionContentProps {
   return {
     libelle: "Prénom NOM",
     value: (
@@ -127,6 +155,17 @@ function getPrenomNom(autorite: IAutorite): AccordionContentProps {
       )}${autorite.prenomNotaire.slice(
         1
       )} ${autorite.nomNotaire.toUpperCase()}`}</span>
+    )
+  };
+}
+
+function getPrenomNomOnac(autorite: IAutorite): AccordionContentProps {
+  return {
+    libelle: "Prénom NOM",
+    value: (
+      <span>{`${autorite.prenomOnac.charAt(0)}${autorite.prenomOnac.slice(
+        1
+      )} ${autorite.nomOnac.toUpperCase()}`}</span>
     )
   };
 }
@@ -153,6 +192,26 @@ function getRegionAutoriteContent(region: string): AccordionContentProps {
   return {
     libelle: "Région",
     value: <span className="region">{region || ""}</span>
+  };
+}
+
+function getArrondissementAutoriteContent(
+  arrondisseemnt: string
+): AccordionContentProps {
+  return {
+    libelle: "Arrondissement",
+    value: <span>{arrondisseemnt || ""}</span>
+  };
+}
+
+function getDepartementAutoriteContent(
+  autorite: IAutorite
+): AccordionContentProps {
+  return {
+    libelle: "Département",
+    value: (
+      <span>{`${autorite.libelleDepartement} (${autorite.numeroDepartement})`}</span>
+    )
   };
 }
 
