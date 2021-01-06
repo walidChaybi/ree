@@ -1,4 +1,4 @@
-export enum TypeNatureFiche {
+export enum TypeNatureFicheRc {
   CURATELLE_SIMPLE = "CURATELLE_SIMPLE",
   CURATELLE_AMENAGEE = "CURATELLE_AMENAGEE",
   CURATELLE_RENFORCEE = "CURATELLE_RENFORCEE",
@@ -20,42 +20,42 @@ export enum TypeNatureFiche {
   MESURE_ACCOMPAGNEMENT_JUDICIAIRE = "MESURE_ACCOMPAGNEMENT_JUDICIAIRE"
 }
 
-export class NatureFicheUtil {
+export class NatureFicheRcUtil {
   private static readonly libelles = {
-    [TypeNatureFiche.CURATELLE_SIMPLE]: "Curatelle simple",
-    [TypeNatureFiche.CURATELLE_AMENAGEE]: "Curatelle aménagée",
-    [TypeNatureFiche.CURATELLE_RENFORCEE]: "Curatelle renforcée",
-    [TypeNatureFiche.CURATELLE_RENFORCEE_ASSISTANCE]:
+    [TypeNatureFicheRc.CURATELLE_SIMPLE]: "Curatelle simple",
+    [TypeNatureFicheRc.CURATELLE_AMENAGEE]: "Curatelle aménagée",
+    [TypeNatureFicheRc.CURATELLE_RENFORCEE]: "Curatelle renforcée",
+    [TypeNatureFicheRc.CURATELLE_RENFORCEE_ASSISTANCE]:
       "Curatelle renforcée avec assistance pour les actes à la personne",
-    [TypeNatureFiche.HABILITATION_FAMILIALE_GENERALE]:
+    [TypeNatureFicheRc.HABILITATION_FAMILIALE_GENERALE]:
       "Habilitation familiale générale",
-    [TypeNatureFiche.PRESOMPTION_ABSENCE]: "Présomption d'absence",
-    [TypeNatureFiche.PRESOMPTION_ABSENCE_AVEC_DESIGNATION]:
+    [TypeNatureFicheRc.PRESOMPTION_ABSENCE]: "Présomption d'absence",
+    [TypeNatureFicheRc.PRESOMPTION_ABSENCE_AVEC_DESIGNATION]:
       "Présomption d’absence avec désignation d’un représentant",
-    [TypeNatureFiche.RADIATION_DEMANDE_HOMOLOGATION]:
+    [TypeNatureFicheRc.RADIATION_DEMANDE_HOMOLOGATION]:
       "Radiation de la requête en homologation d’un changement de régime matrimonial",
-    [TypeNatureFiche.DEMANDE_HOMOLOGATION_UN_CHANGEMENT]:
+    [TypeNatureFicheRc.DEMANDE_HOMOLOGATION_UN_CHANGEMENT]:
       "Requête en homologation d’un changement de régime matrimonial",
-    [TypeNatureFiche.DEMANDE_JUDICIAIRE_EN_SEPARATION_BIENS]:
+    [TypeNatureFicheRc.DEMANDE_JUDICIAIRE_EN_SEPARATION_BIENS]:
       "Demande judiciaire en séparation de biens",
-    [TypeNatureFiche.TUTELLE_AMENAGEE]: "Tutelle aménagée",
-    [TypeNatureFiche.TUTELLE_AUX_BIENS]: "Tutelle aux biens",
-    [TypeNatureFiche.TUTELLE_AUX_BIENS_AVEC_ASSISTANCE]:
+    [TypeNatureFicheRc.TUTELLE_AMENAGEE]: "Tutelle aménagée",
+    [TypeNatureFicheRc.TUTELLE_AUX_BIENS]: "Tutelle aux biens",
+    [TypeNatureFicheRc.TUTELLE_AUX_BIENS_AVEC_ASSISTANCE]:
       "Tutelle aux biens et à la personne (avec assistance)",
-    [TypeNatureFiche.TUTELLE_AUX_BIENS_AVEC_REPRESENTATION]:
+    [TypeNatureFicheRc.TUTELLE_AUX_BIENS_AVEC_REPRESENTATION]:
       "Tutelle aux biens et à la personne (avec représentation) ",
-    [TypeNatureFiche.HABILITATION_JUDICIAIRE_ENTRE_EPOUX_217CC]:
+    [TypeNatureFicheRc.HABILITATION_JUDICIAIRE_ENTRE_EPOUX_217CC]:
       "Habilitation judiciaire entre époux (217cc)",
-    [TypeNatureFiche.HABILITATION_ENTRE_EPOUX_219CC]:
+    [TypeNatureFicheRc.HABILITATION_ENTRE_EPOUX_219CC]:
       "Habilitation entre époux (219cc)",
-    [TypeNatureFiche.SAUVEGARDE_JUSTICE_433CC]: "Sauvegarde justice (433cc)",
-    [TypeNatureFiche.MESURE_ACCOMPAGNEMENT_SOCIAL_PERSONNALISE]:
+    [TypeNatureFicheRc.SAUVEGARDE_JUSTICE_433CC]: "Sauvegarde justice (433cc)",
+    [TypeNatureFicheRc.MESURE_ACCOMPAGNEMENT_SOCIAL_PERSONNALISE]:
       "Mesure d’accompagnement social personnalisé (L271-1 casf)",
-    [TypeNatureFiche.MESURE_ACCOMPAGNEMENT_JUDICIAIRE]:
+    [TypeNatureFicheRc.MESURE_ACCOMPAGNEMENT_JUDICIAIRE]:
       "Mesure d’accompagnement judiciaire (495cc) "
   };
 
-  public static getLibelle(nature?: TypeNatureFiche): string {
+  public static getLibelle(nature: TypeNatureFicheRc): string {
     return nature ? this.libelles[nature] : "";
   }
 }

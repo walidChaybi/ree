@@ -9,17 +9,16 @@ import {
 } from "../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
-import {
-  AutoriteUtil,
-  TypeAutorite
-} from "../../../../../model/etatcivil/TypeAutorite";
+import { AutoriteUtil } from "../../../../../model/etatcivil/TypeAutorite";
 import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
 
 export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
   let contentsDecision: AccordionContentProps[] = [];
 
   if (AutoriteUtil.isJuridiction(retourBack.decision.autorite.type)) {
-    contentsDecision = [...getContentJuridiction(retourBack.decision)];
+    contentsDecision = [
+      ...getContentJuridiction(retourBack.decision, retourBack.categorie)
+    ];
   } else if (
     AutoriteUtil.isNotaire(retourBack.decision.autorite.type) ||
     (AutoriteUtil.isOnac(retourBack.decision.autorite.type) &&
@@ -52,8 +51,11 @@ export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
   return decision;
 }
 
-function getContentJuridiction(decision: IDecisionRc): AccordionContentProps[] {
-  return [
+function getContentJuridiction(
+  decision: IDecisionRc,
+  typeFiche: TypeFiche
+): AccordionContentProps[] {
+  const result = [
     {
       libelle: "Type",
       value: DecisionUtil.getLibelle(decision.type)
@@ -64,7 +66,22 @@ function getContentJuridiction(decision: IDecisionRc): AccordionContentProps[] {
         decision.dateDecision != null
           ? getDateString(getDateFromTimestamp(decision.dateDecision))
           : ""
-    },
+    }
+  ];
+
+  if (
+    FicheUtil.isFicheRca(typeFiche) &&
+    decision.dateDecisionEtrangere != null
+  ) {
+    result.push({
+      libelle: "Date décision étrangère",
+      value: decision.dateDecisionEtrangere
+        ? getDateString(getDateFromTimestamp(decision.dateDecisionEtrangere))
+        : ""
+    });
+  }
+
+  return result.concat([
     {
       libelle: "Enrôlement RG",
       value: decision.enrolementRg || ""
@@ -73,7 +90,7 @@ function getContentJuridiction(decision: IDecisionRc): AccordionContentProps[] {
       libelle: "Enrôlement Portalis",
       value: decision.enrolementPortalis || ""
     }
-  ];
+  ]);
 }
 
 function getContentNotaire(decision: IDecisionRc): AccordionContentProps[] {
@@ -114,7 +131,8 @@ function getContentConfirmationDecision(
 
     if (
       FicheUtil.isFicheRca(typeFiche) &&
-      decision.sourceConfirmation.dateDecisionEtrangere != null
+      decision.sourceConfirmation.dateDecisionEtrangere != null &&
+      AutoriteUtil.isJuridiction(decision.autorite.type)
     ) {
       confirmationDecision.push({
         libelle: "Date décision étrangère",

@@ -42,7 +42,7 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
               data.numero
             }`}</div>
             <div className="statusFiche">
-              {data.statutsFiche != null && (
+              {data.statutsFiche != null && data.statutsFiche.length > 0 && (
                 <>{`Statut de la fiche : ${data.statutsFiche[0].statut}`}</>
               )}
             </div>

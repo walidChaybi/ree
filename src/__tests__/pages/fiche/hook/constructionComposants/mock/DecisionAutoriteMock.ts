@@ -50,6 +50,52 @@ export const ficheAutoriteJuridictionFranceAvecConfirmation = {
   }
 };
 
+export const ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA = {
+  categorie: "RCA",
+  decision: {
+    dateDecision: 1577059200,
+    dateDecisionEtrangere: 1577059200,
+    type: TypeDecision.JUGEMENT,
+    autorite: {
+      type: TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE,
+      numeroDepartement: "69",
+      libelleDepartement: "Rhône",
+      ville: "Lyon",
+      pays: "France",
+
+      region: regionIleDeFrance,
+      arrondissement: "8",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: ""
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: {
+      autorite: {
+        type: TypeAutorite.TRIBUNAL_GRANDE_INSTANCE,
+        ville: "Marseille",
+        arrondissement: "10",
+        numeroDepartement: "13",
+        libelleDepartement: regionBoucheDuRhone,
+        pays: "France",
+        region: regionIleDeFrance,
+        nomNotaire: "nomnotaire",
+        prenomNotaire: "prenomnotaire",
+        numeroCrpcen: "",
+        nomOnac: "",
+        prenomOnac: ""
+      },
+      dateDecision: 1584403200,
+      enrolementRg: "enrolementRg",
+      enrolementPortalis: "enrolementPortalis",
+      type: TypeDecision.ARRET
+    }
+  }
+};
+
 export const ficheAutoriteJuridictionEtrangerAvecConfirmation = {
   decision: {
     dateDecision: 1577059200,
