@@ -121,10 +121,9 @@ interface MesRequetesPageProps {
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
-  const [
-    linkParameters,
-    setLinkParameters
-  ] = React.useState<IQueryParametersPourRequetes>({
+  const [linkParameters, setLinkParameters] = React.useState<
+    IQueryParametersPourRequetes
+  >({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,
@@ -168,6 +167,10 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     setLinkParameters(queryParameters);
   }, []);
 
+  /**
+   * Test sur cette fonction trop compliqué et longue à faire par rapport à la valeur ajouté
+   */
+  /* istanbul ignore next */
   const handleReload = useCallback(() => {
     setLinkParameters({ ...linkParameters });
     if (props.miseAJourCompteur !== undefined) {

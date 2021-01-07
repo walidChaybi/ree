@@ -3,10 +3,10 @@ import {
   TypeNatureFicheRc
 } from "../../../model/etatcivil/NatureRc";
 
-test("TypeNature model", () => {
+test("Nature model getLibelle", () => {
+  expect(NatureFicheRcUtil.getLibelle()).toBe("");
   expect(
     NatureFicheRcUtil.getLibelle(TypeNatureFicheRc.CURATELLE_AMENAGEE)
   ).toBe("Curatelle aménagée");
-
-  expect(NatureFicheRcUtil.getLibelle()).toBe("");
+  expect(NatureFicheRcUtil.getLibelle("toto")).toBeUndefined();
 });

@@ -1,10 +1,11 @@
 import { IDateCompose } from "../../views/common/util/DateUtils";
 import { TypeAutorite } from "./TypeAutorite";
 import { TypeDecision } from "./TypeDecision";
-import { TypeNatureFiche } from "./Nature";
+import { TypeNatureFicheRc } from "./NatureRc";
 import { TypeMandataire } from "./Mandataires";
 import { TypeInscriptionRc } from "./InscriptionRc";
 import { TypeFiche } from "./TypeFiche";
+import { TypeNatureFicheRca } from "./NatureRca";
 export interface IBandeauFiche {
   titreFenetre: string;
   categorie: string;
@@ -35,7 +36,7 @@ export interface IFicheRcRca {
   mariageInteresses: IMariageInteresse;
   interesses: IInteresse[];
   statutsFiche: IStatutFiche[];
-  nature: TypeNatureFiche;
+  nature: TypeNatureFicheRc | TypeNatureFicheRca;
   typeInscription: TypeInscriptionRc;
   mandataires: TypeMandataire[];
   duree: IDureeInscription;
@@ -72,6 +73,7 @@ export interface IDureeInscription {
 
 export interface IDecisionRc {
   dateDecision: number;
+  dateDecisionEtrangere: number;
   type: TypeDecision;
   autorite: IAutorite;
   enrolementRg: string;
