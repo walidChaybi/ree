@@ -6,6 +6,7 @@ import { TypeMandataire } from "./Mandataires";
 import { TypeInscriptionRc } from "./InscriptionRc";
 import { TypeFiche } from "./TypeFiche";
 import { TypeNatureFicheRca } from "./NatureRca";
+
 export interface IBandeauFiche {
   titreFenetre: string;
   categorie: string;

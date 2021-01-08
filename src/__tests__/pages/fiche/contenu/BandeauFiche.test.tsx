@@ -1,14 +1,46 @@
 import React from "react";
-import * as renderer from "react-test-renderer";
+import { render } from "@testing-library/react";
 import { BandeauFiche } from "../../../../views/pages/fiche/contenu/BandeauFiche";
 import DATA_FICHE from "../data/ficheRC";
+import { bandeauActe } from "../data/ficheActe";
+import { BandeauFicheRcRcaPacsNumero } from "../../../../views/pages/fiche/contenu/BandeauFicheRcRcaPacsNumero";
+import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
+import { BandeauFicheActeNumero } from "../../../../views/pages/fiche/contenu/BandeauFicheActeNumero";
 
 test("renders du bandeau d'une fiche RC", () => {
-  const component = renderer.create(
+  function getElementNumeroLigne() {
+    return (
+      <BandeauFicheRcRcaPacsNumero
+        dataBandeau={DATA_FICHE.dataBandeau}
+      ></BandeauFicheRcRcaPacsNumero>
+    );
+  }
+  const component = render(
     <>
-      <BandeauFiche dataBandeau={DATA_FICHE.dataBandeau}></BandeauFiche>
+      <BandeauFiche
+        dataBandeau={DATA_FICHE.dataBandeau as IBandeauFiche}
+        elementNumeroLigne={getElementNumeroLigne()}
+      ></BandeauFiche>
     </>
   );
+  expect(component.getByText("RC N° 2018 - 56533"));
+});
 
-  expect(component.toJSON()).toMatchSnapshot();
+test("renders du bandeau d'une fiche Acte", () => {
+  function getElementNumeroLigne() {
+    return (
+      <BandeauFicheActeNumero
+        dataBandeau={DATA_FICHE.dataBandeau}
+      ></BandeauFicheActeNumero>
+    );
+  }
+
+  const component = render(
+    <BandeauFiche
+      dataBandeau={bandeauActe}
+      elementNumeroLigne={getElementNumeroLigne()}
+    ></BandeauFiche>
+  );
+
+  expect(component.getByText("Registre : ACQ.DX.2020.123456..01133"));
 });

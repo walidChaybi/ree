@@ -5,7 +5,7 @@ import { storeRece } from "../common/util/storeRece";
 import messageManager from "../common/util/messageManager";
 import { estOfficierHabiliterPourTousLesDroits } from "../../model/Habilitation";
 import { Droit } from "../../model/Droit";
-import { URL_ACCUEIL } from "./ReceUrls";
+import { URL_ACCUEIL, URL_CONTEXT_APP } from "./ReceUrls";
 
 export const RouterComponent: React.FC = () => {
   return (
@@ -32,6 +32,14 @@ export const RouterComponent: React.FC = () => {
           ></Route>
         );
       })}
+      <Route
+        render={() => {
+          messageManager.showWarningAndClose(
+            "La page demandée n'existe pas, vous avez été redirigé sur la page d'accueil"
+          );
+          return <Redirect to={URL_CONTEXT_APP} />;
+        }}
+      />
     </Switch>
   );
 };

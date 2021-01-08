@@ -1,7 +1,6 @@
 import {
   IAlerte,
   IBandeauFiche,
-  IPrenom,
   IStatutFiche
 } from "../../../../model/etatcivil/FicheInterfaces";
 import {
@@ -16,40 +15,40 @@ import {
   getDateFromTimestamp,
   getDateString
 } from "../../../common/util/DateUtils";
-import { sortObjectWithNumeroOrdre } from "../../../common/util/Utils";
 import { getFicheTitle } from "../FicheUtils";
+import IFournisseurDonneesBandeau from "./fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
 
-export function setDataBandeau(data: any, categorie: string): IBandeauFiche {
+export function setDataBandeau(
+  categorie: string,
+  fournisseurDonneesBandeau: IFournisseurDonneesBandeau
+): IBandeauFiche {
   let dataBandeau = {} as IBandeauFiche;
 
-  if (data && categorie != null) {
-    const personnes = getPersonnes(data, categorie);
+  const data = fournisseurDonneesBandeau.getData();
 
-    const nom1 =
-      personnes && personnes[0] ? personnes[0].nomFamille : undefined;
-    const nom2 =
-      personnes && personnes[1] ? personnes[1].nomFamille : undefined;
+  if (data && categorie != null) {
+    const nom1 = fournisseurDonneesBandeau.getNom1();
+    const nom2 = fournisseurDonneesBandeau.getNom2();
+    const annee = fournisseurDonneesBandeau.getAnnee();
 
     dataBandeau = {
       titreFenetre: getFicheTitle(
-        categorie,
-        data.annee,
+        fournisseurDonneesBandeau.getTypeAbrege(),
+        annee,
         data.numero,
         nom1,
         nom2
       ),
-      categorie: categorie,
+      categorie: fournisseurDonneesBandeau.getType(),
       identifiant: data.id,
-      registre: data.registre ? data.registre : undefined,
-      annee: data.annee,
+      registre: fournisseurDonneesBandeau.getRegistre(),
+      annee,
       numero: data.numero,
       statutsFiche: setStatuts(data.statutsFiche),
-      prenom1: setPrenomInteresse(personnes[0].prenoms),
-      nom1: nom1,
-      prenom2: personnes[1]
-        ? setPrenomInteresse(personnes[1].prenoms)
-        : undefined,
-      nom2: nom2,
+      prenom1: fournisseurDonneesBandeau.getPrenom1(),
+      nom1,
+      prenom2: fournisseurDonneesBandeau.getPrenom2(),
+      nom2,
       alertes: setAlertes(data.alertes),
       dateDerniereMaj: getDateString(
         getDateFromTimestamp(data.dateDerniereMaj)
@@ -63,18 +62,6 @@ export function setDataBandeau(data: any, categorie: string): IBandeauFiche {
   return dataBandeau;
 }
 
-function getPersonnes(data: any, categorie: string) {
-  let personnes = [];
-  if (categorie === "pacs") {
-    personnes = data.partenaires;
-  } else {
-    personnes = data.interesses.sort((i1: any, i2: any) =>
-      sortObjectWithNumeroOrdre(i1, i2, "numeroOrdreSaisi")
-    );
-  }
-  return personnes;
-}
-
 function setStatuts(statuts: IStatutFiche[]) {
   const statutsInscription: IStatutFiche[] = [];
   if (statuts) {
@@ -84,18 +71,6 @@ function setStatuts(statuts: IStatutFiche[]) {
     });
   }
   return statutsInscription;
-}
-
-function setPrenomInteresse(prenoms: IPrenom[]) {
-  let prenomInteresse = "";
-  if (prenoms) {
-    prenoms.forEach(p => {
-      if (p.numeroOrdre === 1) {
-        prenomInteresse = p.prenom;
-      }
-    });
-  }
-  return prenomInteresse;
 }
 
 function setAlertes(alertes: IAlerte[]) {
