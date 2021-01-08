@@ -3,6 +3,9 @@ import { BandeauFiche } from "./contenu/BandeauFiche";
 import { useFichePageApiHook } from "./hook/FichePageApiHook";
 import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
 import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
+import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
+import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
+import { FicheUtil } from "../../../model/etatcivil/TypeFiche";
 
 export interface FichePageProps {
   dataFiche: IDataFicheProps;
@@ -41,10 +44,25 @@ export const FichePage: React.FC<FichePageProps> = props => {
     <div>
       {/* Le Bandeau */}
       {dataFicheState.dataBandeau && (
-        <BandeauFiche dataBandeau={dataFicheState.dataBandeau}></BandeauFiche>
+        <BandeauFiche
+          dataBandeau={dataFicheState.dataBandeau}
+          elementNumeroLigne={getElementNumeroLigne()}
+        ></BandeauFiche>
       )}
       {/* Les Accordéons */}
       {dataFicheState.fiche && <AccordionRece {...dataFicheState.fiche} />}
     </div>
   );
+
+  function getElementNumeroLigne() {
+    return FicheUtil.isActe(props.dataFiche.categorie) ? (
+      <BandeauFicheActeNumero
+        dataBandeau={dataFicheState.dataBandeau}
+      ></BandeauFicheActeNumero>
+    ) : (
+      <BandeauFicheRcRcaPacsNumero
+        dataBandeau={dataFicheState.dataBandeau}
+      ></BandeauFicheRcRcaPacsNumero>
+    );
+  }
 };

@@ -13,7 +13,10 @@ export default {
         dateCreation: 1581807600
       }
     ],
-    dateDerniereMaj: 1583971200,
-    dateDerniereDelivrance: 1592092800
+    dateDerniereMaj: "22/10/2014",
+    dateDerniereDelivrance: "22/10/2014",
+    titreFenetre: "",
+    identifiant: "123",
+    statutsFiche: []
   }
 };

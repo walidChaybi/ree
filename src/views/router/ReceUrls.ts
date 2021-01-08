@@ -10,4 +10,6 @@ export const URL_MES_REQUETES_ID = `${URL_MES_REQUETES}/:idRequete`;
 export const URL_REQUETES_SERVICE_ID = `${URL_REQUETES_SERVICE}/:idRequete`;
 export const URL_DECONNEXION = "/rece/Shibboleth.sso/Logout";
 
+// Urls temporaires
 export const URL_RC_RCA = `${URL_CONTEXT_APP}/rcrca`;
+export const URL_ACTE = `${URL_CONTEXT_APP}/acte`;

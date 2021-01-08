@@ -14,11 +14,13 @@ import {
   URL_MES_REQUETES_ID,
   URL_REQUETES_SERVICE_ID,
   URL_DECONNEXION,
-  URL_RC_RCA
+  URL_RC_RCA,
+  URL_ACTE
 } from "./ReceUrls";
 import { RcRcaPage } from "../pages/RcRcaPage";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
+import { ActePage } from "../pages/ActePage";
 
 export interface IRouteRece {
   component?: any;
@@ -65,6 +67,11 @@ export const routesRece: IRouteRece[] = [
   {
     url: URL_RC_RCA,
     component: RcRcaPage,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2)
+  },
+  {
+    url: URL_ACTE,
+    component: ActePage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2)
   }
 ];

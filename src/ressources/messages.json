@@ -29,7 +29,8 @@
     "requetesservice": "Requêtes du service",
     "apercurequete": "Aperçu de requête",
     "messagerie": "Messagerie",
-    "rcrca": "Fiche RC / RCA / PACS"
+    "rcrca": "Fiche RC / RCA / PACS",
+    "acte": "Fiche Acte"
   },
   "pages": {
     "delivrance": {

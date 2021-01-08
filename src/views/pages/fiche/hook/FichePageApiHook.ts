@@ -6,6 +6,7 @@ import { getPanelsRc } from "./constructionComposants/FicheRcUtils";
 import { setDataBandeau } from "../contenu/BandeauFicheUtils";
 import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
 import { getPanelsRca } from "./constructionComposants/FicheRcaUtils";
+import { fournisseurDonneesBandeauFactory } from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
 export interface IFicheApi {
   dataBandeau: IBandeauFiche;
@@ -23,7 +24,14 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
       getInformationsFiche(categorie, identifiant)
         .then((result: any) => {
           const dataFiche = {} as IFicheApi;
-          dataFiche.dataBandeau = setDataBandeau(result.body.data, categorie);
+
+          dataFiche.dataBandeau = setDataBandeau(
+            categorie,
+            fournisseurDonneesBandeauFactory.createFournisseur(
+              categorie,
+              result.body.data
+            )
+          );
           if (categorie === "rc") {
             dataFiche.fiche = getPanelsRc(result.body.data);
           } else if (categorie === "rca") {

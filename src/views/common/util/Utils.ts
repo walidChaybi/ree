@@ -31,9 +31,30 @@ export function normaliserNomOec(nom: string) {
 
 export function reecriturePrenom(prenom: string) {
   let result = prenom;
-  result = `${prenom.charAt(0).toLocaleUpperCase()}${prenom
-    .substring(1)
-    .toLocaleLowerCase()}`;
-
+  if (prenom) {
+    result = `${prenom.charAt(0).toLocaleUpperCase()}${prenom
+      .substring(1)
+      .toLocaleLowerCase()}`;
+  }
   return result;
+}
+
+export function premiereLettreEnMajusculeLeResteEnMinuscule(str: string) {
+  let res = "";
+  if (str) {
+    res = str.charAt(0).toUpperCase() + str.slice(1).toLocaleLowerCase();
+  }
+  return res;
+}
+
+export function formatDe(str: string) {
+  let de = "de ";
+  const lettres = ["A", "E", "I", "O", "U", "Y", "H"];
+  const premiereLettre = str.charAt(0);
+  lettres.forEach(lettre => {
+    if (lettre === premiereLettre) {
+      de = "d'";
+    }
+  });
+  return de;
 }

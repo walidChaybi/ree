@@ -1,6 +1,8 @@
 import {
   sortObjectWithNumeroOrdre,
-  normaliserNomOec
+  normaliserNomOec,
+  premiereLettreEnMajusculeLeResteEnMinuscule,
+  formatDe
 } from "../../../views/common/util/Utils";
 
 test("Utils sortObjectWithNumeroOrdre ", async () => {
@@ -45,4 +47,22 @@ test("Utils normaliserNomOec ", async () => {
 
   const lowercase = normaliserNomOec(" AGHÉÀ ");
   expect(lowercase).toBe("aghea");
+});
+
+test("Attendu: premiereLettreEnMajusculeLeResteEnMinuscule fonctionne correctement", () => {
+  expect(premiereLettreEnMajusculeLeResteEnMinuscule("NAISSANCE")).toBe(
+    "Naissance"
+  );
+});
+
+test("Attendu: formatDe fonctionne correctement", () => {
+  let str = "Naissance";
+  let de = formatDe(str);
+  let fullStr = `${de}${str}`;
+  expect(fullStr).toBe("de Naissance");
+
+  str = "Absence";
+  de = formatDe(str);
+  fullStr = `${de}${str}`;
+  expect(fullStr).toBe("d'Absence");
 });

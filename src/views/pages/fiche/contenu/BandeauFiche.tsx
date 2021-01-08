@@ -6,6 +6,7 @@ import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
 
 export interface BandeauFicheProps {
   dataBandeau: IBandeauFiche;
+  elementNumeroLigne: JSX.Element;
 }
 
 export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
@@ -37,16 +38,7 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
           {data.registre != null && (
             <div className="InfoImportante">{`Registre : ${data.registre}`}</div>
           )}
-          <div className="InfoImportante LigneNumero">
-            <div>{`${data.categorie.toLocaleUpperCase()} N° ${data.annee} - ${
-              data.numero
-            }`}</div>
-            <div className="statusFiche">
-              {data.statutsFiche != null && data.statutsFiche.length > 0 && (
-                <>{`Statut de la fiche : ${data.statutsFiche[0].statut}`}</>
-              )}
-            </div>
-          </div>
+          {props.elementNumeroLigne}
           <div className="LignePrenomNom">
             <div className="InfoImportante">{getPrenomNom()}</div>
             <div className="alertes">
