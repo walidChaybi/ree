@@ -5,8 +5,12 @@ export default {
     annee: "2018",
     numero: "56533",
     statut: "Actif",
-    prenom1: "Enrico",
-    nom1: "FAVARO",
+    personnes: [
+      {
+        prenom: "Enrico",
+        nom: "FAVARO"
+      }
+    ],
     alertes: [
       {
         alerte: "Date de fin de mesure dépassée",

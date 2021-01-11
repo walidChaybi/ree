@@ -3,6 +3,7 @@ import "./sass/Bandeau.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
+import { jointAvec } from "../../../common/util/Utils";
 
 export interface BandeauFicheProps {
   dataBandeau: IBandeauFiche;
@@ -13,11 +14,11 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
   const data = props.dataBandeau;
 
   function getPrenomNom() {
-    let prenomNom = `${data.prenom1} ${data.nom1.toUpperCase()}`;
-    if (data.prenom2 != null && data.nom2 != null) {
-      prenomNom = `${prenomNom} et ${data.prenom2} ${data.nom2.toUpperCase()}`;
-    }
-    return prenomNom;
+    const nomsPrenoms = data.personnes.map(
+      personne => `${personne.prenom} ${personne.nom}`
+    );
+
+    return jointAvec(nomsPrenoms, " et ");
   }
 
   function getAlertes() {

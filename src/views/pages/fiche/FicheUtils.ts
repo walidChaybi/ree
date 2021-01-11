@@ -1,20 +1,15 @@
+import { SimplePersonne } from "./contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
+import { getValeurOuVide, jointAvec } from "../../common/util/Utils";
+
 export function getFicheTitle(
   categorie: string,
   annee: string,
   numero: string,
-  nom1: string,
-  nom2?: string
+  personnes: SimplePersonne[]
 ) {
-  return `${categorie.toLocaleUpperCase()} - ${getNom(
-    nom1,
-    nom2
-  )} - N° ${annee} - ${numero}`;
-}
-
-function getNom(nom1: string, nom2?: string) {
-  let nom = `${nom1.toLocaleUpperCase()}`;
-  if (nom2 != null && nom2 !== "") {
-    nom += ` et ${nom2.toLocaleUpperCase()}`;
-  }
-  return nom;
+  const noms = jointAvec(
+    personnes.map(p => `${getValeurOuVide(p.nom).toLocaleUpperCase()}`),
+    " et "
+  );
+  return `${categorie.toLocaleUpperCase()} - ${noms} - N° ${annee} - ${numero}`;
 }

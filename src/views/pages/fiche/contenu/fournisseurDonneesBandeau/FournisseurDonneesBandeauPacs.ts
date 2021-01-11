@@ -1,6 +1,6 @@
 import { FournisseurDonneeBandeauRcRca } from "./FournisseurDonneesBandeauRcRca";
 export class FournisseurDonneeBandeauPacs extends FournisseurDonneeBandeauRcRca {
-  getPersonnes() {
+  getPersonnesAsAny() {
     return this.data.partenaires;
   }
 

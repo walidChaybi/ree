@@ -17,8 +17,8 @@ test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
     { statut: "Actif" },
     { statut: "Inactif" }
   ]);
-  expect(bandeauFiche.prenom1).toBe("prenom11");
-  expect(bandeauFiche.prenom2).toBe("prenom21");
+  expect(bandeauFiche.personnes[0].prenom).toBe("prenom11");
+  expect(bandeauFiche.personnes[1].prenom).toBe("prenom21");
   expect(bandeauFiche.alertes).toEqual([
     { alerte: "Date de fin de mesure dépassée", dateCreation: 1581807600 }
   ]);
@@ -39,8 +39,8 @@ test("bandeauFicheUtils setDataBandeau works PACS", async () => {
     { statut: "Actif" },
     { statut: "Inactif" }
   ]);
-  expect(bandeauFiche.prenom1).toBe("prenom11");
-  expect(bandeauFiche.prenom2).toBe("prenom21");
+  expect(bandeauFiche.personnes[0].prenom).toBe("prenom11");
+  expect(bandeauFiche.personnes[1].prenom).toBe("prenom21");
 });
 
 test("bandeauFicheUtils setDataBandeau works Acte", async () => {
@@ -52,6 +52,6 @@ test("bandeauFicheUtils setDataBandeau works Acte", async () => {
   expect(bandeauFiche.titreFenetre).toBe(
     "ABSENCE - GREENWALD et DUPE - N° 1921 - 413"
   );
-  expect(bandeauFiche.prenom1).toBe("Paulita");
+  expect(bandeauFiche.personnes[0].prenom).toBe("Paulita");
   expect(bandeauFiche.registre).toBe("CSL.DX.1921.413.NA.T");
 });

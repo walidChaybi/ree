@@ -1,24 +1,22 @@
-import IFournisseurDonneesBandeau from "./IFournisseurDonneesBandeau";
+import IFournisseurDonneesBandeau, {
+  SimplePersonne
+} from "./IFournisseurDonneesBandeau";
 
-export default abstract class FournisseurDonneesBandeau
+export abstract class FournisseurDonneesBandeau
   implements IFournisseurDonneesBandeau {
-  personnes: any[];
+  personnes: SimplePersonne[];
 
   constructor(protected data: any) {
-    this.personnes = this.getPersonnes();
+    this.personnes = this.getPersonnesAsAny();
   }
 
   getData(): any {
     return this.data;
   }
 
-  abstract getPersonnes(): any[];
+  abstract getPersonnesAsAny(): any[];
 
-  abstract getNom(ordre: number): string;
-
-  abstract getPrenom1(): string;
-
-  abstract getPrenom2(): string | undefined;
+  abstract getSimplePersonnes(): SimplePersonne[];
 
   abstract getTypeAbrege(): string;
   abstract getType(): string;
@@ -27,13 +25,5 @@ export default abstract class FournisseurDonneesBandeau
 
   getRegistre(): string | undefined {
     return undefined;
-  }
-
-  getNom1() {
-    return this.getNom(0);
-  }
-
-  getNom2() {
-    return this.getNom(1);
   }
 }

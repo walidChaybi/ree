@@ -62,3 +62,22 @@ export function formatDe(str: string) {
 export function getValeurOuVide(str: any) {
   return str ? str : "";
 }
+
+export function getPremierElemOuVide(tab: any[]) {
+  return tab && tab[0] ? tab[0] : "";
+}
+
+export function jointAvec(tab: string[], sep: string) {
+  let res = "";
+  tab.forEach(elem => {
+    if (elem && elem.trim()) {
+      if (res) {
+        res = res + sep + elem.trim();
+      } else {
+        res = elem.trim();
+      }
+    }
+  });
+
+  return res;
+}
