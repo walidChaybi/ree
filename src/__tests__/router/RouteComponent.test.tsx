@@ -5,7 +5,7 @@ import {
   URL_MES_REQUETES_ID,
   URL_MES_REQUETES
 } from "../../views/router/ReceUrls";
-import { render } from "@testing-library/react";
+import { render, act, waitFor } from "@testing-library/react";
 import { RouterComponent } from "../../views/router/RouteComponent";
 import { Router } from "react-router-dom";
 import { screen } from "@testing-library/react";
@@ -42,4 +42,22 @@ test("L'utilisateur accède à la page 'Espace délivrance' car il a le droit at
     </Router>
   );
   expect(getByText(/Espace délivrance/)).toBeInTheDocument();
+});
+
+test("L'utilisateur esasye d'accéder à la page 'Page qui n'existe pas', il est redirigé vers une page d'erreur ", async () => {
+  storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
+    idDroit: "d12345",
+    nom: Droit.ATTRIBUER
+  };
+  const history = createMemoryHistory();
+  history.push("url_page_existe_pas");
+  const { getByText } = render(
+    <Router history={history}>
+      <RouterComponent />
+    </Router>
+  );
+  await waitFor(() => {
+    const txt = getByText(/Bienvenu/);
+    expect(txt).toBeInTheDocument();
+  });
 });
