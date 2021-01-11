@@ -231,5 +231,5 @@ test("Autorite utils get autorite : donnees non valides", async () => {
 test("Autorite utils get autorite : onac", async () => {
   const components = getAutorite(ficheAutoriteOnac as IFicheRcRca);
   const element = components[0].contents[1].value as JSX.Element;
-  expect(element.props.children).toBe("prenomOnac NOMONAC");
+  expect(element.props.children).toBe("titreOnac");
 });

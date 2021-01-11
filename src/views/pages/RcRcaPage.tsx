@@ -12,6 +12,10 @@ export const RcRcaPage: React.FC = () => {
   const categorieRca2 = "rca";
   const numeroRca2 = "4093";
 
+  const identifiantRca3 = "8c9ea77f-55dc-494f-8e75-b136ac7ce63e";
+  const categorieRca3 = "rca";
+  const numeroRca3 = "4094";
+
   const identifiant = "76b62678-8b06-4442-ad5b-b9207627a6e3";
   const categorie = "rc";
   const numero = "1";
@@ -49,6 +53,12 @@ export const RcRcaPage: React.FC = () => {
         identifiant={identifiantRca2}
         categorie={categorieRca2}
         numero={numeroRca2}
+      />
+
+      <LienFiche
+        identifiant={identifiantRca3}
+        categorie={categorieRca3}
+        numero={numeroRca3}
       />
 
       <p>RC</p>
