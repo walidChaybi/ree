@@ -6,6 +6,7 @@ import { TypeMandataire } from "./Mandataires";
 import { TypeInscriptionRc } from "./InscriptionRc";
 import { TypeFiche } from "./TypeFiche";
 import { TypeNatureFicheRca } from "./NatureRca";
+import { SimplePersonne } from "../../views/pages/fiche/contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
 
 export interface IBandeauFiche {
   titreFenetre: string;
@@ -15,10 +16,7 @@ export interface IBandeauFiche {
   annee: string;
   numero: string;
   statutsFiche: IStatutFiche[];
-  prenom1: string;
-  nom1: string;
-  prenom2?: string;
-  nom2?: string;
+  personnes: SimplePersonne[];
   alertes?: IAlerte[];
   dateDerniereMaj: string;
   dateDerniereDelivrance: string;

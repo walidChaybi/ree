@@ -3,7 +3,9 @@ import {
   normaliserNomOec,
   premiereLettreEnMajusculeLeResteEnMinuscule,
   formatDe,
-  getValeurOuVide
+  getValeurOuVide,
+  jointAvec,
+  getPremierElemOuVide
 } from "../../../views/common/util/Utils";
 
 test("Utils sortObjectWithNumeroOrdre ", async () => {
@@ -73,4 +75,22 @@ test("Attendu: getValeurOuVide fonctionne correctement", () => {
   expect(getValeurOuVide(undefined)).toBe("");
   expect(getValeurOuVide(null)).toBe("");
   expect(getValeurOuVide("aze")).toBe("aze");
+});
+
+test("Attendu: jointAvec fonctionne correctement", () => {
+  const sep = " et ";
+  expect(jointAvec(["", "", ""], sep)).toBe("");
+  expect(jointAvec(["martin ", " dupe", "aurelia mine"], sep)).toBe(
+    "martin et dupe et aurelia mine"
+  );
+  expect(jointAvec([" martin ", " dupe", "aurelia mine"], sep)).toBe(
+    "martin et dupe et aurelia mine"
+  );
+});
+
+test("Attendu: getPremierElemOuVide fonctionne correctement", () => {
+  expect(getPremierElemOuVide(null!)).toBe("");
+  expect(getPremierElemOuVide(undefined!)).toBe("");
+  expect(getPremierElemOuVide([])).toBe("");
+  expect(getPremierElemOuVide(["aze"])).toBe("aze");
 });

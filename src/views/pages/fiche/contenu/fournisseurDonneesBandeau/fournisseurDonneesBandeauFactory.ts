@@ -1,7 +1,7 @@
 import { FournisseurDonneeBandeauRcRca } from "./FournisseurDonneesBandeauRcRca";
 import { FournisseurDonneeBandeauPacs } from "./FournisseurDonneesBandeauPacs";
 import { FournisseurDonneeBandeauActe } from "./FournisseurDonneesBandeauActe";
-import FournisseurDonneesBandeau from "./FournisseurDonneesBandeau";
+import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 
 class FournisseurDonneesBandeauFactory {
   createFournisseur(categorie: string, data: any) {

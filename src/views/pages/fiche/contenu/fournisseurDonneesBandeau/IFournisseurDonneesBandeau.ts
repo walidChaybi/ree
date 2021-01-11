@@ -1,12 +1,13 @@
 /* istanbul ignore file */
+
+export class SimplePersonne {
+  constructor(public nom: string, public prenom: string) {}
+}
+
 export default interface IFournisseurDonneesBandeau {
   getData(): any;
 
-  getNom1: () => string;
-  getNom2: () => string;
-
-  getPrenom1: () => string;
-  getPrenom2: () => string | undefined;
+  getSimplePersonnes: () => SimplePersonne[];
 
   getTypeAbrege: () => string;
   getType: () => string;

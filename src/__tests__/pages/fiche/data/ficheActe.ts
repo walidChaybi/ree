@@ -8,8 +8,7 @@ export const bandeauActe: IBandeauFiche = {
   annee: "20220",
   numero: "123456",
   statutsFiche: [],
-  prenom1: "Laurent",
-  nom1: "Dupe",
+  personnes: [{ prenom: "Laurent", nom: "Dupe" }],
   dateDerniereMaj: "07/01/2021",
   dateDerniereDelivrance: "07/01/2021"
 };

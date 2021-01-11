@@ -1,17 +1,17 @@
 import { fournisseurDonneesBandeauFactory } from "../../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
 import { acte } from "../../data/ficheActe";
-import FournisseurDonneesBandeau from "../../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/FournisseurDonneesBandeau";
+import { FournisseurDonneesBandeau } from "../../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/FournisseurDonneesBandeau";
 test("Attendu: fournisseur de donnée bandeau pour acte fonctionne correctement", () => {
   const fdActe: FournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(
     "acte",
     acte
   );
 
-  expect(fdActe.getNom1()).toBe("GREENWALD");
-  expect(fdActe.getNom2()).toBe("DUPE");
-  expect(fdActe.getPrenom1()).toBe("Paulita");
-  expect(fdActe.getPrenom2()).toBe("Laurent");
+  expect(fdActe.getSimplePersonnes()[0].nom).toBe("GREENWALD");
+  expect(fdActe.getSimplePersonnes()[1].nom).toBe("DUPE");
+  expect(fdActe.getSimplePersonnes()[0].prenom).toBe("Paulita");
+  expect(fdActe.getSimplePersonnes()[1].prenom).toBe("Laurent");
   expect(fdActe.getTypeAbrege()).toBe("Absence");
   expect(fdActe.getType()).toBe("Acte d'Absence");
 

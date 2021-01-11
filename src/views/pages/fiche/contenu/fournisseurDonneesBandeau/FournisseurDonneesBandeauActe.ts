@@ -1,64 +1,72 @@
-import FournisseurDonneesBandeau from "./FournisseurDonneesBandeau";
+import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 import {
   sortObjectWithNumeroOrdre,
   formatDe,
   premiereLettreEnMajusculeLeResteEnMinuscule,
-  getValeurOuVide
+  getValeurOuVide,
+  getPremierElemOuVide
 } from "../../../../common/util/Utils";
+import { SimplePersonne } from "./IFournisseurDonneesBandeau";
 
 export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
-  getNom(ordre: number) {
-    return this.personnes && this.personnes[ordre]
-      ? this.personnes[ordre].nom
-      : undefined;
+  getPersonnesAsAny(): any[] {
+    return this.data
+      ? this.data.titulaires.sort((i1: any, i2: any) =>
+          sortObjectWithNumeroOrdre(i1, i2, "ordre")
+        )
+      : [];
   }
 
-  getPersonnes(): any[] {
-    let personnes = [];
-    personnes = this.data.titulaires.sort((i1: any, i2: any) =>
-      sortObjectWithNumeroOrdre(i1, i2, "ordre")
+  getSimplePersonnes(): SimplePersonne[] {
+    return this.personnes.map(
+      (p: any) =>
+        new SimplePersonne(
+          getValeurOuVide(p.nom),
+          getPremierElemOuVide(p.prenoms)
+        )
     );
-    return personnes;
-  }
-
-  getPrenom1(): string {
-    return this.personnes[0].prenoms[0];
-  }
-
-  getPrenom2(): string | undefined {
-    return this.personnes[1] ? this.personnes[1].prenoms[0] : undefined;
   }
 
   getTypeAbrege(): string {
-    return premiereLettreEnMajusculeLeResteEnMinuscule(this.data.nature);
+    return this.data
+      ? premiereLettreEnMajusculeLeResteEnMinuscule(this.data.nature)
+      : "";
   }
 
   getType(): string {
-    const nature = premiereLettreEnMajusculeLeResteEnMinuscule(
-      this.data.nature
-    );
-    const de = formatDe(this.data.nature);
-    return `Acte ${de}${nature}`;
+    let res = "";
+    if (this.data) {
+      const nature = premiereLettreEnMajusculeLeResteEnMinuscule(
+        this.data.nature
+      );
+      const de = formatDe(this.data.nature);
+      res = `Acte ${de}${nature}`;
+    }
+    return res;
   }
 
   getAnnee(): string {
-    return this.data.evenement.annee;
+    return this.data ? this.data.evenement.annee : "";
   }
 
   getRegistre() {
-    const annee = this.data.evenement.annee;
-    const noActe = this.data.numero;
+    let res = "";
+    if (this.data) {
+      const annee = this.data.evenement.annee;
+      const noActe = this.data.numero;
 
-    let famille = "";
-    let pocopa = "";
-    let support1 = "";
-    let support2 = "";
-    if (this.data.registre) {
-      famille = getValeurOuVide(this.data.registre.famille);
-      pocopa = getValeurOuVide(this.data.registre.pocopa);
-      support1 = getValeurOuVide(this.data.registre.support1);
-      support2 = getValeurOuVide(this.data.registre.support2);
+      let famille = "";
+      let pocopa = "";
+      let support1 = "";
+      let support2 = "";
+      if (this.data.registre) {
+        famille = getValeurOuVide(this.data.registre.famille);
+        pocopa = getValeurOuVide(this.data.registre.pocopa);
+        support1 = getValeurOuVide(this.data.registre.support1);
+        support2 = getValeurOuVide(this.data.registre.support2);
+      }
+      res = `${famille}.${pocopa}.${annee}.${noActe}.${support1}.${support2}`;
     }
-    return `${famille}.${pocopa}.${annee}.${noActe}.${support1}.${support2}`;
+    return res;
   }
 }

@@ -27,8 +27,6 @@ export function setDataBandeau(
   const data = fournisseurDonneesBandeau.getData();
 
   if (data && categorie != null) {
-    const nom1 = fournisseurDonneesBandeau.getNom1();
-    const nom2 = fournisseurDonneesBandeau.getNom2();
     const annee = fournisseurDonneesBandeau.getAnnee();
 
     dataBandeau = {
@@ -36,8 +34,7 @@ export function setDataBandeau(
         fournisseurDonneesBandeau.getTypeAbrege(),
         annee,
         data.numero,
-        nom1,
-        nom2
+        fournisseurDonneesBandeau.getSimplePersonnes()
       ),
       categorie: fournisseurDonneesBandeau.getType(),
       identifiant: data.id,
@@ -45,10 +42,7 @@ export function setDataBandeau(
       annee,
       numero: data.numero,
       statutsFiche: setStatuts(data.statutsFiche),
-      prenom1: fournisseurDonneesBandeau.getPrenom1(),
-      nom1,
-      prenom2: fournisseurDonneesBandeau.getPrenom2(),
-      nom2,
+      personnes: fournisseurDonneesBandeau.getSimplePersonnes(),
       alertes: setAlertes(data.alertes),
       dateDerniereMaj: getDateString(
         getDateFromTimestamp(data.dateDerniereMaj)
