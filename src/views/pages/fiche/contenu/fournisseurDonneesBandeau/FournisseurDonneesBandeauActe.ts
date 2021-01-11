@@ -2,7 +2,8 @@ import FournisseurDonneesBandeau from "./FournisseurDonneesBandeau";
 import {
   sortObjectWithNumeroOrdre,
   formatDe,
-  premiereLettreEnMajusculeLeResteEnMinuscule
+  premiereLettreEnMajusculeLeResteEnMinuscule,
+  getValeurOuVide
 } from "../../../../common/util/Utils";
 
 export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
@@ -53,10 +54,10 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
     let support1 = "";
     let support2 = "";
     if (this.data.registre) {
-      famille = this.data.registre.famille;
-      pocopa = this.data.registre.pocopa;
-      support1 = this.data.registre.support1;
-      support2 = this.data.registre.support2;
+      famille = getValeurOuVide(this.data.registre.famille);
+      pocopa = getValeurOuVide(this.data.registre.pocopa);
+      support1 = getValeurOuVide(this.data.registre.support1);
+      support2 = getValeurOuVide(this.data.registre.support2);
     }
     return `${famille}.${pocopa}.${annee}.${noActe}.${support1}.${support2}`;
   }

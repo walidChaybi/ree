@@ -2,7 +2,8 @@ import {
   sortObjectWithNumeroOrdre,
   normaliserNomOec,
   premiereLettreEnMajusculeLeResteEnMinuscule,
-  formatDe
+  formatDe,
+  getValeurOuVide
 } from "../../../views/common/util/Utils";
 
 test("Utils sortObjectWithNumeroOrdre ", async () => {
@@ -65,4 +66,11 @@ test("Attendu: formatDe fonctionne correctement", () => {
   de = formatDe(str);
   fullStr = `${de}${str}`;
   expect(fullStr).toBe("d'Absence");
+});
+
+test("Attendu: getValeurOuVide fonctionne correctement", () => {
+  expect(getValeurOuVide("")).toBe("");
+  expect(getValeurOuVide(undefined)).toBe("");
+  expect(getValeurOuVide(null)).toBe("");
+  expect(getValeurOuVide("aze")).toBe("aze");
 });

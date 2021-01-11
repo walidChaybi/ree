@@ -58,3 +58,7 @@ export function formatDe(str: string) {
   });
   return de;
 }
+
+export function getValeurOuVide(str: any) {
+  return str ? str : "";
+}
