@@ -47,11 +47,7 @@ export const TitulaireInformation: React.FC<LocalProps> = ({
   );
 };
 
-const getDate = (
-  jour: number | undefined,
-  mois: number | undefined,
-  annee: number
-): string => {
+const getDate = (jour?: number, mois?: number, annee?: number): string => {
   let res = "";
   const limiteZeroPrecision = 10;
   if (jour) {
@@ -64,5 +60,8 @@ const getDate = (
       mois < limiteZeroPrecision ? `0${mois.toString()}` : mois.toString();
     res = res !== "" ? `${res}${moisFormate}/` : `${moisFormate}/`;
   }
-  return res !== "" ? `${res}${annee.toString()}` : annee.toString();
+  if (annee) {
+    res = res !== "" ? `${res}${annee.toString()}` : annee.toString();
+  }
+  return res;
 };

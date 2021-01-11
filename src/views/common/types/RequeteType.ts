@@ -8,7 +8,7 @@ export interface ITitulaire {
   prenom3: string;
   jourNaissance: number;
   moisNaissance: number;
-  anneeNaissance: number;
+  anneeNaissance?: number;
   villeNaissance: string;
   paysNaissance: string;
   parent1?: string;
