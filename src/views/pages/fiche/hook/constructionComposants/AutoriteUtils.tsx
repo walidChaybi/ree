@@ -81,13 +81,19 @@ function getContentAutoriteFrance(
 }
 
 function getContentOnacEtFrance(autorite: IAutorite): AccordionContentProps[] {
-  return [
+  const content = [
     getTypeAutoriteContent(autorite.type),
     getPrenomNomOnac(autorite),
-    getVilleAutoriteContent(autorite.ville),
-    getArrondissementAutoriteContent(autorite.arrondissement),
-    getDepartementAutoriteContent(autorite)
+    getVilleAutoriteContent(autorite.ville)
   ];
+
+  if (LieuxUtils.isVilleAvecArrondissement(autorite.ville)) {
+    content.push(getArrondissementAutoriteContent(autorite.arrondissement));
+  }
+
+  content.push(getDepartementAutoriteContent(autorite));
+
+  return content;
 }
 
 function getContentNotaireEtEtranger(
@@ -198,11 +204,11 @@ function getRegionAutoriteContent(region: string): AccordionContentProps {
 }
 
 function getArrondissementAutoriteContent(
-  arrondisseemnt: string
+  arrondissement: string
 ): AccordionContentProps {
   return {
     libelle: "Arrondissement",
-    value: <span>{arrondisseemnt || ""}</span>
+    value: <span>{arrondissement || ""}</span>
   };
 }
 

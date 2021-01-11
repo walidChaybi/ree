@@ -16,7 +16,7 @@ const getDurationErrorForAutoClose = (autoClose?: number) =>
 
 const toString = (messages: string[]) => {
   return messages
-    .map((message) => message + "\n")
+    .map(message => message + "\n")
     .toString()
     .replace(/,/g, "");
 };
@@ -40,7 +40,7 @@ const messageManager = {
         autoClose: getDurationErrorForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "error",
+        className: "error"
       }
     );
   },
@@ -57,14 +57,14 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "error",
+        className: "error"
       }
     );
   },
 
   showErrors: (errorMessage: string[]) => {
     const htmlErrorMessage = errorMessage
-      .map((message) => message + "\n")
+      .map(message => message + "\n")
       .toString()
       .replace(/,/g, "");
 
@@ -79,7 +79,7 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "error",
+        className: "error"
       }
     );
   },
@@ -96,7 +96,7 @@ const messageManager = {
         autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "success",
+        className: "success"
       }
     );
   },
@@ -113,14 +113,14 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "success",
+        className: "success"
       }
     );
   },
 
   showSuccesses: (successMessage: string[]) => {
     const htmlErrorMessage = successMessage
-      .map((message) => message + "\n")
+      .map(message => message + "\n")
       .toString()
       .replace(/,/g, "");
 
@@ -135,7 +135,7 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "success",
+        className: "success"
       }
     );
   },
@@ -153,7 +153,7 @@ const messageManager = {
         autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "info",
+        className: "info"
       }
     );
   },
@@ -170,7 +170,7 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "info",
+        className: "info"
       }
     );
   },
@@ -189,7 +189,7 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "info",
+        className: "info"
       }
     );
   },
@@ -207,7 +207,7 @@ const messageManager = {
         autoClose: getDurationForAutoClose(autoClose),
         closeButton: false,
         hideProgressBar: false,
-        className: "warning",
+        className: "warning"
       }
     );
   },
@@ -224,7 +224,7 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "warning",
+        className: "warning"
       }
     );
   },
@@ -243,10 +243,10 @@ const messageManager = {
         autoClose: false,
         closeButton: true,
         hideProgressBar: true,
-        className: "warning",
+        className: "warning"
       }
     );
-  },
+  }
 };
 
 export default messageManager;
