@@ -6,13 +6,14 @@ import {
   ficheUnInteresseVilleNaissanceFranceAvecArrondissementNonParis,
   ficheUnInteresseVilleNaissanceFranceAvecArrondissementParis,
   ficheUnInteresseVilleNaissanceALEtrangerAvecRegion,
-  ficheUnInteresseVilleNaissanceALEtrangerSansRegion
+  ficheUnInteresseVilleNaissanceALEtrangerSansRegion,
+  ficheUnInteresseLieuDecesDateDeces
 } from "../mock/InteressesMock";
-import { IFicheRc } from "../../../../../../model/etatcivil/FicheInterfaces";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/FicheInterfaces";
 
 test("Interesse utils get interesse : affichés suivant leur numero d'ordre ", async () => {
   const components = getInteresse(
-    ficheDeuxInteresseNumeroOrdreNonOrdonne as IFicheRc
+    ficheDeuxInteresseNumeroOrdreNonOrdonne as IFicheRcRca
   );
 
   expect(components).toHaveLength(3);
@@ -21,7 +22,9 @@ test("Interesse utils get interesse : affichés suivant leur numero d'ordre ", a
 });
 
 test("Interesse utils get interesse : affichage correcte d'un interessé  ", async () => {
-  const components = getInteresse(ficheUnInteressePrenomNonOrdonne as IFicheRc);
+  const components = getInteresse(
+    ficheUnInteressePrenomNonOrdonne as IFicheRcRca
+  );
 
   const idxNom = components[0].contents.findIndex(
     content => content.libelle === "Nom"
@@ -90,7 +93,7 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", asy
 
 test("Interesse utils get interesse :  affichage lieu naissance en france dans une ville avec arrondissement ", async () => {
   const components = getInteresse(
-    ficheUnInteresseVilleNaissanceFranceSansArrondissement as IFicheRc
+    ficheUnInteresseVilleNaissanceFranceSansArrondissement as IFicheRcRca
   );
 
   const idxLieuNaissance = components[0].contents.findIndex(
@@ -105,7 +108,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france dans u
 
 test("Interesse utils get interesse :  affichage lieu naissance en france dans une ville avec arrondissement sauf Paris ", async () => {
   const components = getInteresse(
-    ficheUnInteresseVilleNaissanceFranceAvecArrondissementNonParis as IFicheRc
+    ficheUnInteresseVilleNaissanceFranceAvecArrondissementNonParis as IFicheRcRca
   );
 
   const idxLieuNaissance = components[0].contents.findIndex(
@@ -120,7 +123,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france dans u
 
 test("Interesse utils get interesse :  affichage lieu naissance en france à Paris ", async () => {
   const components = getInteresse(
-    ficheUnInteresseVilleNaissanceFranceAvecArrondissementParis as IFicheRc
+    ficheUnInteresseVilleNaissanceFranceAvecArrondissementParis as IFicheRcRca
   );
 
   const idxLieuNaissance = components[0].contents.findIndex(
@@ -135,7 +138,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france à Par
 
 test("Interesse utils get interesse :  affichage lieu naissance à l'étranger ", async () => {
   const components = getInteresse(
-    ficheUnInteresseVilleNaissanceALEtrangerSansRegion as IFicheRc
+    ficheUnInteresseVilleNaissanceALEtrangerSansRegion as IFicheRcRca
   );
 
   const idxLieuNaissance = components[0].contents.findIndex(
@@ -150,7 +153,7 @@ test("Interesse utils get interesse :  affichage lieu naissance à l'étranger "
 
 test("Interesse utils get interesse :  affichage lieu naissance à l'étranger ", async () => {
   const components = getInteresse(
-    ficheUnInteresseVilleNaissanceALEtrangerAvecRegion as IFicheRc
+    ficheUnInteresseVilleNaissanceALEtrangerAvecRegion as IFicheRcRca
   );
 
   const idxLieuNaissance = components[0].contents.findIndex(
@@ -159,6 +162,32 @@ test("Interesse utils get interesse :  affichage lieu naissance à l'étranger "
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
   expect(components[0].contents[idxLieuNaissance].value).toBe(
+    "Berlin - RegionBerlin (Allemagne)"
+  );
+});
+
+test("Interesse utils get interesse :  affichage date désèc et lieu décès rca ", async () => {
+  const components = getInteresse(
+    ficheUnInteresseLieuDecesDateDeces as IFicheRcRca
+  );
+
+  const idxSexe = components[0].contents.findIndex(
+    content => content.libelle === "Sexe"
+  );
+
+  const idxDateDeces = components[0].contents.findIndex(
+    content => content.libelle === "Date de décès"
+  );
+  expect(idxDateDeces).toBeGreaterThan(idxSexe);
+
+  expect(components[0].contents[idxDateDeces].value).toBe("02/03/2018");
+
+  const idxLieuDeces = components[0].contents.findIndex(
+    content => content.libelle === "Lieu de décès"
+  );
+  expect(idxLieuDeces).toBeGreaterThan(idxDateDeces);
+
+  expect(components[0].contents[idxLieuDeces].value).toBe(
     "Berlin - RegionBerlin (Allemagne)"
   );
 });

@@ -161,11 +161,13 @@ function getPrenomNomNotaire(autorite: IAutorite): AccordionContentProps {
 
 function getPrenomNomOnac(autorite: IAutorite): AccordionContentProps {
   return {
-    libelle: "Prénom NOM",
+    libelle: "Titre",
     value: (
-      <span>{`${autorite.prenomOnac.charAt(0)}${autorite.prenomOnac.slice(
-        1
-      )} ${autorite.nomOnac.toUpperCase()}`}</span>
+      <span>
+        {autorite.titreOnac
+          ? `${autorite.titreOnac.charAt(0)}${autorite.titreOnac.slice(1)}`
+          : ""}
+      </span>
     )
   };
 }

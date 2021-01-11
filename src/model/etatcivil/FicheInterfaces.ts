@@ -115,12 +115,17 @@ export interface IInteresse {
   paysNaissance: string;
   regionNaissance: string;
   arrondissementNaissance: string;
+  villeDeces: string;
+  paysDeces: string;
+  regionDeces: string;
+  arrondissementDeces: string;
   nationalite: string;
   sexe: string;
   autreNoms: string[];
   autrePrenoms: string[];
   prenoms: IPrenom[];
   dateNaissance: IDateCompose;
+  dateDeces: IDateCompose;
 }
 
 export interface IPrenom {
@@ -139,6 +144,5 @@ export interface IAutorite {
   nomNotaire: string;
   prenomNotaire: string;
   numeroCrpcen: string;
-  nomOnac: string;
-  prenomOnac: string;
+  titreOnac?: string;
 }

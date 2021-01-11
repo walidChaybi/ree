@@ -312,8 +312,7 @@ export const ficheAutoriteOnac = {
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
       numeroCrpcen: "",
-      nomOnac: "nomOnac",
-      prenomOnac: "prenomOnac"
+      titreOnac: "titreOnac"
     },
     enrolementRg: "enrolementRg",
     enrolementPortalis: "enrolementPortalis",

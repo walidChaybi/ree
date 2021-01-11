@@ -141,3 +141,41 @@ export const ficheUnInteresseVilleNaissanceALEtrangerAvecRegion = {
     }
   ]
 };
+
+export const ficheUnInteresseLieuDecesDateDeces = {
+  categorie: "RCA",
+  interesses: [
+    {
+      villeDeces: "Berlin",
+      paysDeces: "Allemagne",
+      regionDeces: "RegionBerlin",
+      arrondissementDeces: "02",
+      dateDeces: {
+        jour: "02",
+        mois: "03",
+        annee: "2018"
+      },
+
+      numeroOrdreSaisi: 2,
+      nomFamille: "FAVARO",
+      villeNaissance: "San remo",
+      paysNaissance: "Italie",
+      regionNaissance: "",
+      arrondissementNaissance: "",
+      nationalite: "Etrangère",
+      autreNoms: ["favarotti", "favarotti2"],
+      autrePrenoms: ["autreP1", "autreP2"],
+      prenoms: [
+        { prenom: "Enrico", numeroOrdre: 2 },
+        { prenom: "Pablo", numeroOrdre: 3 },
+        { prenom: "Flavio", numeroOrdre: 1 }
+      ],
+      dateNaissance: {
+        jour: "25",
+        mois: "05",
+        annee: "1980"
+      },
+      sexe: "Masculin"
+    }
+  ]
+};
