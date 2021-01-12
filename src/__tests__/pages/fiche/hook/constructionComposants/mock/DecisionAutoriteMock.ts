@@ -89,6 +89,7 @@ export const ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA
         prenomOnac: ""
       },
       dateDecision: 1584403200,
+      dateDecisionEtrangere: 1577059200,
       enrolementRg: "enrolementRg",
       enrolementPortalis: "enrolementPortalis",
       type: TypeDecision.ARRET
