@@ -11,7 +11,7 @@
     "MICADO": "MICADO"
   },
   "motifRequete": {
-    "AUTRE": "Autre",
+    "AUTRE_MOTIF": "Autre",
     "CERTIFICAT_NATIONALITE_FRANCAISE": "Certificat de nationalité française",
     "DECLARATION_ACQUISITION_NATIONALITE_FRANCAISE": "Déclaration d'acquisition de nationalité française",
     "DIVORCE_CONTENTIEUX": "Divorce / Contentieux",
