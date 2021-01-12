@@ -65,7 +65,7 @@ export const ApercuRequetePage: React.FC = () => {
   const reloadData = useCallback(
     (allsigned: boolean) => {
       if (allsigned === true) {
-        history.goBack();
+        history.push(URL_MES_REQUETES);
       }
     },
     [history]
