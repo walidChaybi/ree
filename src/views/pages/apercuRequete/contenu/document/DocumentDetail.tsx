@@ -57,6 +57,8 @@ export const DocumentDetail: React.FC<IDocumentDetailProps> = ({
           setDocumentDelivreFct(result.documentDelivre);
         }
       });
+    } else {
+      lectureDuDocument("");
     }
   }, [
     document.identifiantDocument,
