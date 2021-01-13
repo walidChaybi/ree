@@ -11,7 +11,6 @@ import {
 } from "../../../api/appels/requeteApi";
 import { GroupementDocument } from "../../../model/requete/GroupementDocument";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import officierMock from "../../../mock/data/connectedUser.json";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -37,7 +36,6 @@ test("requeteapi api getDocumentASigner piece justificative", () => {
 test("requeteapi api getRequetes mes requetes", () => {
   getRequetes(
     TypeAppelRequete.MES_REQUETES,
-    { ...officierMock, idSSO: officierMock.id_sso },
     [StatutRequete.ASigner],
     "idSagaDila",
     "ASC"
@@ -49,7 +47,6 @@ test("requeteapi api getRequetes mes requetes", () => {
 test("requeteapi api getRequetes requete service", () => {
   getRequetes(
     TypeAppelRequete.REQUETE_SERVICE,
-    { ...officierMock, idSSO: officierMock.id_sso },
     [StatutRequete.ASigner],
     "dateStatut",
     "ASC"
@@ -59,20 +56,15 @@ test("requeteapi api getRequetes requete service", () => {
 });
 
 test("requeteapi api getRequete", () => {
-  getRequete(
-    { ...officierMock, idSSO: officierMock.id_sso },
-    "104b8563-c7f8-4748-9daa-f26558985894"
-  ).then((result: any) => {
+  getRequete("104b8563-c7f8-4748-9daa-f26558985894").then((result: any) => {
     expect(result).toBeDefined();
   });
 });
 
 test("requeteapi api getCompteurRequetes", () => {
-  getCompteurRequetes({ ...officierMock, idSSO: officierMock.id_sso }).then(
-    (result: any) => {
-      expect(result).toBeDefined();
-    }
-  );
+  getCompteurRequetes().then((result: any) => {
+    expect(result).toBeDefined();
+  });
 });
 
 test("requeteapi api patchStatutRequete", () => {

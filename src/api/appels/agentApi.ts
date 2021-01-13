@@ -17,12 +17,9 @@ export function getLogin(): Promise<any> {
   });
 }
 
-export function getUtilisateurs(idArobas: string): Promise<any> {
+export function getUtilisateurs(): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: URL_UTILISATEURS,
-    parameters: {
-      idArobas
-    }
+    uri: URL_UTILISATEURS
   });
 }

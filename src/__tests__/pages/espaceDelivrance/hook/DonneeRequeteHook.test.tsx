@@ -6,10 +6,7 @@ import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { useRequeteDataApi } from "../../../../views/pages/apercuRequete/hook/DonneeRequeteHook";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
 import { IDataTable } from "../../../../views/pages/espaceDelivrance/MesRequetesPage";
-import connectedUser from "../../../../mock/data/connectedUser.json";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-
-const off = { idSSO: connectedUser.id_sso, ...connectedUser };
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -18,13 +15,10 @@ let containerWithData: Element | null;
 let containerWithErrorWS: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const { dataState = [] } = useRequeteDataApi(
-    {
-      statut: StatutRequete.ASigner,
-      idRequete: "req1"
-    },
-    off
-  );
+  const { dataState = [] } = useRequeteDataApi({
+    statut: StatutRequete.ASigner,
+    idRequete: "req1"
+  });
 
   return (
     <>
@@ -48,7 +42,6 @@ const HookConsummerWithData: React.FC = () => {
       statut: StatutRequete.ASigner,
       idRequete: "req1"
     },
-    off,
     { data: [DONNEES_REQUETE as IDataTable, DONNEES_REQUETE as IDataTable] }
   );
 
@@ -69,13 +62,10 @@ const HookConsummerWithData: React.FC = () => {
 };
 
 const HookConsummerWithErrorWS: React.FC = () => {
-  const { dataState = [] } = useRequeteDataApi(
-    {
-      statut: StatutRequete.ASigner,
-      idRequete: "req2"
-    },
-    off
-  );
+  const { dataState = [] } = useRequeteDataApi({
+    statut: StatutRequete.ASigner,
+    idRequete: "req2"
+  });
 
   return (
     <>

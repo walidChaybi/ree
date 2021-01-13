@@ -17,7 +17,6 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../api/appels/requeteApi";
-import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 import {
   goToLinkCommon,
   commonHeaders,
@@ -46,9 +45,7 @@ import {
 
 /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
-interface MesRequetesServicePageProps {
-  officier?: IOfficierSSOApi;
-}
+interface MesRequetesServicePageProps {}
 
 export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
   /** TODO ETAPE 2 : Bouton "Attribué à" */
@@ -150,11 +147,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     rowsNumberState = 0,
     nextDataLinkState = "",
     previousDataLinkState = ""
-  } = useRequeteApi(
-    linkParameters,
-    TypeAppelRequete.REQUETE_SERVICE,
-    props.officier
-  );
+  } = useRequeteApi(linkParameters, TypeAppelRequete.REQUETE_SERVICE);
 
   /** TODO ETAPE 2 : Bouton "Attribué à" */
   // const users = useUtilisateurApi({

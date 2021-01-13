@@ -99,10 +99,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
               {officier && officier.officierDataState && (
                 <>
                   {selectedTabState === 0 && (
-                    <CompteurRequete
-                      officier={officier.officierDataState}
-                      reloadCompteur={reloadCompteur}
-                    />
+                    <CompteurRequete reloadCompteur={reloadCompteur} />
                   )}
                   <AppBar position="static" className="headerOngletDelivrance">
                     <Tabs
@@ -134,10 +131,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
 
                   <TabPanel value={selectedTabState} index={0}>
                     {selectedTabState === 0 && (
-                      <MesRequetesPage
-                        officier={officier.officierDataState}
-                        miseAJourCompteur={miseAJourCompteur}
-                      />
+                      <MesRequetesPage miseAJourCompteur={miseAJourCompteur} />
                     )}
                   </TabPanel>
                   {officierHabiliterPourLeDroit(
@@ -145,11 +139,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                     Droit.ATTRIBUER
                   ) && (
                     <TabPanel value={selectedTabState} index={1}>
-                      {selectedTabState === 1 && (
-                        <RequetesServicePage
-                          officier={officier.officierDataState}
-                        />
-                      )}
+                      {selectedTabState === 1 && <RequetesServicePage />}
                     </TabPanel>
                   )}
                 </>
