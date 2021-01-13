@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { getText } from "../widget/Text";
 import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
+import { getCsrfHeader } from "./CsrfUtil";
 
 const TIME_OUT_MS = 500;
 interface GestionnaireFermetureProps {
@@ -73,6 +74,12 @@ const appelApi = (officierPayload: IOfficierSSOApi | undefined) => {
   const params = `nomOec=${officierPayload?.nom}&prenomOec=${officierPayload?.prenom}&statuts=A_SIGNER`;
   const url = `${window.origin}/${api.domain}/${api.name}/${version}${URL_REQUETES_COUNT}?${params}`;
   req.open("GET", url, false);
+
+  // Ajout de la valeur du cookie csrf dans l'entête
+  const header = getCsrfHeader();
+  req.setRequestHeader(header.header, header.value);
+
+  // Envoi de la requête
   req.send();
 
   return req;

@@ -4,6 +4,7 @@ import request from "superagent";
 import messageManager from "../views/common/util/messageManager";
 import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
 import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
+import { getCsrfHeader } from "../views/common/util/CsrfUtil";
 
 if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, [
@@ -38,7 +39,7 @@ export enum HttpMethod {
   PUT
 }
 
-interface HttpRequestHeader {
+export interface HttpRequestHeader {
   header: string;
   value: string;
 }
@@ -96,10 +97,14 @@ export class ApiManager {
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
     const codeErreurForbidden = 403;
+
     let httpRequete = this.processRequestMethod(
       httpRequestConfig.method,
       httpRequestConfig.uri
     );
+
+    // Ajout de la valeur du cookie csrf dans l'entête
+    this.addCsrfInfosToConfigHeader(httpRequestConfig);
 
     if (httpRequestConfig.parameters) {
       httpRequete = this.processRequestQueyParameters(
@@ -145,6 +150,13 @@ export class ApiManager {
 
         return Promise.reject(error);
       });
+  }
+
+  private addCsrfInfosToConfigHeader(config: HttpRequestConfig) {
+    if (!config.headers) {
+      config.headers = [];
+    }
+    config.headers[config.headers.length] = getCsrfHeader();
   }
 
   public processRequestHeaders(
