@@ -6,14 +6,12 @@ import {
   useRequeteApi,
   IQueryParametersPourRequetes
 } from "../../../../views/pages/espaceDelivrance/hook/DonneesRequeteHook";
-import officierMock from "../../../../mock/data/connectedUser.json";
 import { TypeAppelRequete } from "../../../../api/appels/requeteApi";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
-const officier = { idSSO: officierMock.id_sso, ...officierMock };
 const queryParam: IQueryParametersPourRequetes = {
   statuts: [StatutRequete.ASigner],
   tri: "idSagaDila",
@@ -24,8 +22,7 @@ let container: Element | null;
 const HookConsummer: React.FC = () => {
   const { dataState = [] } = useRequeteApi(
     queryParam,
-    TypeAppelRequete.MES_REQUETES,
-    officier
+    TypeAppelRequete.MES_REQUETES
   );
   return (
     <>

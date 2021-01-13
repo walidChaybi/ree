@@ -23,7 +23,6 @@ import {
   getMinRange,
   getRowsNumber
 } from "../../../common/util/GestionDesLiensApi";
-import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 import { reecriturePrenom } from "../../../common/util/Utils";
 
 export interface IRequerantApi {
@@ -103,8 +102,7 @@ export enum TypeAppelRequete {
 
 export function useRequeteApi(
   queryParameters: IQueryParametersPourRequetes,
-  typeRequete: TypeAppelRequete,
-  officier?: IOfficierSSOApi
+  typeRequete: TypeAppelRequete
 ) {
   const [dataState, setDataState] = useState<IDataTable[]>();
   const [rowsNumberState, setRowsNumberState] = useState<number>();
@@ -129,30 +127,27 @@ export function useRequeteApi(
       listeStatuts += i < queryParameters.statuts.length - 1 ? "," : "";
     });
 
-    if (officier !== undefined) {
-      getRequetes(
-        typeRequete,
-        officier,
-        listeStatuts,
-        queryParameters.tri,
-        queryParameters.sens,
-        queryParameters.range
-      )
-        .then(result => {
-          setDataState(reponseRequeteMapper(result.body.data));
-          setRowsNumberState(getRowsNumber(result));
-          setMinRangeState(getMinRange(result));
-          setMaxRangeState(getMaxRange(result));
-          const { nextLink, prevLink } = parseLink(result.headers["link"]);
+    getRequetes(
+      typeRequete,
+      listeStatuts,
+      queryParameters.tri,
+      queryParameters.sens,
+      queryParameters.range
+    )
+      .then(result => {
+        setDataState(reponseRequeteMapper(result.body.data));
+        setRowsNumberState(getRowsNumber(result));
+        setMinRangeState(getMinRange(result));
+        setMaxRangeState(getMaxRange(result));
+        const { nextLink, prevLink } = parseLink(result.headers["link"]);
 
-          setPreviousDataLinkState(prevLink);
-          setNextDataLinkState(nextLink);
-        })
-        .catch(error => {
-          setErrorState(error);
-        });
-    }
-  }, [queryParameters, officier, typeRequete]);
+        setPreviousDataLinkState(prevLink);
+        setNextDataLinkState(nextLink);
+      })
+      .catch(error => {
+        setErrorState(error);
+      });
+  }, [queryParameters, typeRequete]);
 
   return {
     dataState,

@@ -28,7 +28,6 @@ export const ApercuRequetePage: React.FC = () => {
     {
       idRequete
     },
-    storeRece.utilisateurCourant,
     histoReq
   );
 

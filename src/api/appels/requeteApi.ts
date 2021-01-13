@@ -4,7 +4,6 @@ import { IDocumentDelivre } from "../../views/common/types/RequeteType";
 import { IQueryParameterUpdateStatutRequete } from "../../views/common/hook/UpdateStatutRequeteHook";
 import { StatutRequete } from "../../model/requete/StatutRequete";
 import { SortOrder } from "../../views/common/widget/tableau/TableUtils";
-import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
 
 const URL_REQUETES_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES = "/requetes";
@@ -65,7 +64,6 @@ export function getDocumentASigner(
 
 export function getRequetes(
   typeRequete: TypeAppelRequete,
-  officier: IOfficierSSOApi,
   listeStatuts: string,
   tri: string,
   sens: SortOrder,
@@ -78,40 +76,29 @@ export function getRequetes(
         ? URL_REQUETES_SERVICE
         : URL_REQUETES,
     parameters: {
-      nomOec: officier.nom,
-      prenomOec: officier.prenom,
       statuts: listeStatuts,
       tri: tri !== "prioriteRequete" ? tri : "dateStatut",
       sens,
-      range,
-      idArobas: officier.idSSO
+      range
     }
   });
 }
 
-export function getRequete(
-  officier: IOfficierSSOApi,
-  idRequete: string,
-  statut?: string
-): Promise<any> {
+export function getRequete(idRequete: string, statut?: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_REQUETES}/${idRequete}`,
     parameters: {
-      nomOec: officier.nom,
-      prenomOec: officier.prenom,
       statut
     }
   });
 }
 
-export function getCompteurRequetes(officier: IOfficierSSOApi): Promise<any> {
+export function getCompteurRequetes(): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: URL_REQUETES_COUNT,
     parameters: {
-      nomOec: officier.nom,
-      prenomOec: officier.prenom,
       statuts: "A_SIGNER"
     }
   });

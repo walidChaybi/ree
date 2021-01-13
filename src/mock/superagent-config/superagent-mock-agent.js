@@ -22,7 +22,7 @@ export const configAgent = [
         return { headers: mockConnectedUser, data: mockHabilitation };
       }
 
-      if (match[1] === "/utilisateurs?idArobas=5ef4b1da1e3ee4adf9615ec7") {
+      if (match[1] === "/utilisateurs") {
         return { data: DONNEES_UTILISATEURS.data };
       }
     },

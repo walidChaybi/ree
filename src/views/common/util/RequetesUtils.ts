@@ -4,12 +4,10 @@ import { getText } from "../../common/widget/Text";
 import { FormatDate } from "./DateUtils";
 
 export const indexParamsReq = {
-  NomOec: 0,
-  PrenomOec: 1,
-  Statut: 2,
-  Tri: 3,
-  Sens: 4,
-  Range: 6
+  Statut: 0,
+  Tri: 1,
+  Sens: 2,
+  Range: 3
 };
 
 const limiteBasse = 2;
