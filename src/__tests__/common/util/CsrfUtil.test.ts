@@ -13,4 +13,7 @@ test("Attendu: getCsrfCookieValue fonctionne correctement", () => {
 
   cookies = "csrf_token=aze;test=test";
   expect(getCsrfCookieValueFromCookies(cookies)).toBe("aze");
+
+  cookies = undefined!;
+  expect(getCsrfCookieValueFromCookies(cookies)).toBe("");
 });

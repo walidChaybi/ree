@@ -97,18 +97,14 @@ export class ApiManager {
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
     const codeErreurForbidden = 403;
-    console.log("httpRequestConfig1=", httpRequestConfig);
 
     let httpRequete = this.processRequestMethod(
       httpRequestConfig.method,
       httpRequestConfig.uri
     );
 
+    // Ajout de la valeur du cookie csrf dans l'entête
     this.addCsrfInfosToConfigHeader(httpRequestConfig);
-    console.log(
-      "httpRequestConfig2=",
-      httpRequestConfig.headers ? httpRequestConfig.headers[0] : ""
-    );
 
     if (httpRequestConfig.parameters) {
       httpRequete = this.processRequestQueyParameters(
