@@ -64,8 +64,8 @@ export const acte: any = {
   ],
   titulaires: [
     {
-      nom: "GREENWALD",
-      prenoms: ["Paulita", "Zaria"],
+      nom: "Greenwald",
+      prenoms: ["paulita", "Zaria"],
       autresNoms: null,
       autresPrenoms: null,
       ordre: 1,
@@ -73,8 +73,8 @@ export const acte: any = {
     },
 
     {
-      nom: "DUPE",
-      prenoms: ["Laurent"],
+      nom: "DUPe",
+      prenoms: ["LaurenT"],
       autresNoms: null,
       autresPrenoms: null,
       ordre: 2,

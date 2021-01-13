@@ -21,8 +21,10 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
     return this.personnes.map(
       (p: any) =>
         new SimplePersonne(
-          getValeurOuVide(p.nom),
-          getPremierElemOuVide(p.prenoms)
+          getValeurOuVide(p.nom).toLocaleUpperCase(),
+          premiereLettreEnMajusculeLeResteEnMinuscule(
+            getPremierElemOuVide(p.prenoms)
+          )
         )
     );
   }
@@ -52,20 +54,27 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   getRegistre() {
     let res = "";
     if (this.data) {
-      const annee = this.data.evenement.annee;
-      const noActe = this.data.numero;
+      const annee = getValeurOuVide(this.data.evenement.annee);
+      const noActe = getValeurOuVide(this.data.numero);
+      const numeroBisTer = getValeurOuVide(this.data.numeroBisTer);
 
       let famille = "";
       let pocopa = "";
       let support1 = "";
       let support2 = "";
       if (this.data.registre) {
-        famille = getValeurOuVide(this.data.registre.famille);
-        pocopa = getValeurOuVide(this.data.registre.pocopa);
-        support1 = getValeurOuVide(this.data.registre.support1);
-        support2 = getValeurOuVide(this.data.registre.support2);
+        famille = getValeurOuVide(
+          this.data.registre.famille
+        ).toLocaleUpperCase();
+        pocopa = getValeurOuVide(this.data.registre.pocopa).toLocaleUpperCase();
+        support1 = getValeurOuVide(
+          this.data.registre.support1
+        ).toLocaleUpperCase();
+        support2 = getValeurOuVide(
+          this.data.registre.support2
+        ).toLocaleUpperCase();
       }
-      res = `${famille}.${pocopa}.${annee}.${noActe}.${support1}.${support2}`;
+      res = `${famille}.${pocopa}.${annee}.${noActe}.${numeroBisTer}.${support1}.${support2}`;
     }
     return res;
   }

@@ -53,5 +53,5 @@ test("bandeauFicheUtils setDataBandeau works Acte", async () => {
     "ABSENCE - GREENWALD et DUPE - N° 1921 - 413"
   );
   expect(bandeauFiche.personnes[0].prenom).toBe("Paulita");
-  expect(bandeauFiche.registre).toBe("CSL.DX.1921.413.NA.T");
+  expect(bandeauFiche.registre).toBe("CSL.DX.1921.413.681.NA.T");
 });

@@ -59,11 +59,11 @@ export function formatDe(str: string) {
   return de;
 }
 
-export function getValeurOuVide(str: any) {
+export function getValeurOuVide(str: string) {
   return str ? str : "";
 }
 
-export function getPremierElemOuVide(tab: any[]) {
+export function getPremierElemOuVide(tab: string[]): string {
   return tab && tab[0] ? tab[0] : "";
 }
 
