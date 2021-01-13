@@ -37,13 +37,14 @@ export enum TypeNatureFicheRca {
   EXEQUATUR_JUGEMENT_DIVORCE = "EXEQUATUR_JUGEMENT_DIVORCE",
   MARIAGE_DECLARE_INOPPOSABLE_FRANCE = "MARIAGE_DECLARE_INOPPOSABLE_FRANCE",
   REFUS_TRANSCRIPTION_ACTE_MARIAGE = "REFUS_TRANSCRIPTION_ACTE_MARIAGE",
-  SEPARATION_CORPS = "SEPARATION_CORPS"
+  SEPARATION_CORPS = "SEPARATION_CORPS",
+  DIVORCE_CONSENTEMENT_MUTUEL = "DIVORCE_CONSENTEMENT_MUTUEL"
 }
 
 export class NatureFicheRcaUtil {
   private static readonly libelles = {
     [TypeNatureFicheRca.ACTE_NOTERIETE_CONSTATANT_LA_POSSESSION_ETAT]:
-      "Acte de notoriété constatant l'apossession d'état",
+      "Acte de notoriété constatant la possession d'état",
     [TypeNatureFicheRca.ANNULATION_LEGITIMATION]: "Annulation de légitimation",
     [TypeNatureFicheRca.ANNULATION_RECONNAISSANCE]:
       "Annulation de reconnaissance",
@@ -95,14 +96,16 @@ export class NatureFicheRcaUtil {
       "Changement de régime matrimonial",
     [TypeNatureFicheRca.DESIGNATION_LOI_APPLICABLE8REGIME_MATRIMONIAL]:
       "Désignation de la loi applicable au régime matrimonial",
-    [TypeNatureFicheRca.DIVORCE]: "Divorce",
+    [TypeNatureFicheRca.DIVORCE]: "Divorce contentieux devant un juge",
     [TypeNatureFicheRca.EXEQUATUR_JUGEMENT_DIVORCE]:
       "Exequatur de jugement de divorce",
     [TypeNatureFicheRca.MARIAGE_DECLARE_INOPPOSABLE_FRANCE]:
       "Mariage déclaré inopposable en France",
     [TypeNatureFicheRca.REFUS_TRANSCRIPTION_ACTE_MARIAGE]:
       "Refus de transcription d'acte de mariage",
-    [TypeNatureFicheRca.SEPARATION_CORPS]: "Séparation de corps"
+    [TypeNatureFicheRca.SEPARATION_CORPS]: "Séparation de corps",
+    [TypeNatureFicheRca.DIVORCE_CONSENTEMENT_MUTUEL]:
+      "Divorce par consentement mutuel devant notaire"
   };
 
   public static getLibelle(nature: TypeNatureFicheRca): string {

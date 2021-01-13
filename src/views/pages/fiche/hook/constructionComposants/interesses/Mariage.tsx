@@ -71,7 +71,7 @@ function getLieuMariage(mariage: IMariageInteresse) {
       regionString ? regionMariage : ""
     } (${paysString})`;
   } else if (!LieuxUtils.isPaysFrance(paysString)) {
-    return `devant les autorités consulaires de ${villeString} en France`;
+    return `devant les autorités consulaires de ${paysString} en France`;
   } else if (!mariage.arrondissementMariage) {
     return `${villeString} (${regionString})`;
   } else {

@@ -33,9 +33,9 @@ export class NatureFicheRcUtil {
     [TypeNatureFicheRc.PRESOMPTION_ABSENCE_AVEC_DESIGNATION]:
       "Présomption d’absence avec désignation d’un représentant",
     [TypeNatureFicheRc.RADIATION_DEMANDE_HOMOLOGATION]:
-      "Radiation de la requête en homologation d’un changement de régime matrimonial",
+      "Radiation de demande d'homologation d'un changement de régime matrimonial",
     [TypeNatureFicheRc.DEMANDE_HOMOLOGATION_UN_CHANGEMENT]:
-      "Requête en homologation d’un changement de régime matrimonial",
+      "Demande d'homologation d’un changement de régime matrimonial",
     [TypeNatureFicheRc.DEMANDE_JUDICIAIRE_EN_SEPARATION_BIENS]:
       "Demande judiciaire en séparation de biens",
     [TypeNatureFicheRc.TUTELLE_AMENAGEE]: "Tutelle aménagée",

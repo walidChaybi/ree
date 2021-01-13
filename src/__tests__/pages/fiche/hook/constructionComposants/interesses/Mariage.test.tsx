@@ -30,7 +30,9 @@ test("renders mariage : non marié à l'étranger mais avec un pays qui n'est pa
   );
   expect(getByText("Mariés")).toBeDefined();
 
-  expect(getByText(/devant les autorités consulaires/i)).toBeDefined();
+  expect(
+    getByText(/devant les autorités consulaires de PaysMariage/i)
+  ).toBeDefined();
 });
 test("renders mariage : la date du mariage est complète", () => {
   const { getByText } = render(
