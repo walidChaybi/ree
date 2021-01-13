@@ -74,8 +74,12 @@ const appelApi = (officierPayload: IOfficierSSOApi | undefined) => {
   const params = `nomOec=${officierPayload?.nom}&prenomOec=${officierPayload?.prenom}&statuts=A_SIGNER`;
   const url = `${window.origin}/${api.domain}/${api.name}/${version}${URL_REQUETES_COUNT}?${params}`;
   req.open("GET", url, false);
+
+  // Ajout de la valeur du cookie csrf dans l'entête
   const header = getCsrfHeader();
   req.setRequestHeader(header.header, header.value);
+
+  // Envoi de la requête
   req.send();
 
   return req;
