@@ -13,7 +13,7 @@ export function getCsrfCookieValueFromCookies(cookies: string) {
       .find(row => row.trim().startsWith(CSRF_COOKIE_NAME));
     if (csrfCookie) {
       const parts = csrfCookie.split("=");
-      if (parts.length > 0) {
+      if (parts.length > 1) {
         value = parts[1];
       }
     }
