@@ -4,6 +4,10 @@ import "./sass/ResumeRequeteContent.scss";
 import { TitulaireInformation } from "./TitulaireInformation";
 import { QualiteRequerant } from "../../../../model/requete/QualiteRequerant";
 import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
+import {
+  getDateStringFromDateCompose,
+  IDateCompose
+} from "../../../common/util/DateUtils";
 
 export interface ResumeRequeteContentProps {
   requete: IDataTable;
@@ -25,16 +29,15 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
     valuePrenomRequerant = `${dataRequerant.prenom}`;
   }
 
-  const dixiemeJour = 10;
-  const octobre = 10;
-  const jourEvent =
-    props.requete.jourEvenement < dixiemeJour
-      ? "0" + props.requete.jourEvenement
-      : props.requete.jourEvenement;
-  const moisEvent =
-    props.requete.moisEvenement < octobre
-      ? "0" + props.requete.moisEvenement
-      : props.requete.moisEvenement;
+  const dateCompose: IDateCompose = {
+    jour: props.requete.jourEvenement
+      ? `${props.requete.jourEvenement}`
+      : undefined,
+    mois: props.requete.moisEvenement
+      ? `${props.requete.moisEvenement}`
+      : undefined,
+    annee: `${props.requete.anneeEvenement}`
+  };
 
   return (
     <>
@@ -73,7 +76,7 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
             <Text messageId={"pages.delivrance.apercu.resume.dateEvent"} />
           </div>
           <div className="personnal-info">
-            {`${jourEvent}/${moisEvent}/${props.requete.anneeEvenement}`}
+            {`${getDateStringFromDateCompose(dateCompose)}`}
           </div>
         </div>
         <div className="bloc-info">

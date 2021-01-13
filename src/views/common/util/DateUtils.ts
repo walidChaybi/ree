@@ -1,6 +1,6 @@
 export interface IDateCompose {
-  jour: string;
-  mois: string;
+  jour?: string;
+  mois?: string;
   annee: string;
 }
 
@@ -17,25 +17,33 @@ export function getDateStringFromDateCompose(date: IDateCompose): string {
   }
 
   if (date && date.mois) {
-    dateString = `${date.mois}/${dateString}`;
+    dateString = `${date.mois.length === 1 ? "0" : ""}${
+      date.mois
+    }/${dateString}`;
   }
 
   if (date && date.jour) {
-    dateString = `${date.jour}/${dateString}`;
+    dateString = `${date.jour.length === 1 ? "0" : ""}${
+      date.jour
+    }/${dateString}`;
   }
   return dateString;
 }
 
-export function getDateFromDateCompose(date: IDateCompose): Date {
-  return new Date(
-    Date.UTC(
-      parseInt(date.annee, 10),
-      parseInt(date.mois, 10),
-      parseInt(date.jour, 10),
-      0,
-      0
-    )
-  );
+export function getDateFromDateCompose(date: IDateCompose): Date | undefined {
+  if (date.annee && date.mois && date.jour) {
+    return new Date(
+      Date.UTC(
+        parseInt(date.annee, 10),
+        parseInt(date.mois, 10),
+        parseInt(date.jour, 10),
+        0,
+        0
+      )
+    );
+  } else {
+    return undefined;
+  }
 }
 
 export function getDateString(date: Date): string {
