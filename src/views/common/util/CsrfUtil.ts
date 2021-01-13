@@ -1,5 +1,6 @@
 import { HttpRequestHeader } from "../../../api/ApiManager";
 const CSRF_COOKIE_NAME = "csrf_token";
+const CSRF_HEADER_NAME = "X-Csrf-Token";
 
 export function getCsrfCookieValue() {
   return getCsrfCookieValueFromCookies(document.cookie);
@@ -23,7 +24,7 @@ export function getCsrfCookieValueFromCookies(cookies: string) {
 
 export function getCsrfHeader(): HttpRequestHeader {
   return {
-    header: "X-Csrf-Token",
+    header: CSRF_HEADER_NAME,
     value: getCsrfCookieValue()
   };
 }
