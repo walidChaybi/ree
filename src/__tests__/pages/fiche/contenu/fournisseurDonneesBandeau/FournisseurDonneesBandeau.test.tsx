@@ -16,5 +16,5 @@ test("Attendu: fournisseur de donnée bandeau pour acte fonctionne correctement"
   expect(fdActe.getType()).toBe("Acte d'Absence");
 
   expect(fdActe.getAnnee()).toBe(1921);
-  expect(fdActe.getRegistre()).toBe("CSL.DX.1921.413.NA.T");
+  expect(fdActe.getRegistre()).toBe("CSL.DX.1921.413.681.NA.T");
 });

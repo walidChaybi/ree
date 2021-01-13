@@ -132,7 +132,7 @@ function getContentConfirmationDecision(
     if (
       FicheUtil.isFicheRca(typeFiche) &&
       decision.sourceConfirmation.dateDecisionEtrangere != null &&
-      AutoriteUtil.isJuridiction(decision.autorite.type)
+      AutoriteUtil.isJuridiction(decision.sourceConfirmation.autorite.type)
     ) {
       confirmationDecision.push({
         libelle: "Date décision étrangère",

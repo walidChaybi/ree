@@ -8,7 +8,7 @@ import { IDataTable } from "../../../views/pages/espaceDelivrance/MesRequetesPag
 
 test("espace delivrance utils goToLinkCommon", () => {
   const result = goToLinkCommon(
-    "<http://localhost:80/rece-requete-api/v1//requetes/requetesService?nomOec=nomConnectedUser&nomOec=prenomConnectedUser&statut=A_SIGNER&tri=dateStatut&sens=ASC&&range=2-105",
+    "<http://localhost:80/rece-requete-api/v1//requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105",
     "requetesService"
   );
   expect(result?.statuts).toStrictEqual(["A_SIGNER"]);

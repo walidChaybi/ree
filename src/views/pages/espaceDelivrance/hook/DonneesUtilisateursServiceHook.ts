@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { IQueryParametersUtilisateursService } from "../../../../api/appels/agentApi";
 import { getUtilisateurs } from "../../../../api/appels/agentApi";
 
 export interface IUtilisateurApi {
@@ -8,24 +7,20 @@ export interface IUtilisateurApi {
   prenom: string;
 }
 
-export function useUtilisateurApi(
-  queryParameters: IQueryParametersUtilisateursService
-) {
+export function useUtilisateurApi() {
   const [dataState, setDataState] = useState<IUtilisateurApi[]>([]);
   const [errorState, setErrorState] = useState(undefined);
   useEffect(() => {
     setDataState([]);
     setErrorState(undefined);
-    if (queryParameters.idArobas !== undefined) {
-      getUtilisateurs(queryParameters.idArobas)
-        .then(result => {
-          setDataState(result.body.data);
-        })
-        .catch(error => {
-          setErrorState(error);
-        });
-    }
-  }, [queryParameters.idArobas]);
+    getUtilisateurs()
+      .then(result => {
+        setDataState(result.body.data);
+      })
+      .catch(error => {
+        setErrorState(error);
+      });
+  }, []);
 
   return {
     dataState,

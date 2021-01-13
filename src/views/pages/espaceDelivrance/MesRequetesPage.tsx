@@ -30,7 +30,6 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../api/appels/requeteApi";
-import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 import {
   goToLinkCommon,
   commonHeaders,
@@ -116,7 +115,6 @@ const columnsTableau = [
 ];
 
 interface MesRequetesPageProps {
-  officier?: IOfficierSSOApi;
   miseAJourCompteur: () => void;
 }
 
@@ -139,11 +137,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     rowsNumberState = 0,
     nextDataLinkState = "",
     previousDataLinkState = ""
-  } = useRequeteApi(
-    linkParameters,
-    TypeAppelRequete.MES_REQUETES,
-    props.officier
-  );
+  } = useRequeteApi(linkParameters, TypeAppelRequete.MES_REQUETES);
 
   const goToLink = useCallback((link: string) => {
     const queryParametersPourRequetes = goToLinkCommon(link, "requetes");

@@ -9,6 +9,7 @@ import ReactDOM from "react-dom";
 import officier from "../../../mock/data/connectedUser.json";
 import request from "superagent";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
+import { waitFor, render, screen, fireEvent } from "@testing-library/react";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 let container: Element | null;
@@ -23,17 +24,19 @@ afterEach(() => {
   container = null;
 });
 
-test("renders Page requete with all elements", () => {
-  act(() => {
-    const history = createMemoryHistory();
-    history.push("mesrequetes/req2", {
-      data: [
-        { ...DONNEES_REQUETE, idRequete: "req1" },
-        { ...DONNEES_REQUETE, idRequete: "req2" },
-        { ...DONNEES_REQUETE, idRequete: "req3" }
-      ]
-    });
+const data = {
+  data: [
+    { ...DONNEES_REQUETE, idRequete: "req1" },
+    { ...DONNEES_REQUETE, idRequete: "req2" },
+    { ...DONNEES_REQUETE, idRequete: "req3" }
+  ]
+};
 
+const history = createMemoryHistory();
+history.push("mesrequetes/req2", data);
+
+test("renders Page requete with all elements", () => {
+  waitFor(() => {
     const component = mount(
       <>
         <Router history={history}>
@@ -55,18 +58,12 @@ test("renders Page requete with all elements", () => {
   });
 });
 
-test("renders Page requete interactions works, no errors returned", async () => {
+test("renders Page requete interactions works, no errors returned", () => {
   const history = createMemoryHistory();
-  history.push("mesrequetes/req2", {
-    data: [
-      { ...DONNEES_REQUETE, idRequete: "req1" },
-      { ...DONNEES_REQUETE, idRequete: "req2" },
-      { ...DONNEES_REQUETE, idRequete: "req3" }
-    ]
-  });
+  history.push("mesrequetes/req2", data);
 
-  await act(async () => {
-    ReactDOM.render(
+  act(() => {
+    render(
       <Router history={history}>
         <MesRequetesPage
           match={{
@@ -82,25 +79,16 @@ test("renders Page requete interactions works, no errors returned", async () => 
             ...officier
           }}
         />
-      </Router>,
-      container
+      </Router>
     );
   });
 
-  container?.getElementsByTagName("button")[1].click();
-  container?.getElementsByTagName("button")[1].click();
-  container?.getElementsByTagName("button")[1].click();
-  container?.getElementsByTagName("button")[1].click();
-  container?.getElementsByTagName("button")[1].click();
-  container?.getElementsByTagName("button")[1].click();
-  container?.getElementsByTagName("button")[1].click();
-  await act(async () => {
-    container
-      ?.getElementsByClassName(
-        "MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
-      )[0]
-      .click();
+  const pageSuivante = screen.getByTitle("Page suivante");
+  waitFor(() => {
+    fireEvent.click(pageSuivante);
   });
+
+  screen.getByText("N°").click();
 });
 
 afterAll(() => {
