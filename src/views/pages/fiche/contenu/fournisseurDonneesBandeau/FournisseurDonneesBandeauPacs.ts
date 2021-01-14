@@ -1,7 +1,11 @@
 import { FournisseurDonneeBandeauRcRca } from "./FournisseurDonneesBandeauRcRca";
+import { triListeObjetsSurPropriete } from "../../../../common/util/Utils";
 export class FournisseurDonneeBandeauPacs extends FournisseurDonneeBandeauRcRca {
   getPersonnesAsAny() {
-    return this.data.partenaires;
+    return triListeObjetsSurPropriete(
+      this.data.partenaires,
+      "numeroOrdreSaisi"
+    );
   }
 
   getTypeAbrege(): string {

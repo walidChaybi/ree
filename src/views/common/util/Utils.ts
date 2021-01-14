@@ -1,15 +1,16 @@
-export function sortObjectWithNumeroOrdre(
-  o1: any,
-  o2: any,
-  propertyName: string
-) {
+function triObjetsSurPropriete(o1: any, o2: any, propertyName: string) {
   if (o1[propertyName] < o2[propertyName]) {
     return -1;
   } else if (o1[propertyName] > o2[propertyName]) {
     return 1;
-  } else {
-    return 0;
   }
+  return 0;
+}
+
+export function triListeObjetsSurPropriete(objets: any[], propriete: string) {
+  return objets
+    ? objets.sort((o1, o2) => triObjetsSurPropriete(o1, o2, propriete))
+    : [];
 }
 
 export function normaliserNomOec(nom: string) {
@@ -59,25 +60,27 @@ export function formatDe(str: string) {
   return de;
 }
 
-export function getValeurOuVide(str: string) {
+export function getValeurOuVide(str?: string) {
   return str ? str : "";
 }
 
-export function getPremierElemOuVide(tab: string[]): string {
+export function getPremierElemOuVide(tab?: string[]): string {
   return tab && tab[0] ? tab[0] : "";
 }
 
 export function jointAvec(tab: string[], sep: string) {
   let res = "";
-  tab.forEach(elem => {
-    if (elem && elem.trim()) {
-      if (res) {
-        res = res + sep + elem.trim();
-      } else {
-        res = elem.trim();
+  if (tab) {
+    tab.forEach(elem => {
+      if (elem && elem.trim()) {
+        if (res) {
+          res = res + sep + elem.trim();
+        } else {
+          res = elem.trim();
+        }
       }
-    }
-  });
+    });
+  }
 
   return res;
 }

@@ -1,33 +1,12 @@
 import {
-  sortObjectWithNumeroOrdre,
   normaliserNomOec,
   premiereLettreEnMajusculeLeResteEnMinuscule,
   formatDe,
   getValeurOuVide,
   jointAvec,
-  getPremierElemOuVide
+  getPremierElemOuVide,
+  triListeObjetsSurPropriete
 } from "../../../views/common/util/Utils";
-
-test("Utils sortObjectWithNumeroOrdre ", async () => {
-  const order1 = sortObjectWithNumeroOrdre(
-    { propertyName: 1, id: "obj1" },
-    { propertyName: 2, id: "obj1" },
-    "propertyName"
-  );
-  expect(order1).toBe(-1);
-  const order2 = sortObjectWithNumeroOrdre(
-    { propertyName: 0, id: "obj1" },
-    { propertyName: 2, id: "obj1" },
-    "propertyName"
-  );
-  expect(order2).toBe(-1);
-  const order3 = sortObjectWithNumeroOrdre(
-    { propertyName: 2, id: "obj1" },
-    { propertyName: 2, id: "obj1" },
-    "propertyName"
-  );
-  expect(order3).toBe(0);
-});
 
 test("Utils normaliserNomOec ", async () => {
   const normalize = normaliserNomOec("NFD");
@@ -73,7 +52,7 @@ test("Attendu: formatDe fonctionne correctement", () => {
 test("Attendu: getValeurOuVide fonctionne correctement", () => {
   expect(getValeurOuVide("")).toBe("");
   expect(getValeurOuVide(undefined)).toBe("");
-  expect(getValeurOuVide(null)).toBe("");
+  expect(getValeurOuVide(null!)).toBe("");
   expect(getValeurOuVide("aze")).toBe("aze");
 });
 
@@ -90,7 +69,26 @@ test("Attendu: jointAvec fonctionne correctement", () => {
 
 test("Attendu: getPremierElemOuVide fonctionne correctement", () => {
   expect(getPremierElemOuVide(null!)).toBe("");
-  expect(getPremierElemOuVide(undefined!)).toBe("");
+  expect(getPremierElemOuVide(undefined)).toBe("");
   expect(getPremierElemOuVide([])).toBe("");
   expect(getPremierElemOuVide(["aze"])).toBe("aze");
+});
+
+test("Attendu: triListeObjetsSurPropriete fonctionne correctement", () => {
+  expect(triListeObjetsSurPropriete(null!, "")).toEqual([]);
+  expect(triListeObjetsSurPropriete(undefined!, "")).toEqual([]);
+  expect(triListeObjetsSurPropriete([], "")).toEqual([]);
+  const liste = [
+    { nom: "martin", ordre: 3 },
+    { nom: "dupe", ordre: 1 },
+    { nom: "dupont", ordre: 2 },
+    { nom: "dd", ordre: 4 }
+  ];
+  const listeTriee = [
+    { nom: "dupe", ordre: 1 },
+    { nom: "dupont", ordre: 2 },
+    { nom: "martin", ordre: 3 },
+    { nom: "dd", ordre: 4 }
+  ];
+  expect(triListeObjetsSurPropriete(liste, "ordre")).toEqual(listeTriee);
 });
