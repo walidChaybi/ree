@@ -5,7 +5,7 @@ import {
   IInteresse
 } from "../../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
-import { sortObjectWithNumeroOrdre } from "../../../../../common/util/Utils";
+import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
 import { getText } from "../../../../../common/widget/Text";
 import { Mariage } from "./Mariage";
 import { LieuxUtils } from "../../../../../../model/Lieux";
@@ -13,8 +13,9 @@ import { FicheUtil } from "../../../../../../model/etatcivil/TypeFiche";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 
 export function getInteresse(retourBack: IFicheRcRca): AccordionPartProps[] {
-  const sortedInteresses = [...retourBack.interesses].sort((i1, i2) =>
-    sortObjectWithNumeroOrdre(i1, i2, "numeroOrdreSaisi")
+  const sortedInteresses = triListeObjetsSurPropriete(
+    [...retourBack.interesses],
+    "numeroOrdreSaisi"
   );
 
   const interessePart: AccordionPartProps[] = sortedInteresses.map(
@@ -89,10 +90,7 @@ function getInteresseInfo(interesse: IInteresse): AccordionContentProps[] {
       value: (
         <span className="prenom">
           {interesse.prenoms
-            ? [...interesse.prenoms]
-                .sort((p1, p2) =>
-                  sortObjectWithNumeroOrdre(p1, p2, "numeroOrdre")
-                )
+            ? triListeObjetsSurPropriete([...interesse.prenoms], "numeroOrdre")
                 .map(prenom => prenom.prenom)
                 .join(", ")
             : ""}

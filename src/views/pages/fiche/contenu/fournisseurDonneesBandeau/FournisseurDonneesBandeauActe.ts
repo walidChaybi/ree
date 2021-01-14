@@ -1,6 +1,6 @@
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 import {
-  sortObjectWithNumeroOrdre,
+  triListeObjetsSurPropriete,
   formatDe,
   premiereLettreEnMajusculeLeResteEnMinuscule,
   getValeurOuVide,
@@ -11,9 +11,7 @@ import { SimplePersonne } from "./IFournisseurDonneesBandeau";
 export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   getPersonnesAsAny(): any[] {
     return this.data
-      ? this.data.titulaires.sort((i1: any, i2: any) =>
-          sortObjectWithNumeroOrdre(i1, i2, "ordre")
-        )
+      ? triListeObjetsSurPropriete(this.data.titulaires, "ordre")
       : [];
   }
 
