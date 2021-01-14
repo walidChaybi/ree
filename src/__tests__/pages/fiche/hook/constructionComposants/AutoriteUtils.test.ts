@@ -7,7 +7,8 @@ import {
   ficheAutoriteSansConfirmation,
   ficheAutoriteNotaireEtrangerAvecConfirmation,
   ficheNonValide,
-  ficheAutoriteOnac
+  ficheAutoriteOnac,
+  ficheAutoriteOnaceEtrangerAvecConfirmation
 } from "./mock/DecisionAutoriteMock";
 
 test("Autorite utils get autorite : decision en France, de type Juridiction, la source de confirmation est présente", async () => {
@@ -177,6 +178,57 @@ test("Autorite utils get autorite : decision à l'étranger, de type Notaire ", 
 
   const idxPrenomNom = components[0].contents.findIndex(
     content => content.libelle === "Prénom NOM"
+  );
+  expect(idxPrenomNom).toBeGreaterThan(-1);
+  expect(idxType).toBeLessThan(idxPrenomNom);
+
+  const idxVille = components[0].contents.findIndex(
+    content => content.libelle === "Ville"
+  );
+  expect(idxVille).toBeGreaterThan(-1);
+
+  expect(idxPrenomNom).toBeLessThan(idxVille);
+
+  const idxRegion = components[0].contents.findIndex(
+    content => content.libelle === "Région"
+  );
+  expect(idxRegion).toBeGreaterThan(-1);
+  expect(idxVille).toBeLessThan(idxRegion);
+
+  const idxPays = components[0].contents.findIndex(
+    content => content.libelle === "Pays"
+  );
+  expect(idxPays).toBeGreaterThan(-1);
+  expect(idxRegion).toBeLessThan(idxPays);
+
+  expect(
+    components[0].contents.findIndex(
+      content => content.libelle === "Arrondissement"
+    )
+  ).toBe(-1);
+  expect(
+    components[0].contents.findIndex(
+      content => content.libelle === "Département"
+    )
+  ).toBe(-1);
+
+  expect(
+    components[0].contents.findIndex(content => content.libelle === "N° CRPCEN")
+  ).toBe(-1);
+});
+
+test("Autorite utils get autorite : decision à l'étranger, de type Onac avec confirmation ONAC ", async () => {
+  const components = getAutorite(
+    ficheAutoriteOnaceEtrangerAvecConfirmation as IFicheRcRca
+  );
+
+  const idxType = components[0].contents.findIndex(
+    content => content.libelle === "Type"
+  );
+  expect(idxType).toBeGreaterThan(-1);
+
+  const idxPrenomNom = components[0].contents.findIndex(
+    content => content.libelle === "Titre"
   );
   expect(idxPrenomNom).toBeGreaterThan(-1);
   expect(idxType).toBeLessThan(idxPrenomNom);

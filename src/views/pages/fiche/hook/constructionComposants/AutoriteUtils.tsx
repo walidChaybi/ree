@@ -47,16 +47,13 @@ function getContentAutorite(
 ): AccordionContentProps[] {
   if (LieuxUtils.isPaysFrance(autorite.pays)) {
     return getContentAutoriteFrance(autorite, typeFiche);
-  } else if (
-    AutoriteUtil.isJuridiction(autorite.type) &&
-    !LieuxUtils.isPaysFrance(autorite.pays)
-  ) {
+  } else if (AutoriteUtil.isJuridiction(autorite.type)) {
     return getContentJuridictionEtEtranger(autorite);
   } else if (
-    AutoriteUtil.isNotaire(autorite.type) &&
-    !LieuxUtils.isPaysFrance(autorite.pays)
+    AutoriteUtil.isNotaire(autorite.type) ||
+    AutoriteUtil.isOnac(autorite.type)
   ) {
-    return getContentNotaireEtEtranger(autorite);
+    return getContentNotaireOnacEtEtranger(autorite);
   } else {
     return [];
   }
@@ -83,7 +80,7 @@ function getContentAutoriteFrance(
 function getContentOnacEtFrance(autorite: IAutorite): AccordionContentProps[] {
   const content = [
     getTypeAutoriteContent(autorite.type),
-    getPrenomNomOnac(autorite),
+    getTitreOnac(autorite),
     getVilleAutoriteContent(autorite.ville)
   ];
 
@@ -96,12 +93,14 @@ function getContentOnacEtFrance(autorite: IAutorite): AccordionContentProps[] {
   return content;
 }
 
-function getContentNotaireEtEtranger(
+function getContentNotaireOnacEtEtranger(
   autorite: IAutorite
 ): AccordionContentProps[] {
   return [
     getTypeAutoriteContent(autorite.type),
-    getPrenomNomNotaire(autorite),
+    AutoriteUtil.isNotaire(autorite.type)
+      ? getPrenomNomNotaire(autorite)
+      : getTitreOnac(autorite),
     getVilleAutoriteContent(autorite.ville),
     getRegionAutoriteContent(autorite.region),
     getPaysAutoriteContent(autorite.pays)
@@ -165,7 +164,7 @@ function getPrenomNomNotaire(autorite: IAutorite): AccordionContentProps {
   };
 }
 
-function getPrenomNomOnac(autorite: IAutorite): AccordionContentProps {
+function getTitreOnac(autorite: IAutorite): AccordionContentProps {
   return {
     libelle: "Titre",
     value: (

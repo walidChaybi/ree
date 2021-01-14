@@ -273,6 +273,49 @@ export const ficheAutoriteNotaireEtrangerAvecConfirmation = {
   }
 };
 
+export const ficheAutoriteOnaceEtrangerAvecConfirmation = {
+  decision: {
+    dateDecision: 1577059200,
+    type: TypeDecision.ACTE_NOTARIE,
+    autorite: {
+      type: TypeAutorite.ONAC,
+      numeroDepartement: "69",
+      libelleDepartement: "Rhône",
+      ville: "Lausanne",
+      pays: "Suisse",
+      region: "Vaud",
+      arrondissement: "8",
+      nomNotaire: "nomnotaire",
+      prenomNotaire: "prenomnotaire",
+      numeroCrpcen: "",
+      nomOnac: "",
+      prenomOnac: ""
+    },
+    enrolementRg: "enrolementRg",
+    enrolementPortalis: "enrolementPortalis",
+    sourceConfirmation: {
+      autorite: {
+        type: "ONAC",
+        ville: "Marseille",
+        arrondissement: "10",
+        numeroDepartement: "13",
+        libelleDepartement: regionBoucheDuRhone,
+        pays: "France",
+        region: regionIleDeFrance,
+        nomNotaire: "nomnotaire",
+        prenomNotaire: "prenomnotaire",
+        numeroCrpcen: "",
+        nomOnac: "",
+        prenomOnac: ""
+      },
+      dateDecision: 1584403200,
+      enrolementRg: "enrolementRg",
+      enrolementPortalis: "enrolementPortalis",
+      type: TypeDecision.ARRET
+    }
+  }
+};
+
 export const ficheAutoriteSansConfirmation = {
   decision: {
     dateDecision: 1577059200,
