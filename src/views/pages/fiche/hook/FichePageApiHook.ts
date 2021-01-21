@@ -7,13 +7,14 @@ import { setDataBandeau } from "../contenu/BandeauFicheUtils";
 import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
 import { getPanelsRca } from "./constructionComposants/FicheRcaUtils";
 import { fournisseurDonneesBandeauFactory } from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
 
 export interface IFicheApi {
   dataBandeau: IBandeauFiche;
   fiche: AccordionReceProps;
 }
 
-export function useFichePageApiHook(categorie: string, identifiant: string) {
+export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
   const [dataFicheState, setDataFicheState] = useState<IFicheApi>(
     {} as IFicheApi
   );
@@ -32,11 +33,24 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
               result.body.data
             )
           );
-          if (categorie === "rc") {
-            dataFiche.fiche = getPanelsRc(result.body.data);
-          } else if (categorie === "rca") {
-            dataFiche.fiche = getPanelsRca(result.body.data);
+
+          switch (categorie) {
+            case TypeFiche.RC:
+              dataFiche.fiche = getPanelsRc(result.body.data);
+              break;
+
+            case TypeFiche.RCA:
+              dataFiche.fiche = getPanelsRca(result.body.data);
+              break;
+
+            case TypeFiche.PACS:
+              dataFiche.fiche = getPanelsPacs(result.body.data);
+              break;
+
+            default:
+              break;
           }
+
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {
