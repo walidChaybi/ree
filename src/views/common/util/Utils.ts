@@ -1,3 +1,5 @@
+import { IPrenom } from "../../../model/etatcivil/FicheInterfaces";
+
 function triObjetsSurPropriete(o1: any, o2: any, propertyName: string) {
   if (o1[propertyName] < o2[propertyName]) {
     return -1;
@@ -72,6 +74,7 @@ export function jointAvec(tab: string[], sep: string) {
   let res = "";
   if (tab) {
     tab.forEach(elem => {
+      console.log("elem=", elem);
       if (elem && elem.trim()) {
         if (res) {
           res = res + sep + elem.trim();
@@ -83,4 +86,22 @@ export function jointAvec(tab: string[], sep: string) {
   }
 
   return res;
+}
+
+export function joint(tab: string[]): string {
+  return jointAvec(tab, ", ");
+}
+
+export function jointPrenoms(prenoms: IPrenom[]): string {
+  return prenoms
+    ? joint(
+        prenoms
+          .sort((p1, p2) => compareNombre(p1.numeroOrdre, p2.numeroOrdre))
+          .map(p => p.prenom)
+      )
+    : "";
+}
+
+export function compareNombre(n1: number, n2: number): number {
+  return n1 > n2 ? 1 : n1 === n2 ? 0 : -1;
 }

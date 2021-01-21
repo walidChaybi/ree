@@ -1,7 +1,10 @@
 import { StatutPacs } from "../enum/StatutPacs";
-import { TypeAutorite } from "../TypeAutorite";
 import { IPartenaire } from "./IPartenaire";
 import { IStatutFiche } from "../FicheInterfaces";
+import { IAnnulation } from "./IAnnulation";
+import { IModification } from "./IModification";
+import { IDissolution } from "./IDissolution";
+import { IAutorite } from "../commun/IAutorite";
 
 export interface IFichePacs {
   id: string;
@@ -13,18 +16,10 @@ export interface IFichePacs {
   referencePactI: string;
   dateEnregistrementParAutorite: number;
   dateInscription: number;
-  autorite: {
-    type: string; // FIXME TypeAutorite => commune_consulaire, tribunal et notaire
-    numeroDepartement: string;
-    ville: string;
-    libelleDepartement: string;
-    pays: string;
-    arrondissement: string;
-    region: string;
-  };
+  autorite: IAutorite;
   annulation: IAnnulation;
   dissolution: IDissolution;
-  modifications: IModification;
+  modifications: IModification[];
   partenaires: IPartenaire[];
   statutsFiche: IStatutFiche[];
 }

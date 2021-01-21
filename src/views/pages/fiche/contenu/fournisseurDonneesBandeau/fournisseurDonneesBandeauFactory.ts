@@ -2,20 +2,21 @@ import { FournisseurDonneeBandeauRcRca } from "./FournisseurDonneesBandeauRcRca"
 import { FournisseurDonneeBandeauPacs } from "./FournisseurDonneesBandeauPacs";
 import { FournisseurDonneeBandeauActe } from "./FournisseurDonneesBandeauActe";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
+import { TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
 
 class FournisseurDonneesBandeauFactory {
-  createFournisseur(categorie: string, data: any) {
+  createFournisseur(categorie: TypeFiche, data: any) {
     let fournisseur: FournisseurDonneesBandeau;
 
     switch (categorie) {
-      case "rc":
-      case "rca":
+      case TypeFiche.RC:
+      case TypeFiche.RCA:
         fournisseur = new FournisseurDonneeBandeauRcRca(data);
         break;
-      case "pacs":
+      case TypeFiche.PACS:
         fournisseur = new FournisseurDonneeBandeauPacs(data);
         break;
-      case "acte":
+      case TypeFiche.ACTE:
         fournisseur = new FournisseurDonneeBandeauActe(data);
         break;
 

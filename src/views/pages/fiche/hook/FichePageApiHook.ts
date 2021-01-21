@@ -8,6 +8,7 @@ import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
 import { getPanelsRca } from "./constructionComposants/FicheRcaUtils";
 import { fournisseurDonneesBandeauFactory } from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
+import { getPanelsPacs } from "./constructionComposants/pacs/FichePacsUtils";
 
 export interface IFicheApi {
   dataBandeau: IBandeauFiche;
@@ -22,8 +23,8 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
 
   useEffect(() => {
     if (identifiant != null && categorie != null) {
-      getInformationsFiche(categorie, identifiant)
-        .then((result: any) => {
+      getInformationsFiche(categorie.toLowerCase(), identifiant).then(
+        (result: any) => {
           const dataFiche = {} as IFicheApi;
 
           dataFiche.dataBandeau = setDataBandeau(
@@ -52,13 +53,14 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
           }
 
           setDataFicheState(dataFiche);
-        })
-        .catch((error: any) => {
-          messageManager.showErrorAndClose(
-            "Impossible récupérer les informations de la fiche"
-          );
-          setErrorState(error);
-        });
+        }
+      );
+      // .catch((error: any) => {
+      //   messageManager.showErrorAndClose(
+      //     "Impossible récupérer les informations de la fiche"
+      //   );
+      //   setErrorState(error);
+      // });
     }
   }, [categorie, identifiant]);
 

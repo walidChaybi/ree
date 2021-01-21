@@ -12,7 +12,7 @@ export enum TypeAutorite {
   JURIDICTION_ETRANGERE = "JURIDICTION_ETRANGERE"
 }
 
-export class AutoriteUtil {
+export class TypeAutoriteUtil {
   private static readonly libelles = {
     [TypeAutorite.COUR_APPEL]: "Cours d'appel",
     [TypeAutorite.TRIBUNAL_GRANDE_INSTANCE]: "Tribunal de grande instance",

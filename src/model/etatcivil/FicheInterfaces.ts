@@ -1,5 +1,4 @@
 import { IDateCompose } from "../../views/common/util/DateUtils";
-import { TypeAutorite } from "./TypeAutorite";
 import { TypeDecision } from "./TypeDecision";
 import { TypeNatureFicheRc } from "./NatureRc";
 import { TypeMandataire } from "./Mandataires";
@@ -7,6 +6,7 @@ import { TypeInscriptionRc } from "./InscriptionRc";
 import { TypeFiche } from "./TypeFiche";
 import { TypeNatureFicheRca } from "./NatureRca";
 import { SimplePersonne } from "../../views/pages/fiche/contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
+import { IAutorite } from "./commun/IAutorite";
 
 export interface IBandeauFiche {
   titreFenetre: string;
@@ -129,18 +129,4 @@ export interface IInteresse {
 export interface IPrenom {
   prenom: string;
   numeroOrdre: number;
-}
-
-export interface IAutorite {
-  type?: TypeAutorite;
-  numeroDepartement: string;
-  libelleDepartement: string;
-  ville: string;
-  region: string;
-  pays: string;
-  arrondissement: string;
-  nomNotaire: string;
-  prenomNotaire: string;
-  numeroCrpcen: string;
-  titreOnac?: string;
 }

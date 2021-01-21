@@ -1,16 +1,14 @@
 import React from "react";
-import {
-  IAutorite,
-  IFicheRcRca
-} from "../../../../../model/etatcivil/FicheInterfaces";
+import { IFicheRcRca } from "../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import {
-  AutoriteUtil,
-  TypeAutorite
+  TypeAutorite,
+  TypeAutoriteUtil
 } from "../../../../../model/etatcivil/TypeAutorite";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
 import { LieuxUtils } from "../../../../../model/Lieux";
 import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
+import { IAutorite } from "../../../../../model/etatcivil/commun/IAutorite";
 
 export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
   const autorite: AccordionPartProps[] = [
@@ -25,7 +23,7 @@ export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
 
   if (
     retourBack.decision.sourceConfirmation != null &&
-    AutoriteUtil.isJuridiction(
+    TypeAutoriteUtil.isJuridiction(
       retourBack.decision.sourceConfirmation.autorite.type
     )
   ) {
@@ -47,11 +45,11 @@ function getContentAutorite(
 ): AccordionContentProps[] {
   if (LieuxUtils.isPaysFrance(autorite.pays)) {
     return getContentAutoriteFrance(autorite, typeFiche);
-  } else if (AutoriteUtil.isJuridiction(autorite.type)) {
+  } else if (TypeAutoriteUtil.isJuridiction(autorite.type)) {
     return getContentJuridictionEtEtranger(autorite);
   } else if (
-    AutoriteUtil.isNotaire(autorite.type) ||
-    AutoriteUtil.isOnac(autorite.type)
+    TypeAutoriteUtil.isNotaire(autorite.type) ||
+    TypeAutoriteUtil.isOnac(autorite.type)
   ) {
     return getContentNotaireOnacEtEtranger(autorite);
   } else {
@@ -63,12 +61,12 @@ function getContentAutoriteFrance(
   autorite: IAutorite,
   typeFiche: TypeFiche
 ): AccordionContentProps[] {
-  if (AutoriteUtil.isJuridiction(autorite.type)) {
+  if (TypeAutoriteUtil.isJuridiction(autorite.type)) {
     return getContentJuridictionEtFrance(autorite);
-  } else if (AutoriteUtil.isNotaire(autorite.type)) {
+  } else if (TypeAutoriteUtil.isNotaire(autorite.type)) {
     return getContentNotaireEtFrance(autorite);
   } else if (
-    AutoriteUtil.isOnac(autorite.type) &&
+    TypeAutoriteUtil.isOnac(autorite.type) &&
     FicheUtil.isFicheRca(typeFiche)
   ) {
     return getContentOnacEtFrance(autorite);
@@ -98,7 +96,7 @@ function getContentNotaireOnacEtEtranger(
 ): AccordionContentProps[] {
   return [
     getTypeAutoriteContent(autorite.type),
-    AutoriteUtil.isNotaire(autorite.type)
+    TypeAutoriteUtil.isNotaire(autorite.type)
       ? getPrenomNomNotaire(autorite)
       : getTitreOnac(autorite),
     getVilleAutoriteContent(autorite.ville),
@@ -185,7 +183,7 @@ function getNumeroCrpcen(autorite: IAutorite): AccordionContentProps {
 }
 
 function getTypeAutoriteContent(type?: TypeAutorite): AccordionContentProps {
-  return { libelle: "Type", value: AutoriteUtil.getLibelle(type) };
+  return { libelle: "Type", value: TypeAutoriteUtil.getLibelle(type) };
 }
 
 function getVilleAutoriteContent(ville: string): AccordionContentProps {

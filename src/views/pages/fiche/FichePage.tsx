@@ -5,7 +5,7 @@ import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
 import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
-import { FicheUtil } from "../../../model/etatcivil/TypeFiche";
+import { FicheUtil, TypeFiche } from "../../../model/etatcivil/TypeFiche";
 
 export interface FichePageProps {
   dataFiche: IDataFicheProps;
@@ -14,7 +14,7 @@ export interface FichePageProps {
 
 export interface IDataFicheProps {
   identifiant: string;
-  categorie: string;
+  categorie: TypeFiche;
 }
 
 export const FichePage: React.FC<FichePageProps> = props => {

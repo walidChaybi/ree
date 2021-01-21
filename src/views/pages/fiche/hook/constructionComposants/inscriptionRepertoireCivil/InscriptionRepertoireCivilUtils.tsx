@@ -16,7 +16,10 @@ import {
 } from "../../../../../../model/etatcivil/NatureRc";
 import { MandataireUtil } from "../../../../../../model/etatcivil/Mandataires";
 import { InscriptionRcUtil } from "../../../../../../model/etatcivil/InscriptionRc";
-import { FicheUtil } from "../../../../../../model/etatcivil/TypeFiche";
+import {
+  FicheUtil,
+  TypeFiche
+} from "../../../../../../model/etatcivil/TypeFiche";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 import {
   NatureFicheRcaUtil,
@@ -152,7 +155,7 @@ function getInscriptionsImpactees(retourBack: IFicheRcRca): JSX.Element[] {
             {`RC n°`}
             <LienFiche
               identifiant={inscription.id}
-              categorie={"rc"}
+              categorie={TypeFiche.RC}
               numero={`${inscription.annee} - ${inscription.numero}`}
             />
 

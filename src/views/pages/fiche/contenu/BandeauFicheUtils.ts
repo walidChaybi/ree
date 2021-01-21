@@ -17,9 +17,10 @@ import {
 } from "../../../common/util/DateUtils";
 import { getFicheTitle } from "../FicheUtils";
 import IFournisseurDonneesBandeau from "./fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
+import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
 
 export function setDataBandeau(
-  categorie: string,
+  categorie: TypeFiche,
   fournisseurDonneesBandeau: IFournisseurDonneesBandeau
 ): IBandeauFiche {
   let dataBandeau = {} as IBandeauFiche;

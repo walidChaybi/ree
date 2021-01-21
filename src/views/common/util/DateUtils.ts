@@ -53,3 +53,7 @@ export function getDateString(date: Date): string {
 export function getDateFromTimestamp(date: number): Date {
   return new Date(date);
 }
+
+export function getFormatDateFromTimestamp(timestamp: number): string {
+  return getDateString(getDateFromTimestamp(timestamp));
+}
