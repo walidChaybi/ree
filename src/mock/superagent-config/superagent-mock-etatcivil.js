@@ -1,5 +1,5 @@
-import mockRC from "../data/RC.json";
-import mockRCA from "../data/RCA.json";
+import mockRC from "../../api/mock/data/RC.json";
+import mockRCA from "../../api/mock/data/RCA.json";
 
 export const configEtatcivil = [
   {

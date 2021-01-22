@@ -1,6 +1,6 @@
 import { getInformationsFiche } from "../../../api/appels/etatcivilApi";
 import request from "superagent";
-import { configEtatcivil } from "../../../api/mock/superagent-config/superagent-mock-etatcivil";
+import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

@@ -2,7 +2,7 @@ import React from "react";
 import { render, waitFor, act } from "@testing-library/react";
 import { FichePage } from "../../../views/pages/fiche/FichePage";
 import request from "superagent";
-import { configEtatcivil } from "../../../api/mock/superagent-config/superagent-mock-etatcivil";
+import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
