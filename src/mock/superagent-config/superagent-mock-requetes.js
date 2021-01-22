@@ -9,7 +9,7 @@ export const configRequetes = [
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost:80/rece/rece-requete-api/v1(.*)",
+    pattern: "http://localhost/rece/rece-requete-api/v1(.*)",
 
     /**
      * returns the data
@@ -78,10 +78,10 @@ export const configRequetes = [
       if (
         match[1] ===
           "/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC" ||
-          match[1] ===
+        match[1] ===
           "/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=DESC" ||
-          match[1] === "/requetes/requetesService?statut=A_SIGNER" ||
-          match[1] ===
+        match[1] === "/requetes/requetesService?statut=A_SIGNER" ||
+        match[1] ===
           "/requetes/requetesService?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC"
       ) {
         return {
@@ -179,7 +179,7 @@ export const configRequetes = [
       }
 
       // Modification des requetes
-      if ((match[1] === "/requetes") && (context.method === "post")) {
+      if (match[1] === "/requetes" && context.method === "post") {
         return this.post;
       }
 

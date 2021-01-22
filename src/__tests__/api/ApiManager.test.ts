@@ -10,12 +10,10 @@ test("instanciation d'une api définie dans le fichier api.json", () => {
 
   expect(api).not.toBe(isNullOrUndefined);
   expect(api.url).toBe("http://localhost");
-
-  expect(api.ports).toBe(80);
   expect(api.domain).toBe("rece");
   expect(api.name).toBe("rece-requete-api");
   expect("v1").toBe(api.version);
-  expect(api.getUri()).toBe("http://localhost:80/rece/rece-requete-api/v1");
+  expect(api.getUri()).toBe("http://localhost/rece/rece-requete-api/v1");
 });
 
 test("fetch d'une requête http GET", () => {

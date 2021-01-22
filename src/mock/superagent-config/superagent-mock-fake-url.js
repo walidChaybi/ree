@@ -3,7 +3,7 @@ export const configFakeUrl = [
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost:80/rece/rece-requete-api/v1(.*)",
+    pattern: "http://localhost/rece/rece-requete-api/v1(.*)",
 
     /**
      * returns the data

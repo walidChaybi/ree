@@ -58,12 +58,10 @@ export interface IHttpResponse {
   status: number;
 }
 
-const DEFAULT_PORT = 80;
 const DOMAIN = "rece";
 
 export class ApiManager {
   private readonly url: string;
-  private readonly ports: number;
   private readonly domain: string;
   private readonly name: string;
   private readonly version: string;
@@ -71,7 +69,6 @@ export class ApiManager {
 
   private constructor(name: ApisAutorisees, version: string) {
     this.url = `${window.location.protocol}//${window.location.hostname}`;
-    this.ports = DEFAULT_PORT;
     this.domain = DOMAIN;
     this.name = name;
     this.version = version;
@@ -92,7 +89,7 @@ export class ApiManager {
   }
 
   public getUri(): string {
-    return `${this.url}:${this.ports}/${this.domain}/${this.name}/${this.version}`;
+    return `${this.url}/${this.domain}/${this.name}/${this.version}`;
   }
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
