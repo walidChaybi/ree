@@ -7,7 +7,7 @@ export const configAgent = [
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost:80/rece/rece-agent-api/v1(.*)",
+    pattern: "http://localhost/rece/rece-agent-api/v1(.*)",
 
     /**
      * returns the data

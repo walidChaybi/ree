@@ -6,7 +6,7 @@ export const configEtatcivil = [
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost:80/rece/rece-etatcivil-api/v1(.*)",
+    pattern: "http://localhost/rece/rece-etatcivil-api/v1(.*)",
 
     /**
      * returns the data
