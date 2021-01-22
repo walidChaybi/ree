@@ -9,6 +9,10 @@ import { getPanelsRca } from "./constructionComposants/FicheRcaUtils";
 import { fournisseurDonneesBandeauFactory } from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
 import { getPanelsPacs } from "./constructionComposants/pacs/FichePacsUtils";
+import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
+import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
+import { IPartenaire } from "../../../../model/etatcivil/pacs/IPartenaire";
+import { getFormatDateFromTimestamp } from "../../../common/util/DateUtils";
 
 export interface IFicheApi {
   dataBandeau: IBandeauFiche;
@@ -45,7 +49,7 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
               break;
 
             case TypeFiche.PACS:
-              dataFiche.fiche = getPanelsPacs(result.body.data);
+              dataFiche.fiche = getPanelsPacs(mapPacs(result.body.data));
               break;
 
             default:
@@ -68,4 +72,22 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
     dataFicheState,
     errorState
   };
+}
+
+function mapPacs(data: any) {
+  const pacs: IFichePacs = data;
+  if (data.partenaires) {
+    data.partenaires.forEach((p: any) => {
+      (p as IPartenaire).nationalite = Nationalite.getEnumFor(p.nationalite);
+    });
+  }
+  pacs.dateDerniereDelivrance = getFormatDateFromTimestamp(
+    data.dateDerniereDelivrance
+  );
+  pacs.dateDerniereMaj = getFormatDateFromTimestamp(data.dateDerniereMaj);
+  pacs.dateEnregistrementParAutorite = getFormatDateFromTimestamp(
+    data.dateEnregistrementParAutorite
+  );
+  pacs.dateInscription = getFormatDateFromTimestamp(data.dateInscription);
+  return pacs;
 }

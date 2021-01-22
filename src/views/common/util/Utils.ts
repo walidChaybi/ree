@@ -74,7 +74,6 @@ export function jointAvec(tab: string[], sep: string) {
   let res = "";
   if (tab) {
     tab.forEach(elem => {
-      console.log("elem=", elem);
       if (elem && elem.trim()) {
         if (res) {
           res = res + sep + elem.trim();
@@ -104,4 +103,8 @@ export function jointPrenoms(prenoms: IPrenom[]): string {
 
 export function compareNombre(n1: number, n2: number): number {
   return n1 > n2 ? 1 : n1 === n2 ? 0 : -1;
+}
+
+export function estTableauNonVide(tab: any[]): boolean {
+  return Array.isArray(tab) && tab.length > 0;
 }

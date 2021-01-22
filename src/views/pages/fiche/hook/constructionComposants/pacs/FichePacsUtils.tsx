@@ -6,18 +6,19 @@ import { IAnnulation } from "../../../../../../model/etatcivil/pacs/IAnnulation"
 import { getPartenaires } from "./PartenairesUtils";
 import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/TypeAutorite";
 import { StatutPacesUtil } from "../../../../../../model/etatcivil/enum/StatutPacs";
-import { getFormatDateFromTimestamp } from "../../../../../common/util/DateUtils";
+import { Autorite } from "../../../../../../model/etatcivil/commun/IAutorite";
+import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 
 export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
   const panelAreas: AccordionPanelAreaProps[] = [
-    { parts: getInscriptionRegistrePacs(pacs) },
-    { parts: getPartenaires(pacs.partenaires) },
-    { parts: getEnregistrementPacs(pacs) }
+    { parts: getInscriptionRegistrePacs(pacs) }
   ];
 
-  AjoutePanelOptionel(panelAreas, pacs.modifications, getModificationPacs);
-  AjoutePanelOptionel(panelAreas, pacs.dissolution, getDissolutionPacs);
-  AjoutePanelOptionel(panelAreas, pacs.annulation, getAnnulationPacs);
+  AjoutePanel(panelAreas, pacs.partenaires, getPartenaires);
+  AjoutePanel(panelAreas, pacs, getEnregistrementPacs);
+  AjoutePanel(panelAreas, pacs.modifications, getModificationPacs);
+  AjoutePanel(panelAreas, pacs.dissolution, getDissolutionPacs);
+  AjoutePanel(panelAreas, pacs.annulation, getAnnulationPacs);
 
   return {
     panels: [
@@ -29,7 +30,7 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
   };
 }
 
-function AjoutePanelOptionel(
+function AjoutePanel(
   panelAreas: AccordionPanelAreaProps[],
   param: any,
   fct: (p: any) => AccordionPartProps[]
@@ -49,12 +50,12 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
       },
       {
         libelle: "Date d'enregistrement par l'autorité",
-        value: getFormatDateFromTimestamp(pacs.dateEnregistrementParAutorite)
+        value: pacs.dateEnregistrementParAutorite
       },
 
       {
         libelle: "Date d'inscription au registre",
-        value: getFormatDateFromTimestamp(pacs.dateInscription)
+        value: pacs.dateInscription
       }
     ]
   };
@@ -63,21 +64,61 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
 }
 
 function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
-  const part: AccordionPartProps = {
-    title: "TODO",
-    contents: [
+  const part1: AccordionPartProps = {
+    title: "Enregistrement PACS",
+    contents: []
+  };
+
+  const contentAutorite: AccordionContentProps = {
+    libelle: "Autorité",
+    value: pacs.autorite ? TypeAutoriteUtil.getLibelle(pacs.autorite.type) : ""
+  };
+
+  const contentDate: AccordionContentProps = {
+    libelle: "Date",
+    value: pacs.dateEnregistrementParAutorite
+  };
+
+  part1.contents.push(contentAutorite);
+  part1.contents.push(contentDate);
+
+  if (Autorite.isNotaire(pacs.autorite)) {
+    const contentNotaire = [
       {
-        libelle: "Autorité",
-        value: TypeAutoriteUtil.getLibelle(pacs.autorite.type)
+        libelle: "Prénom nom",
+        value: Autorite.getLibelleNotaire(pacs.autorite)
       },
       {
-        libelle: "TODO",
-        value: "TODO"
+        libelle: "N° CRPCEN",
+        value: Autorite.getNumeroCrpcen(pacs.autorite)
+      }
+    ];
+    part1.contents.push(...contentNotaire);
+  }
+
+  const part2: AccordionPartProps = {
+    title: "",
+    contents: [
+      {
+        libelle: "Ville",
+        value: Autorite.getVille(pacs.autorite)
+      },
+      {
+        libelle: "Arrondissement",
+        value: Autorite.getArrondissement(pacs.autorite)
+      },
+      {
+        libelle: "Région/Dpt",
+        value: Autorite.getRegionDepartement(pacs.autorite)
+      },
+      {
+        libelle: "Pays",
+        value: Autorite.getPays(pacs.autorite)
       }
     ]
   };
 
-  return [part];
+  return [part1, part2];
 }
 
 function getModificationPacs(pacs: IFichePacs): AccordionPartProps[] {

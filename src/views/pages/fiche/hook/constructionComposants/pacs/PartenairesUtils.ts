@@ -2,8 +2,8 @@ import { AccordionPartProps } from "../../../../../common/widget/accordion/Accor
 import { IPartenaire } from "../../../../../../model/etatcivil/pacs/IPartenaire";
 import { joint, jointPrenoms } from "../../../../../common/util/Utils";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import { NationaliteUtil } from "../../../../../../model/etatcivil/enum/Nationalite";
 import { SexeUtil } from "../../../../../../model/etatcivil/enum/Sexe";
+import { LieuxUtils } from "../../../../../../model/Lieux";
 
 export function getPartenaires(
   partenaires: IPartenaire[]
@@ -34,16 +34,16 @@ export function getPartenaires(
         },
         {
           libelle: "Lieu de naissance",
-          value: joint([
+          value: LieuxUtils.getLieu(
             p.villeNaissance,
-            p.paysNaissance,
             p.regionNaissance,
+            p.paysNaissance,
             p.arrondissementNaissance
-          ])
+          )
         },
         {
           libelle: "Nationalité",
-          value: NationaliteUtil.getLibelle(p.nationalite)
+          value: p.nationalite.libelle
         },
         {
           libelle: "Sexe",

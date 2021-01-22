@@ -1,15 +1,10 @@
-export enum Nationalite {
-  FRANCAISE = "FRANCAISE",
-  ETRANGERE = "ETRANGERE"
-}
+import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 
-export class NationaliteUtil {
-  private static readonly libelles = {
-    [Nationalite.FRANCAISE]: "Française",
-    [Nationalite.ETRANGERE]: "Etrangère"
-  };
+export class Nationalite extends EnumWithLibelle {
+  public static readonly FRANCAISE = new Nationalite("Française");
+  public static readonly ETRANGERE = new Nationalite("Etrangère");
 
-  public static getLibelle(nationalite?: Nationalite): string {
-    return nationalite ? this.libelles[nationalite] : "";
+  public static getEnumFor(str: string) {
+    return EnumWithLibelle.getEnumFor(str, Nationalite);
   }
 }
