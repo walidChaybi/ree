@@ -39,15 +39,15 @@ export const RcRcaPage: React.FC = () => {
 
   const identifiantPacs = "89c9d030-26c3-41d3-bdde-8b4dcc0420e0";
   const categoriePacs = TypeFiche.PACS;
-  const numeroPacs = "123456";
+  const numeroPacs = "123456 (Modification notaire)";
 
   const identifiantPacs2 = "89c9d030-26c3-41d3-bdde-8b4dcc0420e1";
   const categoriePacs2 = TypeFiche.PACS;
-  const numeroPacs2 = "123457";
+  const numeroPacs2 = "123457 (Annulation)";
 
   const identifiantPacs3 = "89c9d030-26c3-41d3-bdde-8b4dcc0420e2";
   const categoriePacs3 = TypeFiche.PACS;
-  const numeroPacs3 = "123457";
+  const numeroPacs3 = "123457 (Dissolution)";
 
   return (
     <div>

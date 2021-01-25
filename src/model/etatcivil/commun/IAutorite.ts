@@ -2,7 +2,9 @@ import { TypeAutorite } from "../TypeAutorite";
 import { LieuxUtils } from "../../Lieux";
 import {
   getValeurOuVide,
-  premiereLettreEnMajusculeLeResteEnMinuscule
+  premiereLettreEnMajusculeLeResteEnMinuscule,
+  formatPrenom,
+  formatNom
 } from "../../../views/common/util/Utils";
 import { TypeJuridiction } from "../enum/TypeJuridiction";
 import { TypePoste } from "../enum/TypePoste";
@@ -63,7 +65,7 @@ export const Autorite = {
   },
   getLibelleNotaire(autorite?: IAutorite): string {
     return autorite
-      ? `Maître ${getValeurOuVide(autorite.prenomNotaire)} ${getValeurOuVide(
+      ? `Maître ${formatPrenom(autorite.prenomNotaire)} ${formatNom(
           autorite.nomNotaire
         )}`
       : "";

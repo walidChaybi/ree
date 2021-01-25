@@ -1,7 +1,10 @@
 import { IActionDatee } from "../commun/IActionDatee";
 import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
+import { IAutorite } from "../commun/IAutorite";
 
-export interface IModification extends IActionDatee {}
+export interface IModification extends IActionDatee {
+  autorite: IAutorite;
+}
 
 export const Modification = {
   getDate(modification: IModification) {

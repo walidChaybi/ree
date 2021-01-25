@@ -9,7 +9,10 @@ import {
 import { getPartenaires } from "./PartenairesUtils";
 import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/TypeAutorite";
 import { StatutPacesUtil } from "../../../../../../model/etatcivil/enum/StatutPacs";
-import { Autorite } from "../../../../../../model/etatcivil/commun/IAutorite";
+import {
+  Autorite,
+  IAutorite
+} from "../../../../../../model/etatcivil/commun/IAutorite";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 import {
   IModification,
@@ -79,58 +82,19 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
 function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
   const part1: AccordionPartProps = {
     title: "Enregistrement du PACS",
-    contents: []
-  };
-
-  const contentAutorite: AccordionContentProps = {
-    libelle: "Autorité",
-    value: pacs.autorite
-      ? TypeAutoriteUtil.getLibelle(pacs.autorite.typeAutorite)
-      : ""
-  };
-
-  const contentDate: AccordionContentProps = {
-    libelle: "Date",
-    value: pacs.dateEnregistrementParAutorite
-  };
-
-  part1.contents.push(contentAutorite);
-  part1.contents.push(contentDate);
-
-  if (Autorite.isNotaire(pacs.autorite)) {
-    const contentNotaire = [
+    contents: [
+      getContentAutorite(pacs.autorite),
+      ...getContentNotaire(pacs.autorite),
       {
-        libelle: "Prénom nom",
-        value: Autorite.getLibelleNotaire(pacs.autorite)
-      },
-      {
-        libelle: "N° CRPCEN",
-        value: Autorite.getNumeroCrpcen(pacs.autorite)
+        libelle: "Date",
+        value: pacs.dateEnregistrementParAutorite
       }
-    ];
-    part1.contents.push(...contentNotaire);
-  }
+    ]
+  };
 
   const part2: AccordionPartProps = {
     title: "",
-    contents: [
-      {
-        libelle: "Ville",
-        value: Autorite.getVille(pacs.autorite)
-      },
-      {
-        libelle: "Arrondissement",
-        value: Autorite.getArrondissement(pacs.autorite)
-      },
-      {
-        libelle: "Région/Dpt",
-        value: Autorite.getRegionDepartement(pacs.autorite)
-      },
-      {
-        libelle: "Pays",
-        value: Autorite.getPays(pacs.autorite)
-      }
-    ]
+    contents: getContentLieu(pacs.autorite)
   };
 
   return [part1, part2];
@@ -139,9 +103,11 @@ function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
 function getModificationPacs(
   modification: IModification
 ): AccordionPartProps[] {
-  const part: AccordionPartProps = {
+  const part1: AccordionPartProps = {
     title: "Modification du pacs",
     contents: [
+      getContentAutorite(modification.autorite),
+      ...getContentNotaire(modification.autorite),
       {
         libelle: "Date d'enregistrement de la convention modificative",
         value: Modification.getDate(modification)
@@ -153,13 +119,20 @@ function getModificationPacs(
     ]
   };
 
-  return [part];
+  const part2: AccordionPartProps = {
+    title: "",
+    contents: getContentLieu(modification.autorite)
+  };
+
+  return [part1, part2];
 }
 
 function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
-  const part: AccordionPartProps = {
+  const part1: AccordionPartProps = {
     title: "Dissolution du PACS",
     contents: [
+      getContentAutorite(dissolution.autorite),
+      ...getContentNotaire(dissolution.autorite),
       {
         libelle: "Date d'enregistrement de la dissolution",
         value: Dissolution.getDate(dissolution)
@@ -175,7 +148,12 @@ function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
     ]
   };
 
-  return [part];
+  const part2: AccordionPartProps = {
+    title: "",
+    contents: getContentLieu(dissolution.autorite)
+  };
+
+  return [part1, part2];
 }
 
 function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
@@ -206,4 +184,51 @@ function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
   };
 
   return [part];
+}
+
+export function getContentAutorite(autorite: IAutorite): AccordionContentProps {
+  return {
+    libelle: "Autorité",
+    value: autorite ? TypeAutoriteUtil.getLibelle(autorite.typeAutorite) : ""
+  };
+}
+
+export function getContentNotaire(
+  autorite: IAutorite
+): AccordionContentProps[] {
+  let contentNotaire: AccordionContentProps[] = [];
+  if (Autorite.isNotaire(autorite)) {
+    contentNotaire = [
+      {
+        libelle: "Prénom nom",
+        value: Autorite.getLibelleNotaire(autorite)
+      },
+      {
+        libelle: "N° CRPCEN",
+        value: Autorite.getNumeroCrpcen(autorite)
+      }
+    ];
+  }
+  return contentNotaire;
+}
+
+export function getContentLieu(autorite: IAutorite): AccordionContentProps[] {
+  return [
+    {
+      libelle: "Ville",
+      value: Autorite.getVille(autorite)
+    },
+    {
+      libelle: "Arrondissement",
+      value: Autorite.getArrondissement(autorite)
+    },
+    {
+      libelle: "Région/Dpt",
+      value: Autorite.getRegionDepartement(autorite)
+    },
+    {
+      libelle: "Pays",
+      value: Autorite.getPays(autorite)
+    }
+  ];
 }

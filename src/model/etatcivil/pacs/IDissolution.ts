@@ -4,8 +4,10 @@ import {
   MotifDissolutionUtil
 } from "../enum/MotifDissolution";
 import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
+import { IAutorite } from "../commun/IAutorite";
 
 export interface IDissolution extends IActionDatee {
+  autorite: IAutorite;
   motif: MotifDissolution;
 }
 
