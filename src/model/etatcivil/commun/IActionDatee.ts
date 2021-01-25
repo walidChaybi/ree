@@ -1,4 +1,4 @@
 export interface IActionDatee {
-  date: string;
-  dateEffet: string;
+  date: number;
+  dateEffet: number;
 }

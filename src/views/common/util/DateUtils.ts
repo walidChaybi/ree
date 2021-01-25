@@ -47,7 +47,10 @@ export function getDateFromDateCompose(date: IDateCompose): Date | undefined {
 }
 
 export function getDateString(date: Date): string {
-  return new Intl.DateTimeFormat("fr-FR").format(date);
+  if (date) {
+    return new Intl.DateTimeFormat("fr-FR").format(date);
+  }
+  return "";
 }
 
 export function getDateFromTimestamp(date: number): Date {
@@ -55,5 +58,8 @@ export function getDateFromTimestamp(date: number): Date {
 }
 
 export function getFormatDateFromTimestamp(timestamp: number): string {
-  return getDateString(getDateFromTimestamp(timestamp));
+  if (timestamp) {
+    return getDateString(getDateFromTimestamp(timestamp));
+  }
+  return "";
 }

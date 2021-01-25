@@ -1,4 +1,7 @@
-import { getValeurOuVide } from "../views/common/util/Utils";
+import {
+  getValeurOuVide,
+  premiereLettreEnMajusculeLeResteEnMinuscule
+} from "../views/common/util/Utils";
 
 const villeAvecArrondissement = ["MARSEILLE", "LYON", "PARIS"];
 
@@ -45,23 +48,29 @@ export class LieuxUtils {
   }
 
   public static getRegionDepartement(
+    ville?: string,
     departement?: string,
     numero?: string,
     region?: string
   ): string {
     let res = "";
-    if (departement) {
-      res = departement;
-    }
 
-    if (numero) {
-      res = res ? res + `(${numero})` : numero;
-    }
+    // Quand la ville vaut "Paris" le champ "Département" est vide
+    if (!this.isVilleParis(ville)) {
+      if (departement) {
+        res = premiereLettreEnMajusculeLeResteEnMinuscule(departement);
+      }
 
-    if (!res) {
-      res = getValeurOuVide(region);
-    }
+      if (numero) {
+        res = res ? res + `(${numero})` : numero;
+      }
 
+      if (!res) {
+        res = premiereLettreEnMajusculeLeResteEnMinuscule(
+          getValeurOuVide(region)
+        );
+      }
+    }
     return res;
   }
 
@@ -72,13 +81,13 @@ export class LieuxUtils {
     arrondissement: string
   ): string {
     const villeString = ville
-      ? `${ville.charAt(0).toUpperCase()}${ville.slice(1)}`
+      ? premiereLettreEnMajusculeLeResteEnMinuscule(ville)
       : "";
     const regionString = region
-      ? `${region.charAt(0).toUpperCase()}${region.slice(1)}`
+      ? premiereLettreEnMajusculeLeResteEnMinuscule(region)
       : "";
     const paysString = pays
-      ? `${pays.charAt(0).toUpperCase()}${pays.slice(1)}`
+      ? premiereLettreEnMajusculeLeResteEnMinuscule(pays)
       : "";
 
     if (LieuxUtils.isPaysFrance(pays)) {

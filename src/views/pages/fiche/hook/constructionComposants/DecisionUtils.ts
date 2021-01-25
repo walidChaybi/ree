@@ -15,13 +15,15 @@ import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
 export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
   let contentsDecision: AccordionContentProps[] = [];
 
-  if (TypeAutoriteUtil.isJuridiction(retourBack.decision.autorite.type)) {
+  if (
+    TypeAutoriteUtil.isJuridiction(retourBack.decision.autorite.typeAutorite)
+  ) {
     contentsDecision = [
       ...getContentJuridiction(retourBack.decision, retourBack.categorie)
     ];
   } else if (
-    TypeAutoriteUtil.isNotaire(retourBack.decision.autorite.type) ||
-    (TypeAutoriteUtil.isOnac(retourBack.decision.autorite.type) &&
+    TypeAutoriteUtil.isNotaire(retourBack.decision.autorite.typeAutorite) ||
+    (TypeAutoriteUtil.isOnac(retourBack.decision.autorite.typeAutorite) &&
       FicheUtil.isFicheRca(retourBack.categorie))
   ) {
     contentsDecision = [...getContentNotaire(retourBack.decision)];
@@ -114,7 +116,9 @@ function getContentConfirmationDecision(
   typeFiche: TypeFiche
 ): AccordionContentProps[] {
   if (
-    TypeAutoriteUtil.isJuridiction(decision.sourceConfirmation.autorite.type)
+    TypeAutoriteUtil.isJuridiction(
+      decision.sourceConfirmation.autorite.typeAutorite
+    )
   ) {
     const confirmationDecision = [
       {
@@ -134,7 +138,9 @@ function getContentConfirmationDecision(
     if (
       FicheUtil.isFicheRca(typeFiche) &&
       decision.sourceConfirmation.dateDecisionEtrangere != null &&
-      TypeAutoriteUtil.isJuridiction(decision.sourceConfirmation.autorite.type)
+      TypeAutoriteUtil.isJuridiction(
+        decision.sourceConfirmation.autorite.typeAutorite
+      )
     ) {
       confirmationDecision.push({
         libelle: "Date décision étrangère",

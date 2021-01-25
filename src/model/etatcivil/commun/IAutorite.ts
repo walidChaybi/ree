@@ -1,19 +1,31 @@
 import { TypeAutorite } from "../TypeAutorite";
 import { LieuxUtils } from "../../Lieux";
-import { getValeurOuVide } from "../../../views/common/util/Utils";
+import {
+  getValeurOuVide,
+  premiereLettreEnMajusculeLeResteEnMinuscule
+} from "../../../views/common/util/Utils";
+import { TypeJuridiction } from "../enum/TypeJuridiction";
+import { TypePoste } from "../enum/TypePoste";
 
+// Regroupe les autorités commune, notaire, onac, juridiction, poste
 export interface IAutorite {
-  type: TypeAutorite;
+  typeAutorite: TypeAutorite;
   numeroDepartement: string;
   libelleDepartement: string;
   ville: string;
   region: string;
   pays: string;
   arrondissement: string;
+  // Notaire
   nomNotaire: string;
   prenomNotaire: string;
   numeroCrpcen: string;
+  // ONAC
   titreOnac?: string;
+  // Juridiction
+  typeJuridiction: TypeJuridiction;
+  // Poste
+  typePoste: TypePoste;
 }
 
 export const Autorite = {
@@ -21,7 +33,7 @@ export const Autorite = {
     if (!autorite) {
       return "";
     }
-    return autorite.ville ? autorite.ville : "";
+    return premiereLettreEnMajusculeLeResteEnMinuscule(autorite.ville);
   },
   getDepartement(autorite?: IAutorite): string {
     return autorite
@@ -36,6 +48,7 @@ export const Autorite = {
   getRegionDepartement(autorite?: IAutorite): string {
     return autorite
       ? LieuxUtils.getRegionDepartement(
+          autorite.ville,
           autorite.libelleDepartement,
           autorite.numeroDepartement,
           autorite.region
@@ -46,7 +59,7 @@ export const Autorite = {
     return autorite ? getValeurOuVide(autorite.pays) : "";
   },
   isNotaire(autorite?: IAutorite): boolean {
-    return autorite ? autorite.type === TypeAutorite.NOTAIRE : false;
+    return autorite ? autorite.typeAutorite === TypeAutorite.NOTAIRE : false;
   },
   getLibelleNotaire(autorite?: IAutorite): string {
     return autorite

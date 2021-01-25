@@ -6,6 +6,7 @@ export enum TypeJuridiction {
   TRIBUNAL_JUDICIAIRE_REFERENCE = "TRIBUNAL JUDICIAIRE REFERENCE",
   TRIBUNAL_PREMIERE_INSTANCE = "TRIBUNAL PREMIERE INSTANCE",
   TRIBUNAL_SUPERIEUR_APPEL = "TRIBUNAL SUPERIEUR APPEL",
+  GREFFE_TRIBUNAL = "GREFFE_TRIBUNAL",
   COUR_APPEL = "COUR APPEL",
   JURIDICTION_ETRANGERE = "JURIDICTION ETRANGERE"
 }
@@ -21,6 +22,7 @@ export class TypeJuridictionUtil {
     [TypeJuridiction.TRIBUNAL_PREMIERE_INSTANCE]:
       "Tribunal de première instance",
     [TypeJuridiction.TRIBUNAL_SUPERIEUR_APPEL]: "Tribunal supérieur d'appel",
+    [TypeJuridiction.GREFFE_TRIBUNAL]: "Greffe du tribunal",
     [TypeJuridiction.COUR_APPEL]: "Cours d'appel",
     [TypeJuridiction.JURIDICTION_ETRANGERE]: "Juridiction étrangère"
   };

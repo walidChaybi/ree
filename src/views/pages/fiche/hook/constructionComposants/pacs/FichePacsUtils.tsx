@@ -2,12 +2,23 @@ import { AccordionReceProps } from "../../../../../common/widget/accordion/Accor
 import { IFichePacs } from "../../../../../../model/etatcivil/pacs/IFichePacs";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { AccordionPanelAreaProps } from "../../../../../common/widget/accordion/AccordionPanelArea";
-import { IAnnulation } from "../../../../../../model/etatcivil/pacs/IAnnulation";
+import {
+  IAnnulation,
+  Annulation
+} from "../../../../../../model/etatcivil/pacs/IAnnulation";
 import { getPartenaires } from "./PartenairesUtils";
 import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/TypeAutorite";
 import { StatutPacesUtil } from "../../../../../../model/etatcivil/enum/StatutPacs";
 import { Autorite } from "../../../../../../model/etatcivil/commun/IAutorite";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import {
+  IModification,
+  Modification
+} from "../../../../../../model/etatcivil/pacs/IModification";
+import {
+  IDissolution,
+  Dissolution
+} from "../../../../../../model/etatcivil/pacs/IDissolution";
 
 export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
   const panelAreas: AccordionPanelAreaProps[] = [
@@ -16,7 +27,9 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
 
   AjoutePanel(panelAreas, pacs.partenaires, getPartenaires);
   AjoutePanel(panelAreas, pacs, getEnregistrementPacs);
-  AjoutePanel(panelAreas, pacs.modifications, getModificationPacs);
+  if (pacs.modifications) {
+    AjoutePanel(panelAreas, pacs.modifications[0], getModificationPacs);
+  }
   AjoutePanel(panelAreas, pacs.dissolution, getDissolutionPacs);
   AjoutePanel(panelAreas, pacs.annulation, getAnnulationPacs);
 
@@ -65,13 +78,15 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
 
 function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    title: "Enregistrement PACS",
+    title: "Enregistrement du PACS",
     contents: []
   };
 
   const contentAutorite: AccordionContentProps = {
     libelle: "Autorité",
-    value: pacs.autorite ? TypeAutoriteUtil.getLibelle(pacs.autorite.type) : ""
+    value: pacs.autorite
+      ? TypeAutoriteUtil.getLibelle(pacs.autorite.typeAutorite)
+      : ""
   };
 
   const contentDate: AccordionContentProps = {
@@ -121,14 +136,19 @@ function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
   return [part1, part2];
 }
 
-function getModificationPacs(pacs: IFichePacs): AccordionPartProps[] {
-  //TODO plusieurs modifications possibles ?
+function getModificationPacs(
+  modification: IModification
+): AccordionPartProps[] {
   const part: AccordionPartProps = {
-    title: "TODO",
+    title: "Modification du pacs",
     contents: [
       {
-        libelle: "Autorité",
-        value: "TODO" // TypeAutoriteUtil.getLibelle(pacs.modifications[0].)
+        libelle: "Date d'enregistrement de la convention modificative",
+        value: Modification.getDate(modification)
+      },
+      {
+        libelle: "Date d'effet à l'égard des tiers",
+        value: Modification.getDateEffet(modification)
       }
     ]
   };
@@ -136,13 +156,21 @@ function getModificationPacs(pacs: IFichePacs): AccordionPartProps[] {
   return [part];
 }
 
-function getDissolutionPacs(pacs: IFichePacs): AccordionPartProps[] {
+function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
   const part: AccordionPartProps = {
-    title: "TODO",
+    title: "Dissolution du PACS",
     contents: [
       {
-        libelle: "TODO",
-        value: "TODO"
+        libelle: "Date d'enregistrement de la dissolution",
+        value: Dissolution.getDate(dissolution)
+      },
+      {
+        libelle: "Date d'effet à l'égard des tiers",
+        value: Dissolution.getDateEffet(dissolution)
+      },
+      {
+        libelle: "Motif",
+        value: Dissolution.getMotif(dissolution)
       }
     ]
   };
@@ -150,13 +178,29 @@ function getDissolutionPacs(pacs: IFichePacs): AccordionPartProps[] {
   return [part];
 }
 
-function getAnnulationPacs(pacs: IAnnulation): AccordionPartProps[] {
+function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
   const part: AccordionPartProps = {
-    title: "TODO",
+    title: "Annulation du PACS",
     contents: [
       {
-        libelle: "TODO",
-        value: "TODO"
+        libelle: "Type de décision",
+        value: Annulation.getTypeDecision(annulation)
+      },
+      {
+        libelle: "Date",
+        value: Annulation.getDate(annulation)
+      },
+      {
+        libelle: "Juridiction",
+        value: Annulation.getJuridiction(annulation)
+      },
+      {
+        libelle: "Enrôlement RG",
+        value: Annulation.getEnrolementRG(annulation)
+      },
+      {
+        libelle: "Enrôlement Portalis",
+        value: Annulation.getEnrolementPortalis(annulation)
       }
     ]
   };

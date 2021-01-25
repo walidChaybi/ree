@@ -41,6 +41,10 @@ export const RcRcaPage: React.FC = () => {
   const categoriePacs = TypeFiche.PACS;
   const numeroPacs = "123456";
 
+  const identifiantPacs2 = "89c9d030-26c3-41d3-bdde-8b4dcc0420e1";
+  const categoriePacs2 = TypeFiche.PACS;
+  const numeroPacs2 = "123457";
+
   return (
     <div>
       <p>RCA</p>
@@ -99,6 +103,11 @@ export const RcRcaPage: React.FC = () => {
         identifiant={identifiantPacs}
         categorie={categoriePacs}
         numero={numeroPacs}
+      />
+      <LienFiche
+        identifiant={identifiantPacs2}
+        categorie={categoriePacs2}
+        numero={numeroPacs2}
       />
     </div>
   );
