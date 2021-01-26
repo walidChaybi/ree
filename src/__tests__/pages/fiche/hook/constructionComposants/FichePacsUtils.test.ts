@@ -1,8 +1,14 @@
 import { getPanelsPacs } from "../../../../../views/pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
-import { pacsModificationNotaireMap } from "../../../../../mock/data/PACS";
+import {
+  pacsModificationNotaireMap,
+  annulationJuridictionMap,
+  dissolutionJuridictionMap,
+  dissolutionPosteMap
+} from "../../../../../mock/data/PACS";
 import { IFichePacs } from "../../../../../model/etatcivil/pacs/IFichePacs";
+import { TypePosteUtil } from "../../../../../model/etatcivil/enum/TypePoste";
 
-test("ficheUtils Pacs works", async () => {
+test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   const panels = getPanelsPacs(pacsModificationNotaireMap as IFichePacs);
 
   expect(panels.panels.length).toBe(1);
@@ -108,7 +114,7 @@ test("ficheUtils Pacs works", async () => {
 
   // 4.1: Infos autorité
   expect(panels.panels[0].panelAreas[3].parts[0].title).toBe(
-    "Modification du pacs"
+    "Modification du PACS"
   );
   expect(panels.panels[0].panelAreas[3].parts[0].contents.length).toBe(5);
   expect(panels.panels[0].panelAreas[3].parts[0].contents[0].libelle).toBe(
@@ -144,4 +150,94 @@ test("ficheUtils Pacs works", async () => {
 
   // 4.2: Localisation
   expect(panels.panels[0].panelAreas[3].parts[1].contents.length).toBe(4);
+});
+
+test("ficheUtils Pacs fonctionne avec annulation juridiction", async () => {
+  const panels = getPanelsPacs(annulationJuridictionMap as IFichePacs);
+
+  expect(panels.panels.length).toBe(1);
+  expect(panels.panels[0].panelAreas.length).toBe(4);
+
+  ///////////// PARTIE 3: Enregistrement du PACS
+  expect(panels.panels[0].panelAreas[2].parts.length).toBe(2);
+  expect(panels.panels[0].panelAreas[2].parts[0].title).toBe(
+    "Enregistrement du PACS"
+  );
+  expect(panels.panels[0].panelAreas[2].parts[0].contents.length).toBe(2);
+
+  // 3.1 Autorité
+  expect(panels.panels[0].panelAreas[2].parts[0].contents[0].libelle).toBe(
+    "Autorité"
+  );
+  expect(panels.panels[0].panelAreas[2].parts[0].contents[0].value).toBe(
+    "Juridiction"
+  );
+
+  // 3.2 Localisation
+  expect(panels.panels[0].panelAreas[2].parts[1].contents[0].libelle).toBe(
+    "Ville"
+  );
+  expect(panels.panels[0].panelAreas[2].parts[1].contents[0].value).toBe(
+    "Paris"
+  );
+  // Vérif Departement vide
+  expect(panels.panels[0].panelAreas[2].parts[1].contents[2].libelle).toBe(
+    "Région/Dpt"
+  );
+  expect(panels.panels[0].panelAreas[2].parts[1].contents[2].value).toBe("");
+
+  ///////////// PARTIE 4: Annulation du pacs
+  expect(panels.panels[0].panelAreas[3].parts.length).toBe(2);
+
+  expect(panels.panels[0].panelAreas[3].parts[0].title).toBe(
+    "Annulation du PACS"
+  );
+});
+
+test("ficheUtils Pacs fonctionne avec dissoultion juridiction", async () => {
+  const panels = getPanelsPacs(dissolutionJuridictionMap as IFichePacs);
+
+  expect(panels.panels.length).toBe(1);
+  expect(panels.panels[0].panelAreas.length).toBe(4);
+
+  ///////////// PARTIE 4: Dissolution du pacs
+  expect(panels.panels[0].panelAreas[3].parts.length).toBe(2);
+
+  expect(panels.panels[0].panelAreas[3].parts[0].title).toBe(
+    "Dissolution du PACS"
+  );
+});
+
+test("ficheUtils Pacs fonctionne avec dissolution poste", async () => {
+  const panels = getPanelsPacs(dissolutionPosteMap as IFichePacs);
+
+  expect(panels.panels.length).toBe(1);
+  expect(panels.panels[0].panelAreas.length).toBe(4);
+
+  ///////////// PARTIE 3: Enregistrement du PACS
+  expect(panels.panels[0].panelAreas[2].parts.length).toBe(2);
+  expect(panels.panels[0].panelAreas[2].parts[0].title).toBe(
+    "Enregistrement du PACS"
+  );
+  expect(panels.panels[0].panelAreas[2].parts[0].contents.length).toBe(2);
+
+  // 3.1 Autorité Poste
+  expect(panels.panels[0].panelAreas[2].parts[0].contents[0].libelle).toBe(
+    "Autorité"
+  );
+  expect(panels.panels[0].panelAreas[2].parts[0].contents[0].value).toBe(
+    "Poste"
+  );
+
+  // Le type de poste n'est pas affiché, il est testé par le code suivant:
+  expect(TypePosteUtil.getLibelle(dissolutionPosteMap.autorite.typePoste)).toBe(
+    "Ambassade"
+  );
+
+  ///////////// PARTIE 4: Dissolution du pacs
+  expect(panels.panels[0].panelAreas[3].parts.length).toBe(2);
+
+  expect(panels.panels[0].panelAreas[3].parts[0].title).toBe(
+    "Dissolution du PACS"
+  );
 });

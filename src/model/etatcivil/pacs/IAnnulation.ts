@@ -11,8 +11,8 @@ import { IAutorite } from "../commun/IAutorite";
 export interface IAnnulation extends IActionDatee {
   type: DecisionAnnulation;
   autorite: IAutorite;
-  enrolementRG: string;
-  enrolementPortalis: string;
+  enrolementRG?: string;
+  enrolementPortalis?: string;
 }
 
 export const Annulation = {

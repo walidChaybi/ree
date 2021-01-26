@@ -104,7 +104,7 @@ function getModificationPacs(
   modification: IModification
 ): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    title: "Modification du pacs",
+    title: "Modification du PACS",
     contents: [
       getContentAutorite(modification.autorite),
       ...getContentNotaire(modification.autorite),
@@ -157,7 +157,7 @@ function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
 }
 
 function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
-  const part: AccordionPartProps = {
+  const part1: AccordionPartProps = {
     title: "Annulation du PACS",
     contents: [
       {
@@ -183,7 +183,12 @@ function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
     ]
   };
 
-  return [part];
+  const part2: AccordionPartProps = {
+    title: "",
+    contents: getContentLieu(annulation.autorite)
+  };
+
+  return [part1, part2];
 }
 
 export function getContentAutorite(

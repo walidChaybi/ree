@@ -88,6 +88,5 @@ export function mapPacs(data: any) {
     data.dateEnregistrementParAutorite
   );
   pacs.dateInscription = getFormatDateFromTimestamp(data.dateInscription);
-
   return pacs;
 }

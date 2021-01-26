@@ -12,7 +12,7 @@ export class TypeAutoriteUtil {
     [TypeAutorite.ONAC]: "ONAC",
     [TypeAutorite.JURIDICTION]: "Juridiction",
     [TypeAutorite.COMMUNE]: "Commune",
-    [TypeAutorite.POSTE_ETRANGER]: "Poste à l'étranger"
+    [TypeAutorite.POSTE_ETRANGER]: "Poste"
   };
 
   public static getLibelle(autorite?: TypeAutorite): string {
