@@ -26,7 +26,9 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
     valueNomRequerant = `${dataRequerant.nomInstitutionnel}`;
   } else if (dataRequerant.qualiteRequerant === QualiteRequerant.Particulier) {
     valueNomRequerant = `${dataRequerant.nomFamille}`;
-    valuePrenomRequerant = `${dataRequerant.prenom}`;
+    valuePrenomRequerant = dataRequerant.prenom
+      ? `${dataRequerant.prenom}`
+      : "";
   }
 
   const dateCompose: IDateCompose = {
