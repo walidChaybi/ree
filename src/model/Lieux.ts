@@ -1,6 +1,6 @@
 import {
   getValeurOuVide,
-  premiereLettreEnMajusculeLeResteEnMinuscule
+  premiereLettreEnMajuscule
 } from "../views/common/util/Utils";
 
 const villeAvecArrondissement = ["MARSEILLE", "LYON", "PARIS"];
@@ -58,7 +58,7 @@ export class LieuxUtils {
     // Quand la ville vaut "Paris" le champ "Département" est vide
     if (!this.isVilleParis(ville)) {
       if (departement) {
-        res = premiereLettreEnMajusculeLeResteEnMinuscule(departement);
+        res = premiereLettreEnMajuscule(departement);
       }
 
       if (numero) {
@@ -66,9 +66,7 @@ export class LieuxUtils {
       }
 
       if (!res) {
-        res = premiereLettreEnMajusculeLeResteEnMinuscule(
-          getValeurOuVide(region)
-        );
+        res = premiereLettreEnMajuscule(getValeurOuVide(region));
       }
     }
     return res;
@@ -80,15 +78,9 @@ export class LieuxUtils {
     pays: string,
     arrondissement: string
   ): string {
-    const villeString = ville
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(ville)
-      : "";
-    const regionString = region
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(region)
-      : "";
-    const paysString = pays
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(pays)
-      : "";
+    const villeString = ville ? premiereLettreEnMajuscule(ville) : "";
+    const regionString = region ? premiereLettreEnMajuscule(region) : "";
+    const paysString = pays ? premiereLettreEnMajuscule(pays) : "";
 
     if (LieuxUtils.isPaysFrance(pays)) {
       if (!LieuxUtils.isVilleAvecArrondissement(ville)) {

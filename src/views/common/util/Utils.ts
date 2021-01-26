@@ -120,3 +120,11 @@ export function formatPrenom(prenom: string): string {
 export function formatNom(nom: string): string {
   return enMajuscule(nom);
 }
+
+export function premiereLettreEnMajuscule(str: string) {
+  let res = "";
+  if (str) {
+    res = str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  return res;
+}

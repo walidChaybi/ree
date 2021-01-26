@@ -3,12 +3,13 @@ import DATA_FICHE_RC from "../data/bandeauRc";
 import DATA_FICHE_PACS from "../data/bandeauPacs";
 import { fournisseurDonneesBandeauFactory } from "../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { acte } from "../data/ficheActe";
+import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
 
 test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
   const bandeauFiche = setDataBandeau(
-    "rc",
+    TypeFiche.RC,
     fournisseurDonneesBandeauFactory.createFournisseur(
-      "rc",
+      TypeFiche.RC,
       DATA_FICHE_RC.dataBandeau
     )
   );
@@ -26,9 +27,9 @@ test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
 
 test("bandeauFicheUtils setDataBandeau works PACS", async () => {
   const bandeauFiche = setDataBandeau(
-    "pacs",
+    TypeFiche.PACS,
     fournisseurDonneesBandeauFactory.createFournisseur(
-      "pacs",
+      TypeFiche.PACS,
       DATA_FICHE_PACS.dataBandeau
     )
   );
@@ -45,8 +46,8 @@ test("bandeauFicheUtils setDataBandeau works PACS", async () => {
 
 test("bandeauFicheUtils setDataBandeau works Acte", async () => {
   const bandeauFiche = setDataBandeau(
-    "acte",
-    fournisseurDonneesBandeauFactory.createFournisseur("acte", acte)
+    TypeFiche.ACTE,
+    fournisseurDonneesBandeauFactory.createFournisseur(TypeFiche.ACTE, acte)
   );
 
   expect(bandeauFiche.titreFenetre).toBe(

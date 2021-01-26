@@ -3,6 +3,7 @@ import { render, fireEvent, waitFor } from "@testing-library/react";
 import { LienFiche } from "../../../views/pages/fiche/LienFiche";
 import request from "superagent";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
+import { TypeFiche } from "../../../model/etatcivil/TypeFiche";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
@@ -15,7 +16,7 @@ test("renders Lien fiche fonctionne correctement", async () => {
   const { getByText } = render(
     <LienFiche
       identifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
-      categorie={"rc"}
+      categorie={TypeFiche.RC}
       numero={"56533"}
       title={"titre"}
     />

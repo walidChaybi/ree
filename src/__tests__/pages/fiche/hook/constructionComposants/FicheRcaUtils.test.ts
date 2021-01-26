@@ -1,5 +1,5 @@
 import { getPanelsRca } from "../../../../../views/pages/fiche/hook/constructionComposants/FicheRcaUtils";
-import mockRCA from "../../../../../api/mock/data/RCA.json";
+import mockRCA from "../../../../../mock/data/RCA.json";
 
 test("ficheUtils rca works", async () => {
   const panels = getPanelsRca(mockRCA.data);

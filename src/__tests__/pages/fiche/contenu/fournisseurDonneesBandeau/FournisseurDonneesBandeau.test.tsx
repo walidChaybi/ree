@@ -2,9 +2,10 @@ import { fournisseurDonneesBandeauFactory } from "../../../../../views/pages/fic
 
 import { acte } from "../../data/ficheActe";
 import { FournisseurDonneesBandeau } from "../../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/FournisseurDonneesBandeau";
+import { TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
 test("Attendu: fournisseur de donnée bandeau pour acte fonctionne correctement", () => {
   const fdActe: FournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(
-    "acte",
+    TypeFiche.ACTE,
     acte
   );
 

@@ -11,7 +11,7 @@ export const ficheAutoriteJuridictionFranceAvecConfirmation = {
     dateDecision: 1577059200,
     type: TypeDecision.JUGEMENT,
     autorite: {
-      type: TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE,
+      typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lyon",
@@ -29,7 +29,7 @@ export const ficheAutoriteJuridictionFranceAvecConfirmation = {
     enrolementPortalis: "enrolementPortalis",
     sourceConfirmation: {
       autorite: {
-        type: TypeAutorite.TRIBUNAL_GRANDE_INSTANCE,
+        typeAutorite: TypeAutorite.JURIDICTION,
         ville: "Marseille",
         arrondissement: "10",
         numeroDepartement: "13",
@@ -57,7 +57,7 @@ export const ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA
     dateDecisionEtrangere: 1577059200,
     type: TypeDecision.JUGEMENT,
     autorite: {
-      type: TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE,
+      typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lyon",
@@ -75,7 +75,7 @@ export const ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA
     enrolementPortalis: "enrolementPortalis",
     sourceConfirmation: {
       autorite: {
-        type: TypeAutorite.TRIBUNAL_GRANDE_INSTANCE,
+        typeAutorite: TypeAutorite.JURIDICTION,
         ville: "Marseille",
         arrondissement: "10",
         numeroDepartement: "13",
@@ -102,7 +102,7 @@ export const ficheAutoriteJuridictionEtrangerAvecConfirmation = {
     dateDecision: 1577059200,
     type: TypeDecision.JUGEMENT,
     autorite: {
-      type: TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE,
+      typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "",
       libelleDepartement: "",
       ville: "Berlin",
@@ -119,7 +119,7 @@ export const ficheAutoriteJuridictionEtrangerAvecConfirmation = {
     enrolementPortalis: "enrolementPortalis",
     sourceConfirmation: {
       autorite: {
-        type: TypeAutorite.TRIBUNAL_GRANDE_INSTANCE,
+        typeAutorite: TypeAutorite.JURIDICTION,
         ville: "Marseille",
         arrondissement: "10",
         numeroDepartement: "13",
@@ -145,7 +145,7 @@ export const ficheAutoriteNotaireFranceAvecConfirmation = {
     dateDecision: 1577059200,
     type: TypeDecision.ACTE_NOTARIE,
     autorite: {
-      type: TypeAutorite.NOTAIRE,
+      typeAutorite: TypeAutorite.NOTAIRE,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lyon",
@@ -190,7 +190,7 @@ export const ficheAutoriteONACFranceAvecConfirmation = {
     dateDecisionEtrangere: 1577059200,
     type: TypeDecision.CONVENTION,
     autorite: {
-      type: TypeAutorite.TRIBUNAL_JUDICIAIRE,
+      typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lyon",
@@ -207,7 +207,7 @@ export const ficheAutoriteONACFranceAvecConfirmation = {
     enrolementPortalis: "enrolementPortalis",
     sourceConfirmation: {
       autorite: {
-        type: TypeAutorite.TRIBUNAL_JUDICIAIRE,
+        typeAutorite: TypeAutorite.JURIDICTION,
         ville: "Marseille",
         arrondissement: "10",
         numeroDepartement: "13",
@@ -235,7 +235,7 @@ export const ficheAutoriteNotaireEtrangerAvecConfirmation = {
     dateDecision: 1577059200,
     type: TypeDecision.ACTE_NOTARIE,
     autorite: {
-      type: TypeAutorite.NOTAIRE,
+      typeAutorite: TypeAutorite.NOTAIRE,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lausanne",
@@ -278,7 +278,7 @@ export const ficheAutoriteOnaceEtrangerAvecConfirmation = {
     dateDecision: 1577059200,
     type: TypeDecision.ACTE_NOTARIE,
     autorite: {
-      type: TypeAutorite.ONAC,
+      typeAutorite: TypeAutorite.ONAC,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lausanne",
@@ -321,7 +321,7 @@ export const ficheAutoriteSansConfirmation = {
     dateDecision: 1577059200,
     type: TypeDecision.ACTE_NOTARIE,
     autorite: {
-      type: TypeAutorite.TRIBUNAL_GRANDE_INSTANCE,
+      typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lyon",
@@ -346,7 +346,7 @@ export const ficheAutoriteOnac = {
     dateDecision: 1577059200,
     type: TypeDecision.ACTE_NOTARIE,
     autorite: {
-      type: TypeAutorite.ONAC,
+      typeAutorite: TypeAutorite.ONAC,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lyon",
