@@ -186,7 +186,9 @@ function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
   return [part];
 }
 
-export function getContentAutorite(autorite: IAutorite): AccordionContentProps {
+export function getContentAutorite(
+  autorite?: IAutorite
+): AccordionContentProps {
   return {
     libelle: "Autorité",
     value: autorite ? TypeAutoriteUtil.getLibelle(autorite.typeAutorite) : ""
@@ -194,7 +196,7 @@ export function getContentAutorite(autorite: IAutorite): AccordionContentProps {
 }
 
 export function getContentNotaire(
-  autorite: IAutorite
+  autorite?: IAutorite
 ): AccordionContentProps[] {
   let contentNotaire: AccordionContentProps[] = [];
   if (Autorite.isNotaire(autorite)) {
@@ -212,7 +214,7 @@ export function getContentNotaire(
   return contentNotaire;
 }
 
-export function getContentLieu(autorite: IAutorite): AccordionContentProps[] {
+export function getContentLieu(autorite?: IAutorite): AccordionContentProps[] {
   return [
     {
       libelle: "Ville",

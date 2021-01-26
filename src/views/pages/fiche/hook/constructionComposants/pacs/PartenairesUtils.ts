@@ -1,6 +1,11 @@
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { IPartenaire } from "../../../../../../model/etatcivil/pacs/IPartenaire";
-import { joint, jointPrenoms } from "../../../../../common/util/Utils";
+import {
+  jointPrenoms,
+  formatNoms,
+  formatPrenoms,
+  formatNom
+} from "../../../../../common/util/Utils";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
 import { SexeUtil } from "../../../../../../model/etatcivil/enum/Sexe";
 import { LieuxUtils } from "../../../../../../model/Lieux";
@@ -14,19 +19,19 @@ export function getPartenaires(
       contents: [
         {
           libelle: "Nom",
-          value: p.nomFamille
+          value: formatNom(p.nomFamille)
         },
         {
           libelle: "Autre(s) nom(s)",
-          value: joint(p.autreNoms)
+          value: formatNoms(p.autreNoms)
         },
         {
           libelle: "Prénoms",
           value: jointPrenoms(p.prenoms)
         },
         {
-          libelle: "Autres prénom(s)",
-          value: joint(p.autrePrenoms)
+          libelle: "Autre(s) prénom(s)",
+          value: formatPrenoms(p.autrePrenoms)
         },
         {
           libelle: "Date de naissance",

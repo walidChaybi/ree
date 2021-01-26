@@ -54,7 +54,7 @@ export class LieuxUtils {
     region?: string
   ): string {
     let res = "";
-
+    // Le champ "Région/dpt" vaut le libellé du département et le numéro entre parenthèses (si connu)
     // Quand la ville vaut "Paris" le champ "Département" est vide
     if (!this.isVilleParis(ville)) {
       if (departement) {

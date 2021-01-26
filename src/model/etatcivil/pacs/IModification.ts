@@ -3,7 +3,7 @@ import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils
 import { IAutorite } from "../commun/IAutorite";
 
 export interface IModification extends IActionDatee {
-  autorite: IAutorite;
+  autorite?: IAutorite;
 }
 
 export const Modification = {

@@ -42,10 +42,13 @@ export function reecriturePrenom(prenom: string) {
   return result;
 }
 
-export function premiereLettreEnMajusculeLeResteEnMinuscule(str: string) {
+export function premiereLettreEnMajusculeLeResteEnMinuscule(str?: string) {
   let res = "";
   if (str) {
-    res = str.charAt(0).toUpperCase() + str.slice(1).toLocaleLowerCase();
+    const strParts = str.split(/[ -]+/);
+    res = strParts
+      .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLocaleLowerCase())
+      .join("-");
   }
   return res;
 }
@@ -91,16 +94,6 @@ export function joint(tab: string[]): string {
   return jointAvec(tab, ", ");
 }
 
-export function jointPrenoms(prenoms: IPrenom[]): string {
-  return prenoms
-    ? joint(
-        prenoms
-          .sort((p1, p2) => compareNombre(p1.numeroOrdre, p2.numeroOrdre))
-          .map(p => p.prenom)
-      )
-    : "";
-}
-
 export function compareNombre(n1: number, n2: number): number {
   return n1 > n2 ? 1 : n1 === n2 ? 0 : -1;
 }
@@ -109,22 +102,45 @@ export function estTableauNonVide(tab: any[]): boolean {
   return Array.isArray(tab) && tab.length > 0;
 }
 
-export function enMajuscule(str: string): string {
+export function enMajuscule(str?: string): string {
   return str ? str.toLocaleUpperCase() : "";
 }
 
-export function formatPrenom(prenom: string): string {
+export function formatPrenom(prenom?: string): string {
   return premiereLettreEnMajusculeLeResteEnMinuscule(prenom);
 }
 
-export function formatNom(nom: string): string {
+export function formatNom(nom?: string): string {
   return enMajuscule(nom);
 }
 
-export function premiereLettreEnMajuscule(str: string) {
+export function premiereLettreEnMajuscule(str?: string) {
   let res = "";
   if (str) {
     res = str.charAt(0).toUpperCase() + str.slice(1);
   }
   return res;
+}
+
+// Tous les autre(s) nom(s) sont affichés en majuscule et sont séparés par une ","
+export function formatNoms(noms?: string[]): string {
+  return noms ? joint(noms.map(n => enMajuscule(n))) : "";
+}
+
+// Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
+export function formatPrenoms(prenoms?: string[]): string {
+  return prenoms
+    ? joint(prenoms.map(p => premiereLettreEnMajusculeLeResteEnMinuscule(p)))
+    : "";
+}
+
+// Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
+export function jointPrenoms(prenoms: IPrenom[]): string {
+  return prenoms
+    ? joint(
+        prenoms
+          .sort((p1, p2) => compareNombre(p1.numeroOrdre, p2.numeroOrdre))
+          .map(p => formatPrenom(p.prenom))
+      )
+    : "";
 }

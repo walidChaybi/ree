@@ -1,3 +1,9 @@
+import { IFichePacs } from "../../model/etatcivil/pacs/IFichePacs";
+import { StatutPacs } from "../../model/etatcivil/enum/StatutPacs";
+import { TypeAutorite } from "../../model/etatcivil/TypeAutorite";
+import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
+import { Sexe } from "../../model/etatcivil/enum/Sexe";
+
 export const pacsModificationNotaire = {
   hasTechnicalError: false,
   hasBusinessError: false,
@@ -98,18 +104,18 @@ export const pacsModificationNotaire = {
   errors: []
 };
 
-export const pacsModificationNotaireMap = {
+export const pacsModificationNotaireMap: IFichePacs = {
   id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
   numero: "123456",
   annee: "2018",
   dateDerniereMaj: "26/11/2020",
   dateDerniereDelivrance: "30/12/2020",
-  statut: "ENREGISTRE",
+  statut: StatutPacs.ENREGISTRE,
   referencePactI: "ref.pact.i",
   dateEnregistrementParAutorite: "19/01/1970",
   dateInscription: "04/12/2020",
   autorite: {
-    typeAutorite: "NOTAIRE",
+    typeAutorite: TypeAutorite.NOTAIRE,
     numeroDepartement: "75",
     ville: "paris",
     libelleDepartement: "",
@@ -120,14 +126,14 @@ export const pacsModificationNotaireMap = {
     prenomNotaire: "dominique",
     numeroCrpcen: "1235467890"
   },
-  annulation: null,
-  dissolution: null,
+  annulation: undefined,
+  dissolution: undefined,
   modifications: [
     {
       date: 1611334469000,
       dateEffet: 1611334469000,
       autorite: {
-        typeAutorite: "NOTAIRE",
+        typeAutorite: TypeAutorite.NOTAIRE,
         numeroDepartement: "75",
         ville: "paris",
         libelleDepartement: "",
@@ -152,20 +158,18 @@ export const pacsModificationNotaireMap = {
       paysNaissance: "france",
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
-      nationalite: {
-        _libelle: "Française"
-      },
-      sexe: "FEMININ",
-      autreNoms: ["DuDu"],
-      autrePrenoms: ["Natacha"],
+      nationalite: Nationalite.FRANCAISE,
+      sexe: Sexe.FEMININ,
+      autreNoms: ["DuDu", "dudu2"],
+      autrePrenoms: ["NatachA", "natacha2"],
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Marie-Charlotte"
+          prenom: "marie charlotte"
         },
         {
           numeroOrdre: 2,
-          prenom: "Sara"
+          prenom: "sara"
         }
       ],
       dateNaissance: {
@@ -181,10 +185,8 @@ export const pacsModificationNotaireMap = {
       paysNaissance: "france",
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
-      nationalite: {
-        _libelle: "Française"
-      },
-      sexe: "MASCULIN",
+      nationalite: Nationalite.FRANCAISE,
+      sexe: Sexe.MASCULIN,
       autreNoms: ["DupDup"],
       autrePrenoms: ["Nabil"],
       prenoms: [

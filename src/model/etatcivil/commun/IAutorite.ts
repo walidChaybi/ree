@@ -11,31 +11,30 @@ import { TypePoste } from "../enum/TypePoste";
 
 // Regroupe les autorités commune, notaire, onac, juridiction, poste
 export interface IAutorite {
-  typeAutorite: TypeAutorite;
-  numeroDepartement: string;
-  libelleDepartement: string;
-  ville: string;
-  region: string;
-  pays: string;
-  arrondissement: string;
+  typeAutorite?: TypeAutorite;
+  numeroDepartement?: string;
+  libelleDepartement?: string;
+  ville?: string;
+  region?: string;
+  pays?: string;
+  arrondissement?: string;
   // Notaire
-  nomNotaire: string;
-  prenomNotaire: string;
-  numeroCrpcen: string;
+  nomNotaire?: string;
+  prenomNotaire?: string;
+  numeroCrpcen?: string;
   // ONAC
   titreOnac?: string;
   // Juridiction
-  typeJuridiction: TypeJuridiction;
+  typeJuridiction?: TypeJuridiction;
   // Poste
-  typePoste: TypePoste;
+  typePoste?: TypePoste;
 }
 
 export const Autorite = {
   getVille(autorite?: IAutorite): string {
-    if (!autorite) {
-      return "";
-    }
-    return premiereLettreEnMajusculeLeResteEnMinuscule(autorite.ville);
+    return autorite
+      ? premiereLettreEnMajusculeLeResteEnMinuscule(autorite.ville)
+      : "";
   },
   getDepartement(autorite?: IAutorite): string {
     return autorite

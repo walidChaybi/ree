@@ -8,7 +8,11 @@ import {
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
 import { LieuxUtils } from "../../../../../model/Lieux";
 import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
-import { IAutorite } from "../../../../../model/etatcivil/commun/IAutorite";
+import {
+  IAutorite,
+  Autorite
+} from "../../../../../model/etatcivil/commun/IAutorite";
+import { formatPrenom, formatNom } from "../../../../common/util/Utils";
 
 export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
   const autorite: AccordionPartProps[] = [
@@ -153,11 +157,9 @@ function getPrenomNomNotaire(autorite: IAutorite): AccordionContentProps {
   return {
     libelle: "Prénom NOM",
     value: (
-      <span>{`Maitre ${autorite.prenomNotaire.charAt(
-        0
-      )}${autorite.prenomNotaire.slice(
-        1
-      )} ${autorite.nomNotaire.toUpperCase()}`}</span>
+      <span>{`Maitre ${formatPrenom(autorite.prenomNotaire)} ${formatNom(
+        autorite.nomNotaire
+      )}`}</span>
     )
   };
 }
@@ -178,7 +180,7 @@ function getTitreOnac(autorite: IAutorite): AccordionContentProps {
 function getNumeroCrpcen(autorite: IAutorite): AccordionContentProps {
   return {
     libelle: "N° CRPCEN",
-    value: autorite.numeroCrpcen
+    value: Autorite.getNumeroCrpcen(autorite)
   };
 }
 
@@ -186,14 +188,14 @@ function getTypeAutoriteContent(type?: TypeAutorite): AccordionContentProps {
   return { libelle: "Type", value: TypeAutoriteUtil.getLibelle(type) };
 }
 
-function getVilleAutoriteContent(ville: string): AccordionContentProps {
+function getVilleAutoriteContent(ville?: string): AccordionContentProps {
   return {
     libelle: "Ville",
     value: <span className="ville">{ville || ""}</span>
   };
 }
 
-function getRegionAutoriteContent(region: string): AccordionContentProps {
+function getRegionAutoriteContent(region?: string): AccordionContentProps {
   return {
     libelle: "Région",
     value: <span className="region">{region || ""}</span>
@@ -201,7 +203,7 @@ function getRegionAutoriteContent(region: string): AccordionContentProps {
 }
 
 function getArrondissementAutoriteContent(
-  arrondissement: string
+  arrondissement?: string
 ): AccordionContentProps {
   return {
     libelle: "Arrondissement",
@@ -220,7 +222,7 @@ function getDepartementAutoriteContent(
   };
 }
 
-function getPaysAutoriteContent(pays: string): AccordionContentProps {
+function getPaysAutoriteContent(pays?: string): AccordionContentProps {
   return {
     libelle: "Pays",
     value: <span className="pays">{pays || ""}</span>

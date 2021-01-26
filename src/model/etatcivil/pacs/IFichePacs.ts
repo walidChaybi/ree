@@ -17,9 +17,9 @@ export interface IFichePacs {
   dateEnregistrementParAutorite: string;
   dateInscription: string;
   autorite: IAutorite;
-  annulation: IAnnulation;
-  dissolution: IDissolution;
-  modifications: IModification[];
-  partenaires: IPartenaire[];
+  annulation?: IAnnulation;
+  dissolution?: IDissolution;
+  modifications?: IModification[];
+  partenaires?: IPartenaire[];
   statutsFiche: IStatutFiche[];
 }
