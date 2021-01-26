@@ -73,7 +73,7 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
   };
 }
 
-function mapPacs(data: any) {
+export function mapPacs(data: any) {
   const pacs: IFichePacs = data;
   if (data.partenaires) {
     data.partenaires.forEach((p: any) => {
@@ -88,5 +88,6 @@ function mapPacs(data: any) {
     data.dateEnregistrementParAutorite
   );
   pacs.dateInscription = getFormatDateFromTimestamp(data.dateInscription);
+
   return pacs;
 }
