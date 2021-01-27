@@ -138,3 +138,7 @@ export function jointPrenoms(prenoms?: IPrenom[]): string {
       )
     : "";
 }
+
+export function numberToString(nb?: number): string {
+  return nb ? nb.toString() : "";
+}

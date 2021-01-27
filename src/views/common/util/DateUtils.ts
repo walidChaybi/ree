@@ -64,7 +64,7 @@ export function getFormatDateFromTimestamp(timestamp: number): string {
   return "";
 }
 
-export function getHeureFromNumber(heure: number, minute: number) {
+export function getHeureFromNumber(heure?: number, minute?: number) {
   if (heure != null) {
     const libelleHeure = heure > 1 ? "heures" : "heure";
     const minuteConvert = minute != null ? `${minute}` : "";

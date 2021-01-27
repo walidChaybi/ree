@@ -15,7 +15,8 @@ import {
   formatNoms,
   formatPrenoms,
   jointPrenoms,
-  premiereLettreEnMajuscule
+  premiereLettreEnMajuscule,
+  numberToString
 } from "../../../views/common/util/Utils";
 import { IPrenom } from "../../../model/etatcivil/FicheInterfaces";
 
@@ -173,4 +174,10 @@ test("Attendu: jointPrenoms fonctionne correctement", () => {
   };
 
   expect(jointPrenoms([p2, p1])).toBe("Marie-Chantal, Jean-Paul");
+});
+
+test("Attendu: numberToString fonctionne correctement", () => {
+  expect(numberToString()).toBe("");
+  const nb = 7;
+  expect(numberToString(nb)).toBe("7");
 });

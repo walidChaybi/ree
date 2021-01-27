@@ -1,10 +1,14 @@
 import { IEvenement } from "./IEvenement";
 import { IAdresse } from "./IAdresse";
 import { IFiliation } from "./IFiliation";
-import { Sexe } from "../Sexe";
-import { formatNom, formatPrenom } from "../../../views/common/util/Utils";
+
+import {
+  formatNom,
+  formatPrenom,
+  numberToString
+} from "../../../views/common/util/Utils";
 import { getDateStringFromDateCompose } from "../../../views/common/util/DateUtils";
-import { SexeUtil } from "../enum/Sexe";
+import { Sexe, SexeUtil } from "../enum/Sexe";
 import { LieuxUtils } from "../../Lieux";
 
 export interface ITitulaireActe {
@@ -40,9 +44,9 @@ export const TitulaireActe = {
   getDateNaissance(titulaire?: ITitulaireActe): string {
     return titulaire && titulaire.naissance
       ? getDateStringFromDateCompose({
-          jour: titulaire.naissance.jour.toString(),
-          mois: titulaire.naissance.mois.toString(),
-          annee: titulaire.naissance.annee.toString()
+          jour: numberToString(titulaire.naissance.jour),
+          mois: numberToString(titulaire.naissance.mois),
+          annee: numberToString(titulaire.naissance.annee)
         })
       : "";
   },
