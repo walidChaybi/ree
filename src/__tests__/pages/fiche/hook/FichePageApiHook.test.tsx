@@ -41,6 +41,23 @@ const HookConsummerRca: React.FC = () => {
   );
 };
 
+const HookConsummerActe: React.FC = () => {
+  const { dataFicheState } = useFichePageApiHook(
+    "acte",
+    "b41079a5-9e8d-478c-b04c-c4c2ac67134f"
+  );
+
+  return (
+    <>
+      {dataFicheState && dataFicheState.dataBandeau && (
+        <div data-testid={"test-fiche-hook-acte"}>
+          {dataFicheState.dataBandeau.identifiant}
+        </div>
+      )}
+    </>
+  );
+};
+
 test("l'appel au WS fonctionne correctement pour une fiche rc", async () => {
   await act(async () => {
     const { getByTestId } = render(<HookConsummerRc />);
@@ -60,6 +77,18 @@ test("l'appel au WS fonctionne correctement pour une fiche rca", async () => {
     await waitFor(() => {
       expect(getByTestId("test-fiche-hook-rca").textContent).toEqual(
         "135e4dfe-9757-4d5d-8715-359c6e73289b"
+      );
+    });
+  });
+});
+
+test("l'appel au WS fonctionne correctement pour une fiche acte", async () => {
+  await act(async () => {
+    const { getByTestId } = render(<HookConsummerActe />);
+
+    await waitFor(() => {
+      expect(getByTestId("test-fiche-hook-acte").textContent).toEqual(
+        "b41079a5-9e8d-478c-b04c-c4c2ac67134f"
       );
     });
   });

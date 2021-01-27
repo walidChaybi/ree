@@ -1,5 +1,6 @@
 import mockRC from "../data/RC.json";
 import mockRCA from "../data/RCA.json";
+import { acte } from "../../../__tests__/pages/fiche/data/ficheActe";
 
 export const configEtatcivil = [
   {
@@ -27,6 +28,13 @@ export const configEtatcivil = [
         match[1] === "/repertoirecivil/rca/135e4dfe-9757-4d5d-8715-359c6e73289b"
       ) {
         return { data: mockRCA.data };
+      }
+
+      if (
+        match[1] ===
+        "/repertoirecivil/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
+      ) {
+        return { data: acte };
       }
     },
 

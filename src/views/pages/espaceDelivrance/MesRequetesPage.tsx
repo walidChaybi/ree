@@ -11,7 +11,7 @@ import {
 } from "./hook/DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
-import { NatureActe } from "../../../model/requete/NatureActe";
+import { NatureActe } from "../../../model/etatcivil/acte/NatureActe";
 import { Canal } from "../../../model/Canal";
 import { URL_MES_REQUETES } from "../../router/ReceUrls";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
@@ -119,9 +119,10 @@ interface MesRequetesPageProps {
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetes
-  >({
+  const [
+    linkParameters,
+    setLinkParameters
+  ] = React.useState<IQueryParametersPourRequetes>({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,
