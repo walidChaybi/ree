@@ -35,16 +35,16 @@ export const acte: any = {
     support2: "T"
   },
   evenement: {
-    minute: null,
-    heure: null,
+    minute: 54,
+    heure: 13,
     jour: 31,
     mois: 3,
     annee: 1921,
     voie: "",
     ville: "Kanpur",
     arrondissement: "",
-    region: "fQcEsLTayh",
-    pays: "Chad"
+    region: "Uttar Pradesh",
+    pays: "Inde"
   },
   mentions: [
     {
@@ -65,20 +65,91 @@ export const acte: any = {
   titulaires: [
     {
       nom: "Greenwald",
-      prenoms: ["paulita", "Zaria"],
+      prenoms: ["Paulita", "Zaria"],
       autresNoms: null,
       autresPrenoms: null,
       ordre: 1,
-      sexe: "FEMININ"
+      sexe: "FEMININ",
+      profession: "DEVELOPPEUR",
+      naissance: {
+        minute: null,
+        heure: null,
+        jour: 10,
+        mois: 10,
+        annee: 1901,
+        pays: "France",
+        region: "Provence-Alpes-Côte d’Azur",
+        ville: "Marseille",
+        arrondissement: "10",
+        voie: ""
+      },
+      domicile: {
+        pays: "DJIBOUTI",
+        region: "",
+        ville: "Djibouti",
+        arrondissement: null,
+        voie: "Ilot du Héron"
+      },
+      filiation: {
+        domicile: {
+          pays: "BELGIQUE",
+          region: "Flandre",
+          ville: "Bruxelles",
+          arrondissement: null,
+          voie: "7 Rue du Nyer"
+        },
+        naissance: null,
+        nom: "Washington",
+        ordre: 1,
+        prenoms: ["Jsandye"],
+        profession: "Livreur",
+        sexe: "MASCULIN",
+        type: "PARENT"
+      }
     },
-
     {
       nom: "DUPe",
       prenoms: ["LaurenT"],
       autresNoms: null,
       autresPrenoms: null,
       ordre: 2,
-      sexe: "MASCULIN"
+      sexe: "MASCULIN",
+      profession: "POMPIER",
+      naissance: {
+        minute: null,
+        heure: null,
+        jour: 30,
+        mois: 3,
+        annee: 1948,
+        pays: "France",
+        region: "Saint-Pierre-et-Miquelon",
+        ville: "Saint-Pierre",
+        arrondissement: "",
+        voie: ""
+      },
+      domicile: {
+        pays: "BELGIQUE",
+        region: "Flandre",
+        ville: "Bruxelles",
+        arrondissement: null,
+        voie: "7 Rue du Noyer"
+      },
+      filiation: {
+        domicile: {
+          pays: "DJIBOUTI",
+          region: "",
+          ville: "Djibouti",
+          arrondissement: null,
+          voie: "16 avenue des Palmiers"
+        },
+        naissance: null,
+        nom: "Sacken",
+        ordre: 1,
+        prenoms: ["Carmela", "Linzy"],
+        profession: "Informaticien",
+        sexe: "MASCULIN",
+        type: "PARENT"
+      }
     }
   ],
   piecesAnnexes: [

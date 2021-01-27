@@ -7,6 +7,10 @@ import { setDataBandeau } from "../contenu/BandeauFicheUtils";
 import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
 import { getPanelsRca } from "./constructionComposants/FicheRcaUtils";
 import { fournisseurDonneesBandeauFactory } from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+import {
+  getPanelsActe,
+  mappingDataActe
+} from "./constructionComposants/acte/FicheActeUtils";
 
 export interface IFicheApi {
   dataBandeau: IBandeauFiche;
@@ -36,6 +40,9 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
             dataFiche.fiche = getPanelsRc(result.body.data);
           } else if (categorie === "rca") {
             dataFiche.fiche = getPanelsRca(result.body.data);
+          } else if (categorie === "acte") {
+            const dataActe = mappingDataActe(result.body.data);
+            dataFiche.fiche = getPanelsActe(dataActe);
           }
           setDataFicheState(dataFiche);
         })

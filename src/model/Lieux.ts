@@ -39,9 +39,9 @@ export class LieuxUtils {
       if (!LieuxUtils.isVilleAvecArrondissement(ville)) {
         return `${villeString} (${regionString})`;
       } else if (!LieuxUtils.isVilleParis(villeString)) {
-        return `${villeString} Arrdt${arrondissement} (${regionString})`;
+        return `${villeString} Arrdt ${arrondissement} (${regionString})`;
       } else {
-        return `${villeString} (Arrdt${arrondissement})`;
+        return `${villeString} (Arrdt ${arrondissement})`;
       }
     } else {
       const regionAffichage = ` - ${regionString}`;
