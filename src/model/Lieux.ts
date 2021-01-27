@@ -1,21 +1,19 @@
 import {
   getValeurOuVide,
-  premiereLettreEnMajuscule
+  premiereLettreEnMajuscule,
+  premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../views/common/util/Utils";
-
-const villeAvecArrondissement = ["MARSEILLE", "LYON", "PARIS"];
 
 const FRANCE = "FRANCE";
 
 const PARIS = "PARIS";
 const MARSEILLE = "MARSEILLE";
 const LYON = "LYON";
+const villesMarseilleLyonParis = [MARSEILLE, LYON, PARIS];
 
 export class LieuxUtils {
   public static isVilleAvecArrondissement(ville?: string): boolean {
-    return (
-      ville != null && villeAvecArrondissement.includes(ville.toUpperCase())
-    );
+    return LieuxUtils.isVilleMarseilleLyonParis(ville);
   }
 
   public static isPaysFrance(pays?: string): boolean {
@@ -28,16 +26,17 @@ export class LieuxUtils {
 
   public static isVilleMarseilleLyonParis(ville?: string): boolean {
     return (
-      ville != null &&
-      (ville.toUpperCase() === PARIS ||
-        ville.toUpperCase() === MARSEILLE ||
-        ville.toUpperCase() === LYON)
+      ville != null && villesMarseilleLyonParis.includes(ville.toUpperCase())
     );
   }
 
-  public static getDepartement(ville?: string, departement?: string) {
+  public static getDepartement(ville?: string, departement?: string): string {
     // Quand la ville vaut "Paris" le champ "Département" est vide
-    return LieuxUtils.isVilleParis(ville) ? "" : getValeurOuVide(departement);
+    return LieuxUtils.isVilleParis(ville)
+      ? ""
+      : getValeurOuVide(
+          premiereLettreEnMajusculeLeResteEnMinuscule(departement, " ")
+        );
   }
 
   public static getArrondissement(ville?: string, arrondissement?: string) {
@@ -58,7 +57,7 @@ export class LieuxUtils {
     // Quand la ville vaut "Paris" le champ "Département" est vide
     if (!this.isVilleParis(ville)) {
       if (departement) {
-        res = premiereLettreEnMajuscule(departement);
+        res = premiereLettreEnMajuscule(departement, " ");
       }
 
       if (numero) {
@@ -73,10 +72,10 @@ export class LieuxUtils {
   }
 
   public static getLieu(
-    ville: string,
-    region: string,
-    pays: string,
-    arrondissement: string
+    ville?: string,
+    region?: string,
+    pays?: string,
+    arrondissement?: string
   ): string {
     const villeString = ville ? premiereLettreEnMajuscule(ville) : "";
     const regionString = region ? premiereLettreEnMajuscule(region) : "";
@@ -92,7 +91,8 @@ export class LieuxUtils {
       }
     } else {
       const regionAffichage = ` - ${regionString}`;
-      return `${villeString}${region ? regionAffichage : ""} (${paysString})`;
+      const paysAffichage = paysString ? ` (${paysString})` : "";
+      return `${villeString}${region ? regionAffichage : ""}${paysAffichage}`;
     }
   }
 }

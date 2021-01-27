@@ -32,13 +32,17 @@ export function normaliserNomOec(nom: string) {
   return result;
 }
 
-export function premiereLettreEnMajusculeLeResteEnMinuscule(str?: string) {
+export function premiereLettreEnMajusculeLeResteEnMinuscule(
+  str?: string,
+  sep?: string
+) {
   let res = "";
+  sep = sep ? sep : "-";
   if (str) {
     const strParts = str.split(/[ -]+/);
     res = strParts
       .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLocaleLowerCase())
-      .join("-");
+      .join(sep);
   }
   return res;
 }
