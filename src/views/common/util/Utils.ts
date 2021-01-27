@@ -32,16 +32,6 @@ export function normaliserNomOec(nom: string) {
   return result;
 }
 
-export function reecriturePrenom(prenom: string) {
-  let result = prenom;
-  if (prenom) {
-    result = `${prenom.charAt(0).toLocaleUpperCase()}${prenom
-      .substring(1)
-      .toLocaleLowerCase()}`;
-  }
-  return result;
-}
-
 export function premiereLettreEnMajusculeLeResteEnMinuscule(str?: string) {
   let res = "";
   if (str) {
@@ -98,7 +88,7 @@ export function compareNombre(n1: number, n2: number): number {
   return n1 > n2 ? 1 : n1 === n2 ? 0 : -1;
 }
 
-export function estTableauNonVide(tab: any[]): boolean {
+export function estTableauNonVide(tab?: any[]): boolean {
   return Array.isArray(tab) && tab.length > 0;
 }
 
@@ -135,7 +125,7 @@ export function formatPrenoms(prenoms?: string[]): string {
 }
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
-export function jointPrenoms(prenoms: IPrenom[]): string {
+export function jointPrenoms(prenoms?: IPrenom[]): string {
   return prenoms
     ? joint(
         prenoms
