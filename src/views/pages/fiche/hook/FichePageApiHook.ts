@@ -7,12 +7,20 @@ import { setDataBandeau } from "../contenu/BandeauFicheUtils";
 import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
 import { getPanelsRca } from "./constructionComposants/FicheRcaUtils";
 import { fournisseurDonneesBandeauFactory } from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+<<<<<<< HEAD
 import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
 import { getPanelsPacs } from "./constructionComposants/pacs/FichePacsUtils";
 import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
 import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
 import { IPartenaire } from "../../../../model/etatcivil/pacs/IPartenaire";
 import { getFormatDateFromTimestamp } from "../../../common/util/DateUtils";
+import { mappingDataActe, getPanelsActe } from "./constructionComposants/acte/FicheActeUtils";
+=======
+import {
+  getPanelsActe,
+  mappingDataActe
+} from "./constructionComposants/acte/FicheActeUtils";
+>>>>>>> refs/remotes/origin/develop
 
 export interface IFicheApi {
   dataBandeau: IBandeauFiche;
@@ -50,6 +58,11 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
 
             case TypeFiche.PACS:
               dataFiche.fiche = getPanelsPacs(mapPacs(result.body.data));
+              break;
+
+            case TypeFiche.ACTE:
+              const dataActe = mappingDataActe(result.body.data);
+              dataFiche.fiche = getPanelsActe(dataActe);
               break;
 
             default:

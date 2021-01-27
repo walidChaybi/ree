@@ -1,4 +1,6 @@
 .accordionPanelArea {
   width: 100%;
   display: grid;
+  grid-template-columns: repeat(auto-fit, 50% 50%);
+  column-gap: 1rem;
 }

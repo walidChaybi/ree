@@ -4,7 +4,7 @@ import moment from "moment";
 import { TypeRequete } from "../../../../model/requete/TypeRequete";
 import { SousTypeRequete } from "../../../../model/requete/SousTypeRequete";
 import { CanalProvenance } from "../../../../model/requete/CanalProvenance";
-import { NatureActe } from "../../../../model/requete/NatureActe";
+import { NatureActe } from "../../../../model/etatcivil/acte/NatureActe";
 import { QualiteRequerant } from "../../../../model/requete/QualiteRequerant";
 import { SousQualiteRequerant } from "../../../../model/requete/SousQualiteRequerant";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";

@@ -1,7 +1,7 @@
 import mockRC from "../data/RC.json";
 import mockRCA from "../data/RCA.json";
 import { pacsModificationNotaire } from "../data/PACS";
-//import mockPACS from "./data/PACS";
+import { acte } from "../../__tests__/pages/fiche/data/ficheActe";
 
 export const configEtatcivil = [
   {
@@ -32,6 +32,11 @@ export const configEtatcivil = [
         "/repertoirecivil/pacs/89c9d030-26c3-41d3-bdde-8b4dcc0420e0"
       ) {
         return { data: pacsModificationNotaire.data };
+      } else if (
+        match[1] ===
+        "/repertoirecivil/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
+      ) {
+        return { data: acte };
       }
     },
 

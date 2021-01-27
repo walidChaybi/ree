@@ -63,3 +63,16 @@ export function getFormatDateFromTimestamp(timestamp: number): string {
   }
   return "";
 }
+
+export function getHeureFromNumber(heure: number, minute: number) {
+  if (heure != null) {
+    const libelleHeure = heure > 1 ? "heures" : "heure";
+    const minuteConvert = minute != null ? `${minute}` : "";
+    if (heure === 0) {
+      return `à zéro ${libelleHeure} ${minuteConvert}`;
+    } else {
+      return `à ${heure}h${minuteConvert}`;
+    }
+  }
+  return "";
+}

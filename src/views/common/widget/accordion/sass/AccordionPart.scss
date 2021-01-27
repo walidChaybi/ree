@@ -3,6 +3,7 @@
 .wrapper {
   display: grid;
   grid-gap: 10px;
+  align-content: start;
 }
 
 .titlePart {
@@ -11,4 +12,5 @@
   font-weight: bold;
   text-align: left;
   font-size: 20px;
+  height: 1.55rem;
 }

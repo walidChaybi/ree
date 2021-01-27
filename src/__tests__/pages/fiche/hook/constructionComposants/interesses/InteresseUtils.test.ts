@@ -35,8 +35,8 @@ test("Interesse utils get interesse : affichage correcte d'un interessé  ", asy
     content => content.libelle === "Autre(s) nom(s)"
   );
   expect(idxAutresNom).toBeGreaterThan(-1);
-  const valueAutresNom: JSX.Element =
-    components[0].contents[idxAutresNom].value;
+  const valueAutresNom: JSX.Element = components[0].contents[idxAutresNom]
+    .value as JSX.Element;
 
   expect(valueAutresNom.props.children).toBe("favarotti, favarotti2");
   expect(idxNom).toBeLessThan(idxAutresNom);
@@ -117,7 +117,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france dans u
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
   expect(components[0].contents[idxLieuNaissance].value).toBe(
-    "Lyon Arrdt02 (Auvergne-Rhône-Alpes)"
+    "Lyon Arrdt 02 (Auvergne-Rhône-Alpes)"
   );
 });
 
@@ -132,7 +132,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france à Par
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
   expect(components[0].contents[idxLieuNaissance].value).toBe(
-    "Paris (Arrdt02)"
+    "Paris (Arrdt 02)"
   );
 });
 
