@@ -57,7 +57,7 @@ export class LieuxUtils {
     // Quand la ville vaut "Paris" le champ "Département" est vide
     if (!this.isVilleParis(ville)) {
       if (departement) {
-        res = premiereLettreEnMajuscule(departement, " ");
+        res = premiereLettreEnMajuscule(departement);
       }
 
       if (numero) {
@@ -71,6 +71,20 @@ export class LieuxUtils {
     return res;
   }
 
+  /**
+   * Quand le pays naissance vaut "France" et quand la ville naissance est différente de "Lyon,Marseille et Paris":
+   *  le lieu de naissance est composé de la ville naissance suivi de la région naissance entre parenthèses.
+   *  Ex: Lille (Nord)
+   * Quand le pays naissance vaut "France", et la ville naissance est parmi "Lyon,Marseille":
+   *  le lieu de naissance est composé de la ville naissance suivie de l'arrondissement naissance puis de la région naissance entre parenthèses.
+   *  Ex: Lyon Arrdt08 (Rhône)
+   * Quand le pays naissance vaut "France", et la ville naissance est "Paris":
+   *  le lieu de naissance est composé de la ville naissance suivie de l'arrondissement naissance .
+   *  Ex:	Paris Arrdt14
+   * Quand le pays naissance est différent de "France":
+   *  le lieu de naissance est composé de la ville naissance - région naissance suivie du pays naissance entre parenthèses.
+   *  Ex:	San remo (Italie) ou Atlantis - Floride (Etats-unis)
+   */
   public static getLieu(
     ville?: string,
     region?: string,
@@ -87,7 +101,7 @@ export class LieuxUtils {
       } else if (!LieuxUtils.isVilleParis(villeString)) {
         return `${villeString} Arrdt ${arrondissement} (${regionString})`;
       } else {
-        return `${villeString} (Arrdt ${arrondissement})`;
+        return `${villeString} Arrdt ${arrondissement}`;
       }
     } else {
       const regionAffichage = ` - ${regionString}`;

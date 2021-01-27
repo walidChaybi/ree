@@ -1,10 +1,9 @@
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { mappingDataActe } from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/FicheActeUtils";
 import { getTitulaires } from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/TitulairesActeUtils";
 import { acte } from "../../../data/ficheActe";
+import { mapActe } from "../../../../../../views/pages/fiche/hook/FichePageApiHook";
 
 test("Acte utils : affichage correcte des infos d'un titulaire", async () => {
-  const dataActe = mappingDataActe(acte);
+  const dataActe = mapActe(acte);
   const components = getTitulaires(dataActe);
 
   const idxNomTitulaire = components[0].contents.findIndex(
@@ -14,7 +13,7 @@ test("Acte utils : affichage correcte des infos d'un titulaire", async () => {
 
   const valueNomTitulaire: JSX.Element = components[0].contents[idxNomTitulaire]
     .value as JSX.Element;
-  expect(valueNomTitulaire.props.children).toBe("Greenwald");
+  expect(valueNomTitulaire.props.children).toBe("GREENWALD");
 
   const idxPrenom1 = components[0].contents.findIndex(
     content => content.libelle === "Prénom 1"

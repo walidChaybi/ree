@@ -59,11 +59,11 @@ test("Attendu: getLieu fonctionne correctement", () => {
   ).toBe("Nantes (Pays de la loire)");
 
   expect(LieuxUtils.getLieu("Lyon", "rhône", "France", "3")).toBe(
-    "Lyon Arrdt3 (Rhône)"
+    "Lyon Arrdt 3 (Rhône)"
   );
 
   expect(LieuxUtils.getLieu("paris", "napparaitpas", "France", "18")).toBe(
-    "Paris (Arrdt18)"
+    "Paris Arrdt 18"
   );
 
   expect(

@@ -1,5 +1,3 @@
-import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../../views/common/util/Utils";
-
 export enum Sexe {
   MASCULIN = "MASCULIN",
   FEMININ = "FEMININ",
@@ -8,8 +6,8 @@ export enum Sexe {
 
 export class SexeUtil {
   private static readonly libelles = {
-    [Sexe.MASCULIN]: premiereLettreEnMajusculeLeResteEnMinuscule(Sexe.MASCULIN),
-    [Sexe.FEMININ]: premiereLettreEnMajusculeLeResteEnMinuscule(Sexe.FEMININ),
+    [Sexe.MASCULIN]: "Masculin",
+    [Sexe.FEMININ]: "Féminin",
     [Sexe.INDETERMINE]: "Indeterminé"
   };
 

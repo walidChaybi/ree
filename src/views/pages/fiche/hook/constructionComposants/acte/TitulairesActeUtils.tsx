@@ -1,16 +1,16 @@
 import React from "react";
-import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
-import { LieuxUtils } from "../../../../../../model/Lieux";
-import { SexeUtil } from "../../../../../../model/etatcivil/Sexe";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { ITitulaireActe } from "../../../../../../model/etatcivil/acte/ITitulaireActe";
+import {
+  ITitulaireActe,
+  TitulaireActe
+} from "../../../../../../model/etatcivil/acte/ITitulaireActe";
 
-export function getTitulaires(retourBack: IFicheActe): AccordionPartProps[] {
+export function getTitulaires(acte: IFicheActe): AccordionPartProps[] {
   const sortedTitulaires = triListeObjetsSurPropriete(
-    [...retourBack.titulaires],
+    [...acte.titulaires],
     "numeroOrdreSaisi"
   );
 
@@ -28,70 +28,40 @@ function getTitulairesInfo(
   titulaire: ITitulaireActe,
   index: number
 ): AccordionContentProps[] {
-  const indexPrenom3 = 2;
   return [
     {
       libelle: `Nom Titulaire ${index}`,
-      value: <span className="nom">{titulaire.nom || ""}</span>
+      value: <span className="nom">{TitulaireActe.getNom(titulaire)}</span>
     },
     {
       libelle: `Prénom 1`,
       value: (
-        <span className="prenom">
-          {titulaire.prenoms[0] ? titulaire.prenoms[0] : ""}
-        </span>
+        <span className="prenom">{TitulaireActe.getPrenom1(titulaire)}</span>
       )
     },
     {
       libelle: `Prénom 2`,
       value: (
-        <span className={`prenom2`}>
-          {titulaire.prenoms[1] ? titulaire.prenoms[1] : ""}
-        </span>
+        <span className={`prenom2`}>{TitulaireActe.getPrenom2(titulaire)}</span>
       )
     },
     {
       libelle: `Prénom 3`,
       value: (
-        <span className={`prenom3`}>
-          {titulaire.prenoms[indexPrenom3]
-            ? titulaire.prenoms[indexPrenom3]
-            : ""}
-        </span>
+        <span className={`prenom3`}>{TitulaireActe.getPrenom3(titulaire)}</span>
       )
     },
     {
       libelle: "Né(e) le",
-      value: (
-        <span>
-          {titulaire.naissance
-            ? getDateStringFromDateCompose({
-                jour: titulaire.naissance.jour.toString(),
-                mois: titulaire.naissance.mois.toString(),
-                annee: titulaire.naissance.annee.toString()
-              })
-            : ""}
-        </span>
-      )
+      value: <span>{TitulaireActe.getDateNaissance(titulaire)}</span>
     },
     {
       libelle: "Sexe",
-      value: (
-        <span>{titulaire.sexe ? SexeUtil.getLibelle(titulaire.sexe) : ""}</span>
-      )
+      value: <span>{TitulaireActe.getSexe(titulaire)}</span>
     },
     {
       libelle: "Lieu de naissance",
-      value: (
-        <span>
-          {LieuxUtils.getLieu(
-            titulaire.naissance.ville,
-            titulaire.naissance.region,
-            titulaire.naissance.pays,
-            titulaire.naissance.arrondissement
-          )}
-        </span>
-      )
+      value: <span>{TitulaireActe.getLieuNaissance(titulaire)}</span>
     }
   ];
 }

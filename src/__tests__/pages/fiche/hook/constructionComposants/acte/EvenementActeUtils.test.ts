@@ -1,9 +1,9 @@
 import { getEvenement } from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/EvenementActeUtils";
-import { mappingDataActe } from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/FicheActeUtils";
 import { acte } from "../../../data/ficheActe";
+import { mapActe } from "../../../../../../views/pages/fiche/hook/FichePageApiHook";
 
 test("Acte utils : affichage correcte des infos de l'évènement", async () => {
-  const dataActe = mappingDataActe(acte);
+  const dataActe = mapActe(acte);
   const components = getEvenement(dataActe);
 
   const idxDate = components[0].contents.findIndex(
