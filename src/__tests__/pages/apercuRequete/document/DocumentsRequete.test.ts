@@ -238,3 +238,22 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
   expect(documentParDefaut).toBeTruthy();
   expect(documentParDefaut?.nom).toBe("Formulaire FA116");
 });
+
+test("Vérification ordre de sélection des documents par défaut visible si extrait sans copie intégrale, sans extrait, sans certificat, sans attestation et uniquement présence formulaire FA115", () => {
+  let documentsDelivres: IDocumentDelivre[] = [
+    {
+      idDocumentDelivre: "1",
+      nom: "formulaire FA115",
+      mimeType: "type",
+      typeDocument: "FA115",
+      taille: 8922,
+      identifiantSwift: "15451",
+      reponse: undefined,
+      conteneurSwift: "",
+      contenu: ""
+    }
+  ];
+  let documentParDefaut = extraitALireParDefault(documentsDelivres);
+  expect(documentParDefaut).toBeTruthy();
+  expect(documentParDefaut?.nom).toBe("Formulaire FA115");
+});
