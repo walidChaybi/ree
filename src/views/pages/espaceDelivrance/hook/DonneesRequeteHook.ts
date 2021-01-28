@@ -206,7 +206,9 @@ function createLibelleRequerant(data: IRequerantApi) {
   } else if (data.qualiteRequerant === QualiteRequerant.Institutionnel) {
     data.libelleRequerant = data.nomInstitutionnel;
   } else if (data.qualiteRequerant === QualiteRequerant.Particulier) {
-    data.libelleRequerant = `${data.prenom} ${data.nomFamille}`;
+    data.libelleRequerant = data.prenom
+      ? `${data.prenom} ${data.nomFamille}`
+      : `${data.nomFamille}`;
   }
   return data;
 }
