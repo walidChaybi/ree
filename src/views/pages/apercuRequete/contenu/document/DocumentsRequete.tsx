@@ -79,7 +79,7 @@ function parseDocumentsDelivres(
   documentsDelivres: IDocumentDelivre[]
 ): IDocumentDetail[] {
   const documentsResult: IDocumentDetail[] = [];
-  documentsDelivres.forEach((element) => {
+  documentsDelivres.forEach(element => {
     documentsResult.push(parseDocumentDelivre(element));
   });
   return documentsResult;
@@ -143,6 +143,7 @@ export function extraitALireParDefault(
     );
     const courriersAccompagnementDocuments = [
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA50),
+      ...getDocumentsByTypeDocument(documents, TypeDocument.FA115),
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA116),
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA117),
       ...getDocumentsByTypeDocument(documents, TypeDocument.FA118)
@@ -168,5 +169,5 @@ const getDocumentsByTypeDocument = (
   documents: IDocumentDelivre[],
   type: TypeDocument
 ): IDocumentDelivre[] => {
-  return documents.filter((element) => element.typeDocument === type);
+  return documents.filter(element => element.typeDocument === type);
 };
