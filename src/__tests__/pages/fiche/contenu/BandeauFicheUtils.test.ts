@@ -17,8 +17,8 @@ test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
     { statut: "Actif" },
     { statut: "Inactif" }
   ]);
-  expect(bandeauFiche.personnes[0].prenom).toBe("prenom11");
-  expect(bandeauFiche.personnes[1].prenom).toBe("prenom21");
+  expect(bandeauFiche.personnes[0].prenom).toBe("Prenom11");
+  expect(bandeauFiche.personnes[1].prenom).toBe("Prenom21");
   expect(bandeauFiche.alertes).toEqual([
     { alerte: "Date de fin de mesure dépassée", dateCreation: 1581807600 }
   ]);
@@ -39,8 +39,8 @@ test("bandeauFicheUtils setDataBandeau works PACS", async () => {
     { statut: "Actif" },
     { statut: "Inactif" }
   ]);
-  expect(bandeauFiche.personnes[0].prenom).toBe("prenom11");
-  expect(bandeauFiche.personnes[1].prenom).toBe("prenom21");
+  expect(bandeauFiche.personnes[0].prenom).toBe("Prenom11");
+  expect(bandeauFiche.personnes[1].prenom).toBe("Prenom21");
 });
 
 test("bandeauFicheUtils setDataBandeau works Acte", async () => {
