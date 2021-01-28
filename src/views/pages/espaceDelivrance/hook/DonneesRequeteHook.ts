@@ -24,6 +24,7 @@ import {
   getRowsNumber
 } from "../../../common/util/GestionDesLiensApi";
 import { reecriturePrenom } from "../../../common/util/Utils";
+import { logError } from "../../../common/util/LogManager";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -110,10 +111,8 @@ export function useRequeteApi(
   const [maxRangeState, setMaxRangeState] = useState<number>();
   const [previousDataLinkState, setPreviousDataLinkState] = useState<string>();
   const [nextDataLinkState, setNextDataLinkState] = useState<string>();
-  const [errorState, setErrorState] = useState(undefined);
 
   useEffect(() => {
-    setErrorState(undefined);
     setRowsNumberState(undefined);
     setMinRangeState(undefined);
     setMaxRangeState(undefined);
@@ -145,7 +144,10 @@ export function useRequeteApi(
         setNextDataLinkState(nextLink);
       })
       .catch(error => {
-        setErrorState(error);
+        logError({
+          messageUtilisateur: "Impossible de récupérer les requêtes",
+          error
+        });
       });
   }, [queryParameters, typeRequete]);
 
@@ -155,8 +157,7 @@ export function useRequeteApi(
     nextDataLinkState,
     rowsNumberState,
     minRangeState,
-    maxRangeState,
-    errorState
+    maxRangeState
   };
 }
 

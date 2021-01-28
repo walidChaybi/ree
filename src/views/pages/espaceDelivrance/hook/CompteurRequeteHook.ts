@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { getCompteurRequetes } from "../../../../api/appels/requeteApi";
+import { logError } from "../../../common/util/LogManager";
 
-export function useCompteurRequeteHook(reloadCompteur?: boolean) {
+export function useCompteurRequeteHook(reloadCompteur = false) {
   const [nombreRequetesState, setNombreRequetesState] = useState<number>(0);
-  const [errorState, setErrorState] = useState<any>();
 
   useEffect(() => {
     getCompteurRequetes()
@@ -11,12 +11,15 @@ export function useCompteurRequeteHook(reloadCompteur?: boolean) {
         setNombreRequetesState(result.body.data);
       })
       .catch(error => {
-        setErrorState(error);
+        logError({
+          messageUtilisateur:
+            "Impossible de récupérer le nombre de requête à signer",
+          error
+        });
       });
   }, [reloadCompteur]);
 
   return {
-    nombreRequetesState,
-    errorState
+    nombreRequetesState
   };
 }

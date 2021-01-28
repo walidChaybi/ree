@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getInformationsFiche } from "../../../../api/appels/etatcivilApi";
-import messageManager from "../../../common/util/messageManager";
 import { AccordionReceProps } from "../../../common/widget/accordion/AccordionRece";
 import { getPanelsRc } from "./constructionComposants/FicheRcUtils";
 import { setDataBandeau } from "../contenu/BandeauFicheUtils";
@@ -11,6 +10,7 @@ import {
   getPanelsActe,
   mappingDataActe
 } from "./constructionComposants/acte/FicheActeUtils";
+import { logError } from "../../../common/util/LogManager";
 
 export interface IFicheApi {
   dataBandeau: IBandeauFiche;
@@ -21,7 +21,6 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
   const [dataFicheState, setDataFicheState] = useState<IFicheApi>(
     {} as IFicheApi
   );
-  const [errorState, setErrorState] = useState(undefined);
 
   useEffect(() => {
     if (identifiant != null && categorie != null) {
@@ -47,16 +46,16 @@ export function useFichePageApiHook(categorie: string, identifiant: string) {
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {
-          messageManager.showErrorAndClose(
-            "Impossible récupérer les informations de la fiche"
-          );
-          setErrorState(error);
+          logError({
+            messageUtilisateur:
+              "Impossible de récupérer les informations de la fiche",
+            error
+          });
         });
     }
   }, [categorie, identifiant]);
 
   return {
-    dataFicheState,
-    errorState
+    dataFicheState
   };
 }

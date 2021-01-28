@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { patchStatutRequete } from "../../../api/appels/requeteApi";
+import { logError } from "../util/LogManager";
 
 export interface IQueryParameterUpdateStatutRequete {
   statut: StatutRequete;
@@ -11,8 +12,6 @@ export function useUpdateStatutRequeteApi(
   queryParameters?: IQueryParameterUpdateStatutRequete,
   callback?: () => void
 ) {
-  const [errorState, setErrorState] = useState<any>();
-
   useEffect(() => {
     if (queryParameters) {
       patchStatutRequete(queryParameters)
@@ -22,12 +21,14 @@ export function useUpdateStatutRequeteApi(
           }
         })
         .catch(error => {
-          setErrorState(error);
+          logError({
+            messageUtilisateur:
+              "Impossible de mettre à jour de statut de la requête",
+            error
+          });
         });
     }
   }, [queryParameters, callback]);
 
-  return {
-    errorState
-  };
+  return {};
 }
