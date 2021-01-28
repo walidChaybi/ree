@@ -14,9 +14,9 @@ const TIME_OUT_MS = 2000;
 
 const FF_LOG_ACTIVE = gestionnaireFeatureFlag.estActif(FeatureFlag.LOG_SERVEUR);
 
-var listLog = [] as Array<IQueryParameterPostLog>;
+let listLog = [] as Array<IQueryParameterPostLog>;
 
-var isWaiting = false;
+let isWaiting = false;
 export interface LogErrorMsg {
   messageUtilisateur: string;
   error?: any;
