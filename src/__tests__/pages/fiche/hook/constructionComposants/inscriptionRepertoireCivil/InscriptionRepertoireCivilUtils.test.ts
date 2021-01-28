@@ -102,5 +102,5 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
     ficheInscriptionRepertoireCivilSansDonnees as IFicheRc
   );
 
-  expect(component.title).toBe("Inscrition au répertoire civil");
+  expect(component.title).toBe("Inscription au répertoire civil");
 });

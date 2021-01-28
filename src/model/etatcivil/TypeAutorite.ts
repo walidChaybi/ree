@@ -14,7 +14,7 @@ export enum TypeAutorite {
 
 export class AutoriteUtil {
   private static readonly libelles = {
-    [TypeAutorite.COUR_APPEL]: "Cours d'appel",
+    [TypeAutorite.COUR_APPEL]: "Cour d'appel",
     [TypeAutorite.TRIBUNAL_GRANDE_INSTANCE]: "Tribunal de grande instance",
     [TypeAutorite.TRIBUNAL_INSTANCE]: "Tribunal d'instance",
     [TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE]: "Tribunal de première instance",
