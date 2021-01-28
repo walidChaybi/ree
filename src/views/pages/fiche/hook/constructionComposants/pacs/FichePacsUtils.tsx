@@ -24,17 +24,23 @@ import {
 } from "../../../../../../model/etatcivil/pacs/IDissolution";
 
 export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
-  const panelAreas: AccordionPanelAreaProps[] = [
-    { parts: getInscriptionRegistrePacs(pacs) }
-  ];
+  const panelAreas: AccordionPanelAreaProps[] = [];
 
-  AjoutePanel(panelAreas, pacs.partenaires, getPartenaires);
-  AjoutePanel(panelAreas, pacs, getEnregistrementPacs);
+  AjoutePanel(
+    panelAreas,
+    pacs,
+    getInscriptionRegistrePacs,
+    "1",
+    "Inscription des registre des PACS des étrangers nés à l'étranger"
+  );
+
+  AjoutePanel(panelAreas, pacs.partenaires, getPartenaires, "2");
+  AjoutePanel(panelAreas, pacs, getEnregistrementPacs, "3");
   if (pacs.modifications) {
-    AjoutePanel(panelAreas, pacs.modifications[0], getModificationPacs);
+    AjoutePanel(panelAreas, pacs.modifications[0], getModificationPacs, "4");
   }
-  AjoutePanel(panelAreas, pacs.dissolution, getDissolutionPacs);
-  AjoutePanel(panelAreas, pacs.annulation, getAnnulationPacs);
+  AjoutePanel(panelAreas, pacs.dissolution, getDissolutionPacs, "5");
+  AjoutePanel(panelAreas, pacs.annulation, getAnnulationPacs, "6");
 
   return {
     panels: [
@@ -49,16 +55,23 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
 function AjoutePanel(
   panelAreas: AccordionPanelAreaProps[],
   param: any,
-  fct: (p: any) => AccordionPartProps[]
+  fct: (p: any) => AccordionPartProps[],
+  idPanelArea?: string,
+  titlePanelArea?: string
 ) {
   if (param) {
-    panelAreas.push({ parts: fct(param) });
+    panelAreas.push({
+      parts: fct(param),
+      id: idPanelArea,
+      title: titlePanelArea
+    } as AccordionPanelAreaProps);
   }
 }
 
 function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
   const part: AccordionPartProps = {
-    title: "Inscription des registre des PACS des étrangers nés à l'étranger",
+    title: "",
+    columnIndex: "1/3",
     contents: [
       {
         libelle: "Statut du PACS",

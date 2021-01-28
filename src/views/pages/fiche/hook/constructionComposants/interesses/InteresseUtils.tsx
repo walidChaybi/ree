@@ -39,7 +39,7 @@ export function getInteresse(retourBack: IFicheRcRca): AccordionPartProps[] {
         }
       ],
       title: "",
-      columnIndex: 0
+      columnIndex: "0"
     });
   }
 

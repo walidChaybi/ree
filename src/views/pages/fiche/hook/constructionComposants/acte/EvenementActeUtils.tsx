@@ -13,8 +13,7 @@ import {
 export function getEvenement(acte: IFicheActe): AccordionPartProps[] {
   const evenement: AccordionPartProps[] = [
     {
-      contents: getDateLieuEvenement(acte.evenement),
-      title: "Evènement"
+      contents: getDateLieuEvenement(acte.evenement)
     }
   ];
 

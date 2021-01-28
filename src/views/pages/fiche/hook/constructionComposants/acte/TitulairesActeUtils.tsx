@@ -19,7 +19,7 @@ export function getTitulaires(acte: IFicheActe): AccordionPartProps[] {
     return {
       contents: getTitulairesInfo(titulaire, index + 1),
       title: titulaire === sortedTitulaires[0] ? "Titulaires" : " ",
-      columnIndex: index % deux === 0 ? 1 : deux
+      columnIndex: String(index % deux === 0 ? 1 : deux)
     };
   });
 }

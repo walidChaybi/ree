@@ -20,7 +20,11 @@ export const AccordionPanel: React.FC<AccordionPanelProps> = ({
       {panelAreas.map((panelArea, index) => {
         return (
           <Fragment key={`accordion-panel-area-${index}-${title}-${id}`}>
-            <AccordionPanelArea id={`${title}-${id}`} parts={panelArea.parts} />
+            <AccordionPanelArea
+              id={`${title}-${id}`}
+              parts={panelArea.parts}
+              title={panelArea.title}
+            />
             {index !== panelAreas.length - 1 && (
               <hr
                 className={"accordionPanelAreaSeparation"}
