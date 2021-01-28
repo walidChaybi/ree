@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import { BandeauFiche } from "./contenu/BandeauFiche";
-import { useFichePageApiHook } from "./hook/FichePageApiHook";
-import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
-import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
-import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
-import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
-import { FicheUtil } from "../../../model/etatcivil/TypeFiche";
+import React, {useEffect} from "react";
+import {BandeauFiche} from "./contenu/BandeauFiche";
+import {useFichePageApiHook} from "./hook/FichePageApiHook";
+import {AccordionRece} from "../../common/widget/accordion/AccordionRece";
+import {FenetreExterneUtil} from "../../common/util/FenetreExterne";
+import {BandeauFicheRcRcaPacsNumero} from "./contenu/BandeauFicheRcRcaPacsNumero";
+import {BandeauFicheActeNumero} from "./contenu/BandeauFicheActeNumero";
+import {FicheUtil} from "../../../model/etatcivil/TypeFiche";
+import {AlerteActe} from "./hook/constructionComposants/acte/AlerteActeUtils";
 
 export interface FichePageProps {
   dataFiche: IDataFicheProps;
@@ -41,28 +42,30 @@ export const FichePage: React.FC<FichePageProps> = props => {
   }, [dataFicheState, props.fenetreExterneUtil]);
 
   return (
-    <div>
-      {/* Le Bandeau */}
-      {dataFicheState.dataBandeau && (
-        <BandeauFiche
-          dataBandeau={dataFicheState.dataBandeau}
-          elementNumeroLigne={getElementNumeroLigne()}
-        ></BandeauFiche>
-      )}
-      {/* Les Accordéons */}
-      {dataFicheState.fiche && <AccordionRece {...dataFicheState.fiche} />}
-    </div>
+      <div>
+        {/* Le Bandeau */}
+        {dataFicheState.dataBandeau && (
+            <BandeauFiche
+                dataBandeau={dataFicheState.dataBandeau}
+                elementNumeroLigne={getElementNumeroLigne()}
+            />
+        )}
+        {/* Le bandeau d'ajout d'alerte pour les actes */}
+        {FicheUtil.isActe(props.dataFiche.categorie) && <AlerteActe/>}
+        {/* Les Accordéons */}
+        {dataFicheState.fiche && <AccordionRece {...dataFicheState.fiche} />}
+      </div>
   );
 
   function getElementNumeroLigne() {
     return FicheUtil.isActe(props.dataFiche.categorie) ? (
-      <BandeauFicheActeNumero
-        dataBandeau={dataFicheState.dataBandeau}
-      ></BandeauFicheActeNumero>
-    ) : (
-      <BandeauFicheRcRcaPacsNumero
-        dataBandeau={dataFicheState.dataBandeau}
-      ></BandeauFicheRcRcaPacsNumero>
+        <BandeauFicheActeNumero
+            dataBandeau={dataFicheState.dataBandeau}
+        />) : (
+        <BandeauFicheRcRcaPacsNumero
+            dataBandeau={dataFicheState.dataBandeau}
+        />
     );
   }
 };
+
