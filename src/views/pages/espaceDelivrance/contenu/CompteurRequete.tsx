@@ -4,7 +4,7 @@ import { getText } from "../../../common/widget/Text";
 import "./sass/CompteurRequete.scss";
 
 interface CompteurRequeteProps {
-  reloadCompteur?: boolean;
+  reloadCompteur: boolean;
 }
 
 export const CompteurRequete: React.FC<CompteurRequeteProps> = props => {

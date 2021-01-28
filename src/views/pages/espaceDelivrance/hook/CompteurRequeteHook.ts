@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getCompteurRequetes } from "../../../../api/appels/requeteApi";
 import { logError } from "../../../common/util/LogManager";
 
-export function useCompteurRequeteHook(reloadCompteur = false) {
+export function useCompteurRequeteHook(reloadCompteur: boolean) {
   const [nombreRequetesState, setNombreRequetesState] = useState<number>(0);
 
   useEffect(() => {

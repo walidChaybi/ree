@@ -7,7 +7,7 @@ import { configRequetes } from "../../../../mock/superagent-config/superagent-mo
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsummer: React.FC = () => {
-  const { nombreRequetesState } = useCompteurRequeteHook();
+  const { nombreRequetesState } = useCompteurRequeteHook(false);
 
   return <div data-testid={"test-compteur-requete"}>{nombreRequetesState}</div>;
 };
