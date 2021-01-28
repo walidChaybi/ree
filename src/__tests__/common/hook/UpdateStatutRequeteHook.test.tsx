@@ -12,14 +12,14 @@ let container: Element | null;
 const func = jest.fn();
 
 const HookConsummer: React.FC = () => {
-  const { errorState } = useUpdateStatutRequeteApi(
+  useUpdateStatutRequeteApi(
     {
       statut: StatutRequete.AImprimer,
       idRequete: "1d189cd9-0df0-45dc-a4cf-0174eb62cbbc"
     },
     func
   );
-  return <div>{errorState ? "erroreState" : ""}</div>;
+  return <div>{""}</div>;
 };
 beforeEach(() => {
   container = document.createElement("div");

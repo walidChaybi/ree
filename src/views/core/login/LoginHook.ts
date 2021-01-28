@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { getLogin } from "../../../api/appels/agentApi";
 import { IHabilitation, IDroit, IProfil } from "../../../model/Habilitation";
-import messageManager from "../../common/util/messageManager";
 import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
+import { logError } from "../../common/util/LogManager";
 
 export interface ILoginApi {
   officierDataState?: IOfficierSSOApi;
@@ -11,7 +11,6 @@ export interface ILoginApi {
 
 export function useLoginApi() {
   const [officierDataState, setOfficierDataState] = useState<IOfficierSSOApi>();
-  const [erreurState, setErreurState] = useState(undefined);
 
   useEffect(() => {
     getLogin()
@@ -23,16 +22,16 @@ export function useLoginApi() {
         setOfficierDataState(officier);
       })
       .catch(error => {
-        messageManager.showErrorAndClose(
-          "Impossible récupérer les informations utilisateur via le service de login"
-        );
-        setErreurState(error);
+        logError({
+          messageUtilisateur:
+            "Impossible de récupérer les informations utilisateur via le service de login",
+          error
+        });
       });
   }, []);
 
   return {
-    officierDataState,
-    erreurState
+    officierDataState
   };
 }
 
