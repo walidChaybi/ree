@@ -37,21 +37,25 @@ export const RcRcaPage: React.FC = () => {
   const categorie5 = TypeFiche.RC;
   const numero5 = "5";
 
+  const identifiantPacs0 = "89c9d030-26c3-41d3-bdde-8b4dcc0420df";
+  const categoriePacs0 = TypeFiche.PACS;
+  const numeroPacs0 = "1234506 (Enregistré notaire)";
+
   const identifiantPacs = "89c9d030-26c3-41d3-bdde-8b4dcc0420e0";
   const categoriePacs = TypeFiche.PACS;
-  const numeroPacs = "123456 (Modification notaire)";
+  const numeroPacs = "1234507 (Modifié juridiction notaire)";
 
   const identifiantPacs2 = "89c9d030-26c3-41d3-bdde-8b4dcc0420e1";
   const categoriePacs2 = TypeFiche.PACS;
-  const numeroPacs2 = "123457 (Annulation)";
+  const numeroPacs2 = "1234508 (Annulé juridiction)";
 
   const identifiantPacs3 = "89c9d030-26c3-41d3-bdde-8b4dcc0420e2";
   const categoriePacs3 = TypeFiche.PACS;
-  const numeroPacs3 = "123458 (Dissolution)";
+  const numeroPacs3 = "1234509 (Dissolu commune)";
 
   const identifiantPacs4 = "89c9d030-26c3-41d3-bdde-8b4dcc0420e3";
   const categoriePacs4 = TypeFiche.PACS;
-  const numeroPacs4 = "123459 (Dissolution notaire)";
+  const numeroPacs4 = "1234510 (Dissolu notaire poste)";
 
   return (
     <div>
@@ -106,7 +110,11 @@ export const RcRcaPage: React.FC = () => {
       />
 
       <p>PACS</p>
-
+      <LienFiche
+        identifiant={identifiantPacs0}
+        categorie={categoriePacs0}
+        numero={numeroPacs0}
+      />
       <LienFiche
         identifiant={identifiantPacs}
         categorie={categoriePacs}

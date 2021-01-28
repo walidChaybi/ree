@@ -35,12 +35,36 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
   );
 
   AjoutePanel(panelAreas, pacs.partenaires, getPartenaires, "2");
-  AjoutePanel(panelAreas, pacs, getEnregistrementPacs, "3");
+  AjoutePanel(
+    panelAreas,
+    pacs,
+    getEnregistrementPacs,
+    "3",
+    "Enregistrement du PACS"
+  );
   if (pacs.modifications) {
-    AjoutePanel(panelAreas, pacs.modifications[0], getModificationPacs, "4");
+    AjoutePanel(
+      panelAreas,
+      pacs.modifications[0],
+      getModificationPacs,
+      "4",
+      "Modification du PACS"
+    );
   }
-  AjoutePanel(panelAreas, pacs.dissolution, getDissolutionPacs, "5");
-  AjoutePanel(panelAreas, pacs.annulation, getAnnulationPacs, "6");
+  AjoutePanel(
+    panelAreas,
+    pacs.dissolution,
+    getDissolutionPacs,
+    "5",
+    "Dissolution du PACS"
+  );
+  AjoutePanel(
+    panelAreas,
+    pacs.annulation,
+    getAnnulationPacs,
+    "6",
+    "Annulation du PACS"
+  );
 
   return {
     panels: [
@@ -94,7 +118,6 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
 
 function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    title: "Enregistrement du PACS",
     contents: [
       getContentAutorite(pacs.autorite),
       ...getContentNotaire(pacs.autorite),
@@ -117,7 +140,6 @@ function getModificationPacs(
   modification: IModification
 ): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    title: "Modification du PACS",
     contents: [
       getContentAutorite(modification.autorite),
       ...getContentNotaire(modification.autorite),
@@ -133,7 +155,6 @@ function getModificationPacs(
   };
 
   const part2: AccordionPartProps = {
-    title: "",
     contents: getContentLieu(modification.autorite)
   };
 
@@ -142,7 +163,6 @@ function getModificationPacs(
 
 function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    title: "Dissolution du PACS",
     contents: [
       getContentAutorite(dissolution.autorite),
       ...getContentNotaire(dissolution.autorite),
@@ -171,7 +191,6 @@ function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
 
 function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    title: "Annulation du PACS",
     contents: [
       {
         libelle: "Type de décision",
@@ -197,7 +216,6 @@ function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
   };
 
   const part2: AccordionPartProps = {
-    title: "",
     contents: getContentLieu(annulation.autorite)
   };
 
