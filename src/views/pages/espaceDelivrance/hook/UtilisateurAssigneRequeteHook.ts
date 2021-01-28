@@ -5,13 +5,13 @@ import {
   patchUtilisateurAssigneRequete,
   IQueryParametersAssigneRequetes
 } from "../../../../api/appels/requeteApi";
+import { logError } from "../../../common/util/LogManager";
 
 export function useUtilisateurRequeteApi(
   queryParameters?: IQueryParametersAssigneRequetes,
   requetes?: IDataTable[]
 ) {
   const [dataState, setDataState] = useState<IQueryParametersAssigneRequetes>();
-  const [errorState, setErrorState] = useState(undefined);
   const [sucessState, setSuccessState] = useState<string | undefined>(
     undefined
   );
@@ -41,14 +41,17 @@ export function useUtilisateurRequeteApi(
           setDataState(queryParameters);
         })
         .catch(error => {
-          setErrorState(error);
+          logError({
+            messageUtilisateur:
+              "Impossible d'assigner un nouvel utilisateur à cette requête",
+            error
+          });
         });
     }
   }, [queryParameters, requetes]);
 
   return {
     dataState,
-    errorState,
     sucessState
   };
 }

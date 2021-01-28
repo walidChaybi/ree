@@ -4,6 +4,7 @@ import { RequestsInformations } from "../ApercuRequetePage";
 import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
 import { getRequete } from "../../../../api/appels/requeteApi";
 import { IQueryParametersPourRequete } from "../../../common/widget/signature/hook/SignatureDocumentHook";
+import { logError } from "../../../common/util/LogManager";
 
 export function useRequeteDataApi(
   queryParameters: IQueryParametersPourRequete,
@@ -12,10 +13,8 @@ export function useRequeteDataApi(
   const [dataState, setDataState] = useState<IDataTable[]>(
     requestsInformations ? requestsInformations.data : []
   );
-  const [errorState, setErrorState] = useState(undefined);
 
   useEffect(() => {
-    setErrorState(undefined);
     setDataState([]);
     if (requestsInformations === undefined) {
       getRequete(queryParameters.idRequete, queryParameters.statut)
@@ -24,14 +23,16 @@ export function useRequeteDataApi(
           setDataState([tmp]);
         })
         .catch(error => {
-          setErrorState(error);
+          logError({
+            messageUtilisateur: "Impossible de récupérer de la requête",
+            error
+          });
         });
     } else {
       setDataState(requestsInformations.data);
     }
   }, [queryParameters.idRequete, queryParameters.statut, requestsInformations]);
   return {
-    dataState,
-    errorState
+    dataState
   };
 }

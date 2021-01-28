@@ -1,0 +1,36 @@
+import mockConnectedUser from "../data/connectedUser.json";
+
+export const configOutiltech = [
+  {
+    /**
+     * regular expression of URL
+     */
+    pattern: "http://localhost:80/rece/rece-outiltech-api/v1(.*)",
+
+    /**
+     * returns the data
+     *
+     * @param match array Result of the resolution of the regular expression
+     * @param params object sent by 'send' function
+     * @param headers object set by 'set' function
+     * @param context object the context of running the fixtures function
+     */
+    fixtures: function (match, params, headers, context) {
+      if (match[1] === "/log") {
+        return { headers: mockConnectedUser, data: null };
+      }
+    },
+
+    /**
+     * returns the result of the POST request
+     *
+     * @param match array Result of the resolution of the regular expression
+     * @param data  mixed Data returns by `fixtures` attribute
+     */
+    post: function (match, data) {
+      return {
+        status: 200
+      };
+    }
+  }
+];

@@ -1,10 +1,13 @@
 import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
 import * as superagent from "superagent";
 import request from "superagent";
+import { v4 as uuidv4 } from "uuid";
 import messageManager from "../views/common/util/messageManager";
 import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
 import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
 import { getCsrfHeader } from "../views/common/util/CsrfUtil";
+
+export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 
 if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, [
@@ -17,7 +20,8 @@ if (process.env.REACT_APP_MOCK) {
 type ApisAutorisees =
   | "rece-requete-api"
   | "rece-agent-api"
-  | "rece-etatcivil-api";
+  | "rece-etatcivil-api"
+  | "rece-outiltech-api";
 
 interface IApi {
   url: string;
@@ -100,6 +104,9 @@ export class ApiManager {
       httpRequestConfig.uri
     );
 
+    // Ajout de l'id de corrélation dans l'entête
+    this.addIdCorrelationToConfigHeader(httpRequestConfig);
+
     // Ajout de la valeur du cookie csrf dans l'entête
     this.addCsrfInfosToConfigHeader(httpRequestConfig);
 
@@ -147,6 +154,16 @@ export class ApiManager {
 
         return Promise.reject(error);
       });
+  }
+
+  private addIdCorrelationToConfigHeader(config: HttpRequestConfig) {
+    if (!config.headers) {
+      config.headers = [];
+    }
+    config.headers[config.headers.length] = {
+      header: ID_CORRELATION_HEADER_NAME,
+      value: uuidv4()
+    };
   }
 
   private addCsrfInfosToConfigHeader(config: HttpRequestConfig) {
