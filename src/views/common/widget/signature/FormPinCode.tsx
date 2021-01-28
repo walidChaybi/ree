@@ -53,6 +53,15 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
         variant="filled"
         onChange={formik.handleChange}
         autoFocus
+        autoComplete="off"
+        InputProps={{
+          readOnly: true
+        }}
+        onFocus={event => {
+          if (event.target != null) {
+            event.target.removeAttribute("readonly");
+          }
+        }}
       />
       {formik.errors.pinCode ? (
         <div className={"ErrorField"}>{formik.errors.pinCode}</div>
