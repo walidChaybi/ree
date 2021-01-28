@@ -1,5 +1,9 @@
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
-import { triListeObjetsSurPropriete } from "../../../../common/util/Utils";
+import {
+  triListeObjetsSurPropriete,
+  premiereLettreEnMajusculeLeResteEnMinuscule,
+  getValeurOuVide
+} from "../../../../common/util/Utils";
 import { IPrenom } from "../../../../../model/etatcivil/FicheInterfaces";
 import { SimplePersonne } from "./IFournisseurDonneesBandeau";
 
@@ -11,7 +15,12 @@ export class FournisseurDonneeBandeauRcRca extends FournisseurDonneesBandeau {
   getSimplePersonnes(): SimplePersonne[] {
     return this.personnes.map(
       (p: any) =>
-        new SimplePersonne(p.nomFamille, this.getPrenomInteresse(p.prenoms))
+        new SimplePersonne(
+          getValeurOuVide(p.nomFamille).toLocaleUpperCase(),
+          premiereLettreEnMajusculeLeResteEnMinuscule(
+            this.getPrenomInteresse(p.prenoms)
+          )
+        )
     );
   }
 

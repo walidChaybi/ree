@@ -34,8 +34,8 @@ export function getInscriptionRepertoireCivil(
       ? getInteresseRca(retourBack)
       : getInteresseRc(retourBack),
     title: FicheUtil.isFicheRca(retourBack.categorie)
-      ? "Inscrition au répertoire civil annexe"
-      : "Inscrition au répertoire civil",
+      ? "Inscription au répertoire civil annexe"
+      : "Inscription au répertoire civil",
     columnIndex: "1/3"
   };
 }

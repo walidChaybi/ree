@@ -1,0 +1,21 @@
+@import "../../../../../../../sass/colors";
+
+
+.AlertesActes {
+  background-color: $border-array;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row-reverse;
+
+  .IconeBoutonAjoutAlertes {
+    font-size: 2em;
+    color: $alertes;
+    margin-right: 0.5rem;
+    cursor: pointer;
+
+    &.Disabled {
+      color: $disabled-button;
+      cursor: default;
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/TypeFiche";
+import { AlerteActe } from "./hook/constructionComposants/acte/AlerteActeUtils";
 
 export interface FichePageProps {
   dataFiche: IDataFicheProps;
@@ -47,8 +48,10 @@ export const FichePage: React.FC<FichePageProps> = props => {
         <BandeauFiche
           dataBandeau={dataFicheState.dataBandeau}
           elementNumeroLigne={getElementNumeroLigne()}
-        ></BandeauFiche>
+        />
       )}
+      {/* Le bandeau d'ajout d'alerte pour les actes */}
+      {FicheUtil.isActe(props.dataFiche.categorie) && <AlerteActe />}
       {/* Les Accordéons */}
       {dataFicheState.fiche && <AccordionRece {...dataFicheState.fiche} />}
     </div>
@@ -56,13 +59,9 @@ export const FichePage: React.FC<FichePageProps> = props => {
 
   function getElementNumeroLigne() {
     return FicheUtil.isActe(props.dataFiche.categorie) ? (
-      <BandeauFicheActeNumero
-        dataBandeau={dataFicheState.dataBandeau}
-      ></BandeauFicheActeNumero>
+      <BandeauFicheActeNumero dataBandeau={dataFicheState.dataBandeau} />
     ) : (
-      <BandeauFicheRcRcaPacsNumero
-        dataBandeau={dataFicheState.dataBandeau}
-      ></BandeauFicheRcRcaPacsNumero>
+      <BandeauFicheRcRcaPacsNumero dataBandeau={dataFicheState.dataBandeau} />
     );
   }
 };
