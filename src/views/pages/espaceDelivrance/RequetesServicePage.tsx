@@ -49,18 +49,13 @@ interface MesRequetesServicePageProps {}
 
 export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
   /** TODO ETAPE 2 : Bouton "Attribué à" */
-  // const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(
-  //   false
-  // );
-
-  // const [queryChangeOecRequest, setQueryChangeOecRequest] = React.useState<
-  //   IQueryParametersAssigneRequetes
-  // >();
+  // const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(false);
+  // const [queryChangeOecRequest, setQueryChangeOecRequest] = React.useState<IQueryParametersAssigneRequetes>();
   /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
-
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetes
-  >({
+  const [
+    linkParameters,
+    setLinkParameters
+  ] = React.useState<IQueryParametersPourRequetes>({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,
@@ -125,11 +120,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
       colLibelle: "pages.delivrance.mesRequetes.tableau.header.nomOec",
       align: "center"
       /** TODO ETAPE 2 : Bouton "Attribué à" */
-      /*,
-        "",
-        (row: IDataTable, selectedUser?: string) => {
-          return getIconOfficierEtatCivil(row, setQueryChangeOecRequest);
-        }*/
+      /*,"",(row: IDataTable, selectedUser?: string) => {return getIconOfficierEtatCivil(row, setQueryChangeOecRequest);}*/
       /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
     }),
     ...commonHeaders,
@@ -150,13 +141,8 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   } = useRequeteApi(linkParameters, TypeAppelRequete.REQUETE_SERVICE);
 
   /** TODO ETAPE 2 : Bouton "Attribué à" */
-  // const users = useUtilisateurApi({
-  //   idArobas: props.officier?.idSSO
-  // });
-  // const { sucessState } = useUtilisateurRequeteApi(
-  //   queryChangeOecRequest,
-  //   dataState
-  // );
+  // const users = useUtilisateurApi({idArobas: props.officier?.idSSO});
+  // const { sucessState } = useUtilisateurRequeteApi(queryChangeOecRequest,dataState);
   // useEffect(() => {
   //   setIsSuccessAssigne(true);
   // }, [sucessState]);
@@ -173,39 +159,19 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   //       <span className="AttributionOEC">{row.nomOec}</span>
   //       <SelectDialog
   //         listOfElements={utilisateurs}
-  //         defaultElementId={
-  //           utilisateurParDefaut !== undefined
-  //             ? utilisateurParDefaut.key
-  //             : undefined
-  //         }
-  //         title={getText(
-  //           "pages.delivrance.monService.officierEtatCivilSelect.title"
-  //         )}
-  //         libelle={getText(
-  //           "pages.delivrance.monService.officierEtatCivilSelect.libelle"
-  //         )}
+  //         defaultElementId={utilisateurParDefaut !== undefined ? utilisateurParDefaut.key : undefined }
+  //         title={getText("pages.delivrance.monService.officierEtatCivilSelect.title")}
+  //         libelle={getText("pages.delivrance.monService.officierEtatCivilSelect.libelle")}
   //         validate={(req: FormValues) => {
-  //           const utilisateur = users.dataState.find(
-  //             u =>
-  //               u.idUtilisateur ===
-  //               (req.selectedItem !== undefined
-  //                 ? req.selectedItem.key
-  //                 : undefined)
-  //           );
-
+  //           const utilisateur = users.dataState.find(u => u.idUtilisateur === (req.selectedItem !== undefined ? req.selectedItem.key : undefined));
   //           if (utilisateur !== undefined && functionCallBack !== undefined) {
-  //             functionCallBack({
-  //               idReponse: row.reponse?.idReponse,
-  //               nomOec: utilisateur.nom,
-  //               prenomOec: utilisateur.prenom
-  //             });
+  //             functionCallBack({ idReponse: row.reponse?.idReponse, nomOec: utilisateur.nom, prenomOec: utilisateur.prenom });
   //           }
   //         }}
   //       />
   //     </div>
   //   );
   // };
-
   /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
   function goToLink(link: string) {
@@ -247,11 +213,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
       />
       <BoutonRetour />
       {/* TODO ETAPE 2 : Bouton "Attribué à"  */}
-      {/* <MessagePopin
-        message={sucessState}
-        messageType={PopinMessageType.Success}
-        isOpen={isSuccessAssigne}
-      /> */}
+      {/* <MessagePopin message={sucessState} messageType={PopinMessageType.Success} isOpen={isSuccessAssigne} /> */}
       {/* FIN TODO ETAPE 2 : Bouton "Attribué à"  */}
     </>
   );
