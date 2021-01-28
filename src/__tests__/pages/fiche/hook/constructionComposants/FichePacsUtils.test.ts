@@ -16,7 +16,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
 
   ///////////// PARTIE 1: Inscription des registre des PACS des étrangers nés à l'étranger
   expect(panels.panels[0].panelAreas[0].parts.length).toBe(1);
-  expect(panels.panels[0].panelAreas[0].parts[0].title).toBe(
+  expect(panels.panels[0].panelAreas[0].title).toBe(
     "Inscription des registre des PACS des étrangers nés à l'étranger"
   );
   expect(panels.panels[0].panelAreas[0].parts[0].contents.length).toBe(3);
@@ -80,9 +80,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   );
   ///////////// PARTIE 3: Enregistrement du PACS
   expect(panels.panels[0].panelAreas[2].parts.length).toBe(2);
-  expect(panels.panels[0].panelAreas[2].parts[0].title).toBe(
-    "Enregistrement du PACS"
-  );
+  expect(panels.panels[0].panelAreas[2].title).toBe("Enregistrement du PACS");
   expect(panels.panels[0].panelAreas[2].parts[0].contents.length).toBe(4);
   expect(panels.panels[0].panelAreas[2].parts[0].contents[0].libelle).toBe(
     "Autorité"
@@ -113,9 +111,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   expect(panels.panels[0].panelAreas[3].parts.length).toBe(2);
 
   // 4.1: Infos autorité
-  expect(panels.panels[0].panelAreas[3].parts[0].title).toBe(
-    "Modification du PACS"
-  );
+  expect(panels.panels[0].panelAreas[3].title).toBe("Modification du PACS");
   expect(panels.panels[0].panelAreas[3].parts[0].contents.length).toBe(5);
   expect(panels.panels[0].panelAreas[3].parts[0].contents[0].libelle).toBe(
     "Autorité"
@@ -160,9 +156,7 @@ test("ficheUtils Pacs fonctionne avec annulation juridiction", async () => {
 
   ///////////// PARTIE 3: Enregistrement du PACS
   expect(panels.panels[0].panelAreas[2].parts.length).toBe(2);
-  expect(panels.panels[0].panelAreas[2].parts[0].title).toBe(
-    "Enregistrement du PACS"
-  );
+  expect(panels.panels[0].panelAreas[2].title).toBe("Enregistrement du PACS");
   expect(panels.panels[0].panelAreas[2].parts[0].contents.length).toBe(2);
 
   // 3.1 Autorité
@@ -189,9 +183,7 @@ test("ficheUtils Pacs fonctionne avec annulation juridiction", async () => {
   ///////////// PARTIE 4: Annulation du pacs
   expect(panels.panels[0].panelAreas[3].parts.length).toBe(2);
 
-  expect(panels.panels[0].panelAreas[3].parts[0].title).toBe(
-    "Annulation du PACS"
-  );
+  expect(panels.panels[0].panelAreas[3].title).toBe("Annulation du PACS");
 });
 
 test("ficheUtils Pacs fonctionne avec dissoultion juridiction", async () => {
@@ -203,9 +195,7 @@ test("ficheUtils Pacs fonctionne avec dissoultion juridiction", async () => {
   ///////////// PARTIE 4: Dissolution du pacs
   expect(panels.panels[0].panelAreas[3].parts.length).toBe(2);
 
-  expect(panels.panels[0].panelAreas[3].parts[0].title).toBe(
-    "Dissolution du PACS"
-  );
+  expect(panels.panels[0].panelAreas[3].title).toBe("Dissolution du PACS");
 });
 
 test("ficheUtils Pacs fonctionne avec dissolution poste", async () => {
@@ -216,9 +206,7 @@ test("ficheUtils Pacs fonctionne avec dissolution poste", async () => {
 
   ///////////// PARTIE 3: Enregistrement du PACS
   expect(panels.panels[0].panelAreas[2].parts.length).toBe(2);
-  expect(panels.panels[0].panelAreas[2].parts[0].title).toBe(
-    "Enregistrement du PACS"
-  );
+  expect(panels.panels[0].panelAreas[2].title).toBe("Enregistrement du PACS");
   expect(panels.panels[0].panelAreas[2].parts[0].contents.length).toBe(2);
 
   // 3.1 Autorité Poste
@@ -237,7 +225,5 @@ test("ficheUtils Pacs fonctionne avec dissolution poste", async () => {
   ///////////// PARTIE 4: Dissolution du pacs
   expect(panels.panels[0].panelAreas[3].parts.length).toBe(2);
 
-  expect(panels.panels[0].panelAreas[3].parts[0].title).toBe(
-    "Dissolution du PACS"
-  );
+  expect(panels.panels[0].panelAreas[3].title).toBe("Dissolution du PACS");
 });
