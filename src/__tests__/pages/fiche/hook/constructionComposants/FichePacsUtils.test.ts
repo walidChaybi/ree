@@ -164,7 +164,7 @@ test("ficheUtils Pacs fonctionne avec annulation juridiction", async () => {
     "Autorité"
   );
   expect(panels.panels[0].panelAreas[2].parts[0].contents[0].value).toBe(
-    "Juridiction"
+    "Tribunal judiciaire"
   );
 
   // 3.2 Localisation
@@ -214,7 +214,7 @@ test("ficheUtils Pacs fonctionne avec dissolution poste", async () => {
     "Autorité"
   );
   expect(panels.panels[0].panelAreas[2].parts[0].contents[0].value).toBe(
-    "Poste"
+    "Ambassade"
   );
 
   // Le type de poste n'est pas affiché, il est testé par le code suivant:
