@@ -6,7 +6,7 @@ import messageManager from "../views/common/util/messageManager";
 import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
 import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
 import { getCsrfHeader } from "../views/common/util/CsrfUtil";
-//
+
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 
 if (process.env.REACT_APP_MOCK) {

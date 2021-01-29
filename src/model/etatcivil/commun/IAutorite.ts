@@ -1,4 +1,4 @@
-import { TypeAutorite } from "../TypeAutorite";
+import { TypeAutorite, TypeAutoriteUtil } from "../TypeAutorite";
 import { LieuxUtils } from "../../Lieux";
 import {
   getValeurOuVide,
@@ -6,8 +6,8 @@ import {
   formatPrenom,
   formatNom
 } from "../../../views/common/util/Utils";
-import { TypeJuridiction } from "../enum/TypeJuridiction";
-import { TypePoste } from "../enum/TypePoste";
+import { TypeJuridiction, TypeJuridictionUtil } from "../enum/TypeJuridiction";
+import { TypePoste, TypePosteUtil } from "../enum/TypePoste";
 
 // Regroupe les autorités commune, notaire, onac, juridiction, poste
 export interface IAutorite {
@@ -71,5 +71,19 @@ export const Autorite = {
   },
   getNumeroCrpcen(autorite?: IAutorite): string {
     return autorite ? getValeurOuVide(autorite.numeroCrpcen) : "";
+  },
+  getTypeAutorite(autorite?: IAutorite): string {
+    let res = "";
+    if (autorite) {
+      if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
+        res = TypeJuridictionUtil.getLibelle(autorite.typeJuridiction);
+      } else if (TypeAutoriteUtil.isPoste(autorite.typeAutorite)) {
+        res = TypePosteUtil.getLibelle(autorite.typePoste);
+      } else {
+        res = TypeAutoriteUtil.getLibelle(autorite.typeAutorite);
+      }
+    }
+
+    return res;
   }
 };

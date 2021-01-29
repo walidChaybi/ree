@@ -13,6 +13,10 @@ import {
   Autorite
 } from "../../../../../model/etatcivil/commun/IAutorite";
 import { formatPrenom, formatNom } from "../../../../common/util/Utils";
+import {
+  TypeJuridiction,
+  TypeJuridictionUtil
+} from "../../../../../model/etatcivil/enum/TypeJuridiction";
 
 export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
   const autorite: AccordionPartProps[] = [
@@ -20,8 +24,7 @@ export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
       contents: getContentAutorite(
         retourBack.decision.autorite,
         retourBack.categorie
-      ),
-      title: "Autorité"
+      )
     }
   ];
 
@@ -113,7 +116,7 @@ function getContentJuridictionEtEtranger(
   autorite: IAutorite
 ): AccordionContentProps[] {
   return [
-    getTypeAutoriteContent(autorite.typeAutorite),
+    getTypeJuridictionContent(autorite.typeJuridiction),
     getVilleAutoriteContent(autorite.ville),
     getRegionAutoriteContent(autorite.region),
     getPaysAutoriteContent(autorite.pays)
@@ -124,7 +127,7 @@ function getContentJuridictionEtFrance(
   autorite: IAutorite
 ): AccordionContentProps[] {
   const contents: AccordionContentProps[] = [
-    getTypeAutoriteContent(autorite.typeAutorite),
+    getTypeJuridictionContent(autorite.typeJuridiction),
     getVilleAutoriteContent(autorite.ville)
   ];
 
@@ -186,6 +189,12 @@ function getNumeroCrpcen(autorite: IAutorite): AccordionContentProps {
 
 function getTypeAutoriteContent(type?: TypeAutorite): AccordionContentProps {
   return { libelle: "Type", value: TypeAutoriteUtil.getLibelle(type) };
+}
+
+function getTypeJuridictionContent(
+  type?: TypeJuridiction
+): AccordionContentProps {
+  return { libelle: "Type", value: TypeJuridictionUtil.getLibelle(type) };
 }
 
 function getVilleAutoriteContent(ville?: string): AccordionContentProps {

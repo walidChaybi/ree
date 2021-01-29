@@ -15,23 +15,23 @@ export class TypeAutoriteUtil {
     [TypeAutorite.POSTE_ETRANGER]: "Poste"
   };
 
-  public static getLibelle(autorite?: TypeAutorite): string {
-    return autorite ? this.libelles[autorite] : "";
+  public static getLibelle(typeAutorite?: TypeAutorite): string {
+    return typeAutorite ? this.libelles[typeAutorite] : "";
   }
 
-  public static isJuridiction(autorite?: TypeAutorite): boolean {
-    return (
-      autorite != null &&
-      autorite !== TypeAutorite.NOTAIRE &&
-      autorite !== TypeAutorite.ONAC
-    );
+  public static isJuridiction(typeAutorite?: TypeAutorite): boolean {
+    return typeAutorite === TypeAutorite.JURIDICTION;
   }
 
-  public static isNotaire(autorite?: TypeAutorite): boolean {
-    return autorite === TypeAutorite.NOTAIRE;
+  public static isNotaire(typeAutorite?: TypeAutorite): boolean {
+    return typeAutorite === TypeAutorite.NOTAIRE;
   }
 
-  public static isOnac(autorite?: TypeAutorite): boolean {
-    return autorite === TypeAutorite.ONAC;
+  public static isOnac(typeAutorite?: TypeAutorite): boolean {
+    return typeAutorite === TypeAutorite.ONAC;
+  }
+
+  public static isPoste(typeAutorite?: TypeAutorite): boolean {
+    return typeAutorite === TypeAutorite.POSTE_ETRANGER;
   }
 }

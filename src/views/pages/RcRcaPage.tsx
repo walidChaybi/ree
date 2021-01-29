@@ -55,7 +55,7 @@ export const RcRcaPage: React.FC = () => {
 
   const identifiantPacs4 = "89c9d030-26c3-41d3-bdde-8b4dcc0420e3";
   const categoriePacs4 = TypeFiche.PACS;
-  const numeroPacs4 = "1234510 (Dissolu notaire poste)";
+  const numeroPacs4 = "1234510 (Dissolu poste notaire)";
 
   return (
     <div>

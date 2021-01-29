@@ -7,7 +7,6 @@ import {
   Annulation
 } from "../../../../../../model/etatcivil/pacs/IAnnulation";
 import { getPartenaires } from "./PartenairesUtils";
-import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/TypeAutorite";
 import { StatutPacesUtil } from "../../../../../../model/etatcivil/enum/StatutPacs";
 import {
   Autorite,
@@ -227,7 +226,7 @@ export function getContentAutorite(
 ): AccordionContentProps {
   return {
     libelle: "Autorité",
-    value: autorite ? TypeAutoriteUtil.getLibelle(autorite.typeAutorite) : ""
+    value: Autorite.getTypeAutorite(autorite)
   };
 }
 
