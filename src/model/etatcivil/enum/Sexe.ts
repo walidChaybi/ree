@@ -1,17 +1,17 @@
 export enum Sexe {
-  INDETERMINE = "INDETERMINE",
+  MASCULIN = "MASCULIN",
   FEMININ = "FEMININ",
-  MASCULIN = "MASCULIN"
+  INDETERMINE = "INDETERMINE"
 }
 
 export class SexeUtil {
   private static readonly libelles = {
-    [Sexe.INDETERMINE]: "Indéterminé",
+    [Sexe.MASCULIN]: "Masculin",
     [Sexe.FEMININ]: "Féminin",
-    [Sexe.MASCULIN]: "Masculin"
+    [Sexe.INDETERMINE]: "Indeterminé"
   };
 
-  public static getLibelle(sexe: Sexe): string {
+  public static getLibelle(sexe?: Sexe): string {
     return sexe ? this.libelles[sexe] : "";
   }
 }

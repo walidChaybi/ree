@@ -131,9 +131,7 @@ test("Interesse utils get interesse :  affichage lieu naissance en france à Par
   );
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
-  expect(components[0].contents[idxLieuNaissance].value).toBe(
-    "Paris (Arrdt 02)"
-  );
+  expect(components[0].contents[idxLieuNaissance].value).toBe("Paris Arrdt 02");
 });
 
 test("Interesse utils get interesse :  affichage lieu naissance à l'étranger ", async () => {

@@ -1,19 +1,19 @@
 import React from "react";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
-import { LieuxUtils } from "../../../../../../model/Lieux";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import {
-  getDateStringFromDateCompose,
-  getHeureFromNumber
-} from "../../../../../common/util/DateUtils";
-import { IEvenement } from "../../../../../../model/etatcivil/acte/IEvenement";
+  IFicheActe,
+  FicheActe
+} from "../../../../../../model/etatcivil/acte/IFicheActe";
+import {
+  IEvenement,
+  Evenement
+} from "../../../../../../model/etatcivil/acte/IEvenement";
 
-export function getEvenement(retourBack: IFicheActe): AccordionPartProps[] {
+export function getEvenement(acte: IFicheActe): AccordionPartProps[] {
   const evenement: AccordionPartProps[] = [
     {
-      contents: getDateLieuEvenement(retourBack.evenement),
-      title: "Evènement"
+      contents: getDateLieuEvenement(acte.evenement)
     }
   ];
 
@@ -21,7 +21,7 @@ export function getEvenement(retourBack: IFicheActe): AccordionPartProps[] {
     contents: [
       {
         libelle: "Nature",
-        value: <span>{retourBack.nature ? retourBack.nature.libelle : ""}</span>
+        value: <span>{FicheActe.getNature(acte)}</span>
       }
     ],
     title: ""
@@ -30,32 +30,15 @@ export function getEvenement(retourBack: IFicheActe): AccordionPartProps[] {
   return evenement;
 }
 
-function getDateLieuEvenement(evenement: IEvenement): AccordionContentProps[] {
+function getDateLieuEvenement(evenement?: IEvenement): AccordionContentProps[] {
   return [
     {
       libelle: `Date de l'évènement`,
-      value: (
-        <span>
-          {`${getDateStringFromDateCompose({
-            jour: evenement.jour.toString(),
-            mois: evenement.mois.toString(),
-            annee: evenement.annee.toString()
-          })} ${getHeureFromNumber(evenement.heure, evenement.minute)}`}
-        </span>
-      )
+      value: <span>{Evenement.getDate(evenement)}</span>
     },
     {
       libelle: `Lieu de l'évènement`,
-      value: (
-        <span>
-          {LieuxUtils.getLieu(
-            evenement.ville,
-            evenement.region,
-            evenement.pays,
-            evenement.arrondissement
-          )}
-        </span>
-      )
+      value: <span>{Evenement.getLieu(evenement)}</span>
     }
   ];
 }

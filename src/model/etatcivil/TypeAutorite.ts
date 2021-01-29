@@ -1,31 +1,18 @@
 export enum TypeAutorite {
   NOTAIRE = "NOTAIRE",
   ONAC = "ONAC",
-  TRIBUNAL_JUDICIAIRE = "TRIBUNAL_JUDICIAIRE",
-  TRIBUNAL_INSTANCE = "TRIBUNAL_INSTANCE",
-  TRIBUNAL_GRANDE_INSTANCE = "TRIBUNAL_GRANDE_INSTANCE",
-  TRIBUNAL_PROXIMITE = "TRIBUNAL_PROXIMITE",
-  TRIBUNAL_JUDICIAIRE_REFERENCE = "TRIBUNAL_JUDICIAIRE_REFERENCE",
-  TRIBUNAL_PREMIERE_INSTANCE = "TRIBUNAL_PREMIERE_INSTANCE",
-  TRIBUNAL_SUPERIEUR_APPEL = "TRIBUNAL_SUPERIEUR_APPEL",
-  COUR_APPEL = "COUR_APPEL",
-  JURIDICTION_ETRANGERE = "JURIDICTION_ETRANGERE"
+  JURIDICTION = "JURIDICTION",
+  COMMUNE = "COMMUNE",
+  POSTE_ETRANGER = "POSTE_ETRANGER"
 }
 
-export class AutoriteUtil {
+export class TypeAutoriteUtil {
   private static readonly libelles = {
-    [TypeAutorite.COUR_APPEL]: "Cour d'appel",
-    [TypeAutorite.TRIBUNAL_GRANDE_INSTANCE]: "Tribunal de grande instance",
-    [TypeAutorite.TRIBUNAL_INSTANCE]: "Tribunal d'instance",
-    [TypeAutorite.TRIBUNAL_PREMIERE_INSTANCE]: "Tribunal de première instance",
-    [TypeAutorite.TRIBUNAL_SUPERIEUR_APPEL]: "Tribunal supérieur d'appel",
-    [TypeAutorite.TRIBUNAL_JUDICIAIRE]: "Tribunal judiciaire",
-    [TypeAutorite.TRIBUNAL_PROXIMITE]: "Tribunal de proximité",
-    [TypeAutorite.JURIDICTION_ETRANGERE]: "Juridiction étrangère",
-    [TypeAutorite.TRIBUNAL_JUDICIAIRE_REFERENCE]:
-      "Tribunal judiciaire de référence",
     [TypeAutorite.NOTAIRE]: "Notaire",
-    [TypeAutorite.ONAC]: "ONAC"
+    [TypeAutorite.ONAC]: "ONAC",
+    [TypeAutorite.JURIDICTION]: "Juridiction",
+    [TypeAutorite.COMMUNE]: "Commune",
+    [TypeAutorite.POSTE_ETRANGER]: "Poste"
   };
 
   public static getLibelle(autorite?: TypeAutorite): string {

@@ -2,13 +2,6 @@ import { AccordionReceProps } from "../../../../../common/widget/accordion/Accor
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { getTitulaires } from "./TitulairesActeUtils";
 import { getEvenement } from "./EvenementActeUtils";
-import { NatureActe } from "../../../../../../model/etatcivil/acte/NatureActe";
-
-export function mappingDataActe(retourBack: any): IFicheActe {
-  const dataActe = retourBack;
-  dataActe.nature = NatureActe.getEnumFor(retourBack.nature);
-  return dataActe;
-}
 
 export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
   return {
@@ -16,7 +9,7 @@ export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
       {
         panelAreas: [
           { parts: getTitulaires(acte) },
-          { parts: getEvenement(acte) }
+          { parts: getEvenement(acte), title: "Evènement" }
         ],
         title: "Résumé de l'acte"
       }

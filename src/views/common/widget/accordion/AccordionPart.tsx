@@ -3,20 +3,20 @@ import { AccordionContent, AccordionContentProps } from "./AccordionContent";
 import "./sass/AccordionPart.scss";
 export interface AccordionPartProps {
   contents: AccordionContentProps[];
-  title: string;
-  columnIndex?: number;
+  title?: string;
+  columnIndex?: string;
   classNameContent?: string;
 }
 
 export const AccordionPart: React.FC<AccordionPartProps> = ({
   contents,
   title,
-  columnIndex = 1,
+  columnIndex = "1",
   classNameContent
 }) => {
   return (
     <div className="wrapper part" style={{ gridColumn: columnIndex }}>
-      <span className="titlePart">{title}</span>
+      {title && <span className="titlePart">{title}</span>}
       {contents.map((content, index) => {
         return (
           <AccordionContent

@@ -9,19 +9,21 @@ import {
 } from "../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
-import { AutoriteUtil } from "../../../../../model/etatcivil/TypeAutorite";
+import { TypeAutoriteUtil } from "../../../../../model/etatcivil/TypeAutorite";
 import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
 
 export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
   let contentsDecision: AccordionContentProps[] = [];
 
-  if (AutoriteUtil.isJuridiction(retourBack.decision.autorite.type)) {
+  if (
+    TypeAutoriteUtil.isJuridiction(retourBack.decision.autorite.typeAutorite)
+  ) {
     contentsDecision = [
       ...getContentJuridiction(retourBack.decision, retourBack.categorie)
     ];
   } else if (
-    AutoriteUtil.isNotaire(retourBack.decision.autorite.type) ||
-    (AutoriteUtil.isOnac(retourBack.decision.autorite.type) &&
+    TypeAutoriteUtil.isNotaire(retourBack.decision.autorite.typeAutorite) ||
+    (TypeAutoriteUtil.isOnac(retourBack.decision.autorite.typeAutorite) &&
       FicheUtil.isFicheRca(retourBack.categorie))
   ) {
     contentsDecision = [...getContentNotaire(retourBack.decision)];
@@ -113,7 +115,11 @@ function getContentConfirmationDecision(
   decision: IDecisionRc,
   typeFiche: TypeFiche
 ): AccordionContentProps[] {
-  if (AutoriteUtil.isJuridiction(decision.sourceConfirmation.autorite.type)) {
+  if (
+    TypeAutoriteUtil.isJuridiction(
+      decision.sourceConfirmation.autorite.typeAutorite
+    )
+  ) {
     const confirmationDecision = [
       {
         libelle: "Type",
@@ -132,7 +138,9 @@ function getContentConfirmationDecision(
     if (
       FicheUtil.isFicheRca(typeFiche) &&
       decision.sourceConfirmation.dateDecisionEtrangere != null &&
-      AutoriteUtil.isJuridiction(decision.sourceConfirmation.autorite.type)
+      TypeAutoriteUtil.isJuridiction(
+        decision.sourceConfirmation.autorite.typeAutorite
+      )
     ) {
       confirmationDecision.push({
         libelle: "Date décision étrangère",

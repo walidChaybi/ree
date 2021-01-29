@@ -4,13 +4,14 @@
   display: grid;
   grid-gap: 10px;
   align-content: start;
-}
 
-.titlePart {
-  grid-row: 1;
-  color: $title-application-color;
-  font-weight: bold;
-  text-align: left;
-  font-size: 20px;
-  height: 1.55rem;
+  .titlePart {
+    grid-row: 1;
+    color: $title-application-color;
+    font-weight: bold;
+    text-align: left;
+    font-size: 20px;
+    height: 1.55rem;
+    margin-bottom: 1em;
+  }
 }

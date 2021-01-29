@@ -1,4 +1,4 @@
-import { configEtatcivil } from "./mock/superagent-config/superagent-mock-etatcivil";
+import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
 import * as superagent from "superagent";
 import request from "superagent";
 import { v4 as uuidv4 } from "uuid";

@@ -23,7 +23,7 @@ import {
   getMinRange,
   getRowsNumber
 } from "../../../common/util/GestionDesLiensApi";
-import { reecriturePrenom } from "../../../common/util/Utils";
+import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../../common/util/Utils";
 import { logError } from "../../../common/util/LogManager";
 
 export interface IRequerantApi {
@@ -217,7 +217,9 @@ function createLibelleRequerant(data: IRequerantApi) {
 function createNomOec(reponse: IReponseApi) {
   let nomOec = "";
   if (reponse?.prenomOec !== undefined && reponse?.nomOec !== undefined) {
-    const prenom = reecriturePrenom(reponse.prenomOec);
+    const prenom = premiereLettreEnMajusculeLeResteEnMinuscule(
+      reponse.prenomOec
+    );
     nomOec = `${prenom} ${reponse.nomOec.toLocaleUpperCase()}`;
   }
   return nomOec;

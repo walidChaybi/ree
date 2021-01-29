@@ -3,6 +3,7 @@ import { IInscriptionLie } from "../../../../../../model/etatcivil/FicheInterfac
 import { LienFiche } from "../../../LienFiche";
 import "./sass/InscriptionsLiees.scss";
 import { InscriptionRcUtil } from "../../../../../../model/etatcivil/InscriptionRc";
+import { TypeFiche } from "../../../../../../model/etatcivil/TypeFiche";
 
 interface IInscriptionsLieesProps {
   inscriptionsLiees: IInscriptionLie[];
@@ -21,7 +22,7 @@ export const InscriptionsLiees: React.FC<IInscriptionsLieesProps> = props => {
           )} (${"RC n°"}`}
           <LienFiche
             identifiant={inscription.id}
-            categorie={"rc"}
+            categorie={TypeFiche.RC}
             numero={`${inscription.annee} - ${inscription.numero}`}
           />
 

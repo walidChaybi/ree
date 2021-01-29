@@ -2,7 +2,8 @@ import React from "react";
 import { render, waitFor, act } from "@testing-library/react";
 import { FichePage } from "../../../views/pages/fiche/FichePage";
 import request from "superagent";
-import { configEtatcivil } from "../../../api/mock/superagent-config/superagent-mock-etatcivil";
+import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
+import { TypeFiche } from "../../../model/etatcivil/TypeFiche";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
@@ -18,7 +19,7 @@ test("rendersFichePage render correcty", async () => {
       <FichePage
         dataFiche={{
           identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
-          categorie: "rc"
+          categorie: TypeFiche.RC
         }}
       />
     );

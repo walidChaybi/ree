@@ -1,6 +1,7 @@
 import mockRC from "../data/RC.json";
 import mockRCA from "../data/RCA.json";
-import { acte } from "../../../__tests__/pages/fiche/data/ficheActe";
+import { pacsModificationNotaire } from "../data/PACS";
+import { acte } from "../../__tests__/pages/fiche/data/ficheActe";
 
 export const configEtatcivil = [
   {
@@ -22,15 +23,16 @@ export const configEtatcivil = [
         match[1] === "/repertoirecivil/rc/7566e16c-2b0e-11eb-adc1-0242ac120002"
       ) {
         return { data: mockRC.data };
-      }
-
-      if (
+      } else if (
         match[1] === "/repertoirecivil/rca/135e4dfe-9757-4d5d-8715-359c6e73289b"
       ) {
         return { data: mockRCA.data };
-      }
-
-      if (
+      } else if (
+        match[1] ===
+        "/repertoirecivil/pacs/89c9d030-26c3-41d3-bdde-8b4dcc0420e0"
+      ) {
+        return { data: pacsModificationNotaire.data };
+      } else if (
         match[1] ===
         "/repertoirecivil/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
       ) {

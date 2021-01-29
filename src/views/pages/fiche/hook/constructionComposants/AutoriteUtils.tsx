@@ -1,16 +1,18 @@
 import React from "react";
-import {
-  IAutorite,
-  IFicheRcRca
-} from "../../../../../model/etatcivil/FicheInterfaces";
+import { IFicheRcRca } from "../../../../../model/etatcivil/FicheInterfaces";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import {
-  AutoriteUtil,
-  TypeAutorite
+  TypeAutorite,
+  TypeAutoriteUtil
 } from "../../../../../model/etatcivil/TypeAutorite";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
 import { LieuxUtils } from "../../../../../model/Lieux";
 import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
+import {
+  IAutorite,
+  Autorite
+} from "../../../../../model/etatcivil/commun/IAutorite";
+import { formatPrenom, formatNom } from "../../../../common/util/Utils";
 
 export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
   const autorite: AccordionPartProps[] = [
@@ -25,8 +27,8 @@ export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
 
   if (
     retourBack.decision.sourceConfirmation != null &&
-    AutoriteUtil.isJuridiction(
-      retourBack.decision.sourceConfirmation.autorite.type
+    TypeAutoriteUtil.isJuridiction(
+      retourBack.decision.sourceConfirmation.autorite.typeAutorite
     )
   ) {
     autorite.push({
@@ -47,11 +49,11 @@ function getContentAutorite(
 ): AccordionContentProps[] {
   if (LieuxUtils.isPaysFrance(autorite.pays)) {
     return getContentAutoriteFrance(autorite, typeFiche);
-  } else if (AutoriteUtil.isJuridiction(autorite.type)) {
+  } else if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
     return getContentJuridictionEtEtranger(autorite);
   } else if (
-    AutoriteUtil.isNotaire(autorite.type) ||
-    AutoriteUtil.isOnac(autorite.type)
+    TypeAutoriteUtil.isNotaire(autorite.typeAutorite) ||
+    TypeAutoriteUtil.isOnac(autorite.typeAutorite)
   ) {
     return getContentNotaireOnacEtEtranger(autorite);
   } else {
@@ -63,12 +65,12 @@ function getContentAutoriteFrance(
   autorite: IAutorite,
   typeFiche: TypeFiche
 ): AccordionContentProps[] {
-  if (AutoriteUtil.isJuridiction(autorite.type)) {
+  if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
     return getContentJuridictionEtFrance(autorite);
-  } else if (AutoriteUtil.isNotaire(autorite.type)) {
+  } else if (TypeAutoriteUtil.isNotaire(autorite.typeAutorite)) {
     return getContentNotaireEtFrance(autorite);
   } else if (
-    AutoriteUtil.isOnac(autorite.type) &&
+    TypeAutoriteUtil.isOnac(autorite.typeAutorite) &&
     FicheUtil.isFicheRca(typeFiche)
   ) {
     return getContentOnacEtFrance(autorite);
@@ -79,7 +81,7 @@ function getContentAutoriteFrance(
 
 function getContentOnacEtFrance(autorite: IAutorite): AccordionContentProps[] {
   const content = [
-    getTypeAutoriteContent(autorite.type),
+    getTypeAutoriteContent(autorite.typeAutorite),
     getTitreOnac(autorite),
     getVilleAutoriteContent(autorite.ville)
   ];
@@ -97,8 +99,8 @@ function getContentNotaireOnacEtEtranger(
   autorite: IAutorite
 ): AccordionContentProps[] {
   return [
-    getTypeAutoriteContent(autorite.type),
-    AutoriteUtil.isNotaire(autorite.type)
+    getTypeAutoriteContent(autorite.typeAutorite),
+    TypeAutoriteUtil.isNotaire(autorite.typeAutorite)
       ? getPrenomNomNotaire(autorite)
       : getTitreOnac(autorite),
     getVilleAutoriteContent(autorite.ville),
@@ -111,7 +113,7 @@ function getContentJuridictionEtEtranger(
   autorite: IAutorite
 ): AccordionContentProps[] {
   return [
-    getTypeAutoriteContent(autorite.type),
+    getTypeAutoriteContent(autorite.typeAutorite),
     getVilleAutoriteContent(autorite.ville),
     getRegionAutoriteContent(autorite.region),
     getPaysAutoriteContent(autorite.pays)
@@ -122,7 +124,7 @@ function getContentJuridictionEtFrance(
   autorite: IAutorite
 ): AccordionContentProps[] {
   const contents: AccordionContentProps[] = [
-    getTypeAutoriteContent(autorite.type),
+    getTypeAutoriteContent(autorite.typeAutorite),
     getVilleAutoriteContent(autorite.ville)
   ];
 
@@ -137,7 +139,7 @@ function getContentNotaireEtFrance(
   autorite: IAutorite
 ): AccordionContentProps[] {
   const contents: AccordionContentProps[] = [
-    getTypeAutoriteContent(autorite.type),
+    getTypeAutoriteContent(autorite.typeAutorite),
     getPrenomNomNotaire(autorite),
     getVilleAutoriteContent(autorite.ville)
   ];
@@ -155,11 +157,9 @@ function getPrenomNomNotaire(autorite: IAutorite): AccordionContentProps {
   return {
     libelle: "Prénom NOM",
     value: (
-      <span>{`Maitre ${autorite.prenomNotaire.charAt(
-        0
-      )}${autorite.prenomNotaire.slice(
-        1
-      )} ${autorite.nomNotaire.toUpperCase()}`}</span>
+      <span>{`Maitre ${formatPrenom(autorite.prenomNotaire)} ${formatNom(
+        autorite.nomNotaire
+      )}`}</span>
     )
   };
 }
@@ -180,22 +180,22 @@ function getTitreOnac(autorite: IAutorite): AccordionContentProps {
 function getNumeroCrpcen(autorite: IAutorite): AccordionContentProps {
   return {
     libelle: "N° CRPCEN",
-    value: autorite.numeroCrpcen
+    value: Autorite.getNumeroCrpcen(autorite)
   };
 }
 
 function getTypeAutoriteContent(type?: TypeAutorite): AccordionContentProps {
-  return { libelle: "Type", value: AutoriteUtil.getLibelle(type) };
+  return { libelle: "Type", value: TypeAutoriteUtil.getLibelle(type) };
 }
 
-function getVilleAutoriteContent(ville: string): AccordionContentProps {
+function getVilleAutoriteContent(ville?: string): AccordionContentProps {
   return {
     libelle: "Ville",
     value: <span className="ville">{ville || ""}</span>
   };
 }
 
-function getRegionAutoriteContent(region: string): AccordionContentProps {
+function getRegionAutoriteContent(region?: string): AccordionContentProps {
   return {
     libelle: "Région",
     value: <span className="region">{region || ""}</span>
@@ -203,7 +203,7 @@ function getRegionAutoriteContent(region: string): AccordionContentProps {
 }
 
 function getArrondissementAutoriteContent(
-  arrondissement: string
+  arrondissement?: string
 ): AccordionContentProps {
   return {
     libelle: "Arrondissement",
@@ -222,7 +222,7 @@ function getDepartementAutoriteContent(
   };
 }
 
-function getPaysAutoriteContent(pays: string): AccordionContentProps {
+function getPaysAutoriteContent(pays?: string): AccordionContentProps {
   return {
     libelle: "Pays",
     value: <span className="pays">{pays || ""}</span>

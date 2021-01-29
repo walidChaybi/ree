@@ -47,14 +47,24 @@ export function getDateFromDateCompose(date: IDateCompose): Date | undefined {
 }
 
 export function getDateString(date: Date): string {
-  return new Intl.DateTimeFormat("fr-FR").format(date);
+  if (date) {
+    return new Intl.DateTimeFormat("fr-FR").format(date);
+  }
+  return "";
 }
 
 export function getDateFromTimestamp(date: number): Date {
   return new Date(date);
 }
 
-export function getHeureFromNumber(heure: number, minute: number) {
+export function getFormatDateFromTimestamp(timestamp: number): string {
+  if (timestamp) {
+    return getDateString(getDateFromTimestamp(timestamp));
+  }
+  return "";
+}
+
+export function getHeureFromNumber(heure?: number, minute?: number) {
   if (heure != null) {
     const libelleHeure = heure > 1 ? "heures" : "heure";
     const minuteConvert = minute != null ? `${minute}` : "";
