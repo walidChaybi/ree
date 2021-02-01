@@ -17,7 +17,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   ///////////// PARTIE 1: Inscription des registre des PACS des étrangers nés à l'étranger
   expect(panels.panels[0].panelAreas[0].parts.length).toBe(1);
   expect(panels.panels[0].panelAreas[0].title).toBe(
-    "Inscription des registre des PACS des étrangers nés à l'étranger"
+    "Inscription au registre des PACS des étrangers nés à l'étranger"
   );
   expect(panels.panels[0].panelAreas[0].parts[0].contents.length).toBe(3);
   expect(panels.panels[0].panelAreas[0].parts[0].contents[0].libelle).toBe(

@@ -30,7 +30,7 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
     pacs,
     getInscriptionRegistrePacs,
     "1",
-    "Inscription des registre des PACS des étrangers nés à l'étranger"
+    "Inscription au registre des PACS des étrangers nés à l'étranger"
   );
 
   AjoutePanel(panelAreas, pacs.partenaires, getPartenaires, "2");
