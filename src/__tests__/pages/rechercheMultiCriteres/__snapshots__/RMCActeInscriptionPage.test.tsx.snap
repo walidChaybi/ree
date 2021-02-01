@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders formulaire Recherche Multi Critères Actes et Inscriptions 1`] = `
+<div
+  className="Formulaire"
+>
+  <div
+    className="Titre"
+  >
+    <span>
+      Critères de recherche d'un acte et d'une inscription
+    </span>
+  </div>
+  <form
+    action="#"
+    onReset={[Function]}
+    onSubmit={[Function]}
+  >
+    <div
+      className="DeuxColonnes FormulaireRMCAI"
+    >
+      <div
+        className="Filtre titulaire"
+      >
+        <div
+          className="TitreFiltre"
+        >
+          <span>
+            Titulaire
+          </span>
+        </div>
+        <div
+          className="FormFiltre"
+        >
+          <div
+            className="BlockInput"
+          >
+            <label
+              htmlFor="titulaire.nom"
+            >
+              Nom
+            </label>
+            <input
+              id="titulaire.nom"
+              name="titulaire.nom"
+              onBlur={[Function]}
+              onChange={[Function]}
+              value=""
+            />
+          </div>
+          <div
+            className="BlockErreur"
+          />
+          <div
+            className="BlockInput"
+          >
+            <label
+              htmlFor="titulaire.prenom"
+            >
+              Prénom
+            </label>
+            <input
+              id="titulaire.prenom"
+              name="titulaire.prenom"
+              onBlur={[Function]}
+              onChange={[Function]}
+              value=""
+            />
+          </div>
+          <div
+            className="BlockErreur"
+          />
+          <div
+            className="DateComposeForm"
+          >
+            <label>
+              Date de naissance
+            </label>
+            <input
+              name="titulaire.dateNaissance.jour"
+              onBlur={[Function]}
+              onChange={[Function]}
+              value=""
+            />
+            <input
+              name="titulaire.dateNaissance.mois"
+              onBlur={[Function]}
+              onChange={[Function]}
+              value=""
+            />
+            <input
+              name="titulaire.dateNaissance.annee"
+              onBlur={[Function]}
+              onChange={[Function]}
+              value=""
+            />
+          </div>
+          <div
+            className="BlockErreur"
+          />
+          <div
+            className="BlockInput"
+          >
+            <label
+              htmlFor="titulaire.paysNaissance"
+            >
+              Pays de naissance
+            </label>
+            <input
+              id="titulaire.paysNaissance"
+              name="titulaire.paysNaissance"
+              onBlur={[Function]}
+              onChange={[Function]}
+              value=""
+            />
+          </div>
+          <div
+            className="BlockErreur"
+          />
+        </div>
+      </div>
+    </div>
+    <button
+      onSubmit={[Function]}
+      type="submit"
+    >
+      Recherche
+    </button>
+  </form>
+</div>
+`;
