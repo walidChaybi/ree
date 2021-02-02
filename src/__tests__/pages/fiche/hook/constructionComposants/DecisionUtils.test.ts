@@ -14,25 +14,25 @@ test("Decision utils get decision : decision de type Juridiction, ", async () =>
 
   expect(components).toHaveLength(2);
 
-  const idxType = components[0].contents.findIndex(
+  const idxType = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxDate = components[0].contents.findIndex(
+  const idxDate = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Date"
   );
   expect(idxDate).toBeGreaterThan(-1);
 
   expect(idxType).toBeLessThan(idxDate);
 
-  const idxEntolementRg = components[0].contents.findIndex(
+  const idxEntolementRg = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement RG"
   );
   expect(idxEntolementRg).toBeGreaterThan(-1);
   expect(idxDate).toBeLessThan(idxEntolementRg);
 
-  const idxEnrolementPortalis = components[0].contents.findIndex(
+  const idxEnrolementPortalis = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement Portalis"
   );
   expect(idxEnrolementPortalis).toBeGreaterThan(-1);
@@ -46,24 +46,24 @@ test("Decision utils get decision : decision de type Notaire, ", async () => {
 
   expect(components).toHaveLength(2);
 
-  const idxType = components[0].contents.findIndex(
+  const idxType = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxDate = components[0].contents.findIndex(
+  const idxDate = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Date"
   );
   expect(idxDate).toBeGreaterThan(-1);
 
   expect(idxType).toBeLessThan(idxDate);
 
-  const idxEntolementRg = components[0].contents.findIndex(
+  const idxEntolementRg = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement RG"
   );
   expect(idxEntolementRg).toBe(-1);
 
-  const idxEnrolementPortalis = components[0].contents.findIndex(
+  const idxEnrolementPortalis = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement Portalis"
   );
   expect(idxEnrolementPortalis).toBe(-1);
@@ -76,31 +76,31 @@ test("Decision utils get decision : decision de type ONAC, ", async () => {
 
   expect(componentsEtrangere).toHaveLength(2);
 
-  const idxType = componentsEtrangere[1].contents.findIndex(
+  const idxType = componentsEtrangere[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxDate = componentsEtrangere[1].contents.findIndex(
+  const idxDate = componentsEtrangere[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Date"
   );
   expect(idxDate).toBeGreaterThan(-1);
 
   expect(idxType).toBeLessThan(idxDate);
 
-  const idxDateEtrangere = componentsEtrangere[1].contents.findIndex(
+  const idxDateEtrangere = componentsEtrangere[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Date décision étrangère"
   );
   expect(idxDateEtrangere).toBeGreaterThan(-1);
 
   expect(idxDate).toBeLessThan(idxDateEtrangere);
 
-  const idxEntolementRg = componentsEtrangere[1].contents.findIndex(
+  const idxEntolementRg = componentsEtrangere[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement RG"
   );
   expect(idxEntolementRg).toBeGreaterThan(-1);
 
-  const idxEnrolementPortalis = componentsEtrangere[1].contents.findIndex(
+  const idxEnrolementPortalis = componentsEtrangere[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement Portalis"
   );
   expect(idxEnrolementPortalis).toBeGreaterThan(-1);
@@ -113,32 +113,32 @@ test("Decision utils get decision fiche RCA : decision de type Juridiction, ", a
 
   expect(components).toHaveLength(2);
 
-  const idxType = components[0].contents.findIndex(
+  const idxType = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxDate = components[0].contents.findIndex(
+  const idxDate = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Date"
   );
   expect(idxDate).toBeGreaterThan(-1);
 
   expect(idxType).toBeLessThan(idxDate);
 
-  const idxDateEtranegre = components[0].contents.findIndex(
+  const idxDateEtranegre = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Date décision étrangère"
   );
   expect(idxDateEtranegre).toBeGreaterThan(-1);
 
   expect(idxDate).toBeLessThan(idxDateEtranegre);
 
-  const idxEntolementRg = components[0].contents.findIndex(
+  const idxEntolementRg = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement RG"
   );
   expect(idxEntolementRg).toBeGreaterThan(-1);
   expect(idxDateEtranegre).toBeLessThan(idxEntolementRg);
 
-  const idxEnrolementPortalis = components[0].contents.findIndex(
+  const idxEnrolementPortalis = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement Portalis"
   );
   expect(idxEnrolementPortalis).toBeGreaterThan(-1);
@@ -152,32 +152,32 @@ test("Decision utils get decision fiche RCA : decision notaire et confirmation d
 
   expect(components).toHaveLength(2);
 
-  const idxType = components[1].contents.findIndex(
+  const idxType = components[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxDate = components[1].contents.findIndex(
+  const idxDate = components[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Date"
   );
   expect(idxDate).toBeGreaterThan(-1);
 
   expect(idxType).toBeLessThan(idxDate);
 
-  const idxDateEtranegre = components[1].contents.findIndex(
+  const idxDateEtranegre = components[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Date décision étrangère"
   );
   expect(idxDateEtranegre).toBeGreaterThan(-1);
 
   expect(idxDate).toBeLessThan(idxDateEtranegre);
 
-  const idxEntolementRg = components[1].contents.findIndex(
+  const idxEntolementRg = components[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement RG"
   );
   expect(idxEntolementRg).toBeGreaterThan(-1);
   expect(idxDateEtranegre).toBeLessThan(idxEntolementRg);
 
-  const idxEnrolementPortalis = components[1].contents.findIndex(
+  const idxEnrolementPortalis = components[1].contentsPart?.contents.findIndex(
     content => content.libelle === "Enrôlement Portalis"
   );
   expect(idxEnrolementPortalis).toBeGreaterThan(-1);

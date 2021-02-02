@@ -6,31 +6,32 @@ test("Acte utils : affichage correcte des infos de l'évènement", async () => {
   const dataActe = mapActe(acte);
   const components = getEvenement(dataActe);
 
-  const idxDate = components[0].contents.findIndex(
+  const idxDate = components[0].contentsPart.contents.findIndex(
     content => content.libelle === "Date de l'évènement"
   );
   expect(idxDate).toBeGreaterThan(-1);
 
-  const valueDate: JSX.Element = components[0].contents[idxDate]
+  const valueDate: JSX.Element = components[0].contentsPart.contents[idxDate]
     .value as JSX.Element;
   expect(valueDate.props.children).toBe("31/03/1921 à 13h54");
 
-  const idxLieu = components[0].contents.findIndex(
+  const idxLieu = components[0].contentsPart.contents.findIndex(
     content => content.libelle === "Lieu de l'évènement"
   );
   expect(idxLieu).toBeGreaterThan(-1);
   expect(idxDate).toBeLessThan(idxLieu);
 
-  const valueLieu: JSX.Element = components[0].contents[idxLieu]
+  const valueLieu: JSX.Element = components[0].contentsPart.contents[idxLieu]
     .value as JSX.Element;
   expect(valueLieu.props.children).toBe("Kanpur - Uttar Pradesh (Inde)");
 
-  const idxNature = components[1].contents.findIndex(
+  const idxNature = components[1].contentsPart.contents.findIndex(
     content => content.libelle === "Nature"
   );
   expect(idxNature).toBeGreaterThan(-1);
 
-  const valueNature: JSX.Element = components[1].contents[idxNature]
-    .value as JSX.Element;
+  const valueNature: JSX.Element = components[1].contentsPart.contents[
+    idxNature
+  ].value as JSX.Element;
   expect(valueNature.props.children).toBe("Absence");
 });

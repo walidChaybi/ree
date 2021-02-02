@@ -21,10 +21,13 @@ import {
 export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
   const autorite: AccordionPartProps[] = [
     {
-      contents: getContentAutorite(
-        retourBack.decision.autorite,
-        retourBack.categorie
-      )
+      contentsPart: {
+        contents: getContentAutorite(
+          retourBack.decision.autorite,
+          retourBack.categorie
+        ),
+        title: "Autorité"
+      }
     }
   ];
 
@@ -35,11 +38,13 @@ export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
     )
   ) {
     autorite.push({
-      contents: getContentAutorite(
-        retourBack.decision.sourceConfirmation.autorite,
-        retourBack.categorie
-      ),
-      title: ""
+      contentsPart: {
+        contents: getContentAutorite(
+          retourBack.decision.sourceConfirmation.autorite,
+          retourBack.categorie
+        ),
+        title: ""
+      }
     });
   }
 

@@ -17,17 +17,25 @@ export function getDateStringFromDateCompose(date: IDateCompose): string {
   }
 
   if (date && date.mois) {
-    dateString = `${date.mois.length === 1 ? "0" : ""}${
+    dateString = `${doitAjouter0Avant(date.mois) ? "0" : ""}${
       date.mois
     }/${dateString}`;
   }
 
   if (date && date.jour) {
-    dateString = `${date.jour.length === 1 ? "0" : ""}${
+    dateString = `${doitAjouter0Avant(date.jour) ? "0" : ""}${
       date.jour
     }/${dateString}`;
   }
   return dateString;
+}
+
+function doitAjouter0Avant(value: string | number) {
+  const valueWithout0ToAddBeginAt = 10;
+
+  return typeof value === "number"
+    ? value < valueWithout0ToAddBeginAt
+    : value.length === 1;
 }
 
 export function getDateFromDateCompose(date: IDateCompose): Date | undefined {

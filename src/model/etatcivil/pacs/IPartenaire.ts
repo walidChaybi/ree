@@ -1,7 +1,7 @@
-import { Sexe } from "../enum/Sexe";
 import { IDateCompose } from "../../../views/common/util/DateUtils";
 import { IPrenom } from "../FicheInterfaces";
 import { Nationalite } from "../enum/Nationalite";
+import { EnumTypeSexe } from "../../../views/common/util/enum/EnumSexe";
 
 export interface IPartenaire {
   numeroOrdreSaisi: number;
@@ -11,7 +11,7 @@ export interface IPartenaire {
   regionNaissance: string;
   arrondissementNaissance: string;
   nationalite: Nationalite;
-  sexe: Sexe;
+  sexe: string;
   autreNoms: string[];
   autrePrenoms: string[];
   prenoms: IPrenom[];

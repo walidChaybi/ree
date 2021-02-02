@@ -18,46 +18,52 @@ test("Autorite utils get autorite : decision en France, de type Juridiction, la 
 
   expect(components).toHaveLength(2);
 
-  const idxType = components[0].contents.findIndex(
+  const idxType = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxVille = components[0].contents.findIndex(
+  const idxVille = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Ville"
   );
   expect(idxVille).toBeGreaterThan(-1);
 
   expect(idxType).toBeLessThan(idxVille);
 
-  const idxArrondissement = components[0].contents.findIndex(
+  const idxArrondissement = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Arrondissement"
   );
   expect(idxArrondissement).toBeGreaterThan(-1);
   expect(idxType).toBeLessThan(idxArrondissement);
 
-  const idxDepartement = components[0].contents.findIndex(
+  const idxDepartement = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Département"
   );
   expect(idxDepartement).toBeGreaterThan(-1);
   expect(idxArrondissement).toBeLessThan(idxDepartement);
 
   expect(
-    components[0].contents.findIndex(
+    components[0].contentsPart?.contents.findIndex(
       content => content.libelle === "Prénom NOM"
     )
   ).toBe(-1);
 
   expect(
-    components[0].contents.findIndex(content => content.libelle === "Région")
+    components[0].contentsPart?.contents.findIndex(
+      content => content.libelle === "Région"
+    )
   ).toBe(-1);
 
   expect(
-    components[0].contents.findIndex(content => content.libelle === "Pays")
+    components[0].contentsPart?.contents.findIndex(
+      content => content.libelle === "Pays"
+    )
   ).toBe(-1);
 
   expect(
-    components[0].contents.findIndex(content => content.libelle === "N° CRPCEN")
+    components[0].contentsPart?.contents.findIndex(
+      content => content.libelle === "N° CRPCEN"
+    )
   ).toBe(-1);
 });
 
@@ -66,48 +72,50 @@ test("Autorite utils get autorite : decision à l'étranger, de type Juridiction
     ficheAutoriteJuridictionEtrangerAvecConfirmation as IFicheRcRca
   );
 
-  const idxType = components[0].contents.findIndex(
+  const idxType = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxVille = components[0].contents.findIndex(
+  const idxVille = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Ville"
   );
   expect(idxVille).toBeGreaterThan(-1);
 
   expect(idxType).toBeLessThan(idxVille);
 
-  const idxRegion = components[0].contents.findIndex(
+  const idxRegion = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Région"
   );
   expect(idxRegion).toBeGreaterThan(-1);
   expect(idxType).toBeLessThan(idxRegion);
 
-  const idxPays = components[0].contents.findIndex(
+  const idxPays = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Pays"
   );
   expect(idxPays).toBeGreaterThan(-1);
   expect(idxRegion).toBeLessThan(idxPays);
 
   expect(
-    components[0].contents.findIndex(
+    components[0].contentsPart?.contents.findIndex(
       content => content.libelle === "Arrondissement"
     )
   ).toBe(-1);
   expect(
-    components[0].contents.findIndex(
+    components[0].contentsPart?.contents.findIndex(
       content => content.libelle === "Département"
     )
   ).toBe(-1);
   expect(
-    components[0].contents.findIndex(
+    components[0].contentsPart?.contents.findIndex(
       content => content.libelle === "Prénom NOM"
     )
   ).toBe(-1);
 
   expect(
-    components[0].contents.findIndex(content => content.libelle === "N° CRPCEN")
+    components[0].contentsPart?.contents.findIndex(
+      content => content.libelle === "N° CRPCEN"
+    )
   ).toBe(-1);
 });
 
@@ -116,41 +124,41 @@ test("Autorite utils get autorite : decision en France, de type Notaire ", async
     ficheAutoriteNotaireFranceAvecConfirmation as IFicheRcRca
   );
 
-  const idxType = components[0].contents.findIndex(
+  const idxType = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxVille = components[0].contents.findIndex(
+  const idxVille = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Ville"
   );
   expect(idxVille).toBeGreaterThan(-1);
 
   expect(idxType).toBeLessThan(idxVille);
 
-  const idxPrenomNom = components[0].contents.findIndex(
+  const idxPrenomNom = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Prénom NOM"
   );
   expect(
-    components[0].contents.findIndex(
+    components[0].contentsPart?.contents.findIndex(
       content => content.libelle === "Prénom NOM"
     )
   ).toBeGreaterThan(-1);
   expect(idxVille).toBeGreaterThan(idxPrenomNom);
 
-  const idxArrondissement = components[0].contents.findIndex(
+  const idxArrondissement = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Arrondissement"
   );
   expect(idxArrondissement).toBeGreaterThan(-1);
   expect(idxPrenomNom).toBeLessThan(idxArrondissement);
 
-  const idxDepartement = components[0].contents.findIndex(
+  const idxDepartement = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Département"
   );
   expect(idxDepartement).toBeGreaterThan(-1);
   expect(idxArrondissement).toBeLessThan(idxDepartement);
 
-  const idxCrpcen = components[0].contents.findIndex(
+  const idxCrpcen = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "N° CRPCEN"
   );
 
@@ -158,11 +166,15 @@ test("Autorite utils get autorite : decision en France, de type Notaire ", async
   expect(idxDepartement).toBeLessThan(idxCrpcen);
 
   expect(
-    components[0].contents.findIndex(content => content.libelle === "Région")
+    components[0].contentsPart?.contents.findIndex(
+      content => content.libelle === "Région"
+    )
   ).toBe(-1);
 
   expect(
-    components[0].contents.findIndex(content => content.libelle === "Pays")
+    components[0].contentsPart?.contents.findIndex(
+      content => content.libelle === "Pays"
+    )
   ).toBe(-1);
 });
 
@@ -171,49 +183,51 @@ test("Autorite utils get autorite : decision à l'étranger, de type Notaire ", 
     ficheAutoriteNotaireEtrangerAvecConfirmation as IFicheRcRca
   );
 
-  const idxType = components[0].contents.findIndex(
+  const idxType = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxPrenomNom = components[0].contents.findIndex(
+  const idxPrenomNom = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Prénom NOM"
   );
   expect(idxPrenomNom).toBeGreaterThan(-1);
   expect(idxType).toBeLessThan(idxPrenomNom);
 
-  const idxVille = components[0].contents.findIndex(
+  const idxVille = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Ville"
   );
   expect(idxVille).toBeGreaterThan(-1);
 
   expect(idxPrenomNom).toBeLessThan(idxVille);
 
-  const idxRegion = components[0].contents.findIndex(
+  const idxRegion = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Région"
   );
   expect(idxRegion).toBeGreaterThan(-1);
   expect(idxVille).toBeLessThan(idxRegion);
 
-  const idxPays = components[0].contents.findIndex(
+  const idxPays = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Pays"
   );
   expect(idxPays).toBeGreaterThan(-1);
   expect(idxRegion).toBeLessThan(idxPays);
 
   expect(
-    components[0].contents.findIndex(
+    components[0].contentsPart?.contents.findIndex(
       content => content.libelle === "Arrondissement"
     )
   ).toBe(-1);
   expect(
-    components[0].contents.findIndex(
+    components[0].contentsPart?.contents.findIndex(
       content => content.libelle === "Département"
     )
   ).toBe(-1);
 
   expect(
-    components[0].contents.findIndex(content => content.libelle === "N° CRPCEN")
+    components[0].contentsPart?.contents.findIndex(
+      content => content.libelle === "N° CRPCEN"
+    )
   ).toBe(-1);
 });
 
@@ -222,49 +236,51 @@ test("Autorite utils get autorite : decision à l'étranger, de type Onac avec c
     ficheAutoriteOnaceEtrangerAvecConfirmation as IFicheRcRca
   );
 
-  const idxType = components[0].contents.findIndex(
+  const idxType = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Type"
   );
   expect(idxType).toBeGreaterThan(-1);
 
-  const idxPrenomNom = components[0].contents.findIndex(
+  const idxPrenomNom = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Titre"
   );
   expect(idxPrenomNom).toBeGreaterThan(-1);
   expect(idxType).toBeLessThan(idxPrenomNom);
 
-  const idxVille = components[0].contents.findIndex(
+  const idxVille = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Ville"
   );
   expect(idxVille).toBeGreaterThan(-1);
 
   expect(idxPrenomNom).toBeLessThan(idxVille);
 
-  const idxRegion = components[0].contents.findIndex(
+  const idxRegion = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Région"
   );
   expect(idxRegion).toBeGreaterThan(-1);
   expect(idxVille).toBeLessThan(idxRegion);
 
-  const idxPays = components[0].contents.findIndex(
+  const idxPays = components[0].contentsPart?.contents.findIndex(
     content => content.libelle === "Pays"
   );
   expect(idxPays).toBeGreaterThan(-1);
   expect(idxRegion).toBeLessThan(idxPays);
 
   expect(
-    components[0].contents.findIndex(
+    components[0].contentsPart?.contents.findIndex(
       content => content.libelle === "Arrondissement"
     )
   ).toBe(-1);
   expect(
-    components[0].contents.findIndex(
+    components[0].contentsPart?.contents.findIndex(
       content => content.libelle === "Département"
     )
   ).toBe(-1);
 
   expect(
-    components[0].contents.findIndex(content => content.libelle === "N° CRPCEN")
+    components[0].contentsPart?.contents.findIndex(
+      content => content.libelle === "N° CRPCEN"
+    )
   ).toBe(-1);
 });
 
@@ -277,11 +293,11 @@ test("Autorite utils get autorite : la source de confirmation n'est pas présent
 test("Autorite utils get autorite : donnees non valides", async () => {
   const components = getAutorite(ficheNonValide as IFicheRcRca);
 
-  expect(components[0].contents).toHaveLength(0);
+  expect(components[0].contentsPart?.contents).toHaveLength(0);
 });
 
 test("Autorite utils get autorite : onac", async () => {
   const components = getAutorite(ficheAutoriteOnac as IFicheRcRca);
-  const element = components[0].contents[1].value as JSX.Element;
+  const element = components[0].contentsPart?.contents[1].value as JSX.Element;
   expect(element.props.children).toBe("titreOnac");
 });

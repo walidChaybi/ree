@@ -7,54 +7,56 @@ import {
   formatNom
 } from "../../../../../common/util/Utils";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import { SexeUtil } from "../../../../../../model/etatcivil/enum/Sexe";
 import { LieuxUtils } from "../../../../../../model/Lieux";
+import { EnumTypeSexe } from "../../../../../common/util/enum/EnumSexe";
 
 export function getPartenaires(
   partenaires: IPartenaire[]
 ): AccordionPartProps[] {
   return partenaires.map((p, idx) => {
     return {
-      title: `Partenaire ${idx + 1}`,
-      contents: [
-        {
-          libelle: "Nom",
-          value: formatNom(p.nomFamille)
-        },
-        {
-          libelle: "Autre(s) nom(s)",
-          value: formatNoms(p.autreNoms)
-        },
-        {
-          libelle: "Prénoms",
-          value: jointPrenoms(p.prenoms)
-        },
-        {
-          libelle: "Autre(s) prénom(s)",
-          value: formatPrenoms(p.autrePrenoms)
-        },
-        {
-          libelle: "Date de naissance",
-          value: getDateStringFromDateCompose(p.dateNaissance)
-        },
-        {
-          libelle: "Lieu de naissance",
-          value: LieuxUtils.getLieu(
-            p.villeNaissance,
-            p.regionNaissance,
-            p.paysNaissance,
-            p.arrondissementNaissance
-          )
-        },
-        {
-          libelle: "Nationalité",
-          value: p.nationalite.libelle
-        },
-        {
-          libelle: "Sexe",
-          value: SexeUtil.getLibelle(p.sexe)
-        }
-      ]
+      contentsPart: {
+        title: `Partenaire ${idx + 1}`,
+        contents: [
+          {
+            libelle: "Nom",
+            value: formatNom(p.nomFamille)
+          },
+          {
+            libelle: "Autre(s) nom(s)",
+            value: formatNoms(p.autreNoms)
+          },
+          {
+            libelle: "Prénoms",
+            value: jointPrenoms(p.prenoms)
+          },
+          {
+            libelle: "Autre(s) prénom(s)",
+            value: formatPrenoms(p.autrePrenoms)
+          },
+          {
+            libelle: "Date de naissance",
+            value: getDateStringFromDateCompose(p.dateNaissance)
+          },
+          {
+            libelle: "Lieu de naissance",
+            value: LieuxUtils.getLieu(
+              p.villeNaissance,
+              p.regionNaissance,
+              p.paysNaissance,
+              p.arrondissementNaissance
+            )
+          },
+          {
+            libelle: "Nationalité",
+            value: p.nationalite.libelle
+          },
+          {
+            libelle: "Sexe",
+            value: EnumTypeSexe.getEnumFor(p.sexe).libelle
+          }
+        ]
+      }
     };
   });
 }

@@ -30,13 +30,15 @@ export function getInscriptionRepertoireCivil(
   retourBack: IFicheRcRca
 ): AccordionPartProps {
   return {
-    contents: FicheUtil.isFicheRca(retourBack.categorie)
-      ? getInteresseRca(retourBack)
-      : getInteresseRc(retourBack),
-    title: FicheUtil.isFicheRca(retourBack.categorie)
-      ? "Inscription au répertoire civil annexe"
-      : "Inscription au répertoire civil",
-    columnIndex: "1/3"
+    contentsPart: {
+      contents: FicheUtil.isFicheRca(retourBack.categorie)
+        ? getInteresseRca(retourBack)
+        : getInteresseRc(retourBack),
+      title: FicheUtil.isFicheRca(retourBack.categorie)
+        ? "Inscription au répertoire civil annexe"
+        : "Inscription au répertoire civil",
+      columnIndex: "1/3"
+    }
   };
 }
 

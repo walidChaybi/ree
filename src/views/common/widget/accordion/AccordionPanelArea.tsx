@@ -6,15 +6,17 @@ export interface AccordionPanelAreaProps {
   parts: AccordionPartProps[];
   id?: string;
   title?: string;
+  className?: string;
 }
 
 export const AccordionPanelArea: React.FC<AccordionPanelAreaProps> = ({
   parts,
   id = "",
-  title
+  title,
+  className = "defaultAccordionColumn"
 }) => {
   return (
-    <div className="accordionPanelArea">
+    <div className={`accordionPanelArea ${className}`}>
       {title && <span className="titlePanelArea">{title}</span>}
       {parts.map((part, index) => {
         return (

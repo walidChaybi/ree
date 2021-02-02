@@ -21,6 +21,8 @@ import {
   IDissolution,
   Dissolution
 } from "../../../../../../model/etatcivil/pacs/IDissolution";
+import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
+import { getFichesPersonne } from "../FichePersonne";
 
 export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
   const panelAreas: AccordionPanelAreaProps[] = [];
@@ -65,12 +67,17 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
     "Annulation du PACS"
   );
 
+  const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(
+    pacs.personnes
+  );
+
   return {
     panels: [
       {
         panelAreas,
         title: "Vue du PACS"
-      }
+      },
+      ...fichesPersonne
     ]
   };
 }
@@ -93,23 +100,25 @@ function AjoutePanel(
 
 function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
   const part: AccordionPartProps = {
-    title: "",
-    columnIndex: "1/3",
-    contents: [
-      {
-        libelle: "Statut du PACS",
-        value: StatutPacesUtil.getLibelle(pacs.statut)
-      },
-      {
-        libelle: "Date d'enregistrement par l'autorité",
-        value: pacs.dateEnregistrementParAutorite
-      },
+    contentsPart: {
+      title: "",
+      columnIndex: "1/3",
+      contents: [
+        {
+          libelle: "Statut du PACS",
+          value: StatutPacesUtil.getLibelle(pacs.statut)
+        },
+        {
+          libelle: "Date d'enregistrement par l'autorité",
+          value: pacs.dateEnregistrementParAutorite
+        },
 
-      {
-        libelle: "Date d'inscription au registre",
-        value: pacs.dateInscription
-      }
-    ]
+        {
+          libelle: "Date d'inscription au registre",
+          value: pacs.dateInscription
+        }
+      ]
+    }
   };
 
   return [part];
@@ -117,19 +126,23 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
 
 function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    contents: [
-      getContentAutorite(pacs.autorite),
-      ...getContentNotaire(pacs.autorite),
-      {
-        libelle: "Date",
-        value: pacs.dateEnregistrementParAutorite
-      }
-    ]
+    contentsPart: {
+      contents: [
+        getContentAutorite(pacs.autorite),
+        ...getContentNotaire(pacs.autorite),
+        {
+          libelle: "Date",
+          value: pacs.dateEnregistrementParAutorite
+        }
+      ]
+    }
   };
 
   const part2: AccordionPartProps = {
-    title: "",
-    contents: getContentLieu(pacs.autorite)
+    contentsPart: {
+      title: "",
+      contents: getContentLieu(pacs.autorite)
+    }
   };
 
   return [part1, part2];
@@ -139,22 +152,26 @@ function getModificationPacs(
   modification: IModification
 ): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    contents: [
-      getContentAutorite(modification.autorite),
-      ...getContentNotaire(modification.autorite),
-      {
-        libelle: "Date d'enregistrement de la convention modificative",
-        value: Modification.getDate(modification)
-      },
-      {
-        libelle: "Date d'effet à l'égard des tiers",
-        value: Modification.getDateEffet(modification)
-      }
-    ]
+    contentsPart: {
+      contents: [
+        getContentAutorite(modification.autorite),
+        ...getContentNotaire(modification.autorite),
+        {
+          libelle: "Date d'enregistrement de la convention modificative",
+          value: Modification.getDate(modification)
+        },
+        {
+          libelle: "Date d'effet à l'égard des tiers",
+          value: Modification.getDateEffet(modification)
+        }
+      ]
+    }
   };
 
   const part2: AccordionPartProps = {
-    contents: getContentLieu(modification.autorite)
+    contentsPart: {
+      contents: getContentLieu(modification.autorite)
+    }
   };
 
   return [part1, part2];
@@ -162,27 +179,31 @@ function getModificationPacs(
 
 function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    contents: [
-      getContentAutorite(dissolution.autorite),
-      ...getContentNotaire(dissolution.autorite),
-      {
-        libelle: "Date d'enregistrement de la dissolution",
-        value: Dissolution.getDate(dissolution)
-      },
-      {
-        libelle: "Date d'effet à l'égard des tiers",
-        value: Dissolution.getDateEffet(dissolution)
-      },
-      {
-        libelle: "Motif",
-        value: Dissolution.getMotif(dissolution)
-      }
-    ]
+    contentsPart: {
+      contents: [
+        getContentAutorite(dissolution.autorite),
+        ...getContentNotaire(dissolution.autorite),
+        {
+          libelle: "Date d'enregistrement de la dissolution",
+          value: Dissolution.getDate(dissolution)
+        },
+        {
+          libelle: "Date d'effet à l'égard des tiers",
+          value: Dissolution.getDateEffet(dissolution)
+        },
+        {
+          libelle: "Motif",
+          value: Dissolution.getMotif(dissolution)
+        }
+      ]
+    }
   };
 
   const part2: AccordionPartProps = {
-    title: "",
-    contents: getContentLieu(dissolution.autorite)
+    contentsPart: {
+      title: "",
+      contents: getContentLieu(dissolution.autorite)
+    }
   };
 
   return [part1, part2];
@@ -190,32 +211,36 @@ function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
 
 function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
   const part1: AccordionPartProps = {
-    contents: [
-      {
-        libelle: "Type de décision",
-        value: Annulation.getTypeDecision(annulation)
-      },
-      {
-        libelle: "Date",
-        value: Annulation.getDate(annulation)
-      },
-      {
-        libelle: "Juridiction",
-        value: Annulation.getJuridiction(annulation)
-      },
-      {
-        libelle: "Enrôlement RG",
-        value: Annulation.getEnrolementRG(annulation)
-      },
-      {
-        libelle: "Enrôlement Portalis",
-        value: Annulation.getEnrolementPortalis(annulation)
-      }
-    ]
+    contentsPart: {
+      contents: [
+        {
+          libelle: "Type de décision",
+          value: Annulation.getTypeDecision(annulation)
+        },
+        {
+          libelle: "Date",
+          value: Annulation.getDate(annulation)
+        },
+        {
+          libelle: "Juridiction",
+          value: Annulation.getJuridiction(annulation)
+        },
+        {
+          libelle: "Enrôlement RG",
+          value: Annulation.getEnrolementRG(annulation)
+        },
+        {
+          libelle: "Enrôlement Portalis",
+          value: Annulation.getEnrolementPortalis(annulation)
+        }
+      ]
+    }
   };
 
   const part2: AccordionPartProps = {
-    contents: getContentLieu(annulation.autorite)
+    contentsPart: {
+      contents: getContentLieu(annulation.autorite)
+    }
   };
 
   return [part1, part2];

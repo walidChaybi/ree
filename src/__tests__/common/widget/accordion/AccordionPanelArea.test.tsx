@@ -8,13 +8,18 @@ test("render composant AccordionPanelArea", async () => {
     <AccordionPanelArea
       parts={[
         {
-          contents: [{ libelle: "testLibelle1", value: "testValue1" }],
-          title: "titleTest1"
+          contentsPart: {
+            contents: [{ libelle: "testLibelle1", value: "testValue1" }],
+            title: "titleTest1"
+          }
         },
         {
-          contents: [{ libelle: "testLibelle2", value: "testValue2" }],
-          title: "titleTest2",
-          columnIndex: 0
+          contentsPart: {
+            contents: [{ libelle: "testLibelle2", value: "testValue2" }],
+            title: "titleTest2",
+            columnIndex: "0"
+          },
+          columnIndex: "0"
         }
       ]}
     />

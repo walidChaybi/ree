@@ -13,18 +13,22 @@ import {
 export function getEvenement(acte: IFicheActe): AccordionPartProps[] {
   const evenement: AccordionPartProps[] = [
     {
-      contents: getDateLieuEvenement(acte.evenement)
+      contentsPart: {
+        contents: getDateLieuEvenement(acte.evenement)
+      }
     }
   ];
 
   evenement.push({
-    contents: [
-      {
-        libelle: "Nature",
-        value: <span>{FicheActe.getNature(acte)}</span>
-      }
-    ],
-    title: ""
+    contentsPart: {
+      contents: [
+        {
+          libelle: "Nature",
+          value: <span>{FicheActe.getNature(acte)}</span>
+        }
+      ],
+      title: ""
+    }
   });
 
   return evenement;

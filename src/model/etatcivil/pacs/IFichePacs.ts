@@ -5,6 +5,7 @@ import { IAnnulation } from "./IAnnulation";
 import { IModification } from "./IModification";
 import { IDissolution } from "./IDissolution";
 import { IAutorite } from "../commun/IAutorite";
+import { IPersonne } from "../../../views/pages/fiche/contenu/personne/Personne";
 
 export interface IFichePacs {
   id: string;
@@ -22,4 +23,5 @@ export interface IFichePacs {
   modifications?: IModification[];
   partenaires?: IPartenaire[];
   statutsFiche: IStatutFiche[];
+  personnes: IPersonne[];
 }

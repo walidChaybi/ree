@@ -6,9 +6,11 @@ import { AccordionPart } from "../../../../views/common/widget/accordion/Accordi
 test("render composant AccordionPart", async () => {
   const { getByText } = render(
     <AccordionPart
-      contents={[{ libelle: "testLibelle", value: "testValue" }]}
-      title={"titleTest"}
-      classNameContent=""
+      contentsPart={{
+        contents: [{ libelle: "testLibelle", value: "testValue" }],
+        title: "titleTest",
+        classNameContent: ""
+      }}
     />
   );
 

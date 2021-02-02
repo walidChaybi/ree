@@ -2,7 +2,6 @@ import { IFichePacs } from "../../model/etatcivil/pacs/IFichePacs";
 import { StatutPacs } from "../../model/etatcivil/enum/StatutPacs";
 import { TypeAutorite } from "../../model/etatcivil/TypeAutorite";
 import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
-import { Sexe } from "../../model/etatcivil/enum/Sexe";
 import { TypeJuridiction } from "../../model/etatcivil/enum/TypeJuridiction";
 import { DecisionAnnulation } from "../../model/etatcivil/enum/DecisionAnnulation";
 import { MotifDissolution } from "../../model/etatcivil/enum/MotifDissolution";
@@ -103,12 +102,14 @@ export const pacsModificationNotaire = {
         paysEvenement: "France",
         complementMotif: ""
       }
-    ]
+    ],
+    personnes: []
   },
   errors: []
 };
 
 export const pacsModificationNotaireMap: IFichePacs = {
+  personnes: [],
   id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
   numero: "123456",
   annee: "2018",
@@ -163,7 +164,7 @@ export const pacsModificationNotaireMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: Sexe.FEMININ,
+      sexe: "FEMININ",
       autreNoms: ["DuDu", "dudu2"],
       autrePrenoms: ["NatachA", "natacha2"],
       prenoms: [
@@ -190,7 +191,7 @@ export const pacsModificationNotaireMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: Sexe.MASCULIN,
+      sexe: "MASCULIN",
       autreNoms: ["DupDup"],
       autrePrenoms: ["Nabil"],
       prenoms: [
@@ -226,6 +227,7 @@ export const pacsModificationNotaireMap: IFichePacs = {
 };
 
 export const annulationJuridictionMap: IFichePacs = {
+  personnes: [],
   id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e1",
   numero: "123456",
   annee: "2018",
@@ -269,7 +271,7 @@ export const annulationJuridictionMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: Sexe.FEMININ,
+      sexe: "FEMININ",
       autreNoms: ["DuDu"],
       autrePrenoms: ["Natacha"],
       prenoms: [
@@ -296,7 +298,7 @@ export const annulationJuridictionMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: Sexe.MASCULIN,
+      sexe: "MASCULIN",
       autreNoms: ["DupDup"],
       autrePrenoms: ["Nabil"],
       prenoms: [
@@ -320,6 +322,7 @@ export const annulationJuridictionMap: IFichePacs = {
 };
 
 export const dissolutionJuridictionMap: IFichePacs = {
+  personnes: [],
   id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e2",
   numero: "123456",
   annee: "2018",
@@ -365,7 +368,7 @@ export const dissolutionJuridictionMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: Sexe.FEMININ,
+      sexe: "FEMININ",
       autreNoms: ["DuDu"],
       autrePrenoms: ["Natacha"],
       prenoms: [
@@ -392,7 +395,7 @@ export const dissolutionJuridictionMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: Sexe.MASCULIN,
+      sexe: "MASCULIN",
       autreNoms: ["DupDup"],
       autrePrenoms: ["Nabil"],
       prenoms: [
@@ -416,6 +419,7 @@ export const dissolutionJuridictionMap: IFichePacs = {
 };
 
 export const dissolutionPosteMap: IFichePacs = {
+  personnes: [],
   id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e3",
   numero: "123456",
   annee: "2018",
@@ -461,7 +465,7 @@ export const dissolutionPosteMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: Sexe.FEMININ,
+      sexe: "FEMININ",
       autreNoms: ["DuDu"],
       autrePrenoms: ["Natacha"],
       prenoms: [
@@ -488,7 +492,7 @@ export const dissolutionPosteMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: Sexe.MASCULIN,
+      sexe: "MASCULIN",
       autreNoms: ["DupDup"],
       autrePrenoms: ["Nabil"],
       prenoms: [

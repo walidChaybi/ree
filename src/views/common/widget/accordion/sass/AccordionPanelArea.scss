@@ -3,7 +3,6 @@
 .accordionPanelArea {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 50% 50%);
   column-gap: 1rem;
 
   .titlePanelArea {
@@ -16,4 +15,12 @@
     grid-column: 1/3;
     margin-bottom: 1em;
   }
+}
+
+.defaultAccordionColumn {
+  grid-template-columns: repeat(auto-fit, 50% 50%);
+}
+
+.accordionColumn3 {
+  grid-template-columns: repeat(auto-fit, 33% 33% 33%);
 }

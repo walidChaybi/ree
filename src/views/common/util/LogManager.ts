@@ -12,8 +12,6 @@ const logManager = {};
 
 const TIME_OUT_MS = 2000;
 
-const FF_LOG_ACTIVE = gestionnaireFeatureFlag.estActif(FeatureFlag.LOG_SERVEUR);
-
 let listLog = [] as Array<IQueryParameterPostLog>;
 
 let isWaiting = false;
@@ -24,7 +22,7 @@ export interface LogErrorMsg {
 }
 
 export function logError(logErrorMgs: LogErrorMsg) {
-  if (FF_LOG_ACTIVE) {
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.LOG_SERVEUR)) {
     logErrorOnServer(logErrorMgs);
   }
   /* istanbul ignore next */

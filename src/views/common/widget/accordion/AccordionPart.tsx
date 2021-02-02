@@ -1,32 +1,31 @@
 import React from "react";
-import { AccordionContent, AccordionContentProps } from "./AccordionContent";
 import "./sass/AccordionPart.scss";
+import { AccordionSubParts } from "./AccordionSubPart";
+import {
+  AccordionContentPartProps,
+  AccordionPartContent
+} from "./AccordionPartContent";
+
 export interface AccordionPartProps {
-  contents: AccordionContentProps[];
-  title?: string;
+  contentsPart?: AccordionContentPartProps;
+  subParts?: AccordionContentPartProps[];
   columnIndex?: string;
-  classNameContent?: string;
 }
 
 export const AccordionPart: React.FC<AccordionPartProps> = ({
-  contents,
-  title,
-  columnIndex = "1",
-  classNameContent
+  contentsPart,
+  subParts,
+  columnIndex = "1"
 }) => {
   return (
-    <div className="wrapper part" style={{ gridColumn: columnIndex }}>
-      {title && <span className="titlePart">{title}</span>}
-      {contents.map((content, index) => {
-        return (
-          <AccordionContent
-            className={classNameContent}
-            key={`content-${title}-${index}`}
-            {...content}
-            row={index + 1}
-          />
-        );
-      })}
-    </div>
+    <>
+      {subParts != null ? (
+        <AccordionSubParts subParts={subParts} columnIndex={columnIndex} />
+      ) : (
+        contentsPart && (
+          <AccordionPartContent {...contentsPart} columnIndex={columnIndex} />
+        )
+      )}
+    </>
   );
 };
