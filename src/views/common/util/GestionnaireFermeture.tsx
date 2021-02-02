@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
-import { OfficierContextProps } from "../../core/contexts/OfficierContext";
+import React, {useEffect} from "react";
+import {OfficierContextProps} from "../../core/contexts/OfficierContext";
 import apiResources from "../../../ressources/api.json";
 import messageManager from "./messageManager";
-import { useHistory } from "react-router-dom";
-import { getText } from "../widget/Text";
-import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
-import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
-import { getCsrfHeader } from "./CsrfUtil";
+import {useHistory} from "react-router-dom";
+import {getText} from "../widget/Text";
+import {IOfficierSSOApi} from "../../../model/IOfficierSSOApi";
+import {URL_REQUETES_COUNT} from "../../../api/appels/requeteApi";
+import {getCsrfHeader} from "./CsrfUtil";
 
 const TIME_OUT_MS = 500;
+
 interface GestionnaireFermetureProps {
   paramsFctAAppler?: any;
   fctAAppeler?: (data: any) => any;
@@ -71,7 +72,7 @@ const appelApi = (officierPayload: IOfficierSSOApi | undefined) => {
   const api = apiResources.apis[0];
   const version = api.usedVersions[0];
 
-  const params = `nomOec=${officierPayload?.nom}&prenomOec=${officierPayload?.prenom}&statuts=A_SIGNER`;
+  const params = `statuts=A_SIGNER`;
   const url = `${window.origin}/${api.domain}/${api.name}/${version}${URL_REQUETES_COUNT}?${params}`;
   req.open("GET", url, false);
 
