@@ -21,25 +21,29 @@ export function getInteresse(retourBack: IFicheRcRca): AccordionPartProps[] {
   const interessePart: AccordionPartProps[] = sortedInteresses.map(
     interesse => {
       return {
-        contents: FicheUtil.isFicheRca(retourBack.categorie)
-          ? getInteresseInfoRca(interesse)
-          : getInteresseInfo(interesse),
-        title: getText("vue-rc-interesse", [interesse.numeroOrdreSaisi])
+        contentsPart: {
+          contents: FicheUtil.isFicheRca(retourBack.categorie)
+            ? getInteresseInfoRca(interesse)
+            : getInteresseInfo(interesse),
+          title: getText("vue-rc-interesse", [interesse.numeroOrdreSaisi])
+        }
       };
     }
   );
 
   if (retourBack.mariageInteresses) {
     interessePart.push({
-      contents: [
-        {
-          libelle: "",
-          value: <Mariage {...retourBack.mariageInteresses} />,
-          className: "mariageContainer"
-        }
-      ],
-      title: "",
-      columnIndex: "0"
+      contentsPart: {
+        contents: [
+          {
+            libelle: "",
+            value: <Mariage {...retourBack.mariageInteresses} />,
+            className: "mariageContainer"
+          }
+        ],
+        title: "",
+        columnIndex: "0"
+      }
     });
   }
 

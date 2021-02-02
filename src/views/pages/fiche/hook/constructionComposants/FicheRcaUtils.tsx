@@ -4,8 +4,14 @@ import { getInscriptionRepertoireCivil } from "./inscriptionRepertoireCivil/Insc
 import { getInteresse } from "./interesses/InteresseUtils";
 import { getDecision } from "./DecisionUtils";
 import { getAutorite } from "./AutoriteUtils";
+import { AccordionPanelProps } from "../../../../common/widget/accordion/AccordionPanel";
+import { getFichesPersonne } from "./FichePersonne";
 
 export function getPanelsRca(retourBack: IFicheRcRca): AccordionReceProps {
+  const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(
+    retourBack.personnes
+  );
+
   return {
     panels: [
       {
@@ -16,7 +22,8 @@ export function getPanelsRca(retourBack: IFicheRcRca): AccordionReceProps {
           { parts: getAutorite(retourBack) }
         ],
         title: "Vue du RCA"
-      }
+      },
+      ...fichesPersonne
     ]
   };
 }

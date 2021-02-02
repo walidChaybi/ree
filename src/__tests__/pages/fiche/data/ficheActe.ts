@@ -159,7 +159,7 @@ export const acte: any = {
     }
   ],
   alerteActes: [],
-  personnes: ["55ea5fbc-452a-4682-930c-7b6093bba00b"],
+  personnes: [],
   compositionCorps: [
     {
       texte: null,

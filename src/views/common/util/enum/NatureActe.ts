@@ -1,4 +1,6 @@
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+/* istanbul ignore file */
+
+import { EnumWithLibelle } from "./EnumWithLibelle";
 
 export class NatureActe extends EnumWithLibelle {
   public static readonly NAISSANCE = new NatureActe("Naissance");

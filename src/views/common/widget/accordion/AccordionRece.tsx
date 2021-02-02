@@ -10,18 +10,12 @@ export interface AccordionReceProps {
 }
 
 export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {
-  const [expanded, setExpanded] = React.useState<boolean>(true);
-  const handleChange = () => (event: any) => {
-    setExpanded(!expanded);
-  };
-
   return (
     <>
       {panels.map((panel, index) => {
         return (
           <Accordion
-            expanded={expanded}
-            onChange={handleChange()}
+            defaultExpanded={index === 0}
             key={`rece-accordion-${index}`}
             className="accordionRece"
           >

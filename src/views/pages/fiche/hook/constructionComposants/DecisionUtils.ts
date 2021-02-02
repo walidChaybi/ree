@@ -31,8 +31,10 @@ export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
 
   const decision: AccordionPartProps[] = [
     {
-      contents: contentsDecision,
-      title: "Décision"
+      contentsPart: {
+        contents: contentsDecision,
+        title: "Décision"
+      }
     }
   ];
 
@@ -41,13 +43,15 @@ export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
     retourBack.decision.type != null
   ) {
     decision.push({
-      contents: [
-        ...getContentConfirmationDecision(
-          retourBack.decision,
-          retourBack.categorie
-        )
-      ],
-      title: "Confirmée par la décision"
+      contentsPart: {
+        contents: [
+          ...getContentConfirmationDecision(
+            retourBack.decision,
+            retourBack.categorie
+          )
+        ],
+        title: "Confirmée par la décision"
+      }
     });
   }
   return decision;

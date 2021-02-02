@@ -6,6 +6,7 @@ import { TypeInscriptionRc } from "./InscriptionRc";
 import { TypeFiche } from "./TypeFiche";
 import { TypeNatureFicheRca } from "./NatureRca";
 import { SimplePersonne } from "../../views/pages/fiche/contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
+import { IPersonne } from "../../views/pages/fiche/contenu/personne/Personne";
 import { IAutorite } from "./commun/IAutorite";
 
 export interface IBandeauFiche {
@@ -41,6 +42,7 @@ export interface IFicheRcRca {
   duree: IDureeInscription;
   inscriptionsImpactees: IInscriptionsImpactees[];
   inscriptionsLiees: IInscriptionLie[];
+  personnes: IPersonne[];
 }
 
 export interface IInscriptionsImpactees {

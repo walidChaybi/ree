@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export class EnumWithLibelle {
   constructor(private readonly _libelle: string) {}
 

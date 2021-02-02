@@ -96,7 +96,10 @@ export class LieuxUtils {
     const paysString = pays ? premiereLettreEnMajuscule(pays) : "";
 
     if (LieuxUtils.isPaysFrance(pays)) {
-      if (!LieuxUtils.isVilleAvecArrondissement(ville)) {
+      if (
+        !LieuxUtils.isVilleAvecArrondissement(ville) ||
+        arrondissement == null
+      ) {
         return `${villeString} (${regionString})`;
       } else if (!LieuxUtils.isVilleParis(villeString)) {
         return `${villeString} Arrdt ${arrondissement} (${regionString})`;

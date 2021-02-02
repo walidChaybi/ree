@@ -8,14 +8,14 @@ import {
   numberToString
 } from "../../../views/common/util/Utils";
 import { getDateStringFromDateCompose } from "../../../views/common/util/DateUtils";
-import { Sexe, SexeUtil } from "../enum/Sexe";
 import { LieuxUtils } from "../../Lieux";
+import { EnumTypeSexe } from "../../../views/common/util/enum/EnumSexe";
 
 export interface ITitulaireActe {
   nom?: string;
   ordre: number;
   prenoms?: string[];
-  sexe?: Sexe;
+  sexe?: string;
   naissance?: IEvenement;
   profession?: string;
   domicile?: IAdresse;
@@ -51,7 +51,9 @@ export const TitulaireActe = {
       : "";
   },
   getSexe(titulaire?: ITitulaireActe): string {
-    return titulaire ? SexeUtil.getLibelle(titulaire.sexe) : "";
+    return titulaire && titulaire.sexe
+      ? EnumTypeSexe.getEnumFor(titulaire.sexe).libelle
+      : "";
   },
   getLieuNaissance(titulaire?: ITitulaireActe): string {
     return titulaire && titulaire.naissance

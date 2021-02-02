@@ -17,9 +17,11 @@ export function getTitulaires(acte: IFicheActe): AccordionPartProps[] {
   const deux = 2;
   return sortedTitulaires.map((titulaire, index) => {
     return {
-      contents: getTitulairesInfo(titulaire, index + 1),
-      title: titulaire === sortedTitulaires[0] ? "Titulaires" : " ",
-      columnIndex: String(index % deux === 0 ? 1 : deux)
+      contentsPart: {
+        contents: getTitulairesInfo(titulaire, index + 1),
+        title: titulaire === sortedTitulaires[0] ? "Titulaires" : " ",
+        columnIndex: String(index % deux === 0 ? 1 : deux)
+      }
     };
   });
 }

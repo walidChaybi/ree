@@ -12,28 +12,40 @@ test("render composant AccordionRece", async () => {
             {
               parts: [
                 {
-                  contents: [{ libelle: "testLibelle1", value: "testValue1" }],
-                  title: "titleTest1"
+                  contentsPart: {
+                    contents: [
+                      { libelle: "testLibelle1", value: "testValue1" }
+                    ],
+                    title: "titleTest1"
+                  }
                 },
                 {
-                  contents: [{ libelle: "testLibelle2", value: "testValue2" }],
-                  title: "titleTest2"
+                  contentsPart: {
+                    contents: [
+                      { libelle: "testLibelle2", value: "testValue2" }
+                    ],
+                    title: "titleTest2"
+                  }
                 }
               ]
             },
             {
               parts: [
                 {
-                  contents: [
-                    { libelle: "testLibelle1.1", value: "testValue1.1" }
-                  ],
-                  title: "titleTest1.1"
+                  contentsPart: {
+                    contents: [
+                      { libelle: "testLibelle1.1", value: "testValue1.1" }
+                    ],
+                    title: "titleTest1.1"
+                  }
                 },
                 {
-                  contents: [
-                    { libelle: "testLibelle2.1", value: "testValue2.1" }
-                  ],
-                  title: "titleTest2.1"
+                  contentsPart: {
+                    contents: [
+                      { libelle: "testLibelle2.1", value: "testValue2.1" }
+                    ],
+                    title: "titleTest2.1"
+                  }
                 }
               ]
             }
@@ -59,28 +71,40 @@ test("render composant AccordionRece can close", async () => {
             {
               parts: [
                 {
-                  contents: [{ libelle: "testLibelle1", value: "testValue1" }],
-                  title: "titleTest1"
+                  contentsPart: {
+                    contents: [
+                      { libelle: "testLibelle1", value: "testValue1" }
+                    ],
+                    title: "titleTest1"
+                  }
                 },
                 {
-                  contents: [{ libelle: "testLibelle2", value: "testValue2" }],
-                  title: "titleTest2"
+                  contentsPart: {
+                    contents: [
+                      { libelle: "testLibelle2", value: "testValue2" }
+                    ],
+                    title: "titleTest2"
+                  }
                 }
               ]
             },
             {
               parts: [
                 {
-                  contents: [
-                    { libelle: "testLibelle1.1", value: "testValue1.1" }
-                  ],
-                  title: "titleTest1.1"
+                  contentsPart: {
+                    contents: [
+                      { libelle: "testLibelle1.1", value: "testValue1.1" }
+                    ],
+                    title: "titleTest1.1"
+                  }
                 },
                 {
-                  contents: [
-                    { libelle: "testLibelle2.1", value: "testValue2.1" }
-                  ],
-                  title: "titleTest2.1"
+                  contentsPart: {
+                    contents: [
+                      { libelle: "testLibelle2.1", value: "testValue2.1" }
+                    ],
+                    title: "titleTest2.1"
+                  }
                 }
               ]
             }

@@ -47,6 +47,18 @@ export function premiereLettreEnMajusculeLeResteEnMinuscule(
   return res;
 }
 
+export function enMajuscule(str?: string): string {
+  return str ? str.toLocaleUpperCase() : "";
+}
+
+export function formatPrenom(prenom?: string): string {
+  return premiereLettreEnMajusculeLeResteEnMinuscule(prenom);
+}
+
+export function formatNom(nom?: string): string {
+  return enMajuscule(nom);
+}
+
 export function formatDe(str: string) {
   let de = "de ";
   const lettres = ["A", "E", "I", "O", "U", "Y", "H"];
@@ -94,18 +106,6 @@ export function compareNombre(n1: number, n2: number): number {
 
 export function estTableauNonVide(tab?: any[]): boolean {
   return Array.isArray(tab) && tab.length > 0;
-}
-
-export function enMajuscule(str?: string): string {
-  return str ? str.toLocaleUpperCase() : "";
-}
-
-export function formatPrenom(prenom?: string): string {
-  return premiereLettreEnMajusculeLeResteEnMinuscule(prenom);
-}
-
-export function formatNom(nom?: string): string {
-  return enMajuscule(nom);
 }
 
 export function premiereLettreEnMajuscule(str?: string) {

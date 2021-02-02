@@ -5,7 +5,7 @@ export const configOutiltech = [
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost:80/rece/rece-outiltech-api/v1(.*)",
+    pattern: "http://localhost/rece/rece-outiltech-api/v1(.*)",
 
     /**
      * returns the data
