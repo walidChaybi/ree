@@ -1,36 +1,26 @@
-import { useState, useEffect } from "react";
-import { getInformationsFiche } from "../../../../api/appels/etatcivilApi";
-import { AccordionReceProps } from "../../../common/widget/accordion/AccordionRece";
-import { getPanelsRc } from "./constructionComposants/FicheRcUtils";
-import { setDataBandeau } from "../contenu/BandeauFicheUtils";
-import {
-  IBandeauFiche,
-  IFicheRcRca
-} from "../../../../model/etatcivil/FicheInterfaces";
-import { getPanelsRca } from "./constructionComposants/FicheRcaUtils";
-import { fournisseurDonneesBandeauFactory } from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
-import { EnumTypeAutresNoms } from "../../../common/util/enum/EnumAutresNoms";
-import {
-  IAutresNoms,
-  ILieuEvenement,
-  IFicheLien,
-  IPersonne
-} from "../contenu/personne/Personne";
-import {
-  IDateCompose,
-  getFormatDateFromTimestamp
-} from "../../../common/util/DateUtils";
-import { EnumTypeSexe } from "../../../common/util/enum/EnumSexe";
+import {useEffect, useState} from "react";
+import {getInformationsFiche} from "../../../../api/appels/etatcivilApi";
+import {AccordionReceProps} from "../../../common/widget/accordion/AccordionRece";
+import {getPanelsRc} from "./constructionComposants/FicheRcUtils";
+import {setDataBandeau} from "../contenu/BandeauFicheUtils";
+import {IBandeauFiche, IFicheRcRca, IInteresse} from "../../../../model/etatcivil/FicheInterfaces";
+import {getPanelsRca} from "./constructionComposants/FicheRcaUtils";
+import {fournisseurDonneesBandeauFactory} from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+import {EnumTypeAutresNoms} from "../../../common/util/enum/EnumAutresNoms";
+import {IAutresNoms, IFicheLien, ILieuEvenement, IPersonne} from "../contenu/personne/Personne";
+import {getFormatDateFromTimestamp, IDateCompose} from "../../../common/util/DateUtils";
+import {EnumTypeSexe} from "../../../common/util/enum/EnumSexe";
 
-import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
-import { getPanelsPacs } from "./constructionComposants/pacs/FichePacsUtils";
-import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
-import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
-import { IPartenaire } from "../../../../model/etatcivil/pacs/IPartenaire";
-import { getPanelsActe } from "./constructionComposants/acte/FicheActeUtils";
-import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
-import { NatureActe } from "../../../common/util/enum/NatureActe";
-import { logError } from "../../../common/util/LogManager";
+import {TypeFiche} from "../../../../model/etatcivil/TypeFiche";
+import {getPanelsPacs} from "./constructionComposants/pacs/FichePacsUtils";
+import {IFichePacs} from "../../../../model/etatcivil/pacs/IFichePacs";
+import {Nationalite} from "../../../../model/etatcivil/enum/Nationalite";
+import {IPartenaire} from "../../../../model/etatcivil/pacs/IPartenaire";
+import {getPanelsActe} from "./constructionComposants/acte/FicheActeUtils";
+import {IFicheActe} from "../../../../model/etatcivil/acte/IFicheActe";
+import {NatureActe} from "../../../common/util/enum/NatureActe";
+import {logError} from "../../../common/util/LogManager";
+import {formatNom, formatPrenom} from "../../../common/util/Utils";
 
 export interface IFicheApi {
   dataBandeau: IBandeauFiche;
@@ -39,7 +29,7 @@ export interface IFicheApi {
 
 export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
   const [dataFicheState, setDataFicheState] = useState<IFicheApi>(
-    {} as IFicheApi
+      {} as IFicheApi
   );
 
   useEffect(() => {
@@ -95,9 +85,14 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
 }
 
 function mapRcRca(retourBack: any): IFicheRcRca {
+  const dataRcRca = retourBack as IFicheRcRca;
+  if (dataRcRca.interesses !== undefined) {
+    dataRcRca.interesses.forEach(interesse => harmoniserNomPrenomsInteresse(interesse));
+  }
+
   return {
-    ...retourBack,
-    personnes: mapPersonnes(retourBack.personnes, retourBack)
+    ...dataRcRca,
+    personnes: mapPersonnes(dataRcRca.personnes, dataRcRca)
   };
 }
 
@@ -184,4 +179,21 @@ export function mapActe(data: any): IFicheActe {
   dataActe.personnes = mapPersonnes(data.personnes, data);
 
   return dataActe;
+}
+
+function harmoniserNomPrenomsInteresse(interesse: IInteresse) {
+  interesse.nomFamille = interesse.nomFamille ? formatNom(interesse.nomFamille) : interesse.nomFamille;
+  if (interesse.autreNoms !== undefined) {
+    interesse.autreNoms.forEach(autreNom => formatNom(autreNom));
+  }
+  if (interesse.autrePrenoms !== undefined) {
+    interesse.autrePrenoms.forEach(autrePrenom => formatPrenom(autrePrenom));
+  }
+  if (interesse.prenoms !== undefined) {
+    interesse.prenoms.forEach(prenom => {
+      prenom.prenom = formatPrenom(prenom.prenom);
+    });
+  }
+
+  return interesse;
 }
