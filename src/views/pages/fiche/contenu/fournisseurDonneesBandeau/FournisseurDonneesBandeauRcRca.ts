@@ -1,11 +1,7 @@
-import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
-import {
-  triListeObjetsSurPropriete,
-  premiereLettreEnMajusculeLeResteEnMinuscule,
-  getValeurOuVide
-} from "../../../../common/util/Utils";
-import { IPrenom } from "../../../../../model/etatcivil/FicheInterfaces";
-import { SimplePersonne } from "./IFournisseurDonneesBandeau";
+import {FournisseurDonneesBandeau} from "./FournisseurDonneesBandeau";
+import {formatNom, formatPrenom, triListeObjetsSurPropriete} from "../../../../common/util/Utils";
+import {IPrenom} from "../../../../../model/etatcivil/FicheInterfaces";
+import {SimplePersonne} from "./IFournisseurDonneesBandeau";
 
 export class FournisseurDonneeBandeauRcRca extends FournisseurDonneesBandeau {
   getPersonnesAsAny(): any[] {
@@ -14,13 +10,13 @@ export class FournisseurDonneeBandeauRcRca extends FournisseurDonneesBandeau {
 
   getSimplePersonnes(): SimplePersonne[] {
     return this.personnes.map(
-      (p: any) =>
-        new SimplePersonne(
-          getValeurOuVide(p.nomFamille).toLocaleUpperCase(),
-          premiereLettreEnMajusculeLeResteEnMinuscule(
-            this.getPrenomInteresse(p.prenoms)
-          )
-        )
+        (p: any) =>
+            new SimplePersonne(
+                formatNom(p.nomFamille),
+                formatPrenom(
+                    this.getPrenomInteresse(p.prenoms)
+                )
+            )
     );
   }
 
@@ -40,6 +36,7 @@ export class FournisseurDonneeBandeauRcRca extends FournisseurDonneesBandeau {
     let prenomInteresse = "";
     if (prenoms) {
       prenoms.forEach(p => {
+        p.prenom = p.prenom ? formatPrenom(p.prenom) : p.prenom;
         if (p.numeroOrdre === 1) {
           prenomInteresse = p.prenom;
         }

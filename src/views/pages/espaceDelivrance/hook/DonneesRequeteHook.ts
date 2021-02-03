@@ -1,30 +1,22 @@
-import { useState, useEffect } from "react";
-import { StatutRequete } from "../../../../model/requete/StatutRequete";
+import {useEffect, useState} from "react";
+import {StatutRequete} from "../../../../model/requete/StatutRequete";
 import moment from "moment";
-import { TypeRequete } from "../../../../model/requete/TypeRequete";
-import { SousTypeRequete } from "../../../../model/requete/SousTypeRequete";
-import { CanalProvenance } from "../../../../model/requete/CanalProvenance";
-import { NatureActe } from "../../../common/util/enum/NatureActe";
-import { QualiteRequerant } from "../../../../model/requete/QualiteRequerant";
-import { SousQualiteRequerant } from "../../../../model/requete/SousQualiteRequerant";
-import { SortOrder } from "../../../common/widget/tableau/TableUtils";
-import { Canal } from "../../../../model/Canal";
-import { MotifRequete } from "../../../../model/requete/MotifRequete";
-import { FormatDate } from "../../../common/util/DateUtils";
-import {
-  IDocumentDelivre,
-  IPieceJustificative
-} from "../../../common/types/RequeteType";
-import { IDataTable } from "../MesRequetesPage";
-import { getRequetes } from "../../../../api/appels/requeteApi";
-import {
-  parseLink,
-  getMaxRange,
-  getMinRange,
-  getRowsNumber
-} from "../../../common/util/GestionDesLiensApi";
-import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../../common/util/Utils";
-import { logError } from "../../../common/util/LogManager";
+import {TypeRequete} from "../../../../model/requete/TypeRequete";
+import {SousTypeRequete} from "../../../../model/requete/SousTypeRequete";
+import {CanalProvenance} from "../../../../model/requete/CanalProvenance";
+import {QualiteRequerant} from "../../../../model/requete/QualiteRequerant";
+import {SousQualiteRequerant} from "../../../../model/requete/SousQualiteRequerant";
+import {SortOrder} from "../../../common/widget/tableau/TableUtils";
+import {Canal} from "../../../../model/Canal";
+import {MotifRequete} from "../../../../model/requete/MotifRequete";
+import {FormatDate} from "../../../common/util/DateUtils";
+import {IDocumentDelivre, IPieceJustificative, ITitulaire} from "../../../common/types/RequeteType";
+import {IDataTable} from "../MesRequetesPage";
+import {getRequetes} from "../../../../api/appels/requeteApi";
+import {getMaxRange, getMinRange, getRowsNumber, parseLink} from "../../../common/util/GestionDesLiensApi";
+import {formatNom, formatPrenom, premiereLettreEnMajusculeLeResteEnMinuscule} from "../../../common/util/Utils";
+import {logError} from "../../../common/util/LogManager";
+import {NatureActe} from "../../../common/util/enum/NatureActe";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -81,7 +73,7 @@ export interface IRequeteApi {
   requerant: IRequerantApi;
   sousTypeRequete: SousTypeRequete;
   statut: StatutRequete;
-  titulaires: any;
+  titulaires: ITitulaire[];
   typeActe: any;
   typeRequete: TypeRequete;
   villeEvenement: string;
@@ -186,13 +178,13 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     villeEvenement: data.villeEvenement,
     paysEvenement: data.paysEvenement,
     requerant: createLibelleRequerant(data.requerant),
-    titulaires: data.titulaires,
+    titulaires: harmoniserTitulaires(data.titulaires),
     canal: data.canal,
     motifRequete: data.motifRequete,
     piecesJustificatives: data.piecesJustificatives,
     nomOec: createNomOec(data.reponse),
     typeActe: data.typeActe,
-    reponse: data.reponse,
+    reponse: harmoniserReponse(data.reponse),
     anneeEvenement: data.anneeEvenement,
     jourEvenement: data.jourEvenement,
     moisEvenement: data.moisEvenement,
@@ -207,20 +199,44 @@ function createLibelleRequerant(data: IRequerantApi) {
   } else if (data.qualiteRequerant === QualiteRequerant.Institutionnel) {
     data.libelleRequerant = data.nomInstitutionnel;
   } else if (data.qualiteRequerant === QualiteRequerant.Particulier) {
+    data.prenom = data.prenom ? `${formatPrenom(data.prenom)}` : data.prenom;
+    data.nomFamille = data.nomFamille ? `${formatNom(data.nomFamille)}` : data.nomFamille;
     data.libelleRequerant = data.prenom
-      ? `${data.prenom} ${data.nomFamille}`
-      : `${data.nomFamille}`;
+        ? `${data.prenom} ${data.nomFamille}`
+        : `${data.nomFamille}`;
   }
   return data;
+}
+
+function harmoniserTitulaires(titulaires: ITitulaire[]) {
+  titulaires.forEach(titulaire => {
+    harmoniserTitulaire(titulaire)
+  })
+  return titulaires;
+}
+
+function harmoniserTitulaire(titulaire: ITitulaire) {
+  titulaire.nomNaissance = titulaire.nomNaissance ? `${formatNom(titulaire.nomNaissance)}` : titulaire.nomNaissance
+  titulaire.nomUsage = titulaire.nomUsage ? `${formatNom(titulaire.nomUsage)}` : titulaire.nomUsage
+  titulaire.prenom1 = titulaire.prenom1 ? `${formatPrenom(titulaire.prenom1)}` : titulaire.prenom1
+  titulaire.prenom2 = titulaire.prenom2 ? `${formatPrenom(titulaire.prenom2)}` : titulaire.prenom2
+  titulaire.prenom3 = titulaire.prenom3 ? `${formatPrenom(titulaire.prenom3)}` : titulaire.prenom3
+  return titulaire;
 }
 
 function createNomOec(reponse: IReponseApi) {
   let nomOec = "";
   if (reponse?.prenomOec !== undefined && reponse?.nomOec !== undefined) {
     const prenom = premiereLettreEnMajusculeLeResteEnMinuscule(
-      reponse.prenomOec
+        reponse.prenomOec
     );
     nomOec = `${prenom} ${reponse.nomOec.toLocaleUpperCase()}`;
   }
   return nomOec;
+}
+
+function harmoniserReponse(reponse: IReponseApi) {
+  reponse.nomOec = reponse.nomOec ? `${formatNom(reponse.nomOec)}` : reponse.nomOec;
+  reponse.prenomOec = reponse.prenomOec ? `${formatPrenom(reponse.prenomOec)}` : reponse.prenomOec;
+  return reponse;
 }

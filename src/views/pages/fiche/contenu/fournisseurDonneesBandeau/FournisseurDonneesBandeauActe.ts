@@ -1,12 +1,14 @@
-import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
+import {FournisseurDonneesBandeau} from "./FournisseurDonneesBandeau";
 import {
-  triListeObjetsSurPropriete,
   formatDe,
-  premiereLettreEnMajusculeLeResteEnMinuscule,
+  formatNom,
+  formatPrenom,
+  getPremierElemOuVide,
   getValeurOuVide,
-  getPremierElemOuVide
+  premiereLettreEnMajusculeLeResteEnMinuscule,
+  triListeObjetsSurPropriete
 } from "../../../../common/util/Utils";
-import { SimplePersonne } from "./IFournisseurDonneesBandeau";
+import {SimplePersonne} from "./IFournisseurDonneesBandeau";
 
 export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   getPersonnesAsAny(): any[] {
@@ -19,10 +21,9 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
     return this.personnes.map(
       (p: any) =>
         new SimplePersonne(
-          getValeurOuVide(p.nom).toLocaleUpperCase(),
-          premiereLettreEnMajusculeLeResteEnMinuscule(
-            getPremierElemOuVide(p.prenoms)
-          )
+            formatNom(p.nom),
+            formatPrenom(getPremierElemOuVide(p.prenoms)
+            )
         )
     );
   }

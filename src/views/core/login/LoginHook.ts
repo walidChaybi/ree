@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import { getLogin } from "../../../api/appels/agentApi";
-import { IHabilitation, IDroit, IProfil } from "../../../model/Habilitation";
-import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
-import { logError } from "../../common/util/LogManager";
+import {useEffect, useState} from "react";
+import {getLogin} from "../../../api/appels/agentApi";
+import {IDroit, IHabilitation, IProfil} from "../../../model/Habilitation";
+import {IOfficierSSOApi} from "../../../model/IOfficierSSOApi";
+import {logError} from "../../common/util/LogManager";
+import {formatNom, formatPrenom} from "../../common/util/Utils";
 
 export interface ILoginApi {
   officierDataState?: IOfficierSSOApi;
@@ -38,8 +39,8 @@ export function useLoginApi() {
 function setUtilisateurSSOApiFromHeaders(headers: any): IOfficierSSOApi {
   return {
     idSSO: headers.id_sso,
-    nom: headers.nom,
-    prenom: headers.prenom,
+    nom: formatNom(headers.nom),
+    prenom: formatPrenom(headers.prenom),
     trigramme: headers.trigramme,
     mail: headers.mail,
     profils: setProfilsUtilisateur(headers.profil),
