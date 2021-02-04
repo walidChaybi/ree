@@ -2,13 +2,11 @@ import messageManager from "./messageManager";
 import moment from "moment";
 import { gestionnaireFeatureFlag } from "./featureFlag/gestionnaireFeatureFlag";
 import { FeatureFlag } from "./featureFlag/FeatureFlag";
-import { ID_CORRELATION_HEADER_NAME } from "../../../api/ApiManager";
 import {
   postLog,
   IQueryParameterPostLog
 } from "../../../api/appels/outiltechApi";
-
-const logManager = {};
+import { ID_CORRELATION_HEADER_NAME } from "../../../api/ApiManager";
 
 const TIME_OUT_MS = 2000;
 
@@ -16,7 +14,7 @@ let listLog = [] as Array<IQueryParameterPostLog>;
 
 let isWaiting = false;
 export interface LogErrorMsg {
-  messageUtilisateur: string;
+  messageUtilisateur?: string;
   error?: any;
   errorInfo?: React.ErrorInfo | string;
 }
@@ -29,7 +27,9 @@ export function logError(logErrorMgs: LogErrorMsg) {
   if (process.env.NODE_ENV === "development") {
     logErrorOnConsole(logErrorMgs);
   }
-  logErrorOnScreen(logErrorMgs.messageUtilisateur);
+  if (logErrorMgs.messageUtilisateur) {
+    logErrorOnScreen(logErrorMgs.messageUtilisateur);
+  }
 }
 
 function logErrorOnScreen(errorMessage: string) {
@@ -70,5 +70,3 @@ function sendToServer() {
 
   listLog = [];
 }
-
-export default logManager;

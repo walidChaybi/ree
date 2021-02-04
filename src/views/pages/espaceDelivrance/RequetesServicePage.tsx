@@ -41,7 +41,7 @@ import {
 // import {
 //   MessagePopin,
 //   PopinMessageType
-// } from "../../common/widget/MessagePopin";
+// } from "../../common/widget/popin/MessagePopin";
 
 /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
@@ -52,10 +52,9 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   // const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(false);
   // const [queryChangeOecRequest, setQueryChangeOecRequest] = React.useState<IQueryParametersAssigneRequetes>();
   /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
-  const [
-    linkParameters,
-    setLinkParameters
-  ] = React.useState<IQueryParametersPourRequetes>({
+  const [linkParameters, setLinkParameters] = React.useState<
+    IQueryParametersPourRequetes
+  >({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,

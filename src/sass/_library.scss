@@ -1,4 +1,5 @@
 @import "./colors";
+$application-font-family: "NotoSansUI-Regular";
 
 @font-face {
   font-family: "NotoSansUI-Regular";
@@ -11,10 +12,6 @@
   src: url("../fonts/NotoSansUI-Bold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
-}
-
-.televerificationIcon {
-  font-size: 7.5em !important;
 }
 
 .center {
@@ -261,4 +258,27 @@ th {
 .region {
   text-transform: lowercase;
   text-transform: capitalize;
+}
+///////////////////////////////////////////////
+// Material UI
+///////////////////////////////////////////////
+.MuiTypography-body1,
+.MuiTypography-body2 {
+  font-family: "NotoSansUI-Regular", sans-serif !important;
+}
+
+.MuiTypography-body1 {
+  font-size: 0.9rem !important;
+}
+
+.MuiTypography-body2 {
+  font-size: 0.8rem !important;
+}
+
+.MuiExpansionPanelSummary-root {
+  min-height: auto !important;
+}
+
+.MuiDialogContentText-root {
+  color: black !important;
 }

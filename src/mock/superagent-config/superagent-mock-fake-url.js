@@ -1,5 +1,6 @@
 export const configFakeUrl = [
   {
+    nbRequetes: 0,
     /**
      * regular expression of URL
      */
@@ -19,6 +20,8 @@ export const configFakeUrl = [
         match[1] === "/requetes?parametre1=titi&parametre2=3&parametre3=tutu"
       ) {
         return true;
+      } else if (match[1] === "/requetes/count?statuts=A_SIGNER") {
+        return { data: this.nbRequetes };
       }
     },
 
