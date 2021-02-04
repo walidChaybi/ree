@@ -23,7 +23,7 @@ export class TypeJuridictionUtil {
       "Tribunal de première instance",
     [TypeJuridiction.TRIBUNAL_SUPERIEUR_APPEL]: "Tribunal supérieur d'appel",
     [TypeJuridiction.GREFFE_TRIBUNAL]: "Greffe du tribunal",
-    [TypeJuridiction.COUR_APPEL]: "Cours d'appel",
+    [TypeJuridiction.COUR_APPEL]: "Cour d'appel",
     [TypeJuridiction.JURIDICTION_ETRANGERE]: "Juridiction étrangère"
   };
 
