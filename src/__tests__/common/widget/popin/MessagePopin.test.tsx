@@ -4,7 +4,7 @@ import { screen, fireEvent, act } from "@testing-library/react";
 import {
   MessagePopin,
   PopinMessageType
-} from "../../../views/common/widget/MessagePopin";
+} from "../../../../views/common/widget/popin/MessagePopin";
 import { useState } from "react";
 
 let containerSuccess: Element | null;

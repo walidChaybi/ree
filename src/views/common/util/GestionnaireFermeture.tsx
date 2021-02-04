@@ -1,14 +1,14 @@
-import React, {useEffect} from "react";
-import {OfficierContextProps} from "../../core/contexts/OfficierContext";
+import React, { useEffect } from "react";
+import { OfficierContextProps } from "../../core/contexts/OfficierContext";
 import apiResources from "../../../ressources/api.json";
 import messageManager from "./messageManager";
-import {useHistory} from "react-router-dom";
-import {getText} from "../widget/Text";
-import {IOfficierSSOApi} from "../../../model/IOfficierSSOApi";
-import {URL_REQUETES_COUNT} from "../../../api/appels/requeteApi";
-import {getCsrfHeader} from "./CsrfUtil";
+import { useHistory } from "react-router-dom";
+import { getText } from "../widget/Text";
+import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
+import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
+import { getCsrfHeader } from "./CsrfUtil";
 
-const TIME_OUT_MS = 500;
+const TIME_OUT_MS = 2000;
 
 interface GestionnaireFermetureProps {
   paramsFctAAppler?: any;
@@ -29,7 +29,6 @@ export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = props
           resTraitement = props.fctTraitementResultat(res);
         }
       }
-
       if (resTraitement) {
         // Cancel the default event
         event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
