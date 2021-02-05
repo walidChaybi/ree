@@ -21,7 +21,7 @@
       "FONC_9": "Requête json invalide",
       "FONC_10": "Document à signer trop gros (> 600 Kio)",
       "FONC_12": "Code PIN incorrect, votre carte est bloquée",
-      "WEB_EXT1": "La signature électronique est actuellement indisponible.\nMerci de recommencer l'appel plus tard."
+      "WEB_EXT1": "La signature électronique est actuellement indisponible ou n'est pas installée."
     }
   }
 }
