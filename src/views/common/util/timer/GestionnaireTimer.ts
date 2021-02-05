@@ -11,6 +11,7 @@ class GestionnaireTimer {
     if (timer) {
       this.setEtatCurseur(timer.etatCurseurAvant);
       window.clearTimeout(timer.id);
+      this.timers.delete(nomTimer);
     }
   }
 
