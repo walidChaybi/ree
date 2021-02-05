@@ -1,22 +1,35 @@
-import {useEffect, useState} from "react";
-import {StatutRequete} from "../../../../model/requete/StatutRequete";
+import { useEffect, useState } from "react";
+import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import moment from "moment";
-import {TypeRequete} from "../../../../model/requete/TypeRequete";
-import {SousTypeRequete} from "../../../../model/requete/SousTypeRequete";
-import {CanalProvenance} from "../../../../model/requete/CanalProvenance";
-import {QualiteRequerant} from "../../../../model/requete/QualiteRequerant";
-import {SousQualiteRequerant} from "../../../../model/requete/SousQualiteRequerant";
-import {SortOrder} from "../../../common/widget/tableau/TableUtils";
-import {Canal} from "../../../../model/Canal";
-import {MotifRequete} from "../../../../model/requete/MotifRequete";
-import {FormatDate} from "../../../common/util/DateUtils";
-import {IDocumentDelivre, IPieceJustificative, ITitulaire} from "../../../common/types/RequeteType";
-import {IDataTable} from "../MesRequetesPage";
-import {getRequetes} from "../../../../api/appels/requeteApi";
-import {getMaxRange, getMinRange, getRowsNumber, parseLink} from "../../../common/util/GestionDesLiensApi";
-import {formatNom, formatPrenom, premiereLettreEnMajusculeLeResteEnMinuscule} from "../../../common/util/Utils";
-import {logError} from "../../../common/util/LogManager";
-import {NatureActe} from "../../../common/util/enum/NatureActe";
+import { TypeRequete } from "../../../../model/requete/TypeRequete";
+import { SousTypeRequete } from "../../../../model/requete/SousTypeRequete";
+import { CanalProvenance } from "../../../../model/requete/CanalProvenance";
+import { QualiteRequerant } from "../../../../model/requete/QualiteRequerant";
+import { SousQualiteRequerant } from "../../../../model/requete/SousQualiteRequerant";
+import { SortOrder } from "../../../common/widget/tableau/TableUtils";
+import { Canal } from "../../../../model/Canal";
+import { MotifRequete } from "../../../../model/requete/MotifRequete";
+import { FormatDate } from "../../../common/util/DateUtils";
+import {
+  IDocumentDelivre,
+  IPieceJustificative,
+  ITitulaire
+} from "../../../common/types/RequeteType";
+import { IDataTable } from "../MesRequetesPage";
+import { getRequetes } from "../../../../api/appels/requeteApi";
+import {
+  getMaxRange,
+  getMinRange,
+  getRowsNumber,
+  parseLink
+} from "../../../common/util/GestionDesLiensApi";
+import {
+  formatNom,
+  formatPrenom,
+  premiereLettreEnMajusculeLeResteEnMinuscule
+} from "../../../common/util/Utils";
+import { logError } from "../../../common/util/LogManager";
+import { NatureActe } from "../../../common/util/enum/NatureActe";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -200,27 +213,39 @@ function createLibelleRequerant(data: IRequerantApi) {
     data.libelleRequerant = data.nomInstitutionnel;
   } else if (data.qualiteRequerant === QualiteRequerant.Particulier) {
     data.prenom = data.prenom ? `${formatPrenom(data.prenom)}` : data.prenom;
-    data.nomFamille = data.nomFamille ? `${formatNom(data.nomFamille)}` : data.nomFamille;
+    data.nomFamille = data.nomFamille
+      ? `${formatNom(data.nomFamille)}`
+      : data.nomFamille;
     data.libelleRequerant = data.prenom
-        ? `${data.prenom} ${data.nomFamille}`
-        : `${data.nomFamille}`;
+      ? `${data.prenom} ${data.nomFamille}`
+      : `${data.nomFamille}`;
   }
   return data;
 }
 
 function harmoniserTitulaires(titulaires: ITitulaire[]) {
   titulaires.forEach(titulaire => {
-    harmoniserTitulaire(titulaire)
-  })
+    harmoniserTitulaire(titulaire);
+  });
   return titulaires;
 }
 
 function harmoniserTitulaire(titulaire: ITitulaire) {
-  titulaire.nomNaissance = titulaire.nomNaissance ? `${formatNom(titulaire.nomNaissance)}` : titulaire.nomNaissance
-  titulaire.nomUsage = titulaire.nomUsage ? `${formatNom(titulaire.nomUsage)}` : titulaire.nomUsage
-  titulaire.prenom1 = titulaire.prenom1 ? `${formatPrenom(titulaire.prenom1)}` : titulaire.prenom1
-  titulaire.prenom2 = titulaire.prenom2 ? `${formatPrenom(titulaire.prenom2)}` : titulaire.prenom2
-  titulaire.prenom3 = titulaire.prenom3 ? `${formatPrenom(titulaire.prenom3)}` : titulaire.prenom3
+  titulaire.nomNaissance = titulaire.nomNaissance
+    ? `${formatNom(titulaire.nomNaissance)}`
+    : titulaire.nomNaissance;
+  titulaire.nomUsage = titulaire.nomUsage
+    ? `${formatNom(titulaire.nomUsage)}`
+    : titulaire.nomUsage;
+  titulaire.prenom1 = titulaire.prenom1
+    ? `${formatPrenom(titulaire.prenom1)}`
+    : titulaire.prenom1;
+  titulaire.prenom2 = titulaire.prenom2
+    ? `${formatPrenom(titulaire.prenom2)}`
+    : titulaire.prenom2;
+  titulaire.prenom3 = titulaire.prenom3
+    ? `${formatPrenom(titulaire.prenom3)}`
+    : titulaire.prenom3;
   return titulaire;
 }
 
@@ -228,7 +253,7 @@ function createNomOec(reponse: IReponseApi) {
   let nomOec = "";
   if (reponse?.prenomOec !== undefined && reponse?.nomOec !== undefined) {
     const prenom = premiereLettreEnMajusculeLeResteEnMinuscule(
-        reponse.prenomOec
+      reponse.prenomOec
     );
     nomOec = `${prenom} ${reponse.nomOec.toLocaleUpperCase()}`;
   }
@@ -236,7 +261,13 @@ function createNomOec(reponse: IReponseApi) {
 }
 
 function harmoniserReponse(reponse: IReponseApi) {
-  reponse.nomOec = reponse.nomOec ? `${formatNom(reponse.nomOec)}` : reponse.nomOec;
-  reponse.prenomOec = reponse.prenomOec ? `${formatPrenom(reponse.prenomOec)}` : reponse.prenomOec;
-  return reponse;
+  if (reponse) {
+    reponse.nomOec = reponse.nomOec
+      ? `${formatNom(reponse.nomOec)}`
+      : reponse.nomOec;
+    reponse.prenomOec = reponse.prenomOec
+      ? `${formatPrenom(reponse.prenomOec)}`
+      : reponse.prenomOec;
+    return reponse;
+  }
 }
