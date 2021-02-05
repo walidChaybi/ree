@@ -24,6 +24,7 @@ import {
   IQueryParameterUpdateDocument
 } from "../../../../../api/appels/requeteApi";
 import { gestionnaireSignatureFlag } from "../../../util/signatureFlag/gestionnaireSignatureFlag";
+import gestionnaireTimer from "../../../util/timer/GestionnaireTimer";
 
 export interface IQueryParametersPourRequete {
   statut?: StatutRequete;
@@ -70,6 +71,17 @@ interface DocumentToSave {
 }
 
 const MaxLengthDocumentToSign = 600000;
+const DIRECTION_TO_CALL_APP = "to-call-app";
+const CODE_ERREUR_NON_DISPO = "WEB_EXT1";
+const TIMER_SIGNATURE = "TimerContactWebExt";
+const SIGNATURE_TIMEOUT = 3000;
+
+const EVENT_NON_DISPO = {
+  detail: {
+    direction: DIRECTION_TO_CALL_APP,
+    erreurs: [{ code: CODE_ERREUR_NON_DISPO }]
+  }
+};
 
 export function useSignatureDocumentHook(
   documentsByRequete: DocumentsByRequete,
@@ -167,17 +179,6 @@ export function useSignatureDocumentHook(
   }, [documentsToSave]);
 
   useEffect(() => {
-    getDocumentAndSendToSignature(
-      idRequetesToSign,
-      documentsToSignWating,
-      setErrorsSignature,
-      setDocumentsToSignWating,
-      processResultWebExtension,
-      pinCode
-    );
-  }, [pinCode, idRequetesToSign, documentsToSignWating]);
-
-  useEffect(() => {
     setDocumentsToSignWating(documentsByRequete);
     setIdRequetesToSign(Object.keys(documentsByRequete));
     setSuccessSignature([]);
@@ -201,7 +202,9 @@ export function useSignatureDocumentHook(
       const customEvent = event as CustomEvent;
       const result = customEvent.detail;
 
-      if (result.direction && result.direction === "to-call-app") {
+      gestionnaireTimer.annuleTimer(TIMER_SIGNATURE);
+
+      if (result.direction && result.direction === DIRECTION_TO_CALL_APP) {
         if (result.erreurs !== undefined && result.erreurs.length > 0) {
           setErrorsSignature({
             numeroRequete:
@@ -225,6 +228,23 @@ export function useSignatureDocumentHook(
     },
     [documentsToSignWating, idRequetesToSign]
   );
+
+  useEffect(() => {
+    getDocumentAndSendToSignature(
+      idRequetesToSign,
+      documentsToSignWating,
+      setErrorsSignature,
+      setDocumentsToSignWating,
+      processResultWebExtension,
+      handleBackFromWebExtension,
+      pinCode
+    );
+  }, [
+    pinCode,
+    idRequetesToSign,
+    documentsToSignWating,
+    handleBackFromWebExtension
+  ]);
 
   useEffect(() => {
     // Ajout du listener pour communiquer avec la webextension
@@ -282,7 +302,8 @@ function sendDocumentToSignature(
   result: IRequestDocumentApiResult,
   pinCode: number,
   documentsToSignWating: DocumentsByRequete,
-  idRequetesToSign: string[]
+  idRequetesToSign: string[],
+  handleBackFromWebExtension: any
 ) {
   const detail = {
     function: "SIGN",
@@ -298,6 +319,13 @@ function sendDocumentToSignature(
     erreursSimulees: getErrorsMock()
   };
 
+  gestionnaireTimer.declancheTimer(
+    TIMER_SIGNATURE,
+    SIGNATURE_TIMEOUT,
+    true,
+    handleBackFromWebExtension,
+    EVENT_NON_DISPO
+  );
   window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
 }
 
@@ -309,6 +337,7 @@ function getDocumentAndSendToSignature(
   processResultWebExtension: (
     currentRequeteProcessing: DocumentsATraiter
   ) => void,
+  handleBackFromWebExtension: any,
   pinCode?: number
 ) {
   if (idRequetesToSign.length > 0 && pinCode !== undefined) {
@@ -332,7 +361,8 @@ function getDocumentAndSendToSignature(
           result,
           pinCode,
           documentsToSignWating,
-          idRequetesToSign
+          idRequetesToSign,
+          handleBackFromWebExtension
         );
       } else {
         changeDocumentToSign(

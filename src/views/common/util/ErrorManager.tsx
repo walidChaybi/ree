@@ -18,7 +18,7 @@ export class ErrorManager extends React.Component<LocalProps, LocalState> {
     this.addOnErrorManager();
   }
 
-  getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: Error) {
     return {
       hasError: true,
       error
