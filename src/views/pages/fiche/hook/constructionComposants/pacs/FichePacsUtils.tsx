@@ -27,21 +27,32 @@ import { getFichesPersonne } from "../FichePersonne";
 export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
   const panelAreas: AccordionPanelAreaProps[] = [];
 
+  const deuxColonnes = 2;
+
   AjoutePanel(
     panelAreas,
     pacs,
     getInscriptionRegistrePacs,
     "1",
-    "Inscription au registre des PACS des étrangers nés à l'étranger"
+    "Inscription au registre des PACS des étrangers nés à l'étranger",
+    1
   );
 
-  AjoutePanel(panelAreas, pacs.partenaires, getPartenaires, "2");
+  AjoutePanel(
+    panelAreas,
+    pacs.partenaires,
+    getPartenaires,
+    "2",
+    "",
+    deuxColonnes
+  );
   AjoutePanel(
     panelAreas,
     pacs,
     getEnregistrementPacs,
     "3",
-    "Enregistrement du PACS"
+    "Enregistrement du PACS",
+    deuxColonnes
   );
   if (pacs.modifications) {
     AjoutePanel(
@@ -49,7 +60,8 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
       pacs.modifications[0],
       getModificationPacs,
       "4",
-      "Modification du PACS"
+      "Modification du PACS",
+      deuxColonnes
     );
   }
   AjoutePanel(
@@ -57,14 +69,16 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
     pacs.dissolution,
     getDissolutionPacs,
     "5",
-    "Dissolution du PACS"
+    "Dissolution du PACS",
+    deuxColonnes
   );
   AjoutePanel(
     panelAreas,
     pacs.annulation,
     getAnnulationPacs,
     "6",
-    "Annulation du PACS"
+    "Annulation du PACS",
+    deuxColonnes
   );
 
   const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(
@@ -87,13 +101,15 @@ function AjoutePanel(
   param: any,
   fct: (p: any) => AccordionPartProps[],
   idPanelArea?: string,
-  titlePanelArea?: string
+  titlePanelArea?: string,
+  nbColonnePanelArea?: number
 ) {
   if (param) {
     panelAreas.push({
       parts: fct(param),
       id: idPanelArea,
-      title: titlePanelArea
+      title: titlePanelArea,
+      nbColonne: nbColonnePanelArea
     } as AccordionPanelAreaProps);
   }
 }
@@ -102,14 +118,13 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
   const part: AccordionPartProps = {
     contentsPart: {
       title: "",
-      columnIndex: "1/3",
       contents: [
         {
           libelle: "Statut du PACS",
           value: StatutPacesUtil.getLibelle(pacs.statut)
         },
         {
-          libelle: "Date d'enregistrement par l'autorité",
+          libelle: "Date d'enregistrement (par l'autorité)",
           value: pacs.dateEnregistrementParAutorite
         },
 

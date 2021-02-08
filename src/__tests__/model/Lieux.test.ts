@@ -47,7 +47,7 @@ test("Attendu: getRegionDepartement fonctionne correctement", () => {
       "44",
       "pays de la loire"
     )
-  ).toBe("Loire atlantique(44)");
+  ).toBe("Loire atlantique (44)");
   expect(LieuxUtils.getRegionDepartement("paris", "paris", "18", "")).toBe("");
   expect(LieuxUtils.getRegionDepartement("", "", "", "Dakar")).toBe("Dakar");
 });

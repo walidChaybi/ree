@@ -9,7 +9,6 @@
     "annee": "2015",
     "numero": "15987",
     "nature": "",
-    "typeInscription": "",
     "dateInscription": null,
     "dateDerniereMaj": 1435183200,
     "dateDerniereDelivrance": 1457046000,
@@ -21,6 +20,8 @@
     "alertes": [],
     "dureeInscription": {},
     "mandataires": [],
+    "typeInscription": "",
+    "inscriptionsImpactees": [],
     "inscriptionsLiees": [],
     "interesses": [
       {

@@ -41,7 +41,7 @@ export function getFichesPersonne(
               ]
             }
           ],
-          className: "accordionColumn3"
+          nbColonne: 3
         }
       ],
       title: `Fiche Personne ${index + 1}`
@@ -183,17 +183,34 @@ function getSexePersonne(sexe: EnumTypeSexe): AccordionContentProps {
 
 function getParentsPersonne(parents: IFamille[]): AccordionContentProps[] {
   let result: AccordionContentProps[] = [];
+  const indexPremierParentAdoptif = 2;
+  const indexDeuxiemeParentAdoptif = 3;
+
   parents.forEach((parent, index) => {
-    result = result.concat([
-      {
-        libelle: `Nom parent ${index + 1}`,
-        value: enMajuscule(parent.nom)
-      },
-      {
-        libelle: `Prénom parent ${index + 1}`,
-        value: premiereLettreEnMajusculeLeResteEnMinuscule(parent.prenoms[0])
-      }
-    ]);
+    if (index === 0 || index === 1) {
+      result = result.concat([
+        {
+          libelle: `Nom parent ${index + 1}`,
+          value: enMajuscule(parent.nom)
+        },
+        {
+          libelle: `Prénom parent ${index + 1}`,
+          value: premiereLettreEnMajusculeLeResteEnMinuscule(parent.prenoms[0])
+        }
+      ]);
+    } else if (
+      index === indexPremierParentAdoptif ||
+      index === indexDeuxiemeParentAdoptif
+    ) {
+      result = result.concat([
+        {
+          libelle: `Prénom et nom (parent adoptif ${index - 1})`,
+          value: `${premiereLettreEnMajusculeLeResteEnMinuscule(
+            parent.prenoms[0]
+          )} ${enMajuscule(parent.nom)}`
+        }
+      ]);
+    }
   });
   return result;
 }
@@ -216,14 +233,15 @@ function getEnfantsPersonne(enfants: IFamille[]): AccordionContentProps {
 
 function getActesPersonne(actes: IFicheLienActes[]): AccordionContentProps {
   const liensActes = actes.map(acte => (
-    <LienFiche
-      key={`acte-${acte.numero}`}
-      categorie={TypeFiche.ACTE}
-      numero={`Acte ${formatDe(
-        acte.nature.libelle
-      )}${acte.nature.libelle.toLocaleLowerCase()} N°${acte.numero}`}
-      identifiant={acte.id}
-    />
+    <div key={`acte-${acte.numero}`}>
+      <LienFiche
+        categorie={TypeFiche.ACTE}
+        numero={`Acte ${formatDe(
+          acte.nature.libelle
+        )}${acte.nature.libelle.toLocaleLowerCase()} N°${acte.numero}`}
+        identifiant={acte.id}
+      />
+    </div>
   ));
   return {
     libelle: "",
@@ -232,46 +250,49 @@ function getActesPersonne(actes: IFicheLienActes[]): AccordionContentProps {
 }
 
 function getRcsPersonne(rcs: IFicheLien[]): AccordionContentProps {
-  const liensActes = rcs.map(rc => (
-    <LienFiche
-      key={`rc-${rc.numero}`}
-      categorie={TypeFiche.RC}
-      numero={`Inscription RC N°${rc.numero}`}
-      identifiant={rc.id}
-    />
+  const liensRcs = rcs.map(rc => (
+    <div key={`rc-${rc.numero}`}>
+      <LienFiche
+        categorie={TypeFiche.RC}
+        numero={`Inscription RC N°${rc.numero}`}
+        identifiant={rc.id}
+      />
+    </div>
   ));
   return {
     libelle: "",
-    value: liensActes
+    value: liensRcs
   };
 }
 
 function getRcasPersonne(rcas: IFicheLien[]): AccordionContentProps {
-  const liensActes = rcas.map(rca => (
-    <LienFiche
-      key={`rca-${rca.numero}`}
-      categorie={TypeFiche.RCA}
-      numero={`Inscription RCA N°${rca.numero}`}
-      identifiant={rca.id}
-    />
+  const liensRcas = rcas.map(rca => (
+    <div key={`rca-${rca.numero}`}>
+      <LienFiche
+        categorie={TypeFiche.RCA}
+        numero={`Inscription RCA N°${rca.numero}`}
+        identifiant={rca.id}
+      />
+    </div>
   ));
   return {
     libelle: "",
-    value: liensActes
+    value: liensRcas
   };
 }
 
 function getPacssPersonne(pacss: IFicheLien[]): AccordionContentProps {
-  const liensActes = pacss.map(pacs => (
-    <LienFiche
-      key={`pacs-${pacs.numero}`}
-      categorie={TypeFiche.PACS}
-      numero={`Inscription PACS N°${pacs.numero}`}
-      identifiant={pacs.id}
-    />
+  const liensPacss = pacss.map(pacs => (
+    <div key={`pacs-${pacs.numero}`}>
+      <LienFiche
+        categorie={TypeFiche.PACS}
+        numero={`Inscription PACS N°${pacs.numero}`}
+        identifiant={pacs.id}
+      />
+    </div>
   ));
   return {
     libelle: "",
-    value: liensActes
+    value: liensPacss
   };
 }

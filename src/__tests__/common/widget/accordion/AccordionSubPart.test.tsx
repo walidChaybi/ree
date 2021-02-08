@@ -13,7 +13,6 @@ test("render composant AccordionPart", async () => {
           classNameContent: ""
         }
       ]}
-      columnIndex={"1"}
     />
   );
 

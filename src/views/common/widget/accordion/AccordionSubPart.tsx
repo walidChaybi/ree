@@ -5,20 +5,19 @@ import { AccordionContentPartProps } from "./AccordionPartContent";
 
 export interface AccordionSubPartProps {
   subParts: AccordionContentPartProps[];
-  columnIndex: string;
+  classNameContent?: string;
 }
 
 export const AccordionSubParts: React.FC<AccordionSubPartProps> = ({
   subParts,
-  columnIndex
+  classNameContent
 }) => {
   return (
-    <div className={`wrapper part `} style={{ gridColumn: columnIndex }}>
+    <div className={`wrapper  ${classNameContent}`}>
       {subParts.map(subPart => (
         <AccordionPart
           key={`subPart-columnIndex-${subPart.title}`}
           contentsPart={{ ...subPart }}
-          columnIndex={"1"}
         />
       ))}
     </div>

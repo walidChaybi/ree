@@ -14,13 +14,10 @@ export function getTitulaires(acte: IFicheActe): AccordionPartProps[] {
     "numeroOrdreSaisi"
   );
 
-  const deux = 2;
   return sortedTitulaires.map((titulaire, index) => {
     return {
       contentsPart: {
-        contents: getTitulairesInfo(titulaire, index + 1),
-        title: titulaire === sortedTitulaires[0] ? "Titulaires" : " ",
-        columnIndex: String(index % deux === 0 ? 1 : deux)
+        contents: getTitulairesInfo(titulaire, index + 1)
       }
     };
   });
@@ -33,25 +30,19 @@ function getTitulairesInfo(
   return [
     {
       libelle: `Nom Titulaire ${index}`,
-      value: <span className="nom">{TitulaireActe.getNom(titulaire)}</span>
+      value: <span>{TitulaireActe.getNom(titulaire)}</span>
     },
     {
       libelle: `Prénom 1`,
-      value: (
-        <span className="prenom">{TitulaireActe.getPrenom1(titulaire)}</span>
-      )
+      value: <span>{TitulaireActe.getPrenom1(titulaire)}</span>
     },
     {
       libelle: `Prénom 2`,
-      value: (
-        <span className={`prenom2`}>{TitulaireActe.getPrenom2(titulaire)}</span>
-      )
+      value: <span>{TitulaireActe.getPrenom2(titulaire)}</span>
     },
     {
       libelle: `Prénom 3`,
-      value: (
-        <span className={`prenom3`}>{TitulaireActe.getPrenom3(titulaire)}</span>
-      )
+      value: <span>{TitulaireActe.getPrenom3(titulaire)}</span>
     },
     {
       libelle: "Né(e) le",

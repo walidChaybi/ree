@@ -37,13 +37,11 @@ export function getInteresse(retourBack: IFicheRcRca): AccordionPartProps[] {
         contents: [
           {
             libelle: "",
-            value: <Mariage {...retourBack.mariageInteresses} />,
-            className: "mariageContainer"
+            value: <Mariage {...retourBack.mariageInteresses} />
           }
-        ],
-        title: "",
-        columnIndex: "0"
-      }
+        ]
+      },
+      classNameContent: "mariageContainer"
     });
   }
 

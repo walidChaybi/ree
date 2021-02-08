@@ -25,8 +25,7 @@ export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
         contents: getContentAutorite(
           retourBack.decision.autorite,
           retourBack.categorie
-        ),
-        title: "Autorité"
+        )
       }
     }
   ];
@@ -42,8 +41,7 @@ export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
         contents: getContentAutorite(
           retourBack.decision.sourceConfirmation.autorite,
           retourBack.categorie
-        ),
-        title: ""
+        )
       }
     });
   }

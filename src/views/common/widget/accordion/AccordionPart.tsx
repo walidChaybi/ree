@@ -9,21 +9,27 @@ import {
 export interface AccordionPartProps {
   contentsPart?: AccordionContentPartProps;
   subParts?: AccordionContentPartProps[];
-  columnIndex?: string;
+  classNameContent?: string;
 }
 
 export const AccordionPart: React.FC<AccordionPartProps> = ({
   contentsPart,
   subParts,
-  columnIndex = "1"
+  classNameContent = ""
 }) => {
   return (
     <>
       {subParts != null ? (
-        <AccordionSubParts subParts={subParts} columnIndex={columnIndex} />
+        <AccordionSubParts
+          subParts={subParts}
+          classNameContent={classNameContent}
+        />
       ) : (
         contentsPart && (
-          <AccordionPartContent {...contentsPart} columnIndex={columnIndex} />
+          <AccordionPartContent
+            {...contentsPart}
+            classNameContent={classNameContent}
+          />
         )
       )}
     </>

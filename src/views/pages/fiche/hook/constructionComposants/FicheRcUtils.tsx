@@ -16,13 +16,16 @@ export function getPanelsRc(retourBack: IFicheRcRca): AccordionReceProps {
       {
         panelAreas: [
           { parts: [getInscriptionRepertoireCivil(retourBack)] },
-          { parts: getInteresse(retourBack) },
-          { parts: getDecision(retourBack) },
-          { parts: getAutorite(retourBack) },
+          {
+            parts: getInteresse(retourBack),
+            nbColonne: 2
+          },
+          { parts: getDecision(retourBack), nbColonne: 2 },
+          { parts: getAutorite(retourBack), title: "Autorité", nbColonne: 2 }
         ],
-        title: "Vue du RC",
+        title: "Vue du RC"
       },
-      ...fichesPersonne,
-    ],
+      ...fichesPersonne
+    ]
   };
 }
