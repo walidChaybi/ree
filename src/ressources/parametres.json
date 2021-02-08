@@ -1,0 +1,8 @@
+{
+  "code_pin": {
+    "time_out_ms": 1800000
+  },
+  "signature": {
+    "time_out_ms": 8000
+  }
+}

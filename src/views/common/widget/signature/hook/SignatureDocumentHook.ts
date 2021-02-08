@@ -25,6 +25,7 @@ import {
 } from "../../../../../api/appels/requeteApi";
 import { gestionnaireSignatureFlag } from "../../../util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "../../../util/timer/GestionnaireTimer";
+import parametres from "../../../../../ressources/parametres.json";
 
 export interface IQueryParametersPourRequete {
   statut?: StatutRequete;
@@ -74,7 +75,7 @@ const MaxLengthDocumentToSign = 600000;
 const DIRECTION_TO_CALL_APP = "to-call-app";
 const CODE_ERREUR_NON_DISPO = "WEB_EXT1";
 const TIMER_SIGNATURE = "TimerContactWebExt";
-const SIGNATURE_TIMEOUT = 8000;
+const SIGNATURE_TIMEOUT = parametres.signature.time_out_ms;
 
 const EVENT_NON_DISPO = {
   detail: {
@@ -85,7 +86,7 @@ const EVENT_NON_DISPO = {
 
 export function useSignatureDocumentHook(
   documentsByRequete: DocumentsByRequete,
-  pinCode?: number
+  pinCode?: string
 ) {
   const [documentsToSignWating, setDocumentsToSignWating] = useState<
     DocumentsByRequete
@@ -300,7 +301,7 @@ function changeDocumentToSign(
 
 function sendDocumentToSignature(
   result: IRequestDocumentApiResult,
-  pinCode: number,
+  pinCode: string,
   documentsToSignWating: DocumentsByRequete,
   idRequetesToSign: string[],
   handleBackFromWebExtension: any
@@ -338,7 +339,7 @@ function getDocumentAndSendToSignature(
     currentRequeteProcessing: DocumentsATraiter
   ) => void,
   handleBackFromWebExtension: any,
-  pinCode?: number
+  pinCode?: string
 ) {
   if (idRequetesToSign.length > 0 && pinCode !== undefined) {
     requestDocumentApi(

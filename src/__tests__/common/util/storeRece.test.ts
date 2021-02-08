@@ -7,3 +7,10 @@ test("store rece works ", async () => {
   storeRece.utilisateurCourant = { ...officier, idSSO: "idSSo" };
   expect(storeRece.utilisateurCourant).toBeDefined();
 });
+
+test("store rece code pin ", async () => {
+  expect(storeRece.codePin).toBeUndefined();
+
+  storeRece.codePin = "1234";
+  expect(storeRece.codePin).toBeDefined();
+});
