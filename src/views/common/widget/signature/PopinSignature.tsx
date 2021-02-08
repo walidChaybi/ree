@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Dialog,
   DialogTitle,
@@ -17,6 +17,7 @@ import {
   DocumentsByRequete
 } from "./hook/SignatureDocumentHook";
 import { SuccessSignature } from "./messages/SuccessSignature";
+import { storeRece } from "../../util/storeRece";
 
 interface PopinSignatureProps {
   documentsByRequete: DocumentsByRequete;
@@ -29,17 +30,15 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
   open,
   onClose
 }) => {
-  const [pinCode, setPinCode] = React.useState<number>();
+  const [pinCode, setPinCode] = React.useState<string | undefined>(
+    storeRece.codePin
+  );
 
   const {
     successSignature,
     errorsSignature,
     idRequetesToSign
   } = useSignatureDocumentHook(documentsByRequete, pinCode);
-
-  useEffect(() => {
-    setPinCode(undefined);
-  }, [documentsByRequete]);
 
   return (
     <>

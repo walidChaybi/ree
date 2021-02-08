@@ -6,14 +6,15 @@ import { Button } from "reakit/Button";
 
 import "./sass/FormPinCode.scss";
 import { getText } from "../Text";
+import { storeRece } from "../../util/storeRece";
 
 interface FormPinCodePros {
   onClose: (isOpen: boolean, changePage: boolean) => void;
-  setPinCode: (pinCode?: number) => void;
+  setPinCode: (pinCode?: string) => void;
 }
 
 interface FormValues {
-  pinCode?: number;
+  pinCode?: string;
 }
 
 interface FormValuesErrors {
@@ -28,7 +29,7 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
     const errors: FormValuesErrors = {};
     if (!values.pinCode) {
       errors.pinCode = getText("signature.validate.require");
-    } else if (isNaN(values.pinCode)) {
+    } else if (isNaN(Number(values.pinCode))) {
       errors.pinCode = getText("signature.validate.isNaN");
     }
 
@@ -39,6 +40,7 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
     initialValues: {},
     validate,
     onSubmit: (values: FormValues) => {
+      storeRece.codePin = values.pinCode;
       setPinCode(values.pinCode);
     }
   });
@@ -49,8 +51,8 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
         id="pinCode"
         name="pinCode"
         label="Code pin"
-        type="password"
         variant="filled"
+        type="password"
         onChange={formik.handleChange}
         autoFocus
         autoComplete="off"
