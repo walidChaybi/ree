@@ -74,7 +74,7 @@ const MaxLengthDocumentToSign = 600000;
 const DIRECTION_TO_CALL_APP = "to-call-app";
 const CODE_ERREUR_NON_DISPO = "WEB_EXT1";
 const TIMER_SIGNATURE = "TimerContactWebExt";
-const SIGNATURE_TIMEOUT = 3000;
+const SIGNATURE_TIMEOUT = 8000;
 
 const EVENT_NON_DISPO = {
   detail: {
