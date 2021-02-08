@@ -8,8 +8,8 @@ export const ficheInscriptionRepertoireCivil = {
   ],
   typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [
-    { id: "0", numero: "2015 - 36547" },
-    { id: "1", numero: "2020- 36547" }
+    { id: "0", annee: "2015", numero: "36547" },
+    { id: "1", annee: "2020", numero: "36548" }
   ],
   inscriptionsLiees: [
     {

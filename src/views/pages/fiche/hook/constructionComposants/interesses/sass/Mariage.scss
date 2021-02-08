@@ -1,10 +1,7 @@
 .mariageContainer {
+  grid-column: 1 / span 2;
   .mariage {
     padding-left: 10px;
     padding-right: 10px;
   }
-}
-
-div.wrapper {
-  grid-column: 1/3;
 }

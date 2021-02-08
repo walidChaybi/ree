@@ -4,32 +4,23 @@ import { AccordionContent, AccordionContentProps } from "./AccordionContent";
 export interface AccordionContentPartProps {
   contents: AccordionContentProps[];
   title?: string;
-  rowIndex?: string;
   classNameContent?: string;
-  classNamePart?: string;
-  columnIndex?: string;
 }
 
 export const AccordionPartContent: React.FC<AccordionContentPartProps> = ({
   contents,
   title,
-  classNameContent,
-  classNamePart,
-  columnIndex = "1"
+  classNameContent
 }) => {
   return (
-    <div
-      className={`wrapper part ${classNamePart}`}
-      style={{ gridColumn: columnIndex }}
-    >
+    <div className={`wrapper ${classNameContent}`}>
       {title && <span className="titlePart">{title}</span>}
       {contents.map((content, index) => {
         return (
           <AccordionContent
-            className={classNameContent}
             key={`content-${title}-${index}`}
             {...content}
-            row={index + 1}
+            row={title != null ? index + 1 : index}
           />
         );
       })}

@@ -16,10 +16,13 @@ export function getPanelsRca(retourBack: IFicheRcRca): AccordionReceProps {
     panels: [
       {
         panelAreas: [
-          { parts: [getInscriptionRepertoireCivil(retourBack)] },
-          { parts: getInteresse(retourBack) },
-          { parts: getDecision(retourBack) },
-          { parts: getAutorite(retourBack) }
+          { parts: [getInscriptionRepertoireCivil(retourBack)], nbColonne: 1 },
+          {
+            parts: getInteresse(retourBack),
+            nbColonne: 2
+          },
+          { parts: getDecision(retourBack), nbColonne: 2 },
+          { parts: getAutorite(retourBack), title: "Autorité", nbColonne: 2 }
         ],
         title: "Vue du RCA"
       },

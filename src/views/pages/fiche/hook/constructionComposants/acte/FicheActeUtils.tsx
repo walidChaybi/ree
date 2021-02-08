@@ -13,8 +13,12 @@ export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
     panels: [
       {
         panelAreas: [
-          { parts: getTitulaires(acte) },
-          { parts: getEvenement(acte), title: "Evènement" }
+          {
+            parts: getTitulaires(acte),
+            title: "Titulaires",
+            nbColonne: 2
+          },
+          { parts: getEvenement(acte), title: "Evènement", nbColonne: 2 }
         ],
         title: "Résumé de l'acte"
       },

@@ -88,7 +88,8 @@ export const Personne = {
     return LieuxUtils.getLieu(
       personne.lieuNaissance.ville,
       personne.lieuNaissance.region,
-      personne.lieuNaissance.pays
+      personne.lieuNaissance.pays,
+      personne.lieuNaissance.arrondissement
     );
   },
 
@@ -97,7 +98,8 @@ export const Personne = {
       ? LieuxUtils.getLieu(
           personne.lieuDeces.ville,
           personne.lieuDeces.region,
-          personne.lieuDeces.pays
+          personne.lieuDeces.pays,
+          personne.lieuDeces.arrondissement
         )
       : "";
   },

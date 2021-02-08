@@ -27,16 +27,27 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
   expect(valueMandataire.match(/ \/ /)).toHaveLength(1);
   expect(idxNature).toBeLessThan(idxMandataire);
 
-  const idxTyepInscription = component.contentsPart.contents.findIndex(
+  const idxTypeInscription = component.contentsPart.contents.findIndex(
     content => content.libelle === "Type inscription"
   );
-  expect(idxTyepInscription).toBeGreaterThan(-1);
-  const valueTyepInscription: JSX.Element =
-    component.contentsPart.contents[idxTyepInscription].value;
-  expect(valueTyepInscription.props.children[0]).toBe("Renouvellement (");
-  expect(valueTyepInscription.props.children[1]).toHaveLength(2);
-  expect(valueTyepInscription.props.children[2]).toBe(")");
-  expect(idxMandataire).toBeLessThan(idxTyepInscription);
+  expect(idxTypeInscription).toBeGreaterThan(-1);
+  const valueTypeInscription: JSX.Element =
+    component.contentsPart.contents[idxTypeInscription].value;
+  expect(valueTypeInscription.props.children[0]).toBe("Renouvellement");
+  expect(valueTypeInscription.props.children[1]).toHaveLength(2);
+  expect(idxMandataire).toBeLessThan(idxTypeInscription);
+
+  const valueTypeInscription1: JSX.Element =
+    valueTypeInscription.props.children[1][0];
+  expect(valueTypeInscription1.props.children[0]).toBe(" (");
+  expect(valueTypeInscription1.props.children[1]).toBe("RC n°");
+  expect(valueTypeInscription1.props.children[3]).toBe(", ");
+
+  const valueTypeInscription2: JSX.Element =
+    valueTypeInscription.props.children[1][1];
+  expect(valueTypeInscription2.props.children[0]).toBe("");
+  expect(valueTypeInscription2.props.children[1]).toBe("RC n°");
+  expect(valueTypeInscription2.props.children[3]).toBe(")");
 
   const idxInscriptionLie = component.contentsPart.contents.findIndex(
     content => content.libelle === "Inscription(s) liée(s)"
@@ -72,7 +83,7 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
   expect(idxDureeInscription).toBeLessThan(idxDateFinMEsure);
 });
 
-test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans isncriptions liees  et sans inscriptions impactées", async () => {
+test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans unité de durée d'inscription", async () => {
   const component = getInscriptionRepertoireCivil(
     ficheInscriptionRepertoireCivilSansUniteDureeInscription as IFicheRcRca
   );
@@ -85,24 +96,23 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
   expect(valueDureeInscription).toBe("Viager");
 });
 
-test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans isncriptions liees  et sans inscriptions impactées", async () => {
+test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans inscriptions liees et sans inscriptions impactées", async () => {
   const component = getInscriptionRepertoireCivil(
     ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes as IFicheRcRca
   );
 
-  const idxTyepInscription = component.contentsPart.contents.findIndex(
+  const idxTypeInscription = component.contentsPart.contents.findIndex(
     content => content.libelle === "Type inscription"
   );
-  expect(idxTyepInscription).toBeGreaterThan(-1);
-  const valueTyepInscription: JSX.Element =
-    component.contentsPart.contents[idxTyepInscription].value;
+  expect(idxTypeInscription).toBeGreaterThan(-1);
+  const valueTypeInscription: JSX.Element =
+    component.contentsPart.contents[idxTypeInscription].value;
 
-  expect(valueTyepInscription.props.children[0]).toBe("Renouvellement ");
-  expect(valueTyepInscription.props.children[1]).toHaveLength(0);
-  expect(valueTyepInscription.props.children[2]).toBe("");
+  expect(valueTypeInscription.props.children[0]).toBe("Renouvellement");
+  expect(valueTypeInscription.props.children[1]).toHaveLength(0);
 });
 
-test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans isncriptions liees  et sans inscriptions impactées", async () => {
+test("Inscription repertoire civil utils : affichage sans données", async () => {
   const component = getInscriptionRepertoireCivil(
     ficheInscriptionRepertoireCivilSansDonnees as IFicheRcRca
   );

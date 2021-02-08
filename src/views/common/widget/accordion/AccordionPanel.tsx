@@ -24,7 +24,7 @@ export const AccordionPanel: React.FC<AccordionPanelProps> = ({
               id={`${title}-${id}`}
               parts={panelArea.parts}
               title={panelArea.title}
-              className={panelArea.className}
+              nbColonne={panelArea.nbColonne}
             />
             {index !== panelAreas.length - 1 && (
               <hr

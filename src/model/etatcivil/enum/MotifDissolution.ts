@@ -14,9 +14,7 @@ export class MotifDissolutionUtil {
     [MotifDissolution.COMMUN_ACCORD]: premiereLettreEnMajusculeLeResteEnMinuscule(
       MotifDissolution.COMMUN_ACCORD
     ),
-    [MotifDissolution.UNILATERAL]: premiereLettreEnMajusculeLeResteEnMinuscule(
-      MotifDissolution.UNILATERAL
-    ),
+    [MotifDissolution.UNILATERAL]: "Unilatéral",
     [MotifDissolution.DECES]: "Décès",
     [MotifDissolution.MARIAGE]: premiereLettreEnMajusculeLeResteEnMinuscule(
       MotifDissolution.MARIAGE
@@ -24,9 +22,7 @@ export class MotifDissolutionUtil {
     [MotifDissolution.TUTEUR_COMMUN_ACCORD]: premiereLettreEnMajusculeLeResteEnMinuscule(
       MotifDissolution.TUTEUR_COMMUN_ACCORD
     ),
-    [MotifDissolution.TUTEUR_UNILATERAL]: premiereLettreEnMajusculeLeResteEnMinuscule(
-      MotifDissolution.TUTEUR_UNILATERAL
-    )
+    [MotifDissolution.TUTEUR_UNILATERAL]: "Tuteur unilatéral"
   };
 
   public static getLibelle(motifDissolution?: MotifDissolution): string {

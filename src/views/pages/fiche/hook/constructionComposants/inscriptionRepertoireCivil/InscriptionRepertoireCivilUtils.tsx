@@ -36,8 +36,7 @@ export function getInscriptionRepertoireCivil(
         : getInteresseRc(retourBack),
       title: FicheUtil.isFicheRca(retourBack.categorie)
         ? "Inscription au répertoire civil annexe"
-        : "Inscription au répertoire civil",
-      columnIndex: "1/3"
+        : "Inscription au répertoire civil"
     }
   };
 }
@@ -116,19 +115,21 @@ function getInteresseRca(retourBack: IFicheRcRca): AccordionContentProps[] {
 
 function getTypeInscription(retourBack: IFicheRcRca): JSX.Element {
   return (
-    <span style={{ display: "flex" }}>
-      {`${InscriptionRcUtil.getLibelle(retourBack.typeInscription)} ${
-        retourBack.inscriptionsImpactees &&
-        retourBack.inscriptionsImpactees.length > 0
-          ? "("
-          : ""
-      }`}
+    <span>
+      {InscriptionRcUtil.getLibelle(retourBack.typeInscription)}
+      {retourBack.inscriptionsImpactees?.map((inscription, index) => (
+        <span key={`link-fiche-rc-${inscription.id || ""}`}>
+          {index === 0 ? " (" : ""}
+          {`RC n°`}
+          <LienFiche
+            identifiant={inscription.id}
+            categorie={TypeFiche.RC}
+            numero={`${inscription.annee} - ${inscription.numero}`}
+          />
 
-      {getInscriptionsImpactees(retourBack)}
-      {retourBack.inscriptionsImpactees &&
-      retourBack.inscriptionsImpactees.length > 0
-        ? ")"
-        : ""}
+          {retourBack.inscriptionsImpactees.length - 1 === index ? ")" : ", "}
+        </span>
+      ))}
     </span>
   );
 }
@@ -142,32 +143,4 @@ function getUniteDuree(duree?: IDureeInscription) {
     }
   }
   return "";
-}
-
-function getInscriptionsImpactees(retourBack: IFicheRcRca): JSX.Element[] {
-  let inscriptionsImpactee: JSX.Element[] = [];
-  if (
-    retourBack.inscriptionsImpactees &&
-    retourBack.inscriptionsImpactees.length > 0
-  ) {
-    inscriptionsImpactee = retourBack.inscriptionsImpactees.map(
-      (inscription, index) => {
-        const key = `link-fiche-rc-${inscription.id || ""}`;
-        return (
-          <span key={key} style={{ display: "flex", whiteSpace: "pre" }}>
-            {`RC n°`}
-            <LienFiche
-              identifiant={inscription.id}
-              categorie={TypeFiche.RC}
-              numero={`${inscription.annee} - ${inscription.numero}`}
-            />
-
-            {retourBack.inscriptionsImpactees.length - 1 === index ? "" : ", "}
-          </span>
-        );
-      }
-    );
-  }
-
-  return inscriptionsImpactee;
 }

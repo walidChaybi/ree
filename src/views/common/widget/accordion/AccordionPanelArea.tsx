@@ -6,29 +6,42 @@ export interface AccordionPanelAreaProps {
   parts: AccordionPartProps[];
   id?: string;
   title?: string;
-  className?: string;
+  nbColonne?: number;
 }
 
 export const AccordionPanelArea: React.FC<AccordionPanelAreaProps> = ({
   parts,
   id = "",
   title,
-  className = "defaultAccordionColumn"
+  nbColonne = 1
 }) => {
+  const test = nbColonne > 1 ? `nbColonnes${nbColonne}` : "";
   return (
-    <div className={`accordionPanelArea ${className}`}>
+    <div className={`accordionPanelArea ${test}`}>
       {title && <span className="titlePanelArea">{title}</span>}
       {parts.map((part, index) => {
+        const classNamePart =
+          part.classNameContent == null && nbColonne > 1
+            ? getCssColonne(nbColonne, index)
+            : part.classNameContent;
         return (
           <AccordionPart
             key={`accordion-panel-area-${index}-${id}`}
             {...part}
-            columnIndex={
-              part.columnIndex != null ? part.columnIndex : String(index + 1)
-            }
+            classNameContent={classNamePart}
           />
         );
       })}
     </div>
   );
 };
+
+function getCssColonne(nbColonnes: number, indexPart: number): string {
+  let className = "";
+  if ((indexPart + 1) % nbColonnes === 0) {
+    className = `Colonne${nbColonnes}`;
+  } else {
+    className = `Colonne${(indexPart + 1) % nbColonnes}`;
+  }
+  return className;
+}

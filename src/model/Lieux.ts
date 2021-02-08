@@ -61,7 +61,7 @@ export class LieuxUtils {
       }
 
       if (numero) {
-        res = res ? res + `(${numero})` : numero;
+        res = res ? res + ` (${numero})` : numero;
       }
 
       if (!res) {

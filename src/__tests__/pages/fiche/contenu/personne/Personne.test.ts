@@ -9,7 +9,7 @@ test("render composant AccordionPart", async () => {
   );
   expect(Personne.getAutresPrenom(personneMock)).toBe("Solomon");
   expect(Personne.getLieuNaissance(personneMock)).toBe(
-    "Marseille (Provence-Aples-côte d'azur)"
+    "Marseille Arrdt 2 (Provence-Aples-côte d'azur)"
   );
   expect(Personne.getLieuDeces(personneMock)).toBe(
     "Londres - Angleterre (Grande bretagne)"
