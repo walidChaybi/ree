@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
         onClick={event => onClickLogo(event)}
         data-testid="LogoHeader"
       />
-      <Tooltip title={`Version de dévelopement numéro: ${version}`}>
+      <Tooltip title={`Version : ${version}`}>
         <h1>
           <Text messageId={"header"} />
         </h1>

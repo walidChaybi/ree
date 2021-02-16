@@ -15,8 +15,8 @@ function getYear(date: Date) {
 function getMonth(date: Date) {
   return date.getMonth();
 }
-
-const years = range(1500, getYear(new Date()) + 1);
+const ANNEE_MIN = 1900;
+const years = range(ANNEE_MIN, getYear(new Date()) + 1);
 const months = [
   "Janvier",
   "Février",
@@ -57,6 +57,7 @@ export const customHeaderRenderer = ({
     }}
   >
     <button
+      name="decrease"
       onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         decreaseMonth();
@@ -67,6 +68,7 @@ export const customHeaderRenderer = ({
     </button>
 
     <select
+      aria-label="select month"
       value={months[getMonth(date)]}
       onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
     >
@@ -78,6 +80,7 @@ export const customHeaderRenderer = ({
     </select>
 
     <select
+      aria-label="select year"
       value={getYear(date)}
       onChange={({ target: { value } }) => changeYear(Number(value))}
     >
@@ -89,6 +92,7 @@ export const customHeaderRenderer = ({
     </select>
 
     <button
+      name="increase"
       onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         increaseMonth();

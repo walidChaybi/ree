@@ -4,50 +4,36 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import "../scss/ReceDatePicker.scss";
 import "react-datepicker/dist/react-datepicker.css";
-import { connect, FormikProps, FormikValues } from "formik";
-import { rempliAGaucheAvecZero } from "../../../util/Utils";
 import { customHeaderRenderer } from "./CustomHeader";
-import { FormikComponentProps } from "../utils/FormUtil";
 
 interface ComponentProps {
-  nomComposantjour: string;
-  nomComposantMois: string;
-  nomComposantAnnee: string;
   dateValue?: Date;
+  disabled?: boolean;
+  onChange?: (date: Date) => void;
 }
 
-export type ReceDatePickerProps = ComponentProps & FormikComponentProps;
+export type ReceDatePickerProps = ComponentProps;
 
 const ReceDatePicker: React.FC<ReceDatePickerProps> = props => {
   const [dateValue, setDateValue] = useState(props.dateValue ?? new Date());
-  const formik: FormikProps<FormikValues> = props.formik;
 
-  function onDateValueChange(
-    date: Date,
-    event: React.SyntheticEvent<any> | undefined
-  ) {
-    if (date) {
-      formik.setFieldValue(
-        props.nomComposantjour,
-        rempliAGaucheAvecZero(date.getDate())
-      );
-      formik.setFieldValue(
-        props.nomComposantMois,
-        rempliAGaucheAvecZero(date.getMonth() + 1)
-      );
-      formik.setFieldValue(props.nomComposantAnnee, date.getFullYear());
-      setDateValue(date);
+  React.useEffect(() => {
+    if (props.dateValue) {
+      setDateValue(props.dateValue);
     }
-  }
+  }, [props.dateValue]);
 
   return (
     <div className="ReceDatePicker">
       <DatePicker
         renderCustomHeader={customHeaderRenderer}
         selected={dateValue}
-        onChange={onDateValueChange}
+        onChange={(date: Date, event: React.SyntheticEvent<any> | undefined) =>
+          onDateValueChange(props, setDateValue, date, event)
+        }
         customInput={<IconCalendar />}
         shouldCloseOnSelect={true}
+        disabled={props.disabled}
       />
     </div>
   );
@@ -61,9 +47,25 @@ class IconCalendar extends React.Component<{ value?: any; onClick?: any }> {
         size="lg"
         className="IconeCalendar"
         onClick={this.props.onClick}
+        title="calendrier"
       />
     );
   }
 }
 
-export default connect(ReceDatePicker);
+export function onDateValueChange(
+  props: any,
+  setDateValue: any,
+  date: Date,
+  event: React.SyntheticEvent<any> | undefined
+) {
+  if (date) {
+    if (props.onChange) {
+      props.onChange(date);
+    }
+
+    setDateValue(date);
+  }
+}
+
+export default ReceDatePicker;

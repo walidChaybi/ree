@@ -6,32 +6,32 @@ import TitulaireFiltre, {
 } from "./filtres/titulaire/TitulaireFiltre";
 import * as Yup from "yup";
 import "./scss/RMCActeInscriptionPage.scss";
-import {
-  DatesDebutFinAnneeFiltre,
+import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeValidationSchema,
-  DatesDebutFinAnneeDefaultValues
+  DatesDebutFinAnneeDefaultValues,
+  DatesDebutFinAnneeFiltreProps
 } from "./filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
 import { useRMCInscriptionApiHook } from "./hook/RMCInscriptionApiHook";
 import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
 
 // Nom des filtres
 const TITULAIRE = "titulaire";
-const DATE_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
+const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 
 // Valeurs par défaut des champs
 const DefaultValuesRMCActeInscription = {
   [TITULAIRE]: TitulaireDefaultValues,
-  [DATE_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues
+  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues
 };
 
 // Schéma de validation en sortie de champs
 const ValidationSchemaRMCActeInscription = Yup.object({
   [TITULAIRE]: TitulaireValidationSchema,
-  [DATE_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema
+  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema
 });
 
+export const titreFrom = "Critères de recherche d'un acte et d'une inscription";
 export const RMCActeInscriptionPage: React.FC = () => {
-  const titreFrom = "Critères de recherche d'un acte et d'une inscription";
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(),
     getFormDatesDebutFinAnnee()
@@ -93,10 +93,9 @@ function getFormTitulaire(): JSX.Element {
 }
 
 function getFormDatesDebutFinAnnee(): JSX.Element {
-  return (
-    <DatesDebutFinAnneeFiltre
-      nomFiltre={DATE_DEBUT_FIN_ANNEE}
-      key={DATE_DEBUT_FIN_ANNEE}
-    />
-  );
+  const datesDebutFinAnneeFiltreProps = {
+    nomFiltre: DATES_DEBUT_FIN_ANNEE,
+    key: DATES_DEBUT_FIN_ANNEE
+  } as DatesDebutFinAnneeFiltreProps;
+  return <DatesDebutFinAnneeFiltre {...datesDebutFinAnneeFiltreProps} />;
 }

@@ -2,6 +2,7 @@ import {
   rempliAGaucheAvecZero,
   supprimerEspacesInutiles
 } from "../../../util/Utils";
+import { FormikProps, FormikValues } from "formik";
 
 export const NB_MAX_JOUR = 31;
 export const NB_MAX_MOIS = 12;
@@ -34,7 +35,7 @@ export function traiteCarAutorises(element: any, filter: any) {
 
 export function traiteDepassement(element: any, nb: number) {
   if (Number(element.value) > nb) {
-    element.value = nb;
+    element.value = String(nb);
   }
 }
 
@@ -56,9 +57,10 @@ export function focusApresProchainChamps(
   }
 }
 
-export function traiteZeroAGauche(e: any, fct: any) {
+export function traiteZeroAGauche(e: any, formik: FormikProps<FormikValues>) {
   e.target.value = rempliAGaucheAvecZero(e.target.value);
-  fct(e);
+  formik.handleChange(e);
+  formik.handleBlur(e);
 }
 
 export function traiteEspace(e: any, fct: any) {
