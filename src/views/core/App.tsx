@@ -18,9 +18,17 @@ import {
 import { URL_MES_REQUETES } from "../router/ReceUrls";
 import { storeRece } from "../common/util/storeRece";
 import { ErrorManager } from "../common/util/ErrorManager";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import fr from "date-fns/locale/fr";
+// ReceDatepicker Locale
+registerLocale("fr", fr);
+setDefaultLocale("fr");
+
+
 
 const App: React.FC = () => {
   const login = useLoginApi();
+
   return (
     <ErrorManager>
       <Router>

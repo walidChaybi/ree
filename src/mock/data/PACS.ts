@@ -6,6 +6,7 @@ import { TypeJuridiction } from "../../model/etatcivil/enum/TypeJuridiction";
 import { DecisionAnnulation } from "../../model/etatcivil/enum/DecisionAnnulation";
 import { MotifDissolution } from "../../model/etatcivil/enum/MotifDissolution";
 import { TypePoste } from "../../model/etatcivil/enum/TypePoste";
+import { Sexe } from "../../model/etatcivil/enum/Sexe";
 
 export const pacsModificationNotaire = {
   hasTechnicalError: false,
@@ -164,7 +165,7 @@ export const pacsModificationNotaireMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       autreNoms: ["DuDu", "dudu2"],
       autrePrenoms: ["NatachA", "natacha2"],
       prenoms: [
@@ -191,7 +192,7 @@ export const pacsModificationNotaireMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       autreNoms: ["DupDup"],
       autrePrenoms: ["Nabil"],
       prenoms: [
@@ -271,7 +272,7 @@ export const annulationJuridictionMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       autreNoms: ["DuDu"],
       autrePrenoms: ["Natacha"],
       prenoms: [
@@ -298,7 +299,7 @@ export const annulationJuridictionMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       autreNoms: ["DupDup"],
       autrePrenoms: ["Nabil"],
       prenoms: [
@@ -368,7 +369,7 @@ export const dissolutionJuridictionMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       autreNoms: ["DuDu"],
       autrePrenoms: ["Natacha"],
       prenoms: [
@@ -395,7 +396,7 @@ export const dissolutionJuridictionMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       autreNoms: ["DupDup"],
       autrePrenoms: ["Nabil"],
       prenoms: [
@@ -465,7 +466,7 @@ export const dissolutionPosteMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: "FEMININ",
+      sexe: Sexe.FEMININ,
       autreNoms: ["DuDu"],
       autrePrenoms: ["Natacha"],
       prenoms: [
@@ -492,7 +493,7 @@ export const dissolutionPosteMap: IFichePacs = {
       regionNaissance: "normandie",
       arrondissementNaissance: "20",
       nationalite: Nationalite.FRANCAISE,
-      sexe: "MASCULIN",
+      sexe: Sexe.MASCULIN,
       autreNoms: ["DupDup"],
       autrePrenoms: ["Nabil"],
       prenoms: [

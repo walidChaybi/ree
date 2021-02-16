@@ -9,7 +9,7 @@ import {
 } from "../../../views/common/util/Utils";
 import { getDateStringFromDateCompose } from "../../../views/common/util/DateUtils";
 import { LieuxUtils } from "../../Lieux";
-import { EnumTypeSexe } from "../../../views/common/util/enum/EnumSexe";
+import { Sexe } from "../enum/Sexe";
 
 export interface ITitulaireActe {
   nom?: string;
@@ -52,7 +52,7 @@ export const TitulaireActe = {
   },
   getSexe(titulaire?: ITitulaireActe): string {
     return titulaire && titulaire.sexe
-      ? EnumTypeSexe.getEnumFor(titulaire.sexe).libelle
+      ? Sexe.getEnumFor(titulaire.sexe).libelle
       : "";
   },
   getLieuNaissance(titulaire?: ITitulaireActe): string {

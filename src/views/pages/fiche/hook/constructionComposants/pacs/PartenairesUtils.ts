@@ -8,7 +8,6 @@ import {
 } from "../../../../../common/util/Utils";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
 import { LieuxUtils } from "../../../../../../model/Lieux";
-import { EnumTypeSexe } from "../../../../../common/util/enum/EnumSexe";
 
 export function getPartenaires(
   partenaires: IPartenaire[]
@@ -53,7 +52,7 @@ export function getPartenaires(
           },
           {
             libelle: "Sexe",
-            value: EnumTypeSexe.getEnumFor(p.sexe).libelle
+            value: p.sexe.libelle
           }
         ]
       }

@@ -1,5 +1,7 @@
+@import "../../../../../sass/colors";
+
 .Bandeau {
-  background-color: #ffd966;
+  background-color: $bandeau-color;
   padding: 0.5rem;
 
   > div {
@@ -56,7 +58,7 @@
   }
 
   .IconeAlertes {
-    color: firebrick;
+    color: $alertes;
     margin-right: 0.5rem;
   }
 }

@@ -29,7 +29,7 @@ import {
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../common/util/Utils";
 import { logError } from "../../../common/util/LogManager";
-import { NatureActe } from "../../../common/util/enum/NatureActe";
+import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
 
 export interface IRequerantApi {
   idRequerant: string;

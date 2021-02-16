@@ -2,10 +2,9 @@ import React from "react";
 import messages from "../../../ressources/messages.json";
 import errors from "../../../ressources/errors.json";
 import success from "../../../ressources/success.json";
-import regex from "../../../ressources/regex.json";
 import referentiel from "../../../ressources/referentiel.json";
 
-const ressources = { ...messages, errors, regex, referentiel, success };
+const ressources = { ...messages, errors, referentiel, success };
 
 export type MessageId = string;
 

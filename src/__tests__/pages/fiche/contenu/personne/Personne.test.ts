@@ -1,6 +1,6 @@
 import { Personne } from "../../../../../views/pages/fiche/contenu/personne/Personne";
 import { personneMock } from "../../../fiche/hook/constructionComposants/mock/PersonneMock";
-import { NatureActe } from "../../../../../views/common/util/enum/NatureActe";
+import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 test("render composant AccordionPart", async () => {
   expect(Personne.getNom(personneMock)).toBe("FAULKNER");
   expect(Personne.getAutresNoms(personneMock)).toBe("ELISA (Pseudonyme)");
@@ -17,7 +17,7 @@ test("render composant AccordionPart", async () => {
   expect(Personne.getDateNaissance(personneMock)).toBe("26/02/1980");
   expect(Personne.getDateDeces(personneMock)).toBe("07/2020");
   expect(Personne.getNationalite(personneMock)).toBe("Francaise");
-  expect(Personne.getSexe(personneMock)).toBe("MASCULIN");
+  expect(Personne.getSexe(personneMock)).toBe("Masculin");
   expect(Personne.getParents(personneMock)).toStrictEqual([
     { id: null, typeLienParente: "DIRECT", nom: "Paul", prenoms: ["Justice"] },
     { id: null, typeLienParente: "DIRECT", nom: "Barton", prenoms: ["Buck"] },
