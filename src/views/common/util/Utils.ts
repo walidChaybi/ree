@@ -142,3 +142,15 @@ export function jointPrenoms(prenoms?: IPrenom[]): string {
 export function numberToString(nb?: number): string {
   return nb ? nb.toString() : "";
 }
+
+export function rempliAGauche(nb: number | string, c: string, long: number) {
+  return nb ? String(nb).padStart(long, c) : "";
+}
+
+export function rempliAGaucheAvecZero(nb: number | string, long = 2) {
+  return rempliAGauche(nb, "0", long);
+}
+
+export function supprimerEspacesInutiles(value: string) {
+  return value.trim().replace(new RegExp(/\s{2,}/g), " ");
+}

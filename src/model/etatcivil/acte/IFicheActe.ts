@@ -1,6 +1,6 @@
 import { IEvenement } from "./IEvenement";
 import { ITitulaireActe } from "./ITitulaireActe";
-import { NatureActe } from "../../../views/common/util/enum/NatureActe";
+import { NatureActe } from "../enum/NatureActe";
 import { IPersonne } from "../../../views/pages/fiche/contenu/personne/Personne";
 
 export interface IFicheActe {

@@ -29,6 +29,10 @@ a {
   }
 }
 
+input {
+  font-family: "NotoSansUI-Regular", sans-serif;
+}
+
 button {
   margin: 0.3em 0.3em 0.3em 0.6em;
   background: $button-application-color;
@@ -67,13 +71,6 @@ button {
   }
 }
 
-form {
-  button {
-    margin-top: 3em;
-    margin-bottom: 3em;
-  }
-}
-
 h1 {
   font-size: 1.2rem;
   font-weight: 500;
@@ -97,18 +94,6 @@ h4 {
   color: #0579be;
   font-family: "NotoSansUI-Regular", sans-serif;
   font-size: 0.6725em;
-}
-
-input {
-  height: 1.852em;
-  width: 13.851em;
-  padding: 0.5em 3em 0.5em 1em;
-  -webkit-appearance: none;
-  border: 1px solid #aeaeae;
-}
-
-input::placeholder {
-  font-size: smaller;
 }
 
 legend {

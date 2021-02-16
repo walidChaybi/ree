@@ -1,11 +1,12 @@
 import { IPersonne } from "../../../../../../views/pages/fiche/contenu/personne/Personne";
-import { EnumTypeAutresNoms } from "../../../../../../views/common/util/enum/EnumAutresNoms";
-import { NatureActe } from "../../../../../../views/common/util/enum/NatureActe";
+import { AutresNoms } from "../../../../../../model/etatcivil/enum/AutresNoms";
+import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
+import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 
 export const personneMock: IPersonne = {
   id: "e7114c57-d00d-48ad-bbee-af2b01e2da63",
   nom: "Faulkner",
-  sexe: "MASCULIN",
+  sexe: Sexe.MASCULIN,
   nationalite: "FRANCAISE",
   lieuNaissance: {
     jour: 26,
@@ -36,9 +37,7 @@ export const personneMock: IPersonne = {
     mois: "7",
     annee: "2020"
   },
-  autresNoms: [
-    { nom: "Elisa", type: EnumTypeAutresNoms.getEnumFor("PSEUDONYME") }
-  ],
+  autresNoms: [{ nom: "Elisa", type: AutresNoms.getEnumFor("PSEUDONYME") }],
   prenoms: ["Elie_madelaine-henriette", "Maëlla", "Marie-Charlotte"],
   autresPrenoms: ["Solomon"],
   parents: [

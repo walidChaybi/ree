@@ -1,0 +1,23 @@
+@import "../../../../../sass/colors";
+
+.Formulaire {
+  margin: 1.5rem 5rem;
+  border-radius: 0.3rem;
+  border: 1px solid;
+  border-color: $button-application-color;
+
+  .Titre {
+    background-color: $button-application-color;
+    padding: 0.2em 1em 0.2em 1.325em;
+    margin: 0em;
+    border-radius: 0.25em 0.25em 0 0;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+  }
+
+  .DeuxColonnes {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+}

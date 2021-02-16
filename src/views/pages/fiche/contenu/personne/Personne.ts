@@ -3,14 +3,14 @@ import {
   formatPrenom,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../../common/util/Utils";
-import { EnumTypeAutresNoms } from "../../../../common/util/enum/EnumAutresNoms";
 import { LieuxUtils } from "../../../../../model/Lieux";
 import {
   IDateCompose,
   getDateStringFromDateCompose
 } from "../../../../common/util/DateUtils";
-import { EnumTypeSexe } from "../../../../common/util/enum/EnumSexe";
-import { NatureActe } from "../../../../common/util/enum/NatureActe";
+import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
+import { AutresNoms } from "../../../../../model/etatcivil/enum/AutresNoms";
 
 export interface IPersonne {
   nom: string;
@@ -22,7 +22,7 @@ export interface IPersonne {
   nationalite: string;
   dateDeces?: IDateCompose;
   lieuDeces?: ILieuEvenement;
-  sexe: EnumTypeSexe;
+  sexe: Sexe;
   parents: IFamille[];
   enfants: IFamille[];
   actes: IFicheLienActes[];
@@ -55,7 +55,7 @@ export interface ILieuEvenement {
 
 export interface IAutresNoms {
   nom: string;
-  type: EnumTypeAutresNoms;
+  type: AutresNoms;
 }
 
 export const Personne = {
@@ -68,7 +68,7 @@ export const Personne = {
       .map(nom => {
         const typeNom = ` (${nom.type.libelle})`;
         return `${formatNom(nom.nom)}${
-          EnumTypeAutresNoms.isAutre(nom.type) ? "" : typeNom
+          AutresNoms.isAutre(nom.type) ? "" : typeNom
         }`;
       })
       .join(", ");
@@ -118,8 +118,8 @@ export const Personne = {
     return premiereLettreEnMajusculeLeResteEnMinuscule(personne.nationalite);
   },
 
-  getSexe(personne: IPersonne): EnumTypeSexe {
-    return personne.sexe;
+  getSexe(personne: IPersonne): string {
+    return personne.sexe.libelle;
   },
 
   getParents(personne: IPersonne): IFamille[] {

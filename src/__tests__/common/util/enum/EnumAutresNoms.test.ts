@@ -1,10 +1,6 @@
-import { EnumTypeAutresNoms } from "../../../../views/common/util/enum/EnumAutresNoms";
+import { AutresNoms } from "../../../../model/etatcivil/enum/AutresNoms";
 
 test("enum autre nom", () => {
-  expect(
-    EnumTypeAutresNoms.isAutre(EnumTypeAutresNoms.getEnumFor("AUTRE"))
-  ).toBeTruthy();
-  expect(
-    EnumTypeAutresNoms.isAutre(EnumTypeAutresNoms.getEnumFor("USAGE"))
-  ).toBeFalsy();
+  expect(AutresNoms.isAutre(AutresNoms.getEnumFor("AUTRE"))).toBeTruthy();
+  expect(AutresNoms.isAutre(AutresNoms.getEnumFor("USAGE"))).toBeFalsy();
 });

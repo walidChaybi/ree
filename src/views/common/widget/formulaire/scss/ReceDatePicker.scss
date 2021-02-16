@@ -1,0 +1,29 @@
+@import "../../../.././../sass/colors";
+
+.react-datepicker__triangle {
+  left: 15px !important;
+}
+.ReceDatePicker {
+  margin: auto;
+
+  .IconeCalendar {
+    color: $application-color;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  button {
+    // Surcharge le css du bouton par défaut définit dans _library.scss
+    min-width: auto !important;
+    &:focus {
+      box-shadow: unset !important;
+    }
+  }
+
+  // Custom Header
+  select {
+    width: auto !important;
+  }
+}

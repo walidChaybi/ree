@@ -1,7 +1,8 @@
 import React from "react";
-import { Text, getText, MessageId } from "../Text";
+import { Text, MessageId } from "../Text";
 import { useHistory } from "react-router-dom";
 import { URL_CONTEXT_APP } from "../../../router/ReceUrls";
+import { UUID } from "../../../../ressources/Regex";
 
 interface CategorieProps {
   url: string;
@@ -15,12 +16,11 @@ export const Categorie: React.FC<CategorieProps> = ({
   last
 }) => {
   const history = useHistory();
-  const uuidRegex = new RegExp(getText("regex.pages.common.uuid"), "i");
   const onClickLink = () => {
     history.push(`${URL_CONTEXT_APP}${url}`);
   };
 
-  if (last && uuidRegex.test(messageId)) {
+  if (last && UUID.test(messageId)) {
     messageId = "apercurequete";
   }
   const message = `fildariane.${messageId}`;

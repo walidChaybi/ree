@@ -9,7 +9,6 @@ import {
 import { AccordionPanelProps } from "../../../../common/widget/accordion/AccordionPanel";
 import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
 import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
-import { EnumTypeSexe } from "../../../../common/util/enum/EnumSexe";
 import { LienFiche } from "../../LienFiche";
 import {
   formatDe,
@@ -174,10 +173,10 @@ function getNationalitePersonne(nationalite: string): AccordionContentProps {
   };
 }
 
-function getSexePersonne(sexe: EnumTypeSexe): AccordionContentProps {
+function getSexePersonne(sexe: string): AccordionContentProps {
   return {
     libelle: "Sexe",
-    value: sexe.libelle
+    value: sexe
   };
 }
 
