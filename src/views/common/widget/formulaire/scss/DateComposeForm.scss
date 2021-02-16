@@ -1,37 +1,16 @@
 @import "../../../../../sass/colors";
 
 .DateComposeForm {
-  margin: 0.5rem 0;
-  display: grid;
-  grid-template-columns: 50% 12.5% 9px 12.5% 9px 22%;
-
-  label {
-    align-self: center;
-    color: $button-application-color;
-  }
-
-  input {
-    align-self: center;
-  }
-
-  input:nth-child(3) {
-    margin-right: 0.5rem;
-  }
-
-  .Sep {
-    margin: auto;
-  }
-
-  input {
-    text-align: center;
-  }
+  grid-template-columns: 50% 12.5% 9px 12.5% 9px 20% 2%;
 }
 
 .DateComposeFormWithDatePicker {
+  grid-template-columns: 50% 12.5% 9px 12.5% 9px 12% 2% 7%;
+}
+
+.DateComposeForm-common {
   margin: 0.5rem 0;
   display: grid;
-  grid-template-columns: 50% 12.5% 9px 12.5% 9px 14% 7%;
-
   label {
     align-self: center;
     color: $button-application-color;
@@ -51,5 +30,18 @@
 
   input {
     text-align: center;
+  }
+
+  button {
+    min-width: auto !important;
+  }
+
+  .IconeCroix {
+    color: $application-color;
+    &:hover {
+      cursor: pointer;
+    }
+    align-self: center;
+    margin-left: 2px;
   }
 }
