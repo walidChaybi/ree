@@ -45,7 +45,7 @@ const habsDesc: IHabiliationDescription[] = [
     nomComposant: "BoutonTest4",
     tousLesDroits: [Droit.CONSULTER_ARCHIVES],
     comportementSiNonAutorise: { disabled: true },
-    visiblePourLesDroits: [Droit.CONSULTER_ARCHIVES]
+    visibleSeulementPourLesDroits: [Droit.CONSULTER_ARCHIVES]
   }
 ];
 
@@ -117,7 +117,7 @@ test("Le bouton ne doit pas être grisé car il n'a aucun droit associé", () =>
   expect(getByText(/Click me/i).closest("button")).not.toBeDisabled();
 });
 
-test("Le bouton ne doit être ni grisé ni invisible car l'utilisateur à le droit CONSULTER_ARCHIVES", () => {
+test("Le bouton ne doit être ni grisé ni invisible car l'utilisateur à seulement le droit CONSULTER_ARCHIVES", () => {
   storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
     idDroit: "d12345",
     nom: Droit.CONSULTER_ARCHIVES
@@ -128,18 +128,34 @@ test("Le bouton ne doit être ni grisé ni invisible car l'utilisateur à le dro
   expect(getByText(/Click me/i).closest("button")).not.toBeDisabled();
 });
 
-test("Le bouton ne doit être ni grisé ni invisible car l'utilisateur à les droits ATTRIBUER et CONSULTER_ARCHIVES", () => {
-  storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
-    idDroit: "d12345",
-    nom: Droit.CONSULTER_ARCHIVES
+test("Le bouton doit être invisible car l'utilisateur n'a pas seulement le droit CONSULTER_ARCHIVES", () => {
+  let hab1 = {
+    idHabilitation: "h12345",
+    profil: {
+      idProfil: "p12345",
+      nom: "CONSULTER_ARCHIVES",
+      droits: [
+        {
+          idDroit: "d12345",
+          nom: Droit.CONSULTER_ARCHIVES
+        }
+      ]
+    }
   };
-  storeRece.utilisateurCourant!.habilitations[0].profil.droits[1] = {
-    idDroit: "d12345",
-    nom: Droit.ATTRIBUER
+  let hab2 = {
+    idHabilitation: "h67890",
+    profil: {
+      idProfil: "p12346",
+      nom: "ATTRIBUER",
+      droits: [
+        {
+          idDroit: "d12346",
+          nom: Droit.ATTRIBUER
+        }
+      ]
+    }
   };
-  habsDesc[0].visiblePourLesDroits = [Droit.ATTRIBUER];
-  const { getByText, queryByTestId } = render(<BoutonTestWithHab />);
-  expect(queryByTestId(/testid/i)).not.toBeNull();
-  // @ts-ignore
-  expect(getByText(/Click me/i).closest("button")).not.toBeDisabled();
+  storeRece.utilisateurCourant!.habilitations = [hab1, hab2];
+  const { queryByTestId } = render(<BoutonTest4WithHab />);
+  expect(queryByTestId(/testid/i)).toBeNull();
 });

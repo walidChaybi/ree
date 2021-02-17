@@ -16,7 +16,8 @@ import {
   URL_DECONNEXION,
   URL_RC_RCA,
   URL_ACTE,
-  URL_RECHERCHE_ACTE_INSCRIPTION
+  URL_RECHERCHE_ACTE_INSCRIPTION,
+  URL_RECHERCHE_ACTE
 } from "./ReceUrls";
 import { RcRcaPage } from "../pages/RcRcaPage";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
@@ -24,6 +25,7 @@ import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaire
 import { ActePage } from "../pages/ActePage";
 import { droitsSaufConsulterArchives } from "../common/util/habilitation/habilitationsDescription";
 import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/RMCActeInscriptionPage";
+import { RMCArchivesPage } from "../pages/rechercheMultiCriteres/RMCArchivesPage";
 
 export interface IRouteRece {
   component?: any;
@@ -83,6 +85,11 @@ export const routesRece: IRouteRece[] = [
   {
     url: URL_RECHERCHE_ACTE_INSCRIPTION,
     component: RMCActeInscriptionPage,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2)
+  },
+  {
+    url: URL_RECHERCHE_ACTE,
+    component: RMCArchivesPage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2)
   }
 ];
