@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  estOfficierHabiliterPourSeulementLesDroits,
   estOfficierHabiliterPourTousLesDroits,
   estOfficierHabiliterPourUnDesDroits
 } from "../../../../model/Habilitation";
@@ -66,15 +67,10 @@ const WithHabilitation = (
             habilitationPourLeComposant,
             storeRece.utilisateurCourant
           );
-          if (
-            habilitationPourLeComposant.visiblePourLesDroits &&
-            !estOfficierHabiliterPourUnDesDroits(
-              storeRece.utilisateurCourant,
-              habilitationPourLeComposant.visiblePourLesDroits
-            )
-          ) {
-            composantEstVisible = false;
-          }
+          composantEstVisible = visibiliteComposant(
+            habilitationPourLeComposant,
+            storeRece.utilisateurCourant
+          );
         }
       }
       return (
@@ -90,3 +86,28 @@ const WithHabilitation = (
   return Habilitation;
 };
 export default WithHabilitation;
+
+function visibiliteComposant(
+  habilitationPourLeComposant: IHabiliationDescription,
+  utilisateurCourant: IOfficierSSOApi
+): boolean {
+  if (
+    habilitationPourLeComposant.visiblePourLesDroits &&
+    !estOfficierHabiliterPourUnDesDroits(
+      utilisateurCourant,
+      habilitationPourLeComposant.visiblePourLesDroits
+    )
+  ) {
+    return false;
+  }
+  if (
+    habilitationPourLeComposant.visibleSeulementPourLesDroits &&
+    !estOfficierHabiliterPourSeulementLesDroits(
+      utilisateurCourant,
+      habilitationPourLeComposant.visibleSeulementPourLesDroits
+    )
+  ) {
+    return false;
+  }
+  return true;
+}

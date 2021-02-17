@@ -30,6 +30,7 @@
     "apercurequete": "Aperçu de requête",
     "messagerie": "Messagerie",
     "rechercheacteinscription": "Recherche acte ou inscription",
+    "rechercheacte": "Recherche acte",
     "rcrca": "Fiche RC / RCA / PACS",
     "acte": "Fiche Acte"
   },
@@ -177,6 +178,7 @@
         "communication": "Communication avec les usagers",
         "requete": "Rechercher une requête",
         "rechercheacteinscription": "Rechercher un acte ou une inscription",
+        "rechercheacte": "Rechercher un acte",
         "tableau": "Tableau de bord"
       },
       "titles": {
@@ -186,6 +188,7 @@
         "communication": "Bouton pour accèder à la communication avec les usagers",
         "requete": "Bouton pour accèder à la recherche d'une requête",
         "rechercheacteinscription": "Bouton pour accèder à la recherche d'un acte ou d'une inscription",
+        "rechercheacte": "Bouton pour accèder à la recherche d'un acte",
         "tableau": "Bouton pour accèder au tableau de bord"
       }
     },

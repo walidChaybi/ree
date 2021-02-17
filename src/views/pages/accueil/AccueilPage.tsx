@@ -7,7 +7,8 @@ import {
   BoutonAccueilCommunication,
   BoutonAccueilRechercheRequete,
   BoutonAccueilRechercheActeOuInscription,
-  BoutonAccueilEspaceDelivrance
+  BoutonAccueilEspaceDelivrance,
+  BoutonAccueilRechercheActe
 } from "./BoutonAccueil";
 import "../accueil/sass/AccueilPage.scss";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
@@ -96,6 +97,12 @@ export const AccueilPage: React.FC = () => {
           iconFA={faSearch}
           titleId="pages.accueil.titles.rechercheacteinscription"
         ></BoutonAccueilRechercheActeOuInscription>
+        <BoutonAccueilRechercheActe
+          messageId="pages.accueil.boutons.rechercheacte"
+          pageUrl="rechercheacte"
+          iconFA={faSearch}
+          titleId="pages.accueil.titles.rechercheacte"
+        ></BoutonAccueilRechercheActe>
         <BoutonAccueil
           messageId="pages.accueil.boutons.tableau"
           pageUrl="tableau"

@@ -49,3 +49,16 @@ export function estOfficierHabiliterPourUnDesDroits(
   }
   return droits.some(droit => officierHabiliterPourLeDroit(officier, droit));
 }
+
+export function estOfficierHabiliterPourSeulementLesDroits(
+  officier: IOfficierSSOApi,
+  droits: Droit[]
+) {
+  if (!droits || droits.length === 0) {
+    return true;
+  }
+  return (
+    droits.length === officier.habilitations.length &&
+    droits.every(droit => officierHabiliterPourLeDroit(officier, droit))
+  );
+}

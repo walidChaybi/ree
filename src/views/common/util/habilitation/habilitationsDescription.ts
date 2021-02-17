@@ -11,6 +11,7 @@ export interface IHabiliationDescription {
   comportementSiNonAutorise: Object;
   comportementSiAutorise?: Object;
   visiblePourLesDroits?: Droit[];
+  visibleSeulementPourLesDroits?: Droit[];
 }
 
 export type NomComposant =
@@ -21,7 +22,8 @@ export type NomComposant =
   | "BoutonAccueilRechercheRequete"
   | "BoutonAccueilRechercheActeOuInscription"
   | "BoutonAccueilTableauDeBord"
-  | "BoutonAccueilEspaceDelivrance";
+  | "BoutonAccueilEspaceDelivrance"
+  | "BoutonAccueilRechercheActe";
 
 ///// ETAPE2 ////////////////////////////////////////////////////////////////
 const etape2Active = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
@@ -43,7 +45,8 @@ export const droitsSaufConsulterArchives = [
   Droit.METTRE_A_JOUR_ACTE,
   Droit.METTRE_A_JOUR_RC_RCA_PACS,
   Droit.SIGNER,
-  Droit.CONSULTER
+  Droit.CONSULTER,
+  Droit.ATTRIBUER
 ];
 
 export const habilitationsDescription: IHabiliationDescription[] = [
@@ -92,7 +95,14 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilRechercheActeOuInscription",
-    unDesDroits: etape2([Droit.CONSULTER, Droit.CONSULTER_ARCHIVES]),
-    comportementSiNonAutorise: { disabled: true }
+    unDesDroits: etape2([Droit.CONSULTER]),
+    comportementSiNonAutorise: { disabled: true },
+    visiblePourLesDroits: droitsSaufConsulterArchives
+  },
+  {
+    nomComposant: "BoutonAccueilRechercheActe",
+    tousLesDroits: etape2([Droit.CONSULTER_ARCHIVES]),
+    comportementSiNonAutorise: { disabled: true },
+    visibleSeulementPourLesDroits: [Droit.CONSULTER_ARCHIVES]
   }
 ];
