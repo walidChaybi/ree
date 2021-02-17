@@ -130,6 +130,7 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
         <div className="BlockInput">
           <label htmlFor={withNamespace(props.nomFiltre, ANNEE)}>Année:</label>
           <Field
+            aria-label={`${props.nomFiltre} année`}
             component="input"
             name={withNamespace(props.nomFiltre, ANNEE)}
             id={withNamespace(props.nomFiltre, ANNEE)}

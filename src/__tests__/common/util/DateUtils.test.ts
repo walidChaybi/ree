@@ -21,7 +21,7 @@ test("getDateFromDateCompose", () => {
   const date = getDateFromDateCompose(dateCompose);
   if (date) {
     expect(date.getDate()).toBe(1);
-    expect(date.getMonth()).toBe(2);
+    expect(date.getMonth()).toBe(1);
     expect(date.getFullYear()).toBe(2020);
   }
 });

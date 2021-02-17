@@ -15,7 +15,7 @@ export const Body: React.FC = () => {
 
   return (
     <>
-      <div className="AppBody">
+      <main className="AppBody">
         <OfficierContext.Consumer>
           {officier =>
             officier?.officierDataState?.idSSO !== undefined ? (
@@ -28,7 +28,7 @@ export const Body: React.FC = () => {
             )
           }
         </OfficierContext.Consumer>
-      </div>
+      </main>
     </>
   );
 };

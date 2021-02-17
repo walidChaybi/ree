@@ -41,12 +41,12 @@ function doitAjouter0Avant(value: string | number) {
     : value.length === 1;
 }
 
-export function getDateFromDateCompose(date: IDateCompose): Date | undefined {
-  if (date.annee && date.mois && date.jour) {
+export function getDateFromDateCompose(date?: IDateCompose): Date | undefined {
+  if (date && date.annee && date.mois && date.jour) {
     return new Date(
       Date.UTC(
         parseInt(date.annee, 10),
-        parseInt(date.mois, 10),
+        parseInt(date.mois, 10) - 1,
         parseInt(date.jour, 10),
         0,
         0

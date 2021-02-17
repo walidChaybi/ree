@@ -80,7 +80,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
       />
       <OfficierContext.Consumer>
         {officier => (
-          <div className="UtilisateurBouton">
+          <div id="simple-menu" className="UtilisateurBouton">
             {officier !== undefined &&
               officier.officierDataState !== undefined && (
                 <>
