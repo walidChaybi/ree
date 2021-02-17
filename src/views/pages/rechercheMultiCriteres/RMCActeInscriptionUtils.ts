@@ -1,40 +1,48 @@
-import { IResultatRMCActe } from "../../../model/rmc/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../model/rmc/IResultatRMCInscription";
-import { IRMCActeInscription } from "../../../model/rmc/IRMCActeInscription";
-import { IRMCRequest } from "../../../model/rmc/IRMCRequest";
+import { IResultatRMCActe } from "../../../model/rmc/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../model/rmc/resultat/IResultatRMCInscription";
+import { IRMCActeInscription } from "../../../model/rmc/rechercheForm/IRMCActeInscription";
+import { IRMCRequest } from "../../../model/rmc/envoi/IRMCRequest";
+import { getDateFromDateCompose } from "../../common/util/DateUtils";
+import { valeurOuUndefined } from "../../common/util/Utils";
 
+/** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
   let criteresMapper: IRMCRequest;
   criteresMapper = {
     // Filtre Titulaire
-    nomTitulaire: criteres.titulaire.nom || null,
-    prenomTitulaire: criteres.titulaire.prenom || null,
-    jourNaissance: criteres.titulaire.dateNaissance.jour || null,
-    moisNaissance: criteres.titulaire.dateNaissance.mois || null,
-    anneeNaissance: criteres.titulaire.dateNaissance.annee || null,
-    paysNaissance: criteres.titulaire.paysNaissance || null,
+    nomTitulaire: valeurOuUndefined(criteres.titulaire.nom),
+    prenomTitulaire: valeurOuUndefined(criteres.titulaire.prenom),
+    jourNaissance: valeurOuUndefined(criteres.titulaire.dateNaissance.jour),
+    moisNaissance: valeurOuUndefined(criteres.titulaire.dateNaissance.mois),
+    anneeNaissance: valeurOuUndefined(criteres.titulaire.dateNaissance.annee),
+    paysNaissance: valeurOuUndefined(criteres.titulaire.paysNaissance),
     // Filtre Date de création
-    dateCreationDebut: null,
-    dateCreationFin: null,
-    annee: null,
+    dateCreationDebut: getDateFromDateCompose(
+      criteres.datesDebutFinAnnee?.dateDebut
+    ),
+    dateCreationFin: getDateFromDateCompose(
+      criteres.datesDebutFinAnnee?.dateFin
+    ),
+    annee: criteres.datesDebutFinAnnee?.annee,
 
     // Filtre Registre & Réppertoire Civile
-    natureActe: null,
-    familleRegistre: null,
-    posteOuPocopa: null,
-    numeroActe: null,
-    numeroInscription: null,
-    typeRepertoire: null,
-    natureRc: null,
-    natureRca: null,
-    jourDateEvenement: null,
-    moisDateEvenement: null,
-    anneeDateEvenement: null,
-    paysEvenement: null
+    natureActe: undefined,
+    familleRegistre: undefined,
+    posteOuPocopa: undefined,
+    numeroActe: undefined,
+    numeroInscription: undefined,
+    typeRepertoire: undefined,
+    natureRc: undefined,
+    natureRca: undefined,
+    jourDateEvenement: undefined,
+    moisDateEvenement: undefined,
+    anneeDateEvenement: undefined,
+    paysEvenement: undefined
   };
   return criteresMapper;
 }
 
+/** Actes: mapping après appel d'api */
 export function mappingActes(data: any): IResultatRMCActe[] {
   const actesMapper: IResultatRMCActe[] = [];
   data.forEach((acte: any) => {
@@ -57,6 +65,7 @@ export function mappingActes(data: any): IResultatRMCActe[] {
   return actesMapper;
 }
 
+/** RC/RCA/PACS: mapping après appel d'api */
 export function mappingInscriptions(data: any): IResultatRMCInscription[] {
   const inscriptionsMapper: IResultatRMCInscription[] = [];
   data.forEach((inscription: any) => {

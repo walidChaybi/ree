@@ -154,3 +154,8 @@ export function rempliAGaucheAvecZero(nb: number | string, long = 2) {
 export function supprimerEspacesInutiles(value: string) {
   return value.trim().replace(new RegExp(/\s{2,}/g), " ");
 }
+
+// Util lors de l'envoi d'une chaîne de caractères au back: convertion des chaîne vide en undefined
+export function valeurOuUndefined(valeur?: string) {
+  return valeur || undefined;
+}

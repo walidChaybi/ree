@@ -45,9 +45,11 @@ test("render composant DateComposeForm", async () => {
   await act(async () => {
     render(<HookConsummerDateComposeForm />);
   });
-  const inputJour = screen.getByLabelText("jour") as HTMLInputElement;
-  const inputMois = screen.getByLabelText("mois") as HTMLInputElement;
-  const inputAnnee = screen.getByLabelText("année") as HTMLInputElement;
+  const inputJour = screen.getByLabelText("dateDebut jour") as HTMLInputElement;
+  const inputMois = screen.getByLabelText("dateDebut mois") as HTMLInputElement;
+  const inputAnnee = screen.getByLabelText(
+    "dateDebut année"
+  ) as HTMLInputElement;
 
   await waitFor(() => {
     expect(inputJour).toBeDefined();

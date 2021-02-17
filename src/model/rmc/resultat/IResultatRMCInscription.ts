@@ -1,4 +1,4 @@
-import { IDateCompose } from "../../views/common/util/DateUtils";
+import { IDateCompose } from "../../../views/common/util/DateUtils";
 
 export interface IResultatRMCInscription {
   id: string;

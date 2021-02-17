@@ -167,7 +167,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           onInput={jourChange}
           onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
           disabled={props.disabled}
-          aria-label="jour"
+          aria-label={`${props.nomFiltre} jour`}
         />
         <div className="Sep">/</div>
         <Field
@@ -177,7 +177,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           onInput={moisChange}
           onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
           disabled={props.disabled}
-          aria-label="mois"
+          aria-label={`${props.nomFiltre} mois`}
         />
 
         <div className="Sep">/</div>
@@ -187,7 +187,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           maxLength="4"
           onInput={anneeChange}
           disabled={props.disabled}
-          aria-label="année"
+          aria-label={`${props.nomFiltre} année`}
         />
         <FontAwesomeIcon
           icon={faTimesCircle}

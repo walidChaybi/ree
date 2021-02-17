@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { rechercheMultiCriteresActes } from "../../../../api/appels/etatcivilApi";
-import { IResultatRMCActe } from "../../../../model/rmc/IResultatRMCActe";
-import { IRMCActeInscription } from "../../../../model/rmc/IRMCActeInscription";
+import { IResultatRMCActe } from "../../../../model/rmc/resultat/IResultatRMCActe";
+import { IRMCActeInscription } from "../../../../model/rmc/rechercheForm/IRMCActeInscription";
 import messageManager from "../../../common/util/messageManager";
 import { mappingActes, mappingCriteres } from "../RMCActeInscriptionUtils";
 

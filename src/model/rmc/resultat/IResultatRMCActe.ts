@@ -1,5 +1,5 @@
-import { IDateCompose } from "../../views/common/util/DateUtils";
-import { NatureActe } from "../etatcivil/enum/NatureActe";
+import { IDateCompose } from "../../../views/common/util/DateUtils";
+import { NatureActe } from "../../etatcivil/enum/NatureActe";
 
 export interface IResultatRMCActe {
   id: string;
