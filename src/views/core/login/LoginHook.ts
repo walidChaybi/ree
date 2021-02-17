@@ -1,9 +1,8 @@
-import {useEffect, useState} from "react";
-import {getLogin} from "../../../api/appels/agentApi";
-import {IDroit, IHabilitation, IProfil} from "../../../model/Habilitation";
-import {IOfficierSSOApi} from "../../../model/IOfficierSSOApi";
-import {logError} from "../../common/util/LogManager";
-import {formatNom, formatPrenom} from "../../common/util/Utils";
+import { useEffect, useState } from "react";
+import { getLogin } from "../../../api/appels/agentApi";
+import { IDroit, IHabilitation, IProfil } from "../../../model/Habilitation";
+import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
+import { formatNom, formatPrenom } from "../../common/util/Utils";
 
 export interface ILoginApi {
   officierDataState?: IOfficierSSOApi;
@@ -12,6 +11,7 @@ export interface ILoginApi {
 
 export function useLoginApi() {
   const [officierDataState, setOfficierDataState] = useState<IOfficierSSOApi>();
+  const [erreurState, setErreurState] = useState(undefined);
 
   useEffect(() => {
     getLogin()
@@ -23,16 +23,13 @@ export function useLoginApi() {
         setOfficierDataState(officier);
       })
       .catch(error => {
-        logError({
-          messageUtilisateur:
-            "Impossible de récupérer les informations utilisateur via le service de login",
-          error
-        });
+        setErreurState(error);
       });
   }, []);
 
   return {
-    officierDataState
+    officierDataState,
+    erreurState
   };
 }
 
