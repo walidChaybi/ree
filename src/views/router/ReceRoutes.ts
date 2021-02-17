@@ -22,6 +22,7 @@ import { RcRcaPage } from "../pages/RcRcaPage";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
 import { ActePage } from "../pages/ActePage";
+import { droitsSaufConsulterArchives } from "../common/util/habilitation/habilitationsDescription";
 import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/RMCActeInscriptionPage";
 
 export interface IRouteRece {
@@ -45,7 +46,8 @@ export const routesRece: IRouteRece[] = [
   {
     url: URL_MES_REQUETES,
     component: EspaceDelivrancePage,
-    props: { selectedTab: 0 }
+    props: { selectedTab: 0 },
+    droits: droitsSaufConsulterArchives
   },
   {
     url: URL_REQUETES_SERVICE,
@@ -55,11 +57,13 @@ export const routesRece: IRouteRece[] = [
   },
   {
     url: URL_MES_REQUETES_ID,
-    component: ApercuRequetePage
+    component: ApercuRequetePage,
+    droits: droitsSaufConsulterArchives
   },
   {
     url: URL_REQUETES_SERVICE_ID,
-    component: ApercuRequetePage
+    component: ApercuRequetePage,
+    droits: [Droit.ATTRIBUER]
   },
   {
     url: URL_DECONNEXION,

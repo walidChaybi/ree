@@ -62,13 +62,18 @@ const WithHabilitation = (
             : habilitationsDescription
         );
         if (habilitationPourLeComposant) {
-          if (habilitationPourLeComposant.nonvisibleSiNonAutorise) {
+          comportementComposant = getComportement(
+            habilitationPourLeComposant,
+            storeRece.utilisateurCourant
+          );
+          if (
+            habilitationPourLeComposant.visiblePourLesDroits &&
+            !estOfficierHabiliterPourUnDesDroits(
+              storeRece.utilisateurCourant,
+              habilitationPourLeComposant.visiblePourLesDroits
+            )
+          ) {
             composantEstVisible = false;
-          } else {
-            comportementComposant = getComportement(
-              habilitationPourLeComposant,
-              storeRece.utilisateurCourant
-            );
           }
         }
       }

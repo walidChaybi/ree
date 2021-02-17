@@ -62,11 +62,14 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   );
 };
 
+export const BoutonAccueilEspaceDelivrance = WithHabilitation(
+  BoutonAccueil,
+  "BoutonAccueilEspaceDelivrance"
+);
 export const BoutonAccueilEspaceMiseAjour = WithHabilitation(
   BoutonAccueil,
   "BoutonAccueilEspaceMiseAjour"
 );
-
 export const BoutonAccueilEspaceCreation = WithHabilitation(
   BoutonAccueil,
   "BoutonAccueilEspaceCreation"
