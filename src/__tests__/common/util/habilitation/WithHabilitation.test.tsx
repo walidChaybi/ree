@@ -39,6 +39,13 @@ const habsDesc: IHabiliationDescription[] = [
     nomComposant: "BoutonTest3",
     unDesDroits: [Droit.ATTRIBUER, Droit.CONSULTER],
     comportementSiNonAutorise: { disabled: true }
+  },
+  {
+    // @ts-ignore
+    nomComposant: "BoutonTest4",
+    tousLesDroits: [Droit.CONSULTER_ARCHIVES],
+    comportementSiNonAutorise: { disabled: true },
+    visiblePourLesDroits: [Droit.CONSULTER_ARCHIVES]
   }
 ];
 
@@ -53,6 +60,12 @@ const BoutonTest3WithHab = WithHabilitation(
   BoutonTest,
   // @ts-ignore
   "BoutonTest3",
+  habsDesc
+);
+const BoutonTest4WithHab = WithHabilitation(
+  BoutonTest,
+  // @ts-ignore
+  "BoutonTest4",
   habsDesc
 );
 
@@ -87,8 +100,11 @@ test("Le bouton doit être grisé car l'utilisateur n'à pas le droit Attribuer"
 });
 
 test("Le bouton doit être invisible car l'utilisateur n'à pas le droit Attribuer", () => {
-  storeRece.utilisateurCourant!.habilitations[0].profil.droits = [];
-  habsDesc[0].nonvisibleSiNonAutorise = true;
+  storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
+    idDroit: "d12346",
+    nom: Droit.CONSULTER_ARCHIVES
+  };
+  habsDesc[0].visiblePourLesDroits = [Droit.ATTRIBUER];
   const { queryByTestId } = render(<BoutonTestWithHab />);
   expect(queryByTestId(/testid/i)).toBeNull();
 });
@@ -96,6 +112,33 @@ test("Le bouton doit être invisible car l'utilisateur n'à pas le droit Attribu
 test("Le bouton ne doit pas être grisé car il n'a aucun droit associé", () => {
   storeRece.utilisateurCourant!.habilitations[0].profil.droits = [];
   const { getByText, queryByTestId } = render(<BoutonTest2WithHab />);
+  expect(queryByTestId(/testid/i)).not.toBeNull();
+  // @ts-ignore
+  expect(getByText(/Click me/i).closest("button")).not.toBeDisabled();
+});
+
+test("Le bouton ne doit être ni grisé ni invisible car l'utilisateur à le droit CONSULTER_ARCHIVES", () => {
+  storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
+    idDroit: "d12345",
+    nom: Droit.CONSULTER_ARCHIVES
+  };
+  const { getByText, queryByTestId } = render(<BoutonTest4WithHab />);
+  expect(queryByTestId(/testid/i)).not.toBeNull();
+  // @ts-ignore
+  expect(getByText(/Click me/i).closest("button")).not.toBeDisabled();
+});
+
+test("Le bouton ne doit être ni grisé ni invisible car l'utilisateur à les droits ATTRIBUER et CONSULTER_ARCHIVES", () => {
+  storeRece.utilisateurCourant!.habilitations[0].profil.droits[0] = {
+    idDroit: "d12345",
+    nom: Droit.CONSULTER_ARCHIVES
+  };
+  storeRece.utilisateurCourant!.habilitations[0].profil.droits[1] = {
+    idDroit: "d12345",
+    nom: Droit.ATTRIBUER
+  };
+  habsDesc[0].visiblePourLesDroits = [Droit.ATTRIBUER];
+  const { getByText, queryByTestId } = render(<BoutonTestWithHab />);
   expect(queryByTestId(/testid/i)).not.toBeNull();
   // @ts-ignore
   expect(getByText(/Click me/i).closest("button")).not.toBeDisabled();

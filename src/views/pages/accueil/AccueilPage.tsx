@@ -6,7 +6,8 @@ import {
   BoutonAccueilEspaceCreation,
   BoutonAccueilCommunication,
   BoutonAccueilRechercheRequete,
-  BoutonAccueilRechercheActeOuInscription
+  BoutonAccueilRechercheActeOuInscription,
+  BoutonAccueilEspaceDelivrance
 } from "./BoutonAccueil";
 import "../accueil/sass/AccueilPage.scss";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
@@ -59,12 +60,12 @@ export const AccueilPage: React.FC = () => {
         )}
       </OfficierContext.Consumer>
       <div className="MenuAccueil">
-        <BoutonAccueil
+        <BoutonAccueilEspaceDelivrance
           messageId="pages.accueil.boutons.delivrance"
           pageUrl="mesrequetes"
           iconFA={faGavel}
           titleId="pages.accueil.titles.delivrance"
-        ></BoutonAccueil>
+        ></BoutonAccueilEspaceDelivrance>
         <BoutonAccueilEspaceMiseAjour
           messageId="pages.accueil.boutons.miseAJour"
           pageUrl="miseAJour"
@@ -99,7 +100,6 @@ export const AccueilPage: React.FC = () => {
           messageId="pages.accueil.boutons.tableau"
           pageUrl="tableau"
           iconFA={faChartBar}
-          disabled={true}
           titleId="pages.accueil.titles.tableau"
         ></BoutonAccueil>
       </div>
