@@ -10,25 +10,26 @@
   height: 4em;
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.55);
   color: white;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
 
   .LogoHeader {
-    margin: 0.8rem -8.5rem 0.8rem -9rem;
-    cursor: pointer;
+    text-align: start;
+    img {
+      margin: 0.5rem;
+      cursor: pointer;
+      width: 50%;
+    }
   }
 
   h1 {
     margin: 1.1rem;
   }
 
-  .Utilisateur {
-    margin: 1.2rem 2rem;
-  }
-
   .UtilisateurBouton {
+    text-align: end;
     margin: 0.7rem 2rem;
+
     button span {
       color: white;
       text-transform: initial;

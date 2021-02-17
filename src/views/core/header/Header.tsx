@@ -23,13 +23,15 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
 
   return (
     <header className="AppHeader">
-      <img
-        className="LogoHeader"
-        src={logoReceBlanc}
-        alt={getText("altLogoRece")}
-        onClick={event => onClickLogo(event)}
-        data-testid="LogoHeader"
-      />
+      <div className="LogoHeader">
+        <img
+          src={logoReceBlanc}
+          alt={getText("altLogoRece")}
+          onClick={event => onClickLogo(event)}
+          data-testid="LogoHeader"
+        />
+      </div>
+      
       <Tooltip title={`Version : ${version}`}>
         <h1>
           <Text messageId={"header"} />
