@@ -90,3 +90,7 @@ export const BoutonAccueilRechercheActe = WithHabilitation(
   BoutonAccueil,
   "BoutonAccueilRechercheActe"
 );
+export const BoutonAccueilTableau = WithHabilitation(
+  BoutonAccueil,
+  "BoutonAccueilTableau"
+);
