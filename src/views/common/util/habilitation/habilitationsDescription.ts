@@ -23,7 +23,8 @@ export type NomComposant =
   | "BoutonAccueilRechercheActeOuInscription"
   | "BoutonAccueilTableauDeBord"
   | "BoutonAccueilEspaceDelivrance"
-  | "BoutonAccueilRechercheActe";
+  | "BoutonAccueilRechercheActe"
+  | "BoutonAccueilTableau";
 
 ///// ETAPE2 ////////////////////////////////////////////////////////////////
 const etape2Active = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
@@ -57,7 +58,7 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilEspaceDelivrance",
-    unDesDroits: etape2(droitsSaufConsulterArchives),
+    unDesDroits: droitsSaufConsulterArchives,
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
@@ -104,5 +105,10 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     tousLesDroits: etape2([Droit.CONSULTER_ARCHIVES]),
     comportementSiNonAutorise: { disabled: true },
     visibleSeulementPourLesDroits: [Droit.CONSULTER_ARCHIVES]
+  },
+  {
+    nomComposant: "BoutonAccueilTableau",
+    tousLesDroits: etape2([]),
+    comportementSiNonAutorise: { disabled: true }
   }
 ];

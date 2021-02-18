@@ -1,14 +1,14 @@
 import React from "react";
 import { Text, getText } from "../../common/widget/Text";
 import {
-  BoutonAccueil,
   BoutonAccueilEspaceMiseAjour,
   BoutonAccueilEspaceCreation,
   BoutonAccueilCommunication,
   BoutonAccueilRechercheRequete,
   BoutonAccueilRechercheActeOuInscription,
   BoutonAccueilEspaceDelivrance,
-  BoutonAccueilRechercheActe
+  BoutonAccueilRechercheActe,
+  BoutonAccueilTableau
 } from "./BoutonAccueil";
 import "../accueil/sass/AccueilPage.scss";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
@@ -103,12 +103,12 @@ export const AccueilPage: React.FC = () => {
           iconFA={faSearch}
           titleId="pages.accueil.titles.rechercheacte"
         ></BoutonAccueilRechercheActe>
-        <BoutonAccueil
+        <BoutonAccueilTableau
           messageId="pages.accueil.boutons.tableau"
           pageUrl="tableau"
           iconFA={faChartBar}
           titleId="pages.accueil.titles.tableau"
-        ></BoutonAccueil>
+        ></BoutonAccueilTableau>
       </div>
     </div>
   );
