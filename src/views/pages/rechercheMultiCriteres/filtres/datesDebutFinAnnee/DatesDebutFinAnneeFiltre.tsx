@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Field, ErrorMessage, connect } from "formik";
+import { ErrorMessage, connect } from "formik";
 import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
 import DateComposeForm, {
@@ -10,7 +10,9 @@ import DateComposeForm, {
 } from "../../../../common/widget/formulaire/DateComposeForm";
 import {
   withNamespace,
-  FormikComponentProps
+  FormikComponentProps,
+  ComponentFiltreProps,
+  isErrorString
 } from "../../../../common/widget/formulaire/utils/FormUtil";
 import {
   digitSeulement,
@@ -19,8 +21,12 @@ import {
 import {
   IDateCompose,
   estDateVide,
-  compareDatesCompose
+  compareDatesCompose,
+  MAX_YEAR
 } from "../../../../common/util/DateUtils";
+import { getLibelle } from "../../../../common/widget/Text";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
+import { MSG_MAX_YEAR } from "../../../../../ressources/messages";
 
 // Noms des champs
 export const DATE_DEBUT = "dateDebut";
@@ -40,33 +46,23 @@ export const DatesDebutFinAnneeValidationSchema = Yup.object()
   .shape({
     [DATE_DEBUT]: DateValidationSchema,
     [DATE_FIN]: DateValidationSchema,
-    [ANNEE]: Yup.number()
+    [ANNEE]: Yup.number().min(MAX_YEAR, MSG_MAX_YEAR)
   })
   .test(
-    "DatesInvalides",
-    "Les dates sont invalides !",
-    function (value, other) {
+    "datesInvalides",
+    getLibelle(
+      "La date de fin doit être supérieure ou égale à la date de début"
+    ),
+    function (value) {
       const res = compareDatesCompose(
         (value[DATE_FIN] as any) as IDateCompose,
         (value[DATE_DEBUT] as any) as IDateCompose
       );
-      if (res >= 0) {
-        return true;
-      } else {
-        return this.createError({
-          path: dateFinInfDateDebutError,
-          message: "Date de fin inf date début"
-        });
-      }
+      return res >= 0;
     }
   );
 
-interface ComponentProps {
-  nomFiltre: string;
-  key: string;
-}
-
-export type DatesDebutFinAnneeFiltreProps = ComponentProps &
+export type DatesDebutFinAnneeFiltreProps = ComponentFiltreProps &
   FormikComponentProps;
 
 const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props => {
@@ -94,14 +90,14 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
   }, [props.formik.dirty, datesDisabled, setDatesDisabled, anneeDisabled]);
 
   const dateDebutComposeFormProps = {
-    labelDate: "De: ",
+    labelDate: getLibelle("De "),
     nomFiltre: withNamespace(props.nomFiltre, DATE_DEBUT),
     showDatePicker: true,
     onChange: onDateDebutChange
   } as DateComposeFormProps;
 
   const dateFinComposeFormProps = {
-    labelDate: "A: ",
+    labelDate: getLibelle("A "),
     nomFiltre: withNamespace(props.nomFiltre, DATE_FIN),
     showDatePicker: true,
     onChange: onDateFinChange
@@ -125,7 +121,7 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
   }
 
   return (
-    <div className={`Filtre ${props.nomFiltre}`} key={props.key}>
+    <div className={`Filtre ${props.nomFiltre}`}>
       <div className="TitreFiltre">
         <span>Filtre date de création</span>
       </div>
@@ -140,28 +136,21 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
           {...dateFinComposeFormProps}
         />
 
-        {props.formik.errors.dateFinInfDateDebutError && (
+        {isErrorString(props.formik.errors, props.nomFiltre) && (
           <div className="BlockErreur">
-            La date de fin doit être supérieure ou égale à la date de début
+            <ErrorMessage name={props.nomFiltre} />
           </div>
         )}
 
         {/* Recherche par annee uniquement */}
-        <div className="BlockInput">
-          <label htmlFor={withNamespace(props.nomFiltre, ANNEE)}>Année:</label>
-          <Field
-            aria-label={`${props.nomFiltre} année`}
-            component="input"
-            name={withNamespace(props.nomFiltre, ANNEE)}
-            id={withNamespace(props.nomFiltre, ANNEE)}
-            maxLength="4"
-            onInput={anneeChange}
-            disabled={anneeDisabled()}
-          />
-        </div>
-        <div className="BlockErreur">
-          <ErrorMessage name={withNamespace(props.nomFiltre, ANNEE)} />
-        </div>
+        <InputField
+          name={withNamespace(props.nomFiltre, ANNEE)}
+          label={getLibelle("Année")}
+          ariaLabel={`${props.nomFiltre} année`}
+          maxLength="4"
+          onInput={anneeChange}
+          disabled={anneeDisabled()}
+        />
       </div>
     </div>
   );

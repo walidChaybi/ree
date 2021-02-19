@@ -11,13 +11,14 @@ import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
+import { DATES_DEBUT_FIN_ANNEE } from "../../../../../views/pages/rechercheMultiCriteres/RMCActeInscriptionPage";
 const HookDatesDebutFinAnneeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
-  const datesDebutFinAnneeFiltreProps = {
-    nomFiltre: "datesDebutFinAnnee",
-    key: "datesDebutFinAnnee"
-  } as DatesDebutFinAnneeFiltreProps;
+  const datesDebutFinAnneeFiltreProps = ({
+    nomFiltre: DATES_DEBUT_FIN_ANNEE,
+    key: DATES_DEBUT_FIN_ANNEE
+  } as any) as DatesDebutFinAnneeFiltreProps;
 
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));

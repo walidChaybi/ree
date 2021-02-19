@@ -13,27 +13,36 @@ import DatesDebutFinAnneeFiltre, {
 } from "./filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
 import { useRMCInscriptionApiHook } from "./hook/RMCInscriptionApiHook";
 import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
+import {
+  RegistreRepertoireFiltre,
+  RegistreRepertoireDefaultValues,
+  RegistreRepertoireValidationSchema
+} from "./filtres/registreReperoire/RegistreReperoireFiltre";
 
 // Nom des filtres
 const TITULAIRE = "titulaire";
-const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
+export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
+export const REGISTRE_REPERTOIRE = "registreRepertoire";
 
 // Valeurs par défaut des champs
 const DefaultValuesRMCActeInscription = {
   [TITULAIRE]: TitulaireDefaultValues,
-  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues
+  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues,
+  [REGISTRE_REPERTOIRE]: RegistreRepertoireDefaultValues
 };
 
 // Schéma de validation en sortie de champs
 const ValidationSchemaRMCActeInscription = Yup.object({
   [TITULAIRE]: TitulaireValidationSchema,
-  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema
+  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema,
+  [REGISTRE_REPERTOIRE]: RegistreRepertoireValidationSchema
 });
 
 export const titreFrom = "Critères de recherche d'un acte et d'une inscription";
 export const RMCActeInscriptionPage: React.FC = () => {
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(),
+    getRegistreRepertoire(),
     getFormDatesDebutFinAnnee()
   ];
 
@@ -94,8 +103,21 @@ function getFormTitulaire(): JSX.Element {
 
 function getFormDatesDebutFinAnnee(): JSX.Element {
   const datesDebutFinAnneeFiltreProps = {
-    nomFiltre: DATES_DEBUT_FIN_ANNEE,
-    key: DATES_DEBUT_FIN_ANNEE
+    nomFiltre: DATES_DEBUT_FIN_ANNEE
   } as DatesDebutFinAnneeFiltreProps;
-  return <DatesDebutFinAnneeFiltre {...datesDebutFinAnneeFiltreProps} />;
+  return (
+    <DatesDebutFinAnneeFiltre
+      key={DATES_DEBUT_FIN_ANNEE}
+      {...datesDebutFinAnneeFiltreProps}
+    />
+  );
+}
+
+function getRegistreRepertoire(): JSX.Element {
+  return (
+    <RegistreRepertoireFiltre
+      nomFiltre={REGISTRE_REPERTOIRE}
+      key={REGISTRE_REPERTOIRE}
+    />
+  );
 }

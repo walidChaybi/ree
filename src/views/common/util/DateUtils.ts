@@ -1,5 +1,6 @@
 import { rempliAGaucheAvecZero } from "./Utils";
 
+export const MAX_YEAR = 1900;
 const MAX_MONTH = 12;
 export interface IDateCompose {
   jour?: string;
@@ -55,6 +56,49 @@ export function getDateFromDateCompose(date?: IDateCompose): Date | undefined {
   } else {
     return undefined;
   }
+}
+
+export function getDateDebutFromDateCompose(
+  date?: IDateCompose
+): Date | undefined {
+  if (date) {
+    const jour = date.jour || "1";
+    const mois = date.mois || "1";
+    return getDateFromDateCompose({ jour, mois, annee: date.annee });
+  } else {
+    return undefined;
+  }
+}
+
+export function getDateFinFromDateCompose(
+  date?: IDateCompose
+): Date | undefined {
+  if (date) {
+    const mois = date.mois || String(MAX_MONTH);
+    let jour = "";
+    if (!date.jour) {
+      const dernierjourDuMois = getDernierJourDuMois(
+        Number(mois),
+        Number(date.annee)
+      );
+      jour = String(dernierjourDuMois ? dernierjourDuMois : "");
+    }
+    return getDateFromDateCompose({ jour, mois, annee: date.annee });
+  } else {
+    return undefined;
+  }
+}
+
+export function getDernierJourDuMois(
+  mois?: number,
+  annee?: number
+): number | undefined {
+  let dernierjourDuMois;
+  if (annee && mois) {
+    const date = new Date(annee, mois, 0);
+    dernierjourDuMois = date.getDate();
+  }
+  return dernierjourDuMois;
 }
 
 export function getDateString(date: Date): string {
@@ -146,13 +190,17 @@ export function getFormatDateFromTimestamp(timestamp: number): string {
   }
   return "";
 }
-
-export function getHeureFromNumber(heure?: number, minute?: number) {
+/**
+ *
+ * 12 04 => à 12h04
+ * 00 04 => à zéro heure 04
+ * 10 00 => à 10h
+ */
+export function formatAHeure(heure?: number, minute?: number) {
   if (heure != null) {
-    const libelleHeure = heure > 1 ? "heures" : "heure";
-    const minuteConvert = minute != null ? `${minute}` : "";
+    const minuteConvert = minute ? `${minute}` : "";
     if (heure === 0) {
-      return `à zéro ${libelleHeure} ${minuteConvert}`;
+      return `à zéro heure ${minuteConvert}`;
     } else {
       return `à ${heure}h${minuteConvert}`;
     }

@@ -11,16 +11,22 @@ import {
   traiteCarAutorises,
   traiteZeroAGauche
 } from "./utils/ControlesUtil";
-import { withNamespace, FormikComponentProps } from "./utils/FormUtil";
+import {
+  withNamespace,
+  FormikComponentProps,
+  isErrorString
+} from "./utils/FormUtil";
 import {
   estDateValide,
   getIsoStringFromDateCompose,
   IDateCompose,
   getDateComposeFromDate,
-  estDateReceValide
+  estDateReceValide,
+  MAX_YEAR
 } from "../../util/DateUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { MSG_MAX_YEAR } from "../../../../ressources/messages";
 
 // Noms des champs
 export const JOUR = "jour";
@@ -36,7 +42,9 @@ export const DateDefaultValues = {
 
 // Schéma de validation des champs
 export const DateValidationSchema = Yup.object()
-  .shape({})
+  .shape({
+    [ANNEE]: Yup.number().min(MAX_YEAR, MSG_MAX_YEAR)
+  })
   .test(
     "dateInvalide",
     "Date ou format invalide (formats autorisés: JJ/MM/AAAA, MM/AAAA, AAAA)",
@@ -207,7 +215,10 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
         )}
       </div>
       <div className="BlockErreur">
-        <ErrorMessage name={props.nomFiltre} />
+        {isErrorString(props.formik.errors, props.nomFiltre) && (
+          <ErrorMessage name={props.nomFiltre} />
+        )}
+        <ErrorMessage name={withNamespace(props.nomFiltre, ANNEE)} />
       </div>
     </>
   );

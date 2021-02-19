@@ -2,7 +2,10 @@ import { IResultatRMCActe } from "../../../model/rmc/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../model/rmc/resultat/IResultatRMCInscription";
 import { IRMCActeInscription } from "../../../model/rmc/rechercheForm/IRMCActeInscription";
 import { IRMCRequest } from "../../../model/rmc/envoi/IRMCRequest";
-import { getDateFromDateCompose } from "../../common/util/DateUtils";
+import {
+  getDateFinFromDateCompose,
+  getDateDebutFromDateCompose
+} from "../../common/util/DateUtils";
 import { valeurOuUndefined } from "../../common/util/Utils";
 
 /** Critères de recherche: mapping avant appel d'api */
@@ -17,10 +20,10 @@ export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
     anneeNaissance: valeurOuUndefined(criteres.titulaire.dateNaissance.annee),
     paysNaissance: valeurOuUndefined(criteres.titulaire.paysNaissance),
     // Filtre Date de création
-    dateCreationDebut: getDateFromDateCompose(
+    dateCreationDebut: getDateDebutFromDateCompose(
       criteres.datesDebutFinAnnee?.dateDebut
     ),
-    dateCreationFin: getDateFromDateCompose(
+    dateCreationFin: getDateFinFromDateCompose(
       criteres.datesDebutFinAnnee?.dateFin
     ),
     annee: criteres.datesDebutFinAnnee?.annee,

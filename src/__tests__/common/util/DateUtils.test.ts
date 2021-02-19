@@ -9,7 +9,10 @@ import {
   compareNumber,
   compareDatesCompose,
   getIsoStringFromDateCompose,
-  getDateComposeFromDate
+  getDateComposeFromDate,
+  getDernierJourDuMois,
+  getDateDebutFromDateCompose,
+  getDateFinFromDateCompose
 } from "../../../views/common/util/DateUtils";
 
 test("getDateFromDateCompose", () => {
@@ -216,4 +219,84 @@ test("getDateComposeFromDate", () => {
     mois: "03",
     annee: "1990"
   });
+});
+
+test("getDernierJourDuMois", () => {
+  expect(getDernierJourDuMois(2, 1800)).toBe(28);
+  expect(getDernierJourDuMois(2, 1990)).toBe(28);
+  expect(getDernierJourDuMois(2, 2000)).toBe(29);
+  expect(getDernierJourDuMois(2, 2010)).toBe(28);
+  expect(getDernierJourDuMois(2, 2020)).toBe(29);
+  expect(getDernierJourDuMois(1, 2020)).toBe(31);
+  expect(getDernierJourDuMois(4, 2020)).toBe(30);
+});
+
+function expectDatesEquals(d1?: Date, d2?: Date) {
+  if (d1 === d2) {
+    return true;
+  }
+  if (d1 && !d2) {
+    return false;
+  }
+  if (!d1 && d2) {
+    return false;
+  }
+  return (
+    d1?.getFullYear() === d2?.getFullYear() &&
+    d1?.getMonth() === d2?.getMonth() &&
+    d1?.getDate() === d2?.getDate()
+  );
+}
+
+test("getDateDebutFromDateCompose", () => {
+  expect(getDateDebutFromDateCompose()).toBe(undefined);
+  expect(getDateDebutFromDateCompose({ jour: "", mois: "", annee: "" })).toBe(
+    undefined
+  );
+
+  expectDatesEquals(
+    getDateDebutFromDateCompose({ jour: "", mois: "", annee: "1990" }),
+    new Date(1990, 1, 1)
+  );
+
+  expectDatesEquals(
+    getDateDebutFromDateCompose({ jour: "", mois: "10", annee: "1990" }),
+    new Date(1990, 10, 1)
+  );
+
+  expectDatesEquals(
+    getDateDebutFromDateCompose({ jour: "05", mois: "10", annee: "1990" }),
+    new Date(1990, 10, 5)
+  );
+});
+
+test("getDateFinFromDateCompose", () => {
+  expect(getDateFinFromDateCompose()).toBe(undefined);
+  expect(getDateFinFromDateCompose({ jour: "", mois: "", annee: "" })).toBe(
+    undefined
+  );
+  expectDatesEquals(
+    getDateDebutFromDateCompose({ jour: "", mois: "", annee: "1990" }),
+    new Date(1990, 12, 31)
+  );
+
+  expectDatesEquals(
+    getDateDebutFromDateCompose({ jour: "", mois: "02", annee: "1990" }),
+    new Date(1990, 2, 28)
+  );
+
+  expectDatesEquals(
+    getDateDebutFromDateCompose({ jour: "", mois: "02", annee: "2000" }),
+    new Date(1990, 2, 29)
+  );
+
+  expectDatesEquals(
+    getDateDebutFromDateCompose({ jour: "", mois: "04", annee: "2021" }),
+    new Date(1990, 4, 30)
+  );
+
+  expectDatesEquals(
+    getDateDebutFromDateCompose({ jour: "10", mois: "02", annee: "1990" }),
+    new Date(1990, 2, 10)
+  );
 });
