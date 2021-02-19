@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Field,
-  ErrorMessage,
-  connect,
-  FormikProps,
-  FormikValues
-} from "formik";
+import { connect, FormikProps, FormikValues } from "formik";
 import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
 import DateComposeForm, {
@@ -25,6 +19,8 @@ import { withNamespace } from "../../../../common/widget/formulaire/utils/FormUt
 import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import { faArrowsAltH } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
+import { getLibelle } from "../../../../common/widget/Text";
 
 // Noms des champs
 export const NOM = "nom";
@@ -87,18 +83,11 @@ const TitulaireFiltre: React.FC<any> = props => {
         <span>Titulaire</span>
       </div>
       <div className="FormFiltre">
-        <div className="BlockInput">
-          <label htmlFor={withNamespace(props.nomFiltre, NOM)}>Nom</label>
-          <Field
-            component="input"
-            name={withNamespace(props.nomFiltre, NOM)}
-            id={withNamespace(props.nomFiltre, NOM)}
-            onBlur={onBlurChamp}
-          />
-        </div>
-        <div className="BlockErreur">
-          <ErrorMessage name={withNamespace(props.nomFiltre, NOM)} />
-        </div>
+        <InputField
+          name={withNamespace(props.nomFiltre, NOM)}
+          label={getLibelle("Nom")}
+          onBlur={onBlurChamp}
+        />
 
         <button
           className="BtnNomPrenom"
@@ -108,35 +97,19 @@ const TitulaireFiltre: React.FC<any> = props => {
           Nom <FontAwesomeIcon icon={faArrowsAltH} /> Prénom
         </button>
 
-        <div className="BlockInput">
-          <label htmlFor={withNamespace(props.nomFiltre, PRENOM)}>Prénom</label>
-          <Field
-            component="input"
-            name={withNamespace(props.nomFiltre, PRENOM)}
-            id={withNamespace(props.nomFiltre, PRENOM)}
-            onBlur={onBlurChamp}
-          />
-        </div>
-        <div className="BlockErreur">
-          <ErrorMessage name={withNamespace(props.nomFiltre, PRENOM)} />
-        </div>
+        <InputField
+          name={withNamespace(props.nomFiltre, PRENOM)}
+          label={getLibelle("Prénom")}
+          onBlur={onBlurChamp}
+        />
 
         <DateComposeForm {...dateDebutComposeFormProps} />
 
-        <div className="BlockInput">
-          <label htmlFor={withNamespace(props.nomFiltre, PAYS_NAISSANCE)}>
-            Pays de naissance
-          </label>
-          <Field
-            component="input"
-            name={withNamespace(props.nomFiltre, PAYS_NAISSANCE)}
-            id={withNamespace(props.nomFiltre, PAYS_NAISSANCE)}
-            onBlur={onBlurChamp}
-          />
-        </div>
-        <div className="BlockErreur">
-          <ErrorMessage name={withNamespace(props.nomFiltre, PAYS_NAISSANCE)} />
-        </div>
+        <InputField
+          name={withNamespace(props.nomFiltre, PAYS_NAISSANCE)}
+          label={getLibelle("Pays de naissance")}
+          onBlur={onBlurChamp}
+        />
       </div>
     </div>
   );

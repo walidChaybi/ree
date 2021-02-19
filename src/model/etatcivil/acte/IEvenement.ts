@@ -1,6 +1,6 @@
 import {
   getDateStringFromDateCompose,
-  getHeureFromNumber
+  formatAHeure
 } from "../../../views/common/util/DateUtils";
 import { numberToString } from "../../../views/common/util/Utils";
 import { LieuxUtils } from "../../Lieux";
@@ -25,7 +25,7 @@ export const Evenement = {
           jour: numberToString(evenement.jour),
           mois: numberToString(evenement.mois),
           annee: numberToString(evenement.annee)
-        })} ${getHeureFromNumber(evenement.heure, evenement.minute)}`
+        })} ${formatAHeure(evenement.heure, evenement.minute)}`
       : "";
   },
   getLieu(evenement?: IEvenement): string {

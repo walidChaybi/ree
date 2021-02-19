@@ -35,3 +35,7 @@ export function getText(
   }
   return message || `⚠ ${messageId}`;
 }
+
+export function getLibelle(msg: string) {
+  return msg;
+}

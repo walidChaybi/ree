@@ -16,7 +16,8 @@ import {
   formatPrenoms,
   jointPrenoms,
   premiereLettreEnMajuscule,
-  numberToString
+  numberToString,
+  valeurOuUndefined
 } from "../../../views/common/util/Utils";
 import { IPrenom } from "../../../model/etatcivil/FicheInterfaces";
 
@@ -180,4 +181,10 @@ test("Attendu: numberToString fonctionne correctement", () => {
   expect(numberToString()).toBe("");
   const nb = 7;
   expect(numberToString(nb)).toBe("7");
+});
+
+test("Attendu: valeurOuUndefined fonctionne correctement", () => {
+  expect(valeurOuUndefined()).toBe(undefined);
+  expect(valeurOuUndefined("")).toBe(undefined);
+  expect(valeurOuUndefined("azer")).toBe("azer");
 });
