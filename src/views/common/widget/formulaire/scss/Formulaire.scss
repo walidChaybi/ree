@@ -20,4 +20,13 @@
     display: grid;
     grid-template-columns: 50% 50%;
   }
+
+  .Buttons {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .ResetButton {
+    background-color: #0579be;
+  }
 }

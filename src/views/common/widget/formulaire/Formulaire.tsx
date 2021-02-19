@@ -23,7 +23,7 @@ export const Formulaire: React.FC<FomulaireProps> = props => {
         initialValues={props.formDefaultValues}
         validationSchema={props.formValidationSchema}
       >
-        {({ isValid, dirty }) => (
+        {({ isValid, dirty, resetForm }) => (
           <>
             {props.blocs && (
               <Form>
@@ -33,9 +33,18 @@ export const Formulaire: React.FC<FomulaireProps> = props => {
                   })}
                 </div>
                 {
-                  <button disabled={!isValid || !dirty} type="submit">
-                    {props.libelleBouton}
-                  </button>
+                  <div className="Buttons">
+                    <button
+                      className="ResetButton"
+                      type="reset"
+                      onClick={() => resetForm()}
+                    >
+                      Réinitialiser les critères
+                    </button>
+                    <button disabled={!isValid || !dirty} type="submit">
+                      {props.libelleBouton}
+                    </button>
+                  </div>
                 }
               </Form>
             )}
