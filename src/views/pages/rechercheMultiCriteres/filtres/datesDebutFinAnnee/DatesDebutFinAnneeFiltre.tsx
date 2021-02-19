@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Field, ErrorMessage, connect } from "formik";
 import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
@@ -42,23 +42,24 @@ export const DatesDebutFinAnneeValidationSchema = Yup.object()
     [DATE_FIN]: DateValidationSchema,
     [ANNEE]: Yup.number()
   })
-  .test("DatesInvalides", "Les dates sont invalides !", function (
-    value,
-    other
-  ) {
-    const res = compareDatesCompose(
-      (value[DATE_FIN] as any) as IDateCompose,
-      (value[DATE_DEBUT] as any) as IDateCompose
-    );
-    if (res >= 0) {
-      return true;
-    } else {
-      return this.createError({
-        path: dateFinInfDateDebutError,
-        message: "Date de fin inf date début"
-      });
+  .test(
+    "DatesInvalides",
+    "Les dates sont invalides !",
+    function (value, other) {
+      const res = compareDatesCompose(
+        (value[DATE_FIN] as any) as IDateCompose,
+        (value[DATE_DEBUT] as any) as IDateCompose
+      );
+      if (res >= 0) {
+        return true;
+      } else {
+        return this.createError({
+          path: dateFinInfDateDebutError,
+          message: "Date de fin inf date début"
+        });
+      }
     }
-  });
+  );
 
 interface ComponentProps {
   nomFiltre: string;
@@ -72,6 +73,25 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
   const [dateDebut, setDateDebut] = useState<IDateComposeForm>();
   const [dateFin, setDateFin] = useState<IDateComposeForm>();
   const [datesDisabled, setDatesDisabled] = useState<boolean>();
+
+  const anneeDisabled = useCallback(() => {
+    return (
+      !estDateVide(dateDebut as IDateCompose) ||
+      !estDateVide(dateFin as IDateCompose)
+    );
+  }, [dateDebut, dateFin]);
+
+  // Permet de dégriser les champs dates de creation ou année apres un resetForm.
+  useEffect(() => {
+    if (datesDisabled && !props.formik.dirty) {
+      setDatesDisabled(false);
+    }
+
+    if (anneeDisabled() && !props.formik.dirty) {
+      setDateDebut({ jour: "", mois: "", annee: "" });
+      setDateFin({ jour: "", mois: "", annee: "" });
+    }
+  }, [props.formik.dirty, datesDisabled, setDatesDisabled, anneeDisabled]);
 
   const dateDebutComposeFormProps = {
     labelDate: "De: ",
@@ -136,10 +156,7 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
             id={withNamespace(props.nomFiltre, ANNEE)}
             maxLength="4"
             onInput={anneeChange}
-            disabled={
-              !estDateVide(dateDebut as IDateCompose) ||
-              !estDateVide(dateFin as IDateCompose)
-            }
+            disabled={anneeDisabled()}
           />
         </div>
         <div className="BlockErreur">
