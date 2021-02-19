@@ -147,15 +147,16 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
 
   function videChamps(e: any) {
     e.preventDefault();
-
-    setDateSaisie({});
-    if (props.onChange) {
-      props.onChange({});
-    }
-    props.formik.setFieldValue(withNamespace(props.nomFiltre, JOUR), "");
-    props.formik.setFieldValue(withNamespace(props.nomFiltre, MOIS), "");
-    props.formik.setFieldValue(withNamespace(props.nomFiltre, ANNEE), "");
-    props.formik.setFieldTouched(props.nomFiltre, false, false);
+    executeEnDiffere(() => {
+      setDateSaisie({});
+      if (props.onChange) {
+        props.onChange({});
+      }
+      props.formik.setFieldValue(withNamespace(props.nomFiltre, JOUR), "");
+      props.formik.setFieldValue(withNamespace(props.nomFiltre, MOIS), "");
+      props.formik.setFieldValue(withNamespace(props.nomFiltre, ANNEE), "");
+      props.formik.setFieldTouched(props.nomFiltre, false, false);
+    });
   }
 
   return (
@@ -230,24 +231,29 @@ export const onDatePickerValueChange = (
   setDateSaisie: any
 ) => {
   const dateCompose = getDateComposeFromDate(date) as IDateComposeForm;
-
-  props.formik.setFieldValue(
-    withNamespace(props.nomFiltre, JOUR),
-    dateCompose.jour
-  );
-  props.formik.setFieldValue(
-    withNamespace(props.nomFiltre, MOIS),
-    dateCompose.mois
-  );
-  props.formik.setFieldValue(
-    withNamespace(props.nomFiltre, ANNEE),
-    dateCompose.annee
-  );
-
-  setDateSaisie(dateCompose);
-  if (props.onChange) {
-    props.onChange(dateCompose);
-  }
+  executeEnDiffere(() => {
+    props.formik.setFieldValue(
+      withNamespace(props.nomFiltre, JOUR),
+      dateCompose.jour
+    );
+    props.formik.setFieldValue(
+      withNamespace(props.nomFiltre, MOIS),
+      dateCompose.mois
+    );
+    props.formik.setFieldValue(
+      withNamespace(props.nomFiltre, ANNEE),
+      dateCompose.annee
+    );
+    props.formik.setFieldTouched(props.nomFiltre, false, false);
+    setDateSaisie(dateCompose);
+    if (props.onChange) {
+      props.onChange(dateCompose);
+    }
+  });
+};
+const TIME_OUT_MS = 100;
+const executeEnDiffere = (fct: any) => {
+  setTimeout(fct, TIME_OUT_MS);
 };
 
 export default connect(DateComposeForm);

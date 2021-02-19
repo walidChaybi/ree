@@ -60,6 +60,16 @@ export const DatesDebutFinAnneeValidationSchema = Yup.object()
       );
       return res >= 0;
     }
+  )
+  .test(
+    "datesInvalides2",
+    getLibelle("La date de début doit être renseignée"),
+    function (value) {
+      return (
+        !estDateVide((value[DATE_DEBUT] as any) as IDateCompose) ||
+        estDateVide((value[DATE_FIN] as any) as IDateCompose)
+      );
+    }
   );
 
 export type DatesDebutFinAnneeFiltreProps = ComponentFiltreProps &

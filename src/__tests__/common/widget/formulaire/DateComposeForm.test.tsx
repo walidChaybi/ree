@@ -10,7 +10,8 @@ import {
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues,
-  onDatePickerValueChange
+  onDatePickerValueChange,
+  executeEnDiffere
 } from "../../../../views/common/widget/formulaire/DateComposeForm";
 import { Field, Formik, Form } from "formik";
 
@@ -122,8 +123,10 @@ test("render composant DateComposeForm: onDatePickerValueChange", async () => {
   };
   onDatePickerValueChange(props, date, setDateSaisie);
 
-  expect(setDateSaisie).toHaveBeenCalledTimes(1);
-  expect(props.formik.setFieldValue).toHaveBeenCalledTimes(3);
+  waitFor(() => {
+    expect(setDateSaisie).toHaveBeenCalledTimes(1);
+    expect(props.formik.setFieldValue).toHaveBeenCalledTimes(3);
+  });
 });
 
 afterEach(cleanup);
