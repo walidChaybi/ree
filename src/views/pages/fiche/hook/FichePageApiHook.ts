@@ -67,8 +67,7 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
               break;
 
             case TypeFiche.ACTE:
-              const dataActe = mapActe(result.body.data);
-              dataFiche.fiche = getPanelsActe(dataActe);
+              dataFiche.fiche = getPanelsActe(mapActe(result.body.data));
               break;
 
             default:
@@ -189,6 +188,16 @@ export function mapActe(data: any): IFicheActe {
   dataActe.personnes = mapPersonnes(data.personnes, data);
 
   return dataActe;
+}
+
+export function convertToBlob(base64: string): Blob {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: "application/pdf" });
 }
 
 function harmoniserNomPrenomsInteresse(interesse: IInteresse) {

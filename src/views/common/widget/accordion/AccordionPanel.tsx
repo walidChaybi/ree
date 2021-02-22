@@ -8,6 +8,7 @@ export interface AccordionPanelProps {
   panelAreas: AccordionPanelAreaProps[];
   title: string;
   id?: string;
+  url?: string;
 }
 
 export const AccordionPanel: React.FC<AccordionPanelProps> = ({
@@ -23,6 +24,7 @@ export const AccordionPanel: React.FC<AccordionPanelProps> = ({
             <AccordionPanelArea
               id={`${title}-${id}`}
               parts={panelArea.parts}
+              value={panelArea.value}
               title={panelArea.title}
               nbColonne={panelArea.nbColonne}
             />
