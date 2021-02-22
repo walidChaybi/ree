@@ -39,6 +39,21 @@ export const configEtatcivil = [
         "/repertoirecivil/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
       ) {
         return { data: acte };
+      } else if (
+        match[1] ===
+        "/repertoirecivil/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
+      ) {
+        return {
+          headers: [
+            {
+              "Content-Disposition": 'filename="unfichier.pdf"'
+            },
+            {
+              "content-type": "application/pdf"
+            }
+          ],
+          body: "contenubase64dupdf"
+        };
       }
 
       if (match[1] === "/acte/rmc") {

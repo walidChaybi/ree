@@ -4,6 +4,7 @@ const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
 export const URL_ETAT_CIVIL = "/repertoirecivil";
 export const URL_ACTE = "/acte";
+export const URL_ACTE_IMAGE = "/repertoirecivil/acte/corps";
 
 export function getInformationsFiche(
   categorie: string,
@@ -32,5 +33,13 @@ export function rechercheMultiCriteresInscriptions(
     method: HttpMethod.POST,
     uri: `${URL_ETAT_CIVIL}/rmc`,
     data: criteres
+  });
+}
+
+export function getImagesActe(identifiant: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE_IMAGE}/${identifiant}`,
+    responseType: "blob"
   });
 }

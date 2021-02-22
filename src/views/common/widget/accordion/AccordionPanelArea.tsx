@@ -3,7 +3,8 @@ import { AccordionPart, AccordionPartProps } from "./AccordionPart";
 import "./sass/AccordionPanelArea.scss";
 
 export interface AccordionPanelAreaProps {
-  parts: AccordionPartProps[];
+  parts?: AccordionPartProps[];
+  value?: JSX.Element | JSX.Element[] | string;
   id?: string;
   title?: string;
   nbColonne?: number;
@@ -11,6 +12,7 @@ export interface AccordionPanelAreaProps {
 
 export const AccordionPanelArea: React.FC<AccordionPanelAreaProps> = ({
   parts,
+  value,
   id = "",
   title,
   nbColonne = 1
@@ -19,19 +21,21 @@ export const AccordionPanelArea: React.FC<AccordionPanelAreaProps> = ({
   return (
     <div className={`accordionPanelArea ${test}`}>
       {title && <span className="titlePanelArea">{title}</span>}
-      {parts.map((part, index) => {
-        const classNamePart =
-          part.classNameContent == null && nbColonne > 1
-            ? getCssColonne(nbColonne, index)
-            : part.classNameContent;
-        return (
-          <AccordionPart
-            key={`accordion-panel-area-${index}-${id}`}
-            {...part}
-            classNameContent={classNamePart}
-          />
-        );
-      })}
+      {value && <div>{value}</div>}
+      {parts &&
+        parts.map((part, index) => {
+          const classNamePart =
+            part.classNameContent == null && nbColonne > 1
+              ? getCssColonne(nbColonne, index)
+              : part.classNameContent;
+          return (
+            <AccordionPart
+              key={`accordion-panel-area-${index}-${id}`}
+              {...part}
+              classNameContent={classNamePart}
+            />
+          );
+        })}
     </div>
   );
 };

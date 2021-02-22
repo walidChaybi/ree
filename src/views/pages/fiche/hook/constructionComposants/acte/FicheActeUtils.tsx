@@ -4,6 +4,8 @@ import { getTitulaires } from "./TitulairesActeUtils";
 import { getEvenement } from "./EvenementActeUtils";
 import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
 import { getFichesPersonne } from "../personne/FichePersonne";
+import React from "react";
+import { ActeImage } from "./ActeImage";
 
 export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
   const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(
@@ -22,6 +24,20 @@ export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
         ],
         title: "Résumé de l'acte"
       },
+      {
+        panelAreas: [
+          {
+            value: (
+              <ActeImage
+                id={acte.compositionCorps.idCompositionCorps}
+              ></ActeImage>
+            ),
+            nbColonne: 1
+          }
+        ],
+        title: "Vue de l'acte"
+      },
+
       ...fichesPersonne
     ]
   };
