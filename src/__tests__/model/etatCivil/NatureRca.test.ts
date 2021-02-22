@@ -1,7 +1,7 @@
 import {
   NatureFicheRcaUtil,
   TypeNatureFicheRca
-} from "../../../model/etatcivil/NatureRca";
+} from "../../../model/etatcivil/enum/TypeNatureFicheRca";
 
 test("Nature model getLibelle", () => {
   expect(NatureFicheRcaUtil.getLibelle()).toBe("");

@@ -5,7 +5,7 @@ import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
 import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
-import { FicheUtil, TypeFiche } from "../../../model/etatcivil/TypeFiche";
+import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { AlerteActe } from "./hook/constructionComposants/acte/AlerteActeUtils";
 
 export interface FichePageProps {

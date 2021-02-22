@@ -7,7 +7,7 @@ import {
   formatNom
 } from "../../../../../common/util/Utils";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import { LieuxUtils } from "../../../../../../model/Lieux";
+import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 
 export function getPartenaires(
   partenaires: IPartenaire[]

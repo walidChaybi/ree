@@ -1,5 +1,5 @@
-import { TypeAutorite, TypeAutoriteUtil } from "../TypeAutorite";
-import { LieuxUtils } from "../../Lieux";
+import { TypeAutorite, TypeAutoriteUtil } from "../enum/TypeAutorite";
+import { LieuxUtils } from "../../LieuxUtils";
 import {
   getValeurOuVide,
   premiereLettreEnMajusculeLeResteEnMinuscule,

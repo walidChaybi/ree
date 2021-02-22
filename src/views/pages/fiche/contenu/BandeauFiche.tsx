@@ -2,7 +2,7 @@ import React from "react";
 import "./sass/Bandeau.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
+import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
 import { jointAvec } from "../../../common/util/Utils";
 
 export interface BandeauFicheProps {

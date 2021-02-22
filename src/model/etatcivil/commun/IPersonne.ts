@@ -2,15 +2,19 @@ import {
   formatNom,
   formatPrenom,
   premiereLettreEnMajusculeLeResteEnMinuscule
-} from "../../../../common/util/Utils";
-import { LieuxUtils } from "../../../../../model/Lieux";
+} from "../../../views/common/util/Utils";
+import { LieuxUtils } from "../../LieuxUtils";
 import {
   IDateCompose,
   getDateStringFromDateCompose
-} from "../../../../common/util/DateUtils";
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
-import { AutresNoms } from "../../../../../model/etatcivil/enum/AutresNoms";
+} from "../../../views/common/util/DateUtils";
+import { Sexe } from "../enum/Sexe";
+import { AutresNoms } from "../enum/AutresNoms";
+import { ILieuEvenement } from "./ILieuEvenement";
+import { IFicheLien } from "./IFicheLien";
+import { IFicheLienActes } from "./IFicheLienActes";
+import { IFamille } from "./IFamille";
+import { IAutresNoms } from "./IAutresNoms";
 
 export interface IPersonne {
   nom: string;
@@ -29,33 +33,6 @@ export interface IPersonne {
   pacss: IFicheLien[];
   rcs: IFicheLien[];
   rcas: IFicheLien[];
-}
-
-export interface IFicheLien {
-  numero: string;
-  id: string;
-}
-
-export interface IFicheLienActes {
-  numero: string;
-  id: string;
-  nature: NatureActe;
-}
-export interface IFamille {
-  nom: string;
-  prenoms: string[];
-}
-
-export interface ILieuEvenement {
-  pays: string;
-  ville: string;
-  region: string;
-  arrondissement: string;
-}
-
-export interface IAutresNoms {
-  nom: string;
-  type: AutresNoms;
 }
 
 export const Personne = {

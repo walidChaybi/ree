@@ -1,6 +1,6 @@
 import { IFichePacs } from "../../model/etatcivil/pacs/IFichePacs";
 import { StatutPacs } from "../../model/etatcivil/enum/StatutPacs";
-import { TypeAutorite } from "../../model/etatcivil/TypeAutorite";
+import { TypeAutorite } from "../../model/etatcivil/enum/TypeAutorite";
 import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
 import { TypeJuridiction } from "../../model/etatcivil/enum/TypeJuridiction";
 import { DecisionAnnulation } from "../../model/etatcivil/enum/DecisionAnnulation";

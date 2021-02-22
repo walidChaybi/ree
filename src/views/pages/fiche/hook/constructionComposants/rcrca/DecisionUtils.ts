@@ -1,16 +1,17 @@
-import { DecisionUtil } from "../../../../../model/etatcivil/TypeDecision";
+import { DecisionUtil } from "../../../../../../model/etatcivil/enum/TypeDecision";
 import {
   getDateString,
   getDateFromTimestamp
-} from "../../../../common/util/DateUtils";
+} from "../../../../../common/util/DateUtils";
+import { IDecisionRc } from "../../../../../../model/etatcivil/fiche/IDecisionRc";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
+import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/enum/TypeAutorite";
 import {
-  IFicheRcRca,
-  IDecisionRc
-} from "../../../../../model/etatcivil/FicheInterfaces";
-import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
-import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
-import { TypeAutoriteUtil } from "../../../../../model/etatcivil/TypeAutorite";
-import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
+  FicheUtil,
+  TypeFiche
+} from "../../../../../../model/etatcivil/enum/TypeFiche";
 
 export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
   let contentsDecision: AccordionContentProps[] = [];

@@ -1,22 +1,23 @@
 import React from "react";
 import {
   IPersonne,
-  Personne,
-  IFamille,
-  IFicheLienActes,
-  IFicheLien
-} from "../../contenu/personne/Personne";
-import { AccordionPanelProps } from "../../../../common/widget/accordion/AccordionPanel";
-import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
-import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
-import { LienFiche } from "../../LienFiche";
+  Personne
+} from "../../../../../../model/etatcivil/commun/IPersonne";
+import { IFamille } from "../../../../../../model/etatcivil/commun/IFamille";
+import { IFicheLienActes } from "../../../../../../model/etatcivil/commun/IFicheLienActes";
+import { IFicheLien } from "../../../../../../model/etatcivil/commun/IFicheLien";
+import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
+import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
+import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import { LienFiche } from "../../../LienFiche";
 import {
   formatDe,
   enMajuscule,
   premiereLettreEnMajusculeLeResteEnMinuscule
-} from "../../../../common/util/Utils";
-import { TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
-import { AccordionContentPartProps } from "../../../../common/widget/accordion/AccordionPartContent";
+} from "../../../../../common/util/Utils";
+import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
+import { AccordionContentPartProps } from "../../../../../common/widget/accordion/AccordionPartContent";
+import { getLibelle } from "../../../../../common/widget/Text";
 
 export function getFichesPersonne(
   personnes: IPersonne[]
@@ -43,7 +44,7 @@ export function getFichesPersonne(
           nbColonne: 3
         }
       ],
-      title: `Fiche Personne ${index + 1}`
+      title: getLibelle(`Fiche Personne ${index + 1}`)
     };
   });
 }
@@ -57,7 +58,7 @@ function getInformationsListeInscriptions(
       getRcasPersonne(Personne.getRcas(personne)),
       getPacssPersonne(Personne.getPacss(personne))
     ],
-    title: "Liste d'inscriptions"
+    title: getLibelle("Liste d'inscriptions")
   };
 }
 
@@ -66,7 +67,7 @@ function getInformationsListeActes(
 ): AccordionContentPartProps {
   return {
     contents: [getActesPersonne(Personne.getActes(personne))],
-    title: "Liste d'actes"
+    title: getLibelle("Liste d'actes")
   };
 }
 
@@ -75,7 +76,7 @@ function getInformationsParents(
 ): AccordionContentPartProps {
   return {
     contents: [...getParentsPersonne(Personne.getParents(personne))],
-    title: "Parents"
+    title: getLibelle("Parents")
   };
 }
 
@@ -84,7 +85,7 @@ function getInformationsEnfants(
 ): AccordionContentPartProps {
   return {
     contents: [getEnfantsPersonne(Personne.getEnfants(personne))],
-    title: "Enfants"
+    title: getLibelle("Enfants")
   };
 }
 
@@ -103,28 +104,28 @@ function getInformationsPersonne(personne: IPersonne): AccordionPartProps {
         getLieuDeces(Personne.getLieuDeces(personne)),
         getDateDeces(Personne.getDateDeces(personne))
       ],
-      title: "Personne"
+      title: getLibelle("Personne")
     }
   };
 }
 
 function getNomPersonne(nom: string): AccordionContentProps {
   return {
-    libelle: "Nom",
+    libelle: getLibelle("Nom"),
     value: nom
   };
 }
 
 function getAutresNomsPersonne(autresNom: string): AccordionContentProps {
   return {
-    libelle: "Autres noms",
+    libelle: getLibelle("Autres noms"),
     value: autresNom
   };
 }
 
 function getPrenomsPersonne(prenoms: string): AccordionContentProps {
   return {
-    libelle: "Prénoms",
+    libelle: getLibelle("Prénoms"),
     value: prenoms
   };
 }
@@ -133,49 +134,49 @@ function getAutresPrenomsPersonne(
   autresPrenoms: string
 ): AccordionContentProps {
   return {
-    libelle: "Autres prénoms",
+    libelle: getLibelle("Autres prénoms"),
     value: autresPrenoms
   };
 }
 
 function getLieuNaissance(lieuNaissance: string): AccordionContentProps {
   return {
-    libelle: "Lieu de naissance",
+    libelle: getLibelle("Lieu de naissance"),
     value: lieuNaissance
   };
 }
 
 function getLieuDeces(lieuDeces: string): AccordionContentProps {
   return {
-    libelle: "Lieu décès (si connu)",
+    libelle: getLibelle("Lieu décès (si connu)"),
     value: lieuDeces
   };
 }
 
 function getDateNaissance(dateNaissance: string): AccordionContentProps {
   return {
-    libelle: "Né(e) le",
+    libelle: getLibelle("Né(e) le"),
     value: dateNaissance
   };
 }
 
 function getDateDeces(dateDeces: string): AccordionContentProps {
   return {
-    libelle: "Date décès (si connu)",
+    libelle: getLibelle("Date décès (si connu)"),
     value: dateDeces
   };
 }
 
 function getNationalitePersonne(nationalite: string): AccordionContentProps {
   return {
-    libelle: "Nationalité",
+    libelle: getLibelle("Nationalité"),
     value: nationalite
   };
 }
 
 function getSexePersonne(sexe: string): AccordionContentProps {
   return {
-    libelle: "Sexe",
+    libelle: getLibelle("Sexe"),
     value: sexe
   };
 }
@@ -189,11 +190,11 @@ function getParentsPersonne(parents: IFamille[]): AccordionContentProps[] {
     if (index === 0 || index === 1) {
       result = result.concat([
         {
-          libelle: `Nom parent ${index + 1}`,
+          libelle: getLibelle(`Nom parent ${index + 1}`),
           value: enMajuscule(parent.nom)
         },
         {
-          libelle: `Prénom parent ${index + 1}`,
+          libelle: getLibelle(`Prénom parent ${index + 1}`),
           value: premiereLettreEnMajusculeLeResteEnMinuscule(parent.prenoms[0])
         }
       ]);
@@ -203,7 +204,7 @@ function getParentsPersonne(parents: IFamille[]): AccordionContentProps[] {
     ) {
       result = result.concat([
         {
-          libelle: `Prénom et nom (parent adoptif ${index - 1})`,
+          libelle: getLibelle(`Prénom et nom (parent adoptif ${index - 1})`),
           value: `${premiereLettreEnMajusculeLeResteEnMinuscule(
             parent.prenoms[0]
           )} ${enMajuscule(parent.nom)}`
@@ -224,7 +225,7 @@ function getEnfantsPersonne(enfants: IFamille[]): AccordionContentProps {
   });
 
   return {
-    libelle: `Liste enfants`,
+    libelle: getLibelle("Liste enfants"),
     value: enfantsHtml,
     className: "contentDownside"
   };

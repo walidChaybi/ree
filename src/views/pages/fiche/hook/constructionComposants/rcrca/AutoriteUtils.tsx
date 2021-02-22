@@ -1,22 +1,25 @@
 import React from "react";
-import { IFicheRcRca } from "../../../../../model/etatcivil/FicheInterfaces";
-import { AccordionPartProps } from "../../../../common/widget/accordion/AccordionPart";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import {
   TypeAutorite,
   TypeAutoriteUtil
-} from "../../../../../model/etatcivil/TypeAutorite";
-import { AccordionContentProps } from "../../../../common/widget/accordion/AccordionContent";
-import { LieuxUtils } from "../../../../../model/Lieux";
-import { FicheUtil, TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
+} from "../../../../../../model/etatcivil/enum/TypeAutorite";
+import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import { LieuxUtils } from "../../../../../../model/LieuxUtils";
+import {
+  FicheUtil,
+  TypeFiche
+} from "../../../../../../model/etatcivil/enum/TypeFiche";
 import {
   IAutorite,
   Autorite
-} from "../../../../../model/etatcivil/commun/IAutorite";
-import { formatPrenom, formatNom } from "../../../../common/util/Utils";
+} from "../../../../../../model/etatcivil/commun/IAutorite";
+import { formatPrenom, formatNom } from "../../../../../common/util/Utils";
 import {
   TypeJuridiction,
   TypeJuridictionUtil
-} from "../../../../../model/etatcivil/enum/TypeJuridiction";
+} from "../../../../../../model/etatcivil/enum/TypeJuridiction";
 
 export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
   const autorite: AccordionPartProps[] = [

@@ -3,7 +3,7 @@ import {
   formatAHeure
 } from "../../../views/common/util/DateUtils";
 import { numberToString } from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../Lieux";
+import { LieuxUtils } from "../../LieuxUtils";
 
 export interface IEvenement {
   heure?: number;

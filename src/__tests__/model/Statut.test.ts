@@ -1,7 +1,7 @@
 import {
   StatutFicheUtil,
   StatutFiche
-} from "../../model/etatcivil/StatutFiche";
+} from "../../model/etatcivil/enum/StatutFiche";
 
 test("Statut model getLibelle", () => {
   expect(StatutFicheUtil.getLibelle()).toBe("");

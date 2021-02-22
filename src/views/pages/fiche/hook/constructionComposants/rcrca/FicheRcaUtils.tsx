@@ -1,11 +1,11 @@
-import { IFicheRcRca } from "../../../../../model/etatcivil/FicheInterfaces";
-import { AccordionReceProps } from "../../../../common/widget/accordion/AccordionRece";
-import { getInscriptionRepertoireCivil } from "./inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
-import { getInteresse } from "./interesses/InteresseUtils";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { AccordionReceProps } from "../../../../../common/widget/accordion/AccordionRece";
+import { getInscriptionRepertoireCivil } from "../inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
+import { getInteresse } from "../interesses/InteresseUtils";
 import { getDecision } from "./DecisionUtils";
 import { getAutorite } from "./AutoriteUtils";
-import { AccordionPanelProps } from "../../../../common/widget/accordion/AccordionPanel";
-import { getFichesPersonne } from "./FichePersonne";
+import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
+import { getFichesPersonne } from "../personne/FichePersonne";
 
 export function getPanelsRca(retourBack: IFicheRcRca): AccordionReceProps {
   const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(

@@ -1,4 +1,4 @@
-import { IPrenom } from "../../../model/etatcivil/FicheInterfaces";
+import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 
 function triObjetsSurPropriete(o1: any, o2: any, propertyName: string) {
   if (o1[propertyName] < o2[propertyName]) {

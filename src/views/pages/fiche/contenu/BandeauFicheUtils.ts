@@ -1,23 +1,21 @@
-import {
-  IAlerte,
-  IBandeauFiche,
-  IStatutFiche
-} from "../../../../model/etatcivil/FicheInterfaces";
+import { IStatutFiche } from "../../../../model/etatcivil/fiche/IStatutFiche";
+import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
+import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
 import {
   AlerteInscription,
   AlerteInscriptionUtil
-} from "../../../../model/etatcivil/AlerteInscription";
+} from "../../../../model/etatcivil/enum/AlerteInscription";
 import {
   StatutFiche,
   StatutFicheUtil
-} from "../../../../model/etatcivil/StatutFiche";
+} from "../../../../model/etatcivil/enum/StatutFiche";
 import {
   getDateFromTimestamp,
   getDateString
 } from "../../../common/util/DateUtils";
 import { getFicheTitle } from "../FicheUtils";
 import IFournisseurDonneesBandeau from "./fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
-import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
+import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
 
 export function setDataBandeau(
   categorie: TypeFiche,

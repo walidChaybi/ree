@@ -1,4 +1,4 @@
-import { Personne } from "../../../../../views/pages/fiche/contenu/personne/Personne";
+import { Personne } from "../../../../../model/etatcivil/commun/IPersonne";
 import { personneMock } from "../../../fiche/hook/constructionComposants/mock/PersonneMock";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 test("render composant AccordionPart", async () => {

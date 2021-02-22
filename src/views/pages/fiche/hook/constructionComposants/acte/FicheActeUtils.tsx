@@ -3,7 +3,7 @@ import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { getTitulaires } from "./TitulairesActeUtils";
 import { getEvenement } from "./EvenementActeUtils";
 import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
-import { getFichesPersonne } from "../FichePersonne";
+import { getFichesPersonne } from "../personne/FichePersonne";
 
 export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
   const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(

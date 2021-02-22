@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
-import { TypeDecision } from "../../../../../../model/etatcivil/TypeDecision";
-import { TypeAutorite } from "../../../../../../model/etatcivil/TypeAutorite";
+import { TypeDecision } from "../../../../../../model/etatcivil/enum/TypeDecision";
+import { TypeAutorite } from "../../../../../../model/etatcivil/enum/TypeAutorite";
 
 const regionIleDeFrance = "Ile de france";
 const regionBoucheDuRhone = "Bouches-du-Rhône";

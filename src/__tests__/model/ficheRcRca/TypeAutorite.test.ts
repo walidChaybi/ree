@@ -1,7 +1,7 @@
 import {
   TypeAutoriteUtil,
   TypeAutorite
-} from "../../../model/etatcivil/TypeAutorite";
+} from "../../../model/etatcivil/enum/TypeAutorite";
 
 test("TypeAutorite model", () => {
   expect(TypeAutoriteUtil.isJuridiction(TypeAutorite.NOTAIRE)).toBe(false);

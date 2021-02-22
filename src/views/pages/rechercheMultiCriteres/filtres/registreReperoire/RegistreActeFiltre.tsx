@@ -49,7 +49,7 @@ export const RegistreActeFiltre: React.FC<ComponentFiltreProps> = props => {
       />
       <SelectField
         name={familleRegistreWithNamespace}
-        label={getLibelle("N° de l'acte")}
+        label={getLibelle("Famille de registre")}
         options={CodeFamilleRegistre.getAllEnumsAsOptions()}
       />
       <InputField

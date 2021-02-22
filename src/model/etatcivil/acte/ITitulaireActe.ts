@@ -8,7 +8,7 @@ import {
   numberToString
 } from "../../../views/common/util/Utils";
 import { getDateStringFromDateCompose } from "../../../views/common/util/DateUtils";
-import { LieuxUtils } from "../../Lieux";
+import { LieuxUtils } from "../../LieuxUtils";
 import { Sexe } from "../enum/Sexe";
 
 export interface ITitulaireActe {

@@ -4,8 +4,8 @@ import {
   ficheAutoriteONACFranceAvecConfirmation,
   ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA
 } from "./mock/DecisionAutoriteMock";
-import { IFicheRcRca } from "../../../../../model/etatcivil/FicheInterfaces";
-import { getDecision } from "../../../../../views/pages/fiche/hook/constructionComposants/DecisionUtils";
+import { IFicheRcRca } from "../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { getDecision } from "../../../../../views/pages/fiche/hook/constructionComposants/rcrca/DecisionUtils";
 
 test("Decision utils get decision : decision de type Juridiction, ", async () => {
   const components = getDecision(
