@@ -26,6 +26,5 @@ describe("Display pdf Iframe", () => {
     );
     const text = screen.queryByText("Pas d'image disponible");
     expect(text).toBeNull();
-    screen.debug();
   });
 });
