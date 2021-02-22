@@ -19,7 +19,12 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
   let valuePrenomRequerant = "";
 
   if (dataRequerant.qualiteRequerant === QualiteRequerant.MandataireHabilite) {
-    valueNomRequerant = `${dataRequerant.raisonSociale}`;
+    if (dataRequerant.raisonSociale) {
+      valueNomRequerant = `${dataRequerant.raisonSociale}`;
+    } else {
+      valueNomRequerant = `${dataRequerant.nomFamille}`;
+      valuePrenomRequerant = `${dataRequerant.prenom}`;
+    }
   } else if (
     dataRequerant.qualiteRequerant === QualiteRequerant.Institutionnel
   ) {
