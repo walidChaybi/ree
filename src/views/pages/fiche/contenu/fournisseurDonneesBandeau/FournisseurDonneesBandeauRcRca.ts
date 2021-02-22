@@ -1,7 +1,11 @@
-import {FournisseurDonneesBandeau} from "./FournisseurDonneesBandeau";
-import {formatNom, formatPrenom, triListeObjetsSurPropriete} from "../../../../common/util/Utils";
-import {IPrenom} from "../../../../../model/etatcivil/FicheInterfaces";
-import {SimplePersonne} from "./IFournisseurDonneesBandeau";
+import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
+import {
+  formatNom,
+  formatPrenom,
+  triListeObjetsSurPropriete
+} from "../../../../common/util/Utils";
+import { IPrenom } from "../../../../../model/etatcivil/fiche/IPrenom";
+import { SimplePersonne } from "./IFournisseurDonneesBandeau";
 
 export class FournisseurDonneeBandeauRcRca extends FournisseurDonneesBandeau {
   getPersonnesAsAny(): any[] {
@@ -10,13 +14,11 @@ export class FournisseurDonneeBandeauRcRca extends FournisseurDonneesBandeau {
 
   getSimplePersonnes(): SimplePersonne[] {
     return this.personnes.map(
-        (p: any) =>
-            new SimplePersonne(
-                formatNom(p.nomFamille),
-                formatPrenom(
-                    this.getPrenomInteresse(p.prenoms)
-                )
-            )
+      (p: any) =>
+        new SimplePersonne(
+          formatNom(p.nomFamille),
+          formatPrenom(this.getPrenomInteresse(p.prenoms))
+        )
     );
   }
 

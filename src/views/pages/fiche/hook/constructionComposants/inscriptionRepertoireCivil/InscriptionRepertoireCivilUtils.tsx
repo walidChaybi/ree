@@ -1,8 +1,6 @@
 import React from "react";
-import {
-  IFicheRcRca,
-  IDureeInscription
-} from "../../../../../../model/etatcivil/FicheInterfaces";
+import { IDureeInscription } from "../../../../../../model/etatcivil/fiche/IDureeInscription";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { LienFiche } from "../../../LienFiche";
 import {
@@ -13,18 +11,18 @@ import { InscriptionsLiees } from "./InscriptionsLiees";
 import {
   NatureFicheRcUtil,
   TypeNatureFicheRc
-} from "../../../../../../model/etatcivil/NatureRc";
-import { MandataireUtil } from "../../../../../../model/etatcivil/Mandataires";
-import { InscriptionRcUtil } from "../../../../../../model/etatcivil/InscriptionRc";
+} from "../../../../../../model/etatcivil/enum/TypeNatureFicheRc";
+import { MandataireUtil } from "../../../../../../model/etatcivil/enum/TypeMandataire";
+import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import {
   FicheUtil,
   TypeFiche
-} from "../../../../../../model/etatcivil/TypeFiche";
+} from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 import {
   NatureFicheRcaUtil,
   TypeNatureFicheRca
-} from "../../../../../../model/etatcivil/NatureRca";
+} from "../../../../../../model/etatcivil/enum/TypeNatureFicheRca";
 
 export function getInscriptionRepertoireCivil(
   retourBack: IFicheRcRca

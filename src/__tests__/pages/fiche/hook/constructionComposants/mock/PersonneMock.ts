@@ -1,4 +1,4 @@
-import { IPersonne } from "../../../../../../views/pages/fiche/contenu/personne/Personne";
+import { IPersonne } from "../../../../../../model/etatcivil/commun/IPersonne";
 import { AutresNoms } from "../../../../../../model/etatcivil/enum/AutresNoms";
 import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";

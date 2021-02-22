@@ -1,4 +1,4 @@
-import { getPanelsRca } from "../../../../../views/pages/fiche/hook/constructionComposants/FicheRcaUtils";
+import { getPanelsRca } from "../../../../../views/pages/fiche/hook/constructionComposants/rcrca/FicheRcaUtils";
 import mockRCA from "../../../../../mock/data/RCA.json";
 
 test("ficheUtils rca works", async () => {

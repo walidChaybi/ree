@@ -5,7 +5,6 @@ import {
 } from "../views/common/util/Utils";
 
 const FRANCE = "FRANCE";
-
 const PARIS = "PARIS";
 const MARSEILLE = "MARSEILLE";
 const LYON = "LYON";

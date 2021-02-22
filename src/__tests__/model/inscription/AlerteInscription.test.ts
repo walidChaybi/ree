@@ -1,7 +1,7 @@
 import {
   AlerteInscription,
   AlerteInscriptionUtil
-} from "../../../model/etatcivil/AlerteInscription";
+} from "../../../model/etatcivil/enum/AlerteInscription";
 
 test("AlerteInscription model getLibelle", () => {
   expect(

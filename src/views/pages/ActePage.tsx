@@ -2,7 +2,7 @@
 
 import React from "react";
 import { LienFiche } from "./fiche/LienFiche";
-import { TypeFiche } from "../../model/etatcivil/TypeFiche";
+import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
 
 export const ActePage: React.FC = () => {
   return (

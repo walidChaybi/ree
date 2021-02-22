@@ -207,3 +207,11 @@ export function formatAHeure(heure?: number, minute?: number) {
   }
   return "";
 }
+
+export function formatDeOuLe(date: IDateCompose) {
+  if (date && date.jour) {
+    return "Le";
+  } else {
+    return "En";
+  }
+}

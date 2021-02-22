@@ -1,7 +1,7 @@
 import { IEvenement } from "./IEvenement";
 import { ITitulaireActe } from "./ITitulaireActe";
 import { NatureActe } from "../enum/NatureActe";
-import { IPersonne } from "../../../views/pages/fiche/contenu/personne/Personne";
+import { IPersonne } from "../commun/IPersonne";
 
 export interface IFicheActe {
   titulaires: ITitulaireActe[];

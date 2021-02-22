@@ -1,5 +1,5 @@
 import { IDateCompose } from "../../../views/common/util/DateUtils";
-import { IPrenom } from "../FicheInterfaces";
+import { IPrenom } from "../fiche/IPrenom";
 import { Nationalite } from "../enum/Nationalite";
 import { Sexe } from "../enum/Sexe";
 

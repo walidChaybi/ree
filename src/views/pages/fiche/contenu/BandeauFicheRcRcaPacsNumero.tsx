@@ -1,6 +1,6 @@
 import React from "react";
 import "./sass/Bandeau.scss";
-import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
+import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
 
 export interface BandeauFicheRcRcaPacsNumeroProps {
   dataBandeau: IBandeauFiche;

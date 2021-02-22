@@ -4,7 +4,7 @@ import { BandeauFiche } from "../../../../views/pages/fiche/contenu/BandeauFiche
 import DATA_FICHE from "../data/ficheRC";
 import { bandeauActe } from "../data/ficheActe";
 import { BandeauFicheRcRcaPacsNumero } from "../../../../views/pages/fiche/contenu/BandeauFicheRcRcaPacsNumero";
-import { IBandeauFiche } from "../../../../model/etatcivil/FicheInterfaces";
+import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
 import { BandeauFicheActeNumero } from "../../../../views/pages/fiche/contenu/BandeauFicheActeNumero";
 
 test("renders du bandeau d'une fiche RC", () => {

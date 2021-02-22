@@ -1,6 +1,6 @@
-import { getPanelsRca } from "../../../../../views/pages/fiche/hook/constructionComposants/FicheRcaUtils";
+import { getPanelsRca } from "../../../../../views/pages/fiche/hook/constructionComposants/rcrca/FicheRcaUtils";
 import mockRC from "../../../../../mock/data/RC.json";
-import { getPanelsRc } from "../../../../../views/pages/fiche/hook/constructionComposants/FicheRcUtils";
+import { getPanelsRc } from "../../../../../views/pages/fiche/hook/constructionComposants/rcrca/FicheRcUtils";
 
 test("ficheUtils rc works", async () => {
   const panels = getPanelsRc(mockRC.data);

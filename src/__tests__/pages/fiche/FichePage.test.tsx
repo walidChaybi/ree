@@ -3,7 +3,7 @@ import { render, waitFor, act } from "@testing-library/react";
 import { FichePage } from "../../../views/pages/fiche/FichePage";
 import request from "superagent";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
-import { TypeFiche } from "../../../model/etatcivil/TypeFiche";
+import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

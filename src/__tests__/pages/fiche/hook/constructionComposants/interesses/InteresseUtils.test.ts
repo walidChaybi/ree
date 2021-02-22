@@ -9,7 +9,7 @@ import {
   ficheUnInteresseVilleNaissanceALEtrangerSansRegion,
   ficheUnInteresseLieuDecesDateDeces
 } from "../mock/InteressesMock";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/FicheInterfaces";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
 
 test("Interesse utils get interesse : affichés suivant leur numero d'ordre ", async () => {
   const components = getInteresse(

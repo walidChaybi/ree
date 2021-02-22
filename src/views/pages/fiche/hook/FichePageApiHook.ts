@@ -1,29 +1,25 @@
 import { useEffect, useState } from "react";
 import { getInformationsFiche } from "../../../../api/appels/etatcivilApi";
 import { AccordionReceProps } from "../../../common/widget/accordion/AccordionRece";
-import { getPanelsRc } from "./constructionComposants/FicheRcUtils";
+import { getPanelsRc } from "./constructionComposants/rcrca/FicheRcUtils";
 import { setDataBandeau } from "../contenu/BandeauFicheUtils";
-import {
-  IBandeauFiche,
-  IFicheRcRca,
-  IInteresse
-} from "../../../../model/etatcivil/FicheInterfaces";
-import { getPanelsRca } from "./constructionComposants/FicheRcaUtils";
+import { IInteresse } from "../../../../model/etatcivil/fiche/IInteresse";
+import { IFicheRcRca } from "../../../../model/etatcivil/fiche/IFicheRcRca";
+import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
+import { getPanelsRca } from "./constructionComposants/rcrca/FicheRcaUtils";
 import { fournisseurDonneesBandeauFactory } from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { AutresNoms } from "../../../../model/etatcivil/enum/AutresNoms";
-import {
-  IAutresNoms,
-  IFicheLien,
-  ILieuEvenement,
-  IPersonne
-} from "../contenu/personne/Personne";
+import { IPersonne } from "../../../../model/etatcivil/commun/IPersonne";
+import { IAutresNoms } from "../../../../model/etatcivil/commun/IAutresNoms";
+import { IFicheLien } from "../../../../model/etatcivil/commun/IFicheLien";
+import { ILieuEvenement } from "../../../../model/etatcivil/commun/ILieuEvenement";
 import {
   getFormatDateFromTimestamp,
   IDateCompose
 } from "../../../common/util/DateUtils";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 
-import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
+import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
 import { getPanelsPacs } from "./constructionComposants/pacs/FichePacsUtils";
 import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
 import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";

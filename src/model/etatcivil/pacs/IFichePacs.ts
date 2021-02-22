@@ -1,11 +1,11 @@
 import { StatutPacs } from "../enum/StatutPacs";
 import { IPartenaire } from "./IPartenaire";
-import { IStatutFiche } from "../FicheInterfaces";
+import { IStatutFiche } from "../fiche/IStatutFiche";
 import { IAnnulation } from "./IAnnulation";
 import { IModification } from "./IModification";
 import { IDissolution } from "./IDissolution";
 import { IAutorite } from "../commun/IAutorite";
-import { IPersonne } from "../../../views/pages/fiche/contenu/personne/Personne";
+import { IPersonne } from "../commun/IPersonne";
 
 export interface IFichePacs {
   id: string;

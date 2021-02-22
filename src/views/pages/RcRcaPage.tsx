@@ -2,7 +2,7 @@
 
 import React from "react";
 import { LienFiche } from "./fiche/LienFiche";
-import { TypeFiche } from "../../model/etatcivil/TypeFiche";
+import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
 
 export const RcRcaPage: React.FC = () => {
   const identifiantRca = "8c9ea77f-55dc-494f-8e75-b136ac7ce63c";

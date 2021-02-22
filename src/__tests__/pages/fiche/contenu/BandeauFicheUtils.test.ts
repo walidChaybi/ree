@@ -3,7 +3,7 @@ import DATA_FICHE_RC from "../data/bandeauRc";
 import DATA_FICHE_PACS from "../data/bandeauPacs";
 import { fournisseurDonneesBandeauFactory } from "../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { acte } from "../data/ficheActe";
-import { TypeFiche } from "../../../../model/etatcivil/TypeFiche";
+import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
 
 test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
   const bandeauFiche = setDataBandeau(

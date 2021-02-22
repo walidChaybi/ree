@@ -1,15 +1,13 @@
 import React from "react";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import {
-  IFicheRcRca,
-  IInteresse
-} from "../../../../../../model/etatcivil/FicheInterfaces";
+import { IInteresse } from "../../../../../../model/etatcivil/fiche/IInteresse";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
 import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
 import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
-import { getText } from "../../../../../common/widget/Text";
+import { getText, getLibelle } from "../../../../../common/widget/Text";
 import { Mariage } from "./Mariage";
-import { LieuxUtils } from "../../../../../../model/Lieux";
-import { FicheUtil } from "../../../../../../model/etatcivil/TypeFiche";
+import { LieuxUtils } from "../../../../../../model/LieuxUtils";
+import { FicheUtil } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 
 export function getInteresse(retourBack: IFicheRcRca): AccordionPartProps[] {
@@ -53,13 +51,13 @@ function getInteresseInfoRca(interesse: IInteresse): AccordionContentProps[] {
   if (interesse.dateDeces != null) {
     interesseIno = interesseIno.concat([
       {
-        libelle: "Date de décès",
+        libelle: getLibelle("Date de décès"),
         value: interesse.dateDeces
           ? getDateStringFromDateCompose(interesse.dateDeces)
           : ""
       },
       {
-        libelle: "Lieu de décès",
+        libelle: getLibelle("Lieu de décès"),
         value: LieuxUtils.getLieu(
           interesse.villeDeces,
           interesse.regionDeces,
@@ -76,11 +74,11 @@ function getInteresseInfoRca(interesse: IInteresse): AccordionContentProps[] {
 function getInteresseInfo(interesse: IInteresse): AccordionContentProps[] {
   return [
     {
-      libelle: "Nom",
+      libelle: getLibelle("Nom"),
       value: <span className="nom">{interesse.nomFamille || ""}</span>
     },
     {
-      libelle: "Autre(s) nom(s)",
+      libelle: getLibelle("Autre(s) nom(s)"),
       value: (
         <span className="nom">
           {interesse.autreNoms ? interesse.autreNoms.join(", ") : ""}
@@ -88,7 +86,7 @@ function getInteresseInfo(interesse: IInteresse): AccordionContentProps[] {
       )
     },
     {
-      libelle: "Prénom(s)",
+      libelle: getLibelle("Prénom(s)"),
       value: (
         <span className="prenom">
           {interesse.prenoms
@@ -100,7 +98,7 @@ function getInteresseInfo(interesse: IInteresse): AccordionContentProps[] {
       )
     },
     {
-      libelle: "Autre(s) prénom(s)",
+      libelle: getLibelle("Autre(s) prénom(s)"),
       value: (
         <span className="prenom">
           {interesse.autrePrenoms ? interesse.autrePrenoms.join(", ") : ""}
@@ -108,13 +106,13 @@ function getInteresseInfo(interesse: IInteresse): AccordionContentProps[] {
       )
     },
     {
-      libelle: "Date de naissance",
+      libelle: getLibelle("Date de naissance"),
       value: interesse.dateNaissance
         ? getDateStringFromDateCompose(interesse.dateNaissance)
         : ""
     },
     {
-      libelle: "Lieu de naissance",
+      libelle: getLibelle("Lieu de naissance"),
       value: LieuxUtils.getLieu(
         interesse.villeNaissance,
         interesse.regionNaissance,
@@ -123,11 +121,11 @@ function getInteresseInfo(interesse: IInteresse): AccordionContentProps[] {
       )
     },
     {
-      libelle: "Nationalité",
+      libelle: getLibelle("Nationalité"),
       value: interesse.nationalite || ""
     },
     {
-      libelle: "Sexe",
+      libelle: getLibelle("Sexe"),
       value: interesse.sexe || ""
     }
   ];

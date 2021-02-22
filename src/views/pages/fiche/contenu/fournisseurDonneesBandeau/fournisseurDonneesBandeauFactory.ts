@@ -2,7 +2,7 @@ import { FournisseurDonneeBandeauRcRca } from "./FournisseurDonneesBandeauRcRca"
 import { FournisseurDonneeBandeauPacs } from "./FournisseurDonneesBandeauPacs";
 import { FournisseurDonneeBandeauActe } from "./FournisseurDonneesBandeauActe";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
-import { TypeFiche } from "../../../../../model/etatcivil/TypeFiche";
+import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
 
 class FournisseurDonneesBandeauFactory {
   createFournisseur(categorie: TypeFiche, data: any) {

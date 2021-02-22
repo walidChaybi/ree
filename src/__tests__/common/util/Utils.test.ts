@@ -19,7 +19,7 @@ import {
   numberToString,
   valeurOuUndefined
 } from "../../../views/common/util/Utils";
-import { IPrenom } from "../../../model/etatcivil/FicheInterfaces";
+import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 
 test("Utils normaliserNomOec ", async () => {
   const normalize = normaliserNomOec("NFD");

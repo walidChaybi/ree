@@ -5,7 +5,7 @@ import {
   ficheInscriptionRepertoireCivilSansUniteDureeInscription,
   ficheInscriptionRepertoireCivilSansDonnees
 } from "../mock/InscriptionRepertoireCivilMock";
-import { IFicheRcRcaRca } from "../../../../../../model/etatcivil/FicheInterfaces";
+import { IFicheRcRcaRca } from "../../../../../../model/etatcivil/fiche/FicheInterfaces";
 
 test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile  ", async () => {
   const component = getInscriptionRepertoireCivil(

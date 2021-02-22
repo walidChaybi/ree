@@ -6,7 +6,7 @@ import {
 import { FichePage } from "./FichePage";
 import { Link } from "@material-ui/core";
 import "./sass/LienFiche.scss";
-import { TypeFiche } from "../../../model/etatcivil/TypeFiche";
+import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 
 interface IDataLienFicheProps {
   identifiant: string;
@@ -19,10 +19,9 @@ interface IDataLienFicheProps {
 
 export const LienFiche: React.FC<IDataLienFicheProps> = props => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(false);
-  const [
-    fenetreExterneUtil,
-    setFenetreExterneUtil
-  ] = useState<FenetreExterneUtil>();
+  const [fenetreExterneUtil, setFenetreExterneUtil] = useState<
+    FenetreExterneUtil
+  >();
 
   const onClick = () => {
     toggleFenetre();
