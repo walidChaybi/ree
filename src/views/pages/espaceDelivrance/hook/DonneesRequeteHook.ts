@@ -208,7 +208,10 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
 
 function createLibelleRequerant(data: IRequerantApi) {
   if (data.qualiteRequerant === QualiteRequerant.MandataireHabilite) {
-    data.libelleRequerant = `${data.raisonSociale} / ${data.identite}`;
+    data.libelleRequerant =
+      data.raisonSociale && data.identite
+        ? `${data.raisonSociale} / ${data.identite}`
+        : `${formatPrenom(data.prenom)} ${formatNom(data.nomFamille)}`;
   } else if (data.qualiteRequerant === QualiteRequerant.Institutionnel) {
     data.libelleRequerant = data.nomInstitutionnel;
   } else if (data.qualiteRequerant === QualiteRequerant.Particulier) {
