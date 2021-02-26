@@ -1,4 +1,18 @@
-import { eachLike } from "@pact-foundation/pact/dsl/matchers";
+import {eachLike, like} from "@pact-foundation/pact/dsl/matchers";
+
+export const documentDelivre = like({
+  idDocumentDelivre: "c456bb58-04f5-40dd-8c33-599306cafb7d",
+  typeDocument: "EXTRAIT_SANS_FILIATION",
+  nom: "1_c4565512-1193-4f7d-88fd-042f75ca8364.pdf",
+  mimeType: "application/pdf",
+  taille: 207836,
+  contenu: null,
+  conteneurSwift: "documents-delivres-2020-6",
+  reponse: null,
+  avecCtv: true,
+  nbPages: 2,
+  orientation: "P"
+});
 
 export const requetesPact = eachLike({
   idRequete: "c456358c-6e4c-4a5f-adc3-083e692f72ab",
@@ -23,7 +37,6 @@ export const requetesPact = eachLike({
   anneeEvenement: 1983,
   villeEvenement: "paris",
   paysEvenement: "france",
-  nbExemplaire: null,
   motifRequete: "PENSION_REVERSION",
   lienRequerant: null,
   mandantType: null,
@@ -51,6 +64,7 @@ export const requetesPact = eachLike({
     anneeEvenement: 1960,
     villeEvenement: "fez",
     paysEvenement: "maroc",
+    idArobas: "03901913",
     nomOec: "SLAOUI",
     prenomOec: "Nabil",
     commentaire: "commentaire",
@@ -63,9 +77,13 @@ export const requetesPact = eachLike({
       contenu: null,
       conteneurSwift: "documents-delivres-2020-6",
       reponse: null,
-      cheminFs: "/saga-docinternet-fs/EXTRAIT.pdf"
+      avecCtv: true,
+      nbPages: 2,
+      orientation: "P"
     }),
-    requete: null
+    requete: null,
+    dateReponse: 1591826400.000000000,
+    statutReponse: "SATISFAIT"
   },
   requerant: {
     idRequerant: "c456e268-34c9-45df-9ffc-817d2ba081f2",
@@ -90,11 +108,11 @@ export const requetesPact = eachLike({
     prenom1: "nicolas",
     prenom2: "",
     prenom3: "",
-    jourNaissance: 25,
-    moisNaissance: 3,
-    anneeNaissance: 1983,
-    villeNaissance: "fez",
-    paysNaissance: "maroc",
+    jourNaissance: 22,
+    moisNaissance: 4,
+    anneeNaissance: 1986,
+    villeNaissance: null,
+    paysNaissance: null,
     adoption: null,
     sexe: null,
     parent1: null,
