@@ -7,22 +7,58 @@
   },
   "interactions": [
     {
-      "description": "get all requests of an oec",
-      "providerState": "requests exist",
+      "description": "Comptage des requêtes pour un oec connecté",
+      "providerState": "Comptage des requêtes pour un OEC",
       "request": {
         "method": "GET",
-        "path": "/rece-requete-api/v1/requetes",
-        "query": "statut=A_SIGNER&tri=dateStatus&sens=ASC&nomOec=SLAOUI&prenomOec=Nabil&idArobas=03901913"
+        "path": "/rece-requete-api/v1/requetes/count",
+        "query": "statuts=A_SIGNER",
+        "headers": {
+          "id_sso": "03901913"
+        }
       },
       "response": {
         "status": 200,
         "headers": {
-          "Content-Type": "application/json; charset=utf-8"
+          "Content-Type": "application/json"
         },
         "body": {
           "hasTechnicalError": false,
           "hasBusinessError": false,
           "status": 200,
+          "url": "/rece-requete-api/v1/requetes/count",
+          "data": 0,
+          "errors": [
+
+          ]
+        },
+        "matchingRules": {
+          "$.body.data": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "Récupération des requêtes pour un oec connecté",
+      "providerState": "L'OEC dispose de requêtes au statut à signer sur plusieurs pages",
+      "request": {
+        "method": "GET",
+        "path": "/rece-requete-api/v1/requetes",
+        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "headers": {
+          "id_sso": "03901913"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "hasTechnicalError": false,
+          "hasBusinessError": false,
+          "status": 206,
           "url": "/rece-requete-api/v1/requetes",
           "data": [
             {
@@ -48,7 +84,6 @@
               "anneeEvenement": 1983,
               "villeEvenement": "paris",
               "paysEvenement": "france",
-              "nbExemplaire": null,
               "motifRequete": "PENSION_REVERSION",
               "lienRequerant": null,
               "mandantType": null,
@@ -78,6 +113,7 @@
                 "anneeEvenement": 1960,
                 "villeEvenement": "fez",
                 "paysEvenement": "maroc",
+                "idArobas": "03901913",
                 "nomOec": "SLAOUI",
                 "prenomOec": "Nabil",
                 "commentaire": "commentaire",
@@ -91,10 +127,14 @@
                     "contenu": null,
                     "conteneurSwift": "documents-delivres-2020-6",
                     "reponse": null,
-                    "cheminFs": "/saga-docinternet-fs/EXTRAIT.pdf"
+                    "avecCtv": true,
+                    "nbPages": 2,
+                    "orientation": "P"
                   }
                 ],
-                "requete": null
+                "requete": null,
+                "dateReponse": 1591826400,
+                "statutReponse": "SATISFAIT"
               },
               "requerant": {
                 "idRequerant": "c456e268-34c9-45df-9ffc-817d2ba081f2",
@@ -120,11 +160,11 @@
                   "prenom1": "nicolas",
                   "prenom2": "",
                   "prenom3": "",
-                  "jourNaissance": 25,
-                  "moisNaissance": 3,
-                  "anneeNaissance": 1983,
-                  "villeNaissance": "fez",
-                  "paysNaissance": "maroc",
+                  "jourNaissance": 22,
+                  "moisNaissance": 4,
+                  "anneeNaissance": 1986,
+                  "villeNaissance": null,
+                  "paysNaissance": null,
                   "adoption": null,
                   "sexe": null,
                   "parent1": null,
@@ -161,6 +201,638 @@
             "min": 1
           },
           "$.body.data[*].titulaires[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "Récupération des requêtes pour un oec connecté",
+      "providerState": "L'OEC dispose de requêtes au statut à signer sur une seule page",
+      "request": {
+        "method": "GET",
+        "path": "/rece-requete-api/v1/requetes",
+        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "headers": {
+          "id_sso": "03901913"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "hasTechnicalError": false,
+          "hasBusinessError": false,
+          "status": 200,
+          "url": "/rece-requete-api/v1/requetes",
+          "data": [
+            {
+              "idRequete": "c456358c-6e4c-4a5f-adc3-083e692f72ab",
+              "idSagaDilaImpression": null,
+              "idSagaDila": 1,
+              "idRequeteInitiale": null,
+              "identifiantPartenaire": "A-1-XZ1WOMAX",
+              "dateCreation": 1591803760,
+              "dateDerniereMaj": 1591803760,
+              "canal": "INTERNET",
+              "provenance": "DILA",
+              "statut": "A_SIGNER",
+              "dateStatut": 1599472699.838561,
+              "dateTrtDemat": null,
+              "dateDelivranceDemat": null,
+              "typeRequete": "DELIVRANCE",
+              "sousTypeRequete": "RDD",
+              "natureActe": "NAISSANCE",
+              "typeActe": "EXTRAIT_AVEC_FILIATION",
+              "jourEvenement": 25,
+              "moisEvenement": 3,
+              "anneeEvenement": 1983,
+              "villeEvenement": "paris",
+              "paysEvenement": "france",
+              "motifRequete": "PENSION_REVERSION",
+              "lienRequerant": null,
+              "mandantType": null,
+              "mandantIdentite": null,
+              "mandantLien": null,
+              "piecesJustificatives": [
+                {
+                  "idPieceJustificative": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
+                  "nom": "1_c45606fb-f0e3-4647-ab4a-a6c5c416e809.pdf",
+                  "mimeType": "application/pdf",
+                  "typePieceJustificative": "cpro",
+                  "extension": null,
+                  "taille": 207836,
+                  "contenu": null,
+                  "conteneurSwift": "pieces-justificatives-2020-6",
+                  "requete": null
+                }
+              ],
+              "reponse": {
+                "idReponse": "c45640ba-364e-4bd5-a8e7-4d4a0066ef87",
+                "dateTraitementDemat": null,
+                "dateDelivrance": 1591862400,
+                "natureActe": "NAISSANCE",
+                "referenceActe": "(COL) ORAN.1961.RET ..12404",
+                "jourEvenement": 11,
+                "moisEvenement": 3,
+                "anneeEvenement": 1960,
+                "villeEvenement": "fez",
+                "paysEvenement": "maroc",
+                "idArobas": "03901913",
+                "nomOec": "SLAOUI",
+                "prenomOec": "Nabil",
+                "commentaire": "commentaire",
+                "documentsDelivres": [
+                  {
+                    "idDocumentDelivre": "c456bb58-04f5-40dd-8c33-599306cafb7d",
+                    "typeDocument": "EXTRAIT_SANS_FILIATION",
+                    "nom": "1_c4565512-1193-4f7d-88fd-042f75ca8364.pdf",
+                    "mimeType": "application/pdf",
+                    "taille": 207836,
+                    "contenu": null,
+                    "conteneurSwift": "documents-delivres-2020-6",
+                    "reponse": null,
+                    "avecCtv": true,
+                    "nbPages": 2,
+                    "orientation": "P"
+                  }
+                ],
+                "requete": null,
+                "dateReponse": 1591826400,
+                "statutReponse": "SATISFAIT"
+              },
+              "requerant": {
+                "idRequerant": "c456e268-34c9-45df-9ffc-817d2ba081f2",
+                "typeRequerant": "TITULAIRE",
+                "qualiteRequerant": "PARTICULIER",
+                "nomInstitutionnel": null,
+                "identite": null,
+                "raisonSociale": null,
+                "nomFamille": "aubin",
+                "nomUsage": null,
+                "prenom": "nicolas",
+                "mail": null,
+                "telephone": "1777327569",
+                "adresse": null,
+                "requete": null
+              },
+              "titulaires": [
+                {
+                  "idTitulaire": "c4562f1c-08ad-45d9-b63e-4a3c391496d1",
+                  "position": 1,
+                  "nomNaissance": "aubin",
+                  "nomUsage": null,
+                  "prenom1": "nicolas",
+                  "prenom2": "",
+                  "prenom3": "",
+                  "jourNaissance": 22,
+                  "moisNaissance": 4,
+                  "anneeNaissance": 1986,
+                  "villeNaissance": null,
+                  "paysNaissance": null,
+                  "adoption": null,
+                  "sexe": null,
+                  "parent1": null,
+                  "parent2": null,
+                  "requete": null
+                }
+              ]
+            }
+          ],
+          "errors": [
+
+          ]
+        },
+        "matchingRules": {
+          "$.body.data": {
+            "min": 1
+          },
+          "$.body.data[*].*": {
+            "match": "type"
+          },
+          "$.body.data[*].piecesJustificatives": {
+            "min": 1
+          },
+          "$.body.data[*].piecesJustificatives[*].*": {
+            "match": "type"
+          },
+          "$.body.data[*].reponse.documentsDelivres": {
+            "min": 1
+          },
+          "$.body.data[*].reponse.documentsDelivres[*].*": {
+            "match": "type"
+          },
+          "$.body.data[*].titulaires": {
+            "min": 1
+          },
+          "$.body.data[*].titulaires[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "Récupération des requêtes pour un oec connecté",
+      "providerState": "L'OEC ne dispose pas de requêtes au statut à signer",
+      "request": {
+        "method": "GET",
+        "path": "/rece-requete-api/v1/requetes",
+        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "headers": {
+          "id_sso": "03901913"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "hasTechnicalError": false,
+          "hasBusinessError": false,
+          "status": 200,
+          "url": "/rece-requete-api/v1/requetes",
+          "data": [
+
+          ],
+          "errors": [
+
+          ]
+        }
+      }
+    },
+    {
+      "description": "Récupération des requêtes pour un oec connecté",
+      "providerState": "Les headers nécessaires de l'OEC connecté ne sont pas envoyés",
+      "request": {
+        "method": "GET",
+        "path": "/rece-requete-api/v1/requetes",
+        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "hasTechnicalError": false,
+          "hasBusinessError": false,
+          "status": 200,
+          "url": "/rece-requete-api/v1/requetes",
+          "data": [
+
+          ],
+          "errors": [
+
+          ]
+        }
+      }
+    },
+    {
+      "description": "Récupération des requêtes affectées au service",
+      "providerState": "Le service dispose de requêtes au statut à signer sur plusieurs pages",
+      "request": {
+        "method": "GET",
+        "path": "/rece-requete-api/v1/requetes/requetesService",
+        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "headers": {
+          "id_sso": "03901913"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "hasTechnicalError": false,
+          "hasBusinessError": false,
+          "status": 206,
+          "url": "/rece-requete-api/v1/requetes/requetesService",
+          "data": [
+            {
+              "idRequete": "c456358c-6e4c-4a5f-adc3-083e692f72ab",
+              "idSagaDilaImpression": null,
+              "idSagaDila": 1,
+              "idRequeteInitiale": null,
+              "identifiantPartenaire": "A-1-XZ1WOMAX",
+              "dateCreation": 1591803760,
+              "dateDerniereMaj": 1591803760,
+              "canal": "INTERNET",
+              "provenance": "DILA",
+              "statut": "A_SIGNER",
+              "dateStatut": 1599472699.838561,
+              "dateTrtDemat": null,
+              "dateDelivranceDemat": null,
+              "typeRequete": "DELIVRANCE",
+              "sousTypeRequete": "RDD",
+              "natureActe": "NAISSANCE",
+              "typeActe": "EXTRAIT_AVEC_FILIATION",
+              "jourEvenement": 25,
+              "moisEvenement": 3,
+              "anneeEvenement": 1983,
+              "villeEvenement": "paris",
+              "paysEvenement": "france",
+              "motifRequete": "PENSION_REVERSION",
+              "lienRequerant": null,
+              "mandantType": null,
+              "mandantIdentite": null,
+              "mandantLien": null,
+              "piecesJustificatives": [
+                {
+                  "idPieceJustificative": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
+                  "nom": "1_c45606fb-f0e3-4647-ab4a-a6c5c416e809.pdf",
+                  "mimeType": "application/pdf",
+                  "typePieceJustificative": "cpro",
+                  "extension": null,
+                  "taille": 207836,
+                  "contenu": null,
+                  "conteneurSwift": "pieces-justificatives-2020-6",
+                  "requete": null
+                }
+              ],
+              "reponse": {
+                "idReponse": "c45640ba-364e-4bd5-a8e7-4d4a0066ef87",
+                "dateTraitementDemat": null,
+                "dateDelivrance": 1591862400,
+                "natureActe": "NAISSANCE",
+                "referenceActe": "(COL) ORAN.1961.RET ..12404",
+                "jourEvenement": 11,
+                "moisEvenement": 3,
+                "anneeEvenement": 1960,
+                "villeEvenement": "fez",
+                "paysEvenement": "maroc",
+                "idArobas": "03901913",
+                "nomOec": "SLAOUI",
+                "prenomOec": "Nabil",
+                "commentaire": "commentaire",
+                "documentsDelivres": [
+                  {
+                    "idDocumentDelivre": "c456bb58-04f5-40dd-8c33-599306cafb7d",
+                    "typeDocument": "EXTRAIT_SANS_FILIATION",
+                    "nom": "1_c4565512-1193-4f7d-88fd-042f75ca8364.pdf",
+                    "mimeType": "application/pdf",
+                    "taille": 207836,
+                    "contenu": null,
+                    "conteneurSwift": "documents-delivres-2020-6",
+                    "reponse": null,
+                    "avecCtv": true,
+                    "nbPages": 2,
+                    "orientation": "P"
+                  }
+                ],
+                "requete": null,
+                "dateReponse": 1591826400,
+                "statutReponse": "SATISFAIT"
+              },
+              "requerant": {
+                "idRequerant": "c456e268-34c9-45df-9ffc-817d2ba081f2",
+                "typeRequerant": "TITULAIRE",
+                "qualiteRequerant": "PARTICULIER",
+                "nomInstitutionnel": null,
+                "identite": null,
+                "raisonSociale": null,
+                "nomFamille": "aubin",
+                "nomUsage": null,
+                "prenom": "nicolas",
+                "mail": null,
+                "telephone": "1777327569",
+                "adresse": null,
+                "requete": null
+              },
+              "titulaires": [
+                {
+                  "idTitulaire": "c4562f1c-08ad-45d9-b63e-4a3c391496d1",
+                  "position": 1,
+                  "nomNaissance": "aubin",
+                  "nomUsage": null,
+                  "prenom1": "nicolas",
+                  "prenom2": "",
+                  "prenom3": "",
+                  "jourNaissance": 22,
+                  "moisNaissance": 4,
+                  "anneeNaissance": 1986,
+                  "villeNaissance": null,
+                  "paysNaissance": null,
+                  "adoption": null,
+                  "sexe": null,
+                  "parent1": null,
+                  "parent2": null,
+                  "requete": null
+                }
+              ]
+            }
+          ],
+          "errors": [
+
+          ]
+        },
+        "matchingRules": {
+          "$.body.data": {
+            "min": 1
+          },
+          "$.body.data[*].*": {
+            "match": "type"
+          },
+          "$.body.data[*].piecesJustificatives": {
+            "min": 1
+          },
+          "$.body.data[*].piecesJustificatives[*].*": {
+            "match": "type"
+          },
+          "$.body.data[*].reponse.documentsDelivres": {
+            "min": 1
+          },
+          "$.body.data[*].reponse.documentsDelivres[*].*": {
+            "match": "type"
+          },
+          "$.body.data[*].titulaires": {
+            "min": 1
+          },
+          "$.body.data[*].titulaires[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "Récupération des requêtes affectées au service",
+      "providerState": "Le service dispose de requêtes au statut à signer sur une seule page",
+      "request": {
+        "method": "GET",
+        "path": "/rece-requete-api/v1/requetes/requetesService",
+        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "headers": {
+          "id_sso": "03901913"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "hasTechnicalError": false,
+          "hasBusinessError": false,
+          "status": 200,
+          "url": "/rece-requete-api/v1/requetes/requetesService",
+          "data": [
+            {
+              "idRequete": "c456358c-6e4c-4a5f-adc3-083e692f72ab",
+              "idSagaDilaImpression": null,
+              "idSagaDila": 1,
+              "idRequeteInitiale": null,
+              "identifiantPartenaire": "A-1-XZ1WOMAX",
+              "dateCreation": 1591803760,
+              "dateDerniereMaj": 1591803760,
+              "canal": "INTERNET",
+              "provenance": "DILA",
+              "statut": "A_SIGNER",
+              "dateStatut": 1599472699.838561,
+              "dateTrtDemat": null,
+              "dateDelivranceDemat": null,
+              "typeRequete": "DELIVRANCE",
+              "sousTypeRequete": "RDD",
+              "natureActe": "NAISSANCE",
+              "typeActe": "EXTRAIT_AVEC_FILIATION",
+              "jourEvenement": 25,
+              "moisEvenement": 3,
+              "anneeEvenement": 1983,
+              "villeEvenement": "paris",
+              "paysEvenement": "france",
+              "motifRequete": "PENSION_REVERSION",
+              "lienRequerant": null,
+              "mandantType": null,
+              "mandantIdentite": null,
+              "mandantLien": null,
+              "piecesJustificatives": [
+                {
+                  "idPieceJustificative": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
+                  "nom": "1_c45606fb-f0e3-4647-ab4a-a6c5c416e809.pdf",
+                  "mimeType": "application/pdf",
+                  "typePieceJustificative": "cpro",
+                  "extension": null,
+                  "taille": 207836,
+                  "contenu": null,
+                  "conteneurSwift": "pieces-justificatives-2020-6",
+                  "requete": null
+                }
+              ],
+              "reponse": {
+                "idReponse": "c45640ba-364e-4bd5-a8e7-4d4a0066ef87",
+                "dateTraitementDemat": null,
+                "dateDelivrance": 1591862400,
+                "natureActe": "NAISSANCE",
+                "referenceActe": "(COL) ORAN.1961.RET ..12404",
+                "jourEvenement": 11,
+                "moisEvenement": 3,
+                "anneeEvenement": 1960,
+                "villeEvenement": "fez",
+                "paysEvenement": "maroc",
+                "idArobas": "03901913",
+                "nomOec": "SLAOUI",
+                "prenomOec": "Nabil",
+                "commentaire": "commentaire",
+                "documentsDelivres": [
+                  {
+                    "idDocumentDelivre": "c456bb58-04f5-40dd-8c33-599306cafb7d",
+                    "typeDocument": "EXTRAIT_SANS_FILIATION",
+                    "nom": "1_c4565512-1193-4f7d-88fd-042f75ca8364.pdf",
+                    "mimeType": "application/pdf",
+                    "taille": 207836,
+                    "contenu": null,
+                    "conteneurSwift": "documents-delivres-2020-6",
+                    "reponse": null,
+                    "avecCtv": true,
+                    "nbPages": 2,
+                    "orientation": "P"
+                  }
+                ],
+                "requete": null,
+                "dateReponse": 1591826400,
+                "statutReponse": "SATISFAIT"
+              },
+              "requerant": {
+                "idRequerant": "c456e268-34c9-45df-9ffc-817d2ba081f2",
+                "typeRequerant": "TITULAIRE",
+                "qualiteRequerant": "PARTICULIER",
+                "nomInstitutionnel": null,
+                "identite": null,
+                "raisonSociale": null,
+                "nomFamille": "aubin",
+                "nomUsage": null,
+                "prenom": "nicolas",
+                "mail": null,
+                "telephone": "1777327569",
+                "adresse": null,
+                "requete": null
+              },
+              "titulaires": [
+                {
+                  "idTitulaire": "c4562f1c-08ad-45d9-b63e-4a3c391496d1",
+                  "position": 1,
+                  "nomNaissance": "aubin",
+                  "nomUsage": null,
+                  "prenom1": "nicolas",
+                  "prenom2": "",
+                  "prenom3": "",
+                  "jourNaissance": 22,
+                  "moisNaissance": 4,
+                  "anneeNaissance": 1986,
+                  "villeNaissance": null,
+                  "paysNaissance": null,
+                  "adoption": null,
+                  "sexe": null,
+                  "parent1": null,
+                  "parent2": null,
+                  "requete": null
+                }
+              ]
+            }
+          ],
+          "errors": [
+
+          ]
+        },
+        "matchingRules": {
+          "$.body.data": {
+            "min": 1
+          },
+          "$.body.data[*].*": {
+            "match": "type"
+          },
+          "$.body.data[*].piecesJustificatives": {
+            "min": 1
+          },
+          "$.body.data[*].piecesJustificatives[*].*": {
+            "match": "type"
+          },
+          "$.body.data[*].reponse.documentsDelivres": {
+            "min": 1
+          },
+          "$.body.data[*].reponse.documentsDelivres[*].*": {
+            "match": "type"
+          },
+          "$.body.data[*].titulaires": {
+            "min": 1
+          },
+          "$.body.data[*].titulaires[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "Récupération des requêtes affectées au service",
+      "providerState": "Le service ne dispose pas de requêtes au statut à signer",
+      "request": {
+        "method": "GET",
+        "path": "/rece-requete-api/v1/requetes/requetesService",
+        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "headers": {
+          "id_sso": "03901913"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "hasTechnicalError": false,
+          "hasBusinessError": false,
+          "status": 200,
+          "url": "/rece-requete-api/v1/requetes/requetesService",
+          "data": [
+
+          ],
+          "errors": [
+
+          ]
+        }
+      }
+    },
+    {
+      "description": "Interaction documents délivrés",
+      "providerState": "Récupération d'un document par son ID",
+      "request": {
+        "method": "GET",
+        "path": "/rece-requete-api/v1/documentsdelivres/6aff8596-62e1-4cdd-9038-88715aa811f8",
+        "headers": {
+          "id_sso": "03901913"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "hasTechnicalError": false,
+          "hasBusinessError": false,
+          "status": 200,
+          "url": "/rece-requete-api/v1/documentsdelivres/6aff8596-62e1-4cdd-9038-88715aa811f8",
+          "data": {
+            "idDocumentDelivre": "c456bb58-04f5-40dd-8c33-599306cafb7d",
+            "typeDocument": "EXTRAIT_SANS_FILIATION",
+            "nom": "1_c4565512-1193-4f7d-88fd-042f75ca8364.pdf",
+            "mimeType": "application/pdf",
+            "taille": 207836,
+            "contenu": null,
+            "conteneurSwift": "documents-delivres-2020-6",
+            "reponse": null,
+            "avecCtv": true,
+            "nbPages": 2,
+            "orientation": "P"
+          },
+          "errors": [
+
+          ]
+        },
+        "matchingRules": {
+          "$.body.data": {
             "match": "type"
           }
         }
