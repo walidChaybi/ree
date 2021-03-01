@@ -14,3 +14,5 @@ export const CarateresAutoriseRecherche = new RegExp(
 export const AsterisqueRecherche = new RegExp(
   /^([0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{1}|[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{2,}\*?)$/
 );
+
+export const numeroInscription = new RegExp(/^.{4}[-]/);

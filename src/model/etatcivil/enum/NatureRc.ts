@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { Options } from "../../../views/common/util/Type";
 
 export class NatureRc extends EnumWithLibelle {
   public static readonly CURATELLE_SIMPLE = new NatureRc("Curatelle simple");
@@ -57,5 +58,9 @@ export class NatureRc extends EnumWithLibelle {
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, NatureRc);
+  }
+
+  public static getAllEnumsAsOptions(): Options {
+    return EnumWithLibelle.getAllEnumsAsOptions(NatureRc);
   }
 }

@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
-
+import { Options } from "../../../views/common/util/Type";
 export class NatureRca extends EnumWithLibelle {
   public static readonly ACTE_NOTERIETE_CONSTATANT_LA_POSSESSION_ETAT = new NatureRca(
     "Acte de notoriété constatant la possession d'état"
@@ -114,5 +114,9 @@ export class NatureRca extends EnumWithLibelle {
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, NatureRca);
+  }
+
+  public static getAllEnumsAsOptions(): Options {
+    return EnumWithLibelle.getAllEnumsAsOptions(NatureRca);
   }
 }

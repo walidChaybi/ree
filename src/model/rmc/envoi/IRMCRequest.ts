@@ -1,3 +1,9 @@
+import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
+import { NatureRc } from "../../etatcivil/enum/NatureRc";
+import { NatureRca } from "../../etatcivil/enum/NatureRca";
+import { NatureActe } from "../../etatcivil/enum/NatureActe";
+import { CodeFamilleRegistre } from "../../etatcivil/enum/CodeFamilleRegistre";
+
 export interface IRMCRequest {
   // Filtre Titulaire
   nomTitulaire?: string;
@@ -14,15 +20,15 @@ export interface IRMCRequest {
 
   // Filtre Registre & Réppertoire Civile
   // Registre
-  natureActe?: string;
-  familleRegistre?: string;
+  natureActe?: NatureActe;
+  familleRegistre?: CodeFamilleRegistre;
   posteOuPocopa?: string;
   numeroActe?: string;
   //Repertoire
   numeroInscription?: string;
-  typeRepertoire?: string;
-  natureRc?: string;
-  natureRca?: string;
+  typeRepertoire?: TypeRepertoire;
+  natureRc?: NatureRc;
+  natureRca?: NatureRca;
   // Evenement
   jourDateEvenement?: string;
   moisDateEvenement?: string;

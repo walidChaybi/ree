@@ -15,7 +15,6 @@ import {
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
-import { getValeurOuVide } from "../../../../../common/util/Utils";
 
 export function getInscriptionRepertoireCivil(
   retourBack: IFicheRcRca
@@ -36,7 +35,7 @@ function getInteresseRc(retourBack: IFicheRcRca): AccordionContentProps[] {
   return [
     {
       libelle: "Nature",
-      value: getValeurOuVide(retourBack.nature?.libelle)
+      value: retourBack.nature.libelle
     },
     {
       libelle: "Mandataire(s)",
