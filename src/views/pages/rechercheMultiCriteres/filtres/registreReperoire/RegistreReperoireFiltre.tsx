@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import {
   ComponentFiltreProps,
-  withNamespace
+  withNamespace,
+  IOnFieldChangeParam
 } from "../../../../common/widget/formulaire/utils/FormUtil";
-import {
-  RegistreActeFiltre,
+import RegistreActeFiltre, {
   RegistreActeDefaultValues,
-  RegistreActeValidationSchema
+  RegistreActeValidationSchema,
+  RegistreActeFiltreProps
 } from "./RegistreActeFiltre";
 import { getLibelle } from "../../../../common/widget/Text";
 import RepertoireInscriptionFiltre, {
@@ -34,20 +35,45 @@ export const RegistreRepertoireValidationSchema = Yup.object({
 });
 
 export const RegistreRepertoireFiltre: React.FC<ComponentFiltreProps> = props => {
+  const [filtreActeInactif, setFiltreActeInactif] = useState<
+    boolean | undefined
+  >(false);
+  const [filtreInscriptionInactif, setFiltreInscriptionInactif] = useState<
+    boolean | undefined
+  >(false);
+
+  function onFiltreActeChange(param: IOnFieldChangeParam) {
+    setFiltreInscriptionInactif(param.filtreDirty);
+  }
+
+  function onFiltreInscriptionChange(param: IOnFieldChangeParam) {
+    setFiltreActeInactif(param.filtreDirty);
+  }
+
   const componentFiltreInscriptionProps = {
-    nomFiltre: withNamespace(props.nomFiltre, REPERTOIRE)
+    nomFiltre: withNamespace(props.nomFiltre, REPERTOIRE),
+    onFieldChange: onFiltreInscriptionChange
   } as ComponentFiltreInscriptionProps;
+
+  const registreActeFiltreProps = {
+    nomFiltre: withNamespace(props.nomFiltre, REGISTRE),
+    onFieldChange: onFiltreActeChange
+  } as RegistreActeFiltreProps;
 
   return (
     <div className={props.nomFiltre}>
       <Fieldset titre={getLibelle("Filtre registre et répertoire")}>
         <div className="FormFiltre">
           <RegistreActeFiltre
-            nomFiltre={withNamespace(props.nomFiltre, REGISTRE)}
+            filtreInactif={filtreActeInactif}
+            {...registreActeFiltreProps}
           />
         </div>
         <div className="FormFiltre">
-          <RepertoireInscriptionFiltre {...componentFiltreInscriptionProps} />
+          <RepertoireInscriptionFiltre
+            filtreInactif={filtreInscriptionInactif}
+            {...componentFiltreInscriptionProps}
+          />
         </div>
       </Fieldset>
     </div>

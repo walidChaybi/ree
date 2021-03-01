@@ -7,18 +7,17 @@ import {
   fireEvent
 } from "@testing-library/react";
 import { Field, Formik, Form } from "formik";
-import {
+import RegistreActeFiltre, {
   RegistreActeDefaultValues,
-  RegistreActeFiltre
+  RegistreActeFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreActeFiltre";
 import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/RMCActeInscriptionPage";
-import { ComponentFiltreProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
 const HookRegistreActeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
   const registreFiltreProps = {
     nomFiltre: REGISTRE_REPERTOIRE
-  } as ComponentFiltreProps;
+  } as RegistreActeFiltreProps;
 
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));
