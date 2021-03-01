@@ -18,6 +18,7 @@ import { IRMCRequest } from "../../../../model/rmc/envoi/IRMCRequest";
 import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
 import { NatureRc } from "../../../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
+import { RMCRepertoire } from "../../../../model/rmc/rechercheForm/IRMCRepertoire";
 
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
@@ -52,10 +53,18 @@ export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
     numeroActe: valeurOuUndefined(
       criteres.registreRepertoire?.registre?.numeroActe
     ),
-    numeroInscription: undefined,
-    typeRepertoire: undefined,
-    natureRc: undefined,
-    natureRca: undefined,
+    numeroInscription: valeurOuUndefined(
+      criteres.registreRepertoire?.repertoire?.numeroInscription
+    ),
+    typeRepertoire: valeurOuUndefined(
+      criteres.registreRepertoire?.repertoire?.typeRepertoire
+    ),
+    natureRc: RMCRepertoire.getNatureRc(
+      criteres.registreRepertoire?.repertoire
+    ),
+    natureRca: RMCRepertoire.getNatureRca(
+      criteres.registreRepertoire?.repertoire
+    ),
     jourDateEvenement: undefined,
     moisDateEvenement: undefined,
     anneeDateEvenement: undefined,

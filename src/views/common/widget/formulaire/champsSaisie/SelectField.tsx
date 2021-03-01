@@ -8,14 +8,28 @@ interface SelectFiledProps {
   ariaLabel?: string;
   description?: string;
   options: Options;
+  disabled?: boolean;
+  onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export const SelectField: React.FC<SelectFiledProps> = ({
   name,
   label,
   ariaLabel,
   description,
-  options
+  options,
+  disabled,
+  onInput,
+  onChange
 }) => {
+  const otherProps = {} as any;
+  if (onInput) {
+    otherProps.onInput = onInput;
+  }
+  if (onChange) {
+    otherProps.onChange = onChange;
+  }
+
   return (
     <div className="InputField">
       <div className="BlockInput">
@@ -24,6 +38,8 @@ export const SelectField: React.FC<SelectFiledProps> = ({
           name={name}
           aria-label={`${ariaLabel ? ariaLabel : name}`}
           as="select"
+          disabled={disabled}
+          {...otherProps}
         >
           <option defaultValue={""}>{description ? description : ""}</option>
           {options.map(({ value, str }) => (

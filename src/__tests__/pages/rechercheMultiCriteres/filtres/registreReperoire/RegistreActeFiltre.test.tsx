@@ -57,7 +57,7 @@ test("render composant RegistreActeFiltre", async () => {
     "registreRepertoire.numeroActe"
   ) as HTMLInputElement;
 
-  const allIputDateDebutDateFin = [
+  const allInputRegistreActe = [
     natureActe,
     familleRegistre,
     pocopa,
@@ -65,7 +65,7 @@ test("render composant RegistreActeFiltre", async () => {
   ];
 
   await waitFor(() => {
-    expectToBeDefined([...allIputDateDebutDateFin]);
+    expectToBeDefined([...allInputRegistreActe]);
   });
 
   act(() => {

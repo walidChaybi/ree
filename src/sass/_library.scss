@@ -111,12 +111,25 @@ option {
 
 select {
   padding: 0.5em 2.5em 0.5em 0.2em;
-  background: url(../img/expand-close.svg) #fff no-repeat 100% 50%;
+
+  background-image: url(../img/expand-close.svg);
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 50%;
+
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   border: 1px solid #c8c8c8;
   border-radius: 4px;
+
+  cursor: pointer;
+
+  &:disabled {
+    background-color: $form-input-disabled;
+    cursor: default;
+  }
 }
 
 .FormContent {
