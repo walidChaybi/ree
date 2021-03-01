@@ -86,9 +86,9 @@ export default {
     documentsDelivres: [],
     requete: ""
   },
-  anneeEvenement: 0,
-  jourEvenement: 0,
-  moisEvenement: 0,
+  anneeEvenement: 2009,
+  jourEvenement: 25,
+  moisEvenement: 1,
   nbExemplaire: 0,
   documentsDelivres: []
 };

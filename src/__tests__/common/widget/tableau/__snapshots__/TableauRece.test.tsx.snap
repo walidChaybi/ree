@@ -24,7 +24,7 @@ Array [
           >
             <span
               aria-disabled={false}
-              className="MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
+              className="MuiButtonBase-root MuiTableSortLabel-root TableauFontHeader CursorHeader"
               onBlur={[Function]}
               onClick={[Function]}
               onDragLeave={[Function]}
@@ -41,16 +41,6 @@ Array [
               tabIndex={0}
             >
               N°
-              <svg
-                aria-hidden={true}
-                className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-                />
-              </svg>
             </span>
           </th>
         </tr>
@@ -67,7 +57,8 @@ Array [
         >
           <td
             aria-sort={null}
-            className="MuiTableCell-root MuiTableCell-body tableauFontBody MuiTableCell-alignLeft MuiTableCell-sizeSmall"
+            className="MuiTableCell-root MuiTableCell-body TableauFontBody MuiTableCell-alignLeft MuiTableCell-sizeSmall"
+            title={11982}
           >
             11982
           </td>
@@ -80,7 +71,8 @@ Array [
         >
           <td
             aria-sort={null}
-            className="MuiTableCell-root MuiTableCell-body tableauFontBody MuiTableCell-alignLeft MuiTableCell-sizeSmall"
+            className="MuiTableCell-root MuiTableCell-body TableauFontBody MuiTableCell-alignLeft MuiTableCell-sizeSmall"
+            title={11985}
           >
             11985
           </td>
@@ -93,7 +85,8 @@ Array [
         >
           <td
             aria-sort={null}
-            className="MuiTableCell-root MuiTableCell-body tableauFontBody MuiTableCell-alignLeft MuiTableCell-sizeSmall"
+            className="MuiTableCell-root MuiTableCell-body TableauFontBody MuiTableCell-alignLeft MuiTableCell-sizeSmall"
+            title={11991}
           >
             11991
           </td>

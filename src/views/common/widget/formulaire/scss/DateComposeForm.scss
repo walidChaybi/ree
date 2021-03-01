@@ -19,6 +19,7 @@
 
   input {
     align-self: center;
+    text-align: center;
   }
 
   input:nth-child(3) {
@@ -27,10 +28,6 @@
 
   .Sep {
     margin: auto;
-  }
-
-  input {
-    text-align: center;
   }
 
   button {

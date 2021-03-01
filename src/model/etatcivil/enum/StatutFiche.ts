@@ -1,15 +1,12 @@
-export enum StatutFiche {
-  ACTIF = "ACTIF",
-  INACTIF = "INACTIF"
-}
+/* istanbul ignore file */
 
-export class StatutFicheUtil {
-  private static readonly libelles = {
-    [StatutFiche.ACTIF]: "Actif",
-    [StatutFiche.INACTIF]: "Inactif"
-  };
+import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 
-  public static getLibelle(statutFiche?: StatutFiche): string {
-    return statutFiche ? this.libelles[statutFiche] : "";
+export class StatutFiche extends EnumWithLibelle {
+  public static readonly ACTIF = new StatutFiche("Actif");
+  public static readonly INACTIF = new StatutFiche("Inactif");
+
+  public static getEnumFor(str: string) {
+    return EnumWithLibelle.getEnumFor(str, StatutFiche);
   }
 }

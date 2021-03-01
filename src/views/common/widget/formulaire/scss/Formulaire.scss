@@ -2,19 +2,6 @@
 
 .Formulaire {
   margin: 1.5rem 5rem;
-  border-radius: 0.3rem;
-  border: 1px solid;
-  border-color: $button-application-color;
-
-  .Titre {
-    background-color: $button-application-color;
-    padding: 0.2em 1em 0.2em 1.325em;
-    margin: 0em;
-    border-radius: 0.25em 0.25em 0 0;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-  }
 
   .DeuxColonnes {
     display: grid;
@@ -27,6 +14,16 @@
   }
 
   .ResetButton {
-    background-color: #0579be;
+    background-color: $application-color;
+  }
+
+  input:disabled {
+    background-color: $form-input-disabled;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid $form-border-input-disabled;
+    height: 30px;
+    border-radius: 0.2rem;
   }
 }

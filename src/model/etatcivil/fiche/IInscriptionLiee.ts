@@ -1,6 +1,6 @@
 import { TypeInscriptionRc } from "../enum/TypeInscriptionRc";
 
-export interface IInscriptionLie {
+export interface IInscriptionLiee {
   typeInscription: TypeInscriptionRc;
   numero: string;
   annee: string;

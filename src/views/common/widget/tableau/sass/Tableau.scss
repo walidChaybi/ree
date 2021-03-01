@@ -1,3 +1,5 @@
+@import "../../../../../sass/colors";
+
 tbody {
   tr {
     cursor: pointer;
@@ -6,4 +8,30 @@ tbody {
 
 table {
   table-layout: fixed;
+}
+
+.MuiTablePagination-root {
+  .MuiTablePagination-actions {
+    button {
+      box-shadow: none;
+    }
+  }
+}
+
+.TableauFontHeader {
+  font-family: "NotoSansUI-Bold", sans-serif !important;
+  color: $application-color !important;
+  text-decoration: underline !important;
+}
+
+.OrderedHeaderCell {
+  font-weight: bold !important;
+}
+
+.CursorHeader {
+  cursor: default !important;
+}
+
+.TableauFontBody {
+  font-family: "NotoSansUI-Regular", sans-serif !important;
 }

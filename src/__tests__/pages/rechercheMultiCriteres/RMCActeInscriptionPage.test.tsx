@@ -7,7 +7,7 @@ import {
   screen
 } from "@testing-library/react";
 import {
-  titreFrom,
+  titreForm,
   RMCActeInscriptionPage
 } from "../../../views/pages/rechercheMultiCriteres/RMCActeInscriptionPage";
 
@@ -16,7 +16,7 @@ test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async
     render(<RMCActeInscriptionPage />);
   });
   await waitFor(() => {
-    expect(screen.getAllByText(titreFrom)).toHaveLength(2);
+    expect(screen.getAllByText(titreForm)).toHaveLength(2);
   });
 });
 

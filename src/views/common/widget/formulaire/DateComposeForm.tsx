@@ -203,7 +203,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           size="xs"
           className="IconeCroix"
           onClick={videChamps}
-          title="vider les champs"
+          title="Vider les champs"
         />
         {props.showDatePicker && (
           <ReceDatePicker

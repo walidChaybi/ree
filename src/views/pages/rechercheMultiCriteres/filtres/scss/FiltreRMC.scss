@@ -1,42 +1,34 @@
 @import "../../../../../sass/colors";
 
-.Filtre {
-  margin: 1rem;
-  border-radius: 0.3rem;
-  border: 1px solid;
-  border-color: $application-color;
-  text-align: start;
+.TitreFiltre {
+  background-color: $application-color;
+  padding: 0.2em 1em 0.2em 1.325em;
+  margin: 0em;
+  border-radius: 0.25em 0.25em 0 0;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
 
-  .TitreFiltre {
-    background-color: $application-color;
-    padding: 0.2em 1em 0.2em 1.325em;
-    margin: 0em;
-    border-radius: 0.25em 0.25em 0 0;
-    font-weight: bold;
-    color: white;
-    text-align: center;
+.FormFiltre {
+  margin: 1.5rem 2.5rem 0 2.5rem;
+  .BlockInput {
+    margin: 0.5rem 0;
+    padding-bottom: 0.5rem;
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    label {
+      align-self: center;
+      color: $button-application-color;
+    }
+    input {
+      align-self: center;
+    }
   }
-
-  .FormFiltre {
-    margin: 1.5rem 2.5rem 0 2.5rem;
-    .BlockInput {
-      margin: 0.5rem 0;
-      padding-bottom: 0.5rem;
-      display: grid;
-      grid-template-columns: 50% 50%;
-
-      label {
-        align-self: center;
-        color: $button-application-color;
-      }
-      input {
-        align-self: center;
-      }
-    }
-    .BlockErreur {
-      color: $error;
-      margin: 0.5rem 0;
-      font-size: 0.85rem;
-    }
+  .BlockErreur {
+    color: $error;
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
   }
 }

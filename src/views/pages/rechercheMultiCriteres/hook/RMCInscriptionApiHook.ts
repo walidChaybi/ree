@@ -1,40 +1,70 @@
 import { useState, useEffect } from "react";
 import { rechercheMultiCriteresInscriptions } from "../../../../api/appels/etatcivilApi";
-import { IResultatRMCInscription } from "../../../../model/rmc/resultat/IResultatRMCInscription";
 import { IRMCActeInscription } from "../../../../model/rmc/rechercheForm/IRMCActeInscription";
-import messageManager from "../../../common/util/messageManager";
+import { IResultatRMCInscription } from "../../../../model/rmc/resultat/IResultatRMCInscription";
+import {
+  getMaxRange,
+  getMinRange,
+  getRowsNumber,
+  IDataTableau,
+  parseLink
+} from "../../../common/util/GestionDesLiensApi";
+import { logError } from "../../../common/util/LogManager";
 import {
   mappingCriteres,
-  mappingInscriptions
-} from "../RMCActeInscriptionUtils";
+  mappingInscriptions,
+  rechercherRepertoireAutorise
+} from "./RMCActeInscriptionUtils";
 
-export function useRMCInscriptionApiHook(
-  criteres: IRMCActeInscription,
-  range?: string
-) {
+export interface ICriteresRecherche {
+  valeurs: IRMCActeInscription;
+  range?: string;
+}
+
+export function useRMCInscriptionApiHook(criteres?: ICriteresRecherche) {
   const [dataRMCInscription, setDataRMCInscription] = useState<
     IResultatRMCInscription[]
   >();
+  const [dataTableauRMCInscription, setDataTableauRMCInscription] = useState<
+    IDataTableau
+  >();
 
   useEffect(() => {
-    if (criteres != null) {
-      const criteresRequest = mappingCriteres(criteres);
-      // Recherche dans les inscriptions
-      rechercheMultiCriteresInscriptions(criteresRequest)
-        .then((result: any) => {
-          setDataRMCInscription(
-            mappingInscriptions(result.body.data.repertoiresCiviles)
-          );
-        })
-        .catch((error: any) => {
-          messageManager.showErrorAndClose(
-            "Impossible récupérer les inscriptions de la recherche multi-critères"
-          );
-        });
+    if (criteres != null && criteres.valeurs != null) {
+      const criteresRecherche = mappingCriteres(criteres.valeurs);
+
+      if (rechercherRepertoireAutorise(criteresRecherche)) {
+        // Recherche dans les inscriptions
+        rechercheMultiCriteresInscriptions(criteresRecherche, criteres.range)
+          .then((result: any) => {
+            setDataRMCInscription(
+              mappingInscriptions(result.body.data.repertoiresCiviles)
+            );
+            const { nextLink, prevLink } = parseLink(result.headers["link"]);
+            setDataTableauRMCInscription({
+              previousDataLinkState: prevLink,
+              nextDataLinkState: nextLink,
+              rowsNumberState: getRowsNumber(result),
+              minRangeState: getMinRange(result),
+              maxRangeState: getMaxRange(result)
+            });
+          })
+          .catch(error => {
+            logError({
+              messageUtilisateur:
+                "Impossible de récupérer les inscriptions de la recherche multi-critères",
+              error
+            });
+          });
+      } else {
+        setDataRMCInscription([]);
+        setDataTableauRMCInscription({});
+      }
     }
   }, [criteres]);
 
   return {
-    dataRMCInscription
+    dataRMCInscription,
+    dataTableauRMCInscription
   };
 }

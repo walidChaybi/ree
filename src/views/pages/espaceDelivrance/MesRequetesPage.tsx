@@ -13,7 +13,6 @@ import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
 import { NatureActe } from "../../../model/etatcivil/enum/NatureActe";
 import { Canal } from "../../../model/Canal";
-import { URL_MES_REQUETES } from "../../router/ReceUrls";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
 import "./sass/RequeteTableau.scss";
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
@@ -31,7 +30,7 @@ import {
   TypeAppelRequete
 } from "../../../api/appels/requeteApi";
 import {
-  goToLinkCommon,
+  goToLinkRequete,
   commonHeaders,
   getIconPrioriteRequete
 } from "./espaceDelivranceUtils";
@@ -116,6 +115,7 @@ const columnsTableau = [
 
 interface MesRequetesPageProps {
   miseAJourCompteur: () => void;
+  getUrlBack: (id: string, data: any[]) => void;
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
@@ -141,7 +141,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   } = useRequeteApi(linkParameters, TypeAppelRequete.MES_REQUETES);
 
   const goToLink = useCallback((link: string) => {
-    const queryParametersPourRequetes = goToLinkCommon(link, "requetes");
+    const queryParametersPourRequetes = goToLinkRequete(link, "requetes");
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }
@@ -177,7 +177,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     <>
       <TableauRece
         idKey={"idRequete"}
-        onClickOnLine={getUrlBack}
+        onClickOnLine={props.getUrlBack}
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
         columnHeaders={columnsTableau}
@@ -195,7 +195,3 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     </>
   );
 };
-
-function getUrlBack(identifiantRequete: string): string {
-  return `${URL_MES_REQUETES}/${identifiantRequete}`;
-}

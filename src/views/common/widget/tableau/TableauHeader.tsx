@@ -6,18 +6,20 @@ import { SortOrder } from "./TableUtils";
 import { TableauTypeColumn } from "./TableauRece";
 
 export interface TableauHeaderProps {
-  onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
-  order: SortOrder;
-  orderBy: string;
+  onRequestSort?: (event: React.MouseEvent<unknown>, property: string) => void;
+  order?: SortOrder;
+  orderBy?: string;
   columnHeaders: TableauTypeColumn[];
 }
 
-export const TableauHeader: React.FC<TableauHeaderProps> = (props) => {
+export const TableauHeader: React.FC<TableauHeaderProps> = props => {
   const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property: string) => (
     event: React.MouseEvent<unknown>
   ) => {
-    onRequestSort(event, property);
+    if (onRequestSort) {
+      onRequestSort(event, property);
+    }
   };
 
   const listOfTableauHeaderCell = [];

@@ -89,6 +89,14 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
     setReloadCompteur(!reloadCompteur);
   };
 
+  const getUrlBack = (identifiantRequete: string, data: any) => {
+    if (identifiantRequete && data) {
+      history.push(`${URL_MES_REQUETES}/${identifiantRequete}`, {
+        data
+      });
+    }
+  };
+
   return (
     <>
       <Title titleId={"pages.delivrance.titre"} />
@@ -131,7 +139,10 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
 
                   <TabPanel value={selectedTabState} index={0}>
                     {selectedTabState === 0 && (
-                      <MesRequetesPage miseAJourCompteur={miseAJourCompteur} />
+                      <MesRequetesPage
+                        miseAJourCompteur={miseAJourCompteur}
+                        getUrlBack={getUrlBack}
+                      />
                     )}
                   </TabPanel>
                   {officierHabiliterPourLeDroit(
@@ -139,7 +150,9 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                     Droit.ATTRIBUER
                   ) && (
                     <TabPanel value={selectedTabState} index={1}>
-                      {selectedTabState === 1 && <RequetesServicePage />}
+                      {selectedTabState === 1 && (
+                        <RequetesServicePage getUrlBack={getUrlBack} />
+                      )}
                     </TabPanel>
                   )}
                 </>

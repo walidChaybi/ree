@@ -1,0 +1,162 @@
+import {
+  formatNom,
+  formatNoms,
+  formatPrenoms,
+  getValeurOuVide,
+  valeurOuUndefined
+} from "../../../common/util/Utils";
+import {
+  getDateStringFromDateCompose,
+  getDateFinFromDateCompose,
+  getDateDebutFromDateCompose
+} from "../../../common/util/DateUtils";
+import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
+import { IResultatRMCActe } from "../../../../model/rmc/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../../model/rmc/resultat/IResultatRMCInscription";
+import { IRMCActeInscription } from "../../../../model/rmc/rechercheForm/IRMCActeInscription";
+import { IRMCRequest } from "../../../../model/rmc/envoi/IRMCRequest";
+import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
+import { NatureRc } from "../../../../model/etatcivil/enum/NatureRc";
+import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
+
+/** Critères de recherche: mapping avant appel d'api */
+export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
+  let criteresMapper: IRMCRequest;
+  criteresMapper = {
+    // Filtre Titulaire
+    nomTitulaire: valeurOuUndefined(criteres.titulaire?.nom),
+    prenomTitulaire: valeurOuUndefined(criteres.titulaire?.prenom),
+    jourNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.jour),
+    moisNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.mois),
+    anneeNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.annee),
+    paysNaissance: valeurOuUndefined(criteres.titulaire?.paysNaissance),
+    // Filtre Date de création
+    dateCreationDebut: getDateDebutFromDateCompose(
+      criteres.datesDebutFinAnnee?.dateDebut
+    ),
+    dateCreationFin: getDateFinFromDateCompose(
+      criteres.datesDebutFinAnnee?.dateFin
+    ),
+    annee: valeurOuUndefined(criteres.datesDebutFinAnnee?.annee),
+
+    // Filtre Registre & Réppertoire Civile
+    natureActe: valeurOuUndefined(
+      criteres.registreRepertoire?.registre?.natureActe
+    ),
+    familleRegistre: valeurOuUndefined(
+      criteres.registreRepertoire?.registre?.familleRegistre
+    ),
+    posteOuPocopa: valeurOuUndefined(
+      criteres.registreRepertoire?.registre?.pocopa
+    ),
+    numeroActe: valeurOuUndefined(
+      criteres.registreRepertoire?.registre?.numeroActe
+    ),
+    numeroInscription: undefined,
+    typeRepertoire: undefined,
+    natureRc: undefined,
+    natureRca: undefined,
+    jourDateEvenement: undefined,
+    moisDateEvenement: undefined,
+    anneeDateEvenement: undefined,
+    paysEvenement: undefined
+  };
+  return criteresMapper;
+}
+
+/** Actes: mapping après appel d'api */
+export function mappingActes(data: any): IResultatRMCActe[] {
+  const actesMapper: IResultatRMCActe[] = [];
+  data.forEach((acte: any) => {
+    const acteMapper: IResultatRMCActe = {
+      idActe: acte.id,
+      nom: formatNom(acte.nom),
+      autresNoms: formatNoms(acte.autresNoms),
+      prenoms: formatPrenoms(acte.prenoms),
+      dateNaissance: getDateStringFromDateCompose({
+        jour: acte.jourNaissance,
+        mois: acte.moisNaissance,
+        annee: acte.anneeNaissance
+      }),
+      paysNaissance: getValeurOuVide(acte.paysNaissance),
+      nature: NatureActe.getEnumFor(acte.nature).libelle,
+      registre: getValeurOuVide(acte.registre)
+    };
+    actesMapper.push(acteMapper);
+  });
+  return actesMapper;
+}
+
+/** RC/RCA/PACS: mapping après appel d'api */
+export function mappingInscriptions(data: any): IResultatRMCInscription[] {
+  const inscriptionsMapper: IResultatRMCInscription[] = [];
+  data.forEach((inscription: any) => {
+    const inscriptionMapper: IResultatRMCInscription = {
+      idInscription: inscription.id,
+      nom: formatNom(inscription.nom),
+      autresNoms: formatNoms(inscription.autresNoms),
+      prenoms: formatPrenoms(inscription.prenoms),
+      dateNaissance: getDateStringFromDateCompose({
+        jour: inscription.jourNaissance,
+        mois: inscription.moisNaissance,
+        annee: inscription.anneeNaissance
+      }),
+      paysNaissance: getValeurOuVide(inscription.paysNaissance),
+      numeroInscription: getValeurOuVide(inscription.numero),
+      nature: getNatureInscription(
+        inscription.typeInscription,
+        inscription.nature
+      ),
+      typeInscription: getValeurOuVide(inscription.typeInscription),
+      statutInscription: getValeurOuVide(
+        StatutFiche.getEnumFor(inscription.statut).libelle
+      )
+    };
+    inscriptionsMapper.push(inscriptionMapper);
+  });
+  return inscriptionsMapper;
+}
+
+function getNatureInscription(type: string, nature: string) {
+  let natureInscription = "";
+  if (type) {
+    const typeToUpper = type.toUpperCase();
+    switch (typeToUpper) {
+      case "RC":
+        natureInscription = NatureRc.getEnumFor(nature).libelle;
+        break;
+      case "RCA":
+        natureInscription = NatureRca.getEnumFor(nature).libelle;
+        break;
+
+      default:
+        natureInscription = "";
+        break;
+    }
+  }
+  return natureInscription;
+}
+
+export function rechercherRepertoireAutorise(criteres: IRMCRequest): boolean {
+  if (
+    criteres.natureActe ||
+    criteres.familleRegistre ||
+    criteres.posteOuPocopa ||
+    criteres.numeroActe
+  ) {
+    return false;
+  }
+  return true;
+}
+
+export function rechercherActeAutorise(criteres: IRMCRequest): boolean {
+  if (
+    criteres.typeRepertoire ||
+    criteres.natureRc ||
+    criteres.natureRca ||
+    criteres.numeroInscription
+  ) {
+    return false;
+  }
+  return true;
+}

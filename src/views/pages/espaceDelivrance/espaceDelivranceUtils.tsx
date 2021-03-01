@@ -13,7 +13,7 @@ import LabelIcon from "@material-ui/icons/Label";
 import React from "react";
 import { IDataTable } from "./MesRequetesPage";
 
-export function goToLinkCommon(
+export function goToLinkRequete(
   link: string,
   separator: string
 ): IQueryParametersPourRequetes | undefined {

@@ -47,7 +47,7 @@ class IconCalendar extends React.Component<{ value?: any; onClick?: any }> {
         size="lg"
         className="IconeCalendar"
         onClick={this.props.onClick}
-        title="calendrier"
+        title="Calendrier"
       />
     );
   }

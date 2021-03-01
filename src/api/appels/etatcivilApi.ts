@@ -17,22 +17,30 @@ export function getInformationsFiche(
 }
 
 export function rechercheMultiCriteresActes(
-  criteres: IRMCRequest
+  criteres: IRMCRequest,
+  range?: string
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.POST,
     uri: `${URL_ACTE}/rmc`,
-    data: criteres
+    data: criteres,
+    parameters: {
+      range
+    }
   });
 }
 
 export function rechercheMultiCriteresInscriptions(
-  criteres: IRMCRequest
+  criteres: IRMCRequest,
+  range?: string
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.POST,
     uri: `${URL_ETAT_CIVIL}/rmc`,
-    data: criteres
+    data: criteres,
+    parameters: {
+      range
+    }
   });
 }
 

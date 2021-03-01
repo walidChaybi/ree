@@ -8,10 +8,6 @@ import {
   getDateFromTimestamp
 } from "../../../../../common/util/DateUtils";
 import { InscriptionsLiees } from "./InscriptionsLiees";
-import {
-  NatureFicheRcUtil,
-  TypeNatureFicheRc
-} from "../../../../../../model/etatcivil/enum/TypeNatureFicheRc";
 import { MandataireUtil } from "../../../../../../model/etatcivil/enum/TypeMandataire";
 import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import {
@@ -19,10 +15,7 @@ import {
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
-import {
-  NatureFicheRcaUtil,
-  TypeNatureFicheRca
-} from "../../../../../../model/etatcivil/enum/TypeNatureFicheRca";
+import { getValeurOuVide } from "../../../../../common/util/Utils";
 
 export function getInscriptionRepertoireCivil(
   retourBack: IFicheRcRca
@@ -43,9 +36,7 @@ function getInteresseRc(retourBack: IFicheRcRca): AccordionContentProps[] {
   return [
     {
       libelle: "Nature",
-      value: NatureFicheRcUtil.getLibelle(
-        retourBack.nature as TypeNatureFicheRc
-      )
+      value: getValeurOuVide(retourBack.nature?.libelle)
     },
     {
       libelle: "Mandataire(s)",
@@ -93,9 +84,7 @@ function getInteresseRca(retourBack: IFicheRcRca): AccordionContentProps[] {
   return [
     {
       libelle: "Nature",
-      value: NatureFicheRcaUtil.getLibelle(
-        retourBack.nature as TypeNatureFicheRca
-      )
+      value: retourBack.nature.libelle
     },
     {
       libelle: "Type inscription",

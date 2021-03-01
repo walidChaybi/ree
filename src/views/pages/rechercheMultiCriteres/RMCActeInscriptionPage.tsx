@@ -11,13 +11,19 @@ import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps
 } from "./filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
-import { useRMCInscriptionApiHook } from "./hook/RMCInscriptionApiHook";
+import {
+  ICriteresRecherche,
+  useRMCInscriptionApiHook
+} from "./hook/RMCInscriptionApiHook";
 import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
+import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
+import { NB_LIGNES_PAR_APPEL } from "../../common/widget/tableau/TableauRece";
 import {
   RegistreRepertoireFiltre,
   RegistreRepertoireDefaultValues,
   RegistreRepertoireValidationSchema
 } from "./filtres/registreReperoire/RegistreReperoireFiltre";
+import { IRMCActeInscription } from "../../../model/rmc/rechercheForm/IRMCActeInscription";
 
 // Nom des filtres
 const TITULAIRE = "titulaire";
@@ -38,7 +44,8 @@ const ValidationSchemaRMCActeInscription = Yup.object({
   [REGISTRE_REPERTOIRE]: RegistreRepertoireValidationSchema
 });
 
-export const titreFrom = "Critères de recherche d'un acte et d'une inscription";
+export const titreForm = "Critères de recherche d'un acte ou d'une inscription";
+
 export const RMCActeInscriptionPage: React.FC = () => {
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(),
@@ -46,53 +53,86 @@ export const RMCActeInscriptionPage: React.FC = () => {
     getFormDatesDebutFinAnnee()
   ];
 
-  const [valuesRMCActe, setValuesRMCActe] = useState<any>();
+  const [valuesRMC, setValuesRMC] = useState<IRMCActeInscription>({});
 
-  const [valuesRMCInscription, setValuesRMCInscription] = useState<any>();
+  const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const { dataRMCActe } = useRMCActeApiHook(valuesRMCActe);
+  const [critèresRechercheActe, setCritèresRechercheActe] = useState<
+    ICriteresRecherche
+  >();
 
-  const { dataRMCInscription } = useRMCInscriptionApiHook(valuesRMCInscription);
+  const [
+    critèresRechercheInscription,
+    setCritèresRechercheInscription
+  ] = useState<ICriteresRecherche>();
+
+  const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(
+    critèresRechercheActe
+  );
+
+  const {
+    dataRMCInscription,
+    dataTableauRMCInscription
+  } = useRMCInscriptionApiHook(critèresRechercheInscription);
 
   const onSubmitRMCActeInscription = (values: any) => {
-    setValuesRMCActe(values);
-    setValuesRMCInscription(values);
+    setNouvelleRecherche(true);
+    setValuesRMC(values);
+    setCritèresRechercheActe({
+      valeurs: values,
+      range: `0-${NB_LIGNES_PAR_APPEL}`
+    });
+    setCritèresRechercheInscription({
+      valeurs: values,
+      range: `0-${NB_LIGNES_PAR_APPEL}`
+    });
+    setNouvelleRecherche(false);
+  };
+
+  const setRangeActe = (range: string) => {
+    if (valuesRMC && range !== "") {
+      setCritèresRechercheActe({
+        valeurs: valuesRMC,
+        range
+      });
+    }
+  };
+
+  const setRangeInscription = (range: string) => {
+    if (valuesRMC && range !== "") {
+      setCritèresRechercheInscription({
+        valeurs: valuesRMC,
+        range
+      });
+    }
   };
 
   return (
     <>
-      <title>{titreFrom}</title>
+      <title>{titreForm}</title>
       <Formulaire
-        titre={titreFrom}
+        titre={titreForm}
         formDefaultValues={DefaultValuesRMCActeInscription}
         formValidationSchema={ValidationSchemaRMCActeInscription}
-        libelleBouton="Recherche"
+        libelleBouton="Rechercher"
         blocs={blocsForm}
         onSubmit={onSubmitRMCActeInscription}
         formulaireClassName="DeuxColonnes FormulaireRMCAI"
       />
-      {dataRMCActe && dataRMCActe.length > 0 && (
-        <div>
-          <p>ACTE : </p>
-          {dataRMCActe?.map((acte, index) => {
-            return (
-              <p key={`acteRMC${index}`}>{`${acte.nom}  ${acte.natureActe}`}</p>
-            );
-          })}
-        </div>
-      )}
-      {dataRMCInscription && dataRMCInscription.length > 0 && (
-        <div>
-          <p>INSCRIPTION : </p>
-          {dataRMCInscription?.map((inscription, index) => {
-            return (
-              <p
-                key={`inscriptionRMC${index}`}
-              >{`${inscription.nom}  ${inscription?.natureInscription}`}</p>
-            );
-          })}
-        </div>
-      )}
+      {dataRMCActe &&
+        dataTableauRMCActe &&
+        dataRMCInscription &&
+        dataTableauRMCInscription && (
+          <RMCActeInscriptionResultats
+            dataRMCActe={dataRMCActe}
+            dataTableauRMCActe={dataTableauRMCActe}
+            dataRMCInscription={dataRMCInscription}
+            dataTableauRMCInscription={dataTableauRMCInscription}
+            setRangeInscription={setRangeInscription}
+            setRangeActe={setRangeActe}
+            resetRMC={nouvelleRecherche}
+          />
+        )}
     </>
   );
 };

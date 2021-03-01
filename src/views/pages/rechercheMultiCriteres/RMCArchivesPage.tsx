@@ -1,3 +1,6 @@
+/* istanbul ignore file */
+// TODO Provisoire le temps de developper le formulaire
+
 import React from "react";
 import "./scss/RMCActeInscriptionPage.scss";
 

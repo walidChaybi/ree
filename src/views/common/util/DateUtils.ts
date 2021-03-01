@@ -82,8 +82,9 @@ export function getDateFinFromDateCompose(
         Number(date.annee)
       );
       jour = String(dernierjourDuMois ? dernierjourDuMois : "");
+      return getDateFromDateCompose({ jour, mois, annee: date.annee });
     }
-    return getDateFromDateCompose({ jour, mois, annee: date.annee });
+    return getDateFromDateCompose({ jour: date.jour, mois, annee: date.annee });
   } else {
     return undefined;
   }

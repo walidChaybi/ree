@@ -4,7 +4,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import { TableauBodyCell } from "./TableauBodyCell";
 import { getText } from "../Text";
-import { useHistory } from "react-router-dom";
 import { TableauTypeColumn } from "./TableauRece";
 
 import "./sass/Tableau.scss";
@@ -14,7 +13,7 @@ interface TableauBodyProps {
   data: any[];
   idKey: string;
   columnHeaders: TableauTypeColumn[];
-  onClickOnLine: (identifiant: string) => string;
+  onClickOnLine: (identifiant: string, data: any[]) => void;
 }
 
 export const TableauBody: React.FC<TableauBodyProps> = ({
@@ -23,12 +22,8 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   columnHeaders,
   onClickOnLine
 }) => {
-  const history = useHistory();
-
   function onClickRowHandler(identifiant: string) {
-    history.push(onClickOnLine(identifiant), {
-      data
-    });
+    onClickOnLine(identifiant, data);
   }
 
   return (
@@ -36,7 +31,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
       <TableBody>
         {data.map((row: any, idx: number) => (
           <TableRow
-            key={row[idKey]}
+            key={`${row[idKey]}${idx}`}
             onClick={() => onClickRowHandler(row[idKey])}
             data-testid={row[idKey]}
           >

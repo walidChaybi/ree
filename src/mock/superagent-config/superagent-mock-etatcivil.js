@@ -1,7 +1,7 @@
 import mockRC from "../data/RC.json";
 import mockRCA from "../data/RCA.json";
-import mockRMCActe from "../data/RMCActe.json";
-import mockRMCInscription from "../data/RMCInscription.json";
+import { ReponseAppelRMCActe } from "../data/RMCActe";
+import { ReponseAppelRMCInscription } from "../data/RMCInscription";
 import { pacsModificationNotaire } from "../data/PACS";
 import { acte } from "../../__tests__/pages/fiche/data/ficheActe";
 
@@ -56,12 +56,12 @@ export const configEtatcivil = [
         };
       }
 
-      if (match[1] === "/acte/rmc") {
-        return { data: mockRMCActe.data };
+      if (match[1] === "/acte/rmc?range=0-105") {
+        return { data: ReponseAppelRMCActe.data };
       }
 
-      if (match[1] === "/repertoirecivil/rmc") {
-        return { data: mockRMCInscription.data };
+      if (match[1] === "/repertoirecivil/rmc?range=0-105") {
+        return { data: ReponseAppelRMCInscription.data };
       }
     },
 

@@ -1,13 +1,10 @@
-import { IDateCompose } from "../../../views/common/util/DateUtils";
-import { NatureActe } from "../../etatcivil/enum/NatureActe";
-
 export interface IResultatRMCActe {
-  id: string;
-  nom: string;
-  autresNoms: string[];
-  prenoms: string[];
-  dateNaissance: IDateCompose;
-  paysNaissance: string;
-  natureActe: NatureActe;
-  registre: string;
+  idActe?: string;
+  nom?: string;
+  autresNoms?: string;
+  prenoms?: string;
+  dateNaissance?: string;
+  paysNaissance?: string;
+  nature?: string;
+  registre?: string;
 }

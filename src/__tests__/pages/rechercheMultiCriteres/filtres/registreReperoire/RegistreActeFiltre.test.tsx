@@ -16,7 +16,7 @@ import { ComponentFiltreProps } from "../../../../../views/common/widget/formula
 const HookRegistreActeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
-  const registreActeFiltreProps = {
+  const registreFiltreProps = {
     nomFiltre: REGISTRE_REPERTOIRE
   } as ComponentFiltreProps;
 
@@ -31,7 +31,7 @@ const HookRegistreActeFiltre: React.FC = () => {
       onSubmit={handleClickButton}
     >
       <Form>
-        <RegistreActeFiltre {...registreActeFiltreProps} />
+        <RegistreActeFiltre {...registreFiltreProps} />
         <button type="submit">Submit</button>
         <Field as="textarea" value={result} data-testid="result" />
       </Form>

@@ -9,7 +9,8 @@ export class EnumWithLibelle {
   }
 
   public static getEnumFor(str: string, clazz: any) {
-    return str ? clazz[str] : str;
+    str = str != null ? str : "";
+    return str && clazz[str] ? clazz[str] : str;
   }
 
   public static getAllEnumsAsOptions(clazz: any): Options {

@@ -19,6 +19,7 @@ import { withNamespace } from "../../../../common/widget/formulaire/utils/FormUt
 import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import { faArrowsAltH } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { getLibelle } from "../../../../common/widget/Text";
 
@@ -78,39 +79,38 @@ const TitulaireFiltre: React.FC<any> = props => {
   }
 
   return (
-    <div className={`Filtre ${props.nomFiltre}`}>
-      <div className="TitreFiltre">
-        <span>Titulaire</span>
-      </div>
-      <div className="FormFiltre">
-        <InputField
-          name={withNamespace(props.nomFiltre, NOM)}
-          label={getLibelle("Nom")}
-          onBlur={onBlurChamp}
-        />
+    <div className={props.nomFiltre}>
+      <Fieldset titre={getLibelle("Filtre titulaire")}>
+        <div className="FormFiltre">
+          <InputField
+            name={withNamespace(props.nomFiltre, NOM)}
+            label={getLibelle("Nom")}
+            onBlur={onBlurChamp}
+          />
 
-        <button
-          className="BtnNomPrenom"
-          type="button"
-          onClick={switchNomPrenom}
-        >
-          Nom <FontAwesomeIcon icon={faArrowsAltH} /> Prénom
-        </button>
+          <button
+            className="BtnNomPrenom"
+            type="button"
+            onClick={switchNomPrenom}
+          >
+            Nom <FontAwesomeIcon icon={faArrowsAltH} /> Prénom
+          </button>
 
-        <InputField
-          name={withNamespace(props.nomFiltre, PRENOM)}
-          label={getLibelle("Prénom")}
-          onBlur={onBlurChamp}
-        />
+          <InputField
+            name={withNamespace(props.nomFiltre, PRENOM)}
+            label={getLibelle("Prénom")}
+            onBlur={onBlurChamp}
+          />
 
-        <DateComposeForm {...dateDebutComposeFormProps} />
+          <DateComposeForm {...dateDebutComposeFormProps} />
 
-        <InputField
-          name={withNamespace(props.nomFiltre, PAYS_NAISSANCE)}
-          label={getLibelle("Pays de naissance")}
-          onBlur={onBlurChamp}
-        />
-      </div>
+          <InputField
+            name={withNamespace(props.nomFiltre, PAYS_NAISSANCE)}
+            label={getLibelle("Pays de naissance")}
+            onBlur={onBlurChamp}
+          />
+        </div>
+      </Fieldset>
     </div>
   );
 };

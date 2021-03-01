@@ -10,9 +10,10 @@ import {
   RegistreActeValidationSchema
 } from "./RegistreActeFiltre";
 import { getLibelle } from "../../../../common/widget/Text";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 
 // Noms des champs
-export const REGISTRE_ACTE = "registreActe";
+export const REGISTRE_ACTE = "registre";
 
 // Valeurs par défaut des champs
 export const RegistreRepertoireDefaultValues = {
@@ -26,15 +27,14 @@ export const RegistreRepertoireValidationSchema = Yup.object({
 
 export const RegistreRepertoireFiltre: React.FC<ComponentFiltreProps> = props => {
   return (
-    <div className={`Filtre ${props.nomFiltre}`}>
-      <div className="TitreFiltre">
-        <span>{getLibelle("Filtre registre et répertoire")}</span>
-      </div>
-      <div className="FormFiltre">
-        <RegistreActeFiltre
-          nomFiltre={withNamespace(props.nomFiltre, REGISTRE_ACTE)}
-        />
-      </div>
+    <div className={props.nomFiltre}>
+      <Fieldset titre={getLibelle("Filtre registre et répertoire")}>
+        <div className="FormFiltre">
+          <RegistreActeFiltre
+            nomFiltre={withNamespace(props.nomFiltre, REGISTRE_ACTE)}
+          />
+        </div>
+      </Fieldset>
     </div>
   );
 };
