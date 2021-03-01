@@ -10,8 +10,7 @@ import {
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues,
-  onDatePickerValueChange,
-  executeEnDiffere
+  onDatePickerValueChange
 } from "../../../../views/common/widget/formulaire/DateComposeForm";
 import { Field, Formik, Form } from "formik";
 
@@ -101,7 +100,7 @@ test("render composant DateComposeForm", async () => {
   });
 
   // Click bouton effacer
-  const iconEffacer = screen.getByTitle("vider les champs");
+  const iconEffacer = screen.getByTitle("Vider les champs");
   act(() => {
     fireEvent.click(iconEffacer);
   });

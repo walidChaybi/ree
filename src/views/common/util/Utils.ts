@@ -157,5 +157,5 @@ export function supprimerEspacesInutiles(value: string) {
 
 // Util lors de l'envoi d'une chaîne de caractères au back: convertion des chaîne vide en undefined
 export function valeurOuUndefined(valeur?: string) {
-  return valeur || undefined;
+  return valeur !== "" ? valeur : undefined;
 }

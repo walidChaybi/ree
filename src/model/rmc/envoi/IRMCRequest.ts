@@ -13,14 +13,17 @@ export interface IRMCRequest {
   annee?: string;
 
   // Filtre Registre & Réppertoire Civile
+  // Registre
   natureActe?: string;
   familleRegistre?: string;
   posteOuPocopa?: string;
   numeroActe?: string;
+  //Repertoire
   numeroInscription?: string;
   typeRepertoire?: string;
   natureRc?: string;
   natureRca?: string;
+  // Evenement
   jourDateEvenement?: string;
   moisDateEvenement?: string;
   anneeDateEvenement?: string;

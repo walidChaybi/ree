@@ -1,11 +1,11 @@
 import React from "react";
-import { IInscriptionLie } from "../../../../../../model/etatcivil/fiche/IInscriptionLie";
+import { IInscriptionLiee } from "../../../../../../model/etatcivil/fiche/IInscriptionLiee";
 import { LienFiche } from "../../../LienFiche";
 import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 
 interface IInscriptionsLieesProps {
-  inscriptionsLiees: IInscriptionLie[];
+  inscriptionsLiees: IInscriptionLiee[];
 }
 
 export const InscriptionsLiees: React.FC<IInscriptionsLieesProps> = props => {

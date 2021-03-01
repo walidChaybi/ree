@@ -40,3 +40,9 @@ div {
     box-shadow: none;
   }
 }
+
+.ColOverflow {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

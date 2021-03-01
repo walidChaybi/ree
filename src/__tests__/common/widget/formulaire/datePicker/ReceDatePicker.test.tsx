@@ -9,7 +9,7 @@ test("render composant ReceDatePicker", async () => {
     render(<ReceDatePicker />);
   });
 
-  expect(screen.getByTitle("calendrier")).toBeDefined();
+  expect(screen.getByTitle("Calendrier")).toBeDefined();
 });
 
 test("render composant Formulaire: onDateValueChange", async () => {

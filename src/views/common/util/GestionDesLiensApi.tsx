@@ -6,6 +6,14 @@ export interface IParametresLienApi {
   range?: string;
 }
 
+export interface IDataTableau {
+  previousDataLinkState?: string;
+  nextDataLinkState?: string;
+  rowsNumberState?: number;
+  minRangeState?: number;
+  maxRangeState?: number;
+}
+
 export function parseLink(linkHeader: string) {
   let nextLink;
   let prevLink;

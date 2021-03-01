@@ -1,15 +1,14 @@
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
 import { getInscriptionRepertoireCivil } from "../../../../../../views/pages/fiche/hook/constructionComposants/inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
 import {
   ficheInscriptionRepertoireCivil,
   ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes,
-  ficheInscriptionRepertoireCivilSansUniteDureeInscription,
-  ficheInscriptionRepertoireCivilSansDonnees
+  ficheInscriptionRepertoireCivilSansUniteDureeInscription
 } from "../mock/InscriptionRepertoireCivilMock";
-import { IFicheRcRcaRca } from "../../../../../../model/etatcivil/fiche/FicheInterfaces";
 
 test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile  ", async () => {
   const component = getInscriptionRepertoireCivil(
-    ficheInscriptionRepertoireCivil as IFicheRcRcaRca
+    ficheInscriptionRepertoireCivil as IFicheRcRca
   );
 
   const idxNature = component.contentsPart.contents.findIndex(
@@ -110,12 +109,4 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
 
   expect(valueTypeInscription.props.children[0]).toBe("Renouvellement");
   expect(valueTypeInscription.props.children[1]).toHaveLength(0);
-});
-
-test("Inscription repertoire civil utils : affichage sans données", async () => {
-  const component = getInscriptionRepertoireCivil(
-    ficheInscriptionRepertoireCivilSansDonnees as IFicheRcRca
-  );
-
-  expect(component.contentsPart.title).toBe("Inscription au répertoire civil");
 });

@@ -7,7 +7,6 @@ import { useRequeteApi } from "./hook/DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
 
-import { URL_REQUETES_SERVICE } from "../../router/ReceUrls";
 import { BoutonRetour } from "../../common/widget/BoutonRetour";
 import "./sass/RequeteTableau.scss";
 
@@ -18,7 +17,7 @@ import {
   TypeAppelRequete
 } from "../../../api/appels/requeteApi";
 import {
-  goToLinkCommon,
+  goToLinkRequete,
   commonHeaders,
   getIconPrioriteRequete
 } from "./espaceDelivranceUtils";
@@ -45,16 +44,20 @@ import {
 
 /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
-interface MesRequetesServicePageProps {}
+interface MesRequetesServicePageProps {
+  getUrlBack: (id: string, data: any[]) => void;
+}
 
 export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
   /** TODO ETAPE 2 : Bouton "Attribué à" */
   // const [isSuccessAssigne, setIsSuccessAssigne] = React.useState<boolean>(false);
   // const [queryChangeOecRequest, setQueryChangeOecRequest] = React.useState<IQueryParametersAssigneRequetes>();
   /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetes
-  >({
+
+  const [
+    linkParameters,
+    setLinkParameters
+  ] = React.useState<IQueryParametersPourRequetes>({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,
@@ -174,7 +177,10 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
   function goToLink(link: string) {
-    const queryParametersPourRequetes = goToLinkCommon(link, "requetesService");
+    const queryParametersPourRequetes = goToLinkRequete(
+      link,
+      "requetesService"
+    );
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }
@@ -201,7 +207,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
         idKey={"idRequete"}
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
-        onClickOnLine={getUrlBack}
+        onClickOnLine={props.getUrlBack}
         columnHeaders={columnHeaders}
         dataState={dataState}
         rowsNumberState={rowsNumberState}
@@ -217,10 +223,6 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     </>
   );
 };
-
-function getUrlBack(identifiantRequete: string): string {
-  return `${URL_REQUETES_SERVICE}/${identifiantRequete}`;
-}
 
 /** TODO ETAPE 2 : Bouton "Attribué à" */
 // function convertUsersToSelect(

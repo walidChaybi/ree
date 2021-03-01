@@ -130,20 +130,6 @@ select {
   position: relative;
 }
 
-.tableauFontHeader {
-  font-family: "NotoSansUI-Bold", sans-serif !important;
-  color: $application-color !important;
-  text-decoration: underline !important;
-}
-
-.OrderedHeaderCell {
-  font-weight: bold !important;
-}
-
-.tableauFontBody {
-  font-family: "NotoSansUI-Regular", sans-serif !important;
-}
-
 .BoutonRetour {
   float: left;
   background-color: $button-application-color;

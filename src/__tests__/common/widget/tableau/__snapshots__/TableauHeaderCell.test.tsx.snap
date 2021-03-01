@@ -8,7 +8,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
   >
     <span
       aria-disabled={false}
-      className="MuiButtonBase-root MuiTableSortLabel-root OrderedHeaderCell tableauFontHeader MuiTableSortLabel-active"
+      className="MuiButtonBase-root MuiTableSortLabel-root OrderedHeaderCell TableauFontHeader MuiTableSortLabel-active"
       onBlur={[Function]}
       onDragLeave={[Function]}
       onFocus={[Function]}

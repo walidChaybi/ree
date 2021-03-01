@@ -1,7 +1,9 @@
 /* istanbul ignore file */
 
+import { NatureRc } from "../../../../../../model/etatcivil/enum/NatureRc";
+
 export const ficheInscriptionRepertoireCivil = {
-  nature: "CURATELLE_AMENAGEE",
+  nature: NatureRc.CURATELLE_AMENAGEE,
   mandataires: [
     "MANDATAIRE_JUDICIAIRE_ASSOCIATION",
     "MANDATAIRE_JUDICIAIRE_INDIVIDUEL"
@@ -33,7 +35,7 @@ export const ficheInscriptionRepertoireCivil = {
 };
 
 export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes = {
-  nature: "Curatelle aménagée",
+  nature: NatureRc.CURATELLE_AMENAGEE,
   mandataires: [
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"
@@ -50,7 +52,7 @@ export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImp
 };
 
 export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
-  nature: "Curatelle aménagée",
+  nature: NatureRc.CURATELLE_AMENAGEE,
   mandataires: [
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"
@@ -64,5 +66,3 @@ export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
     dateFinDeMesure: 1581724800
   }
 };
-
-export const ficheInscriptionRepertoireCivilSansDonnees = {};

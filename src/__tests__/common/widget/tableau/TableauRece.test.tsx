@@ -388,7 +388,7 @@ test("TableauRece can sort", () => {
       <TableauRece
         idKey={"idRequete"}
         onClickOnLine={handleClickOnLine}
-        sortOrderByState={""}
+        sortOrderByState={"idSagaDila"}
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
         dataState={requetes.data}

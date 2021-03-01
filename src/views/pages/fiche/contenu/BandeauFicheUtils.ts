@@ -5,10 +5,7 @@ import {
   AlerteInscription,
   AlerteInscriptionUtil
 } from "../../../../model/etatcivil/enum/AlerteInscription";
-import {
-  StatutFiche,
-  StatutFicheUtil
-} from "../../../../model/etatcivil/enum/StatutFiche";
+import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
 import {
   getDateFromTimestamp,
   getDateString
@@ -59,7 +56,7 @@ function setStatuts(statuts: IStatutFiche[]) {
   const statutsInscription: IStatutFiche[] = [];
   if (statuts) {
     statuts.forEach(s => {
-      s.statut = StatutFicheUtil.getLibelle(s.statut as StatutFiche);
+      s.statut = StatutFiche.getEnumFor(s.statut).libelle;
       statutsInscription.push(s);
     });
   }

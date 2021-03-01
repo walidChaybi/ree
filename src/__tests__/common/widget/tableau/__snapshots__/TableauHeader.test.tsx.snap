@@ -17,7 +17,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiTableSortLabel-root OrderedHeaderCell tableauFontHeader MuiTableSortLabel-active"
+          className="MuiButtonBase-root MuiTableSortLabel-root OrderedHeaderCell TableauFontHeader MuiTableSortLabel-active"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -53,7 +53,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
+          className="MuiButtonBase-root MuiTableSortLabel-root TableauFontHeader"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -70,16 +70,6 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
           tabIndex={0}
         >
           Sous-type
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-            />
-          </svg>
         </span>
       </th>
       <th
@@ -89,7 +79,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
+          className="MuiButtonBase-root MuiTableSortLabel-root TableauFontHeader"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -106,16 +96,6 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
           tabIndex={0}
         >
           Provenance
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-            />
-          </svg>
         </span>
       </th>
       <th
@@ -125,7 +105,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
+          className="MuiButtonBase-root MuiTableSortLabel-root TableauFontHeader"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -142,16 +122,6 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
           tabIndex={0}
         >
           Nature d'acte
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-            />
-          </svg>
         </span>
       </th>
       <th
@@ -161,7 +131,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
+          className="MuiButtonBase-root MuiTableSortLabel-root TableauFontHeader"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -178,16 +148,6 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
           tabIndex={0}
         >
           Requérant
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-            />
-          </svg>
         </span>
       </th>
       <th
@@ -197,7 +157,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
+          className="MuiButtonBase-root MuiTableSortLabel-root TableauFontHeader"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -214,16 +174,6 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
           tabIndex={0}
         >
           Date de création
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-            />
-          </svg>
         </span>
       </th>
       <th
@@ -233,7 +183,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
+          className="MuiButtonBase-root MuiTableSortLabel-root TableauFontHeader"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -250,16 +200,6 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
           tabIndex={0}
         >
           Dernière mise à jour
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-            />
-          </svg>
         </span>
       </th>
       <th
@@ -269,7 +209,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
+          className="MuiButtonBase-root MuiTableSortLabel-root TableauFontHeader"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -286,16 +226,6 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
           tabIndex={0}
         >
           Statut
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-            />
-          </svg>
         </span>
       </th>
       <th
@@ -305,7 +235,7 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
       >
         <span
           aria-disabled={false}
-          className="MuiButtonBase-root MuiTableSortLabel-root tableauFontHeader"
+          className="MuiButtonBase-root MuiTableSortLabel-root TableauFontHeader"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -322,16 +252,6 @@ exports[`renders header tableau des requêtes de l'application 1`] = `
           tabIndex={0}
         >
           Priorité
-          <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-            />
-          </svg>
         </span>
       </th>
     </tr>

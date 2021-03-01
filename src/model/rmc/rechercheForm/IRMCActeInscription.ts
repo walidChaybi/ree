@@ -1,7 +1,9 @@
 import { IRMCTitulaire } from "./IRMCTitulaire";
 import { IRMCDateCreation } from "./dateCreation/IRMCDateCreation";
+import { IRMCRegistreRepertoire } from "./IRMCRegistreRepertoire";
 
 export interface IRMCActeInscription {
-  titulaire: IRMCTitulaire;
-  datesDebutFinAnnee: IRMCDateCreation;
+  titulaire?: IRMCTitulaire;
+  datesDebutFinAnnee?: IRMCDateCreation;
+  registreRepertoire?: IRMCRegistreRepertoire;
 }

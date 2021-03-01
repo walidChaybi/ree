@@ -17,9 +17,9 @@ describe("Display pdf Iframe", () => {
     // Mock link creation
     window.URL.createObjectURL = jest.fn(() => "url_test");
     render(<ActeImage id="b41079a5-9e8d-478c-b04c-c4c4ey86537g"></ActeImage>);
-    var linkElement = null;
     await waitFor(() => {
-      linkElement = screen.getByTitle("Visionneuse PDF");
+      const linkElement = screen.getByTitle("Visionneuse PDF");
+      expect(linkElement).toBeInTheDocument();
     });
     expect(document.querySelector("iframe").getAttribute("src")).toBe(
       "url_test"

@@ -1,9 +1,0 @@
-{
-  "hasTechnicalError": false,
-  "hasBusinessError": false,
-  "status": 201,
-  "url": "/rece/rece-requete-api/v1/repertoirecivil/rmc",
-  "data": {
-    "repertoiresCiviles": [{ "id": "85160d6e-893b-47c2-a9a8-b25573189f0c" }]
-  }
-}

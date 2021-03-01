@@ -8,8 +8,8 @@ import "../../../../sass/_library.scss";
 import { TableauTypeColumn } from "./TableauRece";
 
 interface TableauHeaderCellProps {
-  order: SortOrder;
-  orderBy: string;
+  order?: SortOrder;
+  orderBy?: string;
   column: TableauTypeColumn;
   sortHandler: (property: string) => (event: React.MouseEvent<unknown>) => void;
 }
@@ -22,7 +22,8 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
 }) => {
   const styles = classNames({
     OrderedHeaderCell: orderBy === column.keys[0],
-    tableauFontHeader: true
+    TableauFontHeader: true,
+    CursorHeader: !(orderBy && orderBy && sortHandler)
   });
 
   let orderTableCell: SortDirection = false;
@@ -49,8 +50,9 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
         active={orderBy === column.keys[0]}
         direction={orderBy === column.keys[0] ? orderTableLabel : "asc"}
         onClick={sortHandler(column.keys[0])}
+        hideSortIcon={!(orderBy === column.keys[0])}
       >
-        <Text messageId={`${column.colLibelle}`} />
+        <Text messageId={`${column.colLibelle}`} noWarning={true} />
       </TableSortLabel>
     </TableCell>
   );

@@ -24,6 +24,7 @@ import {
   compareDatesCompose,
   MAX_YEAR
 } from "../../../../common/util/DateUtils";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { getLibelle } from "../../../../common/widget/Text";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { MSG_MAX_YEAR } from "../../../../../ressources/messages";
@@ -131,37 +132,36 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
   }
 
   return (
-    <div className={`Filtre ${props.nomFiltre}`}>
-      <div className="TitreFiltre">
-        <span>Filtre date de création</span>
-      </div>
-      <div className="FormFiltre">
-        <DateComposeForm
-          disabled={datesDisabled}
-          {...dateDebutComposeFormProps}
-        />
+    <div className={props.nomFiltre}>
+      <Fieldset titre={"Filtre date de création"}>
+        <div className="FormFiltre">
+          <DateComposeForm
+            disabled={datesDisabled}
+            {...dateDebutComposeFormProps}
+          />
 
-        <DateComposeForm
-          disabled={datesDisabled}
-          {...dateFinComposeFormProps}
-        />
+          <DateComposeForm
+            disabled={datesDisabled}
+            {...dateFinComposeFormProps}
+          />
 
-        {isErrorString(props.formik.errors, props.nomFiltre) && (
-          <div className="BlockErreur">
-            <ErrorMessage name={props.nomFiltre} />
-          </div>
-        )}
+          {isErrorString(props.formik.errors, props.nomFiltre) && (
+            <div className="BlockErreur">
+              <ErrorMessage name={props.nomFiltre} />
+            </div>
+          )}
 
-        {/* Recherche par annee uniquement */}
-        <InputField
-          name={withNamespace(props.nomFiltre, ANNEE)}
-          label={getLibelle("Année")}
-          ariaLabel={`${props.nomFiltre} année`}
-          maxLength="4"
-          onInput={anneeChange}
-          disabled={anneeDisabled()}
-        />
-      </div>
+          {/* Recherche par annee uniquement */}
+          <InputField
+            name={withNamespace(props.nomFiltre, ANNEE)}
+            label={getLibelle("Année")}
+            ariaLabel={`${props.nomFiltre} année`}
+            maxLength="4"
+            onInput={anneeChange}
+            disabled={anneeDisabled()}
+          />
+        </div>
+      </Fieldset>
     </div>
   );
 };
