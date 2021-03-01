@@ -22,11 +22,15 @@ test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
 
   const titre = container.getElementsByClassName("Titre").item(0)
     ?.firstElementChild?.innerHTML;
-  expect(titre).toEqual("Résultats de la rechercher");
+  expect(titre).toEqual("Résultats de la recherche");
 
-  expect(screen.getByText(/Rechercher dans les registres/i)).toBeDefined();
+  expect(screen.getByText(/Recherche dans les registres/i)).toBeDefined();
 
-  expect(screen.getByText(/Rechercher dans les repertoires/i)).toBeDefined();
+  expect(
+    screen.getByText(
+      /Recherche dans les repertoires de greffe et registre des PACS étrangers/i
+    )
+  ).toBeDefined();
   expect(
     screen.getByText(
       /Aucune inscription trouvée pour ces critères de recherche/i
@@ -46,13 +50,17 @@ test("renders Fielset Recherche Multi Critères => Seulement des inscriptions", 
 
   const titre = container.getElementsByClassName("Titre").item(0)
     ?.firstElementChild?.innerHTML;
-  expect(titre).toEqual("Résultats de la rechercher");
+  expect(titre).toEqual("Résultats de la recherche");
 
-  expect(screen.getByText(/Rechercher dans les registres/i)).toBeDefined();
+  expect(screen.getByText(/Recherche dans les registres/i)).toBeDefined();
 
   expect(
     screen.getByText(/Aucun acte trouvé pour ces critères de recherche/i)
   ).toBeDefined();
 
-  expect(screen.getByText(/Rechercher dans les repertoires/i)).toBeDefined();
+  expect(
+    screen.getByText(
+      /Recherche dans les repertoires de greffe et registre des PACS étrangers/i
+    )
+  ).toBeDefined();
 });

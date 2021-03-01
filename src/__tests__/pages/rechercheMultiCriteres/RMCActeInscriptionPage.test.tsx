@@ -69,3 +69,32 @@ test("Bouton réinitialisation des champs", async () => {
     expect(inputAnneeSeule).not.toBeDisabled();
   });
 });
+
+test("Bouton Rechercher du Formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
+  await act(async () => {
+    render(<RMCActeInscriptionPage />);
+  });
+
+  const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
+  const inputAnnee = screen.getByLabelText(
+    "datesDebutFinAnnee année"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputNom, {
+      target: {
+        value: "mockNom"
+      }
+    });
+    fireEvent.change(inputAnnee, {
+      target: {
+        value: "1990"
+      }
+    });
+  });
+
+  const submit = screen.getByText(/Rechercher/i);
+  await act(async () => {
+    fireEvent.click(submit);
+  });
+});
