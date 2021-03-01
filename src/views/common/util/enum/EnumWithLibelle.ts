@@ -23,6 +23,6 @@ export class EnumWithLibelle {
         });
       }
     }
-    return options;
+    return options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
   }
 }
