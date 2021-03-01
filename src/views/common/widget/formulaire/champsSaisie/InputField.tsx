@@ -10,6 +10,7 @@ interface InputFieldProps {
   noErrorMessage?: boolean;
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export const InputField: React.FC<InputFieldProps> = ({
   name,
@@ -19,7 +20,8 @@ export const InputField: React.FC<InputFieldProps> = ({
   disabled,
   noErrorMessage,
   onInput,
-  onBlur
+  onBlur,
+  onChange
 }) => {
   const otherProps = {} as any;
   if (maxLength) {
@@ -30,6 +32,9 @@ export const InputField: React.FC<InputFieldProps> = ({
   }
   if (onBlur) {
     otherProps.onBlur = onBlur;
+  }
+  if (onChange) {
+    otherProps.onChange = onChange;
   }
   return (
     <>

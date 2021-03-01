@@ -3,7 +3,8 @@ import * as Yup from "yup";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
-  withNamespace
+  withNamespace,
+  isDirty
 } from "../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../common/widget/Text";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
@@ -93,24 +94,46 @@ const RepertoireInscriptionFiltre: React.FC<ComponentFiltreInscriptionProps> = p
     }
   };
 
+  function onFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    if (props.onFieldChange) {
+      props.onFieldChange({
+        filtreDirty: isDirty(
+          e.target.value,
+          e.target.name,
+          props.formik.values,
+          [numeroInscriptionWithNamespace, typeRepertoireWithNamespace]
+        )
+      });
+    }
+    props.formik.handleChange(e);
+  }
+
   return (
     <>
       <InputField
         name={numeroInscriptionWithNamespace}
         label={getLibelle("N° de l'inscription")}
         onInput={formatNumber}
+        disabled={props.filtreInactif}
+        onChange={onFieldChange}
       />
       <SelectField
         name={typeRepertoireWithNamespace}
         label={getLibelle("Type de répertoire")}
         options={TypeRepertoire.getAllEnumsAsOptions()}
-        onChange={manageNatureOptions}
+        onChange={e => {
+          manageNatureOptions(e);
+          onFieldChange(e);
+        }}
+        disabled={props.filtreInactif}
       />
       <SelectField
         name={natureInscriptionWithNamespace}
         label={getLibelle("Nature de l'inscription")}
         options={natureOptions}
-        disabled={disabled}
+        disabled={disabled || props.filtreInactif}
+        onChange={onFieldChange}
       />
     </>
   );

@@ -56,7 +56,7 @@ export class NatureRca extends EnumWithLibelle {
     "Jugement en contestation de maternité"
   );
   public static readonly JUGEMENT_EN_CONTESTATION_PATERNITE = new NatureRca(
-    "Jugement en contestation en paternité"
+    "Jugement en contestation de paternité"
   );
   public static readonly JUGEMENT_RECTIFICATIF = new NatureRca(
     "Jugement rectificatif"
