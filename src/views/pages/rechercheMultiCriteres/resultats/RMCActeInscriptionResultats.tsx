@@ -23,10 +23,10 @@ export interface RMCActeInscriptionResultatsProps {
 export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = props => {
   return (
     <div className="ResultatsRMC">
-      <Fieldset titre="Résultats de la rechercher">
+      <Fieldset titre="Résultats de la recherche">
         <div className="SubResultatsRMC">
           <div className="SousTitre">
-            <span>{getLibelle("Rechercher dans les registres")}</span>
+            <span>{getLibelle("Recherche dans les registres")}</span>
           </div>
           {props.dataRMCActe.length > 0 ? (
             <RMCResultatsActe
@@ -43,7 +43,11 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
         </div>
         <div className="SubResultatsRMC">
           <div className="SousTitre">
-            <span>{getLibelle("Rechercher dans les repertoires")}</span>
+            <span>
+              {getLibelle(
+                "Recherche dans les repertoires de greffe et registre des PACS étrangers"
+              )}
+            </span>
           </div>
           {props.dataRMCInscription.length > 0 ? (
             <RMCResultatsInscription

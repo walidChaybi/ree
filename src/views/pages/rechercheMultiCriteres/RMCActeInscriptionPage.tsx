@@ -57,9 +57,10 @@ export const RMCActeInscriptionPage: React.FC = () => {
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [critèresRechercheActe, setCritèresRechercheActe] = useState<
-    ICriteresRecherche
-  >();
+  const [
+    critèresRechercheActe,
+    setCritèresRechercheActe
+  ] = useState<ICriteresRecherche>();
 
   const [
     critèresRechercheInscription,

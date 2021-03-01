@@ -19,7 +19,6 @@ import { ICriteresRecherche } from "./RMCInscriptionApiHook";
 export function useRMCActeApiHook(criteres?: ICriteresRecherche) {
   const [dataRMCActe, setDataRMCActe] = useState<IResultatRMCActe[]>();
   const [dataTableauRMCActe, setDataTableauRMCActe] = useState<IDataTableau>();
-
   useEffect(() => {
     if (criteres != null && criteres.valeurs != null) {
       const criteresRequest = mappingCriteres(criteres.valeurs);

@@ -7,6 +7,7 @@ import {
 } from "../../../../views/pages/rechercheMultiCriteres/hook/RMCInscriptionApiHook";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { NB_LIGNES_PAR_APPEL } from "../../../../views/common/widget/tableau/TableauRece";
+import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
@@ -22,6 +23,12 @@ const criteres: ICriteresRecherche = {
       dateDebut: { jour: "", mois: "", annee: "" },
       dateFin: { jour: "", mois: "", annee: "" },
       annee: ""
+    },
+    registreRepertoire: {
+      repertoire: {
+        typeRepertoire: "RCA",
+        natureInscription: NatureRca.CHANGEMENT_SEXE
+      }
     }
   },
   range: `0-${NB_LIGNES_PAR_APPEL}`

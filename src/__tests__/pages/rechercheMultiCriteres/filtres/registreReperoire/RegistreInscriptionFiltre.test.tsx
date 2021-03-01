@@ -53,6 +53,7 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   const natureInscription = screen.getByLabelText(
     "registreRepertoire.natureInscription"
   ) as HTMLInputElement;
+  const submit = screen.getByText(/Submit/i);
 
   act(() => {
     fireEvent.change(numeroInscription, {
@@ -65,13 +66,9 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
         value: "RC"
       }
     });
-  });
-
-  await act(() => {
     fireEvent.input(typeRepertoire);
   });
 
-  const submit = screen.getByText(/Submit/i);
   await waitFor(() => {
     act(() => {
       fireEvent.change(natureInscription, {
@@ -103,9 +100,6 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   const typeRepertoire = screen.getByLabelText(
     "registreRepertoire.typeRepertoire"
   ) as HTMLInputElement;
-  const natureInscription = screen.getByLabelText(
-    "registreRepertoire.natureInscription"
-  ) as HTMLInputElement;
 
   act(() => {
     fireEvent.change(numeroInscription, {
@@ -118,13 +112,14 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
         value: "RCA"
       }
     });
-  });
-
-  await act(() => {
     fireEvent.input(typeRepertoire);
   });
 
+  const natureInscription = screen.getByLabelText(
+    "registreRepertoire.natureInscription"
+  ) as HTMLInputElement;
   const submit = screen.getByText(/Submit/i);
+
   await waitFor(() => {
     act(() => {
       fireEvent.change(natureInscription, {
