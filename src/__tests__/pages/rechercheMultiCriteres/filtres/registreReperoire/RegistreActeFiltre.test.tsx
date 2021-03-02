@@ -11,12 +11,12 @@ import RegistreActeFiltre, {
   RegistreActeDefaultValues,
   RegistreActeFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreActeFiltre";
-import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/RMCActeInscriptionPage";
+import { REGISTRE } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 const HookRegistreActeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
   const registreFiltreProps = {
-    nomFiltre: REGISTRE_REPERTOIRE
+    nomFiltre: REGISTRE
   } as RegistreActeFiltreProps;
 
   const handleClickButton = (values: any) => {
@@ -25,7 +25,7 @@ const HookRegistreActeFiltre: React.FC = () => {
   return (
     <Formik
       initialValues={{
-        [REGISTRE_REPERTOIRE]: { ...RegistreActeDefaultValues }
+        [REGISTRE]: { ...RegistreActeDefaultValues }
       }}
       onSubmit={handleClickButton}
     >
@@ -44,16 +44,14 @@ test("render composant RegistreActeFiltre", async () => {
   });
 
   const natureActe = screen.getByLabelText(
-    "registreRepertoire.natureActe"
+    "registre.natureActe"
   ) as HTMLInputElement;
   const familleRegistre = screen.getByLabelText(
-    "registreRepertoire.familleRegistre"
+    "registre.familleRegistre"
   ) as HTMLInputElement;
-  const pocopa = screen.getByLabelText(
-    "registreRepertoire.pocopa"
-  ) as HTMLInputElement;
+  const pocopa = screen.getByLabelText("registre.pocopa") as HTMLInputElement;
   const numeroActe = screen.getByLabelText(
-    "registreRepertoire.numeroActe"
+    "registre.numeroActe"
   ) as HTMLInputElement;
 
   const allInputRegistreActe = [
@@ -99,7 +97,7 @@ test("render composant RegistreActeFiltre", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"registreRepertoire":{"natureActe":"MARIAGE","familleRegistre":"ACQ","pocopa":"Washington","numeroActe":"123456"}}'
+      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","pocopa":"Washington","numeroActe":"123456"}}'
     );
   });
 });
