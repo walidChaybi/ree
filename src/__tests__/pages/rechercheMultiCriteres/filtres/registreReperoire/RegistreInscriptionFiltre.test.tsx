@@ -82,7 +82,7 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
 
   const result = screen.getByTestId("result");
   await waitFor(() => {
-    expect(natureInscription).not.toBeDisabled();
+    expect(natureInscription.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
       '{"registreRepertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RC","natureInscription":"CURATELLE_SIMPLE"}}'
     );
@@ -100,6 +100,10 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   const typeRepertoire = screen.getByLabelText(
     "registreRepertoire.typeRepertoire"
   ) as HTMLInputElement;
+  const natureInscription = screen.getByLabelText(
+    "registreRepertoire.natureInscription"
+  ) as HTMLInputElement;
+  const submit = screen.getByText(/Submit/i);
 
   act(() => {
     fireEvent.change(numeroInscription, {
@@ -115,11 +119,6 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
     fireEvent.input(typeRepertoire);
   });
 
-  const natureInscription = screen.getByLabelText(
-    "registreRepertoire.natureInscription"
-  ) as HTMLInputElement;
-  const submit = screen.getByText(/Submit/i);
-
   await waitFor(() => {
     act(() => {
       fireEvent.change(natureInscription, {
@@ -133,7 +132,7 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
 
   const result = screen.getByTestId("result");
   await waitFor(() => {
-    expect(natureInscription).not.toBeDisabled();
+    expect(natureInscription.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
       '{"registreRepertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RCA","natureInscription":"FILIATION"}}'
     );
@@ -166,21 +165,11 @@ test("Le champ Nature de l'inscription est désactivé par le choix de l'utilisa
         value: "PACS"
       }
     });
-  });
-
-  await act(() => {
     fireEvent.input(typeRepertoire);
   });
 
-  const submit = screen.getByText(/Submit/i);
   await waitFor(() => {
-    act(() => {
-      fireEvent.click(submit);
-    });
-  });
-
-  await waitFor(() => {
-    expect(natureInscription).toBeDisabled();
+    expect(natureInscription.disabled).toBeTruthy();
   });
 });
 
@@ -191,9 +180,6 @@ test("Le champ Nature de l'inscription est désactivé car l'utilisateur n'a pas
 
   const numeroInscription = screen.getByLabelText(
     "registreRepertoire.numeroInscription"
-  ) as HTMLInputElement;
-  const typeRepertoire = screen.getByLabelText(
-    "registreRepertoire.typeRepertoire"
   ) as HTMLInputElement;
   const natureInscription = screen.getByLabelText(
     "registreRepertoire.natureInscription"
@@ -207,19 +193,8 @@ test("Le champ Nature de l'inscription est désactivé car l'utilisateur n'a pas
     });
   });
 
-  await act(() => {
-    fireEvent.input(typeRepertoire);
-  });
-
-  const submit = screen.getByText(/Submit/i);
   await waitFor(() => {
-    act(() => {
-      fireEvent.click(submit);
-    });
-  });
-
-  await waitFor(() => {
-    expect(natureInscription).toBeDisabled();
+    expect(natureInscription.disabled).toBeTruthy();
   });
 });
 
@@ -264,10 +239,7 @@ test("Un tiret n'est pas ajouté après le 4ème caractère du numéro d'inscrip
         value: "1982-"
       }
     });
-  });
-
-  await act(async () => {
-    fireEvent.input(numeroInscription);
+    //fireEvent.input(numeroInscription);
   });
 
   await waitFor(() => {
