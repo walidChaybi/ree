@@ -3,17 +3,17 @@ import React, { useCallback, useState } from "react";
 import {
   TableauRece,
   TableauTypeColumn
-} from "../../../common/widget/tableau/TableauRece";
-import { HeaderTableauRMCActe } from "../../../../model/rmc/HeaderTableauRMC";
-import { IDataTableau } from "../../../common/util/GestionDesLiensApi";
+} from "../../../../common/widget/tableau/TableauRece";
+import { HeaderTableauRMCActe } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
+import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
 import {
   commonHeadersTableauRMC,
   natureHeadersTableauRMC,
   goToLinkRMC
 } from "./RMCResultatsCommun";
-import { FenetreFiche } from "../../fiche/FenetreFiche";
-import { IResultatRMCActe } from "../../../../model/rmc/resultat/IResultatRMCActe";
-import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
+import { FenetreFiche } from "../../../fiche/FenetreFiche";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
 export interface RMCResultatActeProps {
   dataRMCActe: IResultatRMCActe[];
   dataTableauRMCActe: IDataTableau;

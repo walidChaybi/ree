@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { rechercheMultiCriteresInscriptions } from "../../../../api/appels/etatcivilApi";
-import { IRMCActeInscription } from "../../../../model/rmc/rechercheForm/IRMCActeInscription";
-import { IResultatRMCInscription } from "../../../../model/rmc/resultat/IResultatRMCInscription";
+import { rechercheMultiCriteresInscriptions } from "../../../../../api/appels/etatcivilApi";
+import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   getMaxRange,
   getMinRange,
   getRowsNumber,
   IDataTableau,
   parseLink
-} from "../../../common/util/GestionDesLiensApi";
-import { logError } from "../../../common/util/LogManager";
+} from "../../../../common/util/GestionDesLiensApi";
+import { logError } from "../../../../common/util/LogManager";
 import {
   mappingCriteres,
   mappingInscriptions,
@@ -25,9 +25,10 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRecherche) {
   const [dataRMCInscription, setDataRMCInscription] = useState<
     IResultatRMCInscription[]
   >();
-  const [dataTableauRMCInscription, setDataTableauRMCInscription] = useState<
-    IDataTableau
-  >();
+  const [
+    dataTableauRMCInscription,
+    setDataTableauRMCInscription
+  ] = useState<IDataTableau>();
 
   useEffect(() => {
     if (criteres != null && criteres.valeurs != null) {

@@ -1,4 +1,4 @@
-import { goToLinkRMC } from "../../../views/pages/rechercheMultiCriteres/resultats/RMCResultatsCommun";
+import { goToLinkRMC } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCResultatsCommun";
 
 test("RMC Utils goToLinkRMC", () => {
   const result = goToLinkRMC(

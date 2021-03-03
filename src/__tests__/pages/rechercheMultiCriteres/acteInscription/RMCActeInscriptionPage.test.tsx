@@ -9,7 +9,7 @@ import {
 import {
   titreForm,
   RMCActeInscriptionPage
-} from "../../../views/pages/rechercheMultiCriteres/RMCActeInscriptionPage";
+} from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {

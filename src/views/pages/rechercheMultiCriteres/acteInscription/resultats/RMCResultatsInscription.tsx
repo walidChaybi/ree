@@ -2,17 +2,17 @@ import React, { useCallback, useState } from "react";
 import {
   TableauRece,
   TableauTypeColumn
-} from "../../../common/widget/tableau/TableauRece";
-import { IDataTableau } from "../../../common/util/GestionDesLiensApi";
+} from "../../../../common/widget/tableau/TableauRece";
+import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
 import {
   commonHeadersTableauRMC,
   natureHeadersTableauRMC,
   goToLinkRMC
 } from "./RMCResultatsCommun";
-import { FenetreFiche } from "../../fiche/FenetreFiche";
-import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
-import { IResultatRMCInscription } from "../../../../model/rmc/resultat/IResultatRMCInscription";
-import { HeaderTableauRMCInscription } from "../../../../model/rmc/HeaderTableauRMC";
+import { FenetreFiche } from "../../../fiche/FenetreFiche";
+import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
+import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { HeaderTableauRMCInscription } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
 
 export interface RMCResultatInscriptionProps {
   dataRMCInscription: IResultatRMCInscription[];

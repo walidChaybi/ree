@@ -1,4 +1,4 @@
-import { IResultatRMCInscription } from "../../model/rmc/resultat/IResultatRMCInscription";
+import { IResultatRMCInscription } from "../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 
 export const DataTableauInscription = {
   previousDataLinkState: undefined,

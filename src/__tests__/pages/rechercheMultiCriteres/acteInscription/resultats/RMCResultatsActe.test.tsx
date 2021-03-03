@@ -1,10 +1,10 @@
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
-import { RMCResultatsActe } from "../../../../views/pages/rechercheMultiCriteres/resultats/RMCResultatsActe";
+import { RMCResultatsActe } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCResultatsActe";
 import {
   DataRMCActeAvecResultat,
   DataTableauActe
-} from "../../../../mock/data/RMCActe";
+} from "../../../../../mock/data/RMCActe";
 
 test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => {
   const { getAllByText } = render(

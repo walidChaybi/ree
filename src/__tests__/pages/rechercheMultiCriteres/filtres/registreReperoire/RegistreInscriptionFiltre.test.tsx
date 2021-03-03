@@ -11,7 +11,7 @@ import RepertoireInscriptionFiltre, {
   ComponentFiltreInscriptionProps,
   RepertoireInscriptionDefaultValues
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RepertoireInscriptionFiltre";
-import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/RMCActeInscriptionPage";
+import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 
 const HookRegistreInscriptionFiltre: React.FC = () => {
   const [result, setResult] = useState("");

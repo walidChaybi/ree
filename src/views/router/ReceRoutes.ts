@@ -24,8 +24,8 @@ import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
 import { ActePage } from "../pages/ActePage";
 import { droitsSaufConsulterArchives } from "../common/util/habilitation/habilitationsDescription";
-import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/RMCActeInscriptionPage";
-import { RMCArchivesPage } from "../pages/rechercheMultiCriteres/RMCArchivesPage";
+import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import { RMCArchivesPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCArchivesPage";
 
 export interface IRouteRece {
   component?: any;

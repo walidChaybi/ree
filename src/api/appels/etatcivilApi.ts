@@ -1,4 +1,4 @@
-import { IRMCRequest } from "../../model/rmc/envoi/IRMCRequest";
+import { IRMCRequest } from "../../model/rmc/acteInscription/envoi/IRMCRequest";
 import { HttpMethod, ApiManager } from "../ApiManager";
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 

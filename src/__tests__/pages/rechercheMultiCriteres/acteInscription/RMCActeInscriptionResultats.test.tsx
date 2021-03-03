@@ -1,14 +1,14 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { RMCActeInscriptionResultats } from "../../../views/pages/rechercheMultiCriteres/resultats/RMCActeInscriptionResultats";
+import { RMCActeInscriptionResultats } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 import {
   DataRMCActeAvecResultat,
   DataTableauActe
-} from "../../../mock/data/RMCActe";
+} from "../../../../mock/data/RMCActe";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
-} from "../../../mock/data/RMCInscription";
+} from "../../../../mock/data/RMCInscription";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(

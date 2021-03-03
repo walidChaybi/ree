@@ -1,5 +1,5 @@
-import { TableauTypeColumn } from "../../../common/widget/tableau/TableauRece";
-import { HeaderTableauRMC } from "../../../../model/rmc/HeaderTableauRMC";
+import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece";
+import { HeaderTableauRMC } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
 
 export const commonHeadersTableauRMC = [
   new TableauTypeColumn({

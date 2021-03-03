@@ -1,10 +1,10 @@
 import React from "react";
 import { render, act, screen, fireEvent } from "@testing-library/react";
-import { RMCResultatsInscription } from "../../../../views/pages/rechercheMultiCriteres/resultats/RMCResultatsInscription";
+import { RMCResultatsInscription } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCResultatsInscription";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
-} from "../../../../mock/data/RMCInscription";
+} from "../../../../../mock/data/RMCInscription";
 
 test("renders Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
   render(

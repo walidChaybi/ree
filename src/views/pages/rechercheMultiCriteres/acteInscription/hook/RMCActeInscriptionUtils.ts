@@ -4,21 +4,21 @@ import {
   formatPrenoms,
   getValeurOuVide,
   valeurOuUndefined
-} from "../../../common/util/Utils";
+} from "../../../../common/util/Utils";
 import {
   getDateStringFromDateCompose,
   getDateFinFromDateCompose,
   getDateDebutFromDateCompose
-} from "../../../common/util/DateUtils";
-import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
-import { IResultatRMCActe } from "../../../../model/rmc/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../model/rmc/resultat/IResultatRMCInscription";
-import { IRMCActeInscription } from "../../../../model/rmc/rechercheForm/IRMCActeInscription";
-import { IRMCRequest } from "../../../../model/rmc/envoi/IRMCRequest";
-import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
-import { NatureRc } from "../../../../model/etatcivil/enum/NatureRc";
-import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
-import { RMCRepertoire } from "../../../../model/rmc/rechercheForm/IRMCRepertoire";
+} from "../../../../common/util/DateUtils";
+import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { IRMCRequest } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequest";
+import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
+import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
+import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
+import { RMCRepertoire } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
 
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
