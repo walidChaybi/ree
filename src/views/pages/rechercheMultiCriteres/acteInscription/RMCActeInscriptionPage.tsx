@@ -1,29 +1,29 @@
 import React, { useState } from "react";
-import { Formulaire } from "../../common/widget/formulaire/Formulaire";
+import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
 import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireValidationSchema
-} from "./filtres/titulaire/TitulaireFiltre";
+} from "../filtres/titulaire/TitulaireFiltre";
 import * as Yup from "yup";
 import "./scss/RMCActeInscriptionPage.scss";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeValidationSchema,
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps
-} from "./filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
+} from "../filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
 import {
   ICriteresRecherche,
   useRMCInscriptionApiHook
 } from "./hook/RMCInscriptionApiHook";
 import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
 import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
-import { NB_LIGNES_PAR_APPEL } from "../../common/widget/tableau/TableauRece";
-import {
-  RegistreRepertoireFiltre,
+import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableauRece";
+import RegistreRepertoireFiltre, {
   RegistreRepertoireDefaultValues,
+  RegistreRepertoireFiltreProps,
   RegistreRepertoireValidationSchema
-} from "./filtres/registreReperoire/RegistreReperoireFiltre";
-import { IRMCActeInscription } from "../../../model/rmc/rechercheForm/IRMCActeInscription";
+} from "../filtres/registreReperoire/RegistreReperoireFiltre";
+import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 
 // Nom des filtres
 const TITULAIRE = "titulaire";
@@ -155,10 +155,13 @@ function getFormDatesDebutFinAnnee(): JSX.Element {
 }
 
 function getRegistreRepertoire(): JSX.Element {
+  const registreRepertoireFiltreFiltreProps = {
+    nomFiltre: REGISTRE_REPERTOIRE
+  } as RegistreRepertoireFiltreProps;
   return (
     <RegistreRepertoireFiltre
-      nomFiltre={REGISTRE_REPERTOIRE}
       key={REGISTRE_REPERTOIRE}
+      {...registreRepertoireFiltreFiltreProps}
     />
   );
 }

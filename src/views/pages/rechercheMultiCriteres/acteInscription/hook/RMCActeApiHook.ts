@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { rechercheMultiCriteresActes } from "../../../../api/appels/etatcivilApi";
-import { IResultatRMCActe } from "../../../../model/rmc/resultat/IResultatRMCActe";
+import { rechercheMultiCriteresActes } from "../../../../../api/appels/etatcivilApi";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import {
   getMaxRange,
   getMinRange,
   getRowsNumber,
   IDataTableau,
   parseLink
-} from "../../../common/util/GestionDesLiensApi";
-import { logError } from "../../../common/util/LogManager";
+} from "../../../../common/util/GestionDesLiensApi";
+import { logError } from "../../../../common/util/LogManager";
 import {
   mappingActes,
   mappingCriteres,

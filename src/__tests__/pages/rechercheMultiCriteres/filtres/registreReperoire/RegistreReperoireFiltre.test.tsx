@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import {
-  RegistreRepertoireFiltre,
-  RegistreRepertoireDefaultValues
+import React from "react";
+import RegistreRepertoireFiltre, {
+  RegistreRepertoireDefaultValues,
+  RegistreRepertoireFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 import {
   render,
@@ -12,16 +12,20 @@ import {
 } from "@testing-library/react";
 import { getLibelle } from "../../../../../views/common/widget/Text";
 import { Formik, Form } from "formik";
-import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/RMCActeInscriptionPage";
+import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 
 const HookRegistreRepertoireFiltre: React.FC = () => {
+  const registreRepertoireFiltreFiltreProps = {
+    nomFiltre: REGISTRE_REPERTOIRE
+  } as RegistreRepertoireFiltreProps;
+
   return (
     <Formik
       initialValues={{ [REGISTRE_REPERTOIRE]: RegistreRepertoireDefaultValues }}
       onSubmit={(values: any) => {}}
     >
       <Form>
-        <RegistreRepertoireFiltre nomFiltre={REGISTRE_REPERTOIRE} />
+        <RegistreRepertoireFiltre {...registreRepertoireFiltreFiltreProps} />
       </Form>
     </Formik>
   );

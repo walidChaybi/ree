@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import {
   ComponentFiltreProps,
   withNamespace,
-  IOnFieldChangeParam
+  IOnFieldChangeParam,
+  FormikComponentProps
 } from "../../../../common/widget/formulaire/utils/FormUtil";
 import RegistreActeFiltre, {
   RegistreActeDefaultValues,
@@ -12,11 +13,11 @@ import RegistreActeFiltre, {
 } from "./RegistreActeFiltre";
 import { getLibelle } from "../../../../common/widget/Text";
 import RepertoireInscriptionFiltre, {
-  ComponentFiltreInscriptionProps,
   RepertoireInscriptionDefaultValues,
   RepertoireInscriptionValidationSchema
 } from "./RepertoireInscriptionFiltre";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import { connect } from "formik";
 
 // Noms des champs
 export const REGISTRE = "registre";
@@ -34,13 +35,32 @@ export const RegistreRepertoireValidationSchema = Yup.object({
   [REPERTOIRE]: RepertoireInscriptionValidationSchema
 });
 
-export const RegistreRepertoireFiltre: React.FC<ComponentFiltreProps> = props => {
+export type RegistreRepertoireFiltreProps = ComponentFiltreProps &
+  FormikComponentProps;
+
+const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props => {
   const [filtreActeInactif, setFiltreActeInactif] = useState<
     boolean | undefined
   >(false);
   const [filtreInscriptionInactif, setFiltreInscriptionInactif] = useState<
     boolean | undefined
   >(false);
+
+  useEffect(() => {
+    if (
+      (filtreInscriptionInactif || filtreActeInactif) &&
+      !props.formik.dirty
+    ) {
+      setFiltreInscriptionInactif(false);
+      setFiltreActeInactif(false);
+    }
+  }, [
+    props.formik.dirty,
+    filtreInscriptionInactif,
+    filtreActeInactif,
+    setFiltreInscriptionInactif,
+    setFiltreActeInactif
+  ]);
 
   function onFiltreActeChange(param: IOnFieldChangeParam) {
     setFiltreInscriptionInactif(param.filtreDirty);
@@ -50,10 +70,10 @@ export const RegistreRepertoireFiltre: React.FC<ComponentFiltreProps> = props =>
     setFiltreActeInactif(param.filtreDirty);
   }
 
-  const componentFiltreInscriptionProps = {
+  const registreRepertoireFiltreProps = {
     nomFiltre: withNamespace(props.nomFiltre, REPERTOIRE),
     onFieldChange: onFiltreInscriptionChange
-  } as ComponentFiltreInscriptionProps;
+  } as RegistreRepertoireFiltreProps;
 
   const registreActeFiltreProps = {
     nomFiltre: withNamespace(props.nomFiltre, REGISTRE),
@@ -72,10 +92,12 @@ export const RegistreRepertoireFiltre: React.FC<ComponentFiltreProps> = props =>
         <div className="FormFiltre">
           <RepertoireInscriptionFiltre
             filtreInactif={filtreInscriptionInactif}
-            {...componentFiltreInscriptionProps}
+            {...registreRepertoireFiltreProps}
           />
         </div>
       </Fieldset>
     </div>
   );
 };
+
+export default connect(RegistreRepertoireFiltre);

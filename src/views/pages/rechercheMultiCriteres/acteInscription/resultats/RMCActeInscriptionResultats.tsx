@@ -2,13 +2,13 @@ import React from "react";
 import { RMCResultatsActe } from "./RMCResultatsActe";
 import { RMCResultatsInscription } from "./RMCResultatsInscription";
 
-import { IResultatRMCActe } from "../../../../model/rmc/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../model/rmc/resultat/IResultatRMCInscription";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 
 import "../scss/RMCActeInscriptionResultats.scss";
-import { Fieldset } from "../../../common/widget/fieldset/Fieldset";
-import { IDataTableau } from "../../../common/util/GestionDesLiensApi";
-import { getLibelle } from "../../../common/widget/Text";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
+import { getLibelle } from "../../../../common/widget/Text";
 
 export interface RMCActeInscriptionResultatsProps {
   dataRMCActe: IResultatRMCActe[];

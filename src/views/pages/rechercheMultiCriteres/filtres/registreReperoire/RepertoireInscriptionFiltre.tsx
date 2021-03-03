@@ -22,6 +22,7 @@ import {
   CARATERES_AUTORISES_MESSAGE,
   NUMERO_INSCRIPTION_MESSAGE
 } from "../../../../common/widget/formulaire/FormulaireMessages";
+import { useEffect } from "react";
 
 // Noms des champs
 export const NUMERO_INSCRIPTION = "numeroInscription";
@@ -61,20 +62,20 @@ const RepertoireInscriptionFiltre: React.FC<ComponentFiltreInscriptionProps> = p
     NATURE_INSCRIPTION
   );
 
-  const [disabled, setDisabled] = useState<boolean>(true);
+  const [natureDisabled, setNatureDisabled] = useState<boolean>(true);
   const [natureOptions, setNatureOptions] = useState<Options>([]);
 
   const manageNatureOptions = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     props.formik.setFieldValue(natureInscriptionWithNamespace, "");
     if (e.target.value === "RC") {
-      setDisabled(false);
+      setNatureDisabled(false);
       setNatureOptions(NatureRc.getAllEnumsAsOptions());
     } else if (e.target.value === "RCA") {
-      setDisabled(false);
+      setNatureDisabled(false);
       setNatureOptions(NatureRca.getAllEnumsAsOptions());
     } else {
-      setDisabled(true);
+      setNatureDisabled(true);
       setNatureOptions([]);
     }
     props.formik.handleChange(e);
@@ -93,6 +94,12 @@ const RepertoireInscriptionFiltre: React.FC<ComponentFiltreInscriptionProps> = p
       e.target.value = `${value.slice(0, limitChar)}-${value.slice(limitChar)}`;
     }
   };
+
+  useEffect(() => {
+    if (!natureDisabled && !props.formik.dirty) {
+      setNatureDisabled(true);
+    }
+  }, [props.formik.dirty, natureDisabled, setNatureDisabled]);
 
   function onFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -132,7 +139,7 @@ const RepertoireInscriptionFiltre: React.FC<ComponentFiltreInscriptionProps> = p
         name={natureInscriptionWithNamespace}
         label={getLibelle("Nature de l'inscription")}
         options={natureOptions}
-        disabled={disabled || props.filtreInactif}
+        disabled={natureDisabled || props.filtreInactif}
         onChange={onFieldChange}
       />
     </>
