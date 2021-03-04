@@ -16,3 +16,5 @@ export const AsterisqueRecherche = new RegExp(
 );
 
 export const numeroInscription = new RegExp(/^.{4}[-]/);
+
+export const CarateresAlphanumerique = new RegExp(/^[0-9a-zA-Z]+$/);

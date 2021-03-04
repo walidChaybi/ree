@@ -37,6 +37,6 @@ export class CodeFamilleRegistre extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllEnumsAsOptions(CodeFamilleRegistre);
+    return EnumWithLibelle.getAllLibellesAsOptions(CodeFamilleRegistre);
   }
 }

@@ -1,0 +1,26 @@
+.FormulaireRMCRequete {
+  .requete {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .datesDebutFinAnnee {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .titulaire {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .requerant {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .BtnNomPrenom {
+    margin: 0 20% 2%;
+    width: 60%;
+  }
+}

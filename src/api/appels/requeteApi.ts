@@ -1,14 +1,16 @@
-import {ApiManager, HttpMethod} from "../ApiManager";
-import {GroupementDocument} from "../../model/requete/GroupementDocument";
-import {IDocumentDelivre} from "../../views/common/types/RequeteType";
-import {IQueryParameterUpdateStatutRequete} from "../../views/common/hook/UpdateStatutRequeteHook";
-import {StatutRequete} from "../../model/requete/StatutRequete";
-import {SortOrder} from "../../views/common/widget/tableau/TableUtils";
+import { ApiManager, HttpMethod } from "../ApiManager";
+import { GroupementDocument } from "../../model/requete/GroupementDocument";
+import { IDocumentDelivre } from "../../views/common/types/RequeteType";
+import { IQueryParameterUpdateStatutRequete } from "../../views/common/hook/UpdateStatutRequeteHook";
+import { StatutRequete } from "../../model/requete/StatutRequete";
+import { SortOrder } from "../../views/common/widget/tableau/TableUtils";
+import { IRMCRequestRequete } from "../../model/rmc/requete/IRMCRequestRequete";
 
 export const URL_REQUETES_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES = "/requetes";
 export const URL_REQUETES_COUNT = "/requetes/count";
 export const URL_DOCUMENTSELIVRES = "/documentsdelivres";
+export const URL_REQUETES_RMC = "/requetes/rmc";
 const URL_REPONSES = "/reponses";
 
 export interface IRequestDocumentApiResult {
@@ -137,5 +139,19 @@ export function patchUtilisateurAssigneRequete(
       prenomOec: queryParameters.prenomOec
     },
     headers: []
+  });
+}
+
+export function rechercheMultiCriteresRequetes(
+  criteres: IRMCRequestRequete,
+  range?: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_REQUETES_RMC}`,
+    data: criteres,
+    parameters: {
+      range
+    }
   });
 }

@@ -4,6 +4,8 @@ const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
 export const URL_ETAT_CIVIL = "/repertoirecivil";
 export const URL_ACTE = "/acte";
+export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
+export const URL_ACTE_RMC = "/acte/rmc";
 export const URL_ACTE_IMAGE = "/repertoirecivil/acte/corps";
 
 export function getInformationsFiche(
@@ -22,7 +24,7 @@ export function rechercheMultiCriteresActes(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_ACTE}/rmc`,
+    uri: `${URL_ACTE_RMC}`,
     data: criteres,
     parameters: {
       range
@@ -36,7 +38,7 @@ export function rechercheMultiCriteresInscriptions(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_ETAT_CIVIL}/rmc`,
+    uri: `${URL_ETAT_CIVIL_RMC}`,
     data: criteres,
     parameters: {
       range

@@ -117,6 +117,6 @@ export class NatureRca extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllEnumsAsOptions(NatureRca);
+    return EnumWithLibelle.getAllLibellesAsOptions(NatureRca);
   }
 }
