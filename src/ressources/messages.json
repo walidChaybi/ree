@@ -22,19 +22,6 @@
     "retourMesRequetes": "Retour à mes requêtes",
     "deconnexion": "Déconnexion"
   },
-  "fildariane": {
-    "deconnexion": "Logout",
-    "accueil": "Accueil",
-    "mesrequetes": "Mes requêtes",
-    "requetesservice": "Requêtes du service",
-    "apercurequete": "Aperçu de requête",
-    "messagerie": "Messagerie",
-    "rechercherequete": "Rechercher une requête",
-    "rechercheacteinscription": "Recherche acte ou inscription",
-    "rechercheacte": "Recherche acte",
-    "rcrca": "Fiche RC / RCA / PACS",
-    "acte": "Fiche Acte"
-  },
   "pages": {
     "delivrance": {
       "onglets": {

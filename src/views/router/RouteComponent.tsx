@@ -1,16 +1,18 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { routesRece, IRouteRece } from "./ReceRoutes";
+import { routesRece } from "./ReceRoutes";
 import { storeRece } from "../common/util/storeRece";
 import messageManager from "../common/util/messageManager";
 import { estOfficierHabiliterPourUnDesDroits } from "../../model/Habilitation";
 import { Droit } from "../../model/Droit";
-import { URL_ACCUEIL, URL_CONTEXT_APP } from "./ReceUrls";
+import { URL_ACCUEIL } from "./ReceUrls";
+import { getLibelle } from "../common/widget/Text";
+import { IRoute } from "../common/util/route/IRoute";
 
 export const RouterComponent: React.FC = () => {
   return (
     <Switch>
-      {routesRece.map((route: IRouteRece, index: number) => {
+      {routesRece.map((route: IRoute, index: number) => {
         return (
           <Route
             key={index}
@@ -19,7 +21,9 @@ export const RouterComponent: React.FC = () => {
             render={props => {
               if (route.canAccess === false || !estAutorise(route.droits)) {
                 messageManager.showWarningAndClose(
-                  "La page demandée n'est pas autorisée, vous avez été redirigé sur la page d'accueil"
+                  getLibelle(
+                    "La page demandée n'est pas autorisée, vous avez été redirigé sur la page d'accueil"
+                  )
                 );
                 return <Redirect to={URL_ACCUEIL} />;
               } else {
@@ -35,9 +39,11 @@ export const RouterComponent: React.FC = () => {
       <Route
         render={() => {
           messageManager.showWarningAndClose(
-            "La page demandée n'existe pas, vous avez été redirigé sur la page d'accueil"
+            getLibelle(
+              "La page demandée n'existe pas, vous avez été redirigé sur la page d'accueil"
+            )
           );
-          return <Redirect to={URL_CONTEXT_APP} />;
+          return <Redirect to={URL_ACCUEIL} />;
         }}
       />
     </Switch>

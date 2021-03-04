@@ -6,16 +6,15 @@ import { createMemoryHistory } from "history";
 import { mount } from "enzyme";
 import { ApercuRequetePage } from "../../../views/pages/apercuRequete/ApercuRequetePage";
 import {
-  URL_MES_REQUETES,
   URL_MES_REQUETES_ID,
-  URL_REQUETES_SERVICE,
   URL_REQUETES_SERVICE_ID
 } from "../../../views/router/ReceUrls";
+import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 
 test("renders Page requete with all elements", () => {
   act(() => {
     const history = createMemoryHistory();
-    history.push(`${URL_MES_REQUETES}/req2`, {
+    history.push(getUrlWithParam(URL_MES_REQUETES_ID, "req2"), {
       data: [
         { ...DONNEES_REQUETE, idRequete: "req1" },
         { ...DONNEES_REQUETE, idRequete: "req2" },
@@ -32,17 +31,15 @@ test("renders Page requete with all elements", () => {
         </Router>
       </>
     );
-
     expect(component.find("EtatRequete")).toHaveLength(1);
     expect(component.find("ContenuRequete")).toHaveLength(1);
-    expect(component.find("EtatRequete")).toHaveLength(1);
   });
 });
 
 test("renders Page requete with no elements", () => {
   act(() => {
     const history = createMemoryHistory();
-    history.push(`${URL_MES_REQUETES}/req2`, {
+    history.push(getUrlWithParam(URL_MES_REQUETES_ID, "req2"), {
       data: []
     });
 
@@ -66,7 +63,7 @@ test("renders Page requete with no elements", () => {
 
 test("renders Page requete change url", () => {
   const history = createMemoryHistory();
-  history.push(`${URL_MES_REQUETES}/req2`, {
+  history.push(getUrlWithParam(URL_MES_REQUETES_ID, "req2"), {
     data: [
       { ...DONNEES_REQUETE, idRequete: "req1" },
       { ...DONNEES_REQUETE, idRequete: "req2" },
@@ -94,16 +91,22 @@ test("renders Page requete change url", () => {
     button => button.id === "button-navigation-right"
   );
 
-  expect(history.location.pathname).toBe("/rece/rece-ui/mesrequetes/req2");
+  expect(history.location.pathname).toBe(
+    getUrlWithParam(URL_MES_REQUETES_ID, "req2")
+  );
   fireEvent.click(leftButton!);
-  expect(history.location.pathname).toBe("/rece/rece-ui/mesrequetes/req1");
+  expect(history.location.pathname).toBe(
+    getUrlWithParam(URL_MES_REQUETES_ID, "req1")
+  );
   fireEvent.click(rightButton!);
-  expect(history.location.pathname).toBe("/rece/rece-ui/mesrequetes/req2");
+  expect(history.location.pathname).toBe(
+    getUrlWithParam(URL_MES_REQUETES_ID, "req2")
+  );
 });
 
 test("renders Page requeteService change url", () => {
   const history = createMemoryHistory();
-  history.push(`${URL_REQUETES_SERVICE}/req2`, {
+  history.push(getUrlWithParam(URL_REQUETES_SERVICE_ID, "req2"), {
     data: [
       { ...DONNEES_REQUETE, idRequete: "req1" },
       { ...DONNEES_REQUETE, idRequete: "req2" },
@@ -131,9 +134,15 @@ test("renders Page requeteService change url", () => {
     button => button.id === "button-navigation-right"
   );
 
-  expect(history.location.pathname).toBe("/rece/rece-ui/requetesservice/req2");
+  expect(history.location.pathname).toBe(
+    getUrlWithParam(URL_REQUETES_SERVICE_ID, "req2")
+  );
   fireEvent.click(leftButton!);
-  expect(history.location.pathname).toBe("/rece/rece-ui/requetesservice/req1");
+  expect(history.location.pathname).toBe(
+    getUrlWithParam(URL_REQUETES_SERVICE_ID, "req1")
+  );
   fireEvent.click(rightButton!);
-  expect(history.location.pathname).toBe("/rece/rece-ui/requetesservice/req2");
+  expect(history.location.pathname).toBe(
+    getUrlWithParam(URL_REQUETES_SERVICE_ID, "req2")
+  );
 });

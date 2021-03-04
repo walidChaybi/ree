@@ -21,6 +21,7 @@ import {
   commonHeaders,
   getIconPrioriteRequete
 } from "./espaceDelivranceUtils";
+import { URL_REQUETES_SERVICE_ID } from "../../router/ReceUrls";
 
 /** TODO ETAPE 2 : Bouton "Attribué à" */
 // import {
@@ -45,7 +46,7 @@ import {
 /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
 interface MesRequetesServicePageProps {
-  getUrlBack: (id: string, data: any[]) => void;
+  getUrlBack: (id: string, data: any[], urlWithParam: string) => void;
 }
 
 export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
@@ -54,10 +55,9 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   // const [queryChangeOecRequest, setQueryChangeOecRequest] = React.useState<IQueryParametersAssigneRequetes>();
   /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
-  const [
-    linkParameters,
-    setLinkParameters
-  ] = React.useState<IQueryParametersPourRequetes>({
+  const [linkParameters, setLinkParameters] = React.useState<
+    IQueryParametersPourRequetes
+  >({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,
@@ -200,6 +200,10 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     setLinkParameters(queryParameters);
   }, []);
 
+  function onClickOnLine(identifiant: string, data: any[]) {
+    props.getUrlBack(identifiant, data, URL_REQUETES_SERVICE_ID);
+  }
+
   // TODO droit sur le bouton signature ?
   return (
     <>
@@ -207,7 +211,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
         idKey={"idRequete"}
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
-        onClickOnLine={props.getUrlBack}
+        onClickOnLine={onClickOnLine}
         columnHeaders={columnHeaders}
         dataState={dataState}
         rowsNumberState={rowsNumberState}

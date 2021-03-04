@@ -2,13 +2,19 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useRequeteDataApi } from "./hook/DonneeRequeteHook";
 import { IDataTable } from "../espaceDelivrance/MesRequetesPage";
-import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
+import {
+  URL_MES_REQUETES,
+  URL_REQUETES_SERVICE,
+  URL_MES_REQUETES_ID,
+  URL_REQUETES_SERVICE_ID
+} from "../../router/ReceUrls";
 import { Title } from "../../core/title/Title";
 import { ActionsButtonsRequestPage } from "./actions/ActionsButtonsRequestPage";
 import { EtatRequete } from "./contenu/EtatRequete";
 import { ContenuRequete } from "./contenu/ContenuRequete";
 import { IDocumentDelivre } from "../../common/types/RequeteType";
 import { storeRece } from "../../common/util/storeRece";
+import { getUrlWithParam } from "../../common/util/route/routeUtil";
 
 export interface RequestsInformations {
   data: IDataTable[];
@@ -35,10 +41,18 @@ export const ApercuRequetePage: React.FC = () => {
     (idx: number) => {
       const pathname = history.location.pathname;
       if (pathname.startsWith(URL_MES_REQUETES)) {
-        history.push(`${URL_MES_REQUETES}/${dataState[idx].idRequete}`);
+        const url = getUrlWithParam(
+          URL_MES_REQUETES_ID,
+          dataState[idx].idRequete
+        );
+        history.push(url);
       }
       if (pathname.startsWith(URL_REQUETES_SERVICE)) {
-        history.push(`${URL_REQUETES_SERVICE}/${dataState[idx].idRequete}`);
+        const url = getUrlWithParam(
+          URL_REQUETES_SERVICE_ID,
+          dataState[idx].idRequete
+        );
+        history.push(url);
       }
       setIndexRequete(idx);
     },

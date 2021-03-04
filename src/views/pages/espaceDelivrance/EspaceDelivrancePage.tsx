@@ -14,6 +14,7 @@ import { getText } from "../../common/widget/Text";
 import { Droit } from "../../../model/Droit";
 import { officierHabiliterPourLeDroit } from "../../../model/Habilitation";
 import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
+import { getUrlWithParam } from "../../common/util/route/routeUtil";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -89,9 +90,14 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
     setReloadCompteur(!reloadCompteur);
   };
 
-  const getUrlBack = (identifiantRequete: string, data: any) => {
+  const getUrlBack = (
+    identifiantRequete: string,
+    data: any,
+    urlWithParam: string
+  ) => {
     if (identifiantRequete && data) {
-      history.push(`${URL_MES_REQUETES}/${identifiantRequete}`, {
+      const url = getUrlWithParam(urlWithParam, identifiantRequete);
+      history.push(url, {
         data
       });
     }

@@ -8,7 +8,6 @@ class StoreRece {
   private _utilisateurCourant?: IOfficierSSOApi;
   private _codePin?: string;
   private _timerCodePin?: number;
-
   set utilisateurCourant(uc: IOfficierSSOApi | undefined) {
     this._utilisateurCourant = uc;
   }

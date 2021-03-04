@@ -35,6 +35,7 @@ import {
   getIconPrioriteRequete
 } from "./espaceDelivranceUtils";
 import { BoutonSignature } from "../../common/widget/signature/BoutonSignature";
+import { URL_MES_REQUETES_ID } from "../../router/ReceUrls";
 
 export interface IDataTable {
   idRequete: string;
@@ -115,14 +116,13 @@ const columnsTableau = [
 
 interface MesRequetesPageProps {
   miseAJourCompteur: () => void;
-  getUrlBack: (id: string, data: any[]) => void;
+  getUrlBack: (id: string, data: any[], urlWithParam: string) => void;
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
-  const [
-    linkParameters,
-    setLinkParameters
-  ] = React.useState<IQueryParametersPourRequetes>({
+  const [linkParameters, setLinkParameters] = React.useState<
+    IQueryParametersPourRequetes
+  >({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,
@@ -173,11 +173,15 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     }
   }, [linkParameters, props]);
 
+  function onClickOnLine(identifiant: string, data: any[]) {
+    props.getUrlBack(identifiant, data, URL_MES_REQUETES_ID);
+  }
+
   return (
     <>
       <TableauRece
         idKey={"idRequete"}
-        onClickOnLine={props.getUrlBack}
+        onClickOnLine={onClickOnLine}
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
         columnHeaders={columnsTableau}

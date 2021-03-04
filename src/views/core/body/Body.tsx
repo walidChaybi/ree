@@ -8,6 +8,7 @@ import {
 } from "../contexts/OfficierContext";
 import { LoginPage } from "../login/LoginPage";
 import { logError } from "../../common/util/LogManager";
+import { routesRece } from "../../router/ReceRoutes";
 
 export const RetourContext = React.createContext(URL_ACCUEIL);
 export const Body: React.FC = () => {
@@ -20,7 +21,10 @@ export const Body: React.FC = () => {
           {officier =>
             officier?.officierDataState?.idSSO !== undefined ? (
               <RetourContext.Provider value={retourState}>
-                <FilAriane setRetourState={setRetourState} />
+                <FilAriane
+                  setRetourState={setRetourState}
+                  routes={routesRece}
+                />
                 <RouterComponent />
               </RetourContext.Provider>
             ) : (
