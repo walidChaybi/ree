@@ -3,7 +3,6 @@ import {
   DecisionAnnulation,
   DecisionAnnulationUtil
 } from "../enum/DecisionAnnulation";
-import { TypeJuridictionUtil } from "../enum/TypeJuridiction";
 import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
 import { getValeurOuVide } from "../../../views/common/util/Utils";
 import { IAutorite } from "../commun/IAutorite";
@@ -23,8 +22,8 @@ export const Annulation = {
     return getFormatDateFromTimestamp(annulation.date);
   },
   getJuridiction(annulation: IAnnulation): string {
-    return annulation.autorite
-      ? TypeJuridictionUtil.getLibelle(annulation.autorite.typeJuridiction)
+    return annulation.autorite && annulation.autorite.typeJuridiction
+      ? annulation.autorite.typeJuridiction
       : "";
   },
   getEnrolementRG(annulation: IAnnulation): string {

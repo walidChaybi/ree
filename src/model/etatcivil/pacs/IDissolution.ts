@@ -1,14 +1,10 @@
 import { IActionDatee } from "../commun/IActionDatee";
-import {
-  MotifDissolution,
-  MotifDissolutionUtil
-} from "../enum/MotifDissolution";
 import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
 import { IAutorite } from "../commun/IAutorite";
 
 export interface IDissolution extends IActionDatee {
   autorite: IAutorite;
-  motif: MotifDissolution;
+  motif: string;
 }
 
 export const Dissolution = {
@@ -19,6 +15,6 @@ export const Dissolution = {
     return getFormatDateFromTimestamp(dissolution.dateEffet);
   },
   getMotif(dissolution: IDissolution) {
-    return MotifDissolutionUtil.getLibelle(dissolution.motif);
+    return dissolution.motif;
   }
 };

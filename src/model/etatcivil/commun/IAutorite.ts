@@ -6,8 +6,6 @@ import {
   formatPrenom,
   formatNom
 } from "../../../views/common/util/Utils";
-import { TypeJuridiction, TypeJuridictionUtil } from "../enum/TypeJuridiction";
-import { TypePoste, TypePosteUtil } from "../enum/TypePoste";
 
 // Regroupe les autorités commune, notaire, onac, juridiction, poste
 export interface IAutorite {
@@ -25,9 +23,9 @@ export interface IAutorite {
   // ONAC
   titreOnac?: string;
   // Juridiction
-  typeJuridiction?: TypeJuridiction;
+  typeJuridiction?: string;
   // Poste
-  typePoste?: TypePoste;
+  typePoste?: string;
 }
 
 export const Autorite = {
@@ -76,9 +74,9 @@ export const Autorite = {
     let res = "";
     if (autorite) {
       if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
-        res = TypeJuridictionUtil.getLibelle(autorite.typeJuridiction);
+        res = autorite.typeJuridiction ? autorite.typeJuridiction : "";
       } else if (TypeAutoriteUtil.isPoste(autorite.typeAutorite)) {
-        res = TypePosteUtil.getLibelle(autorite.typePoste);
+        res = autorite.typePoste ? autorite.typePoste : "";
       } else {
         res = TypeAutoriteUtil.getLibelle(autorite.typeAutorite);
       }
