@@ -112,7 +112,7 @@ export const RMCResultatsInscription: React.FC<RMCResultatInscriptionProps> = ({
                     dataRMCInscription
                   ) as TypeFiche
                 }
-                toClose={closeFenetre}
+                onClose={closeFenetre}
                 key={`fiche${idInscription}`}
               />
             );
