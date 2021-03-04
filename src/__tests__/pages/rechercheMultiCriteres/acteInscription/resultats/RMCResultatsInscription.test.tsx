@@ -1,10 +1,19 @@
 import React from "react";
-import { render, act, screen, fireEvent } from "@testing-library/react";
+import {
+  render,
+  act,
+  screen,
+  fireEvent,
+  waitFor
+} from "@testing-library/react";
 import { RMCResultatsInscription } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCResultatsInscription";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "../../../../../mock/data/RMCInscription";
+import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import request from "superagent";
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
   render(
@@ -53,5 +62,29 @@ test("Ouverture d'une inscription", async () => {
 
   act(() => {
     fireEvent.click(ligne);
+  });
+
+  const titreBandeau = "PACS N° 2018 - 123456";
+  const titreAccordeaon = "Vue du PACS";
+
+  await waitFor(() => {
+    const numero = screen.getByText(titreBandeau);
+    expect(numero).toBeDefined();
+
+    const vue = screen.getByText(titreAccordeaon);
+    expect(vue).toBeDefined();
+  });
+
+  act(() => {
+    const event = new CustomEvent("beforeunload");
+    window.top.dispatchEvent(event);
+  });
+
+  await waitFor(() => {
+    const numero = screen.queryByText(titreBandeau);
+    expect(numero).toBeNull();
+
+    const vue = screen.queryByText(titreAccordeaon);
+    expect(vue).toBeNull();
   });
 });

@@ -31,12 +31,16 @@ export const configEtatcivil = [
         return { data: mockRCA.data };
       } else if (
         match[1] ===
-        "/repertoirecivil/pacs/89c9d030-26c3-41d3-bdde-8b4dcc0420e0"
+          "/repertoirecivil/pacs/89c9d030-26c3-41d3-bdde-8b4dcc0420e0" ||
+        match[1] ===
+          "/repertoirecivil/pacs/85160d6e-893b-47c2-a9a8-b25573189f0c"
       ) {
         return { data: pacsModificationNotaire.data };
       } else if (
         match[1] ===
-        "/repertoirecivil/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f"
+          "/repertoirecivil/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f" ||
+        match[1] ===
+          "/repertoirecivil/acte/d8708d77-a359-4553-be72-1eb5f246d4da"
       ) {
         return { data: acte };
       } else if (

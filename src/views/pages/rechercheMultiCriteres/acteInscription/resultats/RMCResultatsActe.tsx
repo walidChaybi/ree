@@ -99,7 +99,7 @@ export const RMCResultatsActe: React.FC<RMCResultatActeProps> = ({
               <FenetreFiche
                 identifiant={idActe}
                 categorie={TypeFiche.ACTE}
-                toClose={closeFenetre}
+                onClose={closeFenetre}
                 key={`fiche${idActe}${index}`}
               />
             );
