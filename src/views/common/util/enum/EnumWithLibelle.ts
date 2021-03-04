@@ -13,7 +13,7 @@ export class EnumWithLibelle {
     return str && clazz[str] ? clazz[str] : str;
   }
 
-  public static getAllEnumsAsOptions(clazz: any): Options {
+  public static getAllLibellesAsOptions(clazz: any): Options {
     const options: Options = [];
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key)) {

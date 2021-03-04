@@ -13,6 +13,6 @@ export class TypeRepertoire extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllEnumsAsOptions(TypeRepertoire);
+    return EnumWithLibelle.getAllLibellesAsOptions(TypeRepertoire);
   }
 }

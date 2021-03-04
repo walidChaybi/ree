@@ -29,6 +29,7 @@
     "requetesservice": "Requêtes du service",
     "apercurequete": "Aperçu de requête",
     "messagerie": "Messagerie",
+    "rechercherequete": "Rechercher une requête",
     "rechercheacteinscription": "Recherche acte ou inscription",
     "rechercheacte": "Recherche acte",
     "rcrca": "Fiche RC / RCA / PACS",
@@ -176,7 +177,7 @@
         "miseAJour": "Espace mise à jour",
         "creation": "Espace création",
         "communication": "Communication avec les usagers",
-        "requete": "Rechercher une requête",
+        "rechercherequete": "Rechercher une requête",
         "rechercheacteinscription": "Rechercher un acte ou une inscription",
         "rechercheacte": "Rechercher un acte",
         "tableau": "Tableau de bord"

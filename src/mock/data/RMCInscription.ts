@@ -13,7 +13,7 @@ export const ReponseAppelRMCInscription = {
   hasTechnicalError: false,
   hasBusinessError: false,
   status: 201,
-  url: "/rece/rece-requete-api/v1/repertoirecivil/rmc",
+  url: "/rece/rece-etatcivil-api/v1/repertoirecivil/rmc",
   data: {
     repertoiresCiviles: [
       {

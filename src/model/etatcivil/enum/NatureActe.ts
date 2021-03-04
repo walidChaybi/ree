@@ -18,6 +18,6 @@ export class NatureActe extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllEnumsAsOptions(NatureActe);
+    return EnumWithLibelle.getAllLibellesAsOptions(NatureActe);
   }
 }

@@ -1,4 +1,5 @@
 import DONNEES_REQUETE from "../data/requete";
+import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 const mockPdf = require("../data/pdf-base64.json");
 const mockPng = require("../data/png-base64.json");
@@ -142,6 +143,11 @@ export const configRequetes = [
         return { data: 20 };
       }
 
+      // RMC Requete
+      if (match[1] === "/requetes/rmc?range=0-105") {
+        return { data: ReponseAppelRMCRequete.data };
+      }
+
       //Récupération de pièces justufucatives
       if (
         match[1] ===
@@ -210,7 +216,8 @@ export const configRequetes = [
      */
     post: function (match, data) {
       return {
-        status: 201
+        status: 201,
+        body: data
       };
     },
 

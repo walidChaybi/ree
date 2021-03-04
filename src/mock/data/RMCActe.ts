@@ -12,7 +12,7 @@ export const ReponseAppelRMCActe = {
   hasTechnicalError: false,
   hasBusinessError: false,
   status: 201,
-  url: "/rece/rece-requete-api/v1/acte/rmc",
+  url: "/rece/rece-etatcivil-api/v1/acte/rmc",
   data: {
     registres: [
       {

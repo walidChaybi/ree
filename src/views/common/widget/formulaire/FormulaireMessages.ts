@@ -6,3 +6,6 @@ export const ASTERISQUE_MESSAGE =
 
 export const NUMERO_INSCRIPTION_MESSAGE =
   "Le n° de l'inscription doit respecter le format année-numéro";
+
+export const CARACTERES_ALPHANUMERIQUE =
+  "Les caractères autorisés sont les chiffres et les lettres sans accents";
