@@ -11,7 +11,7 @@ test("renders not last Categorie", async () => {
   history.push(URL_REQUETES);
   const { getByText } = render(
     <Router history={history}>
-      <Categorie url={URL_ACCUEIL} messageId={"accueil.test"} last={false} />
+      <Categorie url={URL_ACCUEIL} message={"accueil.test"} last={false} />
     </Router>
   );
   await waitFor(() => {
@@ -27,12 +27,12 @@ test("renders not last Categorie and click", async () => {
   history.push(URL_REQUETES);
   const { getByText } = render(
     <Router history={history}>
-      <Categorie url={URL_ACCUEIL} messageId={"accueil.test"} last={false} />
+      <Categorie url={URL_ACCUEIL} message={"accueil.test"} last={false} />
     </Router>
   );
   await waitFor(() => {
     expect(history.length).toBe(2);
-    const linkElement = getByText(/accueil.test/);
+    const linkElement = getByText("accueil.test");
     fireEvent.click(linkElement);
     expect(history.length).toBe(3);
   });
@@ -43,30 +43,13 @@ test("renders last Categorie", async () => {
   history.push(URL_REQUETES);
   const { getByText } = render(
     <Router history={history}>
-      <Categorie url={URL_ACCUEIL} messageId={"accueilString"} last={true} />
+      <Categorie url={URL_ACCUEIL} message={"accueilString"} last={true} />
     </Router>
   );
   await waitFor(() => {
-    const linkElement = getByText(/fildariane.accueilString/);
+    const linkElement = getByText("accueilString");
     expect(linkElement).toBeInTheDocument();
     expect(linkElement.className).toBe("TextFilAriane");
-  });
-});
-
-test("renders last Categorie and apercu requete", async () => {
-  const history = createMemoryHistory();
-  const { getByText } = render(
-    <Router history={history}>
-      <Categorie
-        url={URL_ACCUEIL}
-        messageId={"204b8563-c7f8-4748-9daa-f26558985894"}
-        last={true}
-      />
-    </Router>
-  );
-  await waitFor(() => {
-    const linkElement = getByText(/Aperçu de requête/);
-    expect(linkElement).toBeInTheDocument();
   });
 });
 
@@ -76,11 +59,11 @@ test("renders not last Categorie go to accueil", async () => {
   history.push("test2");
   const { getAllByText } = render(
     <Router history={history}>
-      <Categorie url={URL_ACCUEIL} messageId={"accueil"} last={false} />
+      <Categorie url={URL_ACCUEIL} message={"Accueil"} last={false} />
     </Router>
   );
   await waitFor(() => {
-    const linkElement = getAllByText(/Accueil/);
+    const linkElement = getAllByText("Accueil");
     expect(history).toHaveLength(3);
     fireEvent.click(linkElement[0]);
     expect(history).toHaveLength(4);

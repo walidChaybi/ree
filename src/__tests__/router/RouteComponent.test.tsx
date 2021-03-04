@@ -1,14 +1,9 @@
 import React from "react";
 import { createMemoryHistory } from "history";
-import {
-  URL_REQUETES_SERVICE,
-  URL_MES_REQUETES_ID,
-  URL_MES_REQUETES
-} from "../../views/router/ReceUrls";
-import { render, act, waitFor } from "@testing-library/react";
+import { URL_REQUETES_SERVICE } from "../../views/router/ReceUrls";
+import { render, waitFor } from "@testing-library/react";
 import { RouterComponent } from "../../views/router/RouteComponent";
 import { Router } from "react-router-dom";
-import { screen } from "@testing-library/react";
 import mockConnectedUser from "../../mock/data/connectedUser.json";
 import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
 import { storeRece } from "../../views/common/util/storeRece";
