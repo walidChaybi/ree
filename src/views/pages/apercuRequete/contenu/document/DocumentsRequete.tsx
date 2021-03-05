@@ -7,7 +7,14 @@ import {
 } from "../../../../common/types/RequeteType";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 import { MimeType } from "../../../../../ressources/MimeType";
-import { TypeDocument } from "../../../../../model/requete/TypeDocument";
+import {
+  getCourriersAccompagnementDocuments,
+  getcopieIntegraleDocuments,
+  getExtraitDocuments,
+  getCertificatDocuments,
+  getAttestationDocuments,
+  getAutresDocuments
+} from "../../../../../model/requete/TypeDocument";
 import { getText } from "../../../../common/widget/Text";
 
 interface IDocumentsDelivres {
@@ -35,7 +42,6 @@ export const DocumentsRequete: React.FC<IDocumentsRequeteProps> = ({
   }, [documentsDelivres]);
 
   const mockFct = (doc: IDocumentDelivre) => {}; // FIXME
-
   return (
     <>
       <DocumentPresentation
@@ -103,56 +109,17 @@ function parseDocumentDelivre(
 export function extraitALireParDefault(
   documents: IDocumentDelivre[]
 ): IDocumentDetail | undefined {
+  let documentAlireParDefaut: IDocumentDetail | undefined;
   if (documents.length > 0) {
-    const copieIntegraleDocuments = getDocumentsByTypeDocument(
-      documents,
-      TypeDocument.CopieIntegrale
+    const copieIntegraleDocuments = getcopieIntegraleDocuments(documents);
+    const extraitDocuments = getExtraitDocuments(documents);
+    const certificatDocuments = getCertificatDocuments(documents);
+    const attestationDocuments = getAttestationDocuments(documents);
+    const courriersAccompagnementDocuments = getCourriersAccompagnementDocuments(
+      documents
     );
-    const extraitDocuments = [
-      ...getDocumentsByTypeDocument(
-        documents,
-        TypeDocument.ExtraitAvecFiliation
-      ),
-      ...getDocumentsByTypeDocument(
-        documents,
-        TypeDocument.ExtraitSansFiliation
-      ),
-      ...getDocumentsByTypeDocument(documents, TypeDocument.ExtraitPlurilingue)
-    ];
-    const certificatDocuments = [
-      ...getDocumentsByTypeDocument(
-        documents,
-        TypeDocument.CertificatSituationRC
-      ),
-      ...getDocumentsByTypeDocument(
-        documents,
-        TypeDocument.CertificatSituationRCA
-      ),
-      ...getDocumentsByTypeDocument(
-        documents,
-        TypeDocument.CertificatSituationRCetRCA
-      ),
-      ...getDocumentsByTypeDocument(
-        documents,
-        TypeDocument.CertificatSituationPACS
-      )
-    ];
-    const attestationDocuments = getDocumentsByTypeDocument(
-      documents,
-      TypeDocument.AtestationPACS
-    );
-    const courriersAccompagnementDocuments = [
-      ...getDocumentsByTypeDocument(documents, TypeDocument.FA50),
-      ...getDocumentsByTypeDocument(documents, TypeDocument.FA115),
-      ...getDocumentsByTypeDocument(documents, TypeDocument.FA116),
-      ...getDocumentsByTypeDocument(documents, TypeDocument.FA117),
-      ...getDocumentsByTypeDocument(documents, TypeDocument.FA118)
-    ];
-    const autresDocuments = getDocumentsByTypeDocument(
-      documents,
-      TypeDocument.CopieNonSignee
-    );
-    return parseDocumentDelivre(
+    const autresDocuments = getAutresDocuments(documents);
+    documentAlireParDefaut = parseDocumentDelivre(
       copieIntegraleDocuments[0] ||
         extraitDocuments[0] ||
         certificatDocuments[0] ||
@@ -162,12 +129,5 @@ export function extraitALireParDefault(
         undefined
     );
   }
-  return undefined;
+  return documentAlireParDefaut;
 }
-
-const getDocumentsByTypeDocument = (
-  documents: IDocumentDelivre[],
-  type: TypeDocument
-): IDocumentDelivre[] => {
-  return documents.filter(element => element.typeDocument === type);
-};

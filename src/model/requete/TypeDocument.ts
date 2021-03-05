@@ -1,3 +1,5 @@
+import { IDocumentDelivre } from "../../views/common/types/RequeteType";
+
 export enum TypeDocument {
   AtestationPACS = "ATTESTATION_PACS",
   CertificatSituationRC = "CERTIFICAT_SITUATION_RC",
@@ -33,3 +35,81 @@ export enum TypeDocument {
   FA61 = "FA61",
   FA62 = "FA62"
 }
+
+export function getcopieIntegraleDocuments(
+  documents: IDocumentDelivre[]
+): IDocumentDelivre[] {
+  return getDocumentsByTypeDocument(documents, TypeDocument.CopieIntegrale);
+}
+
+export function getExtraitDocuments(
+  documents: IDocumentDelivre[]
+): IDocumentDelivre[] {
+  return [
+    ...getDocumentsByTypeDocument(documents, TypeDocument.ExtraitAvecFiliation),
+    ...getDocumentsByTypeDocument(documents, TypeDocument.ExtraitSansFiliation),
+    ...getDocumentsByTypeDocument(documents, TypeDocument.ExtraitPlurilingue)
+  ];
+}
+
+export function getCertificatDocuments(
+  documents: IDocumentDelivre[]
+): IDocumentDelivre[] {
+  return [
+    ...getDocumentsByTypeDocument(
+      documents,
+      TypeDocument.CertificatSituationRC
+    ),
+    ...getDocumentsByTypeDocument(
+      documents,
+      TypeDocument.CertificatSituationRCA
+    ),
+    ...getDocumentsByTypeDocument(
+      documents,
+      TypeDocument.CertificatSituationRCetRCA
+    ),
+    ...getDocumentsByTypeDocument(
+      documents,
+      TypeDocument.CertificatSituationPACS
+    )
+  ];
+}
+
+export function getAttestationDocuments(
+  documents: IDocumentDelivre[]
+): IDocumentDelivre[] {
+  return getDocumentsByTypeDocument(documents, TypeDocument.AtestationPACS);
+}
+
+const posNumberFA = 2;
+export function getCourriersAccompagnementDocuments(
+  documents: IDocumentDelivre[]
+) {
+  let docsRes: IDocumentDelivre[] = [];
+  for (const key in TypeDocument) {
+    if (
+      TypeDocument.hasOwnProperty(key) &&
+      // Si la clé commence par FA et que le reste est un nombre
+      key.startsWith("FA") &&
+      !isNaN(Number(key.slice(posNumberFA)))
+    ) {
+      const clazz = TypeDocument as any;
+      const typeDoc = clazz[key] as TypeDocument;
+      docsRes = docsRes.concat(getDocumentsByTypeDocument(documents, typeDoc));
+    }
+  }
+  return docsRes;
+}
+
+export function getAutresDocuments(
+  documents: IDocumentDelivre[]
+): IDocumentDelivre[] {
+  return getDocumentsByTypeDocument(documents, TypeDocument.CopieNonSignee);
+}
+
+export const getDocumentsByTypeDocument = (
+  documents: IDocumentDelivre[],
+  type: TypeDocument
+): IDocumentDelivre[] => {
+  return documents.filter(element => element.typeDocument === type);
+};
