@@ -2,7 +2,7 @@ import { IDocumentDelivre } from "../../../../views/common/types/RequeteType";
 import { extraitALireParDefault } from "../../../../views/pages/apercuRequete/contenu/document/DocumentsRequete";
 
 test("Vérification ordre de sélection des documents par défaut visible si copie intégrale", () => {
-  let documentsDelivres: IDocumentDelivre[] = [
+  const documentsDelivres: IDocumentDelivre[] = [
     {
       idDocumentDelivre: "1",
       nom: "AtestationPACS",
@@ -13,7 +13,7 @@ test("Vérification ordre de sélection des documents par défaut visible si cop
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "2",
       nom: "copie intégrale",
@@ -24,7 +24,7 @@ test("Vérification ordre de sélection des documents par défaut visible si cop
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "3",
       nom: "certificat 1",
@@ -35,7 +35,7 @@ test("Vérification ordre de sélection des documents par défaut visible si cop
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "4",
       nom: "certificat 2",
@@ -46,7 +46,7 @@ test("Vérification ordre de sélection des documents par défaut visible si cop
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "5",
       nom: "certificat 2",
@@ -57,7 +57,7 @@ test("Vérification ordre de sélection des documents par défaut visible si cop
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "6",
       nom: "certificat 2",
@@ -68,15 +68,15 @@ test("Vérification ordre de sélection des documents par défaut visible si cop
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    }
+    } as IDocumentDelivre
   ];
-  let documentParDefaut = extraitALireParDefault(documentsDelivres);
+  const documentParDefaut = extraitALireParDefault(documentsDelivres);
   expect(documentParDefaut).toBeTruthy();
   expect(documentParDefaut?.nom).toBe("Copie intégrale");
 });
 
 test("Vérification ordre de sélection des documents par défaut visible si extrait sans copie intégrale", () => {
-  let documentsDelivres: IDocumentDelivre[] = [
+  const documentsDelivres: IDocumentDelivre[] = [
     {
       idDocumentDelivre: "1",
       nom: "AtestationPACS",
@@ -87,7 +87,7 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "3",
       nom: "certificat 1",
@@ -98,7 +98,7 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "4",
       nom: "certificat 2",
@@ -109,7 +109,7 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "5",
       nom: "certificat 2",
@@ -120,7 +120,7 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "6",
       nom: "certificat 2",
@@ -131,15 +131,15 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    }
+    } as IDocumentDelivre
   ];
-  let documentParDefaut = extraitALireParDefault(documentsDelivres);
+  const documentParDefaut = extraitALireParDefault(documentsDelivres);
   expect(documentParDefaut).toBeTruthy();
   expect(documentParDefaut?.nom).toBe("Extrait avec filiation");
 });
 
 test("Vérification ordre de sélection des documents par défaut visible si extrait sans copie intégrale, sans extrait", () => {
-  let documentsDelivres: IDocumentDelivre[] = [
+  const documentsDelivres: IDocumentDelivre[] = [
     {
       idDocumentDelivre: "1",
       nom: "AtestationPACS",
@@ -150,7 +150,7 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "3",
       nom: "certificat 1",
@@ -161,7 +161,7 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "4",
       nom: "certificat 2",
@@ -172,7 +172,7 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "6",
       nom: "certificat 2",
@@ -183,15 +183,15 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    }
+    } as IDocumentDelivre
   ];
-  let documentParDefaut = extraitALireParDefault(documentsDelivres);
+  const documentParDefaut = extraitALireParDefault(documentsDelivres);
   expect(documentParDefaut).toBeTruthy();
   expect(documentParDefaut?.nom).toBe("Certificat de situation au RC");
 });
 
 test("Vérification ordre de sélection des documents par défaut visible si extrait sans copie intégrale, sans extrait, sans certificat", () => {
-  let documentsDelivres: IDocumentDelivre[] = [
+  const documentsDelivres: IDocumentDelivre[] = [
     {
       idDocumentDelivre: "1",
       nom: "AtestationPACS",
@@ -202,7 +202,7 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    },
+    } as IDocumentDelivre,
     {
       idDocumentDelivre: "4",
       nom: "certificat 2",
@@ -213,15 +213,15 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    }
+    } as IDocumentDelivre
   ];
-  let documentParDefaut = extraitALireParDefault(documentsDelivres);
+  const documentParDefaut = extraitALireParDefault(documentsDelivres);
   expect(documentParDefaut).toBeTruthy();
   expect(documentParDefaut?.nom).toBe("Attestation de PACS");
 });
 
 test("Vérification ordre de sélection des documents par défaut visible si extrait sans copie intégrale, sans extrait, sans certificat, sans attestation", () => {
-  let documentsDelivres: IDocumentDelivre[] = [
+  const documentsDelivres: IDocumentDelivre[] = [
     {
       idDocumentDelivre: "4",
       nom: "certificat 2",
@@ -232,15 +232,15 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    }
+    } as IDocumentDelivre
   ];
-  let documentParDefaut = extraitALireParDefault(documentsDelivres);
+  const documentParDefaut = extraitALireParDefault(documentsDelivres);
   expect(documentParDefaut).toBeTruthy();
   expect(documentParDefaut?.nom).toBe("Formulaire FA116");
 });
 
 test("Vérification ordre de sélection des documents par défaut visible si extrait sans copie intégrale, sans extrait, sans certificat, sans attestation et uniquement présence formulaire FA115", () => {
-  let documentsDelivres: IDocumentDelivre[] = [
+  const documentsDelivres: IDocumentDelivre[] = [
     {
       idDocumentDelivre: "1",
       nom: "formulaire FA115",
@@ -251,9 +251,9 @@ test("Vérification ordre de sélection des documents par défaut visible si ext
       reponse: undefined,
       conteneurSwift: "",
       contenu: ""
-    }
+    } as IDocumentDelivre
   ];
-  let documentParDefaut = extraitALireParDefault(documentsDelivres);
+  const documentParDefaut = extraitALireParDefault(documentsDelivres);
   expect(documentParDefaut).toBeTruthy();
   expect(documentParDefaut?.nom).toBe("Formulaire FA115");
 });

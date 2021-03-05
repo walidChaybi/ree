@@ -1,8 +1,6 @@
 /* istanbul ignore file */
 import * as React from "react";
 import { logError } from "./LogManager";
-import { URL_ACCUEIL } from "../../router/ReceUrls";
-import { getLibelle } from "../widget/Text";
 
 interface LocalProps {
   remoteLog: boolean;
@@ -14,7 +12,10 @@ interface LocalState {
 }
 
 const erreurMsgUtilisateur = "Une erreur inattendue est survenue";
-export class ErrorManager extends React.Component<LocalProps, LocalState> {
+export class ErrorManagerBoundary extends React.Component<
+  LocalProps,
+  LocalState
+> {
   constructor(props: LocalProps) {
     super(props);
     this.addOnErrorManager();
@@ -62,14 +63,8 @@ export class ErrorManager extends React.Component<LocalProps, LocalState> {
   }
 
   public render() {
-    if (this.state.hasError && document.getElementsByClassName("Toastify")) {
-      // Cas d'erreur ou la page n'a pas pu s'afficher à cause d'une erreur
-      alert(
-        getLibelle(
-          "Une erreur inatendue est survenue (veuillez contacter un administrateur), vous allez être redirigé vers la page d'accueil"
-        )
-      );
-      window.location.replace(URL_ACCUEIL);
+    if (this.state.hasError) {
+      return <div className={"error"}>Erreur inattendue!</div>;
     }
     return this.props.children;
   }

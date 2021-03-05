@@ -13,6 +13,7 @@ export enum FormatDate {
   DDMMYYYYHHmm = "DD/MM/YYYY HH:mm"
 }
 
+/** Trasforme un objet IDateCompose en chaîne JJ/MM/AAAA */
 export function getDateStringFromDateCompose(date: IDateCompose): string {
   let dateString = "";
 

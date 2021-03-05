@@ -12,7 +12,8 @@ import {
   getDateComposeFromDate,
   getDernierJourDuMois,
   getDateDebutFromDateCompose,
-  getDateFinFromDateCompose
+  getDateFinFromDateCompose,
+  getDateStringFromDateCompose
 } from "../../../views/common/util/DateUtils";
 
 test("getDateFromDateCompose", () => {
@@ -299,4 +300,31 @@ test("getDateFinFromDateCompose", () => {
     getDateDebutFromDateCompose({ jour: "10", mois: "02", annee: "1990" }),
     new Date(1990, 2, 10)
   );
+});
+
+test("getDateStringFromDateCompose", () => {
+  expect(getDateStringFromDateCompose(undefined!)).toBe("");
+  expect(
+    getDateStringFromDateCompose({
+      jour: undefined,
+      mois: undefined,
+      annee: undefined!
+    })
+  ).toBe("");
+  expect(
+    getDateStringFromDateCompose({
+      jour: undefined,
+      mois: undefined,
+      annee: "2021"
+    })
+  ).toBe("2021");
+  expect(
+    getDateStringFromDateCompose({ jour: "1", mois: "1", annee: "2021" })
+  ).toBe("01/01/2021");
+  expect(
+    getDateStringFromDateCompose({ jour: undefined, mois: "1", annee: "2021" })
+  ).toBe("01/2021");
+  expect(
+    getDateStringFromDateCompose({ jour: "", mois: "1", annee: "2021" })
+  ).toBe("01/2021");
 });
