@@ -12,7 +12,6 @@ import RequeteFiltre, {
   RequeteDefaultValues,
   RequeteFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/requete/RequeteFiltre";
-import { CARACTERES_ALPHANUMERIQUE } from "../../../../../views/common/widget/formulaire/FormulaireMessages";
 
 const HookRequeteFiltre: React.FC = () => {
   const [result, setResult] = useState("");

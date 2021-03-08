@@ -5,12 +5,9 @@ import { Fieldset } from "../fieldset/Fieldset";
 
 interface FomulaireProps {
   titre: string;
-  blocs: JSX.Element[];
   formDefaultValues: any;
   formValidationSchema: any;
   onSubmit: (values: any) => void;
-  libelleBouton: string;
-  formulaireClassName?: string;
 }
 
 export const Formulaire: React.FC<FomulaireProps> = props => {
@@ -22,34 +19,7 @@ export const Formulaire: React.FC<FomulaireProps> = props => {
           initialValues={props.formDefaultValues}
           validationSchema={props.formValidationSchema}
         >
-          {({ isValid, dirty, resetForm }) => (
-            <>
-              {props.blocs && (
-                <Form>
-                  <div className={props.formulaireClassName}>
-                    {props.blocs.map(bloc => {
-                      return bloc;
-                    })}
-                  </div>
-                  {
-                    <div className="Buttons">
-                      <button
-                        className="ResetButton"
-                        type="reset"
-                        onClick={() => resetForm()}
-                      >
-                        Réinitialiser les critères
-                      </button>
-
-                      <button disabled={!isValid || !dirty} type="submit">
-                        {props.libelleBouton}
-                      </button>
-                    </div>
-                  }
-                </Form>
-              )}
-            </>
-          )}
+          <Form>{props.children}</Form>
         </Formik>
       </Fieldset>
     </div>

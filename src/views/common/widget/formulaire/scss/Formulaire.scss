@@ -8,15 +8,6 @@
     grid-template-columns: 50% 50%;
   }
 
-  .Buttons {
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  .ResetButton {
-    background-color: $application-color;
-  }
-
   input:disabled {
     background-color: $form-input-disabled;
     -webkit-appearance: none;

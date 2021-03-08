@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
 import TitulaireFiltre, {
+  TitulaireFiltreProps,
   TitulaireDefaultValues,
   TitulaireValidationSchema
 } from "../filtres/titulaire/TitulaireFiltre";
@@ -24,9 +25,11 @@ import RegistreRepertoireFiltre, {
   RegistreRepertoireValidationSchema
 } from "../filtres/registreReperoire/RegistreReperoireFiltre";
 import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { stockageDonnees } from "../../../common/util/stockageDonnees";
+import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 
 // Nom des filtres
-const TITULAIRE = "titulaire";
+export const TITULAIRE = "titulaire";
 export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 export const REGISTRE_REPERTOIRE = "registreRepertoire";
 
@@ -57,10 +60,9 @@ export const RMCActeInscriptionPage: React.FC = () => {
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [
-    critèresRechercheActe,
-    setCritèresRechercheActe
-  ] = useState<ICriteresRecherche>();
+  const [critèresRechercheActe, setCritèresRechercheActe] = useState<
+    ICriteresRecherche
+  >();
 
   const [
     critèresRechercheInscription,
@@ -87,6 +89,7 @@ export const RMCActeInscriptionPage: React.FC = () => {
       valeurs: values,
       range: `0-${NB_LIGNES_PAR_APPEL}`
     });
+    stockageDonnees.stockerCriteresRMCActeInspt(values);
     setNouvelleRecherche(false);
   };
 
@@ -108,6 +111,14 @@ export const RMCActeInscriptionPage: React.FC = () => {
     }
   };
 
+  const rappelCriteres = () => {
+    return stockageDonnees.recupererCriteresRMCActeInspt();
+  };
+
+  const boutonsProps = {
+    rappelCriteres
+  } as RMCBoutonsProps;
+
   return (
     <>
       <title>{titreForm}</title>
@@ -115,11 +126,11 @@ export const RMCActeInscriptionPage: React.FC = () => {
         titre={titreForm}
         formDefaultValues={DefaultValuesRMCActeInscription}
         formValidationSchema={ValidationSchemaRMCActeInscription}
-        libelleBouton="Rechercher"
-        blocs={blocsForm}
         onSubmit={onSubmitRMCActeInscription}
-        formulaireClassName="DeuxColonnes FormulaireRMCAI"
-      />
+      >
+        <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
+        <RMCBoutons {...boutonsProps} />
+      </Formulaire>
       {dataRMCActe &&
         dataTableauRMCActe &&
         dataRMCInscription &&
@@ -139,7 +150,10 @@ export const RMCActeInscriptionPage: React.FC = () => {
 };
 
 function getFormTitulaire(): JSX.Element {
-  return <TitulaireFiltre nomFiltre={TITULAIRE} key={TITULAIRE} />;
+  const titulaireFiltreProps = {
+    nomFiltre: TITULAIRE
+  } as TitulaireFiltreProps;
+  return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} />;
 }
 
 function getFormDatesDebutFinAnnee(): JSX.Element {

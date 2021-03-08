@@ -1,0 +1,14 @@
+@import "../../../../../sass/colors";
+
+.Boutons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.RappelBouton {
+  background-color: $application-color;
+}
+
+.ReinitBouton {
+  background-color: $application-color;
+}

@@ -11,27 +11,28 @@ import RepertoireInscriptionFiltre, {
   ComponentFiltreInscriptionProps,
   RepertoireInscriptionDefaultValues
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RepertoireInscriptionFiltre";
-import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import { REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 
-const HookRegistreInscriptionFiltre: React.FC = () => {
+const HookRepertoireInscriptionFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
-  const registreInscriptionFiltreProps = {
-    nomFiltre: REGISTRE_REPERTOIRE
+  const repertoireInscriptionFiltreProps = {
+    nomFiltre: REPERTOIRE
   } as ComponentFiltreInscriptionProps;
 
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));
   };
+
   return (
     <Formik
       initialValues={{
-        [REGISTRE_REPERTOIRE]: { ...RepertoireInscriptionDefaultValues }
+        [REPERTOIRE]: { ...RepertoireInscriptionDefaultValues }
       }}
       onSubmit={handleClickButton}
     >
       <Form>
-        <RepertoireInscriptionFiltre {...registreInscriptionFiltreProps} />
+        <RepertoireInscriptionFiltre {...repertoireInscriptionFiltreProps} />
         <button type="submit">Submit</button>
         <Field as="textarea" value={result} data-testid="result" />
       </Form>
@@ -41,17 +42,17 @@ const HookRegistreInscriptionFiltre: React.FC = () => {
 
 test("Le champ Nature de l'inscription est conditionné par le choix de l'utilisateur pour le type de répertoire RC", async () => {
   await act(async () => {
-    render(<HookRegistreInscriptionFiltre />);
+    render(<HookRepertoireInscriptionFiltre />);
   });
 
   const numeroInscription = screen.getByLabelText(
-    "registreRepertoire.numeroInscription"
+    "repertoire.numeroInscription"
   ) as HTMLInputElement;
   const typeRepertoire = screen.getByLabelText(
-    "registreRepertoire.typeRepertoire"
+    "repertoire.typeRepertoire"
   ) as HTMLInputElement;
   const natureInscription = screen.getByLabelText(
-    "registreRepertoire.natureInscription"
+    "repertoire.natureInscription"
   ) as HTMLInputElement;
   const submit = screen.getByText(/Submit/i);
 
@@ -84,24 +85,24 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   await waitFor(() => {
     expect(natureInscription.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"registreRepertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RC","natureInscription":"CURATELLE_SIMPLE"}}'
+      '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RC","natureInscription":"CURATELLE_SIMPLE"}}'
     );
   });
 });
 
 test("Le champ Nature de l'inscription est conditionné par le choix de l'utilisateur pour le type de répertoire RCA", async () => {
   await act(async () => {
-    render(<HookRegistreInscriptionFiltre />);
+    render(<HookRepertoireInscriptionFiltre />);
   });
 
   const numeroInscription = screen.getByLabelText(
-    "registreRepertoire.numeroInscription"
+    "repertoire.numeroInscription"
   ) as HTMLInputElement;
   const typeRepertoire = screen.getByLabelText(
-    "registreRepertoire.typeRepertoire"
+    "repertoire.typeRepertoire"
   ) as HTMLInputElement;
   const natureInscription = screen.getByLabelText(
-    "registreRepertoire.natureInscription"
+    "repertoire.natureInscription"
   ) as HTMLInputElement;
   const submit = screen.getByText(/Submit/i);
 
@@ -134,24 +135,24 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   await waitFor(() => {
     expect(natureInscription.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"registreRepertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RCA","natureInscription":"FILIATION"}}'
+      '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RCA","natureInscription":"FILIATION"}}'
     );
   });
 });
 
 test("Le champ Nature de l'inscription est désactivé par le choix de l'utilisateur pour le type de répertoire PACS", async () => {
   await act(async () => {
-    render(<HookRegistreInscriptionFiltre />);
+    render(<HookRepertoireInscriptionFiltre />);
   });
 
   const numeroInscription = screen.getByLabelText(
-    "registreRepertoire.numeroInscription"
+    "repertoire.numeroInscription"
   ) as HTMLInputElement;
   const typeRepertoire = screen.getByLabelText(
-    "registreRepertoire.typeRepertoire"
+    "repertoire.typeRepertoire"
   ) as HTMLInputElement;
   const natureInscription = screen.getByLabelText(
-    "registreRepertoire.natureInscription"
+    "repertoire.natureInscription"
   ) as HTMLInputElement;
 
   act(() => {
@@ -175,14 +176,14 @@ test("Le champ Nature de l'inscription est désactivé par le choix de l'utilisa
 
 test("Le champ Nature de l'inscription est désactivé car l'utilisateur n'a pas choisi de type de répertoire", async () => {
   await act(async () => {
-    render(<HookRegistreInscriptionFiltre />);
+    render(<HookRepertoireInscriptionFiltre />);
   });
 
   const numeroInscription = screen.getByLabelText(
-    "registreRepertoire.numeroInscription"
+    "repertoire.numeroInscription"
   ) as HTMLInputElement;
   const natureInscription = screen.getByLabelText(
-    "registreRepertoire.natureInscription"
+    "repertoire.natureInscription"
   ) as HTMLInputElement;
 
   act(() => {
@@ -200,11 +201,11 @@ test("Le champ Nature de l'inscription est désactivé car l'utilisateur n'a pas
 
 test("Un tiret est automatiquement ajouté après le 4ème caractère du numéro d'inscription", async () => {
   await act(async () => {
-    render(<HookRegistreInscriptionFiltre />);
+    render(<HookRepertoireInscriptionFiltre />);
   });
 
   const numeroInscription = screen.getByLabelText(
-    "registreRepertoire.numeroInscription"
+    "repertoire.numeroInscription"
   ) as HTMLInputElement;
 
   act(() => {
@@ -226,11 +227,11 @@ test("Un tiret est automatiquement ajouté après le 4ème caractère du numéro
 
 test("Un tiret n'est pas ajouté après le 4ème caractère du numéro d'inscription si le 5ème caractère est lui-même un tiret", async () => {
   await act(async () => {
-    render(<HookRegistreInscriptionFiltre />);
+    render(<HookRepertoireInscriptionFiltre />);
   });
 
   const numeroInscription = screen.getByLabelText(
-    "registreRepertoire.numeroInscription"
+    "repertoire.numeroInscription"
   ) as HTMLInputElement;
 
   act(() => {
@@ -239,7 +240,6 @@ test("Un tiret n'est pas ajouté après le 4ème caractère du numéro d'inscrip
         value: "1982-"
       }
     });
-    //fireEvent.input(numeroInscription);
   });
 
   await waitFor(() => {
