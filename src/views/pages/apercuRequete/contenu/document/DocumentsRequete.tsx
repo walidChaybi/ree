@@ -92,18 +92,25 @@ function parseDocumentsDelivres(
 }
 
 function parseDocumentDelivre(
-  documentDelivre: IDocumentDelivre
+  documentDelivre?: IDocumentDelivre
 ): IDocumentDetail {
-  return {
-    identifiantDocument: documentDelivre.idDocumentDelivre,
-    nom: getText(
-      `pages.requete.consultation.documentDelivre.type.${documentDelivre.typeDocument}`
-    ),
-    mimeType: documentDelivre.mimeType as
-      | MimeType.IMAGE_PNG
-      | MimeType.APPLI_PDF,
-    taille: documentDelivre.taille
-  };
+  return documentDelivre
+    ? {
+        identifiantDocument: documentDelivre.idDocumentDelivre,
+        nom: getText(
+          `pages.requete.consultation.documentDelivre.type.${documentDelivre.typeDocument}`
+        ),
+        mimeType: documentDelivre.mimeType as
+          | MimeType.IMAGE_PNG
+          | MimeType.APPLI_PDF,
+        taille: documentDelivre.taille
+      }
+    : {
+        identifiantDocument: "inconnu",
+        nom: "inconnu",
+        mimeType: MimeType.IMAGE_PNG,
+        taille: 0
+      };
 }
 
 export function extraitALireParDefault(
@@ -126,7 +133,7 @@ export function extraitALireParDefault(
         attestationDocuments[0] ||
         courriersAccompagnementDocuments[0] ||
         autresDocuments[0] ||
-        undefined
+        documents[0]
     );
   }
   return documentAlireParDefaut;
