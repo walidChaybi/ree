@@ -3,8 +3,7 @@ import * as Yup from "yup";
 import {
   ComponentFiltreProps,
   withNamespace,
-  FormikComponentProps,
-  isDirty
+  FormikComponentProps
 } from "../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../common/widget/Text";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
@@ -12,6 +11,7 @@ import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/S
 import { CodeFamilleRegistre } from "../../../../../model/etatcivil/enum/CodeFamilleRegistre";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { connect } from "formik";
+import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 
 // Noms des champs
 export const NATURE_ACTE = "natureActe";
@@ -47,24 +47,10 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
   );
   const natureActeWithNamespace = withNamespace(props.nomFiltre, NATURE_ACTE);
 
-  function onFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (props.onFieldChange) {
-      props.onFieldChange({
-        filtreDirty: isDirty(
-          e.target.value,
-          e.target.name,
-          props.formik.values,
-          [
-            natureActeWithNamespace,
-            familleRegistreWithNamespace,
-            pocopaWithNamespace,
-            numeroActeWithNamespace
-          ]
-        )
-      });
-    }
-    props.formik.handleChange(e);
-  }
+  const onBlurNumero = (e: any) => {
+    traiteEspace(e, props.formik.handleChange);
+    props.formik.handleBlur(e);
+  };
 
   return (
     <>
@@ -73,26 +59,23 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
         label={getLibelle("Nature de l'acte")}
         options={NatureActe.getAllEnumsAsOptions()}
         disabled={props.filtreInactif}
-        onChange={onFieldChange}
       />
       <SelectField
         name={familleRegistreWithNamespace}
         label={getLibelle("Famille de registre")}
         options={CodeFamilleRegistre.getAllEnumsAsOptions()}
         disabled={props.filtreInactif}
-        onChange={onFieldChange}
       />
       <InputField
         name={pocopaWithNamespace}
         label={getLibelle("Poste/POCOPA")}
         disabled={props.filtreInactif}
-        onChange={onFieldChange}
       />
       <InputField
         name={numeroActeWithNamespace}
         label={getLibelle("N° de l'acte")}
         disabled={props.filtreInactif}
-        onChange={onFieldChange}
+        onBlur={onBlurNumero}
       />
     </>
   );

@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ErrorMessage, connect } from "formik";
 import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues,
-  DateValidationSchema,
-  IDateComposeForm
+  DateValidationSchema
 } from "../../../../common/widget/formulaire/DateComposeForm";
 import {
   withNamespace,
@@ -28,6 +27,7 @@ import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { getLibelle } from "../../../../common/widget/Text";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { MSG_MAX_YEAR } from "../../../../../ressources/messages";
+import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 
 // Noms des champs
 export const DATE_DEBUT = "dateDebut";
@@ -77,41 +77,26 @@ export type DatesDebutFinAnneeFiltreProps = ComponentFiltreProps &
   FormikComponentProps;
 
 const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props => {
-  const [dateDebut, setDateDebut] = useState<IDateComposeForm>();
-  const [dateFin, setDateFin] = useState<IDateComposeForm>();
   const [datesDisabled, setDatesDisabled] = useState<boolean>();
-
-  const anneeDisabled = useCallback(() => {
-    return (
-      !estDateVide(dateDebut as IDateCompose) ||
-      !estDateVide(dateFin as IDateCompose)
-    );
-  }, [dateDebut, dateFin]);
+  const [anneeDisabled, setAnneeDisabled] = useState<boolean>();
 
   // Permet de dégriser les champs dates de creation ou année apres un resetForm.
+  // Ou de griser les champs apres un rappelCriteres
   useEffect(() => {
-    if (datesDisabled && !props.formik.dirty) {
-      setDatesDisabled(false);
-    }
-
-    if (anneeDisabled() && !props.formik.dirty) {
-      setDateDebut({ jour: "", mois: "", annee: "" });
-      setDateFin({ jour: "", mois: "", annee: "" });
-    }
-  }, [props.formik.dirty, datesDisabled, setDatesDisabled, anneeDisabled]);
+    setAnneeDisabled(isDatesDirty(props.formik.values as IRMCActeInscription));
+    setDatesDisabled(isAnneeDirty(props.formik.values as IRMCActeInscription));
+  }, [props.formik.dirty, props.formik.values]);
 
   const dateDebutComposeFormProps = {
     labelDate: getLibelle("De "),
     nomFiltre: withNamespace(props.nomFiltre, DATE_DEBUT),
-    showDatePicker: true,
-    onChange: onDateDebutChange
+    showDatePicker: true
   } as DateComposeFormProps;
 
   const dateFinComposeFormProps = {
     labelDate: getLibelle("A "),
     nomFiltre: withNamespace(props.nomFiltre, DATE_FIN),
-    showDatePicker: true,
-    onChange: onDateFinChange
+    showDatePicker: true
   } as DateComposeFormProps;
 
   function anneeChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -121,14 +106,6 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
     } else {
       setDatesDisabled(false);
     }
-  }
-
-  function onDateDebutChange(dateCompose: IDateComposeForm) {
-    setDateDebut(dateCompose);
-  }
-
-  function onDateFinChange(dateCompose: IDateComposeForm) {
-    setDateFin(dateCompose);
   }
 
   return (
@@ -158,7 +135,7 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
             ariaLabel={`${props.nomFiltre} année`}
             maxLength="4"
             onInput={anneeChange}
-            disabled={anneeDisabled()}
+            disabled={anneeDisabled}
           />
         </div>
       </Fieldset>
@@ -167,3 +144,20 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
 };
 
 export default connect(DatesDebutFinAnneeFiltre);
+
+function isDatesDirty(values: IRMCActeInscription) {
+  const dateDebut = values.datesDebutFinAnnee?.dateDebut;
+  const dateFin = values.datesDebutFinAnnee?.dateFin;
+  return (
+    dateDebut?.jour !== "" ||
+    dateDebut.mois !== "" ||
+    dateDebut.annee !== "" ||
+    dateFin?.jour !== "" ||
+    dateFin.mois !== "" ||
+    dateFin.annee !== ""
+  );
+}
+
+function isAnneeDirty(values: IRMCActeInscription) {
+  return values.datesDebutFinAnnee?.annee !== "";
+}

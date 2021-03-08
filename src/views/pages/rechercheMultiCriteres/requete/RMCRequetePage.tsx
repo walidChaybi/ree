@@ -10,6 +10,8 @@ import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableauRece"
 import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
 import { useRMCRequeteApiHook } from "./hook/RMCRequeteApiHook";
 import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
+import { stockageDonnees } from "../../../common/util/stockageDonnees";
+import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 
 // Nom des filtres
 export const REQUETE = "requete";
@@ -33,10 +35,9 @@ export const RMCRequetePage: React.FC = () => {
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [
-    critèresRechercheRequete,
-    setCritèresRechercheRequete
-  ] = useState<ICriteresRMCRequete>();
+  const [critèresRechercheRequete, setCritèresRechercheRequete] = useState<
+    ICriteresRMCRequete
+  >();
 
   const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(
     critèresRechercheRequete
@@ -49,6 +50,7 @@ export const RMCRequetePage: React.FC = () => {
       valeurs: values,
       range: `0-${NB_LIGNES_PAR_APPEL}`
     });
+    stockageDonnees.stockerCriteresRMCReq(values);
     setNouvelleRecherche(false);
   };
 
@@ -61,6 +63,14 @@ export const RMCRequetePage: React.FC = () => {
   //   }
   // };
 
+  const rappelCriteres = () => {
+    return stockageDonnees.recupererCriteresRMCReq();
+  };
+
+  const boutonsProps = {
+    rappelCriteres
+  } as RMCBoutonsProps;
+
   return (
     <>
       <title>{titreForm}</title>
@@ -68,12 +78,11 @@ export const RMCRequetePage: React.FC = () => {
         titre={titreForm}
         formDefaultValues={DefaultValuesRMCRequete}
         formValidationSchema={ValidationSchemaRMCRequete}
-        libelleBouton="Rechercher"
-        blocs={blocsForm}
         onSubmit={onSubmitRMCRequete}
-        formulaireClassName="DeuxColonnes FormulaireRMCReq"
-      />
-
+      >
+        <div className="DeuxColonnes FormulaireRMCReq">{blocsForm}</div>
+        <RMCBoutons {...boutonsProps} />
+      </Formulaire>
       {dataRMCRequete && dataTableauRMCRequete && <> {dataRMCRequete} </>}
       {/* {dataRMCRequete && dataTableauRMCRequete && (
         <RMCRequeteResultats

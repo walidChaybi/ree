@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import {
   ComponentFiltreProps,
   withNamespace,
-  IOnFieldChangeParam,
   FormikComponentProps
 } from "../../../../common/widget/formulaire/utils/FormUtil";
 import RegistreActeFiltre, {
@@ -18,6 +17,7 @@ import RepertoireInscriptionFiltre, {
 } from "./RepertoireInscriptionFiltre";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { connect } from "formik";
+import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 
 // Noms des champs
 export const REGISTRE = "registre";
@@ -46,38 +46,24 @@ const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props 
     boolean | undefined
   >(false);
 
+  // Permet de dégriser les filtres registre ou inscription apres un resetForm.
+  // Ou de griser si besoin un des filtres apres un rappelCriteres
   useEffect(() => {
-    if (
-      (filtreInscriptionInactif || filtreActeInactif) &&
-      !props.formik.dirty
-    ) {
-      setFiltreInscriptionInactif(false);
-      setFiltreActeInactif(false);
-    }
-  }, [
-    props.formik.dirty,
-    filtreInscriptionInactif,
-    filtreActeInactif,
-    setFiltreInscriptionInactif,
-    setFiltreActeInactif
-  ]);
+    setFiltreActeInactif(
+      isRepertoireDirty(props.formik.values as IRMCActeInscription)
+    );
 
-  function onFiltreActeChange(param: IOnFieldChangeParam) {
-    setFiltreInscriptionInactif(param.filtreDirty);
-  }
-
-  function onFiltreInscriptionChange(param: IOnFieldChangeParam) {
-    setFiltreActeInactif(param.filtreDirty);
-  }
+    setFiltreInscriptionInactif(
+      isRegistreDirty(props.formik.values as IRMCActeInscription)
+    );
+  }, [props.formik.dirty, props.formik.values]);
 
   const registreRepertoireFiltreProps = {
-    nomFiltre: withNamespace(props.nomFiltre, REPERTOIRE),
-    onFieldChange: onFiltreInscriptionChange
+    nomFiltre: withNamespace(props.nomFiltre, REPERTOIRE)
   } as RegistreRepertoireFiltreProps;
 
   const registreActeFiltreProps = {
-    nomFiltre: withNamespace(props.nomFiltre, REGISTRE),
-    onFieldChange: onFiltreActeChange
+    nomFiltre: withNamespace(props.nomFiltre, REGISTRE)
   } as RegistreActeFiltreProps;
 
   return (
@@ -101,3 +87,18 @@ const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props 
 };
 
 export default connect(RegistreRepertoireFiltre);
+
+function isRegistreDirty(values: IRMCActeInscription) {
+  const criteres = values.registreRepertoire?.registre;
+  return (
+    criteres?.familleRegistre !== "" ||
+    criteres?.natureActe !== "" ||
+    criteres?.numeroActe !== "" ||
+    criteres?.pocopa !== ""
+  );
+}
+
+function isRepertoireDirty(values: IRMCActeInscription) {
+  const criteres = values.registreRepertoire?.repertoire;
+  return criteres?.numeroInscription !== "" || criteres?.typeRepertoire !== "";
+}

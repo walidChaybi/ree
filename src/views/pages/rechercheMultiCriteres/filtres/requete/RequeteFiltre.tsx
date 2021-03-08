@@ -9,7 +9,7 @@ import { getLibelle } from "../../../../common/widget/Text";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { Options } from "../../../../common/util/Type";
-import { connect } from "formik";
+import { connect, getIn } from "formik";
 import { TypeRequete } from "../../../../../model/requete/v2/TypeRequete";
 import { StatutRequete } from "../../../../../model/requete/v2/StatutRequete";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/SousTypeDelivrance";
@@ -19,6 +19,8 @@ import { SousTypeInformation } from "../../../../../model/requete/v2/SousTypeInf
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { CarateresAlphanumerique } from "../../../../../ressources/Regex";
 import { CARACTERES_ALPHANUMERIQUE } from "../../../../common/widget/formulaire/FormulaireMessages";
+import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
+import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 
 // Noms des champs
 export const NUMERO_REQUETE = "numeroRequete";
@@ -62,42 +64,50 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
     STATUT_REQUETE
   );
 
-  const [
-    sousTypeRequeteDisabled,
-    setSousTypeRequeteDisabled
-  ] = useState<boolean>(true);
+  const [sousTypeRequeteInactif, setSousTypeRequeteInactif] = useState<boolean>(
+    true
+  );
 
   const [sousTypeRequeteOptions, setSousTypeRequeteOptions] = useState<Options>(
     []
   );
 
-  const manageTypeRequeteOptions = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    props.formik.setFieldValue(sousTypeRequeteWithNamespace, "");
-    if (e.target.value === "DELIVRANCE") {
-      setSousTypeRequeteDisabled(false);
+  const manageTypeRequeteOptions = (type: string) => {
+    if (type === "DELIVRANCE") {
       setSousTypeRequeteOptions(SousTypeDelivrance.getAllNomsAsOptions());
-    } else if (e.target.value === "CREATION_ACTE") {
-      setSousTypeRequeteDisabled(false);
+    } else if (type === "CREATION_ACTE") {
       setSousTypeRequeteOptions(SousTypeCreation.getAllNomsAsOptions());
-    } else if (e.target.value === "MISE_A_JOUR") {
-      setSousTypeRequeteDisabled(false);
+    } else if (type === "MISE_A_JOUR") {
       setSousTypeRequeteOptions(SousTypeMiseAJour.getAllNomsAsOptions());
-    } else if (e.target.value === "INFORMATION") {
-      setSousTypeRequeteDisabled(false);
+    } else if (type === "INFORMATION") {
       setSousTypeRequeteOptions(SousTypeInformation.getAllEnumsAsOptions());
     } else {
-      setSousTypeRequeteDisabled(true);
       setSousTypeRequeteOptions([]);
     }
+  };
+
+  const onBlurNumero = (e: any) => {
+    traiteEspace(e, props.formik.handleChange);
+    props.formik.handleBlur(e);
+  };
+
+  const onChangeTypeRequete = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    props.formik.setFieldValue(sousTypeRequeteWithNamespace, "");
+    manageTypeRequeteOptions(e.target.value);
     props.formik.handleChange(e);
   };
 
   useEffect(() => {
-    if (!sousTypeRequeteDisabled && !props.formik.dirty) {
-      setSousTypeRequeteDisabled(true);
-    }
-  }, [props.formik.dirty, sousTypeRequeteDisabled]);
+    setSousTypeRequeteInactif(
+      !isTypeRequeteDirty(props.formik.values as IRMCRequete)
+    );
+    const type = getIn(
+      props.formik.values,
+      withNamespace(props.nomFiltre, TYPE_REQUETE)
+    );
+    manageTypeRequeteOptions(type);
+  }, [props.formik.dirty, props.formik.values, props.nomFiltre]);
 
   return (
     <div className={props.nomFiltre}>
@@ -106,20 +116,21 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
           <InputField
             name={numeroRequeteWithNamespace}
             label={getLibelle("N° Requete")}
+            onBlur={onBlurNumero}
           />
           <SelectField
             name={typeRequeteWithNamespace}
             label={getLibelle("Type de requête")}
             options={TypeRequete.getAllEnumsAsOptions()}
             onChange={e => {
-              manageTypeRequeteOptions(e);
+              onChangeTypeRequete(e);
             }}
           />
           <SelectField
             name={sousTypeRequeteWithNamespace}
             label={getLibelle("Sous-type de requête")}
             options={sousTypeRequeteOptions}
-            disabled={sousTypeRequeteDisabled}
+            disabled={sousTypeRequeteInactif}
           />
           <SelectField
             name={statutRequeteWithNamespace}
@@ -133,3 +144,7 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
 };
 
 export default connect(RequeteFiltre);
+
+function isTypeRequeteDirty(values: IRMCRequete) {
+  return values.requete?.typeRequete !== "";
+}

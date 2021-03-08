@@ -1,5 +1,5 @@
 import React from "react";
-import { connect, FormikProps, FormikValues } from "formik";
+import { connect } from "formik";
 import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
 import DateComposeForm, {
@@ -15,7 +15,11 @@ import {
   CarateresAutoriseRecherche,
   AsterisqueRecherche
 } from "../../../../../ressources/Regex";
-import { withNamespace } from "../../../../common/widget/formulaire/utils/FormUtil";
+import {
+  ComponentFiltreProps,
+  FormikComponentProps,
+  withNamespace
+} from "../../../../common/widget/formulaire/utils/FormUtil";
 import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import { faArrowsAltH } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -51,31 +55,28 @@ export const TitulaireValidationSchema = Yup.object({
     .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE)
 });
 
-export interface FiltreProps {
-  nomFiltre: string;
-}
+export type TitulaireFiltreProps = ComponentFiltreProps & FormikComponentProps;
 
-const TitulaireFiltre: React.FC<any> = props => {
-  const formik: FormikProps<FormikValues> = props.formik;
-
+const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
   const dateDebutComposeFormProps = {
     labelDate: "Date de naissance",
     nomFiltre: withNamespace(props.nomFiltre, DATE_NAISSANCE)
   } as DateComposeFormProps;
 
   function onBlurChamp(e: any) {
-    traiteEspace(e, formik.handleChange);
-    formik.handleBlur(e);
+    traiteEspace(e, props.formik.handleChange);
+    props.formik.handleBlur(e);
   }
 
   function switchNomPrenom() {
-    const nomOld = formik.getFieldProps(withNamespace(props.nomFiltre, NOM))
-      .value;
-    const prenomOld = formik.getFieldProps(
+    const nomOld = props.formik.getFieldProps(
+      withNamespace(props.nomFiltre, NOM)
+    ).value;
+    const prenomOld = props.formik.getFieldProps(
       withNamespace(props.nomFiltre, PRENOM)
     ).value;
-    formik.setFieldValue(withNamespace(props.nomFiltre, NOM), prenomOld);
-    formik.setFieldValue(withNamespace(props.nomFiltre, PRENOM), nomOld);
+    props.formik.setFieldValue(withNamespace(props.nomFiltre, NOM), prenomOld);
+    props.formik.setFieldValue(withNamespace(props.nomFiltre, PRENOM), nomOld);
   }
 
   return (

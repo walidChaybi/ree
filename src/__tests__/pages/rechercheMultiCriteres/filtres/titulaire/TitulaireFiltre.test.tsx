@@ -1,12 +1,25 @@
 import React, { useState } from "react";
-import { fireEvent, render, waitFor, act } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  waitFor,
+  act,
+  screen
+} from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import TitulaireFiltre, {
-  TitulaireDefaultValues
+  TitulaireDefaultValues,
+  TitulaireFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/titulaire/TitulaireFiltre";
+import { TITULAIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 
 const HookConsummerTitulaireForm: React.FC = () => {
   const [result, setResult] = useState("");
+
+  const titulaireFiltreProps = {
+    nomFiltre: TITULAIRE
+  } as TitulaireFiltreProps;
+
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));
   };
@@ -14,14 +27,14 @@ const HookConsummerTitulaireForm: React.FC = () => {
   return (
     <>
       <Formik
-        initialValues={TitulaireDefaultValues}
+        initialValues={{
+          [TITULAIRE]: { ...TitulaireDefaultValues }
+        }}
         onSubmit={handleClickButton}
       >
         <Form>
-          <TitulaireFiltre nomFiltre="" />
-          <button type="submit" onSubmit={handleClickButton}>
-            Submit
-          </button>
+          <TitulaireFiltre {...titulaireFiltreProps} />
+          <button type="submit">Submit</button>
           <Field as="textarea" value={result} data-testid="result" />
         </Form>
       </Formik>
@@ -31,44 +44,43 @@ const HookConsummerTitulaireForm: React.FC = () => {
 
 test("render composant formulaire Titulaire", async () => {
   await act(async () => {
-    const { getByLabelText, getByText, getByTestId } = render(
-      <HookConsummerTitulaireForm />
+    render(<HookConsummerTitulaireForm />);
+  });
+  const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
+  const inputPrenom = screen.getByLabelText("Prénom") as HTMLInputElement;
+  const inputPays = screen.getByLabelText(
+    "Pays de naissance"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputNom, {
+      target: {
+        value: "mockNom"
+      }
+    });
+    fireEvent.change(inputPrenom, {
+      target: {
+        value: "mockPrenom"
+      }
+    });
+    fireEvent.change(inputPays, {
+      target: {
+        value: "mockPays"
+      }
+    });
+  });
+
+  const submit = screen.getByText(/Submit/i);
+  await act(async () => {
+    fireEvent.click(submit);
+  });
+
+  const result = screen.getByTestId("result");
+
+  await waitFor(() => {
+    expect(result.innerHTML).toBe(
+      '{"titulaire":{"nom":"mockNom","prenom":"mockPrenom","dateNaissance":{"jour":"","mois":"","annee":""},"paysNaissance":"mockPays"}}'
     );
-
-    const inputNom = getByLabelText("Nom") as HTMLInputElement;
-    const inputPrenom = getByLabelText("Prénom") as HTMLInputElement;
-    const inputPays = getByLabelText("Pays de naissance") as HTMLInputElement;
-
-    act(() => {
-      fireEvent.change(inputNom, {
-        target: {
-          value: "mockNom"
-        }
-      });
-      fireEvent.change(inputPrenom, {
-        target: {
-          value: "mockPrenom"
-        }
-      });
-      fireEvent.change(inputPays, {
-        target: {
-          value: "mockPays"
-        }
-      });
-    });
-
-    const submit = getByText(/Submit/i);
-    await act(async () => {
-      fireEvent.click(submit);
-    });
-
-    const result = getByTestId("result");
-
-    await waitFor(() => {
-      expect(result.innerHTML).toBe(
-        '{"nom":"mockNom","prenom":"mockPrenom","dateNaissance":{"jour":"","mois":"","annee":""},"paysNaissance":"mockPays"}'
-      );
-    });
   });
 });
 
