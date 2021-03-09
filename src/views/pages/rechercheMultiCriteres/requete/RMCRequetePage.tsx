@@ -10,34 +10,45 @@ import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableauRece"
 import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
 import { useRMCRequeteApiHook } from "./hook/RMCRequeteApiHook";
 import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
+import TitulaireFiltre, {
+  TitulaireDefaultValues,
+  TitulaireFiltreProps,
+  TitulaireValidationSchema
+} from "../filtres/titulaire/TitulaireFiltre";
+import "./scss/RMCRequetePage.scss";
+
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 
 // Nom des filtres
 export const REQUETE = "requete";
+export const TITULAIRE = "titulaire";
 
 // Valeurs par défaut des champs
 const DefaultValuesRMCRequete = {
-  [REQUETE]: RequeteDefaultValues
+  [REQUETE]: RequeteDefaultValues,
+  [TITULAIRE]: TitulaireDefaultValues
 };
 
 // Schéma de validation en sortie de champs
 const ValidationSchemaRMCRequete = Yup.object({
-  [REQUETE]: RequeteValidationSchema
+  [REQUETE]: RequeteValidationSchema,
+  [TITULAIRE]: TitulaireValidationSchema
 });
 
 export const titreForm = "Critères de recherche d'une requête";
 
 export const RMCRequetePage: React.FC = () => {
-  const blocsForm: JSX.Element[] = [getFormRequete()];
+  const blocsForm: JSX.Element[] = [getFormRequete(), getFormTitulaire()];
 
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [critèresRechercheRequete, setCritèresRechercheRequete] = useState<
-    ICriteresRMCRequete
-  >();
+  const [
+    critèresRechercheRequete,
+    setCritèresRechercheRequete
+  ] = useState<ICriteresRMCRequete>();
 
   const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(
     critèresRechercheRequete
@@ -80,9 +91,10 @@ export const RMCRequetePage: React.FC = () => {
         formValidationSchema={ValidationSchemaRMCRequete}
         onSubmit={onSubmitRMCRequete}
       >
-        <div className="DeuxColonnes FormulaireRMCReq">{blocsForm}</div>
+        <div className="DeuxColonnes FormulaireRMCRequete">{blocsForm}</div>
         <RMCBoutons {...boutonsProps} />
       </Formulaire>
+
       {dataRMCRequete && dataTableauRMCRequete && <> {dataRMCRequete} </>}
       {/* {dataRMCRequete && dataTableauRMCRequete && (
         <RMCRequeteResultats
@@ -101,4 +113,11 @@ function getFormRequete(): JSX.Element {
     nomFiltre: REQUETE
   } as RequeteFiltreProps;
   return <RequeteFiltre key={REQUETE} {...requeteFiltreProps} />;
+}
+
+function getFormTitulaire(): JSX.Element {
+  const titulaireFiltreProps = {
+    nomFiltre: TITULAIRE
+  } as TitulaireFiltreProps;
+  return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} />;
 }
