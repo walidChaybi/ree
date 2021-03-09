@@ -6,7 +6,6 @@ import {
   dissolutionPosteMap
 } from "../../../../../mock/data/PACS";
 import { IFichePacs } from "../../../../../model/etatcivil/pacs/IFichePacs";
-import { TypePosteUtil } from "../../../../../model/etatcivil/enum/TypePoste";
 
 test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   const panels = getPanelsPacs(pacsModificationNotaireMap as IFichePacs);
@@ -236,9 +235,7 @@ test("ficheUtils Pacs fonctionne avec dissolution poste", async () => {
   ).toBe("Ambassade");
 
   // Le type de poste n'est pas affiché, il est testé par le code suivant:
-  expect(TypePosteUtil.getLibelle(dissolutionPosteMap.autorite.typePoste)).toBe(
-    "Ambassade"
-  );
+  expect(dissolutionPosteMap.autorite.typePoste).toBe("Ambassade");
 
   ///////////// PARTIE 4: Dissolution du pacs
   expect(panels.panels[0].panelAreas[3].parts.length).toBe(2);

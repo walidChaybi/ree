@@ -2,10 +2,7 @@ import { IFichePacs } from "../../model/etatcivil/pacs/IFichePacs";
 import { StatutPacs } from "../../model/etatcivil/enum/StatutPacs";
 import { TypeAutorite } from "../../model/etatcivil/enum/TypeAutorite";
 import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
-import { TypeJuridiction } from "../../model/etatcivil/enum/TypeJuridiction";
 import { DecisionAnnulation } from "../../model/etatcivil/enum/DecisionAnnulation";
-import { MotifDissolution } from "../../model/etatcivil/enum/MotifDissolution";
-import { TypePoste } from "../../model/etatcivil/enum/TypePoste";
 import { Sexe } from "../../model/etatcivil/enum/Sexe";
 
 export const pacsModificationNotaire = {
@@ -21,7 +18,6 @@ export const pacsModificationNotaire = {
     dateDerniereMaj: 1606381200000,
     dateDerniereDelivrance: 1609318800000,
     statut: "ENREGISTRE",
-    referencePactI: "ref.pact.i",
     dateEnregistrementParAutorite: 1606381200,
     dateInscription: 1607036400000,
     autorite: {
@@ -117,7 +113,6 @@ export const pacsModificationNotaireMap: IFichePacs = {
   dateDerniereMaj: "26/11/2020",
   dateDerniereDelivrance: "30/12/2020",
   statut: StatutPacs.ENREGISTRE,
-  referencePactI: "ref.pact.i",
   dateEnregistrementParAutorite: "19/01/1970",
   dateInscription: "04/12/2020",
   autorite: {
@@ -235,7 +230,6 @@ export const annulationJuridictionMap: IFichePacs = {
   dateDerniereMaj: "26/11/2020",
   dateDerniereDelivrance: "30/12/2020",
   statut: StatutPacs.ENREGISTRE,
-  referencePactI: "ref.pact.i",
   dateEnregistrementParAutorite: "19/01/1970",
   dateInscription: "04/12/2020",
   autorite: {
@@ -246,7 +240,7 @@ export const annulationJuridictionMap: IFichePacs = {
     pays: "France",
     arrondissement: "18",
     region: "",
-    typeJuridiction: TypeJuridiction.TRIBUNAL_JUDICIAIRE
+    typeJuridiction: "Tribunal judiciaire"
   },
   annulation: {
     date: 1606381200000,
@@ -256,7 +250,7 @@ export const annulationJuridictionMap: IFichePacs = {
       typeAutorite: TypeAutorite.JURIDICTION,
       ville: "Paris",
       pays: "France",
-      typeJuridiction: TypeJuridiction.GREFFE_TRIBUNAL
+      typeJuridiction: "Greffe du tribunal"
     },
     enrolementRG: "xxx",
     enrolementPortalis: "yyy"
@@ -330,7 +324,6 @@ export const dissolutionJuridictionMap: IFichePacs = {
   dateDerniereMaj: "26/11/2020",
   dateDerniereDelivrance: "30/12/2020",
   statut: StatutPacs.ENREGISTRE,
-  referencePactI: "ref.pact.i",
   dateEnregistrementParAutorite: "19/01/1970",
   dateInscription: "04/12/2020",
   autorite: {
@@ -341,13 +334,13 @@ export const dissolutionJuridictionMap: IFichePacs = {
     pays: "France",
     arrondissement: "18",
     region: "",
-    typeJuridiction: TypeJuridiction.TRIBUNAL_JUDICIAIRE
+    typeJuridiction: "Tribunal judiciaire"
   },
   annulation: undefined,
   dissolution: {
     date: 1606381200000,
     dateEffet: 1606381200000,
-    motif: MotifDissolution.MARIAGE,
+    motif: "mariage",
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "75",
@@ -356,7 +349,7 @@ export const dissolutionJuridictionMap: IFichePacs = {
       pays: "France",
       arrondissement: "18",
       region: "",
-      typeJuridiction: TypeJuridiction.TRIBUNAL_JUDICIAIRE
+      typeJuridiction: "Tribunal judiciaire"
     }
   },
   modifications: undefined,
@@ -427,7 +420,6 @@ export const dissolutionPosteMap: IFichePacs = {
   dateDerniereMaj: "26/11/2020",
   dateDerniereDelivrance: "30/12/2020",
   statut: StatutPacs.ENREGISTRE,
-  referencePactI: "ref.pact.i",
   dateEnregistrementParAutorite: "19/01/1970",
   dateInscription: "04/12/2020",
   autorite: {
@@ -438,13 +430,13 @@ export const dissolutionPosteMap: IFichePacs = {
     pays: "France",
     arrondissement: "18",
     region: "",
-    typePoste: TypePoste.AMBASSADE
+    typePoste: "Ambassade"
   },
   annulation: undefined,
   dissolution: {
     date: 1606381200000,
     dateEffet: 1606381200000,
-    motif: MotifDissolution.MARIAGE,
+    motif: "mariage",
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "75",
@@ -453,7 +445,7 @@ export const dissolutionPosteMap: IFichePacs = {
       pays: "France",
       arrondissement: "18",
       region: "",
-      typeJuridiction: TypeJuridiction.TRIBUNAL_JUDICIAIRE
+      typeJuridiction: "Tribunal judiciaire"
     }
   },
   modifications: undefined,

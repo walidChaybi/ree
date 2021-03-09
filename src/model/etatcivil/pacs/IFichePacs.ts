@@ -14,7 +14,6 @@ export interface IFichePacs {
   dateDerniereMaj: string;
   dateDerniereDelivrance: string;
   statut: StatutPacs;
-  referencePactI: string;
   dateEnregistrementParAutorite: string;
   dateInscription: string;
   autorite: IAutorite;
