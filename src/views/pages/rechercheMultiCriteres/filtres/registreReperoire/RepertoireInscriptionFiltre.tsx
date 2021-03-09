@@ -44,7 +44,12 @@ export const RepertoireInscriptionValidationSchema = Yup.object({
   [NATURE_INSCRIPTION]: Yup.string()
 });
 
-export type ComponentFiltreInscriptionProps = ComponentFiltreProps &
+interface ComponentProps {
+  filtreTypeRepertoire?: TypeRepertoire;
+}
+
+export type ComponentFiltreInscriptionProps = ComponentProps &
+  ComponentFiltreProps &
   FormikComponentProps;
 
 const RepertoireInscriptionFiltre: React.FC<ComponentFiltreInscriptionProps> = props => {
@@ -122,7 +127,11 @@ const RepertoireInscriptionFiltre: React.FC<ComponentFiltreInscriptionProps> = p
       <SelectField
         name={typeRepertoireWithNamespace}
         label={getLibelle("Type de répertoire")}
-        options={TypeRepertoire.getAllEnumsAsOptions()}
+        options={TypeRepertoire.getAllEnumsAsOptions().filter(el => {
+          return props.filtreTypeRepertoire
+            ? el.value === props.filtreTypeRepertoire.libelle
+            : true;
+        })}
         onChange={e => {
           onChangeTypeRepertoire(e);
         }}

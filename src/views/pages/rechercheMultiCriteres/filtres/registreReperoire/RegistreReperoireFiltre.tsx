@@ -13,26 +13,36 @@ import RegistreActeFiltre, {
 import { getLibelle } from "../../../../common/widget/Text";
 import RepertoireInscriptionFiltre, {
   RepertoireInscriptionDefaultValues,
-  RepertoireInscriptionValidationSchema
+  RepertoireInscriptionValidationSchema,
+  ComponentFiltreInscriptionProps
 } from "./RepertoireInscriptionFiltre";
+import EvenementFiltre, {
+  EvenementFiltreProps,
+  EvenementDefaultValues,
+  EvenementValidationSchema
+} from "./EvenementFiltre";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { connect } from "formik";
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoire";
 
 // Noms des champs
 export const REGISTRE = "registre";
 export const REPERTOIRE = "repertoire";
+export const EVENEMENT = "evenement";
 
 // Valeurs par défaut des champs
 export const RegistreRepertoireDefaultValues = {
   [REGISTRE]: RegistreActeDefaultValues,
-  [REPERTOIRE]: RepertoireInscriptionDefaultValues
+  [REPERTOIRE]: RepertoireInscriptionDefaultValues,
+  [EVENEMENT]: EvenementDefaultValues
 };
 
 // Schéma de validation des champs
 export const RegistreRepertoireValidationSchema = Yup.object({
   [REGISTRE]: RegistreActeValidationSchema,
-  [REPERTOIRE]: RepertoireInscriptionValidationSchema
+  [REPERTOIRE]: RepertoireInscriptionValidationSchema,
+  [EVENEMENT]: EvenementValidationSchema
 });
 
 export type RegistreRepertoireFiltreProps = ComponentFiltreProps &
@@ -45,6 +55,12 @@ const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props 
   const [filtreInscriptionInactif, setFiltreInscriptionInactif] = useState<
     boolean | undefined
   >(false);
+  const [filteEvenementInactif, setFilteEvenementInactif] = useState<
+    boolean | undefined
+  >(false);
+  const [filtreTypeRepertoire, setFiltreTypeRepertoire] = useState<
+    TypeRepertoire | undefined
+  >();
 
   // Permet de dégriser les filtres registre ou inscription apres un resetForm.
   // Ou de griser si besoin un des filtres apres un rappelCriteres
@@ -56,15 +72,28 @@ const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props 
     setFiltreInscriptionInactif(
       isRegistreDirty(props.formik.values as IRMCActeInscription)
     );
+
+    setFilteEvenementInactif(
+      isTypeRcRca(props.formik.values as IRMCActeInscription)
+    );
+
+    isPaysEvenementDirty(props.formik.values as IRMCActeInscription)
+      ? setFiltreTypeRepertoire(TypeRepertoire.PACS)
+      : setFiltreTypeRepertoire(undefined);
   }, [props.formik.dirty, props.formik.values]);
 
   const registreRepertoireFiltreProps = {
-    nomFiltre: withNamespace(props.nomFiltre, REPERTOIRE)
-  } as RegistreRepertoireFiltreProps;
+    nomFiltre: withNamespace(props.nomFiltre, REPERTOIRE),
+    filtreTypeRepertoire: filtreTypeRepertoire
+  } as ComponentFiltreInscriptionProps;
 
   const registreActeFiltreProps = {
     nomFiltre: withNamespace(props.nomFiltre, REGISTRE)
   } as RegistreActeFiltreProps;
+
+  const evenementFiltreProps = {
+    nomFiltre: withNamespace(props.nomFiltre, EVENEMENT)
+  } as EvenementFiltreProps;
 
   return (
     <div className={props.nomFiltre}>
@@ -79,6 +108,12 @@ const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props 
           <RepertoireInscriptionFiltre
             filtreInactif={filtreInscriptionInactif}
             {...registreRepertoireFiltreProps}
+          />
+        </div>
+        <div className="FormFiltre">
+          <EvenementFiltre
+            filtreInactif={filteEvenementInactif}
+            {...evenementFiltreProps}
           />
         </div>
       </Fieldset>
@@ -101,4 +136,17 @@ function isRegistreDirty(values: IRMCActeInscription) {
 function isRepertoireDirty(values: IRMCActeInscription) {
   const criteres = values.registreRepertoire?.repertoire;
   return criteres?.numeroInscription !== "" || criteres?.typeRepertoire !== "";
+}
+
+function isPaysEvenementDirty(values: IRMCActeInscription) {
+  const criteres = values.registreRepertoire?.evenement;
+  return criteres?.paysEvenement !== "";
+}
+
+function isTypeRcRca(values: IRMCActeInscription) {
+  const criteres = values.registreRepertoire?.repertoire;
+  return (
+    criteres?.typeRepertoire === TypeRepertoire.RC.libelle ||
+    criteres?.typeRepertoire === TypeRepertoire.RCA.libelle
+  );
 }

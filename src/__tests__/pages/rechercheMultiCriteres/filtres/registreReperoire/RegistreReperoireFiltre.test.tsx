@@ -50,6 +50,14 @@ test("renders filtre Registre et Repertoire", async () => {
     "registreRepertoire.repertoire.numeroInscription"
   ) as HTMLInputElement;
 
+  const typeRepertoire = screen.getByLabelText(
+    "registreRepertoire.repertoire.typeRepertoire"
+  ) as HTMLInputElement;
+
+  const paysEvenement = screen.getByLabelText(
+    "registreRepertoire.evenement.paysEvenement"
+  ) as HTMLInputElement;
+
   await waitFor(() => {
     expect(natureActe).toBeDefined();
     expect(numeroInscription).toBeDefined();
@@ -81,6 +89,38 @@ test("renders filtre Registre et Repertoire", async () => {
 
   await waitFor(() => {
     expect(natureActe).not.toBeDisabled();
+  });
+
+  // Le champ typeRepertoire est renseigné alors le champ paysEvenement doit être inactive
+  fireEventChange(typeRepertoire, "RC");
+
+  await waitFor(() => {
+    expect(paysEvenement).toBeDisabled();
+  });
+
+  // Le champ typeRepertoire est non renseigné alors le champ paysEvenement doit être active
+  fireEventChange(typeRepertoire, "");
+
+  await waitFor(() => {
+    expect(paysEvenement).not.toBeDisabled();
+  });
+
+  // Le champ paysEvenement est renseigné alors le champ typeRepertoire doit être filtré
+  fireEventChange(paysEvenement, "pays");
+
+  await waitFor(() => {
+    expect(screen.getByText("PACS")).toBeDefined;
+    expect(screen.queryByText("RC")).toBeNull();
+    expect(screen.queryByText("RCA")).toBeNull();
+  });
+
+  // Le champ paysEvenement est non renseigné alors le champ typeRepertoire ne doit pas être filtré
+  fireEventChange(paysEvenement, "");
+
+  await waitFor(() => {
+    expect(screen.getByText("PACS")).toBeDefined;
+    expect(screen.getByText("RC")).toBeDefined;
+    expect(screen.getByText("RCA")).toBeDefined;
   });
 });
 

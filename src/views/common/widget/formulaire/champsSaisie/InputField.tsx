@@ -6,6 +6,7 @@ interface InputFieldProps {
   label?: string;
   ariaLabel?: string;
   maxLength?: string;
+  title?: string;
   disabled?: boolean;
   noErrorMessage?: boolean;
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -17,6 +18,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   label,
   ariaLabel,
   maxLength,
+  title,
   disabled,
   noErrorMessage,
   onInput,
@@ -46,6 +48,7 @@ export const InputField: React.FC<InputFieldProps> = ({
           name={name}
           id={name}
           disabled={disabled}
+          title={title}
           {...otherProps}
         />
       </div>

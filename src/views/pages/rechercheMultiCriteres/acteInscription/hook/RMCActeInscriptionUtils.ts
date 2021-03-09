@@ -65,10 +65,18 @@ export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
     natureRca: RMCRepertoire.getNatureRca(
       criteres.registreRepertoire?.repertoire
     ),
-    jourDateEvenement: undefined,
-    moisDateEvenement: undefined,
-    anneeDateEvenement: undefined,
-    paysEvenement: undefined
+    jourDateEvenement: valeurOuUndefined(
+      criteres.registreRepertoire?.evenement?.dateEvenement?.jour
+    ),
+    moisDateEvenement: valeurOuUndefined(
+      criteres.registreRepertoire?.evenement?.dateEvenement?.mois
+    ),
+    anneeDateEvenement: valeurOuUndefined(
+      criteres.registreRepertoire?.evenement?.dateEvenement?.annee
+    ),
+    paysEvenement: valeurOuUndefined(
+      criteres.registreRepertoire?.evenement?.paysEvenement
+    )
   };
   return criteresMapper;
 }
