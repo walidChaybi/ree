@@ -1,13 +1,10 @@
 import React from "react";
-import { Text } from "../../../common/widget/Text";
+import {Text} from "../../../common/widget/Text";
 import "./sass/ResumeRequeteContent.scss";
-import { TitulaireInformation } from "./TitulaireInformation";
-import { QualiteRequerant } from "../../../../model/requete/QualiteRequerant";
-import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
-import {
-  getDateStringFromDateCompose,
-  IDateCompose
-} from "../../../common/util/DateUtils";
+import {TitulaireInformation} from "./TitulaireInformation";
+import {QualiteRequerant} from "../../../../model/requete/QualiteRequerant";
+import {IDataTable} from "../../espaceDelivrance/MesRequetesPage";
+import {getDateStringFromDateCompose, IDateCompose} from "../../../common/util/DateUtils";
 
 export interface ResumeRequeteContentProps {
   requete: IDataTable;
@@ -38,56 +35,58 @@ export const ResumeRequeteContent: React.FC<ResumeRequeteContentProps> = props =
 
   const dateCompose: IDateCompose = {
     jour: props.requete.jourEvenement
-      ? `${props.requete.jourEvenement}`
-      : undefined,
+        ? `${props.requete.jourEvenement}`
+        : undefined,
     mois: props.requete.moisEvenement
-      ? `${props.requete.moisEvenement}`
-      : undefined,
+        ? `${props.requete.moisEvenement}`
+        : undefined,
     annee: `${props.requete.anneeEvenement}`
   };
 
+  const dataTitulaire = [...props.requete.titulaires].sort((a, b) => a.position - b.position);
+
   return (
-    <>
-      <div className="resume-requete-content">
-        <div className="bloc-info">
-          <div className="label">
-            <Text messageId={"pages.delivrance.apercu.resume.sousType"} />
+      <>
+        <div className="resume-requete-content">
+          <div className="bloc-info">
+            <div className="label">
+              <Text messageId={"pages.delivrance.apercu.resume.sousType"}/>
+            </div>
+            <div className="capital personnal-info">
+              <Text
+                  messageId={`referentiel.sousTypeRequete.long.${props.requete.sousTypeRequete}`}
+              />
+            </div>
           </div>
-          <div className="capital personnal-info">
-            <Text
-              messageId={`referentiel.sousTypeRequete.long.${props.requete.sousTypeRequete}`}
-            />
+          {dataTitulaire.map((titulaire) => {
+            return (
+                <TitulaireInformation
+                    key={`titulaire${titulaire.position}Information`}
+                    titulaire={titulaire}
+                    position={titulaire.position}
+                />
+            );
+          })}
+          <div className="bloc-info">
+            <div className="label">
+              <Text messageId={"pages.delivrance.apercu.resume.nature"}/>
+            </div>
+            <div className="capital personnal-info">
+              <Text
+                  messageId={`referentiel.natureActe.${props.requete.natureActe}`}
+              />
+            </div>
           </div>
-        </div>
-        {props.requete.titulaires.map((titulaire, index) => {
-          return (
-            <TitulaireInformation
-              key={`titulaire${index + 1}Information`}
-              titulaire={titulaire}
-              position={index + 1}
-            />
-          );
-        })}
-        <div className="bloc-info">
-          <div className="label">
-            <Text messageId={"pages.delivrance.apercu.resume.nature"} />
+          <div className="bloc-info">
+            <div className="label">
+              <Text messageId={"pages.delivrance.apercu.resume.dateEvent"}/>
+            </div>
+            <div className="personnal-info">
+              {`${getDateStringFromDateCompose(dateCompose)}`}
+            </div>
           </div>
-          <div className="capital personnal-info">
-            <Text
-              messageId={`referentiel.natureActe.${props.requete.natureActe}`}
-            />
-          </div>
-        </div>
-        <div className="bloc-info">
-          <div className="label">
-            <Text messageId={"pages.delivrance.apercu.resume.dateEvent"} />
-          </div>
-          <div className="personnal-info">
-            {`${getDateStringFromDateCompose(dateCompose)}`}
-          </div>
-        </div>
-        <div className="bloc-info">
-          <div className="label">
+          <div className="bloc-info">
+            <div className="label">
             <Text messageId={"pages.delivrance.apercu.resume.lieuEvent"} />
           </div>
           <div className="capital personnal-info no-justify-info">{`${props.requete.villeEvenement}, ${props.requete.paysEvenement}`}</div>
