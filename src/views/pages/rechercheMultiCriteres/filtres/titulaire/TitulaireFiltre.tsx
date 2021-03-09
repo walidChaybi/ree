@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "formik";
+import { connect, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
 import DateComposeForm, {
@@ -16,6 +16,7 @@ import {
   AsterisqueRecherche
 } from "../../../../../ressources/Regex";
 import {
+  isErrorString,
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
@@ -42,18 +43,31 @@ export const TitulaireDefaultValues = {
 };
 
 // Schéma de validation des champs
-export const TitulaireValidationSchema = Yup.object({
-  [NOM]: Yup.string()
-    .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
-    .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
-  [PRENOM]: Yup.string()
-    .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
-    .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
-  [DATE_NAISSANCE]: DateValidationSchema,
-  [PAYS_NAISSANCE]: Yup.string()
-    .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
-    .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE)
-});
+export const TitulaireValidationSchema = Yup.object()
+  .shape({
+    [NOM]: Yup.string()
+      .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
+      .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
+    [PRENOM]: Yup.string()
+      .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
+      .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
+    [DATE_NAISSANCE]: DateValidationSchema,
+    [PAYS_NAISSANCE]: Yup.string()
+      .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
+      .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE)
+  })
+  .test(
+    "prenomInvalide",
+    getLibelle(
+      "L'astérique est autorisé dans le prénom que si le nom est saisie (avec ou sans *)"
+    ),
+    function (value) {
+      const nom = value[NOM] as string;
+      const prenom = value[PRENOM] as string;
+
+      return !(prenom != null && prenom?.includes("*") && nom == null);
+    }
+  );
 
 export type TitulaireFiltreProps = ComponentFiltreProps & FormikComponentProps;
 
@@ -102,6 +116,11 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
             label={getLibelle("Prénom")}
             onBlur={onBlurChamp}
           />
+          {isErrorString(props.formik.errors, props.nomFiltre) && (
+            <div className="BlockErreur">
+              <ErrorMessage name={props.nomFiltre} />
+            </div>
+          )}
 
           <DateComposeForm {...dateDebutComposeFormProps} />
 

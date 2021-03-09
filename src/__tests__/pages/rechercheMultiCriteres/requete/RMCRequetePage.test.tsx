@@ -38,9 +38,13 @@ test("Bouton réinitialisation des champs", async () => {
     "requete.statutRequete"
   ) as HTMLInputElement;
 
+  const submit = screen.getByText(/Rechercher/i);
+  const reset = screen.getByText(/Réinitialiser les critères/i);
+
   await waitFor(() => {
     expect(numeroRequete).toBeDefined();
     expect(typeRequete).toBeDefined();
+    expect(sousTypeRequete).toBeDefined();
     expect(statutRequete).toBeDefined();
   });
 
@@ -63,27 +67,23 @@ test("Bouton réinitialisation des champs", async () => {
     });
   });
 
-  await waitFor(() => {
-    act(() => {
-      fireEvent.change(sousTypeRequete, {
-        target: {
-          value: "COMPLETION_REQUETE"
-        }
-      });
+  await act(async () => {
+    fireEvent.change(sousTypeRequete, {
+      target: {
+        value: "COMPLETION_REQUETE"
+      }
     });
+  });
+
+  await waitFor(() => {
     expect(numeroRequete.value).toBe("1234ABCD");
     expect(typeRequete.value).toBe("INFORMATION");
     expect(sousTypeRequete.value).toBe("COMPLETION_REQUETE");
     expect(statutRequete.value).toBe("A_TRAITER");
   });
 
-  const submit = screen.getByText(/Rechercher/i);
   await act(async () => {
     fireEvent.click(submit);
-  });
-
-  const reset = screen.getByText(/Réinitialiser les critères/i);
-  await act(async () => {
     fireEvent.click(reset);
   });
 
