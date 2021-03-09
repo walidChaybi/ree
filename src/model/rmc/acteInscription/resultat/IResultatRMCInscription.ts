@@ -1,5 +1,5 @@
 export interface IResultatRMCInscription {
-  idInscription?: string;
+  idInscription: string;
   nom?: string;
   autresNoms?: string;
   prenoms?: string;

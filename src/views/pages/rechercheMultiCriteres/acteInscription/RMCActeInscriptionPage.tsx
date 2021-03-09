@@ -60,32 +60,32 @@ export const RMCActeInscriptionPage: React.FC = () => {
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [critèresRechercheActe, setCritèresRechercheActe] = useState<
+  const [criteresRechercheActe, setCriteresRechercheActe] = useState<
     ICriteresRecherche
   >();
 
   const [
-    critèresRechercheInscription,
-    setCritèresRechercheInscription
+    criteresRechercheInscription,
+    setCriteresRechercheInscription
   ] = useState<ICriteresRecherche>();
 
   const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(
-    critèresRechercheActe
+    criteresRechercheActe
   );
 
   const {
     dataRMCInscription,
     dataTableauRMCInscription
-  } = useRMCInscriptionApiHook(critèresRechercheInscription);
+  } = useRMCInscriptionApiHook(criteresRechercheInscription);
 
   const onSubmitRMCActeInscription = (values: any) => {
     setNouvelleRecherche(true);
     setValuesRMC(values);
-    setCritèresRechercheActe({
+    setCriteresRechercheActe({
       valeurs: values,
       range: `0-${NB_LIGNES_PAR_APPEL}`
     });
-    setCritèresRechercheInscription({
+    setCriteresRechercheInscription({
       valeurs: values,
       range: `0-${NB_LIGNES_PAR_APPEL}`
     });
@@ -95,7 +95,7 @@ export const RMCActeInscriptionPage: React.FC = () => {
 
   const setRangeActe = (range: string) => {
     if (valuesRMC && range !== "") {
-      setCritèresRechercheActe({
+      setCriteresRechercheActe({
         valeurs: valuesRMC,
         range
       });
@@ -104,7 +104,7 @@ export const RMCActeInscriptionPage: React.FC = () => {
 
   const setRangeInscription = (range: string) => {
     if (valuesRMC && range !== "") {
-      setCritèresRechercheInscription({
+      setCriteresRechercheInscription({
         valeurs: valuesRMC,
         range
       });

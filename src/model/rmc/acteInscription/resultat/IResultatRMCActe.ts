@@ -1,5 +1,5 @@
 export interface IResultatRMCActe {
-  idActe?: string;
+  idActe: string;
   nom?: string;
   autresNoms?: string;
   prenoms?: string;

@@ -3,7 +3,13 @@ import mockRCA from "../data/RCA.json";
 import { ReponseAppelRMCActe } from "../data/RMCActe";
 import { ReponseAppelRMCInscription } from "../data/RMCInscription";
 import { pacsModificationNotaire } from "../data/PACS";
-import { acte } from "../../__tests__/pages/fiche/data/ficheActe";
+import {
+  acte,
+  acte1,
+  acte2,
+  acte3,
+  acte4
+} from "../../__tests__/pages/fiche/data/ficheActe";
 
 export const configEtatcivil = [
   {
@@ -43,6 +49,26 @@ export const configEtatcivil = [
           "/repertoirecivil/acte/d8708d77-a359-4553-be72-1eb5f246d4da"
       ) {
         return { data: acte };
+      } else if (
+        match[1] ===
+        "/repertoirecivil/acte/d8708d77-a359-4553-be72-1eb5f246d4dc"
+      ) {
+        return { data: acte1 };
+      } else if (
+        match[1] ===
+        "/repertoirecivil/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8"
+      ) {
+        return { data: acte2 };
+      } else if (
+        match[1] ===
+        "/repertoirecivil/acte/d8708d77-a359-4553-be72-1eb5f246d4db"
+      ) {
+        return { data: acte3 };
+      } else if (
+        match[1] ===
+        "/repertoirecivil/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9"
+      ) {
+        return { data: acte4 };
       } else if (
         match[1] ===
         "/repertoirecivil/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g"

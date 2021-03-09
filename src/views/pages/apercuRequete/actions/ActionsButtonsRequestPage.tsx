@@ -1,12 +1,12 @@
 import React from "react";
-import { NavigationButton } from "./NavigationButton";
 import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
-import { BoutonRetour } from "../../../common/widget/BoutonRetour";
+import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import "./sass/ActionButtonsRequestPage.scss";
 import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { BoutonARetraiterSaga } from "./BoutonARetraiterSaga";
 import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
+import { BarreNavigationSuivPrec } from "../../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 
 export interface ActionsProps {
   indexRequete: number;
@@ -30,42 +30,31 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   const estRequeteASigner = estASigner(requetes, indexRequete);
   const estRequeteATraiter = estATraiter(requetes, indexRequete);
   return (
-    <div className="ActionsButtons">
-      <NavigationButton
-        direction={"left"}
-        indexRequete={indexRequete}
-        maxRequetes={maxRequetes}
-        setIndexRequete={setIndexRequete}
-      />
-      <div className="event-button">
-        <div>
-          <BoutonRetour messageId={"boutons.retourMesRequetes"} />
-        </div>
-        <div>
-          {estRequeteASigner && (
-            <BoutonSignature
-              libelle={"pages.delivrance.apercu.signatureElectronique"}
-              requetes={[requetes[indexRequete]]}
-              reloadData={reloadData}
-              uniqueSignature={true}
-              connectedUser={connectedUser}
-            />
-          )}
-        </div>
-        {!estRequeteATraiter && (
-          <div className="boutonARetraiterSaga">
-            <BoutonARetraiterSaga idRequete={idRequete} />
-          </div>
+    <BarreNavigationSuivPrec
+      index={indexRequete}
+      max={maxRequetes}
+      setIndex={setIndexRequete}
+    >
+      <div>
+        <BoutonRetour messageId={"boutons.retourMesRequetes"} />
+      </div>
+      <div>
+        {estRequeteASigner && (
+          <BoutonSignature
+            libelle={"pages.delivrance.apercu.signatureElectronique"}
+            requetes={[requetes[indexRequete]]}
+            reloadData={reloadData}
+            uniqueSignature={true}
+            connectedUser={connectedUser}
+          />
         )}
       </div>
-
-      <NavigationButton
-        direction={"right"}
-        indexRequete={indexRequete}
-        maxRequetes={maxRequetes}
-        setIndexRequete={setIndexRequete}
-      />
-    </div>
+      {!estRequeteATraiter && (
+        <div className="boutonARetraiterSaga">
+          <BoutonARetraiterSaga idRequete={idRequete} />
+        </div>
+      )}
+    </BarreNavigationSuivPrec>
   );
 };
 

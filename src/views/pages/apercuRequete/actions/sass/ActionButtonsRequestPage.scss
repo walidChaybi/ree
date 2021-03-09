@@ -1,39 +1,5 @@
-.ActionsButtons {
-  display: flex;
-  justify-content: space-between;
-  position: sticky;
-  z-index: 1;
-  top: 70px;
-  border-radius: 0.25rem;
-  background-color: rgba(255, 255, 255, 0.5);
-  .event-button {
-    display: flex;
-    button {
-      margin: 0px;
-    }
-    div {
-      display: inline-flex;
-      margin: auto;
-      margin-left: 30px;
-      margin-right: 30px;
-    }
-  }
-
-  .boutonARetraiterSaga {
-    button {
-      background-color: #d75406;
-    }
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  .ActionsButtons {
-    .event-button {
-      display: block;
-      div {
-        display: inline-flex;
-        margin-top: 15px;
-      }
-    }
+.boutonARetraiterSaga {
+  button {
+    background-color: #d75406;
   }
 }

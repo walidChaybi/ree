@@ -25,7 +25,7 @@ export interface TableauHeaderProps {
   canUseSignature?: boolean;
   previousDataLinkState: string;
   handleChangeSort?: (tri: string, sens: SortOrder) => void;
-  onClickOnLine: (id: string, data: any[]) => void;
+  onClickOnLine: (id: string, data: any[], idx: number) => void;
   goToLink: (value: string) => void;
   handleReload?: () => void;
   nbLignesParPage?: number;
@@ -180,6 +180,11 @@ export const TableauRece: React.FC<TableauHeaderProps> = props => {
     setdataBody(processData());
   }, [props.dataState, processData, props.resetTableau]);
 
+  function onClickOnLine(identifiant: string, data: any[], idx: number) {
+    const rowNumber = pageState * rowsPerPageState + idx;
+    props.onClickOnLine(identifiant, data, rowNumber);
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -194,7 +199,7 @@ export const TableauRece: React.FC<TableauHeaderProps> = props => {
             data={dataBody}
             idKey={props.idKey}
             columnHeaders={props.columnHeaders}
-            onClickOnLine={props.onClickOnLine}
+            onClickOnLine={onClickOnLine}
           />
         </Box>
       </TableContainer>

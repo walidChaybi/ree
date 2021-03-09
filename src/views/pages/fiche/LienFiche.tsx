@@ -51,11 +51,16 @@ export const LienFiche: React.FC<IDataLienFicheProps> = props => {
           setFenetreExterneUtil={setFenetreExterneUtil}
         >
           <FichePage
-            dataFiche={{
-              identifiant: props.identifiant,
-              categorie: props.categorie
-            }}
+            dataFicheIdentifiant={props.identifiant}
+            dataFicheCategorie={props.categorie}
+            datasFiches={[
+              {
+                identifiant: props.identifiant,
+                categorie: props.categorie
+              }
+            ]}
             fenetreExterneUtil={fenetreExterneUtil}
+            index={0}
           />
         </FenetreExterne>
       )}

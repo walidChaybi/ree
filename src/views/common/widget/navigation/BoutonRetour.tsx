@@ -1,7 +1,7 @@
 import React from "react";
-import { Text, MessageId } from "./Text";
+import { Text, MessageId } from "../Text";
 import { Link } from "react-router-dom";
-import { RetourContext } from "../../core/body/Body";
+import { RetourContext } from "../../../core/body/Body";
 
 interface BoutonRetourProps {
   messageId?: MessageId;
@@ -11,7 +11,7 @@ export const BoutonRetour: React.FC<BoutonRetourProps> = ({
 }) => {
   return (
     <RetourContext.Consumer>
-      {(retourUrl) => (
+      {retourUrl => (
         <Link to={retourUrl} className="BoutonRetour" role="button">
           <Text messageId={messageId} />
         </Link>

@@ -7,7 +7,7 @@ import { useRequeteApi } from "./hook/DonneesRequeteHook";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
 
-import { BoutonRetour } from "../../common/widget/BoutonRetour";
+import { BoutonRetour } from "../../common/widget/navigation/BoutonRetour";
 import "./sass/RequeteTableau.scss";
 
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
