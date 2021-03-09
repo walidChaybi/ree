@@ -13,7 +13,7 @@ interface TableauBodyProps {
   data: any[];
   idKey: string;
   columnHeaders: TableauTypeColumn[];
-  onClickOnLine: (identifiant: string, data: any[]) => void;
+  onClickOnLine: (identifiant: string, data: any[], idx: number) => void;
 }
 
 export const TableauBody: React.FC<TableauBodyProps> = ({
@@ -22,8 +22,8 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   columnHeaders,
   onClickOnLine
 }) => {
-  function onClickRowHandler(identifiant: string) {
-    onClickOnLine(identifiant, data);
+  function onClickRowHandler(identifiant: string, idx: number) {
+    onClickOnLine(identifiant, data, idx);
   }
 
   return (
@@ -32,7 +32,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
         {data.map((row: any, idx: number) => (
           <TableRow
             key={`${row[idKey]}${idx}`}
-            onClick={() => onClickRowHandler(row[idKey])}
+            onClick={() => onClickRowHandler(row[idKey], idx)}
             data-testid={row[idKey]}
           >
             {getRowRender(columnHeaders, row, idx)}

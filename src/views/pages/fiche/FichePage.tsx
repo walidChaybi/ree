@@ -7,9 +7,13 @@ import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNume
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { AlerteActe } from "./hook/constructionComposants/acte/AlerteActeUtils";
+import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 
 export interface FichePageProps {
-  dataFiche: IDataFicheProps;
+  dataFicheIdentifiant: string;
+  dataFicheCategorie: TypeFiche;
+  datasFiches?: IDataFicheProps[];
+  index?: number;
   fenetreExterneUtil?: FenetreExterneUtil;
 }
 
@@ -19,9 +23,20 @@ export interface IDataFicheProps {
 }
 
 export const FichePage: React.FC<FichePageProps> = props => {
+  const [dataFicheCourante, setDataFicheCourante] = React.useState<
+    IDataFicheProps
+  >({
+    identifiant: props.dataFicheIdentifiant,
+    categorie: props.dataFicheCategorie
+  });
+
+  const [indexCourant, setIndexCourant] = React.useState<number>(
+    props.index != null ? props.index : 0
+  );
+
   const { dataFicheState } = useFichePageApiHook(
-    props.dataFiche.categorie,
-    props.dataFiche.identifiant
+    dataFicheCourante.categorie,
+    dataFicheCourante.identifiant
   );
 
   // Obligatoire pour les styles qui sont chargés dynamiquement
@@ -41,6 +56,13 @@ export const FichePage: React.FC<FichePageProps> = props => {
     }
   }, [dataFicheState, props.fenetreExterneUtil]);
 
+  function setIndexFiche(index: number) {
+    if (props.datasFiches && index >= 0 && index < props.datasFiches.length) {
+      setDataFicheCourante(props.datasFiches[index]);
+      setIndexCourant(index);
+    }
+  }
+
   return (
     <div>
       {/* Le Bandeau */}
@@ -50,15 +72,20 @@ export const FichePage: React.FC<FichePageProps> = props => {
           elementNumeroLigne={getElementNumeroLigne()}
         />
       )}
+      <BarreNavigationSuivPrec
+        index={indexCourant}
+        max={props.datasFiches ? props.datasFiches.length : 0}
+        setIndex={setIndexFiche}
+      />
       {/* Le bandeau d'ajout d'alerte pour les actes */}
-      {FicheUtil.isActe(props.dataFiche.categorie) && <AlerteActe />}
+      {FicheUtil.isActe(props.dataFicheCategorie) && <AlerteActe />}
       {/* Les Accordéons */}
       {dataFicheState.fiche && <AccordionRece {...dataFicheState.fiche} />}
     </div>
   );
 
   function getElementNumeroLigne() {
-    return FicheUtil.isActe(props.dataFiche.categorie) ? (
+    return FicheUtil.isActe(props.dataFicheCategorie) ? (
       <BandeauFicheActeNumero dataBandeau={dataFicheState.dataBandeau} />
     ) : (
       <BandeauFicheRcRcaPacsNumero dataBandeau={dataFicheState.dataBandeau} />

@@ -43,7 +43,37 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     registre: "4568"
   },
   {
+    idActe: "d8708d77-a359-4553-be72-1eb5f246d4dc",
+    nom: "ROSE",
+    autresNoms: "DUPE",
+    prenoms: "Jean-pierre, Michel",
+    dateNaissance: "08/06/1960",
+    paysNaissance: "Tunisie",
+    nature: "Reconnaissance",
+    registre: "4568"
+  },
+  {
     idActe: "2748bb45-22cd-41ea-90db-0483b8ffc8a8",
+    nom: "ROSE",
+    autresNoms: "",
+    prenoms: "Catherine, Marlène",
+    dateNaissance: "02/11/1991",
+    paysNaissance: "Australie",
+    nature: "Naissance",
+    registre: "8547"
+  },
+  {
+    idActe: "d8708d77-a359-4553-be72-1eb5f246d4db",
+    nom: "ROSE",
+    autresNoms: "DUPE",
+    prenoms: "Jean-pierre, Michel",
+    dateNaissance: "08/06/1960",
+    paysNaissance: "Tunisie",
+    nature: "Reconnaissance",
+    registre: "4568"
+  },
+  {
+    idActe: "2748bb45-22cd-41ea-90db-0483b8ffc8a9",
     nom: "ROSE",
     autresNoms: "",
     prenoms: "Catherine, Marlène",

@@ -4,13 +4,15 @@ import {
   FenetreExterne,
   FenetreExterneUtil
 } from "../../common/util/FenetreExterne";
-import { FichePage } from "./FichePage";
+import { FichePage, IDataFicheProps } from "./FichePage";
 import "./sass/LienFiche.scss";
 
 interface IFenetreFicheProps {
   identifiant: string;
   categorie: TypeFiche;
   onClose: (id: string) => void;
+  datasFiches: IDataFicheProps[];
+  index: number;
 }
 
 export const FenetreFiche: React.FC<IFenetreFicheProps> = props => {
@@ -34,11 +36,11 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = props => {
           setFenetreExterneUtil={setFenetreExterneUtil}
         >
           <FichePage
-            dataFiche={{
-              identifiant: props.identifiant,
-              categorie: props.categorie
-            }}
+            datasFiches={props.datasFiches}
+            dataFicheIdentifiant={props.identifiant}
+            dataFicheCategorie={props.categorie}
             fenetreExterneUtil={fenetreExterneUtil}
+            index={props.index}
           />
         </FenetreExterne>
       )}

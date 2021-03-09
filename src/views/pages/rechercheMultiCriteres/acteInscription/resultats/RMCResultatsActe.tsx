@@ -14,6 +14,7 @@ import {
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
+import { getValeurOuVide } from "../../../../common/util/Utils";
 export interface RMCResultatActeProps {
   dataRMCActe: IResultatRMCActe[];
   dataTableauRMCActe: IDataTableau;
@@ -62,6 +63,8 @@ export const RMCResultatsActe: React.FC<RMCResultatActeProps> = ({
   // Gestion de la Fenêtre
   const [etatFenetres, setEtatFenetres] = useState<string[]>([]);
 
+  const [indexClique, setIndexClique] = useState<number>(0);
+
   const closeFenetre = (idActe: string) => {
     const tableau = [...etatFenetres];
     const index = tableau.indexOf(idActe);
@@ -69,13 +72,19 @@ export const RMCResultatsActe: React.FC<RMCResultatActeProps> = ({
     setEtatFenetres(tableau);
   };
 
-  const onClickOnLine = (idActe: string, data: any) => {
+  const onClickOnLine = (idActe: string, data: any, idx: number) => {
     const tableau = [...etatFenetres];
     if (tableau.indexOf(idActe) === -1) {
       tableau.push(idActe);
       setEtatFenetres(tableau);
     }
+    setIndexClique(idx);
   };
+
+  const datasFiches = dataRMCActe.map(data => ({
+    identifiant: getValeurOuVide(data.idActe),
+    categorie: TypeFiche.ACTE
+  }));
 
   return (
     <>
@@ -97,10 +106,12 @@ export const RMCResultatsActe: React.FC<RMCResultatActeProps> = ({
           {etatFenetres.map((idActe: string, index: number) => {
             return (
               <FenetreFiche
+                key={`fiche${idActe}${index}`}
                 identifiant={idActe}
                 categorie={TypeFiche.ACTE}
+                index={indexClique}
                 onClose={closeFenetre}
-                key={`fiche${idActe}${index}`}
+                datasFiches={datasFiches}
               />
             );
           })}

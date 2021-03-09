@@ -10,9 +10,13 @@ import {
   goToLinkRMC
 } from "./RMCResultatsCommun";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
-import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
+import {
+  TypeFiche,
+  FicheUtil
+} from "../../../../../model/etatcivil/enum/TypeFiche";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { HeaderTableauRMCInscription } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
+import { getValeurOuVide } from "../../../../common/util/Utils";
 
 export interface RMCResultatInscriptionProps {
   dataRMCInscription: IResultatRMCInscription[];
@@ -70,6 +74,8 @@ export const RMCResultatsInscription: React.FC<RMCResultatInscriptionProps> = ({
   // Gestion de la Fenêtre
   const [etatFenetres, setEtatFenetres] = useState<string[]>([]);
 
+  const [indexClique, setIndexClique] = useState<number>(0);
+
   const closeFenetre = (idInscription: string) => {
     const tableau = [...etatFenetres];
     const index = tableau.indexOf(idInscription);
@@ -77,13 +83,18 @@ export const RMCResultatsInscription: React.FC<RMCResultatInscriptionProps> = ({
     setEtatFenetres(tableau);
   };
 
-  const onClickOnLine = (idInscription: string, data: any) => {
+  const onClickOnLine = (idInscription: string, data: any, idx: number) => {
     const tableau = [...etatFenetres];
     if (tableau.indexOf(idInscription) === -1) {
       tableau.push(idInscription);
       setEtatFenetres(tableau);
     }
+    setIndexClique(idx);
   };
+  const datasFiches = dataRMCInscription.map(data => ({
+    identifiant: getValeurOuVide(data.idInscription),
+    categorie: getCategorieFiche(data.idInscription, dataRMCInscription)
+  }));
 
   return (
     <>
@@ -106,12 +117,9 @@ export const RMCResultatsInscription: React.FC<RMCResultatInscriptionProps> = ({
             return (
               <FenetreFiche
                 identifiant={idInscription}
-                categorie={
-                  getCategorieFiche(
-                    idInscription,
-                    dataRMCInscription
-                  ) as TypeFiche
-                }
+                categorie={getCategorieFiche(idInscription, dataRMCInscription)}
+                datasFiches={datasFiches}
+                index={indexClique}
                 onClose={closeFenetre}
                 key={`fiche${idInscription}`}
               />
@@ -126,12 +134,12 @@ export const RMCResultatsInscription: React.FC<RMCResultatInscriptionProps> = ({
 function getCategorieFiche(
   id: string,
   data: IResultatRMCInscription[]
-): string {
+): TypeFiche {
   let categorie = "";
   data.forEach(repertoire => {
     if (repertoire.typeInscription && repertoire.idInscription === id) {
       categorie = repertoire.typeInscription;
     }
   });
-  return categorie;
+  return FicheUtil.getTypeFicheFromString(categorie);
 }

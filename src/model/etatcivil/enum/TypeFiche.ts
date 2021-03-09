@@ -24,8 +24,8 @@ export class FicheUtil {
     return FicheUtil.getTypeFicheFromString(type) === TypeFiche.ACTE;
   }
 
-  public static getTypeFicheFromString(type: string): TypeFiche | null {
-    let typeFiche = null;
+  public static getTypeFicheFromString(type: string): TypeFiche {
+    let typeFiche: TypeFiche;
     if (type) {
       const typeToUpper = type.toUpperCase();
       switch (typeToUpper) {
@@ -41,12 +41,8 @@ export class FicheUtil {
         case "ACTE":
           typeFiche = TypeFiche.ACTE;
           break;
-
-        default:
-          typeFiche = null;
-          break;
       }
     }
-    return typeFiche;
+    return typeFiche!;
   }
 }
