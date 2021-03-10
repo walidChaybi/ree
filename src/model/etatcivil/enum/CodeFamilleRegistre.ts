@@ -16,9 +16,7 @@ export class CodeFamilleRegistre extends EnumWithLibelle {
     "Acte issu d'anciennes colonies"
   );
   public static readonly CSL = new CodeFamilleRegistre("Acte consulaire");
-  public static readonly DEP = new CodeFamilleRegistre(
-    "Acte déposé dans un pays voisin"
-  );
+  public static readonly DEP = new CodeFamilleRegistre("Acte déposé");
   public static readonly JUG = new CodeFamilleRegistre(
     "Transcription judiciaire"
   );
@@ -37,6 +35,6 @@ export class CodeFamilleRegistre extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(CodeFamilleRegistre);
+    return EnumWithLibelle.getAllLibellesAsOptions(CodeFamilleRegistre, true);
   }
 }

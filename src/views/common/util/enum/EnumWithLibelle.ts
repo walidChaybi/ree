@@ -13,13 +13,18 @@ export class EnumWithLibelle {
     return str && clazz[str] ? clazz[str] : str;
   }
 
-  public static getAllLibellesAsOptions(clazz: any): Options {
+  public static getAllLibellesAsOptions(
+    clazz: any,
+    inclureCodeDansLibelle = false
+  ): Options {
     const options: Options = [];
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key)) {
         options.push({
           value: key,
-          str: clazz[key]._libelle
+          str: inclureCodeDansLibelle
+            ? `(${key}) ${clazz[key]._libelle}`
+            : clazz[key]._libelle
         });
       }
     }
