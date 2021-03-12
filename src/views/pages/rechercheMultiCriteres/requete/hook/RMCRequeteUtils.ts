@@ -42,9 +42,8 @@ export function mappingCriteresRequete(
     annee: valeurOuUndefined(criteres.datesDebutFinAnnee?.annee),
 
     // Filtre Requerant
-    nomRequerant: undefined,
-    prenomRequerant: undefined,
-    raisonSociale: undefined
+    nomRequerant: valeurOuUndefined(criteres.requerant?.nom),
+    raisonSociale: valeurOuUndefined(criteres.requerant?.raisonSociale)
   };
   return criteresMapper;
 }
