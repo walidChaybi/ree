@@ -9,7 +9,7 @@ export interface IFicheActe {
   evenement?: IEvenement;
   nature: NatureActe;
   personnes: IPersonne[];
-  compositionCorps: ICompositionCorps;
+  compositionCorps?: ICompositionCorps;
 }
 
 export const FicheActe = {

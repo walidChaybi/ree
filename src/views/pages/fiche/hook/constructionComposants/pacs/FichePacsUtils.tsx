@@ -22,7 +22,7 @@ import {
   Dissolution
 } from "../../../../../../model/etatcivil/pacs/IDissolution";
 import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
-import { getFichesPersonne } from "../personne/FichePersonne";
+import { getFichesPersonneWithHabilitation } from "../personne/FichePersonne";
 
 export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
   const panelAreas: AccordionPanelAreaProps[] = [];
@@ -81,7 +81,7 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
     deuxColonnes
   );
 
-  const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(
+  const fichesPersonne: AccordionPanelProps[] = getFichesPersonneWithHabilitation(
     pacs.personnes
   );
 
