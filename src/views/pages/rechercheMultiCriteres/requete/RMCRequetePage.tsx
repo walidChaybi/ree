@@ -19,27 +19,44 @@ import "./scss/RMCRequetePage.scss";
 
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
+import RequerantFiltre, {
+  RequerantDefaultValues,
+  RequerantFiltreProps,
+  RequerantValidationSchema
+} from "../filtres/requerant/RequerantFiltre";
+import "./scss/RMCRequetePage.scss";
 
 // Nom des filtres
 export const REQUETE = "requete";
+
+export const REQUERANT = "requerant";
+
 export const TITULAIRE = "titulaire";
 
 // Valeurs par défaut des champs
 const DefaultValuesRMCRequete = {
   [REQUETE]: RequeteDefaultValues,
+  [REQUERANT]: RequerantDefaultValues,
   [TITULAIRE]: TitulaireDefaultValues
 };
 
 // Schéma de validation en sortie de champs
 const ValidationSchemaRMCRequete = Yup.object({
   [REQUETE]: RequeteValidationSchema,
+
+  [REQUERANT]: RequerantValidationSchema,
+
   [TITULAIRE]: TitulaireValidationSchema
 });
 
 export const titreForm = "Critères de recherche d'une requête";
 
 export const RMCRequetePage: React.FC = () => {
-  const blocsForm: JSX.Element[] = [getFormRequete(), getFormTitulaire()];
+  const blocsForm: JSX.Element[] = [
+    getFormRequete(),
+    getFormTitulaire(),
+    getFormRequerant()
+  ];
 
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
 
@@ -113,6 +130,13 @@ function getFormRequete(): JSX.Element {
     nomFiltre: REQUETE
   } as RequeteFiltreProps;
   return <RequeteFiltre key={REQUETE} {...requeteFiltreProps} />;
+}
+
+function getFormRequerant(): JSX.Element {
+  const requerantFiltreProps = {
+    nomFiltre: REQUERANT
+  } as RequerantFiltreProps;
+  return <RequerantFiltre key={REQUERANT} {...requerantFiltreProps} />;
 }
 
 function getFormTitulaire(): JSX.Element {

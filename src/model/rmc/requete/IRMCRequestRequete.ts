@@ -22,6 +22,5 @@ export interface IRMCRequestRequete {
 
   // Filtre Requerant
   nomRequerant?: string;
-  prenomRequerant?: string;
   raisonSociale?: string;
 }
