@@ -18,10 +18,13 @@ import {
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { AccordionContentPartProps } from "../../../../../common/widget/accordion/AccordionPartContent";
 import { getLibelle } from "../../../../../common/widget/Text";
+import WithHabilitationFonction from "../../../../../common/util/habilitation/WithHabilitationFonction";
 
-export function getFichesPersonne(
-  personnes: IPersonne[]
-): AccordionPanelProps[] {
+export function getFichesPersonneWithHabilitation(personnes: IPersonne[]) {
+  return WithHabilitationFonction(getFichesPersonne, [personnes]);
+}
+
+function getFichesPersonne(personnes: IPersonne[]): AccordionPanelProps[] {
   return personnes.map((personne, index) => {
     return {
       panelAreas: [

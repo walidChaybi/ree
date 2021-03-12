@@ -17,7 +17,7 @@ export interface IHabilitation {
   profil: IProfil;
 }
 
-/** Savoir si l'officier connecté à le droit ou le profilt demandé en paramètre */
+/** Savoir si l'officier connecté à le droit ou le profil demandé en paramètre */
 export function officierHabiliterPourLeDroit(
   officier: IOfficierSSOApi,
   droit: Droit
@@ -61,4 +61,20 @@ export function estOfficierHabiliterPourSeulementLesDroits(
     droits.length === officier.habilitations.length &&
     droits.every(droit => officierHabiliterPourLeDroit(officier, droit))
   );
+}
+
+export function officierHabiliterUniquementPourLeDroit(
+  officier: IOfficierSSOApi,
+  droit: Droit
+): boolean {
+  let droitTrouve = false;
+
+  if (
+    officier.habilitations.length === 1 &&
+    officier.habilitations[0].profil.droits.length === 1
+  ) {
+    droitTrouve = officier.habilitations[0].profil.droits[0].nom === droit;
+  }
+
+  return droitTrouve;
 }

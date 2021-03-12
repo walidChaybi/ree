@@ -5,10 +5,10 @@ import { getInteresse } from "../interesses/InteresseUtils";
 import { getDecision } from "./DecisionUtils";
 import { getAutorite } from "./AutoriteUtils";
 import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
-import { getFichesPersonne } from "../personne/FichePersonne";
+import { getFichesPersonneWithHabilitation } from "../personne/FichePersonne";
 
 export function getPanelsRc(retourBack: IFicheRcRca): AccordionReceProps {
-  const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(
+  const fichesPersonne: AccordionPanelProps[] = getFichesPersonneWithHabilitation(
     retourBack.personnes
   );
   return {

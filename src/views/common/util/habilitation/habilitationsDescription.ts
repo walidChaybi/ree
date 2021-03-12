@@ -5,14 +5,17 @@ import { gestionnaireFeatureFlag } from "../featureFlag/gestionnaireFeatureFlag"
 import { FeatureFlag } from "../featureFlag/FeatureFlag";
 
 export interface IHabiliationDescription {
-  nomComposant: NomComposant;
+  nomComposant: NomComposantOuFonction;
+  estFonction?: boolean;
   unDesDroits?: Droit[];
   tousLesDroits?: Droit[];
-  comportementSiNonAutorise: Object;
-  comportementSiAutorise?: Object;
+  uniquementLeDroit?: Droit;
+  comportementSiNonAutorise?: any;
+  comportementSiAutorise?: any;
   visiblePourLesDroits?: Droit[];
   visibleSeulementPourLesDroits?: Droit[];
 }
+export type NomFonction = "getFichesPersonne";
 
 export type NomComposant =
   | "LinkTabMesRequetes"
@@ -24,7 +27,10 @@ export type NomComposant =
   | "BoutonAccueilTableauDeBord"
   | "BoutonAccueilEspaceDelivrance"
   | "BoutonAccueilRechercheActe"
-  | "BoutonAccueilTableau";
+  | "BoutonAccueilTableau"
+  | "AlerteActe";
+
+export type NomComposantOuFonction = NomComposant | NomFonction;
 
 ///// ETAPE2 ////////////////////////////////////////////////////////////////
 const etape2Active = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
@@ -110,5 +116,15 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     nomComposant: "BoutonAccueilTableau",
     tousLesDroits: etape2([]),
     comportementSiNonAutorise: { disabled: true }
+  },
+  {
+    nomComposant: "getFichesPersonne",
+    estFonction: true,
+    uniquementLeDroit: Droit.CONSULTER_ARCHIVES,
+    comportementSiAutorise: { retourne: [] }
+  },
+  {
+    nomComposant: "AlerteActe",
+    visiblePourLesDroits: droitsSaufConsulterArchives
   }
 ];

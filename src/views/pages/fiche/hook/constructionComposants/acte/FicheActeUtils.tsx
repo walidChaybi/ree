@@ -3,12 +3,12 @@ import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { getTitulaires } from "./TitulairesActeUtils";
 import { getEvenement } from "./EvenementActeUtils";
 import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
-import { getFichesPersonne } from "../personne/FichePersonne";
+import { getFichesPersonneWithHabilitation } from "../personne/FichePersonne";
 import React from "react";
 import { ActeImage } from "./ActeImage";
 
 export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
-  const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(
+  const fichesPersonne: AccordionPanelProps[] = getFichesPersonneWithHabilitation(
     acte.personnes
   );
   return {
@@ -29,7 +29,7 @@ export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
           {
             value: (
               <ActeImage
-                id={acte.compositionCorps.idCompositionCorps}
+                id={acte.compositionCorps?.idCompositionCorps}
               ></ActeImage>
             ),
             nbColonne: 1

@@ -1,13 +1,20 @@
-import { estOfficierHabiliterPourTousLesDroits } from "../../model/Habilitation";
+import {
+  estOfficierHabiliterPourTousLesDroits,
+  officierHabiliterUniquementPourLeDroit
+} from "../../model/Habilitation";
 import { storeRece } from "../../views/common/util/storeRece";
 import mockConnectedUser from "../../mock/data/connectedUser.json";
 import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
 import { Droit } from "../../model/Droit";
+import {
+  userDroitConsulterArchive,
+  userDroitConsulterConsulterArchive
+} from "../../mock/data/connectedUserAvecDroit";
+
+const u: any = mockConnectedUser;
 
 test("Habilitation model", () => {
-  const u: any = mockConnectedUser;
   storeRece.utilisateurCourant = u as IOfficierSSOApi;
-
   let estAutorise = estOfficierHabiliterPourTousLesDroits(
     storeRece.utilisateurCourant,
     [Droit.ATTRIBUER]
@@ -26,4 +33,20 @@ test("Habilitation model", () => {
     ["AUTRE"]
   );
   expect(estAutorise).toBe(false);
+});
+
+test("Attendu: officierHabiliterUniquementPourLeDroit fonctionne correctement", () => {
+  storeRece.utilisateurCourant = userDroitConsulterArchive;
+  let uniquementLeDroit = officierHabiliterUniquementPourLeDroit(
+    storeRece.utilisateurCourant,
+    Droit.CONSULTER_ARCHIVES
+  );
+  expect(uniquementLeDroit).toBe(true);
+
+  storeRece.utilisateurCourant = userDroitConsulterConsulterArchive;
+  uniquementLeDroit = officierHabiliterUniquementPourLeDroit(
+    storeRece.utilisateurCourant,
+    Droit.CONSULTER_ARCHIVES
+  );
+  expect(uniquementLeDroit).toBe(false);
 });
