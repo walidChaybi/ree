@@ -59,7 +59,7 @@ export const TitulaireValidationSchema = Yup.object()
   .test(
     "prenomInvalide",
     getLibelle(
-      "L'astérique est autorisé dans le prénom que si le nom est saisie (avec ou sans *)"
+      "L'astérisque est autorisé dans le prénom que si le nom est saisi (avec ou sans *)"
     ),
     function (value) {
       const nom = value[NOM] as string;

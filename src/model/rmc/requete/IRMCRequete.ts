@@ -6,6 +6,6 @@ import { IRMCFiltreRequete } from "./IRMCFiltreRequete";
 export interface IRMCRequete {
   requete?: IRMCFiltreRequete;
   titulaire?: IRMCTitulaire;
-  datesDebutFinAnnee?: IRMCDateCreation;
+  datesDebutFin?: IRMCDateCreation;
   requerant?: IRMCRequerant;
 }

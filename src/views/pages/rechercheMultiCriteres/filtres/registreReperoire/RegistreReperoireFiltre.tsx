@@ -14,7 +14,7 @@ import { getLibelle } from "../../../../common/widget/Text";
 import RepertoireInscriptionFiltre, {
   RepertoireInscriptionDefaultValues,
   RepertoireInscriptionValidationSchema,
-  ComponentFiltreInscriptionProps
+  RepertoireInscriptionFiltreProps
 } from "./RepertoireInscriptionFiltre";
 import EvenementFiltre, {
   EvenementFiltreProps,
@@ -84,8 +84,8 @@ const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props 
 
   const registreRepertoireFiltreProps = {
     nomFiltre: withNamespace(props.nomFiltre, REPERTOIRE),
-    filtreTypeRepertoire: filtreTypeRepertoire
-  } as ComponentFiltreInscriptionProps;
+    filtreTypeRepertoire
+  } as RepertoireInscriptionFiltreProps;
 
   const registreActeFiltreProps = {
     nomFiltre: withNamespace(props.nomFiltre, REGISTRE)
