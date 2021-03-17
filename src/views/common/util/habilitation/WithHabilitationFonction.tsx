@@ -19,29 +19,23 @@ function getHabilitationsPourLaFonction(
 const WithHabilitationFonction = (
   functionToWrap: any,
   params: any[],
-  composantId?: NomFonction
+  composantId: NomFonction
 ) => {
-  console.log("WithHabilitationFonction", storeRece.utilisateurCourant);
   if (storeRece.utilisateurCourant) {
     const habilitationsPourLaFonction = getHabilitationsPourLaFonction(
-      composantId ? composantId : functionToWrap.name,
-
+      composantId,
       habilitationsDescription
     );
     if (habilitationsPourLaFonction.length > 0) {
-      console.log("habilitationsPourLaFonction", habilitationsPourLaFonction);
       const valeurDeRetour = getValeurSuivantHabilitation(
         habilitationsPourLaFonction,
         storeRece.utilisateurCourant
       );
-      console.log("valeurDeRetour", valeurDeRetour);
       if (valeurDeRetour !== null) {
-        console.log("valeurDeRetour !");
         return valeurDeRetour;
       }
     }
   }
-  console.log("functionToWrap !", functionToWrap, params);
   return functionToWrap(...params);
 };
 
@@ -51,10 +45,8 @@ function getValeurSuivantHabilitation(
   habilitationsPourLaFonction: IHabiliationDescription[],
   utilisateur: IOfficierSSOApi
 ) {
-  console.log("===WithHabilitationFonction");
   let valeur = null;
   habilitationsPourLaFonction.forEach(habDesc => {
-    console.log("habDesc", habDesc);
     // A complèter avec les différents cas si besoin
     if (
       habDesc.uniquementLeDroit &&
@@ -64,10 +56,6 @@ function getValeurSuivantHabilitation(
         habDesc.uniquementLeDroit
       )
     ) {
-      console.log(
-        "habDesc.comportementSiAutorise.retourne",
-        habDesc.comportementSiAutorise.retourne
-      );
       valeur = habDesc.comportementSiAutorise.retourne;
     }
   });
