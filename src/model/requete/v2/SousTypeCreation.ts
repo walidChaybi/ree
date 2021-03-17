@@ -6,49 +6,49 @@ import { Options } from "../../../views/common/util/Type";
 export class SousTypeCreation extends EnumWithComplete {
   public static readonly RCEDXR = new SousTypeCreation(
     "RCEDXR",
-    "Création Etab DX RIE",
-    "Requête de Création Etablissement par déclaration (DX) RIE"
+    "Requête de Création Etablissement par déclaration (DX) RIE",
+    "Création Etab DX RIE"
   );
   public static readonly RCEDXC = new SousTypeCreation(
     "RCEDXC",
-    "Création Etab DX (c)",
-    "Requête de Création Etablissement par déclaration (DX) Courrier"
+    "Requête de Création Etablissement par déclaration (DX) Courrier",
+    "Création Etab DX (c)"
   );
   public static readonly RCEYC = new SousTypeCreation(
     "RCEYC",
-    "Création Etab Y (c)",
-    "Requête de Création Etablissement pour régularisation (Y) Courrier"
+    "Requête de Création Etablissement pour régularisation (Y) Courrier",
+    "Création Etab Y (c)"
   );
   public static readonly RCEADMC = new SousTypeCreation(
     "RCEADMC",
-    "Création Dressé en Mer (c)",
-    "Requête de Création Etablissement suite Acte Dressé en Mer Courrier"
+    "Requête de Création Etablissement suite Acte Dressé en Mer Courrier",
+    "Création Dressé en Mer (c)"
   );
   public static readonly RCEXR = new SousTypeCreation(
     "RCEXR",
-    "Création Etab X RIE",
-    "Requête de Création Etablissement par décret (X) RIE"
+    "Requête de Création Etablissement par décret (X) RIE",
+    "Création Etab X RIE"
   );
   // public static readonly ETABLISSEMENT = new SousTypeCreation("ETABLISSEMENT");
   public static readonly RCETJC = new SousTypeCreation(
     "RCETJC",
-    "Création Etab Trans Judic (c)",
-    "Requête de Création Etablissement suite Transciption Judiciaire Courrier"
+    "Requête de Création Etablissement suite Transciption Judiciaire Courrier",
+    "Création Etab Trans Judic (c)"
   );
   public static readonly RCTC = new SousTypeCreation(
     "RCTC",
-    "Création Transcrit (c)",
-    "Requête de Création suite Transcription Courrier"
+    "Requête de Création suite Transcription Courrier",
+    "Création Transcrit (c)"
   );
   public static readonly RCADR = new SousTypeCreation(
     "RCADR",
-    "Création Dressé RECE",
-    "Requête de Création suite Acte Dressé RECE"
+    "Requête de Création suite Acte Dressé RECE",
+    "Création Dressé RECE"
   );
   public static readonly RCTD = new SousTypeCreation(
     "RCTD",
-    "Création Transcrit (d)",
-    "Requête de Création suite Transcription Démat"
+    "Requête de Création suite Transcription Démat",
+    "Création Transcrit (d)"
   );
 
   public static getEnumFor(str: string) {

@@ -22,3 +22,15 @@
     }
   }
 }
+
+.TabPanel {
+  > div {
+    padding: 0 0.5rem;
+  }
+}
+
+.BlocBoutons {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1rem 0 1rem;
+}

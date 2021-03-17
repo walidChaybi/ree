@@ -15,7 +15,6 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
     <>
       <div className="Boutons">
         <button
-          className="RappelBouton"
           type="button"
           onClick={() => {
             props.formik.setValues(props.rappelCriteres());
@@ -24,11 +23,7 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
           {getLibelle("Rappel critères")}
         </button>
 
-        <button
-          className="ReinitBouton"
-          type="reset"
-          onClick={() => props.formik.resetForm()}
-        >
+        <button type="reset" onClick={() => props.formik.resetForm()}>
           {getLibelle("Réinitialiser les critères")}
         </button>
 

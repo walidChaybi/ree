@@ -12,7 +12,7 @@ export const BoutonRetour: React.FC<BoutonRetourProps> = ({
   return (
     <RetourContext.Consumer>
       {retourUrl => (
-        <Link to={retourUrl} className="BoutonRetour" role="button">
+        <Link to={retourUrl} className="Bouton BoutonRetour" role="button">
           <Text messageId={messageId} />
         </Link>
       )}
