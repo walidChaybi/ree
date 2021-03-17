@@ -49,7 +49,12 @@ const habsDesc: IHabiliationDescription[] = [
   }
 ];
 
-const BoutonTestWithHab = WithHabilitation(BoutonTest, undefined, habsDesc);
+const BoutonTestWithHab = WithHabilitation(
+  BoutonTest,
+  // @ts-ignore
+  "BoutonTest",
+  habsDesc
+);
 const BoutonTest2WithHab = WithHabilitation(
   BoutonTest,
   // @ts-ignore
@@ -129,7 +134,7 @@ test("Le bouton ne doit être ni grisé ni invisible car l'utilisateur à seulem
 });
 
 test("Le bouton doit être invisible car l'utilisateur n'a pas seulement le droit CONSULTER_ARCHIVES", () => {
-  let hab1 = {
+  const hab1 = {
     idHabilitation: "h12345",
     profil: {
       idProfil: "p12345",
@@ -142,7 +147,7 @@ test("Le bouton doit être invisible car l'utilisateur n'a pas seulement le droi
       ]
     }
   };
-  let hab2 = {
+  const hab2 = {
     idHabilitation: "h67890",
     profil: {
       idProfil: "p12346",
