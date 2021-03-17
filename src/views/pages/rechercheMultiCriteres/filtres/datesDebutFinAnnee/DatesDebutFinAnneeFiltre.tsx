@@ -21,12 +21,12 @@ import {
   IDateCompose,
   estDateVide,
   compareDatesCompose,
-  MAX_YEAR
+  MIN_YEAR
 } from "../../../../common/util/DateUtils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { getLibelle } from "../../../../common/widget/Text";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { MSG_MAX_YEAR } from "../../../../../ressources/messages";
+import { MSG_MIN_YEAR } from "../../../../../ressources/messages";
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 
 // Noms des champs
@@ -47,7 +47,7 @@ export const DatesDebutFinAnneeValidationSchema = Yup.object()
   .shape({
     [DATE_DEBUT]: DateValidationSchema,
     [DATE_FIN]: DateValidationSchema,
-    [ANNEE]: Yup.number().min(MAX_YEAR, MSG_MAX_YEAR)
+    [ANNEE]: Yup.number().min(MIN_YEAR, MSG_MIN_YEAR)
   })
   .test(
     "datesInvalides",
@@ -73,30 +73,45 @@ export const DatesDebutFinAnneeValidationSchema = Yup.object()
     }
   );
 
-export type DatesDebutFinAnneeFiltreProps = ComponentFiltreProps &
+interface AnneeInputProps {
+  anneeVisible?: boolean;
+  anneeMin?: number;
+}
+
+export type DatesDebutFinAnneeFiltreProps = AnneeInputProps &
+  ComponentFiltreProps &
   FormikComponentProps;
 
 const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props => {
+  const anneeVisible = props.anneeVisible ? props.anneeVisible : false;
   const [datesDisabled, setDatesDisabled] = useState<boolean>();
   const [anneeDisabled, setAnneeDisabled] = useState<boolean>();
 
   // Permet de dégriser les champs dates de creation ou année apres un resetForm.
   // Ou de griser les champs apres un rappelCriteres
   useEffect(() => {
-    setAnneeDisabled(isDatesDirty(props.formik.values as IRMCActeInscription));
-    setDatesDisabled(isAnneeDirty(props.formik.values as IRMCActeInscription));
-  }, [props.formik.dirty, props.formik.values]);
+    if (anneeVisible) {
+      setAnneeDisabled(
+        isDatesDirty(props.formik.values as IRMCActeInscription)
+      );
+      setDatesDisabled(
+        isAnneeDirty(props.formik.values as IRMCActeInscription)
+      );
+    }
+  }, [props.formik.dirty, props.formik.values, anneeVisible]);
 
   const dateDebutComposeFormProps = {
     labelDate: getLibelle("De "),
     nomFiltre: withNamespace(props.nomFiltre, DATE_DEBUT),
-    showDatePicker: true
+    showDatePicker: true,
+    anneeMin: props.anneeMin
   } as DateComposeFormProps;
 
   const dateFinComposeFormProps = {
     labelDate: getLibelle("A "),
     nomFiltre: withNamespace(props.nomFiltre, DATE_FIN),
-    showDatePicker: true
+    showDatePicker: true,
+    anneeMin: props.anneeMin
   } as DateComposeFormProps;
 
   function anneeChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -129,14 +144,16 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
           )}
 
           {/* Recherche par annee uniquement */}
-          <InputField
-            name={withNamespace(props.nomFiltre, ANNEE)}
-            label={getLibelle("Année")}
-            ariaLabel={`${props.nomFiltre} année`}
-            maxLength="4"
-            onInput={anneeChange}
-            disabled={anneeDisabled}
-          />
+          {anneeVisible && (
+            <InputField
+              name={withNamespace(props.nomFiltre, ANNEE)}
+              label={getLibelle("Année")}
+              ariaLabel={`${props.nomFiltre} année`}
+              maxLength="4"
+              onInput={anneeChange}
+              disabled={anneeDisabled}
+            />
+          )}
         </div>
       </Fieldset>
     </div>

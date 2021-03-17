@@ -44,15 +44,15 @@ export const RepertoireInscriptionValidationSchema = Yup.object({
   [NATURE_INSCRIPTION]: Yup.string()
 });
 
-interface ComponentProps {
+interface TypeRepertoireInputProps {
   filtreTypeRepertoire?: TypeRepertoire;
 }
 
-export type ComponentFiltreInscriptionProps = ComponentProps &
+export type RepertoireInscriptionFiltreProps = TypeRepertoireInputProps &
   ComponentFiltreProps &
   FormikComponentProps;
 
-const RepertoireInscriptionFiltre: React.FC<ComponentFiltreInscriptionProps> = props => {
+const RepertoireInscriptionFiltre: React.FC<RepertoireInscriptionFiltreProps> = props => {
   const numeroInscriptionWithNamespace = withNamespace(
     props.nomFiltre,
     NUMERO_INSCRIPTION

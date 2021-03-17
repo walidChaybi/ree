@@ -22,11 +22,11 @@ import {
   IDateCompose,
   getDateComposeFromDate,
   estDateReceValide,
-  MAX_YEAR
+  MIN_YEAR
 } from "../../util/DateUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { MSG_MAX_YEAR } from "../../../../ressources/messages";
+import { MSG_MIN_YEAR, MSG_MEP_YEAR } from "../../../../ressources/messages";
 
 // Noms des champs
 export const JOUR = "jour";
@@ -43,14 +43,13 @@ export const DateDefaultValues = {
 // Schéma de validation des champs
 export const DateValidationSchema = Yup.object()
   .shape({
-    [ANNEE]: Yup.number().min(MAX_YEAR, MSG_MAX_YEAR)
+    [ANNEE]: Yup.number()
   })
   .test(
     "dateInvalide",
     "Date ou format invalide (formats autorisés: JJ/MM/AAAA, MM/AAAA, AAAA)",
     function (date) {
       const dateCompose = (date as any) as IDateCompose;
-
       if (!dateCompose) {
         return true;
       }
@@ -67,6 +66,7 @@ interface ComponentProps {
   showDatePicker?: boolean;
   onChange?: (date: IDateComposeForm) => void;
   disabled?: boolean;
+  anneeMin?: number;
 }
 
 export type DateComposeFormProps = ComponentProps & FormikComponentProps;
@@ -79,6 +79,10 @@ export interface IDateComposeForm {
 
 const DateComposeForm: React.FC<DateComposeFormProps> = props => {
   const [dateSaisie, setDateSaisie] = useState<IDateComposeForm>({});
+
+  const minDate = props.anneeMin
+    ? `${props.anneeMin}-01-01`
+    : `${MIN_YEAR}-01-01`;
 
   function buildDatePickerValue(): Date {
     let datePickerValue = new Date();
@@ -159,6 +163,14 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
     });
   }
 
+  function validateAnnee(value: number) {
+    if (value && props.anneeMin && value < props.anneeMin) {
+      return MSG_MEP_YEAR;
+    } else if (value && !props.anneeMin && value < MIN_YEAR) {
+      return MSG_MIN_YEAR;
+    }
+  }
+
   return (
     <>
       <div
@@ -197,6 +209,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           onInput={anneeChange}
           disabled={props.disabled}
           aria-label={`${props.nomFiltre} année`}
+          validate={validateAnnee}
         />
         <FontAwesomeIcon
           icon={faTimesCircle}
@@ -212,6 +225,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
             onChange={date => {
               onDatePickerValueChange(props, date, setDateSaisie);
             }}
+            minDate={new Date(minDate)}
           />
         )}
       </div>

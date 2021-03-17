@@ -16,7 +16,6 @@ import TitulaireFiltre, {
   TitulaireValidationSchema
 } from "../filtres/titulaire/TitulaireFiltre";
 import "./scss/RMCRequetePage.scss";
-
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import RequerantFiltre, {
@@ -24,29 +23,33 @@ import RequerantFiltre, {
   RequerantFiltreProps,
   RequerantValidationSchema
 } from "../filtres/requerant/RequerantFiltre";
-import "./scss/RMCRequetePage.scss";
+import DatesDebutFinAnneeFiltre, {
+  DatesDebutFinAnneeDefaultValues,
+  DatesDebutFinAnneeFiltreProps,
+  DatesDebutFinAnneeValidationSchema
+} from "../filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
+import { MEP_YEAR } from "../../../common/util/DateUtils";
 
 // Nom des filtres
 export const REQUETE = "requete";
-
-export const REQUERANT = "requerant";
-
+export const DATES_DEBUT_FIN = "datesDebutFin";
 export const TITULAIRE = "titulaire";
+export const REQUERANT = "requerant";
 
 // Valeurs par défaut des champs
 const DefaultValuesRMCRequete = {
   [REQUETE]: RequeteDefaultValues,
-  [REQUERANT]: RequerantDefaultValues,
-  [TITULAIRE]: TitulaireDefaultValues
+  [DATES_DEBUT_FIN]: DatesDebutFinAnneeDefaultValues,
+  [TITULAIRE]: TitulaireDefaultValues,
+  [REQUERANT]: RequerantDefaultValues
 };
 
 // Schéma de validation en sortie de champs
 const ValidationSchemaRMCRequete = Yup.object({
   [REQUETE]: RequeteValidationSchema,
-
-  [REQUERANT]: RequerantValidationSchema,
-
-  [TITULAIRE]: TitulaireValidationSchema
+  [DATES_DEBUT_FIN]: DatesDebutFinAnneeValidationSchema,
+  [TITULAIRE]: TitulaireValidationSchema,
+  [REQUERANT]: RequerantValidationSchema
 });
 
 export const titreForm = "Critères de recherche d'une requête";
@@ -54,6 +57,7 @@ export const titreForm = "Critères de recherche d'une requête";
 export const RMCRequetePage: React.FC = () => {
   const blocsForm: JSX.Element[] = [
     getFormRequete(),
+    getFormDatesDebutFin(),
     getFormTitulaire(),
     getFormRequerant()
   ];
@@ -132,11 +136,17 @@ function getFormRequete(): JSX.Element {
   return <RequeteFiltre key={REQUETE} {...requeteFiltreProps} />;
 }
 
-function getFormRequerant(): JSX.Element {
-  const requerantFiltreProps = {
-    nomFiltre: REQUERANT
-  } as RequerantFiltreProps;
-  return <RequerantFiltre key={REQUERANT} {...requerantFiltreProps} />;
+function getFormDatesDebutFin(): JSX.Element {
+  const datesDebutFinAnneeFiltreProps = {
+    nomFiltre: DATES_DEBUT_FIN,
+    anneeMin: MEP_YEAR
+  } as DatesDebutFinAnneeFiltreProps;
+  return (
+    <DatesDebutFinAnneeFiltre
+      key={DATES_DEBUT_FIN}
+      {...datesDebutFinAnneeFiltreProps}
+    />
+  );
 }
 
 function getFormTitulaire(): JSX.Element {
@@ -144,4 +154,11 @@ function getFormTitulaire(): JSX.Element {
     nomFiltre: TITULAIRE
   } as TitulaireFiltreProps;
   return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} />;
+}
+
+function getFormRequerant(): JSX.Element {
+  const requerantFiltreProps = {
+    nomFiltre: REQUERANT
+  } as RequerantFiltreProps;
+  return <RequerantFiltre key={REQUERANT} {...requerantFiltreProps} />;
 }

@@ -34,12 +34,9 @@ export function mappingCriteresRequete(
 
     // Filtre Date de création
     dateCreationDebut: getDateDebutFromDateCompose(
-      criteres.datesDebutFinAnnee?.dateDebut
+      criteres.datesDebutFin?.dateDebut
     ),
-    dateCreationFin: getDateFinFromDateCompose(
-      criteres.datesDebutFinAnnee?.dateFin
-    ),
-    annee: valeurOuUndefined(criteres.datesDebutFinAnnee?.annee),
+    dateCreationFin: getDateFinFromDateCompose(criteres.datesDebutFin?.dateFin),
 
     // Filtre Requerant
     nomRequerant: valeurOuUndefined(criteres.requerant?.nom),

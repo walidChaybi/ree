@@ -3,25 +3,27 @@ import { connect } from "formik";
 import { FormikComponentProps } from "../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../common/widget/Text";
 import "./scss/RMCBoutons.scss";
+import RMCBoutonRappelCriteres, {
+  RMCBoutonRappelCriteresProps
+} from "./RMCBoutonRappelCriteres";
 
 export interface IRMCBoutonsProps {
-  rappelCriteres: () => any;
+  rappelCriteres?: () => any;
 }
 
 export type RMCBoutonsProps = IRMCBoutonsProps & FormikComponentProps;
 
 const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
+  const rmcBoutonRappelCriteresProps = {
+    rappelCriteres: props.rappelCriteres
+  } as RMCBoutonRappelCriteresProps;
+
   return (
     <>
       <div className="Boutons">
-        <button
-          type="button"
-          onClick={() => {
-            props.formik.setValues(props.rappelCriteres());
-          }}
-        >
-          {getLibelle("Rappel critères")}
-        </button>
+        {props.rappelCriteres && (
+          <RMCBoutonRappelCriteres {...rmcBoutonRappelCriteresProps} />
+        )}
 
         <button type="reset" onClick={() => props.formik.resetForm()}>
           {getLibelle("Réinitialiser les critères")}
