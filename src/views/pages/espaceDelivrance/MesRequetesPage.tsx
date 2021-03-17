@@ -120,9 +120,10 @@ interface MesRequetesPageProps {
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetes
-  >({
+  const [
+    linkParameters,
+    setLinkParameters
+  ] = React.useState<IQueryParametersPourRequetes>({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,

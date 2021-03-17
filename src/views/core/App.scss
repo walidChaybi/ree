@@ -60,6 +60,9 @@
       margin-right: 0.3rem;
     }
   }
+  li:hover {
+    background-color: $application-color;
+  }
 }
 
 .AppBody {

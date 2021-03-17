@@ -33,41 +33,43 @@ input {
   font-family: "NotoSansUI-Regular", sans-serif;
 }
 
-button {
-  margin: 0.3em 0.3em 0.3em 0.6em;
+.BoutonRetour {
+  float: left;
+}
+
+button,
+Button,
+.Bouton {
+  margin: 0.5rem;
+  padding: 0.3rem;
   background: $button-application-color;
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  padding: 0.3em;
   overflow: hidden;
-  position: relative;
   min-width: 4vw;
   color: white;
   font-family: "NotoSansUI-Bold", sans-serif;
-  font-size: initial;
+  font-size: 1rem;
   text-align: center;
   cursor: pointer;
-  border: medium none;
+  border: none;
   border-radius: 0.25rem;
   text-transform: uppercase;
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
-  -webkit-appearance: button;
-  writing-mode: horizontal-tb;
-  text-rendering: auto;
-  letter-spacing: normal;
-  word-spacing: normal;
-  text-indent: 0px;
   text-shadow: none;
-  display: inline-block;
-  align-items: flex-start;
   -webkit-box-direction: normal;
+  text-decoration: none;
 
   &:disabled {
-    background-color: rgba(75, 75, 75, 0.87);
+    background-color: $disabled-button;
+    pointer-events: none;
   }
 
-  &:focus {
-    box-shadow: 0 0 0 2pt $border-focus;
+  &:link {
+    outline-style: none;
+  }
+
+  &:focus,
+  &:hover {
+    background-color: $application-color;
+    box-shadow: 0 0 0 2px $border-focus;
   }
 }
 
@@ -141,28 +143,6 @@ select {
   border-radius: 0.3em;
   padding: 0.45em;
   position: relative;
-}
-
-.BoutonRetour {
-  float: left;
-  background-color: $button-application-color;
-  color: #fff;
-  border-radius: 0.25rem;
-  text-transform: uppercase;
-  font-size: initial;
-  font-family: "NotoSansUI-Bold", sans-serif;
-  text-decoration: none;
-  padding: 0.3em;
-
-  &:link {
-    outline-style: none;
-  }
-
-  &:focus,
-  &:hover {
-    box-shadow: 0 0 0 2pt $border-focus;
-    border: none;
-  }
 }
 
 .error {
@@ -259,4 +239,8 @@ th {
 
 .MuiDialogContentText-root {
   color: black !important;
+}
+
+.MuiList-padding {
+  padding: 0 !important;
 }
