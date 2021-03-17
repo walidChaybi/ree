@@ -21,6 +21,7 @@ import { getLibelle } from "../../../../../common/widget/Text";
 import WithHabilitationFonction from "../../../../../common/util/habilitation/WithHabilitationFonction";
 
 export function getFichesPersonneWithHabilitation(personnes: IPersonne[]) {
+  console.log("getFichesPersonneWithHabilitation, p=", personnes);
   return WithHabilitationFonction(getFichesPersonne, [personnes]);
 }
 
