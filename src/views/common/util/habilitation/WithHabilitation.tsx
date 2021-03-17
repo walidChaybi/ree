@@ -53,7 +53,10 @@ const WithHabilitation = (
 ) => {
   class Habilitation extends React.Component<any> {
     public render() {
-      console.log("WithHabilitation, composantId", composantId);
+      console.log(
+        "WithHabilitation, ComponentToWrap.name",
+        ComponentToWrap.name
+      );
       let comportementComposant = {};
       let composantEstVisible = true;
       if (storeRece.utilisateurCourant) {
