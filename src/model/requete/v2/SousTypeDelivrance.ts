@@ -3,51 +3,53 @@ import { EnumWithComplete } from "../../../views/common/util/enum/EnumWithComple
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../views/common/util/Type";
 
+export const LISTE_DES_REQUETES_COURRIER = ["RDAPC", "RDCSC", "RDC", "RDLFC"];
+
 export class SousTypeDelivrance extends EnumWithComplete {
   public static readonly RDD = new SousTypeDelivrance(
     "RDD",
-    "Délivrance E/C (d)",
-    "Requête Délivrance Extrait/Copie Dématérialisée"
+    "Requête de Délivrance Extrait/Copie Dématérialisée",
+    "Délivrance E/C (d)"
   );
   public static readonly RDC = new SousTypeDelivrance(
     "RDC",
-    "Délivrance E/C (c)",
-    "Requête Délivrance Extrait/Copie Courrier"
+    "Requête de Délivrance Extrait/Copie Courrier",
+    "Délivrance E/C (c)"
   );
   public static readonly RDAPD = new SousTypeDelivrance(
     "RDAPD",
-    "Délivrance AP (d)",
-    "Requête de Délivrance Attestation de PACS Démat"
+    "Requête de Délivrance Attestation de PACS Démat",
+    "Délivrance AP (d)"
   );
   public static readonly RDAPC = new SousTypeDelivrance(
     "RDAPC",
-    "Délivrance AP (c)",
-    "Requête de Délivrance Attestation de PACS Courrier"
+    "Requête de Délivrance Attestation de PACS Courrier",
+    "Délivrance AP (c)"
   );
   public static readonly RDCSD = new SousTypeDelivrance(
     "RDCSD",
-    "Délivrance CS (d)",
-    "Requête de Délivrance de Certificat de Situation Démat"
+    "Requête de Délivrance de Certificat de Situation Démat",
+    "Délivrance CS (d)"
   );
   public static readonly RDCSC = new SousTypeDelivrance(
     "RDCSC",
-    "Délivrance CS (c)",
-    "Requête de Délivrance de Certificat de Situation Courrier"
+    "Requête de Délivrance de Certificat de Situation Courrier",
+    "Délivrance CS (c)"
   );
   public static readonly RDDP = new SousTypeDelivrance(
     "RDDP",
-    "Délivrance",
-    "Requête de Délivrance Démat COMEDEC"
+    "Requête de Délivrance Démat COMEDEC",
+    "Délivrance"
   );
   public static readonly RDDCO = new SousTypeDelivrance(
     "RDDCO",
-    "Délivrance",
-    "Requête de Délivrance Démat PLANETE"
+    "Requête de Délivrance Démat PLANETE",
+    "Délivrance"
   );
-  public static readonly RDCCAMR = new SousTypeDelivrance(
-    "RDCCAMR",
-    "Délivrance CCAM",
-    "Requête de Délivrance Certificat de Capacité A Mariage RECE"
+  public static readonly RDLFC = new SousTypeDelivrance(
+    "RDLFC",
+    "Requête de Délivrance Livret de Famille Courrier",
+    "Délivrance LF (c)"
   );
 
   public static getEnumFor(str: string) {

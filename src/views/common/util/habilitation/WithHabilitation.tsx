@@ -74,6 +74,7 @@ const WithHabilitation = (
           );
         }
       }
+
       return (
         <>
           {composantEstVisible && (

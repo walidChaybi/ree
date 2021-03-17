@@ -28,7 +28,8 @@ export type NomComposant =
   | "BoutonAccueilEspaceDelivrance"
   | "BoutonAccueilRechercheActe"
   | "BoutonAccueilTableau"
-  | "AlerteActe";
+  | "AlerteActe"
+  | "MenuSaisirRequete";
 
 export type NomComposantOuFonction = NomComposant | NomFonction;
 
@@ -126,5 +127,10 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   {
     nomComposant: "AlerteActe",
     visiblePourLesDroits: droitsSaufConsulterArchives
+  },
+  {
+    nomComposant: "MenuSaisirRequete",
+    tousLesDroits: etape2([Droit.SAISIR_REQUETE]),
+    comportementSiNonAutorise: { disabled: true }
   }
 ];

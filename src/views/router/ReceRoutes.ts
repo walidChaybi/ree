@@ -17,7 +17,9 @@ import {
   URL_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_RECHERCHE_ACTE,
-  URL_RECHERCHE_REQUETE
+  URL_RECHERCHE_REQUETE,
+  URL_MES_REQUETES_SAISIR_REQUETE,
+  URL_REQUETES_SERVICE_SAISIR_REQUETE
 } from "./ReceUrls";
 import { RcRcaPage } from "../pages/RcRcaPage";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
@@ -29,6 +31,7 @@ import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInsc
 import { RMCArchivesPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCArchivesPage";
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { IRoute } from "../common/util/route/IRoute";
+import { SaisirRequetePage } from "../pages/saisirRequete/SaisirRequetePage";
 
 export const routesRece: IRoute[] = [
   {
@@ -102,5 +105,19 @@ export const routesRece: IRoute[] = [
     component: RMCRequetePage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle("Rechercher une requête")
+  },
+  {
+    url: URL_MES_REQUETES_SAISIR_REQUETE,
+    component: SaisirRequetePage,
+    droits: [Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Saisir une requête")
+  },
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_REQUETE,
+    component: SaisirRequetePage,
+    droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Saisir une requête")
   }
 ];

@@ -15,6 +15,7 @@ import { Droit } from "../../../model/Droit";
 import { officierHabiliterPourLeDroit } from "../../../model/Habilitation";
 import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
 import { getUrlWithParam } from "../../common/util/route/routeUtil";
+import MenuSaisirRequete from "./contenu/MenuSaisirRequete";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -28,6 +29,7 @@ function TabPanel(props: TabPanelProps) {
 
   return (
     <div
+      className="TabPanel"
       role="tabpanel"
       hidden={value !== index}
       id={`nav-tabpanel-${index}`}
@@ -142,6 +144,10 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       />
                     </Tabs>
                   </AppBar>
+
+                  <div className="BlocBoutons">
+                    <MenuSaisirRequete indexTabPanel={selectedTabState} />
+                  </div>
 
                   <TabPanel value={selectedTabState} index={0}>
                     {selectedTabState === 0 && (
