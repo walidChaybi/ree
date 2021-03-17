@@ -48,20 +48,16 @@ function getComportement(
  */
 const WithHabilitation = (
   ComponentToWrap: any,
-  composantId?: NomComposant,
+  composantId: NomComposant,
   specifiquesHabilitationsDescription?: IHabiliationDescription[]
 ) => {
   class Habilitation extends React.Component<any> {
     public render() {
-      console.log(
-        "WithHabilitation, ComponentToWrap.name",
-        ComponentToWrap.name
-      );
       let comportementComposant = {};
       let composantEstVisible = true;
       if (storeRece.utilisateurCourant) {
         const habilitationPourLeComposant = getHabilitationPourLeComposant(
-          composantId ? composantId : ComponentToWrap.name,
+          composantId,
           specifiquesHabilitationsDescription
             ? specifiquesHabilitationsDescription
             : habilitationsDescription

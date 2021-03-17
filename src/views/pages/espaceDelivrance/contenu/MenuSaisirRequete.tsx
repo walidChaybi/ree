@@ -77,4 +77,4 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
   );
 };
 
-export default WithHabilitation(MenuSaisirRequete);
+export default WithHabilitation(MenuSaisirRequete, "MenuSaisirRequete");

@@ -30,5 +30,6 @@ export function LinkTabMesRequetes(props: LinkTabProps) {
 }
 
 export const LinkTabMesRequetesWithHabilitation = WithHabilitation(
-  LinkTabMesRequetes
+  LinkTabMesRequetes,
+  "LinkTabMesRequetes"
 );
