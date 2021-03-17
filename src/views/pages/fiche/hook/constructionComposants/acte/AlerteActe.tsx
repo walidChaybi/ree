@@ -19,4 +19,4 @@ const AlerteActe: React.FC = () => {
   );
 };
 
-export default WithHabilitation(AlerteActe);
+export default WithHabilitation(AlerteActe, "AlerteActe");
