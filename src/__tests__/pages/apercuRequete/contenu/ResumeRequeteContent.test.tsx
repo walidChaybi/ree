@@ -14,7 +14,7 @@ test("renders resumé du contenu de la requete", () => {
   expect(component.toJSON()).toMatchSnapshot();
 });
 
-test("renders nom de famille, lieu évenement", () => {
+test("renders nom de famille, lieu évènement", () => {
   render(<ResumeRequeteContent requete={DONNEES_REQUETE as IDataTable} />);
   const nomFamille = screen.getByText(/aubin/i);
   const fez = screen.getByText(/fez/i);

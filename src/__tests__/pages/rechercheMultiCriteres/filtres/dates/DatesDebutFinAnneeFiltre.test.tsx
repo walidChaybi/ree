@@ -17,7 +17,8 @@ const HookDatesDebutFinAnneeFiltre: React.FC = () => {
 
   const datesDebutFinAnneeFiltreProps = ({
     nomFiltre: DATES_DEBUT_FIN_ANNEE,
-    key: DATES_DEBUT_FIN_ANNEE
+    key: DATES_DEBUT_FIN_ANNEE,
+    anneeVisible: true
   } as any) as DatesDebutFinAnneeFiltreProps;
 
   const handleClickButton = (values: any) => {

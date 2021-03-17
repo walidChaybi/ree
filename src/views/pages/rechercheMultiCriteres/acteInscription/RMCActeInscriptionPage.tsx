@@ -60,9 +60,10 @@ export const RMCActeInscriptionPage: React.FC = () => {
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [criteresRechercheActe, setCriteresRechercheActe] = useState<
-    ICriteresRecherche
-  >();
+  const [
+    criteresRechercheActe,
+    setCriteresRechercheActe
+  ] = useState<ICriteresRecherche>();
 
   const [
     criteresRechercheInscription,
@@ -158,7 +159,8 @@ function getFormTitulaire(): JSX.Element {
 
 function getFormDatesDebutFinAnnee(): JSX.Element {
   const datesDebutFinAnneeFiltreProps = {
-    nomFiltre: DATES_DEBUT_FIN_ANNEE
+    nomFiltre: DATES_DEBUT_FIN_ANNEE,
+    anneeVisible: true
   } as DatesDebutFinAnneeFiltreProps;
   return (
     <DatesDebutFinAnneeFiltre

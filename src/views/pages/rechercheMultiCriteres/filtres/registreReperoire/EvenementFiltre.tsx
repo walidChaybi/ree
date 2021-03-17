@@ -53,7 +53,7 @@ const EvenementFiltre: React.FC<EvenementFiltreProps> = props => {
   );
 
   const dateEvenementComposeFormProps = {
-    labelDate: getLibelle("Date de l'évenement"),
+    labelDate: getLibelle("Date de l'évènement"),
     nomFiltre: dateEvenementWithNamespace,
     showDatePicker: false
   } as DateComposeFormProps;
@@ -76,7 +76,7 @@ const EvenementFiltre: React.FC<EvenementFiltreProps> = props => {
         disabled={props.filtreInactif}
         title="Le pays de l'évènement ne concerne que les actes ou les PACS"
         name={paysEvenementWithNamespace}
-        label={getLibelle("Pays de l'évenement")}
+        label={getLibelle("Pays de l'évènement")}
         onBlur={onBlurChamp}
       />
     </>
