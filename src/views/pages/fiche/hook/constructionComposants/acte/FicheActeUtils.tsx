@@ -27,11 +27,7 @@ export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
       {
         panelAreas: [
           {
-            value: (
-              <ActeImage
-                id={acte.compositionCorps?.idCompositionCorps}
-              ></ActeImage>
-            ),
+            value: <ActeImage id={acte.id}></ActeImage>,
             nbColonne: 1
           }
         ],

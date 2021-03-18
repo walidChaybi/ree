@@ -1,3 +1,4 @@
+import { LinearProgress } from "@material-ui/core";
 import React from "react";
 import { getImagesActe } from "../../../../../../api/appels/etatcivilApi";
 import { logError } from "../../../../../common/util/LogManager";
@@ -33,7 +34,7 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id }) => {
       {url ? (
         <iframe title="Visionneuse PDF" src={url}></iframe>
       ) : (
-        <span>Pas d'image disponible</span>
+        <LinearProgress />
       )}
     </div>
   );
