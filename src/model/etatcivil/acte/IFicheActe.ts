@@ -5,6 +5,7 @@ import { IPersonne } from "../commun/IPersonne";
 import { ICompositionCorps } from "./ICompositionCorps";
 
 export interface IFicheActe {
+  id: string;
   titulaires: ITitulaireActe[];
   evenement?: IEvenement;
   nature: NatureActe;

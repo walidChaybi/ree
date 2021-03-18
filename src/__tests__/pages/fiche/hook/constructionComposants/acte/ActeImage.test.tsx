@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { getByRole, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
@@ -9,8 +9,9 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 describe("Display pdf Iframe", () => {
   test("Affichage par défaut", async () => {
     render(<ActeImage id=""></ActeImage>);
-    const text = screen.getByText("Pas d'image disponible");
-    expect(text).toBeInTheDocument();
+    screen.debug();
+    const loading = screen.getByRole("progressbar");
+    expect(loading).toBeInTheDocument();
   });
 
   test("Affiche une iframe", async () => {
@@ -24,7 +25,6 @@ describe("Display pdf Iframe", () => {
     expect(document.querySelector("iframe").getAttribute("src")).toBe(
       "url_test"
     );
-    const text = screen.queryByText("Pas d'image disponible");
-    expect(text).toBeNull();
+    expect(screen.queryByRole("progressbar")).toBeNull();
   });
 });
