@@ -10,6 +10,7 @@ export interface ActeImageProps {
 
 export const ActeImage: React.FC<ActeImageProps> = ({ id }) => {
   const [url, setUrl] = React.useState<string>();
+  const [error, setError] = React.useState<string>();
 
   React.useEffect(() => {
     if (id) {
@@ -25,6 +26,7 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id }) => {
           logError({
             error
           });
+          setError(error);
         });
     }
   }, [id]);
@@ -33,6 +35,8 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id }) => {
     <div id="docActeViewer" className="DocumentActeViewer">
       {url ? (
         <iframe title="Visionneuse PDF" src={url}></iframe>
+      ) : error ? (
+        <span>Une erreur s'est produite</span>
       ) : (
         <LinearProgress />
       )}
