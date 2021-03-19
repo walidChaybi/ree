@@ -30,6 +30,10 @@ export class CodeFamilleRegistre extends EnumWithLibelle {
     "Actes d'optants à la nationalité (Algérie)"
   );
 
+  public static readonly PAC = new CodeFamilleRegistre(
+    "Français vivant à l'étranger ayant conclu un PACS en poste"
+  );
+
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, CodeFamilleRegistre);
   }
