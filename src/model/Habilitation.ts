@@ -1,5 +1,5 @@
 import { Droit } from "./Droit";
-import { IOfficierSSOApi } from "./IOfficierSSOApi";
+import { IPerimetre } from "./IPerimetre";
 
 export interface IDroit {
   idDroit: string;
@@ -15,66 +15,5 @@ export interface IProfil {
 export interface IHabilitation {
   idHabilitation: string;
   profil: IProfil;
-}
-
-/** Savoir si l'officier connecté à le droit ou le profil demandé en paramètre */
-export function officierHabiliterPourLeDroit(
-  officier: IOfficierSSOApi,
-  droit: Droit
-) {
-  let droitTrouve: IDroit | undefined;
-  officier.habilitations.forEach(
-    h =>
-      (droitTrouve = droitTrouve || h.profil.droits.find(d => d.nom === droit))
-  );
-  return droitTrouve != null;
-}
-
-export function estOfficierHabiliterPourTousLesDroits(
-  officier: IOfficierSSOApi,
-  droits: Droit[]
-) {
-  if (!droits || droits.length === 0) {
-    return true;
-  }
-  return droits.every(droit => officierHabiliterPourLeDroit(officier, droit));
-}
-
-export function estOfficierHabiliterPourUnDesDroits(
-  officier: IOfficierSSOApi,
-  droits: Droit[]
-) {
-  if (!droits || droits.length === 0) {
-    return true;
-  }
-  return droits.some(droit => officierHabiliterPourLeDroit(officier, droit));
-}
-
-export function estOfficierHabiliterPourSeulementLesDroits(
-  officier: IOfficierSSOApi,
-  droits: Droit[]
-) {
-  if (!droits || droits.length === 0) {
-    return true;
-  }
-  return (
-    droits.length === officier.habilitations.length &&
-    droits.every(droit => officierHabiliterPourLeDroit(officier, droit))
-  );
-}
-
-export function officierHabiliterUniquementPourLeDroit(
-  officier: IOfficierSSOApi,
-  droit: Droit
-): boolean {
-  let droitTrouve = false;
-
-  if (
-    officier.habilitations.length === 1 &&
-    officier.habilitations[0].profil.droits.length === 1
-  ) {
-    droitTrouve = officier.habilitations[0].profil.droits[0].nom === droit;
-  }
-
-  return droitTrouve;
+  perimetre: IPerimetre;
 }

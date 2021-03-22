@@ -1,6 +1,6 @@
 import mockConnectedUser from "../data/connectedUser.json";
 import DONNEES_UTILISATEURS from "../data/utilisateurs";
-import mockHabilitation from "../data/habilitationMock.json";
+import { MockHabilitation } from "../data/habilitationMock";
 
 export const configAgent = [
   {
@@ -19,7 +19,7 @@ export const configAgent = [
      */
     fixtures: function (match, params, headers, context) {
       if (match[1] === "/utilisateurs/login") {
-        return { headers: mockConnectedUser, data: mockHabilitation };
+        return { headers: mockConnectedUser, data: MockHabilitation };
       }
 
       if (match[1] === "/utilisateurs") {

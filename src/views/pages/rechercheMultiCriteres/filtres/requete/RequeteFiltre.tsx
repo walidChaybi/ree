@@ -115,7 +115,7 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
         <div className="FormFiltre">
           <InputField
             name={numeroRequeteWithNamespace}
-            label={getLibelle("N° Requete")}
+            label={getLibelle("N° Requête")}
             onBlur={onBlurNumero}
           />
           <SelectField

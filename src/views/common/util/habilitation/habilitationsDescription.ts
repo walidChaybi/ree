@@ -14,8 +14,9 @@ export interface IHabiliationDescription {
   comportementSiAutorise?: any;
   visiblePourLesDroits?: Droit[];
   visibleSeulementPourLesDroits?: Droit[];
+  verificationPerimetre?: boolean;
 }
-export type NomFonction = "getFichesPersonne";
+export type NomFonction = "";
 
 export type NomComposant =
   | "LinkTabMesRequetes"
@@ -117,12 +118,6 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     nomComposant: "BoutonAccueilTableau",
     tousLesDroits: etape2([]),
     comportementSiNonAutorise: { disabled: true }
-  },
-  {
-    nomComposant: "getFichesPersonne",
-    estFonction: true,
-    uniquementLeDroit: Droit.CONSULTER_ARCHIVES,
-    comportementSiAutorise: { retourne: [] }
   },
   {
     nomComposant: "AlerteActe",

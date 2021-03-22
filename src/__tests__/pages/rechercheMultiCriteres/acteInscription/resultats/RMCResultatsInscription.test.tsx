@@ -13,6 +13,8 @@ import {
 } from "../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import request from "superagent";
+import { storeRece } from "../../../../../views/common/util/storeRece";
+import { userDroitConsulterPerimetreMEAE } from "../../../../../mock/data/connectedUserAvecDroit";
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
@@ -51,6 +53,7 @@ test("Ouverture d'une inscription", async () => {
   };
   global.close = jest.fn();
 
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
   const { getByTestId } = render(
     <RMCResultatsInscription
       dataRMCInscription={DataRMCInscriptionAvecResultat}

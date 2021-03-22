@@ -1,16 +1,16 @@
 import * as React from "react";
 import {
+  IOfficierSSOApi,
   estOfficierHabiliterPourSeulementLesDroits,
   estOfficierHabiliterPourTousLesDroits,
   estOfficierHabiliterPourUnDesDroits
-} from "../../../../model/Habilitation";
+} from "../../../../model/IOfficierSSOApi";
 import { storeRece } from "../storeRece";
 import {
   habilitationsDescription,
   IHabiliationDescription,
   NomComposant
 } from "./habilitationsDescription";
-import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
 function getHabilitationPourLeComposant(
   nomComposant: string,
@@ -25,12 +25,10 @@ function getComportement(
 ) {
   const authorise = habilitationPourLeComposant.tousLesDroits
     ? estOfficierHabiliterPourTousLesDroits(
-        utilisateurCourant,
         habilitationPourLeComposant.tousLesDroits
       )
     : habilitationPourLeComposant.unDesDroits
     ? estOfficierHabiliterPourUnDesDroits(
-        utilisateurCourant,
         habilitationPourLeComposant.unDesDroits
       )
     : true;
@@ -95,7 +93,6 @@ function visibiliteComposant(
   if (
     habilitationPourLeComposant.visiblePourLesDroits &&
     !estOfficierHabiliterPourUnDesDroits(
-      utilisateurCourant,
       habilitationPourLeComposant.visiblePourLesDroits
     )
   ) {
@@ -104,7 +101,6 @@ function visibiliteComposant(
   if (
     habilitationPourLeComposant.visibleSeulementPourLesDroits &&
     !estOfficierHabiliterPourSeulementLesDroits(
-      utilisateurCourant,
       habilitationPourLeComposant.visibleSeulementPourLesDroits
     )
   ) {

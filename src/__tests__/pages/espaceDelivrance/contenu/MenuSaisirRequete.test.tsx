@@ -36,7 +36,7 @@ test("renders menu 'Saisir une requête'", async () => {
     "Requête de Délivrance Attestation de PACS Courrier"
   );
   const RDCSC = screen.getByText(
-    "Requête de Délivrance de Certificat de Situation Courrier"
+    "Requête de Délivrance Certificat de Situation Courrier"
   );
   const RDLFC = screen.getByText(
     "Requête de Délivrance Livret de Famille Courrier"

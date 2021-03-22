@@ -104,7 +104,7 @@ export const routesRece: IRoute[] = [
     url: URL_RECHERCHE_REQUETE,
     component: RMCRequetePage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Rechercher une requête")
+    libelle: getLibelle("Recherche une requête")
   },
   {
     url: URL_MES_REQUETES_SAISIR_REQUETE,

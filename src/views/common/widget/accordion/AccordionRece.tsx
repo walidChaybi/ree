@@ -18,6 +18,7 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {
             defaultExpanded={index === 0}
             key={`rece-accordion-${index}`}
             className="accordionRece"
+            disabled={panel.panelAreas.every(pa => !pa.value && !pa.parts)}
           >
             <AccordionTitle title={panel.title} />
 

@@ -12,7 +12,6 @@ export const AccordionTitle: React.FC<AccordionTitleProps> = ({ title }) => {
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel1bh-content"
-      id={`panel-header-${title.replace(/ /g, "")}`}
       className="accordionTitle"
     >
       {title}

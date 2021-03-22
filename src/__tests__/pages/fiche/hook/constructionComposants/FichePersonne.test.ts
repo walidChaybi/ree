@@ -1,8 +1,8 @@
-import { getFichesPersonneWithHabilitation } from "../../../../../views/pages/fiche/hook/constructionComposants/personne/FichePersonne";
+import { getFichesPersonne } from "../../../../../views/pages/fiche/hook/constructionComposants/personne/FichePersonne";
 import { personneMock } from "./mock/PersonneMock";
 
 test("Decision utils get decision : decision de type Juridiction, ", async () => {
-  const components = getFichesPersonneWithHabilitation([personneMock]);
+  const components = getFichesPersonne([personneMock]);
 
   expect(components).toHaveLength(1);
 

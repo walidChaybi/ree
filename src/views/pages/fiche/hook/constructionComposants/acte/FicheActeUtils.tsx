@@ -3,14 +3,27 @@ import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { getTitulaires } from "./TitulairesActeUtils";
 import { getEvenement } from "./EvenementActeUtils";
 import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
-import { getFichesPersonneWithHabilitation } from "../personne/FichePersonne";
+import { getFichesPersonneActe } from "../personne/FichePersonne";
 import React from "react";
 import { ActeImage } from "./ActeImage";
+import { AccordionPanelAreaProps } from "../../../../../common/widget/accordion/AccordionPanelArea";
+import {
+  officierALeDroitSurLePerimetre,
+  officierHabiliterUniquementPourLeDroit,
+  officierAutoriserSurLeTypeRegistre,
+  officierHabiliterPourLeDroit
+} from "../../../../../../model/IOfficierSSOApi";
+import { Droit } from "../../../../../../model/Droit";
+import { PERIMETRE_MEAE } from "../../../../../../model/IPerimetre";
 
 export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
-  const fichesPersonne: AccordionPanelProps[] = getFichesPersonneWithHabilitation(
-    acte.personnes
+  const idTypeRegistre = acte.registre.type.id;
+  const paramsAffichage = getParamsAffichageFicheActe(idTypeRegistre);
+  const fichesPersonne: AccordionPanelProps[] = getFichesPersonneActe(
+    acte.personnes,
+    paramsAffichage
   );
+
   return {
     panels: [
       {
@@ -25,16 +38,77 @@ export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
         title: "Résumé de l'acte"
       },
       {
-        panelAreas: [
-          {
-            value: <ActeImage id={acte.id}></ActeImage>,
-            nbColonne: 1
-          }
-        ],
+        panelAreas: getPanelAreasActeImage(acte, paramsAffichage),
         title: "Vue de l'acte"
       },
 
       ...fichesPersonne
     ]
   };
+}
+
+function getPanelAreasActeImage(
+  acte: IFicheActe,
+  params: IParamsAffichage
+): AccordionPanelAreaProps[] {
+  if (params.visuActe === "classique" || params.visuActe === "filigrane") {
+    return [
+      {
+        value: <ActeImage id={acte.id}></ActeImage>,
+        nbColonne: 1
+      }
+    ];
+  } else {
+    // params.visuActe === "disabled"
+    return [{ value: undefined }];
+  }
+}
+
+export interface IParamsAffichage {
+  ajouterAlerte: boolean;
+  visuActe: "classique" | "filigrane" | "disabled";
+  personnes: "visible" | "disabled" | "none";
+}
+
+export function getParamsAffichageFicheActe(idTypeRegistre: string) {
+  const params = {
+    ajouterAlerte: true,
+    visuActe: "disabled",
+    personnes: "disabled"
+  } as IParamsAffichage;
+
+  // Vérification que l'officier à le droit de consulter la visualisation de l'acte
+
+  // S'il a le droit CONSULTER sur le périmètre MEAE
+  // ou
+  // S'il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
+  if (
+    officierALeDroitSurLePerimetre(Droit.CONSULTER, PERIMETRE_MEAE) ||
+    officierAutoriserSurLeTypeRegistre(idTypeRegistre)
+  ) {
+    params.ajouterAlerte = true;
+    params.visuActe = "classique";
+    params.personnes = "visible";
+  }
+  // S'il a uniquement le droit CONSULTER_ARCHIVE
+  // ou
+  // S'il a le droit CONSULTER_ARCHIVE et S'il a un droit CONSULTER mais pas sur le périmètre de l'acte
+  // ou Si le type de registre n'est présent dans le périmètre de l'acte
+  else if (
+    officierHabiliterUniquementPourLeDroit(Droit.CONSULTER_ARCHIVES) ||
+    (officierHabiliterPourLeDroit(Droit.CONSULTER_ARCHIVES) &&
+      !officierAutoriserSurLeTypeRegistre(idTypeRegistre))
+  ) {
+    params.ajouterAlerte = false;
+    params.visuActe = "filigrane";
+    params.personnes = "none";
+  }
+  // S'il a un droit CONSULTER mais pas sur le périmètre de l'acte
+  // ou Si le type de registre n'est présent dans le périmètre de l'acte
+  else if (!officierAutoriserSurLeTypeRegistre(idTypeRegistre)) {
+    params.ajouterAlerte = false;
+    params.visuActe = "disabled";
+    params.personnes = "disabled";
+  }
+  return params;
 }

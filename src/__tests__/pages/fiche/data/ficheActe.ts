@@ -29,6 +29,10 @@ export const acte: any = {
   dateDerniereMaj: 1536357600000,
   visibiliteArchiviste: "ANOM",
   registre: {
+    id: "a41079a5-9e8d-478c-b04c-c4c2ac67134f",
+    type: {
+      id: "a41079a5-9e8d-478c-b14c-c4c2ac67134f"
+    },
     famille: "CSL",
     pocopa: "DX",
     support1: "NA",
@@ -130,7 +134,7 @@ export const acte: any = {
       domicile: {
         pays: "BELGIQUE",
         region: "Flandre",
-        ville: "Bruxelles",
+        ville: "Bruxelles2",
         arrondissement: null,
         voie: "7 Rue du Noyer"
       },
@@ -159,7 +163,7 @@ export const acte: any = {
     }
   ],
   alerteActes: [],
-  personnes: [],
+  personnes: [{ prenom: "Laurent", nom: "Dupe" }],
   compositionCorps: [
     {
       texte: null,
@@ -172,7 +176,7 @@ export const acte: any = {
       noPage: 3
     },
     {
-      texte: "corps d'acte",
+      texte: "corps d'acte4",
       image: null,
       noPage: null
     },
@@ -185,7 +189,7 @@ export const acte: any = {
 };
 
 export const acte1: any = {
-  id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
+  id: "b41079a5-9e8d-478c-b04c-c4c2ac67134e",
   dateInitialisation: 1405980000000,
   dateCreation: 1256943600000,
   modeCreation: "DRESSE",
@@ -200,6 +204,10 @@ export const acte1: any = {
   dateDerniereMaj: 1536357600000,
   visibiliteArchiviste: "ANOM",
   registre: {
+    id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
+    type: {
+      id: "a41079a5-9e8d-478c-b24c-c4c2ac67134f"
+    },
     famille: "CSL",
     pocopa: "DX",
     support1: "NA",
@@ -265,7 +273,7 @@ export const acte1: any = {
         domicile: {
           pays: "BELGIQUE",
           region: "Flandre",
-          ville: "Bruxelles",
+          ville: "Bruxelles3",
           arrondissement: null,
           voie: "7 Rue du Nyer"
         },
@@ -293,17 +301,17 @@ export const acte1: any = {
         mois: 3,
         annee: 1948,
         pays: "France",
-        region: "Saint-Pierre-et-Miquelon",
-        ville: "Saint-Pierre",
+        region: "Saint-Pierre-et-Miquelon2",
+        ville: "Saint-Pierre2",
         arrondissement: "",
         voie: ""
       },
       domicile: {
         pays: "BELGIQUE",
         region: "Flandre",
-        ville: "Bruxelles",
+        ville: "Bruxelles4",
         arrondissement: null,
-        voie: "7 Rue du Noyer"
+        voie: "17 Rue du Noyer"
       },
       filiation: {
         domicile: {
@@ -311,7 +319,7 @@ export const acte1: any = {
           region: "",
           ville: "Djibouti",
           arrondissement: null,
-          voie: "16 avenue des Palmiers"
+          voie: "6 avenue des Palmiers"
         },
         naissance: null,
         nom: "Sacken",
@@ -343,7 +351,7 @@ export const acte1: any = {
       noPage: 3
     },
     {
-      texte: "corps d'acte",
+      texte: "corps d'acte2",
       image: null,
       noPage: null
     },
@@ -371,6 +379,10 @@ export const acte2: any = {
   dateDerniereMaj: 1536357600000,
   visibiliteArchiviste: "ANOM",
   registre: {
+    id: "c41079a5-9e8d-478c-b04c-c4c2ac67134f",
+    type: {
+      id: "a41079a5-9e8d-478c-b34c-c4c2ac67134f"
+    },
     famille: "CSL",
     pocopa: "DX",
     support1: "NA",
@@ -436,7 +448,7 @@ export const acte2: any = {
         domicile: {
           pays: "BELGIQUE",
           region: "Flandre",
-          ville: "Bruxelles",
+          ville: "Bruxelles5",
           arrondissement: null,
           voie: "7 Rue du Nyer"
         },
@@ -464,17 +476,17 @@ export const acte2: any = {
         mois: 3,
         annee: 1948,
         pays: "France",
-        region: "Saint-Pierre-et-Miquelon",
-        ville: "Saint-Pierre",
+        region: "Saint-Pierre-et-Miquelon3",
+        ville: "Saint-Pierre3",
         arrondissement: "",
         voie: ""
       },
       domicile: {
         pays: "BELGIQUE",
         region: "Flandre",
-        ville: "Bruxelles",
+        ville: "Bruxelles6",
         arrondissement: null,
-        voie: "7 Rue du Noyer"
+        voie: "27 Rue du Noyer"
       },
       filiation: {
         domicile: {
@@ -482,7 +494,7 @@ export const acte2: any = {
           region: "",
           ville: "Djibouti",
           arrondissement: null,
-          voie: "16 avenue des Palmiers"
+          voie: "26 avenue des Palmiers"
         },
         naissance: null,
         nom: "Sacken",
@@ -514,7 +526,7 @@ export const acte2: any = {
       noPage: 3
     },
     {
-      texte: "corps d'acte",
+      texte: "corps d'acte5",
       image: null,
       noPage: null
     },
@@ -527,7 +539,7 @@ export const acte2: any = {
 };
 
 export const acte3: any = {
-  id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
+  id: "b41079a5-9e8d-478c-b04c-c4c2ac67134d",
   dateInitialisation: 1405980000000,
   dateCreation: 1256943600000,
   modeCreation: "DRESSE",
@@ -542,6 +554,10 @@ export const acte3: any = {
   dateDerniereMaj: 1536357600000,
   visibiliteArchiviste: "ANOM",
   registre: {
+    id: "d41079a5-9e8d-478c-b04c-c4c2ac67134f",
+    type: {
+      id: "a41079a5-9e8d-478c-b44c-c4c2ac67134f"
+    },
     famille: "CSL",
     pocopa: "DX",
     support1: "NA",
@@ -607,7 +623,7 @@ export const acte3: any = {
         domicile: {
           pays: "BELGIQUE",
           region: "Flandre",
-          ville: "Bruxelles",
+          ville: "Bruxelles7",
           arrondissement: null,
           voie: "7 Rue du Nyer"
         },
@@ -635,17 +651,17 @@ export const acte3: any = {
         mois: 3,
         annee: 1948,
         pays: "France",
-        region: "Saint-Pierre-et-Miquelon",
-        ville: "Saint-Pierre",
+        region: "Saint-Pierre-et-Miquelon4",
+        ville: "Saint-Pierre4",
         arrondissement: "",
         voie: ""
       },
       domicile: {
         pays: "BELGIQUE",
         region: "Flandre",
-        ville: "Bruxelles",
+        ville: "Bruxelles8",
         arrondissement: null,
-        voie: "7 Rue du Noyer"
+        voie: "37 Rue du Noyer"
       },
       filiation: {
         domicile: {
@@ -653,7 +669,7 @@ export const acte3: any = {
           region: "",
           ville: "Djibouti",
           arrondissement: null,
-          voie: "16 avenue des Palmiers"
+          voie: "116 avenue des Palmiers"
         },
         naissance: null,
         nom: "Sacken",
@@ -685,7 +701,7 @@ export const acte3: any = {
       noPage: 3
     },
     {
-      texte: "corps d'acte",
+      texte: "corps d'acte3",
       image: null,
       noPage: null
     },
@@ -713,6 +729,10 @@ export const acte4: any = {
   dateDerniereMaj: 1536357600000,
   visibiliteArchiviste: "ANOM",
   registre: {
+    id: "f41079a5-9e8d-478c-b04c-c4c2ac67134f",
+    type: {
+      id: "a41079a5-9e8d-478c-b54c-c4c2ac67134f"
+    },
     famille: "CSL",
     pocopa: "DX",
     support1: "NA",
@@ -778,7 +798,7 @@ export const acte4: any = {
         domicile: {
           pays: "BELGIQUE",
           region: "Flandre",
-          ville: "Bruxelles",
+          ville: "Bruxelles9",
           arrondissement: null,
           voie: "7 Rue du Nyer"
         },
@@ -806,17 +826,17 @@ export const acte4: any = {
         mois: 3,
         annee: 1948,
         pays: "France",
-        region: "Saint-Pierre-et-Miquelon",
-        ville: "Saint-Pierre",
+        region: "Saint-Pierre-et-Miquelon5",
+        ville: "Saint-Pierre5",
         arrondissement: "",
         voie: ""
       },
       domicile: {
         pays: "BELGIQUE",
         region: "Flandre",
-        ville: "Bruxelles",
+        ville: "Bruxelles10",
         arrondissement: null,
-        voie: "7 Rue du Noyer"
+        voie: "47 Rue du Noyer"
       },
       filiation: {
         domicile: {
@@ -824,7 +844,7 @@ export const acte4: any = {
           region: "",
           ville: "Djibouti",
           arrondissement: null,
-          voie: "16 avenue des Palmiers"
+          voie: "169 avenue des Palmiers"
         },
         naissance: null,
         nom: "Sacken",

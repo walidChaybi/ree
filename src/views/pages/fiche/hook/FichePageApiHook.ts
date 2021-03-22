@@ -29,10 +29,13 @@ import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
 import { logError } from "../../../common/util/LogManager";
 import { formatNom, formatPrenom } from "../../../common/util/Utils";
+import { IRegistre } from "../../../../model/etatcivil/acte/IRegistre";
+import { ITypeRegistre } from "../../../../model/etatcivil/acte/ITypeRegistre";
 
 export interface IFicheApi {
   dataBandeau: IBandeauFiche;
   fiche: AccordionReceProps;
+  data: any;
 }
 
 export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
@@ -55,19 +58,23 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
           );
           switch (categorie) {
             case TypeFiche.RC:
-              dataFiche.fiche = getPanelsRc(mapRcRca(result.body.data));
+              dataFiche.data = mapRcRca(result.body.data);
+              dataFiche.fiche = getPanelsRc(dataFiche.data);
               break;
 
             case TypeFiche.RCA:
-              dataFiche.fiche = getPanelsRca(mapRcRca(result.body.data));
+              dataFiche.data = mapRcRca(result.body.data);
+              dataFiche.fiche = getPanelsRca(dataFiche.data);
               break;
 
             case TypeFiche.PACS:
-              dataFiche.fiche = getPanelsPacs(mapPacs(result.body.data));
+              dataFiche.data = mapPacs(result.body.data);
+              dataFiche.fiche = getPanelsPacs(dataFiche.data);
               break;
 
             case TypeFiche.ACTE:
-              dataFiche.fiche = getPanelsActe(mapActe(result.body.data));
+              dataFiche.data = mapActe(result.body.data);
+              dataFiche.fiche = getPanelsActe(dataFiche.data);
               break;
 
             default:
@@ -114,52 +121,65 @@ function mapPersonnes(personnes: any, retourBack: any): IPersonne[] {
       dateNaissance: mapDatePersonne(personne.naissance),
       lieuDeces: personne.deces && mapLieuPersonne(personne.deces),
       dateDeces: personne.deces && mapDatePersonne(personne.deces),
-      sexe: Sexe.getEnumFor(personne.sexe),
-      actes: personne.actes
-        .filter((acte: any) => acte.numero !== retourBack.numero)
-        .map((acte: any) => {
-          return {
-            ...acte,
-            nature: NatureActe.getEnumFor(acte.nature)
-          };
-        }),
-      pacss: personne.pacss.filter(
-        (pacs: IFicheLien) => pacs.numero !== retourBack.numero
-      ),
-      rcas: personne.rcas.filter(
-        (rca: IFicheLien) => rca.numero !== retourBack.numero
-      ),
-      rcs: personne.rcs.filter(
-        (rc: IFicheLien) => rc.numero !== retourBack.numero
-      )
+      sexe: personne.sexe && Sexe.getEnumFor(personne.sexe),
+      actes:
+        personne.actes &&
+        personne.actes
+          .filter((acte: any) => acte.numero !== retourBack.numero)
+          .map((acte: any) => {
+            return {
+              ...acte,
+              nature: NatureActe.getEnumFor(acte.nature)
+            };
+          }),
+      pacss:
+        personne.pacss &&
+        personne.pacss.filter(
+          (pacs: IFicheLien) => pacs.numero !== retourBack.numero
+        ),
+      rcas:
+        personne.rcas &&
+        personne.rcas.filter(
+          (rca: IFicheLien) => rca.numero !== retourBack.numero
+        ),
+      rcs:
+        personne.rcs &&
+        personne.rcs.filter((rc: IFicheLien) => rc.numero !== retourBack.numero)
     };
   });
 }
 
 function mapAutresNoms(autresNoms: any[]): IAutresNoms[] {
-  return autresNoms.map(autreNom => {
-    return {
-      ...autreNom,
-      type: AutresNoms.getEnumFor(autreNom.type)
-    };
-  });
+  return (
+    autresNoms &&
+    autresNoms.map(autreNom => {
+      return {
+        ...autreNom,
+        type: AutresNoms.getEnumFor(autreNom.type)
+      };
+    })
+  );
 }
 
 function mapLieuPersonne(lieu: any): ILieuEvenement {
-  return {
-    arrondissement: lieu.arrondissement,
-    pays: lieu.pays,
-    region: lieu.region,
-    ville: lieu.ville
-  };
+  return lieu
+    ? {
+        arrondissement: lieu.arrondissement,
+        pays: lieu.pays,
+        region: lieu.region,
+        ville: lieu.ville
+      }
+    : ({} as ILieuEvenement);
 }
 
 function mapDatePersonne(date: any): IDateCompose {
-  return {
-    jour: date.jour,
-    mois: date.mois,
-    annee: date.annee
-  };
+  return date
+    ? {
+        jour: date.jour,
+        mois: date.mois,
+        annee: date.annee
+      }
+    : ({} as IDateCompose);
 }
 
 export function mapPacs(data: any) {
@@ -182,10 +202,20 @@ export function mapPacs(data: any) {
   return pacs;
 }
 
+export function mapRegistre(data: any) {
+  let registre = {} as IRegistre;
+  if (data) {
+    registre = data as IRegistre;
+    registre.type = data.type as ITypeRegistre;
+  }
+  return registre;
+}
+
 export function mapActe(data: any): IFicheActe {
   const dataActe = data as IFicheActe;
   dataActe.nature = NatureActe.getEnumFor(data.nature);
   dataActe.personnes = mapPersonnes(data.personnes, data);
+  dataActe.registre = mapRegistre(data.registre);
 
   return dataActe;
 }

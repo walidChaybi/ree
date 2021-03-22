@@ -12,13 +12,15 @@ export type RMCBoutonRappelCriteresProps = IRMCBoutonRappelCriteresPropsProps &
   FormikComponentProps;
 
 const RMCBoutonRappelCriteres: React.FC<RMCBoutonRappelCriteresProps> = props => {
+  const values = props.rappelCriteres();
   return (
     <>
       <button
         className="RappelBouton"
         type="button"
+        disabled={values == null}
         onClick={() => {
-          props.formik.setValues(props.rappelCriteres());
+          props.formik.setValues(values);
         }}
       >
         {getLibelle("Rappel critères")}

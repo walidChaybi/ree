@@ -1,0 +1,27 @@
+export const MockHabilitation = {
+  habilitations: [
+    {
+      idHabilitation: "idHabilitation",
+      profil: {
+        idProfil: "idProfil",
+        nom: "nom",
+        profilDroit: [
+          {
+            droit: {
+              idDroit: "idDroit",
+              nom: "nom"
+            }
+          }
+        ]
+      },
+      perimetre: {
+        id: "idPerimetre",
+        description: "descPérimètre",
+        estActif: true,
+        listePays: "paysPérimètre",
+        nom: "nomPérimètre",
+        type: ["idlisteIdTypeRegistre"]
+      }
+    }
+  ]
+};

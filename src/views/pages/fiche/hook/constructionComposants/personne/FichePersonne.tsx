@@ -18,42 +18,63 @@ import {
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { AccordionContentPartProps } from "../../../../../common/widget/accordion/AccordionPartContent";
 import { getLibelle } from "../../../../../common/widget/Text";
-import WithHabilitationFonction from "../../../../../common/util/habilitation/WithHabilitationFonction";
+import { AccordionPanelAreaProps } from "../../../../../common/widget/accordion/AccordionPanelArea";
 
-export function getFichesPersonneWithHabilitation(personnes: IPersonne[]) {
-  return WithHabilitationFonction(
-    getFichesPersonne,
-    [personnes],
-    "getFichesPersonne"
-  );
+import { IParamsAffichage } from "../acte/FicheActeUtils";
+
+export function getFichesPersonneActe(
+  personnes: IPersonne[],
+  paramsAffichage: IParamsAffichage
+) {
+  if (paramsAffichage.personnes === "visible") {
+    return getFichesPersonne(personnes);
+  } else if (paramsAffichage.personnes === "disabled") {
+    return [
+      {
+        panelAreas: [],
+        title: getLibelle(`Fiche Personne`)
+      }
+    ];
+  } else {
+    // paramsAffichage.personnes === "none"
+    return [];
+  }
 }
 
-function getFichesPersonne(personnes: IPersonne[]): AccordionPanelProps[] {
+export function getFichesPersonne(
+  personnes: IPersonne[]
+): AccordionPanelProps[] {
   return personnes.map((personne, index) => {
     return {
-      panelAreas: [
-        {
-          parts: [
-            getInformationsPersonne(personne),
-            {
-              subParts: [
-                getInformationsParents(personne),
-                getInformationsEnfants(personne)
-              ]
-            },
-            {
-              subParts: [
-                getInformationsListeActes(personne),
-                getInformationsListeInscriptions(personne)
-              ]
-            }
-          ],
-          nbColonne: 3
-        }
-      ],
+      panelAreas: getPanelAreasFichesPersonnes(personne),
       title: getLibelle(`Fiche Personne ${index + 1}`)
     };
   });
+}
+
+function getPanelAreasFichesPersonnes(
+  personne: IPersonne
+): AccordionPanelAreaProps[] {
+  return [
+    {
+      parts: [
+        getInformationsPersonne(personne),
+        {
+          subParts: [
+            getInformationsParents(personne),
+            getInformationsEnfants(personne)
+          ]
+        },
+        {
+          subParts: [
+            getInformationsListeActes(personne),
+            getInformationsListeInscriptions(personne)
+          ]
+        }
+      ],
+      nbColonne: 3
+    }
+  ];
 }
 
 function getInformationsListeInscriptions(
@@ -193,7 +214,7 @@ function getParentsPersonne(parents: IFamille[]): AccordionContentProps[] {
   const indexPremierParentAdoptif = 2;
   const indexDeuxiemeParentAdoptif = 3;
 
-  parents.forEach((parent, index) => {
+  parents?.forEach((parent, index) => {
     if (index === 0 || index === 1) {
       result = result.concat([
         {
@@ -223,7 +244,7 @@ function getParentsPersonne(parents: IFamille[]): AccordionContentProps[] {
 }
 
 function getEnfantsPersonne(enfants: IFamille[]): AccordionContentProps {
-  const enfantsHtml = enfants.map(enfant => {
+  const enfantsHtml = enfants?.map(enfant => {
     return (
       <p key={`enfant-${enfant.nom}-${enfant.prenoms}`}>{`${enMajuscule(
         enfant.nom
@@ -239,7 +260,7 @@ function getEnfantsPersonne(enfants: IFamille[]): AccordionContentProps {
 }
 
 function getActesPersonne(actes: IFicheLienActes[]): AccordionContentProps {
-  const liensActes = actes.map(acte => (
+  const liensActes = actes?.map(acte => (
     <div key={`acte-${acte.numero}`}>
       <LienFiche
         categorie={TypeFiche.ACTE}
@@ -257,7 +278,7 @@ function getActesPersonne(actes: IFicheLienActes[]): AccordionContentProps {
 }
 
 function getRcsPersonne(rcs: IFicheLien[]): AccordionContentProps {
-  const liensRcs = rcs.map(rc => (
+  const liensRcs = rcs?.map(rc => (
     <div key={`rc-${rc.numero}`}>
       <LienFiche
         categorie={TypeFiche.RC}
@@ -273,7 +294,7 @@ function getRcsPersonne(rcs: IFicheLien[]): AccordionContentProps {
 }
 
 function getRcasPersonne(rcas: IFicheLien[]): AccordionContentProps {
-  const liensRcas = rcas.map(rca => (
+  const liensRcas = rcas?.map(rca => (
     <div key={`rca-${rca.numero}`}>
       <LienFiche
         categorie={TypeFiche.RCA}
@@ -289,7 +310,7 @@ function getRcasPersonne(rcas: IFicheLien[]): AccordionContentProps {
 }
 
 function getPacssPersonne(pacss: IFicheLien[]): AccordionContentProps {
-  const liensPacss = pacss.map(pacs => (
+  const liensPacss = pacss?.map(pacs => (
     <div key={`pacs-${pacs.numero}`}>
       <LienFiche
         categorie={TypeFiche.PACS}
