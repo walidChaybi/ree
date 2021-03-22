@@ -3,6 +3,7 @@ import { ITitulaireActe } from "./ITitulaireActe";
 import { NatureActe } from "../enum/NatureActe";
 import { IPersonne } from "../commun/IPersonne";
 import { ICompositionCorps } from "./ICompositionCorps";
+import { IRegistre } from "./IRegistre";
 
 export interface IFicheActe {
   id: string;
@@ -11,6 +12,7 @@ export interface IFicheActe {
   nature: NatureActe;
   personnes: IPersonne[];
   compositionCorps?: ICompositionCorps;
+  registre: IRegistre;
 }
 
 export const FicheActe = {

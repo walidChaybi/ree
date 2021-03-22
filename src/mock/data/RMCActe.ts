@@ -36,8 +36,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     idActe: "d8708d77-a359-4553-be72-1eb5f246d4da",
     nom: "ROSE",
     autresNoms: "DUPE",
-    prenoms: "Jean-pierre, Michel",
-    dateNaissance: "08/06/1960",
+    prenoms: "Jean-pierre, Mick",
+    dateNaissance: "08/06/1961",
     paysNaissance: "Tunisie",
     nature: "Reconnaissance",
     registre: "4568"

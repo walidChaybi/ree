@@ -37,37 +37,45 @@ export interface IPersonne {
 
 export const Personne = {
   getNom(personne: IPersonne): string {
-    return formatNom(personne.nom);
+    return personne.nom ? formatNom(personne.nom) : "";
   },
 
   getAutresNoms(personne: IPersonne): string {
     return personne.autresNoms
-      .map(nom => {
-        const typeNom = ` (${nom.type.libelle})`;
-        return `${formatNom(nom.nom)}${
-          AutresNoms.isAutre(nom.type) ? "" : typeNom
-        }`;
-      })
-      .join(", ");
+      ? personne.autresNoms
+          .map(nom => {
+            const typeNom = ` (${nom.type.libelle})`;
+            return `${formatNom(nom.nom)}${
+              AutresNoms.isAutre(nom.type) ? "" : typeNom
+            }`;
+          })
+          .join(", ")
+      : "";
   },
 
   getPrenoms(personne: IPersonne): string {
-    return personne.prenoms.map(prenom => formatPrenom(prenom)).join(", ");
+    return personne.prenoms
+      ? personne.prenoms.map(prenom => formatPrenom(prenom)).join(", ")
+      : "";
   },
 
   getAutresPrenom(personne: IPersonne): string {
     return personne.autresPrenoms
-      .map(autrePrenom => formatPrenom(autrePrenom))
-      .join(", ");
+      ? personne.autresPrenoms
+          .map(autrePrenom => formatPrenom(autrePrenom))
+          .join(", ")
+      : "";
   },
 
   getLieuNaissance(personne: IPersonne): string {
-    return LieuxUtils.getLieu(
-      personne.lieuNaissance.ville,
-      personne.lieuNaissance.region,
-      personne.lieuNaissance.pays,
-      personne.lieuNaissance.arrondissement
-    );
+    return personne.lieuNaissance
+      ? LieuxUtils.getLieu(
+          personne.lieuNaissance.ville,
+          personne.lieuNaissance.region,
+          personne.lieuNaissance.pays,
+          personne.lieuNaissance.arrondissement
+        )
+      : "";
   },
 
   getLieuDeces(personne: IPersonne): string {
@@ -82,7 +90,9 @@ export const Personne = {
   },
 
   getDateNaissance(personne: IPersonne): string {
-    return getDateStringFromDateCompose(personne.dateNaissance);
+    return personne.dateNaissance
+      ? getDateStringFromDateCompose(personne.dateNaissance)
+      : "";
   },
 
   getDateDeces(personne: IPersonne): string {
@@ -92,11 +102,13 @@ export const Personne = {
   },
 
   getNationalite(personne: IPersonne): string {
-    return premiereLettreEnMajusculeLeResteEnMinuscule(personne.nationalite);
+    return personne.nationalite
+      ? premiereLettreEnMajusculeLeResteEnMinuscule(personne.nationalite)
+      : "";
   },
 
   getSexe(personne: IPersonne): string {
-    return personne.sexe.libelle;
+    return personne.sexe?.libelle;
   },
 
   getParents(personne: IPersonne): IFamille[] {

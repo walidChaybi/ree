@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { LinearProgress } from "@material-ui/core";
-import React from "react";
 import { getImagesActe } from "../../../../../../api/appels/etatcivilApi";
 import { logError } from "../../../../../common/util/LogManager";
 import "./sass/ActeImage.scss";
@@ -9,24 +9,23 @@ export interface ActeImageProps {
 }
 
 export const ActeImage: React.FC<ActeImageProps> = ({ id }) => {
-  const [url, setUrl] = React.useState<string>();
-  const [error, setError] = React.useState<string>();
+  const [url, setUrl] = useState<string>();
+  const [error, setError] = useState<string>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (id) {
       getImagesActe(id)
         .then((pdf: any) => {
           const documentObjectURL = URL.createObjectURL(
             new Blob([pdf.body], { type: "application/pdf" })
           );
-
           setUrl(documentObjectURL);
         })
-        .catch((error: any) => {
+        .catch((err: any) => {
           logError({
-            error
+            error: err
           });
-          setError(error);
+          setError(err);
         });
     }
   }, [id]);

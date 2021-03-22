@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { useFichePageApiHook } from "./hook/FichePageApiHook";
 import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
@@ -8,6 +8,8 @@ import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import AlerteActe from "./hook/constructionComposants/acte/AlerteActe";
 import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
+import { getParamsAffichageFicheActe } from "./hook/constructionComposants/acte/FicheActeUtils";
+import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
 
 export interface FichePageProps {
   dataFicheIdentifiant: string;
@@ -23,16 +25,16 @@ export interface IDataFicheProps {
 }
 
 export const FichePage: React.FC<FichePageProps> = props => {
-  const [dataFicheCourante, setDataFicheCourante] = React.useState<
-    IDataFicheProps
-  >({
+  const [dataFicheCourante, setDataFicheCourante] = useState<IDataFicheProps>({
     identifiant: props.dataFicheIdentifiant,
     categorie: props.dataFicheCategorie
   });
 
-  const [indexCourant, setIndexCourant] = React.useState<number>(
+  const [indexCourant, setIndexCourant] = useState<number>(
     props.index != null ? props.index : 0
   );
+
+  const [alerteVisible, setAlerteVisible] = useState<boolean>(false);
 
   const { dataFicheState } = useFichePageApiHook(
     dataFicheCourante.categorie,
@@ -54,7 +56,18 @@ export const FichePage: React.FC<FichePageProps> = props => {
       props.fenetreExterneUtil.ref.document.title =
         dataFicheState.dataBandeau.titreFenetre;
     }
-  }, [dataFicheState, props.fenetreExterneUtil]);
+
+    if (
+      FicheUtil.isActe(props.dataFicheCategorie) &&
+      dataFicheState != null &&
+      dataFicheState.data != null
+    ) {
+      const data = dataFicheState.data as IFicheActe;
+      setAlerteVisible(
+        getParamsAffichageFicheActe(data.registre.type.id).ajouterAlerte
+      );
+    }
+  }, [dataFicheState, props.fenetreExterneUtil, props.dataFicheCategorie]);
 
   function setIndexFiche(index: number) {
     if (props.datasFiches && index >= 0 && index < props.datasFiches.length) {
@@ -78,7 +91,7 @@ export const FichePage: React.FC<FichePageProps> = props => {
         setIndex={setIndexFiche}
       />
       {/* Le bandeau d'ajout d'alerte pour les actes */}
-      {FicheUtil.isActe(props.dataFicheCategorie) && <AlerteActe />}
+      {alerteVisible && <AlerteActe />}
       {/* Les Accordéons */}
       {dataFicheState.fiche && <AccordionRece {...dataFicheState.fiche} />}
     </div>

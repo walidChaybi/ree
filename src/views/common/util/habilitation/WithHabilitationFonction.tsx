@@ -1,11 +1,13 @@
-import { officierHabiliterUniquementPourLeDroit } from "../../../../model/Habilitation";
+/* istanbul ignore file */
+// FIXME : class à supprimer ?
+
+import { officierHabiliterUniquementPourLeDroit } from "../../../../model/IOfficierSSOApi";
 import { storeRece } from "../storeRece";
 import {
   habilitationsDescription,
   IHabiliationDescription,
   NomFonction
 } from "./habilitationsDescription";
-import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 
 function getHabilitationsPourLaFonction(
   nomComposant: string,
@@ -28,8 +30,7 @@ const WithHabilitationFonction = (
     );
     if (habilitationsPourLaFonction.length > 0) {
       const valeurDeRetour = getValeurSuivantHabilitation(
-        habilitationsPourLaFonction,
-        storeRece.utilisateurCourant
+        habilitationsPourLaFonction
       );
       if (valeurDeRetour !== null) {
         return valeurDeRetour;
@@ -42,19 +43,16 @@ const WithHabilitationFonction = (
 export default WithHabilitationFonction;
 
 function getValeurSuivantHabilitation(
-  habilitationsPourLaFonction: IHabiliationDescription[],
-  utilisateur: IOfficierSSOApi
+  habilitationsPourLaFonction: IHabiliationDescription[]
 ) {
   let valeur = null;
   habilitationsPourLaFonction.forEach(habDesc => {
     // A complèter avec les différents cas si besoin
+
     if (
       habDesc.uniquementLeDroit &&
       habDesc.comportementSiAutorise &&
-      officierHabiliterUniquementPourLeDroit(
-        utilisateur,
-        habDesc.uniquementLeDroit
-      )
+      officierHabiliterUniquementPourLeDroit(habDesc.uniquementLeDroit)
     ) {
       valeur = habDesc.comportementSiAutorise.retourne;
     }

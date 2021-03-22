@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { routesRece } from "./ReceRoutes";
 import { storeRece } from "../common/util/storeRece";
 import messageManager from "../common/util/messageManager";
-import { estOfficierHabiliterPourUnDesDroits } from "../../model/Habilitation";
+import { estOfficierHabiliterPourUnDesDroits } from "../../model/IOfficierSSOApi";
 import { Droit } from "../../model/Droit";
 import { URL_ACCUEIL } from "./ReceUrls";
 import { getLibelle } from "../common/widget/Text";
@@ -54,6 +54,6 @@ function estAutorise(droits: Droit[] | undefined) {
   return (
     !droits ||
     (storeRece.utilisateurCourant &&
-      estOfficierHabiliterPourUnDesDroits(storeRece.utilisateurCourant, droits))
+      estOfficierHabiliterPourUnDesDroits(droits))
   );
 }

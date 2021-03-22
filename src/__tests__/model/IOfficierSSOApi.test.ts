@@ -1,34 +1,30 @@
 import {
   estOfficierHabiliterPourTousLesDroits,
+  officierAutoriserSurLeTypeRegistre,
   officierHabiliterUniquementPourLeDroit
-} from "../../model/Habilitation";
+} from "../../model/IOfficierSSOApi";
 import { storeRece } from "../../views/common/util/storeRece";
 import mockConnectedUser from "../../mock/data/connectedUser.json";
 import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
 import { Droit } from "../../model/Droit";
 import {
   userDroitConsulterArchive,
-  userDroitConsulterConsulterArchive
+  userDroitConsulterConsulterArchive,
+  userDroitConsulterPerimetreMEAE,
+  userDroitConsulterPerimetreTUNIS
 } from "../../mock/data/connectedUserAvecDroit";
 
 const u: any = mockConnectedUser;
 
 test("Habilitation model", () => {
   storeRece.utilisateurCourant = u as IOfficierSSOApi;
-  let estAutorise = estOfficierHabiliterPourTousLesDroits(
-    storeRece.utilisateurCourant,
-    [Droit.ATTRIBUER]
-  );
+  let estAutorise = estOfficierHabiliterPourTousLesDroits([Droit.ATTRIBUER]);
+  expect(estAutorise).toBe(true);
+
+  estAutorise = estOfficierHabiliterPourTousLesDroits([]);
   expect(estAutorise).toBe(true);
 
   estAutorise = estOfficierHabiliterPourTousLesDroits(
-    storeRece.utilisateurCourant,
-    []
-  );
-  expect(estAutorise).toBe(true);
-
-  estAutorise = estOfficierHabiliterPourTousLesDroits(
-    storeRece.utilisateurCourant,
     // @ts-ignore
     ["AUTRE"]
   );
@@ -38,15 +34,26 @@ test("Habilitation model", () => {
 test("Attendu: officierHabiliterUniquementPourLeDroit fonctionne correctement", () => {
   storeRece.utilisateurCourant = userDroitConsulterArchive;
   let uniquementLeDroit = officierHabiliterUniquementPourLeDroit(
-    storeRece.utilisateurCourant,
     Droit.CONSULTER_ARCHIVES
   );
   expect(uniquementLeDroit).toBe(true);
 
   storeRece.utilisateurCourant = userDroitConsulterConsulterArchive;
   uniquementLeDroit = officierHabiliterUniquementPourLeDroit(
-    storeRece.utilisateurCourant,
     Droit.CONSULTER_ARCHIVES
   );
   expect(uniquementLeDroit).toBe(false);
+});
+
+test("Utilisateur autoriser à consulter l'acte dont l'idTypeRegistre est passé", () => {
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreTUNIS;
+  const idTypeRegistre = "b66a9304-48b4-4aa3-920d-6cb27dd76c83";
+  let autoriserAConsulterActe = officierAutoriserSurLeTypeRegistre(
+    idTypeRegistre
+  );
+  expect(autoriserAConsulterActe).toBe(true);
+
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  autoriserAConsulterActe = officierAutoriserSurLeTypeRegistre(idTypeRegistre);
+  expect(autoriserAConsulterActe).toBe(false);
 });

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getLogin } from "../../../api/appels/agentApi";
 import { IDroit, IHabilitation, IProfil } from "../../../model/Habilitation";
 import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
+import { IPerimetre } from "../../../model/IPerimetre";
 import { formatNom, formatPrenom } from "../../common/util/Utils";
 
 export interface ILoginApi {
@@ -69,9 +70,22 @@ function setHabilitationsUtilisateur(habilitations: any[]): IHabilitation[] {
               nom: profilDroit.droit.nom
             } as IDroit)
         );
+      if (h.perimetre != null) {
+        habilitation.perimetre = {} as IPerimetre;
+        habilitation.perimetre.idPerimetre = h.perimetre.id;
+        habilitation.perimetre.nom = h.perimetre.nom;
+        habilitation.perimetre.description = h.perimetre.description;
+        habilitation.perimetre.estActif = h.perimetre.estActif;
+        habilitation.perimetre.listePays = h.perimetre.listePays
+          ?.toUpperCase()
+          .split(" ET ");
+        habilitation.perimetre.listeIdTypeRegistre =
+          h.perimetre.listeIdTypeRegistre;
+      }
       habilitationsUtilisateur.push(habilitation);
     });
   }
+
   return habilitationsUtilisateur;
 }
 

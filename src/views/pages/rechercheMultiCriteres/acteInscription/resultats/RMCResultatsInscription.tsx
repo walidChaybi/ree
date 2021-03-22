@@ -16,6 +16,8 @@ import {
 } from "../../../../../model/etatcivil/enum/TypeFiche";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { HeaderTableauRMCInscription } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
+import { Droit } from "../../../../../model/Droit";
+import { officierALeDroitSurLePerimetre } from "../../../../../model/IOfficierSSOApi";
 import { getValeurOuVide } from "../../../../common/util/Utils";
 
 export interface RMCResultatInscriptionProps {
@@ -84,13 +86,16 @@ export const RMCResultatsInscription: React.FC<RMCResultatInscriptionProps> = ({
   };
 
   const onClickOnLine = (idInscription: string, data: any, idx: number) => {
-    const tableau = [...etatFenetres];
-    if (tableau.indexOf(idInscription) === -1) {
-      tableau.push(idInscription);
-      setEtatFenetres(tableau);
+    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, "MEAE")) {
+      const tableau = [...etatFenetres];
+      if (tableau.indexOf(idInscription) === -1) {
+        tableau.push(idInscription);
+        setEtatFenetres(tableau);
+      }
+      setIndexClique(idx);
     }
-    setIndexClique(idx);
   };
+
   const datasFiches = dataRMCInscription.map(data => ({
     identifiant: getValeurOuVide(data.idInscription),
     categorie: getCategorieFiche(data.idInscription, dataRMCInscription)

@@ -12,7 +12,7 @@ import { MesRequetesPage } from "./MesRequetesPage";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import { getText } from "../../common/widget/Text";
 import { Droit } from "../../../model/Droit";
-import { officierHabiliterPourLeDroit } from "../../../model/Habilitation";
+import { officierHabiliterPourLeDroit } from "../../../model/IOfficierSSOApi";
 import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
 import { getUrlWithParam } from "../../common/util/route/routeUtil";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequete";
@@ -136,10 +136,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                         href={URL_REQUETES_SERVICE}
                         {...a11yProps(1)}
                         disabled={
-                          !officierHabiliterPourLeDroit(
-                            officier.officierDataState,
-                            Droit.ATTRIBUER
-                          )
+                          !officierHabiliterPourLeDroit(Droit.ATTRIBUER)
                         }
                       />
                     </Tabs>
@@ -157,10 +154,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       />
                     )}
                   </TabPanel>
-                  {officierHabiliterPourLeDroit(
-                    officier.officierDataState,
-                    Droit.ATTRIBUER
-                  ) && (
+                  {officierHabiliterPourLeDroit(Droit.ATTRIBUER) && (
                     <TabPanel value={selectedTabState} index={1}>
                       {selectedTabState === 1 && (
                         <RequetesServicePage getUrlBack={getUrlBack} />
