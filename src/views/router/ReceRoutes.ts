@@ -77,12 +77,14 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle("Déconnexion")
   },
   {
+    // FIXME: A supprimer ainsi que la page de démo correspondante
     url: URL_RC_RCA,
     component: RcRcaPage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: "Rc Rca Pacs"
   },
   {
+    // FIXME: A supprimer ainsi que la page de démo correspondante
     url: URL_ACTE,
     component: ActePage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
@@ -92,13 +94,15 @@ export const routesRece: IRoute[] = [
     url: URL_RECHERCHE_ACTE_INSCRIPTION,
     component: RMCActeInscriptionPage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Recherche acte ou inscription")
+    libelle: getLibelle("Recherche acte ou inscription"),
+    droits: [Droit.CONSULTER]
   },
   {
     url: URL_RECHERCHE_ACTE,
     component: RMCArchivesPage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Recherche acte")
+    libelle: getLibelle("Recherche acte"),
+    droits: [Droit.CONSULTER_ARCHIVES]
   },
   {
     url: URL_RECHERCHE_REQUETE,
