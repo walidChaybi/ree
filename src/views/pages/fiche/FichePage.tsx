@@ -8,8 +8,8 @@ import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import AlerteActe from "./hook/constructionComposants/acte/AlerteActe";
 import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
-import { getParamsAffichageFicheActe } from "./hook/constructionComposants/acte/FicheActeUtils";
-import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
+import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
+import { setFiche } from "./FicheUtils";
 
 export interface FichePageProps {
   dataFicheIdentifiant: string;
@@ -34,40 +34,26 @@ export const FichePage: React.FC<FichePageProps> = props => {
     props.index != null ? props.index : 0
   );
 
-  const [alerteVisible, setAlerteVisible] = useState<boolean>(false);
-
   const { dataFicheState } = useFichePageApiHook(
     dataFicheCourante.categorie,
     dataFicheCourante.identifiant
   );
 
+  const { bandeauFiche, alerteVisible, panelsFiche } = setFiche(
+    dataFicheCourante.categorie,
+    dataFicheState.data
+  );
+
   // Obligatoire pour les styles qui sont chargés dynamiquement
   useEffect(() => {
-    if (dataFicheState != null) {
+    if (dataFicheState != null && dataFicheState.data != null) {
       const event = new CustomEvent("refreshStyles");
       window.top.dispatchEvent(event);
     }
-
-    if (
-      props.fenetreExterneUtil &&
-      dataFicheState != null &&
-      dataFicheState.dataBandeau
-    ) {
-      props.fenetreExterneUtil.ref.document.title =
-        dataFicheState.dataBandeau.titreFenetre;
+    if (props.fenetreExterneUtil && bandeauFiche) {
+      props.fenetreExterneUtil.ref.document.title = bandeauFiche.titreFenetre;
     }
-
-    if (
-      FicheUtil.isActe(props.dataFicheCategorie) &&
-      dataFicheState != null &&
-      dataFicheState.data != null
-    ) {
-      const data = dataFicheState.data as IFicheActe;
-      setAlerteVisible(
-        getParamsAffichageFicheActe(data.registre.type.id).ajouterAlerte
-      );
-    }
-  }, [dataFicheState, props.fenetreExterneUtil, props.dataFicheCategorie]);
+  }, [dataFicheState, props.fenetreExterneUtil, bandeauFiche]);
 
   function setIndexFiche(index: number) {
     if (props.datasFiches && index >= 0 && index < props.datasFiches.length) {
@@ -79,10 +65,13 @@ export const FichePage: React.FC<FichePageProps> = props => {
   return (
     <div>
       {/* Le Bandeau */}
-      {dataFicheState.dataBandeau && (
+      {bandeauFiche && (
         <BandeauFiche
-          dataBandeau={dataFicheState.dataBandeau}
-          elementNumeroLigne={getElementNumeroLigne()}
+          dataBandeau={bandeauFiche}
+          elementNumeroLigne={getElementNumeroLigne(
+            bandeauFiche,
+            props.dataFicheCategorie
+          )}
         />
       )}
       <BarreNavigationSuivPrec
@@ -93,15 +82,15 @@ export const FichePage: React.FC<FichePageProps> = props => {
       {/* Le bandeau d'ajout d'alerte pour les actes */}
       {alerteVisible && <AlerteActe />}
       {/* Les Accordéons */}
-      {dataFicheState.fiche && <AccordionRece {...dataFicheState.fiche} />}
+      {panelsFiche && <AccordionRece {...panelsFiche} />}
     </div>
   );
-
-  function getElementNumeroLigne() {
-    return FicheUtil.isActe(props.dataFicheCategorie) ? (
-      <BandeauFicheActeNumero dataBandeau={dataFicheState.dataBandeau} />
-    ) : (
-      <BandeauFicheRcRcaPacsNumero dataBandeau={dataFicheState.dataBandeau} />
-    );
-  }
 };
+
+function getElementNumeroLigne(bandeau: IBandeauFiche, categorie: TypeFiche) {
+  return FicheUtil.isActe(categorie) ? (
+    <BandeauFicheActeNumero dataBandeau={bandeau} />
+  ) : (
+    <BandeauFicheRcRcaPacsNumero dataBandeau={bandeau} />
+  );
+}

@@ -10,9 +10,9 @@ import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import { FicheUtil } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 
-export function getInteresse(retourBack: IFicheRcRca): AccordionPartProps[] {
+export function getInteresse(rcrca: IFicheRcRca): AccordionPartProps[] {
   const sortedInteresses = triListeObjetsSurPropriete(
-    [...retourBack.interesses],
+    [...rcrca.interesses],
     "numeroOrdreSaisi"
   );
 
@@ -20,7 +20,7 @@ export function getInteresse(retourBack: IFicheRcRca): AccordionPartProps[] {
     interesse => {
       return {
         contentsPart: {
-          contents: FicheUtil.isFicheRca(retourBack.categorie)
+          contents: FicheUtil.isFicheRca(rcrca.categorie)
             ? getInteresseInfoRca(interesse)
             : getInteresseInfo(interesse),
           title: getText("vue-rc-interesse", [interesse.numeroOrdreSaisi])
@@ -29,13 +29,13 @@ export function getInteresse(retourBack: IFicheRcRca): AccordionPartProps[] {
     }
   );
 
-  if (retourBack.mariageInteresses) {
+  if (rcrca.mariageInteresses) {
     interessePart.push({
       contentsPart: {
         contents: [
           {
             libelle: "",
-            value: <Mariage {...retourBack.mariageInteresses} />
+            value: <Mariage {...rcrca.mariageInteresses} />
           }
         ]
       },

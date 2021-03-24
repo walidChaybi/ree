@@ -17,93 +17,87 @@ import {
 import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 
 export function getInscriptionRepertoireCivil(
-  retourBack: IFicheRcRca
+  rcrca: IFicheRcRca
 ): AccordionPartProps {
   return {
     contentsPart: {
-      contents: FicheUtil.isFicheRca(retourBack.categorie)
-        ? getInteresseRca(retourBack)
-        : getInteresseRc(retourBack),
-      title: FicheUtil.isFicheRca(retourBack.categorie)
+      contents: FicheUtil.isFicheRca(rcrca.categorie)
+        ? getInteresseRca(rcrca)
+        : getInteresseRc(rcrca),
+      title: FicheUtil.isFicheRca(rcrca.categorie)
         ? "Inscription au répertoire civil annexe"
         : "Inscription au répertoire civil"
     }
   };
 }
 
-function getInteresseRc(retourBack: IFicheRcRca): AccordionContentProps[] {
+function getInteresseRc(rcrca: IFicheRcRca): AccordionContentProps[] {
   return [
     {
       libelle: "Nature",
-      value: retourBack.nature.libelle
+      value: rcrca.nature.libelle
     },
     {
       libelle: "Mandataire(s)",
-      value: retourBack.mandataires
-        ? retourBack.mandataires
+      value: rcrca.mandataires
+        ? rcrca.mandataires
             .map(mandataire => MandataireUtil.getLibelle(mandataire))
             .join(" / ")
         : ""
     },
     {
       libelle: "Type inscription",
-      value: getTypeInscription(retourBack)
+      value: getTypeInscription(rcrca)
     },
     {
       libelle: "Inscription(s) liée(s)",
-      value: retourBack.inscriptionsLiees ? (
-        <InscriptionsLiees inscriptionsLiees={retourBack.inscriptionsLiees} />
+      value: rcrca.inscriptionsLiees ? (
+        <InscriptionsLiees inscriptionsLiees={rcrca.inscriptionsLiees} />
       ) : (
         ""
       )
     },
     {
       libelle: "Date d'inscription",
-      value: retourBack.dateInscription
-        ? getDateString(getDateFromTimestamp(retourBack.dateInscription))
-        : ""
+      value: rcrca.dateInscription ? getDateString(rcrca.dateInscription) : ""
     },
     {
       libelle: "Durée inscription",
-      value: getUniteDuree(retourBack.duree)
+      value: getUniteDuree(rcrca.duree)
     },
     {
       libelle: "Date fin de mesure",
       value:
-        retourBack.duree && retourBack.duree.dateFinDeMesure
-          ? getDateString(
-              getDateFromTimestamp(retourBack.duree.dateFinDeMesure)
-            )
+        rcrca.duree && rcrca.duree.dateFinDeMesure
+          ? getDateString(getDateFromTimestamp(rcrca.duree.dateFinDeMesure))
           : ""
     }
   ];
 }
 
-function getInteresseRca(retourBack: IFicheRcRca): AccordionContentProps[] {
+function getInteresseRca(rcrca: IFicheRcRca): AccordionContentProps[] {
   return [
     {
       libelle: "Nature",
-      value: retourBack.nature.libelle
+      value: rcrca.nature.libelle
     },
     {
       libelle: "Type inscription",
-      value: getTypeInscription(retourBack)
+      value: getTypeInscription(rcrca)
     },
 
     {
       libelle: "Date d'inscription",
-      value: retourBack.dateInscription
-        ? getDateString(getDateFromTimestamp(retourBack.dateInscription))
-        : ""
+      value: rcrca.dateInscription ? getDateString(rcrca.dateInscription) : ""
     }
   ];
 }
 
-function getTypeInscription(retourBack: IFicheRcRca): JSX.Element {
+function getTypeInscription(rcrca: IFicheRcRca): JSX.Element {
   return (
     <span>
-      {InscriptionRcUtil.getLibelle(retourBack.typeInscription)}
-      {retourBack.inscriptionsImpactees?.map((inscription, index) => (
+      {InscriptionRcUtil.getLibelle(rcrca.typeInscription)}
+      {rcrca.inscriptionsImpactees?.map((inscription, index) => (
         <span key={`link-fiche-rc-${inscription.id || ""}`}>
           {index === 0 ? " (" : ""}
           {`RC n°`}
@@ -113,7 +107,7 @@ function getTypeInscription(retourBack: IFicheRcRca): JSX.Element {
             numero={`${inscription.annee} - ${inscription.numero}`}
           />
 
-          {retourBack.inscriptionsImpactees.length - 1 === index ? ")" : ", "}
+          {rcrca.inscriptionsImpactees.length - 1 === index ? ")" : ", "}
         </span>
       ))}
     </span>

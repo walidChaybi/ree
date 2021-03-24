@@ -18,9 +18,9 @@ export interface IFicheRcRca {
   categorie: TypeFiche;
   annee: string;
   numero: string;
-  dateInscription: number;
-  dateDerniereMaj: number;
-  dateDerniereDelivrance: number;
+  dateInscription: Date;
+  dateDerniereMaj: Date;
+  dateDerniereDelivrance: Date;
   alertes: IAlerte[];
   decision: IDecisionRc;
   mariageInteresses: IMariageInteresse;

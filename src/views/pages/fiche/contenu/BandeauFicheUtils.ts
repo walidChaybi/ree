@@ -6,10 +6,7 @@ import {
   AlerteInscriptionUtil
 } from "../../../../model/etatcivil/enum/AlerteInscription";
 import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
-import {
-  getDateFromTimestamp,
-  getDateString
-} from "../../../common/util/DateUtils";
+import { getDateString } from "../../../common/util/DateUtils";
 import { getFicheTitle } from "../FicheUtils";
 import IFournisseurDonneesBandeau from "./fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
 import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
@@ -40,12 +37,8 @@ export function setDataBandeau(
       statutsFiche: setStatuts(data.statutsFiche),
       personnes: fournisseurDonneesBandeau.getSimplePersonnes(),
       alertes: setAlertes(data.alertes),
-      dateDerniereMaj: getDateString(
-        getDateFromTimestamp(data.dateDerniereMaj)
-      ),
-      dateDerniereDelivrance: getDateString(
-        getDateFromTimestamp(data.dateDerniereDelivrance)
-      )
+      dateDerniereMaj: getDateString(data.dateDerniereMaj),
+      dateDerniereDelivrance: getDateString(data.dateDerniereDelivrance)
     };
   }
 

@@ -1,80 +1,59 @@
 import { useEffect, useState } from "react";
 import { getInformationsFiche } from "../../../../api/appels/etatcivilApi";
-import { AccordionReceProps } from "../../../common/widget/accordion/AccordionRece";
-import { getPanelsRc } from "./constructionComposants/rcrca/FicheRcUtils";
-import { setDataBandeau } from "../contenu/BandeauFicheUtils";
 import { IInteresse } from "../../../../model/etatcivil/fiche/IInteresse";
 import { IFicheRcRca } from "../../../../model/etatcivil/fiche/IFicheRcRca";
-import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
-import { getPanelsRca } from "./constructionComposants/rcrca/FicheRcaUtils";
-import { fournisseurDonneesBandeauFactory } from "../contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { AutresNoms } from "../../../../model/etatcivil/enum/AutresNoms";
 import { IPersonne } from "../../../../model/etatcivil/commun/IPersonne";
 import { IAutresNoms } from "../../../../model/etatcivil/commun/IAutresNoms";
 import { IFicheLien } from "../../../../model/etatcivil/commun/IFicheLien";
 import { ILieuEvenement } from "../../../../model/etatcivil/commun/ILieuEvenement";
 import {
-  getFormatDateFromTimestamp,
+  getDateFromTimestamp,
   IDateCompose
 } from "../../../common/util/DateUtils";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
-
 import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
-import { getPanelsPacs } from "./constructionComposants/pacs/FichePacsUtils";
 import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
 import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
 import { IPartenaire } from "../../../../model/etatcivil/pacs/IPartenaire";
-import { getPanelsActe } from "./constructionComposants/acte/FicheActeUtils";
 import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
 import { logError } from "../../../common/util/LogManager";
 import { formatNom, formatPrenom } from "../../../common/util/Utils";
 import { IRegistre } from "../../../../model/etatcivil/acte/IRegistre";
 import { ITypeRegistre } from "../../../../model/etatcivil/acte/ITypeRegistre";
+import { NatureRc } from "../../../../model/etatcivil/enum/NatureRc";
+import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
 
-export interface IFicheApi {
-  dataBandeau: IBandeauFiche;
-  fiche: AccordionReceProps;
+export interface IDataFicheApi {
   data: any;
 }
 
 export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
-  const [dataFicheState, setDataFicheState] = useState<IFicheApi>(
-    {} as IFicheApi
+  const [dataFicheState, setDataFicheState] = useState<IDataFicheApi>(
+    {} as IDataFicheApi
   );
-
   useEffect(() => {
     if (identifiant != null && categorie != null) {
       getInformationsFiche(categorie.toLowerCase(), identifiant)
         .then((result: any) => {
-          const dataFiche = {} as IFicheApi;
+          const dataFiche = {} as IDataFicheApi;
 
-          dataFiche.dataBandeau = setDataBandeau(
-            categorie,
-            fournisseurDonneesBandeauFactory.createFournisseur(
-              categorie,
-              result.body.data
-            )
-          );
           switch (categorie) {
             case TypeFiche.RC:
               dataFiche.data = mapRcRca(result.body.data);
-              dataFiche.fiche = getPanelsRc(dataFiche.data);
               break;
 
             case TypeFiche.RCA:
               dataFiche.data = mapRcRca(result.body.data);
-              dataFiche.fiche = getPanelsRca(dataFiche.data);
               break;
 
             case TypeFiche.PACS:
               dataFiche.data = mapPacs(result.body.data);
-              dataFiche.fiche = getPanelsPacs(dataFiche.data);
               break;
 
             case TypeFiche.ACTE:
               dataFiche.data = mapActe(result.body.data);
-              dataFiche.fiche = getPanelsActe(dataFiche.data);
               break;
 
             default:
@@ -98,21 +77,65 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
   };
 }
 
-function mapRcRca(retourBack: any): IFicheRcRca {
-  const dataRcRca = retourBack as IFicheRcRca;
+function mapRcRca(data: any): IFicheRcRca {
+  const dataRcRca: IFicheRcRca = data;
   if (dataRcRca.interesses !== undefined) {
     dataRcRca.interesses.forEach(interesse =>
       harmoniserNomPrenomsInteresse(interesse)
     );
   }
+  dataRcRca.dateDerniereDelivrance = getDateFromTimestamp(
+    data.dateDerniereDelivrance
+  );
+  dataRcRca.dateDerniereMaj = getDateFromTimestamp(data.dateDerniereMaj);
+  dataRcRca.dateInscription = getDateFromTimestamp(data.dateInscription);
 
-  return {
-    ...dataRcRca,
-    personnes: mapPersonnes(dataRcRca.personnes, dataRcRca)
-  };
+  dataRcRca.personnes = mapPersonnes(data.personnes, data.numero);
+
+  dataRcRca.nature =
+    data.categorie === "rc"
+      ? NatureRc.getEnumFor(data.nature)
+      : NatureRca.getEnumFor(data.nature);
+
+  return dataRcRca;
 }
 
-function mapPersonnes(personnes: any, retourBack: any): IPersonne[] {
+export function mapPacs(data: any) {
+  const dataPacs: IFichePacs = data;
+  if (data.partenaires) {
+    data.partenaires.forEach((p: any) => {
+      (p as IPartenaire).nationalite = Nationalite.getEnumFor(p.nationalite);
+    });
+  }
+  dataPacs.dateDerniereDelivrance = getDateFromTimestamp(
+    data.dateDerniereDelivrance
+  );
+  dataPacs.dateDerniereMaj = getDateFromTimestamp(data.dateDerniereMaj);
+  dataPacs.dateEnregistrementParAutorite = getDateFromTimestamp(
+    data.dateEnregistrementParAutorite
+  );
+  dataPacs.dateInscription = getDateFromTimestamp(data.dateInscription);
+
+  dataPacs.personnes = mapPersonnes(data.personnes, data.numero);
+
+  return dataPacs;
+}
+
+export function mapActe(data: any): IFicheActe {
+  const dataActe: IFicheActe = data;
+  dataActe.nature = NatureActe.getEnumFor(data.nature);
+  dataActe.registre = mapRegistre(data.registre);
+  dataActe.dateDerniereDelivrance = getDateFromTimestamp(
+    data.dateDerniereDelivrance
+  );
+  dataActe.dateDerniereMaj = getDateFromTimestamp(data.dateDerniereMaj);
+
+  dataActe.personnes = mapPersonnes(data.personnes, data.numero);
+
+  return dataActe;
+}
+
+function mapPersonnes(personnes: any, numero: any): IPersonne[] {
   return personnes.map((personne: any) => {
     return {
       ...personne,
@@ -125,7 +148,7 @@ function mapPersonnes(personnes: any, retourBack: any): IPersonne[] {
       actes:
         personne.actes &&
         personne.actes
-          .filter((acte: any) => acte.numero !== retourBack.numero)
+          .filter((acte: any) => acte.numero !== numero)
           .map((acte: any) => {
             return {
               ...acte,
@@ -134,17 +157,13 @@ function mapPersonnes(personnes: any, retourBack: any): IPersonne[] {
           }),
       pacss:
         personne.pacss &&
-        personne.pacss.filter(
-          (pacs: IFicheLien) => pacs.numero !== retourBack.numero
-        ),
+        personne.pacss.filter((pacs: IFicheLien) => pacs.numero !== numero),
       rcas:
         personne.rcas &&
-        personne.rcas.filter(
-          (rca: IFicheLien) => rca.numero !== retourBack.numero
-        ),
+        personne.rcas.filter((rca: IFicheLien) => rca.numero !== numero),
       rcs:
         personne.rcs &&
-        personne.rcs.filter((rc: IFicheLien) => rc.numero !== retourBack.numero)
+        personne.rcs.filter((rc: IFicheLien) => rc.numero !== numero)
     };
   });
 }
@@ -182,26 +201,6 @@ function mapDatePersonne(date: any): IDateCompose {
     : ({} as IDateCompose);
 }
 
-export function mapPacs(data: any) {
-  const pacs: IFichePacs = data;
-  if (data.partenaires) {
-    data.partenaires.forEach((p: any) => {
-      (p as IPartenaire).nationalite = Nationalite.getEnumFor(p.nationalite);
-    });
-  }
-  pacs.dateDerniereDelivrance = getFormatDateFromTimestamp(
-    data.dateDerniereDelivrance
-  );
-  pacs.dateDerniereMaj = getFormatDateFromTimestamp(data.dateDerniereMaj);
-  pacs.dateEnregistrementParAutorite = getFormatDateFromTimestamp(
-    data.dateEnregistrementParAutorite
-  );
-  pacs.dateInscription = getFormatDateFromTimestamp(data.dateInscription);
-
-  pacs.personnes = mapPersonnes(data.personnes, data);
-  return pacs;
-}
-
 export function mapRegistre(data: any) {
   let registre = {} as IRegistre;
   if (data) {
@@ -209,15 +208,6 @@ export function mapRegistre(data: any) {
     registre.type = data.type as ITypeRegistre;
   }
   return registre;
-}
-
-export function mapActe(data: any): IFicheActe {
-  const dataActe = data as IFicheActe;
-  dataActe.nature = NatureActe.getEnumFor(data.nature);
-  dataActe.personnes = mapPersonnes(data.personnes, data);
-  dataActe.registre = mapRegistre(data.registre);
-
-  return dataActe;
 }
 
 export function convertToBlob(base64: string): Blob {

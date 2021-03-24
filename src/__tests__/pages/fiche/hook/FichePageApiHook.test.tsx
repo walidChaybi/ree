@@ -16,10 +16,8 @@ const HookConsummerRc: React.FC = () => {
 
   return (
     <>
-      {dataFicheState && dataFicheState.dataBandeau && (
-        <div data-testid={"test-fiche-hook"}>
-          {dataFicheState.dataBandeau.identifiant}
-        </div>
+      {dataFicheState && dataFicheState.data && (
+        <div data-testid={"test-fiche-hook"}>{dataFicheState.data.id}</div>
       )}
     </>
   );
@@ -33,10 +31,8 @@ const HookConsummerRca: React.FC = () => {
 
   return (
     <>
-      {dataFicheState && dataFicheState.dataBandeau && (
-        <div data-testid={"test-fiche-hook-rca"}>
-          {dataFicheState.dataBandeau.identifiant}
-        </div>
+      {dataFicheState && dataFicheState.data && (
+        <div data-testid={"test-fiche-hook-rca"}>{dataFicheState.data.id}</div>
       )}
     </>
   );
@@ -50,10 +46,8 @@ const HookConsummerPacs: React.FC = () => {
 
   return (
     <>
-      {dataFicheState && dataFicheState.dataBandeau && (
-        <div data-testid={"test-fiche-hook-pacs"}>
-          {dataFicheState.dataBandeau.identifiant}
-        </div>
+      {dataFicheState && dataFicheState.data && (
+        <div data-testid={"test-fiche-hook-pacs"}>{dataFicheState.data.id}</div>
       )}
     </>
   );
@@ -67,10 +61,8 @@ const HookConsummerActe: React.FC = () => {
 
   return (
     <>
-      {dataFicheState && dataFicheState.dataBandeau && (
-        <div data-testid={"test-fiche-hook-acte"}>
-          {dataFicheState.dataBandeau.identifiant}
-        </div>
+      {dataFicheState && dataFicheState.data && (
+        <div data-testid={"test-fiche-hook-acte"}>{dataFicheState.data.id}</div>
       )}
     </>
   );

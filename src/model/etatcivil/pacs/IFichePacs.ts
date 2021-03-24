@@ -11,11 +11,11 @@ export interface IFichePacs {
   id: string;
   numero: string;
   annee: string;
-  dateDerniereMaj: string;
-  dateDerniereDelivrance: string;
+  dateDerniereMaj: Date;
+  dateDerniereDelivrance: Date;
   statut: StatutPacs;
-  dateEnregistrementParAutorite: string;
-  dateInscription: string;
+  dateEnregistrementParAutorite: Date;
+  dateInscription: Date;
   autorite: IAutorite;
   annulation?: IAnnulation;
   dissolution?: IDissolution;

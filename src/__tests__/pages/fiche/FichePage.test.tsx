@@ -14,19 +14,15 @@ beforeEach(() => {
 });
 
 test("rendersFichePage render correcty", async () => {
-  await act(async () => {
-    render(
-      <FichePage
-        dataFiche={{
-          identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
-          categorie: TypeFiche.RC
-        }}
-      />
-    );
+  render(
+    <FichePage
+      dataFicheIdentifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
+      dataFicheCategorie={TypeFiche.RC}
+    />
+  );
 
-    await waitFor(() => {
-      expect(fct).toHaveBeenCalledTimes(1);
-    });
+  await waitFor(() => {
+    expect(fct).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -1,3 +1,4 @@
+import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
 import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
 
 export const bandeauActe: IBandeauFiche = {
@@ -20,8 +21,8 @@ export const acte: any = {
   modeCreation: "DRESSE",
   statut: "ANNULE",
   dateStatut: 1045609200000,
-  nature: "ABSENCE",
-  numero: "413",
+  nature: new NatureActe("Absence"),
+  numero: "410",
   numeroBisTer: "681",
   nomOec: "MARTIN",
   prenomOec: "JULIE",
@@ -195,8 +196,8 @@ export const acte1: any = {
   modeCreation: "DRESSE",
   statut: "ANNULE",
   dateStatut: 1045609200000,
-  nature: "ABSENCE",
-  numero: "413",
+  nature: new NatureActe("ABSENCE"),
+  numero: "411",
   numeroBisTer: "681",
   nomOec: "MARTIN",
   prenomOec: "JULIE",
@@ -370,8 +371,8 @@ export const acte2: any = {
   modeCreation: "DRESSE",
   statut: "ANNULE",
   dateStatut: 1045609200000,
-  nature: "ABSENCE",
-  numero: "414",
+  nature: new NatureActe("Absence"),
+  numero: "412",
   numeroBisTer: "681",
   nomOec: "MARTIN",
   prenomOec: "JULIE",
@@ -545,7 +546,7 @@ export const acte3: any = {
   modeCreation: "DRESSE",
   statut: "ANNULE",
   dateStatut: 1045609200000,
-  nature: "ABSENCE",
+  nature: new NatureActe("Absence"),
   numero: "413",
   numeroBisTer: "681",
   nomOec: "MARTIN",
@@ -714,13 +715,13 @@ export const acte3: any = {
 };
 
 export const acte4: any = {
-  id: "2748bb45-22cd-41ea-90db-0483b8ffc8a8",
+  id: "2748bb45-22cd-41ea-90db-0483b8ffc8a9",
   dateInitialisation: 1405980000000,
   dateCreation: 1256943600000,
   modeCreation: "DRESSE",
   statut: "ANNULE",
   dateStatut: 1045609200000,
-  nature: "ABSENCE",
+  nature: new NatureActe("Absence"),
   numero: "414",
   numeroBisTer: "681",
   nomOec: "MARTIN",

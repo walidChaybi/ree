@@ -13,21 +13,19 @@ import {
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
 
-export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
+export function getDecision(rcrca: IFicheRcRca): AccordionPartProps[] {
   let contentsDecision: AccordionContentProps[] = [];
 
-  if (
-    TypeAutoriteUtil.isJuridiction(retourBack.decision.autorite.typeAutorite)
-  ) {
+  if (TypeAutoriteUtil.isJuridiction(rcrca.decision.autorite.typeAutorite)) {
     contentsDecision = [
-      ...getContentJuridiction(retourBack.decision, retourBack.categorie)
+      ...getContentJuridiction(rcrca.decision, rcrca.categorie)
     ];
   } else if (
-    TypeAutoriteUtil.isNotaire(retourBack.decision.autorite.typeAutorite) ||
-    (TypeAutoriteUtil.isOnac(retourBack.decision.autorite.typeAutorite) &&
-      FicheUtil.isFicheRca(retourBack.categorie))
+    TypeAutoriteUtil.isNotaire(rcrca.decision.autorite.typeAutorite) ||
+    (TypeAutoriteUtil.isOnac(rcrca.decision.autorite.typeAutorite) &&
+      FicheUtil.isFicheRca(rcrca.categorie))
   ) {
-    contentsDecision = [...getContentNotaire(retourBack.decision)];
+    contentsDecision = [...getContentNotaire(rcrca.decision)];
   }
 
   const decision: AccordionPartProps[] = [
@@ -40,16 +38,13 @@ export function getDecision(retourBack: IFicheRcRca): AccordionPartProps[] {
   ];
 
   if (
-    retourBack.decision.sourceConfirmation != null &&
-    retourBack.decision.type != null
+    rcrca.decision.sourceConfirmation != null &&
+    rcrca.decision.type != null
   ) {
     decision.push({
       contentsPart: {
         contents: [
-          ...getContentConfirmationDecision(
-            retourBack.decision,
-            retourBack.categorie
-          )
+          ...getContentConfirmationDecision(rcrca.decision, rcrca.categorie)
         ],
         title: "Confirmée par la décision"
       }
