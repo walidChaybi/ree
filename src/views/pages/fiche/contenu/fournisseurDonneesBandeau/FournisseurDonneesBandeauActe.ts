@@ -1,4 +1,4 @@
-import {FournisseurDonneesBandeau} from "./FournisseurDonneesBandeau";
+import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 import {
   formatDe,
   formatNom,
@@ -8,7 +8,7 @@ import {
   premiereLettreEnMajusculeLeResteEnMinuscule,
   triListeObjetsSurPropriete
 } from "../../../../common/util/Utils";
-import {SimplePersonne} from "./IFournisseurDonneesBandeau";
+import { SimplePersonne } from "./IFournisseurDonneesBandeau";
 
 export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   getPersonnesAsAny(): any[] {
@@ -21,16 +21,15 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
     return this.personnes.map(
       (p: any) =>
         new SimplePersonne(
-            formatNom(p.nom),
-            formatPrenom(getPremierElemOuVide(p.prenoms)
-            )
+          formatNom(p.nom),
+          formatPrenom(getPremierElemOuVide(p.prenoms))
         )
     );
   }
 
   getTypeAbrege(): string {
     return this.data
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(this.data.nature)
+      ? premiereLettreEnMajusculeLeResteEnMinuscule(this.data.nature.libelle)
       : "";
   }
 
@@ -38,9 +37,9 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
     let res = "";
     if (this.data) {
       const nature = premiereLettreEnMajusculeLeResteEnMinuscule(
-        this.data.nature
+        this.data.nature.libelle
       );
-      const de = formatDe(this.data.nature);
+      const de = formatDe(this.data.nature.libelle);
       res = `Acte ${de}${nature}`;
     }
     return res;

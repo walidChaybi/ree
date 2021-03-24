@@ -46,7 +46,7 @@ test("Ouverture d'un acte", async () => {
     fireEvent.click(ligne);
   });
 
-  const titreBandeau = "ACTE D'ABSENCE N° 1921 - 413";
+  const titreBandeau = "ACTE D'ABSENCE N° 1921 - 410";
   const titreAccordeaon = "Résumé de l'acte";
 
   await waitFor(() => {
@@ -90,7 +90,7 @@ test("Ouverture d'un acte et navigation via bouton Suivant", async () => {
     fireEvent.click(ligne);
   });
 
-  const titreBandeau = "ACTE D'ABSENCE N° 1921 - 413";
+  const titreBandeau = "ACTE D'ABSENCE N° 1921 - 411";
 
   await verifieFiche(titreBandeau);
 
@@ -100,7 +100,7 @@ test("Ouverture d'un acte et navigation via bouton Suivant", async () => {
     fireEvent.click(suivant);
   });
 
-  const titreBandeau2 = "ACTE D'ABSENCE N° 1922 - 414";
+  const titreBandeau2 = "ACTE D'ABSENCE N° 1922 - 412";
 
   await verifieFiche(titreBandeau2);
 });
@@ -130,7 +130,7 @@ test("Ouverture d'un acte et navigation via bouton Précédent", async () => {
 
   const precedent = screen.getByTitle("Précédent");
 
-  act(() => {
+  await act(async () => {
     fireEvent.click(precedent);
   });
 

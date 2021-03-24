@@ -17,29 +17,26 @@ import {
 } from "../../../../../../model/etatcivil/commun/IAutorite";
 import { formatPrenom, formatNom } from "../../../../../common/util/Utils";
 
-export function getAutorite(retourBack: IFicheRcRca): AccordionPartProps[] {
+export function getAutorite(rcrca: IFicheRcRca): AccordionPartProps[] {
   const autorite: AccordionPartProps[] = [
     {
       contentsPart: {
-        contents: getContentAutorite(
-          retourBack.decision.autorite,
-          retourBack.categorie
-        )
+        contents: getContentAutorite(rcrca.decision.autorite, rcrca.categorie)
       }
     }
   ];
 
   if (
-    retourBack.decision.sourceConfirmation != null &&
+    rcrca.decision.sourceConfirmation != null &&
     TypeAutoriteUtil.isJuridiction(
-      retourBack.decision.sourceConfirmation.autorite.typeAutorite
+      rcrca.decision.sourceConfirmation.autorite.typeAutorite
     )
   ) {
     autorite.push({
       contentsPart: {
         contents: getContentAutorite(
-          retourBack.decision.sourceConfirmation.autorite,
-          retourBack.categorie
+          rcrca.decision.sourceConfirmation.autorite,
+          rcrca.categorie
         )
       }
     });

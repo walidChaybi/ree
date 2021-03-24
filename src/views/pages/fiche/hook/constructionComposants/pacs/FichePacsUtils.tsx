@@ -23,6 +23,7 @@ import {
 } from "../../../../../../model/etatcivil/pacs/IDissolution";
 import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
 import { getFichesPersonne } from "../personne/FichePersonne";
+import { getDateString } from "../../../../../common/util/DateUtils";
 
 export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
   const panelAreas: AccordionPanelAreaProps[] = [];
@@ -125,12 +126,12 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
         },
         {
           libelle: "Date d'enregistrement (par l'autorité)",
-          value: pacs.dateEnregistrementParAutorite
+          value: getDateString(pacs.dateEnregistrementParAutorite)
         },
 
         {
           libelle: "Date d'inscription au registre",
-          value: pacs.dateInscription
+          value: getDateString(pacs.dateInscription)
         }
       ]
     }
@@ -147,7 +148,7 @@ function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
         ...getContentNotaire(pacs.autorite),
         {
           libelle: "Date",
-          value: pacs.dateEnregistrementParAutorite
+          value: getDateString(pacs.dateEnregistrementParAutorite)
         }
       ]
     }

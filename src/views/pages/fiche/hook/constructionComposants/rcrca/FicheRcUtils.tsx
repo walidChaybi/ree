@@ -7,21 +7,19 @@ import { getAutorite } from "./AutoriteUtils";
 import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
 import { getFichesPersonne } from "../personne/FichePersonne";
 
-export function getPanelsRc(retourBack: IFicheRcRca): AccordionReceProps {
-  const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(
-    retourBack.personnes
-  );
+export function getPanelsRc(rc: IFicheRcRca): AccordionReceProps {
+  const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(rc.personnes);
   return {
     panels: [
       {
         panelAreas: [
-          { parts: [getInscriptionRepertoireCivil(retourBack)] },
+          { parts: [getInscriptionRepertoireCivil(rc)] },
           {
-            parts: getInteresse(retourBack),
+            parts: getInteresse(rc),
             nbColonne: 2
           },
-          { parts: getDecision(retourBack), nbColonne: 2 },
-          { parts: getAutorite(retourBack), title: "Autorité", nbColonne: 2 }
+          { parts: getDecision(rc), nbColonne: 2 },
+          { parts: getAutorite(rc), title: "Autorité", nbColonne: 2 }
         ],
         title: "Vue du RC"
       },

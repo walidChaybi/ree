@@ -13,6 +13,8 @@ export interface IFicheActe {
   personnes: IPersonne[];
   compositionCorps?: ICompositionCorps;
   registre: IRegistre;
+  dateDerniereMaj: Date;
+  dateDerniereDelivrance: Date;
 }
 
 export const FicheActe = {
