@@ -60,6 +60,11 @@ Button,
   &:disabled {
     background-color: $disabled-button;
     pointer-events: none;
+    &:focus,
+    &:hover {
+      box-shadow: none;
+    }
+    cursor: default;
   }
 
   &:link {
