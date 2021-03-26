@@ -30,7 +30,8 @@ export type NomComposant =
   | "BoutonAccueilRechercheActe"
   | "BoutonAccueilTableau"
   | "AlerteActe"
-  | "MenuSaisirRequete";
+  | "MenuSaisirRequete"
+  | "TabPanelMesRequetes";
 
 export type NomComposantOuFonction = NomComposant | NomFonction;
 
@@ -61,7 +62,7 @@ export const droitsSaufConsulterArchives = [
 export const habilitationsDescription: IHabiliationDescription[] = [
   {
     nomComposant: "LinkTabMesRequetes",
-    tousLesDroits: [Droit.ATTRIBUER],
+    unDesDroits: [Droit.ATTRIBUER],
     comportementSiNonAutorise: { disabled: true }
   },
   {
@@ -127,5 +128,9 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     nomComposant: "MenuSaisirRequete",
     tousLesDroits: etape2([Droit.SAISIR_REQUETE]),
     comportementSiNonAutorise: { disabled: true }
+  },
+  {
+    nomComposant: "TabPanelMesRequetes",
+    visiblePourLesDroits: [Droit.ATTRIBUER]
   }
 ];

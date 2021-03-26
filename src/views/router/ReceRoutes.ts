@@ -19,7 +19,10 @@ import {
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_REQUETE,
   URL_MES_REQUETES_SAISIR_REQUETE,
-  URL_REQUETES_SERVICE_SAISIR_REQUETE
+  URL_REQUETES_SERVICE_SAISIR_REQUETE,
+  URL_APPERCU_REQUETE_TRAITEMENT_ID,
+  URL_APPERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_APPERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID
 } from "./ReceUrls";
 import { RcRcaPage } from "../pages/RcRcaPage";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
@@ -32,6 +35,8 @@ import { RMCArchivesPage } from "../pages/rechercheMultiCriteres/acteInscription
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { IRoute } from "../common/util/route/IRoute";
 import { SaisirRequetePage } from "../pages/saisirRequete/SaisirRequetePage";
+import { ApercuRequetePriseEnChargePage } from "../pages/apercuRequete/ApercuRequetePriseEnChargePage";
+import { ApercuRequeteTraitementPage } from "../pages/apercuRequete/ApercuRequeteTraitementPage";
 
 export const routesRece: IRoute[] = [
   {
@@ -123,5 +128,26 @@ export const routesRece: IRoute[] = [
     droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle("Saisir une requête")
+  },
+  {
+    url: URL_APPERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    component: ApercuRequetePriseEnChargePage,
+    //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Aperçu requête (prise en charge)")
+  },
+  {
+    url: URL_APPERCU_REQUETE_TRAITEMENT_ID,
+    component: ApercuRequeteTraitementPage,
+    //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Aperçu requête (traitement)")
+  },
+  {
+    url: URL_APPERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
+    component: ApercuRequeteTraitementPage,
+    //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Aperçu requête (traitement)")
   }
 ];

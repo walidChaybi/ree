@@ -4,16 +4,47 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { Route, MemoryRouter } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Categorie } from "./Categorie";
-import {
-  URL_SEPARATEUR,
-  URL_CONTEXT_APP,
-  URL_ACCUEIL
-} from "../../../router/ReceUrls";
-import { UUID } from "../../../../ressources/Regex";
+import { URL_CONTEXT_APP, URL_ACCUEIL } from "../../../router/ReceUrls";
 import { getLibelle } from "../Text";
 import { IRoute } from "../../util/route/IRoute";
-import { urlWithParamPatern } from "../../util/route/routeUtil";
+import {
+  urlWithParamPatern,
+  URL_SEPARATEUR,
+  getUrlWithoutIdParam,
+  isPathElemId
+} from "../../util/route/routeUtil";
 
+// Gère l'empilement des urls visités par l'utilisateur
+class GestionnaireNavigation {
+  private urls: string[] = [];
+
+  urlStartsWith(url1: string, url2: string) {
+    return getPathElements(url1)
+      .join()
+      .startsWith(getPathElements(url2).join());
+  }
+
+  addUrl(url: string) {
+    const newUrls: string[] = [];
+    let idx = 0;
+    while (idx < this.urls.length && !this.urlStartsWith(this.urls[idx], url)) {
+      newUrls.push(this.urls[idx]);
+      idx++;
+    }
+    newUrls.push(url);
+    this.urls = newUrls;
+  }
+
+  getUrl(index: number) {
+    return this.urls[index];
+  }
+
+  getUrls() {
+    return this.urls;
+  }
+}
+
+export const gestionnaireNavigation = new GestionnaireNavigation();
 interface FilArianeProps {
   setRetourState?: (retourUrl: string) => void;
   routes: IRoute[];
@@ -24,9 +55,13 @@ export const FilAriane: React.FC<FilArianeProps> = ({
   routes
 }) => {
   const history = useHistory();
-
-  const pagesInfos = buildPagesInfos(history.location.pathname, routes);
-
+  const locationPathName = history.location.pathname;
+  gestionnaireNavigation.addUrl(locationPathName);
+  const pagesInfos = buildPagesInfos(
+    history.location.pathname,
+    routes,
+    gestionnaireNavigation
+  );
   if (setRetourState !== undefined) {
     setRetourContextValue(pagesInfos, setRetourState);
   }
@@ -91,13 +126,36 @@ interface IPageInfo {
   derniere: boolean;
 }
 
-export function buildPagesInfos(path: string, routes: IRoute[]) {
+export function buildPagesInfos(
+  path: string,
+  routes: IRoute[],
+  gestNavigation: GestionnaireNavigation
+) {
   const pagesInfos: IPageInfo[] = [];
   const pathElements = getPathElements(path);
+  const navigationUrls = gestNavigation.getUrls();
 
+  // Pour chaque partie de l'url (/a/b/c => a, a/b, a/b/c) on construit un objet IPageInfo
   pathElements.forEach((pathElem, idx) => {
-    const url = getUrlFromNPathElements(pathElements, idx);
+    let url = getUrlFromNPathElements(pathElements, idx);
+    // Gère le cas ou l'utilisateur navigue d'une page avec un identifiant dans l'url vers une autre page (avec identifiant dans l'url ou pas)
+    // Dans ce cas le gestionnaire de navigation permet de retrouver l'url avec le bon identifiant
+    const indexAPartirDeLaFinDePathElements = pathElements.length - 1 - idx;
+    // Dans le cas d'un accès par favoris puis d'une navigation, les urls dans le gestionnaire de navigation peuvent être [a/b/c, a/b/c/d] et dans pathElements: [a, a/b, a/b/c, a/b/c/d]
+    //   Donc on voit que les urls du gestionnaire de navigation correspondent aux deux dernières urls de pathElements (le code ci-dessous traite ce cas en faisant correspndent les urls du gestionnaires de navigation à celles de pathElements pour construire la bonne url pour l'objet IPageInfo)
+    const indexDansUrlsGestionnaireNavigation =
+      navigationUrls.length - indexAPartirDeLaFinDePathElements - 1;
+    // Si la navigation est classique à partir de la page d'accueil alors c'est toujours l'url du gestionnaire de navigation qui est utilisée
+    // Si la navigation s'effectue par "favoris" alors c'est l'url reconstruite à partir de l'url entrée via "favoris" qui est utilisée
+    const utiliserUrlGestionnaireNavigation =
+      indexDansUrlsGestionnaireNavigation >= 0 &&
+      indexDansUrlsGestionnaireNavigation < navigationUrls.length;
+    url = utiliserUrlGestionnaireNavigation
+      ? gestNavigation.getUrl(indexDansUrlsGestionnaireNavigation)
+      : url;
+
     const route = getRoute(url, routes);
+
     pagesInfos.push({
       url,
       libelle: route ? route.libelle : pathElem,
@@ -126,10 +184,10 @@ export function getPathElements(path: string) {
   let pathElements = cleanPath.split(URL_SEPARATEUR);
   // suppression des éléments vides dûs aux "/" de début et de fin potentiels
   pathElements = pathElements.filter(x => x);
-  // Suppression de l'éventuel UUID de fin
+  // Suppression de l'éventuel Nombre ou UUID de fin
   if (
     pathElements.length > 0 &&
-    UUID.test(pathElements[pathElements.length - 1])
+    isPathElemId(pathElements[pathElements.length - 1])
   ) {
     pathElements.pop();
   }
@@ -137,8 +195,9 @@ export function getPathElements(path: string) {
 }
 
 function getRoute(url: string, routes: IRoute[]) {
+  const urlWithoutId = getUrlWithoutIdParam(url);
   return routes.find(r => {
     // Recherche par url en supprimant les éventuels paramètres (exemple: .../apercurequete/:idRequete => .../apercurequete)
-    return r.url.replace(urlWithParamPatern, "$1") === url;
+    return r.url.replace(urlWithParamPatern, "$1") === urlWithoutId;
   });
 }

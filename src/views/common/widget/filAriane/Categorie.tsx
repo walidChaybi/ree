@@ -16,9 +16,11 @@ export const Categorie: React.FC<CategorieProps> = ({ url, message, last }) => {
   return (
     <>
       {last ? (
-        <div className="TextFilAriane">{message}</div>
+        <div className="TextFilAriane" title={url}>
+          {message}
+        </div>
       ) : (
-        <div className="LinkFilAriane" onClick={onClickLink}>
+        <div className="LinkFilAriane" onClick={onClickLink} title={url}>
           {message}
         </div>
       )}

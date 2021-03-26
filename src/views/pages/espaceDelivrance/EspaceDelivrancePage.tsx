@@ -2,7 +2,6 @@ import React from "react";
 import { Title } from "../../core/title/Title";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import { RequetesServicePage } from "./RequetesServicePage";
 import "./sass/EspaceDelivrancePage.scss";
@@ -11,11 +10,14 @@ import { OfficierContext } from "../../core/contexts/OfficierContext";
 import { MesRequetesPage } from "./MesRequetesPage";
 import { CompteurRequete } from "./contenu/CompteurRequete";
 import { getText } from "../../common/widget/Text";
-import { Droit } from "../../../model/Droit";
-import { officierHabiliterPourLeDroit } from "../../../model/IOfficierSSOApi";
 import { URL_MES_REQUETES, URL_REQUETES_SERVICE } from "../../router/ReceUrls";
 import { getUrlWithParam } from "../../common/util/route/routeUtil";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequete";
+import {
+  LinkTabMesRequetesDeServiceWithHabilitation,
+  LinkTabMesRequetes
+} from "./contenu/LinkTabMesRequetes";
+import WithHabilitation from "../../common/util/habilitation/WithHabilitation";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -23,7 +25,7 @@ interface TabPanelProps {
   value: any;
 }
 
-function TabPanel(props: TabPanelProps) {
+export function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
   const paddingBox = 3;
 
@@ -41,6 +43,11 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
+export const TabPanelWithHabilitation = WithHabilitation(
+  TabPanel,
+  "TabPanelMesRequetes"
+);
+
 function a11yProps(index: any) {
   return {
     id: `nav-tab-${index}`,
@@ -52,19 +59,6 @@ interface LinkTabProps {
   label?: string;
   href?: string;
   disabled?: boolean;
-}
-
-function LinkTab(props: LinkTabProps) {
-  return (
-    <Tab
-      component="a"
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        event.preventDefault();
-      }}
-      {...props}
-      className={props.disabled ? "tab-disabled" : ""}
-    />
-  );
 }
 
 interface LocalProps {
@@ -126,18 +120,14 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       className="ongletDelivrance"
                       indicatorColor="primary"
                     >
-                      <LinkTab
+                      <LinkTabMesRequetes
                         label={getText("pages.delivrance.onglets.mesRequetes")}
-                        href={URL_MES_REQUETES}
                         {...a11yProps(0)}
                       />
-                      <LinkTab
+                      <LinkTabMesRequetesDeServiceWithHabilitation
                         label={getText("pages.delivrance.onglets.monService")}
                         href={URL_REQUETES_SERVICE}
                         {...a11yProps(1)}
-                        disabled={
-                          !officierHabiliterPourLeDroit(Droit.ATTRIBUER)
-                        }
                       />
                     </Tabs>
                   </AppBar>
@@ -154,13 +144,12 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       />
                     )}
                   </TabPanel>
-                  {officierHabiliterPourLeDroit(Droit.ATTRIBUER) && (
-                    <TabPanel value={selectedTabState} index={1}>
-                      {selectedTabState === 1 && (
-                        <RequetesServicePage getUrlBack={getUrlBack} />
-                      )}
-                    </TabPanel>
-                  )}
+
+                  <TabPanelWithHabilitation value={selectedTabState} index={1}>
+                    {selectedTabState === 1 && (
+                      <RequetesServicePage getUrlBack={getUrlBack} />
+                    )}
+                  </TabPanelWithHabilitation>
                 </>
               )}
             </>
