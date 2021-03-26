@@ -1,0 +1,11 @@
+import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+
+export class TypeVisibiliteArchiviste extends EnumWithLibelle {
+  public static readonly NON = new TypeVisibiliteArchiviste("NON");
+  public static readonly MEAE = new TypeVisibiliteArchiviste("MEAE");
+  public static readonly ANOM = new TypeVisibiliteArchiviste("ANOM");
+
+  public static getEnumFor(str: string) {
+    return EnumWithLibelle.getEnumFor(str, TypeVisibiliteArchiviste);
+  }
+}
