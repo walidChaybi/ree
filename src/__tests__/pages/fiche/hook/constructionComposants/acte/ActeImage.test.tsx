@@ -9,7 +9,6 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 describe("Display pdf Iframe", () => {
   test("Affichage par défaut", async () => {
     render(<ActeImage id=""></ActeImage>);
-    screen.debug();
     const loading = screen.getByRole("progressbar");
     expect(loading).toBeInTheDocument();
   });
