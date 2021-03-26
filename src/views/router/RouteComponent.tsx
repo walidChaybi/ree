@@ -3,7 +3,10 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { routesRece } from "./ReceRoutes";
 import { storeRece } from "../common/util/storeRece";
 import messageManager from "../common/util/messageManager";
-import { estOfficierHabiliterPourUnDesDroits } from "../../model/IOfficierSSOApi";
+import {
+  estOfficierHabiliterPourUnDesDroits,
+  estOfficierHabiliterPourSeulementLesDroits
+} from "../../model/IOfficierSSOApi";
 import { Droit } from "../../model/Droit";
 import { URL_ACCUEIL } from "./ReceUrls";
 import { getLibelle } from "../common/widget/Text";
@@ -19,7 +22,11 @@ export const RouterComponent: React.FC = () => {
             exact={true}
             path={route.url}
             render={props => {
-              if (route.canAccess === false || !estAutorise(route.droits)) {
+              if (
+                route.canAccess === false ||
+                !estAutorise(route.droits) ||
+                !estAutoriseDroitsStricts(route.uniquementLesdroits)
+              ) {
                 messageManager.showWarningAndClose(
                   getLibelle(
                     "La page demandée n'est pas autorisée, vous avez été redirigé sur la page d'accueil"
@@ -55,5 +62,13 @@ function estAutorise(droits: Droit[] | undefined) {
     !droits ||
     (storeRece.utilisateurCourant &&
       estOfficierHabiliterPourUnDesDroits(droits))
+  );
+}
+
+function estAutoriseDroitsStricts(droits: Droit[] | undefined) {
+  return (
+    !droits ||
+    (storeRece.utilisateurCourant &&
+      estOfficierHabiliterPourSeulementLesDroits(droits))
   );
 }

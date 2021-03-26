@@ -31,7 +31,7 @@ import { ActePage } from "../pages/ActePage";
 import { droitsSaufConsulterArchives } from "../common/util/habilitation/habilitationsDescription";
 import { getLibelle } from "../common/widget/Text";
 import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
-import { RMCArchivesPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCArchivesPage";
+import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { IRoute } from "../common/util/route/IRoute";
 import { SaisirRequetePage } from "../pages/saisirRequete/SaisirRequetePage";
@@ -104,10 +104,10 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_RECHERCHE_ACTE,
-    component: RMCArchivesPage,
+    component: RMCArchivePage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle("Recherche acte"),
-    droits: [Droit.CONSULTER_ARCHIVES]
+    uniquementLesdroits: [Droit.CONSULTER_ARCHIVES]
   },
   {
     url: URL_RECHERCHE_REQUETE,

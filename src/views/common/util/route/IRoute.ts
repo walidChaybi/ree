@@ -7,6 +7,7 @@ export interface IRoute {
   props?: Object;
   render?: (props: RouteComponentProps<any>) => React.ReactNode;
   droits?: Droit[];
+  uniquementLesdroits?: Droit[];
   canAccess?: boolean;
   libelle: string;
 }
