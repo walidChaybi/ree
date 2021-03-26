@@ -5,6 +5,10 @@ import {
   withNamespace,
   FormikComponentProps
 } from "../../../../common/widget/formulaire/utils/FormUtil";
+import {
+  digitSeulement,
+  traiteCarAutorises
+} from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import { getLibelle } from "../../../../common/widget/Text";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
@@ -47,6 +51,10 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
   );
   const natureActeWithNamespace = withNamespace(props.nomFiltre, NATURE_ACTE);
 
+  function numeroChange(e: React.ChangeEvent<HTMLInputElement>) {
+    traiteCarAutorises(e.target, digitSeulement);
+  }
+
   const onBlurNumero = (e: any) => {
     traiteEspace(e, props.formik.handleChange);
     props.formik.handleBlur(e);
@@ -76,6 +84,7 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
         label={getLibelle("N° de l'acte")}
         disabled={props.filtreInactif}
         onBlur={onBlurNumero}
+        onInput={numeroChange}
       />
     </>
   );

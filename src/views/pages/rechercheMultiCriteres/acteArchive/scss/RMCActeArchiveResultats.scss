@@ -1,0 +1,21 @@
+@import "../../../../../sass/colors";
+
+.ResultatsRMC {
+  margin: 1.5rem 5rem;
+
+  .SousTitre {
+    margin: 0.5rem 0rem;
+    color: black;
+    text-align: left;
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  .SubResultatsRMC {
+    margin: 0 1rem;
+    .AucunResultat {
+      text-align: center;
+      margin: 1rem;
+    }
+  }
+}

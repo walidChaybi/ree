@@ -39,7 +39,7 @@ export const InputField: React.FC<InputFieldProps> = ({
     otherProps.onChange = onChange;
   }
   return (
-    <>
+    <div className="InputField">
       <div className="BlockInput">
         {label && <label htmlFor={name}>{label}</label>}
         <Field
@@ -57,6 +57,6 @@ export const InputField: React.FC<InputFieldProps> = ({
           <ErrorMessage name={name} />
         </div>
       )}
-    </>
+    </div>
   );
 };
