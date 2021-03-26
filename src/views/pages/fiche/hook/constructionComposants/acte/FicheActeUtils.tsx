@@ -9,16 +9,19 @@ import { ActeImage } from "./ActeImage";
 import { AccordionPanelAreaProps } from "../../../../../common/widget/accordion/AccordionPanelArea";
 import {
   officierALeDroitSurLePerimetre,
-  officierHabiliterUniquementPourLeDroit,
   officierAutoriserSurLeTypeRegistre,
   officierHabiliterPourLeDroit
 } from "../../../../../../model/IOfficierSSOApi";
 import { Droit } from "../../../../../../model/Droit";
 import { PERIMETRE_MEAE } from "../../../../../../model/IPerimetre";
+import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 
 export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
   const idTypeRegistre = acte.registre.type.id;
-  const paramsAffichage = getParamsAffichageFicheActe(idTypeRegistre);
+  const paramsAffichage = getParamsAffichageFicheActe(
+    idTypeRegistre,
+    acte.visibiliteArchiviste
+  );
   const fichesPersonne: AccordionPanelProps[] = getFichesPersonneActe(
     acte.personnes,
     paramsAffichage
@@ -70,7 +73,10 @@ export interface IParamsAffichage {
   personnes: "visible" | "disabled" | "none";
 }
 
-export function getParamsAffichageFicheActe(idTypeRegistre: string) {
+export function getParamsAffichageFicheActe(
+  idTypeRegistre: string,
+  typeVisibiliteArchiviste: TypeVisibiliteArchiviste
+) {
   const params = {
     ajouterAlerte: true,
     visuActe: "disabled",
@@ -90,19 +96,17 @@ export function getParamsAffichageFicheActe(idTypeRegistre: string) {
     params.visuActe = "classique";
     params.personnes = "visible";
   }
-  // S'il a uniquement le droit CONSULTER_ARCHIVE
-  // ou
-  // S'il a le droit CONSULTER_ARCHIVE et S'il a un droit CONSULTER mais pas sur le périmètre de l'acte
-  // ou Si le type de registre n'est présent dans le périmètre de l'acte
+
+  // Si c'est un acte archive et qu'il a le droit CONSULTER_ARCHIVE
   else if (
-    officierHabiliterUniquementPourLeDroit(Droit.CONSULTER_ARCHIVES) ||
-    (officierHabiliterPourLeDroit(Droit.CONSULTER_ARCHIVES) &&
-      !officierAutoriserSurLeTypeRegistre(idTypeRegistre))
+    typeVisibiliteArchiviste !== TypeVisibiliteArchiviste.NON &&
+    officierHabiliterPourLeDroit(Droit.CONSULTER_ARCHIVES)
   ) {
     params.ajouterAlerte = false;
     params.visuActe = "filigrane";
     params.personnes = "none";
   }
+
   // S'il a un droit CONSULTER mais pas sur le périmètre de l'acte
   // ou Si le type de registre n'est présent dans le périmètre de l'acte
   else if (!officierAutoriserSurLeTypeRegistre(idTypeRegistre)) {

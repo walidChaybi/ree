@@ -24,6 +24,7 @@ import { IRegistre } from "../../../../model/etatcivil/acte/IRegistre";
 import { ITypeRegistre } from "../../../../model/etatcivil/acte/ITypeRegistre";
 import { NatureRc } from "../../../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
+import { TypeVisibiliteArchiviste } from "../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 
 export interface IDataFicheApi {
   data: any;
@@ -131,6 +132,10 @@ export function mapActe(data: any): IFicheActe {
   dataActe.dateDerniereMaj = getDateFromTimestamp(data.dateDerniereMaj);
 
   dataActe.personnes = mapPersonnes(data.personnes, data.numero);
+
+  dataActe.visibiliteArchiviste = TypeVisibiliteArchiviste.getEnumFor(
+    data.visibiliteArchiviste
+  );
 
   return dataActe;
 }

@@ -12,6 +12,7 @@ import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import { AccordionReceProps } from "../../common/widget/accordion/AccordionRece";
 import { fournisseurDonneesBandeauFactory } from "./contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
 
 export function getFicheTitle(
   categorie: string,
@@ -54,9 +55,11 @@ export function setFiche(categorie: TypeFiche, data: any): IFiche {
         break;
 
       case TypeFiche.ACTE:
-        fiche.panelsFiche = getPanelsActe(data);
+        const ficheActe = data as IFicheActe;
+        fiche.panelsFiche = getPanelsActe(ficheActe);
         fiche.alerteVisible = getParamsAffichageFicheActe(
-          data.registre.type.id
+          ficheActe.registre.type.id,
+          ficheActe.visibiliteArchiviste
         ).ajouterAlerte;
         break;
 

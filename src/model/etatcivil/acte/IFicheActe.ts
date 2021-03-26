@@ -4,6 +4,7 @@ import { NatureActe } from "../enum/NatureActe";
 import { IPersonne } from "../commun/IPersonne";
 import { ICompositionCorps } from "./ICompositionCorps";
 import { IRegistre } from "./IRegistre";
+import { TypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
 
 export interface IFicheActe {
   id: string;
@@ -15,6 +16,7 @@ export interface IFicheActe {
   registre: IRegistre;
   dateDerniereMaj: Date;
   dateDerniereDelivrance: Date;
+  visibiliteArchiviste: TypeVisibiliteArchiviste;
 }
 
 export const FicheActe = {
