@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import {
   ComponentFiltreProps,
@@ -9,8 +9,6 @@ import { getLibelle } from "../../../../common/widget/Text";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoire";
-import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
-import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
 import { Options } from "../../../../common/util/Type";
 import { connect, FormikValues, getIn } from "formik";
 import {
@@ -22,6 +20,12 @@ import {
   NUMERO_INSCRIPTION_MESSAGE
 } from "../../../../common/widget/formulaire/FormulaireMessages";
 import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
+import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
+import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
+import {
+  peupleNatureRc,
+  peupleNatureRca
+} from "../../../../../api/nomenclature/NomenclatureEtatcivil";
 
 // Noms des champs
 export const NUMERO_INSCRIPTION = "numeroInscription";
@@ -74,10 +78,14 @@ const RepertoireInscriptionFiltre: React.FC<RepertoireInscriptionFiltreProps> = 
     props.formik.handleBlur(e);
   };
 
-  const manageNatureOptions = (type: string) => {
+  const manageNatureOptions = async (type: string) => {
     if (type === "RC") {
+      await peupleNatureRc();
+
       setNatureOptions(NatureRc.getAllEnumsAsOptions());
     } else if (type === "RCA") {
+      await peupleNatureRca();
+
       setNatureOptions(NatureRca.getAllEnumsAsOptions());
     } else {
       setNatureOptions([]);

@@ -3,16 +3,15 @@ import RegistreRepertoireFiltre, {
   RegistreRepertoireDefaultValues,
   RegistreRepertoireFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
-import {
-  render,
-  act,
-  waitFor,
-  screen,
-  fireEvent
-} from "@testing-library/react";
-import { getLibelle } from "../../../../../views/common/widget/Text";
-import { Formik, Form } from "formik";
-import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import {act, fireEvent, render, screen, waitFor} from "@testing-library/react";
+import {getLibelle} from "../../../../../views/common/widget/Text";
+import {Form, Formik} from "formik";
+import {REGISTRE_REPERTOIRE} from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import request from "superagent";
+import {configEtatcivil} from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
+
 
 const HookRegistreRepertoireFiltre: React.FC = () => {
   const registreRepertoireFiltreFiltreProps = {
@@ -20,14 +19,15 @@ const HookRegistreRepertoireFiltre: React.FC = () => {
   } as RegistreRepertoireFiltreProps;
 
   return (
-    <Formik
-      initialValues={{ [REGISTRE_REPERTOIRE]: RegistreRepertoireDefaultValues }}
-      onSubmit={(values: any) => {}}
-    >
-      <Form>
-        <RegistreRepertoireFiltre {...registreRepertoireFiltreFiltreProps} />
-      </Form>
-    </Formik>
+      <Formik
+          initialValues={{[REGISTRE_REPERTOIRE]: RegistreRepertoireDefaultValues}}
+          onSubmit={(values: any) => {
+          }}
+      >
+        <Form>
+          <RegistreRepertoireFiltre {...registreRepertoireFiltreFiltreProps} />
+        </Form>
+      </Formik>
   );
 };
 
@@ -109,6 +109,7 @@ test("renders filtre Registre et Repertoire", async () => {
   fireEventChange(paysEvenement, "pays");
 
   await waitFor(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     expect(screen.getByText("PACS")).toBeDefined;
     expect(screen.queryByText("RC")).toBeNull();
     expect(screen.queryByText("RCA")).toBeNull();
@@ -118,8 +119,11 @@ test("renders filtre Registre et Repertoire", async () => {
   fireEventChange(paysEvenement, "");
 
   await waitFor(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     expect(screen.getByText("PACS")).toBeDefined;
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     expect(screen.getByText("RC")).toBeDefined;
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     expect(screen.getByText("RCA")).toBeDefined;
   });
 });

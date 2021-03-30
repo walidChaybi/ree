@@ -1,4 +1,4 @@
-import { IResultatRMCInscription } from "../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import {IResultatRMCInscription} from "../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 
 export const DataTableauInscription = {
   previousDataLinkState: undefined,
@@ -136,3 +136,100 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     statutInscription: "Actif"
   }
 ];
+
+export const ReponseAppelNomenclatureNatureRC =
+    {
+      "hasTechnicalError": false,
+      "hasBusinessError": false,
+      "status": 200,
+      "url": "/rece-etatcivil-api/v1/nomenclature/NATURE_RC",
+      "data": [
+        {
+          "id": "058a436b-330d-4c3c-83e0-e49d27390121",
+          "categorie": "NATURE_RC",
+          "code": "PRESOMPTION_ABSENCE",
+          "libelle": "présomption d'absence",
+          "estActif": true,
+          "usagePacs": null,
+          "type": "Requête",
+          "sousType": null,
+          "decisionCouple": false,
+          "article": "la",
+          "categorieRCRCA": "ABSENCE"
+        },
+        {
+          "id": "058a436b-330d-4c3c-83e0-e49d27390122",
+          "categorie": "NATURE_RC",
+          "code": "CO_CURATELLE_RENFORCEE",
+          "libelle": "co-curatelle renforcée",
+          "estActif": false,
+          "usagePacs": null,
+          "type": "Protection des majeurs",
+          "sousType": null,
+          "decisionCouple": false,
+          "article": "la",
+          "categorieRCRCA": "CURATELLE"
+        },
+        {
+          "id": "058a436b-330d-4c3c-83e0-e49d27390123",
+          "categorie": "NATURE_RC",
+          "code": "CURATELLE_512",
+          "libelle": "curatelle 512",
+          "estActif": false,
+          "usagePacs": null,
+          "type": "Protection des majeurs",
+          "sousType": null,
+          "decisionCouple": false,
+          "article": "la",
+          "categorieRCRCA": "CURATELLE"
+        }]
+    };
+
+export const ReponseAppelNomenclatureNatureRCA =
+    {
+      "hasTechnicalError": false,
+      "hasBusinessError": false,
+      "status": 200,
+      "url": "/rece-etatcivil-api/v1/nomenclature/NATURE_RCA",
+      "data":
+          [
+            {
+              "id": "158a436b-330d-4c3c-83e0-e49d27390121",
+              "categorie": "NATURE_RCA",
+              "code": "DECLARATION_JUDICIAIRE_ABSENCE",
+              "libelle": "déclaration judiciaire d'absence",
+              "estActif": true,
+              "usagePacs": null,
+              "type": null,
+              "sousType": null,
+              "decisionCouple": false,
+              "article": "la",
+              "categorieRCRCA": "ABSENCE"
+            },
+            {
+              "id": "258a436b-330d-4c3c-83e0-e49d27390122",
+              "categorie": "NATURE_RCA",
+              "code": "DECLARATION_JUDICIAIRE_DECES",
+              "libelle": "déclaration judiciaire de décès",
+              "estActif": true,
+              "usagePacs": null,
+              "type": null,
+              "sousType": null,
+              "decisionCouple": false,
+              "article": "la",
+              "categorieRCRCA": "DECES"
+            },
+            {
+              "id": "358a436b-330d-4c3c-83e0-e49d27390123",
+              "categorie": "NATURE_RCA",
+              "code": "MORT_DEPORTATION",
+              "libelle": "mort en déportation",
+              "estActif": true,
+              "usagePacs": null,
+              "type": null,
+              "sousType": null,
+              "decisionCouple": false,
+              "article": "la",
+              "categorieRCRCA": "DECES"
+            }]
+    };
