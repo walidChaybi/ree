@@ -1,15 +1,13 @@
 import mockRC from "../data/RC.json";
 import mockRCA from "../data/RCA.json";
-import { ReponseAppelRMCActe } from "../data/RMCActe";
-import { ReponseAppelRMCInscription } from "../data/RMCInscription";
-import { pacsModificationNotaire } from "../data/PACS";
+import {ReponseAppelRMCActe} from "../data/RMCActe";
 import {
-  acte,
-  acte1,
-  acte2,
-  acte3,
-  acte4
-} from "../../__tests__/pages/fiche/data/ficheActe";
+  ReponseAppelNomenclatureNatureRC,
+  ReponseAppelNomenclatureNatureRCA,
+  ReponseAppelRMCInscription
+} from "../data/RMCInscription";
+import {pacsModificationNotaire} from "../data/PACS";
+import {acte, acte1, acte2, acte3, acte4} from "../../__tests__/pages/fiche/data/ficheActe";
 
 export const configEtatcivil = [
   {
@@ -87,11 +85,19 @@ export const configEtatcivil = [
       }
 
       if (match[1] === "/acte/rmc?range=0-105") {
-        return { data: ReponseAppelRMCActe.data };
+        return {data: ReponseAppelRMCActe.data};
       }
 
       if (match[1] === "/repertoirecivil/rmc?range=0-105") {
-        return { data: ReponseAppelRMCInscription.data };
+        return {data: ReponseAppelRMCInscription.data};
+      }
+
+      if (match[1] === "/nomenclature/NATURE_RC") {
+        return {data: ReponseAppelNomenclatureNatureRC.data};
+      }
+
+      if (match[1] === "/nomenclature/NATURE_RCA") {
+        return {data: ReponseAppelNomenclatureNatureRCA.data};
       }
     },
 

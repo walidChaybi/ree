@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
+import React, {useState} from "react";
+import {Formulaire} from "../../../common/widget/formulaire/Formulaire";
 import RequeteFiltre, {
   RequeteDefaultValues,
   RequeteFiltreProps,
   RequeteValidationSchema
 } from "../filtres/requete/RequeteFiltre";
 import * as Yup from "yup";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableauRece";
-import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
-import { useRMCRequeteApiHook } from "./hook/RMCRequeteApiHook";
-import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
+import {NB_LIGNES_PAR_APPEL} from "../../../common/widget/tableau/TableauRece";
+import {IRMCRequete} from "../../../../model/rmc/requete/IRMCRequete";
+import {useRMCRequeteApiHook} from "./hook/RMCRequeteApiHook";
+import {ICriteresRMCRequete} from "../../../../model/rmc/requete/ICriteresRMCRequete";
 import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireFiltreProps,
   TitulaireValidationSchema
 } from "../filtres/titulaire/TitulaireFiltre";
 import "./scss/RMCRequetePage.scss";
-import { stockageDonnees } from "../../../common/util/stockageDonnees";
-import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
+import {stockageDonnees} from "../../../common/util/stockageDonnees";
+import RMCBoutons, {RMCBoutonsProps} from "../boutons/RMCBoutons";
 import RequerantFiltre, {
   RequerantDefaultValues,
   RequerantFiltreProps,
@@ -28,7 +28,7 @@ import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeFiltreProps,
   DatesDebutFinAnneeValidationSchema
 } from "../filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
-import { MEP_YEAR } from "../../../common/util/DateUtils";
+import {MEP_YEAR} from "../../../common/util/DateUtils";
 
 // Nom des filtres
 export const REQUETE = "requete";
@@ -62,23 +62,25 @@ export const RMCRequetePage: React.FC = () => {
     getFormRequerant()
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
   const [
-    critèresRechercheRequete,
-    setCritèresRechercheRequete
+    criteresRechercheRequete,
+    setCriteresRechercheRequete
   ] = useState<ICriteresRMCRequete>();
 
   const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(
-    critèresRechercheRequete
+      criteresRechercheRequete
   );
 
   const onSubmitRMCRequete = (values: any) => {
     setNouvelleRecherche(true);
     setValuesRMCRequete(values);
-    setCritèresRechercheRequete({
+    setCriteresRechercheRequete({
       valeurs: values,
       range: `0-${NB_LIGNES_PAR_APPEL}`
     });

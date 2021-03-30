@@ -1,14 +1,14 @@
-import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
+import {configEtatcivil} from "../mock/superagent-config/superagent-mock-etatcivil";
 import * as superagent from "superagent";
 import request from "superagent";
-import { v4 as uuidv4 } from "uuid";
+import {v4 as uuidv4} from "uuid";
 import messageManager from "../views/common/util/messageManager";
-import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
-import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
-import { getCsrfHeader } from "../views/common/util/CsrfUtil";
+import {configAgent} from "../mock/superagent-config/superagent-mock-agent";
+import {configRequetes} from "../mock/superagent-config/superagent-mock-requetes";
+import {getCsrfHeader} from "../views/common/util/CsrfUtil";
 
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
-
+const EXPIRATION_CACHE_SECONDS = 3600;
 if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, [
     configRequetes[0],
@@ -70,21 +70,23 @@ export class ApiManager {
   private readonly name: string;
   private readonly version: string;
   private static instance: ApiManager;
+  private readonly expireCache: any;
 
   private constructor(name: ApisAutorisees, version: string) {
     this.url = `${window.location.protocol}//${window.location.hostname}`;
     this.domain = DOMAIN;
     this.name = name;
     this.version = version;
+    this.expireCache = require("expire-cache");
   }
 
   public static getInstance(name: ApisAutorisees, version: string): ApiManager {
     if (
-      !(
-        ApiManager.instance &&
-        ApiManager.instance.name === name &&
-        ApiManager.instance.version === version
-      )
+        !(
+            ApiManager.instance &&
+            ApiManager.instance.name === name &&
+            ApiManager.instance.version === version
+        )
     ) {
       ApiManager.instance = new ApiManager(name, version);
     }
@@ -97,11 +99,30 @@ export class ApiManager {
   }
 
   public fetch(httpRequestConfig: HttpRequestConfig): Promise<any> {
+    return this.fetchData(httpRequestConfig);
+  }
+
+  public fetchCache(httpRequestConfig: HttpRequestConfig): Promise<any> {
+    const dataCache = this.expireCache.get(httpRequestConfig.uri);
+    if (dataCache !== undefined) {
+      return Promise.resolve({
+        body: dataCache.body,
+        status: dataCache.status,
+        headers: dataCache.header
+      });
+    } else {
+      return this.fetchData(httpRequestConfig, true);
+    }
+  }
+
+
+  public fetchData(httpRequestConfig: HttpRequestConfig, useCache = false): Promise<any> {
+
     const codeErreurForbidden = 403;
 
     let httpRequete = this.processRequestMethod(
-      httpRequestConfig.method,
-      httpRequestConfig.uri
+        httpRequestConfig.method,
+        httpRequestConfig.uri
     );
 
     // Ajout de l'id de corrélation dans l'entête
@@ -112,48 +133,55 @@ export class ApiManager {
 
     if (httpRequestConfig.parameters) {
       httpRequete = this.processRequestQueyParameters(
-        httpRequestConfig.parameters,
-        httpRequete
+          httpRequestConfig.parameters,
+          httpRequete
       );
     }
 
     if (httpRequestConfig.data) {
       httpRequete = this.processRequestData(
-        httpRequestConfig.data,
-        httpRequete
+          httpRequestConfig.data,
+          httpRequete
       );
     }
 
     if (httpRequestConfig.headers) {
       httpRequete = this.processRequestHeaders(
-        httpRequestConfig.headers,
-        httpRequete
+          httpRequestConfig.headers,
+          httpRequete
       );
     }
-
     if (httpRequestConfig.responseType) {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
     return httpRequete
-      .then(response => {
-        return Promise.resolve({
-          body: response.body,
-          status: response.status,
-          headers: response.header
-        });
-      })
-      .catch(error => {
-        if (
-          process.env.NODE_ENV === "development" &&
-          error.status !== codeErreurForbidden
-        ) {
-          messageManager.showError(
-            `Une erreur est survenue: ${error ? error.message : "inconnue"}`
-          );
-        }
+        .then(response => {
+          if (useCache) {
+            this.expireCache.set(httpRequestConfig.uri, {
+              body: response.body,
+              status: response.status,
+              headers: response.header
+            }, EXPIRATION_CACHE_SECONDS);
+          }
 
-        return Promise.reject(error);
-      });
+          return Promise.resolve({
+            body: response.body,
+            status: response.status,
+            headers: response.header
+          });
+        })
+        .catch(error => {
+          if (
+              process.env.NODE_ENV === "development" &&
+              error.status !== codeErreurForbidden
+          ) {
+            messageManager.showError(
+                `Une erreur est survenue: ${error ? error.message : "inconnue"}`
+            );
+          }
+
+          return Promise.reject(error);
+        });
   }
 
   private addIdCorrelationToConfigHeader(config: HttpRequestConfig) {

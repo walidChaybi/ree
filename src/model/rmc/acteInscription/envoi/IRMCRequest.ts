@@ -1,8 +1,6 @@
-import { TypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
-import { NatureRc } from "../../../etatcivil/enum/NatureRc";
-import { NatureRca } from "../../../etatcivil/enum/NatureRca";
-import { NatureActe } from "../../../etatcivil/enum/NatureActe";
-import { CodeFamilleRegistre } from "../../../etatcivil/enum/CodeFamilleRegistre";
+import {TypeRepertoire} from "../../../etatcivil/enum/TypeRepertoire";
+import {NatureActe} from "../../../etatcivil/enum/NatureActe";
+import {CodeFamilleRegistre} from "../../../etatcivil/enum/CodeFamilleRegistre";
 
 export interface IRMCRequest {
   // Filtre Titulaire
@@ -27,8 +25,7 @@ export interface IRMCRequest {
   //Repertoire
   numeroInscription?: string;
   typeRepertoire?: TypeRepertoire;
-  natureRc?: NatureRc;
-  natureRca?: NatureRca;
+  natureRcRca?: string;
   // Evenement
   jourDateEvenement?: string;
   moisDateEvenement?: string;

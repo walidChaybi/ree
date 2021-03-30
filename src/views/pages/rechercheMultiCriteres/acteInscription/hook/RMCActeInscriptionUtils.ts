@@ -1,24 +1,18 @@
+import {formatNom, formatNoms, formatPrenoms, getValeurOuVide, valeurOuUndefined} from "../../../../common/util/Utils";
 import {
-  formatNom,
-  formatNoms,
-  formatPrenoms,
-  getValeurOuVide,
-  valeurOuUndefined
-} from "../../../../common/util/Utils";
-import {
-  getDateStringFromDateCompose,
+  getDateDebutFromDateCompose,
   getDateFinFromDateCompose,
-  getDateDebutFromDateCompose
+  getDateStringFromDateCompose
 } from "../../../../common/util/DateUtils";
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { IRMCRequest } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequest";
-import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
-import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
-import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
-import { RMCRepertoire } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
+import {NatureActe} from "../../../../../model/etatcivil/enum/NatureActe";
+import {IResultatRMCActe} from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import {IResultatRMCInscription} from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import {IRMCActeInscription} from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import {IRMCRequest} from "../../../../../model/rmc/acteInscription/envoi/IRMCRequest";
+import {StatutFiche} from "../../../../../model/etatcivil/enum/StatutFiche";
+import {NatureRc} from "../../../../../model/etatcivil/enum/NatureRc";
+import {NatureRca} from "../../../../../model/etatcivil/enum/NatureRca";
+import {RMCRepertoire} from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
 
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
@@ -33,49 +27,46 @@ export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
     paysNaissance: valeurOuUndefined(criteres.titulaire?.paysNaissance),
     // Filtre Date de création
     dateCreationDebut: getDateDebutFromDateCompose(
-      criteres.datesDebutFinAnnee?.dateDebut
+        criteres.datesDebutFinAnnee?.dateDebut
     ),
     dateCreationFin: getDateFinFromDateCompose(
-      criteres.datesDebutFinAnnee?.dateFin
+        criteres.datesDebutFinAnnee?.dateFin
     ),
     annee: valeurOuUndefined(criteres.datesDebutFinAnnee?.annee),
 
     // Filtre Registre & Réppertoire Civile
     natureActe: valeurOuUndefined(
-      criteres.registreRepertoire?.registre?.natureActe
+        criteres.registreRepertoire?.registre?.natureActe
     ),
     familleRegistre: valeurOuUndefined(
-      criteres.registreRepertoire?.registre?.familleRegistre
+        criteres.registreRepertoire?.registre?.familleRegistre
     ),
     posteOuPocopa: valeurOuUndefined(
-      criteres.registreRepertoire?.registre?.pocopa
+        criteres.registreRepertoire?.registre?.pocopa
     ),
     numeroActe: valeurOuUndefined(
-      criteres.registreRepertoire?.registre?.numeroActe
+        criteres.registreRepertoire?.registre?.numeroActe
     ),
     numeroInscription: valeurOuUndefined(
-      criteres.registreRepertoire?.repertoire?.numeroInscription
+        criteres.registreRepertoire?.repertoire?.numeroInscription
     ),
     typeRepertoire: valeurOuUndefined(
-      criteres.registreRepertoire?.repertoire?.typeRepertoire
+        criteres.registreRepertoire?.repertoire?.typeRepertoire
     ),
-    natureRc: RMCRepertoire.getNatureRc(
-      criteres.registreRepertoire?.repertoire
-    ),
-    natureRca: RMCRepertoire.getNatureRca(
-      criteres.registreRepertoire?.repertoire
+    natureRcRca: RMCRepertoire.getNatureRcRca(
+        criteres.registreRepertoire?.repertoire
     ),
     jourDateEvenement: valeurOuUndefined(
-      criteres.registreRepertoire?.evenement?.dateEvenement?.jour
+        criteres.registreRepertoire?.evenement?.dateEvenement?.jour
     ),
     moisDateEvenement: valeurOuUndefined(
-      criteres.registreRepertoire?.evenement?.dateEvenement?.mois
+        criteres.registreRepertoire?.evenement?.dateEvenement?.mois
     ),
     anneeDateEvenement: valeurOuUndefined(
-      criteres.registreRepertoire?.evenement?.dateEvenement?.annee
+        criteres.registreRepertoire?.evenement?.dateEvenement?.annee
     ),
     paysEvenement: valeurOuUndefined(
-      criteres.registreRepertoire?.evenement?.paysEvenement
+        criteres.registreRepertoire?.evenement?.paysEvenement
     )
   };
   return criteresMapper;
@@ -121,12 +112,12 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
       paysNaissance: getValeurOuVide(inscription.paysNaissance),
       numeroInscription: getValeurOuVide(inscription.numero),
       nature: getNatureInscription(
-        inscription.typeInscription,
-        inscription.nature
+          inscription.typeInscription,
+          inscription.nature
       ),
       typeInscription: getValeurOuVide(inscription.typeInscription),
       statutInscription: getValeurOuVide(
-        StatutFiche.getEnumFor(inscription.statut).libelle
+          StatutFiche.getEnumFor(inscription.statut).libelle
       )
     };
     inscriptionsMapper.push(inscriptionMapper);
@@ -145,9 +136,7 @@ function getNatureInscription(type: string, nature: string) {
       case "RCA":
         natureInscription = NatureRca.getEnumFor(nature).libelle;
         break;
-
       default:
-        natureInscription = "";
         break;
     }
   }
@@ -155,25 +144,14 @@ function getNatureInscription(type: string, nature: string) {
 }
 
 export function rechercherRepertoireAutorise(criteres: IRMCRequest): boolean {
-  if (
-    criteres.natureActe ||
-    criteres.familleRegistre ||
-    criteres.posteOuPocopa ||
-    criteres.numeroActe
-  ) {
-    return false;
-  }
-  return true;
+  return !(criteres.natureActe ||
+      criteres.familleRegistre ||
+      criteres.posteOuPocopa ||
+      criteres.numeroActe);
 }
 
 export function rechercherActeAutorise(criteres: IRMCRequest): boolean {
-  if (
-    criteres.typeRepertoire ||
-    criteres.natureRc ||
-    criteres.natureRca ||
-    criteres.numeroInscription
-  ) {
-    return false;
-  }
-  return true;
+  return !(criteres.typeRepertoire ||
+      criteres.natureRcRca ||
+      criteres.numeroInscription);
 }

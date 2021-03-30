@@ -1,17 +1,17 @@
 /* istanbul ignore file */
 
-import { NatureRc } from "../../../../../../model/etatcivil/enum/NatureRc";
+import {NatureRc} from "../../../../../../model/etatcivil/enum/NatureRc";
 
 export const ficheInscriptionRepertoireCivil = {
-  nature: NatureRc.CURATELLE_AMENAGEE,
+  nature: new NatureRc("CURATELLE_AMENAGEE"),
   mandataires: [
     "MANDATAIRE_JUDICIAIRE_ASSOCIATION",
     "MANDATAIRE_JUDICIAIRE_INDIVIDUEL"
   ],
   typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [
-    { id: "0", annee: "2015", numero: "36547" },
-    { id: "1", annee: "2020", numero: "36548" }
+    {id: "0", annee: "2015", numero: "36547"},
+    {id: "1", annee: "2020", numero: "36548"}
   ],
   inscriptionsLiees: [
     {
@@ -35,7 +35,7 @@ export const ficheInscriptionRepertoireCivil = {
 };
 
 export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes = {
-  nature: NatureRc.CURATELLE_AMENAGEE,
+  nature: new NatureRc("CURATELLE_AMENAGEE"),
   mandataires: [
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"
@@ -52,7 +52,7 @@ export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImp
 };
 
 export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
-  nature: NatureRc.CURATELLE_AMENAGEE,
+  nature: new NatureRc("CURATELLE_AMENAGEE"),
   mandataires: [
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"

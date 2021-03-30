@@ -1,17 +1,15 @@
-import { Field, Form, Formik } from "formik";
-import {
-  render,
-  waitFor,
-  act,
-  screen,
-  fireEvent
-} from "@testing-library/react";
-import React, { useState } from "react";
+import {Field, Form, Formik} from "formik";
+import {act, fireEvent, render, screen, waitFor} from "@testing-library/react";
+import React, {useState} from "react";
 import RepertoireInscriptionFiltre, {
   ComponentFiltreInscriptionProps,
   RepertoireInscriptionDefaultValues
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RepertoireInscriptionFiltre";
-import { REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
+import {REPERTOIRE} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
+import request from "superagent";
+import {configEtatcivil} from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const HookRepertoireInscriptionFiltre: React.FC = () => {
   const [result, setResult] = useState("");
@@ -74,7 +72,7 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
     act(() => {
       fireEvent.change(natureInscription, {
         target: {
-          value: "CURATELLE_SIMPLE"
+          value: "058a436b-330d-4c3c-83e0-e49d27390123"
         }
       });
       fireEvent.click(submit);
@@ -85,7 +83,7 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   await waitFor(() => {
     expect(natureInscription.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RC","natureInscription":"CURATELLE_SIMPLE"}}'
+        '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RC","natureInscription":"058a436b-330d-4c3c-83e0-e49d27390123"}}'
     );
   });
 });
@@ -124,7 +122,7 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
     act(() => {
       fireEvent.change(natureInscription, {
         target: {
-          value: "FILIATION"
+          value: "358a436b-330d-4c3c-83e0-e49d27390123"
         }
       });
       fireEvent.click(submit);
@@ -135,7 +133,7 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   await waitFor(() => {
     expect(natureInscription.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RCA","natureInscription":"FILIATION"}}'
+        '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RCA","natureInscription":"358a436b-330d-4c3c-83e0-e49d27390123"}}'
     );
   });
 });
