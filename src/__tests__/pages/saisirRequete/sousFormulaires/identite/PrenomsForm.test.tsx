@@ -1,0 +1,154 @@
+import { Field, Form, Formik } from "formik";
+import {
+  render,
+  waitFor,
+  act,
+  screen,
+  fireEvent
+} from "@testing-library/react";
+import React, { useState } from "react";
+import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
+import PrenomsForm, {
+  PrenomsFormDefaultValues,
+  PrenomsFormValidationSchema
+} from "../../../../../views/pages/saisirRequete/sousFormulaires/identite/prenoms/PrenomsForm";
+import { PRENOMS } from "../../../../../views/pages/saisirRequete/sousFormulaires/identite/IdentiteForm";
+
+const HookPrenomsForm: React.FC = () => {
+  const [result, setResult] = useState("");
+
+  const prenomsFormProps = {
+    nom: PRENOMS
+  } as SubFormProps;
+
+  const handleClickButton = (values: any) => {
+    setResult(JSON.stringify(values));
+  };
+
+  return (
+    <Formik
+      initialValues={{
+        [PRENOMS]: { ...PrenomsFormDefaultValues }
+      }}
+      validationSchema={PrenomsFormValidationSchema}
+      onSubmit={handleClickButton}
+    >
+      <Form>
+        <PrenomsForm {...prenomsFormProps} />
+        <button type="submit">Submit</button>
+        <Field as="textarea" value={result} data-testid="result" />
+      </Form>
+    </Formik>
+  );
+};
+
+test("render composant Prenoms Formulaire", async () => {
+  await act(async () => {
+    render(<HookPrenomsForm />);
+  });
+
+  const inputPrenom1 = screen.getByLabelText(
+    "prenoms.prenom1"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputPrenom1, {
+      target: {
+        value: "mockprenom1"
+      }
+    });
+  });
+
+  const submit = screen.getByText(/Submit/i);
+  await act(async () => {
+    fireEvent.click(submit);
+  });
+
+  const result = screen.getByTestId("result");
+
+  await waitFor(() => {
+    expect(result.innerHTML).toBe(
+      '{"prenoms":{"prenom1":"Mockprenom1","prenom2":"","prenom3":""}}'
+    );
+  });
+});
+
+test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async () => {
+  await act(async () => {
+    render(<HookPrenomsForm />);
+  });
+
+  const inputPrenom1 = screen.getByLabelText(
+    "prenoms.prenom1"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputPrenom1, {
+      target: {
+        value: "mockprenom1"
+      }
+    });
+  });
+
+  const ajoutPrenom = screen.getByText(/Ajouter un prénom/i);
+  await act(async () => {
+    fireEvent.click(ajoutPrenom);
+  });
+
+  const inputPrenom2 = screen.getByLabelText(
+    "prenoms.prenom2"
+  ) as HTMLInputElement;
+
+  await act(async () => {
+    fireEvent.change(inputPrenom2, {
+      target: {
+        value: "mockprenom2"
+      }
+    });
+  });
+
+  const ajoutPrenom2 = screen.getByText(/Ajouter un prénom/i);
+  await act(async () => {
+    fireEvent.click(ajoutPrenom2);
+  });
+
+  const inputPrenom3 = screen.getByLabelText(
+    "prenoms.prenom3"
+  ) as HTMLInputElement;
+
+  await act(async () => {
+    fireEvent.change(inputPrenom3, {
+      target: {
+        value: "mockprenom3"
+      }
+    });
+  });
+
+  const submit = screen.getByText(/Submit/i);
+  await act(async () => {
+    fireEvent.click(submit);
+  });
+
+  const result = screen.getByTestId("result");
+
+  await waitFor(() => {
+    expect(result.innerHTML).toBe(
+      '{"prenoms":{"prenom1":"Mockprenom1","prenom2":"Mockprenom2","prenom3":"Mockprenom3"}}'
+    );
+  });
+
+  const supprPrenom = screen.getByText(/Supprimer un prénom/i);
+  await act(async () => {
+    fireEvent.click(supprPrenom);
+  });
+
+  await act(async () => {
+    fireEvent.click(submit);
+  });
+
+  await waitFor(() => {
+    expect(result.innerHTML).toBe(
+      '{"prenoms":{"prenom1":"Mockprenom1","prenom2":"Mockprenom2","prenom3":""}}'
+    );
+  });
+});

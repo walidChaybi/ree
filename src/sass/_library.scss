@@ -62,6 +62,7 @@ Button,
     pointer-events: none;
     &:focus,
     &:hover {
+      background-color: $disabled-button;
       box-shadow: none;
     }
     cursor: default;
@@ -74,6 +75,15 @@ Button,
   &:focus,
   &:hover {
     background-color: $application-color;
+    box-shadow: 0 0 0 2px $border-focus;
+  }
+}
+
+.BoutonDanger {
+  background: $button-danger;
+  &:focus,
+  &:hover {
+    background-color: $button-danger-hover;
     box-shadow: 0 0 0 2px $border-focus;
   }
 }

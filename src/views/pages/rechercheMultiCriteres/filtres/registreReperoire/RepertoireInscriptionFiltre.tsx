@@ -13,7 +13,7 @@ import { Options } from "../../../../common/util/Type";
 import { connect, FormikValues, getIn } from "formik";
 import {
   CarateresAutorise,
-  numeroInscription
+  NumeroInscription
 } from "../../../../../ressources/Regex";
 import {
   CARATERES_AUTORISES_MESSAGE,
@@ -22,10 +22,6 @@ import {
 import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
-import {
-  peupleNatureRc,
-  peupleNatureRca
-} from "../../../../../api/nomenclature/NomenclatureEtatcivil";
 
 // Noms des champs
 export const NUMERO_INSCRIPTION = "numeroInscription";
@@ -42,7 +38,7 @@ export const RepertoireInscriptionDefaultValues = {
 // Schéma de validation des champs
 export const RepertoireInscriptionValidationSchema = Yup.object({
   [NUMERO_INSCRIPTION]: Yup.string()
-    .matches(numeroInscription, NUMERO_INSCRIPTION_MESSAGE)
+    .matches(NumeroInscription, NUMERO_INSCRIPTION_MESSAGE)
     .matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
   [TYPE_REPERTOIRE]: Yup.string(),
   [NATURE_INSCRIPTION]: Yup.string()
@@ -80,13 +76,9 @@ const RepertoireInscriptionFiltre: React.FC<RepertoireInscriptionFiltreProps> = 
 
   const manageNatureOptions = async (type: string) => {
     if (type === "RC") {
-      await peupleNatureRc();
-
-      setNatureOptions(NatureRc.getAllEnumsAsOptions());
+      setNatureOptions(await NatureRc.getAllEnumsAsOptions());
     } else if (type === "RCA") {
-      await peupleNatureRca();
-
-      setNatureOptions(NatureRca.getAllEnumsAsOptions());
+      setNatureOptions(await NatureRca.getAllEnumsAsOptions());
     } else {
       setNatureOptions([]);
     }

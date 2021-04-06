@@ -7,12 +7,17 @@ interface FomulaireProps {
   titre: string;
   formDefaultValues: any;
   formValidationSchema: any;
-  onSubmit: (values: any) => void;
+  onSubmit: (values: any, errors?: any) => void;
+  className?: string;
 }
 
 export const Formulaire: React.FC<FomulaireProps> = props => {
   return (
-    <div className="Formulaire">
+    <div
+      className={
+        props.className ? `${props.className} Formulaire` : "Formulaire"
+      }
+    >
       <Fieldset titre={props.titre}>
         <Formik
           onSubmit={props.onSubmit}

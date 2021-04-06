@@ -1,24 +1,29 @@
 import React from "react";
-import {IDureeInscription} from "../../../../../../model/etatcivil/fiche/IDureeInscription";
-import {IFicheRcRca} from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
-import {AccordionPartProps} from "../../../../../common/widget/accordion/AccordionPart";
-import {LienFiche} from "../../../LienFiche";
-import {getDateFromTimestamp, getDateString} from "../../../../../common/util/DateUtils";
-import {InscriptionsLiees} from "./InscriptionsLiees";
-import {MandataireUtil} from "../../../../../../model/etatcivil/enum/TypeMandataire";
-import {InscriptionRcUtil} from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
-import {FicheUtil, TypeFiche} from "../../../../../../model/etatcivil/enum/TypeFiche";
-import {AccordionContentProps} from "../../../../../common/widget/accordion/AccordionContent";
-import {premiereLettreEnMajuscule} from "../../../../../common/util/Utils";
+import { IDureeInscription } from "../../../../../../model/etatcivil/fiche/IDureeInscription";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
+import { LienFiche } from "../../../LienFiche";
+import {
+  getDateFromTimestamp,
+  getDateString
+} from "../../../../../common/util/DateUtils";
+import { InscriptionsLiees } from "./InscriptionsLiees";
+import { MandataireUtil } from "../../../../../../model/etatcivil/enum/TypeMandataire";
+import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
+import {
+  FicheUtil,
+  TypeFiche
+} from "../../../../../../model/etatcivil/enum/TypeFiche";
+import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
 
 export function getInscriptionRepertoireCivil(
-    rcrca: IFicheRcRca
+  rcrca: IFicheRcRca
 ): AccordionPartProps {
   return {
     contentsPart: {
       contents: FicheUtil.isFicheRca(rcrca.categorie)
-          ? getInteresseRca(rcrca)
-          : getInteresseRc(rcrca),
+        ? getInteresseRca(rcrca)
+        : getInteresseRc(rcrca),
       title: FicheUtil.isFicheRca(rcrca.categorie)
         ? "Inscription au répertoire civil annexe"
         : "Inscription au répertoire civil"
@@ -30,7 +35,7 @@ function getInteresseRc(rcrca: IFicheRcRca): AccordionContentProps[] {
   return [
     {
       libelle: "Nature",
-      value: premiereLettreEnMajuscule(rcrca.nature.libelle)
+      value: rcrca.nature.libelle
     },
     {
       libelle: "Mandataire(s)",
@@ -74,7 +79,7 @@ function getInteresseRca(rcrca: IFicheRcRca): AccordionContentProps[] {
   return [
     {
       libelle: "Nature",
-      value: premiereLettreEnMajuscule(rcrca.nature.libelle)
+      value: rcrca.nature.libelle
     },
     {
       libelle: "Type inscription",

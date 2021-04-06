@@ -1,0 +1,20 @@
+@import "../../../../../../../sass/colors";
+
+.DateLieu {
+  display: grid;
+  grid-template-columns: 37.5% 62.5%;
+  .DateNaissance {
+    .DateComposeForm {
+      grid-template-columns: 53% 10% 9px 10% 9px 14% 2%;
+    }
+    .BlockErreur {
+      margin-left: 53%;
+    }
+  }
+  .BlockInput {
+    grid-template-columns: 5% 39%;
+  }
+  .BlockErreur {
+    margin-left: 5%;
+  }
+}

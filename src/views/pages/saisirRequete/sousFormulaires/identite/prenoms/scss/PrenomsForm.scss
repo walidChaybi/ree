@@ -1,0 +1,15 @@
+@import "../../../../../../../sass/colors";
+
+.PrenomsForm {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  .BlockInput {
+    grid-template-columns: 30.7% 69.5%;
+  }
+  .BlockErreur {
+    margin-left: 30.7%;
+  }
+  button {
+    margin: 0.5rem 0 0.5rem 1rem;
+  }
+}

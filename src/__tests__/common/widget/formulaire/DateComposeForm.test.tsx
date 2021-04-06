@@ -20,7 +20,7 @@ const HookConsummerDateComposeForm: React.FC = () => {
 
   const dateDebutComposeFormProps = ({
     labelDate: "De: ",
-    nomFiltre: "dateDebut",
+    nomDate: "dateDebut",
     showDatePicker: true,
     onChange: onDateDebutChange
   } as any) as DateComposeFormProps;

@@ -1,15 +1,15 @@
 @import "../../../../../sass/colors";
 
 .DateComposeForm {
-  grid-template-columns: 50% 12.5% 9px 12.5% 9px 20% 2%;
+  grid-template-columns: 35% 15.5% 21px 15.5% 21px 23% 2%;
 }
 
 .DateComposeFormWithDatePicker {
-  grid-template-columns: 50% 12.5% 9px 12.5% 9px 12% 2% 7%;
+  grid-template-columns: 35% 15.5% 9px 15.5% 9px 23% 2% 7%;
 }
 
 .DateComposeForm-common {
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
   padding-bottom: 0.5rem;
   display: grid;
   label {
@@ -20,10 +20,6 @@
   input {
     align-self: center;
     text-align: center;
-  }
-
-  input:nth-child(3) {
-    margin-right: 0.5rem;
   }
 
   .Sep {

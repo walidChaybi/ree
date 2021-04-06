@@ -27,6 +27,7 @@ import RegistreRepertoireFiltre, {
 import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
+import { MIN_YEAR } from "../../../common/util/DateUtils";
 
 // Nom des filtres
 export const TITULAIRE = "titulaire";
@@ -160,7 +161,8 @@ function getFormTitulaire(): JSX.Element {
 function getFormDatesDebutFinAnnee(): JSX.Element {
   const datesDebutFinAnneeFiltreProps = {
     nomFiltre: DATES_DEBUT_FIN_ANNEE,
-    anneeVisible: true
+    anneeVisible: true,
+    anneeMin: MIN_YEAR
   } as DatesDebutFinAnneeFiltreProps;
   return (
     <DatesDebutFinAnneeFiltre

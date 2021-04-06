@@ -15,6 +15,10 @@ export const AsterisqueRecherche = new RegExp(
   /^([0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{1}|[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{2,}\*?)$/
 );
 
-export const numeroInscription = new RegExp(/^.{4}[-]/);
+export const NumeroInscription = new RegExp(/^.{4}[-]/);
 
 export const CarateresAlphanumerique = new RegExp(/^[0-9a-zA-Z]+$/);
+
+export const NumeroTelephone = new RegExp(
+  /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/
+);

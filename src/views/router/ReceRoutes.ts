@@ -18,8 +18,8 @@ import {
   URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_REQUETE,
-  URL_MES_REQUETES_SAISIR_REQUETE,
-  URL_REQUETES_SERVICE_SAISIR_REQUETE,
+  URL_MES_REQUETES_SAISIR_RDCSC,
+  URL_REQUETES_SERVICE_SAISIR_RDCSC,
   URL_APPERCU_REQUETE_TRAITEMENT_ID,
   URL_APPERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_APPERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID
@@ -34,7 +34,7 @@ import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInsc
 import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { IRoute } from "../common/util/route/IRoute";
-import { SaisirRequetePage } from "../pages/saisirRequete/SaisirRequetePage";
+import { SaisirRDCSCPage } from "../pages/saisirRequete/SaisirRDCSCPage";
 import { ApercuRequetePriseEnChargePage } from "../pages/apercuRequete/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "../pages/apercuRequete/ApercuRequeteTraitementPage";
 
@@ -116,18 +116,22 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle("Recherche une requête")
   },
   {
-    url: URL_MES_REQUETES_SAISIR_REQUETE,
-    component: SaisirRequetePage,
+    url: URL_MES_REQUETES_SAISIR_RDCSC,
+    component: SaisirRDCSCPage,
     droits: [Droit.SAISIR_REQUETE],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Saisir une requête")
+    libelle: getLibelle(
+      "Saisir une requête de délivrance certificat de situation courrier"
+    )
   },
   {
-    url: URL_REQUETES_SERVICE_SAISIR_REQUETE,
-    component: SaisirRequetePage,
+    url: URL_REQUETES_SERVICE_SAISIR_RDCSC,
+    component: SaisirRDCSCPage,
     droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Saisir une requête")
+    libelle: getLibelle(
+      "Saisir une requête de délivrance certificat de situation courrier"
+    )
   },
   {
     url: URL_APPERCU_REQUETE_PRISE_EN_CHARGE_ID,

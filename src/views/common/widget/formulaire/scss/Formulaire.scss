@@ -1,7 +1,7 @@
 @import "../../../../../sass/colors";
 
 .Formulaire {
-  margin: 1.5rem 5rem;
+  margin: 1.5rem 7rem;
 
   .DeuxColonnes {
     display: grid;
@@ -16,5 +16,36 @@
     border: 1px solid $form-border-input-disabled;
     height: 30px;
     border-radius: 0.2rem;
+    padding: 1px 8px;
+  }
+
+  .BlockInput {
+    margin-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: grid;
+
+    label {
+      align-self: center;
+      color: $button-application-color;
+    }
+    input {
+      align-self: center;
+    }
+  }
+
+  .BlockErreur {
+    color: $error;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    .Warning {
+      font-size: 0.85rem;
+      margin-right: 0.5em;
+    }
+  }
+
+  .RadioInput {
+    input {
+      margin: 0 1rem;
+    }
   }
 }

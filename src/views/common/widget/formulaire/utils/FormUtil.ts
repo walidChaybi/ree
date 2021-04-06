@@ -1,4 +1,9 @@
-import { FormikProps, FormikValues, getIn, FormikErrors } from "formik";
+import { FormikProps, FormikValues } from "formik";
+
+export const NB_CARACT_MAX_SAISIE = "100";
+export const NB_CARACT_ADRESSE = "38";
+export const NB_CARACT_COMMUNE = "32";
+export const NB_CARACT_CODE_POSTAL = "5";
 
 export type FormikComponentProps = {
   formik: FormikProps<FormikValues>;
@@ -14,14 +19,12 @@ export interface ComponentFiltreProps {
   onFieldChange?: (param: IOnFieldChangeParam) => void;
 }
 
+export interface ISubForm {
+  nom: string;
+  titre?: string;
+}
+export type SubFormProps = ISubForm & FormikComponentProps;
+
 export function withNamespace(nomParent: string, nomChamp: string) {
   return nomParent ? `${nomParent}.${nomChamp}` : nomChamp;
-}
-
-export function isErrorString(
-  errors: FormikErrors<FormikValues>,
-  path: string
-) {
-  const error = getIn(errors, path);
-  return error && typeof error === "string";
 }

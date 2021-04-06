@@ -2,6 +2,7 @@ import { rempliAGaucheAvecZero } from "./Utils";
 
 export const MIN_YEAR = 1900;
 export const MEP_YEAR = 2021;
+export const MIN_LENGTH_ANNEE = 4;
 const MAX_MONTH = 12;
 export interface IDateCompose {
   jour?: string;

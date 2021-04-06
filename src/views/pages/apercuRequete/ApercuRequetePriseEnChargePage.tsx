@@ -1,3 +1,6 @@
+/* istanbul ignore file */
+// TODO à supprimer lors de l'implémentation de la page
+
 import React from "react";
 import { getLibelle } from "../../common/widget/Text";
 import { useHistory } from "react-router-dom";

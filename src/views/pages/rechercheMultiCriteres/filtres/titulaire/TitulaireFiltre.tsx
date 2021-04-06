@@ -1,5 +1,5 @@
 import React from "react";
-import { connect, ErrorMessage } from "formik";
+import { connect } from "formik";
 import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
 import DateComposeForm, {
@@ -16,7 +16,6 @@ import {
   AsterisqueRecherche
 } from "../../../../../ressources/Regex";
 import {
-  isErrorString,
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
@@ -56,25 +55,28 @@ export const TitulaireValidationSchema = Yup.object()
       .matches(CarateresAutoriseRecherche, CARATERES_AUTORISES_MESSAGE)
       .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE)
   })
-  .test(
-    "prenomInvalide",
-    getLibelle(
-      "L'astérisque est autorisé dans le prénom que si le nom est saisi (avec ou sans *)"
-    ),
-    function (value) {
-      const nom = value[NOM] as string;
-      const prenom = value[PRENOM] as string;
+  .test("prenomInvalide", function (value, error) {
+    const nom = value[NOM] as string;
+    const prenom = value[PRENOM] as string;
 
-      return !(prenom != null && prenom?.includes("*") && nom == null);
-    }
-  );
+    const paramsError = {
+      path: `${error.path}.prenom`,
+      message: getLibelle(
+        "L'astérisque est autorisé dans le prénom que si le nom est saisi (avec ou sans *)"
+      )
+    };
+
+    return prenom != null && prenom?.includes("*") && nom == null
+      ? this.createError(paramsError)
+      : true;
+  });
 
 export type TitulaireFiltreProps = ComponentFiltreProps & FormikComponentProps;
 
 const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
   const dateDebutComposeFormProps = {
     labelDate: "Date de naissance",
-    nomFiltre: withNamespace(props.nomFiltre, DATE_NAISSANCE)
+    nomDate: withNamespace(props.nomFiltre, DATE_NAISSANCE)
   } as DateComposeFormProps;
 
   function onBlurChamp(e: any) {
@@ -116,11 +118,6 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
             label={getLibelle("Prénom")}
             onBlur={onBlurChamp}
           />
-          {isErrorString(props.formik.errors, props.nomFiltre) && (
-            <div className="BlockErreur">
-              <ErrorMessage name={props.nomFiltre} />
-            </div>
-          )}
 
           <DateComposeForm {...dateDebutComposeFormProps} />
 
