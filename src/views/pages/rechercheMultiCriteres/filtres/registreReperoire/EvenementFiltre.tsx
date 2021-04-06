@@ -1,5 +1,5 @@
 import React from "react";
-import { ErrorMessage, connect, FormikProps, FormikValues } from "formik";
+import { connect } from "formik";
 import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
 import DateComposeForm, {
@@ -10,14 +10,14 @@ import DateComposeForm, {
 import {
   withNamespace,
   FormikComponentProps,
-  ComponentFiltreProps,
-  isErrorString
+  ComponentFiltreProps
 } from "../../../../common/widget/formulaire/utils/FormUtil";
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../common/widget/formulaire/FormulaireMessages";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import { CarateresAutoriseRecherche } from "../../../../../ressources/Regex";
 import { getLibelle } from "../../../../common/widget/Text";
+import { MIN_YEAR } from "../../../../common/util/DateUtils";
 
 // Noms des champs
 export const DATE_EVENEMENT = "dateEvenement";
@@ -41,8 +41,6 @@ export const EvenementValidationSchema = Yup.object().shape({
 export type EvenementFiltreProps = ComponentFiltreProps & FormikComponentProps;
 
 const EvenementFiltre: React.FC<EvenementFiltreProps> = props => {
-  const formik: FormikProps<FormikValues> = props.formik;
-
   const dateEvenementWithNamespace = withNamespace(
     props.nomFiltre,
     DATE_EVENEMENT
@@ -54,24 +52,19 @@ const EvenementFiltre: React.FC<EvenementFiltreProps> = props => {
 
   const dateEvenementComposeFormProps = {
     labelDate: getLibelle("Date de l'évènement"),
-    nomFiltre: dateEvenementWithNamespace,
-    showDatePicker: false
+    nomDate: dateEvenementWithNamespace,
+    showDatePicker: false,
+    anneeMin: MIN_YEAR
   } as DateComposeFormProps;
 
   function onBlurChamp(e: any) {
-    traiteEspace(e, formik.handleChange);
-    formik.handleBlur(e);
+    traiteEspace(e, props.formik.handleChange);
+    props.formik.handleBlur(e);
   }
 
   return (
     <>
       <DateComposeForm {...dateEvenementComposeFormProps} />
-
-      {isErrorString(props.formik.errors, props.nomFiltre) && (
-        <div className="BlockErreur">
-          <ErrorMessage name={props.nomFiltre} />
-        </div>
-      )}
       <InputField
         disabled={props.filtreInactif}
         title="Le pays de l'évènement ne concerne que les actes ou les PACS"

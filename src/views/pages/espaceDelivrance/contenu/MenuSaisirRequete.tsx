@@ -8,8 +8,14 @@ import {
 } from "../../../../model/requete/v2/SousTypeDelivrance";
 import { getLibelle } from "../../../common/widget/Text";
 import {
-  URL_MES_REQUETES_SAISIR_REQUETE,
-  URL_REQUETES_SERVICE_SAISIR_REQUETE
+  URL_MES_REQUETES_SAISIR_RDCSC,
+  URL_REQUETES_SERVICE_SAISIR_RDCSC,
+  URL_MES_REQUETES_SAISIR_RDAPC,
+  URL_REQUETES_SERVICE_SAISIR_RDAPC,
+  URL_MES_REQUETES_SAISIR_RDC,
+  URL_REQUETES_SERVICE_SAISIR_RDC,
+  URL_MES_REQUETES_SAISIR_RDLFC,
+  URL_REQUETES_SERVICE_SAISIR_RDLFC
 } from "../../../router/ReceUrls";
 import { useHistory } from "react-router-dom";
 import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
@@ -33,10 +39,48 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
   const history = useHistory();
 
   const clickMenuItem = (nomRequete: string) => {
-    if (props.indexTabPanel === 0) {
-      history.push(URL_MES_REQUETES_SAISIR_REQUETE, { nomRequete });
-    } else if (props.indexTabPanel === 1) {
-      history.push(URL_REQUETES_SERVICE_SAISIR_REQUETE, { nomRequete });
+    if (props.indexTabPanel === 1) {
+      switch (nomRequete) {
+        case "RDAPC":
+          history.push(URL_REQUETES_SERVICE_SAISIR_RDAPC);
+          break;
+
+        case "RDCSC":
+          history.push(URL_REQUETES_SERVICE_SAISIR_RDCSC);
+          break;
+
+        case "RDC":
+          history.push(URL_REQUETES_SERVICE_SAISIR_RDC);
+          break;
+
+        case "RDLFC":
+          history.push(URL_REQUETES_SERVICE_SAISIR_RDLFC);
+          break;
+
+        default:
+          break;
+      }
+    } else {
+      switch (nomRequete) {
+        case "RDAPC":
+          history.push(URL_MES_REQUETES_SAISIR_RDAPC);
+          break;
+
+        case "RDCSC":
+          history.push(URL_MES_REQUETES_SAISIR_RDCSC);
+          break;
+
+        case "RDC":
+          history.push(URL_MES_REQUETES_SAISIR_RDC);
+          break;
+
+        case "RDLFC":
+          history.push(URL_MES_REQUETES_SAISIR_RDLFC);
+          break;
+
+        default:
+          break;
+      }
     }
   };
 

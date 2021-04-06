@@ -1,5 +1,5 @@
-import {IRMCRequest} from "../../model/rmc/acteInscription/envoi/IRMCRequest";
-import {ApiManager, HttpMethod} from "../ApiManager";
+import { IRMCRequest } from "../../model/rmc/acteInscription/envoi/IRMCRequest";
+import { ApiManager, HttpMethod } from "../ApiManager";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
@@ -56,8 +56,8 @@ export function getImagesActe(identifiant: string): Promise<any> {
   });
 }
 
-export async function getNomenclature(
-    categorie: string
+export async function getNomenclatureEtatCivil(
+  categorie: string
 ): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,

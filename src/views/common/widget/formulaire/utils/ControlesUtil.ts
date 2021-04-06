@@ -1,4 +1,6 @@
 import {
+  enMajuscule,
+  premiereLettreEnMajusculeLeResteEnMinuscule,
   rempliAGaucheAvecZero,
   supprimerEspacesInutiles
 } from "../../../util/Utils";
@@ -66,4 +68,24 @@ export function traiteZeroAGauche(e: any, formik: FormikProps<FormikValues>) {
 export function traiteEspace(e: any, fct: any) {
   e.target.value = supprimerEspacesInutiles(e.target.value);
   fct(e);
+}
+
+export function sortieChampEnMajuscule(
+  value: string,
+  formik: FormikProps<FormikValues>,
+  nomChamp: string
+) {
+  let res = supprimerEspacesInutiles(value);
+  res = enMajuscule(res);
+  formik.setFieldValue(nomChamp, res);
+}
+
+export function sortieChampPremiereLettreEnMajuscule(
+  value: string,
+  formik: FormikProps<FormikValues>,
+  nomChamp: string
+) {
+  let res = supprimerEspacesInutiles(value);
+  res = premiereLettreEnMajusculeLeResteEnMinuscule(res);
+  formik.setFieldValue(nomChamp, res);
 }

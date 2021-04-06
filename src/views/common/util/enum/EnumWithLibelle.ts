@@ -1,4 +1,5 @@
 import { Options } from "../Type";
+import { premiereLettreEnMajuscule } from "../Utils";
 
 /* istanbul ignore file */
 export class EnumWithLibelle {
@@ -15,19 +16,21 @@ export class EnumWithLibelle {
 
   public static getAllLibellesAsOptions(
     clazz: any,
-    inclureCodeDansLibelle = false
+    inclureCodeDansLibelle = false,
+    tri = true
   ): Options {
     const options: Options = [];
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key)) {
+        const libelle = premiereLettreEnMajuscule(`${clazz[key]._libelle}`);
         options.push({
           value: key,
-          str: inclureCodeDansLibelle
-            ? `(${key}) ${clazz[key]._libelle}`
-            : clazz[key]._libelle
+          str: inclureCodeDansLibelle ? `(${key}) ${libelle}` : libelle
         });
       }
     }
-    return options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
+    return tri
+      ? options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str))
+      : options;
   }
 }

@@ -11,22 +11,26 @@ import {
   traiteCarAutorises,
   traiteZeroAGauche
 } from "./utils/ControlesUtil";
-import {
-  withNamespace,
-  FormikComponentProps,
-  isErrorString
-} from "./utils/FormUtil";
+import { withNamespace, FormikComponentProps } from "./utils/FormUtil";
 import {
   estDateValide,
   getIsoStringFromDateCompose,
   IDateCompose,
   getDateComposeFromDate,
   estDateReceValide,
-  MIN_YEAR
+  MIN_YEAR,
+  MEP_YEAR,
+  MIN_LENGTH_ANNEE
 } from "../../util/DateUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { MSG_MIN_YEAR, MSG_MEP_YEAR } from "../../../../ressources/messages";
+import {
+  MSG_MIN_YEAR,
+  MSG_DATE_MEP_MIN,
+  MSG_CURRENT_YEAR_MAX,
+  MSG_MIN_LENGTH_ANNEE
+} from "../../../../ressources/messages";
+import { getLibelle } from "../Text";
 
 // Noms des champs
 export const JOUR = "jour";
@@ -43,30 +47,46 @@ export const DateDefaultValues = {
 // Schéma de validation des champs
 export const DateValidationSchema = Yup.object()
   .shape({
+    [JOUR]: Yup.number(),
+    [MOIS]: Yup.number(),
     [ANNEE]: Yup.number()
   })
-  .test(
-    "dateInvalide",
-    "Date ou format invalide (formats autorisés: JJ/MM/AAAA, MM/AAAA, AAAA)",
-    function (date) {
-      const dateCompose = (date as any) as IDateCompose;
-      if (!dateCompose) {
-        return true;
-      }
-
-      if (!dateCompose.jour && !dateCompose.mois && !dateCompose.annee) {
-        return true;
-      }
-      return estDateReceValide(dateCompose);
+  .test("formatDateInvalide", function (date: any, error: any) {
+    const dateCompose = date as IDateCompose;
+    if (!dateCompose) {
+      return true;
     }
-  );
+
+    if (!dateCompose.jour && !dateCompose.mois && !dateCompose.annee) {
+      return true;
+    }
+
+    const paramsError = {
+      path: `${error.path}.annee`,
+      message: getLibelle(
+        "Date ou format invalide (formats autorisés: JJ/MM/AAAA, MM/AAAA, AAAA)"
+      )
+    };
+
+    return !estDateReceValide(dateCompose)
+      ? this.createError(paramsError)
+      : true;
+  });
+
+export const DateValidationSchemaSansTestFormat = Yup.object().shape({
+  [JOUR]: Yup.number(),
+  [MOIS]: Yup.number(),
+  [ANNEE]: Yup.number()
+});
+
 interface ComponentProps {
   labelDate: string;
-  nomFiltre: string;
+  nomDate: string;
   showDatePicker?: boolean;
   onChange?: (date: IDateComposeForm) => void;
   disabled?: boolean;
   anneeMin?: number;
+  anneeMax?: number;
 }
 
 export type DateComposeFormProps = ComponentProps & FormikComponentProps;
@@ -80,9 +100,13 @@ export interface IDateComposeForm {
 const DateComposeForm: React.FC<DateComposeFormProps> = props => {
   const [dateSaisie, setDateSaisie] = useState<IDateComposeForm>({});
 
-  const minDate = props.anneeMin
-    ? `${props.anneeMin}-01-01`
-    : `${MIN_YEAR}-01-01`;
+  const dateMini = props.anneeMin
+    ? new Date(`${props.anneeMin}-01-01`)
+    : undefined;
+
+  const dateMaxi = props.anneeMax
+    ? new Date(`${props.anneeMax}-12-31`)
+    : undefined;
 
   function buildDatePickerValue(): Date {
     let datePickerValue = new Date();
@@ -156,18 +180,31 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
       if (props.onChange) {
         props.onChange({});
       }
-      props.formik.setFieldValue(withNamespace(props.nomFiltre, JOUR), "");
-      props.formik.setFieldValue(withNamespace(props.nomFiltre, MOIS), "");
-      props.formik.setFieldValue(withNamespace(props.nomFiltre, ANNEE), "");
-      props.formik.setFieldTouched(props.nomFiltre, false, false);
+      props.formik.setFieldValue(withNamespace(props.nomDate, JOUR), "");
+      props.formik.setFieldValue(withNamespace(props.nomDate, MOIS), "");
+      props.formik.setFieldValue(withNamespace(props.nomDate, ANNEE), "");
+      props.formik.setFieldTouched(props.nomDate, false, false);
     });
   }
 
   function validateAnnee(value: number) {
-    if (value && props.anneeMin && value < props.anneeMin) {
-      return MSG_MEP_YEAR;
-    } else if (value && !props.anneeMin && value < MIN_YEAR) {
-      return MSG_MIN_YEAR;
+    if (value) {
+      if (value.toString().length < MIN_LENGTH_ANNEE) {
+        return MSG_MIN_LENGTH_ANNEE;
+      }
+      if (props.anneeMin && value < props.anneeMin) {
+        if (props.anneeMin === MIN_YEAR) {
+          return MSG_MIN_YEAR;
+        } else if (props.anneeMin === MEP_YEAR) {
+          return MSG_DATE_MEP_MIN;
+        }
+      } else if (
+        props.anneeMax &&
+        props.anneeMax === new Date().getFullYear() &&
+        value > props.anneeMax
+      ) {
+        return MSG_CURRENT_YEAR_MAX;
+      }
     }
   }
 
@@ -183,33 +220,36 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
         <label>{props.labelDate}</label>
         <Field
           component="input"
-          name={withNamespace(props.nomFiltre, JOUR)}
+          name={withNamespace(props.nomDate, JOUR)}
           maxLength="2"
           onInput={jourChange}
           onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
           disabled={props.disabled}
-          aria-label={`${props.nomFiltre} jour`}
+          aria-label={`${props.nomDate} jour`}
+          placeholder="JJ"
         />
         <div className="Sep">/</div>
         <Field
           component="input"
-          name={withNamespace(props.nomFiltre, MOIS)}
+          name={withNamespace(props.nomDate, MOIS)}
           maxLength="2"
           onInput={moisChange}
           onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
           disabled={props.disabled}
-          aria-label={`${props.nomFiltre} mois`}
+          aria-label={`${props.nomDate} mois`}
+          placeholder="MM"
         />
 
         <div className="Sep">/</div>
         <Field
           component="input"
-          name={withNamespace(props.nomFiltre, ANNEE)}
+          name={withNamespace(props.nomDate, ANNEE)}
           maxLength="4"
           onInput={anneeChange}
           disabled={props.disabled}
-          aria-label={`${props.nomFiltre} année`}
+          aria-label={`${props.nomDate} année`}
           validate={validateAnnee}
+          placeholder="AAAA"
         />
         <FontAwesomeIcon
           icon={faTimesCircle}
@@ -225,15 +265,13 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
             onChange={date => {
               onDatePickerValueChange(props, date, setDateSaisie);
             }}
-            minDate={new Date(minDate)}
+            dateMini={dateMini}
+            dateMaxi={dateMaxi}
           />
         )}
       </div>
       <div className="BlockErreur">
-        {isErrorString(props.formik.errors, props.nomFiltre) && (
-          <ErrorMessage name={props.nomFiltre} />
-        )}
-        <ErrorMessage name={withNamespace(props.nomFiltre, ANNEE)} />
+        <ErrorMessage name={withNamespace(props.nomDate, ANNEE)} />
       </div>
     </>
   );
@@ -247,18 +285,18 @@ export const onDatePickerValueChange = (
   const dateCompose = getDateComposeFromDate(date) as IDateComposeForm;
   executeEnDiffere(() => {
     props.formik.setFieldValue(
-      withNamespace(props.nomFiltre, JOUR),
+      withNamespace(props.nomDate, JOUR),
       dateCompose.jour
     );
     props.formik.setFieldValue(
-      withNamespace(props.nomFiltre, MOIS),
+      withNamespace(props.nomDate, MOIS),
       dateCompose.mois
     );
     props.formik.setFieldValue(
-      withNamespace(props.nomFiltre, ANNEE),
+      withNamespace(props.nomDate, ANNEE),
       dateCompose.annee
     );
-    props.formik.setFieldTouched(props.nomFiltre, false, false);
+    props.formik.setFieldTouched(props.nomDate, false, false);
     setDateSaisie(dateCompose);
     if (props.onChange) {
       props.onChange(dateCompose);
@@ -266,7 +304,7 @@ export const onDatePickerValueChange = (
   });
 };
 const TIME_OUT_MS = 100;
-const executeEnDiffere = (fct: any) => {
+export const executeEnDiffere = (fct: any) => {
   setTimeout(fct, TIME_OUT_MS);
 };
 

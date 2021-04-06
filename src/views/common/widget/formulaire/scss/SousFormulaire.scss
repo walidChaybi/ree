@@ -1,0 +1,20 @@
+@import "../../../../../sass/colors";
+
+.SousFormulaire {
+  background-color: $form-background;
+  text-align: start;
+
+  > .Titre {
+    margin: 1rem 0;
+    background-color: $form-titre-background;
+    text-transform: uppercase;
+    padding: 0.2em 1em;
+    font-weight: bold;
+    color: $title-application-color;
+    text-align: start;
+  }
+
+  > .ElementForm {
+    margin: 1.5rem 2.5rem;
+  }
+}

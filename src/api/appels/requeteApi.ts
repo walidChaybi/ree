@@ -11,6 +11,7 @@ export const URL_REQUETES = "/requetes";
 export const URL_REQUETES_COUNT = "/requetes/count";
 export const URL_DOCUMENTSELIVRES = "/documentsdelivres";
 export const URL_REQUETES_RMC = "/requetes/rmc";
+export const URL_NOMENCLATURE = "/nomenclature";
 const URL_REPONSES = "/reponses";
 
 export interface IRequestDocumentApiResult {
@@ -49,6 +50,7 @@ export interface IQueryParametersPourRequete {
 }
 
 const api = ApiManager.getInstance("rece-requete-api", "v1");
+const apiV2 = ApiManager.getInstance("rece-requete-api", "v2");
 
 export function getDocumentASigner(
   identifiantDocument: string,
@@ -153,5 +155,12 @@ export function rechercheMultiCriteresRequetes(
     parameters: {
       range
     }
+  });
+}
+
+export async function getNomenclatureRequete(categorie: string): Promise<any> {
+  return apiV2.fetchCache({
+    method: HttpMethod.GET,
+    uri: `${URL_NOMENCLATURE}/${categorie}`
   });
 }

@@ -11,24 +11,11 @@
 }
 
 .FormFiltre {
-  margin: 1.5rem 2.5rem 0 2.5rem;
+  margin: 1.5rem 1.5rem 0 1.5rem;
   .BlockInput {
-    margin: 0.5rem 0;
-    padding-bottom: 0.5rem;
-    display: grid;
-    grid-template-columns: 50% 50%;
-
-    label {
-      align-self: center;
-      color: $button-application-color;
-    }
-    input {
-      align-self: center;
-    }
+    grid-template-columns: 35% 65%;
   }
   .BlockErreur {
-    color: $error;
-    margin: 0.5rem 0;
-    font-size: 0.85rem;
+    margin-left: 35%;
   }
 }

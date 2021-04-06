@@ -7,7 +7,7 @@
   background-color: $form-background;
   text-align: start;
 
-  .Titre {
+  > .Titre {
     background-color: $button-application-color;
     padding: 0.2em 1em;
     margin: 0em;
@@ -20,7 +20,7 @@
     margin: 1rem;
     border-color: $application-color;
 
-    .Titre {
+    > .Titre {
       background-color: $application-color;
     }
   }

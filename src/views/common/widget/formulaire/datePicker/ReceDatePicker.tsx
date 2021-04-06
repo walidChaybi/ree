@@ -10,7 +10,8 @@ interface ComponentProps {
   dateValue?: Date;
   disabled?: boolean;
   onChange?: (date: Date) => void;
-  minDate?: Date;
+  dateMini?: Date;
+  dateMaxi?: Date;
 }
 
 export type ReceDatePickerProps = ComponentProps;
@@ -35,7 +36,8 @@ const ReceDatePicker: React.FC<ReceDatePickerProps> = props => {
         customInput={<IconCalendar />}
         shouldCloseOnSelect={true}
         disabled={props.disabled}
-        minDate={props.minDate}
+        minDate={props.dateMini}
+        maxDate={props.dateMaxi}
       />
     </div>
   );

@@ -2,7 +2,7 @@ import {Field, Form, Formik} from "formik";
 import {act, fireEvent, render, screen, waitFor} from "@testing-library/react";
 import React, {useState} from "react";
 import RepertoireInscriptionFiltre, {
-  ComponentFiltreInscriptionProps,
+  RepertoireInscriptionFiltreProps,
   RepertoireInscriptionDefaultValues
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RepertoireInscriptionFiltre";
 import {REPERTOIRE} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
@@ -16,7 +16,7 @@ const HookRepertoireInscriptionFiltre: React.FC = () => {
 
   const repertoireInscriptionFiltreProps = {
     nomFiltre: REPERTOIRE
-  } as ComponentFiltreInscriptionProps;
+  } as RepertoireInscriptionFiltreProps;
 
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));

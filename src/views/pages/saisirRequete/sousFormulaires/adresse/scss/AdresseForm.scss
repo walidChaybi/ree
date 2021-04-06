@@ -1,0 +1,20 @@
+@import "../../../../../../sass/colors";
+
+.AdresseForm {
+  .BlockInput {
+    grid-template-columns: 35% 45%;
+  }
+  .BlockErreur {
+    margin-left: 35%;
+  }
+  .CodePostal {
+    .BlockInput {
+      grid-template-columns: 35% 10%;
+    }
+  }
+  .Telephone {
+    .BlockInput {
+      grid-template-columns: 35% 20%;
+    }
+  }
+}

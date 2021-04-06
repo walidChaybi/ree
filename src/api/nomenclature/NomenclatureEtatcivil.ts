@@ -1,4 +1,4 @@
-import { getNomenclature } from "../appels/etatcivilApi";
+import { getNomenclatureEtatCivil } from "../appels/etatcivilApi";
 import { NatureRc } from "../../model/etatcivil/enum/NatureRc";
 import { premiereLettreEnMajuscule } from "../../views/common/util/Utils";
 import { NatureRca } from "../../model/etatcivil/enum/NatureRca";
@@ -28,8 +28,4 @@ export async function peupleNatureRca() {
       new NatureRca(premiereLettreEnMajuscule(data.libelle))
     );
   }
-}
-
-async function getNomenclatureEtatCivil(categorie: string) {
-  return getNomenclature(categorie);
 }

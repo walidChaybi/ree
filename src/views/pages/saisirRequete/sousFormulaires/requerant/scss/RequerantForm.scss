@@ -1,0 +1,15 @@
+@import "../../../../../../sass/colors";
+
+.RequerantForm {
+  .BlockInput {
+    grid-template-columns: 20% 80%;
+  }
+  .BlockErreur {
+    margin-left: 20%;
+  }
+  .RequerantSousForm {
+    .BlockInput {
+      grid-template-columns: 20% 40%;
+    }
+  }
+}
