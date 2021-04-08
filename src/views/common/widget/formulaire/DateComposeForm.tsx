@@ -22,8 +22,7 @@ import {
   MEP_YEAR,
   MIN_LENGTH_ANNEE
 } from "../../util/DateUtils";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { IconeCroix } from "../icones/IconeCroix";
 import {
   MSG_MIN_YEAR,
   MSG_DATE_MEP_MIN,
@@ -251,13 +250,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           validate={validateAnnee}
           placeholder="AAAA"
         />
-        <FontAwesomeIcon
-          icon={faTimesCircle}
-          size="xs"
-          className="IconeCroix"
-          onClick={videChamps}
-          title="Vider les champs"
-        />
+        <IconeCroix onClick={videChamps} title="Vider les champs" />
         {props.showDatePicker && (
           <ReceDatePicker
             dateValue={buildDatePickerValue()}

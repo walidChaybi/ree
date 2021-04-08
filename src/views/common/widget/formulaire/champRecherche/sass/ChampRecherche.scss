@@ -1,0 +1,13 @@
+@import "./../../../../../../sass/colors";
+
+.Autocomplete {
+  .loupeChampsRecherche {
+    font-size: 1.2rem;
+    color: $application-color;
+    margin-left: 1.8rem;
+  }
+
+  .IconeCroix {
+    margin-left: -25px;
+  }
+}

@@ -29,13 +29,4 @@
   button {
     min-width: auto !important;
   }
-
-  .IconeCroix {
-    color: $application-color;
-    &:hover {
-      cursor: pointer;
-    }
-    align-self: center;
-    margin-left: 2px;
-  }
 }

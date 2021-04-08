@@ -1,9 +1,8 @@
-import { NatureActe } from "../../../etatcivil/enum/NatureActe";
-import { CodeFamilleRegistre } from "../../../etatcivil/enum/CodeFamilleRegistre";
+import { Option } from "../../../../views/common/util/Type";
 
 export interface IRMCRegistre {
   natureActe?: string;
   familleRegistre?: string;
-  pocopa?: string;
+  pocopa?: Option;
   numeroActe?: string;
 }

@@ -9,7 +9,13 @@ export const MockHabilitation = {
           {
             droit: {
               idDroit: "idDroit",
-              nom: "nom"
+              nom: "CONSULTER"
+            }
+          },
+          {
+            droit: {
+              idDroit: "idDroit",
+              nom: "ATTRIBUER"
             }
           }
         ]
@@ -19,7 +25,7 @@ export const MockHabilitation = {
         description: "descPérimètre",
         estActif: true,
         listePays: "paysPérimètre",
-        nom: "nomPérimètre",
+        nom: "MEAE",
         type: ["idlisteIdTypeRegistre"]
       }
     }

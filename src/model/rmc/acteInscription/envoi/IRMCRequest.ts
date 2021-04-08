@@ -1,6 +1,6 @@
-import {TypeRepertoire} from "../../../etatcivil/enum/TypeRepertoire";
-import {NatureActe} from "../../../etatcivil/enum/NatureActe";
-import {CodeFamilleRegistre} from "../../../etatcivil/enum/CodeFamilleRegistre";
+import { TypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
+import { NatureActe } from "../../../etatcivil/enum/NatureActe";
+import { TypeFamille } from "../../../etatcivil/enum/TypeFamille";
 
 export interface IRMCRequest {
   // Filtre Titulaire
@@ -19,7 +19,7 @@ export interface IRMCRequest {
   // Filtre Registre & Réppertoire Civile
   // Registre
   natureActe?: NatureActe;
-  familleRegistre?: CodeFamilleRegistre;
+  familleRegistre?: TypeFamille;
   posteOuPocopa?: string;
   numeroActe?: string;
   //Repertoire
