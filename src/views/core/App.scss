@@ -1,8 +1,9 @@
 @import "./../../sass/colors";
+@import "./../../sass/library";
 
 .App {
   text-align: center;
-  font-family: "NotoSansUI-Regular", sans-serif;
+  font-family: $application-font-family;
 }
 
 .AppHeader {
@@ -33,7 +34,7 @@
     button span {
       color: white;
       text-transform: initial;
-      font-family: "NotoSansUI-Regular", sans-serif;
+      font-family: $application-font-family;
       font-size: 1rem;
     }
 

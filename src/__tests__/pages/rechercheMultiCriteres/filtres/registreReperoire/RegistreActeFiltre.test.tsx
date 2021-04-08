@@ -4,7 +4,8 @@ import {
   waitFor,
   act,
   screen,
-  fireEvent
+  fireEvent,
+  wait
 } from "@testing-library/react";
 import { Field, Formik, Form } from "formik";
 import RegistreActeFiltre, {
@@ -12,6 +13,11 @@ import RegistreActeFiltre, {
   RegistreActeFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreActeFiltre";
 import { REGISTRE } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
+
+import request from "superagent";
+import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
+
 const HookRegistreActeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
@@ -49,6 +55,7 @@ test("render composant RegistreActeFiltre", async () => {
   const familleRegistre = screen.getByLabelText(
     "registre.familleRegistre"
   ) as HTMLInputElement;
+  const autocomplete = screen.getByTestId("autocomplete");
   const pocopa = screen.getByLabelText("registre.pocopa") as HTMLInputElement;
   const numeroActe = screen.getByLabelText(
     "registre.numeroActe"
@@ -58,11 +65,37 @@ test("render composant RegistreActeFiltre", async () => {
     natureActe,
     familleRegistre,
     pocopa,
-    numeroActe
+    numeroActe,
+    autocomplete
   ];
 
   await waitFor(() => {
     expectToBeDefined([...allInputRegistreActe]);
+  });
+
+  autocomplete.focus();
+
+  act(() => {
+    fireEvent.change(familleRegistre, {
+      target: {
+        value: "ACQ"
+      }
+    });
+  });
+
+  act(() => {
+    fireEvent.change(pocopa, {
+      target: {
+        value: "t"
+      }
+    });
+  });
+  await waitFor(() => {
+    expect(screen.getByText("TORONTO")).toBeInTheDocument();
+  });
+  act(() => {
+    fireEvent.keyDown(pocopa, { key: "ArrowDown" });
+    fireEvent.keyDown(pocopa, { key: "Enter" });
   });
 
   act(() => {
@@ -71,16 +104,7 @@ test("render composant RegistreActeFiltre", async () => {
         value: "MARIAGE"
       }
     });
-    fireEvent.change(familleRegistre, {
-      target: {
-        value: "ACQ"
-      }
-    });
-    fireEvent.change(pocopa, {
-      target: {
-        value: "Washington"
-      }
-    });
+
     fireEvent.change(numeroActe, {
       target: {
         value: "123456"
@@ -97,7 +121,7 @@ test("render composant RegistreActeFiltre", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","pocopa":"Washington","numeroActe":"123456"}}'
+      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","pocopa":{"value":"TORONTO","str":"TORONTO"},"numeroActe":"123456"}}'
     );
   });
 });

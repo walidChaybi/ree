@@ -1,14 +1,22 @@
-import {configEtatcivil} from "../mock/superagent-config/superagent-mock-etatcivil";
-import * as superagent from "superagent";
-import request from "superagent";
-import {v4 as uuidv4} from "uuid";
+import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
+import request, * as superagent from "superagent";
+import { v4 as uuidv4 } from "uuid";
 import messageManager from "../views/common/util/messageManager";
-import {configAgent} from "../mock/superagent-config/superagent-mock-agent";
-import {configRequetes} from "../mock/superagent-config/superagent-mock-requetes";
-import {getCsrfHeader} from "../views/common/util/CsrfUtil";
+import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
+import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
+import { getCsrfHeader } from "../views/common/util/CsrfUtil";
+import { URL_ACCUEIL } from "../views/router/ReceUrls";
+import {
+  ReceCache,
+  GestionnaireCache
+} from "../views/common/util/GestionnaireCache";
 
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
-const EXPIRATION_CACHE_SECONDS = 3600;
+const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (43200 secondes)
+
+const HTTP_FORBIDDEN = 403;
+const ERROR_OFFLINE_TIMEOUT = 5000;
+
 if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, [
     configRequetes[0],
@@ -63,30 +71,33 @@ export interface IHttpResponse {
 }
 
 const DOMAIN = "rece";
-
+type API_ERROR_TYPE =
+  | "erreurOffLine"
+  | "toutesErreursSaufForbidden"
+  | undefined;
 export class ApiManager {
   private readonly url: string;
   private readonly domain: string;
   private readonly name: string;
   private readonly version: string;
   private static instance: ApiManager;
-  private readonly expireCache: any;
+  private readonly cache: ReceCache;
 
   private constructor(name: ApisAutorisees, version: string) {
     this.url = `${window.location.protocol}//${window.location.hostname}`;
     this.domain = DOMAIN;
     this.name = name;
     this.version = version;
-    this.expireCache = require("expire-cache");
+    this.cache = GestionnaireCache.addCache(name, EXPIRATION_CACHE_SECONDS);
   }
 
   public static getInstance(name: ApisAutorisees, version: string): ApiManager {
     if (
-        !(
-            ApiManager.instance &&
-            ApiManager.instance.name === name &&
-            ApiManager.instance.version === version
-        )
+      !(
+        ApiManager.instance &&
+        ApiManager.instance.name === name &&
+        ApiManager.instance.version === version
+      )
     ) {
       ApiManager.instance = new ApiManager(name, version);
     }
@@ -103,7 +114,7 @@ export class ApiManager {
   }
 
   public fetchCache(httpRequestConfig: HttpRequestConfig): Promise<any> {
-    const dataCache = this.expireCache.get(httpRequestConfig.uri);
+    const dataCache = this.cache.get(this.buildCacheKey(httpRequestConfig));
     if (dataCache !== undefined) {
       return Promise.resolve({
         body: dataCache.body,
@@ -115,14 +126,13 @@ export class ApiManager {
     }
   }
 
-
-  public fetchData(httpRequestConfig: HttpRequestConfig, useCache = false): Promise<any> {
-
-    const codeErreurForbidden = 403;
-
+  public fetchData(
+    httpRequestConfig: HttpRequestConfig,
+    useCache = false
+  ): Promise<any> {
     let httpRequete = this.processRequestMethod(
-        httpRequestConfig.method,
-        httpRequestConfig.uri
+      httpRequestConfig.method,
+      httpRequestConfig.uri
     );
 
     // Ajout de l'id de corrélation dans l'entête
@@ -133,55 +143,83 @@ export class ApiManager {
 
     if (httpRequestConfig.parameters) {
       httpRequete = this.processRequestQueyParameters(
-          httpRequestConfig.parameters,
-          httpRequete
+        httpRequestConfig.parameters,
+        httpRequete
       );
     }
 
     if (httpRequestConfig.data) {
       httpRequete = this.processRequestData(
-          httpRequestConfig.data,
-          httpRequete
+        httpRequestConfig.data,
+        httpRequete
       );
     }
 
     if (httpRequestConfig.headers) {
       httpRequete = this.processRequestHeaders(
-          httpRequestConfig.headers,
-          httpRequete
+        httpRequestConfig.headers,
+        httpRequete
       );
     }
     if (httpRequestConfig.responseType) {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
     return httpRequete
-        .then(response => {
-          if (useCache) {
-            this.expireCache.set(httpRequestConfig.uri, {
-              body: response.body,
-              status: response.status,
-              headers: response.header
-            }, EXPIRATION_CACHE_SECONDS);
-          }
-
-          return Promise.resolve({
+      .then(response => {
+        if (useCache) {
+          this.cache.set(this.buildCacheKey(httpRequestConfig), {
             body: response.body,
             status: response.status,
             headers: response.header
           });
-        })
-        .catch(error => {
-          if (
-              process.env.NODE_ENV === "development" &&
-              error.status !== codeErreurForbidden
-          ) {
-            messageManager.showError(
-                `Une erreur est survenue: ${error ? error.message : "inconnue"}`
-            );
-          }
+        }
 
-          return Promise.reject(error);
+        return Promise.resolve({
+          body: response.body,
+          status: response.status,
+          headers: response.header
         });
+      })
+      .catch(error => {
+        const errorType = this.manageApiError(error);
+        if (errorType === "erreurOffLine") {
+          // Permet à l'application de se recharger avant l'affichage de  l'erreur
+          setTimeout(() => {
+            Promise.reject(error);
+          }, ERROR_OFFLINE_TIMEOUT);
+        } else {
+          return Promise.reject(error);
+        }
+      });
+  }
+
+  private manageApiError(error: any): API_ERROR_TYPE {
+    let errorType: API_ERROR_TYPE = undefined;
+    if (
+      error &&
+      error.message &&
+      error.message.indexOf("offline") !== -1 &&
+      error.crossDomain === true
+    ) {
+      errorType = "erreurOffLine";
+      // Force la reconnexion
+      window.location.replace(URL_ACCUEIL);
+    } else if (
+      process.env.NODE_ENV === "development" &&
+      error.status !== HTTP_FORBIDDEN
+    ) {
+      errorType = "toutesErreursSaufForbidden";
+      messageManager.showError(
+        `Une erreur est survenue: ${error ? error.message : "inconnue"}`
+      );
+    }
+    return errorType;
+  }
+
+  private buildCacheKey(httpRequestConfig: HttpRequestConfig) {
+    return `${httpRequestConfig.method}.${
+      httpRequestConfig.uri
+    }.${JSON.stringify(httpRequestConfig.parameters)}`;
   }
 
   private addIdCorrelationToConfigHeader(config: HttpRequestConfig) {

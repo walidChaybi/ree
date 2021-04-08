@@ -105,6 +105,93 @@ export const configEtatcivil = [
       if (match[1] === "/nomenclature/NATURE_RCA") {
         return { data: ReponseAppelNomenclatureNatureRCA.data };
       }
+
+      if (
+        match[1] ===
+        "/acte/pocopas/debutentPar?debutPocopa=t&nombreResultatsMax=15"
+      ) {
+        return {
+          data: [
+            "TORONTO",
+            "TOURANE",
+            "TOURNAI",
+            "TOKYO",
+            "TULEAR",
+            "TUNIS",
+            "TURIN",
+            "TURIN ET GENES"
+          ]
+        };
+      }
+
+      if (
+        match[1] ===
+        "/acte/pocopas/debutentPar?debutPocopa=t&familleRegistre=ACQ&nombreResultatsMax=15"
+      ) {
+        return {
+          data: [
+            "TORONTO",
+            "TOURANE",
+            "TOURNAI",
+            "TOKYO",
+            "TULEAR",
+            "TUNIS",
+            "TURIN",
+            "TURIN ET GENES"
+          ]
+        };
+      }
+
+      if (
+        match[1] ===
+        "/acte/pocopas/debutentPar?debutPocopa=tu&nombreResultatsMax=15"
+      ) {
+        return {
+          data: ["TULEAR", "TUNIS", "TURIN", "TURIN ET GENES"]
+        };
+      }
+
+      if (
+        match[1] ===
+        "/acte/pocopas/debutentPar?debutPocopa=tun&nombreResultatsMax=15"
+      ) {
+        return {
+          data: ["TUNIS"]
+        };
+      }
+
+      if (
+        match[1] ===
+        "/acte/pocopas/debutentPar?debutPocopa=tuni&nombreResultatsMax=15"
+      ) {
+        return {
+          data: ["TUNIS"]
+        };
+      }
+
+      if (
+        match[1] ===
+        "/acte/pocopas/debutentPar?debutPocopa=tunis&nombreResultatsMax=15"
+      ) {
+        return {
+          data: ["TUNIS"]
+        };
+      }
+
+      if (
+        match[1] ===
+        "/acte/pocopas/debutentPar?debutPocopa=t&familleRegistre=ACQ&nombreResultatsMax=15"
+      ) {
+        return {
+          data: ["TOKYO"]
+        };
+      }
+
+      if (String(match[1]).startsWith("/acte/pocopas/debutentPar")) {
+        return {
+          data: ["TUNIS"]
+        };
+      }
     },
 
     /**

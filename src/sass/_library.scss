@@ -31,6 +31,8 @@ a {
 
 input {
   font-family: "NotoSansUI-Regular", sans-serif;
+  width: -webkit-fill-available; // Force le champ input à 100% de son parent dans tous les cas (chrome)
+  width: -moz-available; // Force le champ input à 100% de son parent dans tous les cas (firefox)
 }
 
 .BoutonRetour {
