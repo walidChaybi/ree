@@ -8,6 +8,7 @@ export const URL_ACTE = "/acte";
 export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
 export const URL_ACTE_RMC = "/acte/rmc";
 export const URL_ACTE_IMAGE = "/repertoirecivil/acte/corps";
+export const URL_ACTE_TEXTE = "/repertoirecivil/acte/texte";
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
 
@@ -53,6 +54,14 @@ export function getImagesActe(identifiant: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE_IMAGE}/${identifiant}`,
+    responseType: "blob"
+  });
+}
+
+export function getTexteActe(identifiant: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE_TEXTE}/${identifiant}`,
     responseType: "blob"
   });
 }

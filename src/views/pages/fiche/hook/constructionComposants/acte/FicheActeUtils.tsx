@@ -57,7 +57,12 @@ function getPanelAreasActeImage(
   if (params.visuActe === "classique" || params.visuActe === "filigrane") {
     return [
       {
-        value: <ActeImage id={acte.id}></ActeImage>,
+        value: (
+          <ActeImage
+            id={acte.id}
+            estReecrit={acte.compositionCorps?.estReecrit}
+          ></ActeImage>
+        ),
         nbColonne: 1
       }
     ];
