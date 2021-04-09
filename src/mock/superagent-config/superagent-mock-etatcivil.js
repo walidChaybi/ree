@@ -88,6 +88,21 @@ export const configEtatcivil = [
           ],
           body: "contenubase64dupdf"
         };
+      } else if (
+        match[1] ===
+        "/repertoirecivil/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
+      ) {
+        return {
+          headers: [
+            {
+              "Content-Disposition": 'filename="unfichier.pdf"'
+            },
+            {
+              "content-type": "application/pdf"
+            }
+          ],
+          body: "contenubase64dupdf"
+        };
       }
 
       if (match[1] === "/acte/rmc?range=0-105") {
