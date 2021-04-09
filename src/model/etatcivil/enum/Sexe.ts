@@ -7,7 +7,7 @@ export class Sexe extends EnumWithLibelle {
   public static readonly MASCULIN = new Sexe("Masculin");
   public static readonly FEMININ = new Sexe("Féminin");
   public static readonly INDETERMINE = new Sexe("Indéterminé");
-  public static readonly INCONNU = new Sexe("Non renseignée");
+  public static readonly INCONNU = new Sexe("Non renseigné");
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, Sexe);

@@ -20,9 +20,9 @@ import {
   URL_RECHERCHE_REQUETE,
   URL_MES_REQUETES_SAISIR_RDCSC,
   URL_REQUETES_SERVICE_SAISIR_RDCSC,
-  URL_APPERCU_REQUETE_TRAITEMENT_ID,
-  URL_APPERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_APPERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID
+  URL_APERCU_REQUETE_TRAITEMENT_ID,
+  URL_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID
 } from "./ReceUrls";
 import { RcRcaPage } from "../pages/RcRcaPage";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
@@ -134,21 +134,21 @@ export const routesRece: IRoute[] = [
     )
   },
   {
-    url: URL_APPERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    url: URL_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
     component: ApercuRequetePriseEnChargePage,
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle("Aperçu requête (prise en charge)")
   },
   {
-    url: URL_APPERCU_REQUETE_TRAITEMENT_ID,
+    url: URL_APERCU_REQUETE_TRAITEMENT_ID,
     component: ApercuRequeteTraitementPage,
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle("Aperçu requête (traitement)")
   },
   {
-    url: URL_APPERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
+    url: URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
     component: ApercuRequeteTraitementPage,
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),

@@ -52,7 +52,7 @@ const ParticulierForm: React.FC<SubFormProps> = props => {
         name={nomFamilleWithNamespace}
         label={getLibelle("Nom de famille")}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onChange={e =>
+        onBlur={e =>
           sortieChampEnMajuscule(
             e.target.value,
             props.formik,
@@ -64,7 +64,7 @@ const ParticulierForm: React.FC<SubFormProps> = props => {
         name={nomUsageWithNamespace}
         label={getLibelle("Nom d'usage")}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onChange={e =>
+        onBlur={e =>
           sortieChampEnMajuscule(
             e.target.value,
             props.formik,
@@ -76,7 +76,7 @@ const ParticulierForm: React.FC<SubFormProps> = props => {
         name={withNamespace(props.nom, PRENOM)}
         label={getLibelle("Prénom")}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onChange={e =>
+        onBlur={e =>
           sortieChampPremiereLettreEnMajuscule(
             e.target.value,
             props.formik,

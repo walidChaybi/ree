@@ -79,7 +79,7 @@ const IdentiteForm: React.FC<SubFormProps> = props => {
             name={nomFamilleWithNamespace}
             label={getLibelle("Nom de Famille")}
             maxLength={NB_CARACT_MAX_SAISIE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampEnMajuscule(
                 e.target.value,
                 props.formik,
@@ -91,7 +91,7 @@ const IdentiteForm: React.FC<SubFormProps> = props => {
             name={nomUsageWithNamespace}
             label={getLibelle("Nom d'usage")}
             maxLength={NB_CARACT_MAX_SAISIE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampEnMajuscule(
                 e.target.value,
                 props.formik,

@@ -65,7 +65,7 @@ const NaissanceForm: React.FC<SubFormProps> = props => {
             label={getLibelle("à")}
             placeholder={getLibelle("Ville de naissance")}
             maxLength={NB_CARACT_MAX_SAISIE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
                 e.target.value,
                 props.formik,
@@ -79,7 +79,7 @@ const NaissanceForm: React.FC<SubFormProps> = props => {
         name={withNamespace(props.nom, PAYS_NAISSANCE)}
         label={getLibelle("Pays de naissance")}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onChange={e =>
+        onBlur={e =>
           sortieChampPremiereLettreEnMajuscule(
             e.target.value,
             props.formik,

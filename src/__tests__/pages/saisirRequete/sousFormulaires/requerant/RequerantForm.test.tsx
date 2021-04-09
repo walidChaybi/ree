@@ -133,6 +133,7 @@ test("retour du formulaire Requerant", async () => {
   });
 
   await waitFor(() => {
+    fireEvent.blur(typeRequerantParticulierPrenom);
     expect(typeRequerantParticulierPrenom.value).toEqual("Mockprenom");
   });
 

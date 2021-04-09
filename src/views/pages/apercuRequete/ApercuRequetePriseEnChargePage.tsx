@@ -4,7 +4,7 @@
 import React from "react";
 import { getLibelle } from "../../common/widget/Text";
 import { useHistory } from "react-router-dom";
-import { URL_APPERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID } from "../../router/ReceUrls";
+import { URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID } from "../../router/ReceUrls";
 import { BoutonRetour } from "../../common/widget/navigation/BoutonRetour";
 import { getUrlWithParam } from "../../common/util/route/routeUtil";
 
@@ -18,7 +18,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
         onClick={() => {
           history.push(
             getUrlWithParam(
-              URL_APPERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
+              URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
               "123"
             )
           );

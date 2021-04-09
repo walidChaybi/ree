@@ -77,6 +77,8 @@ test("render composant Identite Formulaire", async () => {
 
   const submit = screen.getByText(/Submit/i);
   await act(async () => {
+    fireEvent.blur(inputNomFamille);
+    fireEvent.blur(inputNomUsage);
     fireEvent.click(submit);
   });
 

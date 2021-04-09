@@ -121,6 +121,12 @@ test("render composant Adresse Formulaire", async () => {
 
   const submit = screen.getByText(/Submit/i);
   await act(async () => {
+    fireEvent.blur(inputVoie);
+    fireEvent.blur(inputLieuDit);
+    fireEvent.blur(inputComplementDestinataire);
+    fireEvent.blur(inputComplementPointGeo);
+    fireEvent.blur(inputCommune);
+    fireEvent.blur(inputPays);
     fireEvent.click(submit);
   });
 
