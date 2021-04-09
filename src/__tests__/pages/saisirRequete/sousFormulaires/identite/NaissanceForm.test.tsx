@@ -69,6 +69,8 @@ test("render composant Naissance Formulaire", async () => {
 
   const submit = screen.getByText(/Submit/i);
   await act(async () => {
+    fireEvent.blur(inputVille);
+    fireEvent.blur(inputPays);
     fireEvent.click(submit);
   });
 

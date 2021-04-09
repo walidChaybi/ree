@@ -94,6 +94,8 @@ test("render composant Institutionnel Formulaire", async () => {
 
   const submit = screen.getByText(/Submit/i);
   await act(async () => {
+    fireEvent.blur(inputNom);
+    fireEvent.blur(inputPrenom);
     fireEvent.click(submit);
   });
 

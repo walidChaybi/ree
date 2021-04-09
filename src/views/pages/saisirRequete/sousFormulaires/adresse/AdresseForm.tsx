@@ -99,7 +99,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             label={getLibelle("Numéro, type et nom de la voie")}
             placeholder={getLibelle("Numéro, type et nom de la voie")}
             maxLength={NB_CARACT_ADRESSE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampEnMajuscule(
                 e.target.value,
                 props.formik,
@@ -116,7 +116,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
               "Lieu-dit, boite postale ou état/province à l'étranger"
             )}
             maxLength={NB_CARACT_ADRESSE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampEnMajuscule(
                 e.target.value,
                 props.formik,
@@ -131,7 +131,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
               "Appartement, boite aux lettres, étage, couloir, escalier, chez…"
             )}
             maxLength={NB_CARACT_ADRESSE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampEnMajuscule(
                 e.target.value,
                 props.formik,
@@ -146,7 +146,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             )}
             placeholder={getLibelle("Entrée, bâtiment, immeuble, résidence…")}
             maxLength={NB_CARACT_ADRESSE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampEnMajuscule(
                 e.target.value,
                 props.formik,
@@ -165,7 +165,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             name={communeWithNamespace}
             label={getLibelle("Commune")}
             maxLength={NB_CARACT_COMMUNE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampEnMajuscule(
                 e.target.value,
                 props.formik,
@@ -177,7 +177,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             name={paysWithNamespace}
             label={getLibelle("Pays")}
             maxLength={NB_CARACT_ADRESSE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampEnMajuscule(
                 e.target.value,
                 props.formik,

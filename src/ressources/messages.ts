@@ -10,7 +10,7 @@ export const MSG_DATE_MEP_MIN = getLibelle(
 );
 
 export const MSG_CURRENT_YEAR_MAX = getLibelle(
-  `L'année doit être inférieur ou égale à l'année en cours`
+  `L'année doit être inférieure ou égale à l'année en cours`
 );
 
 export const MSG_MIN_LENGTH_ANNEE = getLibelle(

@@ -76,6 +76,9 @@ test("render composant Particulier Formulaire", async () => {
 
   const submit = screen.getByText(/Submit/i);
   await act(async () => {
+    fireEvent.blur(inputNomFamille);
+    fireEvent.blur(inputNomUsage);
+    fireEvent.blur(inputPrenom);
     fireEvent.click(submit);
   });
 

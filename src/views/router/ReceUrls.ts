@@ -8,9 +8,9 @@ export const URL_REQUETES_SERVICE = `${URL_CONTEXT_APP}/requetesservice`;
 // Aperçu requête
 export const URL_MES_REQUETES_ID = `${URL_MES_REQUETES}/apercurequete/:idRequete`;
 export const URL_REQUETES_SERVICE_ID = `${URL_REQUETES_SERVICE}/apercurequete/:idRequete`;
-export const URL_APPERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequeteprisencharge/:idRequete`;
-export const URL_APPERCU_REQUETE_TRAITEMENT_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetetraitement/:idRequete`;
-export const URL_APPERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequeteprisencharge/apercurequetetraitement/:idRequete`;
+export const URL_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetepriseencharge/:idRequete`;
+export const URL_APERCU_REQUETE_TRAITEMENT_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetetraitement/:idRequete`;
+export const URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetepriseencharge/apercurequetetraitement/:idRequete`;
 // RMC
 export const URL_RECHERCHE_ACTE_INSCRIPTION = `${URL_CONTEXT_APP}/rechercheacteinscription`;
 export const URL_RECHERCHE_ACTE = `${URL_CONTEXT_APP}/rechercheacte`;

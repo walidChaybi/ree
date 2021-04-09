@@ -52,7 +52,7 @@ export const PrenomsFormValidationSchema = Yup.object()
 
     const params = {
       path: `${error.path}.prenom1`,
-      message: getLibelle("Saisie du Prénom 1 est obligatoire")
+      message: getLibelle("La saisie du Prénom 1 est obligatoire")
     };
 
     return prenom1 == null && (prenom2 != null || prenom3 != null)
@@ -65,7 +65,7 @@ export const PrenomsFormValidationSchema = Yup.object()
 
     const params = {
       path: `${error.path}.prenom2`,
-      message: getLibelle("Saisie du Prénom 2 est obligatoire")
+      message: getLibelle("La saisie du Prénom 2 est obligatoire")
     };
 
     return prenom2 == null && prenom3 != null ? this.createError(params) : true;
@@ -131,7 +131,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
           label={getLibelle("Prénom 1")}
           placeholder={getLibelle("Prénom 1")}
           maxLength={NB_CARACT_MAX_SAISIE}
-          onChange={e =>
+          onBlur={e =>
             sortieChampPremiereLettreEnMajuscule(
               e.target.value,
               props.formik,
@@ -148,7 +148,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
             label={getLibelle("Prénom 2")}
             placeholder={getLibelle("Prénom 2")}
             maxLength={NB_CARACT_MAX_SAISIE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
                 e.target.value,
                 props.formik,
@@ -171,7 +171,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
             label={getLibelle("Prénom 3")}
             placeholder={getLibelle("Prénom 3")}
             maxLength={NB_CARACT_MAX_SAISIE}
-            onChange={e =>
+            onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
                 e.target.value,
                 props.formik,
