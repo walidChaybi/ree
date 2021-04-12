@@ -43,7 +43,7 @@ export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
       criteres.registreArchive?.registre?.familleRegistre
     ),
     posteOuPocopa: valeurOuUndefined(
-      criteres.registreArchive?.registre?.pocopa
+      criteres.registreArchive?.registre?.pocopa?.value
     ),
     numeroActe: valeurOuUndefined(
       criteres.registreArchive?.registre?.numeroActe
