@@ -1,6 +1,6 @@
 import { getNomenclatureEtatCivil } from "../appels/etatcivilApi";
 import { NatureRc } from "../../model/etatcivil/enum/NatureRc";
-import { premiereLettreEnMajuscule } from "../../views/common/util/Utils";
+import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../views/common/util/Utils";
 import { NatureRca } from "../../model/etatcivil/enum/NatureRca";
 
 const NATURE_RC = "NATURE_RC";
@@ -13,7 +13,7 @@ export async function peupleNatureRc() {
     NatureRc.addEnum(
       NatureRc,
       data.id,
-      new NatureRc(premiereLettreEnMajuscule(data.libelle))
+      new NatureRc(premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle))
     );
   }
 }
@@ -25,7 +25,7 @@ export async function peupleNatureRca() {
     NatureRca.addEnum(
       NatureRca,
       data.id,
-      new NatureRca(premiereLettreEnMajuscule(data.libelle))
+      new NatureRca(premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle))
     );
   }
 }

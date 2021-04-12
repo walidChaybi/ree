@@ -1,7 +1,7 @@
 import {
   getValeurOuVide,
   premiereLettreEnMajuscule,
-  premiereLettreEnMajusculeLeResteEnMinuscule
+  formatMajusculesMinusculesAvecSeparateur
 } from "../views/common/util/Utils";
 
 const FRANCE = "FRANCE";
@@ -34,7 +34,7 @@ export class LieuxUtils {
     return LieuxUtils.isVilleParis(ville)
       ? ""
       : getValeurOuVide(
-          premiereLettreEnMajusculeLeResteEnMinuscule(departement, " ")
+          formatMajusculesMinusculesAvecSeparateur(departement, " ")
         );
   }
 

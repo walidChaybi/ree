@@ -25,7 +25,9 @@ export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
 
       rechercheMultiCriteresRequetes(criteresRequest, criteres.range)
         .then((result: any) => {
-          setDataRMCRequete(mappingRequetes(result.body.data.requetes));
+          setDataRMCRequete(
+            mappingRequetes(result.body.data.resultatsRecherche)
+          );
           const { nextLink, prevLink } = parseLink(result.headers["link"]);
           setDataTableauRMCRequete({
             previousDataLinkState: prevLink,

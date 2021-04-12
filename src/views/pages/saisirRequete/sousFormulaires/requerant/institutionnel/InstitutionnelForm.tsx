@@ -92,9 +92,7 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
         name={nomWithNamespace}
         label={getLibelle("Nom représentant")}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e =>
-          sortieChampEnMajuscule(e.target.value, props.formik, nomWithNamespace)
-        }
+        onBlur={e => sortieChampEnMajuscule(e, props.formik, nomWithNamespace)}
       />
       <InputField
         name={prenomWithNamespace}
@@ -102,7 +100,7 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
         maxLength={NB_CARACT_MAX_SAISIE}
         onBlur={e =>
           sortieChampPremiereLettreEnMajuscule(
-            e.target.value,
+            e,
             props.formik,
             prenomWithNamespace
           )

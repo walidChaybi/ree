@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { premiereLettreEnMajuscule } from "../../views/common/util/Utils";
+import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../views/common/util/Utils";
 import { TypePieceJustificative } from "../../model/requete/v2/TypePieceJustificative";
 import { DocumentDelivrance } from "../../model/requete/v2/DocumentDelivrance";
 import { getNomenclatureRequete } from "../appels/requeteApi";
@@ -16,7 +16,9 @@ export async function peupleTypePieceJustificative() {
     TypePieceJustificative.addEnum(
       TypePieceJustificative,
       data.id,
-      new TypePieceJustificative(premiereLettreEnMajuscule(data.libelle))
+      new TypePieceJustificative(
+        premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle)
+      )
     );
   }
 }
@@ -28,7 +30,9 @@ export async function peupleDocumentDelivrence() {
     DocumentDelivrance.addEnum(
       DocumentDelivrance,
       data.id,
-      new DocumentDelivrance(premiereLettreEnMajuscule(data.libelle))
+      new DocumentDelivrance(
+        premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle)
+      )
     );
   }
 }
