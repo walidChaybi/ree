@@ -141,8 +141,11 @@ export function buildPagesInfos(
     // Gère le cas ou l'utilisateur navigue d'une page avec un identifiant dans l'url vers une autre page (avec identifiant dans l'url ou pas)
     // Dans ce cas le gestionnaire de navigation permet de retrouver l'url avec le bon identifiant
     const indexAPartirDeLaFinDePathElements = pathElements.length - 1 - idx;
-    // Dans le cas d'un accès par favoris puis d'une navigation, les urls dans le gestionnaire de navigation peuvent être [a/b/c, a/b/c/d] et dans pathElements: [a, a/b, a/b/c, a/b/c/d]
-    //   Donc on voit que les urls du gestionnaire de navigation correspondent aux deux dernières urls de pathElements (le code ci-dessous traite ce cas en faisant correspndent les urls du gestionnaires de navigation à celles de pathElements pour construire la bonne url pour l'objet IPageInfo)
+    // Dans le cas d'un accès par favoris puis d'une navigation,
+    // les urls dans le gestionnaire de navigation peuvent être [a/b/c, a/b/c/d] et dans pathElements: [a, a/b, a/b/c, a/b/c/d]
+    // Donc on voit que les urls du gestionnaire de navigation correspondent aux deux dernières urls de pathElements
+    // (le code ci-dessous traite ce cas en faisant correspndent les urls du gestionnaires de navigation à celles de pathElements
+    // pour construire la bonne url pour l'objet IPageInfo)
     const indexDansUrlsGestionnaireNavigation =
       navigationUrls.length - indexAPartirDeLaFinDePathElements - 1;
     // Si la navigation est classique à partir de la page d'accueil alors c'est toujours l'url du gestionnaire de navigation qui est utilisée

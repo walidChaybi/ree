@@ -10,12 +10,12 @@ import { InputField } from "../../../../common/widget/formulaire/champsSaisie/In
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { Options } from "../../../../common/util/Type";
 import { connect, getIn } from "formik";
-import { TypeRequete } from "../../../../../model/requete/v2/TypeRequete";
-import { StatutRequete } from "../../../../../model/requete/v2/StatutRequete";
-import { SousTypeDelivrance } from "../../../../../model/requete/v2/SousTypeDelivrance";
-import { SousTypeCreation } from "../../../../../model/requete/v2/SousTypeCreation";
-import { SousTypeMiseAJour } from "../../../../../model/requete/v2/SousTypeMiseAJour";
-import { SousTypeInformation } from "../../../../../model/requete/v2/SousTypeInformation";
+import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
+import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { SousTypeCreation } from "../../../../../model/requete/v2/enum/SousTypeCreation";
+import { SousTypeMiseAJour } from "../../../../../model/requete/v2/enum/SousTypeMiseAJour";
+import { SousTypeInformation } from "../../../../../model/requete/v2/enum/SousTypeInformation";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { CarateresAlphanumerique } from "../../../../../ressources/Regex";
 import { CARACTERES_ALPHANUMERIQUE } from "../../../../common/widget/formulaire/FormulaireMessages";

@@ -47,7 +47,7 @@
               "uniteDuree": "ans",
               "dateFinDeMesure": 1581724800
             },
-            "mandataires": [
+            "codesMandataires": [
               "Mandataire judiciaire à la protection des majeurs association"
             ],
             "inscriptionsLiees": [
@@ -117,10 +117,10 @@
           "$.body.data.alertes[*].*": {
             "match": "type"
           },
-          "$.body.data.mandataires": {
+          "$.body.data.codesMandataires": {
             "min": 1
           },
-          "$.body.data.mandataires[*].*": {
+          "$.body.data.codesMandataires[*].*": {
             "match": "type"
           },
           "$.body.data.inscriptionsLiees": {

@@ -6,9 +6,9 @@ import {
 import { IFamille } from "../../../../../../model/etatcivil/commun/IFamille";
 import { IFicheLienActes } from "../../../../../../model/etatcivil/commun/IFicheLienActes";
 import { IFicheLien } from "../../../../../../model/etatcivil/commun/IFicheLien";
-import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
-import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
-import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { LienFiche } from "../../../LienFiche";
 import {
   formatDe,
@@ -16,9 +16,9 @@ import {
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../../../common/util/Utils";
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { AccordionContentPartProps } from "../../../../../common/widget/accordion/AccordionPartContent";
+import { SectionContentPartProps } from "../../../../../common/widget/section/SectionPartContent";
 import { getLibelle } from "../../../../../common/widget/Text";
-import { AccordionPanelAreaProps } from "../../../../../common/widget/accordion/AccordionPanelArea";
+import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
 
 import { IParamsAffichage } from "../acte/FicheActeUtils";
 
@@ -41,9 +41,7 @@ export function getFichesPersonneActe(
   }
 }
 
-export function getFichesPersonne(
-  personnes: IPersonne[]
-): AccordionPanelProps[] {
+export function getFichesPersonne(personnes: IPersonne[]): SectionPanelProps[] {
   return personnes.map((personne, index) => {
     return {
       panelAreas: getPanelAreasFichesPersonnes(personne),
@@ -54,7 +52,7 @@ export function getFichesPersonne(
 
 function getPanelAreasFichesPersonnes(
   personne: IPersonne
-): AccordionPanelAreaProps[] {
+): SectionPanelAreaProps[] {
   return [
     {
       parts: [
@@ -79,7 +77,7 @@ function getPanelAreasFichesPersonnes(
 
 function getInformationsListeInscriptions(
   personne: IPersonne
-): AccordionContentPartProps {
+): SectionContentPartProps {
   return {
     contents: [
       getRcsPersonne(Personne.getRcs(personne)),
@@ -92,32 +90,28 @@ function getInformationsListeInscriptions(
 
 function getInformationsListeActes(
   personne: IPersonne
-): AccordionContentPartProps {
+): SectionContentPartProps {
   return {
     contents: [getActesPersonne(Personne.getActes(personne))],
     title: getLibelle("Liste d'actes")
   };
 }
 
-function getInformationsParents(
-  personne: IPersonne
-): AccordionContentPartProps {
+function getInformationsParents(personne: IPersonne): SectionContentPartProps {
   return {
     contents: [...getParentsPersonne(Personne.getParents(personne))],
     title: getLibelle("Parents")
   };
 }
 
-function getInformationsEnfants(
-  personne: IPersonne
-): AccordionContentPartProps {
+function getInformationsEnfants(personne: IPersonne): SectionContentPartProps {
   return {
     contents: [getEnfantsPersonne(Personne.getEnfants(personne))],
     title: getLibelle("Enfants")
   };
 }
 
-function getInformationsPersonne(personne: IPersonne): AccordionPartProps {
+function getInformationsPersonne(personne: IPersonne): SectionPartProps {
   return {
     contentsPart: {
       contents: [
@@ -137,80 +131,78 @@ function getInformationsPersonne(personne: IPersonne): AccordionPartProps {
   };
 }
 
-function getNomPersonne(nom: string): AccordionContentProps {
+function getNomPersonne(nom: string): SectionContentProps {
   return {
     libelle: getLibelle("Nom"),
     value: nom
   };
 }
 
-function getAutresNomsPersonne(autresNom: string): AccordionContentProps {
+function getAutresNomsPersonne(autresNom: string): SectionContentProps {
   return {
     libelle: getLibelle("Autres noms"),
     value: autresNom
   };
 }
 
-function getPrenomsPersonne(prenoms: string): AccordionContentProps {
+function getPrenomsPersonne(prenoms: string): SectionContentProps {
   return {
     libelle: getLibelle("Prénoms"),
     value: prenoms
   };
 }
 
-function getAutresPrenomsPersonne(
-  autresPrenoms: string
-): AccordionContentProps {
+function getAutresPrenomsPersonne(autresPrenoms: string): SectionContentProps {
   return {
     libelle: getLibelle("Autres prénoms"),
     value: autresPrenoms
   };
 }
 
-function getLieuNaissance(lieuNaissance: string): AccordionContentProps {
+function getLieuNaissance(lieuNaissance: string): SectionContentProps {
   return {
     libelle: getLibelle("Lieu de naissance"),
     value: lieuNaissance
   };
 }
 
-function getLieuDeces(lieuDeces: string): AccordionContentProps {
+function getLieuDeces(lieuDeces: string): SectionContentProps {
   return {
     libelle: getLibelle("Lieu décès (si connu)"),
     value: lieuDeces
   };
 }
 
-function getDateNaissance(dateNaissance: string): AccordionContentProps {
+function getDateNaissance(dateNaissance: string): SectionContentProps {
   return {
     libelle: getLibelle("Né(e) le"),
     value: dateNaissance
   };
 }
 
-function getDateDeces(dateDeces: string): AccordionContentProps {
+function getDateDeces(dateDeces: string): SectionContentProps {
   return {
     libelle: getLibelle("Date décès (si connu)"),
     value: dateDeces
   };
 }
 
-function getNationalitePersonne(nationalite: string): AccordionContentProps {
+function getNationalitePersonne(nationalite: string): SectionContentProps {
   return {
     libelle: getLibelle("Nationalité"),
     value: nationalite
   };
 }
 
-function getSexePersonne(sexe: string): AccordionContentProps {
+function getSexePersonne(sexe: string): SectionContentProps {
   return {
     libelle: getLibelle("Sexe"),
     value: sexe
   };
 }
 
-function getParentsPersonne(parents: IFamille[]): AccordionContentProps[] {
-  let result: AccordionContentProps[] = [];
+function getParentsPersonne(parents: IFamille[]): SectionContentProps[] {
+  let result: SectionContentProps[] = [];
   const indexPremierParentAdoptif = 2;
   const indexDeuxiemeParentAdoptif = 3;
 
@@ -243,7 +235,7 @@ function getParentsPersonne(parents: IFamille[]): AccordionContentProps[] {
   return result;
 }
 
-function getEnfantsPersonne(enfants: IFamille[]): AccordionContentProps {
+function getEnfantsPersonne(enfants: IFamille[]): SectionContentProps {
   const enfantsHtml = enfants?.map(enfant => {
     return (
       <p key={`enfant-${enfant.nom}-${enfant.prenoms}`}>{`${enMajuscule(
@@ -259,7 +251,7 @@ function getEnfantsPersonne(enfants: IFamille[]): AccordionContentProps {
   };
 }
 
-function getActesPersonne(actes: IFicheLienActes[]): AccordionContentProps {
+function getActesPersonne(actes: IFicheLienActes[]): SectionContentProps {
   const liensActes = actes?.map(acte => (
     <div key={`acte-${acte.numero}`}>
       <LienFiche
@@ -277,7 +269,7 @@ function getActesPersonne(actes: IFicheLienActes[]): AccordionContentProps {
   };
 }
 
-function getRcsPersonne(rcs: IFicheLien[]): AccordionContentProps {
+function getRcsPersonne(rcs: IFicheLien[]): SectionContentProps {
   const liensRcs = rcs?.map(rc => (
     <div key={`rc-${rc.numero}`}>
       <LienFiche
@@ -293,7 +285,7 @@ function getRcsPersonne(rcs: IFicheLien[]): AccordionContentProps {
   };
 }
 
-function getRcasPersonne(rcas: IFicheLien[]): AccordionContentProps {
+function getRcasPersonne(rcas: IFicheLien[]): SectionContentProps {
   const liensRcas = rcas?.map(rca => (
     <div key={`rca-${rca.numero}`}>
       <LienFiche
@@ -309,7 +301,7 @@ function getRcasPersonne(rcas: IFicheLien[]): AccordionContentProps {
   };
 }
 
-function getPacssPersonne(pacss: IFicheLien[]): AccordionContentProps {
+function getPacssPersonne(pacss: IFicheLien[]): SectionContentProps {
   const liensPacss = pacss?.map(pacs => (
     <div key={`pacs-${pacs.numero}`}>
       <LienFiche

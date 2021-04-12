@@ -21,7 +21,7 @@ import ParticulierForm, {
   ParticulierFormValidationSchema
 } from "./particulier/ParticulierForm";
 import { connect } from "formik";
-import { TypeRequerant } from "../../../../../model/requete/v2/TypeRequerant";
+import { TypeRequerant } from "../../../../../model/requete/v2/enum/TypeRequerant";
 
 // Noms des champs
 export const TYPE_REQUERANT = "typeRequerant";

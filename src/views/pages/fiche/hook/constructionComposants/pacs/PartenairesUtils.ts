@@ -1,4 +1,4 @@
-import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { IPartenaire } from "../../../../../../model/etatcivil/pacs/IPartenaire";
 import {
   jointPrenoms,
@@ -9,9 +9,7 @@ import {
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
 import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 
-export function getPartenaires(
-  partenaires: IPartenaire[]
-): AccordionPartProps[] {
+export function getPartenaires(partenaires: IPartenaire[]): SectionPartProps[] {
   return partenaires.map((p, idx) => {
     return {
       contentsPart: {

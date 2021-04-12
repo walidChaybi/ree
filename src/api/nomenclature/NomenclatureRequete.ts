@@ -1,7 +1,8 @@
 /* istanbul ignore file */
+
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../views/common/util/Utils";
-import { TypePieceJustificative } from "../../model/requete/v2/TypePieceJustificative";
-import { DocumentDelivrance } from "../../model/requete/v2/DocumentDelivrance";
+import { TypePieceJustificative } from "../../model/requete/v2/enum/TypePieceJustificative";
+import { DocumentDelivrance } from "../../model/requete/v2/enum/DocumentDelivrance";
 import { getNomenclatureRequete } from "../appels/requeteApi";
 
 const TYPE_PIECE_JUSTIFICATIVE = "TYPE_PIECE_JUSTIFICATIVE";

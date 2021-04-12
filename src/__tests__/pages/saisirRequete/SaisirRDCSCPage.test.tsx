@@ -1,7 +1,7 @@
 import React from "react";
 import { render, waitFor, act, screen } from "@testing-library/react";
 import { SaisirRDCSCPage } from "../../../views/pages/saisirRequete/SaisirRDCSCPage";
-import { SousTypeDelivrance } from "../../../model/requete/v2/SousTypeDelivrance";
+import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import request from "superagent";
 import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
 

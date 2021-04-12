@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SousTypeDelivrance } from "../../../model/requete/v2/SousTypeDelivrance";
+import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { Formulaire } from "../../common/widget/formulaire/Formulaire";
 import * as Yup from "yup";
 import IdentiteForm, {
@@ -23,7 +23,7 @@ import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
 import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
-import { DocumentDelivrance } from "../../../model/requete/v2/DocumentDelivrance";
+import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 
 // Nom des sous-formulaires
 export const DOCUMENT = "document";

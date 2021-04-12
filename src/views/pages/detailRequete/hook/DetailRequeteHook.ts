@@ -1,0 +1,205 @@
+import { useState, useEffect } from "react";
+import { getDetailRequete } from "../../../../api/appels/requeteApi";
+import { logError } from "../../../common/util/LogManager";
+import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
+import { IRequerant } from "../../../../model/requete/v2/IRequerant";
+import { IMandant } from "../../../../model/requete/v2/IMandant";
+import { TypeMandant } from "../../../../model/requete/v2/enum/TypeMandant";
+import { TypeLienMandant } from "../../../../model/requete/v2/enum/TypeLienMandant";
+import { MotifDelivrance } from "../../../../model/requete/v2/enum/MotifDelivrance";
+import { IEvenementReqDelivrance } from "../../../../model/requete/v2/IEvenementReqDelivrance";
+import { TypeNatureActe } from "../../../../model/requete/v2/enum/TypeNatureActe";
+import { IProvenanceRequete } from "../../../../model/requete/v2/IProvenanceRequete";
+import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
+import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
+import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
+import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
+import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
+import { ITitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
+import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
+import { TypeLienRequerant } from "../../../../model/requete/v2/enum/TypeLienRequerant";
+import { ILienRequerant } from "../../../../model/requete/v2/ILienRequerant";
+import { IQualiteRequerant } from "../../../../model/requete/v2/IQualiteRequerant";
+import { IAdresseRequerant } from "../../../../model/requete/v2/IAdresseRequerant";
+import { IUtilisateurRece } from "../../../../model/requete/v2/IUtilisateurRece";
+import { IParticulier } from "../../../../model/requete/v2/IParticulier";
+import { IMandataireHabilite } from "../../../../model/requete/v2/IMandataireHabilite";
+import { IAutreProfessionnel } from "../../../../model/requete/v2/IAutreProfessionnel";
+import { IInstitutionnel } from "../../../../model/requete/v2/IInstitutionnel";
+import { TypeMandataireReq } from "../../../../model/requete/v2/enum/TypeMandataireReq";
+import { TypeInstitutionnel } from "../../../../model/requete/v2/enum/TypeInstitutionnel";
+
+export interface IDataDetailRequeteApi {
+  data: any;
+}
+
+export function useDetailRequeteApiHook(idRequete: string) {
+  const [
+    detailRequeteState,
+    setDetailRequeteState
+  ] = useState<IDataDetailRequeteApi>({} as IDataDetailRequeteApi);
+
+  useEffect(() => {
+    if (idRequete != null) {
+      getDetailRequete(idRequete)
+        .then((result: any) => {
+          const detailRequete = {} as IDataDetailRequeteApi;
+          const typeRequete = TypeRequete.getEnumFor(result.body.data.type);
+          if (typeRequete === TypeRequete.DELIVRANCE) {
+            detailRequete.data = mappingRequeteDelivrance(result.body.data);
+          }
+          setDetailRequeteState(detailRequete);
+        })
+        .catch((error: any) => {
+          logError({
+            messageUtilisateur:
+              "Impossible de récupérer le détail de la requête",
+            error
+          });
+        });
+    }
+  }, [idRequete]);
+  return { detailRequeteState };
+}
+
+export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
+  return {
+    // Partie Requête
+    id: data.id,
+    numero: data.numeroRequete,
+    idSagaDila: data.idSagaDila,
+    dateCreation: data.dateCreation,
+    canal: TypeCanal.getEnumFor(data.canal),
+    type: TypeRequete.getEnumFor(data.type),
+    statutCourant: getStatutCourant(data.statut),
+    titulaires: getTitulaires(data.titulaires),
+    requerant: getRequerant(data.requerant),
+    mandant: data.mandant ? getMandant(data.mandant) : undefined,
+    idUtilisateur: data.idUtilisateur,
+
+    //Partie Requête Delivrance
+    sousType: SousTypeDelivrance.getEnumFor(data.sousType),
+    documentDemande: DocumentDelivrance.getEnumFor(data.documentDemande),
+    nbExemplaireImpression: data.nombreExemplairesDemandes,
+    provenanceRequete: getProvenance(data),
+    evenement: data.evenement ? getEvenement(data.evenement) : undefined,
+    motif: MotifDelivrance.getEnumFor(data.motif),
+    complementMotif: data.complementMotif
+  };
+}
+
+function getTitulaires(titulaires: any): ITitulaireRequete[] {
+  let titulairesRequetes: ITitulaireRequete[] = [];
+  titulaires.forEach((titulaire: any) => {
+    const titu = titulaire as ITitulaireRequete;
+    titu.nationalite = Nationalite.getEnumFor(titulaire.nationalite);
+    titulairesRequetes.push(titu);
+  });
+  return titulairesRequetes;
+}
+
+function getStatutCourant(statut: any): IStatutCourant {
+  return {
+    statut: StatutRequete.getEnumFor(statut.statutRequete),
+    dateEffet: statut.dateEffet,
+    raisonStatut: statut.raisonStatut
+  };
+}
+
+function getRequerant(requerant: any): IRequerant {
+  return {
+    id: requerant.id,
+    dateCreation: requerant.dateCreation,
+    nomFamille: requerant.nomFamille,
+    prenom: requerant.prenom,
+    courriel: requerant.courriel,
+    telephone: requerant.telephone,
+    adresse: requerant.adresse as IAdresseRequerant,
+    lienRequerant: requerant.lienRequerant
+      ? getLienRequerant(requerant.lienRequerant)
+      : undefined,
+    qualiteRequerant: getQualiteRequerant(requerant)
+  };
+}
+
+function getLienRequerant(lienRequerant: any): ILienRequerant {
+  return {
+    id: lienRequerant.id,
+    lien: TypeLienRequerant.getEnumFor(lienRequerant.typeLienRequerant),
+    natureLien: lienRequerant.nature
+  };
+}
+
+function getQualiteRequerant(requerant: any): IQualiteRequerant {
+  return {
+    qualite: Qualite.getEnumFor(requerant.qualite),
+    utilisateurRece: requerant.detailQualiteRece as IUtilisateurRece,
+    particulier: requerant.detailQualiteParticulier as IParticulier,
+    mandataireHabilite: getMandataireHabilite(
+      requerant.detailQualiteMandataireHabilite
+    ),
+    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    institutionnel: getInstitutionnel(
+      requerant.detailQualiteMandataireInstitutionnel
+    )
+  };
+}
+
+function getMandataireHabilite(mandataire: any): IMandataireHabilite {
+  if (mandataire) {
+    return {
+      type: TypeMandataireReq.getEnumFor(mandataire.type),
+      raisonSociale: mandataire.raisonSociale,
+      nature: mandataire.nature,
+      CRPCEN: mandataire.crpcen
+    };
+  }
+  return {} as IMandataireHabilite;
+}
+
+function getInstitutionnel(institutionnel: any): IInstitutionnel {
+  if (institutionnel) {
+    return {
+      type: TypeInstitutionnel.getEnumFor(institutionnel.type),
+      nomInstitution: institutionnel.nomInstitution,
+      nature: institutionnel.nature
+    };
+  }
+  return {} as IInstitutionnel;
+}
+
+function getMandant(mandant: any): IMandant {
+  return {
+    id: mandant.id,
+    type: TypeMandant.getEnumFor(mandant.typeMandant),
+    nom: mandant.nom,
+    prenom: mandant.prenom,
+    raisonSociale: mandant.raisonSociale,
+    typeLien: TypeLienMandant.getEnumFor(mandant.typeLienMandant),
+    natureLien: mandant.natureLien
+  };
+}
+
+function getProvenance(data: any): IProvenanceRequete {
+  return {
+    provenance: Provenance.getEnumFor(data.provenance),
+    provenancePlanete: data.provenancePlanete,
+    provenanceRece: data.provenanceRece,
+    provenanceServicePublic: data.provenanceServicePublic
+  };
+}
+
+function getEvenement(evenement: any): IEvenementReqDelivrance {
+  return {
+    id: evenement.id,
+    natureActe: TypeNatureActe.getEnumFor(evenement.natureActe),
+    jour: evenement.jour,
+    mois: evenement.mois,
+    annee: evenement.annee,
+    ville: evenement.ville,
+    pays: evenement.pays
+  };
+}

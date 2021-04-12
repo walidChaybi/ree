@@ -19,35 +19,25 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
 
   useEffect(() => {
     if (id) {
+      let pdf;
       if (isImage) {
-        getImagesActe(id)
-          .then((pdf: any) => {
-            const documentObjectURL = URL.createObjectURL(
-              new Blob([pdf.body], { type: "application/pdf" })
-            );
-            setUrl(documentObjectURL);
-          })
-          .catch((err: any) => {
-            logError({
-              error: err
-            });
-            setError(err);
-          });
+        pdf = getImagesActe(id);
       } else {
-        getTexteActe(id)
-          .then((pdf: any) => {
-            const documentObjectURL = URL.createObjectURL(
-              new Blob([pdf.body], { type: "application/pdf" })
-            );
-            setUrl(documentObjectURL);
-          })
-          .catch((err: any) => {
-            logError({
-              error: err
-            });
-            setError(err);
-          });
+        pdf = getTexteActe(id);
       }
+      pdf
+        .then((pdf: any) => {
+          const documentObjectURL = URL.createObjectURL(
+            new Blob([pdf.body], { type: "application/pdf" })
+          );
+          setUrl(documentObjectURL);
+        })
+        .catch((err: any) => {
+          logError({
+            error: err
+          });
+          setError(err);
+        });
     }
   }, [id, isImage]);
 

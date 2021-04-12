@@ -22,7 +22,7 @@ export const rcPact = {
     uniteDuree: "ans",
     dateFinDeMesure: 1581724800
   },
-  mandataires: eachLike(
+  codesMandataires: eachLike(
     "Mandataire judiciaire à la protection des majeurs association"
   ),
   inscriptionsLiees: eachLike({
