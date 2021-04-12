@@ -133,7 +133,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
           maxLength={NB_CARACT_MAX_SAISIE}
           onBlur={e =>
             sortieChampPremiereLettreEnMajuscule(
-              e.target.value,
+              e,
               props.formik,
               prenomWithNamespace1
             )
@@ -150,7 +150,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
             maxLength={NB_CARACT_MAX_SAISIE}
             onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
-                e.target.value,
+                e,
                 props.formik,
                 prenomWithNamespace2
               )
@@ -173,7 +173,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
             maxLength={NB_CARACT_MAX_SAISIE}
             onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
-                e.target.value,
+                e,
                 props.formik,
                 prenomWithNamespace3
               )

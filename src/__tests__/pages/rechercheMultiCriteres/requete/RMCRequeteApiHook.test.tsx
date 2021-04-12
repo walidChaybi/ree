@@ -2,11 +2,11 @@ import React from "react";
 import { render, waitFor, act, screen } from "@testing-library/react";
 import request from "superagent";
 import { useRMCRequeteApiHook } from "../../../../views/pages/rechercheMultiCriteres/requete/hook/RMCRequeteApiHook";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { NB_LIGNES_PAR_APPEL } from "../../../../views/common/widget/tableau/TableauRece";
 import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 const criteres: ICriteresRMCRequete = {
   valeurs: {
@@ -16,7 +16,7 @@ const criteres: ICriteresRMCRequete = {
       paysNaissance: "France",
       dateNaissance: { jour: "10", mois: "01", annee: "2020" }
     },
-    datesDebutFinAnnee: {
+    datesDebutFin: {
       dateDebut: { jour: "", mois: "", annee: "" },
       dateFin: { jour: "", mois: "", annee: "" },
       annee: ""

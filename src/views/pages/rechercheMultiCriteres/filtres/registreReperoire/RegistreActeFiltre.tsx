@@ -20,8 +20,12 @@ import {
   ChampRechercheFieldProps
 } from "../../../../common/widget/formulaire/champRecherche/ChampRechercheField";
 import { useRecherchePocopa } from "./hook/RecherchePocopaApiHook";
-import { Option } from "../../../../common/util/Type";
+import { Option, Options } from "../../../../common/util/Type";
 import { TypeFamille } from "../../../../../model/etatcivil/enum/TypeFamille";
+import {
+  enMajuscule,
+  premiereLettreEnMajusculeLeResteEnMinuscule
+} from "../../../../common/util/Utils";
 
 // Noms des champs
 export const NATURE_ACTE = "natureActe";
@@ -59,9 +63,11 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
   const natureActeWithNamespace = withNamespace(props.nomFiltre, NATURE_ACTE);
 
   // State: Gestion Autocomplete
-  const [valeurChampAutocomplete, setValeurChampAutocomplete] = React.useState<
-    string
-  >("");
+  const [
+    valeurChampAutocomplete,
+    setValeurChampAutocomplete
+  ] = React.useState<string>("");
+
   // State: dernier pocopas sélectionné
   const [lastPocopaSelected, setLastPocopaSelected] = React.useState<
     string | undefined
@@ -107,9 +113,17 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
    *   You can use the `getOptionSelected` prop to customize the equality test.
    */
   const getPocopasAsOptions = useCallback(() => {
-    const pocopasAsOptions = pocopas
-      ? pocopas.map(p => ({ value: p, str: p } as Option))
-      : [];
+    let pocopasAsOptions = [] as Options;
+    if (pocopas) {
+      pocopasAsOptions = pocopas.map(
+        p =>
+          ({
+            value: enMajuscule(p),
+            str: premiereLettreEnMajusculeLeResteEnMinuscule(p)
+          } as Option)
+      );
+    }
+
     if (lastPocopaSelected && pocopas?.indexOf(lastPocopaSelected) === -1) {
       pocopasAsOptions.push({
         value: lastPocopaSelected,

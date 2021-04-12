@@ -100,11 +100,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             placeholder={getLibelle("Numéro, type et nom de la voie")}
             maxLength={NB_CARACT_ADRESSE}
             onBlur={e =>
-              sortieChampEnMajuscule(
-                e.target.value,
-                props.formik,
-                voieWithNamespace
-              )
+              sortieChampEnMajuscule(e, props.formik, voieWithNamespace)
             }
           />
           <InputField
@@ -117,11 +113,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             )}
             maxLength={NB_CARACT_ADRESSE}
             onBlur={e =>
-              sortieChampEnMajuscule(
-                e.target.value,
-                props.formik,
-                lieuDitWithNamespace
-              )
+              sortieChampEnMajuscule(e, props.formik, lieuDitWithNamespace)
             }
           />
           <InputField
@@ -132,11 +124,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             )}
             maxLength={NB_CARACT_ADRESSE}
             onBlur={e =>
-              sortieChampEnMajuscule(
-                e.target.value,
-                props.formik,
-                destinataireWithNamespace
-              )
+              sortieChampEnMajuscule(e, props.formik, destinataireWithNamespace)
             }
           />
           <InputField
@@ -147,11 +135,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             placeholder={getLibelle("Entrée, bâtiment, immeuble, résidence…")}
             maxLength={NB_CARACT_ADRESSE}
             onBlur={e =>
-              sortieChampEnMajuscule(
-                e.target.value,
-                props.formik,
-                pointGeoWithNamespace
-              )
+              sortieChampEnMajuscule(e, props.formik, pointGeoWithNamespace)
             }
           />
           <div className="CodePostal">
@@ -166,11 +150,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             label={getLibelle("Commune")}
             maxLength={NB_CARACT_COMMUNE}
             onBlur={e =>
-              sortieChampEnMajuscule(
-                e.target.value,
-                props.formik,
-                communeWithNamespace
-              )
+              sortieChampEnMajuscule(e, props.formik, communeWithNamespace)
             }
           />
           <InputField
@@ -178,11 +158,7 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             label={getLibelle("Pays")}
             maxLength={NB_CARACT_ADRESSE}
             onBlur={e =>
-              sortieChampEnMajuscule(
-                e.target.value,
-                props.formik,
-                paysWithNamespace
-              )
+              sortieChampEnMajuscule(e, props.formik, paysWithNamespace)
             }
           />
           <InputField

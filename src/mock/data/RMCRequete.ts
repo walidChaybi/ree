@@ -12,9 +12,9 @@ export const ReponseAppelRMCRequete = {
   hasTechnicalError: false,
   hasBusinessError: false,
   status: 201,
-  url: "/rece/rece-requete-api/v1/requetes/rmc",
+  url: "/rece/rece-requete-api/v2/requetes/rmc",
   data: {
-    requetes: [
+    resultatsRecherche: [
       {
         id: "d8708d77-a359-4553-be72-1eb5f246d4da",
         numero: "123abc"

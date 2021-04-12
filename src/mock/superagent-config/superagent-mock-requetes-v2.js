@@ -3,6 +3,8 @@ import {
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
 
+import { ReponseAppelRMCRequete } from "../data/RMCRequete";
+
 export const configRequetesV2 = [
   {
     /**
@@ -26,6 +28,11 @@ export const configRequetesV2 = [
 
       if (match[1] === "/nomenclature/TYPE_PIECE_JUSTIFICATIVE") {
         return { data: ReponseAppelNomenclatureTypePiecesJustificative.data };
+      }
+
+      // RMC Requete
+      if (match[1] === "/requetes/rmc?range=0-105") {
+        return { data: ReponseAppelRMCRequete.data };
       }
     },
 

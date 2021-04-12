@@ -67,7 +67,7 @@ const NaissanceForm: React.FC<SubFormProps> = props => {
             maxLength={NB_CARACT_MAX_SAISIE}
             onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
-                e.target.value,
+                e,
                 props.formik,
                 villeWithNamespace
               )
@@ -81,7 +81,7 @@ const NaissanceForm: React.FC<SubFormProps> = props => {
         maxLength={NB_CARACT_MAX_SAISIE}
         onBlur={e =>
           sortieChampPremiereLettreEnMajuscule(
-            e.target.value,
+            e,
             props.formik,
             paysWithNamespace
           )

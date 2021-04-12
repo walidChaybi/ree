@@ -32,7 +32,7 @@ export const REQUERANT = "requerant";
 export const ADRESSE = "adresse";
 
 // Valeurs par défaut des champs
-const DefaultValuesRMCRequete = {
+const DefaultValuesSaisirRDCSC = {
   [DOCUMENT]: "",
   [INTERESSE]: IdentiteFormDefaultValues,
   [REQUERANT]: RequerantFormDefaultValues,
@@ -40,7 +40,7 @@ const DefaultValuesRMCRequete = {
 };
 
 // Schéma de validation en sortie de champs
-const ValidationSchemaRMCRequete = Yup.object({
+const ValidationSchemaSaisirRDCSC = Yup.object({
   [DOCUMENT]: Yup.string().required(DOCUMENT_OBLIGATOIRE),
   [INTERESSE]: IdentiteFormValidationSchema,
   [REQUERANT]: RequerantFormValidationSchema,
@@ -66,7 +66,7 @@ export const SaisirRDCSCPage: React.FC = () => {
     getAdresseForm()
   ];
 
-  const onSubmitSaisirRequete = (values: any, errors: any) => {};
+  const onSubmitSaisirRDCSC = (values: any) => {};
 
   const boutonsProps = {} as SaisirRequeteBoutonsProps;
 
@@ -75,9 +75,9 @@ export const SaisirRDCSCPage: React.FC = () => {
       <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
-        formDefaultValues={DefaultValuesRMCRequete}
-        formValidationSchema={ValidationSchemaRMCRequete}
-        onSubmit={onSubmitSaisirRequete}
+        formDefaultValues={DefaultValuesSaisirRDCSC}
+        formValidationSchema={ValidationSchemaSaisirRDCSC}
+        onSubmit={onSubmitSaisirRDCSC}
         className="FormulaireSaisirRDCSC"
       >
         <div>{blocsForm}</div>

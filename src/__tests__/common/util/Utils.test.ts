@@ -15,7 +15,6 @@ import {
   formatNoms,
   formatPrenoms,
   jointPrenoms,
-  premiereLettreEnMajuscule,
   numberToString,
   valeurOuUndefined
 } from "../../../views/common/util/Utils";
@@ -137,8 +136,10 @@ test("Attendu: enMajuscule fonctionne correctement", () => {
 });
 
 test("Attendu: premiereLettreEnMajuscule fonctionne correctement", () => {
-  expect(premiereLettreEnMajuscule()).toBe("");
-  expect(premiereLettreEnMajuscule("pierre durant")).toBe("Pierre durant");
+  expect(premiereLettreEnMajusculeLeResteEnMinuscule()).toBe("");
+  expect(premiereLettreEnMajusculeLeResteEnMinuscule("pierre durant")).toBe(
+    "Pierre durant"
+  );
 });
 
 test("Attendu: formatPrenom fonctionne correctement", () => {

@@ -71,21 +71,23 @@ export function traiteEspace(e: any, fct: any) {
 }
 
 export function sortieChampEnMajuscule(
-  value: string,
+  e: any,
   formik: FormikProps<FormikValues>,
   nomChamp: string
 ) {
-  let res = supprimerEspacesInutiles(value);
-  res = enMajuscule(res);
-  formik.setFieldValue(nomChamp, res);
+  e.target.value = enMajuscule(supprimerEspacesInutiles(e.target.value));
+  formik.setFieldValue(nomChamp, e.target.value);
+  formik.handleBlur(e);
 }
 
 export function sortieChampPremiereLettreEnMajuscule(
-  value: string,
+  e: any,
   formik: FormikProps<FormikValues>,
   nomChamp: string
 ) {
-  let res = supprimerEspacesInutiles(value);
-  res = premiereLettreEnMajusculeLeResteEnMinuscule(res);
-  formik.setFieldValue(nomChamp, res);
+  e.target.value = premiereLettreEnMajusculeLeResteEnMinuscule(
+    supprimerEspacesInutiles(e.target.value)
+  );
+  formik.setFieldValue(nomChamp, e.target.value);
+  formik.handleBlur(e);
 }

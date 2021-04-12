@@ -46,22 +46,25 @@ export function mappingCriteresRequete(
 }
 
 /** Requetes: mapping après appel d'api */
-export function mappingRequetes(data: any): IResultatRMCRequete[] {
+export function mappingRequetes(
+  resultatsRecherche: any
+): IResultatRMCRequete[] {
   const requetesMapper: IResultatRMCRequete[] = [];
-  data.forEach((requete: any) => {
+
+  resultatsRecherche.forEach((requete: any) => {
     const requeteMapper: IResultatRMCRequete = {
       idRequete: getValeurOuVide(requete.id),
       numeroRequete: getValeurOuVide(requete.numero),
-      sousTypeRequete: getValeurOuVide(requete.sousTypeRequete),
-      canal: getValeurOuVide(requete.canal),
-      natureActe: getValeurOuVide(requete.natureActe),
+      sousTypeRequete: getValeurOuVide(requete.sousType),
+      provenance: getValeurOuVide(requete.provenance),
+      natureActe: getValeurOuVide(requete.nature),
       document: getValeurOuVide(requete.document),
       requerant: getValeurOuVide(requete.requerant),
-      nomOec: formatNom(requete.nomOec),
+      attribuerA: formatNom(requete.attribuerA),
       dateCreation: getValeurOuVide(requete.dateCreation),
       dateDerniereMaj: getValeurOuVide(requete.dateDerniereMaj),
       statut: getValeurOuVide(requete.statut),
-      prioriteRequete: getValeurOuVide(requete.prioriteRequete)
+      prioriteRequete: getValeurOuVide(requete.priorite)
     };
     requetesMapper.push(requeteMapper);
   });

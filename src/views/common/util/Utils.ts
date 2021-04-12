@@ -32,7 +32,7 @@ export function normaliserNomOec(nom: string) {
   return result;
 }
 
-export function premiereLettreEnMajusculeLeResteEnMinuscule(
+export function formatMajusculesMinusculesAvecSeparateur(
   str?: string,
   sep?: string
 ) {
@@ -41,7 +41,7 @@ export function premiereLettreEnMajusculeLeResteEnMinuscule(
   if (str) {
     const strParts = str.split(/[ -]+/);
     res = strParts
-      .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLocaleLowerCase())
+      .map(p => premiereLettreEnMajusculeLeResteEnMinuscule(p))
       .join(sep);
   }
   return res;
@@ -52,7 +52,7 @@ export function enMajuscule(str?: string): string {
 }
 
 export function formatPrenom(prenom?: string): string {
-  return premiereLettreEnMajusculeLeResteEnMinuscule(prenom);
+  return formatMajusculesMinusculesAvecSeparateur(prenom);
 }
 
 export function formatNom(nom?: string): string {
@@ -108,6 +108,14 @@ export function estTableauNonVide(tab?: any[]): boolean {
   return Array.isArray(tab) && tab.length > 0;
 }
 
+export function premiereLettreEnMajusculeLeResteEnMinuscule(str?: string) {
+  let res = "";
+  if (str) {
+    res = str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+  return res;
+}
+
 export function premiereLettreEnMajuscule(str?: string) {
   let res = "";
   if (str) {
@@ -123,9 +131,7 @@ export function formatNoms(noms?: string[]): string {
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
 export function formatPrenoms(prenoms?: string[]): string {
-  return prenoms
-    ? joint(prenoms.map(p => premiereLettreEnMajusculeLeResteEnMinuscule(p)))
-    : "";
+  return prenoms ? joint(prenoms.map(p => formatPrenom(p))) : "";
 }
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","

@@ -148,7 +148,7 @@ export function rechercheMultiCriteresRequetes(
   criteres: IRMCRequestRequete,
   range?: string
 ): Promise<any> {
-  return api.fetch({
+  return apiV2.fetch({
     method: HttpMethod.POST,
     uri: `${URL_REQUETES_RMC}`,
     data: criteres,

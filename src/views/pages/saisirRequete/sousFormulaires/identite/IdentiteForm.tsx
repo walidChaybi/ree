@@ -77,14 +77,10 @@ const IdentiteForm: React.FC<SubFormProps> = props => {
         <div className="IdentiteForm">
           <InputField
             name={nomFamilleWithNamespace}
-            label={getLibelle("Nom de Famille")}
+            label={getLibelle("Nom de famille")}
             maxLength={NB_CARACT_MAX_SAISIE}
             onBlur={e =>
-              sortieChampEnMajuscule(
-                e.target.value,
-                props.formik,
-                nomFamilleWithNamespace
-              )
+              sortieChampEnMajuscule(e, props.formik, nomFamilleWithNamespace)
             }
           />
           <InputField
@@ -92,11 +88,7 @@ const IdentiteForm: React.FC<SubFormProps> = props => {
             label={getLibelle("Nom d'usage")}
             maxLength={NB_CARACT_MAX_SAISIE}
             onBlur={e =>
-              sortieChampEnMajuscule(
-                e.target.value,
-                props.formik,
-                nomUsageWithNamespace
-              )
+              sortieChampEnMajuscule(e, props.formik, nomUsageWithNamespace)
             }
           />
           <PrenomsForm {...prenomsFormProps} />
