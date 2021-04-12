@@ -5,16 +5,16 @@ import {
 } from "../../../../../common/util/DateUtils";
 import { IDecisionRc } from "../../../../../../model/etatcivil/fiche/IDecisionRc";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
-import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
-import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/enum/TypeAutorite";
 import {
   FicheUtil,
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
 
-export function getDecision(rcrca: IFicheRcRca): AccordionPartProps[] {
-  let contentsDecision: AccordionContentProps[] = [];
+export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
+  let contentsDecision: SectionContentProps[] = [];
 
   if (TypeAutoriteUtil.isJuridiction(rcrca.decision.autorite.typeAutorite)) {
     contentsDecision = [
@@ -28,7 +28,7 @@ export function getDecision(rcrca: IFicheRcRca): AccordionPartProps[] {
     contentsDecision = [...getContentNotaire(rcrca.decision)];
   }
 
-  const decision: AccordionPartProps[] = [
+  const decision: SectionPartProps[] = [
     {
       contentsPart: {
         contents: contentsDecision,
@@ -56,7 +56,7 @@ export function getDecision(rcrca: IFicheRcRca): AccordionPartProps[] {
 function getContentJuridiction(
   decision: IDecisionRc,
   typeFiche: TypeFiche
-): AccordionContentProps[] {
+): SectionContentProps[] {
   const result = [
     {
       libelle: "Type",
@@ -95,7 +95,7 @@ function getContentJuridiction(
   ]);
 }
 
-function getContentNotaire(decision: IDecisionRc): AccordionContentProps[] {
+function getContentNotaire(decision: IDecisionRc): SectionContentProps[] {
   return [
     {
       libelle: "Type",
@@ -114,7 +114,7 @@ function getContentNotaire(decision: IDecisionRc): AccordionContentProps[] {
 function getContentConfirmationDecision(
   decision: IDecisionRc,
   typeFiche: TypeFiche
-): AccordionContentProps[] {
+): SectionContentProps[] {
   if (
     TypeAutoriteUtil.isJuridiction(
       decision.sourceConfirmation.autorite.typeAutorite

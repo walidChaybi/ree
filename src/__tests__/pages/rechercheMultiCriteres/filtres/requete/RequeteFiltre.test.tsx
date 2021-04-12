@@ -132,7 +132,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
     fireEvent.input(typeRequete);
     fireEvent.change(statutRequete, {
       target: {
-        value: "TRAITEE_A_IMPRIMER"
+        value: "TRAITE_A_IMPRIMER"
       }
     });
   });
@@ -152,7 +152,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"requete":{"numeroRequete":"1234ABCD","typeRequete":"CREATION_ACTE","sousTypeRequete":"RCTC","statutRequete":"TRAITEE_A_IMPRIMER"}}'
+      '{"requete":{"numeroRequete":"1234ABCD","typeRequete":"CREATION_ACTE","sousTypeRequete":"RCTC","statutRequete":"TRAITE_A_IMPRIMER"}}'
     );
   });
 });

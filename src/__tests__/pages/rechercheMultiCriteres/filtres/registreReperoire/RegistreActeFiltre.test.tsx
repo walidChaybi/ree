@@ -4,8 +4,7 @@ import {
   waitFor,
   act,
   screen,
-  fireEvent,
-  wait
+  fireEvent
 } from "@testing-library/react";
 import { Field, Formik, Form } from "formik";
 import RegistreActeFiltre, {
@@ -16,6 +15,7 @@ import { REGISTRE } from "../../../../../views/pages/rechercheMultiCriteres/filt
 
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const HookRegistreActeFiltre: React.FC = () => {

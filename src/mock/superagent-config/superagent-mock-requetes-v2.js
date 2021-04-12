@@ -1,3 +1,4 @@
+import { ReponseAppelDetailRequeteDelivrance } from "../data/DetailRequeteDelivrance";
 import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclatureTypePiecesJustificative
@@ -33,6 +34,11 @@ export const configRequetesV2 = [
       // RMC Requete
       if (match[1] === "/requetes/rmc?range=0-105") {
         return { data: ReponseAppelRMCRequete.data };
+      }
+
+      // Détail requête Délivrance
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d404") {
+        return { data: ReponseAppelDetailRequeteDelivrance.data };
       }
     },
 

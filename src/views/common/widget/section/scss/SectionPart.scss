@@ -1,0 +1,31 @@
+@import "../../../../../sass/colors";
+
+.wrapper {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+
+  .TitlePart {
+    grid-row: 1;
+    color: $title-application-color;
+    font-weight: bold;
+    text-align: left;
+    font-size: 20px;
+  }
+
+  .wrapper {
+    margin-bottom: 10px;
+  }
+}
+
+.Colonne1 {
+  grid-column: 1;
+}
+
+.Colonne2 {
+  grid-column: 2;
+}
+
+.Colonne3 {
+  grid-column: 3;
+}

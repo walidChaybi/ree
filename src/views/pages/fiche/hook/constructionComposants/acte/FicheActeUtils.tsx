@@ -2,11 +2,11 @@ import { AccordionReceProps } from "../../../../../common/widget/accordion/Accor
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { getTitulaires } from "./TitulairesActeUtils";
 import { getEvenement } from "./EvenementActeUtils";
-import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
+import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { getFichesPersonneActe } from "../personne/FichePersonne";
 import React from "react";
 import { ActeImage } from "./ActeImage";
-import { AccordionPanelAreaProps } from "../../../../../common/widget/accordion/AccordionPanelArea";
+import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
 import {
   officierALeDroitSurLePerimetre,
   officierAutoriserSurLeTypeRegistre,
@@ -22,7 +22,7 @@ export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
     idTypeRegistre,
     acte.visibiliteArchiviste
   );
-  const fichesPersonne: AccordionPanelProps[] = getFichesPersonneActe(
+  const fichesPersonne: SectionPanelProps[] = getFichesPersonneActe(
     acte.personnes,
     paramsAffichage
   );
@@ -53,7 +53,7 @@ export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
 function getPanelAreasActeImage(
   acte: IFicheActe,
   params: IParamsAffichage
-): AccordionPanelAreaProps[] {
+): SectionPanelAreaProps[] {
   if (params.visuActe === "classique" || params.visuActe === "filigrane") {
     return [
       {

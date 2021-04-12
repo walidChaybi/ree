@@ -1,12 +1,12 @@
 import React from "react";
-import { AccordionPanel, AccordionPanelProps } from "./AccordionPanel";
+import { SectionPanel, SectionPanelProps } from "../section/SectionPanel";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import { AccordionTitle } from "./AccordionTitle";
 import "./sass/AccordionRece.scss";
 
 export interface AccordionReceProps {
-  panels: AccordionPanelProps[];
+  panels: SectionPanelProps[];
 }
 
 export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {
@@ -23,7 +23,7 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {
             <AccordionTitle title={panel.title} />
 
             <AccordionDetails>
-              <AccordionPanel {...panel} id={`${index}`} />
+              <SectionPanel {...panel} id={`${index}`} />
             </AccordionDetails>
           </Accordion>
         );

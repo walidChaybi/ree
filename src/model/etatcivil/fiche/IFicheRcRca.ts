@@ -28,7 +28,7 @@ export interface IFicheRcRca {
   statutsFiche: IStatutFiche[];
   nature: NatureRc | NatureRca;
   typeInscription: TypeInscriptionRc;
-  mandataires: TypeMandataire[];
+  codesMandataires: TypeMandataire[];
   duree: IDureeInscription;
   inscriptionsImpactees: IInscriptionsImpactees[];
   inscriptionsLiees: IInscriptionLiee[];

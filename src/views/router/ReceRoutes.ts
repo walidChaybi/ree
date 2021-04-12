@@ -22,7 +22,9 @@ import {
   URL_REQUETES_SERVICE_SAISIR_RDCSC,
   URL_APERCU_REQUETE_TRAITEMENT_ID,
   URL_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID
+  URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_DETAIL_REQUETE_ID,
+  URL_REQUETES_SERVICE_DETAIL_REQUETE_ID
 } from "./ReceUrls";
 import { RcRcaPage } from "../pages/RcRcaPage";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
@@ -37,6 +39,7 @@ import { IRoute } from "../common/util/route/IRoute";
 import { SaisirRDCSCPage } from "../pages/saisirRequete/SaisirRDCSCPage";
 import { ApercuRequetePriseEnChargePage } from "../pages/apercuRequete/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "../pages/apercuRequete/ApercuRequeteTraitementPage";
+import { DetailRequetePage } from "../pages/detailRequete/DetailRequetePage";
 
 export const routesRece: IRoute[] = [
   {
@@ -153,5 +156,17 @@ export const routesRece: IRoute[] = [
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle("Aperçu requête (traitement)")
+  },
+  {
+    url: URL_MES_REQUETES_DETAIL_REQUETE_ID,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    libelle: getLibelle("Détail de la requête")
+  },
+  {
+    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    libelle: getLibelle("Détail de la requête")
   }
 ];

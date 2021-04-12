@@ -4,11 +4,11 @@ import { getInscriptionRepertoireCivil } from "../inscriptionRepertoireCivil/Ins
 import { getInteresse } from "../interesses/InteresseUtils";
 import { getDecision } from "./DecisionUtils";
 import { getAutorite } from "./AutoriteUtils";
-import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
+import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { getFichesPersonne } from "../personne/FichePersonne";
 
 export function getPanelsRc(rc: IFicheRcRca): AccordionReceProps {
-  const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(rc.personnes);
+  const fichesPersonne: SectionPanelProps[] = getFichesPersonne(rc.personnes);
   return {
     panels: [
       {

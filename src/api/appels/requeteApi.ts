@@ -158,6 +158,16 @@ export function rechercheMultiCriteresRequetes(
   });
 }
 
+////////////////////////
+/*** API REQUETE V2 ***/
+////////////////////////
+export function getDetailRequete(idRequete: string): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_REQUETES}/${idRequete}`
+  });
+}
+
 export async function getNomenclatureRequete(categorie: string): Promise<any> {
   return apiV2.fetchCache({
     method: HttpMethod.GET,

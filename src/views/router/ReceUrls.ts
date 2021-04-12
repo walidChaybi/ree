@@ -11,6 +11,9 @@ export const URL_REQUETES_SERVICE_ID = `${URL_REQUETES_SERVICE}/apercurequete/:i
 export const URL_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetepriseencharge/:idRequete`;
 export const URL_APERCU_REQUETE_TRAITEMENT_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetetraitement/:idRequete`;
 export const URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetepriseencharge/apercurequetetraitement/:idRequete`;
+// Détail de la requête
+export const URL_MES_REQUETES_DETAIL_REQUETE_ID = `${URL_MES_REQUETES}/apercurequete/detailrequete/:idRequete`;
+export const URL_REQUETES_SERVICE_DETAIL_REQUETE_ID = `${URL_REQUETES_SERVICE}/apercurequete/detailrequete/:idRequete`;
 // RMC
 export const URL_RECHERCHE_ACTE_INSCRIPTION = `${URL_CONTEXT_APP}/rechercheacteinscription`;
 export const URL_RECHERCHE_ACTE = `${URL_CONTEXT_APP}/rechercheacte`;

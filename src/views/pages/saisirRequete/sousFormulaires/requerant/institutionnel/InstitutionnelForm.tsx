@@ -16,7 +16,7 @@ import {
 } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
-import { TypeInstitutionnel } from "../../../../../../model/requete/v2/TypeInstitutionnel";
+import { TypeInstitutionnel } from "../../../../../../model/requete/v2/enum/TypeInstitutionnel";
 
 // Noms des champs
 export const TYPE = "type";

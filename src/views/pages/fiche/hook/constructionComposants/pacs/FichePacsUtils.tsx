@@ -1,7 +1,7 @@
 import { AccordionReceProps } from "../../../../../common/widget/accordion/AccordionRece";
 import { IFichePacs } from "../../../../../../model/etatcivil/pacs/IFichePacs";
-import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
-import { AccordionPanelAreaProps } from "../../../../../common/widget/accordion/AccordionPanelArea";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
 import {
   IAnnulation,
   Annulation
@@ -12,7 +12,7 @@ import {
   Autorite,
   IAutorite
 } from "../../../../../../model/etatcivil/commun/IAutorite";
-import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import {
   IModification,
   Modification
@@ -21,12 +21,12 @@ import {
   IDissolution,
   Dissolution
 } from "../../../../../../model/etatcivil/pacs/IDissolution";
-import { AccordionPanelProps } from "../../../../../common/widget/accordion/AccordionPanel";
+import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { getFichesPersonne } from "../personne/FichePersonne";
 import { getDateString } from "../../../../../common/util/DateUtils";
 
 export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
-  const panelAreas: AccordionPanelAreaProps[] = [];
+  const panelAreas: SectionPanelAreaProps[] = [];
 
   const deuxColonnes = 2;
 
@@ -82,9 +82,7 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
     deuxColonnes
   );
 
-  const fichesPersonne: AccordionPanelProps[] = getFichesPersonne(
-    pacs.personnes
-  );
+  const fichesPersonne: SectionPanelProps[] = getFichesPersonne(pacs.personnes);
 
   return {
     panels: [
@@ -98,9 +96,9 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
 }
 
 function AjoutePanel(
-  panelAreas: AccordionPanelAreaProps[],
+  panelAreas: SectionPanelAreaProps[],
   param: any,
-  fct: (p: any) => AccordionPartProps[],
+  fct: (p: any) => SectionPartProps[],
   idPanelArea?: string,
   titlePanelArea?: string,
   nbColonnePanelArea?: number
@@ -111,12 +109,12 @@ function AjoutePanel(
       id: idPanelArea,
       title: titlePanelArea,
       nbColonne: nbColonnePanelArea
-    } as AccordionPanelAreaProps);
+    } as SectionPanelAreaProps);
   }
 }
 
-function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
-  const part: AccordionPartProps = {
+function getInscriptionRegistrePacs(pacs: IFichePacs): SectionPartProps[] {
+  const part: SectionPartProps = {
     contentsPart: {
       title: "",
       contents: [
@@ -140,8 +138,8 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): AccordionPartProps[] {
   return [part];
 }
 
-function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
-  const part1: AccordionPartProps = {
+function getEnregistrementPacs(pacs: IFichePacs): SectionPartProps[] {
+  const part1: SectionPartProps = {
     contentsPart: {
       contents: [
         getContentAutorite(pacs.autorite),
@@ -154,7 +152,7 @@ function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
     }
   };
 
-  const part2: AccordionPartProps = {
+  const part2: SectionPartProps = {
     contentsPart: {
       title: "",
       contents: getContentLieu(pacs.autorite)
@@ -164,10 +162,8 @@ function getEnregistrementPacs(pacs: IFichePacs): AccordionPartProps[] {
   return [part1, part2];
 }
 
-function getModificationPacs(
-  modification: IModification
-): AccordionPartProps[] {
-  const part1: AccordionPartProps = {
+function getModificationPacs(modification: IModification): SectionPartProps[] {
+  const part1: SectionPartProps = {
     contentsPart: {
       contents: [
         getContentAutorite(modification.autorite),
@@ -184,7 +180,7 @@ function getModificationPacs(
     }
   };
 
-  const part2: AccordionPartProps = {
+  const part2: SectionPartProps = {
     contentsPart: {
       contents: getContentLieu(modification.autorite)
     }
@@ -193,8 +189,8 @@ function getModificationPacs(
   return [part1, part2];
 }
 
-function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
-  const part1: AccordionPartProps = {
+function getDissolutionPacs(dissolution: IDissolution): SectionPartProps[] {
+  const part1: SectionPartProps = {
     contentsPart: {
       contents: [
         getContentAutorite(dissolution.autorite),
@@ -215,7 +211,7 @@ function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
     }
   };
 
-  const part2: AccordionPartProps = {
+  const part2: SectionPartProps = {
     contentsPart: {
       title: "",
       contents: getContentLieu(dissolution.autorite)
@@ -225,8 +221,8 @@ function getDissolutionPacs(dissolution: IDissolution): AccordionPartProps[] {
   return [part1, part2];
 }
 
-function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
-  const part1: AccordionPartProps = {
+function getAnnulationPacs(annulation: IAnnulation): SectionPartProps[] {
+  const part1: SectionPartProps = {
     contentsPart: {
       contents: [
         {
@@ -253,7 +249,7 @@ function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
     }
   };
 
-  const part2: AccordionPartProps = {
+  const part2: SectionPartProps = {
     contentsPart: {
       contents: getContentLieu(annulation.autorite)
     }
@@ -262,19 +258,15 @@ function getAnnulationPacs(annulation: IAnnulation): AccordionPartProps[] {
   return [part1, part2];
 }
 
-export function getContentAutorite(
-  autorite?: IAutorite
-): AccordionContentProps {
+export function getContentAutorite(autorite?: IAutorite): SectionContentProps {
   return {
     libelle: "Autorité",
     value: Autorite.getTypeAutorite(autorite)
   };
 }
 
-export function getContentNotaire(
-  autorite?: IAutorite
-): AccordionContentProps[] {
-  let contentNotaire: AccordionContentProps[] = [];
+export function getContentNotaire(autorite?: IAutorite): SectionContentProps[] {
+  let contentNotaire: SectionContentProps[] = [];
   if (Autorite.isNotaire(autorite)) {
     contentNotaire = [
       {
@@ -290,7 +282,7 @@ export function getContentNotaire(
   return contentNotaire;
 }
 
-export function getContentLieu(autorite?: IAutorite): AccordionContentProps[] {
+export function getContentLieu(autorite?: IAutorite): SectionContentProps[] {
   return [
     {
       libelle: "Ville",

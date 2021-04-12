@@ -16,7 +16,7 @@ import {
 } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
-import { TypeMandataireReq } from "../../../../../../model/requete/v2/TypeMandataireReq";
+import { TypeMandataireReq } from "../../../../../../model/requete/v2/enum/TypeMandataireReq";
 
 // Noms des champs
 export const TYPE = "type";

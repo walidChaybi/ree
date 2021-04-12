@@ -1,7 +1,7 @@
 import React from "react";
 import { IDureeInscription } from "../../../../../../model/etatcivil/fiche/IDureeInscription";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
-import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { LienFiche } from "../../../LienFiche";
 import {
   getDateFromTimestamp,
@@ -14,11 +14,11 @@ import {
   FicheUtil,
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 
 export function getInscriptionRepertoireCivil(
   rcrca: IFicheRcRca
-): AccordionPartProps {
+): SectionPartProps {
   return {
     contentsPart: {
       contents: FicheUtil.isFicheRca(rcrca.categorie)
@@ -31,7 +31,7 @@ export function getInscriptionRepertoireCivil(
   };
 }
 
-function getInteresseRc(rcrca: IFicheRcRca): AccordionContentProps[] {
+function getInteresseRc(rcrca: IFicheRcRca): SectionContentProps[] {
   return [
     {
       libelle: "Nature",
@@ -39,8 +39,8 @@ function getInteresseRc(rcrca: IFicheRcRca): AccordionContentProps[] {
     },
     {
       libelle: "Mandataire(s)",
-      value: rcrca.mandataires
-        ? rcrca.mandataires
+      value: rcrca.codesMandataires
+        ? rcrca.codesMandataires
             .map(mandataire => MandataireUtil.getLibelle(mandataire))
             .join(" / ")
         : ""
@@ -75,7 +75,7 @@ function getInteresseRc(rcrca: IFicheRcRca): AccordionContentProps[] {
   ];
 }
 
-function getInteresseRca(rcrca: IFicheRcRca): AccordionContentProps[] {
+function getInteresseRca(rcrca: IFicheRcRca): SectionContentProps[] {
   return [
     {
       libelle: "Nature",

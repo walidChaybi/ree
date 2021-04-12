@@ -1,14 +1,14 @@
 import React from "react";
-import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
-import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import {
   ITitulaireActe,
   TitulaireActe
 } from "../../../../../../model/etatcivil/acte/ITitulaireActe";
 
-export function getTitulaires(acte: IFicheActe): AccordionPartProps[] {
+export function getTitulaires(acte: IFicheActe): SectionPartProps[] {
   const sortedTitulaires = triListeObjetsSurPropriete(
     [...acte.titulaires],
     "numeroOrdreSaisi"
@@ -26,7 +26,7 @@ export function getTitulaires(acte: IFicheActe): AccordionPartProps[] {
 function getTitulairesInfo(
   titulaire: ITitulaireActe,
   index: number
-): AccordionContentProps[] {
+): SectionContentProps[] {
   return [
     {
       libelle: `Nom Titulaire ${index}`,

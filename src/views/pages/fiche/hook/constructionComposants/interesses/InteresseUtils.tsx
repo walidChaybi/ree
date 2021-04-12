@@ -2,32 +2,30 @@ import React from "react";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
 import { IInteresse } from "../../../../../../model/etatcivil/fiche/IInteresse";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
-import { AccordionPartProps } from "../../../../../common/widget/accordion/AccordionPart";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
 import { getText, getLibelle } from "../../../../../common/widget/Text";
 import { Mariage } from "./Mariage";
 import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import { FicheUtil } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { AccordionContentProps } from "../../../../../common/widget/accordion/AccordionContent";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 
-export function getInteresse(rcrca: IFicheRcRca): AccordionPartProps[] {
+export function getInteresse(rcrca: IFicheRcRca): SectionPartProps[] {
   const sortedInteresses = triListeObjetsSurPropriete(
     [...rcrca.interesses],
     "numeroOrdreSaisi"
   );
 
-  const interessePart: AccordionPartProps[] = sortedInteresses.map(
-    interesse => {
-      return {
-        contentsPart: {
-          contents: FicheUtil.isFicheRca(rcrca.categorie)
-            ? getInteresseInfoRca(interesse)
-            : getInteresseInfo(interesse),
-          title: getText("vue-rc-interesse", [interesse.numeroOrdreSaisi])
-        }
-      };
-    }
-  );
+  const interessePart: SectionPartProps[] = sortedInteresses.map(interesse => {
+    return {
+      contentsPart: {
+        contents: FicheUtil.isFicheRca(rcrca.categorie)
+          ? getInteresseInfoRca(interesse)
+          : getInteresseInfo(interesse),
+        title: getText("vue-rc-interesse", [interesse.numeroOrdreSaisi])
+      }
+    };
+  });
 
   if (rcrca.mariageInteresses) {
     interessePart.push({
@@ -46,7 +44,7 @@ export function getInteresse(rcrca: IFicheRcRca): AccordionPartProps[] {
   return interessePart;
 }
 
-function getInteresseInfoRca(interesse: IInteresse): AccordionContentProps[] {
+function getInteresseInfoRca(interesse: IInteresse): SectionContentProps[] {
   let interesseIno = getInteresseInfo(interesse);
   if (interesse.dateDeces != null) {
     interesseIno = interesseIno.concat([
@@ -71,7 +69,7 @@ function getInteresseInfoRca(interesse: IInteresse): AccordionContentProps[] {
   return interesseIno;
 }
 
-function getInteresseInfo(interesse: IInteresse): AccordionContentProps[] {
+function getInteresseInfo(interesse: IInteresse): SectionContentProps[] {
   return [
     {
       libelle: getLibelle("Nom"),

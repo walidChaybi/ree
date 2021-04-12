@@ -1,7 +1,7 @@
 import { Personne } from "../../../../../model/etatcivil/commun/IPersonne";
 import { personneMock } from "../../../fiche/hook/constructionComposants/mock/PersonneMock";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-test("render composant AccordionPart", async () => {
+test("render composant SectionPart", async () => {
   expect(Personne.getNom(personneMock)).toBe("FAULKNER");
   expect(Personne.getAutresNoms(personneMock)).toBe("ELISA (Pseudonyme)");
   expect(Personne.getPrenoms(personneMock)).toBe(

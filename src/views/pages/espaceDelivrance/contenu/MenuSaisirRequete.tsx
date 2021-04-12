@@ -5,7 +5,7 @@ import "./sass/MenuSaisirRequete.scss";
 import {
   LISTE_DES_REQUETES_COURRIER,
   SousTypeDelivrance
-} from "../../../../model/requete/v2/SousTypeDelivrance";
+} from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { getLibelle } from "../../../common/widget/Text";
 import {
   URL_MES_REQUETES_SAISIR_RDCSC,
