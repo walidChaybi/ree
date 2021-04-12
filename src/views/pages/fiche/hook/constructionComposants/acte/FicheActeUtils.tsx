@@ -60,7 +60,11 @@ function getPanelAreasActeImage(
         value: (
           <ActeImage
             id={acte.id}
-            estReecrit={acte.compositionCorps?.estReecrit}
+            estReecrit={
+              params.visuActe === "classique"
+                ? acte.compositionCorps?.estReecrit
+                : undefined
+            }
           ></ActeImage>
         ),
         nbColonne: 1
