@@ -1,6 +1,6 @@
 import React from "react";
 import Tab from "@material-ui/core/Tab";
-import "../sass/EspaceDelivrancePage.scss";
+import "../scss/EspaceDelivrancePage.scss";
 import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
 
 interface LinkTabProps {

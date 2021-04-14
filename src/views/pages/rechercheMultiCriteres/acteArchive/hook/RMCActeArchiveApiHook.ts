@@ -3,11 +3,8 @@ import { rechercheMultiCriteresActes } from "../../../../../api/appels/etatcivil
 import { IRMCActeArchive } from "../../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import {
-  getMaxRange,
-  getMinRange,
-  getRowsNumber,
-  IDataTableau,
-  parseLink
+  getDataTableau,
+  IDataTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
 import { mappingActes, mappingCriteres } from "./RMCActeArchiveUtils";
@@ -27,14 +24,7 @@ export function useRMCActeArchiveApiHook(criteres?: ICriteresRecherche) {
       rechercheMultiCriteresActes(criteresRequest, criteres.range)
         .then((result: any) => {
           setDataRMCActe(mappingActes(result.body.data.registres));
-          const { nextLink, prevLink } = parseLink(result.headers["link"]);
-          setDataTableauRMCActe({
-            previousDataLinkState: prevLink,
-            nextDataLinkState: nextLink,
-            rowsNumberState: getRowsNumber(result),
-            minRangeState: getMinRange(result),
-            maxRangeState: getMaxRange(result)
-          });
+          setDataTableauRMCActe(getDataTableau(result));
         })
         .catch(error => {
           logError({

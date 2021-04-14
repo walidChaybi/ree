@@ -48,3 +48,18 @@ export function getMinRange(result: any) {
 export function getMaxRange(result: any) {
   return +(result.headers[contentRange] as string).split("/")[0].split("-")[1];
 }
+
+export function getDataTableau(result: any): IDataTableau {
+  let dataTableau = {} as IDataTableau;
+  const { nextLink, prevLink } = parseLink(result.headers["link"]);
+
+  dataTableau = {
+    previousDataLinkState: prevLink,
+    nextDataLinkState: nextLink,
+    rowsNumberState: getRowsNumber(result),
+    minRangeState: getMinRange(result),
+    maxRangeState: getMaxRange(result)
+  };
+
+  return dataTableau;
+}

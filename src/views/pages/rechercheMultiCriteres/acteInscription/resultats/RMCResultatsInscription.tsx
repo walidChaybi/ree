@@ -76,23 +76,21 @@ export const RMCResultatsInscription: React.FC<RMCResultatInscriptionProps> = ({
   // Gestion de la Fenêtre
   const [etatFenetres, setEtatFenetres] = useState<string[]>([]);
 
-  const [indexClique, setIndexClique] = useState<number>(0);
-
-  const closeFenetre = (idInscription: string) => {
+  const closeFenetre = (idInscription: string, idx: number) => {
     const tableau = [...etatFenetres];
-    const index = tableau.indexOf(idInscription);
-    tableau.splice(index, 1);
-    setEtatFenetres(tableau);
+    if (tableau[idx] === idInscription) {
+      tableau[idx] = "";
+      setEtatFenetres(tableau);
+    }
   };
 
   const onClickOnLine = (idInscription: string, data: any, idx: number) => {
     if (officierALeDroitSurLePerimetre(Droit.CONSULTER, "MEAE")) {
       const tableau = [...etatFenetres];
-      if (tableau.indexOf(idInscription) === -1) {
-        tableau.push(idInscription);
+      if (tableau[idx] !== idInscription) {
+        tableau[idx] = idInscription;
         setEtatFenetres(tableau);
       }
-      setIndexClique(idx);
     }
   };
 
@@ -118,16 +116,22 @@ export const RMCResultatsInscription: React.FC<RMCResultatInscriptionProps> = ({
 
       {etatFenetres && etatFenetres.length > 0 && (
         <>
-          {etatFenetres.map(idInscription => {
+          {etatFenetres.map((idInscription: string, index: number) => {
             return (
-              <FenetreFiche
-                identifiant={idInscription}
-                categorie={getCategorieFiche(idInscription, dataRMCInscription)}
-                datasFiches={datasFiches}
-                index={indexClique}
-                onClose={closeFenetre}
-                key={`fiche${idInscription}`}
-              />
+              idInscription &&
+              idInscription !== "" && (
+                <FenetreFiche
+                  key={`fiche${idInscription}${index}`}
+                  identifiant={idInscription}
+                  categorie={getCategorieFiche(
+                    idInscription,
+                    dataRMCInscription
+                  )}
+                  datasFiches={datasFiches}
+                  index={index}
+                  onClose={closeFenetre}
+                />
+              )
             );
           })}
         </>

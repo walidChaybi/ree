@@ -11,8 +11,8 @@ import {
 import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import { AccordionReceProps } from "../../common/widget/accordion/AccordionRece";
-import { fournisseurDonneesBandeauFactory } from "./contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
+import { IDataFicheProps } from "./FichePage";
 
 export function getFicheTitle(
   categorie: string,
@@ -33,15 +33,13 @@ export interface IFiche {
   panelsFiche: AccordionReceProps;
 }
 
-export function setFiche(categorie: TypeFiche, data: any): IFiche {
+export function setFiche(dataFiche: IDataFicheProps, data: any): IFiche {
   const fiche = {} as IFiche;
-  if (categorie && data) {
-    fiche.bandeauFiche = setDataBandeau(
-      categorie,
-      fournisseurDonneesBandeauFactory.createFournisseur(categorie, data)
-    );
 
-    switch (categorie) {
+  if (dataFiche.categorie && data && dataFiche.identifiant === data.id) {
+    fiche.bandeauFiche = setDataBandeau(dataFiche, data);
+
+    switch (dataFiche.categorie) {
       case TypeFiche.RC:
         fiche.panelsFiche = getPanelsRc(data);
         break;

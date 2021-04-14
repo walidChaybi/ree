@@ -75,7 +75,7 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
   const manageTypeRequeteOptions = (type: string) => {
     if (type === "DELIVRANCE") {
       setSousTypeRequeteOptions(SousTypeDelivrance.getAllNomsAsOptions());
-    } else if (type === "CREATION_ACTE") {
+    } else if (type === "CREATION") {
       setSousTypeRequeteOptions(SousTypeCreation.getAllNomsAsOptions());
     } else if (type === "MISE_A_JOUR") {
       setSousTypeRequeteOptions(SousTypeMiseAJour.getAllNomsAsOptions());

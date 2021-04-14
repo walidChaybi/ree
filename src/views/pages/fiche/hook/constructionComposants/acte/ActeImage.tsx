@@ -5,7 +5,7 @@ import {
   getTexteActe
 } from "../../../../../../api/appels/etatcivilApi";
 import { logError } from "../../../../../common/util/LogManager";
-import "./sass/ActeImage.scss";
+import "./scss/ActeImage.scss";
 
 export interface ActeImageProps {
   id?: string;
@@ -19,13 +19,13 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
 
   useEffect(() => {
     if (id) {
-      let pdf;
+      let imagesActe;
       if (isImage) {
-        pdf = getImagesActe(id);
+        imagesActe = getImagesActe(id);
       } else {
-        pdf = getTexteActe(id);
+        imagesActe = getTexteActe(id);
       }
-      pdf
+      imagesActe
         .then((pdf: any) => {
           const documentObjectURL = URL.createObjectURL(
             new Blob([pdf.body], { type: "application/pdf" })

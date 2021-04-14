@@ -11,7 +11,7 @@ export class StatutRequete extends EnumWithLibelle {
   public static readonly TRANSFEREE = new StatutRequete("Transférée");
   public static readonly A_VALIDER = new StatutRequete("A valider");
   public static readonly A_SIGNER = new StatutRequete("A signer");
-  public static readonly IGNOREE = new StatutRequete("Ignorer");
+  public static readonly IGNOREE = new StatutRequete("Ignorée");
   public static readonly TRAITE_A_IMPRIMER = new StatutRequete(
     "Traitée - A imprimer"
   );
@@ -22,7 +22,7 @@ export class StatutRequete extends EnumWithLibelle {
     "Traitée - Imprimée"
   );
   public static readonly TRAITE_DELIVRE_DEMAT = new StatutRequete(
-    "Traitée - Délivrer Démat"
+    "Traitée - Délivrée Démat"
   );
   public static readonly TRAITE_REPONDU = new StatutRequete(
     "Traitée - Répondue"

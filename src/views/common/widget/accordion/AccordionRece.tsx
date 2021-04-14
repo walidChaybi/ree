@@ -3,7 +3,7 @@ import { SectionPanel, SectionPanelProps } from "../section/SectionPanel";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import { AccordionTitle } from "./AccordionTitle";
-import "./sass/AccordionRece.scss";
+import "./scss/AccordionRece.scss";
 
 export interface AccordionReceProps {
   panels: SectionPanelProps[];

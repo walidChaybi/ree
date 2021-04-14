@@ -1,0 +1,27 @@
+@import "../../../../../scss/colors";
+
+.Fieldset {
+  border-radius: 0.3rem;
+  border: 1px solid;
+  border-color: $button-application-color;
+  background-color: $form-background;
+  text-align: start;
+
+  > .Titre {
+    background-color: $button-application-color;
+    padding: 0.2em 1em;
+    margin: 0em;
+    border-radius: 0.25em 0.25em 0 0;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+  }
+  .Fieldset {
+    margin: 1rem;
+    border-color: $application-color;
+
+    > .Titre {
+      background-color: $application-color;
+    }
+  }
+}

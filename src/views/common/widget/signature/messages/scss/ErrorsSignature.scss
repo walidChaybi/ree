@@ -1,0 +1,9 @@
+@import "../../../../../../scss/colors";
+
+.ErrorItem {
+  color: $error;
+
+  p {
+    color: $error;
+  }
+}

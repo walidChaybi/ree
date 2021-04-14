@@ -98,7 +98,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   });
 });
 
-test("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur CREATION_ACTE", async () => {
+test("Le champ Type requete est conditionné par le choix de l'utilisateur à la valeur CREATION", async () => {
   await act(async () => {
     render(<HookRequeteFiltre />);
   });
@@ -126,7 +126,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
     });
     fireEvent.change(typeRequete, {
       target: {
-        value: "CREATION_ACTE"
+        value: "CREATION"
       }
     });
     fireEvent.input(typeRequete);
@@ -152,7 +152,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"requete":{"numeroRequete":"1234ABCD","typeRequete":"CREATION_ACTE","sousTypeRequete":"RCTC","statutRequete":"TRAITE_A_IMPRIMER"}}'
+      '{"requete":{"numeroRequete":"1234ABCD","typeRequete":"CREATION","sousTypeRequete":"RCTC","statutRequete":"TRAITE_A_IMPRIMER"}}'
     );
   });
 });
@@ -259,7 +259,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
     act(() => {
       fireEvent.change(sousTypeRequete, {
         target: {
-          value: "COMPLETION_REQUETE"
+          value: "COMPLETION_REQUETE_EN_COURS"
         }
       });
       fireEvent.click(submit);
@@ -270,7 +270,7 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   await waitFor(() => {
     expect(sousTypeRequete.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"requete":{"numeroRequete":"1234ABCD","typeRequete":"INFORMATION","sousTypeRequete":"COMPLETION_REQUETE","statutRequete":"A_TRAITER"}}'
+      '{"requete":{"numeroRequete":"1234ABCD","typeRequete":"INFORMATION","sousTypeRequete":"COMPLETION_REQUETE_EN_COURS","statutRequete":"A_TRAITER"}}'
     );
   });
 });

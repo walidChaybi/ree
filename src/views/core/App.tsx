@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
 import React from "react";
-import "../../sass/_library.scss";
-import "../../sass/_colors.scss";
+import "../../scss/_library.scss";
+import "../../scss/_colors.scss";
 import "./App.scss";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Header } from "./header/Header";

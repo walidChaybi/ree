@@ -4,7 +4,7 @@ import { Options } from "../../../../views/common/util/Type";
 
 export class SousTypeInformation extends EnumWithLibelle {
   public static readonly INFORMATION = new SousTypeInformation("Information");
-  public static readonly COMPLETION_REQUETE = new SousTypeInformation(
+  public static readonly COMPLETION_REQUETE_EN_COURS = new SousTypeInformation(
     "Complétion requête en cours"
   );
 

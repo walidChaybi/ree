@@ -4,7 +4,7 @@ import { Options } from "../../../../views/common/util/Type";
 
 export class TypeRequete extends EnumWithLibelle {
   public static readonly DELIVRANCE = new TypeRequete("Délivrance");
-  public static readonly CREATION_ACTE = new TypeRequete("Création acte");
+  public static readonly CREATION = new TypeRequete("Création");
   public static readonly MISE_A_JOUR = new TypeRequete("Mise à jour");
   public static readonly INFORMATION = new TypeRequete("Information");
 

@@ -61,7 +61,7 @@ test("Ouverture d'une inscription", async () => {
     />
   );
 
-  const ligne = getByTestId("85160d6e-893b-47c2-a9a8-b25573189f0c");
+  const ligne = getByTestId("89c9d030-26c3-41d3-bdde-8b4dcc0420e0");
 
   act(() => {
     fireEvent.click(ligne);

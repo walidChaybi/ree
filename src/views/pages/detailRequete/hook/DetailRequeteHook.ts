@@ -92,11 +92,11 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
 }
 
 function getTitulaires(titulaires: any): ITitulaireRequete[] {
-  let titulairesRequetes: ITitulaireRequete[] = [];
-  titulaires.forEach((titulaire: any) => {
-    const titu = titulaire as ITitulaireRequete;
-    titu.nationalite = Nationalite.getEnumFor(titulaire.nationalite);
-    titulairesRequetes.push(titu);
+  const titulairesRequetes: ITitulaireRequete[] = [];
+  titulaires.forEach((t: any) => {
+    const titulaire = t as ITitulaireRequete;
+    titulaire.nationalite = Nationalite.getEnumFor(t.nationalite);
+    titulairesRequetes.push(titulaire);
   });
   return titulairesRequetes;
 }

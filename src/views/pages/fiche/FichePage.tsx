@@ -36,24 +36,35 @@ export const FichePage: React.FC<FichePageProps> = props => {
 
   const { dataFicheState } = useFichePageApiHook(
     dataFicheCourante.categorie,
-    dataFicheCourante.identifiant
+    dataFicheCourante.identifiant,
+    indexCourant
   );
 
   const { bandeauFiche, alerteVisible, panelsFiche } = setFiche(
-    dataFicheCourante.categorie,
+    dataFicheCourante,
     dataFicheState.data
   );
 
   // Obligatoire pour les styles qui sont chargés dynamiquement
   useEffect(() => {
-    if (dataFicheState != null && dataFicheState.data != null) {
-      const event = new CustomEvent("refreshStyles");
-      window.top.dispatchEvent(event);
+    if (
+      dataFicheState.data &&
+      dataFicheState.data.id === dataFicheCourante.identifiant
+    ) {
+      if (dataFicheState.data != null) {
+        const event = new CustomEvent("refreshStyles");
+        window.top.dispatchEvent(event);
+      }
+      if (props.fenetreExterneUtil && bandeauFiche) {
+        props.fenetreExterneUtil.ref.document.title = bandeauFiche.titreFenetre;
+      }
     }
-    if (props.fenetreExterneUtil && bandeauFiche) {
-      props.fenetreExterneUtil.ref.document.title = bandeauFiche.titreFenetre;
-    }
-  }, [dataFicheState, props.fenetreExterneUtil, bandeauFiche]);
+  }, [
+    dataFicheState.data,
+    props.fenetreExterneUtil,
+    bandeauFiche,
+    dataFicheCourante
+  ]);
 
   function setIndexFiche(index: number) {
     if (props.datasFiches && index >= 0 && index < props.datasFiches.length) {

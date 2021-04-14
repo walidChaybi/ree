@@ -3,7 +3,7 @@ import React from "react";
 import { DocumentDetail } from "./DocumentDetail";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import List from "@material-ui/core/List";
-import "./sass/DocumentPresentation.scss";
+import "./scss/DocumentPresentation.scss";
 import classNames from "classnames";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 import { IDocumentDetail } from "../../../../common/types/IDocumentDetail";

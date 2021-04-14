@@ -1,7 +1,7 @@
 import React from "react";
 import { useCompteurRequeteHook } from "../hook/CompteurRequeteHook";
 import { getText } from "../../../common/widget/Text";
-import "./sass/CompteurRequete.scss";
+import "./scss/CompteurRequete.scss";
 
 interface CompteurRequeteProps {
   reloadCompteur: boolean;

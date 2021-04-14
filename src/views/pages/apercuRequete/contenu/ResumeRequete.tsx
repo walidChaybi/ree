@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./sass/ResumeRequete.scss";
+import "./scss/ResumeRequete.scss";
 import {
   Accordion,
   AccordionSummary,

@@ -8,7 +8,7 @@ import {
   getDateStringFromDateCompose,
   formatDeOuLe
 } from "../../../../../common/util/DateUtils";
-import "./sass/Mariage.scss";
+import "./scss/Mariage.scss";
 
 export const Mariage: React.FC<IMariageInteresse> = props => {
   return (

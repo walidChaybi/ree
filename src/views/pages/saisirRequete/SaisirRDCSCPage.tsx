@@ -17,7 +17,7 @@ import RequerantForm, {
 import { getLibelle } from "../../common/widget/Text";
 import { SelectField } from "../../common/widget/formulaire/champsSaisie/SelectField";
 import { Options } from "../../common/util/Type";
-import "./sass/SaisirRDCSCPage.scss";
+import "./scss/SaisirRDCSCPage.scss";
 import { SubFormProps } from "../../common/widget/formulaire/utils/FormUtil";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps

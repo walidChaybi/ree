@@ -1,5 +1,5 @@
 import React from "react";
-import "./sass/EtatRequete.scss";
+import "./scss/EtatRequete.scss";
 import { getText } from "../../../common/widget/Text";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import classNames from "classnames";

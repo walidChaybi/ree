@@ -1,7 +1,7 @@
 import * as React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./sass/Message.scss";
+import "./scss/Message.scss";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { getText } from "./../widget/Text";
 

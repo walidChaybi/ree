@@ -1,0 +1,23 @@
+@import "../../../../../../scss/colors";
+
+.BoutonSuivPrec {
+  display: inline-block;
+  span {
+    display: inline-block;
+  }
+
+  .BoutonSuivPrecItem {
+    padding: 0px;
+    min-width: 0px;
+    color: $button-application-color;
+    background-color: transparent;
+    font-size: 40px;
+    vertical-align: middle;
+
+    &:disabled {
+      background-color: transparent;
+      color: $disabled-button;
+      pointer-events: auto !important;
+    }
+  }
+}

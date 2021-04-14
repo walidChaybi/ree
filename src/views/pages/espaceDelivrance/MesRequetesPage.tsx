@@ -14,7 +14,7 @@ import { SortOrder } from "../../common/widget/tableau/TableUtils";
 import { NatureActe } from "../../../model/etatcivil/enum/NatureActe";
 import { Canal } from "../../../model/Canal";
 import { BoutonRetour } from "../../common/widget/navigation/BoutonRetour";
-import "./sass/RequeteTableau.scss";
+import "./scss/RequeteTableau.scss";
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
 import { MotifRequete } from "../../../model/requete/MotifRequete";
 import { CanalProvenance } from "../../../model/requete/CanalProvenance";

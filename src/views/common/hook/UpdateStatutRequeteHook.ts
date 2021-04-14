@@ -23,7 +23,7 @@ export function useUpdateStatutRequeteApi(
         .catch(error => {
           logError({
             messageUtilisateur:
-              "Impossible de mettre à jour de statut de la requête",
+              "Impossible de mettre à jour le statut de la requête",
             error
           });
         });

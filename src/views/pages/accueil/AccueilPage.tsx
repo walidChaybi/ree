@@ -10,7 +10,7 @@ import {
   BoutonAccueilRechercheActe,
   BoutonAccueilTableau
 } from "./BoutonAccueil";
-import "../accueil/sass/AccueilPage.scss";
+import "../accueil/scss/AccueilPage.scss";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
   faPlusCircle,

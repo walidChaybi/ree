@@ -40,7 +40,7 @@ test("Ouverture d'un acte", async () => {
     />
   );
 
-  const ligne = getByTestId("d8708d77-a359-4553-be72-1eb5f246d4da");
+  const ligne = getByTestId("b41079a5-9e8d-478c-b04c-c4c2ac67134f");
 
   act(() => {
     fireEvent.click(ligne);

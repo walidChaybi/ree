@@ -6,7 +6,7 @@ import {
   faChevronCircleLeft,
   faChevronCircleRight
 } from "@fortawesome/free-solid-svg-icons";
-import "./sass/BoutonSuivPrec.scss";
+import "./scss/BoutonSuivPrec.scss";
 
 export interface BoutonSuivPrecProps {
   direction: "left" | "right";

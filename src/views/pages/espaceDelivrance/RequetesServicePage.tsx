@@ -8,7 +8,7 @@ import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { SortOrder } from "../../common/widget/tableau/TableUtils";
 
 import { BoutonRetour } from "../../common/widget/navigation/BoutonRetour";
-import "./sass/RequeteTableau.scss";
+import "./scss/RequeteTableau.scss";
 
 import { HeaderTableauRequete } from "../../../model/requete/HeaderTableauRequete";
 
@@ -55,9 +55,10 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   // const [queryChangeOecRequest, setQueryChangeOecRequest] = React.useState<IQueryParametersAssigneRequetes>();
   /** FIN TODO ETAPE 2 : Bouton "Attribué à" */
 
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetes
-  >({
+  const [
+    linkParameters,
+    setLinkParameters
+  ] = React.useState<IQueryParametersPourRequetes>({
     statuts: [
       StatutRequete.ASigner,
       StatutRequete.ATraiterDemat,

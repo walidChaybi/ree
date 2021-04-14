@@ -1,6 +1,6 @@
 import React from "react";
 import { ResumeRequete } from "./ResumeRequete";
-import "./sass/ContenuRequete.scss";
+import "./scss/ContenuRequete.scss";
 import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
 import { ExtraitDocument } from "../../../common/widget/document/ExtraitDocument";
 import { IDocumentDelivre } from "../../../common/types/RequeteType";

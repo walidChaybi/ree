@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
-import "./sass/ErrorsSignature.scss";
+import "./scss/ErrorsSignature.scss";
 import { getText } from "../../Text";
 
 interface ErrorsSignatureProps {

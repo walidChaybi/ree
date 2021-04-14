@@ -6,8 +6,8 @@ import { TableauBodyCell } from "./TableauBodyCell";
 import { getText } from "../Text";
 import { TableauTypeColumn } from "./TableauRece";
 
-import "./sass/Tableau.scss";
-import "./sass/TableauBody.scss";
+import "./scss/Tableau.scss";
+import "./scss/TableauBody.scss";
 
 interface TableauBodyProps {
   data: any[];
