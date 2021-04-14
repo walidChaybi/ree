@@ -63,22 +63,20 @@ export const RMCResultatsActe: React.FC<RMCResultatActeProps> = ({
   // Gestion de la Fenêtre
   const [etatFenetres, setEtatFenetres] = useState<string[]>([]);
 
-  const [indexClique, setIndexClique] = useState<number>(0);
-
-  const closeFenetre = (idActe: string) => {
+  const closeFenetre = (idActe: string, idx: number) => {
     const tableau = [...etatFenetres];
-    const index = tableau.indexOf(idActe);
-    tableau.splice(index, 1);
-    setEtatFenetres(tableau);
+    if (tableau[idx] === idActe) {
+      tableau[idx] = "";
+      setEtatFenetres(tableau);
+    }
   };
 
   const onClickOnLine = (idActe: string, data: any, idx: number) => {
     const tableau = [...etatFenetres];
-    if (tableau.indexOf(idActe) === -1) {
-      tableau.push(idActe);
+    if (tableau[idx] !== idActe) {
+      tableau[idx] = idActe;
       setEtatFenetres(tableau);
     }
-    setIndexClique(idx);
   };
 
   const datasFiches = dataRMCActe.map(data => ({
@@ -105,14 +103,17 @@ export const RMCResultatsActe: React.FC<RMCResultatActeProps> = ({
         <>
           {etatFenetres.map((idActe: string, index: number) => {
             return (
-              <FenetreFiche
-                key={`fiche${idActe}${index}`}
-                identifiant={idActe}
-                categorie={TypeFiche.ACTE}
-                index={indexClique}
-                onClose={closeFenetre}
-                datasFiches={datasFiches}
-              />
+              idActe &&
+              idActe !== "" && (
+                <FenetreFiche
+                  key={`fiche${idActe}${index}`}
+                  identifiant={idActe}
+                  categorie={TypeFiche.ACTE}
+                  datasFiches={datasFiches}
+                  index={index}
+                  onClose={closeFenetre}
+                />
+              )
             );
           })}
         </>

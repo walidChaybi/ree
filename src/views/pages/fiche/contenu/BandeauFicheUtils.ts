@@ -8,41 +8,44 @@ import {
 import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
 import { getDateString } from "../../../common/util/DateUtils";
 import { getFicheTitle } from "../FicheUtils";
-import IFournisseurDonneesBandeau from "./fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
-import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
+import { IDataFicheProps } from "../FichePage";
+import { fournisseurDonneesBandeauFactory } from "./fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
 export function setDataBandeau(
-  categorie: TypeFiche,
-  fournisseurDonneesBandeau: IFournisseurDonneesBandeau
+  dataFiche: IDataFicheProps,
+  data: any
 ): IBandeauFiche {
-  let dataBandeau = {} as IBandeauFiche;
+  const fournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(
+    dataFiche.categorie,
+    data
+  );
 
-  const data = fournisseurDonneesBandeau.getData();
+  let bandeauFiche = {} as IBandeauFiche;
+  const dataBandeau = fournisseurDonneesBandeau.getData();
 
-  if (data && categorie != null) {
+  if (dataBandeau && dataFiche.categorie != null) {
     const annee = fournisseurDonneesBandeau.getAnnee();
-
-    dataBandeau = {
+    bandeauFiche = {
       titreFenetre: getFicheTitle(
         fournisseurDonneesBandeau.getTypeAbrege(),
         annee,
-        data.numero,
+        dataBandeau.numero,
         fournisseurDonneesBandeau.getSimplePersonnes()
       ),
       categorie: fournisseurDonneesBandeau.getType(),
-      identifiant: data.id,
+      identifiant: dataBandeau.id,
       registre: fournisseurDonneesBandeau.getRegistre(),
       annee,
-      numero: data.numero,
-      statutsFiche: setStatuts(data.statutsFiche),
+      numero: dataBandeau.numero,
+      statutsFiche: setStatuts(dataBandeau.statutsFiche),
       personnes: fournisseurDonneesBandeau.getSimplePersonnes(),
-      alertes: setAlertes(data.alertes),
-      dateDerniereMaj: getDateString(data.dateDerniereMaj),
-      dateDerniereDelivrance: getDateString(data.dateDerniereDelivrance)
+      alertes: setAlertes(dataBandeau.alertes),
+      dateDerniereMaj: getDateString(dataBandeau.dateDerniereMaj),
+      dateDerniereDelivrance: getDateString(dataBandeau.dateDerniereDelivrance)
     };
   }
 
-  return dataBandeau;
+  return bandeauFiche;
 }
 
 function setStatuts(statuts: IStatutFiche[]) {

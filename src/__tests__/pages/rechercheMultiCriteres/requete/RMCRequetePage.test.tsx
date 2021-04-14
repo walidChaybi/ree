@@ -70,7 +70,7 @@ test("Bouton réinitialisation des champs", async () => {
   await act(async () => {
     fireEvent.change(sousTypeRequete, {
       target: {
-        value: "COMPLETION_REQUETE"
+        value: "COMPLETION_REQUETE_EN_COURS"
       }
     });
   });
@@ -78,7 +78,7 @@ test("Bouton réinitialisation des champs", async () => {
   await waitFor(() => {
     expect(numeroRequete.value).toBe("1234ABCD");
     expect(typeRequete.value).toBe("INFORMATION");
-    expect(sousTypeRequete.value).toBe("COMPLETION_REQUETE");
+    expect(sousTypeRequete.value).toBe("COMPLETION_REQUETE_EN_COURS");
     expect(statutRequete.value).toBe("A_TRAITER");
   });
 

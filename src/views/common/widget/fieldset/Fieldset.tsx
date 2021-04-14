@@ -1,5 +1,5 @@
 import React from "react";
-import "./sass/Fieldset.scss";
+import "./scss/Fieldset.scss";
 
 interface FieldsetProps {
   titre: string;

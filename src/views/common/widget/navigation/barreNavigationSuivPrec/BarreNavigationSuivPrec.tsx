@@ -1,6 +1,6 @@
 import React from "react";
 import { BoutonSuivPrec } from "./BoutonSuivPrec";
-import "./sass/BarreNavigationSuivPrec.scss";
+import "./scss/BarreNavigationSuivPrec.scss";
 
 export interface ActionsProps {
   index: number;

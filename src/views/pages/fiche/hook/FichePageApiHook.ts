@@ -30,7 +30,11 @@ export interface IDataFicheApi {
   data: any;
 }
 
-export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
+export function useFichePageApiHook(
+  categorie: TypeFiche,
+  identifiant: string,
+  indexCourant: number
+) {
   const [dataFicheState, setDataFicheState] = useState<IDataFicheApi>(
     {} as IDataFicheApi
   );
@@ -71,7 +75,7 @@ export function useFichePageApiHook(categorie: TypeFiche, identifiant: string) {
           });
         });
     }
-  }, [categorie, identifiant]);
+  }, [categorie, identifiant, indexCourant]);
 
   return {
     dataFicheState

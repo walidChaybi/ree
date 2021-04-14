@@ -3,11 +3,8 @@ import { rechercheMultiCriteresInscriptions } from "../../../../../api/appels/et
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
-  getMaxRange,
-  getMinRange,
-  getRowsNumber,
-  IDataTableau,
-  parseLink
+  getDataTableau,
+  IDataTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
 import {
@@ -41,14 +38,7 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRecherche) {
             setDataRMCInscription(
               mappingInscriptions(result.body.data.repertoiresCiviles)
             );
-            const { nextLink, prevLink } = parseLink(result.headers["link"]);
-            setDataTableauRMCInscription({
-              previousDataLinkState: prevLink,
-              nextDataLinkState: nextLink,
-              rowsNumberState: getRowsNumber(result),
-              minRangeState: getMinRange(result),
-              maxRangeState: getMaxRange(result)
-            });
+            setDataTableauRMCInscription(getDataTableau(result));
           })
           .catch(error => {
             logError({

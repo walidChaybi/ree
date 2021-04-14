@@ -1,5 +1,5 @@
 import React from "react";
-import "./sass/AlertesActes.scss";
+import "./scss/AlertesActes.scss";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getLibelle } from "../../../../../common/widget/Text";

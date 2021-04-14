@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { TextField } from "@material-ui/core";
 import { Button } from "reakit/Button";
 
-import "./sass/FormPinCode.scss";
+import "./scss/FormPinCode.scss";
 import { getText } from "../Text";
 import { storeRece } from "../../util/storeRece";
 

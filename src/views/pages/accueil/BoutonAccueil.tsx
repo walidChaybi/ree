@@ -5,7 +5,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Badge from "@material-ui/core/Badge";
 import { getText } from "../../common/widget/Text";
-import "../accueil/sass/BoutonAccueil.scss";
+import "../accueil/scss/BoutonAccueil.scss";
 import WithHabilitation from "../../common/util/habilitation/WithHabilitation";
 
 interface BoutonAccueilProps {

@@ -3,11 +3,8 @@ import { rechercheMultiCriteresRequetes } from "../../../../../api/appels/requet
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import { IResultatRMCRequete } from "../../../../../model/rmc/requete/IResultatRMCRequete";
 import {
-  getMaxRange,
-  getMinRange,
-  getRowsNumber,
-  IDataTableau,
-  parseLink
+  getDataTableau,
+  IDataTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
 import { mappingCriteresRequete, mappingRequetes } from "./RMCRequeteUtils";
@@ -28,14 +25,7 @@ export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
           setDataRMCRequete(
             mappingRequetes(result.body.data.resultatsRecherche)
           );
-          const { nextLink, prevLink } = parseLink(result.headers["link"]);
-          setDataTableauRMCRequete({
-            previousDataLinkState: prevLink,
-            nextDataLinkState: nextLink,
-            rowsNumberState: getRowsNumber(result),
-            minRangeState: getMinRange(result),
-            maxRangeState: getMaxRange(result)
-          });
+          setDataTableauRMCRequete(getDataTableau(result));
         })
         .catch(error => {
           logError({

@@ -1,0 +1,8 @@
+@import "../../../../../../scss/colors";
+
+.SuccessItem {
+  color: $success;
+  span {
+    font-size: 12px;
+  }
+}

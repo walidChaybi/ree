@@ -1,6 +1,6 @@
 import React from "react";
 import { MessageId, Text } from "../Text";
-import "./sass/ExtraitDocument.scss";
+import "./scss/ExtraitDocument.scss";
 import { Accordion } from "@material-ui/core";
 
 interface IExtraitDocumentProps {

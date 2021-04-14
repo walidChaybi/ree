@@ -4,15 +4,18 @@ import DATA_FICHE_PACS from "../data/bandeauPacs";
 import { fournisseurDonneesBandeauFactory } from "../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { acte } from "../data/ficheActe";
 import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
+import { IDataFicheProps } from "../../../../views/pages/fiche/FichePage";
 
 test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
-  const bandeauFiche = setDataBandeau(
-    TypeFiche.RC,
-    fournisseurDonneesBandeauFactory.createFournisseur(
-      TypeFiche.RC,
-      DATA_FICHE_RC.dataBandeau
-    )
-  );
+  const dataFiche = {
+    identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
+    categorie: TypeFiche.RC
+  } as IDataFicheProps;
+
+  const data = DATA_FICHE_RC.dataBandeau;
+
+  const bandeauFiche = setDataBandeau(dataFiche, data);
+
   expect(bandeauFiche.titreFenetre).toBe("RC - NOM1 et NOM2 - N° 2018 - 56533");
   expect(bandeauFiche.statutsFiche).toEqual([
     { statut: "Actif" },
@@ -26,13 +29,15 @@ test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
 });
 
 test("bandeauFicheUtils setDataBandeau works PACS", async () => {
-  const bandeauFiche = setDataBandeau(
-    TypeFiche.PACS,
-    fournisseurDonneesBandeauFactory.createFournisseur(
-      TypeFiche.PACS,
-      DATA_FICHE_PACS.dataBandeau
-    )
-  );
+  const dataFiche = {
+    identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
+    categorie: TypeFiche.PACS
+  } as IDataFicheProps;
+
+  const data = DATA_FICHE_PACS.dataBandeau;
+
+  const bandeauFiche = setDataBandeau(dataFiche, data);
+
   expect(bandeauFiche.titreFenetre).toBe(
     "PACS - NOM1 et NOM2 - N° 2019 - 29369"
   );
@@ -45,10 +50,14 @@ test("bandeauFicheUtils setDataBandeau works PACS", async () => {
 });
 
 test("bandeauFicheUtils setDataBandeau works Acte", async () => {
-  const bandeauFiche = setDataBandeau(
-    TypeFiche.ACTE,
-    fournisseurDonneesBandeauFactory.createFournisseur(TypeFiche.ACTE, acte)
-  );
+  const dataFiche = {
+    identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
+    categorie: TypeFiche.ACTE
+  } as IDataFicheProps;
+
+  const data = acte;
+
+  const bandeauFiche = setDataBandeau(dataFiche, data);
 
   expect(bandeauFiche.titreFenetre).toBe(
     "ABSENCE - GREENWALD et DUPE - N° 1921 - 410"

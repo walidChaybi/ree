@@ -1,7 +1,7 @@
 import React from "react";
 import TableCell from "@material-ui/core/TableCell";
-import "./sass/Tableau.scss";
-import "../../../../sass/_library.scss";
+import "./scss/Tableau.scss";
+import "../../../../scss/_library.scss";
 import { TableauTypeColumn } from "./TableauRece";
 import { getValeurOuVide } from "../../util/Utils";
 

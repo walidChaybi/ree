@@ -6,7 +6,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
 import Image from "@material-ui/icons/Image";
 import { lectureDuDocument, convertToBlob } from "./DocumentPresentation";
-import "./sass/DocumentDetail.scss";
+import "./scss/DocumentDetail.scss";
 import { IDocumentDetail } from "../../../../common/types/IDocumentDetail";
 import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
 import { requestDocumentApi } from "../../../../common/hook/DocumentRequeteHook";

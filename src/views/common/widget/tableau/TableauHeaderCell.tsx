@@ -4,7 +4,7 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import { Text } from "../Text";
 import { SortOrder } from "./TableUtils";
 import classNames from "classnames";
-import "../../../../sass/_library.scss";
+import "../../../../scss/_library.scss";
 import { TableauTypeColumn } from "./TableauRece";
 
 interface TableauHeaderCellProps {

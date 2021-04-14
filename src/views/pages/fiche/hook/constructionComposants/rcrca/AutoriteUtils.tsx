@@ -16,6 +16,7 @@ import {
   Autorite
 } from "../../../../../../model/etatcivil/commun/IAutorite";
 import { formatPrenom, formatNom } from "../../../../../common/util/Utils";
+import { TypeJuridiction } from "../../../../../../model/etatcivil/enum/TypeJuridiction";
 
 export function getAutorite(rcrca: IFicheRcRca): SectionPartProps[] {
   const autorite: SectionPartProps[] = [
@@ -189,7 +190,10 @@ function getTypeAutoriteContent(type?: TypeAutorite): SectionContentProps {
 }
 
 function getTypeJuridictionContent(type?: string): SectionContentProps {
-  return { libelle: "Type", value: type ? type : "" };
+  return {
+    libelle: "Type",
+    value: type ? TypeJuridiction.getEnumFor(type).libelle : ""
+  };
 }
 
 function getVilleAutoriteContent(ville?: string): SectionContentProps {

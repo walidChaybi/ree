@@ -1,7 +1,7 @@
 import React from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import "./sass/MenuSaisirRequete.scss";
+import "./scss/MenuSaisirRequete.scss";
 import {
   LISTE_DES_REQUETES_COURRIER,
   SousTypeDelivrance

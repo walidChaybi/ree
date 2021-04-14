@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-import "./sass/ChampRecherche.scss";
+import "./scss/ChampRecherche.scss";
 import { Autocomplete } from "@material-ui/lab";
 import { Option } from "../../../util/Type";
 import { Field, connect } from "formik";

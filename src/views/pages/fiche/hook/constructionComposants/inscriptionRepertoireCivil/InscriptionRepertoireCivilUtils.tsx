@@ -15,6 +15,7 @@ import {
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../../../../common/util/Utils";
 
 export function getInscriptionRepertoireCivil(
   rcrca: IFicheRcRca
@@ -35,7 +36,9 @@ function getInteresseRc(rcrca: IFicheRcRca): SectionContentProps[] {
   return [
     {
       libelle: "Nature",
-      value: rcrca.nature.libelle
+      value: rcrca.nature
+        ? premiereLettreEnMajusculeLeResteEnMinuscule(rcrca.nature.libelle)
+        : ""
     },
     {
       libelle: "Mandataire(s)",
@@ -79,7 +82,9 @@ function getInteresseRca(rcrca: IFicheRcRca): SectionContentProps[] {
   return [
     {
       libelle: "Nature",
-      value: rcrca.nature.libelle
+      value: rcrca.nature
+        ? premiereLettreEnMajusculeLeResteEnMinuscule(rcrca.nature.libelle)
+        : ""
     },
     {
       libelle: "Type inscription",

@@ -11,7 +11,7 @@ import { getText } from "../../../common/widget/Text";
 import { ProgressSignature } from "./ProgressSignature";
 import { FormPinCode } from "./FormPinCode";
 import { ErrorsSignature } from "./messages/ErrorsSignature";
-import "./sass/PopinSignature.scss";
+import "./scss/PopinSignature.scss";
 import {
   useSignatureDocumentHook,
   DocumentsByRequete

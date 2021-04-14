@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Box from "@material-ui/core/Box";
 import { RequetesServicePage } from "./RequetesServicePage";
-import "./sass/EspaceDelivrancePage.scss";
+import "./scss/EspaceDelivrancePage.scss";
 import { useHistory } from "react-router-dom";
 import { OfficierContext } from "../../core/contexts/OfficierContext";
 import { MesRequetesPage } from "./MesRequetesPage";
