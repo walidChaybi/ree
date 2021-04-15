@@ -79,7 +79,7 @@ export const RMCArchivePage: React.FC = () => {
     setNouvelleRecherche(false);
   };
 
-  const setRangeActe = (range: string) => {
+  const setRangeActeArchive = (range: string) => {
     if (valuesRMC && range !== "") {
       setCriteresRechercheActe({
         valeurs: valuesRMC,
@@ -110,9 +110,9 @@ export const RMCArchivePage: React.FC = () => {
       </Formulaire>
       {dataRMCActe && dataTableauRMCActe && (
         <RMCActeArchiveResultats
-          dataRMCActe={dataRMCActe}
-          dataTableauRMCActe={dataTableauRMCActe}
-          setRangeActe={setRangeActe}
+          dataRMCActeArchive={dataRMCActe}
+          dataTableauRMCActeArchive={dataTableauRMCActe}
+          setRangeActeArchive={setRangeActeArchive}
           resetRMC={nouvelleRecherche}
         />
       )}

@@ -9,8 +9,8 @@ import {
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(
     <RMCActeArchiveResultats
-      dataRMCActe={DataRMCActeAvecResultat}
-      dataTableauRMCActe={DataTableauActe}
+      dataRMCActeArchive={DataRMCActeAvecResultat}
+      dataTableauRMCActeArchive={DataTableauActe}
     />
   );
 

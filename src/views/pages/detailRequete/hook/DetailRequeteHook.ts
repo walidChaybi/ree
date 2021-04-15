@@ -178,7 +178,7 @@ function getMandant(mandant: any): IMandant {
     nom: mandant.nom,
     prenom: mandant.prenom,
     raisonSociale: mandant.raisonSociale,
-    typeLien: TypeLienMandant.getEnumFor(mandant.typeLienMandant),
+    typeLien: TypeLienMandant.getEnumFor(mandant.lienMandant),
     natureLien: mandant.natureLien
   };
 }

@@ -50,16 +50,13 @@ export function getMaxRange(result: any) {
 }
 
 export function getDataTableau(result: any): IDataTableau {
-  let dataTableau = {} as IDataTableau;
   const { nextLink, prevLink } = parseLink(result.headers["link"]);
 
-  dataTableau = {
+  return {
     previousDataLinkState: prevLink,
     nextDataLinkState: nextLink,
     rowsNumberState: getRowsNumber(result),
     minRangeState: getMinRange(result),
     maxRangeState: getMaxRange(result)
   };
-
-  return dataTableau;
 }

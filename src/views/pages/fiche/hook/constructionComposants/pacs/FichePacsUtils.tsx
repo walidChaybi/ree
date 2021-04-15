@@ -24,13 +24,14 @@ import {
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { getFichesPersonne } from "../personne/FichePersonne";
 import { getDateString } from "../../../../../common/util/DateUtils";
+import { AjoutePartAuPanelAreas } from "../../../../../common/widget/section/SectionUtils";
 
 export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
   const panelAreas: SectionPanelAreaProps[] = [];
 
   const deuxColonnes = 2;
 
-  AjoutePanel(
+  AjoutePartAuPanelAreas(
     panelAreas,
     pacs,
     getInscriptionRegistrePacs,
@@ -39,7 +40,7 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
     1
   );
 
-  AjoutePanel(
+  AjoutePartAuPanelAreas(
     panelAreas,
     pacs.partenaires,
     getPartenaires,
@@ -47,7 +48,7 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
     "",
     deuxColonnes
   );
-  AjoutePanel(
+  AjoutePartAuPanelAreas(
     panelAreas,
     pacs,
     getEnregistrementPacs,
@@ -56,7 +57,7 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
     deuxColonnes
   );
   if (pacs.modifications) {
-    AjoutePanel(
+    AjoutePartAuPanelAreas(
       panelAreas,
       pacs.modifications[0],
       getModificationPacs,
@@ -65,7 +66,7 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
       deuxColonnes
     );
   }
-  AjoutePanel(
+  AjoutePartAuPanelAreas(
     panelAreas,
     pacs.dissolution,
     getDissolutionPacs,
@@ -73,7 +74,7 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
     "Dissolution du PACS",
     deuxColonnes
   );
-  AjoutePanel(
+  AjoutePartAuPanelAreas(
     panelAreas,
     pacs.annulation,
     getAnnulationPacs,
@@ -93,24 +94,6 @@ export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
       ...fichesPersonne
     ]
   };
-}
-
-function AjoutePanel(
-  panelAreas: SectionPanelAreaProps[],
-  param: any,
-  fct: (p: any) => SectionPartProps[],
-  idPanelArea?: string,
-  titlePanelArea?: string,
-  nbColonnePanelArea?: number
-) {
-  if (param) {
-    panelAreas.push({
-      parts: fct(param),
-      id: idPanelArea,
-      title: titlePanelArea,
-      nbColonne: nbColonnePanelArea
-    } as SectionPanelAreaProps);
-  }
 }
 
 function getInscriptionRegistrePacs(pacs: IFichePacs): SectionPartProps[] {
