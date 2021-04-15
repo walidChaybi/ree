@@ -9,9 +9,9 @@ import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getLibelle } from "../../../../common/widget/Text";
 
 export interface RMCActeArchiveResultatsProps {
-  dataRMCActe: IResultatRMCActe[];
-  dataTableauRMCActe: IDataTableau;
-  setRangeActe?: (range: string) => void;
+  dataRMCActeArchive: IResultatRMCActe[];
+  dataTableauRMCActeArchive: IDataTableau;
+  setRangeActeArchive?: (range: string) => void;
   resetRMC?: boolean;
 }
 
@@ -23,11 +23,11 @@ export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = p
           <div className="SousTitre">
             <span>{getLibelle("Recherche dans les registres")}</span>
           </div>
-          {props.dataRMCActe.length > 0 ? (
+          {props.dataRMCActeArchive.length > 0 ? (
             <RMCResultatsActe
-              dataRMCActe={props.dataRMCActe}
-              dataTableauRMCActe={props.dataTableauRMCActe}
-              setRangeActe={props.setRangeActe}
+              dataRMCActe={props.dataRMCActeArchive}
+              dataTableauRMCActe={props.dataTableauRMCActeArchive}
+              setRangeActe={props.setRangeActeArchive}
               resetTableauActe={props.resetRMC}
             />
           ) : (
