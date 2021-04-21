@@ -82,11 +82,9 @@ export function getPocopas(
   });
 }
 
-export async function getNomenclatureEtatCivil(
-  categorie: string
-): Promise<any> {
+export async function getNomenclatureEtatCivil(nom: string): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}/${categorie}`
+    uri: `${URL_NOMENCLATURE}/${nom}`
   });
 }

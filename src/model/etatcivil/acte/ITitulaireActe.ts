@@ -17,6 +17,7 @@ export interface ITitulaireActe {
   prenoms?: string[];
   sexe?: string;
   naissance?: IEvenement;
+  age?: number;
   profession?: string;
   domicile?: IAdresse;
   filiations?: IFiliation[];

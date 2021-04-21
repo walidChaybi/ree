@@ -168,9 +168,9 @@ export function getDetailRequete(idRequete: string): Promise<any> {
   });
 }
 
-export async function getNomenclatureRequete(categorie: string): Promise<any> {
+export async function getNomenclatureRequete(nom: string): Promise<any> {
   return apiV2.fetchCache({
     method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}/${categorie}`
+    uri: `${URL_NOMENCLATURE}/${nom}`
   });
 }
