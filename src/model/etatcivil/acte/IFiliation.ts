@@ -7,6 +7,7 @@ export interface IFiliation {
   nom: string;
   sexe: string;
   naissance: IEvenement;
+  age: number;
   profession: string;
   domicile: IAdresse;
   prenoms: string[];
