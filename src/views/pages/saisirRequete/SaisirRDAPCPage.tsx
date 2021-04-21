@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { Formulaire } from "../../common/widget/formulaire/Formulaire";
 import * as Yup from "yup";
@@ -15,59 +15,50 @@ import RequerantForm, {
   RequerantFormValidationSchema
 } from "./sousFormulaires/requerant/RequerantForm";
 import { getLibelle } from "../../common/widget/Text";
-import { SelectField } from "../../common/widget/formulaire/champsSaisie/SelectField";
-import { Options } from "../../common/util/Type";
 import "./scss/SaisirRDCSCPage.scss";
 import { SubFormProps } from "../../common/widget/formulaire/utils/FormUtil";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
 import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
-import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
-import { TypeRequerant } from "../../../model/requete/v2/enum/TypeRequerant";
+import { TypeRequerantPacs } from "../../../model/requete/v2/enum/TypeRequerantPacs";
 
 // Nom des sous-formulaires
 export const DOCUMENT = "document";
-export const INTERESSE = "interesse";
+export const PARTENAIRE1 = "partenaire1";
+export const PARTENAIRE2 = "partenaire2";
 export const REQUERANT = "requerant";
 export const ADRESSE = "adresse";
 
 // Valeurs par défaut des champs
-const DefaultValuesSaisirRDCSC = {
+const DefaultValuesRDAPCRequete = {
   [DOCUMENT]: "",
-  [INTERESSE]: IdentiteFormDefaultValues,
+  [PARTENAIRE1]: IdentiteFormDefaultValues,
+  [PARTENAIRE2]: IdentiteFormDefaultValues,
   [REQUERANT]: RequerantFormDefaultValues,
   [ADRESSE]: AdresseFormDefaultValues
 };
 
 // Schéma de validation en sortie de champs
-const ValidationSchemaSaisirRDCSC = Yup.object({
+const ValidationSchemaRDAPCRequete = Yup.object({
   [DOCUMENT]: Yup.string().required(DOCUMENT_OBLIGATOIRE),
-  [INTERESSE]: IdentiteFormValidationSchema,
+  [PARTENAIRE1]: IdentiteFormValidationSchema,
+  [PARTENAIRE2]: IdentiteFormValidationSchema,
   [REQUERANT]: RequerantFormValidationSchema,
   [ADRESSE]: AdresseFormValidationSchema
 });
 
-export const titreForm = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
+export const titreForm = SousTypeDelivrance.getEnumFor("RDAPC").libelle;
 
-export const SaisirRDCSCPage: React.FC = () => {
-  const [documentDemandeOptions, setDocumentDemandeOptions] = useState<Options>(
-    []
-  );
-
-  useState(async () => {
-    const documentDelivrance = await DocumentDelivrance.getAllCertificatSituation();
-    setDocumentDemandeOptions(documentDelivrance);
-  });
-
+export const SaisirRDAPCPage: React.FC = () => {
   const blocsForm: JSX.Element[] = [
-    getDocumentDemande(documentDemandeOptions),
-    getInteresseForm(),
+    getPartenaire1Form(),
+    getPartenaire2Form(),
     getRequerantForm(),
     getAdresseForm()
   ];
 
-  const onSubmitSaisirRDCSC = (values: any) => {};
+  const onSubmitSaisirRequete = (values: any, errors: any) => {};
 
   const boutonsProps = {} as SaisirRequeteBoutonsProps;
 
@@ -76,10 +67,10 @@ export const SaisirRDCSCPage: React.FC = () => {
       <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
-        formDefaultValues={DefaultValuesSaisirRDCSC}
-        formValidationSchema={ValidationSchemaSaisirRDCSC}
-        onSubmit={onSubmitSaisirRDCSC}
-        className="FormulaireSaisirRDCSC"
+        formDefaultValues={DefaultValuesRDAPCRequete}
+        formValidationSchema={ValidationSchemaRDAPCRequete}
+        onSubmit={onSubmitSaisirRequete}
+        className="FormulaireSaisirRDAPC"
       >
         <div>{blocsForm}</div>
         <SaisirRequeteBoutons {...boutonsProps} />
@@ -88,31 +79,27 @@ export const SaisirRDCSCPage: React.FC = () => {
   );
 };
 
-function getDocumentDemande(documentDemandeOptions: Options): JSX.Element {
-  return (
-    <div className="DocumentInput" key={DOCUMENT}>
-      <SelectField
-        name={DOCUMENT}
-        label={getLibelle("Document demandé")}
-        options={documentDemandeOptions}
-      />
-    </div>
-  );
+function getPartenaire1Form(): JSX.Element {
+  const interesseFormProps = {
+    nom: PARTENAIRE1,
+    titre: getLibelle("Identité du premier partenaire")
+  } as SubFormProps;
+  return <IdentiteForm key={PARTENAIRE1} {...interesseFormProps} />;
 }
 
-function getInteresseForm(): JSX.Element {
+function getPartenaire2Form(): JSX.Element {
   const interesseFormProps = {
-    nom: INTERESSE,
-    titre: getLibelle("Intéressé")
+    nom: PARTENAIRE2,
+    titre: getLibelle("Identité du second partenaire")
   } as SubFormProps;
-  return <IdentiteForm key={INTERESSE} {...interesseFormProps} />;
+  return <IdentiteForm key={PARTENAIRE2} {...interesseFormProps} />;
 }
 
 function getRequerantForm(): JSX.Element {
   const requerantFromProps = {
     nom: REQUERANT,
     titre: getLibelle("Identité du requérant"),
-    type: TypeRequerant.getAllEnumsAsOptions()
+    type: TypeRequerantPacs.getAllEnumsAsOptions()
   } as SubFormProps;
   return <RequerantForm key={REQUERANT} {...requerantFromProps} />;
 }

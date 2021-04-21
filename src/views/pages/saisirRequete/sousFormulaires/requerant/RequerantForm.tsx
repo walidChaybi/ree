@@ -21,7 +21,6 @@ import ParticulierForm, {
   ParticulierFormValidationSchema
 } from "./particulier/ParticulierForm";
 import { connect } from "formik";
-import { TypeRequerant } from "../../../../../model/requete/v2/enum/TypeRequerant";
 
 // Noms des champs
 export const TYPE_REQUERANT = "typeRequerant";
@@ -114,7 +113,7 @@ const RequerantForm: React.FC<SubFormProps> = props => {
           <RadioField
             name={typeRequerantWithNamespace}
             label={getLibelle("Réquerant")}
-            values={TypeRequerant.getAllEnumsAsOptions()}
+            values={props.type}
             onChange={e => {
               onChangeRequerant(e);
             }}

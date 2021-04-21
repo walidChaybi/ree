@@ -24,7 +24,9 @@ import {
   URL_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_DETAIL_REQUETE_ID,
-  URL_REQUETES_SERVICE_DETAIL_REQUETE_ID
+  URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
+  URL_MES_REQUETES_SAISIR_RDAPC,
+  URL_REQUETES_SERVICE_SAISIR_RDAPC
 } from "./ReceUrls";
 import { RcRcaPage } from "../pages/RcRcaPage";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
@@ -37,6 +39,7 @@ import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCA
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { IRoute } from "../common/util/route/IRoute";
 import { SaisirRDCSCPage } from "../pages/saisirRequete/SaisirRDCSCPage";
+import { SaisirRDAPCPage } from "../pages/saisirRequete/SaisirRDAPCPage";
 import { ApercuRequetePriseEnChargePage } from "../pages/apercuRequete/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "../pages/apercuRequete/ApercuRequeteTraitementPage";
 import { DetailRequetePage } from "../pages/detailRequete/DetailRequetePage";
@@ -134,6 +137,24 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(
       "Saisir une requête de délivrance certificat de situation courrier"
+    )
+  },
+  {
+    url: URL_MES_REQUETES_SAISIR_RDAPC,
+    component: SaisirRDAPCPage,
+    droits: [Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(
+      "Saisir une requête de délivrance d'attestation de Pacte Civil de Solidarité"
+    )
+  },
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_RDAPC,
+    component: SaisirRDAPCPage,
+    droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(
+      "Saisir une requête de délivrance d'attestation de Pacte Civil de Solidarité"
     )
   },
   {

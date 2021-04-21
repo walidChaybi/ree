@@ -22,6 +22,7 @@ export interface ComponentFiltreProps {
 export interface ISubForm {
   nom: string;
   titre?: string;
+  type: any;
 }
 export type SubFormProps = ISubForm & FormikComponentProps;
 
