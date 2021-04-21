@@ -13,12 +13,14 @@ import RequerantForm, {
 } from "../../../../../views/pages/saisirRequete/sousFormulaires/requerant/RequerantForm";
 import { REQUERANT } from "../../../../../views/pages/saisirRequete/SaisirRDCSCPage";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
+import { TypeRequerant } from "../../../../../model/requete/v2/enum/TypeRequerant";
 
 const HookRequerantForm: React.FC = () => {
   const [result, setResult] = useState("");
 
   const requerantFormProps = {
-    nom: REQUERANT
+    nom: REQUERANT,
+    type: TypeRequerant.getAllEnumsAsOptions()
   } as SubFormProps;
 
   const handleClickButton = (values: any) => {
