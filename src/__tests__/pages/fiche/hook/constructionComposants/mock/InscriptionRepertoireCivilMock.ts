@@ -25,12 +25,12 @@ export const ficheInscriptionRepertoireCivil = {
       idInscription: ""
     }
   ],
-  dateInscription: 1518652800000,
+  dateInscription: new Date(1518652800000),
   duree: {
     nombreDuree: 2,
     uniteDuree: "années",
     autreDuree: "Viager",
-    dateFinDeMesure: 1581724800000
+    dateFinDeMesure: 1581724800
   }
 };
 
@@ -43,7 +43,7 @@ export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImp
   typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [],
   inscriptionsLiees: [],
-  dateInscription: 1518652800,
+  dateInscription: new Date(1518652800000),
   duree: {
     nombreDuree: 2,
     autreDuree: "Viager",
@@ -60,7 +60,7 @@ export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
   typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [],
   inscriptionsLiees: [],
-  dateInscription: 1518652800,
+  dateInscription: new Date(1518652800000),
   duree: {
     autreDuree: "Viager",
     dateFinDeMesure: 1581724800

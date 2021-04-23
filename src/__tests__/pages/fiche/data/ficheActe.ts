@@ -16,18 +16,18 @@ export const bandeauActe: IBandeauFiche = {
 
 export const acte: any = {
   id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
-  dateInitialisation: 1405980000000,
-  dateCreation: 1256943600000,
+  dateInitialisation: 1405980000,
+  dateCreation: 1256943600,
   modeCreation: "DRESSE",
   statut: "ANNULE",
-  dateStatut: 1045609200000,
+  dateStatut: 1045609200,
   nature: new NatureActe("Absence"),
   numero: "410",
   numeroBisTer: "681",
   nomOec: "MARTIN",
   prenomOec: "JULIE",
-  dateDerniereDelivrance: 1413928800000,
-  dateDerniereMaj: 1536357600000,
+  dateDerniereDelivrance: 1413928800,
+  dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
   registre: {
     id: "a41079a5-9e8d-478c-b04c-c4c2ac67134f",
@@ -53,8 +53,8 @@ export const acte: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000000,
-      appositionPapier: 1606086000000,
+      appositionNumerique: 1606086000,
+      appositionPapier: 1606086000,
       statut: "TODO",
       delivrable: false,
       nomOec: "Screens",
@@ -191,18 +191,18 @@ export const acte: any = {
 
 export const acte1: any = {
   id: "d8708d77-a359-4553-be72-1eb5f246d4dc",
-  dateInitialisation: 1405980000000,
-  dateCreation: 1256943600000,
+  dateInitialisation: 1405980000,
+  dateCreation: 1256943600,
   modeCreation: "DRESSE",
   statut: "ANNULE",
-  dateStatut: 1045609200000,
+  dateStatut: 1045609200,
   nature: new NatureActe("ABSENCE"),
   numero: "411",
   numeroBisTer: "681",
   nomOec: "MARTIN",
   prenomOec: "JULIE",
-  dateDerniereDelivrance: 1413928800000,
-  dateDerniereMaj: 1536357600000,
+  dateDerniereDelivrance: 1413928800,
+  dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
   registre: {
     id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
@@ -228,8 +228,8 @@ export const acte1: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000000,
-      appositionPapier: 1606086000000,
+      appositionNumerique: 1606086000,
+      appositionPapier: 1606086000,
       statut: "TODO",
       delivrable: false,
       nomOec: "Screens",
@@ -366,18 +366,18 @@ export const acte1: any = {
 
 export const acte2: any = {
   id: "2748bb45-22cd-41ea-90db-0483b8ffc8a8",
-  dateInitialisation: 1405980000000,
-  dateCreation: 1256943600000,
+  dateInitialisation: 1405980000,
+  dateCreation: 1256943600,
   modeCreation: "DRESSE",
   statut: "ANNULE",
-  dateStatut: 1045609200000,
+  dateStatut: 1045609200,
   nature: new NatureActe("Absence"),
   numero: "412",
   numeroBisTer: "681",
   nomOec: "MARTIN",
   prenomOec: "JULIE",
-  dateDerniereDelivrance: 1413928800000,
-  dateDerniereMaj: 1536357600000,
+  dateDerniereDelivrance: 1413928800,
+  dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
   registre: {
     id: "c41079a5-9e8d-478c-b04c-c4c2ac67134f",
@@ -403,8 +403,8 @@ export const acte2: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000000,
-      appositionPapier: 1606086000000,
+      appositionNumerique: 1606086000,
+      appositionPapier: 1606086000,
       statut: "TODO",
       delivrable: false,
       nomOec: "Screens",
@@ -541,18 +541,18 @@ export const acte2: any = {
 
 export const acte3: any = {
   id: "d8708d77-a359-4553-be72-1eb5f246d4db",
-  dateInitialisation: 1405980000000,
-  dateCreation: 1256943600000,
+  dateInitialisation: 1405980000,
+  dateCreation: 1256943600,
   modeCreation: "DRESSE",
   statut: "ANNULE",
-  dateStatut: 1045609200000,
+  dateStatut: 1045609200,
   nature: new NatureActe("Absence"),
   numero: "413",
   numeroBisTer: "681",
   nomOec: "MARTIN",
   prenomOec: "JULIE",
-  dateDerniereDelivrance: 1413928800000,
-  dateDerniereMaj: 1536357600000,
+  dateDerniereDelivrance: 1413928800,
+  dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
   registre: {
     id: "d41079a5-9e8d-478c-b04c-c4c2ac67134f",
@@ -578,8 +578,8 @@ export const acte3: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000000,
-      appositionPapier: 1606086000000,
+      appositionNumerique: 1606086000,
+      appositionPapier: 1606086000,
       statut: "TODO",
       delivrable: false,
       nomOec: "Screens",
@@ -716,18 +716,18 @@ export const acte3: any = {
 
 export const acte4: any = {
   id: "2748bb45-22cd-41ea-90db-0483b8ffc8a9",
-  dateInitialisation: 1405980000000,
-  dateCreation: 1256943600000,
+  dateInitialisation: 1405980000,
+  dateCreation: 1256943600,
   modeCreation: "DRESSE",
   statut: "ANNULE",
-  dateStatut: 1045609200000,
+  dateStatut: 1045609200,
   nature: new NatureActe("Absence"),
   numero: "414",
   numeroBisTer: "681",
   nomOec: "MARTIN",
   prenomOec: "JULIE",
-  dateDerniereDelivrance: 1413928800000,
-  dateDerniereMaj: 1536357600000,
+  dateDerniereDelivrance: 1413928800,
+  dateDerniereMaj: 1536357600,
   visibiliteArchiviste: "ANOM",
   registre: {
     id: "f41079a5-9e8d-478c-b04c-c4c2ac67134f",
@@ -753,8 +753,8 @@ export const acte4: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000000,
-      appositionPapier: 1606086000000,
+      appositionNumerique: 1606086000,
+      appositionPapier: 1606086000,
       statut: "TODO",
       delivrable: false,
       nomOec: "Screens",

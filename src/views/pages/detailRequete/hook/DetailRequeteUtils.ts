@@ -286,8 +286,11 @@ function getNomOuRaisonSociale(requerant: IRequerant) {
     case Qualite.INSTITUTIONNEL:
       nom = requerant?.qualiteRequerant.institutionnel?.nomInstitution;
       break;
-    case Qualite.PARTICULIER || Qualite.UTILISATEUR_RECE:
-      nom = Requerant.getNomFamille(requerant);
+    case Qualite.PARTICULIER:
+      nom = requerant?.qualiteRequerant.particulier?.nomUsage;
+      break;
+    case Qualite.UTILISATEUR_RECE:
+      nom = requerant?.nomFamille;
       break;
     default:
       nom = "";
@@ -458,6 +461,7 @@ function getRequeteDelivranceInfo(
       EvenementReqDelivrance.getPays(requete.evenement)
     ]
   );
+  console.log(requete.documentDemande.libelle);
   ajouterContentPartAuPartUneValeur(
     infosRequete,
     getLibelle("Document"),

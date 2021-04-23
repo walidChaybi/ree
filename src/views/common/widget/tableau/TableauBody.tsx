@@ -3,7 +3,6 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import { TableauBodyCell } from "./TableauBodyCell";
-import { getText } from "../Text";
 import { TableauTypeColumn } from "./TableauRece";
 
 import "./scss/Tableau.scss";
@@ -29,15 +28,17 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   return (
     <>
       <TableBody>
-        {data.map((row: any, idx: number) => (
-          <TableRow
-            key={`${row[idKey]}${idx}`}
-            onClick={() => onClickRowHandler(row[idKey], idx)}
-            data-testid={row[idKey]}
-          >
-            {getRowRender(columnHeaders, row, idx)}
-          </TableRow>
-        ))}
+        {data.map((row: any, idx: number) => {
+          return (
+            <TableRow
+              key={`${row[idKey]}${idx}`}
+              onClick={() => onClickRowHandler(row[idKey], idx)}
+              data-testid={row[idKey]}
+            >
+              {getRowRender(columnHeaders, row, idx)}
+            </TableRow>
+          );
+        })}
       </TableBody>
     </>
   );
@@ -51,29 +52,23 @@ function getRowRender(
   const tableauBodyCellList = [];
 
   for (const column of columnHeaders) {
-    if (column.getTextRefentiel === true) {
-      tableauBodyCellList.push(
-        <TableauBodyCell
-          key={`row-${idx}-${column.keys[0]}`}
-          data={getText(`${column.rowLibelle}.${column.getValueAtKey(row)}`)}
-          column={column}
-        />
-      );
-    } else if (column.getIcon !== undefined) {
+    const valueAtKey = column.getValueAtKey(row);
+
+    if (column.getElement !== undefined) {
       tableauBodyCellList.push(
         <TableCell
           style={column.style}
           align={column?.align ? column?.align : "center"}
           key={`row-${idx}-${column.keys[0]}`}
         >
-          {column.getIcon(row)}
+          {column.getElement(row)}
         </TableCell>
       );
     } else {
       tableauBodyCellList.push(
         <TableauBodyCell
           key={`row-${idx}-${column.keys[0]}`}
-          data={column.getValueAtKey(row)}
+          valueAtKey={valueAtKey}
           column={column}
         />
       );

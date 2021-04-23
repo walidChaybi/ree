@@ -1,6 +1,6 @@
 import React from "react";
-import { RMCResultatsActe } from "./RMCResultatsActe";
-import { RMCResultatsInscription } from "./RMCResultatsInscription";
+import { RMCTableauActes } from "./RMCTableauActes";
+import { RMCTableauInscriptions } from "./RMCTableauInscriptions";
 
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -29,7 +29,7 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
             <span>{getLibelle("Recherche dans les registres")}</span>
           </div>
           {props.dataRMCActe.length > 0 ? (
-            <RMCResultatsActe
+            <RMCTableauActes
               dataRMCActe={props.dataRMCActe}
               dataTableauRMCActe={props.dataTableauRMCActe}
               setRangeActe={props.setRangeActe}
@@ -50,7 +50,7 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
             </span>
           </div>
           {props.dataRMCInscription.length > 0 ? (
-            <RMCResultatsInscription
+            <RMCTableauInscriptions
               dataRMCInscription={props.dataRMCInscription}
               dataTableauRMCInscription={props.dataTableauRMCInscription}
               setRangeInscription={props.setRangeInscription}

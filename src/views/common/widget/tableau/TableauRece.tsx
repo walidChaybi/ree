@@ -40,35 +40,35 @@ export interface TableauDataToUse {
 type alignType = "left" | "center" | "right" | "justify" | "inherit";
 export interface ITableauTypeColumnParam {
   keys: string[];
-  colLibelle: string;
-  getTextRefentiel?: boolean;
+  title: string;
   align?: alignType;
   style?: React.CSSProperties;
   width?: string | number;
   rowLibelle?: string;
-  getIcon?: (value: any, selectedValue?: string) => JSX.Element;
+  getElement?: (value: any, selectedValue?: string) => JSX.Element;
   className?: string;
+  dataIsArray?: boolean;
 }
 
 export class TableauTypeColumn {
   public keys: string[];
-  public colLibelle: string;
-  public getTextRefentiel?: boolean;
+  public title: string;
   public align?: alignType;
   public style?: React.CSSProperties;
   public rowLibelle?: string;
-  public getIcon?: (value: any, selectedValue?: string) => JSX.Element;
+  public getElement?: (value: any, selectedValue?: string) => JSX.Element;
   public className?: string;
+  public dataIsArray?: boolean;
 
   constructor(params: ITableauTypeColumnParam) {
     this.keys = params.keys;
-    this.colLibelle = params.colLibelle;
-    this.getTextRefentiel = params.getTextRefentiel;
+    this.title = params.title;
     this.align = params.align;
     this.style = params.style;
     this.rowLibelle = params.rowLibelle;
-    this.getIcon = params.getIcon;
+    this.getElement = params.getElement;
     this.className = params.className;
+    this.dataIsArray = params.dataIsArray;
   }
 
   public getValueAtKey(object: any): any {

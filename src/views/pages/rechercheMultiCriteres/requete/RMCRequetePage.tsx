@@ -29,6 +29,7 @@ import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeValidationSchema
 } from "../filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
 import { MEP_YEAR } from "../../../common/util/DateUtils";
+import { RMCRequeteResultats } from "./resultats/RMCRequeteResultats";
 
 // Nom des filtres
 export const REQUETE = "requete";
@@ -62,10 +63,8 @@ export const RMCRequetePage: React.FC = () => {
     getFormRequerant()
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
   const [
@@ -88,14 +87,14 @@ export const RMCRequetePage: React.FC = () => {
     setNouvelleRecherche(false);
   };
 
-  // const setRangeRequete = (range: string) => {
-  //   if (valuesRMC && range !== "") {
-  //     setCritèresRechercheRequete({
-  //       valeurs: valuesRMC,
-  //       range
-  //     });
-  //   }
-  // };
+  const setRangeRequete = (range: string) => {
+    if (valuesRMCRequete && range !== "") {
+      setCriteresRechercheRequete({
+        valeurs: valuesRMCRequete,
+        range
+      });
+    }
+  };
 
   const rappelCriteres = () => {
     return stockageDonnees.recupererCriteresRMCReq();
@@ -117,18 +116,14 @@ export const RMCRequetePage: React.FC = () => {
         <div className="DeuxColonnes FormulaireRMCRequete">{blocsForm}</div>
         <RMCBoutons {...boutonsProps} />
       </Formulaire>
-
       {dataRMCRequete && dataTableauRMCRequete && (
-        <> {JSON.stringify(dataRMCRequete)} </>
-      )}
-      {/* {dataRMCRequete && dataTableauRMCRequete && (
         <RMCRequeteResultats
           dataRMCRequete={dataRMCRequete}
           dataTableauRMCRequete={dataTableauRMCRequete}
           setRangeRequete={setRangeRequete}
           resetRMC={nouvelleRecherche}
         />
-      )} */}
+      )}
     </>
   );
 };

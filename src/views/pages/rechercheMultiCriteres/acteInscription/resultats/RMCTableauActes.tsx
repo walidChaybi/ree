@@ -10,11 +10,12 @@ import {
   commonHeadersTableauRMC,
   natureHeadersTableauRMC,
   goToLinkRMC
-} from "./RMCResultatsCommun";
+} from "./RMCTableauCommun";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
 import { getValeurOuVide } from "../../../../common/util/Utils";
+
 export interface RMCResultatActeProps {
   dataRMCActe: IResultatRMCActe[];
   dataTableauRMCActe: IDataTableau;
@@ -29,11 +30,11 @@ const columnsTableau = [
   ...natureHeadersTableauRMC,
   new TableauTypeColumn({
     keys: [HeaderTableauRMCActe.Registre],
-    colLibelle: "Registre"
+    title: "Registre"
   })
 ];
 
-export const RMCResultatsActe: React.FC<RMCResultatActeProps> = ({
+export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   dataRMCActe,
   dataTableauRMCActe,
   setRangeActe,

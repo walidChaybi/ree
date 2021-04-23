@@ -21,52 +21,44 @@ test("renders header tableau des requêtes de l'application", () => {
         columnHeaders={[
           new TableauTypeColumn({
             keys: ["idSagaDila"],
-            colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+            title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
           }),
           new TableauTypeColumn({
             keys: ["sousTypeRequete"],
-            getTextRefentiel: true,
-            colLibelle:
+            title:
               "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
             rowLibelle: "referentiel.sousTypeRequete"
           }),
           new TableauTypeColumn({
             keys: ["provenance"],
-            getTextRefentiel: true,
-            colLibelle:
-              "pages.delivrance.mesRequetes.tableau.header.provenance",
+            title: "pages.delivrance.mesRequetes.tableau.header.provenance",
             rowLibelle: "referentiel.provenance"
           }),
           new TableauTypeColumn({
             keys: ["natureActe"],
-            getTextRefentiel: true,
-            colLibelle:
-              "pages.delivrance.mesRequetes.tableau.header.natureActe",
+            title: "pages.delivrance.mesRequetes.tableau.header.natureActe",
             rowLibelle: "referentiel.natureActe"
           }),
           new TableauTypeColumn({
             keys: ["requerant", "nomOuRaisonSociale"],
-            colLibelle: "pages.delivrance.mesRequetes.tableau.header.requerant"
+            title: "pages.delivrance.mesRequetes.tableau.header.requerant"
           }),
           new TableauTypeColumn({
             keys: ["dateCreation"],
-            colLibelle:
-              "pages.delivrance.mesRequetes.tableau.header.dateCreation"
+            title: "pages.delivrance.mesRequetes.tableau.header.dateCreation"
           }),
           new TableauTypeColumn({
             keys: ["dateStatut"],
-            colLibelle: "pages.delivrance.mesRequetes.tableau.header.dateStatut"
+            title: "pages.delivrance.mesRequetes.tableau.header.dateStatut"
           }),
           new TableauTypeColumn({
             keys: ["statut"],
-            getTextRefentiel: true,
-            colLibelle: "pages.delivrance.mesRequetes.tableau.header.statut",
+            title: "pages.delivrance.mesRequetes.tableau.header.statut",
             rowLibelle: "referentiel.statutRequete"
           }),
           new TableauTypeColumn({
             keys: ["prioriteRequete"],
-            colLibelle:
-              "pages.delivrance.mesRequetes.tableau.header.prioriteRequete"
+            title: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete"
           })
         ]}
       ></TableauHeader>
@@ -86,52 +78,44 @@ test("renders click sur header tableau des requêtes de l'application", () => {
         columnHeaders={[
           new TableauTypeColumn({
             keys: ["idSagaDila"],
-            colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+            title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
           }),
           new TableauTypeColumn({
             keys: ["sousTypeRequete"],
-            getTextRefentiel: true,
-            colLibelle:
+            title:
               "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
             rowLibelle: "referentiel.sousTypeRequete"
           }),
           new TableauTypeColumn({
             keys: ["provenance"],
-            getTextRefentiel: true,
-            colLibelle:
-              "pages.delivrance.mesRequetes.tableau.header.provenance",
+            title: "pages.delivrance.mesRequetes.tableau.header.provenance",
             rowLibelle: "referentiel.provenance"
           }),
           new TableauTypeColumn({
             keys: ["natureActe"],
-            getTextRefentiel: true,
-            colLibelle:
-              "pages.delivrance.mesRequetes.tableau.header.natureActe",
+            title: "pages.delivrance.mesRequetes.tableau.header.natureActe",
             rowLibelle: "referentiel.natureActe"
           }),
           new TableauTypeColumn({
             keys: ["requerant", "nomOuRaisonSociale"],
-            colLibelle: "pages.delivrance.mesRequetes.tableau.header.requerant"
+            title: "pages.delivrance.mesRequetes.tableau.header.requerant"
           }),
           new TableauTypeColumn({
             keys: ["dateCreation"],
-            colLibelle:
-              "pages.delivrance.mesRequetes.tableau.header.dateCreation"
+            title: "pages.delivrance.mesRequetes.tableau.header.dateCreation"
           }),
           new TableauTypeColumn({
             keys: ["dateStatut"],
-            colLibelle: "pages.delivrance.mesRequetes.tableau.header.dateStatut"
+            title: "pages.delivrance.mesRequetes.tableau.header.dateStatut"
           }),
           new TableauTypeColumn({
             keys: ["statut"],
-            getTextRefentiel: true,
-            colLibelle: "pages.delivrance.mesRequetes.tableau.header.statut",
+            title: "pages.delivrance.mesRequetes.tableau.header.statut",
             rowLibelle: "referentiel.statutRequete"
           }),
           new TableauTypeColumn({
             keys: ["prioriteRequete"],
-            colLibelle:
-              "pages.delivrance.mesRequetes.tableau.header.prioriteRequete"
+            title: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete"
           })
         ]}
       ></TableauHeader>

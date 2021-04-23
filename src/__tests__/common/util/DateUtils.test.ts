@@ -45,7 +45,7 @@ test("getDateFromTimestamp", () => {
 });
 
 test("getDateFromTimestamp", () => {
-  const date3 = getDateFromTimestamp(1577836800000);
+  const date3 = getDateFromTimestamp(1577836800);
   expect(date3.getDate()).toBe(1);
   expect(date3.getMonth()).toBe(0);
   expect(date3.getFullYear()).toBe(2020);

@@ -4,32 +4,32 @@ import { HeaderTableauRMC } from "../../../../../model/rmc/acteInscription/Heade
 export const commonHeadersTableauRMC = [
   new TableauTypeColumn({
     keys: [HeaderTableauRMC.Nom],
-    colLibelle: "Nom"
+    title: "Nom"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRMC.AutresNoms],
-    colLibelle: "Autres noms",
+    title: "Autres noms",
     className: "ColOverflow"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRMC.Prenoms],
-    colLibelle: "Prénoms",
+    title: "Prénoms",
     className: "ColOverflow"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRMC.DateNaissance],
-    colLibelle: "Date de naissance"
+    title: "Date de naissance"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRMC.PaysNaissance],
-    colLibelle: "Pays de naissance"
+    title: "Pays de naissance"
   })
 ];
 
 export const natureHeadersTableauRMC = [
   new TableauTypeColumn({
     keys: [HeaderTableauRMC.Nature],
-    colLibelle: "Nature",
+    title: "Nature",
     className: "ColOverflow"
   })
 ];

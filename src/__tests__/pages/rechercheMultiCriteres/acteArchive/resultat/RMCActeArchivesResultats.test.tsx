@@ -1,10 +1,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { RMCActeArchiveResultats } from "../../../../views/pages/rechercheMultiCriteres/acteArchive/resultats/RMCActeArchiveResultats";
+import { RMCActeArchiveResultats } from "../../../../../views/pages/rechercheMultiCriteres/acteArchive/resultats/RMCActeArchiveResultats";
 import {
   DataRMCActeAvecResultat,
   DataTableauActe
-} from "../../../../mock/data/RMCActe";
+} from "../../../../../mock/data/RMCActe";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(

@@ -142,9 +142,7 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
       requerant.detailQualiteMandataireHabilite
     ),
     autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
-    institutionnel: getInstitutionnel(
-      requerant.detailQualiteMandataireInstitutionnel
-    )
+    institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }
 

@@ -62,60 +62,50 @@ test("test des prioritées des requêtes", () => {
             columnHeaders={[
               new TableauTypeColumn({
                 keys: ["idSagaDila"],
-                colLibelle:
-                  "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+                title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
               }),
               new TableauTypeColumn({
                 keys: ["sousTypeRequete"],
-                colLibelle:
+                title:
                   "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
-                getTextRefentiel: true,
                 rowLibelle: "referentiel.sousTypeRequete.court"
               }),
               new TableauTypeColumn({
                 keys: ["provenance"],
-                colLibelle:
-                  "pages.delivrance.mesRequetes.tableau.header.provenance",
-                getTextRefentiel: true,
+                title: "pages.delivrance.mesRequetes.tableau.header.provenance",
                 rowLibelle: "referentiel.provenance"
               }),
               new TableauTypeColumn({
                 keys: ["natureActe"],
-                colLibelle:
-                  "pages.delivrance.mesRequetes.tableau.header.natureActe",
-                getTextRefentiel: true,
+                title: "pages.delivrance.mesRequetes.tableau.header.natureActe",
                 rowLibelle: "referentiel.natureActe"
               }),
               new TableauTypeColumn({
                 keys: ["requerant", "libelleRequerant"],
 
-                colLibelle:
-                  "pages.delivrance.mesRequetes.tableau.header.requerant"
+                title: "pages.delivrance.mesRequetes.tableau.header.requerant"
               }),
               new TableauTypeColumn({
                 keys: ["dateCreation"],
 
-                colLibelle:
+                title:
                   "pages.delivrance.mesRequetes.tableau.header.dateCreation"
               }),
               new TableauTypeColumn({
                 keys: ["dateStatut"],
 
-                colLibelle:
-                  "pages.delivrance.mesRequetes.tableau.header.dateStatut"
+                title: "pages.delivrance.mesRequetes.tableau.header.dateStatut"
               }),
               new TableauTypeColumn({
                 keys: ["statut"],
-                getTextRefentiel: true,
-                colLibelle:
-                  "pages.delivrance.mesRequetes.tableau.header.statut",
+                title: "pages.delivrance.mesRequetes.tableau.header.statut",
                 rowLibelle: "referentiel.statutRequete"
               }),
               new TableauTypeColumn({
                 keys: ["prioriteRequete"],
 
-                colLibelle: "pages.delivrance.mesRequetes.tableau.header",
-                getIcon: (row: any) => {
+                title: "pages.delivrance.mesRequetes.tableau.header",
+                getElement: (row: any) => {
                   return (
                     <Box
                       title={getMessagePrioriteDeLaRequete(row.dateStatut)}

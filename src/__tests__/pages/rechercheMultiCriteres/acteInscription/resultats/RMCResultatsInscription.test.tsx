@@ -6,7 +6,7 @@ import {
   fireEvent,
   waitFor
 } from "@testing-library/react";
-import { RMCResultatsInscription } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCResultatsInscription";
+import { RMCTableauInscriptions } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
@@ -19,7 +19,7 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
   render(
-    <RMCResultatsInscription
+    <RMCTableauInscriptions
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
     />
@@ -31,7 +31,7 @@ test("renders Resultat Inscription Recherche Multi Critères => Avec résultat",
 
 test("Navigation dans les pages du tableau Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
   render(
-    <RMCResultatsInscription
+    <RMCTableauInscriptions
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
     />
@@ -55,7 +55,7 @@ test("Ouverture d'une inscription", async () => {
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
   const { getByTestId } = render(
-    <RMCResultatsInscription
+    <RMCTableauInscriptions
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
     />

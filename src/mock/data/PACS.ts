@@ -15,11 +15,11 @@ export const pacsModificationNotaire = {
     id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
     numero: "123456",
     annee: "2018",
-    dateDerniereMaj: 1606381200000,
-    dateDerniereDelivrance: 1609318800000,
+    dateDerniereMaj: 1606381200,
+    dateDerniereDelivrance: 1609318800,
     statut: "ENREGISTRE",
     dateEnregistrementParAutorite: 1606381200,
-    dateInscription: 1607036400000,
+    dateInscription: 1607036400,
     autorite: {
       typeAutorite: "NOTAIRE",
       numeroDepartement: "75",
@@ -36,8 +36,8 @@ export const pacsModificationNotaire = {
     dissolution: null,
     modifications: [
       {
-        date: 1611334469000,
-        dateEffet: 1611334469000,
+        date: 1611334469,
+        dateEffet: 1611334469,
         autorite: {
           typeAutorite: "NOTAIRE",
           numeroDepartement: "75",
@@ -51,7 +51,7 @@ export const pacsModificationNotaire = {
           numeroCrpcen: "1235467890"
         }
       },
-      { date: 1606381200000, dateEffet: 1606381200000 }
+      { date: 1606381200, dateEffet: 1606381200 }
     ],
     partenaires: [
       {
@@ -131,8 +131,8 @@ export const pacsModificationNotaireMap: IFichePacs = {
   dissolution: undefined,
   modifications: [
     {
-      date: 1611334469000,
-      dateEffet: 1611334469000,
+      date: 1611334469,
+      dateEffet: 1611334469,
       autorite: {
         typeAutorite: TypeAutorite.NOTAIRE,
         numeroDepartement: "75",
@@ -147,8 +147,8 @@ export const pacsModificationNotaireMap: IFichePacs = {
       }
     },
     {
-      date: 1606381200000,
-      dateEffet: 1606381200000
+      date: 1606381200,
+      dateEffet: 1606381200
     }
   ],
   partenaires: [
@@ -243,8 +243,8 @@ export const annulationJuridictionMap: IFichePacs = {
     typeJuridiction: "Tribunal judiciaire"
   },
   annulation: {
-    date: 1606381200000,
-    dateEffet: 1606381200000,
+    date: 1606381200,
+    dateEffet: 1606381200,
     type: DecisionAnnulation.JUGEMENT,
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,
@@ -338,8 +338,8 @@ export const dissolutionJuridictionMap: IFichePacs = {
   },
   annulation: undefined,
   dissolution: {
-    date: 1606381200000,
-    dateEffet: 1606381200000,
+    date: 1606381200,
+    dateEffet: 1606381200,
     motif: "mariage",
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,
@@ -434,8 +434,8 @@ export const dissolutionPosteMap: IFichePacs = {
   },
   annulation: undefined,
   dissolution: {
-    date: 1606381200000,
-    dateEffet: 1606381200000,
+    date: 1606381200,
+    dateEffet: 1606381200,
     motif: "mariage",
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,

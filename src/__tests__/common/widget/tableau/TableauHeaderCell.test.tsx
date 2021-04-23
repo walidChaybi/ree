@@ -15,7 +15,7 @@ test("renders header tableau des requêtes de l'application", () => {
         column={
           new TableauTypeColumn({
             keys: ["idSagaDila"],
-            colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+            title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
           })
         }
       />
@@ -37,8 +37,7 @@ test("renders click sur header tableau des requêtes de l'application", () => {
             column={
               new TableauTypeColumn({
                 keys: ["idSagaDila"],
-                colLibelle:
-                  "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+                title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
               })
             }
           />

@@ -74,14 +74,13 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   const columnHeaders = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila",
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila",
       align: "center",
       style
     }),
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.SousTypeRequete],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
-      getTextRefentiel: true,
+      title: "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
       rowLibelle: "referentiel.sousTypeRequete.court",
       align: "center",
       style: {
@@ -90,23 +89,20 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     }),
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.Canal],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.canal",
-      getTextRefentiel: true,
+      title: "pages.delivrance.mesRequetes.tableau.header.canal",
       rowLibelle: "referentiel.canal",
       align: "center",
       style
     }),
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.NatureActe],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.natureActe",
-      getTextRefentiel: true,
+      title: "pages.delivrance.mesRequetes.tableau.header.natureActe",
       rowLibelle: "referentiel.natureActe",
       align: "center"
     }),
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.TypeActe],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.typeActe",
-      getTextRefentiel: true,
+      title: "pages.delivrance.mesRequetes.tableau.header.typeActe",
       rowLibelle: "pages.requete.consultation.documentDelivre.type",
       align: "center"
     }),
@@ -115,12 +111,12 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
         HeaderTableauRequete.Requerant,
         HeaderTableauRequete.LibelleRequerant
       ],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.requerant",
+      title: "pages.delivrance.mesRequetes.tableau.header.requerant",
       align: "center"
     }),
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.NomOec],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.nomOec",
+      title: "pages.delivrance.mesRequetes.tableau.header.nomOec",
       align: "center"
       /** TODO ETAPE 2 : Bouton "Attribué à" */
       /*,"",(row: IDataTable, selectedUser?: string) => {return getIconOfficierEtatCivil(row, setQueryChangeOecRequest);}*/
@@ -129,8 +125,8 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     ...commonHeaders,
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.PrioriteRequete],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete",
-      getIcon: getIconPrioriteRequete,
+      title: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete",
+      getElement: getIconPrioriteRequete,
       align: "center",
       style
     })
