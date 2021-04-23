@@ -6,7 +6,7 @@ import {
   waitFor,
   screen
 } from "@testing-library/react";
-import { RMCResultatsActe } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCResultatsActe";
+import { RMCTableauActes } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 import {
   DataRMCActeAvecResultat,
   DataTableauActe
@@ -17,7 +17,7 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => {
   const { getAllByText } = render(
-    <RMCResultatsActe
+    <RMCTableauActes
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
     />
@@ -34,7 +34,7 @@ test("Ouverture d'un acte", async () => {
   global.close = jest.fn();
 
   const { getByTestId } = render(
-    <RMCResultatsActe
+    <RMCTableauActes
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
     />
@@ -78,7 +78,7 @@ test("Ouverture d'un acte et navigation via bouton Suivant", async () => {
   global.close = jest.fn();
 
   const { getByTestId } = render(
-    <RMCResultatsActe
+    <RMCTableauActes
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
     />
@@ -112,7 +112,7 @@ test("Ouverture d'un acte et navigation via bouton Précédent", async () => {
   global.close = jest.fn();
 
   const { getByTestId } = render(
-    <RMCResultatsActe
+    <RMCTableauActes
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
     />

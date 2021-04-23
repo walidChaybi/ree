@@ -8,7 +8,7 @@ import {
   commonHeadersTableauRMC,
   natureHeadersTableauRMC,
   goToLinkRMC
-} from "./RMCResultatsCommun";
+} from "./RMCTableauCommun";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import {
   TypeFiche,
@@ -33,20 +33,20 @@ const columnsTableau = [
   ...commonHeadersTableauRMC,
   new TableauTypeColumn({
     keys: [HeaderTableauRMCInscription.NumeroRef],
-    colLibelle: "N° Réf."
+    title: "N° Réf."
   }),
   ...natureHeadersTableauRMC,
   new TableauTypeColumn({
     keys: [HeaderTableauRMCInscription.Type],
-    colLibelle: "Type"
+    title: "Type"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRMCInscription.Statut],
-    colLibelle: "Statut fiche"
+    title: "Statut fiche"
   })
 ];
 
-export const RMCResultatsInscription: React.FC<RMCResultatInscriptionProps> = ({
+export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   dataRMCInscription,
   dataTableauRMCInscription,
   setRangeInscription,

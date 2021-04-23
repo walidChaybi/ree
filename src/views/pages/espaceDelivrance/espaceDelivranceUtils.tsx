@@ -34,18 +34,17 @@ export function goToLinkRequete(
 export const commonHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.DateCreation],
-    colLibelle: "pages.delivrance.mesRequetes.tableau.header.dateCreation",
+    title: "pages.delivrance.mesRequetes.tableau.header.dateCreation",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.DateStatut],
-    colLibelle: "pages.delivrance.mesRequetes.tableau.header.dateStatut",
+    title: "pages.delivrance.mesRequetes.tableau.header.dateStatut",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Statut],
-    colLibelle: "pages.delivrance.mesRequetes.tableau.header.statut",
-    getTextRefentiel: true,
+    title: "pages.delivrance.mesRequetes.tableau.header.statut",
     rowLibelle: "referentiel.statutRequete",
     align: "center"
   })

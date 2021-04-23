@@ -1,14 +1,19 @@
 export interface IResultatRMCRequete {
-  idRequete?: string;
-  numeroRequete?: string; // idSagaDila? : number;
-  sousTypeRequete?: string; //SousTypeRequete;
-  provenance?: string; //Provenance ou Canal;
-  natureActe?: string; // NatureActe;
-  document?: string; // TypeActe
-  requerant?: string; //IRequerantApi;
-  attribuerA?: string; // attribuerA ou nomOec
+  idRequete: string;
+  numero?: string;
+  numeroSagaDila?: string;
+  type?: string;
+  sousType?: string;
+  provenance?: string;
+  nature?: string;
+  document?: string;
+  titulaires?: string[][];
+  datesNaissancesTitulaires?: string[];
+  requerant?: string;
+  attribueA?: string;
   dateCreation?: string;
-  dateDerniereMaj?: string; // ou dateStatut: string;
-  statut?: string; // StatutRequete;
-  prioriteRequete?: string;
+  dateDerniereMaj?: string;
+  statut?: string;
+  priorite?: string;
+  observations?: string[];
 }

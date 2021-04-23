@@ -1,8 +1,9 @@
 import { IResultatRMCActe } from "../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 
 export const DataTableauActe = {
-  previousDataLinkState: undefined,
-  nextDataLinkState: undefined,
+  previousDataLinkState: "previousDataLinkState",
+  nextDataLinkState:
+    "http://localhost:8089/rece-etatcivil-api/v1/acte/rmc?range=1-105",
   rowsNumberState: 2,
   minRangeState: 0,
   maxRangeState: 105

@@ -7,7 +7,7 @@ import {
   IDataTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
-import { mappingCriteresRequete, mappingRequetes } from "./RMCRequeteUtils";
+import { mappingCriteresRequete, mappingRequetes } from "./RMCRequeteMapping";
 
 export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
   const [dataRMCRequete, setDataRMCRequete] = useState<IResultatRMCRequete[]>();

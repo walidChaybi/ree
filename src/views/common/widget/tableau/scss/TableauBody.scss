@@ -32,6 +32,9 @@ table {
   &.MuiTable-root {
     border: 2px $border-array;
     border-style: solid;
+    .MuiTableCell-root {
+      padding: 0.5rem 0;
+    }
   }
 }
 

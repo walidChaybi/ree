@@ -52,7 +52,7 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
         onClick={sortHandler(column.keys[0])}
         hideSortIcon={!(orderBy === column.keys[0])}
       >
-        <Text messageId={`${column.colLibelle}`} noWarning={true} />
+        <Text messageId={`${column.title}`} noWarning={true} />
       </TableSortLabel>
     </TableCell>
   );

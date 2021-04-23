@@ -31,7 +31,7 @@ test("renders composant TableauRece", () => {
   const columnsTableau = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
     })
   ];
 
@@ -69,7 +69,7 @@ test("TableauRece can be reload", () => {
   const columnsTableau = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
     })
   ];
 
@@ -111,7 +111,7 @@ test("TableauRece can be reload with true", () => {
   const columnsTableau = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
     })
   ];
 
@@ -153,7 +153,7 @@ test("TableauRece can be reload with true => go back", () => {
   const columnsTableau = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
     })
   ];
 
@@ -199,7 +199,7 @@ test("TableauRece can change page", () => {
   const columnsTableau = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
     })
   ];
 
@@ -255,7 +255,7 @@ test("TableauRece can change page", () => {
   const columnsTableau = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
     })
   ];
 
@@ -295,7 +295,7 @@ test("TableauRece can't change page bakc and no error'", () => {
   const columnsTableau = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
     })
   ];
 
@@ -337,7 +337,7 @@ test("TableauRece can't change page next and no error'", () => {
   const columnsTableau = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
     })
   ];
 
@@ -379,7 +379,7 @@ test("TableauRece can sort", () => {
   const columnsTableau = [
     new TableauTypeColumn({
       keys: [HeaderTableauRequete.IdSagaDila],
-      colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
     })
   ];
 

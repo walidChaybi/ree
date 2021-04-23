@@ -112,8 +112,10 @@ export function getDateString(date: Date): string {
   return "";
 }
 
-export function getDateFromTimestamp(date: number): Date {
-  return new Date(date);
+// Convertion d'un Timestamp (en secondes depuis 1970) en Date
+// Le Timestamp est multiplié par 1000 car new Date() (en millisecondes depuis 1970)
+export function getDateFromTimestamp(timestamp: number): Date {
+  return new Date(timestamp * 1000);
 }
 
 export function estDateValide(dateCompose: IDateCompose) {
@@ -188,12 +190,14 @@ export function getDateComposeFromDate(date: Date): IDateCompose {
     annee: String(date.getFullYear())
   };
 }
+
 export function getFormatDateFromTimestamp(timestamp: number): string {
   if (timestamp) {
     return getDateString(getDateFromTimestamp(timestamp));
   }
   return "";
 }
+
 /**
  *
  * 12 04 => à 12h04

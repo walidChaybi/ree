@@ -1,7 +1,7 @@
 import { IResultatRMCInscription } from "../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 
 export const DataTableauInscription = {
-  previousDataLinkState: undefined,
+  previousDataLinkState: "previousDataLinkState",
   nextDataLinkState:
     "http://localhost:8089/rece-etatcivil-api/v1/repertoirecivil/rmc?range=1-105",
   rowsNumberState: 6,

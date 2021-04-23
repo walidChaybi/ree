@@ -1,5 +1,5 @@
 import React from "react";
-import { RMCResultatsActe } from "../../acteInscription/resultats/RMCResultatsActe";
+import { RMCTableauActes } from "../../acteInscription/resultats/RMCTableauActes";
 
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 
@@ -24,7 +24,7 @@ export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = p
             <span>{getLibelle("Recherche dans les registres")}</span>
           </div>
           {props.dataRMCActeArchive.length > 0 ? (
-            <RMCResultatsActe
+            <RMCTableauActes
               dataRMCActe={props.dataRMCActeArchive}
               dataTableauRMCActe={props.dataTableauRMCActeArchive}
               setRangeActe={props.setRangeActeArchive}

@@ -38,12 +38,12 @@ export class SousTypeDelivrance extends EnumWithComplete {
   );
   public static readonly RDDP = new SousTypeDelivrance(
     "RDDP",
-    "Requête de Délivrance Démat COMEDEC",
+    "Requête de Délivrance Démat PLANETE",
     "Délivrance"
   );
   public static readonly RDDCO = new SousTypeDelivrance(
     "RDDCO",
-    "Requête de Délivrance Démat PLANETE",
+    "Requête de Délivrance Démat COMEDEC",
     "Délivrance"
   );
   public static readonly RDLFC = new SousTypeDelivrance(

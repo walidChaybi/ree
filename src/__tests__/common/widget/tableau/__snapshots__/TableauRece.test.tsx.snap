@@ -58,7 +58,6 @@ Array [
           <td
             aria-sort={null}
             className="MuiTableCell-root MuiTableCell-body TableauFontBody MuiTableCell-alignLeft MuiTableCell-sizeSmall"
-            title={11982}
           >
             11982
           </td>
@@ -72,7 +71,6 @@ Array [
           <td
             aria-sort={null}
             className="MuiTableCell-root MuiTableCell-body TableauFontBody MuiTableCell-alignLeft MuiTableCell-sizeSmall"
-            title={11985}
           >
             11985
           </td>
@@ -86,7 +84,6 @@ Array [
           <td
             aria-sort={null}
             className="MuiTableCell-root MuiTableCell-body TableauFontBody MuiTableCell-alignLeft MuiTableCell-sizeSmall"
-            title={11991}
           >
             11991
           </td>

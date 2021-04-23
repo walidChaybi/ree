@@ -72,28 +72,25 @@ const style = {
 const columnsTableau = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.IdSagaDila],
-    colLibelle: "pages.delivrance.mesRequetes.tableau.header.idSagaDila",
+    title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila",
     align: "center",
     style
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.SousTypeRequete],
-    colLibelle: "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
-    getTextRefentiel: true,
+    title: "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
     rowLibelle: "referentiel.sousTypeRequete.court",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Canal],
-    colLibelle: "pages.delivrance.mesRequetes.tableau.header.canal",
-    getTextRefentiel: true,
+    title: "pages.delivrance.mesRequetes.tableau.header.canal",
     rowLibelle: "referentiel.canal",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.NatureActe],
-    colLibelle: "pages.delivrance.mesRequetes.tableau.header.natureActe",
-    getTextRefentiel: true,
+    title: "pages.delivrance.mesRequetes.tableau.header.natureActe",
     rowLibelle: "referentiel.natureActe",
     align: "center"
   }),
@@ -102,14 +99,14 @@ const columnsTableau = [
       HeaderTableauRequete.Requerant,
       HeaderTableauRequete.LibelleRequerant
     ],
-    colLibelle: "pages.delivrance.mesRequetes.tableau.header.requerant",
+    title: "pages.delivrance.mesRequetes.tableau.header.requerant",
     align: "center"
   }),
   ...commonHeaders,
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.PrioriteRequete],
-    colLibelle: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete",
-    getIcon: getIconPrioriteRequete,
+    title: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete",
+    getElement: getIconPrioriteRequete,
     align: "center"
   })
 ];
