@@ -23,7 +23,7 @@ export class SousTypeDelivrance extends EnumWithComplete {
   );
   public static readonly RDAPC = new SousTypeDelivrance(
     "RDAPC",
-    "Requête de Délivrance Attestation de PACS Courrier",
+    "Requête de Délivrance d'attestation de Pacte Civil de Solidarité",
     "Délivrance AP (c)"
   );
   public static readonly RDCSD = new SousTypeDelivrance(
