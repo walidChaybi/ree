@@ -112,7 +112,7 @@ const RequerantForm: React.FC<SubFormProps> = props => {
         <div className="RequerantForm">
           <RadioField
             name={typeRequerantWithNamespace}
-            label={getLibelle("Réquerant")}
+            label={getLibelle("Requérant")}
             values={props.type}
             onChange={e => {
               onChangeRequerant(e);

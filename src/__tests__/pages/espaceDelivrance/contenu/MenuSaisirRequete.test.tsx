@@ -77,7 +77,7 @@ test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Délivrance"
   });
 
   const RDAPC = screen.getByText(
-    "Requête de Délivrance Attestation de PACS Courrier"
+    "Requête de Délivrance d'attestation de Pacte Civil de Solidarité"
   );
 
   await waitFor(() => {
@@ -225,7 +225,7 @@ test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Service", as
   });
 
   const RDAPC = screen.getByText(
-    "Requête de Délivrance Attestation de PACS Courrier"
+    "Requête de Délivrance d'attestation de Pacte Civil de Solidarité"
   );
 
   await waitFor(() => {

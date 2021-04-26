@@ -144,18 +144,14 @@ export const routesRece: IRoute[] = [
     component: SaisirRDAPCPage,
     droits: [Droit.SAISIR_REQUETE],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(
-      "Saisir une requête de délivrance d'attestation de Pacte Civil de Solidarité"
-    )
+    libelle: getLibelle("Saisir une requête de délivrance d'attestation PACS")
   },
   {
     url: URL_REQUETES_SERVICE_SAISIR_RDAPC,
     component: SaisirRDAPCPage,
     droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(
-      "Saisir une requête de délivrance d'attestation de Pacte Civil de Solidarité"
-    )
+    libelle: getLibelle("Saisir une requête de délivrance d'attestation PACS")
   },
   {
     url: URL_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
