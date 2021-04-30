@@ -11,7 +11,7 @@ import AdresseForm, {
   AdresseFormValidationSchema
 } from "./sousFormulaires/adresse/AdresseForm";
 import RequerantForm, {
-  RequerantFormDefaultValues,
+  PartenairesFormDefaultValues,
   RequerantFormValidationSchema
 } from "./sousFormulaires/requerant/RequerantForm";
 import { getLibelle } from "../../common/widget/Text";
@@ -35,7 +35,7 @@ const DefaultValuesRDAPCRequete = {
   [DOCUMENT]: "",
   [PARTENAIRE1]: IdentiteFormDefaultValues,
   [PARTENAIRE2]: IdentiteFormDefaultValues,
-  [REQUERANT]: RequerantFormDefaultValues,
+  [REQUERANT]: PartenairesFormDefaultValues,
   [ADRESSE]: AdresseFormDefaultValues
 };
 

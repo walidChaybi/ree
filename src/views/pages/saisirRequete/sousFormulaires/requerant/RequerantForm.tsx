@@ -36,6 +36,14 @@ export const RequerantFormDefaultValues = {
   [PARTICULIER]: ParticulierFormDefaultValues
 };
 
+// Valeurs par défaut des champs
+export const PartenairesFormDefaultValues = {
+  [TYPE_REQUERANT]: "PARTENAIRE1",
+  [MANDATAIRE]: MandataireFormDefaultValues,
+  [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
+  [PARTICULIER]: ParticulierFormDefaultValues
+};
+
 // Schéma de validation des champs
 export const RequerantFormValidationSchema = Yup.object()
   .shape({
