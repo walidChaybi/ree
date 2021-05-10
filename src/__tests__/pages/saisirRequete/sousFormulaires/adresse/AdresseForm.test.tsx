@@ -1,18 +1,18 @@
-import { Field, Form, Formik } from "formik";
 import {
-  render,
-  waitFor,
   act,
+  fireEvent,
+  render,
   screen,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
+import { ADRESSE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import AdresseForm, {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "../../../../../views/pages/saisirRequete/sousFormulaires/adresse/AdresseForm";
-import { ADRESSE } from "../../../../../views/pages/saisirRequete/SaisirRDCSCPage";
 
 const HookAdresseForm: React.FC = () => {
   const [result, setResult] = useState("");

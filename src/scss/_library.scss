@@ -72,7 +72,6 @@ Button,
     outline-style: none;
   }
 
-  &:focus,
   &:hover {
     background-color: $application-color;
     box-shadow: 0 0 0 2px $border-focus;

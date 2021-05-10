@@ -1,29 +1,29 @@
+import { connect } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import {
-  withNamespace,
-  SubFormProps,
-  NB_CARACT_MAX_SAISIE
-} from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../common/widget/Text";
+import { TypeInstitutionnel } from "../../../../../../model/requete/v2/enum/TypeInstitutionnel";
+import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../../common/widget/formulaire/champsSaisie/SelectField";
-import "./../scss/RequerantForm.scss";
-import { connect } from "formik";
+import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
 import {
   sortieChampEnMajuscule,
   sortieChampPremiereLettreEnMajuscule
 } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
-import { TypeInstitutionnel } from "../../../../../../model/requete/v2/enum/TypeInstitutionnel";
-
-// Noms des champs
-export const TYPE = "type";
-export const NATURE = "nature";
-export const NOM_INSTITUTION = "nomInstitution";
-export const NOM = "nom";
-export const PRENOM = "prenom";
+import {
+  NB_CARACT_MAX_SAISIE,
+  SubFormProps,
+  withNamespace
+} from "../../../../../common/widget/formulaire/utils/FormUtil";
+import { getLibelle } from "../../../../../common/widget/Text";
+import {
+  NATURE,
+  NOM,
+  NOM_INSTITUTION,
+  PRENOM,
+  TYPE
+} from "../../../modelForm/ISaisirRDCSCPageModel";
+import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
 export const InstitutionnelFormDefaultValues = {

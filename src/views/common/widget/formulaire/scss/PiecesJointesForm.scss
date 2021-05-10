@@ -1,0 +1,31 @@
+@import "../../../../../scss/colors";
+
+.PiecesJointes {
+  .EnteteActionPJ {
+    width: 6rem;
+    text-align: center;
+  }
+
+  // Cellule Action
+  .ActionPJ {
+    text-align: center;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  // Divers
+  .BoutonUpload {
+    margin-left: 0;
+    padding-right: 0.6rem;
+  }
+
+  .iconeFichier {
+    vertical-align: top;
+    color: $application-color;
+  }
+
+  .iconeTrombone {
+    vertical-align: bottom;
+  }
+}

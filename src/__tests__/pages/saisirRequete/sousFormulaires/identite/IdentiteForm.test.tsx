@@ -1,18 +1,18 @@
-import { Field, Form, Formik } from "formik";
 import {
-  render,
-  waitFor,
   act,
+  fireEvent,
+  render,
   screen,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
+import { INTERESSE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import IdentiteForm, {
   IdentiteFormDefaultValues,
   IdentiteFormValidationSchema
 } from "../../../../../views/pages/saisirRequete/sousFormulaires/identite/IdentiteForm";
-import { INTERESSE } from "../../../../../views/pages/saisirRequete/SaisirRDCSCPage";
 
 const HookIdentiteForm: React.FC = () => {
   const [result, setResult] = useState("");

@@ -9,23 +9,29 @@ const NATURE_RCA = "NATURE_RCA";
 export async function peupleNatureRc() {
   const natureRcs = await getNomenclatureEtatCivil(NATURE_RC);
 
-  for (const data of natureRcs.body.data) {
-    NatureRc.addEnum(
-      NatureRc,
-      data.id,
-      new NatureRc(premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle))
-    );
+  // Pas besoin de recharger l'enum si les données viennent du cache car il a déjà été alimenté une première fois
+  if (!natureRcs.inReceCache) {
+    NatureRc.clean();
+    for (const data of natureRcs.body.data) {
+      NatureRc.addEnum(
+        data.id,
+        new NatureRc(premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle))
+      );
+    }
   }
 }
 
 export async function peupleNatureRca() {
   const natureRcas = await getNomenclatureEtatCivil(NATURE_RCA);
 
-  for (const data of natureRcas.body.data) {
-    NatureRca.addEnum(
-      NatureRca,
-      data.id,
-      new NatureRca(premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle))
-    );
+  // Pas besoin de recharger l'enum si les données viennent du cache car il a déjà été alimenté une première fois
+  if (!natureRcas.inReceCache) {
+    NatureRca.clean();
+    for (const data of natureRcas.body.data) {
+      NatureRca.addEnum(
+        data.id,
+        new NatureRca(premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle))
+      );
+    }
   }
 }

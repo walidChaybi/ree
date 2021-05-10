@@ -7,3 +7,12 @@
   align-self: center;
   margin-left: 2px;
 }
+
+.IconePoubelle {
+  color: $application-color;
+  &:hover {
+    cursor: pointer;
+  }
+  align-self: center;
+  margin-left: 2px;
+}

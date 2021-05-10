@@ -276,26 +276,48 @@ export const ReponseAppelNomenclatureTypePiecesJustificative = {
   url: "/rece-requete-api/v2/nomenclature/TYPE_PIECE_JUSTIFICATIVE",
   data: [
     {
-      id: "d08e2228-1a02-478f-939e-db5dd5ac6999",
-      nom: "TYPE_PIECE_JUSTIFICATIVE",
-      code: "ATTESTATION_PACS",
-      libelle: "Attestation de PACS",
-      estActif: null,
-      usageTeleprocedure: null,
-      usageRECE: null,
+      id: "00c885c9-2918-46fe-b743-798b1b90e5dd",
+      categorie: "TYPE_PIECE_JUSTIFICATIVE",
+      code: "CARTE_PROFESSIONNELLE",
+      libelle: "Carte professionnelle",
+      estActif: true,
+      usageTeleprocedure: true,
+      usageRECE: true,
       categorieDocumentDelivrance: "attestation",
       correspondanceDila: true
     },
     {
-      id: "34da88e2-c5c7-4324-ac8e-b35193352e64",
-      nom: "TYPE_PIECE_JUSTIFICATIVE",
-      code: "CERTIFICAT_SITUATION_PACS",
-      libelle: "Certificat de situation au PACS",
+      id: "f4e3453b-7713-45ef-a82c-e40df43d5b67",
+      categorie: "TYPE_PIECE_JUSTIFICATIVE",
+      code: "MANDAT",
+      libelle: "Mandat",
+      estActif: true,
+      usageTeleprocedure: true,
+      usageRECE: true,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: null
+    },
+    {
+      id: "ab32e570-9171-4760-ac66-851e52110a27",
+      categorie: "TYPE_PIECE_JUSTIFICATIVE",
+      code: "DECISION_PROTECTION",
+      libelle: "Décision de mise sous protection",
       estActif: null,
-      usageTeleprocedure: null,
-      usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      usageTeleprocedure: true,
+      usageRECE: true,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: null
+    },
+    {
+      id: "d2aa8943-d904-4f4f-bb4b-72d02978ef2e",
+      categorie: "TYPE_PIECE_JUSTIFICATIVE",
+      code: "AUTRE",
+      libelle: "Autre",
+      estActif: null,
+      usageTeleprocedure: true,
+      usageRECE: true,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: null
     }
   ],
   errors: []

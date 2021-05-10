@@ -1,25 +1,25 @@
+import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
+import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
+import { sortieChampPremiereLettreEnMajuscule } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
-  withNamespace,
+  NB_CARACT_MAX_SAISIE,
   SubFormProps,
-  NB_CARACT_MAX_SAISIE
+  withNamespace
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../../common/widget/Text";
+import {
+  PRENOM_1,
+  PRENOM_2,
+  PRENOM_3
+} from "../../../modelForm/ISaisirRDCSCPageModel";
 import "./scss/PrenomsForm.scss";
-import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { sortieChampPremiereLettreEnMajuscule } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
-import { connect } from "formik";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
 
 const NB_MIN_PRENOMS = 1;
 const NB_MAX_PRENOMS = 3;
-
-// Noms des champs
-export const PRENOM_1 = "prenom1";
-export const PRENOM_2 = "prenom2";
-export const PRENOM_3 = "prenom3";
 
 // Valeurs par défaut des champs
 export const PrenomsFormDefaultValues = {

@@ -43,7 +43,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
 
   // Gestion de la Fenêtre
   const onClickOnLine = () => {
-    console.log("click");
+    // TODO
   };
 
   return (

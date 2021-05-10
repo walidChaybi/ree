@@ -1,39 +1,39 @@
+import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import {
-  withNamespace,
-  SubFormProps,
-  NB_CARACT_MAX_SAISIE,
-  NB_CARACT_ADRESSE,
-  NB_CARACT_CODE_POSTAL,
-  NB_CARACT_COMMUNE
-} from "../../../../common/widget/formulaire/utils/FormUtil";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { getLibelle } from "../../../../common/widget/Text";
-import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
-import "./scss/AdresseForm.scss";
-import { connect } from "formik";
-import { sortieChampEnMajuscule } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
   CarateresAutorise,
   NumeroTelephone
 } from "../../../../../ressources/Regex";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import {
-  CARATERES_AUTORISES_MESSAGE,
   ADRESSE_MAIL_NON_CONFORME,
+  CARATERES_AUTORISES_MESSAGE,
   NUMERO_TELEPHONE_NON_CONFORME
 } from "../../../../common/widget/formulaire/FormulaireMessages";
-
-// Noms des champs
-export const VOIE = "voie";
-export const LIEU_DIT = "lieuDit";
-export const COMPLEMENT_DESTINATAIRE = "complementDestinataire";
-export const COMPLEMENT_POINT_GEO = "complementPointGeo";
-export const CODE_POSTAL = "codePostal";
-export const COMMUNE = "commune";
-export const PAYS = "pays";
-export const ADRESSE_COURRIEL = "adresseCourriel";
-export const NUMERO_TELEPHONE = "numeroTelephone";
+import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
+import { sortieChampEnMajuscule } from "../../../../common/widget/formulaire/utils/ControlesUtil";
+import {
+  NB_CARACT_ADRESSE,
+  NB_CARACT_CODE_POSTAL,
+  NB_CARACT_COMMUNE,
+  NB_CARACT_MAX_SAISIE,
+  SubFormProps,
+  withNamespace
+} from "../../../../common/widget/formulaire/utils/FormUtil";
+import { getLibelle } from "../../../../common/widget/Text";
+import {
+  ADRESSE_COURRIEL,
+  CODE_POSTAL,
+  COMMUNE,
+  COMPLEMENT_DESTINATAIRE,
+  COMPLEMENT_POINT_GEO,
+  LIEU_DIT,
+  NUMERO_TELEPHONE,
+  PAYS,
+  VOIE
+} from "../../modelForm/ISaisirRDCSCPageModel";
+import "./scss/AdresseForm.scss";
 
 // Valeurs par défaut des champs
 export const AdresseFormDefaultValues = {

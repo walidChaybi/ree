@@ -8,6 +8,16 @@ class StoreRece {
   private _utilisateurCourant?: IOfficierSSOApi;
   private _codePin?: string;
   private _timerCodePin?: number;
+  private _retourUrl?: string;
+
+  set retourUrl(ru: string | undefined) {
+    this._retourUrl = ru;
+  }
+
+  get retourUrl() {
+    return this._retourUrl;
+  }
+
   set utilisateurCourant(uc: IOfficierSSOApi | undefined) {
     this._utilisateurCourant = uc;
   }

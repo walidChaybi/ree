@@ -1,24 +1,25 @@
+import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 import {
-  normaliserNomOec,
-  premiereLettreEnMajusculeLeResteEnMinuscule,
-  formatDe,
-  getValeurOuVide,
-  jointAvec,
-  getPremierElemOuVide,
-  triListeObjetsSurPropriete,
-  joint,
+  changeLaPlaceDunElement,
   compareNombre,
-  estTableauNonVide,
   enMajuscule,
-  formatPrenom,
+  estTableauNonVide,
+  formatDe,
   formatNom,
   formatNoms,
+  formatPrenom,
   formatPrenoms,
+  getPremierElemOuVide,
+  getValeurOuVide,
+  joint,
+  jointAvec,
   jointPrenoms,
+  normaliserNomOec,
   numberToString,
+  premiereLettreEnMajusculeLeResteEnMinuscule,
+  triListeObjetsSurPropriete,
   valeurOuUndefined
 } from "../../../views/common/util/Utils";
-import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 
 test("Utils normaliserNomOec ", async () => {
   const normalize = normaliserNomOec("NFD");
@@ -188,4 +189,30 @@ test("Attendu: valeurOuUndefined fonctionne correctement", () => {
   expect(valeurOuUndefined()).toBe(undefined);
   expect(valeurOuUndefined("")).toBe(undefined);
   expect(valeurOuUndefined("azer")).toBe("azer");
+});
+
+test("Attendu: changeLaPlaceDunElement fonctionne correctement", () => {
+  let tab: any[] = [];
+  changeLaPlaceDunElement(tab, 1, 2);
+  expect(tab).toEqual([]);
+
+  tab = ["a", "b", "c", "d"];
+  changeLaPlaceDunElement(tab, 1, 2);
+  expect(tab).toEqual(["a", "c", "b", "d"]);
+
+  tab = ["a", "b", "c", "d"];
+  changeLaPlaceDunElement(tab, 1, 3);
+  expect(tab).toEqual(["a", "c", "d", "b"]);
+
+  tab = ["a", "b", "c", "d"];
+  changeLaPlaceDunElement(tab, 1, 99);
+  expect(tab).toEqual(["a", "c", "d", "b"]);
+
+  tab = ["a", "b", "c", "d"];
+  changeLaPlaceDunElement(tab, 1, 0);
+  expect(tab).toEqual(["b", "a", "c", "d"]);
+
+  tab = ["a", "b", "c", "d"];
+  changeLaPlaceDunElement(tab, 1, -1);
+  expect(tab).toEqual(["a", "b", "c", "d"]);
 });

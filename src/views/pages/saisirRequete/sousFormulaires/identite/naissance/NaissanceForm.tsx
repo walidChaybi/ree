@@ -1,27 +1,27 @@
+import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
+import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
-  DateDefaultValues,
   DateComposeFormProps,
+  DateDefaultValues,
   DateValidationSchemaSansTestFormat
 } from "../../../../../common/widget/formulaire/DateComposeForm";
+import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
+import { sortieChampPremiereLettreEnMajuscule } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
-  withNamespace,
+  NB_CARACT_MAX_SAISIE,
   SubFormProps,
-  NB_CARACT_MAX_SAISIE
+  withNamespace
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../../common/widget/Text";
-import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
+import {
+  DATE_NAISSANCE,
+  PAYS_NAISSANCE,
+  VILLE_NAISSANCE
+} from "../../../modelForm/ISaisirRDCSCPageModel";
 import "./scss/NaissanceForm.scss";
-import { sortieChampPremiereLettreEnMajuscule } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
-import { connect } from "formik";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
-
-// Noms des champs
-export const DATE_NAISSANCE = "dateNaissance";
-export const VILLE_NAISSANCE = "villeNaissance";
-export const PAYS_NAISSANCE = "paysNaissance";
 
 // Valeurs par défaut des champs
 export const NaissanceFormDefaultValues = {

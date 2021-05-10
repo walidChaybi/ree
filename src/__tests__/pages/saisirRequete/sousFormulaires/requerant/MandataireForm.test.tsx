@@ -1,14 +1,14 @@
-import { Field, Form, Formik } from "formik";
 import {
-  render,
-  waitFor,
   act,
+  fireEvent,
+  render,
   screen,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { MANDATAIRE } from "../../../../../views/pages/saisirRequete/sousFormulaires/requerant/RequerantForm";
+import { MANDATAIRE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import MandataireForm, {
   MandataireFormDefaultValues,
   MandataireFormValidationSchema

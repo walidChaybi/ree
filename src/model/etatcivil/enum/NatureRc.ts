@@ -6,8 +6,12 @@ import { peupleNatureRc } from "../../../api/nomenclature/NomenclatureEtatcivil"
 
 export class NatureRc extends EnumWithLibelle {
   //AddEnum specifique aux nomenclatures !
-  public static addEnum(clazz: any, key: string, obj: NatureRc) {
-    clazz[key] = obj;
+  public static addEnum(key: string, obj: NatureRc) {
+    (NatureRc as any)[key] = obj;
+  }
+
+  public static clean() {
+    return EnumWithLibelle.clean(NatureRc);
   }
 
   public static getEnumFor(str: string) {

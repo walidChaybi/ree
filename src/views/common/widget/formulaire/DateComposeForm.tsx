@@ -1,40 +1,40 @@
+import { connect, ErrorMessage, Field } from "formik";
 import React, { useState } from "react";
-import { Field, ErrorMessage, connect } from "formik";
 import * as Yup from "yup";
-import "./scss/DateComposeForm.scss";
-import ReceDatePicker from "./datePicker/ReceDatePicker";
 import {
-  traiteDepassementJour,
-  traiteDepassementMois,
+  MSG_CURRENT_YEAR_MAX,
+  MSG_DATE_MEP_MIN,
+  MSG_MIN_LENGTH_ANNEE,
+  MSG_MIN_YEAR
+} from "../../../../ressources/messages";
+import {
+  ANNEE,
+  JOUR,
+  MOIS
+} from "../../../pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import {
+  estDateReceValide,
+  estDateValide,
+  getDateComposeFromDate,
+  getIsoStringFromDateCompose,
+  IDateCompose,
+  MEP_YEAR,
+  MIN_LENGTH_ANNEE,
+  MIN_YEAR
+} from "../../util/DateUtils";
+import { IconeCroix } from "../icones/IconeCroix";
+import { getLibelle } from "../Text";
+import ReceDatePicker from "./datePicker/ReceDatePicker";
+import "./scss/DateComposeForm.scss";
+import {
   digitSeulement,
   focusApresProchainChamps,
   traiteCarAutorises,
+  traiteDepassementJour,
+  traiteDepassementMois,
   traiteZeroAGauche
 } from "./utils/ControlesUtil";
-import { withNamespace, FormikComponentProps } from "./utils/FormUtil";
-import {
-  estDateValide,
-  getIsoStringFromDateCompose,
-  IDateCompose,
-  getDateComposeFromDate,
-  estDateReceValide,
-  MIN_YEAR,
-  MEP_YEAR,
-  MIN_LENGTH_ANNEE
-} from "../../util/DateUtils";
-import { IconeCroix } from "../icones/IconeCroix";
-import {
-  MSG_MIN_YEAR,
-  MSG_DATE_MEP_MIN,
-  MSG_CURRENT_YEAR_MAX,
-  MSG_MIN_LENGTH_ANNEE
-} from "../../../../ressources/messages";
-import { getLibelle } from "../Text";
-
-// Noms des champs
-export const JOUR = "jour";
-export const MOIS = "mois";
-export const ANNEE = "annee";
+import { FormikComponentProps, withNamespace } from "./utils/FormUtil";
 
 // Valeurs par défaut des champs
 export const DateDefaultValues = {

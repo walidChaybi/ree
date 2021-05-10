@@ -165,3 +165,14 @@ export function supprimerEspacesInutiles(value: string) {
 export function valeurOuUndefined(valeur?: any) {
   return valeur ? valeur : undefined;
 }
+
+export function changeLaPlaceDunElement(
+  tab: any[],
+  index: number,
+  nouvelIndex: number
+) {
+  if (tab && tab.length > 0 && index >= 0 && nouvelIndex >= 0) {
+    const elements = tab.splice(index, 1);
+    tab.splice(nouvelIndex, 0, ...elements);
+  }
+}
