@@ -1,18 +1,18 @@
-import { Field, Form, Formik } from "formik";
 import {
-  render,
-  waitFor,
   act,
+  fireEvent,
+  render,
   screen,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
+import { PRENOMS } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
 } from "../../../../../views/pages/saisirRequete/sousFormulaires/identite/prenoms/PrenomsForm";
-import { PRENOMS } from "../../../../../views/pages/saisirRequete/sousFormulaires/identite/IdentiteForm";
 
 const HookPrenomsForm: React.FC = () => {
   const [result, setResult] = useState("");

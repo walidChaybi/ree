@@ -1,3 +1,5 @@
+import { TypePieceJustificative } from "../../../model/requete/v2/enum/TypePieceJustificative";
+
 export interface ITitulaire {
   idTitulaire: string;
   position: number;
@@ -20,8 +22,12 @@ export interface IPieceJustificative {
   idPieceJustificative: string;
   nom: string;
   mimeType: string;
+  extension?: string;
   taille: number;
-  identifiantSwift: string;
+  identifiantSwift?: string;
+  conteneurSwift?: string;
+  contenu: string;
+  typePieceJustificative: TypePieceJustificative;
 }
 
 export interface IDocumentDelivre {

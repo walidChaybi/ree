@@ -1,37 +1,37 @@
+import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import {
-  withNamespace,
-  SubFormProps,
-  NB_CARACT_MAX_SAISIE
-} from "../../../../common/widget/formulaire/utils/FormUtil";
+import { Nationalite } from "../../../../../model/etatcivil/enum/Nationalite";
+import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
+import { CarateresAutorise } from "../../../../../ressources/Regex";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { getLibelle } from "../../../../common/widget/Text";
-import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
-import "./scss/IdentiteForm.scss";
 import { RadioField } from "../../../../common/widget/formulaire/champsSaisie/RadioField";
-import PrenomsForm, {
-  PrenomsFormDefaultValues,
-  PrenomsFormValidationSchema
-} from "./prenoms/PrenomsForm";
+import { CARATERES_AUTORISES_MESSAGE } from "../../../../common/widget/formulaire/FormulaireMessages";
+import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
+import { sortieChampEnMajuscule } from "../../../../common/widget/formulaire/utils/ControlesUtil";
+import {
+  NB_CARACT_MAX_SAISIE,
+  SubFormProps,
+  withNamespace
+} from "../../../../common/widget/formulaire/utils/FormUtil";
+import { getLibelle } from "../../../../common/widget/Text";
+import {
+  NAISSANCE,
+  NATIONALITE,
+  NOM_FAMILLE,
+  NOM_USAGE,
+  PRENOMS,
+  SEXE
+} from "../../modelForm/ISaisirRDCSCPageModel";
 import NaissanceForm, {
   NaissanceFormDefaultValues,
   NaissanceFormValidationSchema
 } from "./naissance/NaissanceForm";
-import { sortieChampEnMajuscule } from "../../../../common/widget/formulaire/utils/ControlesUtil";
-import { connect } from "formik";
-import { CarateresAutorise } from "../../../../../ressources/Regex";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../common/widget/formulaire/FormulaireMessages";
-import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
-import { Nationalite } from "../../../../../model/etatcivil/enum/Nationalite";
-
-// Noms des champs
-export const NOM_FAMILLE = "nomFamille";
-export const NOM_USAGE = "nomUsage";
-export const PRENOMS = "prenoms";
-export const SEXE = "sexe";
-export const NAISSANCE = "naissance";
-export const NATIONALITE = "nationalite";
+import PrenomsForm, {
+  PrenomsFormDefaultValues,
+  PrenomsFormValidationSchema
+} from "./prenoms/PrenomsForm";
+import "./scss/IdentiteForm.scss";
 
 // Valeurs par défaut des champs
 export const IdentiteFormDefaultValues = {

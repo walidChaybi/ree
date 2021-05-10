@@ -1,32 +1,33 @@
+import { connect } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
+import { TypeRequerant } from "../../../../../model/requete/v2/enum/TypeRequerant";
+import { RadioField } from "../../../../common/widget/formulaire/champsSaisie/RadioField";
+import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
 import {
-  withNamespace,
-  SubFormProps
+  SubFormProps,
+  withNamespace
 } from "../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../common/widget/Text";
-import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
-import "./scss/RequerantForm.scss";
-import { RadioField } from "../../../../common/widget/formulaire/champsSaisie/RadioField";
-import MandataireForm, {
-  MandataireFormDefaultValues,
-  MandataireFormValidationSchema
-} from "./mandataire/MandataireForm";
+import {
+  INSTITUTI0NNEL,
+  MANDATAIRE,
+  PARTICULIER,
+  TYPE_REQUERANT
+} from "../../modelForm/ISaisirRDCSCPageModel";
 import InstitutionnelForm, {
   InstitutionnelFormDefaultValues,
   InstitutionnelFormValidationSchema
 } from "./institutionnel/InstitutionnelForm";
+import MandataireForm, {
+  MandataireFormDefaultValues,
+  MandataireFormValidationSchema
+} from "./mandataire/MandataireForm";
 import ParticulierForm, {
   ParticulierFormDefaultValues,
   ParticulierFormValidationSchema
 } from "./particulier/ParticulierForm";
-import { connect } from "formik";
-
-// Noms des champs
-export const TYPE_REQUERANT = "typeRequerant";
-export const MANDATAIRE = "mandataire";
-export const INSTITUTI0NNEL = "institutionnel";
-export const PARTICULIER = "particulier";
+import "./scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
 export const RequerantFormDefaultValues = {

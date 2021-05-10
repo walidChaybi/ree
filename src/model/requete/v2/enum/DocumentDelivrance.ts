@@ -1,20 +1,23 @@
 /* istanbul ignore file */
-import { peupleDocumentDelivrence } from "../../../../api/nomenclature/NomenclatureRequete";
+import { peupleDocumentDelivrance } from "../../../../api/nomenclature/NomenclatureRequete";
 import { EnumWithLibelle } from "../../../../views/common/util/enum/EnumWithLibelle";
 import { Option, Options } from "../../../../views/common/util/Type";
 
 export class DocumentDelivrance extends EnumWithLibelle {
   //AddEnum specifique aux nomenclatures !
-  public static addEnum(clazz: any, key: string, obj: DocumentDelivrance) {
-    clazz[key] = obj;
+  public static addEnum(key: string, obj: DocumentDelivrance) {
+    (DocumentDelivrance as any)[key] = obj;
   }
 
+  public static clean() {
+    EnumWithLibelle.clean(DocumentDelivrance);
+  }
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, DocumentDelivrance);
   }
 
   public static async getAllEnumsAsOptions(): Promise<Options> {
-    await peupleDocumentDelivrence();
+    await peupleDocumentDelivrance();
     return EnumWithLibelle.getAllLibellesAsOptions(DocumentDelivrance);
   }
 

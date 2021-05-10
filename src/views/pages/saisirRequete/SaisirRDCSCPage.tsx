@@ -1,43 +1,53 @@
-import React, { useState } from "react";
-import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
-import { Formulaire } from "../../common/widget/formulaire/Formulaire";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import IdentiteForm, {
-  IdentiteFormDefaultValues,
-  IdentiteFormValidationSchema
-} from "./sousFormulaires/identite/IdentiteForm";
+import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
+import messageManager from "../../common/util/messageManager";
+import { storeRece } from "../../common/util/storeRece";
+import { Options } from "../../common/util/Type";
+import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
+import { SelectField } from "../../common/widget/formulaire/champsSaisie/SelectField";
+import { Formulaire } from "../../common/widget/formulaire/Formulaire";
+import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
+import PiecesJointesForm from "../../common/widget/formulaire/piecesJointes/PiecesJointesForm";
+import { SubFormProps } from "../../common/widget/formulaire/utils/FormUtil";
+import { getLibelle } from "../../common/widget/Text";
+import { URL_ACCUEIL } from "../../router/ReceUrls";
+import SaisirRequeteBoutons, {
+  SaisirRequeteBoutonsProps
+} from "./boutons/SaisirRequeteBoutons";
+import { useCreationRequeteDelivrance } from "./hook/SaisirRDCSCApiHook";
+import {
+  ADRESSE,
+  DOCUMENT,
+  INTERESSE,
+  PIECES_JOINTES,
+  REQUERANT,
+  SaisieRequeteRDCSC
+} from "./modelForm/ISaisirRDCSCPageModel";
+import "./scss/SaisirRDCSCPage.scss";
 import AdresseForm, {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "./sousFormulaires/adresse/AdresseForm";
+import IdentiteForm, {
+  IdentiteFormDefaultValues,
+  IdentiteFormValidationSchema
+} from "./sousFormulaires/identite/IdentiteForm";
 import RequerantForm, {
   RequerantFormDefaultValues,
   RequerantFormValidationSchema
 } from "./sousFormulaires/requerant/RequerantForm";
-import { getLibelle } from "../../common/widget/Text";
-import { SelectField } from "../../common/widget/formulaire/champsSaisie/SelectField";
-import { Options } from "../../common/util/Type";
-import "./scss/SaisirRDCSCPage.scss";
-import { SubFormProps } from "../../common/widget/formulaire/utils/FormUtil";
-import SaisirRequeteBoutons, {
-  SaisirRequeteBoutonsProps
-} from "./boutons/SaisirRequeteBoutons";
-import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
-import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { TypeRequerant } from "../../../model/requete/v2/enum/TypeRequerant";
-
-// Nom des sous-formulaires
-export const DOCUMENT = "document";
-export const INTERESSE = "interesse";
-export const REQUERANT = "requerant";
-export const ADRESSE = "adresse";
 
 // Valeurs par défaut des champs
 const DefaultValuesSaisirRDCSC = {
   [DOCUMENT]: "",
   [INTERESSE]: IdentiteFormDefaultValues,
   [REQUERANT]: RequerantFormDefaultValues,
-  [ADRESSE]: AdresseFormDefaultValues
+  [ADRESSE]: AdresseFormDefaultValues,
+  [PIECES_JOINTES]: null
 };
 
 // Schéma de validation en sortie de champs
@@ -51,9 +61,15 @@ const ValidationSchemaSaisirRDCSC = Yup.object({
 export const titreForm = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
 
 export const SaisirRDCSCPage: React.FC = () => {
+  const history = useHistory();
+
   const [documentDemandeOptions, setDocumentDemandeOptions] = useState<Options>(
     []
   );
+
+  const [creationRequeteRDCSC, setCreationRequeteRDCSC] = useState<
+    SaisieRequeteRDCSC
+  >();
 
   useState(async () => {
     const documentDelivrance = await DocumentDelivrance.getAllCertificatSituation();
@@ -64,15 +80,40 @@ export const SaisirRDCSCPage: React.FC = () => {
     getDocumentDemande(documentDemandeOptions),
     getInteresseForm(),
     getRequerantForm(),
-    getAdresseForm()
+    getAdresseForm(),
+    getPiecesJointesForm()
   ];
 
-  const onSubmitSaisirRDCSC = (values: any) => {};
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+
+  const idNouvelleRequete = useCreationRequeteDelivrance(
+    SousTypeDelivrance.RDCSC,
+    creationRequeteRDCSC
+  );
+
+  useEffect(() => {
+    if (idNouvelleRequete) {
+      // FIXME comportement à valider
+      messageManager.showInfoAndClose(
+        getLibelle("La requête a bien été enregistrée")
+      );
+      history.push(storeRece.retourUrl ? storeRece.retourUrl : URL_ACCUEIL);
+    }
+  }, [idNouvelleRequete, history]);
+
+  const onSubmitSaisirRDCSC = (values: SaisieRequeteRDCSC) => {
+    setOperationEnCours(true);
+    setCreationRequeteRDCSC({ ...values });
+  };
 
   const boutonsProps = {} as SaisirRequeteBoutonsProps;
 
   return (
     <>
+      <OperationEnCours
+        visible={operationEnCours}
+        onClick={() => setOperationEnCours(false)}
+      />
       <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
@@ -123,4 +164,12 @@ function getAdresseForm(): JSX.Element {
     titre: getLibelle("Adresse postale du requérant")
   } as SubFormProps;
   return <AdresseForm key={ADRESSE} {...adresseFormProps} />;
+}
+
+function getPiecesJointesForm(): JSX.Element {
+  const piecesJointesFormProps = {
+    nom: PIECES_JOINTES,
+    titre: getLibelle("Pièces justificatives")
+  } as SubFormProps;
+  return <PiecesJointesForm key={PIECES_JOINTES} {...piecesJointesFormProps} />;
 }

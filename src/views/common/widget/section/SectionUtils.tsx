@@ -12,7 +12,6 @@ export function ajouterPanelAreasAuPanel(
   title?: string
 ) {
   if (param) {
-    console.log(panel);
     panel.panelAreas.push({
       parts: fct(param),
       title,

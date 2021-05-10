@@ -1,18 +1,18 @@
-import { Field, Form, Formik } from "formik";
 import {
-  render,
-  waitFor,
   act,
+  fireEvent,
+  render,
   screen,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
+import { REQUERANT } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import RequerantForm, {
   RequerantFormDefaultValues,
   RequerantFormValidationSchema
 } from "../../../../../views/pages/saisirRequete/sousFormulaires/requerant/RequerantForm";
-import { REQUERANT } from "../../../../../views/pages/saisirRequete/SaisirRDCSCPage";
-import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { TypeRequerant } from "../../../../../model/requete/v2/enum/TypeRequerant";
 
 const HookRequerantForm: React.FC = () => {

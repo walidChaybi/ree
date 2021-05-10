@@ -1,7 +1,7 @@
 import React from "react";
 import { create } from "react-test-renderer";
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
-import { SelectDialog } from "../../../../views/common/widget/form/SelectDialog";
+import { SelectDialog } from "../../../../views/common/widget/selectDialog/SelectDialog";
 import { getText } from "../../../../views/common/widget/Text";
 import { act } from "react-test-renderer";
 

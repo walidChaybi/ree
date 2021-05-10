@@ -1,29 +1,29 @@
+import { connect } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import {
-  withNamespace,
-  SubFormProps,
-  NB_CARACT_MAX_SAISIE
-} from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../common/widget/Text";
+import { TypeMandataireReq } from "../../../../../../model/requete/v2/enum/TypeMandataireReq";
+import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../../common/widget/formulaire/champsSaisie/SelectField";
-import "./../scss/RequerantForm.scss";
-import { connect } from "formik";
+import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
 import {
   sortieChampEnMajuscule,
   sortieChampPremiereLettreEnMajuscule
 } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
-import { TypeMandataireReq } from "../../../../../../model/requete/v2/enum/TypeMandataireReq";
-
-// Noms des champs
-export const TYPE = "type";
-export const NATURE = "nature";
-export const RAISON_SOCIALE = "raisonSociale";
-export const NOM = "nom";
-export const PRENOM = "prenom";
+import {
+  NB_CARACT_MAX_SAISIE,
+  SubFormProps,
+  withNamespace
+} from "../../../../../common/widget/formulaire/utils/FormUtil";
+import { getLibelle } from "../../../../../common/widget/Text";
+import {
+  NATURE,
+  NOM,
+  PRENOM,
+  RAISON_SOCIALE,
+  TYPE
+} from "../../../modelForm/ISaisirRDCSCPageModel";
+import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
 export const MandataireFormDefaultValues = {

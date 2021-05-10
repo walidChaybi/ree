@@ -6,8 +6,12 @@ import { Options } from "../../../views/common/util/Type";
 
 export class NatureRca extends EnumWithLibelle {
   //AddEnum specifique aux nomenclatures !
-  public static addEnum(clazz: any, key: string, obj: NatureRca) {
-    clazz[key] = obj;
+  public static addEnum(key: string, obj: NatureRca) {
+    (NatureRca as any)[key] = obj;
+  }
+
+  public static clean() {
+    return EnumWithLibelle.clean(NatureRca);
   }
 
   public static getEnumFor(str: string) {

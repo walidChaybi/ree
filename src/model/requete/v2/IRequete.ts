@@ -1,7 +1,8 @@
 /* istanbul ignore file */
 
-import { numberToString } from "../../../views/common/util/Utils";
+import { IPieceJustificative } from "../../../views/common/types/RequeteType";
 import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
+import { numberToString } from "../../../views/common/util/Utils";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
 import { IMandant } from "./IMandant";
@@ -21,6 +22,7 @@ export interface IRequete {
   requerant: IRequerant;
   mandant?: IMandant;
   idUtilisateur: string; // FIXME Utile ?
+  piecesJustificatives: IPieceJustificative[];
 }
 
 export const Requete = {

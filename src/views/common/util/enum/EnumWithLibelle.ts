@@ -1,12 +1,21 @@
 import { Options } from "../Type";
-import { premiereLettreEnMajuscule } from "../Utils";
+import { changeLaPlaceDunElement, premiereLettreEnMajuscule } from "../Utils";
 
+const AUTRE = "autre";
 /* istanbul ignore file */
 export class EnumWithLibelle {
   constructor(private readonly _libelle: string) {}
 
   get libelle() {
     return this._libelle;
+  }
+
+  public static clean(clazz: any) {
+    for (const key in clazz) {
+      if (clazz.hasOwnProperty(key)) {
+        delete clazz[key];
+      }
+    }
   }
 
   public static getEnumFor(str: string, clazz: any) {
@@ -17,7 +26,8 @@ export class EnumWithLibelle {
   public static getAllLibellesAsOptions(
     clazz: any,
     inclureCodeDansLibelle = false,
-    tri = true
+    tri = true,
+    libelleAutreALaFin = true
   ): Options {
     const options: Options = [];
     for (const key in clazz) {
@@ -29,8 +39,29 @@ export class EnumWithLibelle {
         });
       }
     }
-    return tri
-      ? options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str))
-      : options;
+
+    if (tri) {
+      options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
+    }
+
+    // Placement du libellé "Autre" à la fin
+    if (libelleAutreALaFin) {
+      const indexLibelleAutre = options.findIndex(
+        option => option.str.toLocaleLowerCase() === AUTRE
+      );
+
+      changeLaPlaceDunElement(options, indexLibelleAutre, options.length - 1);
+    }
+
+    return options;
+  }
+
+  public static getCode(clazz: any, obj: any) {
+    for (const key in clazz) {
+      if (clazz.hasOwnProperty(key) && clazz[key]._libelle === obj._libelle) {
+        return key;
+      }
+    }
+    return "";
   }
 }

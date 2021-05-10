@@ -1,25 +1,25 @@
+import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import {
-  withNamespace,
-  SubFormProps,
-  NB_CARACT_MAX_SAISIE
-} from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../common/widget/Text";
+import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
-import "./../scss/RequerantForm.scss";
-import { connect } from "formik";
+import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
 import {
   sortieChampEnMajuscule,
   sortieChampPremiereLettreEnMajuscule
 } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
-
-// Noms des champs
-export const NOM_FAMILLE = "nomFamille";
-export const NOM_USAGE = "nomUsage";
-export const PRENOM = "prenom";
+import {
+  NB_CARACT_MAX_SAISIE,
+  SubFormProps,
+  withNamespace
+} from "../../../../../common/widget/formulaire/utils/FormUtil";
+import { getLibelle } from "../../../../../common/widget/Text";
+import {
+  NOM_FAMILLE,
+  NOM_USAGE,
+  PRENOM
+} from "../../../modelForm/ISaisirRDCSCPageModel";
+import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
 export const ParticulierFormDefaultValues = {

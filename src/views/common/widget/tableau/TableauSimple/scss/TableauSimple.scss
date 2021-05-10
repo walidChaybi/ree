@@ -1,0 +1,33 @@
+@import "../../../../../../scss/_colors";
+
+.TableauSimple {
+  border-collapse: collapse;
+  width: 100%;
+
+  // Entête
+  th {
+    text-align: left;
+    background-color: $application-color;
+    color: white;
+  }
+
+  // Lignes
+  // Couleur de fond une ligne sur deux
+  tr:nth-child(even) {
+    background-color: #ececec;
+  }
+
+  // Pour empêcher le curseur type "main" à cause du fichier Tableau.scss
+  tbody {
+    tr {
+      cursor: default;
+    }
+  }
+
+  // Cellules entête et tableau
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 0.3rem;
+  }
+}

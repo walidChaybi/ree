@@ -119,7 +119,8 @@ export class ApiManager {
       return Promise.resolve({
         body: dataCache.body,
         status: dataCache.status,
-        headers: dataCache.header
+        headers: dataCache.header,
+        inReceCache: true
       });
     } else {
       return this.fetchData(httpRequestConfig, true);

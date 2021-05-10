@@ -461,7 +461,6 @@ function getRequeteDelivranceInfo(
       EvenementReqDelivrance.getPays(requete.evenement)
     ]
   );
-  console.log(requete.documentDemande.libelle);
   ajouterContentPartAuPartUneValeur(
     infosRequete,
     getLibelle("Document"),

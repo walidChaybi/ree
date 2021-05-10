@@ -3,7 +3,6 @@ import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
-
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const configRequetesV2 = [
@@ -39,6 +38,10 @@ export const configRequetesV2 = [
       // Détail requête Délivrance
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d404") {
         return { data: ReponseAppelDetailRequeteDelivrance.data };
+      }
+
+      if (match[1] === "/requetes/delivrance") {
+        return { data: "1072bc37-f889-4365-8f75-912166b767dd" };
       }
     },
 

@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { RouterComponent } from "../../router/RouteComponent";
+import { logError } from "../../common/util/LogManager";
+import { storeRece } from "../../common/util/storeRece";
 import { FilAriane } from "../../common/widget/filAriane/FilAriane";
+import { routesRece } from "../../router/ReceRoutes";
 import { URL_ACCUEIL } from "../../router/ReceUrls";
+import { RouterComponent } from "../../router/RouteComponent";
 import {
   OfficierContext,
   OfficierContextProps
 } from "../contexts/OfficierContext";
 import { LoginPage } from "../login/LoginPage";
-import { logError } from "../../common/util/LogManager";
-import { routesRece } from "../../router/ReceRoutes";
 
 export const RetourContext = React.createContext(URL_ACCUEIL);
 export const Body: React.FC = () => {
   const [retourState, setRetourState] = useState<string>(URL_ACCUEIL);
+  storeRece.retourUrl = retourState;
 
   return (
     <>
