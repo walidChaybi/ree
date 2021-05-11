@@ -57,7 +57,7 @@ export function ajouterContentPartAuPartMultiValeurs(
   infos: string[]
 ) {
   if (libelle != null && infos != null && infos.length > 0) {
-    let infosNonVide: string[] = [];
+    const infosNonVide: string[] = [];
 
     infos.forEach((info: string) => {
       if (info != null && info !== "") {

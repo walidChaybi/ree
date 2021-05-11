@@ -3,7 +3,9 @@ import { rempliAGaucheAvecZero } from "./Utils";
 export const MIN_YEAR = 1900;
 export const MEP_YEAR = 2021;
 export const MIN_LENGTH_ANNEE = 4;
+
 const MAX_MONTH = 12;
+const NB_MILISECONDES_IN_SECONDE = 1000;
 export interface IDateCompose {
   jour?: string;
   mois?: string;
@@ -115,7 +117,7 @@ export function getDateString(date: Date): string {
 // Convertion d'un Timestamp (en secondes depuis 1970) en Date
 // Le Timestamp est multiplié par 1000 car new Date() (en millisecondes depuis 1970)
 export function getDateFromTimestamp(timestamp: number): Date {
-  return new Date(timestamp * 1000);
+  return new Date(timestamp * NB_MILISECONDES_IN_SECONDE);
 }
 
 export function estDateValide(dateCompose: IDateCompose) {

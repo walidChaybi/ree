@@ -73,7 +73,7 @@ export function getObservationsNumeroRequete(data: any): JSX.Element {
 export function getCellTitulaires(data: any): JSX.Element {
   const titulaires = data.titulaires;
   let titleTitulaires = "";
-  let celluleTitulaires: string[] = [];
+  const celluleTitulaires: string[] = [];
 
   if (titulaires != null && titulaires.length >= 1) {
     titulaires.forEach((titulaire: string) => {

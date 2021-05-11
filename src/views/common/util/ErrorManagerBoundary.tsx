@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import * as React from "react";
-import { logError } from "./LogManager";
+import { ErrorManager } from "./ErrorManager";
 
 interface LocalProps {
   remoteLog: boolean;
@@ -11,57 +11,7 @@ interface LocalState {
   hasError: boolean;
 }
 
-const erreurMsgUtilisateur = "Une erreur inattendue est survenue";
-export class ErrorManagerBoundary extends React.Component<
-  LocalProps,
-  LocalState
-> {
-  constructor(props: LocalProps) {
-    super(props);
-    this.addOnErrorManager();
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error: Error) {
-    return {
-      hasError: true
-      //error
-    };
-  }
-
-  public static defaultProps = {
-    debug: false,
-    remoteLog: false
-  };
-
-  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    logError({
-      error,
-      errorInfo,
-      messageUtilisateur: erreurMsgUtilisateur
-    });
-  }
-
-  private addOnErrorManager() {
-    if (!window.onerror) {
-      window.onerror = (message, src) => {
-        logError({
-          error: src,
-          messageUtilisateur: erreurMsgUtilisateur
-        });
-      };
-      window.addEventListener("unhandledrejection", event => {
-        logError({
-          error: event.promise,
-          errorInfo: event.reason,
-          messageUtilisateur: erreurMsgUtilisateur
-        });
-
-        event.preventDefault();
-      });
-    }
-  }
-
+export class ErrorManagerBoundary extends ErrorManager {
   public render() {
     if (this.state.hasError) {
       return <div className={"error"}>Erreur inattendue!</div>;
