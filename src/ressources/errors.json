@@ -20,6 +20,7 @@
       "FONC_8": "Carte bloquée après trois tentatives erronées du code PIN",
       "FONC_9": "Requête json invalide",
       "FONC_10": "Document à signer trop gros (> 600 Kio)",
+      "FONC_11": "Récupération des documents à signer impossible actuellement",
       "FONC_12": "Code PIN incorrect, votre carte est bloquée",
       "WEB_EXT1": "La signature électronique est actuellement indisponible ou n'est pas installée."
     }

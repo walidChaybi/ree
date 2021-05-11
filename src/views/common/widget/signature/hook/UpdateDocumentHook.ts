@@ -18,6 +18,7 @@ export function useUpdateDocumentApi(
     if (queryParameters !== undefined && queryParameters.length > 0) {
       patchDocumentsDelivresRequetes(queryParameters)
         .then(result => {
+          setErrorUpdateDocument(undefined);
           if (callBack !== undefined) {
             callBack();
           }

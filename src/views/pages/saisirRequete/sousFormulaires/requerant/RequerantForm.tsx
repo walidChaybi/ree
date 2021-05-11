@@ -1,7 +1,6 @@
 import { connect } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { TypeRequerant } from "../../../../../model/requete/v2/enum/TypeRequerant";
 import { RadioField } from "../../../../common/widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
 import {

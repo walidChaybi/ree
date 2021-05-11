@@ -162,7 +162,12 @@ export function useSignatureDocumentHook(
             .numeroRequete
       });
     }
-  }, [errorUpdateDocument, documentsByRequete, idRequetesToSign]);
+    // Attention ne pas dépendre de "documentsByRequete" ni de "idRequetesToSign" car si une erreur ce produit (plantage API maj)
+    //   alors "documentsByRequete" et "idRequetesToSign" sont remis à jour donc on repasse dans ce code
+    //   alors que updateDocumentQueryParamState et errorUpdateDocument n'ont pas bougés et documentsByRequete[idRequetesToSign[0]].documentsToSave = [].
+    //   => ceci provoque un plantage car documentsByRequete[idRequetesToSign[0]].documentsToSave[0] = undefined
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorUpdateDocument]);
 
   useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState);
 
@@ -347,38 +352,47 @@ function getDocumentAndSendToSignature(
         .idDocumentDelivre,
       GroupementDocument.DocumentDelivre,
       documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].mimeType
-    ).then(result => {
-      if (result.documentDelivre.taille > MaxLengthDocumentToSign) {
+    )
+      .then(result => {
+        if (result.documentDelivre.taille > MaxLengthDocumentToSign) {
+          setErrorsSignature({
+            numeroRequete:
+              documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
+                .numeroRequete,
+            erreurs: [{ code: "FONC_10", libelle: "", detail: "" }]
+          });
+        } else if (
+          isAllowedTypeDocumentToBeSigned(result.documentDelivre.typeDocument)
+        ) {
+          sendDocumentToSignature(
+            result,
+            pinCode,
+            documentsToSignWating,
+            idRequetesToSign,
+            handleBackFromWebExtension
+          );
+        } else {
+          changeDocumentToSign(
+            documentsToSignWating,
+            idRequetesToSign,
+            result.documentDelivre.contenu,
+            setDocumentsToSignWating
+          );
+
+          const currentRequeteProcessing =
+            documentsToSignWating[idRequetesToSign[0]];
+
+          processResultWebExtension(currentRequeteProcessing);
+        }
+      })
+      .catch(error => {
         setErrorsSignature({
           numeroRequete:
             documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
               .numeroRequete,
-          erreurs: [{ code: "FONC_10", libelle: "", detail: "" }]
+          erreurs: [{ code: "FONC_11", libelle: "", detail: "" }]
         });
-      } else if (
-        isAllowedTypeDocumentToBeSigned(result.documentDelivre.typeDocument)
-      ) {
-        sendDocumentToSignature(
-          result,
-          pinCode,
-          documentsToSignWating,
-          idRequetesToSign,
-          handleBackFromWebExtension
-        );
-      } else {
-        changeDocumentToSign(
-          documentsToSignWating,
-          idRequetesToSign,
-          result.documentDelivre.contenu,
-          setDocumentsToSignWating
-        );
-
-        const currentRequeteProcessing =
-          documentsToSignWating[idRequetesToSign[0]];
-
-        processResultWebExtension(currentRequeteProcessing);
-      }
-    });
+      });
   }
 }
 
