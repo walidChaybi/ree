@@ -62,7 +62,7 @@ export class ErrorManager extends React.Component<LocalProps, LocalState> {
   }
 
   public render() {
-    if (this.state.hasError && document.getElementsByClassName("Toastify")) {
+    if (this.state.hasError) {
       // Cas d'erreur ou la page n'a pas pu s'afficher à cause d'une erreur
       alert(
         getLibelle(

@@ -38,9 +38,14 @@ function logErrorOnScreen(errorMessage: string) {
 
 /* istanbul ignore next */
 function logErrorOnConsole(logErrorMgs: LogErrorMsg) {
-  console.error(
-    `Erreur inattendue: ${logErrorMgs.error}, info: ${logErrorMgs.errorInfo}`
-  );
+  if (logErrorMgs) {
+    console.error(`Erreur inattendue: ${JSON.stringify(logErrorMgs.error)}`);
+    if (logErrorMgs.errorInfo) {
+      console.error(`Info erreur: ${logErrorMgs.errorInfo}`);
+    }
+  } else {
+    console.error("Une erreur s'est produite");
+  }
 }
 
 function logErrorOnServer(logErrorMgs: LogErrorMsg) {

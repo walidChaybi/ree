@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
 import "./scss/ErrorsSignature.scss";
 import { getText } from "../../Text";
+import { logError } from "../../../util/LogManager";
 
 interface ErrorsSignatureProps {
   errors: SignatureErrors;
@@ -23,6 +24,8 @@ export const ErrorsSignature: React.FC<ErrorsSignatureProps> = ({ errors }) => {
     const errorsToDisplay: JSX.Element[] = [];
 
     errors.erreurs.forEach(error => {
+      const errorText = getText(`errors.pages.signature.${error.code}`);
+      logError({ error: errorText });
       errorsToDisplay.push(
         <ListItem alignItems="flex-start" key={errors.numeroRequete}>
           <ListItemText
@@ -30,11 +33,7 @@ export const ErrorsSignature: React.FC<ErrorsSignatureProps> = ({ errors }) => {
             primary={`${getText("signature.titreErreur")}${
               errors.numeroRequete
             }`}
-            secondary={
-              <React.Fragment>
-                {getText(`errors.pages.signature.${error.code}`)}
-              </React.Fragment>
-            }
+            secondary={<React.Fragment>{errorText}</React.Fragment>}
           />
         </ListItem>
       );
