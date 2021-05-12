@@ -1,10 +1,9 @@
-import { IEvenement } from "./IEvenement";
-import { ITitulaireActe } from "./ITitulaireActe";
-import { NatureActe } from "../enum/NatureActe";
 import { IPersonne } from "../commun/IPersonne";
-import { ICompositionCorps } from "./ICompositionCorps";
-import { IRegistre } from "./IRegistre";
+import { NatureActe } from "../enum/NatureActe";
 import { TypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
+import { IEvenement } from "./IEvenement";
+import { IRegistre } from "./IRegistre";
+import { ITitulaireActe } from "./ITitulaireActe";
 
 export interface IFicheActe {
   id: string;
@@ -12,7 +11,7 @@ export interface IFicheActe {
   evenement?: IEvenement;
   nature: NatureActe;
   personnes: IPersonne[];
-  compositionCorps?: ICompositionCorps;
+  estReecrit?: boolean;
   registre: IRegistre;
   dateDerniereMaj: Date;
   dateDerniereDelivrance: Date;
