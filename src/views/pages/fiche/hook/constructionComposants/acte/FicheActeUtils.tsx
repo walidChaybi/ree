@@ -1,20 +1,20 @@
-import { AccordionReceProps } from "../../../../../common/widget/accordion/AccordionRece";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { getTitulaires } from "./TitulairesActeUtils";
-import { getEvenement } from "./EvenementActeUtils";
-import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
-import { getFichesPersonneActe } from "../personne/FichePersonne";
 import React from "react";
-import { ActeImage } from "./ActeImage";
-import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
+import { Droit } from "../../../../../../model/Droit";
+import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
+import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 import {
   officierALeDroitSurLePerimetre,
   officierAutoriserSurLeTypeRegistre,
   officierHabiliterPourLeDroit
 } from "../../../../../../model/IOfficierSSOApi";
-import { Droit } from "../../../../../../model/Droit";
 import { PERIMETRE_MEAE } from "../../../../../../model/IPerimetre";
-import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
+import { AccordionReceProps } from "../../../../../common/widget/accordion/AccordionRece";
+import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
+import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
+import { getFichesPersonneActe } from "../personne/FichePersonne";
+import { ActeImage } from "./ActeImage";
+import { getEvenement } from "./EvenementActeUtils";
+import { getTitulaires } from "./TitulairesActeUtils";
 
 export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
   const idTypeRegistre = acte.registre.type.id;
@@ -61,9 +61,7 @@ function getPanelAreasActeImage(
           <ActeImage
             id={acte.id}
             estReecrit={
-              params.visuActe === "classique"
-                ? acte.compositionCorps?.estReecrit
-                : undefined
+              params.visuActe === "classique" ? acte.estReecrit : undefined
             }
           ></ActeImage>
         ),
