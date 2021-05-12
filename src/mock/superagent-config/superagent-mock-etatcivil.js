@@ -1,12 +1,3 @@
-import mockRC from "../data/RC.json";
-import mockRCA from "../data/RCA.json";
-import { ReponseAppelRMCActe } from "../data/RMCActe";
-import { ReponseAppelRMCInscription } from "../data/RMCInscription";
-import {
-  ReponseAppelNomenclatureNatureRC,
-  ReponseAppelNomenclatureNatureRCA
-} from "../data/nomenclatures";
-import { pacsModificationNotaire } from "../data/PACS";
 import {
   acte,
   acte1,
@@ -14,6 +5,15 @@ import {
   acte3,
   acte4
 } from "../../__tests__/pages/fiche/data/ficheActe";
+import {
+  ReponseAppelNomenclatureNatureRC,
+  ReponseAppelNomenclatureNatureRCA
+} from "../data/nomenclatures";
+import { pacsModificationNotaire } from "../data/PACS";
+import mockRC from "../data/RC.json";
+import mockRCA from "../data/RCA.json";
+import { ReponseAppelRMCActe } from "../data/RMCActe";
+import { ReponseAppelRMCInscription } from "../data/RMCInscription";
 
 export const configEtatcivil = [
   {
@@ -50,52 +50,35 @@ export const configEtatcivil = [
           "/repertoirecivil/pacs/85160d6e-893b-47c2-a9a8-b25573189f0c"
       ) {
         return { data: pacsModificationNotaire.data };
-      }
-
-      if (
-        match[1] ===
-          "/repertoirecivil/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f" ||
-        match[1] ===
-          "/repertoirecivil/acte/d8708d77-a359-4553-be72-1eb5f246d4da"
+      } else if (
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f" ||
+        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da"
       ) {
         return { data: acte };
-      }
-
-      if (
-        match[1] ===
-        "/repertoirecivil/acte/d8708d77-a359-4553-be72-1eb5f246d4dc"
-      ) {
+      } else if (match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc") {
         return { data: acte1 };
-      }
-
-      if (
-        match[1] ===
-        "/repertoirecivil/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8"
-      ) {
+      } else if (match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8") {
         return { data: acte2 };
-      }
-
-      if (
-        match[1] ===
-        "/repertoirecivil/acte/d8708d77-a359-4553-be72-1eb5f246d4db"
-      ) {
+      } else if (match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db") {
         return { data: acte3 };
-      }
-
-      if (
-        match[1] ===
-        "/repertoirecivil/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9"
-      ) {
+      } else if (match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9") {
         return { data: acte4 };
-      }
-
-      if (
-        // corps acte
-        match[1] ===
-          "/repertoirecivil/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g" ||
-        // texte acte
-        match[1] ===
-          "/repertoirecivil/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
+      } else if (
+        match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
+      ) {
+        return {
+          headers: [
+            {
+              "Content-Disposition": 'filename="unfichier.pdf"'
+            },
+            {
+              "content-type": "application/pdf"
+            }
+          ],
+          body: "contenubase64dupdf"
+        };
+      } else if (
+        match[1] === "/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
       ) {
         return {
           headers: [

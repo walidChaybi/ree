@@ -1,24 +1,51 @@
+import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
 import { IRMCRequest } from "../../model/rmc/acteInscription/envoi/IRMCRequest";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
-export const URL_ETAT_CIVIL = "/repertoirecivil";
 export const URL_ACTE = "/acte";
 export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
 export const URL_ACTE_RMC = "/acte/rmc";
-export const URL_ACTE_IMAGE = "/repertoirecivil/acte/corps";
-export const URL_ACTE_TEXTE = "/repertoirecivil/acte/texte";
+export const URL_ACTE_IMAGE = "/acte/corps";
+export const URL_ACTE_TEXTE = "/acte/texte";
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
 
+/**
+ * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
+ */
 export function getInformationsFiche(
-  categorie: string,
+  typeFiche: TypeFiche,
+  identifiant: string
+): Promise<any> {
+  if (typeFiche === TypeFiche.ACTE) {
+    return getInformationsFicheActe(identifiant);
+  } else {
+    return getInformationsFicheRepertoire(typeFiche, identifiant);
+  }
+}
+
+/**
+ * Récupération des informations des Fiches RC/RCA/PACS
+ */
+export function getInformationsFicheRepertoire(
+  typeFiche: TypeFiche,
   identifiant: string
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_ETAT_CIVIL}/${categorie}/${identifiant}`
+    uri: `/repertoirecivil/${typeFiche.toLowerCase()}/${identifiant}`
+  });
+}
+
+/**
+ * Récupération des informations des Fiches ACTE
+ */
+export function getInformationsFicheActe(identifiant: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `/acte/${identifiant}`
   });
 }
 
