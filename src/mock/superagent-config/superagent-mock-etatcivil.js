@@ -64,20 +64,9 @@ export const configEtatcivil = [
       } else if (match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9") {
         return { data: acte4 };
       } else if (
-        match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
-      ) {
-        return {
-          headers: [
-            {
-              "Content-Disposition": 'filename="unfichier.pdf"'
-            },
-            {
-              "content-type": "application/pdf"
-            }
-          ],
-          body: "contenubase64dupdf"
-        };
-      } else if (
+        // acte corps
+        match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g" ||
+        // acte texte
         match[1] === "/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
       ) {
         return {
