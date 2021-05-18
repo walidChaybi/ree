@@ -71,11 +71,12 @@ interface DocumentToSave {
   numeroRequete: number;
 }
 
-const MaxLengthDocumentToSign = 600000;
 const DIRECTION_TO_CALL_APP = "to-call-app";
 const CODE_ERREUR_NON_DISPO = "WEB_EXT1";
 const TIMER_SIGNATURE = "TimerContactWebExt";
 const SIGNATURE_TIMEOUT = parametres.signature.time_out_ms;
+const MAX_LEN_DOCUMENT_TO_SIGN_IN_BYTES =
+  parametres.signature.max_len_doc_in_bytes;
 
 const EVENT_NON_DISPO = {
   detail: {
@@ -354,7 +355,17 @@ function getDocumentAndSendToSignature(
       documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].mimeType
     )
       .then(result => {
-        if (result.documentDelivre.taille > MaxLengthDocumentToSign) {
+        if (!result.documentDelivre.contenu) {
+          setErrorsSignature({
+            numeroRequete:
+              documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
+                .numeroRequete,
+            erreurs: [{ code: "FONC_4", libelle: "", detail: "" }]
+          });
+        } else if (
+          result.documentDelivre.contenu.length >
+          MAX_LEN_DOCUMENT_TO_SIGN_IN_BYTES
+        ) {
           setErrorsSignature({
             numeroRequete:
               documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
