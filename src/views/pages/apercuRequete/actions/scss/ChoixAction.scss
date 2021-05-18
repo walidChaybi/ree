@@ -1,0 +1,36 @@
+@import "../../../../../scss/colors";
+
+.bloc-choix-action {
+  margin-top: 0.5em;
+  border: 1px solid;
+  border-color: $border-array;
+  border-radius: 0.25rem;
+  border-top: 0em;
+  width: 100%;
+}
+
+.select-choix-action {
+  background-image: url(../../../../../img/expand-close-blanc.svg);
+  background-color: #05659c;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1rem;
+  font-family: "NotoSansUI-Bold", sans-serif;
+  width: 60%;
+  margin: 0.5em;
+}
+
+.choix-action {
+  border-radius: 0.25rem;
+  text-align: center;
+  width: 100%;
+  .panel {
+    background-color: $application-color;
+    padding: 0.5em 1em 0.5em 1.325em;
+    margin: 0em;
+    color: white;
+    font-weight: bold;
+    border-radius: 0.25em 0.25em 0 0;
+  }
+}
