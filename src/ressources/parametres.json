@@ -3,6 +3,7 @@
     "time_out_ms": 1800000
   },
   "signature": {
-    "time_out_ms": 8000
+    "time_out_ms": 8000,
+    "max_len_doc_in_bytes": 5242880
   }
 }
