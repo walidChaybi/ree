@@ -89,10 +89,12 @@ function mapRcRca(data: any): IFicheRcRca {
       harmoniserNomPrenomsInteresse(interesse)
     );
   }
-  dataRcRca.dateDerniereDelivrance = getDateFromTimestamp(
-    data.dateDerniereDelivrance
-  );
-  dataRcRca.dateDerniereMaj = getDateFromTimestamp(data.dateDerniereMaj);
+  dataRcRca.dateDerniereDelivrance = data.dateDerniereDelivrance
+    ? getDateFromTimestamp(data.dateDerniereDelivrance)
+    : undefined;
+  dataRcRca.dateDerniereMaj = data.dateDerniereMaj
+    ? getDateFromTimestamp(data.dateDerniereMaj)
+    : undefined;
   dataRcRca.dateInscription = getDateFromTimestamp(data.dateInscription);
 
   dataRcRca.personnes = mapPersonnes(data.personnes, data.numero);
@@ -112,10 +114,12 @@ export function mapPacs(data: any) {
       (p as IPartenaire).nationalite = Nationalite.getEnumFor(p.nationalite);
     });
   }
-  dataPacs.dateDerniereDelivrance = getDateFromTimestamp(
-    data.dateDerniereDelivrance
-  );
-  dataPacs.dateDerniereMaj = getDateFromTimestamp(data.dateDerniereMaj);
+  dataPacs.dateDerniereDelivrance = data.dateDerniereDelivrance
+    ? getDateFromTimestamp(data.dateDerniereDelivrance)
+    : undefined;
+  dataPacs.dateDerniereMaj = data.dateDerniereMaj
+    ? getDateFromTimestamp(data.dateDerniereMaj)
+    : undefined;
   dataPacs.dateEnregistrementParAutorite = getDateFromTimestamp(
     data.dateEnregistrementParAutorite
   );
@@ -130,10 +134,12 @@ export function mapActe(data: any): IFicheActe {
   const dataActe: IFicheActe = data;
   dataActe.nature = NatureActe.getEnumFor(data.nature);
   dataActe.registre = mapRegistre(data.registre);
-  dataActe.dateDerniereDelivrance = getDateFromTimestamp(
-    data.dateDerniereDelivrance
-  );
-  dataActe.dateDerniereMaj = getDateFromTimestamp(data.dateDerniereMaj);
+  dataActe.dateDerniereDelivrance = data.dateDerniereDelivrance
+    ? getDateFromTimestamp(data.dateDerniereDelivrance)
+    : undefined;
+  dataActe.dateDerniereMaj = data.dateDerniereMaj
+    ? getDateFromTimestamp(data.dateDerniereMaj)
+    : undefined;
 
   dataActe.personnes = mapPersonnes(data.personnes, data.numero);
 

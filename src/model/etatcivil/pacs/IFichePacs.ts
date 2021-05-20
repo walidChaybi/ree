@@ -11,8 +11,8 @@ export interface IFichePacs {
   id: string;
   numero: string;
   annee: string;
-  dateDerniereMaj: Date;
-  dateDerniereDelivrance: Date;
+  dateDerniereMaj?: Date;
+  dateDerniereDelivrance?: Date;
   statut: StatutPacs;
   dateEnregistrementParAutorite: Date;
   dateInscription: Date;
