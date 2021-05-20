@@ -1,32 +1,31 @@
-@import "../../../../../scss/colors";
-
-.bloc-choix-action {
-  margin-top: 0.5em;
-  border: 1px solid;
-  border-color: $border-array;
-  border-radius: 0.25rem;
-  border-top: 0em;
-  width: 100%;
-}
-
-.select-choix-action {
-  background-image: url(../../../../../img/expand-close-blanc.svg);
+.menu-choix-action {
+  padding: 10px;
   background-color: #05659c;
   color: white;
   font-weight: bold;
   text-align: center;
   font-size: 1.1rem;
   font-family: "NotoSansUI-Bold", sans-serif;
-  width: 60%;
+  width: 70%;
   margin: 0.5em;
+  position: relative;
+  .icon-menu {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
 }
 
-.choix-action {
+.bloc-choix-action {
+  margin-top: 0.5em;
+  border: 1px solid;
+  border-color: #8080805c;
   border-radius: 0.25rem;
-  text-align: center;
+  border-top: 0em;
   width: 100%;
+  text-align: center;
   .panel {
-    background-color: $application-color;
+    background-color: #0579be;
     padding: 0.5em 1em 0.5em 1.325em;
     margin: 0em;
     color: white;

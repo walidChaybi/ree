@@ -13,8 +13,8 @@ export interface IFicheActe {
   personnes: IPersonne[];
   estReecrit?: boolean;
   registre: IRegistre;
-  dateDerniereMaj: Date;
-  dateDerniereDelivrance: Date;
+  dateDerniereMaj?: Date;
+  dateDerniereDelivrance?: Date;
   visibiliteArchiviste: TypeVisibiliteArchiviste;
 }
 

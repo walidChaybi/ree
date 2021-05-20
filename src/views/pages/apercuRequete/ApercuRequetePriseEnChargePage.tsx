@@ -25,7 +25,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     <>
       <title>{getLibelle("Aperçu de la requête en prise en charge")}</title>
       <h1>{getLibelle("Aperçu de la requête en prise en charge")}</h1>
-      <ChoixAction requete={detailRequeteState} />
+      <ChoixAction requete={detailRequeteState?.data} />
       <button
         onClick={() => {
           history.push(
