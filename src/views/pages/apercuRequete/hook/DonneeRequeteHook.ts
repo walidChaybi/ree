@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { reponseRequeteMapperUnitaire } from "../../espaceDelivrance/hook/DonneesRequeteHook";
+import { reponseRequeteMapperUnitaire } from "../../espaceDelivrance/v1/hook/DonneesRequeteHook";
 import { RequestsInformations } from "../ApercuRequetePage";
-import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
+import { IDataTable } from "../../../../model/requete/IDataTable";
 import { getRequete } from "../../../../api/appels/requeteApi";
 import { IQueryParametersPourRequete } from "../../../common/widget/signature/hook/SignatureDocumentHook";
 import { logError } from "../../../common/util/LogManager";

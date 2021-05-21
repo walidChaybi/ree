@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useRequeteDataApi } from "./hook/DonneeRequeteHook";
-import { IDataTable } from "../espaceDelivrance/MesRequetesPage";
+import { IDataTable } from "../../../model/requete/IDataTable";
 import {
   URL_MES_REQUETES,
   URL_REQUETES_SERVICE,

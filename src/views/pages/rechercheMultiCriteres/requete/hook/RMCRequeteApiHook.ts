@@ -1,20 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { rechercheMultiCriteresRequetes } from "../../../../../api/appels/requeteApi";
-import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
-import { IResultatRMCRequete } from "../../../../../model/rmc/requete/IResultatRMCRequete";
 import {
-  getDataTableau,
-  IDataTableau
+  IRequeteTableau,
+  mappingRequetesTableau
+} from "../../../../../model/requete/v2/IRequeteTableau";
+import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
+import {
+  getParamsTableau,
+  IParamsTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
-import { mappingCriteresRequete, mappingRequetes } from "./RMCRequeteMapping";
+import { mappingCriteresRequete } from "./RMCRequeteMapping";
 
 export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
-  const [dataRMCRequete, setDataRMCRequete] = useState<IResultatRMCRequete[]>();
+  const [dataRMCRequete, setDataRMCRequete] = useState<IRequeteTableau[]>();
   const [
     dataTableauRMCRequete,
     setDataTableauRMCRequete
-  ] = useState<IDataTableau>();
+  ] = useState<IParamsTableau>();
 
   useEffect(() => {
     if (criteres != null && criteres.valeurs != null) {
@@ -23,9 +26,9 @@ export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
       rechercheMultiCriteresRequetes(criteresRequest, criteres.range)
         .then((result: any) => {
           setDataRMCRequete(
-            mappingRequetes(result.body.data.resultatsRecherche)
+            mappingRequetesTableau(result.body.data.resultatsRecherche, true)
           );
-          setDataTableauRMCRequete(getDataTableau(result));
+          setDataTableauRMCRequete(getParamsTableau(result));
         })
         .catch(error => {
           logError({

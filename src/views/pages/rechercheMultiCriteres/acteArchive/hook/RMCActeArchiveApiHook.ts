@@ -3,8 +3,8 @@ import { rechercheMultiCriteresActes } from "../../../../../api/appels/etatcivil
 import { IRMCActeArchive } from "../../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import {
-  getDataTableau,
-  IDataTableau
+  getParamsTableau,
+  IParamsTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
 import { mappingActes, mappingCriteres } from "./RMCActeArchiveUtils";
@@ -16,7 +16,10 @@ export interface ICriteresRecherche {
 
 export function useRMCActeArchiveApiHook(criteres?: ICriteresRecherche) {
   const [dataRMCActe, setDataRMCActe] = useState<IResultatRMCActe[]>();
-  const [dataTableauRMCActe, setDataTableauRMCActe] = useState<IDataTableau>();
+  const [
+    dataTableauRMCActe,
+    setDataTableauRMCActe
+  ] = useState<IParamsTableau>();
   useEffect(() => {
     if (criteres != null && criteres.valeurs != null) {
       const criteresRequest = mappingCriteres(criteres.valeurs);
@@ -24,7 +27,7 @@ export function useRMCActeArchiveApiHook(criteres?: ICriteresRecherche) {
       rechercheMultiCriteresActes(criteresRequest, criteres.range)
         .then((result: any) => {
           setDataRMCActe(mappingActes(result.body.data.registres));
-          setDataTableauRMCActe(getDataTableau(result));
+          setDataTableauRMCActe(getParamsTableau(result));
         })
         .catch(error => {
           logError({

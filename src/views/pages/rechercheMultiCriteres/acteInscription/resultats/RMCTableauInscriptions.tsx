@@ -1,67 +1,46 @@
-import React, { useCallback, useState } from "react";
-import {
-  TableauRece,
-  TableauTypeColumn
-} from "../../../../common/widget/tableau/TableauRece";
-import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
-import {
-  commonHeadersTableauRMC,
-  natureHeadersTableauRMC,
-  goToLinkRMC
-} from "./RMCTableauCommun";
-import { FenetreFiche } from "../../../fiche/FenetreFiche";
-import {
-  TypeFiche,
-  FicheUtil
-} from "../../../../../model/etatcivil/enum/TypeFiche";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { HeaderTableauRMCInscription } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
+import React, { useCallback, useEffect, useState } from "react";
 import { Droit } from "../../../../../model/Droit";
+import {
+  FicheUtil,
+  TypeFiche
+} from "../../../../../model/etatcivil/enum/TypeFiche";
 import { officierALeDroitSurLePerimetre } from "../../../../../model/IOfficierSSOApi";
+import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getValeurOuVide } from "../../../../common/util/Utils";
+import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
+import { getLibelle } from "../../../../common/widget/Text";
+import { FenetreFiche } from "../../../fiche/FenetreFiche";
+import { getMessageZeroInscription } from "../hook/RMCActeInscriptionUtils";
+import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
+import {
+  determinerColonnes,
+  NB_INSCRIPTION_PAR_PAGE
+} from "./RMCTableauInscriptionsParams";
 
 export interface RMCResultatInscriptionProps {
+  typeRMC: TypeRMC;
   dataRMCInscription: IResultatRMCInscription[];
-  dataTableauRMCInscription: IDataTableau;
+  dataTableauRMCInscription: IParamsTableau;
   setRangeInscription?: (range: string) => void;
   resetTableauInscription?: boolean;
 }
 
-const NB_INSCRIPTION_PAR_PAGE = 5;
-
-const columnsTableau = [
-  ...commonHeadersTableauRMC,
-  new TableauTypeColumn({
-    keys: [HeaderTableauRMCInscription.NumeroRef],
-    title: "N° Réf."
-  }),
-  ...natureHeadersTableauRMC,
-  new TableauTypeColumn({
-    keys: [HeaderTableauRMCInscription.Type],
-    title: "Type"
-  }),
-  new TableauTypeColumn({
-    keys: [HeaderTableauRMCInscription.Statut],
-    title: "Statut fiche"
-  })
-];
-
 export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
+  typeRMC,
   dataRMCInscription,
   dataTableauRMCInscription,
   setRangeInscription,
   resetTableauInscription
 }) => {
   // Gestion du tableau
-  const rowsNumberState = dataTableauRMCInscription?.rowsNumberState
-    ? dataTableauRMCInscription?.rowsNumberState
-    : 0;
-  const nextDataLinkState = dataTableauRMCInscription?.nextDataLinkState
-    ? dataTableauRMCInscription?.nextDataLinkState
-    : "";
-  const previousDataLinkState = dataTableauRMCInscription?.previousDataLinkState
-    ? dataTableauRMCInscription?.previousDataLinkState
-    : "";
+  const [zeroInscription, setZeroInscription] = useState<JSX.Element>();
+
+  useEffect(() => {
+    if (dataRMCInscription && dataRMCInscription.length === 0) {
+      setZeroInscription(getMessageZeroInscription());
+    }
+  }, [dataRMCInscription]);
 
   const goToLink = useCallback(
     (link: string) => {
@@ -99,21 +78,46 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     categorie: getCategorieFiche(data.idInscription, dataRMCInscription)
   }));
 
+  // Gestion du clic sur une colonne de type checkbox
+  const [selected, setSelected] = useState<string[]>([]);
+  const onClickCheckbox = (
+    isChecked: boolean,
+    data: IResultatRMCInscription
+  ) => {
+    const selectedIndex = selected.indexOf(data?.idInscription);
+    let newSelected: string[] = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, data?.idInscription);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
+  };
+
   return (
     <>
       <TableauRece
         idKey={"idInscription"}
         onClickOnLine={onClickOnLine}
-        columnHeaders={columnsTableau}
+        columnHeaders={determinerColonnes(typeRMC, onClickCheckbox)}
         dataState={dataRMCInscription}
-        rowsNumberState={rowsNumberState}
-        nextDataLinkState={nextDataLinkState}
-        previousDataLinkState={previousDataLinkState}
+        paramsTableau={dataTableauRMCInscription}
         goToLink={goToLink}
         nbLignesParPage={NB_INSCRIPTION_PAR_PAGE}
         resetTableau={resetTableauInscription}
-      />
-
+        noRows={zeroInscription}
+      >
+        {typeRMC === "Auto" && selected.length > 0 && (
+          <div>{getLibelle(`${selected.length} élément(s) coché(s)`)}</div>
+        )}
+      </TableauRece>
       {etatFenetres && etatFenetres.length > 0 && (
         <>
           {etatFenetres.map((idInscription: string, index: number) => {

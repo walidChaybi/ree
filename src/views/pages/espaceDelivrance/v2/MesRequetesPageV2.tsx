@@ -1,0 +1,114 @@
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  IQueryParametersPourRequetesV2,
+  TypeAppelRequete
+} from "../../../../api/appels/requeteApi";
+import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
+import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
+import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
+import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
+import {
+  NB_LIGNES_PAR_APPEL,
+  SortOrder
+} from "../../../common/widget/tableau/TableUtils";
+import { TableauRece } from "../../../common/widget/tableau/v2/TableauRece";
+import { URL_MES_REQUETES_V2 } from "../../../router/ReceUrls";
+import {
+  dateStatutColumnHeaders,
+  requerantColumnHeaders,
+  requeteColumnHeaders,
+  StatutsRequetesEspaceDelivrance
+} from "./EspaceDelivranceParamsV2";
+import { goToLinkRequete } from "./EspaceDelivranceUtilsV2";
+import { useRequeteApi } from "./hook/DonneesRequeteHookV2";
+import "./scss/RequeteTableauV2.scss";
+
+const columnsMesRequestes = [
+  ...requeteColumnHeaders,
+  ...requerantColumnHeaders,
+  ...dateStatutColumnHeaders
+];
+
+interface MesRequetesPageProps {
+  miseAJourCompteur: () => void;
+  setParamsRMCAuto: (id: string, data: any[], urlWithParam: string) => void;
+}
+
+export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
+  const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
+
+  const [
+    linkParameters,
+    setLinkParameters
+  ] = React.useState<IQueryParametersPourRequetesV2>({
+    statuts: StatutsRequetesEspaceDelivrance,
+    tri: "dateStatut",
+    sens: "ASC",
+    range: `0-${NB_LIGNES_PAR_APPEL}`
+  });
+
+  const { dataState, paramsTableau } = useRequeteApi(
+    linkParameters,
+    TypeAppelRequete.MES_REQUETES
+  );
+
+  const goToLink = useCallback((link: string) => {
+    const queryParametersPourRequetes = goToLinkRequete(link, "requetes");
+    if (queryParametersPourRequetes) {
+      setLinkParameters(queryParametersPourRequetes);
+    }
+  }, []);
+
+  const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
+    const queryParameters = {
+      statuts: StatutsRequetesEspaceDelivrance,
+      tri,
+      sens,
+      range: `0-${NB_LIGNES_PAR_APPEL}`
+    };
+
+    setLinkParameters(queryParameters);
+  }, []);
+
+  /**
+   * Test sur cette fonction trop compliqué et longue à faire par rapport à la valeur ajouté
+   */
+  /* istanbul ignore next */
+  const handleReload = useCallback(() => {
+    setLinkParameters({ ...linkParameters });
+    if (props.miseAJourCompteur !== undefined) {
+      props.miseAJourCompteur();
+    }
+  }, [linkParameters, props]);
+
+  function onClickOnLine(idRequete: string, data: IRequeteTableau[]) {
+    props.setParamsRMCAuto(idRequete, data, URL_MES_REQUETES_V2);
+  }
+
+  useEffect(() => {
+    if (dataState && dataState.length === 0) {
+      setZeroRequete(getMessageZeroRequete());
+    }
+  }, [dataState]);
+
+  return (
+    <>
+      <TableauRece
+        idKey={"idRequete"}
+        sortOrderByState={linkParameters.tri}
+        sortOrderState={linkParameters.sens}
+        onClickOnLine={onClickOnLine}
+        columnHeaders={columnsMesRequestes}
+        dataState={dataState}
+        paramsTableau={paramsTableau}
+        goToLink={goToLink}
+        handleChangeSort={handleChangeSort}
+        handleReload={handleReload}
+        noRows={zeroRequete}
+      >
+        <BoutonSignature libelle={"pages.delivrance.action.signature"} />
+      </TableauRece>
+      <BoutonRetour />
+    </>
+  );
+};

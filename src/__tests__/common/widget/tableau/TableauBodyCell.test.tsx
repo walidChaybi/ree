@@ -1,7 +1,7 @@
-import React from "react";
 import { render } from "@testing-library/react";
-import { TableauBodyCell } from "../../../../views/common/widget/tableau/TableauBodyCell";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece";
+import React from "react";
+import { TableauBodyCell } from "../../../../views/common/widget/tableau/v1/TableauBodyCell";
+import { TableauTypeColumn } from "../../../../views/common/widget/tableau/v1/TableauRece";
 
 test("test des prioritées des requêtes", () => {
   const { getByText } = render(

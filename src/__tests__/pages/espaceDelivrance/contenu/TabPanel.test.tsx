@@ -1,6 +1,6 @@
-import React from "react";
 import { act, render, screen } from "@testing-library/react";
-import { TabPanel } from "../../../../views/pages/espaceDelivrance/EspaceDelivrancePage";
+import React from "react";
+import { TabPanel } from "../../../../views/pages/espaceDelivrance/v1/EspaceDelivrancePage";
 
 test("renders TabPanel renders correctly", () => {
   act(() => {

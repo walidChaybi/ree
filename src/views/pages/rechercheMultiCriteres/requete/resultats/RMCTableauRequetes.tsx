@@ -1,13 +1,13 @@
 import React, { useCallback } from "react";
-import { TableauRece } from "../../../../common/widget/tableau/TableauRece";
-import { columnsTableauRequete } from "./RMCTableauRequetesParams";
-import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
-import { IResultatRMCRequete } from "../../../../../model/rmc/requete/IResultatRMCRequete";
+import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
+import { TableauRece } from "../../../../common/widget/tableau/v1/TableauRece";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
+import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
 export interface RMCResultatRequetesProps {
-  dataRMCRequete: IResultatRMCRequete[];
-  dataTableauRMCRequete: IDataTableau;
+  dataRMCRequete: IRequeteTableau[];
+  dataTableauRMCRequete: IParamsTableau;
   setRangeRequete?: (range: string) => void;
   resetTableauRequete?: boolean;
 }

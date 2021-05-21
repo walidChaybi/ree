@@ -1,55 +1,38 @@
-import React, { useCallback, useState } from "react";
-
-import {
-  TableauRece,
-  TableauTypeColumn
-} from "../../../../common/widget/tableau/TableauRece";
-import { HeaderTableauRMCActe } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
-import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
-import {
-  commonHeadersTableauRMC,
-  natureHeadersTableauRMC,
-  goToLinkRMC
-} from "./RMCTableauCommun";
-import { FenetreFiche } from "../../../fiche/FenetreFiche";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import React, { useCallback, useEffect, useState } from "react";
 import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getValeurOuVide } from "../../../../common/util/Utils";
+import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
+import { getLibelle } from "../../../../common/widget/Text";
+import { FenetreFiche } from "../../../fiche/FenetreFiche";
+import { getMessageZeroActe } from "../hook/RMCActeInscriptionUtils";
+import { determinerColonnes, NB_ACTE_PAR_PAGE } from "./RMCTableauActesParams";
+import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
 
 export interface RMCResultatActeProps {
+  typeRMC: TypeRMC;
   dataRMCActe: IResultatRMCActe[];
-  dataTableauRMCActe: IDataTableau;
+  dataTableauRMCActe: IParamsTableau;
   setRangeActe?: (range: string) => void;
   resetTableauActe?: boolean;
 }
 
-const NB_ACTE_PAR_PAGE = 10;
-
-const columnsTableau = [
-  ...commonHeadersTableauRMC,
-  ...natureHeadersTableauRMC,
-  new TableauTypeColumn({
-    keys: [HeaderTableauRMCActe.Registre],
-    title: "Registre"
-  })
-];
-
 export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
+  typeRMC,
   dataRMCActe,
   dataTableauRMCActe,
   setRangeActe,
   resetTableauActe
 }) => {
   // Gestion du tableau
-  const rowsNumberState = dataTableauRMCActe?.rowsNumberState
-    ? dataTableauRMCActe?.rowsNumberState
-    : 0;
-  const nextDataLinkState = dataTableauRMCActe?.nextDataLinkState
-    ? dataTableauRMCActe?.nextDataLinkState
-    : "";
-  const previousDataLinkState = dataTableauRMCActe?.previousDataLinkState
-    ? dataTableauRMCActe?.previousDataLinkState
-    : "";
+  const [zeroActe, setZeroActe] = useState<JSX.Element>();
+
+  useEffect(() => {
+    if (dataRMCActe && dataRMCActe.length === 0) {
+      setZeroActe(getMessageZeroActe());
+    }
+  }, [dataRMCActe]);
 
   const goToLink = useCallback(
     (link: string) => {
@@ -79,26 +62,48 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
       setEtatFenetres(tableau);
     }
   };
-
   const datasFiches = dataRMCActe.map(data => ({
     identifiant: getValeurOuVide(data.idActe),
     categorie: TypeFiche.ACTE
   }));
+
+  // Gestion du clic sur une colonne de type checkbox
+  const [selected, setSelected] = useState<string[]>([]);
+  const onClickCheckbox = (isChecked: boolean, data: IResultatRMCActe) => {
+    const selectedIndex = selected.indexOf(data?.idActe);
+    let newSelected: string[] = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, data?.idActe);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
+  };
 
   return (
     <>
       <TableauRece
         idKey={"idActe"}
         onClickOnLine={onClickOnLine}
-        columnHeaders={columnsTableau}
+        columnHeaders={determinerColonnes(typeRMC, onClickCheckbox)}
         dataState={dataRMCActe}
-        rowsNumberState={rowsNumberState}
-        nextDataLinkState={nextDataLinkState}
-        previousDataLinkState={previousDataLinkState}
+        paramsTableau={dataTableauRMCActe}
         goToLink={goToLink}
         nbLignesParPage={NB_ACTE_PAR_PAGE}
         resetTableau={resetTableauActe}
-      />
+        noRows={zeroActe}
+      >
+        {typeRMC === "Auto" && selected.length > 0 && (
+          <div>{getLibelle(`${selected.length} élément(s) coché(s)`)}</div>
+        )}
+      </TableauRece>
 
       {etatFenetres && etatFenetres.length > 0 && (
         <>

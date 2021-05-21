@@ -1,8 +1,8 @@
+import { act, render, screen } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { useUtilisateurRequeteApi } from "../../../../views/pages/espaceDelivrance/hook/UtilisateurAssigneRequeteHook";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { screen, render, act } from "@testing-library/react";
+import { useUtilisateurRequeteApi } from "../../../../views/pages/espaceDelivrance/v1/hook/UtilisateurAssigneRequeteHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const params = {

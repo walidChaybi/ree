@@ -1,12 +1,12 @@
-import messageManager from "./messageManager";
 import moment from "moment";
-import { gestionnaireFeatureFlag } from "./featureFlag/gestionnaireFeatureFlag";
-import { FeatureFlag } from "./featureFlag/FeatureFlag";
-import {
-  postLog,
-  IQueryParameterPostLog
-} from "../../../api/appels/outiltechApi";
 import { ID_CORRELATION_HEADER_NAME } from "../../../api/ApiManager";
+import {
+  IQueryParameterPostLog,
+  postLog
+} from "../../../api/appels/outiltechApi";
+import { FeatureFlag } from "./featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "./featureFlag/gestionnaireFeatureFlag";
+import messageManager from "./messageManager";
 
 const TIME_OUT_MS = 2000;
 
@@ -24,7 +24,10 @@ export function logError(logErrorMgs: LogErrorMsg) {
     logErrorOnServer(logErrorMgs);
   }
   /* istanbul ignore next */
-  if (process.env.NODE_ENV === "development") {
+  if (
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "test"
+  ) {
     logErrorOnConsole(logErrorMgs);
   }
   if (logErrorMgs.messageUtilisateur) {

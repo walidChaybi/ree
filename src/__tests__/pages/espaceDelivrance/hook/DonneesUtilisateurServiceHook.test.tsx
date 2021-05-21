@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import { useUtilisateurApi } from "../../../../views/pages/espaceDelivrance/hook/DonneesUtilisateursServiceHook";
 import { configAgent } from "../../../../mock/superagent-config/superagent-mock-agent";
+import { useUtilisateurApi } from "../../../../views/pages/espaceDelivrance/v1/hook/DonneesUtilisateursServiceHook";
 
 const superagentMock = require("superagent-mock")(request, configAgent);
 

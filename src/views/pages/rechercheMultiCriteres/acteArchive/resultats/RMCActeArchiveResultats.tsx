@@ -1,16 +1,14 @@
 import React from "react";
-import { RMCTableauActes } from "../../acteInscription/resultats/RMCTableauActes";
-
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-
-import "../scss/RMCActeArchiveResultats.scss";
+import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getLibelle } from "../../../../common/widget/Text";
+import { RMCTableauActes } from "../../acteInscription/resultats/RMCTableauActes";
+import "../scss/RMCActeArchiveResultats.scss";
 
 export interface RMCActeArchiveResultatsProps {
   dataRMCActeArchive: IResultatRMCActe[];
-  dataTableauRMCActeArchive: IDataTableau;
+  dataTableauRMCActeArchive: IParamsTableau;
   setRangeActeArchive?: (range: string) => void;
   resetRMC?: boolean;
 }
@@ -18,13 +16,14 @@ export interface RMCActeArchiveResultatsProps {
 export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = props => {
   return (
     <div className="ResultatsRMC">
-      <Fieldset titre="Résultats de la recherche">
+      <Fieldset titre="Résultats de la recherche multi-critères">
         <div className="SubResultatsRMC">
           <div className="SousTitre">
             <span>{getLibelle("Recherche dans les registres")}</span>
           </div>
           {props.dataRMCActeArchive.length > 0 ? (
             <RMCTableauActes
+              typeRMC="Classique"
               dataRMCActe={props.dataRMCActeArchive}
               dataTableauRMCActe={props.dataTableauRMCActeArchive}
               setRangeActe={props.setRangeActeArchive}

@@ -1,5 +1,9 @@
 import { ReponseAppelDetailRequeteDelivrance } from "../data/DetailRequeteDelivrance";
 import {
+  ReponseAppelMesRequetes,
+  ReponseAppelRequetesService
+} from "../data/EspaceDelivrance";
+import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
@@ -21,6 +25,64 @@ export const configRequetesV2 = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
+      // Mes requetes (espace délivrance)
+      if (
+        match[1] ===
+        "/requetes/mesrequetes?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105"
+      ) {
+        return {
+          data: ReponseAppelMesRequetes,
+          headers: {
+            "content-range": "0-15/" + ReponseAppelMesRequetes.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+          }
+        };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/mesrequetes?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105"
+      ) {
+        return {
+          data: ReponseAppelMesRequetes,
+          headers: {
+            "content-range": "0-15/" + ReponseAppelMesRequetes.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+          }
+        };
+      }
+
+      // Requetes de mon service (espace délivrance)
+      if (
+        match[1] ===
+        "/requetes/requetesService?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105"
+      ) {
+        return {
+          data: ReponseAppelRequetesService,
+          headers: {
+            "content-range": "0-15/" + ReponseAppelRequetesService.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+          }
+        };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/requetesService?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105"
+      ) {
+        return {
+          data: ReponseAppelRequetesService,
+          headers: {
+            "content-range": "0-15/" + ReponseAppelRequetesService.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+          }
+        };
+      }
+
       // Nomenclatures requetes
       if (match[1] === "/nomenclature/DOCUMENT_DELIVRANCE") {
         return { data: ReponseAppelNomenclatureDocummentDelivrance.data };
@@ -40,6 +102,17 @@ export const configRequetesV2 = [
         return { data: ReponseAppelDetailRequeteDelivrance.data };
       }
 
+      // Compteurs requêtes A_SIGNER
+      if (match[1] === "/requetes/count?statuts=A_SIGNER") {
+        return { data: 20 };
+      }
+
+      // Utilisé dans UtilisateurAssigneRequeteHook.test
+      if (match[1] === "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc") {
+        return this.patch;
+      }
+
+      // Creation Requete Delivrance
       if (match[1] === "/requetes/delivrance") {
         return { data: "1072bc37-f889-4365-8f75-912166b767dd" };
       }

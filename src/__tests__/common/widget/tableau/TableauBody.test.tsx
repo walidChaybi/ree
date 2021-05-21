@@ -1,16 +1,16 @@
-import React from "react";
-import { TableauBody } from "../../../../views/common/widget/tableau/TableauBody";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Box } from "@material-ui/core";
+import LabelIcon from "@material-ui/icons/Label";
 import { render } from "@testing-library/react";
 import moment from "moment";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { FormatDate } from "../../../../views/common/util/DateUtils";
-import LabelIcon from "@material-ui/icons/Label";
-import { Box } from "@material-ui/core";
 import {
   getMessagePrioriteDeLaRequete,
   prioriteDeLaRequete
 } from "../../../../views/common/util/RequetesUtils";
+import { TableauBody } from "../../../../views/common/widget/tableau/v1/TableauBody";
+import { TableauTypeColumn } from "../../../../views/common/widget/tableau/v1/TableauRece";
 
 const subData = {
   sousTypeRequete: "RDC",

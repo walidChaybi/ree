@@ -5,18 +5,22 @@ import {
   DocumentsATraiter,
   DocumentsByRequete
 } from "./hook/SignatureDocumentHook";
-import { IDataTable } from "../../../pages/espaceDelivrance/MesRequetesPage";
+import { IDataTable } from "../../../../model/requete/IDataTable";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { getText } from "../Text";
 import { Button } from "reakit/Button";
 import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 import { normaliserNomOec } from "../../util/Utils";
-import { TableauDataToUse } from "../tableau/TableauRece";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
   uniqueSignature?: boolean;
   connectedUser?: IOfficierSSOApi;
+}
+
+export interface TableauDataToUse {
+  requetes?: IDataTable[];
+  reloadData?: (allRequestSigned: boolean) => void;
 }
 
 export const BoutonSignature: React.FC<
@@ -29,9 +33,10 @@ export const BoutonSignature: React.FC<
   connectedUser
 }) => {
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
-  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<
-    DocumentsByRequete
-  >({});
+  const [
+    documentsByRequeteToSign,
+    setDocumentsByRequeteToSign
+  ] = useState<DocumentsByRequete>({});
   const closePopin = useCallback(
     (showPopin: boolean, canReload: boolean) => {
       if (showWaitState && showPopin === false) {
@@ -68,7 +73,7 @@ export const BoutonSignature: React.FC<
           sousTypeRequete: requete.sousTypeRequete
         };
 
-        requete.reponse.documentsDelivres.forEach(document => {
+        requete.reponse.documentsDelivres.forEach((document: any) => {
           if (document.avecCtv === true) {
             documentsATraiter.documentsToSign.push({
               idDocumentDelivre: document.idDocumentDelivre,

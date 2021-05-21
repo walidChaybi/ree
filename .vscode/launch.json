@@ -33,6 +33,17 @@
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Chrome Debug",
+      "runtimeExecutable": "/usr/bin/chromium",
+      "url": "http://localhost/rece/rece-ui",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "/data/src/*": "${webRoot}/*"
+      }
     }
   ]
 }

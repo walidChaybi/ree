@@ -3,7 +3,7 @@ import { Text } from "../../../common/widget/Text";
 import "./scss/ResumeRequeteContent.scss";
 import { TitulaireInformation } from "./TitulaireInformation";
 import { QualiteRequerant } from "../../../../model/requete/QualiteRequerant";
-import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
+import { IDataTable } from "../../../../model/requete/IDataTable";
 import {
   getDateStringFromDateCompose,
   IDateCompose

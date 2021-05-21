@@ -1,12 +1,12 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "reakit/Button";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Badge from "@material-ui/core/Badge";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { Button } from "reakit/Button";
+import WithHabilitation from "../../common/util/habilitation/WithHabilitation";
 import { getText } from "../../common/widget/Text";
 import "../accueil/scss/BoutonAccueil.scss";
-import WithHabilitation from "../../common/util/habilitation/WithHabilitation";
 
 interface BoutonAccueilProps {
   messageId: string;
@@ -65,6 +65,10 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
 export const BoutonAccueilEspaceDelivrance = WithHabilitation(
   BoutonAccueil,
   "BoutonAccueilEspaceDelivrance"
+);
+export const BoutonAccueilEspaceDelivranceV2 = WithHabilitation(
+  BoutonAccueil,
+  "BoutonAccueilEspaceDelivranceV2"
 );
 export const BoutonAccueilEspaceMiseAjour = WithHabilitation(
   BoutonAccueil,

@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 
 import { Droit } from "../../../../model/Droit";
-import { gestionnaireFeatureFlag } from "../featureFlag/gestionnaireFeatureFlag";
 import { FeatureFlag } from "../featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../featureFlag/gestionnaireFeatureFlag";
 
 export interface IHabiliationDescription {
   nomComposant: NomComposantOuFonction;
@@ -27,6 +27,7 @@ export type NomComposant =
   | "BoutonAccueilRechercheActeOuInscription"
   | "BoutonAccueilTableauDeBord"
   | "BoutonAccueilEspaceDelivrance"
+  | "BoutonAccueilEspaceDelivranceV2"
   | "BoutonAccueilRechercheActe"
   | "BoutonAccueilTableau"
   | "AlerteActe"
@@ -67,6 +68,12 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilEspaceDelivrance",
+    unDesDroits: droitsSaufConsulterArchives,
+    comportementSiNonAutorise: { disabled: true },
+    visiblePourLesDroits: droitsSaufConsulterArchives
+  },
+  {
+    nomComposant: "BoutonAccueilEspaceDelivranceV2",
     unDesDroits: droitsSaufConsulterArchives,
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives

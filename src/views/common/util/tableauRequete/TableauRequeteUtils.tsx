@@ -1,0 +1,140 @@
+import { Box } from "@material-ui/core";
+import ClearIcon from "@material-ui/icons/Clear";
+import LabelIcon from "@material-ui/icons/Label";
+import ReportIcon from "@material-ui/icons/Report";
+import React from "react";
+import { Priorite } from "../../../../model/requete/v2/enum/Priorite";
+import { ITitulaireRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
+import { getLibelle } from "../../widget/Text";
+import { getDateStringFromDateCompose } from "../DateUtils";
+import { numberToString } from "../Utils";
+import "./scss/RequeteUtils.scss";
+
+export function prioriteDeLaRequete(priorite: string): string {
+  switch (Priorite.getEnumFor(priorite)) {
+    case Priorite.BASSE:
+      return "PrioriteBasse";
+    case Priorite.MOYENNE:
+      return "PrioriteMoyenne";
+    case Priorite.HAUTE:
+      return "PrioriteHaute";
+    default:
+      return "";
+  }
+}
+
+export function getIconPrioriteRequete(data: any): JSX.Element {
+  const priorite = data.priorite;
+  if (priorite && priorite !== "") {
+    return (
+      <Box
+        title={Priorite.getEnumFor(priorite).libelle}
+        aria-label={Priorite.getEnumFor(priorite).libelle}
+        aria-hidden={true}
+      >
+        <LabelIcon className={prioriteDeLaRequete(priorite)} />
+      </Box>
+    );
+  } else {
+    return (
+      <Box
+        title={getLibelle("Erreur priorité")}
+        aria-label={getLibelle("Erreur priorité")}
+        aria-hidden={true}
+      >
+        <ClearIcon className="ClearIcon" />
+      </Box>
+    );
+  }
+}
+
+export function getObservationsNumeroRequete(data: any): JSX.Element {
+  const observations = data.observations;
+  let titleObservations = "";
+
+  if (observations != null && observations.length >= 1) {
+    observations.forEach((observation: string) => {
+      titleObservations += `${observation}\n`;
+    });
+  }
+
+  return (
+    <>
+      {titleObservations !== "" && (
+        <Box
+          title={titleObservations}
+          aria-label={titleObservations}
+          aria-hidden={true}
+        >
+          <ReportIcon className="ReportIcon" />
+        </Box>
+      )}
+    </>
+  );
+}
+
+export function getCellTitulaires(data: any): JSX.Element {
+  const titulaires = data.titulaires;
+  let titleTitulaires = "";
+  const celluleTitulaires: string[] = [];
+
+  if (titulaires != null && titulaires.length >= 1) {
+    titulaires.forEach((titulaire: ITitulaireRequeteTableau) => {
+      celluleTitulaires.push(
+        `${titulaire.nom} ${
+          titulaire.prenoms[0] != null ? titulaire.prenoms[0] : ""
+        }`
+      );
+      titleTitulaires += `${titulaire.nom}`;
+      titulaire.prenoms.forEach((p: string) => {
+        const prenom = p != null ? ` ${p}` : "";
+        titleTitulaires += prenom;
+      });
+      titleTitulaires += `\n`;
+    });
+  }
+
+  return (
+    <div title={titleTitulaires}>
+      {celluleTitulaires.map((titulaire: string, index: number) => {
+        return <div key={titulaire.trim()}>{titulaire}</div>;
+      })}
+    </div>
+  );
+}
+
+export function getCellDatesNaissancesTitulaires(data: any): JSX.Element {
+  const titulaires = data.titulaires;
+  let titleTitulaires = "";
+  const celluleTitulaires: string[] = [];
+
+  if (titulaires != null && titulaires.length >= 1) {
+    titulaires.forEach((t: ITitulaireRequeteTableau) => {
+      const date = getDateStringFromDateCompose({
+        jour: numberToString(t.jourNaissance),
+        mois: numberToString(t.moisNaissance),
+        annee: numberToString(t.anneeNaissance)
+      });
+
+      celluleTitulaires.push(date);
+      titleTitulaires += `${date}\n`;
+    });
+  }
+
+  return (
+    <div title={titleTitulaires}>
+      {celluleTitulaires.map((titulaire: string, index: number) => {
+        return <div key={titulaire.trim()}>{titulaire}</div>;
+      })}
+    </div>
+  );
+}
+
+export function getMessageZeroRequete(): JSX.Element {
+  return (
+    <>
+      <ReportIcon />
+      <div>Aucune requête n'a été trouvé</div>
+    </>
+  );
+}

@@ -1,0 +1,16 @@
+.FormulaireSaisirRDCSC {
+  .DocumentInput {
+    margin: 1.5rem 2.5rem;
+    .BlockInput {
+      grid-template-columns: 20% 45%;
+    }
+    .BlockErreur {
+      margin-left: 20%;
+    }
+  }
+}
+
+.FormulaireSaisirRDAPC,
+.FormulaireSaisirRDCSC {
+  margin: 1.5rem 9rem;
+}

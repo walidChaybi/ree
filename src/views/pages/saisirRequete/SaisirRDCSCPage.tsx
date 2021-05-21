@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
+import { TypeRequerant } from "../../../model/requete/v2/enum/TypeRequerant";
 import messageManager from "../../common/util/messageManager";
 import { storeRece } from "../../common/util/storeRece";
 import { Options } from "../../common/util/Type";
@@ -26,7 +27,7 @@ import {
   REQUERANT,
   SaisieRequeteRDCSC
 } from "./modelForm/ISaisirRDCSCPageModel";
-import "./scss/SaisirRDCSCPage.scss";
+import "./scss/SaisirRequetePage.scss";
 import AdresseForm, {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
@@ -39,7 +40,6 @@ import RequerantForm, {
   RequerantFormDefaultValues,
   RequerantFormValidationSchema
 } from "./sousFormulaires/requerant/RequerantForm";
-import { TypeRequerant } from "../../../model/requete/v2/enum/TypeRequerant";
 
 // Valeurs par défaut des champs
 const DefaultValuesSaisirRDCSC = {
@@ -67,9 +67,10 @@ export const SaisirRDCSCPage: React.FC = () => {
     []
   );
 
-  const [creationRequeteRDCSC, setCreationRequeteRDCSC] = useState<
-    SaisieRequeteRDCSC
-  >();
+  const [
+    creationRequeteRDCSC,
+    setCreationRequeteRDCSC
+  ] = useState<SaisieRequeteRDCSC>();
 
   useState(async () => {
     const documentDelivrance = await DocumentDelivrance.getAllCertificatSituation();

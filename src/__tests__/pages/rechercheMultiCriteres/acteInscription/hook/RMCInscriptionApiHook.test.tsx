@@ -6,7 +6,7 @@ import {
   useRMCInscriptionApiHook
 } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { NB_LIGNES_PAR_APPEL } from "../../../../../views/common/widget/tableau/TableauRece";
+import { NB_LIGNES_PAR_APPEL } from "../../../../../views/common/widget/tableau/v1/TableauRece";
 import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);

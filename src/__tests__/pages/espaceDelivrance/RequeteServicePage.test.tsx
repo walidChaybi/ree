@@ -1,20 +1,13 @@
-import React from "react";
-import DONNEES_REQUETE from "../../../mock/data/requete";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
-import { act } from "react-dom/test-utils";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { mount } from "enzyme";
-import ReactDOM from "react-dom";
+import { createMemoryHistory } from "history";
+import React from "react";
+import { act } from "react-dom/test-utils";
+import { Router } from "react-router-dom";
 import request from "superagent";
+import DONNEES_REQUETE from "../../../mock/data/requete";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import { RequetesServicePage } from "../../../views/pages/espaceDelivrance/RequetesServicePage";
-import {
-  waitFor,
-  render,
-  screen,
-  getByTitle,
-  fireEvent
-} from "@testing-library/react";
+import { RequetesServicePage } from "../../../views/pages/espaceDelivrance/v1/RequetesServicePage";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 let container: Element | null;

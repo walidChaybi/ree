@@ -1,8 +1,8 @@
+import { cleanup, fireEvent, render } from "@testing-library/react";
 import React from "react";
-import { cleanup, render, fireEvent } from "@testing-library/react";
 import * as renderer from "react-test-renderer";
-import { TableauHeader } from "../../../../views/common/widget/tableau/TableauHeader";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece";
+import { TableauHeader } from "../../../../views/common/widget/tableau/v1/TableauHeader";
+import { TableauTypeColumn } from "../../../../views/common/widget/tableau/v1/TableauRece";
 
 const UN = 1;
 const DEUX = 2;

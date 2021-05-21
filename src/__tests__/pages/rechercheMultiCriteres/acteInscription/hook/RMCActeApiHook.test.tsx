@@ -3,7 +3,7 @@ import { render, waitFor, act, screen } from "@testing-library/react";
 import request from "superagent";
 import { useRMCActeApiHook } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { NB_LIGNES_PAR_APPEL } from "../../../../../views/common/widget/tableau/TableauRece";
+import { NB_LIGNES_PAR_APPEL } from "../../../../../views/common/widget/tableau/v1/TableauRece";
 import { ICriteresRecherche } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
 import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
 

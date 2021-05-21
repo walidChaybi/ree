@@ -1,9 +1,9 @@
-import React from "react";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import React from "react";
 import {
-  LinkTabMesRequetes,
-  a11yProps
-} from "../../../../views/pages/espaceDelivrance/contenu/LinkTabMesRequetes";
+  a11yProps,
+  LinkTabMesRequetes
+} from "../../../../views/pages/espaceDelivrance/v1/contenu/LinkTabMesRequetes";
 
 test("renders LinkTabMesRequetes renders correctly", () => {
   act(() => {
