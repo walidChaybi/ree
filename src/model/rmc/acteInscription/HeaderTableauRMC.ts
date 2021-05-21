@@ -8,11 +8,13 @@ export enum HeaderTableauRMC {
 }
 
 export enum HeaderTableauRMCActe {
-  Registre = "registre"
+  Registre = "registre",
+  Checkbox = "checkbox"
 }
 
 export enum HeaderTableauRMCInscription {
   NumeroRef = "numeroInscription",
   Type = "typeInscription",
-  Statut = "statutInscription"
+  Statut = "statutInscription",
+  Checkbox = "checkbox"
 }

@@ -2,7 +2,7 @@ import React from "react";
 import * as renderer from "react-test-renderer";
 import { render, screen } from "@testing-library/react";
 
-import { IDataTable } from "../../../../views/pages/espaceDelivrance/MesRequetesPage";
+import { IDataTable } from "../../../../model/requete/IDataTable";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
 import requetes from "../../../../mock/data/requetes.json";
 import { ResumeRequeteContent } from "../../../../views/pages/apercuRequete/contenu/ResumeRequeteContent";

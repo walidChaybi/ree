@@ -1,5 +1,6 @@
 import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
 import { IRMCRequest } from "../../model/rmc/acteInscription/envoi/IRMCRequest";
+import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/auto/hook/RMCAutoUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
@@ -11,6 +12,8 @@ export const URL_ACTE_IMAGE = "/acte/corps";
 export const URL_ACTE_TEXTE = "/acte/texte";
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
+export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
+export const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -113,5 +116,33 @@ export async function getNomenclatureEtatCivil(nom: string): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
     uri: `${URL_NOMENCLATURE}/${nom}`
+  });
+}
+
+export function rechercheMultiCriteresAutoActes(
+  criteres: ICriteresRMCAuto,
+  range?: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_ACTE_RMC_AUTO}`,
+    data: criteres,
+    parameters: {
+      range
+    }
+  });
+}
+
+export function rechercheMultiCriteresAutoInscription(
+  criteres: ICriteresRMCAuto,
+  range?: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_ETAT_CIVIL_RMC_AUTO}`,
+    data: criteres,
+    parameters: {
+      range
+    }
   });
 }

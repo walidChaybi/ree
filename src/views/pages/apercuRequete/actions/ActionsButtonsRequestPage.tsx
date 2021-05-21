@@ -2,7 +2,7 @@ import React from "react";
 import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import "./scss/ActionButtonsRequestPage.scss";
-import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
+import { IDataTable } from "../../../../model/requete/IDataTable";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { BoutonARetraiterSaga } from "./BoutonARetraiterSaga";
 import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";

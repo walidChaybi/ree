@@ -1,20 +1,20 @@
-import React from "react";
 import {
-  render,
   act,
-  screen,
   fireEvent,
+  render,
+  screen,
   waitFor
 } from "@testing-library/react";
-import { RMCTableauInscriptions } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
+import React from "react";
+import request from "superagent";
+import { userDroitConsulterPerimetreMEAE } from "../../../../../mock/data/connectedUserAvecDroit";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import request from "superagent";
 import { storeRece } from "../../../../../views/common/util/storeRece";
-import { userDroitConsulterPerimetreMEAE } from "../../../../../mock/data/connectedUserAvecDroit";
+import { RMCTableauInscriptions } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
@@ -90,4 +90,15 @@ test("Ouverture d'une inscription", async () => {
     const vue = screen.queryByText(titreAccordeaon);
     expect(vue).toBeNull();
   });
+});
+
+test("renders Resultat Inscription Recherche Multi Critères => Sans résultat", () => {
+  render(
+    <RMCTableauInscriptions
+      dataRMCInscription={[]}
+      dataTableauRMCInscription={{}}
+    />
+  );
+
+  expect(screen.getByText(/Aucune inscription n'a été trouvé/i)).toBeDefined();
 });

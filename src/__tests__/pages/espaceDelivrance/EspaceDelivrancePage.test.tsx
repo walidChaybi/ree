@@ -1,14 +1,14 @@
-import React from "react";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
-import EspaceDelivrancePage from "../../../views/pages/espaceDelivrance/EspaceDelivrancePage";
-import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
-import officier from "../../../mock/data/connectedUser.json";
-import { URL_ACCUEIL } from "../../../views/router/ReceUrls";
-import ReactDOM from "react-dom";
-import request from "superagent";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 import { act } from "@testing-library/react";
+import { createMemoryHistory } from "history";
+import React from "react";
+import ReactDOM from "react-dom";
+import { Router } from "react-router-dom";
+import request from "superagent";
+import officier from "../../../mock/data/connectedUser.json";
+import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
+import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
+import EspaceDelivrancePage from "../../../views/pages/espaceDelivrance/v1/EspaceDelivrancePage";
+import { URL_ACCUEIL } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

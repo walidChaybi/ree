@@ -1,27 +1,27 @@
 import React from "react";
-import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
-import { Formulaire } from "../../common/widget/formulaire/Formulaire";
 import * as Yup from "yup";
-import IdentiteForm, {
-  IdentiteFormDefaultValues,
-  IdentiteFormValidationSchema
-} from "./sousFormulaires/identite/IdentiteForm";
+import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
+import { TypeRequerantPacs } from "../../../model/requete/v2/enum/TypeRequerantPacs";
+import { Formulaire } from "../../common/widget/formulaire/Formulaire";
+import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
+import { SubFormProps } from "../../common/widget/formulaire/utils/FormUtil";
+import { getLibelle } from "../../common/widget/Text";
+import SaisirRequeteBoutons, {
+  SaisirRequeteBoutonsProps
+} from "./boutons/SaisirRequeteBoutons";
+import "./scss/SaisirRequetePage.scss";
 import AdresseForm, {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "./sousFormulaires/adresse/AdresseForm";
+import IdentiteForm, {
+  IdentiteFormDefaultValues,
+  IdentiteFormValidationSchema
+} from "./sousFormulaires/identite/IdentiteForm";
 import RequerantForm, {
   PartenairesFormDefaultValues,
   RequerantFormValidationSchema
 } from "./sousFormulaires/requerant/RequerantForm";
-import { getLibelle } from "../../common/widget/Text";
-import "./scss/SaisirRDCSCPage.scss";
-import { SubFormProps } from "../../common/widget/formulaire/utils/FormUtil";
-import SaisirRequeteBoutons, {
-  SaisirRequeteBoutonsProps
-} from "./boutons/SaisirRequeteBoutons";
-import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
-import { TypeRequerantPacs } from "../../../model/requete/v2/enum/TypeRequerantPacs";
 
 // Nom des sous-formulaires
 export const DOCUMENT = "document";

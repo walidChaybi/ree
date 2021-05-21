@@ -1,14 +1,15 @@
-import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece";
 import {
+  getCellDatesNaissancesTitulaires,
+  getCellTitulaires,
   getIconPrioriteRequete,
-  getObservationsNumeroRequete,
-  getCellTitulaires
-} from "../../../../common/util/requete/RequeteUtils";
+  getObservationsNumeroRequete
+} from "../../../../common/util/tableauRequete/TableauRequeteUtils";
+import { TableauTypeColumn } from "../../../../common/widget/tableau/v1/TableauRece";
 
 export enum HeaderTableauRequete {
   Observations = "observations",
   Numero = "numero",
-  NumeroSagaDila = "numeroSagaDila",
+  IdSagaDila = "idSagaDila",
   Type = "type",
   SousType = "sousType",
   Provenance = "provenance",
@@ -37,7 +38,7 @@ export const columnsTableauRequete = [
     style: { width: "100px" }
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRequete.NumeroSagaDila],
+    keys: [HeaderTableauRequete.IdSagaDila],
     title: "N° Saga/Dila",
     align: "center",
     style: { width: "100px" }
@@ -69,7 +70,8 @@ export const columnsTableauRequete = [
     keys: [HeaderTableauRequete.DatesNaissancesTitulaires],
     title: "Date(s) naissance(s)",
     align: "center",
-    dataIsArray: true
+    dataIsArray: true,
+    getElement: getCellDatesNaissancesTitulaires
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Requerant],

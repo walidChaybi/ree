@@ -9,7 +9,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Text } from "../../../common/widget/Text";
 import { ResumeRequeteContent } from "./ResumeRequeteContent";
-import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
+import { IDataTable } from "../../../../model/requete/IDataTable";
 
 interface ResumeRequeteProps {
   requete: IDataTable;

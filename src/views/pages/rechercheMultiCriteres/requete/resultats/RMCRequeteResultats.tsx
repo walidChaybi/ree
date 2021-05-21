@@ -1,14 +1,14 @@
 import React from "react";
-import "../scss/RMCRequeteResultats.scss";
+import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getLibelle } from "../../../../common/widget/Text";
+import "../scss/RMCRequeteResultats.scss";
 import { RMCTableauRequetes } from "./RMCTableauRequetes";
-import { IResultatRMCRequete } from "../../../../../model/rmc/requete/IResultatRMCRequete";
 
 export interface RMCRequeteResultatsProps {
-  dataRMCRequete: IResultatRMCRequete[];
-  dataTableauRMCRequete: IDataTableau;
+  dataRMCRequete: IRequeteTableau[];
+  dataTableauRMCRequete: IParamsTableau;
   setRangeRequete?: (range: string) => void;
   resetRMC?: boolean;
 }
@@ -16,7 +16,7 @@ export interface RMCRequeteResultatsProps {
 export const RMCRequeteResultats: React.FC<RMCRequeteResultatsProps> = props => {
   return (
     <div className="ResultatsRMC">
-      <Fieldset titre="Résultats de la recherche">
+      <Fieldset titre="Résultats de la recherche multi-critères">
         <div className="SubResultatsRMC">
           <div className="SousTitre">
             <span>{getLibelle("Liste des requêtes")}</span>

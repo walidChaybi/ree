@@ -1,33 +1,33 @@
 import React, { useState } from "react";
-import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import TitulaireFiltre, {
-  TitulaireFiltreProps,
-  TitulaireDefaultValues,
-  TitulaireValidationSchema
-} from "../filtres/titulaire/TitulaireFiltre";
 import * as Yup from "yup";
-import "./scss/RMCActeInscriptionPage.scss";
+import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { MIN_YEAR } from "../../../common/util/DateUtils";
+import { stockageDonnees } from "../../../common/util/stockageDonnees";
+import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
+import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
+import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
-  DatesDebutFinAnneeValidationSchema,
   DatesDebutFinAnneeDefaultValues,
-  DatesDebutFinAnneeFiltreProps
+  DatesDebutFinAnneeFiltreProps,
+  DatesDebutFinAnneeValidationSchema
 } from "../filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
-import {
-  ICriteresRecherche,
-  useRMCInscriptionApiHook
-} from "./hook/RMCInscriptionApiHook";
-import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
-import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableauRece";
 import RegistreRepertoireFiltre, {
   RegistreRepertoireDefaultValues,
   RegistreRepertoireFiltreProps,
   RegistreRepertoireValidationSchema
 } from "../filtres/registreReperoire/RegistreReperoireFiltre";
-import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { stockageDonnees } from "../../../common/util/stockageDonnees";
-import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
-import { MIN_YEAR } from "../../../common/util/DateUtils";
+import TitulaireFiltre, {
+  TitulaireDefaultValues,
+  TitulaireFiltreProps,
+  TitulaireValidationSchema
+} from "../filtres/titulaire/TitulaireFiltre";
+import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
+import {
+  ICriteresRecherche,
+  useRMCInscriptionApiHook
+} from "./hook/RMCInscriptionApiHook";
+import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
+import "./scss/RMCActeInscriptionPage.scss";
 
 // Nom des filtres
 export const TITULAIRE = "titulaire";
@@ -138,6 +138,7 @@ export const RMCActeInscriptionPage: React.FC = () => {
         dataRMCInscription &&
         dataTableauRMCInscription && (
           <RMCActeInscriptionResultats
+            typeRMC="Classique"
             dataRMCActe={dataRMCActe}
             dataTableauRMCActe={dataTableauRMCActe}
             dataRMCInscription={dataRMCInscription}

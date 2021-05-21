@@ -6,7 +6,7 @@ import RequeteFiltre, {
   RequeteValidationSchema
 } from "../filtres/requete/RequeteFiltre";
 import * as Yup from "yup";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableauRece";
+import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
 import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
 import { useRMCRequeteApiHook } from "./hook/RMCRequeteApiHook";
 import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";

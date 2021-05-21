@@ -179,6 +179,7 @@
       },
       "boutons": {
         "delivrance": "Espace délivrance",
+        "delivranceV2": "Espace délivrance V2",
         "miseAJour": "Espace mise à jour",
         "creation": "Espace création",
         "communication": "Communication avec les usagers",
@@ -189,6 +190,7 @@
       },
       "titles": {
         "delivrance": "Bouton pour accèder à l'espace délivrance",
+        "delivranceV2": "Bouton pour accèder à l'espace délivrance V2",
         "miseAJour": "Bouton pour accèder à l'espace mise à jour",
         "creation": "Bouton pour accèder à l'espace création",
         "communication": "Bouton pour accèder à la communication avec les usagers",

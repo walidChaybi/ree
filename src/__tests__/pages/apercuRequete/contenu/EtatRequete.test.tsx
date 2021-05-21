@@ -1,7 +1,7 @@
 import React from "react";
 import * as renderer from "react-test-renderer";
 import { render, screen } from "@testing-library/react";
-import { IDataTable } from "../../../../views/pages/espaceDelivrance/MesRequetesPage";
+import { IDataTable } from "../../../../model/requete/IDataTable";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { EtatRequete } from "../../../../views/pages/apercuRequete/contenu/EtatRequete";
 import requete from "../../../../mock/data/requete";

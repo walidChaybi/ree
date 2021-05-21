@@ -1,3 +1,8 @@
+export interface IUrlData {
+  url: string;
+  data: any;
+}
+
 export const URL_DECONNEXION = "/rece/Shibboleth.sso/Logout";
 
 export const URL_CONTEXT_APP = "/rece/rece-ui";
@@ -8,12 +13,24 @@ export const URL_REQUETES_SERVICE = `${URL_CONTEXT_APP}/requetesservice`;
 // Aperçu requête
 export const URL_MES_REQUETES_ID = `${URL_MES_REQUETES}/apercurequete/:idRequete`;
 export const URL_REQUETES_SERVICE_ID = `${URL_REQUETES_SERVICE}/apercurequete/:idRequete`;
-export const URL_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetepriseencharge/:idRequete`;
-export const URL_APERCU_REQUETE_TRAITEMENT_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetetraitement/:idRequete`;
-export const URL_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_CONTEXT_APP}/mesrequetes/apercurequetepriseencharge/apercurequetetraitement/:idRequete`;
+
+// Espace de délivrance V2
+export const URL_MES_REQUETES_V2 = `${URL_CONTEXT_APP}/mesrequetesv2`;
+export const URL_REQUETES_SERVICE_V2 = `${URL_CONTEXT_APP}/requetesservicev2`;
+
+// Aperçu requête V2
+export const URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_V2}/apercurequetepriseencharge/:idRequete`;
+export const URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID = `${URL_MES_REQUETES_V2}/apercurequetetraitement/:idRequete`;
+export const URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_V2}/apercurequetepriseencharge/apercurequetetraitement/:idRequete`;
+
+export const URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_REQUETES_SERVICE_V2}/apercurequetepriseencharge/:idRequete`;
+export const URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_REQUETES_SERVICE_V2}/apercurequetetraitement/:idRequete`;
+export const URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_REQUETES_SERVICE_V2}/apercurequetepriseencharge/apercurequetetraitement/:idRequete`;
+
 // Détail de la requête
 export const URL_MES_REQUETES_DETAIL_REQUETE_ID = `${URL_MES_REQUETES}/apercurequete/detailrequete/:idRequete`;
 export const URL_REQUETES_SERVICE_DETAIL_REQUETE_ID = `${URL_REQUETES_SERVICE}/apercurequete/detailrequete/:idRequete`;
+
 // RMC
 export const URL_RECHERCHE_ACTE_INSCRIPTION = `${URL_CONTEXT_APP}/rechercheacteinscription`;
 export const URL_RECHERCHE_ACTE = `${URL_CONTEXT_APP}/rechercheacte`;

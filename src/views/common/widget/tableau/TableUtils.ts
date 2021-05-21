@@ -1,6 +1,10 @@
 import moment from "moment";
 import { FormatDate } from "../../util/DateUtils";
 
+export const NB_LIGNES_PAR_APPEL = 105;
+
+export const NB_LIGNES_PAR_PAGE = 15;
+
 export type SortOrder = "ASC" | "DESC";
 
 export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -81,4 +85,55 @@ export function getPaginatedData<T>(
     (currentPage % numberOfPagesPerRequetes) * rowsPerPage,
     (currentPage % numberOfPagesPerRequetes) * rowsPerPage + rowsPerPage
   );
+}
+
+/**
+ * Regarde si la page d'après qui va s'afficher est en dehors des données stockée actuellement dans props.dataState
+ * Si c'est le cas il faudra refaire un appel serveur
+ */
+export function laProchainePageEstEnDehors(
+  newPage: number,
+  pageState: number,
+  rowsPerPageState: number,
+  multiplicateur: number
+) {
+  return (
+    newPage > pageState &&
+    newPage * rowsPerPageState >= NB_LIGNES_PAR_APPEL * multiplicateur &&
+    !(pageState * rowsPerPageState > NB_LIGNES_PAR_APPEL * multiplicateur)
+  );
+}
+
+/**
+ * Regarde si la page d'avant qui va s'afficher est en dehors des données stockée actuellement dans props.dataState
+ * Si c'est le cas il faudra refaire un appel serveur
+ */
+export function laPageDAvantEstEnDehors(
+  pageState: number,
+  newPage: number,
+  rowsPerPageState: number,
+  multiplicateur: number
+) {
+  return (
+    pageState > 0 &&
+    newPage < pageState &&
+    // La numérotation des pages commence à zéro donc c'est newPage+1 qu'il faut tester (= pageState car newPage < pageState)
+    pageState * rowsPerPageState <= NB_LIGNES_PAR_APPEL * (multiplicateur - 1)
+  );
+}
+
+export function getSortOrder(
+  columnKey: string,
+  sortOrderBy: string,
+  sortOrder: SortOrder
+): SortOrder {
+  let result: SortOrder = "ASC";
+  if (sortOrderBy !== columnKey) {
+    result = "ASC";
+  } else if (sortOrder === "ASC") {
+    result = "DESC";
+  } else if (sortOrder === "DESC") {
+    result = "ASC";
+  }
+  return result;
 }

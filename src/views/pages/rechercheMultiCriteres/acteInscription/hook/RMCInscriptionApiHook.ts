@@ -3,8 +3,8 @@ import { rechercheMultiCriteresInscriptions } from "../../../../../api/appels/et
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
-  getDataTableau,
-  IDataTableau
+  getParamsTableau,
+  IParamsTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
 import {
@@ -25,7 +25,7 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRecherche) {
   const [
     dataTableauRMCInscription,
     setDataTableauRMCInscription
-  ] = useState<IDataTableau>();
+  ] = useState<IParamsTableau>();
 
   useEffect(() => {
     if (criteres != null && criteres.valeurs != null) {
@@ -38,7 +38,7 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRecherche) {
             setDataRMCInscription(
               mappingInscriptions(result.body.data.repertoiresCiviles)
             );
-            setDataTableauRMCInscription(getDataTableau(result));
+            setDataTableauRMCInscription(getParamsTableau(result));
           })
           .catch(error => {
             logError({

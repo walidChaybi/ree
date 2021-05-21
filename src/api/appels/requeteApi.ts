@@ -9,6 +9,7 @@ import { ApiManager, HttpMethod } from "../ApiManager";
 
 export const URL_REQUETES_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES = "/requetes";
+export const URL_MES_REQUETES = "/requetes/mesrequetes";
 export const URL_REQUETES_COUNT = "/requetes/count";
 export const URL_DOCUMENTSELIVRES = "/documentsdelivres";
 export const URL_REQUETES_RMC = "/requetes/rmc";
@@ -33,6 +34,13 @@ export interface IQueryParametersPourRequetes {
   sens: SortOrder;
   range?: string;
   lastDateReaload?: string;
+}
+
+export interface IQueryParametersPourRequetesV2 {
+  statuts: string[];
+  tri: string;
+  sens: SortOrder;
+  range?: string;
 }
 
 export interface IQueryParameterUpdateDocument {
@@ -147,6 +155,47 @@ export function patchUtilisateurAssigneRequete(
   });
 }
 
+////////////////////////
+/*** API REQUETE V2 ***/
+////////////////////////
+
+export function getMesRequetes(
+  typeRequete: TypeAppelRequete,
+  listeStatuts: string,
+  queryParameters: IQueryParametersPourRequetesV2
+): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.GET,
+    uri:
+      typeRequete === TypeAppelRequete.REQUETE_SERVICE
+        ? URL_REQUETES_SERVICE
+        : URL_MES_REQUETES,
+    parameters: {
+      statuts: listeStatuts,
+      tri:
+        queryParameters.tri !== "prioriteRequete"
+          ? queryParameters.tri
+          : "dateStatut",
+      sens: queryParameters.sens,
+      range: queryParameters.range
+    }
+  });
+}
+
+export function getDetailRequete(idRequete: string): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_REQUETES}/${idRequete}`
+  });
+}
+
+export async function getNomenclatureRequete(nom: string): Promise<any> {
+  return apiV2.fetchCache({
+    method: HttpMethod.GET,
+    uri: `${URL_NOMENCLATURE}/${nom}`
+  });
+}
+
 export function rechercheMultiCriteresRequetes(
   criteres: IRMCRequestRequete,
   range?: string
@@ -161,20 +210,27 @@ export function rechercheMultiCriteresRequetes(
   });
 }
 
-////////////////////////
-/*** API REQUETE V2 ***/
-////////////////////////
-export function getDetailRequete(idRequete: string): Promise<any> {
+export function patchUtilisateurAssigneRequeteV2(
+  queryParameters: IQueryParametersAssigneRequetes
+): Promise<any> {
   return apiV2.fetch({
-    method: HttpMethod.GET,
-    uri: `${URL_REQUETES}/${idRequete}`
+    method: HttpMethod.PATCH,
+    uri: `${URL_REPONSES}/${queryParameters.idReponse}`,
+    parameters: {
+      nomOec: queryParameters.nomOec,
+      prenomOec: queryParameters.prenomOec
+    },
+    headers: []
   });
 }
 
-export async function getNomenclatureRequete(nom: string): Promise<any> {
-  return apiV2.fetchCache({
+export function getCompteurRequetesV2(): Promise<any> {
+  return apiV2.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}/${nom}`
+    uri: URL_REQUETES_COUNT,
+    parameters: {
+      statuts: "A_SIGNER"
+    }
   });
 }
 

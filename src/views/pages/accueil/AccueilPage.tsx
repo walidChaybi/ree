@@ -1,32 +1,37 @@
-import React from "react";
-import { Text, getText } from "../../common/widget/Text";
-import {
-  BoutonAccueilEspaceMiseAjour,
-  BoutonAccueilEspaceCreation,
-  BoutonAccueilCommunication,
-  BoutonAccueilRechercheRequete,
-  BoutonAccueilRechercheActeOuInscription,
-  BoutonAccueilEspaceDelivrance,
-  BoutonAccueilRechercheActe,
-  BoutonAccueilTableau
-} from "./BoutonAccueil";
-import "../accueil/scss/AccueilPage.scss";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import {
+  faChartBar,
+  faGavel,
   faPlusCircle,
   faSearch,
-  faGavel,
-  faChartBar,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 import logoRece from "../../../img/logo-rece.svg";
-import { Title } from "../../core/title/Title";
+import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
+import { getText, Text } from "../../common/widget/Text";
 import {
   OfficierContext,
   OfficierContextProps
 } from "../../core/contexts/OfficierContext";
+import { Title } from "../../core/title/Title";
+import "../accueil/scss/AccueilPage.scss";
+import {
+  BoutonAccueilCommunication,
+  BoutonAccueilEspaceCreation,
+  BoutonAccueilEspaceDelivrance,
+  BoutonAccueilEspaceDelivranceV2,
+  BoutonAccueilEspaceMiseAjour,
+  BoutonAccueilRechercheActe,
+  BoutonAccueilRechercheActeOuInscription,
+  BoutonAccueilRechercheRequete,
+  BoutonAccueilTableau
+} from "./BoutonAccueil";
 
 export const AccueilPage: React.FC = () => {
+  const etape2Active = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
+
   return (
     <div className="AccueilPage">
       <Title titleId={"pages.accueil.titre"} />
@@ -61,12 +66,21 @@ export const AccueilPage: React.FC = () => {
         )}
       </OfficierContext.Consumer>
       <div className="MenuAccueil">
-        <BoutonAccueilEspaceDelivrance
-          messageId="pages.accueil.boutons.delivrance"
-          pageUrl="mesrequetes"
-          iconFA={faGavel}
-          titleId="pages.accueil.titles.delivrance"
-        ></BoutonAccueilEspaceDelivrance>
+        {etape2Active ? (
+          <BoutonAccueilEspaceDelivranceV2
+            messageId="pages.accueil.boutons.delivranceV2"
+            pageUrl="mesrequetesV2"
+            iconFA={faGavel}
+            titleId="pages.accueil.titles.delivranceV2"
+          ></BoutonAccueilEspaceDelivranceV2>
+        ) : (
+          <BoutonAccueilEspaceDelivrance
+            messageId="pages.accueil.boutons.delivrance"
+            pageUrl="mesrequetes"
+            iconFA={faGavel}
+            titleId="pages.accueil.titles.delivrance"
+          ></BoutonAccueilEspaceDelivrance>
+        )}
         <BoutonAccueilEspaceMiseAjour
           messageId="pages.accueil.boutons.miseAJour"
           pageUrl="miseAJour"

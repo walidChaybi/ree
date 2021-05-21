@@ -6,7 +6,7 @@ export interface IParametresLienApi {
   range?: string;
 }
 
-export interface IDataTableau {
+export interface IParamsTableau {
   previousDataLinkState?: string;
   nextDataLinkState?: string;
   rowsNumberState?: number;
@@ -15,16 +15,16 @@ export interface IDataTableau {
 }
 
 export function parseLink(linkHeader: string) {
-  let nextLink;
-  let prevLink;
-  if (linkHeader.indexOf(`rel="next"`) > 0) {
+  let nextLink = "";
+  let prevLink = "";
+  if (linkHeader && linkHeader.indexOf(`rel="next"`) > 0) {
     nextLink = linkHeader
       .split(`;rel="next"`)[0]
       .replace("<", "")
       .replace(">", "");
     nextLink = `${nextLink}`;
   }
-  if (linkHeader.indexOf(`rel="prev"`) > 0) {
+  if (linkHeader && linkHeader.indexOf(`rel="prev"`) > 0) {
     prevLink = linkHeader
       .replace(`<${nextLink}>;rel="next",`, "")
       .split(`;rel="prev"`)[0]
@@ -38,18 +38,24 @@ export function parseLink(linkHeader: string) {
 const contentRange = "content-range";
 
 export function getRowsNumber(result: any) {
-  return +(result.headers[contentRange] as string).split("/")[1];
+  return result.headers[contentRange]
+    ? +(result.headers[contentRange] as string).split("/")[1]
+    : undefined;
 }
 
 export function getMinRange(result: any) {
-  return +(result.headers[contentRange] as string).split("/")[0].split("-")[0];
+  return result.headers[contentRange]
+    ? +(result.headers[contentRange] as string).split("/")[0].split("-")[0]
+    : undefined;
 }
 
 export function getMaxRange(result: any) {
-  return +(result.headers[contentRange] as string).split("/")[0].split("-")[1];
+  return result.headers[contentRange]
+    ? +(result.headers[contentRange] as string).split("/")[0].split("-")[1]
+    : undefined;
 }
 
-export function getDataTableau(result: any): IDataTableau {
+export function getParamsTableau(result: any): IParamsTableau {
   const { nextLink, prevLink } = parseLink(result.headers["link"]);
 
   return {

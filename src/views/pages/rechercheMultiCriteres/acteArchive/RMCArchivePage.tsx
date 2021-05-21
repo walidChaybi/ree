@@ -17,7 +17,7 @@ import {
   useRMCActeArchiveApiHook
 } from "./hook/RMCActeArchiveApiHook";
 import { RMCActeArchiveResultats } from "./resultats/RMCActeArchiveResultats";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableauRece";
+import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
 import RegistreArchiveFiltre, {
   RegistreArchiveDefaultValues,
   RegistreArchiveFiltreProps,

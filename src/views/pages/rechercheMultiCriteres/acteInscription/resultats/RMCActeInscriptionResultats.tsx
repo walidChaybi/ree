@@ -1,20 +1,20 @@
 import React from "react";
-import { RMCTableauActes } from "./RMCTableauActes";
-import { RMCTableauInscriptions } from "./RMCTableauInscriptions";
-
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-
-import "../scss/RMCActeInscriptionResultats.scss";
+import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { IDataTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getLibelle } from "../../../../common/widget/Text";
+import "../scss/RMCActeInscriptionResultats.scss";
+import { RMCTableauActes } from "./RMCTableauActes";
+import { TypeRMC } from "./RMCTableauCommun";
+import { RMCTableauInscriptions } from "./RMCTableauInscriptions";
 
 export interface RMCActeInscriptionResultatsProps {
+  typeRMC: TypeRMC;
   dataRMCActe: IResultatRMCActe[];
-  dataTableauRMCActe: IDataTableau;
+  dataTableauRMCActe: IParamsTableau;
   dataRMCInscription: IResultatRMCInscription[];
-  dataTableauRMCInscription: IDataTableau;
+  dataTableauRMCInscription: IParamsTableau;
   setRangeInscription?: (range: string) => void;
   setRangeActe?: (range: string) => void;
   resetRMC?: boolean;
@@ -22,24 +22,19 @@ export interface RMCActeInscriptionResultatsProps {
 
 export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = props => {
   return (
-    <div className="ResultatsRMC">
-      <Fieldset titre="Résultats de la recherche">
+    <div className={`ResultatsRMC${props.typeRMC}`}>
+      <Fieldset titre="Résultats de la recherche multi-critères">
         <div className="SubResultatsRMC">
           <div className="SousTitre">
             <span>{getLibelle("Recherche dans les registres")}</span>
           </div>
-          {props.dataRMCActe.length > 0 ? (
-            <RMCTableauActes
-              dataRMCActe={props.dataRMCActe}
-              dataTableauRMCActe={props.dataTableauRMCActe}
-              setRangeActe={props.setRangeActe}
-              resetTableauActe={props.resetRMC}
-            />
-          ) : (
-            <div className="AucunResultat">
-              {getLibelle("Aucun acte trouvé pour ces critères de recherche")}
-            </div>
-          )}
+          <RMCTableauActes
+            typeRMC={props.typeRMC}
+            dataRMCActe={props.dataRMCActe}
+            dataTableauRMCActe={props.dataTableauRMCActe}
+            setRangeActe={props.setRangeActe}
+            resetTableauActe={props.resetRMC}
+          />
         </div>
         <div className="SubResultatsRMC">
           <div className="SousTitre">
@@ -49,20 +44,13 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
               )}
             </span>
           </div>
-          {props.dataRMCInscription.length > 0 ? (
-            <RMCTableauInscriptions
-              dataRMCInscription={props.dataRMCInscription}
-              dataTableauRMCInscription={props.dataTableauRMCInscription}
-              setRangeInscription={props.setRangeInscription}
-              resetTableauInscription={props.resetRMC}
-            />
-          ) : (
-            <div className="AucunResultat">
-              {getLibelle(
-                "Aucune inscription trouvée pour ces critères de recherche"
-              )}
-            </div>
-          )}
+          <RMCTableauInscriptions
+            typeRMC={props.typeRMC}
+            dataRMCInscription={props.dataRMCInscription}
+            dataTableauRMCInscription={props.dataTableauRMCInscription}
+            setRangeInscription={props.setRangeInscription}
+            resetTableauInscription={props.resetRMC}
+          />
         </div>
       </Fieldset>
     </div>

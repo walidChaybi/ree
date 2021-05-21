@@ -1,18 +1,18 @@
-import React from "react";
 import {
-  render,
-  fireEvent,
   act,
-  waitFor,
-  screen
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
-import { RMCTableauActes } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
+import React from "react";
+import request from "superagent";
 import {
   DataRMCActeAvecResultat,
   DataTableauActe
 } from "../../../../../mock/data/RMCActe";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import request from "superagent";
+import { RMCTableauActes } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => {
@@ -148,3 +148,9 @@ async function verifieFiche(titreBandeau: string) {
     expect(vue).toBeDefined();
   });
 }
+
+test("renders Resultat Acte Recherche Multi Critères => Sans résultat", () => {
+  render(<RMCTableauActes dataRMCActe={[]} dataTableauRMCActe={{}} />);
+
+  expect(screen.getByText(/Aucun acte n'a été trouvé/i)).toBeDefined();
+});

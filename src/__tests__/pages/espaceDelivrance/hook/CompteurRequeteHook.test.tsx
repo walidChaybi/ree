@@ -1,8 +1,8 @@
+import { act, render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { useCompteurRequeteHook } from "../../../../views/pages/espaceDelivrance/hook/CompteurRequeteHook";
-import { render, waitFor, act } from "@testing-library/react";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { useCompteurRequeteHook } from "../../../../views/pages/espaceDelivrance/v1/hook/CompteurRequeteHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 

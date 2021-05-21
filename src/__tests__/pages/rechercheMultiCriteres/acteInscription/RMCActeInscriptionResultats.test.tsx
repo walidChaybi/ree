@@ -1,6 +1,5 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
-import { RMCActeInscriptionResultats } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
+import React from "react";
 import {
   DataRMCActeAvecResultat,
   DataTableauActe
@@ -9,10 +8,12 @@ import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "../../../../mock/data/RMCInscription";
+import { RMCActeInscriptionResultats } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(
     <RMCActeInscriptionResultats
+      typeRMC="Classique"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
       dataRMCInscription={[]}
@@ -22,8 +23,8 @@ test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
 
   const titre = container.getElementsByClassName("Titre").item(0)
     ?.firstElementChild?.innerHTML;
-  expect(titre).toEqual("Résultats de la recherche");
 
+  expect(titre).toEqual("Résultats de la recherche multi-critères");
   expect(screen.getByText(/Recherche dans les registres/i)).toBeDefined();
 
   expect(
@@ -31,16 +32,12 @@ test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
       /Recherche dans les repertoires de greffe et registre des PACS étrangers/i
     )
   ).toBeDefined();
-  expect(
-    screen.getByText(
-      /Aucune inscription trouvée pour ces critères de recherche/i
-    )
-  ).toBeDefined();
 });
 
 test("renders Fielset Recherche Multi Critères => Seulement des inscriptions", () => {
   const { container } = render(
     <RMCActeInscriptionResultats
+      typeRMC="Classique"
       dataRMCActe={[]}
       dataTableauRMCActe={{}}
       dataRMCInscription={DataRMCInscriptionAvecResultat}
@@ -50,13 +47,9 @@ test("renders Fielset Recherche Multi Critères => Seulement des inscriptions", 
 
   const titre = container.getElementsByClassName("Titre").item(0)
     ?.firstElementChild?.innerHTML;
-  expect(titre).toEqual("Résultats de la recherche");
+  expect(titre).toEqual("Résultats de la recherche multi-critères");
 
   expect(screen.getByText(/Recherche dans les registres/i)).toBeDefined();
-
-  expect(
-    screen.getByText(/Aucun acte trouvé pour ces critères de recherche/i)
-  ).toBeDefined();
 
   expect(
     screen.getByText(

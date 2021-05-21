@@ -1,0 +1,64 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import { act } from "react-dom/test-utils";
+import request from "superagent";
+import {
+  IQueryParametersPourRequetes,
+  TypeAppelRequete
+} from "../../../../api/appels/requeteApi";
+import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { StatutRequete } from "../../../../model/requete/StatutRequete";
+import { useRequeteApi } from "../../../../views/pages/espaceDelivrance/v2/hook/DonneesRequeteHookV2";
+
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
+
+const queryParam: IQueryParametersPourRequetes = {
+  statuts: [StatutRequete.ASigner],
+  tri: "idSagaDila",
+  sens: "ASC"
+};
+let container: Element | null;
+
+const HookConsummer: React.FC = () => {
+  const { dataState = [] } = useRequeteApi(
+    queryParam,
+    TypeAppelRequete.MES_REQUETES
+  );
+  return (
+    <>
+      {dataState.map(element => {
+        return (
+          <div key={element.idRequete} data-testid={element.idRequete}>
+            {element.idRequete}
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+beforeEach(() => {
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+  if (container instanceof Element) {
+    document.body.removeChild<Element>(container);
+  }
+  container = null;
+});
+
+test("monter un composant de test pour vérifier que tout va bien", async () => {
+  await act(async () => {
+    ReactDOM.render(<HookConsummer />, container);
+    expect(container).toBeInstanceOf(Element);
+    if (container instanceof Element) {
+      expect(container.querySelector).toBeTruthy();
+    }
+  });
+});
+
+afterAll(() => {
+  superagentMock.unset();
+});

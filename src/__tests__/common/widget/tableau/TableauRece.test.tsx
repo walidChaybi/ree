@@ -4,7 +4,7 @@ import { screen, render, fireEvent } from "@testing-library/react";
 import {
   TableauRece,
   TableauTypeColumn
-} from "../../../../views/common/widget/tableau/TableauRece";
+} from "../../../../views/common/widget/tableau/v1/TableauRece";
 import { HeaderTableauRequete } from "../../../../model/requete/HeaderTableauRequete";
 import requetes from "../../../../mock/data/requetes.json";
 import { createMemoryHistory } from "history";

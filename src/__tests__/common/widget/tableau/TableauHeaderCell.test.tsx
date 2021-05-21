@@ -1,8 +1,8 @@
+import { cleanup, fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
-import { cleanup, render, fireEvent, waitFor } from "@testing-library/react";
 import * as renderer from "react-test-renderer";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece";
-import { TableauHeaderCell } from "../../../../views/common/widget/tableau/TableauHeaderCell";
+import { TableauHeaderCell } from "../../../../views/common/widget/tableau/v1/TableauHeaderCell";
+import { TableauTypeColumn } from "../../../../views/common/widget/tableau/v1/TableauRece";
 
 test("renders header tableau des requêtes de l'application", () => {
   const func = jest.fn();

@@ -3,8 +3,8 @@ import "./scss/EtatRequete.scss";
 import { getText } from "../../../common/widget/Text";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import classNames from "classnames";
-import { IDataTable } from "../../espaceDelivrance/MesRequetesPage";
-import { IReponseApi } from "../../espaceDelivrance/hook/DonneesRequeteHook";
+import { IDataTable } from "../../../../model/requete/IDataTable";
+import { IReponseApi } from "../../espaceDelivrance/v1/hook/DonneesRequeteHook";
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../../common/util/Utils";
 
 interface EtatRequeteProps {
