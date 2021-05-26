@@ -1,0 +1,19 @@
+@import "../../../../../../../scss/colors";
+
+.CheckboxColumn {
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  .MuiCheckbox-colorSecondary.Mui-checked {
+    color: $application-color !important;
+  }
+
+  .Checkbox {
+    color: $button-application-color;
+  }
+
+  .WarningIcon {
+    color: $alertes;
+    margin: auto;
+  }
+}

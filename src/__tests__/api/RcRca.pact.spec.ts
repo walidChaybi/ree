@@ -1,10 +1,9 @@
 /* istanbul ignore file */
 
+import { Interaction, InteractionObject, Pact } from "@pact-foundation/pact";
 import path from "path";
-import { Pact, InteractionObject, Interaction } from "@pact-foundation/pact";
 import { ApiPact } from "./ApiPact";
 import { rcPact } from "./rc.pact";
-import { URL_ETAT_CIVIL } from "../../api/appels/etatcivilApi";
 
 const provider = new Pact({
   consumer: "rece-rc-ui",
@@ -29,7 +28,8 @@ describe("API Pact test", () => {
   });
 
   describe("getting rc", () => {
-    const uri = "/rece-etatcivil-api/v1" + URL_ETAT_CIVIL;
+    const uri =
+      "/rece-etatcivil-api/v1/repertoirecivil/rc/7566e16c-2b0e-11eb-adc1-0242ac120002";
 
     const expectedResult = {
       hasTechnicalError: false,

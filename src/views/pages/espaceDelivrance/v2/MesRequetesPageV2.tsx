@@ -31,7 +31,12 @@ const columnsMesRequestes = [
 
 interface MesRequetesPageProps {
   miseAJourCompteur: () => void;
-  setParamsRMCAuto: (id: string, data: any[], urlWithParam: string) => void;
+  setParamsRMCAuto: (
+    id: string,
+    data: any[],
+    urlWithParam: string,
+    idx: number
+  ) => void;
 }
 
 export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
@@ -81,8 +86,12 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
     }
   }, [linkParameters, props]);
 
-  function onClickOnLine(idRequete: string, data: IRequeteTableau[]) {
-    props.setParamsRMCAuto(idRequete, data, URL_MES_REQUETES_V2);
+  function onClickOnLine(
+    idRequete: string,
+    data: IRequeteTableau[],
+    idx: number
+  ) {
+    props.setParamsRMCAuto(idRequete, data, URL_MES_REQUETES_V2, idx);
   }
 
   useEffect(() => {

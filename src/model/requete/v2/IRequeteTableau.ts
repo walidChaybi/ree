@@ -30,6 +30,8 @@ export interface IRequeteTableau {
   statut?: string;
   priorite?: string;
   observations?: string[];
+  idUtilisateur?: string;
+  idCorbeilleAgent?: string;
 }
 
 export interface ITitulaireRequeteTableau {
@@ -73,7 +75,9 @@ export function mappingRequetesTableau(
       priorite: getValeurOuVide(requete.priorite),
       observations: mappingSupplementaire
         ? getObservations(requete.observations)
-        : requete.observations
+        : requete.observations,
+      idUtilisateur: getValeurOuVide(requete.idUtilisateur),
+      idCorbeilleAgent: getValeurOuVide(requete.idCorbeilleAgent)
     };
 
     requetesMapper.push(requeteMapper);

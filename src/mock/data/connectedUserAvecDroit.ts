@@ -1,8 +1,9 @@
-import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
 import { Droit } from "../../model/Droit";
+import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
 
 export const userDroitConsulterArchive: IOfficierSSOApi = {
   idSSO: "idSSOConnectedUser",
+  idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
   prenom: "prenomConnectedUser",
   trigramme: "trigrammeConnectedUser",
@@ -35,6 +36,7 @@ export const userDroitConsulterArchive: IOfficierSSOApi = {
 
 export const userDroitConsulterConsulterArchive: IOfficierSSOApi = {
   idSSO: "idSSOConnectedUser",
+  idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
   prenom: "prenomConnectedUser",
   trigramme: "trigrammeConnectedUser",
@@ -70,6 +72,7 @@ export const userDroitConsulterConsulterArchive: IOfficierSSOApi = {
 
 export const userDroitConsulterPerimetreMEAE: IOfficierSSOApi = {
   idSSO: "idSSOConnectedUser",
+  idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
   prenom: "prenomConnectedUser",
   trigramme: "trigrammeConnectedUser",
@@ -102,6 +105,7 @@ export const userDroitConsulterPerimetreMEAE: IOfficierSSOApi = {
 
 export const userDroitConsulterPerimetreTUNIS: IOfficierSSOApi = {
   idSSO: "idSSOConnectedUser",
+  idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
   prenom: "prenomConnectedUser",
   trigramme: "trigrammeConnectedUser",

@@ -6,6 +6,7 @@ import { ApiManager, HttpMethod } from "../ApiManager";
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
 export const URL_ACTE = "/acte";
+export const URL_ETAT_CIVIL = "/repertoirecivil";
 export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
 export const URL_ACTE_RMC = "/acte/rmc";
 export const URL_ACTE_IMAGE = "/acte/corps";
@@ -38,7 +39,7 @@ export function getInformationsFicheRepertoire(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `/repertoirecivil/${typeFiche.toLowerCase()}/${identifiant}`
+    uri: `${URL_ETAT_CIVIL}/${typeFiche.toLowerCase()}/${identifiant}`
   });
 }
 
@@ -48,7 +49,7 @@ export function getInformationsFicheRepertoire(
 export function getInformationsFicheActe(identifiant: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `/acte/${identifiant}`
+    uri: `${URL_ACTE}/${identifiant}`
   });
 }
 

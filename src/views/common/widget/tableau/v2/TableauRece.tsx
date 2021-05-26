@@ -136,9 +136,9 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
     setdataBody(processData());
   }, [props.dataState, processData, props.resetTableau]);
 
-  function onClickOnLine(identifiant: string, data: any[], idx: number) {
-    const rowNumber = pageState * rowsPerPageState + idx;
-    props.onClickOnLine(identifiant, data, rowNumber);
+  function onClickOnLine(identifiant: string, idxOnePage: number) {
+    const idxDataState = pageState * rowsPerPageState + idxOnePage;
+    props.onClickOnLine(identifiant, props.dataState, idxDataState);
   }
 
   return (

@@ -99,11 +99,12 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         nbLignesParPage={NB_ACTE_PAR_PAGE}
         resetTableau={resetTableauActe}
         noRows={zeroActe}
-      >
-        {typeRMC === "Auto" && selected.length > 0 && (
-          <div>{getLibelle(`${selected.length} élément(s) coché(s)`)}</div>
-        )}
-      </TableauRece>
+      />
+      {typeRMC === "Auto" && (
+        <div className="ElementsCoches">
+          {getLibelle(`${selected.length} élément(s) coché(s)`)}
+        </div>
+      )}
 
       {etatFenetres && etatFenetres.length > 0 && (
         <>
