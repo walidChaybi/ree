@@ -11,12 +11,9 @@ import { getLibelle } from "../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
 import { RMCAutoResultats } from "../rechercheMultiCriteres/auto/RMCAutoResultats";
 import { ChoixAction } from "./actions/ChoixAction";
+import { IdRequeteParams } from "./v2/ApercuRequeteUtils";
 
-interface idRequeteParams {
-  idRequete: string;
-}
-
-interface dataRMCAuto {
+interface DataRMCAuto {
   dataRequetes: any[];
   dataRMCAutoActe: IResultatRMCActe[];
   dataTableauRMCAutoActe: IParamsTableau;
@@ -25,16 +22,16 @@ interface dataRMCAuto {
 }
 
 export const ApercuRequetePriseEnChargePage: React.FC = () => {
-  const { idRequete } = useParams<idRequeteParams>();
+  const { idRequete } = useParams<IdRequeteParams>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 
   const history = useHistory();
-  const [dataHistory] = useState<dataRMCAuto>(
-    history.location.state as dataRMCAuto
+  const [dataHistory] = useState<DataRMCAuto>(
+    history.location.state as DataRMCAuto
   );
 
-  const dataRequetes = dataHistory.dataRequetes;
+  //const dataRequetes = dataHistory.dataRequetes;
   const dataRMCAutoActe = dataHistory.dataRMCAutoActe;
   const dataTableauRMCAutoActe = dataHistory.dataTableauRMCAutoActe;
   const dataRMCAutoInscription = dataHistory.dataRMCAutoInscription;

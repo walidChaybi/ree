@@ -5,6 +5,8 @@ import { valeurOuUndefined } from "../../../../common/util/Utils";
 import {
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_V2,
+  URL_RECHERCHE_REQUETE,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_V2
 } from "../../../../router/ReceUrls";
@@ -29,6 +31,11 @@ export function redirectionRMCAuto(
   } else if (urlWithParam === URL_REQUETES_SERVICE_V2) {
     url = getUrlWithParam(
       URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      idRequete
+    );
+  } else if (urlWithParam === URL_RECHERCHE_REQUETE) {
+    url = getUrlWithParam(
+      URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequete
     );
   }

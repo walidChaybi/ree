@@ -15,6 +15,7 @@ export interface IOfficierSSOApi {
   departement: string;
   service: string;
   habilitations: IHabilitation[];
+  idUtilisateur: string;
 }
 
 /** Savoir si l'officier connecté à le droit ou le profilt demandé en paramètre */

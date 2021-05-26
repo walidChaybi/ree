@@ -17,7 +17,10 @@ export function useLoginApi() {
   useEffect(() => {
     getLogin()
       .then(result => {
-        const officier = setUtilisateurSSOApiFromHeaders(result.headers);
+        const officier = setUtilisateurSSOApiFromHeaders(
+          result.headers,
+          result.body.data.idUtilisateur
+        );
         officier.habilitations = setHabilitationsUtilisateur(
           result.body.data.habilitations
         );
@@ -34,8 +37,12 @@ export function useLoginApi() {
   };
 }
 
-function setUtilisateurSSOApiFromHeaders(headers: any): IOfficierSSOApi {
+function setUtilisateurSSOApiFromHeaders(
+  headers: any,
+  idUtilisateur: string
+): IOfficierSSOApi {
   return {
+    idUtilisateur,
     idSSO: headers.id_sso,
     nom: formatNom(headers.nom),
     prenom: formatPrenom(headers.prenom),

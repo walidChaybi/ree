@@ -1,7 +1,7 @@
 import React from "react";
 import { HeaderTableauRMCActe } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
 import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
-import { CheckboxColumn } from "../../checkboxColumn/CheckboxColumn";
+import { CheckboxColumn } from "./checkboxColumn/CheckboxColumn";
 import {
   commonHeadersTableauRMC,
   natureHeadersTableauRMC,
@@ -46,8 +46,8 @@ function getCheckBoxElement(data: any): JSX.Element {
   return (
     <CheckboxColumn
       data={data}
-      hasWarning={hasWarning}
       onClickParentCallBack={onClickParentCallBack}
+      hasWarning={hasWarning}
     />
   );
 }

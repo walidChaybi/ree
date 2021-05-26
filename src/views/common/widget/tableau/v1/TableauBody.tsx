@@ -1,12 +1,11 @@
-import React from "react";
-import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import { TableauBodyCell } from "./TableauBodyCell";
-import { TableauTypeColumn } from "./TableauRece";
-
+import TableRow from "@material-ui/core/TableRow";
+import React from "react";
 import "./scss/Tableau.scss";
 import "./scss/TableauBody.scss";
+import { TableauBodyCell } from "./TableauBodyCell";
+import { TableauTypeColumn } from "./TableauRece";
 
 interface TableauBodyProps {
   data: any[];

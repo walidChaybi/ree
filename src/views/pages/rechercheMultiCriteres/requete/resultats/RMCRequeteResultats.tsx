@@ -21,20 +21,12 @@ export const RMCRequeteResultats: React.FC<RMCRequeteResultatsProps> = props => 
           <div className="SousTitre">
             <span>{getLibelle("Liste des requêtes")}</span>
           </div>
-          {props.dataRMCRequete.length > 0 ? (
-            <RMCTableauRequetes
-              dataRMCRequete={props.dataRMCRequete}
-              dataTableauRMCRequete={props.dataTableauRMCRequete}
-              setRangeRequete={props.setRangeRequete}
-              resetTableauRequete={props.resetRMC}
-            />
-          ) : (
-            <div className="AucunResultat">
-              {getLibelle(
-                "Aucune requête trouvée pour ces critères de recherche"
-              )}
-            </div>
-          )}
+          <RMCTableauRequetes
+            dataRMCRequete={props.dataRMCRequete}
+            dataTableauRMCRequete={props.dataTableauRMCRequete}
+            setRangeRequete={props.setRangeRequete}
+            resetTableauRequete={props.resetRMC}
+          />
         </div>
       </Fieldset>
     </div>

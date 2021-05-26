@@ -78,8 +78,9 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     categorie: getCategorieFiche(data.idInscription, dataRMCInscription)
   }));
 
-  // Gestion du clic sur une colonne de type checkbox
+  // Gestion du clic sur une colonne de type checkbox.
   const [selected, setSelected] = useState<string[]>([]);
+
   const onClickCheckbox = (
     isChecked: boolean,
     data: IResultatRMCInscription
@@ -113,11 +114,14 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
         nbLignesParPage={NB_INSCRIPTION_PAR_PAGE}
         resetTableau={resetTableauInscription}
         noRows={zeroInscription}
-      >
-        {typeRMC === "Auto" && selected.length > 0 && (
-          <div>{getLibelle(`${selected.length} élément(s) coché(s)`)}</div>
-        )}
-      </TableauRece>
+      />
+
+      {typeRMC === "Auto" && (
+        <div className="ElementsCoches">
+          {getLibelle(`${selected.length} élément(s) coché(s)`)}
+        </div>
+      )}
+
       {etatFenetres && etatFenetres.length > 0 && (
         <>
           {etatFenetres.map((idInscription: string, index: number) => {

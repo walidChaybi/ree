@@ -11,6 +11,7 @@ import {
   URL_MES_REQUETES_V2,
   URL_REQUETES_SERVICE_V2
 } from "../../../router/ReceUrls";
+import { navigationApercu } from "../../apercuRequete/v2/ApercuRequeteUtils";
 import {
   IRMCAutoParams,
   useRMCAutoHook
@@ -94,9 +95,19 @@ const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
   const recuperationParamsRMCAuto = (
     idRequete: string,
     dataRequetes: any[],
-    urlWithParam: string
+    urlWithParam: string,
+    idx: number
   ) => {
-    setParamsRMCAuto({ idRequete, dataRequetes, urlWithParam });
+    const navigation = navigationApercu(urlWithParam, dataRequetes, idx);
+    if (navigation.isRmcAuto) {
+      setParamsRMCAuto({
+        idRequete,
+        dataRequetes,
+        urlWithParam
+      });
+    } else if (navigation.url) {
+      history.push(navigation.url, dataRequetes);
+    }
   };
 
   const rmcAutoUrlData: IUrlData = useRMCAutoHook(paramsRMCAuto);

@@ -1,7 +1,7 @@
 import React from "react";
 import { HeaderTableauRMCInscription } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
 import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
-import { CheckboxColumn } from "../../checkboxColumn/CheckboxColumn";
+import { CheckboxColumn } from "./checkboxColumn/CheckboxColumn";
 import {
   commonHeadersTableauRMC,
   natureHeadersTableauRMC,

@@ -11,6 +11,7 @@ import { AccueilPage } from "../pages/accueil/AccueilPage";
 import { ApercuRequetePage } from "../pages/apercuRequete/ApercuRequetePage";
 import { ApercuRequetePriseEnChargePage } from "../pages/apercuRequete/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "../pages/apercuRequete/ApercuRequeteTraitementPage";
+import { ApercuRequetePageV2 } from "../pages/apercuRequete/v2/ApercuRequetePageV2";
 import { DetailRequetePage } from "../pages/detailRequete/DetailRequetePage";
 import EspaceDelivrancePage from "../pages/espaceDelivrance/v1/EspaceDelivrancePage";
 import EspaceDelivrancePageV2 from "../pages/espaceDelivrance/v2/EspaceDelivrancePageV2";
@@ -24,6 +25,7 @@ import {
   URL_CONTEXT_APP,
   URL_DECONNEXION,
   URL_MES_REQUETES,
+  URL_MES_REQUETES_APERCU_REQUETE,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
@@ -35,7 +37,12 @@ import {
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_RECHERCHE_REQUETE,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE,
+  URL_REQUETES_SERVICE_APERCU_REQUETE,
   URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
@@ -45,6 +52,10 @@ import {
   URL_REQUETES_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_SERVICE_V2
 } from "./ReceUrls";
+
+const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
+const LIBELLE_APERCU_REQUETE = "Aperçu de requête V2";
+const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
 
 export const routesRece: IRoute[] = [
   {
@@ -133,6 +144,12 @@ export const routesRece: IRoute[] = [
     )
   },
   {
+    url: URL_MES_REQUETES_APERCU_REQUETE,
+    component: ApercuRequetePageV2,
+    droits: droitsSaufConsulterArchives,
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
     url: URL_REQUETES_SERVICE_SAISIR_RDCSC,
     component: SaisirRDCSCPage,
     droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
@@ -156,46 +173,79 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle("Saisir une requête de délivrance d'attestation PACS")
   },
   {
+    url: URL_REQUETES_SERVICE_APERCU_REQUETE,
+    component: ApercuRequetePageV2,
+    droits: [Droit.ATTRIBUER],
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
     url: URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
     component: ApercuRequetePriseEnChargePage,
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Aperçu requête (prise en charge)")
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
   },
   {
     url: URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
     component: ApercuRequeteTraitementPage,
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Aperçu requête (traitement) ")
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
   },
   {
     url: URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
     component: ApercuRequeteTraitementPage,
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Aperçu requête (traitement)  ")
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE,
+    component: ApercuRequetePageV2,
+    droits: [Droit.ATTRIBUER],
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {
     url: URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
     component: ApercuRequetePriseEnChargePage,
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Aperçu requête (prise en charge)")
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
   },
   {
     url: URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
     component: ApercuRequeteTraitementPage,
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Aperçu requête (traitement)")
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
   },
   {
     url: URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
     component: ApercuRequeteTraitementPage,
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Aperçu requête (traitement)")
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    component: ApercuRequetePriseEnChargePage,
+    //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
+    component: ApercuRequeteTraitementPage,
+    //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
+    component: ApercuRequeteTraitementPage,
+    //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
   },
   {
     url: URL_MES_REQUETES_DETAIL_REQUETE_ID,

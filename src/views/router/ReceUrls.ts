@@ -7,34 +7,54 @@ export const URL_DECONNEXION = "/rece/Shibboleth.sso/Logout";
 
 export const URL_CONTEXT_APP = "/rece/rece-ui";
 export const URL_ACCUEIL = `${URL_CONTEXT_APP}/accueil`;
-// Espace de délivrance
+
+// Espace de délivrance V1
 export const URL_MES_REQUETES = `${URL_CONTEXT_APP}/mesrequetes`;
 export const URL_REQUETES_SERVICE = `${URL_CONTEXT_APP}/requetesservice`;
-// Aperçu requête
+
+// Aperçu requête V1
 export const URL_MES_REQUETES_ID = `${URL_MES_REQUETES}/apercurequete/:idRequete`;
 export const URL_REQUETES_SERVICE_ID = `${URL_REQUETES_SERVICE}/apercurequete/:idRequete`;
 
+// Détail de la requête d'une requete d'un des tableau de l'espace délivrance V1
+export const URL_MES_REQUETES_DETAIL_REQUETE_ID = `${URL_MES_REQUETES}/apercurequete/detailrequete/:idRequete`;
+export const URL_REQUETES_SERVICE_DETAIL_REQUETE_ID = `${URL_REQUETES_SERVICE}/apercurequete/detailrequete/:idRequete`;
+
+///////////// VERSION 2 //////////////
 // Espace de délivrance V2
 export const URL_MES_REQUETES_V2 = `${URL_CONTEXT_APP}/mesrequetesv2`;
 export const URL_REQUETES_SERVICE_V2 = `${URL_CONTEXT_APP}/requetesservicev2`;
 
-// Aperçu requête V2
+// Aperçu requête ... V2 depuis le tableau Mes Requêtes de délivrance
+export const URL_MES_REQUETES_APERCU_REQUETE = `${URL_MES_REQUETES_V2}/apercurequete/:idRequete`;
 export const URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_V2}/apercurequetepriseencharge/:idRequete`;
 export const URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID = `${URL_MES_REQUETES_V2}/apercurequetetraitement/:idRequete`;
 export const URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_V2}/apercurequetepriseencharge/apercurequetetraitement/:idRequete`;
 
+// Aperçu requête ... V2 depuis le tableau Requêtes de mon service
+export const URL_REQUETES_SERVICE_APERCU_REQUETE = `${URL_REQUETES_SERVICE_V2}/apercurequete/:idRequete`;
 export const URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_REQUETES_SERVICE_V2}/apercurequetepriseencharge/:idRequete`;
 export const URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_REQUETES_SERVICE_V2}/apercurequetetraitement/:idRequete`;
 export const URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_REQUETES_SERVICE_V2}/apercurequetepriseencharge/apercurequetetraitement/:idRequete`;
 
-// Détail de la requête
-export const URL_MES_REQUETES_DETAIL_REQUETE_ID = `${URL_MES_REQUETES}/apercurequete/detailrequete/:idRequete`;
-export const URL_REQUETES_SERVICE_DETAIL_REQUETE_ID = `${URL_REQUETES_SERVICE}/apercurequete/detailrequete/:idRequete`;
+// Détail de la requête d'une requete d'un des tableau de l'espace délivrance
+export const URL_MES_REQUETES_DETAIL_REQUETE_ID_V2 = `${URL_MES_REQUETES_V2}/apercurequete/detailrequete/:idRequete`;
+export const URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2 = `${URL_REQUETES_SERVICE_V2}/apercurequete/detailrequete/:idRequete`;
 
-// RMC
+// Rechercher Multi-Critères
 export const URL_RECHERCHE_ACTE_INSCRIPTION = `${URL_CONTEXT_APP}/rechercheacteinscription`;
 export const URL_RECHERCHE_ACTE = `${URL_CONTEXT_APP}/rechercheacte`;
 export const URL_RECHERCHE_REQUETE = `${URL_CONTEXT_APP}/rechercherequete`;
+
+// Aperçu requête ... V2 depuis le tableau résultats RMC Requêtes
+export const URL_RECHERCHE_REQUETE_APERCU_REQUETE = `${URL_RECHERCHE_REQUETE}/apercurequete/:idRequete`;
+export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_RECHERCHE_REQUETE}/apercurequetepriseencharge/:idRequete`;
+export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_RECHERCHE_REQUETE}/apercurequetetraitement/:idRequete`;
+export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_RECHERCHE_REQUETE}/apercurequetepriseencharge/apercurequetetraitement/:idRequete`;
+
+// Détail de la requête d'une requete du tableau résultats RMC Requêtes
+export const URL_RECHERCHE_REQUETE_DETAIL_REQUETE_ID = `${URL_RECHERCHE_REQUETE}/apercurequete/detailrequete/:idRequete`;
+
 // Saisie requête
 export const URL_MES_REQUETES_SAISIR_RDCSC = `${URL_MES_REQUETES}/saisircertificatsituation`;
 export const URL_REQUETES_SERVICE_SAISIR_RDCSC = `${URL_REQUETES_SERVICE}/saisircertificatsituation`;
@@ -44,7 +64,3 @@ export const URL_MES_REQUETES_SAISIR_RDC = `${URL_MES_REQUETES}/saisirextraitcop
 export const URL_REQUETES_SERVICE_SAISIR_RDC = `${URL_REQUETES_SERVICE}/saisirextraitcopie`;
 export const URL_MES_REQUETES_SAISIR_RDLFC = `${URL_MES_REQUETES}/saisirlivretfamille`;
 export const URL_REQUETES_SERVICE_SAISIR_RDLFC = `${URL_REQUETES_SERVICE}/saisirlivretfamille`;
-
-// Urls temporaires
-export const URL_RC_RCA = `${URL_CONTEXT_APP}/rcrca`;
-export const URL_ACTE = `${URL_CONTEXT_APP}/acte`;

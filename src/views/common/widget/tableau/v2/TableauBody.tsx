@@ -11,7 +11,7 @@ interface TableauBodyProps {
   data: any[];
   idKey: string;
   columnHeaders: TableauTypeColumn[];
-  onClickOnLine: (identifiant: string, data: any[], idx: number) => void;
+  onClickOnLine: (identifiant: string, idx: number) => void;
   noRows?: JSX.Element;
 }
 
@@ -23,7 +23,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   noRows
 }) => {
   function onClickRowHandler(identifiant: string, idx: number) {
-    onClickOnLine(identifiant, data, idx);
+    onClickOnLine(identifiant, idx);
   }
 
   return (

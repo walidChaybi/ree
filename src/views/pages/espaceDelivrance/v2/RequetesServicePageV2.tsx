@@ -65,7 +65,12 @@ const columnsRequestesService = [
   ...dateStatutColumnHeaders
 ];
 interface MesRequetesServicePageProps {
-  setParamsRMCAuto: (id: string, data: any[], urlWithParam: string) => void;
+  setParamsRMCAuto: (
+    id: string,
+    data: any[],
+    urlWithParam: string,
+    idx: number
+  ) => void;
 }
 
 export const RequetesServicePageV2: React.FC<MesRequetesServicePageProps> = props => {
@@ -145,8 +150,8 @@ export const RequetesServicePageV2: React.FC<MesRequetesServicePageProps> = prop
     setLinkParameters(queryParameters);
   }, []);
 
-  function onClickOnLine(identifiant: string, data: any[]) {
-    props.setParamsRMCAuto(identifiant, data, URL_REQUETES_SERVICE_V2);
+  function onClickOnLine(identifiant: string, data: any[], idx: number) {
+    props.setParamsRMCAuto(identifiant, data, URL_REQUETES_SERVICE_V2, idx);
   }
 
   useEffect(() => {
