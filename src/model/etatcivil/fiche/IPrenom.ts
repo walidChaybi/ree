@@ -1,4 +1,4 @@
 export interface IPrenom {
-  prenom: string;
+  valeur: string;
   numeroOrdre: number;
 }

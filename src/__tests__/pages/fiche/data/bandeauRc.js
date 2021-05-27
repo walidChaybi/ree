@@ -8,16 +8,16 @@ export default {
       {
         nomFamille: "nom1",
         prenoms: [
-          { numeroOrdre: 1, prenom: "prenom11" },
-          { numeroOrdre: 2, prenom: "prenom12" }
+          { numeroOrdre: 1, valeur: "prenom11" },
+          { numeroOrdre: 2, valeur: "prenom12" }
         ],
         numeroOrdreSaisi: "0"
       },
       {
         nomFamille: "nom2",
         prenoms: [
-          { numeroOrdre: 1, prenom: "prenom21" },
-          { numeroOrdre: 2, prenom: "prenom22" }
+          { numeroOrdre: 1, valeur: "prenom21" },
+          { numeroOrdre: 2, valeur: "prenom22" }
         ],
         numeroOrdreSaisi: "1"
       }

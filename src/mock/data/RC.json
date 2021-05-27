@@ -73,7 +73,7 @@
         "numeroOrdreSaisi": 1,
         "nomFamille": "FAVARO",
         "autresNoms": ["FAVAROTTI"],
-        "prenoms": [{ "prenom": "Enrico", "numeroOrdre": 0 }],
+        "prenoms": [{ "valeur": "Enrico", "numeroOrdre": 0 }],
         "autresPrenoms": [],
         "dateNaissance": {
           "jour": "17",
@@ -91,7 +91,7 @@
         "numeroOrdreSaisi": 2,
         "nomFamille": "FAVARO",
         "autresNoms": ["MAHMOUDI"],
-        "prenoms": [{ "prenom": "Ahmeda", "numeroOrdre": 0 }],
+        "prenoms": [{ "valeur": "Ahmeda", "numeroOrdre": 0 }],
         "autresPrenoms": [],
         "dateNaissance": {
           "jour": "17",

@@ -1,10 +1,10 @@
-import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
+import { IPrenom } from "../../../../../model/etatcivil/fiche/IPrenom";
 import {
   formatNom,
   formatPrenom,
   triListeObjetsSurPropriete
 } from "../../../../common/util/Utils";
-import { IPrenom } from "../../../../../model/etatcivil/fiche/IPrenom";
+import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 import { SimplePersonne } from "./IFournisseurDonneesBandeau";
 
 export class FournisseurDonneeBandeauRcRca extends FournisseurDonneesBandeau {
@@ -38,9 +38,9 @@ export class FournisseurDonneeBandeauRcRca extends FournisseurDonneesBandeau {
     let prenomInteresse = "";
     if (prenoms) {
       prenoms.forEach(p => {
-        p.prenom = p.prenom ? formatPrenom(p.prenom) : p.prenom;
+        p.valeur = p.valeur ? formatPrenom(p.valeur) : p.valeur;
         if (p.numeroOrdre === 1) {
-          prenomInteresse = p.prenom;
+          prenomInteresse = p.valeur;
         }
       });
     }

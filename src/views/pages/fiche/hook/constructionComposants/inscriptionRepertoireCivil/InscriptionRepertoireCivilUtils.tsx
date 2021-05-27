@@ -1,21 +1,20 @@
 import React from "react";
-import { IDureeInscription } from "../../../../../../model/etatcivil/fiche/IDureeInscription";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { LienFiche } from "../../../LienFiche";
-import {
-  getDateFromTimestamp,
-  getDateString
-} from "../../../../../common/util/DateUtils";
-import { InscriptionsLiees } from "./InscriptionsLiees";
-import { MandataireUtil } from "../../../../../../model/etatcivil/enum/TypeMandataire";
-import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import {
   FicheUtil,
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
+import { IDureeInscription } from "../../../../../../model/etatcivil/fiche/IDureeInscription";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import {
+  getDateFromTimestamp,
+  getDateString
+} from "../../../../../common/util/DateUtils";
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../../../../common/util/Utils";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+import { LienFiche } from "../../../LienFiche";
+import { InscriptionsLiees } from "./InscriptionsLiees";
 
 export function getInscriptionRepertoireCivil(
   rcrca: IFicheRcRca
@@ -42,9 +41,11 @@ function getInteresseRc(rcrca: IFicheRcRca): SectionContentProps[] {
     },
     {
       libelle: "Mandataire(s)",
-      value: rcrca.codesMandataires
-        ? rcrca.codesMandataires
-            .map(mandataire => MandataireUtil.getLibelle(mandataire))
+      value: rcrca.mandataires
+        ? rcrca.mandataires
+            .map(mandataire =>
+              premiereLettreEnMajusculeLeResteEnMinuscule(mandataire.libelle)
+            )
             .join(" / ")
         : ""
     },

@@ -34,7 +34,7 @@ export const TitulaireRequete = {
   },
   getPrenom(numero: number, titulaire?: ITitulaireRequete): string {
     return titulaire && titulaire.prenoms && titulaire.prenoms[numero]
-      ? formatPrenom(titulaire.prenoms[numero].prenom)
+      ? formatPrenom(titulaire.prenoms[numero].valeur)
       : "";
   },
   getPrenom1(titulaire?: ITitulaireRequete): string {

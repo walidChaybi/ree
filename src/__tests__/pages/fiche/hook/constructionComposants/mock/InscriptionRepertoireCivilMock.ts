@@ -1,12 +1,17 @@
 /* istanbul ignore file */
 
+import { MandataireRc } from "../../../../../../model/etatcivil/enum/MandataireRc";
 import { NatureRc } from "../../../../../../model/etatcivil/enum/NatureRc";
 
 export const ficheInscriptionRepertoireCivil = {
   nature: new NatureRc("CURATELLE_AMENAGEE"),
-  codesMandataires: [
-    "MANDATAIRE_JUDICIAIRE_ASSOCIATION",
-    "MANDATAIRE_JUDICIAIRE_INDIVIDUEL"
+  mandataires: [
+    new MandataireRc(
+      "Mandataire judiciaire à la protection des majeurs association"
+    ),
+    new MandataireRc(
+      "Mandataire judiciaire à la protection des majeurs  individuel"
+    )
   ],
   typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [
@@ -36,7 +41,7 @@ export const ficheInscriptionRepertoireCivil = {
 
 export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes = {
   nature: new NatureRc("CURATELLE_AMENAGEE"),
-  codesMandataires: [
+  mandataires: [
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"
   ],
@@ -53,7 +58,7 @@ export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImp
 
 export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
   nature: new NatureRc("CURATELLE_AMENAGEE"),
-  codesMandataires: [
+  mandataires: [
     "Mandataire judiciaire à la protection des majeurs association",
     "Préposé d'établissement"
   ],
