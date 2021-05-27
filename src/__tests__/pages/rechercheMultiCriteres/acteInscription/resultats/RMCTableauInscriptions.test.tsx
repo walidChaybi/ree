@@ -20,6 +20,7 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 test("renders Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
   render(
     <RMCTableauInscriptions
+      typeRMC="Classique"
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
     />
@@ -32,6 +33,7 @@ test("renders Resultat Inscription Recherche Multi Critères => Avec résultat",
 test("Navigation dans les pages du tableau Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
   render(
     <RMCTableauInscriptions
+      typeRMC="Classique"
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
     />
@@ -56,6 +58,7 @@ test("Ouverture d'une inscription", async () => {
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
   const { getByTestId } = render(
     <RMCTableauInscriptions
+      typeRMC="Classique"
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
     />
@@ -95,10 +98,45 @@ test("Ouverture d'une inscription", async () => {
 test("renders Resultat Inscription Recherche Multi Critères => Sans résultat", () => {
   render(
     <RMCTableauInscriptions
+      typeRMC="Classique"
       dataRMCInscription={[]}
       dataTableauRMCInscription={{}}
     />
   );
 
   expect(screen.getByText(/Aucune inscription n'a été trouvé/i)).toBeDefined();
+});
+
+test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résultat", async () => {
+  render(
+    <RMCTableauInscriptions
+      typeRMC="Auto"
+      dataRMCInscription={DataRMCInscriptionAvecResultat}
+      dataTableauRMCInscription={DataTableauInscription}
+    />
+  );
+
+  const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
+
+  await waitFor(() => {
+    expect(checkboxColumns).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(checkboxColumns[0]);
+  });
+
+  await waitFor(() => {
+    const elementsCoches = screen.getAllByText("1 élément(s) coché(s)");
+    expect(elementsCoches).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(checkboxColumns[0]);
+  });
+
+  await waitFor(() => {
+    const elementsCoches = screen.getAllByText("0 élément(s) coché(s)");
+    expect(elementsCoches).toBeDefined();
+  });
 });
