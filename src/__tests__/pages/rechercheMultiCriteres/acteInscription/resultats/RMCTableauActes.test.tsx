@@ -18,6 +18,7 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => {
   const { getAllByText } = render(
     <RMCTableauActes
+      typeRMC="Classique"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
     />
@@ -35,6 +36,7 @@ test("Ouverture d'un acte", async () => {
 
   const { getByTestId } = render(
     <RMCTableauActes
+      typeRMC="Classique"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
     />
@@ -79,6 +81,7 @@ test("Ouverture d'un acte et navigation via bouton Suivant", async () => {
 
   const { getByTestId } = render(
     <RMCTableauActes
+      typeRMC="Classique"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
     />
@@ -113,6 +116,7 @@ test("Ouverture d'un acte et navigation via bouton Précédent", async () => {
 
   const { getByTestId } = render(
     <RMCTableauActes
+      typeRMC="Classique"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
     />
@@ -150,7 +154,47 @@ async function verifieFiche(titreBandeau: string) {
 }
 
 test("renders Resultat Acte Recherche Multi Critères => Sans résultat", () => {
-  render(<RMCTableauActes dataRMCActe={[]} dataTableauRMCActe={{}} />);
+  render(
+    <RMCTableauActes
+      typeRMC="Classique"
+      dataRMCActe={[]}
+      dataTableauRMCActe={{}}
+    />
+  );
 
   expect(screen.getByText(/Aucun acte n'a été trouvé/i)).toBeDefined();
+});
+
+test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat", async () => {
+  render(
+    <RMCTableauActes
+      typeRMC="Auto"
+      dataRMCActe={DataRMCActeAvecResultat}
+      dataTableauRMCActe={DataTableauActe}
+    />
+  );
+
+  const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
+
+  await waitFor(() => {
+    expect(checkboxColumns).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(checkboxColumns[0]);
+  });
+
+  await waitFor(() => {
+    const elementsCoches = screen.getAllByText("1 élément(s) coché(s)");
+    expect(elementsCoches).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(checkboxColumns[0]);
+  });
+
+  await waitFor(() => {
+    const elementsCoches = screen.getAllByText("0 élément(s) coché(s)");
+    expect(elementsCoches).toBeDefined();
+  });
 });

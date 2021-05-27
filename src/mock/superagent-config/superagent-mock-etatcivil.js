@@ -184,6 +184,31 @@ export const configEtatcivil = [
           data: ["TUNIS"]
         };
       }
+
+      if (match[1] === "/acte/rmcauto?range=0-105") {
+        return {
+          headers: {
+            "content-range":
+              "0-15/" + ReponseAppelRMCActe?.data?.registres?.length,
+            link:
+              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-105>;rel="next"'
+          },
+          data: ReponseAppelRMCActe.data
+        };
+      }
+
+      if (match[1] === "/repertoirecivil/rmcauto?range=0-105") {
+        return {
+          headers: {
+            "content-range":
+              "0-15/" +
+              ReponseAppelRMCInscription?.data?.repertoiresCiviles?.length,
+            link:
+              '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
+          },
+          data: ReponseAppelRMCInscription.data
+        };
+      }
     },
 
     /**
@@ -207,8 +232,8 @@ export const configEtatcivil = [
      */
     post: function (match, data) {
       return {
-        status: 201,
-        body: data
+        body: data,
+        header: data.headers
       };
     }
   }
