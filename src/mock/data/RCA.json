@@ -26,11 +26,11 @@
     "interesses": [
       {
         "nomFamille": "FAVARO",
-        "prenoms": [{ "prenom": "Enrico", "numeroOrdre": 0 }]
+        "prenoms": [{ "valeur": "Enrico", "numeroOrdre": 0 }]
       },
       {
         "nomFamille": "MAHMOUDI",
-        "prenoms": [{ "prenom": "Ahmeda", "numeroOrdre": 0 }]
+        "prenoms": [{ "valeur": "Ahmeda", "numeroOrdre": 0 }]
       }
     ],
     "decision": {

@@ -247,7 +247,7 @@ function harmoniserNomPrenomsInteresse(interesse: IInteresse) {
   }
   if (interesse.prenoms !== undefined) {
     interesse.prenoms.forEach(prenom => {
-      prenom.prenom = formatPrenom(prenom.prenom);
+      prenom.valeur = formatPrenom(prenom.valeur);
     });
   }
 

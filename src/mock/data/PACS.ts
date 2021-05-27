@@ -1,9 +1,9 @@
-import { IFichePacs } from "../../model/etatcivil/pacs/IFichePacs";
+import { DecisionAnnulation } from "../../model/etatcivil/enum/DecisionAnnulation";
+import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
+import { Sexe } from "../../model/etatcivil/enum/Sexe";
 import { StatutPacs } from "../../model/etatcivil/enum/StatutPacs";
 import { TypeAutorite } from "../../model/etatcivil/enum/TypeAutorite";
-import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
-import { DecisionAnnulation } from "../../model/etatcivil/enum/DecisionAnnulation";
-import { Sexe } from "../../model/etatcivil/enum/Sexe";
+import { IFichePacs } from "../../model/etatcivil/pacs/IFichePacs";
 
 export const pacsModificationNotaire = {
   hasTechnicalError: false,
@@ -66,8 +66,8 @@ export const pacsModificationNotaire = {
         autreNoms: ["DupDup"],
         autrePrenoms: ["Nabil"],
         prenoms: [
-          { numeroOrdre: 2, prenom: "Matthieu" },
-          { numeroOrdre: 1, prenom: "Louis-Philippe" }
+          { numeroOrdre: 2, valeur: "Matthieu" },
+          { numeroOrdre: 1, valeur: "Louis-Philippe" }
         ],
         dateNaissance: { jour: "01", mois: "09", annee: "1983" }
       },
@@ -83,8 +83,8 @@ export const pacsModificationNotaire = {
         autreNoms: ["DuDu"],
         autrePrenoms: ["Natacha"],
         prenoms: [
-          { numeroOrdre: 2, prenom: "Sara" },
-          { numeroOrdre: 1, prenom: "Marie-Charlotte" }
+          { numeroOrdre: 2, valeur: "Sara" },
+          { numeroOrdre: 1, valeur: "Marie-Charlotte" }
         ],
         dateNaissance: { jour: "01", mois: "09", annee: "1983" }
       }
@@ -166,11 +166,11 @@ export const pacsModificationNotaireMap: IFichePacs = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "marie charlotte"
+          valeur: "marie charlotte"
         },
         {
           numeroOrdre: 2,
-          prenom: "sara"
+          valeur: "sara"
         }
       ],
       dateNaissance: {
@@ -193,11 +193,11 @@ export const pacsModificationNotaireMap: IFichePacs = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Louis-Philippe"
+          valeur: "Louis-Philippe"
         },
         {
           numeroOrdre: 2,
-          prenom: "Matthieu"
+          valeur: "Matthieu"
         }
       ],
       dateNaissance: {
@@ -272,11 +272,11 @@ export const annulationJuridictionMap: IFichePacs = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Marie-Charlotte"
+          valeur: "Marie-Charlotte"
         },
         {
           numeroOrdre: 2,
-          prenom: "Sara"
+          valeur: "Sara"
         }
       ],
       dateNaissance: {
@@ -299,11 +299,11 @@ export const annulationJuridictionMap: IFichePacs = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Louis-Philippe"
+          valeur: "Louis-Philippe"
         },
         {
           numeroOrdre: 2,
-          prenom: "Matthieu"
+          valeur: "Matthieu"
         }
       ],
       dateNaissance: {
@@ -368,11 +368,11 @@ export const dissolutionJuridictionMap: IFichePacs = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Marie-Charlotte"
+          valeur: "Marie-Charlotte"
         },
         {
           numeroOrdre: 2,
-          prenom: "Sara"
+          valeur: "Sara"
         }
       ],
       dateNaissance: {
@@ -395,11 +395,11 @@ export const dissolutionJuridictionMap: IFichePacs = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Louis-Philippe"
+          valeur: "Louis-Philippe"
         },
         {
           numeroOrdre: 2,
-          prenom: "Matthieu"
+          valeur: "Matthieu"
         }
       ],
       dateNaissance: {
@@ -464,11 +464,11 @@ export const dissolutionPosteMap: IFichePacs = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Marie-Charlotte"
+          valeur: "Marie-Charlotte"
         },
         {
           numeroOrdre: 2,
-          prenom: "Sara"
+          valeur: "Sara"
         }
       ],
       dateNaissance: {
@@ -491,11 +491,11 @@ export const dissolutionPosteMap: IFichePacs = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Louis-Philippe"
+          valeur: "Louis-Philippe"
         },
         {
           numeroOrdre: 2,
-          prenom: "Matthieu"
+          valeur: "Matthieu"
         }
       ],
       dateNaissance: {

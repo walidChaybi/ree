@@ -17,9 +17,9 @@ export const Parent = {
   getPrenoms(parent?: IParent): string {
     return parent && parent.prenoms && parent.prenoms.length > 0
       ? formatPrenoms([
-          parent.prenoms[0].prenom,
-          parent.prenoms[1]?.prenom,
-          parent.prenoms[2]?.prenom
+          parent.prenoms[0].valeur,
+          parent.prenoms[1]?.valeur,
+          parent.prenoms[2]?.valeur
         ])
       : "";
   }

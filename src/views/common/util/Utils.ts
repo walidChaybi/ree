@@ -140,7 +140,7 @@ export function jointPrenoms(prenoms?: IPrenom[]): string {
     ? joint(
         prenoms
           .sort((p1, p2) => compareNombre(p1.numeroOrdre, p2.numeroOrdre))
-          .map(p => formatPrenom(p.prenom))
+          .map(p => formatPrenom(p.valeur))
       )
     : "";
 }

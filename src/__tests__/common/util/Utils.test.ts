@@ -169,11 +169,11 @@ test("Attendu: jointPrenoms fonctionne correctement", () => {
   expect(jointPrenoms()).toBe("");
   const p1: IPrenom = {
     numeroOrdre: 1,
-    prenom: "marie chantal"
+    valeur: "marie chantal"
   };
   const p2: IPrenom = {
     numeroOrdre: 2,
-    prenom: "jean paul"
+    valeur: "jean paul"
   };
 
   expect(jointPrenoms([p2, p1])).toBe("Marie-Chantal, Jean-Paul");

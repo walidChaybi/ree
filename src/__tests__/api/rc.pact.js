@@ -33,7 +33,7 @@ export const rcPact = {
   interesses: eachLike({
     nomFamille: "FAVARO",
     autresNoms: eachLike("FAVAROTTI"),
-    prenoms: eachLike({ prenom: "Enrico", numeroOrdre: 0 }),
+    prenoms: eachLike({ valeur: "Enrico", numeroOrdre: 0 }),
     autresPrenoms: eachLike("AutrePrenom"),
     dateDeNaissance: -777168000,
     villeDeNaissance: "San remo",

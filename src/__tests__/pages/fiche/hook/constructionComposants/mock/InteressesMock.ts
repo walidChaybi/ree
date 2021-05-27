@@ -13,9 +13,9 @@ export const ficheDeuxInteresseNumeroOrdreNonOrdonne = {
       autreNoms: ["favarotti"],
       autrePrenoms: [],
       prenoms: [
-        { prenom: "Enrico", numeroOrdre: 2 },
-        { prenom: "Pablo", numeroOrdre: 3 },
-        { prenom: "Flavio", numeroOrdre: 1 }
+        { valeur: "Enrico", numeroOrdre: 2 },
+        { valeur: "Pablo", numeroOrdre: 3 },
+        { valeur: "Flavio", numeroOrdre: 1 }
       ],
       dateNaissance: {
         jour: "25",
@@ -35,7 +35,7 @@ export const ficheDeuxInteresseNumeroOrdreNonOrdonne = {
       nationalite: "Française",
       autreNoms: [],
       autrePrenoms: ["AutreP1", "AutreP2"],
-      prenoms: [{ prenom: "P1", numeroOrdre: 0 }],
+      prenoms: [{ valeur: "P1", numeroOrdre: 0 }],
       dateNaissance: {
         jour: "07",
         mois: "12",
@@ -72,9 +72,9 @@ export const ficheUnInteressePrenomNonOrdonne = {
       autreNoms: ["favarotti", "favarotti2"],
       autrePrenoms: ["autreP1", "autreP2"],
       prenoms: [
-        { prenom: "Enrico", numeroOrdre: 2 },
-        { prenom: "Pablo", numeroOrdre: 3 },
-        { prenom: "Flavio", numeroOrdre: 1 }
+        { valeur: "Enrico", numeroOrdre: 2 },
+        { valeur: "Pablo", numeroOrdre: 3 },
+        { valeur: "Flavio", numeroOrdre: 1 }
       ],
       dateNaissance: {
         jour: "25",
@@ -166,9 +166,9 @@ export const ficheUnInteresseLieuDecesDateDeces = {
       autreNoms: ["favarotti", "favarotti2"],
       autrePrenoms: ["autreP1", "autreP2"],
       prenoms: [
-        { prenom: "Enrico", numeroOrdre: 2 },
-        { prenom: "Pablo", numeroOrdre: 3 },
-        { prenom: "Flavio", numeroOrdre: 1 }
+        { valeur: "Enrico", numeroOrdre: 2 },
+        { valeur: "Pablo", numeroOrdre: 3 },
+        { valeur: "Flavio", numeroOrdre: 1 }
       ],
       dateNaissance: {
         jour: "25",

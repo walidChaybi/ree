@@ -1,14 +1,14 @@
 import React from "react";
-import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import { IInteresse } from "../../../../../../model/etatcivil/fiche/IInteresse";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
-import { getText, getLibelle } from "../../../../../common/widget/Text";
-import { Mariage } from "./Mariage";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import { FicheUtil } from "../../../../../../model/etatcivil/enum/TypeFiche";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { IInteresse } from "../../../../../../model/etatcivil/fiche/IInteresse";
+import { LieuxUtils } from "../../../../../../model/LieuxUtils";
+import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
+import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
 import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+import { getLibelle, getText } from "../../../../../common/widget/Text";
+import { Mariage } from "./Mariage";
 
 export function getInteresse(rcrca: IFicheRcRca): SectionPartProps[] {
   const sortedInteresses = triListeObjetsSurPropriete(
@@ -89,7 +89,7 @@ function getInteresseInfo(interesse: IInteresse): SectionContentProps[] {
         <span className="prenom">
           {interesse.prenoms
             ? triListeObjetsSurPropriete([...interesse.prenoms], "numeroOrdre")
-                .map(prenom => prenom.prenom)
+                .map(prenom => prenom.valeur)
                 .join(", ")
             : ""}
         </span>
