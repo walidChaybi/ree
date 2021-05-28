@@ -35,6 +35,11 @@ export function navigationApercu(
     // OU et de type RDC au statut "Traité - A imprimer" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
     // OU et de type RDD au statut "Traiter - A Délivrer démat" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
     // US 210  et au statut "A traiter" ou "Transférée", on lance la "RMC Auto"  et redirection suivant le résultat
+    // US 316  et au statut "Brouillon", redirection vers "Saisir une requête"
+    console.log(
+      "Attention les redirections des US 207 / 210 / 316 ne sont pas encore développées"
+    );
+
     if (
       requete.type === TypeRequete.DELIVRANCE.libelle &&
       requete.statut === StatutRequete.PRISE_EN_CHARGE.libelle
@@ -42,8 +47,10 @@ export function navigationApercu(
       // US 211 ... et au statut "Prise en charge", on lance la "RMC Auto" et redirection suivant le résultat
       redirection.isRmcAuto = true;
     } else {
-      // US 316  et au statut "Brouillon", redirection vers "Saisir une requête"
-      console.log("Futures US 207 / 210 / 316");
+      redirection.url = getUrlWithParam(
+        `${urlWithParam}/apercurequete/:idRequete`,
+        requete.idRequete
+      );
     }
   } else if (requete.idUtilisateur == null) {
     // US 221 Si je "Prendre en charge une requête" depuis l'espace délivrance
