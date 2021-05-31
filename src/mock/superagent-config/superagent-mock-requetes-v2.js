@@ -1,13 +1,10 @@
-import { ReponseAppelDetailRequeteDelivrance } from "../data/DetailRequeteDelivrance";
-import {
-  ReponseAppelMesRequetes,
-  ReponseAppelRequetesService
-} from "../data/EspaceDelivrance";
+import {ReponseAppelDetailRequeteDelivrance} from "../data/DetailRequeteDelivrance";
+import {ReponseAppelMesRequetes, ReponseAppelRequetesService} from "../data/EspaceDelivrance";
 import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
-import { ReponseAppelRMCRequete } from "../data/RMCRequete";
+import {ReponseAppelRMCRequete} from "../data/RMCRequete";
 
 export const configRequetesV2 = [
   {
@@ -28,28 +25,28 @@ export const configRequetesV2 = [
       // Mes requetes (espace délivrance)
       if (
         match[1] ===
-        "/requetes/mesrequetes?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105"
+          "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
             link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+                '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
 
       if (
         match[1] ===
-        "/requetes/mesrequetes?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105"
+          "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
             link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+                '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -57,28 +54,28 @@ export const configRequetesV2 = [
       // Requetes de mon service (espace délivrance)
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105"
+          "/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
             link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+                '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
 
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105"
+          "/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
             link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=A_SIGNER%2CTRAITE_A_DELIVRER_DEMAT%2CTRAITE_A_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+                '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }

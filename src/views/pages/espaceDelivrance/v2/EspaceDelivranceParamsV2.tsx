@@ -1,11 +1,14 @@
-import { getIconPrioriteRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
-import { TableauTypeColumn } from "../../../common/widget/tableau/v1/TableauRece";
-import { getLibelle } from "../../../common/widget/Text";
+import {getIconPrioriteRequete} from "../../../common/util/tableauRequete/TableauRequeteUtils";
+import {TableauTypeColumn} from "../../../common/widget/tableau/v1/TableauRece";
+import {getLibelle} from "../../../common/widget/Text";
 
 export const StatutsRequetesEspaceDelivrance = [
+  "BROUILLON",
+  "A_TRAITER",
+  "PRISE_EN_CHARGE",
+  "TRANSFEREE",
   "A_SIGNER",
-  "TRAITE_A_DELIVRER_DEMAT",
-  "TRAITE_A_IMPRIMER"
+  "A_VALIDER"
 ];
 
 export enum HeaderTableauRequete {
