@@ -8,7 +8,11 @@ import {
   TypeRMC
 } from "./RMCTableauCommun";
 
-let onClickParentCallBack: (isChecked: boolean, data: any) => void;
+let onClickParentCallBack: (
+  index: number,
+  isChecked: boolean,
+  data: any
+) => void;
 
 const columnsTableauRmc = [
   ...commonHeadersTableauRMC,
@@ -31,7 +35,7 @@ export const NB_INSCRIPTION_PAR_PAGE = 5;
 
 export function determinerColonnes(
   typeRMC: TypeRMC,
-  onClickCheckbox: (isChecked: boolean, data: any) => void
+  onClickCheckbox: (index: number, isChecked: boolean, data: any) => void
 ) {
   if (typeRMC === "Auto") {
     onClickParentCallBack = onClickCheckbox;
@@ -47,8 +51,12 @@ export function determinerColonnes(
   return columnsTableauRmc;
 }
 
-function getCheckBoxElement(data: any): JSX.Element {
+function getCheckBoxElement(data: any, index: number): JSX.Element {
   return (
-    <CheckboxColumn data={data} onClickParentCallBack={onClickParentCallBack} />
+    <CheckboxColumn
+      index={index}
+      data={data}
+      onClickParentCallBack={onClickParentCallBack}
+    />
   );
 }

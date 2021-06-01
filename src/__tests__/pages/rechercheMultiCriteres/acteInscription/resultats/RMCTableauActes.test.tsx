@@ -13,6 +13,7 @@ import {
 } from "../../../../../mock/data/RMCActe";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { RMCTableauActes } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
+
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => {
@@ -181,7 +182,11 @@ test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat", a
   });
 
   act(() => {
-    fireEvent.click(checkboxColumns[0]);
+    fireEvent.click(checkboxColumns[0], {
+      target: {
+        checked: true
+      }
+    });
   });
 
   await waitFor(() => {
@@ -190,7 +195,11 @@ test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat", a
   });
 
   act(() => {
-    fireEvent.click(checkboxColumns[0]);
+    fireEvent.click(checkboxColumns[0], {
+      target: {
+        checked: false
+      }
+    });
   });
 
   await waitFor(() => {

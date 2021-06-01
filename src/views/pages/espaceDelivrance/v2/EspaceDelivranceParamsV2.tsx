@@ -1,6 +1,6 @@
-import {getIconPrioriteRequete} from "../../../common/util/tableauRequete/TableauRequeteUtils";
-import {TableauTypeColumn} from "../../../common/widget/tableau/v1/TableauRece";
-import {getLibelle} from "../../../common/widget/Text";
+import { getIconPrioriteRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
+import { TableauTypeColumn } from "../../../common/widget/tableau/v2/TableauTypeColumn";
+import { getLibelle } from "../../../common/widget/Text";
 
 export const StatutsRequetesEspaceDelivrance = [
   "BROUILLON",

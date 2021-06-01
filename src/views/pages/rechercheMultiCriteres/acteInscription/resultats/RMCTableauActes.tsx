@@ -68,21 +68,18 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   }));
 
   // Gestion du clic sur une colonne de type checkbox
-  const [selected, setSelected] = useState<string[]>([]);
-  const onClickCheckbox = (isChecked: boolean, data: IResultatRMCActe) => {
-    const selectedIndex = selected.indexOf(data?.idActe);
-    let newSelected: string[] = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, data?.idActe);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+  const [selected, setSelected] = useState<Map<number, string>>(new Map([]));
+
+  const onClickCheckbox = (
+    index: number,
+    isChecked: boolean,
+    data: IResultatRMCActe
+  ) => {
+    const newSelected = new Map(selected);
+    if (isChecked) {
+      newSelected.set(index, data?.idActe);
+    } else {
+      newSelected.delete(index);
     }
     setSelected(newSelected);
   };
@@ -102,7 +99,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
       />
       {typeRMC === "Auto" && (
         <div className="ElementsCoches">
-          {getLibelle(`${selected.length} élément(s) coché(s)`)}
+          {getLibelle(`${selected.size} élément(s) coché(s)`)}
         </div>
       )}
 
