@@ -6,7 +6,7 @@ export interface ITableauTypeColumnParam {
   align?: alignType;
   style?: React.CSSProperties;
   width?: string | number;
-  getElement?: (value: any, selectedValue?: string) => JSX.Element;
+  getElement?: (value: any, index: number) => JSX.Element;
   className?: string;
   dataIsArray?: boolean;
 }
@@ -16,7 +16,7 @@ export class TableauTypeColumn {
   public title: string;
   public align?: alignType;
   public style?: React.CSSProperties;
-  public getElement?: (value: any, selectedValue?: string) => JSX.Element;
+  public getElement?: (value: any, index: number) => JSX.Element;
   public className?: string;
   public dataIsArray?: boolean;
 

@@ -4,12 +4,18 @@ import React, { useState } from "react";
 import "./scss/CheckboxColumn.scss";
 
 export interface CheckboxColumnProps {
+  index: number;
   data: any;
-  onClickParentCallBack: (isChecked: boolean, data: any) => void;
+  onClickParentCallBack?: (
+    index: number,
+    isChecked: boolean,
+    data: any
+  ) => void;
   hasWarning?: (isChecked: boolean, data: any) => boolean;
 }
 
 export const CheckboxColumn: React.FC<CheckboxColumnProps> = ({
+  index,
   data,
   hasWarning,
   onClickParentCallBack
@@ -19,13 +25,12 @@ export const CheckboxColumn: React.FC<CheckboxColumnProps> = ({
   const onClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation();
     const isChecked: boolean = (event?.target as any)?.checked;
-    setDisplayWarning(true);
     if (hasWarning && hasWarning(isChecked, data)) {
       setDisplayWarning(true);
     } else {
       setDisplayWarning(false);
     }
-    onClickParentCallBack && onClickParentCallBack(isChecked, data);
+    onClickParentCallBack && onClickParentCallBack(index, isChecked, data);
   };
 
   return (

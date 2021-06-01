@@ -79,25 +79,18 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   }));
 
   // Gestion du clic sur une colonne de type checkbox.
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<Map<number, string>>(new Map([]));
 
   const onClickCheckbox = (
+    index: number,
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => {
-    const selectedIndex = selected.indexOf(data?.idInscription);
-    let newSelected: string[] = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, data?.idInscription);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+    const newSelected = new Map(selected);
+    if (isChecked) {
+      newSelected.set(index, data?.idInscription);
+    } else {
+      newSelected.delete(index);
     }
     setSelected(newSelected);
   };
@@ -118,7 +111,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
 
       {typeRMC === "Auto" && (
         <div className="ElementsCoches">
-          {getLibelle(`${selected.length} élément(s) coché(s)`)}
+          {getLibelle(`${selected.size} élément(s) coché(s)`)}
         </div>
       )}
 

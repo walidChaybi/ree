@@ -182,7 +182,7 @@ export function getMessageZeroInscription(): JSX.Element {
   return (
     <>
       <ReportIcon />
-      <div>Aucune inscription n'a été trouvé</div>
+      <div>Aucune inscription n'a été trouvée</div>
     </>
   );
 }

@@ -15,6 +15,7 @@ import {
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
 import { RMCTableauInscriptions } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
+
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
@@ -104,7 +105,7 @@ test("renders Resultat Inscription Recherche Multi Critères => Sans résultat",
     />
   );
 
-  expect(screen.getByText(/Aucune inscription n'a été trouvé/i)).toBeDefined();
+  expect(screen.getByText(/Aucune inscription n'a été trouvée/i)).toBeDefined();
 });
 
 test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résultat", async () => {
@@ -123,7 +124,11 @@ test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résul
   });
 
   act(() => {
-    fireEvent.click(checkboxColumns[0]);
+    fireEvent.click(checkboxColumns[0], {
+      target: {
+        checked: true
+      }
+    });
   });
 
   await waitFor(() => {
@@ -132,7 +137,11 @@ test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résul
   });
 
   act(() => {
-    fireEvent.click(checkboxColumns[0]);
+    fireEvent.click(checkboxColumns[0], {
+      target: {
+        checked: false
+      }
+    });
   });
 
   await waitFor(() => {
