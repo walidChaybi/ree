@@ -36,7 +36,22 @@ export const ficheInscriptionRepertoireCivil = {
     uniteDuree: "années",
     autreDuree: "Viager",
     dateFinDeMesure: 1581724800
-  }
+  },
+  statutsFiche: [
+    {
+      "statut": "ACTIF",
+      "dateEvenement": {
+        "jour": null,
+        "mois": null,
+        "annee": "2020"
+      },
+      "motif": "",
+      "villeEvenement": "nantes",
+      "departementEvenement": "Pays de la Loire",
+      "paysEvenement": "France",
+      "complementMotif": ""
+    }
+  ]
 };
 
 export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes = {

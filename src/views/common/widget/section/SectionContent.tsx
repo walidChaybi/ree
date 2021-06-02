@@ -2,7 +2,7 @@ import React from "react";
 import "./scss/SectionContent.scss";
 
 export interface SectionContentProps {
-  libelle: string;
+  libelle?: string;
   value: JSX.Element | JSX.Element[] | string;
   row?: number;
   className?: string;
@@ -15,12 +15,18 @@ export const SectionContent: React.FC<SectionContentProps> = ({
   className
 }) => {
   return (
-    <div
-      className={className ? className : "content"}
-      style={{ gridRow: row + 1 }}
-    >
-      {libelle && <label className="libelleContent">{libelle}</label>}
-      <span className="valueContent">{value}</span>
-    </div>
+    <>
+      {libelle ? (
+        <div
+          className={className ? className : "content"}
+          style={{ gridRow: row + 1 }}
+        >
+          {libelle && <label className="libelleContent">{libelle}</label>}
+          <span className="valueContent">{value}</span>
+        </div>
+      ) : (
+        <span>{value}</span>
+      )}
+    </>
   );
 };

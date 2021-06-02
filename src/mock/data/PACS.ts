@@ -210,13 +210,16 @@ export const pacsModificationNotaireMap: IFichePacs = {
   statutsFiche: [
     {
       statut: "Actif",
-      dateEvenement: {
-        annee: "2020"
+      dateStatut: 1606381200,
+      statutFicheEvenement: {
+        ville: "nantes",
+        region: "Pays de Loire",
+        pays: "FRANCE",
+        date: {
+          annee: "2020"
+        }
       },
       motif: "",
-      villeEvenement: "nantes",
-      departementEvenement: "Pays de Loire",
-      paysEvenement: "France",
       complementMotif: ""
     }
   ]
