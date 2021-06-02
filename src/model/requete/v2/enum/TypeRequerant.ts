@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import { EnumWithLibelle } from "../../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../../views/common/util/Type";
-import { valeurOuUndefined } from "../../../../views/common/util/Utils";
 
 export class TypeRequerant extends EnumWithLibelle {
   public static readonly INTERESSE = new TypeRequerant("Intéressé");
@@ -12,7 +11,7 @@ export class TypeRequerant extends EnumWithLibelle {
   );
 
   public static getEnumFor(str: string) {
-    return EnumWithLibelle.getEnumFor(str, valeurOuUndefined);
+    return EnumWithLibelle.getEnumFor(str, TypeRequerant);
   }
 
   public static getAllEnumsAsOptions(): Options {

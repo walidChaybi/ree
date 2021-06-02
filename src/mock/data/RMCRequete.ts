@@ -258,19 +258,34 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     idUtilisateur: "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a",
     numero: "9877",
     idSagaDila: "891",
-    type: "Information",
-    sousType: "Complétion requête en cours",
-    provenance: "Internet",
-    document: undefined,
-    nature: undefined,
-    requerant: "DUBOIS Léo",
-    attribueA: "Bureau des Affaires Extra",
-    dateCreation: "22/01/1990",
-    dateDerniereMaj: "22/02/1990",
-    statut: "Brouillon",
-    priorite: "BASSE",
+    type: "Délivrance",
+    sousType: "RDCSD",
+    provenance: "Service Public",
+    document: "Extrait avec filiation",
+    nature: "Naissance",
+    requerant: "Mairie de Nantes",
+    attribueA: "LAMY Mélina",
+    dateCreation: "22/01/1992",
+    dateDerniereMaj: "22/02/1992",
+    statut: "Prise en charge",
+    priorite: "HAUTE",
     observations: [],
-    titulaires: []
+    titulaires: [
+      {
+        nom: "Garcia",
+        prenoms: ["1) Hugo"],
+        jourNaissance: 31,
+        moisNaissance: 12,
+        anneeNaissance: 1981
+      },
+      {
+        nom: "Rossi",
+        prenoms: ["1) Giulia", "2) Clara", "3) Maria"],
+        jourNaissance: 16,
+        moisNaissance: 8,
+        anneeNaissance: 1983
+      }
+    ]
   },
   {
     idRequete: "532a8a9d-91c0-4405-9f5f-503629405423",

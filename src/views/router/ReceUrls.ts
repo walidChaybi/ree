@@ -56,11 +56,11 @@ export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHAR
 export const URL_RECHERCHE_REQUETE_DETAIL_REQUETE_ID = `${URL_RECHERCHE_REQUETE}/apercurequete/detailrequete/:idRequete`;
 
 // Saisie requête
-export const URL_MES_REQUETES_SAISIR_RDCSC = `${URL_MES_REQUETES}/saisircertificatsituation`;
-export const URL_REQUETES_SERVICE_SAISIR_RDCSC = `${URL_REQUETES_SERVICE}/saisircertificatsituation`;
-export const URL_MES_REQUETES_SAISIR_RDAPC = `${URL_MES_REQUETES}/saisirattestationpacs`;
-export const URL_REQUETES_SERVICE_SAISIR_RDAPC = `${URL_REQUETES_SERVICE}/saisirattestationpacs`;
-export const URL_MES_REQUETES_SAISIR_RDC = `${URL_MES_REQUETES}/saisirextraitcopie`;
-export const URL_REQUETES_SERVICE_SAISIR_RDC = `${URL_REQUETES_SERVICE}/saisirextraitcopie`;
-export const URL_MES_REQUETES_SAISIR_RDLFC = `${URL_MES_REQUETES}/saisirlivretfamille`;
-export const URL_REQUETES_SERVICE_SAISIR_RDLFC = `${URL_REQUETES_SERVICE}/saisirlivretfamille`;
+export const URL_MES_REQUETES_SAISIR_RDCSC = `${URL_MES_REQUETES_V2}/saisircertificatsituation`;
+export const URL_REQUETES_SERVICE_SAISIR_RDCSC = `${URL_REQUETES_SERVICE_V2}/saisircertificatsituation`;
+export const URL_MES_REQUETES_SAISIR_RDAPC = `${URL_MES_REQUETES_V2}/saisirattestationpacs`;
+export const URL_REQUETES_SERVICE_SAISIR_RDAPC = `${URL_REQUETES_SERVICE_V2}/saisirattestationpacs`;
+export const URL_MES_REQUETES_SAISIR_RDC = `${URL_MES_REQUETES_V2}/saisirextraitcopie`;
+export const URL_REQUETES_SERVICE_SAISIR_RDC = `${URL_REQUETES_SERVICE_V2}/saisirextraitcopie`;
+export const URL_MES_REQUETES_SAISIR_RDLFC = `${URL_MES_REQUETES_V2}/saisirlivretfamille`;
+export const URL_REQUETES_SERVICE_SAISIR_RDLFC = `${URL_REQUETES_SERVICE_V2}/saisirlivretfamille`;

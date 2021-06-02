@@ -18,7 +18,7 @@ import {
   NOM_FAMILLE,
   NOM_USAGE,
   PRENOM
-} from "../../../modelForm/ISaisirRDCSCPageModel";
+} from "../../../modelForm/ISaisirRequetePageModel";
 import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs

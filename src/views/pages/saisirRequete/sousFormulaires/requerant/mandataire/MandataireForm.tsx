@@ -22,7 +22,7 @@ import {
   PRENOM,
   RAISON_SOCIALE,
   TYPE
-} from "../../../modelForm/ISaisirRDCSCPageModel";
+} from "../../../modelForm/ISaisirRequetePageModel";
 import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
@@ -52,22 +52,6 @@ export const MandataireFormValidationSchema = Yup.object()
       CARATERES_AUTORISES_MESSAGE
     )
   })
-  .test("TypeObligatoire", function (value, error) {
-    const type = value[TYPE] as string;
-    const nature = value[NATURE] as string;
-    const raison = value[RAISON_SOCIALE] as string;
-    const nom = value[NOM] as string;
-    const prenom = value[PRENOM] as string;
-
-    const paramsError = {
-      path: `${error.path}.type`,
-      message: getLibelle("La sélection d'un Type est obligatoire")
-    };
-    return type == null &&
-      (nature != null || raison != null || nom != null || prenom != null)
-      ? this.createError(paramsError)
-      : true;
-  })
   .test("natureObligatoire", function (value, error) {
     const type = value[TYPE] as string;
     const nature = value[NATURE] as string;
@@ -75,7 +59,7 @@ export const MandataireFormValidationSchema = Yup.object()
     const paramsError = {
       path: `${error.path}.nature`,
       message: getLibelle(
-        'Saisie d\'une Nature est obligatoire pour le Type "Autre"'
+        'La saisie d\'une Nature est obligatoire pour le Type "Autre"'
       )
     };
     return type === "AUTRE" && nature == null
@@ -109,12 +93,14 @@ const MandataireForm: React.FC<SubFormProps> = props => {
           onChangeTypeMandataire(e);
         }}
       />
-      <InputField
-        name={withNamespace(props.nom, NATURE)}
-        label={getLibelle("Nature")}
-        maxLength={NB_CARACT_MAX_SAISIE}
-        disabled={natureInactif}
-      />
+      {!natureInactif && (
+        <InputField
+          name={withNamespace(props.nom, NATURE)}
+          label={getLibelle("Nature")}
+          maxLength={NB_CARACT_MAX_SAISIE}
+          disabled={natureInactif}
+        />
+      )}
       <InputField
         name={withNamespace(props.nom, RAISON_SOCIALE)}
         label={getLibelle("Raison sociale")}

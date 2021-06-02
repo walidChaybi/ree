@@ -22,7 +22,7 @@ import {
   NOM_INSTITUTION,
   PRENOM,
   TYPE
-} from "../../../modelForm/ISaisirRDCSCPageModel";
+} from "../../../modelForm/ISaisirRequetePageModel";
 import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
@@ -35,19 +35,37 @@ export const InstitutionnelFormDefaultValues = {
 };
 
 // Schéma de validation des champs
-export const InstitutionnelFormValidationSchema = Yup.object().shape({
-  [TYPE]: Yup.string(),
-  [NATURE]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
-  ),
-  [NOM_INSTITUTION]: Yup.string().matches(
-    CarateresAutorise,
-    CARATERES_AUTORISES_MESSAGE
-  ),
-  [NOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
-  [PRENOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE)
-});
+export const InstitutionnelFormValidationSchema = Yup.object()
+  .shape({
+    [TYPE]: Yup.string(),
+    [NATURE]: Yup.string().matches(
+      CarateresAutorise,
+      CARATERES_AUTORISES_MESSAGE
+    ),
+    [NOM_INSTITUTION]: Yup.string().matches(
+      CarateresAutorise,
+      CARATERES_AUTORISES_MESSAGE
+    ),
+    [NOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+    [PRENOM]: Yup.string().matches(
+      CarateresAutorise,
+      CARATERES_AUTORISES_MESSAGE
+    )
+  })
+  .test("natureObligatoire", function (value, error) {
+    const type = value[TYPE] as string;
+    const nature = value[NATURE] as string;
+
+    const paramsError = {
+      path: `${error.path}.nature`,
+      message: getLibelle(
+        'Saisie d\'une Nature est obligatoire pour le Type "Autre"'
+      )
+    };
+    return type === "AUTRE" && nature == null
+      ? this.createError(paramsError)
+      : true;
+  });
 
 const InstitutionnelForm: React.FC<SubFormProps> = props => {
   const nomWithNamespace = withNamespace(props.nom, NOM);
@@ -77,12 +95,14 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
           onChangeTypeInstitutionnel(e);
         }}
       />
-      <InputField
-        name={withNamespace(props.nom, NATURE)}
-        label={getLibelle("Nature")}
-        maxLength={NB_CARACT_MAX_SAISIE}
-        disabled={natureInactif}
-      />
+      {!natureInactif && (
+        <InputField
+          name={withNamespace(props.nom, NATURE)}
+          label={getLibelle("Nature")}
+          maxLength={NB_CARACT_MAX_SAISIE}
+          disabled={natureInactif}
+        />
+      )}
       <InputField
         name={withNamespace(props.nom, NOM_INSTITUTION)}
         label={getLibelle("Nom institution")}

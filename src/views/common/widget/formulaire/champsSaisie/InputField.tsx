@@ -1,7 +1,7 @@
-import React from "react";
-import { Field, ErrorMessage } from "formik";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ErrorMessage, Field } from "formik";
+import React from "react";
 
 interface InputFieldProps {
   name: string;

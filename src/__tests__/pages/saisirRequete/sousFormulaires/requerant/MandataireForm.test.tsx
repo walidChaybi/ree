@@ -8,7 +8,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { MANDATAIRE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import { MANDATAIRE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRequetePageModel";
 import MandataireForm, {
   MandataireFormDefaultValues,
   MandataireFormValidationSchema
@@ -49,9 +49,6 @@ test("render composant Mandataire Formulaire", async () => {
 
   const inputType = screen.getByLabelText(
     "mandataire.type"
-  ) as HTMLInputElement;
-  const inputNature = screen.getByLabelText(
-    "mandataire.nature"
   ) as HTMLInputElement;
   const inputRaisonSociale = screen.getByLabelText(
     "mandataire.raisonSociale"
@@ -94,9 +91,50 @@ test("render composant Mandataire Formulaire", async () => {
   const result = screen.getByTestId("result");
 
   await waitFor(() => {
-    expect(inputNature.disabled).toBeTruthy();
     expect(result.innerHTML).toBe(
       '{"mandataire":{"type":"AVOCAT","nature":"","raisonSociale":"mockRaisonSociale","nom":"MOCKNOM","prenom":"Mockprenom"}}'
+    );
+  });
+});
+
+test("render composant Mandataire Formulaire : Affichage de l'input Nature", async () => {
+  await act(async () => {
+    render(<HookMandataireForm />);
+  });
+
+  const inputType = screen.getByLabelText(
+    "mandataire.type"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputType, {
+      target: {
+        value: "AUTRE"
+      }
+    });
+  });
+
+  const inputNature = screen.getByLabelText(
+    "mandataire.nature"
+  ) as HTMLInputElement;
+
+  const submit = screen.getByText(/Submit/i);
+
+  await act(async () => {
+    fireEvent.change(inputNature, {
+      target: {
+        value: "mockNature"
+      }
+    });
+    fireEvent.click(submit);
+  });
+
+  const result = screen.getByTestId("result");
+
+  await waitFor(() => {
+    expect(inputNature).toBeDefined();
+    expect(result.innerHTML).toBe(
+      '{"mandataire":{"type":"AUTRE","nature":"mockNature","raisonSociale":"","nom":"","prenom":""}}'
     );
   });
 });

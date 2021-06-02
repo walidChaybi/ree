@@ -34,7 +34,8 @@ import AdresseForm, {
 } from "./sousFormulaires/adresse/AdresseForm";
 import IdentiteForm, {
   IdentiteFormDefaultValues,
-  IdentiteFormValidationSchema
+  IdentiteFormValidationSchema,
+  IdentiteSubFormProps
 } from "./sousFormulaires/identite/IdentiteForm";
 import RequerantForm, {
   RequerantFormDefaultValues,
@@ -146,7 +147,7 @@ function getInteresseForm(): JSX.Element {
   const interesseFormProps = {
     nom: INTERESSE,
     titre: getLibelle("Intéressé")
-  } as SubFormProps;
+  } as IdentiteSubFormProps;
   return <IdentiteForm key={INTERESSE} {...interesseFormProps} />;
 }
 
@@ -154,7 +155,7 @@ function getRequerantForm(): JSX.Element {
   const requerantFromProps = {
     nom: REQUERANT,
     titre: getLibelle("Identité du requérant"),
-    type: TypeRequerant.getAllEnumsAsOptions()
+    options: TypeRequerant.getAllEnumsAsOptions()
   } as SubFormProps;
   return <RequerantForm key={REQUERANT} {...requerantFromProps} />;
 }

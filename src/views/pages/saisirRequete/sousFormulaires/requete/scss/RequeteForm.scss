@@ -1,0 +1,10 @@
+@import "../../../../../../scss/colors";
+
+.RequeteForm {
+  .BlockInput {
+    grid-template-columns: 20% 45%;
+  }
+  .BlockErreur {
+    margin-left: 20%;
+  }
+}

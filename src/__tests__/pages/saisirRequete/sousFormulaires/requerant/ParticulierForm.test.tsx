@@ -8,7 +8,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { PARTICULIER } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import { PARTICULIER } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRequetePageModel";
 import ParticulierForm, {
   ParticulierFormDefaultValues,
   ParticulierFormValidationSchema

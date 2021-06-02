@@ -1,4 +1,5 @@
 import { FormikProps, FormikValues } from "formik";
+import { Options } from "../../../util/Type";
 
 export const NB_CARACT_MAX_SAISIE = "100";
 export const NB_CARACT_ADRESSE = "38";
@@ -22,8 +23,11 @@ export interface ComponentFiltreProps {
 export interface ISubForm {
   nom: string;
   titre?: string;
-  type: any;
+  reset?: boolean;
+  options: Options;
+  onChange?: (value: string) => void;
 }
+
 export type SubFormProps = ISubForm & FormikComponentProps;
 
 export function withNamespace(nomParent: string, nomChamp: string) {

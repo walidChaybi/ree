@@ -7,20 +7,20 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import { TypeRequerant } from "../../../../../model/requete/v2/enum/TypeRequerant";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { REQUERANT } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import RequerantForm, {
   RequerantFormDefaultValues,
   RequerantFormValidationSchema
 } from "../../../../../views/pages/saisirRequete/sousFormulaires/requerant/RequerantForm";
-import { TypeRequerant } from "../../../../../model/requete/v2/enum/TypeRequerant";
 
 const HookRequerantForm: React.FC = () => {
   const [result, setResult] = useState("");
 
   const requerantFormProps = {
     nom: REQUERANT,
-    type: TypeRequerant.getAllEnumsAsOptions()
+    options: TypeRequerant.getAllEnumsAsOptions()
   } as SubFormProps;
 
   const handleClickButton = (values: any) => {
@@ -148,7 +148,7 @@ test("retour du formulaire Requerant", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"requerant":{"typeRequerant":"PARTICULIER","mandataire":{"type":"","nature":"","raisonSociale":"","nom":"","prenom":""},"institutionnel":{"type":"","nature":"","nomInstitution":"","nom":"","prenom":""},"particulier":{"nomFamille":"","nomUsage":"","prenom":"Mockprenom"}}}'
+      '{"requerant":{"typeRequerant":"PARTICULIER","mandataire":{"type":"","nature":"","raisonSociale":"","nom":"","prenom":""},"institutionnel":{"type":"","nature":"","nomInstitution":"","nom":"","prenom":""},"particulier":{"nomFamille":"","nomUsage":"","prenom":"Mockprenom"},"autreProfessionnel":{"nature":"","raisonSociale":"","nom":"","prenom":""}}}'
     );
   });
 });

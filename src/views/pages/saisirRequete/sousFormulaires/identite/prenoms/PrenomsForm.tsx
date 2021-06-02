@@ -15,7 +15,7 @@ import {
   PRENOM_1,
   PRENOM_2,
   PRENOM_3
-} from "../../../modelForm/ISaisirRDCSCPageModel";
+} from "../../../modelForm/ISaisirRequetePageModel";
 import "./scss/PrenomsForm.scss";
 
 const NB_MIN_PRENOMS = 1;
@@ -129,7 +129,6 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
         <InputField
           name={prenomWithNamespace1}
           label={getLibelle("Prénom 1")}
-          placeholder={getLibelle("Prénom 1")}
           maxLength={NB_CARACT_MAX_SAISIE}
           onBlur={e =>
             sortieChampPremiereLettreEnMajuscule(
@@ -146,7 +145,6 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
           <InputField
             name={prenomWithNamespace2}
             label={getLibelle("Prénom 2")}
-            placeholder={getLibelle("Prénom 2")}
             maxLength={NB_CARACT_MAX_SAISIE}
             onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
@@ -169,7 +167,6 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
           <InputField
             name={prenomWithNamespace3}
             label={getLibelle("Prénom 3")}
-            placeholder={getLibelle("Prénom 3")}
             maxLength={NB_CARACT_MAX_SAISIE}
             onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(

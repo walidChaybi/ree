@@ -98,3 +98,25 @@ test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () =
     fireEvent.click(ligne);
   });
 });
+
+test("Clic sur une Requête avec des titulaire", async () => {
+  userDroitConsulterPerimetreMEAE.idUtilisateur =
+    "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
+
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+
+  const { getByTestId } = render(
+    <Router history={history}>
+      <RMCTableauRequetes
+        dataRMCRequete={DataRMCRequeteAvecResultat}
+        dataTableauRMCRequete={DataTableauRequete}
+      />
+    </Router>
+  );
+
+  const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf9");
+
+  act(() => {
+    fireEvent.click(ligne);
+  });
+});
