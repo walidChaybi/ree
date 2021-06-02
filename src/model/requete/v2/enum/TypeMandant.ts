@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { EnumWithLibelle } from "../../../../views/common/util/enum/EnumWithLibelle";
+import { Options } from "../../../../views/common/util/Type";
 
 export class TypeMandant extends EnumWithLibelle {
   public static readonly PERSONNE_PHYSIQUE = new TypeMandant(
@@ -9,5 +10,9 @@ export class TypeMandant extends EnumWithLibelle {
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TypeMandant);
+  }
+
+  public static getAllEnumsAsOptions(): Options {
+    return EnumWithLibelle.getAllLibellesAsOptions(TypeMandant, false, false);
   }
 }

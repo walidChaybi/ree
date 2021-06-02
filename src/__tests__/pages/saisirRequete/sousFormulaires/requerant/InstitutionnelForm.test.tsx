@@ -8,7 +8,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { INSTITUTI0NNEL } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import { INSTITUTI0NNEL } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRequetePageModel";
 import InstitutionnelForm, {
   InstitutionnelFormDefaultValues,
   InstitutionnelFormValidationSchema
@@ -50,9 +50,6 @@ test("render composant Institutionnel Formulaire", async () => {
   const inputType = screen.getByLabelText(
     "institutionnel.type"
   ) as HTMLInputElement;
-  const inputNature = screen.getByLabelText(
-    "institutionnel.nature"
-  ) as HTMLInputElement;
   const inputNomInstitution = screen.getByLabelText(
     "institutionnel.nomInstitution"
   ) as HTMLInputElement;
@@ -66,12 +63,7 @@ test("render composant Institutionnel Formulaire", async () => {
   act(() => {
     fireEvent.change(inputType, {
       target: {
-        value: "AUTRE"
-      }
-    });
-    fireEvent.change(inputNature, {
-      target: {
-        value: "mockNature"
+        value: "TRIBUNAL"
       }
     });
     fireEvent.change(inputNomInstitution, {
@@ -101,9 +93,50 @@ test("render composant Institutionnel Formulaire", async () => {
   const result = screen.getByTestId("result");
 
   await waitFor(() => {
-    expect(inputNature.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-      '{"institutionnel":{"type":"AUTRE","nature":"mockNature","nomInstitution":"mockNomInstitution","nom":"MOCKNOM","prenom":"Mockprenom"}}'
+      '{"institutionnel":{"type":"TRIBUNAL","nature":"","nomInstitution":"mockNomInstitution","nom":"MOCKNOM","prenom":"Mockprenom"}}'
+    );
+  });
+});
+
+test("render input Nature Institutionnel Formulaire", async () => {
+  await act(async () => {
+    render(<HookInstitutionnelForm />);
+  });
+
+  const inputType = screen.getByLabelText(
+    "institutionnel.type"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputType, {
+      target: {
+        value: "AUTRE"
+      }
+    });
+  });
+
+  const inputNature = screen.getByLabelText(
+    "institutionnel.nature"
+  ) as HTMLInputElement;
+
+  const submit = screen.getByText(/Submit/i);
+
+  await act(async () => {
+    fireEvent.change(inputNature, {
+      target: {
+        value: "mockNature"
+      }
+    });
+    fireEvent.click(submit);
+  });
+
+  const result = screen.getByTestId("result");
+
+  await waitFor(() => {
+    expect(inputNature).toBeDefined();
+    expect(result.innerHTML).toBe(
+      '{"institutionnel":{"type":"AUTRE","nature":"mockNature","nomInstitution":"","nom":"","prenom":""}}'
     );
   });
 });

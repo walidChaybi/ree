@@ -7,19 +7,21 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { NAISSANCE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
-import NaissanceForm, {
-  NaissanceFormDefaultValues,
-  NaissanceFormValidationSchema
-} from "../../../../../views/pages/saisirRequete/sousFormulaires/identite/naissance/NaissanceForm";
+import EvenementForm, {
+  EvenementFormDefaultValues,
+  EvenementFormValidationSchema,
+  EvenementSubFormProps
+} from "../../../../../views/pages/saisirRequete/sousFormulaires/evenement/EvenementForm";
 
-const HookNaissanceForm: React.FC = () => {
+const EVENEMENT = "evenement";
+
+const HookEvenementForm: React.FC = () => {
   const [result, setResult] = useState("");
 
-  const naissanceFormProps = {
-    nom: NAISSANCE
-  } as SubFormProps;
+  const evenementFormProps = {
+    nom: EVENEMENT,
+    libelle: "libelle"
+  } as EvenementSubFormProps;
 
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));
@@ -28,13 +30,13 @@ const HookNaissanceForm: React.FC = () => {
   return (
     <Formik
       initialValues={{
-        [NAISSANCE]: { ...NaissanceFormDefaultValues }
+        [EVENEMENT]: { ...EvenementFormDefaultValues }
       }}
-      validationSchema={NaissanceFormValidationSchema}
+      validationSchema={EvenementFormValidationSchema}
       onSubmit={handleClickButton}
     >
       <Form>
-        <NaissanceForm {...naissanceFormProps} />
+        <EvenementForm {...evenementFormProps} />
         <button type="submit">Submit</button>
         <Field as="textarea" value={result} data-testid="result" />
       </Form>
@@ -42,16 +44,16 @@ const HookNaissanceForm: React.FC = () => {
   );
 };
 
-test("render composant Naissance Formulaire", async () => {
+test("render composant Evenement Formulaire", async () => {
   await act(async () => {
-    render(<HookNaissanceForm />);
+    render(<HookEvenementForm />);
   });
 
   const inputVille = screen.getByLabelText(
-    "naissance.villeNaissance"
+    "evenement.villeEvenement"
   ) as HTMLInputElement;
   const inputPays = screen.getByLabelText(
-    "naissance.paysNaissance"
+    "evenement.paysEvenement"
   ) as HTMLInputElement;
 
   act(() => {
@@ -75,10 +77,14 @@ test("render composant Naissance Formulaire", async () => {
   });
 
   const result = screen.getByTestId("result");
+  const libelleDateLieu = screen.getByText(/Date et lieu de libelle/i);
+  const libellePays = screen.getByText(/Pays de libelle/i);
 
   await waitFor(() => {
+    expect(libelleDateLieu).toBeDefined();
+    expect(libellePays).toBeDefined();
     expect(result.innerHTML).toBe(
-      '{"naissance":{"dateNaissance":{"jour":"","mois":"","annee":""},"villeNaissance":"Mockville","paysNaissance":"Mockpays"}}'
+      '{"evenement":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"Mockville","paysEvenement":"Mockpays"}}'
     );
   });
 });

@@ -32,7 +32,7 @@ import {
   NUMERO_TELEPHONE,
   PAYS,
   VOIE
-} from "../../modelForm/ISaisirRDCSCPageModel";
+} from "../../modelForm/ISaisirRequetePageModel";
 import "./scss/AdresseForm.scss";
 
 // Valeurs par défaut des champs

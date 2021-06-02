@@ -19,6 +19,7 @@ import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCA
 import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { SaisirRDAPCPage } from "../pages/saisirRequete/SaisirRDAPCPage";
+import { SaisirRDCPage } from "../pages/saisirRequete/SaisirRDCPage";
 import { SaisirRDCSCPage } from "../pages/saisirRequete/SaisirRDCSCPage";
 import {
   URL_ACCUEIL,
@@ -32,6 +33,7 @@ import {
   URL_MES_REQUETES_DETAIL_REQUETE_ID,
   URL_MES_REQUETES_ID,
   URL_MES_REQUETES_SAISIR_RDAPC,
+  URL_MES_REQUETES_SAISIR_RDC,
   URL_MES_REQUETES_SAISIR_RDCSC,
   URL_MES_REQUETES_V2,
   URL_RECHERCHE_ACTE,
@@ -49,6 +51,7 @@ import {
   URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
   URL_REQUETES_SERVICE_ID,
   URL_REQUETES_SERVICE_SAISIR_RDAPC,
+  URL_REQUETES_SERVICE_SAISIR_RDC,
   URL_REQUETES_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_SERVICE_V2
 } from "./ReceUrls";
@@ -171,6 +174,20 @@ export const routesRece: IRoute[] = [
     droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle("Saisir une requête de délivrance d'attestation PACS")
+  },
+  {
+    url: URL_MES_REQUETES_SAISIR_RDC,
+    component: SaisirRDCPage,
+    droits: [Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Requête de délivrance d'extrait copie Courrier")
+  },
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_RDC,
+    component: SaisirRDCPage,
+    droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Requête de délivrance d'extrait copie Courrier")
   },
   {
     url: URL_REQUETES_SERVICE_APERCU_REQUETE,

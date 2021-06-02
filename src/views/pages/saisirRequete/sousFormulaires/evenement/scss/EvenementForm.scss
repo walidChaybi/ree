@@ -1,9 +1,9 @@
-@import "../../../../../../../scss/colors";
+@import "../../../../../../scss/colors";
 
 .DateLieu {
   display: grid;
   grid-template-columns: 37.5% 62.5%;
-  .DateNaissance {
+  .DateEvenement {
     .DateComposeForm {
       grid-template-columns: 53% 10% 9px 10% 9px 14% 2%;
     }
@@ -11,10 +11,12 @@
       margin-left: 53%;
     }
   }
-  .BlockInput {
-    grid-template-columns: 5% 39%;
-  }
-  .BlockErreur {
-    margin-left: 5%;
+  .InputField {
+    .BlockInput {
+      grid-template-columns: 5% 39%;
+    }
+    .BlockErreur {
+      margin-left: 5%;
+    }
   }
 }

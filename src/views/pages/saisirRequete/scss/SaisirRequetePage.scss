@@ -1,3 +1,9 @@
+.FormulaireSaisirRDC,
+.FormulaireSaisirRDAPC,
+.FormulaireSaisirRDCSC {
+  margin: 1.5rem 8rem;
+}
+
 .FormulaireSaisirRDCSC {
   .DocumentInput {
     margin: 1.5rem 2.5rem;
@@ -10,7 +16,16 @@
   }
 }
 
-.FormulaireSaisirRDAPC,
-.FormulaireSaisirRDCSC {
-  margin: 1.5rem 9rem;
+.FormulaireSaisirRDC {
+  .EvenementForm {
+    .DateLieu {
+      .DateComposeForm,
+      .BlockInput {
+        margin: 0;
+      }
+    }
+    .BlockInput {
+      grid-template-columns: 20% 45%;
+    }
+  }
 }

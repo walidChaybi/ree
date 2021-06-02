@@ -8,7 +8,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { PRENOMS } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import { PRENOMS } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRequetePageModel";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema

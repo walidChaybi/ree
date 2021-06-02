@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { EnumWithLibelle } from "../../../../views/common/util/enum/EnumWithLibelle";
+import { Options } from "../../../../views/common/util/Type";
 
 export class TypeNatureActe extends EnumWithLibelle {
   public static readonly NAISSANCE = new TypeNatureActe("Naissance");
@@ -8,5 +9,13 @@ export class TypeNatureActe extends EnumWithLibelle {
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TypeNatureActe);
+  }
+
+  public static getAllEnumsAsOptions(): Options {
+    return EnumWithLibelle.getAllLibellesAsOptions(
+      TypeNatureActe,
+      false,
+      false
+    );
   }
 }

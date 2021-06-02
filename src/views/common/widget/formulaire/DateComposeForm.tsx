@@ -11,7 +11,7 @@ import {
   ANNEE,
   JOUR,
   MOIS
-} from "../../../pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+} from "../../../pages/saisirRequete/modelForm/ISaisirRequetePageModel";
 import {
   estDateReceValide,
   estDateValide,
