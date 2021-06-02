@@ -109,15 +109,14 @@
     "statutsFiche": [
       {
         "statut": "ACTIF",
-        "dateEvenement": {
-          "jour": null,
-          "mois": null,
-          "annee": "2020"
+        "dateStatut": 1584403200,
+        "statutFicheEvenement": {
+          "date": { "jour": null, "mois": null, "annee": "2020" },
+          "ville": "Nantes",
+          "region": "Pays de la Loire",
+          "pays": "France"
         },
         "motif": "",
-        "villeEvenement": "nantes",
-        "departementEvenement": "Pays de la Loire",
-        "paysEvenement": "France",
         "complementMotif": ""
       }
     ],

@@ -18,7 +18,7 @@ export enum FormatDate {
 }
 
 /** Trasforme un objet IDateCompose en chaîne JJ/MM/AAAA */
-export function getDateStringFromDateCompose(date: IDateCompose): string {
+export function getDateStringFromDateCompose(date?: IDateCompose): string {
   let dateString = "";
 
   if (date && date.annee) {
