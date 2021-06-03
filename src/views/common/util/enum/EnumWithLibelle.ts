@@ -10,6 +10,15 @@ export class EnumWithLibelle {
     return this._libelle;
   }
 
+  public static contientEnums(obj: any) {
+    return Object.entries(obj).length > 0;
+  }
+
+  //AddEnum specifique aux nomenclatures !
+  public static addEnum(key: string, obj: any, clazz: any) {
+    clazz[key] = obj;
+  }
+
   public static clean(clazz: any) {
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key)) {
@@ -56,7 +65,7 @@ export class EnumWithLibelle {
     return options;
   }
 
-  public static getCode(clazz: any, obj: any) {
+  public static getKey(clazz: any, obj: any) {
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key) && clazz[key]._libelle === obj._libelle) {
         return key;

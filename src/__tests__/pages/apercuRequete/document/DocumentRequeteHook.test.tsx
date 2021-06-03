@@ -1,11 +1,11 @@
 import request from "superagent";
-import { requestDocumentApi } from "../../../../views/common/hook/DocumentRequeteHook";
+import { IRequestDocumentApiResult } from "../../../../api/appels/requeteApi";
 import requetes from "../../../../mock/data/requetes.json";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { GroupementDocument } from "../../../../model/requete/GroupementDocument";
 import { MimeType } from "../../../../ressources/MimeType";
-import { IRequestDocumentApiResult } from "../../../../api/appels/requeteApi";
+import { requestDocumentApi } from "../../../../views/common/hook/DocumentRequeteHook";
 import { convertToBlob } from "../../../../views/pages/apercuRequete/contenu/document/DocumentPresentation";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -28,7 +28,7 @@ test("Appel d'api retournant le contenu d'un courrier d'accompagnement", async (
   const courrierAccompagnement = requetes.data[0].reponse.documentsDelivres[1];
   const resultApi = await requestDocumentApi(
     courrierAccompagnement.idDocumentDelivre,
-    GroupementDocument.CourrierAccompagnement
+    GroupementDocument.DocumentDelivre
   );
   const base64 = resultApi.documentDelivre.contenu;
   const blob = convertToBlob(base64, MimeType.APPLI_PDF);
@@ -41,7 +41,7 @@ test("Appel d'api retournant le contenu d'un courrier d'accompagnement KO", asyn
   const courrierAccompagnement = requetes.data[0].reponse.documentsDelivres[1];
   return requestDocumentApi(
     `${courrierAccompagnement.idDocumentDelivre}fakedoc`,
-    GroupementDocument.CourrierAccompagnement
+    GroupementDocument.DocumentDelivre
   )
     .then(result => {
       expect(result).toBe("ko");

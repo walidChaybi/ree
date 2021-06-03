@@ -1,5 +1,8 @@
+import { CLES } from "../../model/parametres/clesParametres";
 import { GroupementDocument } from "../../model/requete/GroupementDocument";
 import { StatutRequete } from "../../model/requete/StatutRequete";
+import { StatutRequete as StatutRequeteV2 } from "../../model/requete/v2/enum/StatutRequete";
+import { IDocumentReponse } from "../../model/requete/v2/IDocumentReponse";
 import { IRequeteDelivrance } from "../../model/requete/v2/IRequeteDelivrance";
 import { IRMCRequestRequete } from "../../model/rmc/requete/IRMCRequestRequete";
 import { IQueryParameterUpdateStatutRequete } from "../../views/common/hook/UpdateStatutRequeteHook";
@@ -15,6 +18,9 @@ export const URL_DOCUMENTSELIVRES = "/documentsdelivres";
 export const URL_REQUETES_RMC = "/requetes/rmc";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
+export const URL_DOCUMENT_REPONSE = "/documentsreponses";
+export const URL_PARAMETRE = "/parametres";
+export const URL_ACTION = "/action";
 
 const URL_REPONSES = "/reponses";
 
@@ -63,17 +69,13 @@ export interface IQueryParametersPourRequete {
 const api = ApiManager.getInstance("rece-requete-api", "v1");
 const apiV2 = ApiManager.getInstance("rece-requete-api", "v2");
 
-export function getDocumentASigner(
+export function getDocument(
   identifiantDocument: string,
   groupement: GroupementDocument
 ): Promise<any> {
-  const groupementEndPoint: string =
-    groupement !== GroupementDocument.DocumentAsigner
-      ? groupement
-      : GroupementDocument.CourrierAccompagnement;
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `/${groupementEndPoint}/${identifiantDocument}`
+    uri: `/${groupement}/${identifiantDocument}`
   });
 }
 
@@ -152,6 +154,18 @@ export function patchUtilisateurAssigneRequete(
       prenomOec: queryParameters.prenomOec
     },
     headers: []
+  });
+}
+
+////////////////////////
+// Paramètres (utilisé aussi en V2)
+////////////////////////
+/** Récupération des paramètres de l'api requête */
+export function getParametresBaseRequete(): Promise<any> {
+  return api.fetchCache({
+    method: HttpMethod.POST,
+    uri: `${URL_PARAMETRE}`,
+    data: CLES
   });
 }
 
@@ -239,5 +253,42 @@ export async function creationRequeteDelivrance(requete: IRequeteDelivrance) {
     method: HttpMethod.POST,
     uri: `${URL_REQUETES_DELIVRANCE}`,
     data: requete
+  });
+}
+
+export function getDocumentReponseById(idDcumentReponse: string): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_DOCUMENT_REPONSE}/${idDcumentReponse}`
+  });
+}
+
+export function postDocumentReponseApi(
+  idRequete: string,
+  documentsReponse: IDocumentReponse[]
+) {
+  return apiV2.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_DOCUMENT_REPONSE}`,
+    data: {
+      idRequete,
+      documentsReponse
+    }
+  });
+}
+
+export function postCreationActionEtMiseAjourStatut(
+  idRequete: string,
+  libelleAction: string,
+  statutRequete: StatutRequeteV2
+) {
+  return apiV2.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_ACTION}`,
+    parameters: {
+      idRequete,
+      libelleAction,
+      statutRequete: StatutRequeteV2.getKey(statutRequete)
+    }
   });
 }

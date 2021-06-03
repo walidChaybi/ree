@@ -3,15 +3,15 @@
 
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { IResultatRMCActe } from "../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IParamsTableau } from "../../common/util/GestionDesLiensApi";
-import { BoutonRetour } from "../../common/widget/navigation/BoutonRetour";
-import { getLibelle } from "../../common/widget/Text";
-import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
-import { RMCAutoResultats } from "../rechercheMultiCriteres/auto/RMCAutoResultats";
-import { ChoixAction } from "./actions/ChoixAction";
-import { IdRequeteParams } from "./v2/ApercuRequeteUtils";
+import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IParamsTableau } from "../../../common/util/GestionDesLiensApi";
+import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
+import { getLibelle } from "../../../common/widget/Text";
+import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
+import { RMCAutoResultats } from "../../rechercheMultiCriteres/auto/RMCAutoResultats";
+import { IdRequeteParams } from "../v2/ApercuRequeteUtils";
+import { ChoixAction } from "./contenu/ChoixAction";
 
 interface DataRMCAuto {
   dataRequetes: any[];
@@ -27,16 +27,16 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 
   const history = useHistory();
-  const [dataHistory] = useState<DataRMCAuto>(
+  const [dataHistory] = useState<DataRMCAuto | undefined>(
     history.location.state as DataRMCAuto
   );
 
   //const dataRequetes = dataHistory.dataRequetes;
-  const dataRMCAutoActe = dataHistory.dataRMCAutoActe;
-  const dataTableauRMCAutoActe = dataHistory.dataTableauRMCAutoActe;
-  const dataRMCAutoInscription = dataHistory.dataRMCAutoInscription;
+  const dataRMCAutoActe = dataHistory?.dataRMCAutoActe;
+  const dataTableauRMCAutoActe = dataHistory?.dataTableauRMCAutoActe;
+  const dataRMCAutoInscription = dataHistory?.dataRMCAutoInscription;
   const dataTableauRMCAutoInscription =
-    dataHistory.dataTableauRMCAutoInscription;
+    dataHistory?.dataTableauRMCAutoInscription;
 
   return (
     <>
@@ -55,7 +55,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
             dataTableauRMCAutoInscription={dataTableauRMCAutoInscription}
           />
         )}
-      <ChoixAction requete={detailRequeteState?.data} />
+      <ChoixAction requete={detailRequeteState} />
       <BoutonRetour message={getLibelle("<< Retour")} />
     </>
   );

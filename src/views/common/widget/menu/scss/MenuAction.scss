@@ -1,0 +1,17 @@
+.menu-choix-action {
+  padding: 10px;
+  background-color: #05659c;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1rem;
+  font-family: "NotoSansUI-Bold", sans-serif;
+  width: 70%;
+  margin: 0.5em;
+  position: relative;
+  .icon-menu {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+}

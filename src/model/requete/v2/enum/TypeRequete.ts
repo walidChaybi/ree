@@ -16,7 +16,7 @@ export class TypeRequete extends EnumWithLibelle {
     return EnumWithLibelle.getAllLibellesAsOptions(TypeRequete);
   }
 
-  public static getCode(obj: TypeRequete) {
-    return EnumWithLibelle.getCode(TypeRequete, obj);
+  public static getKey(obj: TypeRequete) {
+    return EnumWithLibelle.getKey(TypeRequete, obj);
   }
 }

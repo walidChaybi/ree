@@ -68,13 +68,12 @@ export const SaisirRDCSCPage: React.FC = () => {
     []
   );
 
-  const [
-    creationRequeteRDCSC,
-    setCreationRequeteRDCSC
-  ] = useState<SaisieRequeteRDCSC>();
+  const [creationRequeteRDCSC, setCreationRequeteRDCSC] = useState<
+    SaisieRequeteRDCSC
+  >();
 
   useState(async () => {
-    const documentDelivrance = await DocumentDelivrance.getAllCertificatSituation();
+    const documentDelivrance = await DocumentDelivrance.getAllCertificatSituationAsOptions();
     setDocumentDemandeOptions(documentDelivrance);
   });
 

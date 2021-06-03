@@ -1,28 +1,23 @@
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import {
-  fireEvent,
-  render,
-  waitFor,
-  act,
-  screen
-} from "@testing-library/react";
-import {
-  MenuAction,
-  IActionOption
-} from "../../../../views/pages/apercuRequete/actions/MenuAction";
 import { BrowserRouter as Router } from "react-router-dom";
-import { IDataDetailRequeteApi } from "../../../../views/pages/detailRequete/hook/DetailRequeteHook";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { TRequete } from "../../../../model/requete/v2/IRequete";
+import {
+  IActionOption,
+  MenuAction
+} from "../../../../views/common/widget/menu/MenuAction";
 
 test("renders d'un menu choix des actions", () => {
-  let requete: IDataDetailRequeteApi;
-  requete = { data: { sousType: SousTypeDelivrance.RDCSC } };
+  let requete: TRequete;
+  requete = { sousType: SousTypeDelivrance.RDCSC } as TRequete;
 
   const testOptions: IActionOption[] = [
     {
       value: 0,
       label: "Action de test",
-      sousTypes: [SousTypeDelivrance.RDCSC.nom]
+      sousTypes: [SousTypeDelivrance.RDCSC],
+      ref: undefined
     }
   ];
   const { getByText } = render(
@@ -43,19 +38,21 @@ test("renders d'un menu choix des actions", () => {
 });
 
 test("renders d'un menu choix des actions avec filtre", () => {
-  let requete: IDataDetailRequeteApi;
-  requete = { data: { sousType: SousTypeDelivrance.RDCSC } };
+  let requete: TRequete;
+  requete = { sousType: SousTypeDelivrance.RDCSC } as TRequete;
 
   const testOptions: IActionOption[] = [
     {
       value: 0,
       label: "Action de test",
-      sousTypes: [SousTypeDelivrance.RDCSC.nom]
+      sousTypes: [SousTypeDelivrance.RDCSC],
+      ref: undefined
     },
     {
       value: 1,
       label: "Action de test 2",
-      sousTypes: ["test"]
+      sousTypes: ["test"],
+      ref: undefined
     }
   ];
   const { getByText } = render(
