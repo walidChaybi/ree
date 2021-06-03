@@ -31,4 +31,14 @@ export class EnumWithComplete extends EnumWithLibelle {
     }
     return options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
   }
+
+  public static getKeyForNom(clazz: any, nom: string) {
+    let keyResult;
+    for (const key in clazz) {
+      if (clazz.hasOwnProperty(key) && clazz[key]._nom === nom) {
+        keyResult = key;
+      }
+    }
+    return keyResult;
+  }
 }

@@ -35,4 +35,8 @@ export class StatutRequete extends EnumWithLibelle {
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(StatutRequete);
   }
+
+  public static getKey(obj: StatutRequete) {
+    return EnumWithLibelle.getKey(StatutRequete, obj);
+  }
 }

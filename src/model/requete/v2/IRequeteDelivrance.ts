@@ -1,9 +1,10 @@
-import { IRequete } from "./IRequete";
-import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
-import { MotifDelivrance } from "./enum/MotifDelivrance";
-import { IProvenanceRequete } from "./IProvenanceRequete";
 import { DocumentDelivrance } from "./enum/DocumentDelivrance";
+import { MotifDelivrance } from "./enum/MotifDelivrance";
+import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
+import { DocumentReponse, IDocumentReponse } from "./IDocumentReponse";
 import { IEvenementReqDelivrance } from "./IEvenementReqDelivrance";
+import { IProvenanceRequete } from "./IProvenanceRequete";
+import { IRequete } from "./IRequete";
 
 export interface IRequeteDelivrance extends IRequete {
   sousType: SousTypeDelivrance;
@@ -13,4 +14,11 @@ export interface IRequeteDelivrance extends IRequete {
   evenement?: IEvenementReqDelivrance;
   motif?: MotifDelivrance;
   complementMotif?: string;
+  documentsReponses: IDocumentReponse[];
 }
+
+export const RequeteDelivrance = {
+  getDocumentsDeDelivrance(requete: IRequeteDelivrance) {
+    return DocumentReponse.getDocumentsDeDelivrance(requete.documentsReponses);
+  }
+};

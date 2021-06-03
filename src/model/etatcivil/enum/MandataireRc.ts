@@ -14,6 +14,10 @@ export class MandataireRc extends EnumWithLibelle {
     return EnumWithLibelle.clean(MandataireRc);
   }
 
+  public static contientEnums() {
+    return EnumWithLibelle.contientEnums(MandataireRc);
+  }
+
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, MandataireRc);
   }

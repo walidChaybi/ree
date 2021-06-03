@@ -1,26 +1,26 @@
+import { connect, getIn } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import { SousTypeCreation } from "../../../../../model/requete/v2/enum/SousTypeCreation";
+import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { SousTypeInformation } from "../../../../../model/requete/v2/enum/SousTypeInformation";
+import { SousTypeMiseAJour } from "../../../../../model/requete/v2/enum/SousTypeMiseAJour";
+import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
+import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
+import { CarateresAlphanumerique } from "../../../../../ressources/Regex";
+import { Options } from "../../../../common/util/Type";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
+import { CARACTERES_ALPHANUMERIQUE } from "../../../../common/widget/formulaire/FormulaireMessages";
+import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
 } from "../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../common/widget/Text";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { Options } from "../../../../common/util/Type";
-import { connect, getIn } from "formik";
-import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { SousTypeCreation } from "../../../../../model/requete/v2/enum/SousTypeCreation";
-import { SousTypeMiseAJour } from "../../../../../model/requete/v2/enum/SousTypeMiseAJour";
-import { SousTypeInformation } from "../../../../../model/requete/v2/enum/SousTypeInformation";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { CarateresAlphanumerique } from "../../../../../ressources/Regex";
-import { CARACTERES_ALPHANUMERIQUE } from "../../../../common/widget/formulaire/FormulaireMessages";
-import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
-import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 
 // Noms des champs
 export const NUMERO_REQUETE = "numeroRequete";

@@ -1,17 +1,21 @@
 /* istanbul ignore file */
 
-import { Options } from "../../../views/common/util/Type";
-import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { peupleNatureRc } from "../../../api/nomenclature/NomenclatureEtatcivil";
+import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { Options } from "../../../views/common/util/Type";
 
 export class NatureRc extends EnumWithLibelle {
   //AddEnum specifique aux nomenclatures !
   public static addEnum(key: string, obj: NatureRc) {
-    (NatureRc as any)[key] = obj;
+    EnumWithLibelle.addEnum(key, obj, NatureRc);
   }
 
   public static clean() {
     return EnumWithLibelle.clean(NatureRc);
+  }
+
+  public static contientEnums() {
+    return EnumWithLibelle.contientEnums(NatureRc);
   }
 
   public static getEnumFor(str: string) {

@@ -3,20 +3,24 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import { IDataDetailRequeteApi } from "../../detailRequete/hook/DetailRequeteHook";
-import "./scss/ChoixAction.scss";
+import "./scss/MenuAction.scss";
+import { TRequete } from "../../../../model/requete/v2/IRequete";
+import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
 
 export interface IActionOption {
   value: number;
   label: string;
-  sousTypes: string[];
+  sousTypes?: SousTypeDelivrance[];
+  ref: any;
 }
 
 interface IMenuActionProps {
   titre: string;
   onSelect: (indexMenu: number) => any;
   listeActions: IActionOption[];
-  requete?: IDataDetailRequeteApi;
+  requete?: TRequete;
 }
 
 export const MenuAction: React.FC<IMenuActionProps> = props => {
@@ -48,6 +52,11 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
         getContentAnchorEl={null}
         open={Boolean(menu)}
         onClose={handleCloseMenu}
+        onEnter={() => {
+          props.listeActions.forEach(el => {
+            DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+          });
+        }}
         PaperProps={{
           style: {
             width: "58%",
@@ -66,8 +75,19 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
       >
         {props.listeActions.map(
           el =>
-            showChoixAction(el.sousTypes, props.requete?.data) && (
-              <MenuItem onClick={() => props.onSelect(el.value)} key={el.value}>
+            showChoixAction(
+              el.sousTypes,
+              props.requete as IRequeteDelivrance
+            ) && (
+              <MenuItem
+                ref={el.ref}
+                onClick={event => {
+                  DoubleSubmitUtil.eviteDoubleSubmit(el.ref?.current);
+                  setMenu(null);
+                  props.onSelect(el.value);
+                }}
+                key={el.value}
+              >
                 {el.label}
               </MenuItem>
             )
@@ -78,11 +98,10 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
 };
 
 function showChoixAction(
-  sousTypes: string[],
-  detailRequeteState?: any
+  sousTypes?: SousTypeDelivrance[],
+  detailRequeteState?: IRequeteDelivrance
 ): boolean {
-  if (sousTypes) {
-    return sousTypes.includes(detailRequeteState?.sousType.nom);
-  }
-  return true;
+  return sousTypes
+    ? sousTypes.find(st => st === detailRequeteState?.sousType) != null
+    : true;
 }

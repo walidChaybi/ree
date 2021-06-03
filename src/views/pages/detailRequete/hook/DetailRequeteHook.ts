@@ -26,29 +26,26 @@ import { IParticulier } from "../../../../model/requete/v2/IParticulier";
 import { IProvenanceRequete } from "../../../../model/requete/v2/IProvenanceRequete";
 import { IQualiteRequerant } from "../../../../model/requete/v2/IQualiteRequerant";
 import { IRequerant } from "../../../../model/requete/v2/IRequerant";
+import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
 import { ITitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
 import { IUtilisateurRece } from "../../../../model/requete/v2/IUtilisateurRece";
 import { logError } from "../../../common/util/LogManager";
 
-export interface IDataDetailRequeteApi {
-  data: any;
-}
-
 export function useDetailRequeteApiHook(idRequete: string) {
   const [detailRequeteState, setDetailRequeteState] = useState<
-    IDataDetailRequeteApi
-  >({} as IDataDetailRequeteApi);
+    TRequete | undefined
+  >();
 
   useEffect(() => {
     if (idRequete != null) {
       getDetailRequete(idRequete)
         .then((result: any) => {
-          const detailRequete = {} as IDataDetailRequeteApi;
+          let detailRequete;
           const typeRequete = TypeRequete.getEnumFor(result.body.data.type);
           if (typeRequete === TypeRequete.DELIVRANCE) {
-            detailRequete.data = mappingRequeteDelivrance(result.body.data);
+            detailRequete = mappingRequeteDelivrance(result.body.data);
           }
           setDetailRequeteState(detailRequete);
         })
@@ -87,7 +84,9 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     evenement: data.evenement ? getEvenement(data.evenement) : undefined,
     motif: MotifDelivrance.getEnumFor(data.motif),
     complementMotif: data.complementMotif,
-    piecesJustificatives: []
+    piecesJustificatives: [],
+    // Documents réponse avec contenu vide
+    documentsReponses: data.documentsReponses
   };
 }
 

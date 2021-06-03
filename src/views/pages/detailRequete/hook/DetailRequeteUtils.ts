@@ -8,7 +8,7 @@ import { EvenementReqDelivrance } from "../../../../model/requete/v2/IEvenementR
 import { IMandant, Mandant } from "../../../../model/requete/v2/IMandant";
 import { IParent, Parent } from "../../../../model/requete/v2/IParents";
 import { IRequerant, Requerant } from "../../../../model/requete/v2/IRequerant";
-import { Requete } from "../../../../model/requete/v2/IRequete";
+import { Requete, TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import {
   ITitulaireRequete,
@@ -25,17 +25,14 @@ import {
   ajouterPanelAreasAuPanel
 } from "../../../common/widget/section/SectionUtils";
 import { getLibelle } from "../../../common/widget/Text";
-import { IDataDetailRequeteApi } from "./DetailRequeteHook";
 
-export function getPanelsDetailRequete(detailRequete: IDataDetailRequeteApi) {
+export function getPanelsDetailRequete(detailRequete?: TRequete) {
   const panels: SectionPanelProps[] = [];
-  if (
-    detailRequete &&
-    detailRequete.data &&
-    detailRequete.data.type === TypeRequete.DELIVRANCE
-  ) {
-    panels[0] = getPanelDetailRequeteDelivrance(detailRequete.data);
-    panels[1] = getRequeteDelivrance(detailRequete.data);
+  if (detailRequete && detailRequete.type === TypeRequete.DELIVRANCE) {
+    panels[0] = getPanelDetailRequeteDelivrance(
+      detailRequete as IRequeteDelivrance
+    );
+    panels[1] = getRequeteDelivrance(detailRequete as IRequeteDelivrance);
   }
   return panels;
 }

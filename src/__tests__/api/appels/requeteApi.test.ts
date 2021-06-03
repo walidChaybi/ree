@@ -1,6 +1,6 @@
 import request from "superagent";
 import {
-  getDocumentASigner,
+  getDocument,
   getRequetes,
   TypeAppelRequete,
   getRequete,
@@ -16,7 +16,7 @@ import { StatutRequete } from "../../../model/requete/StatutRequete";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("requeteapi api getDocumentASigner doc a signer", () => {
-  getDocumentASigner(
+  getDocument(
     "f9279c00-5d2b-11ea-bc55-0242ac130004",
     GroupementDocument.DocumentAsigner
   ).then((result: any) => {
@@ -25,7 +25,7 @@ test("requeteapi api getDocumentASigner doc a signer", () => {
 });
 
 test("requeteapi api getDocumentASigner piece justificative", () => {
-  getDocumentASigner(
+  getDocument(
     "e496f1d1-18c3-48ca-ae87-e97582fbf188",
     "piecesjustificatives"
   ).then((result: any) => {

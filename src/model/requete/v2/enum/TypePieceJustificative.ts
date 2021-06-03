@@ -1,16 +1,20 @@
 /* istanbul ignore file */
+import { peupleTypePieceJustificative } from "../../../../api/nomenclature/NomenclatureRequete";
 import { EnumWithLibelle } from "../../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../../views/common/util/Type";
-import { peupleTypePieceJustificative } from "../../../../api/nomenclature/NomenclatureRequete";
 
 export class TypePieceJustificative extends EnumWithLibelle {
   //AddEnum specifique aux nomenclatures !
   public static addEnum(key: string, obj: TypePieceJustificative) {
-    (TypePieceJustificative as any)[key] = obj;
+    EnumWithLibelle.addEnum(key, obj, TypePieceJustificative);
   }
 
   public static clean() {
     EnumWithLibelle.clean(TypePieceJustificative);
+  }
+
+  public static contientEnums() {
+    return EnumWithLibelle.contientEnums(TypePieceJustificative);
   }
 
   public static getEnumFor(str: string) {

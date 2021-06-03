@@ -9,6 +9,16 @@ import { IMandant } from "./IMandant";
 import { IRequerant } from "./IRequerant";
 import { IStatutCourant } from "./IStatutCourant";
 import { ITitulaireRequete } from "./ITitulaireRequete";
+import { IRequeteDelivrance } from "./IRequeteDelivrance";
+import { IRequeteInformation } from "./IRequeteInformation";
+import { IRequeteCreation } from "./IRequeteCreation";
+import { IRequeteMiseAjour } from "./IRequeteMiseAjour";
+
+export type TRequete =
+  | IRequeteDelivrance
+  | IRequeteCreation
+  | IRequeteMiseAjour
+  | IRequeteInformation;
 
 export interface IRequete {
   id: string;

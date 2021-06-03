@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import { ChoixAction } from "../../../../views/pages/apercuRequete/actions/ChoixAction";
+import { ChoixAction } from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ChoixAction";
 import { BrowserRouter as Router } from "react-router-dom";
 
 test("renders du bloc choix des actions", () => {

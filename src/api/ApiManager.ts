@@ -29,7 +29,8 @@ type ApisAutorisees =
   | "rece-requete-api"
   | "rece-agent-api"
   | "rece-etatcivil-api"
-  | "rece-outiltech-api";
+  | "rece-outiltech-api"
+  | "rece-composition-api";
 
 interface IApi {
   url: string;
@@ -119,8 +120,7 @@ export class ApiManager {
       return Promise.resolve({
         body: dataCache.body,
         status: dataCache.status,
-        headers: dataCache.header,
-        inReceCache: true
+        headers: dataCache.header
       });
     } else {
       return this.fetchData(httpRequestConfig, true);
@@ -218,9 +218,12 @@ export class ApiManager {
   }
 
   private buildCacheKey(httpRequestConfig: HttpRequestConfig) {
-    return `${httpRequestConfig.method}.${
-      httpRequestConfig.uri
-    }.${JSON.stringify(httpRequestConfig.parameters)}`;
+    const parameters = httpRequestConfig.parameters;
+    let cacheKey = `${httpRequestConfig.method}.${httpRequestConfig.uri}`;
+    if (parameters) {
+      cacheKey = `${cacheKey}.${parameters}`;
+    }
+    return cacheKey;
   }
 
   private addIdCorrelationToConfigHeader(config: HttpRequestConfig) {

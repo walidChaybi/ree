@@ -1,10 +1,10 @@
-import React from "react";
 import { render } from "@testing-library/react";
-import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
-import { DocumentDetail } from "../../../../../views/pages/apercuRequete/contenu/document/DocumentDetail";
-import { MimeType } from "../../../../../ressources/MimeType";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import React from "react";
 import request from "superagent";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { MimeType } from "../../../../../ressources/MimeType";
+import { DocumentDetail } from "../../../../../views/pages/apercuRequete/contenu/document/DocumentDetail";
 window.URL.createObjectURL = jest.fn();
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -31,7 +31,7 @@ test("render titulaire information", () => {
         taille: 250,
         identifiantDocument: "g9279c00-5d2b-11ea-bc55-0242ac130003"
       }}
-      groupement={GroupementDocument.DocumentAsigner}
+      groupement={GroupementDocument.DocumentDelivre}
     />
   );
 

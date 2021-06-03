@@ -2,7 +2,7 @@ import { GroupementDocument } from "../../../model/requete/GroupementDocument";
 import { MimeType } from "../../../ressources/MimeType";
 import {
   IRequestDocumentApiResult,
-  getDocumentASigner
+  getDocument
 } from "../../../api/appels/requeteApi";
 import { IDocumentDelivre } from "../types/RequeteType";
 
@@ -11,7 +11,7 @@ export async function requestDocumentApi(
   groupement: GroupementDocument,
   mimeType: string = MimeType.APPLI_PDF
 ): Promise<IRequestDocumentApiResult> {
-  return getDocumentASigner(identifiantDocument, groupement)
+  return getDocument(identifiantDocument, groupement)
     .then(result => {
       let requestDocumentApiResult: IRequestDocumentApiResult;
       if (typeof result.body.data === "string") {

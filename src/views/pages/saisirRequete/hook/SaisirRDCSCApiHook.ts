@@ -57,7 +57,7 @@ function mapRequeteDelivrance(
       )
     : [];
   return {
-    type: TypeRequete.getCode(TypeRequete.DELIVRANCE),
+    type: TypeRequete.getKey(TypeRequete.DELIVRANCE),
     sousType: sousType.nom,
     piecesJustificatives
   } as any;
