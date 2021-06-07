@@ -1,3 +1,5 @@
+import { urlImagePngVideBase64 } from "../mock/data/ImagePng";
+
 function dataURLtoFile(dataurl: string, filename: string): File {
   const arr = dataurl.split(",");
   const mime = arr[0]!.match(/:(.*?);/)![1];
@@ -12,11 +14,7 @@ function dataURLtoFile(dataurl: string, filename: string): File {
   return new File([u8arr], filename, { type: mime });
 }
 
-const pngFile = dataURLtoFile(
-  // Pour info: ce base64 est une vraie image PNG
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII=",
-  "hello.png"
-);
+const pngFile = dataURLtoFile(urlImagePngVideBase64, "hello.png");
 const pngFiles = [pngFile];
 export const inputPngFiles = {
   length: pngFiles.length,
