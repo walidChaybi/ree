@@ -130,6 +130,15 @@ export const configRequetesV2 = [
       if (match[1] === "/documentsreponses" && context.method === "post") {
         return { data: [idDocumentReponseCARN_CSPAC_01] };
       }
+
+      // Création d'une action et maj statut de la requête
+      if (
+        match[1] ===
+          "/action?idRequete=12345&libelleAction=libelleAction&statutRequete=A_VALIDER" &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
+      }
     },
 
     /**
