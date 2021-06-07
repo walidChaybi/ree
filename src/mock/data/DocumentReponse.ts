@@ -11,7 +11,7 @@ export const documentReponseCARN_CSPAC_01: IDocumentReponse = {
   typeDocument: "c4f4c8fb-5ab1-40df-98ef-b4ea0dde4cb6",
   mimeType: "application/pdf",
   taille: 37236,
-  contenu: imagePngVideBase64,
+  contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
   orientation: Orientation.PORTRAIT
 };
