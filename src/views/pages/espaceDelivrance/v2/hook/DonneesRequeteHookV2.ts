@@ -16,7 +16,8 @@ import { logError } from "../../../../common/util/LogManager";
 
 export function useRequeteApi(
   queryParameters: IQueryParametersPourRequetesV2,
-  typeRequete: TypeAppelRequete
+  typeRequete: TypeAppelRequete,
+  setEnChargement: (enChargement: boolean) => void
 ) {
   const [dataState, setDataState] = useState<IRequeteTableau[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
@@ -33,6 +34,7 @@ export function useRequeteApi(
       .then(result => {
         setDataState(mappingRequetesTableau(result.body.data, false));
         setParamsTableau(getParamsTableau(result));
+        setEnChargement(false);
       })
       .catch(error => {
         logError({
@@ -40,7 +42,7 @@ export function useRequeteApi(
           error
         });
       });
-  }, [queryParameters, typeRequete]);
+  }, [queryParameters, typeRequete, setEnChargement]);
 
   return {
     dataState,

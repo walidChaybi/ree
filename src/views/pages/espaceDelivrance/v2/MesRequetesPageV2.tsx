@@ -42,19 +42,18 @@ interface MesRequetesPageProps {
 export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
 
-  const [
-    linkParameters,
-    setLinkParameters
-  ] = React.useState<IQueryParametersPourRequetesV2>({
-    statuts: StatutsRequetesEspaceDelivrance,
-    tri: "dateStatut",
-    sens: "ASC",
-    range: `0-${NB_LIGNES_PAR_APPEL}`
-  });
-
+  const [linkParameters, setLinkParameters] =
+    React.useState<IQueryParametersPourRequetesV2>({
+      statuts: StatutsRequetesEspaceDelivrance,
+      tri: "dateStatut",
+      sens: "ASC",
+      range: `0-${NB_LIGNES_PAR_APPEL}`
+    });
+  const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteApi(
     linkParameters,
-    TypeAppelRequete.MES_REQUETES
+    TypeAppelRequete.MES_REQUETES,
+    setEnChargement
   );
 
   const goToLink = useCallback((link: string) => {
@@ -114,9 +113,11 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
         handleChangeSort={handleChangeSort}
         handleReload={handleReload}
         noRows={zeroRequete}
+        enChargement={enChargement}
       >
         <BoutonSignature libelle={"pages.delivrance.action.signature"} />
       </TableauRece>
+
       <BoutonRetour />
     </>
   );

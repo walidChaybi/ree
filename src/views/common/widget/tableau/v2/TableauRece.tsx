@@ -34,6 +34,7 @@ export interface TableauReceProps {
   nbLignesParPage?: number;
   resetTableau?: boolean;
   noRows?: JSX.Element;
+  enChargement?: boolean;
 }
 
 export const TableauRece: React.FC<TableauReceProps> = props => {
@@ -157,6 +158,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
             columnHeaders={props.columnHeaders}
             onClickOnLine={onClickOnLine}
             noRows={props.noRows}
+            enChargement={props.enChargement}
           />
         </Box>
       </TableContainer>

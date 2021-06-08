@@ -38,9 +38,6 @@ test("renders d'un menu choix des actions", () => {
 });
 
 test("renders d'un menu choix des actions avec filtre", () => {
-  let requete: TRequete;
-  requete = { sousType: SousTypeDelivrance.RDCSC } as TRequete;
-
   const testOptions: IActionOption[] = [
     {
       value: 0,
@@ -61,7 +58,6 @@ test("renders d'un menu choix des actions avec filtre", () => {
         titre={"titre"}
         listeActions={testOptions}
         onSelect={() => {}}
-        requete={requete}
       />
     </Router>
   );
@@ -71,5 +67,5 @@ test("renders d'un menu choix des actions avec filtre", () => {
   fireEvent.click(menu);
   expect(getByText("Action de test")).not.toBeNull();
   const action2 = screen.queryByText("Action de test 2");
-  expect(action2).toBeNull();
+  expect(getByText("Action de test 2")).not.toBeNull();
 });
