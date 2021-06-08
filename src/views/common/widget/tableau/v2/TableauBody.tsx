@@ -2,6 +2,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
+import { OperationEnCoursSansBackdrop } from "../../attente/OperationEnCoursSansBackdrop";
 import "./scss/Tableau.scss";
 import "./scss/TableauBody.scss";
 import { TableauBodyCell } from "./TableauBodyCell";
@@ -13,6 +14,7 @@ interface TableauBodyProps {
   columnHeaders: TableauTypeColumn[];
   onClickOnLine: (identifiant: string, idx: number) => void;
   noRows?: JSX.Element;
+  enChargement?: boolean;
 }
 
 export const TableauBody: React.FC<TableauBodyProps> = ({
@@ -20,7 +22,8 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   idKey,
   columnHeaders,
   onClickOnLine,
-  noRows
+  noRows,
+  enChargement
 }) => {
   function onClickRowHandler(identifiant: string, idx: number) {
     onClickOnLine(identifiant, idx);
@@ -44,7 +47,13 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
         ) : (
           <TableRow>
             <TableCell align="center" colSpan={columnHeaders.length}>
-              {noRows ? noRows : ""}
+              {enChargement ? (
+                <OperationEnCoursSansBackdrop visible={true} />
+              ) : noRows ? (
+                noRows
+              ) : (
+                ""
+              )}
             </TableCell>
           </TableRow>
         )}

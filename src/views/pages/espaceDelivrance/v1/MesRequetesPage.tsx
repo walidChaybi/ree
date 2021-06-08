@@ -33,19 +33,17 @@ interface MesRequetesPageProps {
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
-  const [
-    linkParameters,
-    setLinkParameters
-  ] = React.useState<IQueryParametersPourRequetes>({
-    statuts: [
-      StatutRequete.ASigner,
-      StatutRequete.ATraiterDemat,
-      StatutRequete.AImprimer
-    ],
-    tri: "dateStatut",
-    sens: "ASC",
-    range: `0-${NB_LIGNES_PAR_APPEL}`
-  });
+  const [linkParameters, setLinkParameters] =
+    React.useState<IQueryParametersPourRequetes>({
+      statuts: [
+        StatutRequete.ASigner,
+        StatutRequete.ATraiterDemat,
+        StatutRequete.AImprimer
+      ],
+      tri: "dateStatut",
+      sens: "ASC",
+      range: `0-${NB_LIGNES_PAR_APPEL}`
+    });
 
   const {
     dataState = [],

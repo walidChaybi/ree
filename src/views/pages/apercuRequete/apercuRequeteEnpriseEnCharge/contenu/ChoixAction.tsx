@@ -1,19 +1,19 @@
-import React, { useState, useRef } from "react";
-import "./scss/ChoixAction.scss";
-import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { getLibelle } from "../../../../common/widget/Text";
-import {
-  MenuAction,
-  IActionOption
-} from "../../../../common/widget/menu/MenuAction";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
+import React, { useRef, useState } from "react";
+import { ParametresComposition } from "../../../../../model/composition/IParametresComposition";
 import { IReponseNegativeDemandeIncomplete } from "../../../../../model/composition/IReponseNegativeDemandeIncomplete";
+import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../../../model/composition/Objets";
+import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import messageManager from "../../../../common/util/messageManager";
-import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../../../model/composition/Objets";
-import { ParametresComposition } from "../../../../../model/composition/IParametresComposition";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
+import {
+  IActionOption,
+  MenuAction
+} from "../../../../common/widget/menu/MenuAction";
+import { getLibelle } from "../../../../common/widget/Text";
 import { useReponseNegative } from "./hook/ChoixReponseNegativeHook";
+import "./scss/ChoixAction.scss";
 
 interface IActionProps {
   requete?: TRequete;
@@ -27,9 +27,8 @@ export const ChoixAction: React.FC<IActionProps> = props => {
   const refDelivrerOptions0 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [reponseNegative, setReponseNegative] = useState<
-    IReponseNegativeDemandeIncomplete | undefined
-  >();
+  const [reponseNegative, setReponseNegative] =
+    useState<IReponseNegativeDemandeIncomplete | undefined>();
 
   useReponseNegative(reponseNegative, props.requete);
 
@@ -81,10 +80,11 @@ export const ChoixAction: React.FC<IActionProps> = props => {
     switch (indexMenu) {
       case 0:
         setOperationEnCours(true);
-        const newReponseNegative = await createReponseNegativePourCompositionApi(
-          OBJET_COURRIER_CERTIFICAT_SITUATION,
-          props.requete as IRequeteDelivrance
-        );
+        const newReponseNegative =
+          await createReponseNegativePourCompositionApi(
+            OBJET_COURRIER_CERTIFICAT_SITUATION,
+            props.requete as IRequeteDelivrance
+          );
         setReponseNegative(newReponseNegative);
         break;
     }
@@ -102,13 +102,16 @@ export const ChoixAction: React.FC<IActionProps> = props => {
           titre={"Délivrer"}
           listeActions={delivrerOptions}
           onSelect={handleDelivrerMenu}
-          requete={props.requete}
         />
         <MenuAction
           titre={"Réponse négative"}
-          listeActions={reponseNegativeOptions}
+          listeActions={reponseNegativeOptions.filter(r => {
+            const requete = props.requete as IRequeteDelivrance;
+            return r.sousTypes
+              ? r.sousTypes.find(st => st === requete?.sousType) != null
+              : true;
+          })}
           onSelect={handleReponseNegativeMenu}
-          requete={props.requete}
         />
       </div>
     </>
