@@ -20,7 +20,7 @@ test("Attendu: useCompositionReponseNegativeDemandeIncompleteApi fonctionne corr
 
   await waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-    expect(screen.getByText(imagePngVideBase64)).not.toBeNull();
+    expect(screen.getByText(imagePngVideBase64)).toBeInTheDocument();
   });
 });
 

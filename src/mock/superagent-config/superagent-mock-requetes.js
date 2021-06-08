@@ -1,3 +1,4 @@
+import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
 import DONNEES_REQUETE from "../data/requete";
 
 const mockPdf = require("../data/pdf-base64.json");
@@ -186,6 +187,11 @@ export const configRequetes = [
       // Utilisé dans UtilisateurAssigneRequeteHook.test
       if (match[1] === "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc") {
         return this.patch;
+      }
+
+      // Récupération des paramètres de la base requête
+      if (match[1] === "/parametres" && context.method === "post") {
+        return { data: parametresBaseRequete };
       }
     },
 

@@ -20,7 +20,7 @@ test("Attendu: VisionneuseDocument fonctionne correctement", async () => {
   await waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
     const iframe = screen.getByTitle("titre") as HTMLIFrameElement;
-    expect(iframe).not.toBeNull();
+    expect(iframe).toBeInTheDocument();
     expect(iframe.src).toBe(urlImagePngVideBase64);
   });
 });

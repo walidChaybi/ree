@@ -6,6 +6,7 @@ import {
   idDocumentReponseCARN_CSPAC_01
 } from "../../../../mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
+import { requete1 } from "../../../../mock/data/RequeteV2";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import {
   useGetDocumentReponseApi,
@@ -21,10 +22,7 @@ const HookConsumerUseGetDocumentReponseApi: React.FC = () => {
 
 const documentsReponses = [documentReponseCARN_CSPAC_01];
 const HookConsumerUsePostDocumentsReponseApi: React.FC = () => {
-  const uuids = usePostDocumentsReponseApi(
-    "d19650ed-012b-41ec-b7be-9e6ea9101eaa",
-    documentsReponses
-  );
+  const uuids = usePostDocumentsReponseApi(requete1.id, documentsReponses);
 
   return <div>{uuids ? uuids[0] : ""}</div>;
 };
@@ -34,7 +32,7 @@ test("Attendu: useGetDocumentReponseApi fonctionne correctement", async () => {
 
   await waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-    expect(screen.getByText(imagePngVideBase64)).not.toBeNull();
+    expect(screen.getByText(imagePngVideBase64)).toBeInTheDocument();
   });
 });
 
@@ -42,7 +40,9 @@ test("Attendu: usePostDocumentsReponseApi fonctionne correctement", async () => 
   render(<HookConsumerUsePostDocumentsReponseApi />);
 
   await waitFor(() => {
-    expect(screen.getByText(idDocumentReponseCARN_CSPAC_01)).not.toBeNull();
+    expect(
+      screen.getByText(idDocumentReponseCARN_CSPAC_01)
+    ).toBeInTheDocument();
   });
 });
 
