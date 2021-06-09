@@ -14,6 +14,7 @@ import { VisionneuseDocument } from "../../../common/widget/document/Visionneuse
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
+import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 
 export const ApercuRequeteTraitementPage: React.FC = () => {
   const { idRequete } = useParams();
@@ -28,14 +29,22 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
     <>
       <title>{getLibelle("Aperçu du traitement de la requête")}</title>
       <h1>{getLibelle("Aperçu du traitement de la requête")}</h1>
+      <div className="contenu-requete">
+        <div className="side left">
+          <SuiviActionsRequete
+            actions={detailRequeteState?.actions}
+          ></SuiviActionsRequete>
+        </div>
+        <div className="side right">
+          <VisionneuseDocument
+            titre={getLibelle("Aperçu des documents")}
+            contenu={contenuDocument?.contenu}
+            typeMime={contenuDocument?.mimeType}
+          />
 
-      <VisionneuseDocument
-        titre={getLibelle("Aperçu des documents")}
-        contenu={contenuDocument?.contenu}
-        typeMime={contenuDocument?.mimeType}
-      />
-
-      <BoutonRetour message={getLibelle("<< Retour")} />
+          <BoutonRetour message={getLibelle("<< Retour")} />
+        </div>
+      </div>
     </>
   );
 

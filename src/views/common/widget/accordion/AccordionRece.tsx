@@ -1,33 +1,36 @@
-import React from "react";
-import { SectionPanel, SectionPanelProps } from "../section/SectionPanel";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
+import React from "react";
+import { SectionPanel, SectionPanelProps } from "../section/SectionPanel";
 import { AccordionTitle } from "./AccordionTitle";
 import "./scss/AccordionRece.scss";
 
 export interface AccordionReceProps {
-  panels: SectionPanelProps[];
+  panel?: SectionPanelProps;
+  index?: number;
+  defaultExpanded: boolean;
+  disabled: boolean;
+  titre: string;
 }
 
-export const AccordionRece: React.FC<AccordionReceProps> = ({ panels }) => {
+export const AccordionRece: React.FC<AccordionReceProps> = props => {
   return (
     <>
-      {panels.map((panel, index) => {
-        return (
-          <Accordion
-            defaultExpanded={index === 0}
-            key={`rece-accordion-${index}`}
-            className="accordionRece"
-            disabled={panel.panelAreas.every(pa => !pa.value && !pa.parts)}
-          >
-            <AccordionTitle title={panel.title} />
+      <Accordion
+        defaultExpanded={props.defaultExpanded}
+        key={`rece-accordion-${props.index}`}
+        className="accordionRece"
+        disabled={false}
+      >
+        <AccordionTitle title={props.titre} />
 
-            <AccordionDetails>
-              <SectionPanel {...panel} id={`${index}`} />
-            </AccordionDetails>
-          </Accordion>
-        );
-      })}
+        <AccordionDetails>
+          {props.panel && (
+            <SectionPanel {...props.panel} id={`${props.index}`} />
+          )}
+          {props.children}
+        </AccordionDetails>
+      </Accordion>
     </>
   );
 };

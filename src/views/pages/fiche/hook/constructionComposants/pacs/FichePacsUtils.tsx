@@ -1,32 +1,32 @@
-import { AccordionReceProps } from "../../../../../common/widget/accordion/AccordionRece";
-import { IFichePacs } from "../../../../../../model/etatcivil/pacs/IFichePacs";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
-import {
-  IAnnulation,
-  Annulation
-} from "../../../../../../model/etatcivil/pacs/IAnnulation";
-import { getPartenaires } from "./PartenairesUtils";
-import { StatutPacesUtil } from "../../../../../../model/etatcivil/enum/StatutPacs";
 import {
   Autorite,
   IAutorite
 } from "../../../../../../model/etatcivil/commun/IAutorite";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { StatutPacesUtil } from "../../../../../../model/etatcivil/enum/StatutPacs";
+import {
+  Annulation,
+  IAnnulation
+} from "../../../../../../model/etatcivil/pacs/IAnnulation";
+import {
+  Dissolution,
+  IDissolution
+} from "../../../../../../model/etatcivil/pacs/IDissolution";
+import { IFichePacs } from "../../../../../../model/etatcivil/pacs/IFichePacs";
 import {
   IModification,
   Modification
 } from "../../../../../../model/etatcivil/pacs/IModification";
-import {
-  IDissolution,
-  Dissolution
-} from "../../../../../../model/etatcivil/pacs/IDissolution";
-import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
-import { getFichesPersonne } from "../personne/FichePersonne";
 import { getDateString } from "../../../../../common/util/DateUtils";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
+import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { AjoutePartAuPanelAreas } from "../../../../../common/widget/section/SectionUtils";
+import { IAccordionReceSection } from "../../../FicheUtils";
+import { getFichesPersonne } from "../personne/FichePersonne";
+import { getPartenaires } from "./PartenairesUtils";
 
-export function getPanelsPacs(pacs: IFichePacs): AccordionReceProps {
+export function getPanelsPacs(pacs: IFichePacs): IAccordionReceSection {
   const panelAreas: SectionPanelAreaProps[] = [];
 
   const deuxColonnes = 2;

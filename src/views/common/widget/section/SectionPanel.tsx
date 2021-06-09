@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import "./scss/SectionPanel.scss";
-import { SectionPanelAreaProps, SectionPanelArea } from "./SectionPanelArea";
+import { SectionPanelArea, SectionPanelAreaProps } from "./SectionPanelArea";
 export interface SectionPanelProps {
   panelAreas: SectionPanelAreaProps[];
   title: string;

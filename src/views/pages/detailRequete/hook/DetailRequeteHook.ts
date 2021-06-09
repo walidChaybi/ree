@@ -15,6 +15,7 @@ import { TypeMandant } from "../../../../model/requete/v2/enum/TypeMandant";
 import { TypeMandataireReq } from "../../../../model/requete/v2/enum/TypeMandataireReq";
 import { TypeNatureActe } from "../../../../model/requete/v2/enum/TypeNatureActe";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
+import { IAction } from "../../../../model/requete/v2/IActions";
 import { IAdresseRequerant } from "../../../../model/requete/v2/IAdresseRequerant";
 import { IAutreProfessionnel } from "../../../../model/requete/v2/IAutreProfessionnel";
 import { IEvenementReqDelivrance } from "../../../../model/requete/v2/IEvenementReqDelivrance";
@@ -75,6 +76,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     requerant: getRequerant(data.requerant),
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
     idUtilisateur: data.idUtilisateur,
+    actions: getActions(data.actions),
 
     //Partie Requête Delivrance
     sousType: SousTypeDelivrance.getEnumFor(data.sousType),
@@ -88,6 +90,15 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     // Documents réponse avec contenu vide
     documentsReponses: data.documentsReponses
   };
+}
+
+function getActions(actions: any): IAction[] {
+  const actionsRequete: IAction[] = [];
+  actions.forEach((a: any) => {
+    const action = a as IAction;
+    actionsRequete.push(action);
+  });
+  return actionsRequete;
 }
 
 function getTitulaires(titulaires: any): ITitulaireRequete[] {

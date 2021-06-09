@@ -1,6 +1,6 @@
 import mockConnectedUser from "../data/connectedUser.json";
-import DONNEES_UTILISATEURS from "../data/utilisateurs";
 import { MockHabilitation } from "../data/habilitationMock";
+import DONNEES_UTILISATEURS from "../data/utilisateurs";
 
 export const configAgent = [
   {
@@ -23,6 +23,13 @@ export const configAgent = [
       }
 
       if (match[1] === "/utilisateurs") {
+        return { data: DONNEES_UTILISATEURS.data };
+      }
+
+      if (
+        match[1] ===
+        "/utilisateurs/infos?ids=204b8563-c7f8-4748-9daa-f26558985894,204b8563-c7f8-4748-9daa-f26558985895"
+      ) {
         return { data: DONNEES_UTILISATEURS.data };
       }
     },

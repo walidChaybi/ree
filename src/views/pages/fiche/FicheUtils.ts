@@ -1,18 +1,18 @@
-import { SimplePersonne } from "./contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
+import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
+import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
+import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import { formatNom, jointAvec } from "../../common/util/Utils";
+import { SectionPanelProps } from "../../common/widget/section/SectionPanel";
 import { setDataBandeau } from "./contenu/BandeauFicheUtils";
-import { getPanelsRc } from "./hook/constructionComposants/rcrca/FicheRcUtils";
-import { getPanelsRca } from "./hook/constructionComposants/rcrca/FicheRcaUtils";
-import { getPanelsPacs } from "./hook/constructionComposants/pacs/FichePacsUtils";
+import { SimplePersonne } from "./contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
+import { IDataFicheProps } from "./FichePage";
 import {
   getPanelsActe,
   getParamsAffichageFicheActe
 } from "./hook/constructionComposants/acte/FicheActeUtils";
-import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
-import { AccordionReceProps } from "../../common/widget/accordion/AccordionRece";
-import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
-import { IDataFicheProps } from "./FichePage";
+import { getPanelsPacs } from "./hook/constructionComposants/pacs/FichePacsUtils";
+import { getPanelsRca } from "./hook/constructionComposants/rcrca/FicheRcaUtils";
+import { getPanelsRc } from "./hook/constructionComposants/rcrca/FicheRcUtils";
 
 export function getFicheTitle(
   categorie: string,
@@ -27,10 +27,13 @@ export function getFicheTitle(
   return `${categorie.toLocaleUpperCase()} - ${noms} - N° ${annee} - ${numero}`;
 }
 
+export interface IAccordionReceSection {
+  panels: SectionPanelProps[];
+}
 export interface IFiche {
   bandeauFiche: IBandeauFiche;
   alerteVisible: boolean;
-  panelsFiche: AccordionReceProps;
+  panelsFiche: IAccordionReceSection;
 }
 
 export function setFiche(dataFiche: IDataFicheProps, data: any): IFiche {

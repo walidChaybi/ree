@@ -8,15 +8,15 @@ import {
   officierHabiliterPourLeDroit
 } from "../../../../../../model/IOfficierSSOApi";
 import { PERIMETRE_MEAE } from "../../../../../../model/IPerimetre";
-import { AccordionReceProps } from "../../../../../common/widget/accordion/AccordionRece";
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
+import { IAccordionReceSection } from "../../../FicheUtils";
 import { getFichesPersonneActe } from "../personne/FichePersonne";
 import { ActeImage } from "./ActeImage";
 import { getEvenement } from "./EvenementActeUtils";
 import { getTitulaires } from "./TitulairesActeUtils";
 
-export function getPanelsActe(acte: IFicheActe): AccordionReceProps {
+export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
   const idTypeRegistre = acte.registre.type.id;
   const paramsAffichage = getParamsAffichageFicheActe(
     idTypeRegistre,

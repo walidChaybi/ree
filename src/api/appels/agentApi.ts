@@ -1,8 +1,9 @@
-import { HttpMethod, ApiManager } from "../ApiManager";
+import { ApiManager, HttpMethod } from "../ApiManager";
 
 // Url APIs
 const URL_UTILISATEURS_LOGIN = "/utilisateurs/login";
 const URL_UTILISATEURS = "/utilisateurs";
+const URL_UTILISATEURS_INFOS = "/utilisateurs/infos";
 
 const api = ApiManager.getInstance("rece-agent-api", "v1");
 
@@ -21,5 +22,15 @@ export function getUtilisateurs(): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: URL_UTILISATEURS
+  });
+}
+
+export function getUtilisateursById(ids: string[]): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_UTILISATEURS_INFOS}`,
+    parameters: {
+      ids
+    }
   });
 }

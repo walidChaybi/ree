@@ -5,6 +5,7 @@ import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils
 import { numberToString } from "../../../views/common/util/Utils";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
+import { IAction } from "./IActions";
 import { IMandant } from "./IMandant";
 import { IRequerant } from "./IRequerant";
 import { IStatutCourant } from "./IStatutCourant";
@@ -33,6 +34,7 @@ export interface IRequete {
   mandant?: IMandant;
   idUtilisateur: string; // FIXME Utile ?
   piecesJustificatives: IPieceJustificative[];
+  actions?: IAction[];
 }
 
 export const Requete = {

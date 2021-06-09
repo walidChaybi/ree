@@ -90,5 +90,23 @@ export default {
   jourEvenement: 25,
   moisEvenement: 1,
   nbExemplaire: 0,
-  documentsDelivres: []
+  documentsDelivres: [],
+  actions: [
+    {
+      id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
+      numeroOrdre: 1,
+      libelle: "Saisie de la requête",
+      dateAction: 1583831941.329563,
+      idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985894",
+      trigramme: "TLI"
+    },
+    {
+      id: "1d189cd9-0df0-45dc-a4cf-0174eb621235",
+      numeroOrdre: 1,
+      libelle: "A traiter",
+      dateAction: 1583831941.329563,
+      idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
+      trigramme: "TLI"
+    }
+  ]
 };

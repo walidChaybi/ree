@@ -10,6 +10,7 @@ import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { RMCAutoResultats } from "../../rechercheMultiCriteres/auto/RMCAutoResultats";
+import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { IdRequeteParams } from "../v2/ApercuRequeteUtils";
 import { ChoixAction } from "./contenu/ChoixAction";
 
@@ -44,19 +45,28 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
       <h1>
         {getLibelle(`Aperçu de la requête en prise en charge ${idRequete}`)}
       </h1>
-      {dataRMCAutoActe &&
-        dataTableauRMCAutoActe &&
-        dataRMCAutoInscription &&
-        dataTableauRMCAutoInscription && (
-          <RMCAutoResultats
-            dataRMCAutoActe={dataRMCAutoActe}
-            dataTableauRMCAutoActe={dataTableauRMCAutoActe}
-            dataRMCAutoInscription={dataRMCAutoInscription}
-            dataTableauRMCAutoInscription={dataTableauRMCAutoInscription}
-          />
-        )}
-      <ChoixAction requete={detailRequeteState} />
-      <BoutonRetour message={getLibelle("<< Retour")} />
+      <div className="contenu-requete">
+        <div className="side left">
+          <SuiviActionsRequete
+            actions={detailRequeteState?.actions}
+          ></SuiviActionsRequete>
+        </div>
+        <div className="side right">
+          {dataRMCAutoActe &&
+            dataTableauRMCAutoActe &&
+            dataRMCAutoInscription &&
+            dataTableauRMCAutoInscription && (
+              <RMCAutoResultats
+                dataRMCAutoActe={dataRMCAutoActe}
+                dataTableauRMCAutoActe={dataTableauRMCAutoActe}
+                dataRMCAutoInscription={dataRMCAutoInscription}
+                dataTableauRMCAutoInscription={dataTableauRMCAutoInscription}
+              />
+            )}
+          <ChoixAction requete={detailRequeteState} />
+          <BoutonRetour message={getLibelle("<< Retour")} />
+        </div>
+      </div>
     </>
   );
 };

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { BandeauFiche } from "./contenu/BandeauFiche";
-import { useFichePageApiHook } from "./hook/FichePageApiHook";
-import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
-import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
-import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
-import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import AlerteActe from "./hook/constructionComposants/acte/AlerteActe";
-import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
+import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
+import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
+import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
+import { BandeauFiche } from "./contenu/BandeauFiche";
+import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
+import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
 import { setFiche } from "./FicheUtils";
+import AlerteActe from "./hook/constructionComposants/acte/AlerteActe";
+import { useFichePageApiHook } from "./hook/FichePageApiHook";
 
 export interface FichePageProps {
   dataFicheIdentifiant: string;
@@ -93,7 +93,17 @@ export const FichePage: React.FC<FichePageProps> = props => {
       {/* Le bandeau d'ajout d'alerte pour les actes */}
       {alerteVisible && <AlerteActe />}
       {/* Les Accordéons */}
-      {panelsFiche && <AccordionRece {...panelsFiche} />}
+      {panelsFiche &&
+        panelsFiche.panels.map((panel, index) => (
+          <AccordionRece
+            key={`accordion-rece-${index}`}
+            panel={panel}
+            index={index}
+            defaultExpanded={index === 0}
+            titre={panel.title}
+            disabled={panel?.panelAreas.every(pa => !pa.value && !pa.parts)}
+          />
+        ))}
     </div>
   );
 };

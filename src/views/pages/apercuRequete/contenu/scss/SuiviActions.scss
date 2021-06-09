@@ -1,0 +1,50 @@
+@import "../../../../../scss/colors";
+
+.suivi-actions-requete {
+  .MuiTypography-body1,
+  .MuiTypography-body2 {
+    font-family: "NotoSansUI-Regular", sans-serif !important;
+  }
+
+  .MuiTypography-body1 {
+    font-size: 0.9rem !important;
+  }
+
+  .MuiTypography-body2 {
+    font-size: 0.8rem !important;
+  }
+
+  .MuiExpansionPanelSummary-root {
+    min-height: auto !important;
+  }
+
+  margin-top: 0.5em;
+  border: 1px solid;
+  border-color: $border-array;
+  border-radius: 0.25rem;
+  border-top: 0em;
+  width: 100%;
+
+  .title {
+    height: 2.5em !important;
+    background-color: $application-color;
+    color: white;
+    font-weight: bold;
+    border-radius: 0.25em 0.25em 0 0;
+    svg {
+      color: white;
+    }
+
+    span {
+      text-align: justify;
+    }
+  }
+
+  ul {
+    height: 5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: left;
+    margin-left: 1em;
+  }
+}
