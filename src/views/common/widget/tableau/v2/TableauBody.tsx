@@ -2,7 +2,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
-import { OperationEnCoursSansBackdrop } from "../../attente/OperationEnCoursSansBackdrop";
+import { OperationLocaleEnCours } from "../../attente/OperationLocaleEnCours";
 import "./scss/Tableau.scss";
 import "./scss/TableauBody.scss";
 import { TableauBodyCell } from "./TableauBodyCell";
@@ -48,7 +48,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
           <TableRow>
             <TableCell align="center" colSpan={columnHeaders.length}>
               {enChargement ? (
-                <OperationEnCoursSansBackdrop visible={true} />
+                <OperationLocaleEnCours visible={true} />
               ) : noRows ? (
                 noRows
               ) : (
