@@ -7,7 +7,10 @@ import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
 import { IUrlData, URL_RECHERCHE_REQUETE } from "../../../../router/ReceUrls";
 import { navigationApercu } from "../../../apercuRequete/v2/ApercuRequeteUtils";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
-import { IRMCAutoParams, useRMCAutoHook } from "../../auto/hook/RMCAutoHook";
+import {
+  IRMCAutoParams,
+  useRMCAutoHook
+} from "../../autoActesInscriptions/hook/RMCAutoHook";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
 export interface RMCResultatRequetesProps {

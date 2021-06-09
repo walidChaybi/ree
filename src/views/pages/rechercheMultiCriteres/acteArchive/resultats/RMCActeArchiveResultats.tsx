@@ -16,7 +16,7 @@ export interface RMCActeArchiveResultatsProps {
 export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = props => {
   return (
     <div className="ResultatsRMC">
-      <Fieldset titre="Résultats de la recherche multi-critères">
+      <Fieldset titre={getLibelle("Résultats de la recherche multi-critères")}>
         <div className="SubResultatsRMC">
           <div className="SousTitre">
             <span>{getLibelle("Recherche dans les registres")}</span>

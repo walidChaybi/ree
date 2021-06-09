@@ -121,6 +121,19 @@ export const configRequetesV2 = [
         return { data: "1072bc37-f889-4365-8f75-912166b767dd" };
       }
 
+      // RMC Auto Requete
+      if (match[1] === "/requetes/rmcauto?range=0-105") {
+        return {
+          headers: {
+            "content-range":
+              "0-15/" +
+              ReponseAppelRMCRequete?.data?.ReponseAppelRMCRequete?.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+          },
+          data: ReponseAppelRMCRequete.data
+        };
+      }
       // Récupération d'un document par son id
       if (match[1] === "/documentsreponses/" + idDocumentReponseCARN_CSPAC_01) {
         return { data: documentReponseCARN_CSPAC_01 };
@@ -162,8 +175,8 @@ export const configRequetesV2 = [
      */
     post: function (match, data) {
       return {
-        status: 201,
-        body: data
+        body: data,
+        header: data.headers
       };
     },
 

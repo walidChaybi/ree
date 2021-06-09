@@ -134,7 +134,7 @@ export function getMessageZeroRequete(): JSX.Element {
   return (
     <>
       <ReportIcon />
-      <div>Aucune requête n'a été trouvé</div>
+      <div>Aucune requête n'a été trouvée</div>
     </>
   );
 }

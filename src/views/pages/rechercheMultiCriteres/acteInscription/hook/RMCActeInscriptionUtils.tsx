@@ -4,7 +4,7 @@ import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
 import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
-import { IRMCRequest } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequest";
+import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { RMCRepertoire } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -23,8 +23,10 @@ import {
 } from "../../../../common/util/Utils";
 
 /** Critères de recherche: mapping avant appel d'api */
-export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequest {
-  let criteresMapper: IRMCRequest;
+export function mappingCriteres(
+  criteres: IRMCActeInscription
+): IRMCRequestActesInscriptions {
+  let criteresMapper: IRMCRequestActesInscriptions;
   criteresMapper = {
     // Filtre Titulaire
     nomTitulaire: valeurOuUndefined(criteres.titulaire?.nom),
@@ -152,7 +154,9 @@ function getNatureInscription(type: string, nature: string) {
   return natureInscription;
 }
 
-export function rechercherRepertoireAutorise(criteres: IRMCRequest): boolean {
+export function rechercherRepertoireAutorise(
+  criteres: IRMCRequestActesInscriptions
+): boolean {
   return !(
     criteres.natureActe ||
     criteres.familleRegistre ||
@@ -161,7 +165,9 @@ export function rechercherRepertoireAutorise(criteres: IRMCRequest): boolean {
   );
 }
 
-export function rechercherActeAutorise(criteres: IRMCRequest): boolean {
+export function rechercherActeAutorise(
+  criteres: IRMCRequestActesInscriptions
+): boolean {
   return !(
     criteres.typeRepertoire ||
     criteres.natureRcRca ||

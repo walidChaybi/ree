@@ -1,6 +1,6 @@
 import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
-import { IRMCRequest } from "../../model/rmc/acteInscription/envoi/IRMCRequest";
-import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/auto/hook/RMCAutoUtils";
+import { IRMCRequestActesInscriptions } from "../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
@@ -54,7 +54,7 @@ export function getInformationsFicheActe(identifiant: string): Promise<any> {
 }
 
 export function rechercheMultiCriteresActes(
-  criteres: IRMCRequest,
+  criteres: IRMCRequestActesInscriptions,
   range?: string
 ): Promise<any> {
   return api.fetch({
@@ -68,7 +68,7 @@ export function rechercheMultiCriteresActes(
 }
 
 export function rechercheMultiCriteresInscriptions(
-  criteres: IRMCRequest,
+  criteres: IRMCRequestActesInscriptions,
   range?: string
 ): Promise<any> {
   return api.fetch({

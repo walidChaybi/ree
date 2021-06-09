@@ -1,5 +1,5 @@
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
-import { IRMCRequestRequete } from "../../../../../model/rmc/requete/IRMCRequestRequete";
+import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
 import { valeurOuUndefined } from "../../../../common/util/Utils";
 import {
@@ -12,7 +12,7 @@ import {
 } from "../../../../router/ReceUrls";
 
 export interface ICriteresRMCAuto {
-  criteres: IRMCRequestRequete[];
+  criteres: IRMCRequestActesInscriptions[];
 }
 
 export function redirectionRMCAuto(
@@ -54,11 +54,13 @@ export function determinerCriteresRMCAuto(
   return criteresRMCAuto;
 }
 
-function criteresRMCAutoMapper(titulaires?: any): IRMCRequestRequete[] {
-  const titulairesRMCAuto: IRMCRequestRequete[] = [];
+function criteresRMCAutoMapper(
+  titulaires?: any
+): IRMCRequestActesInscriptions[] {
+  const titulairesRMCAuto: IRMCRequestActesInscriptions[] = [];
   if (titulaires) {
     titulaires.forEach((t: any) => {
-      const critere = {} as IRMCRequestRequete;
+      const critere = {} as IRMCRequestActesInscriptions;
       critere.nomTitulaire = valeurOuUndefined(t?.nom);
       critere.prenomTitulaire = valeurOuUndefined(t?.prenoms[0]);
       critere.jourNaissance = valeurOuUndefined(t?.jourNaissance);

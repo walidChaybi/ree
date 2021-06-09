@@ -8,6 +8,7 @@ import { IRMCRequestRequete } from "../../model/rmc/requete/IRMCRequestRequete";
 import { IQueryParameterUpdateStatutRequete } from "../../views/common/hook/UpdateStatutRequeteHook";
 import { IDocumentDelivre } from "../../views/common/types/RequeteType";
 import { SortOrder } from "../../views/common/widget/tableau/TableUtils";
+import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 export const URL_REQUETES_SERVICE = "/requetes/requetesService";
@@ -16,6 +17,7 @@ export const URL_MES_REQUETES = "/requetes/mesrequetes";
 export const URL_REQUETES_COUNT = "/requetes/count";
 export const URL_DOCUMENTSELIVRES = "/documentsdelivres";
 export const URL_REQUETES_RMC = "/requetes/rmc";
+export const URL_REQUETES_RMC_AUTO = "/requetes/rmcauto";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
@@ -289,6 +291,20 @@ export function postCreationActionEtMiseAjourStatut(
       idRequete,
       libelleAction,
       statutRequete: StatutRequeteV2.getKey(statutRequete)
+    }
+  });
+}
+
+export function rechercheMultiCriteresAutoRequetes(
+  criteres: ICriteresRMCAuto,
+  range?: string
+): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_REQUETES_RMC_AUTO}`,
+    data: criteres,
+    parameters: {
+      range
     }
   });
 }

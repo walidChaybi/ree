@@ -1,6 +1,3 @@
-/* istanbul ignore file */
-// TODO à supprimer lors de l'implémentation de la page
-
 import React from "react";
 import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";

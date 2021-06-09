@@ -15,7 +15,7 @@ import { navigationApercu } from "../../apercuRequete/v2/ApercuRequeteUtils";
 import {
   IRMCAutoParams,
   useRMCAutoHook
-} from "../../rechercheMultiCriteres/auto/hook/RMCAutoHook";
+} from "../../rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoHook";
 import { CompteurRequete } from "./contenu/CompteurRequeteV2";
 import {
   LinkTabMesRequetes,

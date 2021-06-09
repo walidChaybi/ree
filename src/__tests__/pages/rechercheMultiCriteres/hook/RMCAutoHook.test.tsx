@@ -5,7 +5,7 @@ import { configEtatcivil } from "../../../../mock/superagent-config/superagent-m
 import {
   IRMCAutoParams,
   useRMCAutoHook
-} from "../../../../views/pages/rechercheMultiCriteres/auto/hook/RMCAutoHook";
+} from "../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoHook";
 import {
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_V2,

@@ -74,7 +74,7 @@ test("renders Resultat Requetes Recherche Multi Critères => Sans résultat", ()
     </Router>
   );
 
-  expect(getByText(/Aucune requête n'a été trouvé/i)).toBeDefined();
+  expect(getByText(/Aucune requête n'a été trouvée/i)).toBeDefined();
 });
 
 test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () => {

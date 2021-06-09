@@ -1,8 +1,8 @@
-import { TypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
 import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { TypeFamille } from "../../../etatcivil/enum/TypeFamille";
+import { TypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
 
-export interface IRMCRequest {
+export interface IRMCRequestActesInscriptions {
   // Filtre Titulaire
   nomTitulaire?: string;
   prenomTitulaire?: string;
