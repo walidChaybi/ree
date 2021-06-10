@@ -12,7 +12,7 @@ export const ActionRequete: React.FC<ActionRequeteProps> = props => {
     <ListItemText>
       {`${Action.getLibelle(props.action)} - ${Action.getDateAction(
         props.action
-      )}  - ${Action.getTrigramme(props.action)}`}
+      )} - ${Action.getTrigramme(props.action)}`}
     </ListItemText>
   );
 };

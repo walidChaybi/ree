@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { mount } from "enzyme";
 import React from "react";
 import request from "superagent";
@@ -8,19 +8,20 @@ import { SuiviActionsRequete } from "../../../../views/pages/apercuRequete/conte
 
 const superagentMock = require("superagent-mock")(request, configAgent);
 
-test("renders suivi des actions requete", () => {
-  act(() => {
-    render(<SuiviActionsRequete actions={DONNEES_REQUETE.actions} />);
-    const ligne = screen.getByText(/Suivi/i);
-    expect(ligne.textContent).toBe("Suivi des actions");
-  });
-});
+test("renders suivi des actions requete", async () => {
+  render(<SuiviActionsRequete actions={DONNEES_REQUETE.actions} />);
+  const titre = screen.getByText(/Suivi/i);
+  expect(titre.textContent).toBe("Suivi des actions");
 
-test("renders liste des actions requete", () => {
-  act(() => {
-    render(<SuiviActionsRequete actions={DONNEES_REQUETE.actions} />);
-    const element = screen.getByText(/Saisie de la requête/i);
-    expect(element).toBeDefined;
+  let elem1: HTMLElement;
+  let elem2: HTMLElement;
+  await waitFor(() => {
+    elem1 = screen.getByText(/LOY/i);
+    expect(elem1).toBeInTheDocument();
+    expect(elem1.innerHTML).toBe("Saisie de la requête - 10/03/2020 - LOY");
+    elem2 = screen.getByText(/ESH/i);
+    expect(elem2).toBeInTheDocument();
+    expect(elem2.innerHTML).toBe("A traiter - 10/03/2020 - ESH");
   });
 });
 
