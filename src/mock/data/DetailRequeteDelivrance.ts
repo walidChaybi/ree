@@ -11,7 +11,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
     canal: "COURRIER",
     type: "DELIVRANCE",
     idUtilisateur: null,
-    actions: null,
+    actions: [],
     titulaires: [
       {
         id: "0343e28b-b6f7-4dd4-bb81-3a38454907fb",

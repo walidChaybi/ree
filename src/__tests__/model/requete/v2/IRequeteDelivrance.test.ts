@@ -25,7 +25,6 @@ test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctemen
       requete = {
         documentsReponses: [autreDocument, documentDelivrance, autreDocument]
       } as IRequeteDelivrance;
-      console.log(RequeteDelivrance.getDocumentsDeDelivrance(requete));
     }
   );
 

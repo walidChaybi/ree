@@ -22,7 +22,6 @@ const HookRequeteForm: React.FC = () => {
   } as SubFormProps;
 
   const handleClickButton = (values: any) => {
-    console.log("submitTest", values);
     setResult(JSON.stringify(values));
   };
 
