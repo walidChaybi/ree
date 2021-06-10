@@ -1,58 +1,66 @@
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { IPartenaire } from "../../../../../../model/etatcivil/pacs/IPartenaire";
+import { LieuxUtils } from "../../../../../../model/LieuxUtils";
+import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
 import {
-  jointPrenoms,
+  formatNom,
   formatNoms,
   formatPrenoms,
-  formatNom
+  jointPrenoms
 } from "../../../../../common/util/Utils";
-import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
 export function getPartenaires(partenaires: IPartenaire[]): SectionPartProps[] {
   return partenaires.map((p, idx) => {
+    if (p) {
+      return {
+        contentsPart: {
+          title: `Partenaire ${idx + 1}`,
+          contents: [
+            {
+              libelle: "Nom",
+              value: formatNom(p.nomFamille)
+            },
+            {
+              libelle: "Autre(s) nom(s)",
+              value: formatNoms(p.autreNoms)
+            },
+            {
+              libelle: "Prénoms",
+              value: jointPrenoms(p.prenoms)
+            },
+            {
+              libelle: "Autre(s) prénom(s)",
+              value: formatPrenoms(p.autrePrenoms)
+            },
+            {
+              libelle: "Date de naissance",
+              value: getDateStringFromDateCompose(p.dateNaissance)
+            },
+            {
+              libelle: "Lieu de naissance",
+              value: LieuxUtils.getLieu(
+                p.villeNaissance,
+                p.regionNaissance,
+                p.paysNaissance,
+                p.arrondissementNaissance
+              )
+            },
+            {
+              libelle: "Nationalité",
+              value: p.nationalite?.libelle
+            },
+            {
+              libelle: "Sexe",
+              value: p.sexe?.libelle
+            }
+          ]
+        }
+      };
+    }
     return {
       contentsPart: {
         title: `Partenaire ${idx + 1}`,
-        contents: [
-          {
-            libelle: "Nom",
-            value: formatNom(p.nomFamille)
-          },
-          {
-            libelle: "Autre(s) nom(s)",
-            value: formatNoms(p.autreNoms)
-          },
-          {
-            libelle: "Prénoms",
-            value: jointPrenoms(p.prenoms)
-          },
-          {
-            libelle: "Autre(s) prénom(s)",
-            value: formatPrenoms(p.autrePrenoms)
-          },
-          {
-            libelle: "Date de naissance",
-            value: getDateStringFromDateCompose(p.dateNaissance)
-          },
-          {
-            libelle: "Lieu de naissance",
-            value: LieuxUtils.getLieu(
-              p.villeNaissance,
-              p.regionNaissance,
-              p.paysNaissance,
-              p.arrondissementNaissance
-            )
-          },
-          {
-            libelle: "Nationalité",
-            value: p.nationalite.libelle
-          },
-          {
-            libelle: "Sexe",
-            value: p.sexe.libelle
-          }
-        ]
+        contents: []
       }
     };
   });
