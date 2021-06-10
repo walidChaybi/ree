@@ -5,10 +5,9 @@ export enum TypeDecision {
   ACTE_NOTARIE = "ACTE_NOTARIE",
   DECLARATION = "DECLARATION",
   ONAC = "ONAC",
-
   ORDONNANCE = "ORDONNANCE",
-
-  JUDICIAIRE = "JUDICIAIRE"
+  JUDICIAIRE = "JUDICIAIRE",
+  REQUETE = "REQUETE"
 }
 
 export class DecisionUtil {
@@ -20,7 +19,8 @@ export class DecisionUtil {
     [TypeDecision.DECLARATION]: "Déclaration",
     [TypeDecision.ONAC]: "Onac",
     [TypeDecision.ORDONNANCE]: "Ordonances",
-    [TypeDecision.JUDICIAIRE]: "Judiciaire"
+    [TypeDecision.JUDICIAIRE]: "Judiciaire",
+    [TypeDecision.REQUETE]: "Requête"
   };
 
   public static getLibelle(decision?: TypeDecision): string {
