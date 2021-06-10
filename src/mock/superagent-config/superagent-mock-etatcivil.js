@@ -6,6 +6,7 @@ import {
   acte4
 } from "../../__tests__/pages/fiche/data/ficheActe";
 import {
+  ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureRC,
   ReponseAppelNomenclatureNatureRCA
 } from "../data/nomenclatures";
@@ -96,6 +97,10 @@ export const configEtatcivil = [
 
       if (match[1] === "/nomenclature/NATURE_RCA") {
         return { data: ReponseAppelNomenclatureNatureRCA.data };
+      }
+
+      if (match[1] === "/nomenclature/MANDATAIRE") {
+        return { data: ReponseAppelNomenclatureMandataire.data };
       }
 
       if (

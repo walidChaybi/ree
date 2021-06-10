@@ -94,6 +94,43 @@ export const ReponseAppelNomenclatureNatureRCA = {
   ]
 };
 
+export const ReponseAppelNomenclatureMandataire = {
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/nomenclature/MANDATAIRE",
+  data: [
+    {
+      id: "158a436b-330d-4c3c-83e0-e49d27390124",
+      nom: "MANDATAIRE",
+      code: "MANDATAIRE_JUDICIAIRE_ASSOCIATION",
+      libelle: "Mandataire judiciaire à la protection des majeurs association",
+      estActif: true
+    },
+    {
+      id: "258a436b-330d-4c3c-83e0-e49d27390125",
+      nom: "MANDATAIRE",
+      code: "MANDATAIRE_JUDICIAIRE_INDIVIDUEL",
+      libelle: "Mandataire judiciaire à la protection des majeurs  individuel",
+      estActif: true
+    },
+    {
+      id: "358a436b-330d-4c3c-83e0-e49d27390126",
+      nom: "MANDATAIRE",
+      code: "MANDATAIRE_PREPOSE",
+      libelle: "Préposé d’établissement",
+      estActif: true
+    },
+    {
+      id: "358a436b-330d-4c3c-83e0-e49d27390127",
+      nom: "MANDATAIRE",
+      code: "MANDATAIRE_FAMILLE",
+      libelle: "Famille",
+      estActif: true
+    }
+  ]
+};
+
 export const ReponseAppelNomenclatureDocummentDelivrance = {
   hasTechnicalError: false,
   hasBusinessError: false,
