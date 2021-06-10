@@ -1,19 +1,20 @@
 import {
-  estDateVide,
-  getDateFromDateCompose,
-  getDateString,
-  getDateFromTimestamp,
-  estDateValide,
-  IDateCompose,
-  estDateReceValide,
-  compareNumber,
   compareDatesCompose,
-  getIsoStringFromDateCompose,
+  compareNumber,
+  estDateReceValide,
+  estDateValide,
+  estDateVide,
   getDateComposeFromDate,
-  getDernierJourDuMois,
   getDateDebutFromDateCompose,
   getDateFinFromDateCompose,
-  getDateStringFromDateCompose
+  getDateFromDateCompose,
+  getDateFromTimestamp,
+  getDateString,
+  getDateStringFromDateCompose,
+  getDateStringIso,
+  getDernierJourDuMois,
+  getIsoStringFromDateCompose,
+  IDateCompose
 } from "../../../views/common/util/DateUtils";
 
 test("getDateFromDateCompose", () => {
@@ -37,6 +38,13 @@ test("getDateString", () => {
   expect(dateString).toBe(strDate);
 });
 
+test("converti les dates ISO8601", () => {
+  const date = "1986-08-23";
+
+  const result = getDateStringIso(date);
+  expect(result).toBe("23/08/1986");
+});
+
 test("getDateFromTimestamp", () => {
   const date2 = new Date(strDate);
 
@@ -45,7 +53,7 @@ test("getDateFromTimestamp", () => {
 });
 
 test("getDateFromTimestamp", () => {
-  const date3 = getDateFromTimestamp(1577836800);
+  const date3 = getDateFromTimestamp(1577836800000);
   expect(date3.getDate()).toBe(1);
   expect(date3.getMonth()).toBe(0);
   expect(date3.getFullYear()).toBe(2020);

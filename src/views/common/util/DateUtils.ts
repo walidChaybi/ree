@@ -5,7 +5,6 @@ export const MEP_YEAR = 2021;
 export const MIN_LENGTH_ANNEE = 4;
 
 const MAX_MONTH = 12;
-const NB_MILISECONDES_IN_SECONDE = 1000;
 export interface IDateCompose {
   jour?: string;
   mois?: string;
@@ -107,6 +106,10 @@ export function getDernierJourDuMois(
   return dernierjourDuMois;
 }
 
+export function getDateStringIso(date: string): string {
+  return getDateString(new Date(date));
+}
+
 export function getDateString(date: Date): string {
   if (date) {
     return new Intl.DateTimeFormat("fr-FR").format(date);
@@ -114,10 +117,9 @@ export function getDateString(date: Date): string {
   return "";
 }
 
-// Convertion d'un Timestamp (en secondes depuis 1970) en Date
-// Le Timestamp est multiplié par 1000 car new Date() (en millisecondes depuis 1970)
+// Convertion d'un Timestamp (en millisecondes depuis 1970) en Date
 export function getDateFromTimestamp(timestamp: number): Date {
-  return new Date(timestamp * NB_MILISECONDES_IN_SECONDE);
+  return new Date(timestamp);
 }
 
 export function estDateValide(dateCompose: IDateCompose) {

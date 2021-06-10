@@ -35,21 +35,21 @@ export const ficheInscriptionRepertoireCivil = {
     nombreDuree: 2,
     uniteDuree: "années",
     autreDuree: "Viager",
-    dateFinDeMesure: 1581724800
+    dateFinDeMesure: 1581724800000
   },
   statutsFiche: [
     {
-      "statut": "ACTIF",
-      "dateEvenement": {
-        "jour": null,
-        "mois": null,
-        "annee": "2020"
+      statut: "ACTIF",
+      dateEvenement: {
+        jour: null,
+        mois: null,
+        annee: "2020"
       },
-      "motif": "",
-      "villeEvenement": "nantes",
-      "departementEvenement": "Pays de la Loire",
-      "paysEvenement": "France",
-      "complementMotif": ""
+      motif: "",
+      villeEvenement: "nantes",
+      departementEvenement: "Pays de la Loire",
+      paysEvenement: "France",
+      complementMotif: ""
     }
   ]
 };
@@ -67,7 +67,7 @@ export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImp
   duree: {
     nombreDuree: 2,
     autreDuree: "Viager",
-    dateFinDeMesure: 1581724800
+    dateFinDeMesure: 1581724800000
   }
 };
 
@@ -83,6 +83,6 @@ export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
   dateInscription: new Date(1518652800000),
   duree: {
     autreDuree: "Viager",
-    dateFinDeMesure: 1581724800
+    dateFinDeMesure: 1581724800000
   }
 };

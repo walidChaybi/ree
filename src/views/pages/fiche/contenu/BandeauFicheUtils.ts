@@ -1,14 +1,14 @@
-import { IStatutFiche } from "../../../../model/etatcivil/fiche/IStatutFiche";
-import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
-import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
 import {
   AlerteInscription,
   AlerteInscriptionUtil
 } from "../../../../model/etatcivil/enum/AlerteInscription";
 import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
-import { getDateString } from "../../../common/util/DateUtils";
-import { getFicheTitle } from "../FicheUtils";
+import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
+import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
+import { IStatutFiche } from "../../../../model/etatcivil/fiche/IStatutFiche";
+import { getDateStringIso } from "../../../common/util/DateUtils";
 import { IDataFicheProps } from "../FichePage";
+import { getFicheTitle } from "../FicheUtils";
 import { fournisseurDonneesBandeauFactory } from "./fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
 export function setDataBandeau(
@@ -40,8 +40,10 @@ export function setDataBandeau(
       statutsFiche: setStatuts(dataBandeau.statutsFiche),
       personnes: fournisseurDonneesBandeau.getSimplePersonnes(),
       alertes: setAlertes(dataBandeau.alertes),
-      dateDerniereMaj: getDateString(dataBandeau.dateDerniereMaj),
-      dateDerniereDelivrance: getDateString(dataBandeau.dateDerniereDelivrance)
+      dateDerniereMaj: getDateStringIso(dataBandeau.dateDerniereMaj),
+      dateDerniereDelivrance: getDateStringIso(
+        dataBandeau.dateDerniereDelivrance
+      )
     };
   }
 
