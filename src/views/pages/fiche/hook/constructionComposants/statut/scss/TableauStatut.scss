@@ -1,4 +1,25 @@
 .TableauStatut {
-  max-height: 280px;
+  max-height: 11.5625rem;
   overflow-y: auto;
+
+  th,
+  td {
+    text-align: center;
+  }
+
+  .EnteteStatut {
+    width: 4rem;
+  }
+
+  .EnteteDateStatut {
+    width: 6rem;
+  }
+
+  .EnteteDateEvenement {
+    width: 8rem;
+  }
+
+  .EnteteMotif {
+    width: 8rem;
+  }
 }
