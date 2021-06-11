@@ -147,8 +147,8 @@ function getCategorieFiche(
 ): TypeFiche {
   let categorie = "";
   data.forEach(repertoire => {
-    if (repertoire.typeInscription && repertoire.idInscription === id) {
-      categorie = repertoire.typeInscription;
+    if (repertoire.categorie && repertoire.idInscription === id) {
+      categorie = repertoire.categorie;
     }
   });
   return FicheUtil.getTypeFicheFromString(categorie);

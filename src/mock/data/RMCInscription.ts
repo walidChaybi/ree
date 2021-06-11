@@ -27,8 +27,9 @@ export const ReponseAppelRMCInscription = {
         paysNaissance: "Tunisie",
         numero: "1001",
         nature: "NULL",
-        typeInscription: "PACS",
-        statut: "ACTIF"
+        categorie: "PACS",
+        statut: "ACTIF",
+        typeInscription: "RADIATION"
       },
       {
         id: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
@@ -41,8 +42,9 @@ export const ReponseAppelRMCInscription = {
         paysNaissance: "Tunisie",
         numero: "1002",
         nature: "MESURE_ACCOMPAGNEMENT_SOCIAL_PERSONNALISE",
-        typeInscription: "RC",
-        statut: "ACTIF"
+        categorie: "RC",
+        statut: "ACTIF",
+        typeInscription: "MAIN_LEVEE"
       },
       {
         id: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
@@ -55,8 +57,9 @@ export const ReponseAppelRMCInscription = {
         paysNaissance: "Tunisie",
         numero: "1003",
         nature: "ACTE_NOTERIETE_CONSTATANT_LA_POSSESSION_ETAT",
-        typeInscription: "RCA",
-        statut: "INACTIF"
+        categorie: "RCA",
+        statut: "INACTIF",
+        typeInscription: "INSCRIPTION"
       }
     ]
   }
@@ -72,8 +75,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     paysNaissance: "Tunisie",
     numeroInscription: "1001",
     nature: "",
-    typeInscription: "PACS",
-    statutInscription: "Actif"
+    categorie: "PACS",
+    statutInscription: "Actif",
+    typeInscription: "INSCRIPTION"
   },
   {
     idInscription: "85160d6e-893b-47c2-a9a8-b25573189f0c",
@@ -84,8 +88,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     paysNaissance: "Tunisie",
     numeroInscription: "1002",
     nature: "Mesure d’accompagnement social personnalisé (L271-1 casf)",
-    typeInscription: "RC",
-    statutInscription: "Actif"
+    categorie: "RC",
+    statutInscription: "Actif",
+    typeInscription: "MAIN_LEVEE"
   },
   {
     idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
@@ -96,8 +101,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     paysNaissance: "Tunisie",
     numeroInscription: "1003",
     nature: "Acte de notoriété constatant la possession d'état",
-    typeInscription: "RCA",
-    statutInscription: "Inactif"
+    categorie: "RCA",
+    statutInscription: "Inactif",
+    typeInscription: "CADUCITE 2"
   },
   {
     idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
@@ -108,8 +114,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     paysNaissance: "Tunisie",
     numeroInscription: "1004",
     nature: "Sauvegarde justice (433cc)",
-    typeInscription: "RC",
-    statutInscription: "Actif"
+    categorie: "RC",
+    statutInscription: "Actif",
+    typeInscription: "RENOUVELLEMENT"
   },
   {
     idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
@@ -120,8 +127,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     paysNaissance: "Tunisie",
     numeroInscription: "1005",
     nature: "Annulation de reconnaissance",
-    typeInscription: "RCA",
-    statutInscription: "Actif"
+    categorie: "RCA",
+    statutInscription: "Actif",
+    typeInscription: "RENOUVELLEMENT"
   },
   {
     idInscription: "85160d6e-893b-47c2-a9a8-b25573189f0d",
@@ -132,7 +140,8 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     paysNaissance: "Tunisie",
     numeroInscription: "1006",
     nature: "",
-    typeInscription: "PACS",
-    statutInscription: "Actif"
+    categorie: "PACS",
+    statutInscription: "Actif",
+    typeInscription: "CADUCITE 2"
   }
 ];

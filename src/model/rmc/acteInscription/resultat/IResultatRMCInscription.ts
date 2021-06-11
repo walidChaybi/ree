@@ -9,4 +9,5 @@ export interface IResultatRMCInscription {
   nature?: string;
   typeInscription?: string;
   statutInscription?: string;
+  categorie: string;
 }

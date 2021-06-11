@@ -129,7 +129,8 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
       typeInscription: getValeurOuVide(inscription.typeInscription),
       statutInscription: getValeurOuVide(
         StatutFiche.getEnumFor(inscription.statut).libelle
-      )
+      ),
+      categorie: getValeurOuVide(inscription.categorie)
     };
     inscriptionsMapper.push(inscriptionMapper);
   });
