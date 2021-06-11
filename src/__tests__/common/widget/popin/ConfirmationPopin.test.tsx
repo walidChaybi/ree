@@ -1,8 +1,12 @@
-import React from "react";
-import { useState } from "react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import React, { useState } from "react";
 import { ConfirmationPopin } from "../../../../views/common/widget/popin/ConfirmationPopin";
-import { render, act, waitFor, screen, cleanup } from "@testing-library/react";
-import { fireEvent } from "@testing-library/react";
 
 afterEach(cleanup);
 
@@ -15,18 +19,28 @@ const HookConsummerConfirmationPopin: React.FC<HookConsummerConfirmationPopinPro
 ) => {
   const [display, setDisplay] = useState(true);
 
+  const boutonsPopin = [
+    {
+      label: "Non",
+      action: () => {
+        props.cancel();
+        setDisplay(false);
+      }
+    },
+    {
+      label: "Oui",
+      action: () => {
+        props.ok();
+        setDisplay(false);
+      }
+    }
+  ];
+
   return (
     <ConfirmationPopin
       isOpen={display}
-      message="Message de test"
-      onNo={() => {
-        props.cancel();
-        setDisplay(false);
-      }}
-      onYes={() => {
-        props.ok();
-        setDisplay(false);
-      }}
+      messages={["Message de test"]}
+      boutons={boutonsPopin}
     />
   );
 };

@@ -4,7 +4,7 @@ import {
   Identite,
   LienTitulaire,
   Mandant,
-  Requerent,
+  Requerant,
   Requete
 } from "./ISaisirRequetePageModel";
 
@@ -23,7 +23,7 @@ export interface SaisieRequeteRDCSC {
   [EVENEMENT]: Evenement;
   [TITULAIRE1]: Identite;
   [TITULAIRE2]: Identite;
-  [REQUERANT]: Requerent;
+  [REQUERANT]: Requerant;
   [MANDANT]: Mandant;
   [LIEN_TITULAIRE]: LienTitulaire;
   [ADRESSE]: Adresse;

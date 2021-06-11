@@ -1,12 +1,12 @@
-import React, { useState } from "react";
 import {
-  render,
-  waitFor,
   act,
+  fireEvent,
+  render,
   screen,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
-import { Field, Formik, Form } from "formik";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 import EvenementFiltre, {
   EvenementDefaultValues,
   EvenementFiltreProps
@@ -44,13 +44,13 @@ test("render composant EvenementFiltre", async () => {
   });
 
   const inputJour = screen.getByLabelText(
-    "evenement.dateEvenement jour"
+    "evenement.dateEvenement.jour"
   ) as HTMLInputElement;
   const inputMois = screen.getByLabelText(
-    "evenement.dateEvenement mois"
+    "evenement.dateEvenement.mois"
   ) as HTMLInputElement;
   const inputAnnee = screen.getByLabelText(
-    "evenement.dateEvenement année"
+    "evenement.dateEvenement.annee"
   ) as HTMLInputElement;
   const pays = screen.getByLabelText(
     "evenement.paysEvenement"

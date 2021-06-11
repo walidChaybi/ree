@@ -117,7 +117,12 @@ export const configRequetesV2 = [
       }
 
       // Creation Requete Delivrance
-      if (match[1] === "/requetes/delivrance") {
+      // Certificat de Situation Courrier
+      if (match[1] === "/requetes/delivrance?refus=false") {
+        return { data: "1072bc37-f889-4365-8f75-912166b767dd" };
+      }
+
+      if (match[1] === "/requetes/delivrance?refus=true") {
         return { data: "1072bc37-f889-4365-8f75-912166b767dd" };
       }
 

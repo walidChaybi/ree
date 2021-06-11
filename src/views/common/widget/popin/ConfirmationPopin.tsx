@@ -1,31 +1,31 @@
-import React from "react";
 import {
   Dialog,
-  DialogTitle,
-  DialogContent,
   DialogActions,
-  DialogContentText
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from "@material-ui/core";
+import React from "react";
 import { Button } from "reakit/Button";
+
+interface IBoutonPopin {
+  label: string;
+  action: () => void;
+  color?: string;
+}
 
 export interface ConfirmationPopinProps {
   isOpen: boolean;
-  message: string;
-  onYes: () => void;
-  onNo: () => void;
+  messages: string[];
+  boutons: IBoutonPopin[];
   title?: string;
-  labelOui?: string;
-  labelNon?: string;
 }
 
 export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
   isOpen,
-  message,
-  onYes,
-  onNo,
-  title,
-  labelOui,
-  labelNon
+  messages,
+  boutons,
+  title
 }) => {
   return (
     <Dialog
@@ -35,17 +35,30 @@ export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
     >
       {title && <DialogTitle id="alert-dialog-title">title</DialogTitle>}
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {message}
-        </DialogContentText>
+        {messages.map((msg: string, idx: number) => {
+          return (
+            <DialogContentText
+              id="alert-dialog-description"
+              key={`message${idx}`}
+            >
+              {msg}
+            </DialogContentText>
+          );
+        })}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onNo} color="primary">
-          {labelNon ? labelNon : "Non"}
-        </Button>
-        <Button onClick={onYes} color="primary" autoFocus>
-          {labelOui ? labelOui : "Oui"}
-        </Button>
+        {boutons &&
+          boutons.map((bouton: IBoutonPopin, idx: number) => {
+            return (
+              <Button
+                onClick={bouton.action}
+                color={bouton.color ? bouton.color : "primary"}
+                key={`boutonPopin${idx}`}
+              >
+                {bouton.label}
+              </Button>
+            );
+          })}
       </DialogActions>
     </Dialog>
   );

@@ -224,7 +224,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           onInput={jourChange}
           onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
           disabled={props.disabled}
-          aria-label={`${props.nomDate} jour`}
+          aria-label={`${props.nomDate}.jour`}
           placeholder="JJ"
         />
         <div className="Sep">/</div>
@@ -235,7 +235,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           onInput={moisChange}
           onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
           disabled={props.disabled}
-          aria-label={`${props.nomDate} mois`}
+          aria-label={`${props.nomDate}.mois`}
           placeholder="MM"
         />
 
@@ -246,7 +246,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           maxLength="4"
           onInput={anneeChange}
           disabled={props.disabled}
-          aria-label={`${props.nomDate} année`}
+          aria-label={`${props.nomDate}.annee`}
           validate={validateAnnee}
           placeholder="AAAA"
         />

@@ -1,16 +1,16 @@
-import React from "react";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { getText } from "../../common/widget/Text";
-import { OfficierContext } from "../contexts/OfficierContext";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { URL_DECONNEXION, URL_MES_REQUETES } from "../../router/ReceUrls";
 import { getCompteurRequetes } from "../../../api/appels/requeteApi";
 import { logError } from "../../common/util/LogManager";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
+import { getLibelle, getText } from "../../common/widget/Text";
+import { URL_DECONNEXION, URL_MES_REQUETES } from "../../router/ReceUrls";
+import { OfficierContext } from "../contexts/OfficierContext";
 
 interface BoutonDeconnexionProps {
   onClick?: (event: React.MouseEvent) => void;
@@ -64,19 +64,36 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
       });
   };
 
+  // Eléments Popin Déconnexion
+  const messagePopin = [
+    getLibelle(
+      `Il vous reste ${nbRequetes} requête(s) à signer, êtes-vous sûr de vouloir vous déconnecter ?`
+    )
+  ];
+
+  const boutonsPopin = [
+    {
+      label: "Non",
+      action: () => {
+        setConfirmationDeco(false);
+        history.push(URL_MES_REQUETES);
+      }
+    },
+    {
+      label: "Oui",
+      action: () => {
+        setConfirmationDeco(false);
+        deconnexion();
+      }
+    }
+  ];
+
   return (
     <>
       <ConfirmationPopin
         isOpen={confirmationDeco}
-        message={`Il vous reste ${nbRequetes} requête(s) à signer, êtes-vous sûr de vouloir vous déconnecter ?`}
-        onNo={() => {
-          setConfirmationDeco(false);
-          history.push(URL_MES_REQUETES);
-        }}
-        onYes={() => {
-          setConfirmationDeco(false);
-          deconnexion();
-        }}
+        messages={messagePopin}
+        boutons={boutonsPopin}
       />
       <OfficierContext.Consumer>
         {officier => (

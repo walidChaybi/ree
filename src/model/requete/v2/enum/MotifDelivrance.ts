@@ -38,10 +38,6 @@ export class MotifDelivrance extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(
-      MotifDelivrance,
-      false,
-      false
-    );
+    return EnumWithLibelle.getAllLibellesAsOptions(MotifDelivrance);
   }
 }

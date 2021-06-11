@@ -35,6 +35,7 @@ import {
   URL_MES_REQUETES_SAISIR_RDAPC,
   URL_MES_REQUETES_SAISIR_RDC,
   URL_MES_REQUETES_SAISIR_RDCSC,
+  URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
   URL_MES_REQUETES_V2,
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
@@ -53,6 +54,7 @@ import {
   URL_REQUETES_SERVICE_SAISIR_RDAPC,
   URL_REQUETES_SERVICE_SAISIR_RDC,
   URL_REQUETES_SERVICE_SAISIR_RDCSC,
+  URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE,
   URL_REQUETES_SERVICE_V2
 } from "./ReceUrls";
 
@@ -263,6 +265,20 @@ export const routesRece: IRoute[] = [
     //droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE], // FIXME: à valider
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
+  },
+  {
+    url: URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
+    component: ApercuRequetePageV2,
+    droits: [Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE,
+    component: ApercuRequetePageV2,
+    droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   {
     url: URL_MES_REQUETES_DETAIL_REQUETE_ID,

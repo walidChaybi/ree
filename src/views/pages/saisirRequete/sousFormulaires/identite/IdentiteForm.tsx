@@ -44,7 +44,7 @@ export const IdentiteFormDefaultValues = {
   [PRENOMS]: PrenomsFormDefaultValues,
   [SEXE]: "INCONNU",
   [NAISSANCE]: EvenementFormDefaultValues,
-  [NATIONALITE]: "INCONNU",
+  [NATIONALITE]: "INCONNUE",
   [PARENT1]: "",
   [PARENT2]: ""
 };

@@ -7,12 +7,16 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import request from "superagent";
+import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { MANDATAIRE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRequetePageModel";
 import MandataireForm, {
   MandataireFormDefaultValues,
   MandataireFormValidationSchema
 } from "../../../../../views/pages/saisirRequete/sousFormulaires/requerant/mandataire/MandataireForm";
+
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 const HookMandataireForm: React.FC = () => {
   const [result, setResult] = useState("");

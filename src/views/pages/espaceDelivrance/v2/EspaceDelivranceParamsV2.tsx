@@ -1,14 +1,15 @@
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { getIconPrioriteRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "../../../common/widget/tableau/v2/TableauTypeColumn";
 import { getLibelle } from "../../../common/widget/Text";
 
 export const StatutsRequetesEspaceDelivrance = [
-  "BROUILLON",
-  "A_TRAITER",
-  "PRISE_EN_CHARGE",
-  "TRANSFEREE",
-  "A_SIGNER",
-  "A_VALIDER"
+  StatutRequete.BROUILLON.nom,
+  StatutRequete.A_TRAITER.nom,
+  StatutRequete.PRISE_EN_CHARGE.nom,
+  StatutRequete.TRANSFEREE.nom,
+  StatutRequete.A_SIGNER.nom,
+  StatutRequete.A_VALIDER.nom
 ];
 
 export enum HeaderTableauRequete {

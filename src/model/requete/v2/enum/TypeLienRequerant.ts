@@ -20,11 +20,7 @@ export class TypeLienRequerant extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(
-      TypeLienRequerant,
-      false,
-      false
-    );
+    return EnumWithLibelle.getAllLibellesAsOptions(TypeLienRequerant);
   }
 
   public static getListEnumsAsOptions(keys: string[]): Options {

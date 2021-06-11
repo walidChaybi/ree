@@ -1,4 +1,4 @@
-import { Adresse, Identite, Requerent } from "./ISaisirRequetePageModel";
+import { Adresse, Identite, Requerant } from "./ISaisirRequetePageModel";
 
 // Nom des sous-formulaires
 export const PARTENAIRE1 = "partenaire1";
@@ -9,6 +9,6 @@ export const ADRESSE = "adresse";
 export interface SaisieRequeteRDCSC {
   [PARTENAIRE1]: Identite;
   [PARTENAIRE2]: Identite;
-  [REQUERANT]: Requerent;
+  [REQUERANT]: Requerant;
   [ADRESSE]: Adresse;
 }

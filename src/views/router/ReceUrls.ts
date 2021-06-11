@@ -64,3 +64,7 @@ export const URL_MES_REQUETES_SAISIR_RDC = `${URL_MES_REQUETES_V2}/saisirextrait
 export const URL_REQUETES_SERVICE_SAISIR_RDC = `${URL_REQUETES_SERVICE_V2}/saisirextraitcopie`;
 export const URL_MES_REQUETES_SAISIR_RDLFC = `${URL_MES_REQUETES_V2}/saisirlivretfamille`;
 export const URL_REQUETES_SERVICE_SAISIR_RDLFC = `${URL_REQUETES_SERVICE_V2}/saisirlivretfamille`;
+
+// Aperçu requête ... V2 après saisie de requête
+export const URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE = `${URL_MES_REQUETES_SAISIR_RDCSC}/apercurequete/:idRequete`;
+export const URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE = `${URL_REQUETES_SERVICE_SAISIR_RDCSC}/apercurequete/:idRequete`;

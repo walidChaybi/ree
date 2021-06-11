@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
 import { connect } from "formik";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import "../scss/FiltreRMC.scss";
+import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { MSG_MIN_YEAR } from "../../../../../ressources/messages";
+import {
+  compareDatesCompose,
+  estDateVide,
+  IDateCompose,
+  MIN_YEAR
+} from "../../../../common/util/DateUtils";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues,
   DateValidationSchema
 } from "../../../../common/widget/formulaire/DateComposeForm";
 import {
-  withNamespace,
-  FormikComponentProps,
-  ComponentFiltreProps
-} from "../../../../common/widget/formulaire/utils/FormUtil";
-import {
   digitSeulement,
   traiteCarAutorises
 } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
-  IDateCompose,
-  estDateVide,
-  compareDatesCompose,
-  MIN_YEAR
-} from "../../../../common/util/DateUtils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+  ComponentFiltreProps,
+  FormikComponentProps,
+  withNamespace
+} from "../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../common/widget/Text";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { MSG_MIN_YEAR } from "../../../../../ressources/messages";
-import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import "../scss/FiltreRMC.scss";
 
 // Noms des champs
 export const DATE_DEBUT = "dateDebut";
@@ -145,7 +145,7 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
             <InputField
               name={withNamespace(props.nomFiltre, ANNEE)}
               label={getLibelle("Année")}
-              ariaLabel={`${props.nomFiltre} année`}
+              ariaLabel={`${props.nomFiltre}.annee`}
               maxLength="4"
               onInput={anneeChange}
               disabled={anneeDisabled}

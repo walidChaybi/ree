@@ -1,17 +1,17 @@
-import React, { useState } from "react";
 import {
-  render,
-  waitFor,
   act,
+  fireEvent,
+  render,
   screen,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
-import { Field, Formik, Form } from "formik";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
+import { DATES_DEBUT_FIN_ANNEE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
-import { DATES_DEBUT_FIN_ANNEE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 const HookDatesDebutFinAnneeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
@@ -46,25 +46,25 @@ test("render composant DatesDebutFinAnneeFiltre", async () => {
   });
 
   const inputAnneeSeule = screen.getByLabelText(
-    "datesDebutFinAnnee année"
+    "datesDebutFinAnnee.annee"
   ) as HTMLInputElement;
   const inputJour = screen.getByLabelText(
-    "datesDebutFinAnnee.dateDebut jour"
+    "datesDebutFinAnnee.dateDebut.jour"
   ) as HTMLInputElement;
   const inputMois = screen.getByLabelText(
-    "datesDebutFinAnnee.dateDebut mois"
+    "datesDebutFinAnnee.dateDebut.mois"
   ) as HTMLInputElement;
   const inputAnnee = screen.getByLabelText(
-    "datesDebutFinAnnee.dateDebut année"
+    "datesDebutFinAnnee.dateDebut.annee"
   ) as HTMLInputElement;
   const inputJourFin = screen.getByLabelText(
-    "datesDebutFinAnnee.dateFin jour"
+    "datesDebutFinAnnee.dateFin.jour"
   ) as HTMLInputElement;
   const inputMoisFin = screen.getByLabelText(
-    "datesDebutFinAnnee.dateFin mois"
+    "datesDebutFinAnnee.dateFin.mois"
   ) as HTMLInputElement;
   const inputAnneeFin = screen.getByLabelText(
-    "datesDebutFinAnnee.dateFin année"
+    "datesDebutFinAnnee.dateFin.annee"
   ) as HTMLInputElement;
 
   const allIputDateDebutDateFin = [

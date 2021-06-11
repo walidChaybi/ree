@@ -1,18 +1,18 @@
-import React, { useState } from "react";
 import {
-  render,
-  waitFor,
   act,
-  screen,
+  cleanup,
   fireEvent,
-  cleanup
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues,
   onDatePickerValueChange
 } from "../../../../views/common/widget/formulaire/DateComposeForm";
-import { Field, Formik, Form } from "formik";
 
 const HookConsummerDateComposeForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -45,10 +45,10 @@ test("render composant DateComposeForm", async () => {
   await act(async () => {
     render(<HookConsummerDateComposeForm />);
   });
-  const inputJour = screen.getByLabelText("dateDebut jour") as HTMLInputElement;
-  const inputMois = screen.getByLabelText("dateDebut mois") as HTMLInputElement;
+  const inputJour = screen.getByLabelText("dateDebut.jour") as HTMLInputElement;
+  const inputMois = screen.getByLabelText("dateDebut.mois") as HTMLInputElement;
   const inputAnnee = screen.getByLabelText(
-    "dateDebut année"
+    "dateDebut.annee"
   ) as HTMLInputElement;
 
   await waitFor(() => {

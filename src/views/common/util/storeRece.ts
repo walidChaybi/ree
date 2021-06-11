@@ -8,9 +8,9 @@ class StoreRece {
   private _utilisateurCourant?: IOfficierSSOApi;
   private _codePin?: string;
   private _timerCodePin?: number;
-  private _retourUrl?: string;
+  private _retourUrl = "";
 
-  set retourUrl(ru: string | undefined) {
+  set retourUrl(ru: string) {
     this._retourUrl = ru;
   }
 

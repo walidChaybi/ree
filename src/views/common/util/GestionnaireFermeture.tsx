@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { OfficierContextProps } from "../../core/contexts/OfficierContext";
-import apiResources from "../../../ressources/api.json";
-import messageManager from "./messageManager";
 import { useHistory } from "react-router-dom";
-import { getText } from "../widget/Text";
-import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
+import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
+import apiResources from "../../../ressources/api.json";
+import { OfficierContextProps } from "../../core/contexts/OfficierContext";
+import { getText } from "../widget/Text";
 import { getCsrfHeader } from "./CsrfUtil";
+import messageManager from "./messageManager";
 
 const TIME_OUT_MS = 2000;
 

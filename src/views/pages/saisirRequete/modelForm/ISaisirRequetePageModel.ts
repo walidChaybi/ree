@@ -67,7 +67,7 @@ export const TYPE_MANDANT = "typeMandant";
 export const LIEN = "lien";
 export const NATURE_LIEN = "natureLien";
 
-export interface Requerent {
+export interface Requerant {
   [TYPE_REQUERANT]: string;
   [MANDATAIRE]: Mandataire;
   [INSTITUTI0NNEL]: Institutionnel;

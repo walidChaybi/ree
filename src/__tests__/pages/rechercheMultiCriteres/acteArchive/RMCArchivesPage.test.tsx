@@ -1,14 +1,14 @@
-import React from "react";
 import {
+  act,
   fireEvent,
   render,
-  waitFor,
-  act,
-  screen
+  screen,
+  waitFor
 } from "@testing-library/react";
+import React from "react";
 import {
-  titreForm,
-  RMCArchivePage
+  RMCArchivePage,
+  titreForm
 } from "../../../../views/pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 
 test("renders formulaire Recherche Multi Critères archives", async () => {
@@ -28,10 +28,10 @@ test("Bouton réinitialisation des champs", async () => {
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
 
   const inputAnneeSeule = screen.getByLabelText(
-    "datesDebutFinAnnee année"
+    "datesDebutFinAnnee.annee"
   ) as HTMLInputElement;
   const inputJour = screen.getByLabelText(
-    "datesDebutFinAnnee.dateDebut jour"
+    "datesDebutFinAnnee.dateDebut.jour"
   ) as HTMLInputElement;
 
   await waitFor(() => {
@@ -77,7 +77,7 @@ test("Bouton Rechercher du Formulaire Recherche Multi Critères archives", async
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
   const inputAnnee = screen.getByLabelText(
-    "datesDebutFinAnnee année"
+    "datesDebutFinAnnee.annee"
   ) as HTMLInputElement;
 
   act(() => {

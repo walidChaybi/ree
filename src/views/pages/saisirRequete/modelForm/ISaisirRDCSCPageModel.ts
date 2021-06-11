@@ -1,5 +1,5 @@
 import { PieceJointe } from "../../../common/util/FileUtils";
-import { Adresse, Identite, Requerent } from "./ISaisirRequetePageModel";
+import { Adresse, Identite, Requerant } from "./ISaisirRequetePageModel";
 
 // Nom des sous-formulaires
 export const DOCUMENT = "document";
@@ -8,10 +8,14 @@ export const REQUERANT = "requerant";
 export const ADRESSE = "adresse";
 export const PIECES_JOINTES = "piecesJointes";
 
+export interface CreationRequeteRDCSC {
+  saisie: SaisieRequeteRDCSC;
+  refus?: boolean;
+}
 export interface SaisieRequeteRDCSC {
   [DOCUMENT]: string;
   [INTERESSE]: Identite;
-  [REQUERANT]: Requerent;
+  [REQUERANT]: Requerant;
   [ADRESSE]: Adresse;
   [PIECES_JOINTES]?: PieceJointe[];
 }

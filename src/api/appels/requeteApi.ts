@@ -250,11 +250,20 @@ export function getCompteurRequetesV2(): Promise<any> {
   });
 }
 
-export async function creationRequeteDelivrance(requete: IRequeteDelivrance) {
+export async function creationRequeteDelivrance({
+  requete,
+  refus = false
+}: {
+  requete: IRequeteDelivrance;
+  refus?: boolean;
+}): Promise<any> {
   return apiV2.fetch({
     method: HttpMethod.POST,
     uri: `${URL_REQUETES_DELIVRANCE}`,
-    data: requete
+    data: requete,
+    parameters: {
+      refus
+    }
   });
 }
 
