@@ -77,9 +77,8 @@ const RequeteForm: React.FC<SubFormProps> = props => {
     DocumentDemande.getAllEnumsAsOptions()
   );
 
-  const [complementMotifInactif, setComplementMotifInactif] = useState<boolean>(
-    true
-  );
+  const [complementMotifInactif, setComplementMotifInactif] =
+    useState<boolean>(true);
 
   const onChangeTypeNatureActe = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (props.onChange) {
@@ -129,6 +128,7 @@ const RequeteForm: React.FC<SubFormProps> = props => {
           <InputField
             name={withNamespace(props.nom, NB_EXEMPLAIRE)}
             label={getLibelle("Nombre d'exemplaires")}
+            typeInput={{ type: "number", min: 1, max: 5 }}
           />
           <SelectField
             name={withNamespace(props.nom, MOTIF)}

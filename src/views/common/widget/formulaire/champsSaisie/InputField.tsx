@@ -15,7 +15,15 @@ interface InputFieldProps {
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  typeInput?: TypeInput;
 }
+
+interface TypeInput {
+  type: string;
+  min: number;
+  max: number;
+}
+
 export const InputField: React.FC<InputFieldProps> = ({
   name,
   label,
@@ -27,7 +35,8 @@ export const InputField: React.FC<InputFieldProps> = ({
   placeholder,
   onInput,
   onBlur,
-  onChange
+  onChange,
+  typeInput
 }) => {
   const otherProps = {} as any;
   if (maxLength) {
@@ -67,6 +76,9 @@ export const InputField: React.FC<InputFieldProps> = ({
           title={title}
           placeholder={placeholder ? placeholder : label}
           {...otherProps}
+          type={typeInput?.type}
+          min={typeInput?.min}
+          max={typeInput?.max}
         />
       </div>
       {!noErrorMessage && (
