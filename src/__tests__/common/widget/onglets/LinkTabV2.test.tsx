@@ -1,30 +1,30 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { a11yProps } from "../../../../views/common/widget/onglets/BoiteAOnglets";
-import { LinkTabMesRequetes } from "../../../../views/pages/espaceDelivrance/v1/contenu/LinkTabMesRequetes";
+import { LinkTab } from "../../../../views/common/widget/onglets/LinkTabV2";
 
-test("renders LinkTabMesRequetes renders correctly", () => {
+test("renders LinkTab renders correctly", () => {
   act(() => {
-    render(<LinkTabMesRequetes />);
+    render(<LinkTab />);
   });
   expect(screen.getByRole("tab")).toBeDefined();
 });
 
-test("renders LinkTabMesRequetes is disabled", () => {
+test("renders LinkTab is disabled", () => {
   act(() => {
-    render(<LinkTabMesRequetes disabled={true} />);
+    render(<LinkTab disabled={true} />);
   });
   expect(screen.getByRole("tab").className).toContain("tab-disabled");
 });
 
-test("renders LinkTabMesRequetes a11yProps works correctly", () => {
+test("renders LinkTab a11yProps works correctly", () => {
   const result = a11yProps(0);
   expect(result.id).toBe("nav-tab-0");
 });
 
-test("renders LinkTabMesRequetes is disabled", () => {
+test("renders LinkTab is disabled", () => {
   act(() => {
-    render(<LinkTabMesRequetes />);
+    render(<LinkTab />);
   });
 
   waitFor(() => {

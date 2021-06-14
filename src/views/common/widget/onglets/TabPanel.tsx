@@ -1,0 +1,26 @@
+import { Box } from "@material-ui/core";
+import React from "react";
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+export function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+  const paddingBox = 3;
+
+  return (
+    <div
+      className="TabPanelV2"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`nav-tabpanel-${index}`}
+      aria-labelledby={`nav-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={paddingBox}>{children}</Box>}
+    </div>
+  );
+}

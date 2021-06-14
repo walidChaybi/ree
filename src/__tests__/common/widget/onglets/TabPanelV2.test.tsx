@@ -1,6 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import React from "react";
-import { TabPanel } from "../../../../views/pages/espaceDelivrance/v2/EspaceDelivrancePageV2";
+import { a11yProps } from "../../../../views/common/widget/onglets/BoiteAOnglets";
+import { TabPanel } from "../../../../views/common/widget/onglets/TabPanel";
 
 test("renders TabPanel renders correctly", () => {
   act(() => {
@@ -11,6 +12,11 @@ test("renders TabPanel renders correctly", () => {
     );
   });
   expect(screen.queryAllByText(/render/i)).toHaveLength(1);
+});
+
+test("renders LinkTab a11yProps works correctly", () => {
+  const result = a11yProps(0);
+  expect(result.id).toBe("nav-tab-0");
 });
 
 test("renders TabPanel text don't renders ", () => {

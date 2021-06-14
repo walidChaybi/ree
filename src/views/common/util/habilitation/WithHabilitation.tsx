@@ -1,9 +1,9 @@
 import * as React from "react";
 import {
-  IOfficierSSOApi,
   estOfficierHabiliterPourSeulementLesDroits,
   estOfficierHabiliterPourTousLesDroits,
-  estOfficierHabiliterPourUnDesDroits
+  estOfficierHabiliterPourUnDesDroits,
+  IOfficierSSOApi
 } from "../../../../model/IOfficierSSOApi";
 import { storeRece } from "../storeRece";
 import {

@@ -1,7 +1,5 @@
 import Tab from "@material-ui/core/Tab";
 import React from "react";
-import WithHabilitation from "../../../../common/util/habilitation/WithHabilitation";
-import "../scss/EspaceDelivrancePage.scss";
 
 interface LinkTabProps {
   label?: string;
@@ -9,7 +7,7 @@ interface LinkTabProps {
   disabled?: boolean;
 }
 
-export function LinkTabMesRequetes(props: LinkTabProps) {
+export function LinkTab(props: LinkTabProps) {
   return (
     <Tab
       component="a"
@@ -21,8 +19,3 @@ export function LinkTabMesRequetes(props: LinkTabProps) {
     />
   );
 }
-
-export const LinkTabMesRequetesDeServiceWithHabilitation = WithHabilitation(
-  LinkTabMesRequetes,
-  "LinkTabMesRequetes"
-);
