@@ -11,32 +11,34 @@ const superagentMock = require("superagent-mock")(request, configAgent);
 test("renders suivi des actions requete", async () => {
   render(<SuiviActionsRequete actions={DONNEES_REQUETE.actions} />);
   const titre = screen.getByText(/Suivi/i);
-  expect(titre.textContent).toBe("Suivi des actions");
-
   let elem1: HTMLElement;
   let elem2: HTMLElement;
+
   await waitFor(() => {
+    expect(titre.textContent).toBe("Suivi des actions");
     elem1 = screen.getByText(/LOY/i);
-    expect(elem1).toBeInTheDocument();
+    expect(elem1).toBeDefined();
     expect(elem1.innerHTML).toBe("Saisie de la requête - 10/03/2020 - LOY");
     elem2 = screen.getByText(/ESH/i);
-    expect(elem2).toBeInTheDocument();
+    expect(elem2).toBeDefined();
     expect(elem2.innerHTML).toBe("A traiter - 10/03/2020 - ESH");
   });
 });
 
-test("renders suivi actions hidding", () => {
+test("renders suivi actions hidding", async () => {
   const suiviActionsRequete = mount(
     <SuiviActionsRequete actions={DONNEES_REQUETE.actions} />
   );
-  expect(suiviActionsRequete.find(".Mui-expanded")).toBeDefined();
-
+  await waitFor(() => {
+    expect(suiviActionsRequete.find(".Mui-expanded")).toBeDefined();
+  });
   suiviActionsRequete
     .find(".MuiAccordionSummary-expandIcon")
     .first()
     .simulate("click");
-
-  expect(suiviActionsRequete.find(".Mui-expanded")).toHaveLength(0);
+  await waitFor(() => {
+    expect(suiviActionsRequete.find(".Mui-expanded")).toHaveLength(0);
+  });
 });
 
 afterAll(() => {

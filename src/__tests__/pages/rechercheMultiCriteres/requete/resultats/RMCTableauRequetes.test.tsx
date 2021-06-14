@@ -1,15 +1,18 @@
-import { act, fireEvent, render } from "@testing-library/react";
+import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import { userDroitConsulterPerimetreMEAE } from "../../../../../mock/data/connectedUserAvecDroit";
+import request from "superagent";
 import {
   DataRMCRequeteAvecResultat,
   DataTableauRequete
 } from "../../../../../mock/data/RMCRequete";
-import { storeRece } from "../../../../../views/common/util/storeRece";
+import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { getLastPathElem } from "../../../../../views/common/util/route/routeUtil";
 import { RMCTableauRequetes } from "../../../../../views/pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
 import { URL_RECHERCHE_REQUETE } from "../../../../../views/router/ReceUrls";
+
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const history = createMemoryHistory();
 history.push(URL_RECHERCHE_REQUETE);
@@ -48,24 +51,38 @@ test("Clic sur une Requête du tableau avec un idUtilisateur", async () => {
   act(() => {
     fireEvent.click(ligne);
   });
-});
 
-test("Clic sur une Requête du tableau sans un idUtilisateur", async () => {
-  const { getByTestId } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-      />
-    </Router>
-  );
-
-  const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf8");
-
-  act(() => {
-    fireEvent.click(ligne);
+  await waitFor(() => {
+    expect(getLastPathElem(history.location.pathname)).toEqual(
+      "8ef11b8b-652c-4c6a-ad27-a544fce635d0"
+    );
   });
 });
+
+//     // TODO A remplacer quand l'US 221 sera réalisée
+// test("Clic sur une Requête du tableau sans un idUtilisateur", async () => {
+//   const { getByTestId } = render(
+//     <Router history={history}>
+//       <RMCTableauRequetes
+//         dataRMCRequete={DataRMCRequeteAvecResultat}
+//         dataTableauRMCRequete={DataTableauRequete}
+//       />
+//     </Router>
+//   );
+
+//   const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf8");
+
+//   act(() => {
+//     fireEvent.click(ligne);
+//   });
+
+//   await waitFor(() => {
+//     expect(history.location.pathname).toEqual("rece/rece-ui/rechercherequete");
+//     // expect(getLastPathElem(history.location.pathname)).toEqual(
+//     //   "4578e56c-421c-4e6a-b587-a238a665daf8"
+//     // );
+//   });
+// });
 
 test("renders Resultat Requetes Recherche Multi Critères => Sans résultat", () => {
   const { getByText } = render(
@@ -77,46 +94,62 @@ test("renders Resultat Requetes Recherche Multi Critères => Sans résultat", ()
   expect(getByText(/Aucune requête n'a été trouvée/i)).toBeDefined();
 });
 
-test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () => {
-  userDroitConsulterPerimetreMEAE.idUtilisateur =
-    "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
+//     // TODO A remplacer quand une des US 207 / 210 / 316 sera réalisée
+// test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () => {
+//   userDroitConsulterPerimetreMEAE.idUtilisateur =
+//     "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+//   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-  const { getByTestId } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-      />
-    </Router>
-  );
+//   const { getByTestId } = render(
+//     <Router history={history}>
+//       <RMCTableauRequetes
+//         dataRMCRequete={DataRMCRequeteAvecResultat}
+//         dataTableauRMCRequete={DataTableauRequete}
+//       />
+//     </Router>
+//   );
 
-  const ligne = getByTestId("8ef11b8b-652c-4c6a-ad27-a544fce635d1");
+//   const ligne = getByTestId("8ef11b8b-652c-4c6a-ad27-a544fce635d1");
 
-  act(() => {
-    fireEvent.click(ligne);
-  });
-});
+//   act(() => {
+//     fireEvent.click(ligne);
+//   });
 
-test("Clic sur une Requête avec des titulaire", async () => {
-  userDroitConsulterPerimetreMEAE.idUtilisateur =
-    "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
+//   await waitFor(() => {
+//     expect(history.location.pathname).toEqual("rece/rece-ui/rechercherequete");
+//     // expect(getLastPathElem(history.location.pathname)).toEqual(
+//     //   "8ef11b8b-652c-4c6a-ad27-a544fce635d1"
+//     // );
+//   });
+// });
 
-  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+//     // TODO A remplacer quand une des US 207 / 210 / 316 sera réalisée
+// test("Clic sur une Requête avec des titulaire", async () => {
+//   userDroitConsulterPerimetreMEAE.idUtilisateur =
+//     "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
 
-  const { getByTestId } = render(
-    <Router history={history}>
-      <RMCTableauRequetes
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-      />
-    </Router>
-  );
+//   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-  const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf9");
+//   const { getByTestId } = render(
+//     <Router history={history}>
+//       <RMCTableauRequetes
+//         dataRMCRequete={DataRMCRequeteAvecResultat}
+//         dataTableauRMCRequete={DataTableauRequete}
+//       />
+//     </Router>
+//   );
 
-  act(() => {
-    fireEvent.click(ligne);
-  });
-});
+//   const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf9");
+
+//   act(() => {
+//     fireEvent.click(ligne);
+//   });
+
+//   await waitFor(() => {
+//     expect(history.location.pathname).toEqual("rece/rece-ui/rechercherequete");
+//     // expect(getLastPathElem(history.location.pathname)).toEqual(
+//     //   "8ef11b8b-652c-4c6a-ad27-a544fce635d1"
+//     // );
+//   });
+// });

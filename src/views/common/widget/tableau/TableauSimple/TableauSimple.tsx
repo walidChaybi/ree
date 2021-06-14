@@ -36,15 +36,15 @@ export const TableauSimple: React.FC<TableauSimpleProps> = props => {
         </tr>
       </thead>
       <tbody>
-        {props.lignes.map(ligne => (
-          <tr key={ligne.key}>
-            {ligne.colonnes.map((colonne: Colonne, idx: number) => (
+        {props.lignes.map((ligne: Ligne, idxLigne: number) => (
+          <tr key={`${ligne.key}-${idxLigne}`}>
+            {ligne.colonnes.map((colonne: Colonne, idxColonne: number) => (
               <td
-                key={`${ligne.key}-${idx}`}
+                key={`${ligne.key}-${idxLigne}${idxColonne}`}
                 className={colonne.className}
                 onClick={() => {
                   if (colonne.onClick) {
-                    colonne.onClick(idx);
+                    colonne.onClick(idxColonne);
                   }
                 }}
                 title={colonne.title}

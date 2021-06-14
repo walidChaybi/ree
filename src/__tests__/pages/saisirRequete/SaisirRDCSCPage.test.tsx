@@ -5,20 +5,26 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
+import { getLastPathElem } from "../../../views/common/util/route/routeUtil";
 import { SaisirRDCSCPage } from "../../../views/pages/saisirRequete/SaisirRDCSCPage";
+import { URL_MES_REQUETES_SAISIR_RDCSC } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
+const history = createMemoryHistory();
+history.push(URL_MES_REQUETES_SAISIR_RDCSC);
+
 beforeEach(async () => {
   render(
-    <MemoryRouter>
+    <Router history={history}>
       <SaisirRDCSCPage />)
-    </MemoryRouter>
+    </Router>
   );
 });
 
@@ -85,6 +91,12 @@ test("test du OnSubmit du formulaire de saisie d'une Requête de Délivrance Cer
 
   await act(async () => {
     fireEvent.click(submit);
+  });
+
+  await waitFor(() => {
+    expect(getLastPathElem(history.location.pathname)).toEqual(
+      "1072bc37-f889-4365-8f75-912166b767dd"
+    );
   });
 });
 
@@ -181,6 +193,12 @@ test("test du OnSubmit du formulaire de saisie d'une Requête de Délivrance Cer
 
   await act(async () => {
     fireEvent.click(btnNon);
+  });
+
+  await waitFor(() => {
+    expect(getLastPathElem(history.location.pathname)).toEqual(
+      "1072bc37-f889-4365-8f75-912166b767dd"
+    );
   });
 });
 

@@ -92,13 +92,6 @@ beforeEach(async () => {
 
   containerWithErrorWS = document.createElement("div");
   document.body.appendChild(containerWithErrorWS);
-  await act(async () => {
-    ReactDOM.render(<HookConsummer />, container);
-
-    ReactDOM.render(<HookConsummerWithData />, containerWithData);
-
-    ReactDOM.render(<HookConsummerWithErrorWS />, containerWithErrorWS);
-  });
 });
 
 afterEach(() => {
@@ -116,7 +109,11 @@ afterEach(() => {
   containerWithErrorWS = null;
 });
 
-test("l'appel au WS de récupération d'une requete fonctionne correctement", () => {
+test("l'appel au WS de récupération d'une requete fonctionne correctement", async () => {
+  await act(async () => {
+    ReactDOM.render(<HookConsummer />, container);
+  });
+
   expect(container).toBeInstanceOf(Element);
   if (container instanceof Element) {
     expect(container.querySelector).toBeTruthy();
@@ -127,7 +124,10 @@ test("l'appel au WS de récupération d'une requete fonctionne correctement", ()
   }
 });
 
-test("pas d'appel WS si tableau de données passé en paramètre", () => {
+test("pas d'appel WS si tableau de données passé en paramètre", async () => {
+  await act(async () => {
+    ReactDOM.render(<HookConsummerWithData />, containerWithData);
+  });
   expect(containerWithData).toBeInstanceOf(Element);
   if (containerWithData instanceof Element) {
     expect(containerWithData.querySelector).toBeTruthy();
@@ -138,14 +138,17 @@ test("pas d'appel WS si tableau de données passé en paramètre", () => {
   }
 });
 
-test("pas d'erreur si retour WS en erreur", () => {
+test("pas d'erreur si retour WS en erreur", async () => {
+  await act(async () => {
+    ReactDOM.render(<HookConsummerWithErrorWS />, containerWithErrorWS);
+  });
   expect(containerWithErrorWS).toBeInstanceOf(Element);
   if (containerWithErrorWS instanceof Element) {
     expect(containerWithErrorWS.querySelector).toBeTruthy();
   }
   expect(containerWithErrorWS).not.toBeNull();
   if (containerWithErrorWS instanceof Element) {
-    expect(containerWithErrorWS.childNodes.length).toBe(0);
+    expect(containerWithErrorWS.childNodes.length).toBe(1);
   }
 });
 

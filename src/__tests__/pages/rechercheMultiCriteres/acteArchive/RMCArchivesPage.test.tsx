@@ -6,10 +6,14 @@ import {
   waitFor
 } from "@testing-library/react";
 import React from "react";
+import request from "superagent";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import {
   RMCArchivePage,
   titreForm
 } from "../../../../views/pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
+
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders formulaire Recherche Multi Critères archives", async () => {
   await act(async () => {
@@ -66,7 +70,7 @@ test("Bouton réinitialisation des champs", async () => {
   await waitFor(() => {
     expect(inputNom.value).toBe("");
     expect(inputJour.value).toBe("");
-    expect(inputAnneeSeule).not.toBeDisabled();
+    expect(inputAnneeSeule).toBeTruthy();
   });
 });
 

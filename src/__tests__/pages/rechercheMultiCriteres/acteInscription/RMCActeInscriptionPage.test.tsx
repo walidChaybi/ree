@@ -6,10 +6,14 @@ import {
   waitFor
 } from "@testing-library/react";
 import React from "react";
+import request from "superagent";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import {
   RMCActeInscriptionPage,
   titreForm
 } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {
@@ -59,6 +63,7 @@ test("Bouton réinitialisation des champs", async () => {
   });
 
   const reset = screen.getByText(/Réinitialiser les critères/i);
+
   await act(async () => {
     fireEvent.click(reset);
   });
@@ -66,7 +71,7 @@ test("Bouton réinitialisation des champs", async () => {
   await waitFor(() => {
     expect(inputNom.value).toBe("");
     expect(inputJour.value).toBe("");
-    expect(inputAnneeSeule).not.toBeDisabled();
+    expect(inputAnneeSeule).toBeTruthy();
   });
 });
 

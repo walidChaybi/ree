@@ -45,7 +45,20 @@ export const configRequetes = [
           headers: {
             "content-range": "0-15/" + mockRequetes.data.length,
             link:
-              '<http://localhost:80/rece/rece-requete-api/v1/requetes?statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"'
+              '<http://localhost:80/rece/rece-requete-api/v1/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"'
+          }
+        };
+      }
+      if (
+        match[1] ===
+        "/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105"
+      ) {
+        return {
+          data: mockRequetes.data.slice(0, 105),
+          headers: {
+            "content-range": "0-15/" + mockRequetes.data.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v1/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }

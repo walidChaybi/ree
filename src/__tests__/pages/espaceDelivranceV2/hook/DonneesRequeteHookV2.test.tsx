@@ -3,26 +3,30 @@ import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import {
-  IQueryParametersPourRequetes,
+  IQueryParametersPourRequetesV2,
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { StatutRequete } from "../../../../model/requete/StatutRequete";
+import { NB_LIGNES_PAR_APPEL } from "../../../../views/common/widget/tableau/TableUtils";
+import { StatutsRequetesEspaceDelivrance } from "../../../../views/pages/espaceDelivrance/v2/EspaceDelivranceParamsV2";
 import { useRequeteApi } from "../../../../views/pages/espaceDelivrance/v2/hook/DonneesRequeteHookV2";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-const queryParam: IQueryParametersPourRequetes = {
-  statuts: [StatutRequete.ASigner],
-  tri: "idSagaDila",
-  sens: "ASC"
+const queryParam: IQueryParametersPourRequetesV2 = {
+  statuts: StatutsRequetesEspaceDelivrance,
+  tri: "dateStatut",
+  sens: "ASC",
+  range: `0-${NB_LIGNES_PAR_APPEL}`
 };
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
+  const [enChargement, setEnChargement] = React.useState(true);
   const { dataState = [] } = useRequeteApi(
     queryParam,
-    TypeAppelRequete.MES_REQUETES
+    TypeAppelRequete.MES_REQUETES,
+    setEnChargement
   );
   return (
     <>
@@ -52,11 +56,12 @@ afterEach(() => {
 test("monter un composant de test pour vérifier que tout va bien", async () => {
   await act(async () => {
     ReactDOM.render(<HookConsummer />, container);
-    expect(container).toBeInstanceOf(Element);
-    if (container instanceof Element) {
-      expect(container.querySelector).toBeTruthy();
-    }
   });
+  expect(container).toBeInstanceOf(Element);
+
+  if (container instanceof Element) {
+    expect(container.querySelector).toBeTruthy();
+  }
 });
 
 afterAll(() => {

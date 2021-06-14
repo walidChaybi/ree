@@ -1,11 +1,10 @@
+import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, waitFor, act, screen } from "@testing-library/react";
 import request from "superagent";
-import { useRMCActeApiHook } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { NB_LIGNES_PAR_APPEL } from "../../../../../views/common/widget/tableau/v1/TableauRece";
+import { useRMCActeApiHook } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
 import { ICriteresRecherche } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
-import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
@@ -63,8 +62,7 @@ const criteresRechecheNonAutorise: ICriteresRecherche = {
     },
     registreRepertoire: {
       repertoire: {
-        typeRepertoire: "RC",
-        natureInscription: NatureRc.PRESOMPTION_ABSENCE
+        typeRepertoire: "RC"
       }
     }
   },

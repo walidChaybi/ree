@@ -1,14 +1,14 @@
-import React from "react";
 import {
+  act,
   fireEvent,
   render,
-  waitFor,
-  act,
-  screen
+  screen,
+  waitFor
 } from "@testing-library/react";
+import React from "react";
 import {
-  titreForm,
-  RMCRequetePage
+  RMCRequetePage,
+  titreForm
 } from "../../../../views/pages/rechercheMultiCriteres/requete/RMCRequetePage";
 
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
@@ -38,7 +38,6 @@ test("Bouton réinitialisation des champs", async () => {
     "requete.statutRequete"
   ) as HTMLInputElement;
 
-  const submit = screen.getByText(/Rechercher/i);
   const reset = screen.getByText(/Réinitialiser les critères/i);
 
   await waitFor(() => {
@@ -83,7 +82,6 @@ test("Bouton réinitialisation des champs", async () => {
   });
 
   await act(async () => {
-    fireEvent.click(submit);
     fireEvent.click(reset);
   });
 

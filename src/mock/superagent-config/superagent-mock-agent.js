@@ -44,7 +44,7 @@ export const configAgent = [
     get: function (match, data) {
       return {
         body: data,
-        header: data.headers
+        header: data ? data.headers : null
       };
     },
 

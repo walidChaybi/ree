@@ -1,38 +1,38 @@
-import { useEffect, useState } from "react";
-import { StatutRequete } from "../../../../../model/requete/StatutRequete";
 import moment from "moment";
-import { TypeRequete } from "../../../../../model/requete/TypeRequete";
-import { SousTypeRequete } from "../../../../../model/requete/SousTypeRequete";
-import { CanalProvenance } from "../../../../../model/requete/CanalProvenance";
-import { QualiteRequerant } from "../../../../../model/requete/QualiteRequerant";
-import { SousQualiteRequerant } from "../../../../../model/requete/SousQualiteRequerant";
-import { Canal } from "../../../../../model/Canal";
-import { MotifRequete } from "../../../../../model/requete/MotifRequete";
-import { FormatDate } from "../../../../common/util/DateUtils";
-import {
-  IDocumentDelivre,
-  IPieceJustificative,
-  ITitulaire
-} from "../../../../common/types/RequeteType";
-import { IDataTable } from "../../../../../model/requete/IDataTable";
+import { useEffect, useState } from "react";
 import {
   getRequetes,
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../../../api/appels/requeteApi";
+import { Canal } from "../../../../../model/Canal";
+import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { CanalProvenance } from "../../../../../model/requete/CanalProvenance";
+import { IDataTable } from "../../../../../model/requete/IDataTable";
+import { MotifRequete } from "../../../../../model/requete/MotifRequete";
+import { QualiteRequerant } from "../../../../../model/requete/QualiteRequerant";
+import { SousQualiteRequerant } from "../../../../../model/requete/SousQualiteRequerant";
+import { SousTypeRequete } from "../../../../../model/requete/SousTypeRequete";
+import { StatutRequete } from "../../../../../model/requete/StatutRequete";
+import { TypeRequete } from "../../../../../model/requete/TypeRequete";
+import {
+  IDocumentDelivre,
+  IPieceJustificative,
+  ITitulaire
+} from "../../../../common/types/RequeteType";
+import { FormatDate } from "../../../../common/util/DateUtils";
 import {
   getMaxRange,
   getMinRange,
   getRowsNumber,
   parseLink
 } from "../../../../common/util/GestionDesLiensApi";
+import { logError } from "../../../../common/util/LogManager";
 import {
   formatNom,
   formatPrenom,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../../common/util/Utils";
-import { logError } from "../../../../common/util/LogManager";
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 
 export interface IRequerantApi {
   idRequerant: string;
@@ -163,37 +163,41 @@ function reponseRequeteMapper(data: IRequeteApi[]): IDataTable[] {
 }
 
 export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
-  return {
-    idRequete: data.idRequete,
-    idSagaDila: +data.idSagaDila,
-    dateCreation: moment.unix(data.dateCreation).format(FormatDate.DDMMYYYY),
-    dateDerniereMaj: moment
-      .unix(data.dateDerniereMaj)
-      .format(FormatDate.DDMMYYYY),
-    provenance: data.provenance,
-    statut: data.statut,
-    dateStatut: moment.unix(data.dateStatut).format(FormatDate.DDMMYYYY),
-    idRequeteInitiale: data.idRequeteInitiale,
-    sousTypeRequete: data.sousTypeRequete,
-    typeRequete: data.typeRequete,
-    natureActe: data.natureActe,
-    prioriteRequete: "TODO",
-    villeEvenement: data.villeEvenement,
-    paysEvenement: data.paysEvenement,
-    requerant: createLibelleRequerant(data.requerant),
-    titulaires: harmoniserTitulaires(data.titulaires),
-    canal: data.canal,
-    motifRequete: data.motifRequete,
-    piecesJustificatives: data.piecesJustificatives,
-    nomOec: createNomOec(data.reponse),
-    typeActe: data.typeActe,
-    reponse: harmoniserReponse(data.reponse),
-    anneeEvenement: data.anneeEvenement,
-    jourEvenement: data.jourEvenement,
-    moisEvenement: data.moisEvenement,
-    nbExemplaire: data.nbExemplaire,
-    documentsDelivres: data.documentsDelivres
-  };
+  let requeteMapper = {} as IDataTable;
+  if (data) {
+    requeteMapper = {
+      idRequete: data.idRequete,
+      idSagaDila: +data.idSagaDila,
+      dateCreation: moment.unix(data.dateCreation).format(FormatDate.DDMMYYYY),
+      dateDerniereMaj: moment
+        .unix(data.dateDerniereMaj)
+        .format(FormatDate.DDMMYYYY),
+      provenance: data.provenance,
+      statut: data.statut,
+      dateStatut: moment.unix(data.dateStatut).format(FormatDate.DDMMYYYY),
+      idRequeteInitiale: data.idRequeteInitiale,
+      sousTypeRequete: data.sousTypeRequete,
+      typeRequete: data.typeRequete,
+      natureActe: data.natureActe,
+      prioriteRequete: "TODO",
+      villeEvenement: data.villeEvenement,
+      paysEvenement: data.paysEvenement,
+      requerant: createLibelleRequerant(data.requerant),
+      titulaires: harmoniserTitulaires(data.titulaires),
+      canal: data.canal,
+      motifRequete: data.motifRequete,
+      piecesJustificatives: data.piecesJustificatives,
+      nomOec: createNomOec(data.reponse),
+      typeActe: data.typeActe,
+      reponse: harmoniserReponse(data.reponse),
+      anneeEvenement: data.anneeEvenement,
+      jourEvenement: data.jourEvenement,
+      moisEvenement: data.moisEvenement,
+      nbExemplaire: data.nbExemplaire,
+      documentsDelivres: data.documentsDelivres
+    };
+  }
+  return requeteMapper;
 }
 
 function createLibelleRequerant(data: IRequerantApi) {

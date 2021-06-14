@@ -98,7 +98,14 @@ export const configRequetesV2 = [
 
       // RMC Requete
       if (match[1] === "/requetes/rmc?range=0-105") {
-        return { data: ReponseAppelRMCRequete.data };
+        return {
+          headers: {
+            "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-105>;rel="next"'
+          },
+          data: ReponseAppelRMCRequete.data
+        };
       }
 
       // Détail requête Délivrance
