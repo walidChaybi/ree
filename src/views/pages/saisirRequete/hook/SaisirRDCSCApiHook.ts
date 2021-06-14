@@ -5,6 +5,7 @@ import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
+import { IPrenomOrdonnes } from "../../../../model/requete/v2/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IPieceJustificative } from "../../../common/types/RequeteType";
 import { logError } from "../../../common/util/LogManager";
@@ -62,19 +63,12 @@ function mapRequeteDelivrance(
 const SNP = "SNP";
 
 function getInteresseRequete(interesse: Identite) {
-  console.log(interesse);
   return interesse
     ? {
         position: 1,
         nomNaissance: interesse.nomFamille ? interesse.nomFamille : SNP,
         nomUsage: interesse.nomUsage,
-        prenoms: interesse.prenoms.prenom1
-          ? [
-              { valeur: interesse.prenoms.prenom1, numeroOrdre: 1 },
-              { valeur: interesse.prenoms.prenom2, numeroOrdre: 2 },
-              { valeur: interesse.prenoms.prenom3, numeroOrdre: 3 }
-            ]
-          : [],
+        prenoms: getPrenoms(interesse.prenoms),
         jourNaissance: parseInt(interesse.naissance.dateEvenement.jour, 10),
         moisNaissance: parseInt(interesse.naissance.dateEvenement.mois, 10),
         anneeNaissance: parseInt(interesse.naissance.dateEvenement.annee, 10),
@@ -85,6 +79,20 @@ function getInteresseRequete(interesse: Identite) {
         parentsTitulaire: []
       }
     : {};
+}
+
+function getPrenoms(prenoms: any): IPrenomOrdonnes[] {
+  const prenomsInteresse = [] as IPrenomOrdonnes[];
+  if (prenoms.prenom1 !== "") {
+    prenomsInteresse.push({ prenom: prenoms.prenom1, numeroOrdre: 1 });
+  }
+  if (prenoms.prenom2 !== "") {
+    prenomsInteresse.push({ prenom: prenoms.prenom2, numeroOrdre: 2 });
+  }
+  if (prenoms.prenom3 !== "") {
+    prenomsInteresse.push({ prenom: prenoms.prenom3, numeroOrdre: 3 });
+  }
+  return prenomsInteresse;
 }
 
 function getRequerant(saisie: SaisieRequeteRDCSC) {
@@ -168,10 +176,10 @@ function getInteresse(saisie: SaisieRequeteRDCSC) {
 function getAdresse(adresse: Adresse) {
   return adresse
     ? {
-        voie: adresse.voie,
-        lieuDit: adresse.lieuDit,
-        complementDestinataire: adresse.complementDestinataire,
-        complementPointGeo: adresse.complementPointGeo,
+        ligne4: adresse.voie,
+        ligne5: adresse.lieuDit,
+        ligne2: adresse.complementDestinataire,
+        ligne3: adresse.complementPointGeo,
         codePostal: adresse.codePostal,
         ville: adresse.commune,
         pays: adresse.pays

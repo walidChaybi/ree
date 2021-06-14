@@ -9,15 +9,15 @@ import {
 } from "../../../views/common/util/Utils";
 import { Nationalite } from "../../etatcivil/enum/Nationalite";
 import { Sexe } from "../../etatcivil/enum/Sexe";
-import { IPrenom } from "../../etatcivil/fiche/IPrenom";
 import { IParent } from "./IParents";
+import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 
 export interface ITitulaireRequete {
   id: string;
   position: number;
   nomNaissance: string;
   nomUsage?: string;
-  prenoms?: IPrenom[];
+  prenoms?: IPrenomOrdonnes[];
   jourNaissance?: number;
   moisNaissance?: number;
   anneeNaissance?: number;
@@ -34,7 +34,7 @@ export const TitulaireRequete = {
   },
   getPrenom(numero: number, titulaire?: ITitulaireRequete): string {
     return titulaire && titulaire.prenoms && titulaire.prenoms[numero]
-      ? formatPrenom(titulaire.prenoms[numero].valeur)
+      ? formatPrenom(titulaire.prenoms[numero].prenom)
       : "";
   },
   getPrenom1(titulaire?: ITitulaireRequete): string {

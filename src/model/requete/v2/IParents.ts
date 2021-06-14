@@ -1,13 +1,13 @@
 /* istanbul ignore file */
 
 import { formatNom, formatPrenoms } from "../../../views/common/util/Utils";
-import { IPrenom } from "../../etatcivil/fiche/IPrenom";
+import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 
 export interface IParent {
   id: string;
   position: number;
   nomNaissance: string;
-  prenoms: IPrenom[];
+  prenoms: IPrenomOrdonnes[];
 }
 
 export const Parent = {
@@ -17,9 +17,9 @@ export const Parent = {
   getPrenoms(parent?: IParent): string {
     return parent && parent.prenoms && parent.prenoms.length > 0
       ? formatPrenoms([
-          parent.prenoms[0].valeur,
-          parent.prenoms[1]?.valeur,
-          parent.prenoms[2]?.valeur
+          parent.prenoms[0].prenom,
+          parent.prenoms[1]?.prenom,
+          parent.prenoms[2]?.prenom
         ])
       : "";
   }
