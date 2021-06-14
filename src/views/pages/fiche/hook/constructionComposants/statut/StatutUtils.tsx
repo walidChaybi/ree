@@ -6,15 +6,13 @@ import { SectionPartProps } from "../../../../../common/widget/section/SectionPa
 import { TableauStatut } from "./TableauStatut";
 
 export function getStatuts(rcrca: IFicheRcRca): SectionPartProps[] {
-  const statuts: SectionPartProps[] = [
+  return [
     {
       contentsPart: {
         contents: [getTableauStatuts(rcrca.statutsFiche)]
       }
     }
   ];
-
-  return statuts;
 }
 
 function getTableauStatuts(statutsFiche: IStatutFiche[]): SectionContentProps {

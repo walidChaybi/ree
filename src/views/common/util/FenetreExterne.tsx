@@ -134,8 +134,8 @@ function copyStyles(sourceDoc: Document, targetDoc: Document) {
   removeStyles(targetDoc);
   Array.from(sourceDoc.styleSheets).forEach(styleSheet => {
     try {
-      // @suppresswarnin
-      const cSSStyleSheet = styleSheet as CSSStyleSheet;
+      // pour sonar: as any as CSSStyleSheet
+      const cSSStyleSheet = (styleSheet as any) as CSSStyleSheet;
       if (cSSStyleSheet.cssRules) {
         const newStyleEl = sourceDoc.createElement("style");
 
@@ -161,10 +161,11 @@ function copyStyles(sourceDoc: Document, targetDoc: Document) {
 }
 
 function removeStyles(targetDoc: Document) {
-  const st = targetDoc.getElementsByTagName("style");
-  for (const index in st) {
-    if (st[index] != null && st[index].parentNode != null) {
-      st[index].parentNode!.removeChild(st[index]);
+  const styles = targetDoc.getElementsByTagName("style");
+  for (const index in styles) {
+    const style = styles[index];
+    if (style && style.parentNode) {
+      style.parentNode.removeChild(style);
     }
   }
 }

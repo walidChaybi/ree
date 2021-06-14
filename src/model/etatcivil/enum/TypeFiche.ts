@@ -25,7 +25,7 @@ export class FicheUtil {
   }
 
   public static getTypeFicheFromString(type: string): TypeFiche {
-    let typeFiche: TypeFiche;
+    let typeFiche = TypeFiche.RC;
     if (type) {
       const typeToUpper = type.toUpperCase();
       switch (typeToUpper) {
@@ -43,6 +43,6 @@ export class FicheUtil {
           break;
       }
     }
-    return typeFiche!;
+    return typeFiche;
   }
 }
