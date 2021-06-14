@@ -84,11 +84,28 @@ export const configEtatcivil = [
       }
 
       if (match[1] === "/acte/rmc?range=0-105") {
-        return { data: ReponseAppelRMCActe.data };
+        return {
+          headers: {
+            "content-range":
+              "0-15/" + ReponseAppelRMCActe?.data?.registres?.length,
+            link:
+              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-105>;rel="next"'
+          },
+          data: ReponseAppelRMCActe.data
+        };
       }
 
       if (match[1] === "/repertoirecivil/rmc?range=0-105") {
-        return { data: ReponseAppelRMCInscription.data };
+        return {
+          headers: {
+            "content-range":
+              "0-15/" +
+              ReponseAppelRMCInscription?.data?.repertoiresCiviles?.length,
+            link:
+              '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
+          },
+          data: ReponseAppelRMCInscription.data
+        };
       }
 
       if (match[1] === "/nomenclature/NATURE_RC") {

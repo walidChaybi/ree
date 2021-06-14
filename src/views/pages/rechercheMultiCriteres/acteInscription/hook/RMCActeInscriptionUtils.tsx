@@ -4,6 +4,7 @@ import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
 import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
+import { InscriptionRcUtil } from "../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { RMCRepertoire } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
@@ -21,7 +22,6 @@ import {
   getValeurOuVide,
   valeurOuUndefined
 } from "../../../../common/util/Utils";
-
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(
   criteres: IRMCActeInscription
@@ -122,11 +122,10 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
       }),
       paysNaissance: getValeurOuVide(inscription.paysNaissance),
       numeroInscription: getValeurOuVide(inscription.numero),
-      nature: getNatureInscription(
-        inscription.typeInscription,
-        inscription.nature
+      nature: getNatureInscription(inscription.categorie, inscription.nature),
+      typeInscription: InscriptionRcUtil.getLibelle(
+        inscription.typeInscription
       ),
-      typeInscription: getValeurOuVide(inscription.typeInscription),
       statutInscription: getValeurOuVide(
         StatutFiche.getEnumFor(inscription.statut).libelle
       ),
@@ -137,11 +136,11 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
   return inscriptionsMapper;
 }
 
-function getNatureInscription(type: string, nature: string) {
+function getNatureInscription(categorie: string, nature: string): string {
   let natureInscription = "";
-  if (type) {
-    const typeToUpper = type.toUpperCase();
-    switch (typeToUpper) {
+  if (categorie) {
+    const categorieToUpper = categorie.toUpperCase();
+    switch (categorieToUpper) {
       case "RC":
         natureInscription = NatureRc.getEnumFor(nature).libelle;
         break;
