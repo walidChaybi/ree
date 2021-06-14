@@ -62,12 +62,13 @@ function mapRequeteDelivrance(
 const SNP = "SNP";
 
 function getInteresseRequete(interesse: Identite) {
+  console.log(interesse);
   return interesse
     ? {
         position: 1,
         nomNaissance: interesse.nomFamille ? interesse.nomFamille : SNP,
         nomUsage: interesse.nomUsage,
-        prenoms: interesse.prenoms
+        prenoms: interesse.prenoms.prenom1
           ? [
               { valeur: interesse.prenoms.prenom1, numeroOrdre: 1 },
               { valeur: interesse.prenoms.prenom2, numeroOrdre: 2 },
@@ -108,7 +109,7 @@ function getMandataire(saisie: SaisieRequeteRDCSC) {
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
-    qualite: Qualite.MANDATAIRE_HABILITE,
+    qualite: Qualite.MANDATAIRE_HABILITE.nom,
     detailQualiteMandataireHabilite: {
       type: requerant.mandataire.type,
       nature: requerant.mandataire.nature,
@@ -127,7 +128,7 @@ function getInstitutionnel(saisie: SaisieRequeteRDCSC) {
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
-    qualite: Qualite.INSTITUTIONNEL,
+    qualite: Qualite.INSTITUTIONNEL.nom,
     detailQualiteInstitutionnel: {
       type: requerant.institutionnel.type,
       nature: requerant.institutionnel.nature,
@@ -146,7 +147,7 @@ function getParticulier(saisie: SaisieRequeteRDCSC) {
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
-    qualite: Qualite.PARTICULIER,
+    qualite: Qualite.PARTICULIER.nom,
     detailQualiteParticulier: {
       type: requerant.particulier.nomUsage
     }
@@ -160,7 +161,7 @@ function getInteresse(saisie: SaisieRequeteRDCSC) {
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
-    qualite: Qualite.PARTICULIER
+    qualite: Qualite.PARTICULIER.nom
   };
 }
 
