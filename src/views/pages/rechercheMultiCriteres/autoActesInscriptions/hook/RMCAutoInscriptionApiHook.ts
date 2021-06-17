@@ -25,24 +25,29 @@ export function useRMCAutoInscriptionApiHook(
   ] = useState<IParamsTableau>();
 
   useEffect(() => {
-    if (idRequete != null && data != null) {
-      const criteresRequest = determinerCriteresRMCAuto(idRequete, data);
-
-      rechercheMultiCriteresAutoInscription(criteresRequest, range)
-        .then((result: any) => {
-          setDataRMCAutoInscription(
-            mappingInscriptions(result.body.data.repertoiresCiviles)
+    async function fetchInscriptions() {
+      try {
+        if (idRequete != null && data != null) {
+          const criteresRequest = determinerCriteresRMCAuto(idRequete, data);
+          const result = await rechercheMultiCriteresAutoInscription(
+            criteresRequest,
+            range
           );
+          const inscriptions = await mappingInscriptions(
+            result?.body?.data?.repertoiresCiviles
+          );
+          setDataRMCAutoInscription(inscriptions);
           setDataTableauRMCAutoInscription(getParamsTableau(result));
-        })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur:
-              "Impossible de récupérer les inscriptions de la recherche multi-critères automatique",
-            error
-          });
+        }
+      } catch (error) {
+        logError({
+          messageUtilisateur:
+            "Impossible de récupérer les inscriptions de la recherche multi-critères automatique",
+          error
         });
+      }
     }
+    fetchInscriptions();
   }, [idRequete, data, range]);
 
   return {

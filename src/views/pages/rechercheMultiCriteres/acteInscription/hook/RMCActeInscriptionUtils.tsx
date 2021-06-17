@@ -1,8 +1,7 @@
 import ReportIcon from "@material-ui/icons/Report";
 import React from "react";
+import { getNatureInscription } from "../../../../../api/nomenclature/NomenclatureEtatcivil";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
-import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
 import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
 import { InscriptionRcUtil } from "../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
@@ -22,6 +21,7 @@ import {
   getValeurOuVide,
   valeurOuUndefined
 } from "../../../../common/util/Utils";
+
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(
   criteres: IRMCActeInscription
@@ -107,51 +107,37 @@ export function mappingActes(data: any): IResultatRMCActe[] {
 }
 
 /** RC/RCA/PACS: mapping après appel d'api */
-export function mappingInscriptions(data: any): IResultatRMCInscription[] {
-  const inscriptionsMapper: IResultatRMCInscription[] = [];
-  data.forEach((inscription: any) => {
-    const inscriptionMapper: IResultatRMCInscription = {
-      idInscription: inscription.id,
-      nom: formatNom(inscription.nom),
-      autresNoms: formatNoms(inscription.autresNoms),
-      prenoms: formatPrenoms(inscription.prenoms),
+export async function mappingInscriptions(
+  data: any
+): Promise<IResultatRMCInscription[]> {
+  const promises = data?.map(async (inscription: any) => {
+    const nature: string = await getNatureInscription(
+      inscription?.categorie,
+      inscription?.nature
+    );
+    return {
+      idInscription: inscription?.id,
+      nom: formatNom(inscription?.nom),
+      autresNoms: formatNoms(inscription?.autresNoms),
+      prenoms: formatPrenoms(inscription?.prenoms),
       dateNaissance: getDateStringFromDateCompose({
-        jour: inscription.jourNaissance,
-        mois: inscription.moisNaissance,
-        annee: inscription.anneeNaissance
+        jour: inscription?.jourNaissance,
+        mois: inscription?.moisNaissance,
+        annee: inscription?.anneeNaissance
       }),
-      paysNaissance: getValeurOuVide(inscription.paysNaissance),
-      numeroInscription: getValeurOuVide(inscription.numero),
-      nature: getNatureInscription(inscription.categorie, inscription.nature),
+      paysNaissance: getValeurOuVide(inscription?.paysNaissance),
+      numeroInscription: getValeurOuVide(inscription?.numero),
+      nature,
       typeInscription: InscriptionRcUtil.getLibelle(
-        inscription.typeInscription
+        inscription?.typeInscription
       ),
       statutInscription: getValeurOuVide(
-        StatutFiche.getEnumFor(inscription.statut).libelle
+        StatutFiche.getEnumFor(inscription?.statut)?.libelle
       ),
-      categorie: getValeurOuVide(inscription.categorie)
-    };
-    inscriptionsMapper.push(inscriptionMapper);
+      categorie: getValeurOuVide(inscription?.categorie)
+    } as IResultatRMCInscription;
   });
-  return inscriptionsMapper;
-}
-
-function getNatureInscription(categorie: string, nature: string): string {
-  let natureInscription = "";
-  if (categorie) {
-    const categorieToUpper = categorie.toUpperCase();
-    switch (categorieToUpper) {
-      case "RC":
-        natureInscription = NatureRc.getEnumFor(nature).libelle;
-        break;
-      case "RCA":
-        natureInscription = NatureRca.getEnumFor(nature).libelle;
-        break;
-      default:
-        break;
-    }
-  }
-  return natureInscription;
+  return Promise.all(promises);
 }
 
 export function rechercherRepertoireAutorise(
