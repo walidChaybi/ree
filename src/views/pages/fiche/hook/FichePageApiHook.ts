@@ -1,39 +1,36 @@
-import { useEffect, useState } from "react";
-import { getInformationsFiche } from "../../../../api/appels/etatcivilApi";
-import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
-import { IRegistre } from "../../../../model/etatcivil/acte/IRegistre";
-import { ITypeRegistre } from "../../../../model/etatcivil/acte/ITypeRegistre";
-import { IAutresNoms } from "../../../../model/etatcivil/commun/IAutresNoms";
-import { IFicheLien } from "../../../../model/etatcivil/commun/IFicheLien";
-import { ILieuEvenement } from "../../../../model/etatcivil/commun/ILieuEvenement";
-import { IPersonne } from "../../../../model/etatcivil/commun/IPersonne";
-import { AutresNoms } from "../../../../model/etatcivil/enum/AutresNoms";
-import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
-import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
-import { NatureRc } from "../../../../model/etatcivil/enum/NatureRc";
-import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
-import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
-import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
-import { TypeVisibiliteArchiviste } from "../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
-import { IFicheRcRca } from "../../../../model/etatcivil/fiche/IFicheRcRca";
-import { IInteresse } from "../../../../model/etatcivil/fiche/IInteresse";
-import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
-import { IPartenaire } from "../../../../model/etatcivil/pacs/IPartenaire";
-import {
-  getDateFromTimestamp,
-  IDateCompose
-} from "../../../common/util/DateUtils";
-import { logError } from "../../../common/util/LogManager";
-import { formatNom, formatPrenom } from "../../../common/util/Utils";
+import {useEffect, useState} from "react";
+import {getInformationsFiche} from "../../../../api/appels/etatcivilApi";
+import {IFicheActe} from "../../../../model/etatcivil/acte/IFicheActe";
+import {IRegistre} from "../../../../model/etatcivil/acte/IRegistre";
+import {ITypeRegistre} from "../../../../model/etatcivil/acte/ITypeRegistre";
+import {IAutresNoms} from "../../../../model/etatcivil/commun/IAutresNoms";
+import {IFicheLien} from "../../../../model/etatcivil/commun/IFicheLien";
+import {ILieuEvenement} from "../../../../model/etatcivil/commun/ILieuEvenement";
+import {IPersonne} from "../../../../model/etatcivil/commun/IPersonne";
+import {AutresNoms} from "../../../../model/etatcivil/enum/AutresNoms";
+import {Nationalite} from "../../../../model/etatcivil/enum/Nationalite";
+import {NatureActe} from "../../../../model/etatcivil/enum/NatureActe";
+import {NatureRc} from "../../../../model/etatcivil/enum/NatureRc";
+import {NatureRca} from "../../../../model/etatcivil/enum/NatureRca";
+import {Sexe} from "../../../../model/etatcivil/enum/Sexe";
+import {TypeFiche} from "../../../../model/etatcivil/enum/TypeFiche";
+import {TypeVisibiliteArchiviste} from "../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
+import {IFicheRcRca} from "../../../../model/etatcivil/fiche/IFicheRcRca";
+import {IInteresse} from "../../../../model/etatcivil/fiche/IInteresse";
+import {IFichePacs} from "../../../../model/etatcivil/pacs/IFichePacs";
+import {IPartenaire} from "../../../../model/etatcivil/pacs/IPartenaire";
+import {getDateFromTimestamp, IDateCompose} from "../../../common/util/DateUtils";
+import {logError} from "../../../common/util/LogManager";
+import {formatNom, formatPrenom} from "../../../common/util/Utils";
 
 export interface IDataFicheApi {
   data: any;
 }
 
 export function useFichePageApiHook(
-  typeFiche: TypeFiche,
-  identifiant: string,
-  indexCourant: number
+    typeFiche: TypeFiche,
+    identifiant: string,
+    indexCourant: number
 ) {
   const [dataFicheState, setDataFicheState] = useState<IDataFicheApi>(
     {} as IDataFicheApi
@@ -112,6 +109,7 @@ export function mapPacs(data: any) {
   if (data.partenaires) {
     data.partenaires.forEach((p: any) => {
       (p as IPartenaire).nationalite = Nationalite.getEnumFor(p.nationalite);
+      (p as IPartenaire).sexe = Sexe.getEnumFor(p.sexe);
     });
   }
   dataPacs.dateDerniereDelivrance = data.dateDerniereDelivrance
