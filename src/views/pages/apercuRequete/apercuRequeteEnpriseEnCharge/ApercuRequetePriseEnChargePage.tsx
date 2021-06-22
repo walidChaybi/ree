@@ -11,8 +11,9 @@ import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteH
 import { RMCAutoResultats } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAutoResultats";
 import { useRMCAutoRequeteApiHook } from "../../rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequeteApiHook";
 import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
+import { IdRequeteParams } from "../apercuRequete/ApercuRequeteUtils";
+import { BandeauRequete } from "../contenu/BandeauRequete";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
-import { IdRequeteParams } from "../v2/ApercuRequeteUtils";
 
 interface DataRMCAuto {
   dataRequetes: any[];
@@ -56,36 +57,40 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   return (
     <>
       <title>{getLibelle("Aperçu de la requête en prise en charge")}</title>
-      <h1>
-        {getLibelle(`Aperçu de la requête en prise en charge ${idRequete}`)}
-      </h1>
-      <div className="contenu-requete">
-        <div className="side left">
-          <SuiviActionsRequete actions={detailRequeteState?.actions} />
-          {dataRMCAutoRequete && dataTableauRMCAutoRequete && (
-            <RMCRequetesAssocieesResultats
-              dataRMCAutoRequete={dataRMCAutoRequete}
-              dataTableauRMCAutoRequete={dataTableauRMCAutoRequete}
-              setRangeRequete={setRangeRequete}
-            />
-          )}
-        </div>
-        <div className="side right">
-          {dataRMCAutoActe &&
-            dataTableauRMCAutoActe &&
-            dataRMCAutoInscription &&
-            dataTableauRMCAutoInscription && (
-              <RMCAutoResultats
-                dataRMCAutoActe={dataRMCAutoActe}
-                dataTableauRMCAutoActe={dataTableauRMCAutoActe}
-                dataRMCAutoInscription={dataRMCAutoInscription}
-                dataTableauRMCAutoInscription={dataTableauRMCAutoInscription}
-              />
-            )}
-          <ChoixAction requete={detailRequeteState} />
-          <BoutonRetour message={getLibelle("<< Retour")} />
-        </div>
-      </div>
+      {detailRequeteState && (
+        <>
+          <BandeauRequete detailRequete={detailRequeteState} />
+          <div className="contenu-requete">
+            <div className="side left">
+              <SuiviActionsRequete actions={detailRequeteState?.actions} />
+              {dataRMCAutoRequete && dataTableauRMCAutoRequete && (
+                <RMCRequetesAssocieesResultats
+                  dataRMCAutoRequete={dataRMCAutoRequete}
+                  dataTableauRMCAutoRequete={dataTableauRMCAutoRequete}
+                  setRangeRequete={setRangeRequete}
+                />
+              )}
+            </div>
+            <div className="side right">
+              {dataRMCAutoActe &&
+                dataTableauRMCAutoActe &&
+                dataRMCAutoInscription &&
+                dataTableauRMCAutoInscription && (
+                  <RMCAutoResultats
+                    dataRMCAutoActe={dataRMCAutoActe}
+                    dataTableauRMCAutoActe={dataTableauRMCAutoActe}
+                    dataRMCAutoInscription={dataRMCAutoInscription}
+                    dataTableauRMCAutoInscription={
+                      dataTableauRMCAutoInscription
+                    }
+                  />
+                )}
+              <ChoixAction requete={detailRequeteState} />
+              <BoutonRetour message={getLibelle("<< Retour")} />
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

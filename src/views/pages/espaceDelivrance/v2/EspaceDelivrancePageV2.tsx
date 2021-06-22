@@ -10,12 +10,12 @@ import {
   URL_MES_REQUETES_V2,
   URL_REQUETES_SERVICE_V2
 } from "../../../router/ReceUrls";
-import { navigationApercu } from "../../apercuRequete/v2/ApercuRequeteUtils";
+import { navigationApercu } from "../../apercuRequete/apercuRequete/ApercuRequeteUtils";
 import {
   IRMCAutoParams,
   useRMCAutoHook
 } from "../../rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoHook";
-import { CompteurRequete } from "../v1/contenu/CompteurRequete";
+import { CompteurRequete } from "./contenu/CompteurRequeteV2";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequeteV2";
 import { MesRequetesPageV2 } from "./MesRequetesPageV2";
 import { RequetesServicePageV2 } from "./RequetesServicePageV2";

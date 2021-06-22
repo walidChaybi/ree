@@ -176,7 +176,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
     statut: {
       id: "2c055d1a-b437-48b1-bbd2-fa94d7defba2",
       statutRequete: "A_TRAITER",
-      dateEffet: 1594714272,
+      dateEffet: 1594714272000,
       raisonStatut: ""
     },
     lienRequerant: {
@@ -206,7 +206,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
     },
     provenanceRece: null,
     provenanceServicePublic: null,
-    documentsDelivres: null,
+    documentsReponses: [],
     evenement: {
       id: "0fb80e4f-ab5c-4f26-afcc-3199b67aa2f0",
       natureActe: "MARIAGE",

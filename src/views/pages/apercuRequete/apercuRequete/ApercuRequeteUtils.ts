@@ -1,3 +1,6 @@
+/* istanbul ignore file */
+// Tous les cas ne sont pas testables
+
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";

@@ -88,7 +88,7 @@ Button,
 }
 
 h1 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 500;
 }
 
@@ -257,4 +257,8 @@ th {
 
 .MuiList-padding {
   padding: 0 !important;
+}
+
+.MuiIconButton-root {
+  padding: 9px !important;
 }

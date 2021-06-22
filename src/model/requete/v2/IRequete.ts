@@ -8,12 +8,12 @@ import { TypeRequete } from "./enum/TypeRequete";
 import { IAction } from "./IActions";
 import { IMandant } from "./IMandant";
 import { IRequerant } from "./IRequerant";
-import { IStatutCourant } from "./IStatutCourant";
-import { ITitulaireRequete } from "./ITitulaireRequete";
+import { IRequeteCreation } from "./IRequeteCreation";
 import { IRequeteDelivrance } from "./IRequeteDelivrance";
 import { IRequeteInformation } from "./IRequeteInformation";
-import { IRequeteCreation } from "./IRequeteCreation";
 import { IRequeteMiseAjour } from "./IRequeteMiseAjour";
+import { IStatutCourant } from "./IStatutCourant";
+import { ITitulaireRequete } from "./ITitulaireRequete";
 
 export type TRequete =
   | IRequeteDelivrance
@@ -32,7 +32,7 @@ export interface IRequete {
   titulaires?: ITitulaireRequete[];
   requerant: IRequerant;
   mandant?: IMandant;
-  idUtilisateur: string; // FIXME Utile ?
+  idUtilisateur: string;
   piecesJustificatives: IPieceJustificative[];
   actions?: IAction[];
 }
