@@ -35,9 +35,8 @@ import { IUtilisateurRece } from "../../../../model/requete/v2/IUtilisateurRece"
 import { logError } from "../../../common/util/LogManager";
 
 export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] = useState<
-    TRequete | undefined
-  >();
+  const [detailRequeteState, setDetailRequeteState] =
+    useState<TRequete | undefined>();
 
   useEffect(() => {
     if (idRequete != null) {
@@ -75,7 +74,8 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     titulaires: getTitulaires(data.titulaires),
     requerant: getRequerant(data.requerant),
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
-    idUtilisateur: data.idUtilisateur,
+    idUtilisateur: data.corbeilleAgent.idUtilisateur,
+    idEntite: data.corbeilleService.idEntiteRattachement,
     actions: getActions(data.actions),
 
     //Partie Requête Delivrance
@@ -151,7 +151,8 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     mandataireHabilite: getMandataireHabilite(
       requerant.detailQualiteMandataireHabilite
     ),
-    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    autreProfessionnel:
+      requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }

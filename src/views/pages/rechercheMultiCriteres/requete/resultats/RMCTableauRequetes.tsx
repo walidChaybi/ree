@@ -77,7 +77,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     if (rmcAutoUrlData.url && rmcAutoUrlData.data) {
       history.push(rmcAutoUrlData.url, rmcAutoUrlData.data);
     }
-  }, [rmcAutoUrlData, history]);
+  }, [rmcAutoUrlData, history, dataRMCRequete]);
 
   return (
     <>

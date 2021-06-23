@@ -1,4 +1,5 @@
 import mockConnectedUser from "../data/connectedUser.json";
+import DONNEES_ENTITES from "../data/entitesRattachement.json";
 import { MockHabilitation } from "../data/habilitationMock";
 import INFOS_UTILISATEURS from "../data/infosUtilisateurs";
 import DONNEES_UTILISATEURS from "../data/utilisateurs";
@@ -25,6 +26,13 @@ export const configAgent = [
 
       if (match[1] === "/utilisateurs") {
         return { data: DONNEES_UTILISATEURS.data };
+      }
+
+      if (match[1] === "/utilisateurs/all") {
+        return { data: DONNEES_UTILISATEURS.data };
+      }
+      if (match[1] === "/entiterattachement/all") {
+        return { data: DONNEES_ENTITES.data };
       }
 
       if (

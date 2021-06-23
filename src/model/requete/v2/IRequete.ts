@@ -33,6 +33,7 @@ export interface IRequete {
   requerant: IRequerant;
   mandant?: IMandant;
   idUtilisateur: string;
+  idEntite: string;
   piecesJustificatives: IPieceJustificative[];
   actions?: IAction[];
 }

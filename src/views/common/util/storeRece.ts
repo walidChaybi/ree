@@ -1,3 +1,5 @@
+import { IEntiteRattachement } from "../../../model/agent/IEntiteRattachement";
+import { IUtilisateur } from "../../../model/agent/IUtilisateur";
 import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 import parametres from "../../../ressources/parametres.json";
 import { Rot18 } from "./crypto/cryptos";
@@ -9,6 +11,8 @@ class StoreRece {
   private _codePin?: string;
   private _timerCodePin?: number;
   private _retourUrl = "";
+  private _listeUtilisateurs: IUtilisateur[] = [];
+  private _listeEntite: IEntiteRattachement[] = [];
 
   set retourUrl(ru: string) {
     this._retourUrl = ru;
@@ -31,6 +35,22 @@ class StoreRece {
     this.timeoutCodePin();
   }
 
+  set listeUtilisateurs(liste: IUtilisateur[]) {
+    this._listeUtilisateurs = liste;
+  }
+
+  get listeUtilisateurs(): IUtilisateur[] {
+    return this._listeUtilisateurs;
+  }
+
+  set listeEntite(liste: IEntiteRattachement[]) {
+    this._listeEntite = liste;
+  }
+
+  get listeEntite(): IEntiteRattachement[] {
+    return this._listeEntite;
+  }
+
   get codePin(): string | undefined {
     this.timeoutCodePin();
     return Rot18.decrypte(this._codePin);
@@ -45,6 +65,28 @@ class StoreRece {
       this._codePin = undefined;
     }, codePin.time_out_ms);
   };
+
+  public getPrenomUtilisateurFromID(id: string) {
+    return this.listeUtilisateurs.find(
+      utilisateur => utilisateur.idUtilisateur === id
+    )?.prenom;
+  }
+  public getNomUtilisateurFromID(id: string) {
+    return this.listeUtilisateurs.find(
+      utilisateur => utilisateur.idUtilisateur === id
+    )?.nom;
+  }
+
+  public getLibelleEntite(id: string) {
+    return this.listeEntite.find(entite => entite.idEntite === id)
+      ?.libelleService;
+  }
+
+  public getTrigrammeFromID(id: string) {
+    return this.listeUtilisateurs.find(
+      utilisateur => utilisateur.idUtilisateur === id
+    )?.trigramme;
+  }
 }
 
 export const storeRece = new StoreRece();

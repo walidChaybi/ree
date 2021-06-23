@@ -1,0 +1,56 @@
+{
+  "hasTechnicalError": false,
+  "hasBusinessError": false,
+  "status": 200,
+  "url": "/rece/rece-agent-api/v1/utilisateurs",
+  "data": [
+    {
+      "codeService": "SCEC",
+      "hierarchieEntite": null,
+      "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
+      "libelleService": "Service Central de l'Etat-Civil",
+      "type": "Service",
+      "utilisateur": null
+    },
+    {
+      "codeService": "SCEC",
+      "hierarchieEntite": null,
+      "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
+      "libelleService": "Service Central de l'Etat-Civil",
+      "type": "Service",
+      "utilisateur": null
+    },
+    {
+      "codeService": "SCEC",
+      "hierarchieEntite": null,
+      "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
+      "libelleService": "Service Central de l'Etat-Civil",
+      "type": "Service",
+      "utilisateur": null
+    },
+    {
+      "codeService": "SCEC",
+      "hierarchieEntite": null,
+      "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
+      "libelleService": "Service Central de l'Etat-Civil",
+      "type": "Service",
+      "utilisateur": null
+    },
+    {
+      "codeService": "SCEC",
+      "hierarchieEntite": null,
+      "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
+      "libelleService": "Service Central de l'Etat-Civil",
+      "type": "Service",
+      "utilisateur": null
+    },
+    {
+      "codeService": "SCEC",
+      "hierarchieEntite": null,
+      "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
+      "libelleService": "Service Central de l'Etat-Civil",
+      "type": "Service",
+      "utilisateur": null
+    }
+  ]
+}

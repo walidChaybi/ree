@@ -10,7 +10,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
     dateCreation: 1612342296,
     canal: "COURRIER",
     type: "DELIVRANCE",
-    idUtilisateur: null,
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
     actions: [],
     titulaires: [
       {
@@ -128,9 +128,12 @@ export const ReponseAppelDetailRequeteDelivrance = {
     ],
     corbeilleAgent: {
       id: "4072e911-9f39-4910-8f58-bc355012bf7c",
-      idUtilisateur: "c16dc29a-5f2b-4dd6-a3cc-846e946d1865"
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
     },
-    corbeilleService: null,
+    corbeilleService: {
+      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
+      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    },
     piecesJustificatives: null,
     requerant: {
       id: "97d0e400-19d3-47fa-aedb-137002a96f18",

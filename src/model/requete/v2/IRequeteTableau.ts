@@ -1,4 +1,5 @@
 import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
+import { storeRece } from "../../../views/common/util/storeRece";
 import {
   formatNom,
   formatPrenom,
@@ -32,6 +33,7 @@ export interface IRequeteTableau {
   observations?: string[];
   idUtilisateur?: string;
   idCorbeilleAgent?: string;
+  nomUtilisateurAttribueA?: string;
 }
 
 export interface ITitulaireRequeteTableau {
@@ -68,7 +70,11 @@ export function mappingRequetesTableau(
         ? getTitulaires(requete.titulaires)
         : requete.titulaires,
       requerant: getValeurOuVide(requete.requerant),
-      attribueA: getValeurOuVide(requete.attribueA),
+      attribueA: `${formatPrenom(
+        storeRece.getPrenomUtilisateurFromID(requete.idUtilisateur)
+      )} ${formatNom(
+        storeRece.getNomUtilisateurFromID(requete.idUtilisateur)
+      )}`,
       dateCreation: getFormatDateFromTimestamp(requete.dateCreation),
       dateDerniereMaj: getFormatDateFromTimestamp(requete.dateDernierMAJ),
       statut: StatutRequete.getEnumFor(requete.statut).libelle,

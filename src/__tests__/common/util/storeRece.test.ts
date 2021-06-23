@@ -1,5 +1,9 @@
-import { storeRece } from "../../../views/common/util/storeRece";
+import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
+import { configAgent } from "../../../mock/superagent-config/superagent-mock-agent";
+import { storeRece } from "../../../views/common/util/storeRece";
+
+const superagentMock = require("superagent-mock")(request, configAgent);
 
 test("store rece works ", async () => {
   expect(storeRece.utilisateurCourant).toBeUndefined();
@@ -13,4 +17,77 @@ test("store rece code pin ", async () => {
 
   storeRece.codePin = "1234";
   expect(storeRece.codePin).toBeDefined();
+});
+
+test("store rece listeUtilisateurs", async () => {
+  expect(storeRece.listeUtilisateurs).toStrictEqual([]);
+
+  storeRece.listeUtilisateurs = [
+    {
+      idArobas: "1234",
+      idUtilisateur: "1234",
+
+      nom: "Benoit",
+      prenom: "Newton"
+    }
+  ];
+  expect(storeRece.listeUtilisateurs).toBeDefined();
+});
+
+test("store rece listeEntite ", async () => {
+  expect(storeRece.listeEntite).toStrictEqual([]);
+
+  storeRece.listeEntite = [
+    {
+      idEntite: "1234",
+      type: "Salle",
+      codeService: "1234",
+      libelleService: "Salut"
+    }
+  ];
+  expect(storeRece.listeEntite).toBeDefined();
+});
+
+test("get prenom d'un id ", () => {
+  storeRece.listeUtilisateurs = [
+    {
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+      prenom: "Young",
+      nom: "Ashley"
+    }
+  ];
+  expect(
+    storeRece.getPrenomUtilisateurFromID("7a091a3b-6835-4824-94fb-527d68926d56")
+  ).toStrictEqual("Young");
+});
+
+test("get nom d'un id ", () => {
+  storeRece.listeUtilisateurs = [
+    {
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+      prenom: "Young",
+      nom: "Ashley"
+    }
+  ];
+  expect(
+    storeRece.getNomUtilisateurFromID("7a091a3b-6835-4824-94fb-527d68926d56")
+  ).toStrictEqual("Ashley");
+});
+
+test("get nom d'une entité ", () => {
+  storeRece.listeEntite = [
+    {
+      idEntite: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
+      libelleService: "BAG Assitance Informatique",
+      type: "etrange",
+      codeService: "1234"
+    }
+  ];
+  expect(
+    storeRece.getLibelleEntite("6737d2f8-f2af-450d-a376-f22f6df6ff1d")
+  ).toStrictEqual("BAG Assitance Informatique");
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

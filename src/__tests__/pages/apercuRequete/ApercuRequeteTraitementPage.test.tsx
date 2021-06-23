@@ -5,6 +5,7 @@ import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
+import { storeRece } from "../../../views/common/util/storeRece";
 import { ApercuRequeteTraitementPage } from "../../../views/pages/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../views/router/ReceUrls";
 
@@ -17,6 +18,16 @@ history.push(
     "a4cefb71-8457-4f6b-937e-34b49335d404"
   )
 );
+
+beforeAll(() => {
+  storeRece.listeUtilisateurs = [
+    {
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+      prenom: "Ashley",
+      nom: "Young"
+    }
+  ];
+});
 
 test("renders ApercuRequeteTraitementPage", async () => {
   await act(async () => {
@@ -38,7 +49,7 @@ test("renders ApercuRequeteTraitementPage", async () => {
 
   const title = screen.getByText(/Aperçu du traitement de la requête/i);
   const bandeau = screen.getByText(
-    /Requête à traiter, attribuée à Prenomoec NOMOEC - Le : 14\/07\/2020/i
+    /Requête à traiter, attribuée à Ashley YOUNG - Le : 14\/07\/2020/i
   );
   const actions = screen.getByText(/Suivi des actions/i);
 

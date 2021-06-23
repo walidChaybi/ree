@@ -1,10 +1,14 @@
 /* istanbul ignore file */
 
 import fr from "date-fns/locale/fr";
-import React from "react";
+import React, { useEffect } from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import {
+  getTousLesUtilisateurs,
+  getToutesLesEntiteRattachement
+} from "../../api/appels/agentApi";
 import "../../scss/_colors.scss";
 import "../../scss/_library.scss";
 import {
@@ -18,6 +22,7 @@ import {
   GestionnaireFermeture,
   traiteAppelRequeteASigner
 } from "../common/util/GestionnaireFermeture";
+import { logError } from "../common/util/LogManager";
 import { storeRece } from "../common/util/storeRece";
 import { URL_MES_REQUETES } from "../router/ReceUrls";
 import "./App.scss";
@@ -25,13 +30,19 @@ import { Body } from "./body/Body";
 import { OfficierContext } from "./contexts/OfficierContext";
 import { Header } from "./header/Header";
 import { useLoginApi } from "./login/LoginHook";
+
 // ReceDatepicker Locale
 registerLocale("fr", fr);
 setDefaultLocale("fr");
 
+const PLAGE_IMPORT = 100;
+
 const App: React.FC = () => {
   const login = useLoginApi();
-
+  useEffect(() => {
+    cacheUtilisateurs(0);
+    cacheEntites(0);
+  }, []);
   return (
     <SeulementNavigateur
       navigateurs={
@@ -77,5 +88,40 @@ const App: React.FC = () => {
     </SeulementNavigateur>
   );
 };
+
+export function cacheUtilisateurs(page: number) {
+  getTousLesUtilisateurs(`${page}-${PLAGE_IMPORT}`, true)
+    .then(utilisateurs => {
+      storeRece.listeUtilisateurs = [
+        ...storeRece.listeUtilisateurs,
+        ...utilisateurs.body.data
+      ];
+      if (utilisateurs.headers.link.indexOf(`rel="next"`) > 0) {
+        cacheUtilisateurs(page + 1);
+      }
+    })
+    .catch(error => {
+      logError({
+        messageUtilisateur: "Impossible de récupérer les utilisateurs",
+        error
+      });
+    });
+}
+
+export function cacheEntites(page: number) {
+  getToutesLesEntiteRattachement(`${page}-${PLAGE_IMPORT}`)
+    .then(entites => {
+      storeRece.listeEntite = [...storeRece.listeEntite, ...entites.body.data];
+      if (entites.headers.link.indexOf(`rel="next"`) > 0) {
+        cacheEntites(page + 1);
+      }
+    })
+    .catch(error => {
+      logError({
+        messageUtilisateur: "Impossible de récupérer les entités",
+        error
+      });
+    });
+}
 
 export default App;
