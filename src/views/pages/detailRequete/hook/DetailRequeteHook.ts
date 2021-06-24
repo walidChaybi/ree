@@ -76,7 +76,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     titulaires: getTitulaires(data.titulaires),
     requerant: getRequerant(data.requerant),
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
-    idUtilisateur: data.corbeilleAgent.idUtilisateur,
+    idUtilisateur: data.corbeilleAgent?.idUtilisateur,
     idEntite: data.corbeilleService.idEntiteRattachement,
     actions: getActions(data.actions),
     observations: getObservations(data.observations),
