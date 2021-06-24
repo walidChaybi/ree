@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { IOngletProps } from "../../../../model/IOnglet";
 import { NomComposant } from "../../../common/util/habilitation/habilitationsDescription";
 import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";
-import { IOngletProps } from "../../../common/widget/onglets/IOnglet";
 import { getLibelle } from "../../../common/widget/Text";
 import { OfficierContext } from "../../../core/contexts/OfficierContext";
 import {

@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
+import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
@@ -19,13 +20,7 @@ const requete = {
 } as TRequete;
 
 beforeAll(() => {
-  storeRece.listeUtilisateurs = [
-    {
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-      prenom: "Ashley",
-      nom: "Young"
-    }
-  ];
+  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 
 test("renders titre et numero requete", () => {

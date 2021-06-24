@@ -14,7 +14,7 @@ import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/auto
 import { IdRequeteParams } from "../apercuRequete/ApercuRequeteUtils";
 import { BandeauRequete } from "../contenu/BandeauRequete";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
-
+import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 interface DataRMCAuto {
   dataRequetes: any[];
   dataRMCAutoActe: IResultatRMCActe[];
@@ -43,10 +43,8 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   //**** RMC AUTO ****//
   const [range, setRange] = useState<string>(`0-${NB_LIGNES_PAR_APPEL}`);
 
-  const {
-    dataRMCAutoRequete,
-    dataTableauRMCAutoRequete
-  } = useRMCAutoRequeteApiHook(idRequete, dataRequetes, range);
+  const { dataRMCAutoRequete, dataTableauRMCAutoRequete } =
+    useRMCAutoRequeteApiHook(idRequete, dataRequetes, range);
 
   const setRangeRequete = (value: string) => {
     if (value !== "") {
@@ -63,6 +61,9 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
           <div className="contenu-requete">
             <div className="side left">
               <SuiviActionsRequete actions={detailRequeteState?.actions} />
+              <SuiviObservationsRequete
+                observations={detailRequeteState?.observations}
+              />
               {dataRMCAutoRequete && dataTableauRMCAutoRequete && (
                 <RMCRequetesAssocieesResultats
                   dataRMCAutoRequete={dataRMCAutoRequete}

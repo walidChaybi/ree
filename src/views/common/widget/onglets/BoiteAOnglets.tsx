@@ -2,9 +2,9 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { IOngletProps } from "../../../../model/IOnglet";
 import WithHabilitation from "../../util/habilitation/WithHabilitation";
 import { getLibelle } from "../Text";
-import { IOngletProps } from "./IOnglet";
 import { LinkTab } from "./LinkTabV2";
 import { TabPanel } from "./TabPanel";
 

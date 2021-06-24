@@ -7,6 +7,7 @@ import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
 import { IAction } from "./IActions";
 import { IMandant } from "./IMandant";
+import { IObservation } from "./IObservation";
 import { IRequerant } from "./IRequerant";
 import { IRequeteCreation } from "./IRequeteCreation";
 import { IRequeteDelivrance } from "./IRequeteDelivrance";
@@ -36,6 +37,7 @@ export interface IRequete {
   idEntite: string;
   piecesJustificatives: IPieceJustificative[];
   actions?: IAction[];
+  observations?: IObservation[];
 }
 
 export const Requete = {

@@ -1,6 +1,6 @@
 @import "../../../../../scss/colors";
 
-.suivi-actions-requete {
+.suivis-requete {
   .MuiTypography-body1,
   .MuiTypography-body2 {
     font-family: "NotoSansUI-Regular", sans-serif !important;
@@ -46,5 +46,10 @@
     overflow-y: auto;
     text-align: left;
     margin-left: 1em;
+    div.RECE {
+      span {
+        color: $error-icon-color;
+      }
+    }
   }
 }

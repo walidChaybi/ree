@@ -1,33 +1,35 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { mount } from "enzyme";
 import React from "react";
-import request from "superagent";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
-import { configAgent } from "../../../../mock/superagent-config/superagent-mock-agent";
-import { SuiviActionsRequete } from "../../../../views/pages/apercuRequete/contenu/SuiviActionsRequete";
-
-const superagentMock = require("superagent-mock")(request, configAgent);
+import { SuiviObservationsRequete } from "../../../../views/pages/apercuRequete/contenu/SuiviObservationRequete";
 
 test("renders suivi des actions requete", async () => {
-  render(<SuiviActionsRequete actions={DONNEES_REQUETE.actions} />);
+  render(
+    <SuiviObservationsRequete observations={DONNEES_REQUETE.observations} />
+  );
   const titre = screen.getByText(/Suivi/i);
   let elem1: HTMLElement;
   let elem2: HTMLElement;
 
   await waitFor(() => {
-    expect(titre.textContent).toBe("Suivi des actions");
-    elem1 = screen.getByText(/BOB/i);
+    expect(titre.textContent).toBe("Suivi des observations");
+    elem1 = screen.getByText(/LOS/i);
     expect(elem1).toBeDefined();
-    expect(elem1.innerHTML).toBe("Saisie de la requête - 10/03/2020 - BOB");
-    elem2 = screen.getByText(/APP/i);
+    expect(elem1.innerHTML).toBe(
+      "C'est vraiment dur de pouvo... - 02/01/1970 - LOS"
+    );
+    elem2 = screen.getByText(/BTC/i);
     expect(elem2).toBeDefined();
-    expect(elem2.innerHTML).toBe("A traiter - 10/03/2020 - APP");
+    expect(elem2.innerHTML).toBe(
+      "Je fais pas 30 charactères - 02/01/1970 - BTC"
+    );
   });
 });
 
 test("renders suivi actions hidding", async () => {
   const suiviActionsRequete = mount(
-    <SuiviActionsRequete actions={DONNEES_REQUETE.actions} />
+    <SuiviObservationsRequete observations={DONNEES_REQUETE.observations} />
   );
   await waitFor(() => {
     expect(suiviActionsRequete.find(".Mui-expanded")).toBeDefined();
@@ -39,8 +41,4 @@ test("renders suivi actions hidding", async () => {
   await waitFor(() => {
     expect(suiviActionsRequete.find(".Mui-expanded")).toHaveLength(0);
   });
-});
-
-afterAll(() => {
-  superagentMock.unset();
 });

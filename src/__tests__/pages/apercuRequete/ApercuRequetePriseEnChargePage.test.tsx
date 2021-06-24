@@ -3,6 +3,7 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
+import { LISTE_UTILISATEURS } from "../../../mock/data/ListeUtilisateurs";
 import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../views/common/util/storeRece";
@@ -27,13 +28,7 @@ history.push(
 );
 
 beforeAll(() => {
-  storeRece.listeUtilisateurs = [
-    {
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-      prenom: "Ashley",
-      nom: "Young"
-    }
-  ];
+  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 
 test("renders ApercuRequetePriseEnChargePage", async () => {
@@ -52,20 +47,32 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
     );
   });
 
-  const title = screen.getByText(/Aperçu de la requête/i);
+  const title = screen.getByText(/Aperçu de la requête en prise en charge/i);
   const bandeau = screen.getByText(
     /Requête à traiter, attribuée à Ashley YOUNG - Le : 14\/07\/2020/i
   );
   const actions = screen.getByText(/Suivi des actions/i);
-  const requetes = screen.getByText(/Requêtes associées aux titulaires/i);
-  const RMC = screen.getByText(/Résultats de la recherche multi-critères/i);
+
+  const listeAction1 = screen.getByText(
+    /Saisie de la requête - 10\/03\/2020 - APP/i
+  );
+  const listeAction2 = screen.getByText(/A traiter - 10\/03\/2020 - BOB/i);
+
+  const listeObservation1 = screen.getByText(
+    /C'est vraiment dur de pouvo... - 02\/01\/1970/i
+  );
+  const listeObservation2 = screen.getByText(
+    /Je fais pas 30 charactères - 02\/01\/1970 - BOB/i
+  );
 
   await waitFor(() => {
     expect(title).toBeDefined();
     expect(bandeau).toBeDefined();
     expect(actions).toBeDefined();
-    expect(requetes).toBeDefined();
-    expect(RMC).toBeDefined();
+    expect(listeAction1).toBeDefined();
+    expect(listeAction2).toBeDefined();
+    expect(listeObservation1).toBeDefined();
+    expect(listeObservation2).toBeDefined();
   });
 });
 

@@ -176,3 +176,12 @@ export function changeLaPlaceDunElement(
     tab.splice(nouvelIndex, 0, ...elements);
   }
 }
+
+export function finirAvec3petitsPoints(
+  texte: string,
+  charactereAvantPoints: number
+) {
+  return texte.length > charactereAvantPoints
+    ? `${texte.slice(0, charactereAvantPoints - "...".length)}...`
+    : texte;
+}

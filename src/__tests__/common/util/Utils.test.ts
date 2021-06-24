@@ -4,6 +4,7 @@ import {
   compareNombre,
   enMajuscule,
   estTableauNonVide,
+  finirAvec3petitsPoints,
   formatDe,
   formatNom,
   formatNoms,
@@ -215,4 +216,16 @@ test("Attendu: changeLaPlaceDunElement fonctionne correctement", () => {
   tab = ["a", "b", "c", "d"];
   changeLaPlaceDunElement(tab, 1, -1);
   expect(tab).toEqual(["a", "b", "c", "d"]);
+});
+
+test("3 petits points si la phrase en grande", () => {
+  const phrase1 =
+    "Je fais beaucoup plus de 30 charactères et vous ne pourrez pas lire ma fin";
+  expect(finirAvec3petitsPoints(phrase1, 30)).toStrictEqual(
+    "Je fais beaucoup plus de 30..."
+  );
+  const phrase2 = "Je ne fais pas 30 charactères";
+  expect(finirAvec3petitsPoints(phrase2, 30)).toStrictEqual(
+    "Je ne fais pas 30 charactères"
+  );
 });

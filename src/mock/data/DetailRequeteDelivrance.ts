@@ -11,7 +11,24 @@ export const ReponseAppelDetailRequeteDelivrance = {
     canal: "COURRIER",
     type: "DELIVRANCE",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-    actions: [],
+    actions: [
+      {
+        id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
+        numeroOrdre: 2,
+        libelle: "Saisie de la requête",
+        dateAction: 1583794800000,
+        idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985894",
+        trigramme: "BOB"
+      },
+      {
+        id: "1d189cd9-0df0-45dc-a4cf-0174eb621235",
+        numeroOrdre: 1,
+        libelle: "A traiter",
+        dateAction: 1583794800000,
+        idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
+        trigramme: "APP"
+      }
+    ],
     titulaires: [
       {
         id: "0343e28b-b6f7-4dd4-bb81-3a38454907fb",
@@ -175,7 +192,25 @@ export const ReponseAppelDetailRequeteDelivrance = {
       lienMandant: null,
       natureLien: null
     },
-    observations: null,
+    observations: [
+      {
+        id: "1234",
+        texte: "Je fais pas 30 charactères",
+        idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
+        numeroOrdre: 12,
+        dateObservation: 122335587,
+        trigramme: "BTC"
+      },
+      {
+        id: "id0000",
+        texte:
+          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        idUtilisateur: "",
+        trigramme: "LOS",
+        numeroOrdre: 1234,
+        dateObservation: 123456789
+      }
+    ],
     statut: {
       id: "2c055d1a-b437-48b1-bbd2-fa94d7defba2",
       statutRequete: "A_TRAITER",

@@ -15,6 +15,9 @@ export default {
   paysEvenement: "maroc",
   canal: "INTERNET",
   motifRequete: "PAPIERS_IDENTITE_PASSEPORT",
+  corbeilleAgent: {
+    idUtilisateur: "a091a3b-6835-4824-94fb-527d68926d56"
+  },
   requerant: {
     idRequerant: "f275d357-14ec-42ac-a219-d481cbcbbc61",
     typeRequerant: "TITULAIRE",
@@ -94,11 +97,11 @@ export default {
   actions: [
     {
       id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
-      numeroOrdre: 1,
+      numeroOrdre: 2,
       libelle: "Saisie de la requête",
       dateAction: 1583794800000,
       idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985894",
-      trigramme: ""
+      trigramme: "BOB"
     },
     {
       id: "1d189cd9-0df0-45dc-a4cf-0174eb621235",
@@ -106,7 +109,26 @@ export default {
       libelle: "A traiter",
       dateAction: 1583794800000,
       idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
-      trigramme: ""
+      trigramme: "APP"
+    }
+  ],
+  observations: [
+    {
+      id: "1234",
+      texte: "Je fais pas 30 charactères",
+      idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
+      numeroOrdre: 12,
+      dateObservation: 122335587,
+      trigramme: "BTC"
+    },
+    {
+      id: "id0000",
+      texte:
+        "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+      idUtilisateur: "",
+      trigramme: "LOS",
+      numeroOrdre: 1234,
+      dateObservation: 123456789
     }
   ]
 };

@@ -23,6 +23,7 @@ import { IInstitutionnel } from "../../../../model/requete/v2/IInstitutionnel";
 import { ILienRequerant } from "../../../../model/requete/v2/ILienRequerant";
 import { IMandant } from "../../../../model/requete/v2/IMandant";
 import { IMandataireHabilite } from "../../../../model/requete/v2/IMandataireHabilite";
+import { IObservation } from "../../../../model/requete/v2/IObservation";
 import { IParticulier } from "../../../../model/requete/v2/IParticulier";
 import { IProvenanceRequete } from "../../../../model/requete/v2/IProvenanceRequete";
 import { IQualiteRequerant } from "../../../../model/requete/v2/IQualiteRequerant";
@@ -33,6 +34,7 @@ import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
 import { ITitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
 import { IUtilisateurRece } from "../../../../model/requete/v2/IUtilisateurRece";
 import { logError } from "../../../common/util/LogManager";
+import { storeRece } from "../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string) {
   const [detailRequeteState, setDetailRequeteState] =
@@ -77,6 +79,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     idUtilisateur: data.corbeilleAgent.idUtilisateur,
     idEntite: data.corbeilleService.idEntiteRattachement,
     actions: getActions(data.actions),
+    observations: getObservations(data.observations),
 
     //Partie Requête Delivrance
     sousType: SousTypeDelivrance.getEnumFor(data.sousType),
@@ -96,9 +99,22 @@ function getActions(actions: any): IAction[] {
   const actionsRequete: IAction[] = [];
   actions.forEach((a: any) => {
     const action = a as IAction;
+    const trigramme = storeRece.getTrigrammeFromID(action.idUtilisateur);
+    action.trigramme = trigramme ? trigramme : "";
     actionsRequete.push(action);
   });
   return actionsRequete;
+}
+
+function getObservations(observations: any): IObservation[] {
+  const observationsRequete: IObservation[] = [];
+  observations.forEach((a: any) => {
+    const observation = a as IObservation;
+    const trigramme = storeRece.getTrigrammeFromID(observation.idUtilisateur);
+    observation.trigramme = trigramme ? trigramme : "RECE";
+    observationsRequete.push(observation);
+  });
+  return observationsRequete;
 }
 
 function getTitulaires(titulaires: any): ITitulaireRequete[] {

@@ -4,6 +4,7 @@ import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { BandeauRequete } from "../contenu/BandeauRequete";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
+import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 export interface IdRequeteParams {
   idRequete: string;
 }
@@ -24,6 +25,9 @@ export const ApercuRequetePageV2: React.FC = () => {
               <SuiviActionsRequete
                 actions={detailRequeteState.actions}
               ></SuiviActionsRequete>
+              <SuiviObservationsRequete
+                observations={detailRequeteState?.observations}
+              ></SuiviObservationsRequete>
             </div>
             <div className="side right">
               {JSON.stringify(detailRequeteState)}
