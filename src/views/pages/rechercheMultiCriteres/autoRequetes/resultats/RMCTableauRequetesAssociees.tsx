@@ -2,7 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
-import { getMessageZeroRequete, goToLinkRMCAuto } from "../hook/RMCAutoUtils";
+import {
+  getMessageZeroRequete,
+  goToLinkRMCAuto
+} from "../hook/RMCAutoRequetesUtils";
 import { columnsTableauRequeteAssociees } from "./RMCTableauRequetesAssocieesParams";
 
 export interface RMCTableauRequetesAssocieesProps {

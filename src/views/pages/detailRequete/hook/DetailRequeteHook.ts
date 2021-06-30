@@ -37,33 +37,44 @@ import { logError } from "../../../common/util/LogManager";
 import { storeRece } from "../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] =
-    useState<TRequete | undefined>();
+  const [detailRequeteState, setDetailRequeteState] = useState<
+    TRequete | undefined
+  >();
 
   useEffect(() => {
-    if (idRequete != null) {
-      getDetailRequete(idRequete)
-        .then((result: any) => {
-          let detailRequete;
-          const typeRequete = TypeRequete.getEnumFor(result.body.data.type);
+    async function fetchDetailRequete() {
+      try {
+        if (idRequete != null) {
+          const result = await getDetailRequete(idRequete);
+          const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
           if (typeRequete === TypeRequete.DELIVRANCE) {
-            detailRequete = mappingRequeteDelivrance(result.body.data);
+            const detailRequete = await mappingRequeteDelivrance(
+              result?.body?.data
+            );
+            setDetailRequeteState(detailRequete);
           }
-          setDetailRequeteState(detailRequete);
-        })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur:
-              "Impossible de récupérer le détail de la requête",
-            error
-          });
+        }
+      } catch (error) {
+        logError({
+          messageUtilisateur: "Impossible de récupérer le détail de la requête",
+          error
         });
+      }
     }
+    fetchDetailRequete();
   }, [idRequete]);
-  return { detailRequeteState };
+
+  return {
+    detailRequeteState
+  };
 }
 
-export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
+export async function mappingRequeteDelivrance(
+  data: any
+): Promise<IRequeteDelivrance> {
+  const documentDemande: DocumentDelivrance = await getDocumentDelivrance(
+    data?.documentDemande
+  );
   return {
     // Partie Requête
     id: data.id,
@@ -77,21 +88,22 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     requerant: getRequerant(data.requerant),
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
-    idEntite: data.corbeilleService.idEntiteRattachement,
-    actions: getActions(data.actions),
+    idEntite: data?.corbeilleService?.idEntiteRattachement,
+    actions: getActions(data?.actions),
     observations: getObservations(data.observations),
 
     //Partie Requête Delivrance
-    sousType: SousTypeDelivrance.getEnumFor(data.sousType),
-    documentDemande: DocumentDelivrance.getEnumFor(data.documentDemande),
-    nbExemplaireImpression: data.nombreExemplairesDemandes,
+    sousType: SousTypeDelivrance.getEnumFor(data?.sousType),
+    documentDemande,
+    nbExemplaireImpression: data?.nombreExemplairesDemandes,
     provenanceRequete: getProvenance(data),
-    evenement: data.evenement ? getEvenement(data.evenement) : undefined,
-    motif: MotifDelivrance.getEnumFor(data.motif),
-    complementMotif: data.complementMotif,
+    evenement: data?.evenement ? getEvenement(data.evenement) : undefined,
+    motif: MotifDelivrance.getEnumFor(data?.motif),
+    complementMotif: data?.complementMotif,
     piecesJustificatives: [],
+
     // Documents réponse avec contenu vide
-    documentsReponses: data.documentsReponses
+    documentsReponses: data?.documentsReponses
   };
 }
 
@@ -167,8 +179,7 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     mandataireHabilite: getMandataireHabilite(
       requerant.detailQualiteMandataireHabilite
     ),
-    autreProfessionnel:
-      requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }
@@ -227,4 +238,11 @@ function getEvenement(evenement: any): IEvenementReqDelivrance {
     ville: evenement.ville,
     pays: evenement.pays
   };
+}
+
+async function getDocumentDelivrance(
+  documentDemandeUUID: string
+): Promise<DocumentDelivrance> {
+  await DocumentDelivrance.init();
+  return DocumentDelivrance.getEnumFor(documentDemandeUUID);
 }

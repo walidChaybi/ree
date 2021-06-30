@@ -9,3 +9,7 @@ export interface IResultatRMCActe {
   registre?: string;
   alertes?: string;
 }
+
+export function isInstanceOfActe(data: any): data is IResultatRMCActe {
+  return data && "idActe" in data;
+}

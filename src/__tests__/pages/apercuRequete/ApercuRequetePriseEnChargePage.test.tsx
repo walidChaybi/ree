@@ -1,9 +1,23 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../mock/data/ListeUtilisateurs";
+import {
+  DataRMCActeAvecResultat,
+  DataTableauActe
+} from "../../../mock/data/RMCActe";
+import {
+  DataRMCInscriptionAvecResultat,
+  DataTableauInscription
+} from "../../../mock/data/RMCInscription";
 import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../views/common/util/storeRece";
@@ -20,10 +34,10 @@ history.push(
   ),
   {
     dataRequetes: [],
-    dataRMCAutoActe: [],
-    dataTableauRMCAutoActe: {},
-    dataRMCAutoInscription: [],
-    dataTableauRMCAutoInscription: {}
+    dataRMCAutoActe: DataRMCActeAvecResultat,
+    dataTableauRMCAutoActe: { DataTableauActe },
+    dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
+    dataTableauRMCAutoInscription: { DataTableauInscription }
   }
 );
 
@@ -64,6 +78,7 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
   const listeObservation2 = screen.getByText(
     /Je fais pas 30 charactères - 02\/01\/1970 - BOB/i
   );
+  const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
 
   await waitFor(() => {
     expect(title).toBeDefined();
@@ -73,6 +88,24 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
     expect(listeAction2).toBeDefined();
     expect(listeObservation1).toBeDefined();
     expect(listeObservation2).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(checkboxColumns[0], { target: { checked: true } });
+  });
+
+  await waitFor(() => {
+    const elementsCoches = screen.getAllByText("1 élément(s) coché(s)");
+    expect(elementsCoches).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(checkboxColumns[0], { target: { checked: false } });
+  });
+
+  await waitFor(() => {
+    const elementsCoches = screen.getAllByText("0 élément(s) coché(s)");
+    expect(elementsCoches).toBeDefined();
   });
 });
 

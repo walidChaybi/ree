@@ -8,7 +8,7 @@ import {
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
 import { mappingInscriptions } from "../../acteInscription/hook/RMCActeInscriptionUtils";
-import { determinerCriteresRMCAuto } from "./RMCAutoUtils";
+import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoInscriptionApiHook(
   idRequete: string,

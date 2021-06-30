@@ -1,18 +1,14 @@
 import React from "react";
 import { HeaderTableauRMCInscription } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
+import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
+import { getLibelle } from "../../../../common/widget/Text";
 import { CheckboxColumn } from "./checkboxColumn/CheckboxColumn";
 import {
   commonHeadersTableauRMC,
   natureHeadersTableauRMC,
   TypeRMC
 } from "./RMCTableauCommun";
-
-let onClickParentCallBack: (
-  index: number,
-  isChecked: boolean,
-  data: any
-) => void;
 
 const columnsTableauRmc = [
   ...commonHeadersTableauRMC,
@@ -35,27 +31,48 @@ export const NB_INSCRIPTION_PAR_PAGE = 5;
 
 export function determinerColonnes(
   typeRMC: TypeRMC,
-  onClickCheckbox: (index: number, isChecked: boolean, data: any) => void
+  isCheckboxDisabled: (data: IResultatRMCInscription) => boolean,
+  onClickCheckbox: (
+    index: number,
+    isChecked: boolean,
+    data: IResultatRMCInscription
+  ) => void
 ) {
   if (typeRMC === "Auto") {
-    onClickParentCallBack = onClickCheckbox;
     return [
       ...columnsTableauRmc,
       new TableauTypeColumn({
         keys: [HeaderTableauRMCInscription.Checkbox],
         title: "",
-        getElement: getCheckBoxElement
+        getElement: getCheckBoxElement.bind(
+          null,
+          isCheckboxDisabled,
+          onClickCheckbox
+        )
       })
     ];
   }
   return columnsTableauRmc;
 }
 
-function getCheckBoxElement(data: any, index: number): JSX.Element {
+function getCheckBoxElement(
+  isDisabled: (data: IResultatRMCInscription) => boolean,
+  onClickParentCallBack: (
+    index: number,
+    isChecked: boolean,
+    data: IResultatRMCInscription
+  ) => void,
+  data: any,
+  index: number
+): JSX.Element {
   return (
     <CheckboxColumn
       index={index}
       data={data}
+      disabledMessage={getLibelle(
+        "Ce résultat ne correspond pas au document demandé par le requérant"
+      )}
+      isDisabled={isDisabled}
       onClickParentCallBack={onClickParentCallBack}
     />
   );

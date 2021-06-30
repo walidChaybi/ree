@@ -1,9 +1,11 @@
 import ReportIcon from "@material-ui/icons/Report";
 import React from "react";
-import { getNatureInscription } from "../../../../../api/nomenclature/NomenclatureEtatcivil";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
+import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
 import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
 import { InscriptionRcUtil } from "../../../../../model/etatcivil/enum/TypeInscriptionRc";
+import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoire";
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { RMCRepertoire } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
@@ -110,11 +112,9 @@ export function mappingActes(data: any): IResultatRMCActe[] {
 export async function mappingInscriptions(
   data: any
 ): Promise<IResultatRMCInscription[]> {
-  const promises = data?.map(async (inscription: any) => {
-    const nature: string = await getNatureInscription(
-      inscription?.categorie,
-      inscription?.nature
-    );
+  await NatureRc.init();
+  await NatureRca.init();
+  return data?.map((inscription: any) => {
     return {
       idInscription: inscription?.id,
       nom: formatNom(inscription?.nom),
@@ -127,7 +127,7 @@ export async function mappingInscriptions(
       }),
       paysNaissance: getValeurOuVide(inscription?.paysNaissance),
       numeroInscription: getValeurOuVide(inscription?.numero),
-      nature,
+      nature: getNatureInscription(inscription?.categorie, inscription?.nature),
       typeInscription: InscriptionRcUtil.getLibelle(
         inscription?.typeInscription
       ),
@@ -137,7 +137,6 @@ export async function mappingInscriptions(
       categorie: getValeurOuVide(inscription?.categorie)
     } as IResultatRMCInscription;
   });
-  return Promise.all(promises);
 }
 
 export function rechercherRepertoireAutorise(
@@ -177,4 +176,25 @@ export function getMessageZeroInscription(): JSX.Element {
       <div>Aucune inscription n'a été trouvée</div>
     </>
   );
+}
+
+export function getNatureInscription(
+  categorie: string,
+  nature: string
+): string {
+  let natureInscription = "";
+  if (categorie) {
+    const categorieToUpper = categorie?.toUpperCase();
+    switch (categorieToUpper) {
+      case TypeRepertoire.RC.libelle:
+        natureInscription = NatureRc.getEnumFor(nature)?.libelle;
+        break;
+      case TypeRepertoire.RCA.libelle:
+        natureInscription = NatureRca.getEnumFor(nature)?.libelle;
+        break;
+      default:
+        break;
+    }
+  }
+  return natureInscription;
 }

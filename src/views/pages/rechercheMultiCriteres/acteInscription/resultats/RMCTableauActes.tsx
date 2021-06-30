@@ -16,6 +16,10 @@ export interface RMCResultatActeProps {
   dataTableauRMCActe: IParamsTableau;
   setRangeActe?: (range: string) => void;
   resetTableauActe?: boolean;
+  onClickCheckboxCallBack?: (
+    isChecked: boolean,
+    data: IResultatRMCActe
+  ) => void;
 }
 
 export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
@@ -23,7 +27,8 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   dataRMCActe,
   dataTableauRMCActe,
   setRangeActe,
-  resetTableauActe
+  resetTableauActe,
+  onClickCheckboxCallBack
 }) => {
   // Gestion du tableau
   const [zeroActe, setZeroActe] = useState<JSX.Element>();
@@ -74,13 +79,14 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     index: number,
     isChecked: boolean,
     data: IResultatRMCActe
-  ) => {
+  ): void => {
     const newSelected = new Map(selected);
     if (isChecked) {
       newSelected.set(index, data?.idActe);
     } else {
       newSelected.delete(index);
     }
+    onClickCheckboxCallBack && onClickCheckboxCallBack(isChecked, data);
     setSelected(newSelected);
   };
 

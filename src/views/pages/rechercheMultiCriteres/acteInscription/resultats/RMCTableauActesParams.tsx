@@ -1,5 +1,6 @@
 import React from "react";
 import { HeaderTableauRMCActe } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
 import { CheckboxColumn } from "./checkboxColumn/CheckboxColumn";
 import {
@@ -7,12 +8,6 @@ import {
   natureHeadersTableauRMC,
   TypeRMC
 } from "./RMCTableauCommun";
-
-let onClickParentCallBack: (
-  index: number,
-  isChecked: boolean,
-  data: any
-) => void;
 
 const columnsTableauRmc = [
   ...commonHeadersTableauRMC,
@@ -27,24 +22,35 @@ export const NB_ACTE_PAR_PAGE = 10;
 
 export function determinerColonnes(
   typeRMC: TypeRMC,
-  onClickCheckbox: (index: number, isChecked: boolean, data: any) => void
+  onClickCheckbox: (
+    index: number,
+    isChecked: boolean,
+    data: IResultatRMCActe
+  ) => void
 ) {
   if (typeRMC === "Auto") {
-    onClickParentCallBack = onClickCheckbox;
     return [
       ...columnsTableauRmc,
       new TableauTypeColumn({
         keys: [HeaderTableauRMCActe.Checkbox],
         title: "",
-        getElement: getCheckBoxElement
+        getElement: getCheckBoxElement.bind(null, onClickCheckbox)
       })
     ];
   }
   return columnsTableauRmc;
 }
 
-function getCheckBoxElement(data: any, index: number): JSX.Element {
-  const hasWarning = (isChecked: boolean, value: any): boolean => {
+function getCheckBoxElement(
+  onClickParentCallBack: (
+    index: number,
+    isChecked: boolean,
+    data: IResultatRMCActe
+  ) => void,
+  data: IResultatRMCActe,
+  index: number
+): JSX.Element {
+  const hasWarning = (isChecked: boolean, value: IResultatRMCActe): boolean => {
     return isChecked && value?.alertes?.length !== 0;
   };
   return (

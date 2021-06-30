@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
 import { Snackbar, SnackbarOrigin } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
+import React, { useEffect } from "react";
 import "./scss/MessagePopin.scss";
+
 interface MessagePopinProps {
   message?: string;
   messageType: PopinMessageType;

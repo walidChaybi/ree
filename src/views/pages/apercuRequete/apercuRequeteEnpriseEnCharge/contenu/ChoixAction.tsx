@@ -11,12 +11,15 @@ import {
   IActionOption,
   MenuAction
 } from "../../../../common/widget/menu/MenuAction";
+import { ConfirmationPopin } from "../../../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../../../common/widget/Text";
 import { useReponseNegative } from "./hook/ChoixReponseNegativeHook";
 import "./scss/ChoixAction.scss";
+import { estSeulementActeMariage } from "./VerificationChoixSeulementActeMariage";
 
 interface IActionProps {
-  requete?: TRequete;
+  requete: TRequete;
+  selected?: Map<string, string>;
 }
 
 export const ChoixAction: React.FC<IActionProps> = props => {
@@ -27,10 +30,13 @@ export const ChoixAction: React.FC<IActionProps> = props => {
   const refDelivrerOptions0 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [reponseNegative, setReponseNegative] =
-    useState<IReponseNegativeDemandeIncomplete | undefined>();
+  const [reponseNegative, setReponseNegative] = useState<
+    IReponseNegativeDemandeIncomplete | undefined
+  >();
 
   useReponseNegative(reponseNegative, props.requete);
+
+  const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 
   const delivrerOptions: IActionOption[] = [
     {
@@ -80,12 +86,16 @@ export const ChoixAction: React.FC<IActionProps> = props => {
     switch (indexMenu) {
       case 0:
         setOperationEnCours(true);
-        const newReponseNegative =
-          await createReponseNegativePourCompositionApi(
-            OBJET_COURRIER_CERTIFICAT_SITUATION,
-            props.requete as IRequeteDelivrance
-          );
+        const newReponseNegative = await createReponseNegativePourCompositionApi(
+          OBJET_COURRIER_CERTIFICAT_SITUATION,
+          props.requete as IRequeteDelivrance
+        );
         setReponseNegative(newReponseNegative);
+        break;
+      case 1:
+        if (!estSeulementActeMariage(props.requete, props.selected)) {
+          setHasMessageBloquant(true);
+        }
         break;
     }
   };
@@ -113,6 +123,24 @@ export const ChoixAction: React.FC<IActionProps> = props => {
           })}
           onSelect={handleReponseNegativeMenu}
         />
+        {hasMessageBloquant === true && (
+          <ConfirmationPopin
+            isOpen={true}
+            messages={[
+              getLibelle(
+                "Votre sélection n'est pas cohérente avec le choix de l'action de réponse négative."
+              )
+            ]}
+            boutons={[
+              {
+                label: getLibelle("OK"),
+                action: () => {
+                  setHasMessageBloquant(false);
+                }
+              }
+            ]}
+          />
+        )}
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
 import { IRMCRequestActesInscriptions } from "../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
-import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoUtils";
+import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");

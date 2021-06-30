@@ -1,4 +1,5 @@
 import React from "react";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
@@ -11,6 +12,7 @@ import { RMCTableauInscriptions } from "./RMCTableauInscriptions";
 
 export interface RMCActeInscriptionResultatsProps {
   typeRMC: TypeRMC;
+  dataRequete?: TRequete;
   dataRMCActe: IResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
   dataRMCInscription: IResultatRMCInscription[];
@@ -18,6 +20,14 @@ export interface RMCActeInscriptionResultatsProps {
   setRangeInscription?: (range: string) => void;
   setRangeActe?: (range: string) => void;
   resetRMC?: boolean;
+  onClickCheckboxTableauActes?: (
+    isChecked: boolean,
+    data: IResultatRMCActe
+  ) => void;
+  onClickCheckboxTableauInscriptions?: (
+    isChecked: boolean,
+    data: IResultatRMCInscription
+  ) => void;
 }
 
 export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = props => {
@@ -34,6 +44,7 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
             dataTableauRMCActe={props.dataTableauRMCActe}
             setRangeActe={props.setRangeActe}
             resetTableauActe={props.resetRMC}
+            onClickCheckboxCallBack={props.onClickCheckboxTableauActes}
           />
         </div>
         <div className="SubResultatsRMC">
@@ -46,10 +57,12 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
           </div>
           <RMCTableauInscriptions
             typeRMC={props.typeRMC}
+            dataRequete={props.dataRequete}
             dataRMCInscription={props.dataRMCInscription}
             dataTableauRMCInscription={props.dataTableauRMCInscription}
             setRangeInscription={props.setRangeInscription}
             resetTableauInscription={props.resetRMC}
+            onClickCheckboxCallBack={props.onClickCheckboxTableauInscriptions}
           />
         </div>
       </Fieldset>

@@ -5,6 +5,10 @@ import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle
 import { Options } from "../../../views/common/util/Type";
 
 export class NatureRc extends EnumWithLibelle {
+  public static async init() {
+    await peupleNatureRc();
+  }
+
   //AddEnum specifique aux nomenclatures !
   public static addEnum(key: string, obj: NatureRc) {
     EnumWithLibelle.addEnum(key, obj, NatureRc);
@@ -23,7 +27,7 @@ export class NatureRc extends EnumWithLibelle {
   }
 
   public static async getAllEnumsAsOptions(): Promise<Options> {
-    await peupleNatureRc();
+    await NatureRc.init();
     return EnumWithLibelle.getAllLibellesAsOptions(NatureRc);
   }
 }

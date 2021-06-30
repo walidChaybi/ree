@@ -8,7 +8,7 @@ import { IRMCRequestRequete } from "../../model/rmc/requete/IRMCRequestRequete";
 import { IQueryParameterUpdateStatutRequete } from "../../views/common/hook/UpdateStatutRequeteHook";
 import { IDocumentDelivre } from "../../views/common/types/RequeteType";
 import { SortOrder } from "../../views/common/widget/tableau/TableUtils";
-import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoUtils";
+import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 export const URL_REQUETES_SERVICE = "/requetes/requetesService";

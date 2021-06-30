@@ -1,10 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Droit } from "../../../../../model/Droit";
+import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
 import {
   FicheUtil,
   TypeFiche
 } from "../../../../../model/etatcivil/enum/TypeFiche";
 import { officierALeDroitSurLePerimetre } from "../../../../../model/IOfficierSSOApi";
+import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
+import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getValeurOuVide } from "../../../../common/util/Utils";
@@ -20,18 +25,25 @@ import {
 
 export interface RMCResultatInscriptionProps {
   typeRMC: TypeRMC;
+  dataRequete?: TRequete;
   dataRMCInscription: IResultatRMCInscription[];
   dataTableauRMCInscription: IParamsTableau;
   setRangeInscription?: (range: string) => void;
   resetTableauInscription?: boolean;
+  onClickCheckboxCallBack?: (
+    isChecked: boolean,
+    data: IResultatRMCInscription
+  ) => void;
 }
 
 export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   typeRMC,
+  dataRequete,
   dataRMCInscription,
   dataTableauRMCInscription,
   setRangeInscription,
-  resetTableauInscription
+  resetTableauInscription,
+  onClickCheckboxCallBack
 }) => {
   // Gestion du tableau
   const [zeroInscription, setZeroInscription] = useState<JSX.Element>();
@@ -81,17 +93,33 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   // Gestion du clic sur une colonne de type checkbox.
   const [selected, setSelected] = useState<Map<number, string>>(new Map([]));
 
+  const isCheckboxDisabled = (data: IResultatRMCInscription): boolean => {
+    if (dataRequete?.type === TypeRequete.DELIVRANCE) {
+      if (data?.statutInscription === StatutFiche.INACTIF.libelle) {
+        return true;
+      }
+      const documentDemande: DocumentDelivrance = (dataRequete as IRequeteDelivrance)
+        ?.documentDemande;
+      return !DocumentDelivrance.estDocumentDelivranceValide(
+        data?.categorie,
+        documentDemande
+      );
+    }
+    return false;
+  };
+
   const onClickCheckbox = (
     index: number,
     isChecked: boolean,
     data: IResultatRMCInscription
-  ) => {
+  ): void => {
     const newSelected = new Map(selected);
     if (isChecked) {
       newSelected.set(index, data?.idInscription);
     } else {
       newSelected.delete(index);
     }
+    onClickCheckboxCallBack && onClickCheckboxCallBack(isChecked, data);
     setSelected(newSelected);
   };
 
@@ -100,7 +128,11 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
       <TableauRece
         idKey={"idInscription"}
         onClickOnLine={onClickOnLine}
-        columnHeaders={determinerColonnes(typeRMC, onClickCheckbox)}
+        columnHeaders={determinerColonnes(
+          typeRMC,
+          isCheckboxDisabled,
+          onClickCheckbox
+        )}
         dataState={dataRMCInscription}
         paramsTableau={dataTableauRMCInscription}
         goToLink={goToLink}

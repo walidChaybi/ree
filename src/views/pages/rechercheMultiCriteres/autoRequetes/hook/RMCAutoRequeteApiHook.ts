@@ -9,7 +9,7 @@ import {
   IParamsTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
-import { determinerCriteresRMCAuto } from "./RMCAutoUtils";
+import { determinerCriteresRMCAuto } from "./RMCAutoRequetesUtils";
 
 export function useRMCAutoRequeteApiHook(
   idRequete: string,

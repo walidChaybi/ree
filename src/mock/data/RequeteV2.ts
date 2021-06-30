@@ -1,4 +1,5 @@
 import { SousTypeDelivrance } from "../../model/requete/v2/enum/SousTypeDelivrance";
+import { TypeRequete } from "../../model/requete/v2/enum/TypeRequete";
 import { IRequerant } from "../../model/requete/v2/IRequerant";
 import { IRequeteDelivrance } from "../../model/requete/v2/IRequeteDelivrance";
 
@@ -34,6 +35,7 @@ const requerant: IRequerant = {
 export const idRequete1 = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
 export const requete1 = {
   id: idRequete1,
+  type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDCSC,
   requerant
 } as IRequeteDelivrance;

@@ -1,8 +1,8 @@
 import { NB_LIGNES_PAR_APPEL } from "../../../../common/widget/tableau/TableUtils";
 import { IUrlData } from "../../../../router/ReceUrls";
 import { useRMCAutoActeApiHook } from "./RMCAutoActeApiHook";
+import { redirectionRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 import { useRMCAutoInscriptionApiHook } from "./RMCAutoInscriptionApiHook";
-import { redirectionRMCAuto } from "./RMCAutoUtils";
 
 export interface IRMCAutoParams {
   idRequete: string;
