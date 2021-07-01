@@ -252,17 +252,42 @@ export function getCompteurRequetesV2(): Promise<any> {
 
 export async function creationRequeteDelivrance({
   requete,
-  refus = false
+  refus = false,
+  brouillon = false
 }: {
   requete: IRequeteDelivrance;
   refus?: boolean;
+  brouillon?: boolean;
 }): Promise<any> {
   return apiV2.fetch({
     method: HttpMethod.POST,
     uri: `${URL_REQUETES_DELIVRANCE}`,
     data: requete,
     parameters: {
-      refus
+      refus,
+      brouillon
+    }
+  });
+}
+
+export async function updateRequeteDelivrance({
+  idRequete,
+  requete,
+  refus = false,
+  brouillon = false
+}: {
+  idRequete: string;
+  requete: IRequeteDelivrance;
+  refus?: boolean;
+  brouillon?: boolean;
+}): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}`,
+    data: requete,
+    parameters: {
+      refus,
+      brouillon
     }
   });
 }

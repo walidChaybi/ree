@@ -3,7 +3,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import request from "superagent";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { useCreationRequeteDelivranceRDCSC } from "../../../../views/pages/saisirRequete/hook/SaisirRDCSCApiHook";
+import { useUpdateRequeteDelivranceRDCSC } from "../../../../views/pages/saisirRequete/hook/UpdateRDCSCApiHook";
+import { UpdateRequeteRDCSC } from "../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import {
   RequeteRDCSCInstitutionnel,
   RequeteRDCSCInteresse,
@@ -29,11 +30,14 @@ afterEach(() => {
 });
 
 const HookConsummerInteresse: React.FC = () => {
-  useCreationRequeteDelivranceRDCSC(func, RequeteRDCSCInteresse);
+  useUpdateRequeteDelivranceRDCSC(
+    func,
+    RequeteRDCSCInteresse as UpdateRequeteRDCSC
+  );
   return <>{""}</>;
 };
 
-test("Création requête délivrance hook", async () => {
+test("Maj requête délivrance hook", async () => {
   await act(async () => {
     ReactDOM.render(<HookConsummerInteresse />, container);
   });
@@ -45,11 +49,14 @@ test("Création requête délivrance hook", async () => {
 });
 
 const HookConsummerMandataire: React.FC = () => {
-  useCreationRequeteDelivranceRDCSC(func, RequeteRDCSCMandataire);
+  useUpdateRequeteDelivranceRDCSC(
+    func,
+    RequeteRDCSCMandataire as UpdateRequeteRDCSC
+  );
   return <>{""}</>;
 };
 
-test("Création requête délivrance hook", async () => {
+test("Maj requête délivrance hook", async () => {
   await act(async () => {
     ReactDOM.render(<HookConsummerMandataire />, container);
   });
@@ -61,11 +68,14 @@ test("Création requête délivrance hook", async () => {
 });
 
 const HookConsummerInstitutionnel: React.FC = () => {
-  useCreationRequeteDelivranceRDCSC(func, RequeteRDCSCInstitutionnel);
+  useUpdateRequeteDelivranceRDCSC(
+    func,
+    RequeteRDCSCInstitutionnel as UpdateRequeteRDCSC
+  );
   return <>{""}</>;
 };
 
-test("Création requête délivrance hook", async () => {
+test("Maj requête délivrance hook", async () => {
   await act(async () => {
     ReactDOM.render(<HookConsummerInstitutionnel />, container);
   });
@@ -77,11 +87,14 @@ test("Création requête délivrance hook", async () => {
 });
 
 const HookConsummerParticulier: React.FC = () => {
-  useCreationRequeteDelivranceRDCSC(func, RequeteRDCSCParticulier);
+  useUpdateRequeteDelivranceRDCSC(
+    func,
+    RequeteRDCSCParticulier as UpdateRequeteRDCSC
+  );
   return <>{""}</>;
 };
 
-test("Création requête délivrance hook", async () => {
+test("Maj requête délivrance hook", async () => {
   await act(async () => {
     ReactDOM.render(<HookConsummerParticulier />, container);
   });

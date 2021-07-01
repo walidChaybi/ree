@@ -9,8 +9,17 @@ export const ADRESSE = "adresse";
 export const PIECES_JOINTES = "piecesJointes";
 
 export interface CreationRequeteRDCSC {
+  id?: string;
   saisie: SaisieRequeteRDCSC;
   refus?: boolean;
+  brouillon?: boolean;
+}
+
+export interface UpdateRequeteRDCSC {
+  idRequete: string;
+  saisie: SaisieRequeteRDCSC;
+  refus?: boolean;
+  brouillon?: boolean;
 }
 export interface SaisieRequeteRDCSC {
   [DOCUMENT]: string;

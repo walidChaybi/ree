@@ -35,7 +35,7 @@ test("renders formulaire de saisie d'une Requête de Délivrance Certificat de S
   });
 });
 
-test("test du OnSubmit du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
+test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
   const inputDocumentDemande = screen.getByLabelText(
     "document"
   ) as HTMLSelectElement;
@@ -97,10 +97,12 @@ test("test du OnSubmit du formulaire de saisie d'une Requête de Délivrance Cer
     expect(getLastPathElem(history.location.pathname)).toEqual(
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
+    // Re-init pour les tests suivants
+    history.push(URL_MES_REQUETES_SAISIR_RDCSC);
   });
 });
 
-test("test du OnSubmit du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in OUI", async () => {
+test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in OUI", async () => {
   const inputDocumentDemande = screen.getByLabelText(
     "document"
   ) as HTMLSelectElement;
@@ -148,7 +150,7 @@ test("test du OnSubmit du formulaire de saisie d'une Requête de Délivrance Cer
   });
 });
 
-test("test du OnSubmit du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in NON", async () => {
+test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in NON", async () => {
   const inputDocumentDemande = screen.getByLabelText(
     "document"
   ) as HTMLSelectElement;
@@ -198,6 +200,73 @@ test("test du OnSubmit du formulaire de saisie d'une Requête de Délivrance Cer
   await waitFor(() => {
     expect(getLastPathElem(history.location.pathname)).toEqual(
       "1072bc37-f889-4365-8f75-912166b767dd"
+    );
+    // Re-init pour les tests suivants
+    history.push(URL_MES_REQUETES_SAISIR_RDCSC);
+  });
+});
+
+test("test du Enregistrer du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
+  const inputDocumentDemande = screen.getByLabelText(
+    "document"
+  ) as HTMLSelectElement;
+  const inputPaysNaissance = screen.getByLabelText(
+    "interesse.naissance.paysEvenement"
+  ) as HTMLInputElement;
+  const inputVilleNaissance = screen.getByLabelText(
+    "interesse.naissance.villeEvenement"
+  ) as HTMLInputElement;
+  const inputAnneeNaissance = screen.getByLabelText(
+    "interesse.naissance.dateEvenement.annee"
+  ) as HTMLInputElement;
+
+  act(() => {
+    fireEvent.change(inputPaysNaissance, {
+      target: {
+        value: "mockPaysNaissance"
+      }
+    });
+    fireEvent.change(inputVilleNaissance, {
+      target: {
+        value: "mockVilleNaissance"
+      }
+    });
+    fireEvent.change(inputAnneeNaissance, {
+      target: {
+        value: "1990"
+      }
+    });
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Certificat de situation au pacs"));
+  });
+
+  const submit = screen.getByText("Enregistrer");
+
+  await act(async () => {
+    fireEvent.change(inputDocumentDemande, {
+      target: {
+        value: "34da88e2-c5c7-4324-ac8e-b35193352e64"
+      }
+    });
+    fireEvent.blur(inputPaysNaissance);
+    fireEvent.blur(inputVilleNaissance);
+  });
+
+  await waitFor(() => {
+    expect(inputDocumentDemande.value).toEqual(
+      "34da88e2-c5c7-4324-ac8e-b35193352e64"
+    );
+  });
+
+  await act(async () => {
+    fireEvent.click(submit);
+  });
+
+  await waitFor(() => {
+    expect(getLastPathElem(history.location.pathname)).toEqual(
+      "saisircertificatsituation"
     );
   });
 });

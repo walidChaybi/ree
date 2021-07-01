@@ -4,7 +4,9 @@ import { FormikComponentProps } from "../../../common/widget/formulaire/utils/Fo
 import { getLibelle } from "../../../common/widget/Text";
 import "./scss/SaisirRequeteBoutons.scss";
 
-export type SaisirRequeteBoutonsProps = FormikComponentProps;
+export type SaisirRequeteBoutonsProps = {
+  setIsBrouillon: any;
+} & FormikComponentProps;
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   return (
@@ -12,8 +14,23 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
       <div className="Boutons">
         <button
           disabled={!props.formik.dirty}
-          type="submit"
+          type="button"
+          id="boutonEnregistrer"
+          onClick={() => {
+            props.setIsBrouillon(true);
+            props.formik.submitForm();
+          }}
+        >
+          {getLibelle("Enregistrer")}
+        </button>
+        <button
+          disabled={!props.formik.dirty}
+          type="button"
           id="boutonEnregistrerValider"
+          onClick={() => {
+            props.setIsBrouillon(false);
+            props.formik.submitForm();
+          }}
         >
           {getLibelle("Enregistrer et valider")}
         </button>

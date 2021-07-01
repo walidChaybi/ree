@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeRequerant } from "../../../model/requete/v2/enum/TypeRequerant";
-import messageManager from "../../common/util/messageManager";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
 import { SelectField } from "../../common/widget/formulaire/champsSaisie/SelectField";
@@ -25,6 +24,7 @@ import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
 import { useCreationRequeteDelivranceRDCSC } from "./hook/SaisirRDCSCApiHook";
+import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
 import {
   ADRESSE,
   CreationRequeteRDCSC,
@@ -32,7 +32,8 @@ import {
   INTERESSE,
   PIECES_JOINTES,
   REQUERANT,
-  SaisieRequeteRDCSC
+  SaisieRequeteRDCSC,
+  UpdateRequeteRDCSC
 } from "./modelForm/ISaisirRDCSCPageModel";
 import "./scss/SaisirRequetePage.scss";
 import AdresseForm, {
@@ -90,74 +91,99 @@ export const SaisirRDCSCPage: React.FC = () => {
   ];
 
   /** Enregistrer la requête */
-  const boutonsProps = {} as SaisirRequeteBoutonsProps;
+  const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+
   const [
     donneesNaissanceIncomplete,
     setDonneesNaissanceIncomplete
   ] = React.useState<boolean>(false);
-
   const [
     saisieRequeteRDCSC,
     setSaisieRequeteRDCSC
   ] = useState<SaisieRequeteRDCSC>();
-
   const [
     creationRequeteRDCSC,
     setCreationRequeteRDCSC
   ] = useState<CreationRequeteRDCSC>();
+  const [
+    updateRequeteRDCSC,
+    setUpdateRequeteRDCSC
+  ] = useState<UpdateRequeteRDCSC>();
 
-  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 
-  const idNouvelleRequete = useCreationRequeteDelivranceRDCSC(
-    creationRequeteRDCSC
-  );
+  const [idRequete, setIdRequete] = useState<string>();
 
-  useEffect(() => {
-    if (idNouvelleRequete) {
-      setOperationEnCours(false);
-      // FIXME comportement messageManager à valider
-      messageManager.showSuccessAndClose(
-        getLibelle("La requête a bien été enregistrée")
-      );
-      if (creationRequeteRDCSC?.refus) {
-        history.goBack();
-      } else {
-        const pathname = history.location.pathname;
-        if (pathname.startsWith(URL_MES_REQUETES_SAISIR_RDCSC)) {
-          const url = getUrlWithParam(
-            URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
-            idNouvelleRequete
-          );
-          history.push(url);
-        }
-        if (pathname.startsWith(URL_REQUETES_SERVICE_SAISIR_RDCSC)) {
-          const url = getUrlWithParam(
-            URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE,
-            idNouvelleRequete
-          );
-          history.push(url);
+  const handleSave = (id: string, brouillon: boolean, refus: boolean) => {
+    // Reset des valeurs pour les hooks
+    setCreationRequeteRDCSC(undefined);
+    setUpdateRequeteRDCSC(undefined);
+
+    setOperationEnCours(false);
+
+    // Si l'appel c'est terminé sans erreur
+    if (id) {
+      setIdRequete(id);
+      // Redirection si l'enregistrement n'est pas un brouillon
+      if (!brouillon) {
+        if (refus) {
+          history.goBack();
+        } else {
+          const pathname = history.location.pathname;
+          if (pathname.startsWith(URL_MES_REQUETES_SAISIR_RDCSC)) {
+            const url = getUrlWithParam(
+              URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
+              id
+            );
+            history.push(url);
+          }
+          if (pathname.startsWith(URL_REQUETES_SERVICE_SAISIR_RDCSC)) {
+            const url = getUrlWithParam(
+              URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE,
+              id
+            );
+            history.push(url);
+          }
         }
       }
     }
-  }, [idNouvelleRequete, history, creationRequeteRDCSC]);
+  };
+
+  useCreationRequeteDelivranceRDCSC(handleSave, creationRequeteRDCSC);
+
+  useUpdateRequeteDelivranceRDCSC(handleSave, updateRequeteRDCSC);
 
   const onSubmitSaisirRDCSC = (values: SaisieRequeteRDCSC) => {
     const villeNaissance = values.interesse.naissance.villeEvenement;
     const paysNaissance = values.interesse.naissance.paysEvenement;
     const anneeNaissance = values.interesse.naissance.dateEvenement.annee;
 
+    setSaisieRequeteRDCSC(values);
     if (
-      villeNaissance !== "" &&
-      paysNaissance !== "" &&
-      anneeNaissance !== ""
+      (villeNaissance !== "" &&
+        paysNaissance !== "" &&
+        anneeNaissance !== "") ||
+      isBrouillon
     ) {
       // La requête est envoyé au back
       setOperationEnCours(true);
-      setCreationRequeteRDCSC({ saisie: values, refus: false });
+      if (idRequete) {
+        setUpdateRequeteRDCSC({
+          idRequete,
+          saisie: values,
+          refus: false,
+          brouillon: isBrouillon
+        });
+      } else {
+        setCreationRequeteRDCSC({
+          saisie: values,
+          refus: false,
+          brouillon: isBrouillon
+        });
+      }
     } else {
       // Pop-in
-
-      setSaisieRequeteRDCSC(values);
       setDonneesNaissanceIncomplete(true);
     }
   };
@@ -171,7 +197,16 @@ export const SaisirRDCSCPage: React.FC = () => {
         // TODO appel du Hook de l'US 137 : Réponse automatique - req Certificat Situation incomplète
       }
       setOperationEnCours(true);
-      setCreationRequeteRDCSC({ saisie: saisieRequeteRDCSC, refus });
+      if (idRequete) {
+        setUpdateRequeteRDCSC({
+          idRequete,
+          saisie: saisieRequeteRDCSC,
+          refus,
+          brouillon: isBrouillon
+        });
+      } else {
+        setCreationRequeteRDCSC({ saisie: saisieRequeteRDCSC, refus });
+      }
     }
   };
 
@@ -218,7 +253,7 @@ export const SaisirRDCSCPage: React.FC = () => {
       <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
-        formDefaultValues={DefaultValuesSaisirRDCSC}
+        formDefaultValues={saisieRequeteRDCSC || DefaultValuesSaisirRDCSC}
         formValidationSchema={ValidationSchemaSaisirRDCSC}
         onSubmit={onSubmitSaisirRDCSC}
         className="FormulaireSaisirRDCSC"

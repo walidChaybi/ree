@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { creationRequeteDelivrance } from "../../../../api/appels/requeteApi";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
@@ -9,7 +9,9 @@ import { IPrenomOrdonnes } from "../../../../model/requete/v2/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IPieceJustificative } from "../../../common/types/RequeteType";
 import { logError } from "../../../common/util/LogManager";
+import messageManager from "../../../common/util/messageManager";
 import { supprimeProprietesVides } from "../../../common/util/supprimeProprietesVides";
+import { getLibelle } from "../../../common/widget/Text";
 import {
   CreationRequeteRDCSC,
   SaisieRequeteRDCSC
@@ -17,16 +19,27 @@ import {
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
 
 export function useCreationRequeteDelivranceRDCSC(
+  callback: any,
   requeteRDCSC?: CreationRequeteRDCSC
 ) {
-  const [idNouvelleRequete, setIdNouvelleRequete] = useState<string>();
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
       const requete = mapRequeteDelivrance(requeteRDCSC);
 
-      creationRequeteDelivrance({ requete, refus: requeteRDCSC.refus })
+      creationRequeteDelivrance({
+        requete,
+        refus: requeteRDCSC.refus,
+        brouillon: requeteRDCSC.brouillon
+      })
         .then((result: any) => {
-          setIdNouvelleRequete(result.body.data);
+          callback(
+            result?.body?.data?.id,
+            requeteRDCSC.brouillon,
+            requeteRDCSC.refus
+          );
+          messageManager.showSuccessAndClose(
+            getLibelle("La requête a bien été enregistrée")
+          );
         })
         .catch((error: any) => {
           logError({
@@ -36,12 +49,11 @@ export function useCreationRequeteDelivranceRDCSC(
           });
         });
     }
-  }, [requeteRDCSC]);
-
-  return idNouvelleRequete;
+  }, [requeteRDCSC, callback]);
+  return {};
 }
 
-function mapRequeteDelivrance(
+export function mapRequeteDelivrance(
   requeteRDCSC: CreationRequeteRDCSC
 ): IRequeteDelivrance {
   const requete = ({
@@ -176,10 +188,10 @@ function getInteresse(saisie: SaisieRequeteRDCSC) {
 function getAdresse(adresse: Adresse) {
   return adresse
     ? {
-        ligne4: adresse.voie,
+        ligne2: adresse.voie,
         ligne5: adresse.lieuDit,
-        ligne2: adresse.complementDestinataire,
-        ligne3: adresse.complementPointGeo,
+        ligne3: adresse.complementDestinataire,
+        ligne4: adresse.complementPointGeo,
         codePostal: adresse.codePostal,
         ville: adresse.commune,
         pays: adresse.pays
