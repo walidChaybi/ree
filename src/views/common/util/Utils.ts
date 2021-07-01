@@ -71,7 +71,7 @@ export function formatDe(str: string) {
   return de;
 }
 
-export function getValeurOuVide(str?: string) {
+export function getValeurOuVide(str?: any) {
   return str ? str : "";
 }
 
@@ -98,6 +98,10 @@ export function jointAvec(tab: string[], sep: string) {
 
 export function joint(tab: string[]): string {
   return jointAvec(tab, ", ");
+}
+
+export function jointAvecEspace(tab: string[]): string {
+  return jointAvec(tab, " ");
 }
 
 export function compareNombre(n1: number, n2: number): number {

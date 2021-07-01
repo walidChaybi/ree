@@ -5,6 +5,7 @@ import {
 } from "../../../../api/appels/requeteApi";
 import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
+import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
 import {
@@ -41,14 +42,16 @@ interface MesRequetesPageProps {
 
 export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [linkParameters, setLinkParameters] =
-    React.useState<IQueryParametersPourRequetesV2>({
-      statuts: StatutsRequetesEspaceDelivrance,
-      tri: "dateStatut",
-      sens: "ASC",
-      range: `0-${NB_LIGNES_PAR_APPEL}`
-    });
+  const [linkParameters, setLinkParameters] = React.useState<
+    IQueryParametersPourRequetesV2
+  >({
+    statuts: StatutsRequetesEspaceDelivrance,
+    tri: "dateStatut",
+    sens: "ASC",
+    range: `0-${NB_LIGNES_PAR_APPEL}`
+  });
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteApi(
     linkParameters,
@@ -90,6 +93,7 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
     data: IRequeteTableau[],
     idx: number
   ) {
+    setOperationEnCours(true);
     props.setParamsRMCAuto(idRequete, data, URL_MES_REQUETES_V2, idx);
   }
 
@@ -101,6 +105,11 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
 
   return (
     <>
+      <OperationEnCours
+        visible={operationEnCours}
+        onTimeoutEnd={() => setOperationEnCours(false)}
+        onClick={() => setOperationEnCours(false)}
+      />
       <TableauRece
         idKey={"idRequete"}
         sortOrderByState={linkParameters.tri}

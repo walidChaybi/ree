@@ -1,7 +1,8 @@
-import { IReponseNegativeDemandeIncomplete } from "../../model/composition/IReponseNegativeDemandeIncomplete";
+import { ICertificatSituationComposition } from "../../model/composition/ICertificatSituationComposition";
+import { IReponseNegativeDemandeIncompleteComposition } from "../../model/composition/IReponseNegativeDemandeIncompleteComposition";
 import { imagePngVideBase64 } from "./ImagePng";
 
-export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncomplete = {
+export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncompleteComposition = {
   image_bloc_marques: imagePngVideBase64,
   nom_direction: {
     ligne1: "Direction",
@@ -29,3 +30,42 @@ export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncomplete
     ligne7: "Saint-Germain-de-Tallevende-la-Lande-Vaumont"
   }
 };
+
+export const certificatSituation: ICertificatSituationComposition = {
+  phrases_liees: "phrase",
+  decret1: "decret1",
+  decret2: "decret2",
+  adr_service_delivreur: {
+    ligne4: "11, rue de la Maison Blanche",
+    ligne6: "44941 Nantes CEDEX 9"
+  },
+  adresse_internet: "courrier.scec@diplomatie.gouv.fr",
+  adresse_requerant: {
+    ligne2: "l2",
+    ligne3: "l3",
+    ligne4: "l4",
+    ligne5: "l5",
+    ligne6: "123456",
+    ligne7: "ville"
+  },
+  annee_naissance: "2000",
+  cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  identite_requerant: "nomFamille prenom",
+  image_bloc_marques: imagePngVideBase64,
+  jour_naissance: "1",
+  mois_naissance: "2",
+  nom: "nom",
+  nom_direction: {
+    ligne1: "Direction",
+    ligne2: "des Français à l'étranger",
+    ligne3: "et de l’administration consulaire"
+  },
+  pays_naissance: "paysNaissance",
+  prenoms: "p1 p2",
+  service_delivreur: "Service central d'état civil",
+  sexe: "Masculin",
+  tel_service_delivreur: "01.41.86.42.47",
+  titre: "titre",
+  ville_delivrance: "Nantes",
+  ville_naissance: "villeNaissance"
+} as ICertificatSituationComposition;

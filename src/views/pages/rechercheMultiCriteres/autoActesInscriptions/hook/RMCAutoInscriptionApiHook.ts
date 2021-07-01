@@ -11,7 +11,7 @@ import { mappingInscriptions } from "../../acteInscription/hook/RMCActeInscripti
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoInscriptionApiHook(
-  idRequete: string,
+  requete: IRequeteTableau,
   data: IRequeteTableau[],
   range: string
 ) {
@@ -27,8 +27,8 @@ export function useRMCAutoInscriptionApiHook(
   useEffect(() => {
     async function fetchInscriptions() {
       try {
-        if (idRequete != null && data != null) {
-          const criteresRequest = determinerCriteresRMCAuto(idRequete, data);
+        if (requete && data) {
+          const criteresRequest = determinerCriteresRMCAuto(requete, data);
           const result = await rechercheMultiCriteresAutoInscription(
             criteresRequest,
             range
@@ -48,7 +48,7 @@ export function useRMCAutoInscriptionApiHook(
       }
     }
     fetchInscriptions();
-  }, [idRequete, data, range]);
+  }, [requete, data, range]);
 
   return {
     dataRMCAutoInscription,

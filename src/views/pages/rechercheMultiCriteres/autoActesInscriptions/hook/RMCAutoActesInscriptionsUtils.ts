@@ -3,11 +3,15 @@ import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscr
 import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
 import { valeurOuUndefined } from "../../../../common/util/Utils";
 import {
+  receUrl,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_V2,
   URL_RECHERCHE_REQUETE,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE_V2
 } from "../../../../router/ReceUrls";
 
@@ -17,23 +21,23 @@ export interface ICriteresRMCAuto {
 
 export function redirectionRMCAuto(
   idRequete: string,
-  urlWithParam: string,
+  urlCourante: string,
   dataRMCAutoActe: any[],
   dataRMCAutoInscription: any[]
 ) {
   let url = "";
 
-  if (urlWithParam === URL_MES_REQUETES_V2) {
+  if (urlCourante === URL_MES_REQUETES_V2) {
     url = getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequete
     );
-  } else if (urlWithParam === URL_REQUETES_SERVICE_V2) {
+  } else if (urlCourante === URL_REQUETES_SERVICE_V2) {
     url = getUrlWithParam(
       URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequete
     );
-  } else if (urlWithParam === URL_RECHERCHE_REQUETE) {
+  } else if (urlCourante === URL_RECHERCHE_REQUETE) {
     url = getUrlWithParam(
       URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequete
@@ -42,12 +46,37 @@ export function redirectionRMCAuto(
   return url;
 }
 
-export function determinerCriteresRMCAuto(
+export function redirectionRMCAutoApercuTraitement(
   idRequete: string,
+  urlCourante: string
+) {
+  let url = "";
+  if (urlCourante === URL_MES_REQUETES_V2) {
+    url = getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
+      idRequete
+    );
+  } else if (urlCourante === URL_REQUETES_SERVICE_V2) {
+    url = getUrlWithParam(
+      URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
+      idRequete
+    );
+  } else if (urlCourante === URL_RECHERCHE_REQUETE) {
+    url = getUrlWithParam(
+      URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
+      idRequete
+    );
+  } else if (receUrl.estUrlApercuRequete(url)) {
+    url = receUrl.getUrlApercuTraitementAPartirDe(url);
+  }
+  return url;
+}
+
+export function determinerCriteresRMCAuto(
+  requete: IRequeteTableau,
   data: IRequeteTableau[]
 ): ICriteresRMCAuto {
   const criteresRMCAuto = {} as ICriteresRMCAuto;
-  const requete = data?.find(r => r.idRequete === idRequete);
 
   criteresRMCAuto.criteres = criteresRMCAutoMapper(requete?.titulaires);
 

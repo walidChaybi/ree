@@ -2,31 +2,23 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Orientation } from "../../../../../../model/composition/enum/Orientation";
 import {
-  IReponseNegativeDemandeIncomplete,
+  IReponseNegativeDemandeIncompleteComposition,
   NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
-} from "../../../../../../model/composition/IReponseNegativeDemandeIncomplete";
+} from "../../../../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import { TRequete } from "../../../../../../model/requete/v2/IRequete";
 import { MimeType } from "../../../../../../ressources/MimeType";
 import { useCompositionReponseNegativeDemandeIncompleteApi } from "../../../../../common/hook/v2/composition/CompositionReponseNegativeDemandeIncompleteHook";
-import { usePostDocumentsReponseApi } from "../../../../../common/hook/v2/DocumentReponseHook";
-import {
-  CreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "../../../../../common/hook/v2/requete/ActionHook";
+import { useStockeDocumentCreerActionEtMajStatutRequte } from "../../../../../common/hook/v2/requete/StockDocumentEtCreationActionEtMajStatutRequete";
 import { getUrlWithParam } from "../../../../../common/util/route/routeUtil";
 import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID } from "../../../../../router/ReceUrls";
 
 export function useReponseNegative(
-  reponseNegative?: IReponseNegativeDemandeIncomplete,
+  reponseNegative?: IReponseNegativeDemandeIncompleteComposition,
   requete?: TRequete
 ) {
-  const [
-    creationActionEtMiseAjourStatutParams,
-    setCreationActionEtMiseAjourStatutParams
-  ] = useState<CreationActionEtMiseAjourStatutParams | undefined>();
   const history = useHistory();
   const [
     documentsReponsePourStockage,
@@ -59,26 +51,16 @@ export function useReponseNegative(
   }, [contenuComposition]);
 
   // 3- Stockage du document réponse une fois celui-ci créé
-  const uuidDocumentsReponse = usePostDocumentsReponseApi(
-    requete?.id,
-    documentsReponsePourStockage
-  );
-
-  // 4- Une fois le document stocké, création des paramètres pour la création de l'action et la mise à jour du statut de la requête
-  useEffect(() => {
-    if (uuidDocumentsReponse) {
-      setCreationActionEtMiseAjourStatutParams({
-        requeteId: requete?.id,
-        libelleAction: StatutRequete.A_VALIDER.libelle,
-        statutRequete: StatutRequete.A_VALIDER
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uuidDocumentsReponse]);
-
-  // 5- Une fois le document stocké et les paramètres créés, mise à jour du status de la requête + création d'une action
-  const idAction = usePostCreationActionEtMiseAjourStatutApi(
-    creationActionEtMiseAjourStatutParams
+  // 4- Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
+  // 5- Mise à jour du status de la requête + création d'une action
+  const {
+    idAction,
+    uuidDocumentsReponse
+  } = useStockeDocumentCreerActionEtMajStatutRequte(
+    StatutRequete.A_VALIDER.libelle,
+    StatutRequete.A_VALIDER,
+    documentsReponsePourStockage,
+    requete?.id
   );
 
   // 6- Une fois la requête mise à jour et l'action créée changement de page

@@ -16,7 +16,7 @@ export interface OperationEnCoursProps {
   timeoutInMiliSec?: number;
 }
 
-const DEFAULT_TIMEOUT = 10000;
+const DEFAULT_TIMEOUT = 20000;
 const BACKDROP_TIMER_NAME = "BackdropTimer";
 
 export const OperationEnCours: React.FC<OperationEnCoursProps> = props => {

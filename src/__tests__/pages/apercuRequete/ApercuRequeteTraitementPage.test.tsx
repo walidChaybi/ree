@@ -40,8 +40,6 @@ test("renders ApercuRequeteTraitementPage", async () => {
     );
   });
 
-  screen.debug();
-
   const title = screen.getByText(/Aperçu du traitement de la requête/i);
   const bandeau = screen.getByText(
     /Requête à traiter, attribuée à Ashley YOUNG - Le : 14\/07\/2020/i

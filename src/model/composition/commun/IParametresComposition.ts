@@ -1,18 +1,18 @@
-import { peupleParametresBaseRequete } from "../../api/nomenclature/NomenclatureParametresBaseRequete";
-import { ParametreBaseRequete } from "../parametres/enum/ParametresBaseRequete";
+import { peupleParametresBaseRequete } from "../../../api/nomenclature/NomenclatureParametresBaseRequete";
 import {
+  ADRESSE_INTERNET_MINISTERE,
   BLOC_MARQUES_MINISTERE,
-  NOM_DIRECTION,
   DIRECTION_LIGNE_2,
   DIRECTION_LIGNE_3,
-  ADRESSE_INTERNET_MINISTERE,
+  LIBELLE_FONCTION_AGENT_2,
+  NOM_DIRECTION,
   SERVICE_DELIVREUR_NOM,
   SERVICE_DELIVREUR_RUE,
-  SERVICE_DELIVREUR_SERVICE_VILLE,
-  SERVICE_DELIVREUR_VILLE,
   SERVICE_DELIVREUR_SERVICE_TELEPHONE,
-  LIBELLE_FONCTION_AGENT_2
-} from "../parametres/clesParametres";
+  SERVICE_DELIVREUR_SERVICE_VILLE,
+  SERVICE_DELIVREUR_VILLE
+} from "../../parametres/clesParametres";
+import { ParametreBaseRequete } from "../../parametres/enum/ParametresBaseRequete";
 
 export interface IParametresComposition {
   image_bloc_marques: string; //"+base64+";
@@ -33,7 +33,7 @@ export interface IParametresComposition {
 }
 
 export const ParametresComposition = {
-  async ajoutParametresComposition(obj: IParametresComposition) {
+  async ajoutParametres(obj: IParametresComposition) {
     await peupleParametresBaseRequete();
 
     obj = obj || {};

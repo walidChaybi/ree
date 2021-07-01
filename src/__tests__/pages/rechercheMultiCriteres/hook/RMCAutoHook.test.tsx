@@ -2,6 +2,7 @@ import { act, render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
 import {
   IRMCAutoParams,
   useRMCAutoHook
@@ -18,28 +19,26 @@ import {
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 let params: IRMCAutoParams = {
-  idRequete: ":idRequete",
+  requete: { idRequete: ":idRequete", document: "123456" } as IRequeteTableau,
   dataRequetes: [],
-  urlWithParam: URL_MES_REQUETES_V2
+  urlCourante: URL_MES_REQUETES_V2
 };
 
 const HookConsummerRequete: React.FC = () => {
-  const urlWithParam = URL_MES_REQUETES_V2;
-  params = { ...params, urlWithParam };
   const { url } = useRMCAutoHook(params);
   return <div data-testid="urlRedirection">{url}</div>;
 };
 
 const HookConsummerRequeteService: React.FC = () => {
   const urlWithParam = URL_REQUETES_SERVICE_V2;
-  params = { ...params, urlWithParam };
+  params = { ...params, urlCourante: urlWithParam };
   const { url } = useRMCAutoHook(params);
   return <div data-testid="urlRedirection">{url}</div>;
 };
 
 const HookConsummerRechercheRequete: React.FC = () => {
   const urlWithParam = URL_RECHERCHE_REQUETE;
-  params = { ...params, urlWithParam };
+  params = { ...params, urlCourante: urlWithParam };
   const { url } = useRMCAutoHook(params);
   return <div data-testid="urlRedirection">{url}</div>;
 };

@@ -1,3 +1,4 @@
+import { Sexe } from "../../model/etatcivil/enum/Sexe";
 import { IRequeteTableau } from "../../model/requete/v2/IRequeteTableau";
 
 export const DataTableauRequete = {
@@ -40,14 +41,16 @@ export const ReponseAppelRMCRequete = {
             prenoms: ["1) Hugo"],
             jourNaissance: 31,
             moisNaissance: 12,
-            anneeNaissance: 1981
+            anneeNaissance: 1981,
+            sexe: Sexe.MASCULIN
           },
           {
             nom: "Rossi",
             prenoms: ["1) Giulia", "2) clara", "3) Maria"],
             jourNaissance: 16,
             moisNaissance: 8,
-            anneeNaissance: 1983
+            anneeNaissance: 1983,
+            sexe: Sexe.FEMININ
           }
         ]
       },
@@ -120,7 +123,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "SIANF",
     document: undefined,
     nature: undefined,
-    requerant: "Banque Générale",
+    nomCompletRequerant: "Banque Générale",
     attribueA: "PROVISTE Alain",
     dateCreation: "22/01/1991",
     dateDerniereMaj: "22/02/1991",
@@ -133,14 +136,16 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
         prenoms: ["1) Hugo"],
         jourNaissance: 31,
         moisNaissance: 12,
-        anneeNaissance: 1981
+        anneeNaissance: 1981,
+        sexe: Sexe.MASCULIN
       },
       {
         nom: "Rossi",
         prenoms: ["1) Giulia", "2) clara", "3) Maria"],
         jourNaissance: 16,
         moisNaissance: 8,
-        anneeNaissance: 1983
+        anneeNaissance: 1983,
+        sexe: Sexe.FEMININ
       }
     ]
   },
@@ -154,7 +159,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "Service Public",
     document: "Extrait avec filiation",
     nature: "Naissance",
-    requerant: "Mairie de Nantes",
+    nomCompletRequerant: "Mairie de Nantes",
     attribueA: "LAMY Mélina",
     dateCreation: "22/01/1992",
     dateDerniereMaj: "22/02/1992",
@@ -172,7 +177,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "Internet",
     document: undefined,
     nature: undefined,
-    requerant: "DUBOIS Léo",
+    nomCompletRequerant: "DUBOIS Léo",
     attribueA: "Bureau des Affaires Extra",
     dateCreation: "22/01/1990",
     dateDerniereMaj: "22/02/1990",
@@ -191,7 +196,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "Courrier",
     document: undefined,
     nature: undefined,
-    requerant: "Miccotton Mylene",
+    nomCompletRequerant: "Miccotton Mylene",
     attribueA: "Bureau des Affaires Juridiques",
     dateCreation: "22/01/1990",
     dateDerniereMaj: "22/02/1990",
@@ -210,7 +215,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "SIANF",
     document: undefined,
     nature: undefined,
-    requerant: "Banque Générale",
+    nomCompletRequerant: "Banque Générale",
     attribueA: "PROVISTE Alain",
     dateCreation: "22/01/1991",
     dateDerniereMaj: "22/02/1991",
@@ -223,14 +228,16 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
         prenoms: ["1) Hugo"],
         jourNaissance: 31,
         moisNaissance: 12,
-        anneeNaissance: 1981
+        anneeNaissance: 1981,
+        sexe: Sexe.MASCULIN
       },
       {
         nom: "Rossi",
         prenoms: ["1) Giulia", "2) clara", "3) Maria"],
         jourNaissance: 16,
         moisNaissance: 8,
-        anneeNaissance: 1983
+        anneeNaissance: 1983,
+        sexe: Sexe.FEMININ
       }
     ]
   },
@@ -244,7 +251,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "Service Public",
     document: "Extrait avec filiation",
     nature: "Naissance",
-    requerant: "Mairie de Nantes",
+    nomCompletRequerant: "Mairie de Nantes",
     attribueA: "LAMY Mélina",
     dateCreation: "22/01/1992",
     dateDerniereMaj: "22/02/1992",
@@ -263,7 +270,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "Service Public",
     document: "Extrait avec filiation",
     nature: "Naissance",
-    requerant: "Mairie de Nantes",
+    nomCompletRequerant: "Mairie de Nantes",
     attribueA: "LAMY Mélina",
     dateCreation: "22/01/1992",
     dateDerniereMaj: "22/02/1992",
@@ -276,14 +283,16 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
         prenoms: ["1) Hugo"],
         jourNaissance: 31,
         moisNaissance: 12,
-        anneeNaissance: 1981
+        anneeNaissance: 1981,
+        sexe: Sexe.MASCULIN
       },
       {
         nom: "Rossi",
         prenoms: ["1) Giulia", "2) Clara", "3) Maria"],
         jourNaissance: 16,
         moisNaissance: 8,
-        anneeNaissance: 1983
+        anneeNaissance: 1983,
+        sexe: Sexe.FEMININ
       }
     ]
   },
@@ -297,7 +306,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "Courrier",
     document: undefined,
     nature: undefined,
-    requerant: "Miccotton Mylene",
+    nomCompletRequerant: "Miccotton Mylene",
     attribueA: "Bureau des Affaires Juridiques",
     dateCreation: "22/01/1990",
     dateDerniereMaj: "22/02/1990",
@@ -316,7 +325,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "SIANF",
     document: undefined,
     nature: undefined,
-    requerant: "Banque Générale",
+    nomCompletRequerant: "Banque Générale",
     attribueA: "PROVISTE Alain",
     dateCreation: "22/01/1991",
     dateDerniereMaj: "22/02/1991",
@@ -329,14 +338,16 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
         prenoms: ["1) Hugo"],
         jourNaissance: 31,
         moisNaissance: 12,
-        anneeNaissance: 1981
+        anneeNaissance: 1981,
+        sexe: Sexe.MASCULIN
       },
       {
         nom: "Rossi",
         prenoms: ["1) Giulia", "2) clara", "3) Maria"],
         jourNaissance: 16,
         moisNaissance: 8,
-        anneeNaissance: 1983
+        anneeNaissance: 1983,
+        sexe: Sexe.FEMININ
       }
     ]
   },
@@ -350,7 +361,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "Service Public",
     document: "Extrait avec filiation",
     nature: "Naissance",
-    requerant: "Mairie de Nantes",
+    nomCompletRequerant: "Mairie de Nantes",
     attribueA: "LAMY Mélina",
     dateCreation: "22/01/1992",
     dateDerniereMaj: "22/02/1992",
@@ -369,7 +380,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "Internet",
     document: undefined,
     nature: undefined,
-    requerant: "DUBOIS Léo",
+    nomCompletRequerant: "DUBOIS Léo",
     attribueA: "Bureau des Affaires Extra",
     dateCreation: "22/01/1990",
     dateDerniereMaj: "22/02/1990",
@@ -388,7 +399,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
     provenance: "Courrier",
     document: undefined,
     nature: undefined,
-    requerant: "Miccotton Mylene",
+    nomCompletRequerant: "Miccotton Mylene",
     attribueA: "Bureau des Affaires Juridiques",
     dateCreation: "22/01/1990",
     dateDerniereMaj: "22/02/1990",

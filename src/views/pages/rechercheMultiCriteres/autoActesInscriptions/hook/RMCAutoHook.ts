@@ -1,20 +1,31 @@
+import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { NB_LIGNES_PAR_APPEL } from "../../../../common/widget/tableau/TableUtils";
 import { IUrlData } from "../../../../router/ReceUrls";
+import {
+  IResultGenerationCertificatSituationRMCAutoVide,
+  useGenerationCertificatSituationRMCAutoVide
+} from "./generationCertificatSituationRMCAutoVideHook/GenerationCertificatSituationRMCAutoVideHook";
 import { useRMCAutoActeApiHook } from "./RMCAutoActeApiHook";
-import { redirectionRMCAuto } from "./RMCAutoActesInscriptionsUtils";
+import {
+  redirectionRMCAuto,
+  redirectionRMCAutoApercuTraitement
+} from "./RMCAutoActesInscriptionsUtils";
 import { useRMCAutoInscriptionApiHook } from "./RMCAutoInscriptionApiHook";
 
 export interface IRMCAutoParams {
-  idRequete: string;
+  requete: IRequeteTableau;
   dataRequetes: any[];
-  urlWithParam: string;
+  urlCourante: string;
 }
 
 export function useRMCAutoHook(params: IRMCAutoParams): IUrlData {
-  const urlDataRMCAuto = {} as IUrlData;
+  const urlDataRMCAuto = {} as IUrlData; // FIXME USESTATE ?
 
   const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook(
-    params.idRequete,
+    params.requete,
     params.dataRequetes,
     `0-${NB_LIGNES_PAR_APPEL}`
   );
@@ -23,25 +34,41 @@ export function useRMCAutoHook(params: IRMCAutoParams): IUrlData {
     dataRMCAutoInscription,
     dataTableauRMCAutoInscription
   } = useRMCAutoInscriptionApiHook(
-    params.idRequete,
+    params.requete,
     params.dataRequetes,
     `0-${NB_LIGNES_PAR_APPEL}`
   );
 
+  const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituationRMCAutoVide(
+    params.requete,
+    dataRMCAutoInscription,
+    dataRMCAutoActe
+  );
+
   if (
-    params.idRequete &&
-    params.urlWithParam &&
-    dataRMCAutoActe &&
-    dataTableauRMCAutoActe &&
-    dataRMCAutoInscription &&
-    dataTableauRMCAutoInscription
+    estNonVide(
+      params,
+      dataRMCAutoActe,
+      dataTableauRMCAutoActe,
+      dataRMCAutoInscription,
+      dataTableauRMCAutoInscription,
+      resultGenerationCertificatSituationRMCAutoVide
+    )
   ) {
-    urlDataRMCAuto.url = redirectionRMCAuto(
-      params.idRequete,
-      params.urlWithParam,
-      [dataRMCAutoActe, dataTableauRMCAutoActe],
-      [dataRMCAutoInscription, dataTableauRMCAutoInscription]
-    );
+    //@ts-ignore
+    if (resultGenerationCertificatSituationRMCAutoVide.idDocumentReponse) {
+      urlDataRMCAuto.url = redirectionRMCAutoApercuTraitement(
+        params.requete.idRequete,
+        params.urlCourante
+      );
+    } else {
+      urlDataRMCAuto.url = redirectionRMCAuto(
+        params.requete.idRequete,
+        params.urlCourante,
+        [dataRMCAutoActe, dataTableauRMCAutoActe],
+        [dataRMCAutoInscription, dataTableauRMCAutoInscription]
+      );
+    }
 
     urlDataRMCAuto.data = {
       dataRequetes: params.dataRequetes,
@@ -52,4 +79,22 @@ export function useRMCAutoHook(params: IRMCAutoParams): IUrlData {
     };
   }
   return urlDataRMCAuto;
+}
+function estNonVide(
+  params: IRMCAutoParams,
+  dataRMCAutoActe?: IResultatRMCActe[],
+  dataTableauRMCAutoActe?: IParamsTableau,
+  dataRMCAutoInscription?: IResultatRMCInscription[],
+  dataTableauRMCAutoInscription?: IParamsTableau,
+  resultGenerationCertificatSituationRMCAutoVide?: IResultGenerationCertificatSituationRMCAutoVide
+) {
+  return (
+    params.requete &&
+    params.urlCourante &&
+    dataRMCAutoActe &&
+    dataTableauRMCAutoActe &&
+    dataRMCAutoInscription &&
+    dataTableauRMCAutoInscription &&
+    resultGenerationCertificatSituationRMCAutoVide
+  );
 }

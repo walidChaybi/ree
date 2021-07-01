@@ -15,7 +15,7 @@ export enum HeaderTableauRequete {
   Provenance = "provenance",
   Titulaires = "titulaires",
   DatesNaissancesTitulaires = "datesNaissancesTitulaires",
-  Requerant = "requerant",
+  Requerant = "nomCompletRequerant",
   AttribueA = "attribueA",
   DateCreation = "dateCreation",
   DateDerniereMaj = "dateDerniereMaj",

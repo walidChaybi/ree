@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
-import { ParametresComposition } from "../../../../../model/composition/IParametresComposition";
-import { IReponseNegativeDemandeIncomplete } from "../../../../../model/composition/IReponseNegativeDemandeIncomplete";
-import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../../../model/composition/Objets";
+import {
+  IReponseNegativeDemandeIncompleteComposition,
+  ReponseNegativeDemandeIncompleteComposition
+} from "../../../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
+import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../../../model/composition/ObjetsComposition";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
@@ -31,7 +33,7 @@ export const ChoixAction: React.FC<IActionProps> = props => {
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [reponseNegative, setReponseNegative] = useState<
-    IReponseNegativeDemandeIncomplete | undefined
+    IReponseNegativeDemandeIncompleteComposition | undefined
   >();
 
   useReponseNegative(reponseNegative, props.requete);
@@ -150,29 +152,17 @@ async function createReponseNegativePourCompositionApi(
   objet: string,
   requete?: IRequeteDelivrance
 ) {
-  const reponseNegative = {} as IReponseNegativeDemandeIncomplete;
-  await ParametresComposition.ajoutParametresComposition(reponseNegative);
-  if (requete) {
-    reponseNegative.objet_courrier = objet;
-
-    if (requete.requerant) {
-      reponseNegative.identite_requerant = `${requete.requerant.nomFamille} ${requete.requerant.prenom}`;
-
-      if (requete.requerant.adresse) {
-        reponseNegative.adresse_requerant = {
-          ligne2: requete.requerant.adresse.ligne2,
-          ligne3: requete.requerant.adresse.ligne3,
-          ligne4: requete.requerant.adresse.ligne4,
-          ligne5: requete.requerant.adresse.ligne5,
-          ligne6: requete.requerant.adresse.codePostal,
-          ligne7: requete.requerant.adresse.ville
-        };
-      }
-    } else {
-      messageManager.showErrorAndClose(
-        "Erreur inattendue: Pas de requérent pour la requête"
-      );
-    }
+  const reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
+  if (requete && requete.requerant) {
+    ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+      objet,
+      requete.requerant
+    );
+  } else {
+    messageManager.showErrorAndClose(
+      "Erreur inattendue: Pas de requérent pour la requête"
+    );
   }
+
   return reponseNegative;
 }

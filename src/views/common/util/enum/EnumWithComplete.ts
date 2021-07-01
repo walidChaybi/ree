@@ -33,7 +33,7 @@ export class EnumWithComplete extends EnumWithLibelle {
   }
 
   public static getKeyForNom(clazz: any, nom: string) {
-    let keyResult;
+    let keyResult = "";
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key) && clazz[key]._nom === nom) {
         keyResult = key;

@@ -11,19 +11,18 @@ import { mappingActes } from "../../acteInscription/hook/RMCActeInscriptionUtils
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoActeApiHook(
-  idRequete: string,
+  requete: IRequeteTableau,
   data: IRequeteTableau[],
   range: string
 ) {
   const [dataRMCAutoActe, setDataRMCAutoActe] = useState<IResultatRMCActe[]>();
-  const [
-    dataTableauRMCAutoActe,
-    setDataTableauRMCAutoActe
-  ] = useState<IParamsTableau>();
+  const [dataTableauRMCAutoActe, setDataTableauRMCAutoActe] = useState<
+    IParamsTableau
+  >();
 
   useEffect(() => {
-    if (idRequete != null && data != null) {
-      const criteresRequest = determinerCriteresRMCAuto(idRequete, data);
+    if (requete && data) {
+      const criteresRequest = determinerCriteresRMCAuto(requete, data);
 
       rechercheMultiCriteresAutoActes(criteresRequest, range)
         .then((result: any) => {
@@ -38,7 +37,7 @@ export function useRMCAutoActeApiHook(
           });
         });
     }
-  }, [idRequete, data, range]);
+  }, [requete, data, range]);
 
   return {
     dataRMCAutoActe,

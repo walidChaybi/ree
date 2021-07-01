@@ -1,12 +1,13 @@
 import { ReponseAppelDetailRequeteDelivrance } from "../data/DetailRequeteDelivrance";
 import {
   documentReponseCARN_CSPAC_01,
-  idDocumentReponseCARN_CSPAC_01
+  idDocumentReponse1
 } from "../data/DocumentReponse";
 import {
   ReponseAppelMesRequetes,
   ReponseAppelRequetesService
 } from "../data/EspaceDelivrance";
+import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
 import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclatureTypePiecesJustificative
@@ -163,13 +164,13 @@ export const configRequetesV2 = [
         };
       }
       // Récupération d'un document par son id
-      if (match[1] === "/documentsreponses/" + idDocumentReponseCARN_CSPAC_01) {
+      if (match[1] === "/documentsreponses/" + idDocumentReponse1) {
         return { data: documentReponseCARN_CSPAC_01 };
       }
 
       // Stockage d'un document (POST)
       if (match[1] === "/documentsreponses" && context.method === "post") {
-        return { data: [idDocumentReponseCARN_CSPAC_01] };
+        return { data: [idDocumentReponse1] };
       }
 
       // Création d'une action et maj statut de la requête
@@ -179,6 +180,11 @@ export const configRequetesV2 = [
         context.method === "post"
       ) {
         return { data: "123456789" };
+      }
+
+      // Récupération des paramètres de la base requête
+      if (match[1] === "/parametres" && context.method === "post") {
+        return { data: parametresBaseRequete };
       }
     },
 

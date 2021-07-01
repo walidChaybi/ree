@@ -6,6 +6,7 @@ import {
   getValeurOuVide
 } from "../../../views/common/util/Utils";
 import { NatureActe } from "../../etatcivil/enum/NatureActe";
+import { Sexe } from "../../etatcivil/enum/Sexe";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
 import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
@@ -13,6 +14,7 @@ import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { SousTypeMiseAJour } from "./enum/SousTypeMiseAJour";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TypeRequete } from "./enum/TypeRequete";
+import { IRequerant } from "./IRequerant";
 
 export interface IRequeteTableau {
   idRequete: string;
@@ -22,9 +24,10 @@ export interface IRequeteTableau {
   sousType?: string;
   provenance?: string;
   nature?: string;
-  document?: string;
+  document?: string; // id du type de document demandé
   titulaires?: ITitulaireRequeteTableau[];
-  requerant?: string;
+  requerant?: IRequerant;
+  nomCompletRequerant?: string;
   attribueA?: string;
   dateCreation?: string;
   dateDerniereMaj?: string;
@@ -42,6 +45,9 @@ export interface ITitulaireRequeteTableau {
   jourNaissance: number;
   moisNaissance: number;
   anneeNaissance: number;
+  villeNaissance?: string;
+  paysNaissance?: string;
+  sexe: Sexe;
 }
 
 //////////////////////////////////////////
@@ -66,10 +72,9 @@ export function mappingRequetesTableau(
         ? NatureActe.getEnumFor(requete.nature).libelle
         : "",
       document: getValeurOuVide(requete.document),
-      titulaires: mappingSupplementaire
-        ? getTitulaires(requete.titulaires)
-        : requete.titulaires,
-      requerant: getValeurOuVide(requete.requerant),
+      titulaires: mapTitulaires(requete.titulaires),
+      requerant: requete.requerant,
+      nomCompletRequerant: getValeurOuVide(requete.nomCompletRequerant),
       attribueA: `${formatPrenom(
         storeRece.getPrenomUtilisateurFromID(requete.idUtilisateur)
       )} ${formatNom(
@@ -80,7 +85,7 @@ export function mappingRequetesTableau(
       statut: StatutRequete.getEnumFor(requete.statut).libelle,
       priorite: getValeurOuVide(requete.priorite),
       observations: mappingSupplementaire
-        ? getObservations(requete.observations)
+        ? mapObservations(requete.observations)
         : requete.observations,
       idUtilisateur: getValeurOuVide(requete.idUtilisateur),
       idCorbeilleAgent: getValeurOuVide(requete.idCorbeilleAgent)
@@ -106,16 +111,19 @@ function getSousType(type: string, sousType: string) {
   }
 }
 
-function getTitulaires(titulaires: any): ITitulaireRequeteTableau[] {
+function mapTitulaires(titulaires: any): ITitulaireRequeteTableau[] {
   const titulairesResultatRMCRequete: ITitulaireRequeteTableau[] = [];
   if (titulaires) {
     titulaires.forEach((t: any) => {
-      const titulaire = {} as ITitulaireRequeteTableau;
+      const titulaire: ITitulaireRequeteTableau = t;
       titulaire.nom = formatNom(t.nom);
       titulaire.prenoms = getPrenoms(t.prenoms);
       titulaire.jourNaissance = t.jourNaissance;
       titulaire.moisNaissance = t.moisNaissance;
       titulaire.anneeNaissance = t.anneeNaissance;
+      titulaire.sexe = Sexe.getEnumFor(t.sexe);
+      titulaire.villeNaissance = t.villeNaissance;
+      titulaire.paysNaissance = t.paysNaissance;
       titulairesResultatRMCRequete.push(titulaire);
     });
   }
@@ -137,7 +145,7 @@ function getPrenoms(prenoms: string[]) {
   return prenomsTitulaire;
 }
 
-function getObservations(observations: string[]) {
+function mapObservations(observations: string[]) {
   const observationsTitulaire: string[] = [];
 
   if (observations && observations.length > 0) {

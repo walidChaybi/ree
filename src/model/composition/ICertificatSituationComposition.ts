@@ -1,0 +1,60 @@
+import { IRequerant } from "../requete/v2/IRequerant";
+import { ITitulaireRequeteTableau } from "../requete/v2/IRequeteTableau";
+import { ICommunComposition } from "./commun/ICommunComposition";
+import {
+  IParametresComposition,
+  ParametresComposition
+} from "./commun/IParametresComposition";
+import {
+  IRequerantComposition,
+  RequerantComposition
+} from "./commun/IRequerantComposition";
+import {
+  ITitulaireComposition,
+  TitulaireComposition
+} from "./commun/ITitulaireComposition";
+
+export const NOM_DOCUMENT_CERTIFICAT_SITUATION = "CERTIFICAT_SITUATION.pdf";
+export interface ICertificatSituationComposition
+  extends IParametresComposition,
+    ICommunComposition,
+    IRequerantComposition,
+    ITitulaireComposition {
+  decret1: string;
+  decret2: string;
+  decret3: string;
+  decret4: string;
+  decret5: string;
+  decret6: string;
+
+  phrases_liees: string;
+  phrases_pieces_jointes?: string;
+}
+
+export const CertificatSituationComposition = {
+  async creerCertificatSituation(
+    titre: string,
+    decrets: string[],
+    phrase: string,
+    requerant?: IRequerant,
+    titulaire?: ITitulaireRequeteTableau
+  ): Promise<ICertificatSituationComposition> {
+    const certificatSituation = {
+      titre,
+      phrases_liees: phrase
+    } as ICertificatSituationComposition;
+
+    if (decrets) {
+      decrets.forEach((decret, idx) => {
+        //@ts-ignore
+        certificatSituation[`decret${idx + 1}`] = decret;
+      });
+    }
+
+    await ParametresComposition.ajoutParametres(certificatSituation);
+    RequerantComposition.ajoutInfosRequerant(certificatSituation, requerant);
+    TitulaireComposition.ajoutInfosTitulaire(certificatSituation, titulaire);
+
+    return certificatSituation;
+  }
+};

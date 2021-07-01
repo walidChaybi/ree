@@ -19,8 +19,7 @@ export function isPathElemId(elem: string): boolean {
 }
 
 export function isLastPathElemIsId(url: string): boolean {
-  const lastPathElem = getLastPathElem(url);
-  return isPathElemId(lastPathElem);
+  return Boolean(getUrlParamId(url));
 }
 
 /**
@@ -31,6 +30,11 @@ export function getUrlWithoutIdParam(url: string): string {
   return isLastPathElemIsId(validUrl)
     ? validUrl.substring(0, validUrl.lastIndexOf(URL_SEPARATEUR))
     : validUrl;
+}
+
+export function getUrlParamId(url: string): string | undefined {
+  const lastPathElem = getLastPathElem(url);
+  return isPathElemId(lastPathElem) ? lastPathElem : undefined;
 }
 
 export function getLastPathElem(url: string) {
@@ -45,4 +49,10 @@ export function cleanUrl(url: string) {
     validUrl = validUrl.substring(0, validUrl.length - 1);
   }
   return validUrl;
+}
+
+export function getUrlPrecedente(url: string) {
+  const urlWithoutIdParam = getUrlWithoutIdParam(url);
+  const idxLastUrlSep = urlWithoutIdParam.lastIndexOf(URL_SEPARATEUR);
+  return urlWithoutIdParam.substring(0, idxLastUrlSep);
 }

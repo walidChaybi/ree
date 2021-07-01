@@ -10,7 +10,7 @@ import {
   URL_MES_REQUETES_V2,
   URL_REQUETES_SERVICE_V2
 } from "../../../router/ReceUrls";
-import { navigationApercu } from "../../apercuRequete/apercuRequete/ApercuRequeteUtils";
+import { navigationApercu } from "../../apercuRequete/v2/ApercuRequeteUtils";
 import {
   IRMCAutoParams,
   useRMCAutoHook
@@ -90,12 +90,13 @@ const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
     urlWithParam: string,
     idx: number
   ) => {
-    const navigation = navigationApercu(urlWithParam, dataRequetes, idx);
+    const requete = dataRequetes[idx];
+    const navigation = navigationApercu(urlWithParam, requete);
     if (navigation.isRmcAuto) {
       setParamsRMCAuto({
-        idRequete,
+        requete,
         dataRequetes,
-        urlWithParam
+        urlCourante: urlWithParam
       });
     } else if (navigation.url) {
       history.push(navigation.url, dataRequetes);

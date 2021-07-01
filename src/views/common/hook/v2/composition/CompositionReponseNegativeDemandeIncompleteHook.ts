@@ -1,10 +1,11 @@
-import { IReponseNegativeDemandeIncomplete } from "../../../../../model/composition/IReponseNegativeDemandeIncomplete";
 import { useEffect, useState } from "react";
-import { logError } from "../../../util/LogManager";
 import { compositionApi } from "../../../../../api/appels/compositionApi";
+import { IReponseNegativeDemandeIncompleteComposition } from "../../../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
+import { logError } from "../../../util/LogManager";
+import { getLibelle } from "../../../widget/Text";
 
 export function useCompositionReponseNegativeDemandeIncompleteApi(
-  reponseNegative?: IReponseNegativeDemandeIncomplete
+  reponseNegative?: IReponseNegativeDemandeIncompleteComposition
 ) {
   const [contenuComposition, setContenuComposition] = useState<string>();
 
@@ -18,8 +19,9 @@ export function useCompositionReponseNegativeDemandeIncompleteApi(
         .catch(error => {
           logError({
             error,
-            messageUtilisateur:
+            messageUtilisateur: getLibelle(
               "Impossible de créer le document pour la réponse négative"
+            )
           });
         });
     }

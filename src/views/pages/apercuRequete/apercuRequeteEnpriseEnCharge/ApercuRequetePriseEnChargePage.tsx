@@ -14,10 +14,10 @@ import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteH
 import { RMCAutoResultats } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAutoResultats";
 import { useRMCAutoRequeteApiHook } from "../../rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequeteApiHook";
 import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
-import { IdRequeteParams } from "../apercuRequete/ApercuRequeteUtils";
 import { BandeauRequete } from "../contenu/BandeauRequete";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
+import { IdRequeteParams } from "../v2/ApercuRequeteUtils";
 interface DataRMCAuto {
   dataRequetes: any[];
   dataRMCAutoActe: IResultatRMCActe[];

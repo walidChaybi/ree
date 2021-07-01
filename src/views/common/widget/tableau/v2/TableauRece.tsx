@@ -28,7 +28,7 @@ export interface TableauReceProps {
   paramsTableau: IParamsTableau;
   canUseSignature?: boolean;
   handleChangeSort?: (tri: string, sens: SortOrder) => void;
-  onClickOnLine: (id: string, data: any[], idx: number) => void;
+  onClickOnLine: (id: string, data: any[], idxGlobal: number) => void;
   goToLink: (value: string) => void;
   handleReload?: () => void;
   nbLignesParPage?: number;

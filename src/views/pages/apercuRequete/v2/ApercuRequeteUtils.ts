@@ -20,11 +20,9 @@ export interface IdRequeteParams {
 // Si on doit passer par la RMC Auto alors on renvoie le code RMC_AUTO
 export function navigationApercu(
   urlWithParam: string,
-  dataRequetes: IRequeteTableau[],
-  idx: number
+  requete: IRequeteTableau
 ): INavigationApercu {
   const officier = storeRece.utilisateurCourant;
-  const requete = dataRequetes[idx];
   const redirection = {} as INavigationApercu;
 
   // Si la requete est dans sa corbeille

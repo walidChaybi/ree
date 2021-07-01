@@ -1,6 +1,6 @@
 import {
   documentReponseCARN_CSPAC_01,
-  idDocumentReponseCARN_CSPAC_01
+  idDocumentReponse1
 } from "../data/DocumentReponse";
 import { imagePngVideBase64 } from "../data/ImagePng";
 import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
@@ -43,9 +43,7 @@ export const configMultiAPi = [
       // Récupération d'un document par son id
       if (
         match[1] ===
-        REQUETE_V2_API_URL +
-          "/documentsreponses/" +
-          idDocumentReponseCARN_CSPAC_01
+        REQUETE_V2_API_URL + "/documentsreponses/" + idDocumentReponse1
       ) {
         return { data: documentReponseCARN_CSPAC_01 };
       }
@@ -55,7 +53,7 @@ export const configMultiAPi = [
         match[1] === REQUETE_V2_API_URL + "/documentsreponses" &&
         context.method === "post"
       ) {
-        return { data: [idDocumentReponseCARN_CSPAC_01] };
+        return { data: [idDocumentReponse1] };
       }
 
       // Création d'une action et maj statut de la requête
@@ -74,6 +72,14 @@ export const configMultiAPi = [
         REQUETE_V2_API_URL + "/nomenclature/DOCUMENT_DELIVRANCE"
       ) {
         return { data: ReponseAppelNomenclatureDocummentDelivrance.data };
+      }
+
+      if (
+        match[1] ===
+        COMPOSITION_API_URL + "/composition/CERTIFICAT_SITUATION/1"
+      ) {
+        // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+        return { data: imagePngVideBase64 };
       }
     },
 

@@ -19,7 +19,7 @@ export enum HeaderTableauRequete {
   Canal = "canal",
   NatureActe = "nature",
   Document = "document",
-  Requerant = "requerant",
+  Requerant = "nomCompletRequerant",
   AttribueA = "attribueA",
   LibelleRequerant = "libelleRequerant",
   DateCreation = "dateCreation",
