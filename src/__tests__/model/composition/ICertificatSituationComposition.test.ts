@@ -1,3 +1,4 @@
+import { waitFor } from "@testing-library/react";
 import request from "superagent";
 import { certificatSituation } from "../../../mock/data/Composition";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
@@ -46,8 +47,9 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     requerant,
     titulaire
   );
-
-  expect(resultat).toEqual(attendu);
+  await waitFor(() => {
+    expect(resultat).toEqual(attendu);
+  });
 });
 
 afterAll(() => {

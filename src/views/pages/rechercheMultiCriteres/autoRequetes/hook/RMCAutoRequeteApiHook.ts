@@ -26,23 +26,30 @@ export function useRMCAutoRequeteApiHook(
   ] = useState<IParamsTableau>();
 
   useEffect(() => {
-    if (idRequete != null && data != null) {
-      const criteresRequest = determinerCriteresRMCAuto(idRequete, data);
-      rechercheMultiCriteresAutoRequetes(criteresRequest, range)
-        .then((result: any) => {
-          setDataRMCAutoRequete(
-            mappingRequetesTableau(result.body.data.resultatsRecherche, true)
+    async function fetchRequetes() {
+      try {
+        if (idRequete != null && data != null) {
+          const criteresRequest = determinerCriteresRMCAuto(idRequete, data);
+          const result = await rechercheMultiCriteresAutoRequetes(
+            criteresRequest,
+            range
           );
+          const requetes = await mappingRequetesTableau(
+            result?.body?.data?.resultatsRecherche,
+            true
+          );
+          setDataRMCAutoRequete(requetes);
           setDataTableauRMCAutoRequete(getParamsTableau(result));
-        })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur:
-              "Impossible de récupérer les requêtes de la recherche multi-critères automatique",
-            error
-          });
+        }
+      } catch (error) {
+        logError({
+          messageUtilisateur:
+            "Impossible de récupérer les requêtes de la recherche multi-critères automatique",
+          error
         });
+      }
     }
+    fetchRequetes();
   }, [idRequete, data, range]);
 
   return {

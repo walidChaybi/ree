@@ -20,24 +20,30 @@ export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
   ] = useState<IParamsTableau>();
 
   useEffect(() => {
-    if (criteres != null && criteres.valeurs != null) {
-      const criteresRequest = mappingCriteresRequete(criteres.valeurs);
-
-      rechercheMultiCriteresRequetes(criteresRequest, criteres.range)
-        .then((result: any) => {
-          setDataRMCRequete(
-            mappingRequetesTableau(result.body.data.resultatsRecherche, true)
+    async function fetchRequetes() {
+      try {
+        if (criteres != null && criteres.valeurs != null) {
+          const criteresRequest = mappingCriteresRequete(criteres.valeurs);
+          const result = await rechercheMultiCriteresRequetes(
+            criteresRequest,
+            criteres.range
           );
+          const requetes = await mappingRequetesTableau(
+            result?.body?.data?.resultatsRecherche,
+            true
+          );
+          setDataRMCRequete(requetes);
           setDataTableauRMCRequete(getParamsTableau(result));
-        })
-        .catch(error => {
-          logError({
-            messageUtilisateur:
-              "Impossible de récupérer les requetes de la recherche multi-critères",
-            error
-          });
+        }
+      } catch (error) {
+        logError({
+          messageUtilisateur:
+            "Impossible de récupérer les requetes de la recherche multi-critères",
+          error
         });
+      }
     }
+    fetchRequetes();
   }, [criteres]);
 
   return {

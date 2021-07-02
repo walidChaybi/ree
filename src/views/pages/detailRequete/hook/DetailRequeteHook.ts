@@ -72,7 +72,7 @@ export function useDetailRequeteApiHook(idRequete: string) {
 export async function mappingRequeteDelivrance(
   data: any
 ): Promise<IRequeteDelivrance> {
-  const documentDemande: DocumentDelivrance = await getDocumentDelivrance(
+  const documentDemande: DocumentDelivrance = await DocumentDelivrance.getDocumentDelivrance(
     data?.documentDemande
   );
   return {
@@ -238,11 +238,4 @@ function getEvenement(evenement: any): IEvenementReqDelivrance {
     ville: evenement.ville,
     pays: evenement.pays
   };
-}
-
-async function getDocumentDelivrance(
-  documentDemandeUUID: string
-): Promise<DocumentDelivrance> {
-  await DocumentDelivrance.init();
-  return DocumentDelivrance.getEnumFor(documentDemandeUUID);
 }

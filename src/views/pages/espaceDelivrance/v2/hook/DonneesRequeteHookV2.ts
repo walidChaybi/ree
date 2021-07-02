@@ -23,25 +23,29 @@ export function useRequeteApi(
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
 
   useEffect(() => {
-    let listeStatuts = "";
-
-    queryParameters.statuts.forEach((statut, i) => {
-      listeStatuts += statut;
-      listeStatuts += i < queryParameters.statuts.length - 1 ? "," : "";
-    });
-
-    getMesRequetes(typeRequete, listeStatuts, queryParameters)
-      .then(result => {
-        setDataState(mappingRequetesTableau(result.body.data, false));
+    async function fetchMesRequetes() {
+      try {
+        const listeStatuts = queryParameters?.statuts?.join(",");
+        const result = await getMesRequetes(
+          typeRequete,
+          listeStatuts,
+          queryParameters
+        );
+        const mesRequetes = await mappingRequetesTableau(
+          result?.body?.data,
+          false
+        );
+        setDataState(mesRequetes);
         setParamsTableau(getParamsTableau(result));
         setEnChargement(false);
-      })
-      .catch(error => {
+      } catch (error) {
         logError({
           messageUtilisateur: "Impossible de récupérer les requêtes",
           error
         });
-      });
+      }
+    }
+    fetchMesRequetes();
   }, [queryParameters, typeRequete, setEnChargement]);
 
   return {

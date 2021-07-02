@@ -52,8 +52,8 @@ export const certificatSituation: ICertificatSituationComposition = {
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
   identite_requerant: "nomFamille prenom",
   image_bloc_marques: imagePngVideBase64,
-  jour_naissance: "1",
-  mois_naissance: "2",
+  jour_naissance: "1er",
+  mois_naissance: "Février",
   nom: "nom",
   nom_direction: {
     ligne1: "Direction",
