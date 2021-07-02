@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeRequerant } from "../../../model/requete/v2/enum/TypeRequerant";
+import { logError } from "../../common/util/LogManager";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
 import { SelectField } from "../../common/widget/formulaire/champsSaisie/SelectField";
@@ -98,18 +99,15 @@ export const SaisirRDCSCPage: React.FC = () => {
     donneesNaissanceIncomplete,
     setDonneesNaissanceIncomplete
   ] = React.useState<boolean>(false);
-  const [
-    saisieRequeteRDCSC,
-    setSaisieRequeteRDCSC
-  ] = useState<SaisieRequeteRDCSC>();
-  const [
-    creationRequeteRDCSC,
-    setCreationRequeteRDCSC
-  ] = useState<CreationRequeteRDCSC>();
-  const [
-    updateRequeteRDCSC,
-    setUpdateRequeteRDCSC
-  ] = useState<UpdateRequeteRDCSC>();
+  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] = useState<
+    SaisieRequeteRDCSC
+  >();
+  const [creationRequeteRDCSC, setCreationRequeteRDCSC] = useState<
+    CreationRequeteRDCSC
+  >();
+  const [updateRequeteRDCSC, setUpdateRequeteRDCSC] = useState<
+    UpdateRequeteRDCSC
+  >();
 
   const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 
@@ -191,9 +189,10 @@ export const SaisirRDCSCPage: React.FC = () => {
   const enregistrerValider = (refus: boolean) => {
     if (saisieRequeteRDCSC) {
       if (refus) {
-        console.log(
-          "appel du Hook de l'US 137 : Réponse automatique - req Certificat Situation incomplète"
-        );
+        logError({
+          errorInfo:
+            "appel du Hook de l'US 137 : Réponse automatique - req Certificat Situation incomplète"
+        });
         // TODO appel du Hook de l'US 137 : Réponse automatique - req Certificat Situation incomplète
       }
       setOperationEnCours(true);
