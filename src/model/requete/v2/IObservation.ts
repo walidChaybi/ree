@@ -17,19 +17,19 @@ export interface IObservation {
 }
 
 export const Observation = {
-  getTexte(Observation?: IObservation): string {
-    return Observation
+  getTexte(observation?: IObservation): string {
+    return observation
       ? premiereLettreEnMajuscule(
-          finirAvec3petitsPoints(Observation.texte, LONGUEUR_TEXTE_MAX)
+          finirAvec3petitsPoints(observation.texte, LONGUEUR_TEXTE_MAX)
         )
       : "";
   },
-  getTrigramme(Observation?: IObservation): string {
-    return Observation ? enMajuscule(Observation.trigramme) : "";
+  getTrigramme(observation?: IObservation): string {
+    return observation ? enMajuscule(observation.trigramme) : "";
   },
-  getDate(Observation?: IObservation): string {
-    return Observation
-      ? getFormatDateFromTimestamp(Observation.dateObservation)
+  getDate(observation?: IObservation): string {
+    return observation
+      ? getFormatDateFromTimestamp(observation.dateObservation)
       : "";
   }
 };

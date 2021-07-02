@@ -191,7 +191,7 @@ export const SaisirRDCSCPage: React.FC = () => {
       if (refus) {
         logError({
           errorInfo:
-            "appel du Hook de l'US 137 : Réponse automatique - req Certificat Situation incomplète"
+            "TODO appel du Hook de l'US 137 : Réponse automatique - req Certificat Situation incomplète"
         });
         // TODO appel du Hook de l'US 137 : Réponse automatique - req Certificat Situation incomplète
       }

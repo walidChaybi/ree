@@ -16,24 +16,7 @@ interface BandeauRequeteProps {
 }
 export const BandeauRequete: React.FC<BandeauRequeteProps> = props => {
   const statut = props.detailRequete.statutCourant.statut;
-  const styles = classNames({
-    bleu:
-      statut === StatutRequete.A_TRAITER ||
-      statut === StatutRequete.A_VALIDER ||
-      statut === StatutRequete.PRISE_EN_CHARGE ||
-      statut === StatutRequete.TRANSFEREE,
-    gris:
-      statut === StatutRequete.BROUILLON ||
-      statut === StatutRequete.REJET ||
-      statut === StatutRequete.IGNOREE ||
-      statut === StatutRequete.DOUBLON ||
-      statut === StatutRequete.TRAITE_REPONDU ||
-      statut === StatutRequete.TRAITE_A_DELIVRER_DEMAT ||
-      statut === StatutRequete.TRAITE_A_IMPRIMER ||
-      statut === StatutRequete.TRAITE_DELIVRE_DEMAT ||
-      statut === StatutRequete.TRAITE_IMPRIME,
-    Entete: true
-  });
+  const styles = classNames(getClassName(statut));
   return (
     <div className="BandeauRequete">
       <h1 className={styles}>{getStatutLibelle(props.detailRequete)}</h1>
@@ -185,3 +168,33 @@ const getStatutLibelle = (requete: TRequete) => {
     }
   }
 };
+function getClassName(statut: StatutRequete) {
+  return {
+    bleu: estBleu(),
+    gris: estGris(),
+    Entete: true
+  };
+
+  function estGris() {
+    return (
+      statut === StatutRequete.BROUILLON ||
+      statut === StatutRequete.REJET ||
+      statut === StatutRequete.IGNOREE ||
+      statut === StatutRequete.DOUBLON ||
+      statut === StatutRequete.TRAITE_REPONDU ||
+      statut === StatutRequete.TRAITE_A_DELIVRER_DEMAT ||
+      statut === StatutRequete.TRAITE_A_IMPRIMER ||
+      statut === StatutRequete.TRAITE_DELIVRE_DEMAT ||
+      statut === StatutRequete.TRAITE_IMPRIME
+    );
+  }
+
+  function estBleu() {
+    return (
+      statut === StatutRequete.A_TRAITER ||
+      statut === StatutRequete.A_VALIDER ||
+      statut === StatutRequete.PRISE_EN_CHARGE ||
+      statut === StatutRequete.TRANSFEREE
+    );
+  }
+}
