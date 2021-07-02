@@ -1,4 +1,8 @@
 import {
+  getJourOu1er,
+  getMoisNaissanceEnLettre
+} from "../../../views/common/util/DateUtils";
+import {
   getValeurOuVide,
   jointAvecEspace
 } from "../../../views/common/util/Utils";
@@ -25,8 +29,8 @@ export const TitulaireComposition = {
       obj.prenoms = getValeurOuVide(jointAvecEspace(titulaire.prenoms));
       obj.sexe = titulaire.sexe.libelle;
 
-      obj.jour_naissance = String(getValeurOuVide(titulaire.jourNaissance));
-      obj.mois_naissance = String(getValeurOuVide(titulaire.moisNaissance));
+      obj.jour_naissance = getJourOu1er(titulaire.jourNaissance);
+      obj.mois_naissance = getMoisNaissanceEnLettre(titulaire.moisNaissance);
       obj.annee_naissance = String(getValeurOuVide(titulaire.anneeNaissance));
       obj.ville_naissance = getValeurOuVide(titulaire.villeNaissance);
       obj.pays_naissance = getValeurOuVide(titulaire.paysNaissance);

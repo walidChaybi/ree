@@ -1,5 +1,18 @@
 import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 
+export const UN = 1;
+export const DEUX = 2;
+export const TROIS = 3;
+export const QUATRE = 4;
+export const CINQ = 5;
+export const SIX = 6;
+export const SEPT = 7;
+export const HUIT = 8;
+export const NEUF = 9;
+export const DIX = 10;
+export const ONZE = 11;
+export const DOUZE = 12;
+
 function triObjetsSurPropriete(o1: any, o2: any, propertyName: string) {
   if (o1[propertyName] < o2[propertyName]) {
     return -1;

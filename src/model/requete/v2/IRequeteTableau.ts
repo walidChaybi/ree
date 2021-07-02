@@ -72,10 +72,7 @@ export function mappingRequetesTableau(
         ? NatureActe.getEnumFor(requete.nature).libelle
         : "",
       document: getValeurOuVide(requete.document),
-      titulaires:
-        mappingSupplementaire === true
-          ? mapTitulaires(requete.titulaires)
-          : requete.titulaires,
+      titulaires: mapTitulaires(requete.titulaires, mappingSupplementaire),
       requerant: requete.requerant,
       nomCompletRequerant: getValeurOuVide(requete.nomCompletRequerant),
       attribueA: `${formatPrenom(
@@ -115,11 +112,18 @@ function getSousType(type: string, sousType: string) {
   }
 }
 
-function mapTitulaires(titulaires: any): ITitulaireRequeteTableau[] {
+function mapTitulaires(
+  titulaires: any,
+  mappingSupplementaire: boolean
+): ITitulaireRequeteTableau[] {
   return titulaires?.map((t: any) => {
     const titulaire = {} as ITitulaireRequeteTableau;
     titulaire.nom = formatNom(t?.nom);
-    titulaire.prenoms = getPrenoms(t?.prenoms);
+    if (mappingSupplementaire) {
+      titulaire.prenoms = getPrenoms(t?.prenoms);
+    } else {
+      titulaire.prenoms = t?.prenoms;
+    }
     titulaire.jourNaissance = t?.jourNaissance;
     titulaire.moisNaissance = t?.moisNaissance;
     titulaire.anneeNaissance = t?.anneeNaissance;

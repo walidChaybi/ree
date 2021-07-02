@@ -14,6 +14,8 @@ import {
   getDateStringIso,
   getDernierJourDuMois,
   getIsoStringFromDateCompose,
+  getJourOu1er,
+  getMoisNaissanceEnLettre,
   IDateCompose
 } from "../../../views/common/util/DateUtils";
 
@@ -335,4 +337,16 @@ test("getDateStringFromDateCompose", () => {
   expect(
     getDateStringFromDateCompose({ jour: "", mois: "1", annee: "2021" })
   ).toBe("01/2021");
+});
+
+test("getMoisNaissanceEnLettre", () => {
+  expect(getMoisNaissanceEnLettre(undefined)).toBeUndefined();
+  expect(getMoisNaissanceEnLettre(13)).toBeUndefined();
+  expect(getMoisNaissanceEnLettre(3)).toBe("Mars");
+});
+
+test("getJourSuffixeAvec1erSiBesoin", () => {
+  expect(getJourOu1er(undefined)).toBe("undefined");
+  expect(getJourOu1er(1)).toBe("1er");
+  expect(getJourOu1er(2)).toBe("2");
 });

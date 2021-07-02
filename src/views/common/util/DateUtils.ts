@@ -1,4 +1,19 @@
-import { rempliAGaucheAvecZero } from "./Utils";
+import { getLibelle } from "../widget/Text";
+import {
+  CINQ,
+  DEUX,
+  DIX,
+  DOUZE,
+  HUIT,
+  NEUF,
+  ONZE,
+  QUATRE,
+  rempliAGaucheAvecZero,
+  SEPT,
+  SIX,
+  TROIS,
+  UN
+} from "./Utils";
 
 export const MIN_YEAR = 1900;
 export const MEP_YEAR = 2021;
@@ -226,4 +241,25 @@ export function formatDeOuLe(date: IDateCompose) {
   } else {
     return "En";
   }
+}
+
+const MAP_MOIS_LETTRES = new Map<number, string>();
+MAP_MOIS_LETTRES.set(UN, getLibelle("Janvier"));
+MAP_MOIS_LETTRES.set(DEUX, getLibelle("Février"));
+MAP_MOIS_LETTRES.set(TROIS, getLibelle("Mars"));
+MAP_MOIS_LETTRES.set(QUATRE, getLibelle("Avril"));
+MAP_MOIS_LETTRES.set(CINQ, getLibelle("Mai"));
+MAP_MOIS_LETTRES.set(SIX, getLibelle("Juin"));
+MAP_MOIS_LETTRES.set(SEPT, getLibelle("Juillet"));
+MAP_MOIS_LETTRES.set(HUIT, getLibelle("Août"));
+MAP_MOIS_LETTRES.set(NEUF, getLibelle("Septembre"));
+MAP_MOIS_LETTRES.set(DIX, getLibelle("Octobre"));
+MAP_MOIS_LETTRES.set(ONZE, getLibelle("Novembre"));
+MAP_MOIS_LETTRES.set(DOUZE, getLibelle("Décembre"));
+export function getMoisNaissanceEnLettre(mois?: number): string | undefined {
+  return mois ? MAP_MOIS_LETTRES.get(mois) : undefined;
+}
+
+export function getJourOu1er(jour?: number) {
+  return jour === 1 ? "1er" : String(jour);
 }
