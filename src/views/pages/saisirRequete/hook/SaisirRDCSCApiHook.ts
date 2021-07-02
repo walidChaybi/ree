@@ -169,7 +169,7 @@ function getParticulier(saisie: SaisieRequeteRDCSC) {
     adresse: getAdresse(saisie.adresse),
     qualite: Qualite.PARTICULIER.nom,
     detailQualiteParticulier: {
-      type: requerant.particulier.nomUsage
+      nomUsage: requerant.particulier.nomUsage
     }
   };
 }
