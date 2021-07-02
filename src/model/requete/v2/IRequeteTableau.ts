@@ -72,7 +72,10 @@ export function mappingRequetesTableau(
         ? NatureActe.getEnumFor(requete.nature).libelle
         : "",
       document: getValeurOuVide(requete.document),
-      titulaires: mapTitulaires(requete.titulaires),
+      titulaires:
+        mappingSupplementaire === true
+          ? mapTitulaires(requete.titulaires)
+          : requete.titulaires,
       requerant: requete.requerant,
       nomCompletRequerant: getValeurOuVide(requete.nomCompletRequerant),
       attribueA: `${formatPrenom(
@@ -84,9 +87,10 @@ export function mappingRequetesTableau(
       dateDerniereMaj: getFormatDateFromTimestamp(requete.dateDernierMAJ),
       statut: StatutRequete.getEnumFor(requete.statut).libelle,
       priorite: getValeurOuVide(requete.priorite),
-      observations: mappingSupplementaire
-        ? mapObservations(requete.observations)
-        : requete.observations,
+      observations:
+        mappingSupplementaire === true
+          ? mapObservations(requete.observations)
+          : requete.observations,
       idUtilisateur: getValeurOuVide(requete.idUtilisateur),
       idCorbeilleAgent: getValeurOuVide(requete.idCorbeilleAgent)
     };
@@ -112,36 +116,30 @@ function getSousType(type: string, sousType: string) {
 }
 
 function mapTitulaires(titulaires: any): ITitulaireRequeteTableau[] {
-  const titulairesResultatRMCRequete: ITitulaireRequeteTableau[] = [];
-  if (titulaires) {
-    titulaires.forEach((t: any) => {
-      const titulaire: ITitulaireRequeteTableau = t;
-      titulaire.nom = formatNom(t.nom);
-      titulaire.prenoms = getPrenoms(t.prenoms);
-      titulaire.jourNaissance = t.jourNaissance;
-      titulaire.moisNaissance = t.moisNaissance;
-      titulaire.anneeNaissance = t.anneeNaissance;
-      titulaire.sexe = Sexe.getEnumFor(t.sexe);
-      titulaire.villeNaissance = t.villeNaissance;
-      titulaire.paysNaissance = t.paysNaissance;
-      titulairesResultatRMCRequete.push(titulaire);
-    });
-  }
-
-  return titulairesResultatRMCRequete;
+  return titulaires?.map((t: any) => {
+    const titulaire = {} as ITitulaireRequeteTableau;
+    titulaire.nom = formatNom(t?.nom);
+    titulaire.prenoms = getPrenoms(t?.prenoms);
+    titulaire.jourNaissance = t?.jourNaissance;
+    titulaire.moisNaissance = t?.moisNaissance;
+    titulaire.anneeNaissance = t?.anneeNaissance;
+    titulaire.sexe = Sexe.getEnumFor(t?.sexe);
+    titulaire.villeNaissance = t?.villeNaissance;
+    titulaire.paysNaissance = t?.paysNaissance;
+    return titulaire;
+  });
 }
 
+// Recherche Requete
 const SEPARATOR_NUMERO_ELEMENT = ") ";
 
-function getPrenoms(prenoms: string[]) {
+function getPrenoms(prenoms: string[]): string[] {
   const prenomsTitulaire: string[] = [];
-
   if (prenoms) {
     prenoms.forEach((p: any) => {
       prenomsTitulaire.push(formatPrenom(p.split(SEPARATOR_NUMERO_ELEMENT)[1]));
     });
   }
-
   return prenomsTitulaire;
 }
 
