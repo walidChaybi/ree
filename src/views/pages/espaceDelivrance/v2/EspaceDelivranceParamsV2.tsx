@@ -18,7 +18,7 @@ export enum HeaderTableauRequete {
   Provenance = "provenance",
   Canal = "canal",
   NatureActe = "nature",
-  Document = "document",
+  Document = "documentLibelle",
   Requerant = "nomCompletRequerant",
   AttribueA = "attribueA",
   LibelleRequerant = "libelleRequerant",

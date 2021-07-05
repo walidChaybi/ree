@@ -26,6 +26,7 @@ export interface IRequeteTableau {
   provenance?: string;
   nature?: string;
   document?: string; // id du type de document demandé
+  documentLibelle?: string; // libellé du type de document demandé
   titulaires?: ITitulaireRequeteTableau[];
   requerant?: IRequerant;
   nomCompletRequerant?: string;
@@ -61,7 +62,7 @@ export async function mappingRequetesTableau(
 ): Promise<IRequeteTableau[]> {
   const requetes: Array<Promise<IRequeteTableau>> = resultatsRecherche?.map(
     async (requete: any) => {
-      const document: DocumentDelivrance = await DocumentDelivrance.getDocumentDelivrance(
+      const documentDelivrance: DocumentDelivrance = await DocumentDelivrance.getDocumentDelivrance(
         requete?.document
       );
       return {
@@ -74,7 +75,8 @@ export async function mappingRequetesTableau(
         nature: requete?.nature
           ? NatureActe.getEnumFor(requete?.nature)?.libelle
           : "",
-        document: document?.libelle,
+        document: requete?.document, // id du type de document demandé
+        documentLibelle: documentDelivrance.libelle, // libellé du type de document demandé
         titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
         requerant: requete?.requerant,
         nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),
