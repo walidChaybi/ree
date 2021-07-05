@@ -1,12 +1,12 @@
+import { Link } from "@material-ui/core";
 import React, { useState } from "react";
+import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import {
   FenetreExterne,
   FenetreExterneUtil
 } from "../../common/util/FenetreExterne";
 import { FichePage } from "./FichePage";
-import { Link } from "@material-ui/core";
 import "./scss/LienFiche.scss";
-import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 
 interface IDataLienFicheProps {
   identifiant: string;

@@ -14,6 +14,7 @@ import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteH
 import { BandeauRequete } from "../contenu/BandeauRequete";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
+import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
 import { IdRequeteParams } from "../v2/ApercuRequeteUtils";
 
 export const ApercuRequeteTraitementPage: React.FC = () => {
@@ -35,6 +36,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
           <BandeauRequete detailRequete={detailRequeteState} />
           <div className="contenu-requete">
             <div className="side left">
+              <ResumeRequeteV2 requete={detailRequeteState}></ResumeRequeteV2>
               <SuiviActionsRequete
                 actions={detailRequeteState?.actions}
               ></SuiviActionsRequete>

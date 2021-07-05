@@ -18,7 +18,7 @@ export function getInteresse(rcrca: IFicheRcRca): SectionPartProps[] {
 
   const interessePart: SectionPartProps[] = sortedInteresses.map(interesse => {
     return {
-      contentsPart: {
+      partContent: {
         contents: FicheUtil.isFicheRca(rcrca.categorie)
           ? getInteresseInfoRca(interesse)
           : getInteresseInfo(interesse),
@@ -29,7 +29,7 @@ export function getInteresse(rcrca: IFicheRcRca): SectionPartProps[] {
 
   if (rcrca.mariageInteresses) {
     interessePart.push({
-      contentsPart: {
+      partContent: {
         contents: [
           {
             libelle: "",

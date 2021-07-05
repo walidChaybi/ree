@@ -1,19 +1,19 @@
 import React from "react";
 import "./scss/SectionPart.scss";
-import { SectionSubParts } from "./SectionSubParts";
 import {
-  SectionContentPartProps,
-  SectionPartContent
+  SectionPartContent,
+  SectionPartContentProps
 } from "./SectionPartContent";
+import { SectionSubParts } from "./SectionSubParts";
 
 export interface SectionPartProps {
-  contentsPart?: SectionContentPartProps;
-  subParts?: SectionContentPartProps[];
+  partContent?: SectionPartContentProps;
+  subParts?: SectionPartContentProps[];
   classNameContent?: string;
 }
 
 export const SectionPart: React.FC<SectionPartProps> = ({
-  contentsPart,
+  partContent,
   subParts,
   classNameContent = ""
 }) => {
@@ -25,9 +25,9 @@ export const SectionPart: React.FC<SectionPartProps> = ({
           classNameContent={classNameContent}
         />
       ) : (
-        contentsPart && (
+        partContent && (
           <SectionPartContent
-            {...contentsPart}
+            {...partContent}
             classNameContent={classNameContent}
           />
         )

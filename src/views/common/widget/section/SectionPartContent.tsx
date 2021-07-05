@@ -1,13 +1,13 @@
 import React from "react";
 import { SectionContent, SectionContentProps } from "./SectionContent";
 
-export interface SectionContentPartProps {
+export interface SectionPartContentProps {
   contents: SectionContentProps[];
   title?: string;
   classNameContent?: string;
 }
 
-export const SectionPartContent: React.FC<SectionContentPartProps> = ({
+export const SectionPartContent: React.FC<SectionPartContentProps> = ({
   contents,
   title,
   classNameContent

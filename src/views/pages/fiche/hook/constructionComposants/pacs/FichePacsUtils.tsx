@@ -98,7 +98,7 @@ export function getPanelsPacs(pacs: IFichePacs): IAccordionReceSection {
 
 function getInscriptionRegistrePacs(pacs: IFichePacs): SectionPartProps[] {
   const part: SectionPartProps = {
-    contentsPart: {
+    partContent: {
       title: "",
       contents: [
         {
@@ -123,7 +123,7 @@ function getInscriptionRegistrePacs(pacs: IFichePacs): SectionPartProps[] {
 
 function getEnregistrementPacs(pacs: IFichePacs): SectionPartProps[] {
   const part1: SectionPartProps = {
-    contentsPart: {
+    partContent: {
       contents: [
         getContentAutorite(pacs.autorite),
         ...getContentNotaire(pacs.autorite),
@@ -136,7 +136,7 @@ function getEnregistrementPacs(pacs: IFichePacs): SectionPartProps[] {
   };
 
   const part2: SectionPartProps = {
-    contentsPart: {
+    partContent: {
       title: "",
       contents: getContentLieu(pacs.autorite)
     }
@@ -147,7 +147,7 @@ function getEnregistrementPacs(pacs: IFichePacs): SectionPartProps[] {
 
 function getModificationPacs(modification: IModification): SectionPartProps[] {
   const part1: SectionPartProps = {
-    contentsPart: {
+    partContent: {
       contents: [
         getContentAutorite(modification.autorite),
         ...getContentNotaire(modification.autorite),
@@ -164,7 +164,7 @@ function getModificationPacs(modification: IModification): SectionPartProps[] {
   };
 
   const part2: SectionPartProps = {
-    contentsPart: {
+    partContent: {
       contents: getContentLieu(modification.autorite)
     }
   };
@@ -174,7 +174,7 @@ function getModificationPacs(modification: IModification): SectionPartProps[] {
 
 function getDissolutionPacs(dissolution: IDissolution): SectionPartProps[] {
   const part1: SectionPartProps = {
-    contentsPart: {
+    partContent: {
       contents: [
         getContentAutorite(dissolution.autorite),
         ...getContentNotaire(dissolution.autorite),
@@ -195,7 +195,7 @@ function getDissolutionPacs(dissolution: IDissolution): SectionPartProps[] {
   };
 
   const part2: SectionPartProps = {
-    contentsPart: {
+    partContent: {
       title: "",
       contents: getContentLieu(dissolution.autorite)
     }
@@ -206,7 +206,7 @@ function getDissolutionPacs(dissolution: IDissolution): SectionPartProps[] {
 
 function getAnnulationPacs(annulation: IAnnulation): SectionPartProps[] {
   const part1: SectionPartProps = {
-    contentsPart: {
+    partContent: {
       contents: [
         {
           libelle: "Type de décision",
@@ -233,7 +233,7 @@ function getAnnulationPacs(annulation: IAnnulation): SectionPartProps[] {
   };
 
   const part2: SectionPartProps = {
-    contentsPart: {
+    partContent: {
       contents: getContentLieu(annulation.autorite)
     }
   };

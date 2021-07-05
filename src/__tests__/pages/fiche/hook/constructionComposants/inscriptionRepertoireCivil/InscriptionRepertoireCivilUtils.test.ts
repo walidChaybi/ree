@@ -11,27 +11,27 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
     ficheInscriptionRepertoireCivil as IFicheRcRca
   );
 
-  const idxNature = component.contentsPart.contents.findIndex(
+  const idxNature = component.partContent.contents.findIndex(
     content => content.libelle === "Nature"
   );
   expect(idxNature).toBeGreaterThan(-1);
 
-  const idxMandataire = component.contentsPart.contents.findIndex(
+  const idxMandataire = component.partContent.contents.findIndex(
     content => content.libelle === "Mandataire(s)"
   );
   expect(idxMandataire).toBeGreaterThan(-1);
   const valueMandataire: string =
-    component.contentsPart.contents[idxMandataire].value;
+    component.partContent.contents[idxMandataire].value;
 
   expect(valueMandataire.match(/ \/ /)).toHaveLength(1);
   expect(idxNature).toBeLessThan(idxMandataire);
 
-  const idxTypeInscription = component.contentsPart.contents.findIndex(
+  const idxTypeInscription = component.partContent.contents.findIndex(
     content => content.libelle === "Type inscription"
   );
   expect(idxTypeInscription).toBeGreaterThan(-1);
   const valueTypeInscription: JSX.Element =
-    component.contentsPart.contents[idxTypeInscription].value;
+    component.partContent.contents[idxTypeInscription].value;
   expect(valueTypeInscription.props.children[0]).toBe("Renouvellement");
   expect(valueTypeInscription.props.children[1]).toHaveLength(2);
   expect(idxMandataire).toBeLessThan(idxTypeInscription);
@@ -48,35 +48,35 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
   expect(valueTypeInscription2.props.children[1]).toBe("RC n°");
   expect(valueTypeInscription2.props.children[3]).toBe(")");
 
-  const idxInscriptionLie = component.contentsPart.contents.findIndex(
+  const idxInscriptionLie = component.partContent.contents.findIndex(
     content => content.libelle === "Inscription(s) liée(s)"
   );
   expect(idxInscriptionLie).toBeGreaterThan(-1);
   expect(idxMandataire).toBeLessThan(idxInscriptionLie);
 
-  const idxDateInscription = component.contentsPart.contents.findIndex(
+  const idxDateInscription = component.partContent.contents.findIndex(
     content => content.libelle === "Date d'inscription"
   );
   const valueDateInscription =
-    component.contentsPart.contents[idxDateInscription].value;
+    component.partContent.contents[idxDateInscription].value;
   expect(idxDateInscription).toBeGreaterThan(-1);
   expect(valueDateInscription).toBe("15/02/2018");
   expect(idxInscriptionLie).toBeLessThan(idxDateInscription);
 
-  const idxDureeInscription = component.contentsPart.contents.findIndex(
+  const idxDureeInscription = component.partContent.contents.findIndex(
     content => content.libelle === "Durée inscription"
   );
   const valueDureeInscription =
-    component.contentsPart.contents[idxDureeInscription].value;
+    component.partContent.contents[idxDureeInscription].value;
   expect(idxDureeInscription).toBeGreaterThan(-1);
   expect(valueDureeInscription).toBe("2 années");
   expect(idxDateInscription).toBeLessThan(idxDureeInscription);
 
-  const idxDateFinMEsure = component.contentsPart.contents.findIndex(
+  const idxDateFinMEsure = component.partContent.contents.findIndex(
     content => content.libelle === "Date fin de mesure"
   );
   const valueDateFinMesure =
-    component.contentsPart.contents[idxDateFinMEsure].value;
+    component.partContent.contents[idxDateFinMEsure].value;
   expect(idxDateFinMEsure).toBeGreaterThan(-1);
   expect(valueDateFinMesure).toBe("15/02/2020");
   expect(idxDureeInscription).toBeLessThan(idxDateFinMEsure);
@@ -86,11 +86,11 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
   const component = getInscriptionRepertoireCivil(
     ficheInscriptionRepertoireCivilSansUniteDureeInscription as IFicheRcRca
   );
-  const idxDureeInscription = component.contentsPart.contents.findIndex(
+  const idxDureeInscription = component.partContent.contents.findIndex(
     content => content.libelle === "Durée inscription"
   );
   const valueDureeInscription =
-    component.contentsPart.contents[idxDureeInscription].value;
+    component.partContent.contents[idxDureeInscription].value;
   expect(idxDureeInscription).toBeGreaterThan(-1);
   expect(valueDureeInscription).toBe("Viager");
 });
@@ -100,12 +100,12 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
     ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes as IFicheRcRca
   );
 
-  const idxTypeInscription = component.contentsPart.contents.findIndex(
+  const idxTypeInscription = component.partContent.contents.findIndex(
     content => content.libelle === "Type inscription"
   );
   expect(idxTypeInscription).toBeGreaterThan(-1);
   const valueTypeInscription: JSX.Element =
-    component.contentsPart.contents[idxTypeInscription].value;
+    component.partContent.contents[idxTypeInscription].value;
 
   expect(valueTypeInscription.props.children[0]).toBe("Renouvellement");
   expect(valueTypeInscription.props.children[1]).toHaveLength(0);

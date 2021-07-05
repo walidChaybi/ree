@@ -1,6 +1,5 @@
-import React from "react";
-
 import { render, waitFor } from "@testing-library/react";
+import React from "react";
 import { SectionPanelArea } from "../../../../views/common/widget/section/SectionPanelArea";
 
 test("render composant SectionPanelArea", async () => {
@@ -8,13 +7,13 @@ test("render composant SectionPanelArea", async () => {
     <SectionPanelArea
       parts={[
         {
-          contentsPart: {
+          partContent: {
             contents: [{ libelle: "testLibelle1", value: "testValue1" }],
             title: "titleTest1"
           }
         },
         {
-          contentsPart: {
+          partContent: {
             contents: [{ libelle: "testLibelle2", value: "testValue2" }],
             title: "titleTest2"
           }

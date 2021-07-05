@@ -1,10 +1,10 @@
 import React from "react";
 import "./scss/SectionPart.scss";
 import { SectionPart } from "./SectionPart";
-import { SectionContentPartProps } from "./SectionPartContent";
+import { SectionPartContentProps } from "./SectionPartContent";
 
 export interface SectionSubPartProps {
-  subParts: SectionContentPartProps[];
+  subParts: SectionPartContentProps[];
   classNameContent?: string;
 }
 
@@ -17,7 +17,7 @@ export const SectionSubParts: React.FC<SectionSubPartProps> = ({
       {subParts.map(subPart => (
         <SectionPart
           key={`subPart-columnIndex-${subPart.title}`}
-          contentsPart={{ ...subPart }}
+          partContent={{ ...subPart }}
         />
       ))}
     </div>

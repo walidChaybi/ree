@@ -1,15 +1,15 @@
-import React from "react";
-import DONNEES_REQUETE from "../../../mock/data/requete";
-import { Router, Route } from "react-router-dom";
-import { render, fireEvent, screen, act } from "@testing-library/react";
-import { createMemoryHistory } from "history";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { mount } from "enzyme";
+import { createMemoryHistory } from "history";
+import React from "react";
+import { Route, Router } from "react-router-dom";
+import DONNEES_REQUETE from "../../../mock/data/requete";
+import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 import { ApercuRequetePage } from "../../../views/pages/apercuRequete/ApercuRequetePage";
 import {
   URL_MES_REQUETES_ID,
   URL_REQUETES_SERVICE_ID
 } from "../../../views/router/ReceUrls";
-import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 
 test("renders Page requete with all elements", () => {
   act(() => {

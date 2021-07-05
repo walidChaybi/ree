@@ -8,7 +8,7 @@ import { TableauStatut } from "./TableauStatut";
 export function getStatuts(rcrca: IFicheRcRca): SectionPartProps[] {
   return [
     {
-      contentsPart: {
+      partContent: {
         contents: [getTableauStatuts(rcrca.statutsFiche)]
       }
     }

@@ -1,26 +1,26 @@
 import React from "react";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import {
-  IFicheActe,
-  FicheActe
-} from "../../../../../../model/etatcivil/acte/IFicheActe";
-import {
-  IEvenement,
-  Evenement
+  Evenement,
+  IEvenement
 } from "../../../../../../model/etatcivil/acte/IEvenement";
+import {
+  FicheActe,
+  IFicheActe
+} from "../../../../../../model/etatcivil/acte/IFicheActe";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
 export function getEvenement(acte: IFicheActe): SectionPartProps[] {
   const evenement: SectionPartProps[] = [
     {
-      contentsPart: {
+      partContent: {
         contents: getDateLieuEvenement(acte.evenement)
       }
     }
   ];
 
   evenement.push({
-    contentsPart: {
+    partContent: {
       contents: [
         {
           libelle: "Nature",

@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useRequeteDataApi } from "./hook/DonneeRequeteHook";
 import { IDataTable } from "../../../model/requete/IDataTable";
+import { IDocumentDelivre } from "../../common/types/RequeteType";
+import { getUrlWithParam } from "../../common/util/route/routeUtil";
+import { storeRece } from "../../common/util/storeRece";
+import { Title } from "../../core/title/Title";
 import {
   URL_MES_REQUETES,
-  URL_REQUETES_SERVICE,
   URL_MES_REQUETES_ID,
+  URL_REQUETES_SERVICE,
   URL_REQUETES_SERVICE_ID
 } from "../../router/ReceUrls";
-import { Title } from "../../core/title/Title";
 import { ActionsButtonsRequestPage } from "./actions/ActionsButtonsRequestPage";
-import { EtatRequete } from "./contenu/EtatRequete";
 import { ContenuRequete } from "./contenu/ContenuRequete";
-import { IDocumentDelivre } from "../../common/types/RequeteType";
-import { storeRece } from "../../common/util/storeRece";
-import { getUrlWithParam } from "../../common/util/route/routeUtil";
+import { EtatRequete } from "./contenu/EtatRequete";
+import { useRequeteDataApi } from "./hook/DonneeRequeteHook";
 
 export interface RequestsInformations {
   data: IDataTable[];

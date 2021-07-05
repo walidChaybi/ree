@@ -17,6 +17,7 @@ import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/auto
 import { BandeauRequete } from "../contenu/BandeauRequete";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
+import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
 import { IdRequeteParams } from "../v2/ApercuRequeteUtils";
 interface DataRMCAuto {
   dataRequetes: any[];
@@ -84,6 +85,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
           <BandeauRequete detailRequete={detailRequeteState} />
           <div className="contenu-requete">
             <div className="side left">
+              <ResumeRequeteV2 requete={detailRequeteState}></ResumeRequeteV2>
               <SuiviActionsRequete actions={detailRequeteState?.actions} />
               <SuiviObservationsRequete
                 observations={detailRequeteState?.observations}

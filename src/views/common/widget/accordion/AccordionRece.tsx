@@ -20,7 +20,7 @@ export const AccordionRece: React.FC<AccordionReceProps> = props => {
         defaultExpanded={props.defaultExpanded}
         key={`rece-accordion-${props.index}`}
         className="accordionRece"
-        disabled={false}
+        disabled={props.disabled}
       >
         <AccordionTitle title={props.titre} />
 

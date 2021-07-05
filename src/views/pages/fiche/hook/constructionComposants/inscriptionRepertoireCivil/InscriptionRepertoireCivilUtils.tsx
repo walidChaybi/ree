@@ -20,7 +20,7 @@ export function getInscriptionRepertoireCivil(
   rcrca: IFicheRcRca
 ): SectionPartProps {
   return {
-    contentsPart: {
+    partContent: {
       contents: FicheUtil.isFicheRca(rcrca.categorie)
         ? getInteresseRca(rcrca)
         : getInteresseRc(rcrca),

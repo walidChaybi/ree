@@ -14,6 +14,7 @@ import { TypeLienRequerant } from "../../../../model/requete/v2/enum/TypeLienReq
 import { TypeMandant } from "../../../../model/requete/v2/enum/TypeMandant";
 import { TypeMandataireReq } from "../../../../model/requete/v2/enum/TypeMandataireReq";
 import { TypeNatureActe } from "../../../../model/requete/v2/enum/TypeNatureActe";
+import { TypePieceJustificative } from "../../../../model/requete/v2/enum/TypePieceJustificative";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IAction } from "../../../../model/requete/v2/IActions";
 import { IAdresseRequerant } from "../../../../model/requete/v2/IAdresseRequerant";
@@ -33,6 +34,7 @@ import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivra
 import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
 import { ITitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
 import { IUtilisateurRece } from "../../../../model/requete/v2/IUtilisateurRece";
+import { IPieceJustificative } from "../../../common/types/RequeteType";
 import { logError } from "../../../common/util/LogManager";
 import { storeRece } from "../../../common/util/storeRece";
 
@@ -48,6 +50,7 @@ export function useDetailRequeteApiHook(idRequete: string) {
           const result = await getDetailRequete(idRequete);
           const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
           if (typeRequete === TypeRequete.DELIVRANCE) {
+            await TypePieceJustificative.init();
             const detailRequete = await mappingRequeteDelivrance(
               result?.body?.data
             );
@@ -91,6 +94,7 @@ export async function mappingRequeteDelivrance(
     idEntite: data?.corbeilleService?.idEntiteRattachement,
     actions: getActions(data?.actions),
     observations: getObservations(data.observations),
+    piecesJustificatives: mapPiecesJustificatives(data.piecesJustificatives),
 
     //Partie Requête Delivrance
     sousType: SousTypeDelivrance.getEnumFor(data?.sousType),
@@ -100,11 +104,21 @@ export async function mappingRequeteDelivrance(
     evenement: data?.evenement ? getEvenement(data.evenement) : undefined,
     motif: MotifDelivrance.getEnumFor(data?.motif),
     complementMotif: data?.complementMotif,
-    piecesJustificatives: [],
 
     // Documents réponse avec contenu vide
     documentsReponses: data?.documentsReponses
   };
+}
+
+function mapPiecesJustificatives(data: any): IPieceJustificative[] {
+  const piecesJustificatives: IPieceJustificative[] = data;
+  piecesJustificatives.forEach((pj: any) => {
+    pj.typePieceJustificative = TypePieceJustificative?.getEnumFor(
+      pj.typePieceJustificative
+    ); // pj.typePieceJustificative est un UUID car il vient du back
+  });
+
+  return piecesJustificatives;
 }
 
 function getActions(actions: any): IAction[] {

@@ -31,6 +31,7 @@ import {
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_DETAIL_REQUETE_ID,
+  URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
   URL_MES_REQUETES_ID,
   URL_MES_REQUETES_SAISIR_RDAPC,
   URL_MES_REQUETES_SAISIR_RDC,
@@ -50,6 +51,7 @@ import {
   URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
+  URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
   URL_REQUETES_SERVICE_ID,
   URL_REQUETES_SERVICE_SAISIR_RDAPC,
   URL_REQUETES_SERVICE_SAISIR_RDC,
@@ -288,6 +290,18 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    libelle: getLibelle("Détail de la requête")
+  },
+  {
+    url: URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    libelle: getLibelle("Détail de la requête")
+  },
+  {
+    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
     component: DetailRequetePage,
     droits: [Droit.ATTRIBUER],
     libelle: getLibelle("Détail de la requête")

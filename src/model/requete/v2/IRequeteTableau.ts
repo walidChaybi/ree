@@ -80,7 +80,11 @@ export async function mappingRequetesTableau(
         titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
         requerant: requete?.requerant,
         nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),
-        attribueA: mapAttribueA(requete),
+        attribueA: `${formatPrenom(
+          storeRece.getPrenomUtilisateurFromID(requete?.idUtilisateur)
+        )} ${formatNom(
+          storeRece.getNomUtilisateurFromID(requete?.idUtilisateur)
+        )}`,
         dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
         dateDerniereMaj: getFormatDateFromTimestamp(requete?.dateDernierMAJ),
         statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
@@ -132,18 +136,6 @@ function mapTitulaires(
     titulaire.paysNaissance = t?.paysNaissance;
     return titulaire;
   });
-}
-
-function mapAttribueA(requete: any): string | undefined {
-  let attribueA: string | undefined;
-  if (requete?.idUtilisateur) {
-    attribueA = `${formatPrenom(
-      storeRece.getPrenomUtilisateurFromID(requete?.idUtilisateur)
-    )} ${formatNom(storeRece.getNomUtilisateurFromID(requete?.idUtilisateur))}`;
-  } else if (requete?.idEntiteRattachement) {
-    attribueA = storeRece.getLibelleEntite(requete.idEntiteRattachement);
-  }
-  return attribueA;
 }
 
 // Recherche Requete

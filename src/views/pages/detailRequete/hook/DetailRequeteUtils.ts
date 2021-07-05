@@ -18,10 +18,10 @@ import { triListeObjetsSurPropriete } from "../../../common/util/Utils";
 import { SectionContentProps } from "../../../common/widget/section/SectionContent";
 import { SectionPanelProps } from "../../../common/widget/section/SectionPanel";
 import { SectionPartProps } from "../../../common/widget/section/SectionPart";
-import { SectionContentPartProps } from "../../../common/widget/section/SectionPartContent";
+import { SectionPartContentProps } from "../../../common/widget/section/SectionPartContent";
 import {
-  ajouterContentPartAuPartUneValeur,
   ajouterContentPartAuPartMultiValeurs,
+  ajouterContentPartAuPartUneValeur,
   ajouterPanelAreasAuPanel
 } from "../../../common/widget/section/SectionUtils";
 import { getLibelle } from "../../../common/widget/Text";
@@ -91,7 +91,7 @@ function getTitulaires(titulaires: ITitulaireRequete[]): SectionPartProps[] {
 
   return sortedTitulaires.map((titulaire, index) => {
     return {
-      contentsPart: {
+      partContent: {
         contents: getTitulairesInfo(titulaire, index + 1)
       }
     };
@@ -169,7 +169,7 @@ function getParentsDesTitulaires(
     let sectionParents = {} as SectionPartProps;
     if (titulaire.parentsTitulaire && titulaire.parentsTitulaire?.length > 0) {
       sectionParents = {
-        contentsPart: getParentsDuTitulaire(titulaire.parentsTitulaire, index)
+        partContent: getParentsDuTitulaire(titulaire.parentsTitulaire, index)
       };
     }
     return sectionParents;
@@ -179,7 +179,7 @@ function getParentsDesTitulaires(
 function getParentsDuTitulaire(
   parents: IParent[],
   index: number
-): SectionContentPartProps {
+): SectionPartContentProps {
   const sortedParents = triListeObjetsSurPropriete(
     [...parents],
     "position"
@@ -221,12 +221,12 @@ function getParentsInfo(parents: IParent[]): SectionContentProps[] {
 function getRequerant(requerant: IRequerant): SectionPartProps[] {
   return [
     {
-      contentsPart: {
+      partContent: {
         contents: getRequerantInfo1(requerant)
       }
     },
     {
-      contentsPart: {
+      partContent: {
         contents: getRequerantInfo2(requerant)
       }
     }
@@ -349,12 +349,12 @@ function getTypeRequerant(requerant: IRequerant) {
 function getMandant(mandant: IMandant): SectionPartProps[] {
   return [
     {
-      contentsPart: {
+      partContent: {
         contents: getMandantInfo1(mandant)
       }
     },
     {
-      contentsPart: {
+      partContent: {
         contents: getMandantInfo2(mandant)
       }
     }
@@ -413,7 +413,7 @@ function getRequeteDelivrance(
       {
         parts: [
           {
-            contentsPart: {
+            partContent: {
               contents: getRequeteDelivranceInfo(detailRequete)
             }
           }

@@ -10,13 +10,13 @@ test("render composant AccordionRece", async () => {
           {
             parts: [
               {
-                contentsPart: {
+                partContent: {
                   contents: [{ libelle: "testLibelle1", value: "testValue1" }],
                   title: "titleTest1"
                 }
               },
               {
-                contentsPart: {
+                partContent: {
                   contents: [{ libelle: "testLibelle2", value: "testValue2" }],
                   title: "titleTest2"
                 }
@@ -26,7 +26,7 @@ test("render composant AccordionRece", async () => {
           {
             parts: [
               {
-                contentsPart: {
+                partContent: {
                   contents: [
                     { libelle: "testLibelle1.1", value: "testValue1.1" }
                   ],
@@ -34,7 +34,7 @@ test("render composant AccordionRece", async () => {
                 }
               },
               {
-                contentsPart: {
+                partContent: {
                   contents: [
                     { libelle: "testLibelle2.1", value: "testValue2.1" }
                   ],
@@ -67,13 +67,13 @@ test("render composant AccordionRece can close", async () => {
           {
             parts: [
               {
-                contentsPart: {
+                partContent: {
                   contents: [{ libelle: "testLibelle1", value: "testValue1" }],
                   title: "titleTest1"
                 }
               },
               {
-                contentsPart: {
+                partContent: {
                   contents: [{ libelle: "testLibelle2", value: "testValue2" }],
                   title: "titleTest2"
                 }
@@ -83,7 +83,7 @@ test("render composant AccordionRece can close", async () => {
           {
             parts: [
               {
-                contentsPart: {
+                partContent: {
                   contents: [
                     { libelle: "testLibelle1.1", value: "testValue1.1" }
                   ],
@@ -91,7 +91,7 @@ test("render composant AccordionRece can close", async () => {
                 }
               },
               {
-                contentsPart: {
+                partContent: {
                   contents: [
                     { libelle: "testLibelle2.1", value: "testValue2.1" }
                   ],

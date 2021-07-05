@@ -4,6 +4,10 @@ import { EnumWithLibelle } from "../../../../views/common/util/enum/EnumWithLibe
 import { Options } from "../../../../views/common/util/Type";
 
 export class TypePieceJustificative extends EnumWithLibelle {
+  public static async init() {
+    return peupleTypePieceJustificative();
+  }
+
   //AddEnum specifique aux nomenclatures !
   public static addEnum(key: string, obj: TypePieceJustificative) {
     EnumWithLibelle.addEnum(key, obj, TypePieceJustificative);
@@ -17,8 +21,8 @@ export class TypePieceJustificative extends EnumWithLibelle {
     return EnumWithLibelle.contientEnums(TypePieceJustificative);
   }
 
-  public static getEnumFor(str: string) {
-    return EnumWithLibelle.getEnumFor(str, TypePieceJustificative);
+  public static getEnumFor(uuid: string) {
+    return EnumWithLibelle.getEnumFor(uuid, TypePieceJustificative);
   }
 
   public static async getAllEnumsAsOptions(): Promise<Options> {

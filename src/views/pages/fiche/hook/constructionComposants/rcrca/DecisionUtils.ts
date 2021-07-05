@@ -1,17 +1,17 @@
-import { DecisionUtil } from "../../../../../../model/etatcivil/enum/TypeDecision";
-import {
-  getDateString,
-  getDateFromTimestamp
-} from "../../../../../common/util/DateUtils";
-import { IDecisionRc } from "../../../../../../model/etatcivil/fiche/IDecisionRc";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/enum/TypeAutorite";
+import { DecisionUtil } from "../../../../../../model/etatcivil/enum/TypeDecision";
 import {
   FicheUtil,
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
+import { IDecisionRc } from "../../../../../../model/etatcivil/fiche/IDecisionRc";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import {
+  getDateFromTimestamp,
+  getDateString
+} from "../../../../../common/util/DateUtils";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
 export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
   let contentsDecision: SectionContentProps[] = [];
@@ -30,7 +30,7 @@ export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
 
   const decision: SectionPartProps[] = [
     {
-      contentsPart: {
+      partContent: {
         contents: contentsDecision,
         title: "Décision"
       }
@@ -42,7 +42,7 @@ export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
     rcrca.decision.type != null
   ) {
     decision.push({
-      contentsPart: {
+      partContent: {
         contents: [
           ...getContentConfirmationDecision(rcrca.decision, rcrca.categorie)
         ],

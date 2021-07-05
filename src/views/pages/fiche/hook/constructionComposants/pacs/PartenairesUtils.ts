@@ -13,7 +13,7 @@ export function getPartenaires(partenaires: IPartenaire[]): SectionPartProps[] {
   return partenaires.map((p, idx) => {
     if (p) {
       return {
-        contentsPart: {
+        partContent: {
           title: `Partenaire ${idx + 1}`,
           contents: [
             {
@@ -58,7 +58,7 @@ export function getPartenaires(partenaires: IPartenaire[]): SectionPartProps[] {
       };
     }
     return {
-      contentsPart: {
+      partContent: {
         title: `Partenaire ${idx + 1}`,
         contents: []
       }

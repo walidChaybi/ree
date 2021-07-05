@@ -1,27 +1,27 @@
 import React from "react";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+import {
+  Autorite,
+  IAutorite
+} from "../../../../../../model/etatcivil/commun/IAutorite";
 import {
   TypeAutorite,
   TypeAutoriteUtil
 } from "../../../../../../model/etatcivil/enum/TypeAutorite";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import {
   FicheUtil,
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import {
-  IAutorite,
-  Autorite
-} from "../../../../../../model/etatcivil/commun/IAutorite";
-import { formatPrenom, formatNom } from "../../../../../common/util/Utils";
 import { TypeJuridiction } from "../../../../../../model/etatcivil/enum/TypeJuridiction";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { LieuxUtils } from "../../../../../../model/LieuxUtils";
+import { formatNom, formatPrenom } from "../../../../../common/util/Utils";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
 export function getAutorite(rcrca: IFicheRcRca): SectionPartProps[] {
   const autorite: SectionPartProps[] = [
     {
-      contentsPart: {
+      partContent: {
         contents: getContentAutorite(rcrca.decision.autorite, rcrca.categorie)
       }
     }
@@ -34,7 +34,7 @@ export function getAutorite(rcrca: IFicheRcRca): SectionPartProps[] {
     )
   ) {
     autorite.push({
-      contentsPart: {
+      partContent: {
         contents: getContentAutorite(
           rcrca.decision.sourceConfirmation.autorite,
           rcrca.categorie

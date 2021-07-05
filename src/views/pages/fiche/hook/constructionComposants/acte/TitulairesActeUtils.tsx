@@ -1,12 +1,12 @@
 import React from "react";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import {
   ITitulaireActe,
   TitulaireActe
 } from "../../../../../../model/etatcivil/acte/ITitulaireActe";
+import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
 export function getTitulaires(acte: IFicheActe): SectionPartProps[] {
   const sortedTitulaires = triListeObjetsSurPropriete(
@@ -16,7 +16,7 @@ export function getTitulaires(acte: IFicheActe): SectionPartProps[] {
 
   return sortedTitulaires.map((titulaire, index) => {
     return {
-      contentsPart: {
+      partContent: {
         contents: getTitulairesInfo(titulaire, index + 1)
       }
     };

@@ -1,25 +1,24 @@
 import React from "react";
+import { IFamille } from "../../../../../../model/etatcivil/commun/IFamille";
+import { IFicheLien } from "../../../../../../model/etatcivil/commun/IFicheLien";
+import { IFicheLienActes } from "../../../../../../model/etatcivil/commun/IFicheLienActes";
 import {
   IPersonne,
   Personne
 } from "../../../../../../model/etatcivil/commun/IPersonne";
-import { IFamille } from "../../../../../../model/etatcivil/commun/IFamille";
-import { IFicheLienActes } from "../../../../../../model/etatcivil/commun/IFicheLienActes";
-import { IFicheLien } from "../../../../../../model/etatcivil/commun/IFicheLien";
-import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
-import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
-import { LienFiche } from "../../../LienFiche";
+import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import {
-  formatDe,
   enMajuscule,
+  formatDe,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../../../common/util/Utils";
-import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { SectionContentPartProps } from "../../../../../common/widget/section/SectionPartContent";
-import { getLibelle } from "../../../../../common/widget/Text";
+import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
+import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
-
+import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
+import { SectionPartContentProps } from "../../../../../common/widget/section/SectionPartContent";
+import { getLibelle } from "../../../../../common/widget/Text";
+import { LienFiche } from "../../../LienFiche";
 import { IParamsAffichage } from "../acte/FicheActeUtils";
 
 export function getFichesPersonneActe(
@@ -77,7 +76,7 @@ function getPanelAreasFichesPersonnes(
 
 function getInformationsListeInscriptions(
   personne: IPersonne
-): SectionContentPartProps {
+): SectionPartContentProps {
   return {
     contents: [
       getRcsPersonne(Personne.getRcs(personne)),
@@ -90,21 +89,21 @@ function getInformationsListeInscriptions(
 
 function getInformationsListeActes(
   personne: IPersonne
-): SectionContentPartProps {
+): SectionPartContentProps {
   return {
     contents: [getActesPersonne(Personne.getActes(personne))],
     title: getLibelle("Liste d'actes")
   };
 }
 
-function getInformationsParents(personne: IPersonne): SectionContentPartProps {
+function getInformationsParents(personne: IPersonne): SectionPartContentProps {
   return {
     contents: [...getParentsPersonne(Personne.getParents(personne))],
     title: getLibelle("Parents")
   };
 }
 
-function getInformationsEnfants(personne: IPersonne): SectionContentPartProps {
+function getInformationsEnfants(personne: IPersonne): SectionPartContentProps {
   return {
     contents: [getEnfantsPersonne(Personne.getEnfants(personne))],
     title: getLibelle("Enfants")
@@ -113,7 +112,7 @@ function getInformationsEnfants(personne: IPersonne): SectionContentPartProps {
 
 function getInformationsPersonne(personne: IPersonne): SectionPartProps {
   return {
-    contentsPart: {
+    partContent: {
       contents: [
         getNomPersonne(Personne.getNom(personne)),
         getAutresNomsPersonne(Personne.getAutresNoms(personne)),
