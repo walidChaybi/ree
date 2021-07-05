@@ -3,6 +3,7 @@ import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resul
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { NB_LIGNES_PAR_APPEL } from "../../../../common/widget/tableau/TableUtils";
+import { getLibelle } from "../../../../common/widget/Text";
 import { IUrlData } from "../../../../router/ReceUrls";
 import {
   IResultGenerationCertificatSituationRMCAutoVide,
@@ -55,11 +56,21 @@ export function useRMCAutoHook(params: IRMCAutoParams): IUrlData {
       resultGenerationCertificatSituationRMCAutoVide
     )
   ) {
+    urlDataRMCAuto.data = {
+      dataRequetes: params.dataRequetes,
+      dataRMCAutoActe,
+      dataTableauRMCAutoActe,
+      dataRMCAutoInscription,
+      dataTableauRMCAutoInscription
+    };
     //@ts-ignore
     if (resultGenerationCertificatSituationRMCAutoVide.idDocumentReponse) {
       urlDataRMCAuto.url = redirectionRMCAutoApercuTraitement(
         params.requete.idRequete,
         params.urlCourante
+      );
+      urlDataRMCAuto.data.info = getLibelle(
+        "La recherche multi-critères sur les actes/ RC / RCA et PACS n'ayant donné aucun résultat, il vous est proposé de délivrer le certificat ci-dessous."
       );
     } else {
       urlDataRMCAuto.url = redirectionRMCAuto(
@@ -69,14 +80,6 @@ export function useRMCAutoHook(params: IRMCAutoParams): IUrlData {
         [dataRMCAutoInscription, dataTableauRMCAutoInscription]
       );
     }
-
-    urlDataRMCAuto.data = {
-      dataRequetes: params.dataRequetes,
-      dataRMCAutoActe,
-      dataTableauRMCAutoActe,
-      dataRMCAutoInscription,
-      dataTableauRMCAutoInscription
-    };
   }
   return urlDataRMCAuto;
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import {
@@ -17,7 +17,9 @@ import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { IdRequeteParams } from "../v2/ApercuRequeteUtils";
 
 export const ApercuRequeteTraitementPage: React.FC = () => {
+  const history = useHistory();
   const { idRequete } = useParams<IdRequeteParams>();
+  const [dataHistory] = useState<any>(history.location.state);
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 
@@ -41,6 +43,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
               />
             </div>
             <div className="side right">
+              {dataHistory && dataHistory.info && <div>{dataHistory.info}</div>}
               <VisionneuseDocument
                 titre={getLibelle("Aperçu des documents")}
                 contenu={contenuDocument?.contenu}
