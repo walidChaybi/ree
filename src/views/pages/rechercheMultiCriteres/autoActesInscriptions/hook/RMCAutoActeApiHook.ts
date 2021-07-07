@@ -11,9 +11,9 @@ import { mappingActes } from "../../acteInscription/hook/RMCActeInscriptionUtils
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoActeApiHook(
-  requete: IRequeteTableau,
-  data: IRequeteTableau[],
-  range: string
+  requete?: IRequeteTableau,
+  data?: IRequeteTableau[],
+  range?: string
 ) {
   const [dataRMCAutoActe, setDataRMCAutoActe] = useState<IResultatRMCActe[]>();
   const [dataTableauRMCAutoActe, setDataTableauRMCAutoActe] = useState<

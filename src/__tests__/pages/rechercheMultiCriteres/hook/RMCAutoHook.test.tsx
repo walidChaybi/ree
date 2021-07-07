@@ -6,7 +6,7 @@ import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
 import {
   IRMCAutoParams,
   useRMCAutoHook
-} from "../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoHook";
+} from "../../../../views/common/hook/v2/navigationApercuRequeteRmcAuto/RMCAutoHook";
 import {
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_V2,
@@ -18,29 +18,35 @@ import {
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
-let params: IRMCAutoParams = {
+const paramsRequete: IRMCAutoParams = {
   requete: { idRequete: ":idRequete", document: "123456" } as IRequeteTableau,
   dataRequetes: [],
   urlCourante: URL_MES_REQUETES_V2
 };
 
+const paramsRequeteService = {
+  ...paramsRequete,
+  urlCourante: URL_REQUETES_SERVICE_V2
+};
+
+const paramsRechercheRequete = {
+  ...paramsRequete,
+  urlCourante: URL_RECHERCHE_REQUETE
+};
+
 const HookConsummerRequete: React.FC = () => {
-  const { url } = useRMCAutoHook(params);
-  return <div data-testid="urlRedirection">{url}</div>;
+  const urlData = useRMCAutoHook(paramsRequete);
+  return <div data-testid="urlRedirection">{urlData ? urlData.url : ""}</div>;
 };
 
 const HookConsummerRequeteService: React.FC = () => {
-  const urlWithParam = URL_REQUETES_SERVICE_V2;
-  params = { ...params, urlCourante: urlWithParam };
-  const { url } = useRMCAutoHook(params);
-  return <div data-testid="urlRedirection">{url}</div>;
+  const urlData = useRMCAutoHook(paramsRequeteService);
+  return <div data-testid="urlRedirection">{urlData ? urlData.url : ""}</div>;
 };
 
 const HookConsummerRechercheRequete: React.FC = () => {
-  const urlWithParam = URL_RECHERCHE_REQUETE;
-  params = { ...params, urlCourante: urlWithParam };
-  const { url } = useRMCAutoHook(params);
-  return <div data-testid="urlRedirection">{url}</div>;
+  const urlData = useRMCAutoHook(paramsRechercheRequete);
+  return <div data-testid="urlRedirection">{urlData ? urlData.url : ""}</div>;
 };
 
 test('Test useRMCAutoHook : redirection à partir de "Mes Requêtes"', async () => {

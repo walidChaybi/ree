@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import { IOngletProps } from "../../../../model/IOnglet";
+import {
+  INavigationApercuRMCAutoParams,
+  useNavigationApercuRMCAuto
+} from "../../../common/hook/v2/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
 import { NomComposant } from "../../../common/util/habilitation/habilitationsDescription";
 import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";
 import { getLibelle } from "../../../common/widget/Text";
 import { OfficierContext } from "../../../core/contexts/OfficierContext";
 import {
-  IUrlData,
   URL_MES_REQUETES_V2,
   URL_REQUETES_SERVICE_V2
 } from "../../../router/ReceUrls";
-import { navigationApercu } from "../../apercuRequete/v2/ApercuRequeteUtils";
-import {
-  IRMCAutoParams,
-  useRMCAutoHook
-} from "../../rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoHook";
 import { CompteurRequete } from "./contenu/CompteurRequeteV2";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequeteV2";
 import { MesRequetesPageV2 } from "./MesRequetesPageV2";
@@ -72,7 +69,6 @@ const getOnglets = (
 };
 
 const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
-  const history = useHistory();
   const [reloadCompteur, setReloadCompteur] = React.useState<boolean>(true);
   const miseAJourCompteur = () => {
     setReloadCompteur(!reloadCompteur);
@@ -80,9 +76,10 @@ const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
   const selectedTabState = selectedTab || 0;
 
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams>(
-    {} as IRMCAutoParams
-  );
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+    INavigationApercuRMCAutoParams | undefined
+  >();
+  useNavigationApercuRMCAuto(paramsRMCAuto);
 
   const recuperationParamsRMCAuto = (
     idRequete: string,
@@ -91,25 +88,12 @@ const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
     idx: number
   ) => {
     const requete = dataRequetes[idx];
-    const navigation = navigationApercu(urlWithParam, requete);
-    if (navigation.isRmcAuto) {
-      setParamsRMCAuto({
-        requete,
-        dataRequetes,
-        urlCourante: urlWithParam
-      });
-    } else if (navigation.url) {
-      history.push(navigation.url, dataRequetes);
-    }
+    setParamsRMCAuto({
+      requete,
+      dataRequetes,
+      urlCourante: urlWithParam
+    });
   };
-
-  const rmcAutoUrlData: IUrlData = useRMCAutoHook(paramsRMCAuto);
-
-  useEffect(() => {
-    if (rmcAutoUrlData.url && rmcAutoUrlData.data) {
-      history.push(rmcAutoUrlData.url, rmcAutoUrlData.data);
-    }
-  }, [rmcAutoUrlData, history]);
 
   return (
     <>

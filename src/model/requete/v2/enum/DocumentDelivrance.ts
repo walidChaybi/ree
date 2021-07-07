@@ -104,7 +104,9 @@ export class DocumentDelivrance extends EnumWithComplete {
     );
   }
 
-  public static async getCourrierNonDelivranceAttestationPacsUUID(): Promise<string> {
+  public static async getCourrierNonDelivranceAttestationPacsUUID(): Promise<
+    string
+  > {
     await DocumentDelivrance.init();
     const uuid = EnumWithComplete.getKeyForNom(
       DocumentDelivrance,

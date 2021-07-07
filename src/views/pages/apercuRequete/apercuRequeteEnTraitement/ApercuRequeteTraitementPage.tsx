@@ -15,7 +15,10 @@ import { BandeauRequete } from "../contenu/BandeauRequete";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
-import { IdRequeteParams } from "../v2/ApercuRequeteUtils";
+
+interface IdRequeteParams {
+  idRequete: string;
+}
 
 export const ApercuRequeteTraitementPage: React.FC = () => {
   const history = useHistory();

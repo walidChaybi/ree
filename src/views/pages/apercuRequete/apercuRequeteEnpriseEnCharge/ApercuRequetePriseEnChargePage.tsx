@@ -18,13 +18,16 @@ import { BandeauRequete } from "../contenu/BandeauRequete";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
-import { IdRequeteParams } from "../v2/ApercuRequeteUtils";
 interface DataRMCAuto {
   dataRequetes: any[];
   dataRMCAutoActe: IResultatRMCActe[];
   dataTableauRMCAutoActe: IParamsTableau;
   dataRMCAutoInscription: IResultatRMCInscription[];
   dataTableauRMCAutoInscription: IParamsTableau;
+}
+
+interface IdRequeteParams {
+  idRequete: string;
 }
 
 export const ApercuRequetePriseEnChargePage: React.FC = () => {

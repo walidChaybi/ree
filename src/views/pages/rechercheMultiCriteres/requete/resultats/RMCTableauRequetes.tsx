@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import {
+  INavigationApercuRMCAutoParams,
+  useNavigationApercuRMCAuto
+} from "../../../../common/hook/v2/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getMessageZeroRequete } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
-import { IUrlData, URL_RECHERCHE_REQUETE } from "../../../../router/ReceUrls";
-import { navigationApercu } from "../../../apercuRequete/v2/ApercuRequeteUtils";
+import { URL_RECHERCHE_REQUETE } from "../../../../router/ReceUrls";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
-import {
-  IRMCAutoParams,
-  useRMCAutoHook
-} from "../../autoActesInscriptions/hook/RMCAutoHook";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
 export interface RMCResultatRequetesProps {
@@ -29,8 +27,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   setRangeRequete,
   resetTableauRequete
 }) => {
-  const history = useHistory();
-
   // Gestion du tableau
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -52,11 +48,10 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   );
 
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams>(
-    {} as IRMCAutoParams
-  );
-
-  const rmcAutoUrlData: IUrlData = useRMCAutoHook(paramsRMCAuto);
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+    INavigationApercuRMCAutoParams | undefined
+  >();
+  useNavigationApercuRMCAuto(paramsRMCAuto);
 
   const onClickOnLine = (
     idRequete: string,
@@ -64,27 +59,13 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     idxGlobal: number
   ) => {
     const requete = dataRequetes[idxGlobal];
-    const navigation = navigationApercu(URL_RECHERCHE_REQUETE, requete);
-    if (navigation.isRmcAuto) {
-      setParamsRMCAuto({
-        requete,
-        dataRequetes,
-        urlCourante: URL_RECHERCHE_REQUETE
-      });
-    } else if (navigation.url) {
-      history.push(navigation.url, dataRequetes);
-    }
-  };
 
-  useEffect(
-    () => {
-      if (rmcAutoUrlData.url && rmcAutoUrlData.data) {
-        history.push(rmcAutoUrlData.url, rmcAutoUrlData.data);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [rmcAutoUrlData.url]
-  );
+    setParamsRMCAuto({
+      requete,
+      dataRequetes,
+      urlCourante: URL_RECHERCHE_REQUETE
+    });
+  };
 
   return (
     <>

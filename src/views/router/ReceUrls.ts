@@ -7,7 +7,7 @@ import {
 
 export interface IUrlData {
   url: string;
-  data: any;
+  data?: any;
 }
 
 export const URL_DECONNEXION = "/rece/Shibboleth.sso/Logout";
