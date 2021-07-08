@@ -1,4 +1,5 @@
 import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
+import { TypeLienMandant } from "../../../../model/requete/v2/enum/TypeLienMandant";
 import { TypeLienRequerant } from "../../../../model/requete/v2/enum/TypeLienRequerant";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { EvenementReqDelivrance } from "../../../../model/requete/v2/IEvenementReqDelivrance";
@@ -10,7 +11,10 @@ import {
   TitulaireRequete
 } from "../../../../model/requete/v2/ITitulaireRequete";
 import { IPieceJustificative } from "../../../common/types/RequeteType";
-import { triListeObjetsSurPropriete } from "../../../common/util/Utils";
+import {
+  formatPrenom,
+  triListeObjetsSurPropriete
+} from "../../../common/util/Utils";
 import { SectionContentProps } from "../../../common/widget/section/SectionContent";
 import { SectionPanelProps } from "../../../common/widget/section/SectionPanel";
 import { SectionPartProps } from "../../../common/widget/section/SectionPart";
@@ -30,6 +34,7 @@ export function getPanelsResumeRequete(requete?: TRequete) {
       panels[0] = getRequeteDelivranceSousType(requete as IRequeteDelivrance);
       panels[2] = getRequeteDelivranceInfos(requete as IRequeteDelivrance);
     } else {
+      panels[0] = getRequeteSansSousType();
       panels[2] = getRequeteAutreInfos(requete);
     }
     panels[3] = getPanelRequerantRequeteDelivrance(requete);
@@ -89,7 +94,7 @@ function getPanelTitulaireRequeteDelivrance(
               partContent: {
                 contents: [
                   {
-                    value: "Il n'y pas de titulaire"
+                    value: "Il n'y a pas de titulaire"
                   }
                 ]
               }
@@ -112,12 +117,7 @@ function getPanelRequerantRequeteDelivrance(
     title: getLibelle("Resume requête requerant")
   } as SectionPanelProps;
 
-  ajouterPanelAreasAuPanel(
-    panel,
-    detailRequete.requerant,
-    getRequerant,
-    deuxColonnes
-  );
+  ajouterPanelAreasAuPanel(panel, detailRequete, getRequerant, deuxColonnes);
 
   return panel;
 }
@@ -145,6 +145,10 @@ function getTitulairesInfo(
 ): SectionContentProps[] {
   const infosTitulaire = [] as SectionContentProps[];
 
+  const sortedPrenoms = titulaire.prenoms
+    ? triListeObjetsSurPropriete([...titulaire.prenoms], "numeroOrdre")
+    : "";
+
   ajouterContentPartAuPartUneValeurVide(
     infosTitulaire,
     getLibelle(index === 1 ? "Nom" : ""),
@@ -153,7 +157,7 @@ function getTitulairesInfo(
   ajouterContentPartAuPartUneValeurVide(
     infosTitulaire,
     getLibelle(index === 1 ? "Prénom" : ""),
-    TitulaireRequete.getPrenom1(titulaire)
+    formatPrenom(sortedPrenoms[0].prenom)
   );
   ajouterContentPartAuPartUneValeurVide(
     infosTitulaire,
@@ -164,11 +168,11 @@ function getTitulairesInfo(
   return infosTitulaire;
 }
 
-function getRequerant(requerant: IRequerant): SectionPartProps[] {
+function getRequerant(requete: IRequete): SectionPartProps[] {
   return [
     {
       partContent: {
-        contents: getRequerantInfo1(requerant)
+        contents: getRequerantInfo1(requete)
       }
     }
   ];
@@ -222,32 +226,50 @@ function getPieceJustificativeInfo(
   return infosPJ;
 }
 
-function getRequerantInfo1(requerant: IRequerant): SectionContentProps[] {
-  const infosRequerant = [] as SectionContentProps[];
+function getLienRequerant(requete: IRequete): string {
+  if (
+    requete.mandant !== null &&
+    requete.mandant !== undefined &&
+    requete.mandant.typeLien
+  ) {
+    return requete.mandant.natureLien &&
+      requete.mandant.typeLien === TypeLienMandant.AUTRE
+      ? requete.mandant.natureLien
+      : requete.mandant.typeLien.libelle;
+  } else if (
+    requete.requerant.lienRequerant !== null &&
+    requete.requerant.lienRequerant !== undefined
+  ) {
+    return requete.requerant.lienRequerant.lien === TypeLienRequerant.AUTRE &&
+      requete.requerant.lienRequerant.natureLien
+      ? requete.requerant.lienRequerant.natureLien
+      : requete.requerant.lienRequerant.lien.libelle;
+  }
 
-  const lienTitulaire =
-    requerant?.lienRequerant?.lien === TypeLienRequerant.AUTRE
-      ? requerant?.lienRequerant?.natureLien
-      : requerant?.lienRequerant?.lien.libelle;
+  return "";
+}
+
+function getRequerantInfo1(requete: IRequete): SectionContentProps[] {
+  const infosRequerant = [] as SectionContentProps[];
 
   ajouterContentPartAuPartUneValeurVide(
     infosRequerant,
     getLibelle("Nom requérant"),
-    getNomOuRaisonSociale(requerant)
+    getNomOuRaisonSociale(requete.requerant)
   );
 
-  if (requerant.qualiteRequerant.particulier) {
+  if (requete.requerant.qualiteRequerant.qualite === Qualite.PARTICULIER) {
     ajouterContentPartAuPartUneValeurVide(
       infosRequerant,
       getLibelle("Prénom requérant"),
-      Requerant.getPrenom(requerant)
+      Requerant.getPrenom(requete.requerant)
     );
   }
 
   ajouterContentPartAuPartUneValeurVide(
     infosRequerant,
     getLibelle("Lien avec le titulaire"),
-    lienTitulaire
+    getLienRequerant(requete)
   );
 
   return infosRequerant;
@@ -263,7 +285,7 @@ function getNomOuRaisonSociale(requerant: IRequerant) {
       nom = requerant?.qualiteRequerant.institutionnel?.nomInstitution;
       break;
     case Qualite.PARTICULIER:
-      nom = requerant?.qualiteRequerant.particulier?.nomUsage;
+      nom = Requerant.getNomFamille(requerant);
       break;
     case Qualite.UTILISATEUR_RECE:
       nom = requerant?.nomFamille;
@@ -288,6 +310,17 @@ function getRequeteDelivranceSousType(
             }
           }
         ]
+      }
+    ],
+    title: ""
+  };
+}
+
+function getRequeteSansSousType(): SectionPanelProps {
+  return {
+    panelAreas: [
+      {
+        parts: []
       }
     ],
     title: ""

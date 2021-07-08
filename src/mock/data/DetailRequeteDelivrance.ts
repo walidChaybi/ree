@@ -155,8 +155,8 @@ export const ReponseAppelDetailRequeteDelivrance = {
     requerant: {
       id: "97d0e400-19d3-47fa-aedb-137002a96f18",
       dateCreation: 1528192343,
-      nomFamille: "",
-      prenom: "",
+      nomFamille: "CHOULARD",
+      prenom: "Thierry",
       courriel: "cjacques@candw.fr",
       telephone: "0152698741",
       adresse: {
@@ -169,19 +169,17 @@ export const ReponseAppelDetailRequeteDelivrance = {
         ville: "Nantes",
         pays: "FRANCE"
       },
-      qualite: "MANDATAIRE_HABILITE",
+      qualite: "PARTICULIER",
       detailQualiteRece: null,
       detailQualiteParticulier: null,
-      detailQualiteMandataireHabilite: {
-        id: "94cb55b0-7cb1-4d65-9aae-e6c972e29ed9",
-        type: "AVOCAT",
-        raisonSociale: "Cabinet WandC",
-        nature: "",
-        crpcen: ""
-      },
+      detailQualiteMandataireHabilite: null,
       detailQualiteInstitutionnel: null,
       detailQualiteAutreProfessionnel: null,
-      lienRequerant: null
+      lienRequerant: {
+        id: "a4cefb71-8457-4f6b-937e-34b49335d406",
+        typeLienRequerant: "PERE_MERE",
+        natureLien: null
+      }
     },
     mandant: {
       id: "94a2b37f-3744-4c3c-a53d-61c80c86a90d",
@@ -219,7 +217,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
     },
     lienRequerant: {
       id: "a4cefb71-8457-4f6b-937e-34b49335d406",
-      lien: "PERE_MERE",
+      typeLienRequerant: "PERE_MERE",
       natureLien: null
     },
     doublons: null,
@@ -252,6 +250,363 @@ export const ReponseAppelDetailRequeteDelivrance = {
       mois: 5,
       annee: 2019,
       ville: "Tunis",
+      pays: "TUNISIE"
+    }
+  }
+};
+
+export const ReponseAppelDetailRequeteDelivranceUnTitulaire = {
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-requete-api/v2/requetes/a4cefb71-8457-4f6b-937e-34b49335d404",
+  data: {
+    id: "a4cefb71-8457-4f6b-937e-34b49335d404",
+    numeroRequete: "54j654j4jyfjtj456j4",
+    idSagaDila: 45,
+    dateCreation: 1612342296,
+    canal: "COURRIER",
+    type: "DELIVRANCE",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    actions: [
+      {
+        id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
+        numeroOrdre: 2,
+        libelle: "Saisie de la requête",
+        dateAction: 1583794800000,
+        idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985894",
+        trigramme: "BOB"
+      },
+      {
+        id: "1d189cd9-0df0-45dc-a4cf-0174eb621235",
+        numeroOrdre: 1,
+        libelle: "A traiter",
+        dateAction: 1583794800000,
+        idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
+        trigramme: "APP"
+      }
+    ],
+    titulaires: [
+      {
+        id: "0343e28b-b6f7-4dd4-bb81-3a38454907fb",
+        position: 1,
+        nomNaissance: "Campball",
+        nomUsage: "",
+        anneeNaissance: 1963,
+        moisNaissance: 10,
+        jourNaissance: 10,
+        villeNaissance: "Guangzhou",
+        paysNaissance: "Samoa",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        prenoms: [
+          {
+            id: "7d6f50e0-e984-4011-95ac-17acc198a60f",
+            numeroOrdre: 2,
+            prenom: "Marc"
+          },
+          {
+            id: "19bd7c4f-7194-48de-bcaa-fae5307534e6",
+            numeroOrdre: 1,
+            prenom: "Gilles"
+          }
+        ],
+        parentsTitulaire: [
+          {
+            id: "624c6c8a-b623-4508-b241-e96a408cdde8",
+            position: 1,
+            nomNaissance: "JAMBON",
+            prenoms: [
+              {
+                id: "a1acf689-b2e3-4fc1-8e15-077c810608ec",
+                numeroOrdre: 1,
+                prenom: "Jean"
+              }
+            ]
+          },
+          {
+            id: "624c6c8a-b623-4508-b241-e96a408cdde9",
+            position: 2,
+            nomNaissance: "BONO",
+            prenoms: [
+              {
+                id: "a1acf689-b2e3-4fc1-8e15-077c810608ed",
+                numeroOrdre: 1,
+                prenom: "Jen"
+              },
+              {
+                id: "a1acf689-b2e3-4fc1-8e15-077c810609cd",
+                numeroOrdre: 2,
+                prenom: "Michèle"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    corbeilleAgent: {
+      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+    },
+    corbeilleService: {
+      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
+      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    },
+    piecesJustificatives: [],
+    requerant: {
+      id: "97d0e400-19d3-47fa-aedb-137002a96f18",
+      dateCreation: 1528192343,
+      nomFamille: "",
+      prenom: "",
+      courriel: "cjacques@candw.fr",
+      telephone: "0152698741",
+      adresse: {
+        id: "074acd89-be79-4272-afe0-bb64925ee9ca",
+        ligne2: "5 place de l'Eglise",
+        ligne3: "",
+        ligne4: "",
+        ligne5: "",
+        codePostal: "44000",
+        ville: "Nantes",
+        pays: "FRANCE"
+      },
+      qualite: "MANDATAIRE_HABILITE",
+      detailQualiteRece: null,
+      detailQualiteParticulier: null,
+      detailQualiteMandataireHabilite: {
+        id: "94cb55b0-7cb1-4d65-9aae-e6c972e29ed9",
+        type: "AVOCAT",
+        raisonSociale: "Cabinet WandC",
+        nature: "",
+        crpcen: ""
+      },
+      detailQualiteInstitutionnel: null,
+      detailQualiteAutreProfessionnel: null,
+      lienRequerant: {
+        id: "a4cefb71-8457-4f6b-937e-34b49335d406",
+        typeLienRequerant: "PERE_MERE",
+        natureLien: null
+      }
+    },
+    mandant: {
+      id: "94a2b37f-3744-4c3c-a53d-61c80c86a90d",
+      typeMandant: "PERSONNE_PHYSIQUE",
+      nom: "RANU",
+      prenom: "THIERRY",
+      raisonSociale: "",
+      lienMandant: "PERE_MERE_TITULAIRE",
+      natureLien: null
+    },
+    observations: [
+      {
+        id: "1234",
+        texte: "Je fais pas 30 charactères",
+        idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
+        numeroOrdre: 12,
+        dateObservation: 122335587,
+        trigramme: "BTC"
+      },
+      {
+        id: "id0000",
+        texte:
+          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        idUtilisateur: "",
+        trigramme: "LOS",
+        numeroOrdre: 1234,
+        dateObservation: 123456789
+      }
+    ],
+    statut: {
+      id: "2c055d1a-b437-48b1-bbd2-fa94d7defba2",
+      statutRequete: "A_TRAITER",
+      dateEffet: 1594714272000,
+      raisonStatut: ""
+    },
+    lienRequerant: {
+      id: "a4cefb71-8457-4f6b-937e-34b49335d406",
+      typeLienRequerant: "PERE_MERE",
+      natureLien: null
+    },
+    doublons: null,
+    origines: null,
+    sousType: "RDD",
+    motif: "RETRAITE",
+    complementMotif: "",
+    dateDelivranceDemat: null,
+    provenance: "PLANETE",
+    documentDemande: "Attestation de PACS",
+    nombreExemplairesDemandes: null,
+    provenancePlanete: {
+      id: "f5f8b346-3a73-412d-a581-a0d724f3a606",
+      idMessagePlanete: 123,
+      balNotaire: "notaire@notaire.fr",
+      typeMessage: "message important",
+      lcl: "",
+      idConversation: "",
+      champSaisieLibre: "une saisie complètement libre",
+      referenceDemande: "",
+      dateDemande: null
+    },
+    provenanceRece: null,
+    provenanceServicePublic: null,
+    documentsReponses: [],
+    evenement: {
+      id: "0fb80e4f-ab5c-4f26-afcc-3199b67aa2f0",
+      natureActe: "MARIAGE",
+      jour: 12,
+      mois: 5,
+      annee: 2019,
+      ville: "Tunis",
+      pays: null
+    }
+  }
+};
+
+export const ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ = {
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-requete-api/v2/requetes/a4cefb71-8457-4f6b-937e-34b49335d404",
+  data: {
+    id: "a4cefb71-8457-4f6b-937e-34b49335d404",
+    numeroRequete: "54j654j4jyfjtj456j4",
+    idSagaDila: 45,
+    dateCreation: 1612342296,
+    canal: "COURRIER",
+    type: "DELIVRANCE",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    actions: [
+      {
+        id: "1d189cd9-0df0-45dc-a4cf-0174eb621234",
+        numeroOrdre: 2,
+        libelle: "Saisie de la requête",
+        dateAction: 1583794800000,
+        idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985894",
+        trigramme: "BOB"
+      },
+      {
+        id: "1d189cd9-0df0-45dc-a4cf-0174eb621235",
+        numeroOrdre: 1,
+        libelle: "A traiter",
+        dateAction: 1583794800000,
+        idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
+        trigramme: "APP"
+      }
+    ],
+    titulaires: [],
+    corbeilleAgent: {
+      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+    },
+    corbeilleService: {
+      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
+      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    },
+    piecesJustificatives: [
+      {
+        idPieceJustificative: "519900ee-c9a0-4d41-8673-512949b64946",
+        nom: "Carte professionelle",
+        mimeType: "png",
+        taille: 20,
+        contenu: "contenu",
+        typePieceJustificative: "00c885c9-2918-46fe-b743-798b1b90e5dd"
+      }
+    ],
+    requerant: {
+      id: "97d0e400-19d3-47fa-aedb-137002a96f18",
+      dateCreation: 1528192343,
+      nomFamille: "",
+      prenom: "",
+      courriel: "cjacques@candw.fr",
+      telephone: "0152698741",
+      adresse: {
+        id: "074acd89-be79-4272-afe0-bb64925ee9ca",
+        ligne2: "5 place de l'Eglise",
+        ligne3: "",
+        ligne4: "",
+        ligne5: "",
+        codePostal: "44000",
+        ville: "Nantes",
+        pays: "FRANCE"
+      },
+      qualite: "INSTITUTIONNEL",
+      detailQualiteRece: null,
+      detailQualiteParticulier: null,
+      detailQualiteMandataireHabilite: null,
+      detailQualiteInstitutionnel: {
+        id: "94cb55b0-7cb1-4d65-9aae-e6c972e29ed9",
+        type: "TRIBUNAL",
+        nom: "TGI Marseille",
+        nature: null
+      },
+      detailQualiteAutreProfessionnel: null,
+      lienRequerant: null
+    },
+    mandant: {
+      id: "94a2b37f-3744-4c3c-a53d-61c80c86a90d",
+      typeMandant: "PERSONNE_PHYSIQUE",
+      nom: "RANU",
+      prenom: "THIERRY",
+      raisonSociale: "",
+      lienMandant: "TITULAIRE",
+      natureLien: null
+    },
+    observations: [
+      {
+        id: "1234",
+        texte: "Je fais pas 30 charactères",
+        idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
+        numeroOrdre: 12,
+        dateObservation: 122335587,
+        trigramme: "BTC"
+      },
+      {
+        id: "id0000",
+        texte:
+          "C'est vraiment dur de pouvoir trouver un texte adequate pour remplir ce mock mais bon on fait avec",
+        idUtilisateur: "",
+        trigramme: "LOS",
+        numeroOrdre: 1234,
+        dateObservation: 123456789
+      }
+    ],
+    statut: {
+      id: "2c055d1a-b437-48b1-bbd2-fa94d7defba2",
+      statutRequete: "A_TRAITER",
+      dateEffet: 1594714272000,
+      raisonStatut: ""
+    },
+    lienRequerant: null,
+    doublons: null,
+    origines: null,
+    sousType: "RDD",
+    motif: "RETRAITE",
+    complementMotif: "",
+    dateDelivranceDemat: null,
+    provenance: "PLANETE",
+    documentDemande: "Attestation de PACS",
+    nombreExemplairesDemandes: null,
+    provenancePlanete: {
+      id: "f5f8b346-3a73-412d-a581-a0d724f3a606",
+      idMessagePlanete: 123,
+      balNotaire: "notaire@notaire.fr",
+      typeMessage: "message important",
+      lcl: "",
+      idConversation: "",
+      champSaisieLibre: "une saisie complètement libre",
+      referenceDemande: "",
+      dateDemande: null
+    },
+    provenanceRece: null,
+    provenanceServicePublic: null,
+    documentsReponses: [],
+    evenement: {
+      id: "0fb80e4f-ab5c-4f26-afcc-3199b67aa2f0",
+      natureActe: "MARIAGE",
+      jour: 12,
+      mois: 5,
+      annee: 2019,
+      ville: null,
       pays: "TUNISIE"
     }
   }

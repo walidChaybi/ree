@@ -52,6 +52,10 @@ export const URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARG
 // Détail de la requête d'une requete d'un des tableau de l'espace délivrance
 export const URL_MES_REQUETES_DETAIL_REQUETE_ID_V2 = `${URL_MES_REQUETES_V2}/apercurequete/detailrequete/:idRequete`;
 export const URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2 = `${URL_REQUETES_SERVICE_V2}/apercurequete/detailrequete/:idRequete`;
+export const URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2 = `${URL_MES_REQUETES_V2}/apercurequetepriseencharge/detailrequete/:idRequete`;
+export const URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2 = `${URL_REQUETES_SERVICE_V2}/apercurequetepriseencharge/detailrequete/:idRequete`;
+export const URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2 = `${URL_MES_REQUETES_V2}/${PATH_APERCU_REQUETE_TRAITEMENT}/detailrequete/:idRequete`;
+export const URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_ID_V2 = `${URL_REQUETES_SERVICE_V2}/${PATH_APERCU_REQUETE_TRAITEMENT}/detailrequete/:idRequete`;
 
 // Rechercher Multi-Critères
 export const URL_RECHERCHE_ACTE_INSCRIPTION = `${URL_CONTEXT_APP}/rechercheacteinscription`;

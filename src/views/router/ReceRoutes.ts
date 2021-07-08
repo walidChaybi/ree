@@ -32,6 +32,8 @@ import {
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_DETAIL_REQUETE_ID,
   URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
+  URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
+  URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2,
   URL_MES_REQUETES_ID,
   URL_MES_REQUETES_SAISIR_RDAPC,
   URL_MES_REQUETES_SAISIR_RDC,
@@ -52,6 +54,8 @@ import {
   URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
+  URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
+  URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_ID_V2,
   URL_REQUETES_SERVICE_ID,
   URL_REQUETES_SERVICE_SAISIR_RDAPC,
   URL_REQUETES_SERVICE_SAISIR_RDC,
@@ -63,6 +67,7 @@ import {
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête V2";
 const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
+const LIBELLE_DETAIL_REQUETE = "Détail de la requête";
 
 export const routesRece: IRoute[] = [
   {
@@ -286,24 +291,48 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_DETAIL_REQUETE_ID,
     component: DetailRequetePage,
     droits: droitsSaufConsulterArchives,
-    libelle: getLibelle("Détail de la requête")
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
     component: DetailRequetePage,
     droits: [Droit.ATTRIBUER],
-    libelle: getLibelle("Détail de la requête")
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
     component: DetailRequetePage,
     droits: droitsSaufConsulterArchives,
-    libelle: getLibelle("Détail de la requête")
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
     component: DetailRequetePage,
     droits: [Droit.ATTRIBUER],
-    libelle: getLibelle("Détail de la requête")
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_ID_V2,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   }
 ];
