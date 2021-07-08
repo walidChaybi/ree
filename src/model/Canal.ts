@@ -1,4 +1,5 @@
 export enum Canal {
   Internet = "INTERNET",
-  Courrier = "COURRIER"
+  Courrier = "COURRIER",
+  Rie = "RIE"
 }

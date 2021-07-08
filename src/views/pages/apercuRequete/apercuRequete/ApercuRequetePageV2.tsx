@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { BandeauRequete } from "../contenu/BandeauRequete";
+import { BoutonPrendreEnCharge } from "../contenu/BoutonPrendreEnCharge";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
@@ -33,6 +34,9 @@ export const ApercuRequetePageV2: React.FC = () => {
             </div>
             <div className="side right">
               {JSON.stringify(detailRequeteState)}
+              <BoutonPrendreEnCharge
+                requete={detailRequeteState}
+              ></BoutonPrendreEnCharge>
             </div>
           </div>
         </>

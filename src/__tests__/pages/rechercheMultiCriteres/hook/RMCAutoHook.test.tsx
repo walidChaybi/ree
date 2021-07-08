@@ -8,6 +8,7 @@ import {
   useRMCAutoHook
 } from "../../../../views/common/hook/v2/navigationApercuRequeteRmcAuto/RMCAutoHook";
 import {
+  URL_MES_REQUETES_APERCU_REQUETE,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_V2,
   URL_RECHERCHE_REQUETE,
@@ -34,6 +35,11 @@ const paramsRechercheRequete = {
   urlCourante: URL_RECHERCHE_REQUETE
 };
 
+const paramsApercuRequete = {
+  ...paramsRequete,
+  urlCourante: URL_MES_REQUETES_APERCU_REQUETE
+};
+
 const HookConsummerRequete: React.FC = () => {
   const urlData = useRMCAutoHook(paramsRequete);
   return <div data-testid="urlRedirection">{urlData ? urlData.url : ""}</div>;
@@ -46,6 +52,11 @@ const HookConsummerRequeteService: React.FC = () => {
 
 const HookConsummerRechercheRequete: React.FC = () => {
   const urlData = useRMCAutoHook(paramsRechercheRequete);
+  return <div data-testid="urlRedirection">{urlData ? urlData.url : ""}</div>;
+};
+
+const HookConsummerApercuRequete: React.FC = () => {
+  const urlData = useRMCAutoHook(paramsApercuRequete);
   return <div data-testid="urlRedirection">{urlData ? urlData.url : ""}</div>;
 };
 
@@ -77,6 +88,17 @@ test('Test useRMCAutoHook : redirection à partir de "Recherche Requêtes"', asy
     await waitFor(() =>
       expect(getByTestId("urlRedirection").textContent).toBe(
         URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+      )
+    );
+  });
+});
+
+test('Test useRMCAutoHook : redirection à partir de "Apercu Requêtes (prise en charge)"', async () => {
+  await act(async () => {
+    const { getByTestId } = render(<HookConsummerApercuRequete />);
+    await waitFor(() =>
+      expect(getByTestId("urlRedirection").textContent).toBe(
+        URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
       )
     );
   });

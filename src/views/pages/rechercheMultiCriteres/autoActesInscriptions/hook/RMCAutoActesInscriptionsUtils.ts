@@ -27,12 +27,7 @@ export function redirectionRMCAuto(
 ) {
   let url = "";
 
-  if (urlCourante === URL_MES_REQUETES_V2) {
-    url = getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequete
-    );
-  } else if (urlCourante === URL_REQUETES_SERVICE_V2) {
+  if (urlCourante === URL_REQUETES_SERVICE_V2) {
     url = getUrlWithParam(
       URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequete
@@ -40,6 +35,14 @@ export function redirectionRMCAuto(
   } else if (urlCourante === URL_RECHERCHE_REQUETE) {
     url = getUrlWithParam(
       URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      idRequete
+    );
+  } else if (
+    urlCourante === URL_MES_REQUETES_V2 ||
+    receUrl.estUrlApercuRequete(urlCourante)
+  ) {
+    url = getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequete
     );
   }
@@ -66,8 +69,8 @@ export function redirectionRMCAutoApercuTraitement(
       URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
       idRequete
     );
-  } else if (receUrl.estUrlApercuRequete(url)) {
-    url = receUrl.getUrlApercuTraitementAPartirDe(url);
+  } else if (receUrl.estUrlApercuRequete(urlCourante)) {
+    url = receUrl.getUrlApercuTraitementAPartirDe(urlCourante);
   }
   return url;
 }

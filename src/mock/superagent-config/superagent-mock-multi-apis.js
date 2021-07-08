@@ -58,9 +58,12 @@ export const configMultiAPi = [
 
       // Création d'une action et maj statut de la requête
       if (
-        match[1] ===
+        (match[1] ===
           REQUETE_V2_API_URL +
-            `/action?idRequete=${idRequete1}&libelleAction=A%20valider&statutRequete=A_VALIDER` &&
+            `/action?idRequete=${idRequete1}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
+          match[1] ===
+            REQUETE_V2_API_URL +
+              `/action?idRequete=${idRequete1}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE`) &&
         context.method === "post"
       ) {
         return { data: "123456789" };

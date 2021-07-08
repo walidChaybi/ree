@@ -181,7 +181,10 @@ function getInteresse(saisie: SaisieRequeteRDCSC) {
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
-    qualite: Qualite.PARTICULIER.nom
+    qualite: Qualite.PARTICULIER.nom,
+    detailQualiteParticulier: {
+      nomUsage: saisie.interesse.nomUsage
+    }
   };
 }
 

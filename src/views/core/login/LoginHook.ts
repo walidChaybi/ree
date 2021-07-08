@@ -17,10 +17,7 @@ export function useLoginApi() {
   useEffect(() => {
     getLogin()
       .then(result => {
-        const officier = setUtilisateurSSOApiFromHeaders(
-          result.headers,
-          result.body.data.idUtilisateur
-        );
+        const officier = setUtilisateurSSOApi(result.headers, result.body.data);
         officier.habilitations = setHabilitationsUtilisateur(
           result.body.data.habilitations
         );
@@ -37,12 +34,9 @@ export function useLoginApi() {
   };
 }
 
-function setUtilisateurSSOApiFromHeaders(
-  headers: any,
-  idUtilisateur: string
-): IOfficierSSOApi {
+function setUtilisateurSSOApi(headers: any, body: any): IOfficierSSOApi {
   return {
-    idUtilisateur,
+    idUtilisateur: body.idUtilisateur,
     idSSO: headers.id_sso,
     nom: formatNom(headers.nom),
     prenom: formatPrenom(headers.prenom),
@@ -54,7 +48,9 @@ function setUtilisateurSSOApiFromHeaders(
     bureau: headers.bureau,
     departement: headers.departement,
     service: headers.service,
-    habilitations: []
+    habilitations: [],
+    entite: body.entiteRattachement,
+    entitesFilles: body.entitesFillesDirectes
   };
 }
 
