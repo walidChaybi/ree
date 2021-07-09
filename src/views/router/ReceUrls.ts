@@ -70,6 +70,8 @@ export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHAR
                                                                 apercurequetepriseencharge/${PATH_APERCU_REQUETE_TRAITEMENT}/:idRequete`;
 // Détail de la requête d'une requete du tableau résultats RMC Requêtes
 export const URL_RECHERCHE_REQUETE_DETAIL_REQUETE_ID = `${URL_RECHERCHE_REQUETE}/apercurequete/detailrequete/:idRequete`;
+export const URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID = `${URL_RECHERCHE_REQUETE}/apercurequetepriseencharge/detailrequete/:idRequete`;
+export const URL_RECHERCHE_REQUETE_DETAIL_REQUETE_TRAITEMENT_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQUETE_TRAITEMENT}/detailrequete/:idRequete`;
 
 // Saisie requête
 export const URL_MES_REQUETES_SAISIR_RDCSC = `${URL_MES_REQUETES_V2}/saisircertificatsituation`;

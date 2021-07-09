@@ -42,18 +42,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
         paysNaissance: "Samoa",
         sexe: "MASCULIN",
         nationalite: "FRANCAISE",
-        prenoms: [
-          {
-            id: "7d6f50e0-e984-4011-95ac-17acc198a60f",
-            numeroOrdre: 2,
-            prenom: "Marc"
-          },
-          {
-            id: "19bd7c4f-7194-48de-bcaa-fae5307534e6",
-            numeroOrdre: 1,
-            prenom: "Gilles"
-          }
-        ],
+        prenoms: [],
         parentsTitulaire: [
           {
             id: "624c6c8a-b623-4508-b241-e96a408cdde8",

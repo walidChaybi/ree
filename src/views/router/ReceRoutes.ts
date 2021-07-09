@@ -47,6 +47,9 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
+  URL_RECHERCHE_REQUETE_DETAIL_REQUETE_ID,
+  URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_RECHERCHE_REQUETE_DETAIL_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE,
   URL_REQUETES_SERVICE_APERCU_REQUETE,
   URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -303,36 +306,63 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
     component: DetailRequetePage,
     droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
     component: DetailRequetePage,
     droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
     component: DetailRequetePage,
     droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
     component: DetailRequetePage,
     droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2,
     component: DetailRequetePage,
     droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_ID_V2,
     component: DetailRequetePage,
     droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_DETAIL_REQUETE_ID,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_DETAIL_REQUETE_TRAITEMENT_ID,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   }
 ];

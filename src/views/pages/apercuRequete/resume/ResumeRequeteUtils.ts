@@ -145,9 +145,13 @@ function getTitulairesInfo(
 ): SectionContentProps[] {
   const infosTitulaire = [] as SectionContentProps[];
 
-  const sortedPrenoms = titulaire.prenoms
-    ? triListeObjetsSurPropriete([...titulaire.prenoms], "numeroOrdre")
-    : "";
+  const prenom =
+    titulaire.prenoms && titulaire.prenoms?.length !== 0
+      ? formatPrenom(
+          triListeObjetsSurPropriete([...titulaire.prenoms], "numeroOrdre")[0]
+            .prenom
+        )
+      : "";
 
   ajouterContentPartAuPartUneValeurVide(
     infosTitulaire,
@@ -157,7 +161,7 @@ function getTitulairesInfo(
   ajouterContentPartAuPartUneValeurVide(
     infosTitulaire,
     getLibelle(index === 1 ? "Prénom" : ""),
-    formatPrenom(sortedPrenoms[0].prenom)
+    prenom
   );
   ajouterContentPartAuPartUneValeurVide(
     infosTitulaire,
