@@ -152,9 +152,9 @@ async function createReponseNegativePourCompositionApi(
   objet: string,
   requete?: IRequeteDelivrance
 ) {
-  const reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
+  let reponseNegative: IReponseNegativeDemandeIncompleteComposition | undefined;
   if (requete && requete.requerant) {
-    ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+    reponseNegative = await ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
       objet,
       requete.requerant
     );
