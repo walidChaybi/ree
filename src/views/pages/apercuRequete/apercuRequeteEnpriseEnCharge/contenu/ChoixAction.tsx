@@ -1,13 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   IReponseNegativeDemandeIncompleteComposition,
   ReponseNegativeDemandeIncompleteComposition
 } from "../../../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
 import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../../../model/composition/ObjetsComposition";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import messageManager from "../../../../common/util/messageManager";
+import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import {
   IActionOption,
@@ -15,6 +18,7 @@ import {
 } from "../../../../common/widget/menu/MenuAction";
 import { ConfirmationPopin } from "../../../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../../../common/widget/Text";
+import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID } from "../../../../router/ReceUrls";
 import { useReponseNegative } from "./hook/ChoixReponseNegativeHook";
 import "./scss/ChoixAction.scss";
 import { estSeulementActeMariage } from "./VerificationChoixSeulementActeMariage";
@@ -25,6 +29,8 @@ interface IActionProps {
 }
 
 export const ChoixAction: React.FC<IActionProps> = props => {
+  const history = useHistory();
+
   const refReponseNegativeOptions0 = useRef(null);
   const refReponseNegativeOptions1 = useRef(null);
   const refReponseNegativeOptions2 = useRef(null);
@@ -36,7 +42,24 @@ export const ChoixAction: React.FC<IActionProps> = props => {
     IReponseNegativeDemandeIncompleteComposition | undefined
   >();
 
-  useReponseNegative(reponseNegative, props.requete);
+  const resultatReponseNegative = useReponseNegative(
+    StatutRequete.A_VALIDER.libelle,
+    StatutRequete.A_VALIDER,
+    reponseNegative,
+    props.requete.id
+  );
+
+  useEffect(() => {
+    if (resultatReponseNegative) {
+      history.push(
+        getUrlWithParam(
+          URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
+          props.requete.id
+        )
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatReponseNegative, history]);
 
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 

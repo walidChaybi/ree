@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { updateRequeteDelivrance } from "../../../../api/appels/requeteApi";
 import { logError } from "../../../common/util/LogManager";
-import messageManager from "../../../common/util/messageManager";
-import { getLibelle } from "../../../common/widget/Text";
 import { UpdateRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
-import { mapRequeteDelivrance } from "./SaisirRDCSCApiHook";
+import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
+
+export interface IUpdateRequeteDelivranceRDCSCResultat {
+  idRequete: string;
+  brouillon?: boolean;
+  refus?: boolean;
+}
 
 export interface IUpdateRequeteDelivranceRDCSCResultat {
   idRequete: string;
@@ -20,7 +24,7 @@ export function useUpdateRequeteDelivranceRDCSC(
   >();
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
-      const requete = mapRequeteDelivrance(requeteRDCSC);
+      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(requeteRDCSC);
 
       updateRequeteDelivrance({
         idRequete: requeteRDCSC.idRequete,
@@ -34,9 +38,6 @@ export function useUpdateRequeteDelivranceRDCSC(
             brouillon: requeteRDCSC.brouillon,
             refus: requeteRDCSC.refus
           });
-          messageManager.showSuccessAndClose(
-            getLibelle("La requête a bien été enregistrée")
-          );
         })
         .catch((error: any) => {
           logError({

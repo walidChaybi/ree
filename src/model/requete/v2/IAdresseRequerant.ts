@@ -1,5 +1,5 @@
 export interface IAdresseRequerant {
-  id: string;
+  id?: string;
   ligne2: string;
   ligne3: string;
   ligne4: string;

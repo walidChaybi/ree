@@ -1,10 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
+import {
+  IReponseNegativeDemandeIncompleteComposition,
+  ReponseNegativeDemandeIncompleteComposition
+} from "../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
+import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../model/composition/ObjetsComposition";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequerant } from "../../../model/requete/v2/enum/TypeRequerant";
+import { IRequerant } from "../../../model/requete/v2/IRequerant";
 import { logError } from "../../common/util/LogManager";
+import messageManager from "../../common/util/messageManager";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
 import { SelectField } from "../../common/widget/formulaire/champsSaisie/SelectField";
@@ -20,10 +28,12 @@ import {
   URL_REQUETES_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE
 } from "../../router/ReceUrls";
+import { useReponseNegative } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/hook/ChoixReponseNegativeHook";
 import { getUrlWithParam } from "./../../common/util/route/routeUtil";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
+import { getRequerant } from "./hook/mappingFormulaireRDCSCVersRequeteDelivrance";
 import { useCreationRequeteDelivranceRDCSC } from "./hook/SaisirRDCSCApiHook";
 import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
 import {
@@ -78,6 +88,10 @@ export const SaisirRDCSCPage: React.FC = () => {
     []
   );
 
+  const [reponseNegative, setReponseNegative] = useState<
+    IReponseNegativeDemandeIncompleteComposition | undefined
+  >();
+
   useState(async () => {
     const documentDelivrance = await DocumentDelivrance.getAllCertificatSituationAsOptions();
     setDocumentDemandeOptions(documentDelivrance);
@@ -113,18 +127,25 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const [idRequete, setIdRequete] = useState<string>();
 
-  const handleSave = useCallback(
-    (idRequeteSauvegardee: string, brouillon = false, refus = false) => {
-      setOperationEnCours(false);
-
+  const redirectionPage = useCallback(
+    async (idRequeteSauvegardee: string, brouillon = false, refus = false) => {
       // Si l'appel c'est terminé sans erreur
       if (idRequeteSauvegardee) {
         setIdRequete(idRequeteSauvegardee);
         // Redirection si l'enregistrement n'est pas un brouillon
         if (!brouillon) {
           if (refus) {
-            history.goBack();
+            const reponse = await createReponseNegative(
+              OBJET_COURRIER_CERTIFICAT_SITUATION,
+              saisieRequeteRDCSC
+            );
+
+            setReponseNegative(reponse);
           } else {
+            messageManager.showSuccessAndClose(
+              getLibelle("La requête a bien été enregistrée")
+            );
+            setOperationEnCours(false);
             const pathname = history.location.pathname;
             if (pathname.startsWith(URL_MES_REQUETES_SAISIR_RDCSC)) {
               const url = getUrlWithParam(
@@ -144,7 +165,7 @@ export const SaisirRDCSCPage: React.FC = () => {
         }
       }
     },
-    [history]
+    [history, saisieRequeteRDCSC]
   );
 
   const creationRequeteDelivranceRDCSCResultat = useCreationRequeteDelivranceRDCSC(
@@ -157,23 +178,40 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   useEffect(() => {
     if (creationRequeteDelivranceRDCSCResultat) {
-      handleSave(
+      redirectionPage(
         creationRequeteDelivranceRDCSCResultat.idRequete,
         creationRequeteDelivranceRDCSCResultat.brouillon,
         creationRequeteDelivranceRDCSCResultat.refus
       );
     }
-  }, [creationRequeteDelivranceRDCSCResultat, handleSave]);
+  }, [creationRequeteDelivranceRDCSCResultat, redirectionPage]);
 
   useEffect(() => {
     if (UpdateRequeteDelivranceRDCSCResultat) {
-      handleSave(
+      redirectionPage(
         UpdateRequeteDelivranceRDCSCResultat.idRequete,
         UpdateRequeteDelivranceRDCSCResultat.brouillon,
         UpdateRequeteDelivranceRDCSCResultat.refus
       );
     }
-  }, [UpdateRequeteDelivranceRDCSCResultat, handleSave]);
+  }, [UpdateRequeteDelivranceRDCSCResultat, redirectionPage]);
+
+  const resultatReponseNegative = useReponseNegative(
+    StatutRequete.TRAITE_A_IMPRIMER.libelle,
+    StatutRequete.TRAITE_A_IMPRIMER,
+    reponseNegative,
+    idRequete
+  );
+
+  useEffect(() => {
+    if (resultatReponseNegative) {
+      messageManager.showSuccessAndClose(
+        getLibelle("Le refus a bien été enregistré")
+      );
+
+      history.goBack();
+    }
+  }, [resultatReponseNegative, history]);
 
   const onSubmitSaisirRDCSC = (values: SaisieRequeteRDCSC) => {
     const villeNaissance = values.interesse.naissance.villeEvenement;
@@ -335,4 +373,24 @@ function getPiecesJointesForm(): JSX.Element {
     titre: getLibelle("Pièces justificatives")
   } as SubFormProps;
   return <PiecesJointesForm key={PIECES_JOINTES} {...piecesJointesFormProps} />;
+}
+
+async function createReponseNegative(
+  objet: string,
+  requete?: SaisieRequeteRDCSC
+) {
+  let reponseNegative: IReponseNegativeDemandeIncompleteComposition | undefined;
+  if (requete && requete.requerant) {
+    const requerant = getRequerant(requete) as IRequerant;
+    reponseNegative = await ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+      objet,
+      requerant
+    );
+  } else {
+    messageManager.showErrorAndClose(
+      "Erreur inattendue: Pas de requérent pour la requête"
+    );
+  }
+
+  return reponseNegative;
 }

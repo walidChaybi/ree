@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Orientation } from "../../../../../../model/composition/enum/Orientation";
 import {
   IReponseNegativeDemandeIncompleteComposition,
@@ -8,18 +7,18 @@ import {
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
-import { TRequete } from "../../../../../../model/requete/v2/IRequete";
 import { MimeType } from "../../../../../../ressources/MimeType";
 import { useCompositionReponseNegativeDemandeIncompleteApi } from "../../../../../common/hook/v2/composition/CompositionReponseNegativeDemandeIncompleteHook";
 import { useStockeDocumentCreerActionEtMajStatutRequte } from "../../../../../common/hook/v2/requete/StockDocumentEtCreationActionEtMajStatutRequete";
-import { getUrlWithParam } from "../../../../../common/util/route/routeUtil";
-import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID } from "../../../../../router/ReceUrls";
 
 export function useReponseNegative(
+  libelleAction: string,
+  statutRequete: StatutRequete,
   reponseNegative?: IReponseNegativeDemandeIncompleteComposition,
-  requete?: TRequete
+  requeteId?: string
 ) {
-  const history = useHistory();
+  const [resultat, setResultat] = useState<any>();
+
   const [
     documentsReponsePourStockage,
     setDocumentsReponsePourStockage
@@ -57,30 +56,36 @@ export function useReponseNegative(
     idAction,
     uuidDocumentsReponse
   } = useStockeDocumentCreerActionEtMajStatutRequte(
-    StatutRequete.A_VALIDER.libelle,
-    StatutRequete.A_VALIDER,
+    libelleAction,
+    statutRequete,
     documentsReponsePourStockage,
-    requete?.id
+    requeteId
   );
 
-  // 6- Une fois la requête mise à jour et l'action créée changement de page
+  // 6- Une fois la requête mise à jour et l'action créée création du resultat
   useEffect(
     () => {
       if (
         idAction &&
-        requete &&
+        requeteId &&
         uuidDocumentsReponse &&
         uuidDocumentsReponse.length === 1
       ) {
-        history.push(
-          getUrlWithParam(
-            URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
-            requete.id
-          )
-        );
+        // if (urlRedirection === GO_BACK) {
+        //   history.goBack();
+        // } else {
+        //   history.push(urlRedirection);
+        // }
+        setResultat({
+          requeteId,
+          idAction,
+          uuidDocumentsReponse
+        });
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [idAction]
   );
+
+  return resultat;
 }

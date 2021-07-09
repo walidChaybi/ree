@@ -124,7 +124,7 @@ const PAS_INSCRITE_RCA = getLibelle(
 /////////////////////////////////////////////////////////////////////
 
 class SpecificationPhrase {
-  MAP_SPECIFICATION: Map<string, Specification> = new Map();
+  private readonly MAP_SPECIFICATION: Map<string, Specification> = new Map();
   private init() {
     this.MAP_SPECIFICATION.set(
       DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS),
