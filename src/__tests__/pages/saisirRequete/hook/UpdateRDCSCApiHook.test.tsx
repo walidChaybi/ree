@@ -1,6 +1,5 @@
-import { act } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import ReactDOM from "react-dom";
 import request from "superagent";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { useUpdateRequeteDelivranceRDCSC } from "../../../../views/pages/saisirRequete/hook/UpdateRDCSCApiHook";
@@ -14,93 +13,80 @@ import {
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-let container: Element | null;
-const func = jest.fn();
+const saisieInteresse = {
+  ...RequeteRDCSCInteresse,
+  idRequete: "1072bc37-f889-4365-8f75-912166b767dd"
+} as UpdateRequeteRDCSC;
 
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
+const saisieMandataire = {
+  ...RequeteRDCSCMandataire,
+  idRequete: "1072bc37-f889-4365-8f75-912166b767dd"
+} as UpdateRequeteRDCSC;
 
-afterEach(() => {
-  if (container instanceof Element) {
-    document.body.removeChild<Element>(container);
-  }
-  container = null;
-});
+const saisieInstitution = {
+  ...RequeteRDCSCInstitutionnel,
+  idRequete: "1072bc37-f889-4365-8f75-912166b767dd"
+} as UpdateRequeteRDCSC;
+
+const saisieParticulier = {
+  ...RequeteRDCSCParticulier,
+  idRequete: "1072bc37-f889-4365-8f75-912166b767dd"
+} as UpdateRequeteRDCSC;
 
 const HookConsummerInteresse: React.FC = () => {
-  useUpdateRequeteDelivranceRDCSC(
-    func,
-    RequeteRDCSCInteresse as UpdateRequeteRDCSC
+  const resultat = useUpdateRequeteDelivranceRDCSC(saisieInteresse);
+  return (
+    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
   );
-  return <>{""}</>;
 };
 
-test("Maj requête délivrance hook", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummerInteresse />, container);
-  });
-  expect(container).toBeInstanceOf(Element);
-  if (container instanceof Element) {
-    expect(container.querySelector).toBeTruthy();
-  }
-  expect(func).toBeCalled();
+test("Maj requête délivrance hook intéressé", async () => {
+  render(<HookConsummerInteresse />);
+  await waitForResultat(false, false);
 });
 
 const HookConsummerMandataire: React.FC = () => {
-  useUpdateRequeteDelivranceRDCSC(
-    func,
-    RequeteRDCSCMandataire as UpdateRequeteRDCSC
+  const resultat = useUpdateRequeteDelivranceRDCSC(saisieMandataire);
+  return (
+    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
   );
-  return <>{""}</>;
 };
 
-test("Maj requête délivrance hook", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummerMandataire />, container);
-  });
-  expect(container).toBeInstanceOf(Element);
-  if (container instanceof Element) {
-    expect(container.querySelector).toBeTruthy();
-  }
-  expect(func).toBeCalled();
+test("Maj requête délivrance hook mandataire", async () => {
+  render(<HookConsummerMandataire />);
+  await waitForResultat(false, true);
 });
 
 const HookConsummerInstitutionnel: React.FC = () => {
-  useUpdateRequeteDelivranceRDCSC(
-    func,
-    RequeteRDCSCInstitutionnel as UpdateRequeteRDCSC
+  const resultat = useUpdateRequeteDelivranceRDCSC(saisieInstitution);
+  return (
+    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
   );
-  return <>{""}</>;
 };
 
-test("Maj requête délivrance hook", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummerInstitutionnel />, container);
-  });
-  expect(container).toBeInstanceOf(Element);
-  if (container instanceof Element) {
-    expect(container.querySelector).toBeTruthy();
-  }
-  expect(func).toBeCalled();
+test("Maj requête délivrance hook institution", async () => {
+  render(<HookConsummerInstitutionnel />);
+  await waitForResultat(true, false);
 });
 
 const HookConsummerParticulier: React.FC = () => {
-  useUpdateRequeteDelivranceRDCSC(
-    func,
-    RequeteRDCSCParticulier as UpdateRequeteRDCSC
+  const resultat = useUpdateRequeteDelivranceRDCSC(saisieParticulier);
+  return (
+    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
   );
-  return <>{""}</>;
 };
 
-test("Maj requête délivrance hook", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummerParticulier />, container);
-  });
-  expect(container).toBeInstanceOf(Element);
-  if (container instanceof Element) {
-    expect(container.querySelector).toBeTruthy();
-  }
-  expect(func).toBeCalled();
+test("Maj requête délivrance hook particuler", async () => {
+  render(<HookConsummerParticulier />);
+  await waitForResultat(false, false);
 });
+
+async function waitForResultat(brouillon: boolean, refus: boolean) {
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        `1072bc37-f889-4365-8f75-912166b767dd,${brouillon},${refus}`
+      )
+    ).toBeInTheDocument();
+  });
+}

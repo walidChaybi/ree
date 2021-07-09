@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { creationRequeteDelivrance } from "../../../../api/appels/requeteApi";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
@@ -18,10 +18,18 @@ import {
 } from "../modelForm/ISaisirRDCSCPageModel";
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
 
+export interface ICreationRequeteDelivranceRDCSCResultat {
+  idRequete: string;
+  brouillon?: boolean;
+  refus?: boolean;
+}
+
 export function useCreationRequeteDelivranceRDCSC(
-  callback: any,
   requeteRDCSC?: CreationRequeteRDCSC
-) {
+): ICreationRequeteDelivranceRDCSCResultat | undefined {
+  const [resultat, setResultat] = useState<
+    ICreationRequeteDelivranceRDCSCResultat | undefined
+  >();
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
       const requete = mapRequeteDelivrance(requeteRDCSC);
@@ -32,11 +40,11 @@ export function useCreationRequeteDelivranceRDCSC(
         brouillon: requeteRDCSC.brouillon
       })
         .then((result: any) => {
-          callback(
-            result?.body?.data?.id,
-            requeteRDCSC.brouillon,
-            requeteRDCSC.refus
-          );
+          setResultat({
+            idRequete: result.body.data.id,
+            brouillon: requeteRDCSC.brouillon,
+            refus: requeteRDCSC.refus
+          });
           messageManager.showSuccessAndClose(
             getLibelle("La requête a bien été enregistrée")
           );
@@ -49,8 +57,8 @@ export function useCreationRequeteDelivranceRDCSC(
           });
         });
     }
-  }, [requeteRDCSC, callback]);
-  return {};
+  }, [requeteRDCSC]);
+  return resultat;
 }
 
 export function mapRequeteDelivrance(

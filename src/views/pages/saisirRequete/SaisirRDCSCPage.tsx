@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
@@ -113,44 +113,67 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const [idRequete, setIdRequete] = useState<string>();
 
-  const handleSave = (id: string, brouillon: boolean, refus: boolean) => {
-    // Reset des valeurs pour les hooks
-    setCreationRequeteRDCSC(undefined);
-    setUpdateRequeteRDCSC(undefined);
+  const handleSave = useCallback(
+    (idRequeteSauvegardee: string, brouillon = false, refus = false) => {
+      setOperationEnCours(false);
 
-    setOperationEnCours(false);
-
-    // Si l'appel c'est terminé sans erreur
-    if (id) {
-      setIdRequete(id);
-      // Redirection si l'enregistrement n'est pas un brouillon
-      if (!brouillon) {
-        if (refus) {
-          history.goBack();
-        } else {
-          const pathname = history.location.pathname;
-          if (pathname.startsWith(URL_MES_REQUETES_SAISIR_RDCSC)) {
-            const url = getUrlWithParam(
-              URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
-              id
-            );
-            history.push(url);
-          }
-          if (pathname.startsWith(URL_REQUETES_SERVICE_SAISIR_RDCSC)) {
-            const url = getUrlWithParam(
-              URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE,
-              id
-            );
-            history.push(url);
+      // Si l'appel c'est terminé sans erreur
+      if (idRequeteSauvegardee) {
+        setIdRequete(idRequeteSauvegardee);
+        // Redirection si l'enregistrement n'est pas un brouillon
+        if (!brouillon) {
+          if (refus) {
+            history.goBack();
+          } else {
+            const pathname = history.location.pathname;
+            if (pathname.startsWith(URL_MES_REQUETES_SAISIR_RDCSC)) {
+              const url = getUrlWithParam(
+                URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
+                idRequeteSauvegardee
+              );
+              history.push(url);
+            }
+            if (pathname.startsWith(URL_REQUETES_SERVICE_SAISIR_RDCSC)) {
+              const url = getUrlWithParam(
+                URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE,
+                idRequeteSauvegardee
+              );
+              history.push(url);
+            }
           }
         }
       }
+    },
+    [history]
+  );
+
+  const creationRequeteDelivranceRDCSCResultat = useCreationRequeteDelivranceRDCSC(
+    creationRequeteRDCSC
+  );
+
+  const UpdateRequeteDelivranceRDCSCResultat = useUpdateRequeteDelivranceRDCSC(
+    updateRequeteRDCSC
+  );
+
+  useEffect(() => {
+    if (creationRequeteDelivranceRDCSCResultat) {
+      handleSave(
+        creationRequeteDelivranceRDCSCResultat.idRequete,
+        creationRequeteDelivranceRDCSCResultat.brouillon,
+        creationRequeteDelivranceRDCSCResultat.refus
+      );
     }
-  };
+  }, [creationRequeteDelivranceRDCSCResultat, handleSave]);
 
-  useCreationRequeteDelivranceRDCSC(handleSave, creationRequeteRDCSC);
-
-  useUpdateRequeteDelivranceRDCSC(handleSave, updateRequeteRDCSC);
+  useEffect(() => {
+    if (UpdateRequeteDelivranceRDCSCResultat) {
+      handleSave(
+        UpdateRequeteDelivranceRDCSCResultat.idRequete,
+        UpdateRequeteDelivranceRDCSCResultat.brouillon,
+        UpdateRequeteDelivranceRDCSCResultat.refus
+      );
+    }
+  }, [UpdateRequeteDelivranceRDCSCResultat, handleSave]);
 
   const onSubmitSaisirRDCSC = (values: SaisieRequeteRDCSC) => {
     const villeNaissance = values.interesse.naissance.villeEvenement;

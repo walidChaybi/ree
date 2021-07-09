@@ -121,7 +121,11 @@ export const configRequetesV2 = [
 
       // Utilisé dans UtilisateurAssigneRequeteHook.test
       if (match[1] === "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc") {
-        return this.patch;
+        return {};
+      }
+
+      if (match[1] === "/reponses/1?nomOec=SecondNom&prenomOec=SecondPrenom") {
+        return {};
       }
 
       // Creation Requete Delivrance
@@ -143,6 +147,38 @@ export const configRequetesV2 = [
       }
 
       if (match[1] === "/requetes/delivrance?refus=false&brouillon=true") {
+        return {
+          data: {
+            id: "1072bc37-f889-4365-8f75-912166b767dd"
+          }
+        };
+      }
+      // Update Requete Delivrance
+      // Certificat de Situation Courrier
+      if (
+        match[1] ===
+        "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&brouillon=false"
+      ) {
+        return {
+          data: {
+            id: "1072bc37-f889-4365-8f75-912166b767dd"
+          }
+        };
+      }
+      if (
+        match[1] ===
+        "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=true&brouillon=false"
+      ) {
+        return {
+          data: {
+            id: "1072bc37-f889-4365-8f75-912166b767dd"
+          }
+        };
+      }
+      if (
+        match[1] ===
+        "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&brouillon=true"
+      ) {
         return {
           data: {
             id: "1072bc37-f889-4365-8f75-912166b767dd"
@@ -222,7 +258,8 @@ export const configRequetesV2 = [
      */
     patch: function (match, data) {
       return {
-        status: 201
+        body: data,
+        header: data.headers
       };
     }
   }

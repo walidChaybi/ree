@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { updateRequeteDelivrance } from "../../../../api/appels/requeteApi";
 import { logError } from "../../../common/util/LogManager";
 import messageManager from "../../../common/util/messageManager";
@@ -6,10 +6,18 @@ import { getLibelle } from "../../../common/widget/Text";
 import { UpdateRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
 import { mapRequeteDelivrance } from "./SaisirRDCSCApiHook";
 
+export interface IUpdateRequeteDelivranceRDCSCResultat {
+  idRequete: string;
+  brouillon?: boolean;
+  refus?: boolean;
+}
+
 export function useUpdateRequeteDelivranceRDCSC(
-  callback: any,
   requeteRDCSC?: UpdateRequeteRDCSC
-) {
+): IUpdateRequeteDelivranceRDCSCResultat | undefined {
+  const [resultat, setResultat] = useState<
+    IUpdateRequeteDelivranceRDCSCResultat | undefined
+  >();
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
       const requete = mapRequeteDelivrance(requeteRDCSC);
@@ -21,11 +29,11 @@ export function useUpdateRequeteDelivranceRDCSC(
         brouillon: requeteRDCSC.brouillon
       })
         .then((result: any) => {
-          callback(
-            requeteRDCSC.idRequete,
-            requeteRDCSC.brouillon,
-            requeteRDCSC.refus
-          );
+          setResultat({
+            idRequete: result.body.data.id,
+            brouillon: requeteRDCSC.brouillon,
+            refus: requeteRDCSC.refus
+          });
           messageManager.showSuccessAndClose(
             getLibelle("La requête a bien été enregistrée")
           );
@@ -38,6 +46,6 @@ export function useUpdateRequeteDelivranceRDCSC(
           });
         });
     }
-  }, [requeteRDCSC, callback]);
-  return {};
+  }, [requeteRDCSC]);
+  return resultat;
 }

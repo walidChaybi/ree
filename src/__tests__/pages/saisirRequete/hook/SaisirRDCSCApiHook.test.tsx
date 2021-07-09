@@ -1,6 +1,5 @@
-import { act } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import ReactDOM from "react-dom";
 import request from "superagent";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { useCreationRequeteDelivranceRDCSC } from "../../../../views/pages/saisirRequete/hook/SaisirRDCSCApiHook";
@@ -13,81 +12,61 @@ import {
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-let container: Element | null;
-const func = jest.fn();
-
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  if (container instanceof Element) {
-    document.body.removeChild<Element>(container);
-  }
-  container = null;
-});
-
 const HookConsummerInteresse: React.FC = () => {
-  useCreationRequeteDelivranceRDCSC(func, RequeteRDCSCInteresse);
-  return <>{""}</>;
+  const resultat = useCreationRequeteDelivranceRDCSC(RequeteRDCSCInteresse);
+  return (
+    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+  );
 };
 
-test("Création requête délivrance hook", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummerInteresse />, container);
-  });
-  expect(container).toBeInstanceOf(Element);
-  if (container instanceof Element) {
-    expect(container.querySelector).toBeTruthy();
-  }
-  expect(func).toBeCalled();
+test("Création requête délivrance hook intéressé", async () => {
+  render(<HookConsummerInteresse />);
+  await waitForResultat(false, false);
 });
 
 const HookConsummerMandataire: React.FC = () => {
-  useCreationRequeteDelivranceRDCSC(func, RequeteRDCSCMandataire);
-  return <>{""}</>;
+  const resultat = useCreationRequeteDelivranceRDCSC(RequeteRDCSCMandataire);
+  return (
+    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+  );
 };
 
-test("Création requête délivrance hook", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummerMandataire />, container);
-  });
-  expect(container).toBeInstanceOf(Element);
-  if (container instanceof Element) {
-    expect(container.querySelector).toBeTruthy();
-  }
-  expect(func).toBeCalled();
+test("Création requête délivrance hook mandataire", async () => {
+  render(<HookConsummerMandataire />);
+  await waitForResultat(false, true);
 });
 
 const HookConsummerInstitutionnel: React.FC = () => {
-  useCreationRequeteDelivranceRDCSC(func, RequeteRDCSCInstitutionnel);
-  return <>{""}</>;
+  const resultat = useCreationRequeteDelivranceRDCSC(
+    RequeteRDCSCInstitutionnel
+  );
+  return (
+    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+  );
 };
 
-test("Création requête délivrance hook", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummerInstitutionnel />, container);
-  });
-  expect(container).toBeInstanceOf(Element);
-  if (container instanceof Element) {
-    expect(container.querySelector).toBeTruthy();
-  }
-  expect(func).toBeCalled();
+test("Création requête délivrance hook institutionnel", async () => {
+  render(<HookConsummerInstitutionnel />);
+  await waitForResultat(true, false);
 });
 
 const HookConsummerParticulier: React.FC = () => {
-  useCreationRequeteDelivranceRDCSC(func, RequeteRDCSCParticulier);
-  return <>{""}</>;
+  const resultat = useCreationRequeteDelivranceRDCSC(RequeteRDCSCParticulier);
+  return (
+    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+  );
 };
 
-test("Création requête délivrance hook", async () => {
-  await act(async () => {
-    ReactDOM.render(<HookConsummerParticulier />, container);
-  });
-  expect(container).toBeInstanceOf(Element);
-  if (container instanceof Element) {
-    expect(container.querySelector).toBeTruthy();
-  }
-  expect(func).toBeCalled();
+test("Création requête délivrance hook particulier", async () => {
+  render(<HookConsummerParticulier />);
+  await waitForResultat(false, false);
 });
+async function waitForResultat(brouillon: boolean, refus: boolean) {
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        `1072bc37-f889-4365-8f75-912166b767dd,${brouillon},${refus}`
+      )
+    ).toBeInTheDocument();
+  });
+}
