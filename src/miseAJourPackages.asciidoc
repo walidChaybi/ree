@@ -1,0 +1,12 @@
+12/07/2021
+
+La mise à jour de react-router et react-router-dom endommage FilAriane car le composant n'est plus actualisé
+
+*dep:*
+
+"react": "16.14.0"
+
+*dev dep:*
+
+"@testing-library/dom": "^8.1.0"
+"typescript": "^3.9.10"
