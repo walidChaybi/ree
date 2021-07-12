@@ -113,15 +113,18 @@ export const SaisirRDCSCPage: React.FC = () => {
     donneesNaissanceIncomplete,
     setDonneesNaissanceIncomplete
   ] = React.useState<boolean>(false);
-  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] = useState<
-    SaisieRequeteRDCSC
-  >();
-  const [creationRequeteRDCSC, setCreationRequeteRDCSC] = useState<
-    CreationRequeteRDCSC
-  >();
-  const [updateRequeteRDCSC, setUpdateRequeteRDCSC] = useState<
-    UpdateRequeteRDCSC
-  >();
+  const [
+    saisieRequeteRDCSC,
+    setSaisieRequeteRDCSC
+  ] = useState<SaisieRequeteRDCSC>();
+  const [
+    creationRequeteRDCSC,
+    setCreationRequeteRDCSC
+  ] = useState<CreationRequeteRDCSC>();
+  const [
+    updateRequeteRDCSC,
+    setUpdateRequeteRDCSC
+  ] = useState<UpdateRequeteRDCSC>();
 
   const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 

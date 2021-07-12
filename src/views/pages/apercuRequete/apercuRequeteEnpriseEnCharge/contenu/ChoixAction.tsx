@@ -10,7 +10,6 @@ import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequet
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import messageManager from "../../../../common/util/messageManager";
-import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import {
   IActionOption,
@@ -18,7 +17,7 @@ import {
 } from "../../../../common/widget/menu/MenuAction";
 import { ConfirmationPopin } from "../../../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../../../common/widget/Text";
-import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID } from "../../../../router/ReceUrls";
+import { receUrl } from "../../../../router/ReceUrls";
 import { useReponseNegative } from "./hook/ChoixReponseNegativeHook";
 import "./scss/ChoixAction.scss";
 import { estSeulementActeMariage } from "./VerificationChoixSeulementActeMariage";
@@ -51,12 +50,7 @@ export const ChoixAction: React.FC<IActionProps> = props => {
 
   useEffect(() => {
     if (resultatReponseNegative) {
-      history.push(
-        getUrlWithParam(
-          URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
-          props.requete.id
-        )
-      );
+      receUrl.replaceUrl(history);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatReponseNegative, history]);

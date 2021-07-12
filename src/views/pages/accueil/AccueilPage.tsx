@@ -69,7 +69,7 @@ export const AccueilPage: React.FC = () => {
         {etape2Active ? (
           <BoutonAccueilEspaceDelivranceV2
             messageId="pages.accueil.boutons.delivranceV2"
-            pageUrl="mesrequetesV2"
+            pageUrl="mesrequetesv2"
             iconFA={faGavel}
             titleId="pages.accueil.titles.delivranceV2"
           ></BoutonAccueilEspaceDelivranceV2>

@@ -19,30 +19,33 @@ import { SectionContentProps } from "../../../../../common/widget/section/Sectio
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
 export function getAutorite(rcrca: IFicheRcRca): SectionPartProps[] {
-  const autorite: SectionPartProps[] = [
-    {
-      partContent: {
-        contents: getContentAutorite(rcrca.decision.autorite, rcrca.categorie)
+  let autorite: SectionPartProps[] = [];
+  if (rcrca.decision) {
+    autorite = [
+      {
+        partContent: {
+          contents: getContentAutorite(rcrca.decision.autorite, rcrca.categorie)
+        }
       }
+    ];
+
+    if (
+      rcrca.decision &&
+      rcrca.decision.sourceConfirmation != null &&
+      TypeAutoriteUtil.isJuridiction(
+        rcrca.decision.sourceConfirmation.autorite.typeAutorite
+      )
+    ) {
+      autorite.push({
+        partContent: {
+          contents: getContentAutorite(
+            rcrca.decision.sourceConfirmation.autorite,
+            rcrca.categorie
+          )
+        }
+      });
     }
-  ];
-
-  if (
-    rcrca.decision.sourceConfirmation != null &&
-    TypeAutoriteUtil.isJuridiction(
-      rcrca.decision.sourceConfirmation.autorite.typeAutorite
-    )
-  ) {
-    autorite.push({
-      partContent: {
-        contents: getContentAutorite(
-          rcrca.decision.sourceConfirmation.autorite,
-          rcrca.categorie
-        )
-      }
-    });
   }
-
   return autorite;
 }
 

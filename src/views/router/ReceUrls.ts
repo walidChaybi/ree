@@ -4,6 +4,7 @@ import {
   getUrlWithoutIdParam,
   URL_SEPARATEUR
 } from "../common/util/route/routeUtil";
+import { gestionnaireNavigation } from "../common/widget/filAriane/FilAriane";
 
 export interface IUrlData {
   url: string;
@@ -41,14 +42,12 @@ export const URL_REQUETES_SERVICE_V2 = `${URL_CONTEXT_APP}/requetesservicev2`;
 export const URL_MES_REQUETES_APERCU_REQUETE = `${URL_MES_REQUETES_V2}/apercurequete/:idRequete`;
 export const URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_V2}/apercurequetepriseencharge/:idRequete`;
 export const URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID = `${URL_MES_REQUETES_V2}/${PATH_APERCU_REQUETE_TRAITEMENT}/:idRequete`;
-export const URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_V2}/apercurequetepriseencharge/${PATH_APERCU_REQUETE_TRAITEMENT}/:idRequete`;
 
 // Aperçu requête ... V2 depuis le tableau Requêtes de mon service
 export const URL_REQUETES_SERVICE_APERCU_REQUETE = `${URL_REQUETES_SERVICE_V2}/apercurequete/:idRequete`;
 export const URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_REQUETES_SERVICE_V2}/apercurequetepriseencharge/:idRequete`;
 export const URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_REQUETES_SERVICE_V2}/${PATH_APERCU_REQUETE_TRAITEMENT}/:idRequete`;
-export const URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_REQUETES_SERVICE_V2}/
-                                                                apercurequetepriseencharge/${PATH_APERCU_REQUETE_TRAITEMENT}/:idRequete`;
+
 // Détail de la requête d'une requete d'un des tableau de l'espace délivrance
 export const URL_MES_REQUETES_DETAIL_REQUETE_ID_V2 = `${URL_MES_REQUETES_V2}/apercurequete/detailrequete/:idRequete`;
 export const URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2 = `${URL_REQUETES_SERVICE_V2}/apercurequete/detailrequete/:idRequete`;
@@ -66,8 +65,7 @@ export const URL_RECHERCHE_REQUETE = `${URL_CONTEXT_APP}/rechercherequete`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE = `${URL_RECHERCHE_REQUETE}/apercurequete/:idRequete`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_RECHERCHE_REQUETE}/apercurequetepriseencharge/:idRequete`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQUETE_TRAITEMENT}/:idRequete`;
-export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID = `${URL_RECHERCHE_REQUETE}/
-                                                                apercurequetepriseencharge/${PATH_APERCU_REQUETE_TRAITEMENT}/:idRequete`;
+
 // Détail de la requête d'une requete du tableau résultats RMC Requêtes
 export const URL_RECHERCHE_REQUETE_DETAIL_REQUETE_ID = `${URL_RECHERCHE_REQUETE}/apercurequete/detailrequete/:idRequete`;
 export const URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID = `${URL_RECHERCHE_REQUETE}/apercurequetepriseencharge/detailrequete/:idRequete`;
@@ -103,7 +101,16 @@ function getUrlApercuTraitementAPartirDe(url: string) {
   )}${URL_SEPARATEUR}${PATH_APERCU_REQUETE_TRAITEMENT}${URL_SEPARATEUR}${id}`;
 }
 
+function replaceUrl(history: any) {
+  gestionnaireNavigation.deleteLastUrl();
+  const url = receUrl.getUrlApercuTraitementAPartirDe(
+    history.location.pathname
+  );
+  history.replace(url);
+}
+
 export const receUrl = {
   estUrlApercuRequete,
-  getUrlApercuTraitementAPartirDe
+  getUrlApercuTraitementAPartirDe,
+  replaceUrl
 };

@@ -62,7 +62,7 @@ export function useReponseNegative(
     requeteId
   );
 
-  // 6- Une fois la requête mise à jour et l'action créée création du resultat
+  // 6- Une fois la requête mise à jour et l'action créé, changement de page
   useEffect(
     () => {
       if (
@@ -71,11 +71,6 @@ export function useReponseNegative(
         uuidDocumentsReponse &&
         uuidDocumentsReponse.length === 1
       ) {
-        // if (urlRedirection === GO_BACK) {
-        //   history.goBack();
-        // } else {
-        //   history.push(urlRedirection);
-        // }
         setResultat({
           requeteId,
           idAction,

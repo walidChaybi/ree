@@ -13,12 +13,22 @@ import { configMultiAPi } from "../../../../../src/mock/superagent-config/supera
 import { idRequete1, requete1 } from "../../../../mock/data/RequeteV2";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { ChoixAction } from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ChoixAction";
-import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID } from "../../../../views/router/ReceUrls";
+import {
+  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID
+} from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
 test("renders du bloc choix des actions", async () => {
   const history = createMemoryHistory();
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      idRequete1
+    )
+  );
+
   render(
     <Router history={history}>
       <ChoixAction requete={requete1} />
@@ -62,10 +72,7 @@ test("renders du bloc choix des actions", async () => {
 
   await waitFor(() => {
     expect(history.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_APRES_PRISE_EN_CHARGE_ID,
-        idRequete1
-      )
+      getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID, idRequete1)
     );
   });
 });

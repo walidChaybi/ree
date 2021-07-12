@@ -1,18 +1,18 @@
-import React from "react";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import { Route, MemoryRouter } from "react-router";
+import React from "react";
+import { MemoryRouter, Route } from "react-router";
 import { useHistory } from "react-router-dom";
-import { Categorie } from "./Categorie";
-import { URL_CONTEXT_APP, URL_ACCUEIL } from "../../../router/ReceUrls";
-import { getLibelle } from "../Text";
+import { URL_ACCUEIL, URL_CONTEXT_APP } from "../../../router/ReceUrls";
 import { IRoute } from "../../util/route/IRoute";
 import {
-  urlWithParamPatern,
-  URL_SEPARATEUR,
   getUrlWithoutIdParam,
-  isPathElemId
+  isPathElemId,
+  urlWithParamPatern,
+  URL_SEPARATEUR
 } from "../../util/route/routeUtil";
+import { getLibelle } from "../Text";
+import { Categorie } from "./Categorie";
 
 // Gère l'empilement des urls visités par l'utilisateur
 class GestionnaireNavigation {
@@ -35,6 +35,10 @@ class GestionnaireNavigation {
     this.urls = newUrls;
   }
 
+  deleteLastUrl() {
+    this.urls.pop();
+  }
+
   getUrl(index: number) {
     return this.urls[index];
   }
@@ -45,11 +49,15 @@ class GestionnaireNavigation {
 }
 
 export const gestionnaireNavigation = new GestionnaireNavigation();
+
+/******** Fil d'ariane *******/
 interface FilArianeProps {
   setRetourState?: (retourUrl: string) => void;
   routes: IRoute[];
 }
+
 export const fildarianeLabel = getLibelle("Navigation par fil d'ariane");
+
 export const FilAriane: React.FC<FilArianeProps> = ({
   setRetourState,
   routes

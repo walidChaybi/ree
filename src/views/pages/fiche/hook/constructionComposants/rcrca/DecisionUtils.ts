@@ -16,16 +16,18 @@ import { SectionPartProps } from "../../../../../common/widget/section/SectionPa
 export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
   let contentsDecision: SectionContentProps[] = [];
 
-  if (TypeAutoriteUtil.isJuridiction(rcrca.decision.autorite.typeAutorite)) {
-    contentsDecision = [
-      ...getContentJuridiction(rcrca.decision, rcrca.categorie)
-    ];
-  } else if (
-    TypeAutoriteUtil.isNotaire(rcrca.decision.autorite.typeAutorite) ||
-    (TypeAutoriteUtil.isOnac(rcrca.decision.autorite.typeAutorite) &&
-      FicheUtil.isFicheRca(rcrca.categorie))
-  ) {
-    contentsDecision = [...getContentNotaire(rcrca.decision)];
+  if (rcrca.decision) {
+    if (TypeAutoriteUtil.isJuridiction(rcrca.decision.autorite.typeAutorite)) {
+      contentsDecision = [
+        ...getContentJuridiction(rcrca.decision, rcrca.categorie)
+      ];
+    } else if (
+      TypeAutoriteUtil.isNotaire(rcrca.decision.autorite.typeAutorite) ||
+      (TypeAutoriteUtil.isOnac(rcrca.decision.autorite.typeAutorite) &&
+        FicheUtil.isFicheRca(rcrca.categorie))
+    ) {
+      contentsDecision = [...getContentNotaire(rcrca.decision)];
+    }
   }
 
   const decision: SectionPartProps[] = [
@@ -38,6 +40,7 @@ export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
   ];
 
   if (
+    rcrca.decision &&
     rcrca.decision.sourceConfirmation != null &&
     rcrca.decision.type != null
   ) {

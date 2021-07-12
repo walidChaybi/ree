@@ -122,14 +122,11 @@ export function getDernierJourDuMois(
 }
 
 export function getDateStringIso(date: string): string {
-  return getDateString(new Date(date));
+  return date ? getDateString(new Date(date)) : "";
 }
 
 export function getDateString(date: Date): string {
-  if (date) {
-    return new Intl.DateTimeFormat("fr-FR").format(date);
-  }
-  return "";
+  return date ? new Intl.DateTimeFormat("fr-FR").format(date) : "";
 }
 
 // Convertion d'un Timestamp (en millisecondes depuis 1970) en Date
