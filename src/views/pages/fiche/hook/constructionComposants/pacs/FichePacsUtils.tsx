@@ -26,6 +26,8 @@ import { IAccordionReceSection } from "../../../FicheUtils";
 import { getFichesPersonne } from "../personne/FichePersonne";
 import { getPartenaires } from "./PartenairesUtils";
 
+const DATE_EFFET = "Date d'effet à l'égard des tiers";
+
 export function getPanelsPacs(pacs: IFichePacs): IAccordionReceSection {
   const panelAreas: SectionPanelAreaProps[] = [];
 
@@ -156,7 +158,7 @@ function getModificationPacs(modification: IModification): SectionPartProps[] {
           value: Modification.getDate(modification)
         },
         {
-          libelle: "Date d'effet à l'égard des tiers",
+          libelle: DATE_EFFET,
           value: Modification.getDateEffet(modification)
         }
       ]
@@ -183,7 +185,7 @@ function getDissolutionPacs(dissolution: IDissolution): SectionPartProps[] {
           value: Dissolution.getDate(dissolution)
         },
         {
-          libelle: "Date d'effet à l'égard des tiers",
+          libelle: DATE_EFFET,
           value: Dissolution.getDateEffet(dissolution)
         },
         {
@@ -215,6 +217,10 @@ function getAnnulationPacs(annulation: IAnnulation): SectionPartProps[] {
         {
           libelle: "Date",
           value: Annulation.getDate(annulation)
+        },
+        {
+          libelle: DATE_EFFET,
+          value: Annulation.getDateEffet(annulation)
         },
         {
           libelle: "Juridiction",
