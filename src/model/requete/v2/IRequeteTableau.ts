@@ -3,7 +3,8 @@ import { storeRece } from "../../../views/common/util/storeRece";
 import {
   formatNom,
   formatPrenom,
-  getValeurOuVide
+  getValeurOuVide,
+  valeurOuUndefined
 } from "../../../views/common/util/Utils";
 import { NatureActe } from "../../etatcivil/enum/NatureActe";
 import { Sexe } from "../../etatcivil/enum/Sexe";
@@ -62,39 +63,46 @@ export async function mappingRequetesTableau(
 ): Promise<IRequeteTableau[]> {
   const requetes: Array<Promise<IRequeteTableau>> = resultatsRecherche?.map(
     async (requete: any) => {
-      const documentDelivrance: DocumentDelivrance = await DocumentDelivrance.getDocumentDelivrance(
-        requete?.document
-      );
-      return {
-        idRequete: getValeurOuVide(requete?.id),
-        numero: getValeurOuVide(requete?.numero),
-        idSagaDila: getValeurOuVide(requete?.idSagaDila),
-        type: TypeRequete.getEnumFor(requete?.type)?.libelle,
-        sousType: getSousType(requete?.type, requete?.sousType),
-        provenance: Provenance.getEnumFor(requete?.provenance)?.libelle,
-        nature: requete?.nature
-          ? NatureActe.getEnumFor(requete?.nature)?.libelle
-          : "",
-        document: requete?.document, // id du type de document demandé
-        documentLibelle: documentDelivrance.libelle, // libellé du type de document demandé
-        titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
-        requerant: requete?.requerant,
-        nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),
-        attribueA: mapAttribueA(requete),
-        dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
-        dateDerniereMaj: getFormatDateFromTimestamp(requete?.dateDernierMAJ),
-        statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
-        priorite: getValeurOuVide(requete?.priorite),
-        observations:
-          mappingSupplementaire === true
-            ? mapObservations(requete?.observations)
-            : requete?.observations,
-        idUtilisateur: getValeurOuVide(requete?.idUtilisateur),
-        idCorbeilleAgent: getValeurOuVide(requete?.idCorbeilleAgent)
-      } as IRequeteTableau;
+      return mappingUneRequeteTableau(requete, true);
     }
   );
   return Promise.all(requetes);
+}
+
+export async function mappingUneRequeteTableau(
+  requete: any,
+  mappingSupplementaire: boolean
+): Promise<IRequeteTableau> {
+  const documentDelivrance: DocumentDelivrance = await DocumentDelivrance.getDocumentDelivrance(
+    requete?.document
+  );
+  return {
+    idRequete: valeurOuUndefined(requete?.id),
+    numero: getValeurOuVide(requete?.numero),
+    idSagaDila: getValeurOuVide(requete?.idSagaDila),
+    type: TypeRequete.getEnumFor(requete?.type)?.libelle,
+    sousType: getSousType(requete?.type, requete?.sousType),
+    provenance: Provenance.getEnumFor(requete?.provenance)?.libelle,
+    nature: requete?.nature
+      ? NatureActe.getEnumFor(requete?.nature)?.libelle
+      : "",
+    document: requete?.document, // id du type de document demandé
+    documentLibelle: documentDelivrance.libelle, // libellé du type de document demandé
+    titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
+    requerant: requete?.requerant,
+    nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),
+    attribueA: mapAttribueA(requete),
+    dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
+    dateDerniereMaj: getFormatDateFromTimestamp(requete?.dateDernierMAJ),
+    statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
+    priorite: getValeurOuVide(requete?.priorite),
+    observations:
+      mappingSupplementaire === true
+        ? mapObservations(requete?.observations)
+        : requete?.observations,
+    idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
+    idCorbeilleAgent: valeurOuUndefined(requete?.idCorbeilleAgent)
+  } as IRequeteTableau;
 }
 
 function getSousType(type: string, sousType: string) {

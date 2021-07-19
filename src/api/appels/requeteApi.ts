@@ -23,6 +23,7 @@ export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/action";
+export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
 
 const URL_REPONSES = "/reponses";
 
@@ -340,5 +341,12 @@ export function rechercheMultiCriteresAutoRequetes(
     parameters: {
       range
     }
+  });
+}
+
+export function getRequeteAleatoire() {
+  return apiV2.fetch({
+    method: HttpMethod.GET,
+    uri: URL_REQUETE_ALEATOIRE
   });
 }

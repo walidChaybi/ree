@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 import { IOngletProps } from "../../../../model/IOnglet";
 import {
   INavigationApercuRMCAutoParams,
@@ -12,6 +13,7 @@ import {
   URL_MES_REQUETES_V2,
   URL_REQUETES_SERVICE_V2
 } from "../../../router/ReceUrls";
+import { BoutonPrendreEnChargeAleatoirement } from "./contenu/BoutonPrendreEnChargeAleatoirement";
 import { CompteurRequete } from "./contenu/CompteurRequeteV2";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequeteV2";
 import { MesRequetesPageV2 } from "./MesRequetesPageV2";
@@ -22,9 +24,13 @@ interface LocalProps {
   selectedTab?: number;
 }
 
-const getElementEntreDeux = (selectedTabState: number) => (
+const getElementEntreDeux = (
+  selectedTabState: number,
+  officier: IOfficierSSOApi
+) => (
   <div className="BlocBoutons">
     <MenuSaisirRequete indexTabPanel={selectedTabState} />
+    <BoutonPrendreEnChargeAleatoirement />
   </div>
 );
 
@@ -114,7 +120,8 @@ const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
                       recuperationParamsRMCAuto
                     )}
                     elementEntreTitreEtContenu={getElementEntreDeux(
-                      selectedTabState
+                      selectedTabState,
+                      officier.officierDataState
                     )}
                     titre="Menu espace délivrance"
                     classOnglet="ongletDelivrance"

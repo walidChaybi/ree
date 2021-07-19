@@ -17,6 +17,8 @@ import {
   SeulementNavigateur
 } from "../common/util/detectionNavigateur/DetectionNavigateur";
 import { ErrorManager } from "../common/util/ErrorManager";
+import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
 import {
   appelRequetesASigner,
   GestionnaireFermeture,
@@ -24,7 +26,7 @@ import {
 } from "../common/util/GestionnaireFermeture";
 import { logError } from "../common/util/LogManager";
 import { storeRece } from "../common/util/storeRece";
-import { URL_MES_REQUETES } from "../router/ReceUrls";
+import { URL_MES_REQUETES, URL_MES_REQUETES_V2 } from "../router/ReceUrls";
 import "./App.scss";
 import { Body } from "./body/Body";
 import { OfficierContext } from "./contexts/OfficierContext";
@@ -36,6 +38,8 @@ registerLocale("fr", fr);
 setDefaultLocale("fr");
 
 const PLAGE_IMPORT = 100;
+
+const etape2 = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
 
 const App: React.FC = () => {
   const login = useLoginApi();
@@ -65,7 +69,9 @@ const App: React.FC = () => {
                     paramsFctAAppler={officier}
                     fctAAppeler={appelRequetesASigner}
                     fctTraitementResultat={traiteAppelRequeteASigner}
-                    urlRedirection={URL_MES_REQUETES}
+                    urlRedirection={
+                      etape2 ? URL_MES_REQUETES_V2 : URL_MES_REQUETES
+                    }
                   ></GestionnaireFermeture>
                 )}
               </OfficierContext.Consumer>
@@ -96,7 +102,11 @@ export function cacheUtilisateurs(page: number) {
         ...storeRece.listeUtilisateurs,
         ...utilisateurs.body.data
       ];
-      if (utilisateurs.headers.link.indexOf(`rel="next"`) > 0) {
+      if (
+        utilisateurs.headers &&
+        utilisateurs.headers.link &&
+        utilisateurs.headers.link.indexOf(`rel="next"`) > 0
+      ) {
         cacheUtilisateurs(page + 1);
       }
     })
@@ -112,7 +122,11 @@ export function cacheEntites(page: number) {
   getToutesLesEntiteRattachement(`${page}-${PLAGE_IMPORT}`)
     .then(entites => {
       storeRece.listeEntite = [...storeRece.listeEntite, ...entites.body.data];
-      if (entites.headers.link.indexOf(`rel="next"`) > 0) {
+      if (
+        entites.headers &&
+        entites.headers.link &&
+        entites.headers.link.indexOf(`rel="next"`) > 0
+      ) {
         cacheEntites(page + 1);
       }
     })

@@ -52,9 +52,7 @@ export function useNavigationApercu(
             )
           });
         }
-      } else if (requete.idUtilisateur == null) {
-        // US 221 Si je "Prendre en charge une requête" depuis l'espace délivrance
-        console.log("Futures US 221");
+      } else if (!requete.idUtilisateur) {
         setRedirection({ isRmcAuto: true });
       } else {
         // Si la requête N'EST PAS dans sa corbeille agent-> redirection vers "Aperçu de requête"

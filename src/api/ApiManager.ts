@@ -1,25 +1,26 @@
-import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
 import request, * as superagent from "superagent";
 import { v4 as uuidv4 } from "uuid";
-import messageManager from "../views/common/util/messageManager";
 import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
-import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
+import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
+import { configRequetesV2 } from "../mock/superagent-config/superagent-mock-requetes-v2";
 import { getCsrfHeader } from "../views/common/util/CsrfUtil";
-import { URL_ACCUEIL } from "../views/router/ReceUrls";
 import {
-  ReceCache,
-  GestionnaireCache
+  GestionnaireCache,
+  ReceCache
 } from "../views/common/util/GestionnaireCache";
+import { URL_ACCUEIL } from "../views/router/ReceUrls";
 
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (43200 secondes)
 
 const HTTP_FORBIDDEN = 403;
+export const HTTP_NOT_FOUND = 404;
+
 const ERROR_OFFLINE_TIMEOUT = 5000;
 
 if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, [
-    configRequetes[0],
+    configRequetesV2[0],
     configAgent[0],
     configEtatcivil[0]
   ]);
@@ -210,9 +211,9 @@ export class ApiManager {
       error.status !== HTTP_FORBIDDEN
     ) {
       errorType = "toutesErreursSaufForbidden";
-      messageManager.showError(
-        `Une erreur est survenue: ${error ? error.message : "inconnue"}`
-      );
+      // messageManager.showError(
+      //   `Une erreur est survenue: ${error ? error.message : "inconnue"}`
+      // );
     }
     return errorType;
   }

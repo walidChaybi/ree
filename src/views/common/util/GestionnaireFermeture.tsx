@@ -6,6 +6,8 @@ import apiResources from "../../../ressources/api.json";
 import { OfficierContextProps } from "../../core/contexts/OfficierContext";
 import { getText } from "../widget/Text";
 import { getCsrfHeader } from "./CsrfUtil";
+import { FeatureFlag } from "./featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "./featureFlag/gestionnaireFeatureFlag";
 import messageManager from "./messageManager";
 
 const TIME_OUT_MS = 2000;
@@ -69,7 +71,9 @@ export const appelRequetesASigner = (officier: OfficierContextProps) => {
 const appelApi = (officierPayload: IOfficierSSOApi | undefined) => {
   const req = new XMLHttpRequest();
   const api = apiResources.apis[0];
-  const version = api.usedVersions[0];
+  const version = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2)
+    ? api.usedVersions[1]
+    : api.usedVersions[0];
 
   const params = `statuts=A_SIGNER`;
   const url = `${window.origin}/${api.domain}/${api.name}/${version}${URL_REQUETES_COUNT}?${params}`;

@@ -109,8 +109,13 @@ function replaceUrl(history: any) {
   history.replace(url);
 }
 
+function getUrlCourante(history: any) {
+  return history.location.pathname; // history.location.pathname renvoie une url du type /rece/rece-ui/xxx
+}
+
 export const receUrl = {
   estUrlApercuRequete,
   getUrlApercuTraitementAPartirDe,
-  replaceUrl
+  replaceUrl,
+  getUrlCourante
 };

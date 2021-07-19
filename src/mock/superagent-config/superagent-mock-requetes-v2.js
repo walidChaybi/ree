@@ -222,6 +222,13 @@ export const configRequetesV2 = [
       if (match[1] === "/parametres" && context.method === "post") {
         return { data: parametresBaseRequete };
       }
+
+      // Prise en charge aléatoire
+      if (match[1] === "/requetes/requetealeatoire") {
+        return {
+          data: ReponseAppelMesRequetes[0]
+        };
+      }
     },
 
     /**

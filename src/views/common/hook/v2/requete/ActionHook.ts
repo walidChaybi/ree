@@ -4,8 +4,8 @@ import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequet
 import { logError } from "../../../util/LogManager";
 
 export interface CreationActionEtMiseAjourStatutParams {
-  libelleAction: string;
-  statutRequete: StatutRequete;
+  libelleAction?: string;
+  statutRequete?: StatutRequete;
   requeteId?: string;
 }
 

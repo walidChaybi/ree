@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Droit } from "../../../../model/Droit";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 import { officierHabiliterPourLeDroit } from "../../../../model/IOfficierSSOApi";
@@ -13,18 +13,14 @@ import {
   ITitulaireRequeteTableau
 } from "../../../../model/requete/v2/IRequeteTableau";
 import { ITitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
-import {
-  INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAuto
-} from "../../../common/hook/v2/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
-import {
-  CreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "../../../common/hook/v2/requete/ActionHook";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { storeRece } from "../../../common/util/storeRece";
 import { getLibelle } from "../../../common/widget/Text";
 import { URL_MES_REQUETES_APERCU_REQUETE } from "../../../router/ReceUrls";
+import {
+  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  useCreationActionMiseAjourStatutEtRmcAuto
+} from "../commun/hook/CreationActionMiseAjourStatutEtRmcAutoHook";
 import "./scss/BoutonPrendreEnCharge.scss";
 
 interface BoutonPrendreEnChargeProps {
@@ -34,45 +30,24 @@ interface BoutonPrendreEnChargeProps {
 export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props => {
   const [estDisabled, setEstDisabled] = useState(true);
 
-  //**** RMC AUTO ****//
-  const [
-    paramsRMCAuto,
-    setParamsRMCAuto
-  ] = useState<INavigationApercuRMCAutoParams>(
-    {} as INavigationApercuRMCAutoParams
-  );
+  const [params, setParams] = useState<
+    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
 
-  const [
-    creationActionEtMiseAjourStatutParams,
-    setCreationActionEtMiseAjourStatutParams
-  ] = useState<CreationActionEtMiseAjourStatutParams | undefined>();
-
-  const setActionEtUpdateStatut = (idRequete: string) => {
-    setCreationActionEtMiseAjourStatutParams({
-      requeteId: idRequete,
+  const setActionEtUpdateStatut = () => {
+    setParams({
+      requete: mapRequeteRmcAuto(props.requete as IRequeteDelivrance),
+      dataRequetes: [],
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-      statutRequete: StatutRequete.PRISE_EN_CHARGE
+      statutRequete: StatutRequete.PRISE_EN_CHARGE,
+      urlCourante: getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQUETE,
+        props.requete.id
+      )
     });
   };
 
-  const idAction = usePostCreationActionEtMiseAjourStatutApi(
-    creationActionEtMiseAjourStatutParams
-  );
-
-  useEffect(() => {
-    if (idAction) {
-      setParamsRMCAuto({
-        requete: mapRequeteRmcAuto(props.requete as IRequeteDelivrance),
-        dataRequetes: [],
-        urlCourante: getUrlWithParam(
-          URL_MES_REQUETES_APERCU_REQUETE,
-          props.requete.id
-        )
-      });
-    }
-  }, [idAction, props.requete]);
-
-  useNavigationApercuRMCAuto(paramsRMCAuto);
+  useCreationActionMiseAjourStatutEtRmcAuto(params);
 
   const estATraiterOuATransferee =
     props.requete.statutCourant.statut === StatutRequete.A_TRAITER ||
@@ -110,9 +85,7 @@ export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props
       className="BoutonPriseEnCharge"
       type="button"
       disabled={estDisabled}
-      onClick={() => {
-        setActionEtUpdateStatut(props.requete.id);
-      }}
+      onClick={setActionEtUpdateStatut}
     >
       {getLibelle("Prendre en charge")}
     </button>

@@ -28,10 +28,10 @@ export const configAgent = [
         return { data: DONNEES_UTILISATEURS.data };
       }
 
-      if (match[1] === "/utilisateurs/all") {
+      if (match[1].startsWith("/utilisateurs/all")) {
         return { data: DONNEES_UTILISATEURS.data };
       }
-      if (match[1] === "/entiterattachement/all") {
+      if (match[1].startsWith("/entiterattachement/all")) {
         return { data: DONNEES_ENTITES.data };
       }
 

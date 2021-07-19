@@ -5,13 +5,23 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { getCompteurRequetes } from "../../../api/appels/requeteApi";
+import {
+  getCompteurRequetes,
+  getCompteurRequetesV2
+} from "../../../api/appels/requeteApi";
+import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { logError } from "../../common/util/LogManager";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle, getText } from "../../common/widget/Text";
-import { URL_DECONNEXION, URL_MES_REQUETES } from "../../router/ReceUrls";
+import {
+  URL_DECONNEXION,
+  URL_MES_REQUETES,
+  URL_MES_REQUETES_V2
+} from "../../router/ReceUrls";
 import { OfficierContext } from "../contexts/OfficierContext";
 
+const etape2 = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
 interface BoutonDeconnexionProps {
   onClick?: (event: React.MouseEvent) => void;
 }
@@ -46,7 +56,10 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   const handleClickDeconnexion = () => {
     setMenu(null);
-    getCompteurRequetes()
+
+    const fct = etape2 ? getCompteurRequetesV2 : getCompteurRequetes;
+
+    fct()
       .then(result => {
         const nbReq = result.body.data;
         setNbRequetes(nbReq);
@@ -76,7 +89,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
       label: "Non",
       action: () => {
         setConfirmationDeco(false);
-        history.push(URL_MES_REQUETES);
+        history.push(etape2 ? URL_MES_REQUETES_V2 : URL_MES_REQUETES);
       }
     },
     {
