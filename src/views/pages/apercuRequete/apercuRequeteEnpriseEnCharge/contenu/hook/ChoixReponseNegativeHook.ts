@@ -9,7 +9,7 @@ import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutReq
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import { MimeType } from "../../../../../../ressources/MimeType";
 import { useCompositionReponseNegativeDemandeIncompleteApi } from "../../../../../common/hook/v2/composition/CompositionReponseNegativeDemandeIncompleteHook";
-import { useStockeDocumentCreerActionEtMajStatutRequte } from "../../../../../common/hook/v2/requete/StockDocumentEtCreationActionEtMajStatutRequete";
+import { useStockerDocumentCreerActionMajStatutRequete } from "../../../../../common/hook/v2/requete/StockerDocumentCreerActionMajStatutRequete";
 
 export function useReponseNegative(
   libelleAction: string,
@@ -55,9 +55,9 @@ export function useReponseNegative(
   const {
     idAction,
     uuidDocumentsReponse
-  } = useStockeDocumentCreerActionEtMajStatutRequte(
-    libelleAction,
-    statutRequete,
+  } = useStockerDocumentCreerActionMajStatutRequete(
+    StatutRequete.A_VALIDER.libelle,
+    StatutRequete.A_VALIDER,
     documentsReponsePourStockage,
     requeteId
   );

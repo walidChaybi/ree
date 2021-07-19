@@ -4,7 +4,7 @@ import { ICertificatSituationComposition } from "../../../../../model/compositio
 import { logError } from "../../../util/LogManager";
 import { getLibelle } from "../../../widget/Text";
 
-export function useCertificatSituationRmcAutoVideApi(
+export function useCertificatSituationApiHook(
   certificatSituationComposition?: ICertificatSituationComposition
 ) {
   const [contenuComposition, setContenuComposition] = useState<

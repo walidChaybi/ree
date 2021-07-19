@@ -1,7 +1,6 @@
 import {
   getUrlParamId,
   getUrlPrecedente,
-  getUrlWithoutIdParam,
   URL_SEPARATEUR
 } from "../common/util/route/routeUtil";
 import { gestionnaireNavigation } from "../common/widget/filAriane/FilAriane";
@@ -31,6 +30,7 @@ export const URL_REQUETES_SERVICE_DETAIL_REQUETE_ID = `${URL_REQUETES_SERVICE}/a
 ///////////// VERSION 2 //////////////
 
 ///////////// CHEMINS  //////////////
+export const PATH_APERCU_REQUETE = "apercurequete";
 export const PATH_APERCU_REQUETE_TRAITEMENT = "apercurequetetraitement";
 
 ///////////// URLs    //////////////
@@ -86,12 +86,7 @@ export const URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE = `${URL_MES_REQUETES_
 export const URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE = `${URL_REQUETES_SERVICE_SAISIR_RDCSC}/apercurequete/:idRequete`;
 
 function estUrlApercuRequete(url: string) {
-  const urlWithoutIdParam = getUrlWithoutIdParam(url);
-  return (
-    URL_MES_REQUETES_APERCU_REQUETE.startsWith(urlWithoutIdParam) ||
-    URL_REQUETES_SERVICE_APERCU_REQUETE.startsWith(urlWithoutIdParam) ||
-    URL_RECHERCHE_REQUETE_APERCU_REQUETE.startsWith(urlWithoutIdParam)
-  );
+  return url.indexOf(`/${PATH_APERCU_REQUETE}/`) > 0;
 }
 
 function getUrlApercuTraitementAPartirDe(url: string) {
@@ -101,12 +96,9 @@ function getUrlApercuTraitementAPartirDe(url: string) {
   )}${URL_SEPARATEUR}${PATH_APERCU_REQUETE_TRAITEMENT}${URL_SEPARATEUR}${id}`;
 }
 
-function replaceUrl(history: any) {
+function replaceUrl(history: any, url: string, data?: any) {
   gestionnaireNavigation.deleteLastUrl();
-  const url = receUrl.getUrlApercuTraitementAPartirDe(
-    history.location.pathname
-  );
-  history.replace(url);
+  history.replace(url, data);
 }
 
 function getUrlCourante(history: any) {

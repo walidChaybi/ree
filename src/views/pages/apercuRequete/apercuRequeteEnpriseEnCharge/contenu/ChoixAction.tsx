@@ -1,185 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
-import {
-  IReponseNegativeDemandeIncompleteComposition,
-  ReponseNegativeDemandeIncompleteComposition
-} from "../../../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
-import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../../../model/composition/ObjetsComposition";
-import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import React from "react";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
-import messageManager from "../../../../common/util/messageManager";
-import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
-import {
-  IActionOption,
-  MenuAction
-} from "../../../../common/widget/menu/MenuAction";
-import { ConfirmationPopin } from "../../../../common/widget/popin/ConfirmationPopin";
-import { getLibelle } from "../../../../common/widget/Text";
-import { receUrl } from "../../../../router/ReceUrls";
-import { useReponseNegative } from "./hook/ChoixReponseNegativeHook";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { MenuDelivrer } from "./MenuDelivrer";
+import { MenuReponseNegative } from "./MenuReponseNegative";
 import "./scss/ChoixAction.scss";
-import { estSeulementActeMariage } from "./VerificationChoixSeulementActeMariage";
 
-interface IActionProps {
+export interface IActionProps {
   requete: TRequete;
-  selected?: Map<string, string>;
+  acteSelected?: IResultatRMCActe[];
+  inscriptionSelected?: IResultatRMCInscription[];
 }
 
 export const ChoixAction: React.FC<IActionProps> = props => {
-  const history = useHistory();
-
-  const refReponseNegativeOptions0 = useRef(null);
-  const refReponseNegativeOptions1 = useRef(null);
-  const refReponseNegativeOptions2 = useRef(null);
-  const refReponseNegativeOptions3 = useRef(null);
-  const refDelivrerOptions0 = useRef(null);
-
-  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [reponseNegative, setReponseNegative] = useState<
-    IReponseNegativeDemandeIncompleteComposition | undefined
-  >();
-
-  const resultatReponseNegative = useReponseNegative(
-    StatutRequete.A_VALIDER.libelle,
-    StatutRequete.A_VALIDER,
-    reponseNegative,
-    props.requete.id
+  const acteSelectedFilter = props.acteSelected?.filter(acte => acte !== null);
+  const inscriptionSelectedFilter = props.inscriptionSelected?.filter(
+    inscription => inscription !== null
   );
-
-  useEffect(() => {
-    if (resultatReponseNegative) {
-      receUrl.replaceUrl(history);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultatReponseNegative, history]);
-
-  const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
-
-  const delivrerOptions: IActionOption[] = [
-    {
-      value: 0,
-      label: getLibelle("Certificat de situation"),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refDelivrerOptions0
-    }
-  ];
-
-  const reponseNegativeOptions: IActionOption[] = [
-    {
-      value: 0,
-      label: getLibelle(
-        "Requête incomplète ou illisible, complément d'information nécessaire"
-      ),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refReponseNegativeOptions0
-    },
-    {
-      value: 1,
-      label: getLibelle("Trace d'un mariage actif, courrier de non délivrance"),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refReponseNegativeOptions1
-    },
-    {
-      value: 2,
-      label: getLibelle(
-        "Ressortissant français ou né en France, courrier de non délivrance"
-      ),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refReponseNegativeOptions2
-    },
-    {
-      value: 3,
-      label: getLibelle("Ignorer la requête (fin du traitement)"),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refReponseNegativeOptions3
-    }
-  ];
-
-  const handleDelivrerMenu = (indexMenu: number) => {
-    // todo
-  };
-
-  const handleReponseNegativeMenu = async (indexMenu: number) => {
-    switch (indexMenu) {
-      case 0:
-        setOperationEnCours(true);
-        const newReponseNegative = await createReponseNegativePourCompositionApi(
-          OBJET_COURRIER_CERTIFICAT_SITUATION,
-          props.requete as IRequeteDelivrance
-        );
-        setReponseNegative(newReponseNegative);
-        break;
-      case 1:
-        if (!estSeulementActeMariage(props.requete, props.selected)) {
-          setHasMessageBloquant(true);
-        }
-        break;
-    }
-  };
 
   return (
     <>
-      <OperationEnCours
-        visible={operationEnCours}
-        onTimeoutEnd={() => setOperationEnCours(false)}
-      />
       <div className="bloc-choix-action">
         <div className="panel">Actions</div>
-        <MenuAction
-          titre={"Délivrer"}
-          listeActions={delivrerOptions}
-          onSelect={handleDelivrerMenu}
+        <MenuDelivrer
+          requete={props.requete}
+          acteSelected={acteSelectedFilter}
+          inscriptionSelected={inscriptionSelectedFilter}
         />
-        <MenuAction
-          titre={"Réponse négative"}
-          listeActions={reponseNegativeOptions.filter(r => {
-            const requete = props.requete as IRequeteDelivrance;
-            return r.sousTypes
-              ? r.sousTypes.find(st => st === requete?.sousType) != null
-              : true;
-          })}
-          onSelect={handleReponseNegativeMenu}
+        <MenuReponseNegative
+          requete={props.requete}
+          acteSelected={acteSelectedFilter}
+          inscriptionSelected={inscriptionSelectedFilter}
         />
-        {hasMessageBloquant === true && (
-          <ConfirmationPopin
-            isOpen={true}
-            messages={[
-              getLibelle(
-                "Votre sélection n'est pas cohérente avec le choix de l'action de réponse négative."
-              )
-            ]}
-            boutons={[
-              {
-                label: getLibelle("OK"),
-                action: () => {
-                  setHasMessageBloquant(false);
-                }
-              }
-            ]}
-          />
-        )}
       </div>
     </>
   );
 };
-
-async function createReponseNegativePourCompositionApi(
-  objet: string,
-  requete?: IRequeteDelivrance
-) {
-  let reponseNegative: IReponseNegativeDemandeIncompleteComposition | undefined;
-  if (requete && requete.requerant) {
-    reponseNegative = await ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
-      objet,
-      requete.requerant
-    );
-  } else {
-    messageManager.showErrorAndClose(
-      "Erreur inattendue: Pas de requérent pour la requête"
-    );
-  }
-
-  return reponseNegative;
-}

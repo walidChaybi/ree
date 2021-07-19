@@ -19,7 +19,7 @@ import { URL_MES_REQUETES_ID } from "../../../../views/router/ReceUrls";
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 test("renders Page requete with all elements", async () => {
-  act(async () => {
+  await act(async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
@@ -71,12 +71,8 @@ test("renders Page requete with all elements", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
-
 test("renders Page requete with 1 titulaire", async () => {
-  act(async () => {
+  await act(async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
@@ -125,12 +121,8 @@ test("renders Page requete with 1 titulaire", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
-
 test("renders Page requete without titulaire", async () => {
-  act(async () => {
+  await act(async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
@@ -179,12 +171,8 @@ test("renders Page requete without titulaire", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
-});
-
 test("renders Page requete type creation", async () => {
-  act(async () => {
+  await act(async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(

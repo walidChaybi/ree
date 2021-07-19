@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import {
-  IResultatRMCActe,
-  isInstanceOfActe
-} from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "../../../common/util/GestionDesLiensApi";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
@@ -62,22 +59,37 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   };
 
   // Gestion du clic sur une colonne de type checkbox
-  const [selected, setSelected] = useState<Map<string, string>>(new Map()); // Map<clé: idActe | idInscription, valeur: nature>
+  const [acteSelected, setActeSelected] = useState<IResultatRMCActe[]>();
+  const [inscriptionSelected, setInscriptionSelected] = useState<
+    IResultatRMCInscription[]
+  >();
 
-  const onClickCheckbox = (
+  const onClickCheckboxActe = (
+    index: number,
     isChecked: boolean,
-    data: IResultatRMCActe | IResultatRMCInscription
+    data: IResultatRMCActe
   ): void => {
-    const key: string = isInstanceOfActe(data)
-      ? `acte-${data?.idActe}`
-      : `inscription-${data?.idInscription}`;
-    const newSelected = new Map(selected);
+    const tableau = !acteSelected ? [] : [...acteSelected];
     if (isChecked) {
-      newSelected.set(key, data?.nature || "");
+      tableau[index] = data;
     } else {
-      newSelected.delete(key);
+      tableau.splice(index, 1);
     }
-    setSelected(newSelected);
+    setActeSelected(tableau);
+  };
+
+  const onClickCheckboxInscription = (
+    index: number,
+    isChecked: boolean,
+    data: IResultatRMCInscription
+  ): void => {
+    const tableau = !inscriptionSelected ? [] : [...inscriptionSelected];
+    if (isChecked) {
+      tableau[index] = data;
+    } else {
+      tableau.splice(index, 1);
+    }
+    setInscriptionSelected(tableau);
   };
 
   return (
@@ -114,11 +126,17 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
                     dataTableauRMCAutoInscription={
                       dataTableauRMCAutoInscription
                     }
-                    onClickCheckboxTableauActes={onClickCheckbox}
-                    onClickCheckboxTableauInscriptions={onClickCheckbox}
+                    onClickCheckboxTableauActes={onClickCheckboxActe}
+                    onClickCheckboxTableauInscriptions={
+                      onClickCheckboxInscription
+                    }
                   />
                 )}
-              <ChoixAction requete={detailRequeteState} selected={selected} />
+              <ChoixAction
+                requete={detailRequeteState}
+                acteSelected={acteSelected}
+                inscriptionSelected={inscriptionSelected}
+              />
               <BoutonRetour message={getLibelle("<< Retour")} />
             </div>
           </div>

@@ -15,6 +15,7 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
   const titre = "titre";
   const decrets = ["decret1", "decret2"];
   const phrase = "phrase";
+  const phrasesPiecesJointes = "phrasesPiecesJointes";
   const requerant = {
     id: "123",
     nomFamille: "nomFamille",
@@ -44,6 +45,7 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     titre,
     decrets,
     phrase,
+    phrasesPiecesJointes,
     requerant,
     titulaire
   );

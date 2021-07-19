@@ -7,7 +7,7 @@ import {
   usePostCreationActionEtMiseAjourStatutApi
 } from "./ActionHook";
 
-export function useStockeDocumentCreerActionEtMajStatutRequte(
+export function useStockerDocumentCreerActionMajStatutRequete(
   libelleAction: string,
   statutRequete: StatutRequete,
   documentsReponsePourStockage?: IDocumentReponse[],

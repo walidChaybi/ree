@@ -40,7 +40,7 @@ export const ReponseAppelRMCInscription = {
         moisNaissance: "6",
         anneeNaissance: "1960",
         paysNaissance: "Tunisie",
-        numero: "1002",
+        numero: "1022",
         nature: "MESURE_ACCOMPAGNEMENT_SOCIAL_PERSONNALISE",
         categorie: "RC",
         statut: "ACTIF",
@@ -77,7 +77,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "",
     categorie: "PACS",
     statutInscription: "Actif",
-    typeInscription: "INSCRIPTION"
+    typeInscription: "INSCRIPTION",
+    dateInscription: "2020-12-01",
+    anneeInscription: "2020"
   },
   {
     idInscription: "85160d6e-893b-47c2-a9a8-b25573189f0c",
@@ -90,7 +92,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "Mesure d’accompagnement social personnalisé (L271-1 casf)",
     categorie: "RC",
     statutInscription: "Actif",
-    typeInscription: "MAIN_LEVEE"
+    typeInscription: "MAIN_LEVEE",
+    dateInscription: "2019-11-05",
+    anneeInscription: "2019"
   },
   {
     idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
@@ -103,7 +107,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "Acte de notoriété constatant la possession d'état",
     categorie: "RCA",
     statutInscription: "Inactif",
-    typeInscription: "CADUCITE 2"
+    typeInscription: "CADUCITE 2",
+    dateInscription: "2017-05-07",
+    anneeInscription: "2017"
   },
   {
     idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
@@ -116,7 +122,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "Sauvegarde justice (433cc)",
     categorie: "RC",
     statutInscription: "Actif",
-    typeInscription: "RENOUVELLEMENT"
+    typeInscription: "RENOUVELLEMENT",
+    dateInscription: "2009-02-05",
+    anneeInscription: "2009"
   },
   {
     idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
@@ -129,7 +137,9 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "Annulation de reconnaissance",
     categorie: "RCA",
     statutInscription: "Actif",
-    typeInscription: "RENOUVELLEMENT"
+    typeInscription: "RENOUVELLEMENT",
+    dateInscription: "2007-07-07",
+    anneeInscription: "2007"
   },
   {
     idInscription: "85160d6e-893b-47c2-a9a8-b25573189f0d",
@@ -142,6 +152,8 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "",
     categorie: "PACS",
     statutInscription: "Actif",
-    typeInscription: "CADUCITE 2"
+    typeInscription: "CADUCITE 2",
+    dateInscription: "2000-02-11",
+    anneeInscription: "2000"
   }
 ];

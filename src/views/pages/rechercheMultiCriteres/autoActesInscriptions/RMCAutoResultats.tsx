@@ -12,10 +12,12 @@ export interface RMCAutoResultatsProps {
   dataRMCAutoInscription: IResultatRMCInscription[];
   dataTableauRMCAutoInscription: IParamsTableau;
   onClickCheckboxTableauActes: (
+    index: number,
     isChecked: boolean,
     data: IResultatRMCActe
   ) => void;
   onClickCheckboxTableauInscriptions: (
+    index: number,
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => void;

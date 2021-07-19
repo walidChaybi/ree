@@ -26,7 +26,6 @@ export function redirectionRMCAuto(
   dataRMCAutoInscription: any[]
 ) {
   let url = "";
-
   if (urlCourante === URL_REQUETES_SERVICE_V2) {
     url = getUrlWithParam(
       URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,

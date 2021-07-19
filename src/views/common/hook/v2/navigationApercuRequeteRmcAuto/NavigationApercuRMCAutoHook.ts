@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
-import { IUrlData } from "../../../../router/ReceUrls";
+import { IUrlData, receUrl } from "../../../../router/ReceUrls";
 import { INavigationApercu, useNavigationApercu } from "./NavigationApercuHook";
 import { IRMCAutoParams, useRMCAutoHook } from "./RMCAutoHook";
 
@@ -46,7 +46,11 @@ export function useNavigationApercuRMCAuto(
   useEffect(
     () => {
       if (urlDataToPush && rmcAutoNavigationParams) {
-        history.push(urlDataToPush.url, urlDataToPush.data);
+        if (receUrl.estUrlApercuRequete(rmcAutoNavigationParams?.urlCourante)) {
+          receUrl.replaceUrl(history, urlDataToPush.url, urlDataToPush.data);
+        } else {
+          history.push(urlDataToPush.url, urlDataToPush.data);
+        }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

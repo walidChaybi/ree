@@ -16,6 +16,7 @@ import {
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { getLibelle } from "../../../../../../common/widget/Text";
+import { IPhrasesJasperCertificatSituation } from "../GenerationCertificatSituationHook";
 
 interface INbInscriptionsInfos {
   nbPacs: number;
@@ -95,11 +96,16 @@ class Specification {
     dataRMCAutoActe?: IResultatRMCActe[],
     dataRMCAutoInscription?: IResultatRMCInscription[]
   ) {
-    let phrase: string | undefined;
+    let phrasesLiees: string | undefined;
+    phrasesLiees = "";
+
     if (this.condition.estVerifiee(dataRMCAutoActe, dataRMCAutoInscription)) {
-      phrase = sexe === Sexe.FEMININ ? this.phraseFeminin : this.phraseMasculin;
+      phrasesLiees =
+        sexe === Sexe.FEMININ ? this.phraseFeminin : this.phraseMasculin;
     }
-    return phrase;
+
+    phrasesLiees = phrasesLiees !== "" ? phrasesLiees : undefined;
+    return { phrasesLiees };
   }
 }
 
@@ -124,7 +130,7 @@ const PAS_INSCRITE_RCA = getLibelle(
 /////////////////////////////////////////////////////////////////////
 
 class SpecificationPhrase {
-  private readonly MAP_SPECIFICATION: Map<string, Specification> = new Map();
+  MAP_SPECIFICATION: Map<string, Specification> = new Map();
   private init() {
     this.MAP_SPECIFICATION.set(
       DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS),
@@ -192,13 +198,14 @@ class SpecificationPhrase {
     );
   }
 
-  async getPhrase(
+  async getPhrasesJasper(
     idDocumentDemande: string,
     sexe: Sexe,
     dataRMCAutoActe?: IResultatRMCActe[],
     dataRMCAutoInscription?: IResultatRMCInscription[]
   ) {
-    let phrase: string | undefined;
+    let phrasesJasper = {} as IPhrasesJasperCertificatSituation;
+
     await DocumentDelivrance.init();
     if (this.MAP_SPECIFICATION.size === 0) {
       this.init();
@@ -206,14 +213,14 @@ class SpecificationPhrase {
 
     const specification = this.MAP_SPECIFICATION.get(idDocumentDemande);
     if (specification) {
-      phrase = specification.getPhrase(
+      phrasesJasper = specification.getPhrase(
         sexe,
         dataRMCAutoActe,
         dataRMCAutoInscription
       );
     }
-    return phrase;
+    return phrasesJasper;
   }
 }
 
-export const specificationPhrase = new SpecificationPhrase();
+export const specificationPhraseRMCAutoVide = new SpecificationPhrase();

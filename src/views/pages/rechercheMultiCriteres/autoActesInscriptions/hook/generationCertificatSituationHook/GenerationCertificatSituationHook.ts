@@ -14,29 +14,34 @@ import {
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { MimeType } from "../../../../../../ressources/MimeType";
-import { useCertificatSituationRmcAutoVideApi } from "../../../../../common/hook/v2/composition/CompositionCertificatSituationRmcAutoVideHook";
-import { useStockeDocumentCreerActionEtMajStatutRequte } from "../../../../../common/hook/v2/requete/StockDocumentEtCreationActionEtMajStatutRequete";
+import { useCertificatSituationApiHook } from "../../../../../common/hook/v2/composition/CompositionCertificatSituationHook";
+import { useStockerDocumentCreerActionMajStatutRequete } from "../../../../../common/hook/v2/requete/StockerDocumentCreerActionMajStatutRequete";
 import { specificationDecret } from "./specificationTitreDecretPhrase/specificationDecret";
-import { specificationPhrase } from "./specificationTitreDecretPhrase/specificationPhrase";
 import { specificationTitre } from "./specificationTitreDecretPhrase/specificationTitre";
 
 const RESULTAT_VIDE = {};
 
-export interface IResultGenerationCertificatSituationRMCAutoVide {
+export interface IResultGenerationCertificatSituation {
   idDocumentReponse?: string;
   idAction?: string;
   contenuDocumentReponse?: string;
 }
 
-export function useGenerationCertificatSituationRMCAutoVide(
+export interface IPhrasesJasperCertificatSituation {
+  phrasesLiees?: string;
+  phrasesPiecesJointes?: string;
+}
+
+export function useGenerationCertificatSituation(
   requete?: IRequeteTableau,
   dataRMCAutoInscription?: IResultatRMCInscription[],
-  dataRMCAutoActe?: IResultatRMCActe[]
+  dataRMCAutoActe?: IResultatRMCActe[],
+  specificationPhrase?: any
 ) {
   const [
-    resultGenerationCertificatSituationRMCAutoVide,
-    setResultGenerationCertificatSituationRMCAutoVide
-  ] = useState<IResultGenerationCertificatSituationRMCAutoVide>();
+    resultGenerationCertificatSituation,
+    setResultGenerationCertificatSituation
+  ] = useState<IResultGenerationCertificatSituation>();
 
   const [
     certificatSituationComposition,
@@ -57,22 +62,23 @@ export function useGenerationCertificatSituationRMCAutoVide(
     ) {
       if (requete.titulaires && requete.titulaires.length > 0) {
         specificationPhrase
-          .getPhrase(
+          .getPhrasesJasper(
             requete.document, // id du type de document demandé
             requete.titulaires[0].sexe,
             dataRMCAutoActe,
             dataRMCAutoInscription
           )
-          .then(phrase => {
+          .then((phrases: IPhrasesJasperCertificatSituation) => {
             construitCertificatSituation(
-              phrase,
+              phrases.phrasesLiees,
               requete,
               setCertificatSituationComposition,
-              setResultGenerationCertificatSituationRMCAutoVide
+              setResultGenerationCertificatSituation,
+              phrases.phrasesPiecesJointes
             );
           });
       } else {
-        setResultGenerationCertificatSituationRMCAutoVide(RESULTAT_VIDE);
+        setResultGenerationCertificatSituation(RESULTAT_VIDE);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,9 +86,7 @@ export function useGenerationCertificatSituationRMCAutoVide(
 
   // 1- création du certificat de situation: appel api composition
   // récupération du document en base64
-  const contenuComposition:
-    | string
-    | undefined = useCertificatSituationRmcAutoVideApi(
+  const contenuComposition: string | undefined = useCertificatSituationApiHook(
     certificatSituationComposition
   );
 
@@ -112,7 +116,7 @@ export function useGenerationCertificatSituationRMCAutoVide(
   const {
     idAction,
     uuidDocumentsReponse
-  } = useStockeDocumentCreerActionEtMajStatutRequte(
+  } = useStockerDocumentCreerActionMajStatutRequete(
     StatutRequete.A_VALIDER.libelle,
     StatutRequete.A_VALIDER,
     documentsReponsePourStockage,
@@ -123,7 +127,7 @@ export function useGenerationCertificatSituationRMCAutoVide(
   useEffect(
     () => {
       if (estNonVide(idAction, uuidDocumentsReponse, contenuComposition)) {
-        setResultGenerationCertificatSituationRMCAutoVide({
+        setResultGenerationCertificatSituation({
           //@ts-ignore
           idDocumentReponse: uuidDocumentsReponse[0],
           idAction,
@@ -135,23 +139,25 @@ export function useGenerationCertificatSituationRMCAutoVide(
     [idAction]
   );
 
-  return resultGenerationCertificatSituationRMCAutoVide;
+  return resultGenerationCertificatSituation;
 }
 
 function construitCertificatSituation(
-  phrase: string | undefined,
+  phrasesLiees: string | undefined,
   requete: IRequeteTableau,
   setCertificatSituationComposition: any,
-  setResultGenerationCertificatSituationRMCAutoVide: any
+  setResultGenerationCertificatSituation: any,
+  phrasesPiecesJointes: string | undefined
 ) {
-  if (phrase && requete && requete.document) {
+  if (phrasesLiees && requete && requete.document) {
     getTitre(requete.document ? requete.document : "").then(titre => {
       //@ts-ignore
       getDecrets(requete.document).then(decrets => {
         creerCertificatSituationComposition(
           titre,
           decrets,
-          phrase,
+          phrasesLiees,
+          phrasesPiecesJointes,
           requete
         ).then(composition => {
           setCertificatSituationComposition(composition);
@@ -159,7 +165,7 @@ function construitCertificatSituation(
       });
     });
   } else {
-    setResultGenerationCertificatSituationRMCAutoVide(RESULTAT_VIDE);
+    setResultGenerationCertificatSituation(RESULTAT_VIDE);
   }
 }
 
@@ -187,18 +193,19 @@ async function getDecrets(idDocumentDemande: string): Promise<string[]> {
 async function creerCertificatSituationComposition(
   titre: string,
   decrets: string[],
-  phrase: string,
+  phrasesLiees: string,
+  phrasesPiecesJointes?: string,
   requete?: IRequeteTableau
 ): Promise<ICertificatSituationComposition> {
   let titulaire: ITitulaireRequeteTableau | undefined;
   if (requete?.titulaires) {
     titulaire = requete.titulaires[0];
   }
-
   return CertificatSituationComposition.creerCertificatSituation(
     titre,
     decrets,
-    phrase,
+    phrasesLiees,
+    phrasesPiecesJointes,
     requete?.requerant,
     titulaire
   );

@@ -33,6 +33,7 @@ export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncomplete
 
 export const certificatSituation: ICertificatSituationComposition = {
   phrases_liees: "phrase",
+  phrases_pieces_jointes: "phrasesPiecesJointes",
   decret1: "decret1",
   decret2: "decret2",
   adr_service_delivreur: {

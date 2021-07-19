@@ -10,6 +10,8 @@ export interface IResultatRMCInscription {
   typeInscription?: string;
   statutInscription?: string;
   categorie: string;
+  anneeInscription?: string;
+  dateInscription?: string;
 }
 
 export function isInstanceOfInscription(

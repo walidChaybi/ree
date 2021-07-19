@@ -134,7 +134,9 @@ export async function mappingInscriptions(
       statutInscription: getValeurOuVide(
         StatutFiche.getEnumFor(inscription?.statut)?.libelle
       ),
-      categorie: getValeurOuVide(inscription?.categorie)
+      categorie: getValeurOuVide(inscription?.categorie),
+      anneeInscription: getValeurOuVide(inscription?.anneeInscription),
+      dateInscription: getValeurOuVide(inscription?.dateInscription)
     } as IResultatRMCInscription;
   });
 }
@@ -178,6 +180,7 @@ export function getMessageZeroInscription(): JSX.Element {
   );
 }
 
+//TODO a supprimer voir avec Rodolphe dupplication dans NomenclatureEtatcivil.ts
 export function getNatureInscription(
   categorie: string,
   nature: string

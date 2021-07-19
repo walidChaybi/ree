@@ -3,27 +3,28 @@ import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTyp
 import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 
 export function estSeulementActeMariage(
   requete: TRequete,
-  selected: Map<string, string> | undefined
+  acteSelected: IResultatRMCActe[] | undefined
 ): boolean {
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const sousType: string = (requete as IRequeteDelivrance)?.sousType?.nom;
     return (
       (SousTypeDelivrance.RDCSC.nom === sousType ||
         SousTypeDelivrance.RDCSD.nom === sousType) &&
-      estSeulementActeMariageSelectionne(selected)
+      estSeulementActeMariageSelectionne(acteSelected)
     );
   }
   return true;
 }
 
 function estSeulementActeMariageSelectionne(
-  selected: Map<string, string> | undefined
+  acteSelected: IResultatRMCActe[] | undefined
 ): boolean {
   return (
-    selected?.size === 1 &&
-    selected?.values()?.next()?.value === NatureActe.MARIAGE.libelle
+    acteSelected?.length === 1 &&
+    acteSelected[0].nature === NatureActe.MARIAGE.libelle
   );
 }

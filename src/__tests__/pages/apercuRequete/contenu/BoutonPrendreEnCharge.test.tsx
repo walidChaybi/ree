@@ -1,4 +1,4 @@
-import { act, fireEvent, render } from "@testing-library/react";
+import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -14,19 +14,13 @@ import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
-import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { BoutonPrendreEnCharge } from "../../../../views/pages/apercuRequete/contenu/BoutonPrendreEnCharge";
 import { URL_MES_REQUETES_APERCU_REQUETE } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
-const statutCourantRequete = {
-  statut: StatutRequete.A_TRAITER,
-  dateEffet: 1577923200000
-} as IStatutCourant;
-
-const requeteTest = {
+const requeteTestCOURRIER = {
   id: idRequete1,
   idEntite: "11",
   dateCreation: 1577836800000,
@@ -56,42 +50,82 @@ const requeteTest = {
   ]
 } as IRequeteDelivrance;
 
-let bouttonPrendreEnCharge: HTMLElement;
-
 test("est à A_TRAITER ou TRANSFEREE et provient de COURRIER", async () => {
-  requeteTest.provenanceRequete.provenance = Provenance.COURRIER;
-
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-  const history = createMemoryHistory(URL_MES_REQUETES_APERCU_REQUETE);
+  const history = createMemoryHistory();
+  history.push(URL_MES_REQUETES_APERCU_REQUETE);
 
   const { getByText } = render(
     <Router history={history}>
-      <BoutonPrendreEnCharge requete={requeteTest}></BoutonPrendreEnCharge>
+      <BoutonPrendreEnCharge
+        requete={requeteTestCOURRIER}
+      ></BoutonPrendreEnCharge>
     </Router>
   );
 
-  bouttonPrendreEnCharge = getByText(/Prendre en charge/i);
+  const bouttonPrendreEnCharge = getByText(
+    /Prendre en charge/i
+  ) as HTMLButtonElement;
 
-  expect(bouttonPrendreEnCharge).not.toHaveAttribute("disabled");
+  await waitFor(() => {
+    expect(bouttonPrendreEnCharge.disabled).toBeFalsy();
+  });
 
   await act(async () => {
     fireEvent.click(bouttonPrendreEnCharge);
   });
 });
 
-test("est à A_TRAITER ou TRANSFEREE et provient de COMEDEC", async () => {
-  requeteTest.provenanceRequete.provenance = Provenance.COMEDEC;
+const requeteTestCOMEDEC = {
+  id: idRequete1,
+  idEntite: "11",
+  dateCreation: 1577836800000,
+  statutCourant: {
+    statut: StatutRequete.A_TRAITER,
+    dateEffet: 1577923200000
+  },
+  idUtilisateur: "idUtilisateurConnectedUser",
+  provenanceRequete: { provenance: Provenance.COMEDEC },
+  titulaires: [
+    {
+      id: "0",
+      position: 0,
+      nationalite: Nationalite.FRANCAISE,
+      nomNaissance: "Garcia",
+      prenoms: [
+        {
+          prenom: "Hugo",
+          numeroOrdre: 1
+        }
+      ],
+      jourNaissance: 31,
+      moisNaissance: 12,
+      anneeNaissance: 1981,
+      sexe: Sexe.MASCULIN.libelle
+    }
+  ]
+} as IRequeteDelivrance;
 
+test("est à A_TRAITER ou TRANSFEREE et provient de COMEDEC", async () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
-  const history = createMemoryHistory(URL_MES_REQUETES_APERCU_REQUETE);
+  const history = createMemoryHistory();
+  history.push(URL_MES_REQUETES_APERCU_REQUETE);
+
   const { getByText } = render(
     <Router history={history}>
-      <BoutonPrendreEnCharge requete={requeteTest}></BoutonPrendreEnCharge>
+      <BoutonPrendreEnCharge
+        requete={requeteTestCOMEDEC}
+      ></BoutonPrendreEnCharge>
     </Router>
   );
 
-  bouttonPrendreEnCharge = getByText(/Prendre en charge/i);
-  expect(bouttonPrendreEnCharge).not.toHaveAttribute("disabled");
+  const bouttonPrendreEnCharge = getByText(
+    /Prendre en charge/i
+  ) as HTMLButtonElement;
+
+  await waitFor(() => {
+    expect(bouttonPrendreEnCharge.disabled).toBeFalsy();
+  });
 
   await act(async () => {
     fireEvent.click(bouttonPrendreEnCharge);

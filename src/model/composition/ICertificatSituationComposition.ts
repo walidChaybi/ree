@@ -35,13 +35,15 @@ export const CertificatSituationComposition = {
   async creerCertificatSituation(
     titre: string,
     decrets: string[],
-    phrase: string,
+    phraseLiees: string,
+    phrasesPiecesJointes?: string,
     requerant?: IRequerant,
     titulaire?: ITitulaireRequeteTableau
   ): Promise<ICertificatSituationComposition> {
     const certificatSituation = {
       titre,
-      phrases_liees: phrase
+      phrases_liees: phraseLiees,
+      phrases_pieces_jointes: phrasesPiecesJointes
     } as ICertificatSituationComposition;
 
     if (decrets) {

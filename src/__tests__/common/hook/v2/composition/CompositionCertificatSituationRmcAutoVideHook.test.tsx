@@ -4,11 +4,11 @@ import request from "superagent";
 import { certificatSituation } from "../../../../../mock/data/Composition";
 import { imagePngVideBase64 } from "../../../../../mock/data/ImagePng";
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
-import { useCertificatSituationRmcAutoVideApi } from "../../../../../views/common/hook/v2/composition/CompositionCertificatSituationRmcAutoVideHook";
+import { useCertificatSituationApiHook } from "../../../../../views/common/hook/v2/composition/CompositionCertificatSituationHook";
 const superagentMock = require("superagent-mock")(request, configComposition);
 
 const HookConsumer: React.FC = () => {
-  const doc = useCertificatSituationRmcAutoVideApi(certificatSituation);
+  const doc = useCertificatSituationApiHook(certificatSituation);
 
   return <div>{doc}</div>;
 };

@@ -3,9 +3,10 @@ import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
-  IResultGenerationCertificatSituationRMCAutoVide,
-  useGenerationCertificatSituationRMCAutoVide
-} from "../../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationRMCAutoVideHook/GenerationCertificatSituationRMCAutoVideHook";
+  IResultGenerationCertificatSituation,
+  useGenerationCertificatSituation
+} from "../../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/GenerationCertificatSituationHook";
+import { specificationPhraseRMCAutoVide } from "../../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { useRMCAutoActeApiHook } from "../../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActeApiHook";
 import {
   redirectionRMCAuto,
@@ -44,10 +45,11 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
     `0-${NB_LIGNES_PAR_APPEL}`
   );
 
-  const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituationRMCAutoVide(
+  const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituation(
     params?.requete,
     dataRMCAutoInscription,
-    dataRMCAutoActe
+    dataRMCAutoActe,
+    specificationPhraseRMCAutoVide
   );
 
   useEffect(() => {
@@ -114,7 +116,7 @@ function estNonVide(
   dataTableauRMCAutoActe?: IParamsTableau,
   dataRMCAutoInscription?: IResultatRMCInscription[],
   dataTableauRMCAutoInscription?: IParamsTableau,
-  resultGenerationCertificatSituationRMCAutoVide?: IResultGenerationCertificatSituationRMCAutoVide
+  resultGenerationCertificatSituationRMCAutoVide?: IResultGenerationCertificatSituation
 ) {
   return (
     params?.requete &&

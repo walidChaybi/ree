@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { configMultiAPi } from "../../../../../../../src/mock/superagent-config/superagent-mock-multi-apis";
 import { idDocumentReponse1 } from "../../../../../../mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "../../../../../../mock/data/ImagePng";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import { idRequete1 } from "../../../../../../mock/data/RequeteV2";
+import { configMultiAPi } from "../../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 import {
   IRequeteTableau,
@@ -13,7 +13,8 @@ import {
 } from "../../../../../../model/requete/v2/IRequeteTableau";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { useGenerationCertificatSituationRMCAutoVide } from "../../../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationRMCAutoVideHook/GenerationCertificatSituationRMCAutoVideHook";
+import { useGenerationCertificatSituation } from "../../../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/GenerationCertificatSituationHook";
+import { specificationPhraseRMCAutoVide } from "../../../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
 const titulaire = {
@@ -36,10 +37,11 @@ const dataRMCAutoInscription = [] as IResultatRMCInscription[];
 const dataRMCAutoActe = [] as IResultatRMCActe[];
 
 const HookConsummer: React.FC = () => {
-  const res = useGenerationCertificatSituationRMCAutoVide(
+  const res = useGenerationCertificatSituation(
     requete,
     dataRMCAutoInscription,
-    dataRMCAutoActe
+    dataRMCAutoActe,
+    specificationPhraseRMCAutoVide
   );
   return (
     <div data-testid="resulat">

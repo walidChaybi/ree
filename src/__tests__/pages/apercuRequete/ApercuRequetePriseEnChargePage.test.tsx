@@ -90,6 +90,7 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
     expect(listeObservation2).toBeDefined();
   });
 
+  // Tableau Acte
   await act(async () => {
     fireEvent.click(checkboxColumns[0], { target: { checked: true } });
   });
@@ -101,6 +102,25 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
 
   await act(async () => {
     fireEvent.click(checkboxColumns[0], { target: { checked: false } });
+  });
+
+  await waitFor(() => {
+    const elementsCoches = screen.getAllByText("0 élément(s) coché(s)");
+    expect(elementsCoches).toBeDefined();
+  });
+
+  // Tableau inscription
+  await act(async () => {
+    fireEvent.click(checkboxColumns[10], { target: { checked: true } });
+  });
+
+  await waitFor(() => {
+    const elementsCoches = screen.getAllByText("1 élément(s) coché(s)");
+    expect(elementsCoches).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(checkboxColumns[10], { target: { checked: false } });
   });
 
   await waitFor(() => {
