@@ -97,6 +97,7 @@ export const routesRece: IRoute[] = [
   {
     url: URL_MES_REQUETES_V2,
     component: EspaceDelivrancePageV2,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     props: { selectedTab: 0 },
     droits: droitsSaufConsulterArchives,
     libelle: getLibelle("Mes requêtes V2")
@@ -104,6 +105,7 @@ export const routesRece: IRoute[] = [
   {
     url: URL_REQUETES_SERVICE_V2,
     component: EspaceDelivrancePageV2,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     props: { selectedTab: 1 },
     droits: [Droit.ATTRIBUER],
     libelle: getLibelle("Requête du service V2")

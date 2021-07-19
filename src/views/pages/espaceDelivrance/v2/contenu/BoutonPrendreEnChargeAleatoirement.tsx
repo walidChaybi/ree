@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import WithHabilitation from "../../../../common/util/habilitation/WithHabilitation";
 import messageManager from "../../../../common/util/messageManager";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import { getLibelle } from "../../../../common/widget/Text";
@@ -14,7 +15,7 @@ import {
   useGetRequeteAleatoire
 } from "../hook/PrendreEnChargeAleatoirementHook";
 
-export const BoutonPrendreEnChargeAleatoirement: React.FC = () => {
+const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
   const history = useHistory();
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -62,9 +63,15 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = () => {
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />
-      <button onClick={onClickPrendreEnCharge}>
+
+      <button onClick={onClickPrendreEnCharge} disabled={props.disabled}>
         {getLibelle("Prendre en charge")}
       </button>
     </>
   );
 };
+
+export default WithHabilitation(
+  BoutonPrendreEnChargeAleatoirement,
+  "BoutonPrendreEnChargeAleatoirement"
+);

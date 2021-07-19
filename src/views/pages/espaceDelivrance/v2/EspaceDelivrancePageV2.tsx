@@ -13,7 +13,7 @@ import {
   URL_MES_REQUETES_V2,
   URL_REQUETES_SERVICE_V2
 } from "../../../router/ReceUrls";
-import { BoutonPrendreEnChargeAleatoirement } from "./contenu/BoutonPrendreEnChargeAleatoirement";
+import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
 import { CompteurRequete } from "./contenu/CompteurRequeteV2";
 import MenuSaisirRequete from "./contenu/MenuSaisirRequeteV2";
 import { MesRequetesPageV2 } from "./MesRequetesPageV2";

@@ -32,7 +32,8 @@ export type NomComposant =
   | "BoutonAccueilTableau"
   | "AlerteActe"
   | "MenuSaisirRequete"
-  | "TabPanelMesRequetes";
+  | "TabPanelMesRequetes"
+  | "BoutonPrendreEnChargeAleatoirement";
 
 export type NomComposantOuFonction = NomComposant | NomFonction;
 
@@ -139,5 +140,11 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   {
     nomComposant: "TabPanelMesRequetes",
     visiblePourLesDroits: [Droit.ATTRIBUER]
+  },
+  {
+    nomComposant: "BoutonPrendreEnChargeAleatoirement",
+    unDesDroits: etape2([Droit.DELIVRER, Droit.DELIVRER_COMEDEC]),
+    comportementSiNonAutorise: { disabled: true },
+    visiblePourLesDroits: droitsSaufConsulterArchives
   }
 ];

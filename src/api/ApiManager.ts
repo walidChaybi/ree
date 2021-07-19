@@ -8,6 +8,7 @@ import {
   GestionnaireCache,
   ReceCache
 } from "../views/common/util/GestionnaireCache";
+import messageManager from "../views/common/util/messageManager";
 import { URL_ACCUEIL } from "../views/router/ReceUrls";
 
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
@@ -211,9 +212,9 @@ export class ApiManager {
       error.status !== HTTP_FORBIDDEN
     ) {
       errorType = "toutesErreursSaufForbidden";
-      // messageManager.showError(
-      //   `Une erreur est survenue: ${error ? error.message : "inconnue"}`
-      // );
+      messageManager.showError(
+        `Une erreur est survenue: ${error ? error.message : "inconnue"}`
+      );
     }
     return errorType;
   }
