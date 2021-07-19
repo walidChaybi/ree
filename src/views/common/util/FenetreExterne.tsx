@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import messageManager from "./messageManager";
 
 const ratioWidth = 0.5;
-const ratioHeigth = 0.94;
+const ratioHeight = 0.94;
 const minRandom = 50;
 const maxRandom = 100;
 interface FenetreExterneProps {
@@ -14,6 +14,8 @@ interface FenetreExterneProps {
   top?: number;
   left?: number;
   titre?: string;
+  ratioWidth?: number;
+  ratioHeight?: number;
 }
 
 export interface FenetreExterneUtil {
@@ -83,7 +85,7 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
       ? document.documentElement.clientWidth
       : window.screen.width;
 
-    return width * ratioWidth;
+    return width * (this.props.ratioWidth ? this.props.ratioWidth : ratioWidth);
   };
 
   getHeight = () => {
@@ -92,7 +94,9 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
       : document.documentElement.clientHeight
       ? document.documentElement.clientHeight
       : window.screen.height;
-    return height * ratioHeigth;
+    return (
+      height * (this.props.ratioHeight ? this.props.ratioHeight : ratioHeight)
+    );
   };
 
   private openWindow() {
@@ -135,7 +139,7 @@ function copyStyles(sourceDoc: Document, targetDoc: Document) {
   Array.from(sourceDoc.styleSheets).forEach(styleSheet => {
     try {
       // pour sonar: as any as CSSStyleSheet
-      const cSSStyleSheet = (styleSheet as any) as CSSStyleSheet;
+      const cSSStyleSheet = styleSheet as any as CSSStyleSheet;
       if (cSSStyleSheet.cssRules) {
         const newStyleEl = sourceDoc.createElement("style");
 

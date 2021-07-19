@@ -12,7 +12,7 @@ const superagentMock = require("superagent-mock")(request, configRequetes);
 test("Appel d'api retournant le contenu d'une pièce justificative", async () => {
   const pieceJustificative = requetes.data[0].piecesJustificatives[0];
   const resultApi: IRequestDocumentApiResult = await requestDocumentApi(
-    pieceJustificative.idPieceJustificative,
+    pieceJustificative.id,
     GroupementDocument.PieceJustificative,
     pieceJustificative.mimeType
   );

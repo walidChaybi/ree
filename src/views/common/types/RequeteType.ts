@@ -19,9 +19,9 @@ export interface ITitulaire {
 }
 
 export interface IPieceJustificative {
-  idPieceJustificative: string;
+  id: string;
   nom: string;
-  mimeType: string;
+  mimeType: string | MimeType;
   extension?: string;
   taille: number;
   identifiantSwift?: string;

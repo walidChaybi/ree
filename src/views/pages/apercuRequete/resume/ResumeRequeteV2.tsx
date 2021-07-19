@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { getUrlWithoutIdParam } from "../../../common/util/route/routeUtil";
 import { SectionPanel } from "../../../common/widget/section/SectionPanel";
+import { ListePiecesJustificatives } from "./ListePiecesJustificatives";
 import { getPanelsResumeRequete } from "./ResumeRequeteUtils";
 
 export const titreDetail = "Détails de requête";
@@ -40,7 +41,9 @@ export const ResumeRequeteV2: React.FC<ResumeRequeteV2Props> = props => {
           <hr className={"SectionPanelAreaSeparation"} />
           <SectionPanel {...panels[3]} />
           <hr className={"SectionPanelAreaSeparation"} />
-          <SectionPanel {...panels[4]} />
+          <ListePiecesJustificatives
+            pieces={props.requete.piecesJustificatives}
+          />
         </>
       )}
     </div>

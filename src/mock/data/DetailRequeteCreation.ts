@@ -40,7 +40,7 @@ export const ReponseAppelDetailRequeteCreation = {
     },
     piecesJustificatives: [
       {
-        idPieceJustificative: "519900ee-c9a0-4d41-8673-512949b64946",
+        id: "519900ee-c9a0-4d41-8673-512949b64946",
         nom: "Carte professionelle",
         mimeType: "png",
         taille: 20,

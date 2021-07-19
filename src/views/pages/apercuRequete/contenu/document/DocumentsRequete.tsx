@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { DocumentPresentation } from "./DocumentPresentation";
+import React, { useEffect, useState } from "react";
+import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import {
+  getAttestationDocuments,
+  getAutresDocuments,
+  getCertificatDocuments,
+  getcopieIntegraleDocuments,
+  getCourriersAccompagnementDocuments,
+  getExtraitDocuments
+} from "../../../../../model/requete/TypeDocument";
+import { MimeType } from "../../../../../ressources/MimeType";
 import { IDocumentDetail } from "../../../../common/types/IDocumentDetail";
 import {
-  IPieceJustificative,
-  IDocumentDelivre
+  IDocumentDelivre,
+  IPieceJustificative
 } from "../../../../common/types/RequeteType";
-import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
-import { MimeType } from "../../../../../ressources/MimeType";
-import {
-  getCourriersAccompagnementDocuments,
-  getcopieIntegraleDocuments,
-  getExtraitDocuments,
-  getCertificatDocuments,
-  getAttestationDocuments,
-  getAutresDocuments
-} from "../../../../../model/requete/TypeDocument";
 import { getText } from "../../../../common/widget/Text";
+import { DocumentPresentation } from "./DocumentPresentation";
 
 interface IDocumentsDelivres {
   courriersAccompagnement: IDocumentDetail[];
@@ -70,7 +70,7 @@ function parsePiecesJustificatives(
   const documentsDetails: IDocumentDetail[] = [];
   piecesJustificatives.forEach((element, index) => {
     documentsDetails.push({
-      identifiantDocument: element.idPieceJustificative,
+      identifiantDocument: element.id,
       mimeType: element.mimeType as MimeType.IMAGE_PNG | MimeType.APPLI_PDF,
       nom: getText("pages.requete.consultation.pieceJustificative.nomFichier", [
         `${index}`
@@ -122,9 +122,8 @@ export function extraitALireParDefault(
     const extraitDocuments = getExtraitDocuments(documents);
     const certificatDocuments = getCertificatDocuments(documents);
     const attestationDocuments = getAttestationDocuments(documents);
-    const courriersAccompagnementDocuments = getCourriersAccompagnementDocuments(
-      documents
-    );
+    const courriersAccompagnementDocuments =
+      getCourriersAccompagnementDocuments(documents);
     const autresDocuments = getAutresDocuments(documents);
     documentAlireParDefaut = parseDocumentDelivre(
       copieIntegraleDocuments[0] ||

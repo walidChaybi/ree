@@ -1,4 +1,4 @@
-import {eachLike, like} from "@pact-foundation/pact/dsl/matchers";
+import { eachLike, like } from "@pact-foundation/pact/dsl/matchers";
 
 export const documentDelivre = like({
   idDocumentDelivre: "c456bb58-04f5-40dd-8c33-599306cafb7d",
@@ -43,7 +43,7 @@ export const requetesPact = eachLike({
   mandantIdentite: null,
   mandantLien: null,
   piecesJustificatives: eachLike({
-    idPieceJustificative: "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
+    id: "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
     nom: "1_c45606fb-f0e3-4647-ab4a-a6c5c416e809.pdf",
     mimeType: "application/pdf",
     typePieceJustificative: "cpro",
@@ -82,7 +82,7 @@ export const requetesPact = eachLike({
       orientation: "P"
     }),
     requete: null,
-    dateReponse: 1591826400.000000000,
+    dateReponse: 1591826400.0,
     statutReponse: "SATISFAIT"
   },
   requerant: {

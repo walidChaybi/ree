@@ -6,7 +6,10 @@ import { IDocumentReponse } from "../../model/requete/v2/IDocumentReponse";
 import { IRequeteDelivrance } from "../../model/requete/v2/IRequeteDelivrance";
 import { IRMCRequestRequete } from "../../model/rmc/requete/IRMCRequestRequete";
 import { IQueryParameterUpdateStatutRequete } from "../../views/common/hook/UpdateStatutRequeteHook";
-import { IDocumentDelivre } from "../../views/common/types/RequeteType";
+import {
+  IDocumentDelivre,
+  IPieceJustificative
+} from "../../views/common/types/RequeteType";
 import { SortOrder } from "../../views/common/widget/tableau/TableUtils";
 import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
@@ -21,6 +24,7 @@ export const URL_REQUETES_RMC_AUTO = "/requetes/rmcauto";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
+export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/action";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
@@ -310,6 +314,27 @@ export function postDocumentReponseApi(
     data: {
       idRequete,
       documentsReponse
+    }
+  });
+}
+
+export function getPieceJustificativeById(idPiece: string): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_PIECES_JUSTIFICATIVES}/${idPiece}`
+  });
+}
+
+export function postPieceJustificative(
+  idRequete: string,
+  piecesJustificatives: IPieceJustificative[]
+) {
+  return apiV2.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_PIECES_JUSTIFICATIVES}`,
+    data: {
+      idRequete,
+      piecesJustificatives
     }
   });
 }

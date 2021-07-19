@@ -10,7 +10,6 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "../../../../model/requete/v2/ITitulaireRequete";
-import { IPieceJustificative } from "../../../common/types/RequeteType";
 import {
   formatPrenom,
   triListeObjetsSurPropriete
@@ -38,34 +37,8 @@ export function getPanelsResumeRequete(requete?: TRequete) {
       panels[2] = getRequeteAutreInfos(requete);
     }
     panels[3] = getPanelRequerantRequeteDelivrance(requete);
-    panels[4] = getPanelPiecesJustificativesRequeteDelivrance(requete);
   }
   return panels;
-}
-
-function getPanelPiecesJustificativesRequeteDelivrance(
-  requete: IRequete
-): SectionPanelProps {
-  const nbColonnes = 1;
-  const noPJ: IPieceJustificative[] = [];
-
-  const panel = {
-    panelAreas: [],
-    title: getLibelle("Resume requête PJ")
-  } as SectionPanelProps;
-
-  if (requete.piecesJustificatives) {
-    ajouterPanelAreasAuPanel(
-      panel,
-      requete.piecesJustificatives,
-      getPiecesJustificatives,
-      nbColonnes
-    );
-  } else {
-    ajouterPanelAreasAuPanel(panel, noPJ, getPiecesJustificatives, nbColonnes);
-  }
-
-  return panel;
 }
 
 function getPanelTitulaireRequeteDelivrance(
@@ -180,54 +153,6 @@ function getRequerant(requete: IRequete): SectionPartProps[] {
       }
     }
   ];
-}
-
-function getPiecesJustificatives(
-  piecesJustificatives: IPieceJustificative[]
-): SectionPartProps[] {
-  const sectionParts: SectionPartProps[] = [];
-
-  sectionParts.push({
-    partContent: {
-      contents: getPieceJustificativeLibelle()
-    }
-  });
-
-  if (piecesJustificatives.length !== 0) {
-    sectionParts.push({
-      partContent: {
-        contents: getPieceJustificativeInfo(piecesJustificatives)
-      }
-    });
-  }
-
-  return sectionParts;
-}
-
-function getPieceJustificativeLibelle(): SectionContentProps[] {
-  const infosPJ = [] as SectionContentProps[];
-
-  ajouterContentPartAuPartUneValeurVide(
-    infosPJ,
-    getLibelle("Pièces Justificatives")
-  );
-
-  return infosPJ;
-}
-
-function getPieceJustificativeInfo(
-  piecesJustificatives: IPieceJustificative[]
-): SectionContentProps[] {
-  const infosPJ = [] as SectionContentProps[];
-
-  piecesJustificatives.forEach(pj => {
-    ajouterContentPartAuPartUneValeur(
-      infosPJ,
-      getLibelle(""),
-      pj.typePieceJustificative.libelle
-    );
-  });
-  return infosPJ;
 }
 
 function getLienRequerant(requete: IRequete): string {

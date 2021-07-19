@@ -140,7 +140,19 @@ export const ReponseAppelDetailRequeteDelivrance = {
       id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
       idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
     },
-    piecesJustificatives: [],
+    piecesJustificatives: [
+      {
+        conteneurSwift: "conteneur-swift",
+        contenu: null,
+        extension: null,
+        id: "3feb09fb-1222-4356-a1ad-9a12fc03b218",
+        identifiantSwift: "reference_swift",
+        mimeType: "application/pdf",
+        nom: "justif carte",
+        taille: 200,
+        typePieceJustificative: "00c885c9-2918-46fe-b743-798b1b90e5dd"
+      }
+    ],
     requerant: {
       id: "97d0e400-19d3-47fa-aedb-137002a96f18",
       dateCreation: 1528192343,
@@ -493,7 +505,7 @@ export const ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ = {
     },
     piecesJustificatives: [
       {
-        idPieceJustificative: "519900ee-c9a0-4d41-8673-512949b64946",
+        id: "519900ee-c9a0-4d41-8673-512949b64946",
         nom: "Carte professionelle",
         mimeType: "png",
         taille: 20,

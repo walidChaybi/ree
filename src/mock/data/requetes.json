@@ -26,7 +26,7 @@
       "nbExemplaire": null,
       "piecesJustificatives": [
         {
-          "idPieceJustificative": "e496f1d1-18c3-48ca-ae87-e97582fbf188",
+          "id": "e496f1d1-18c3-48ca-ae87-e97582fbf188",
           "nom": "11984-pi-j-3.PNG",
           "mimeType": "image/png",
           "taille": 47790,
@@ -34,7 +34,7 @@
           "requete": null
         },
         {
-          "idPieceJustificative": "a70237ca-83e5-4f6f-ac86-ec15086c5e3e",
+          "id": "a70237ca-83e5-4f6f-ac86-ec15086c5e3e",
           "nom": "11984-pi-j-3.pdf",
           "mimeType": "application/pdf",
           "taille": 151807,
@@ -149,7 +149,7 @@
       "nbExemplaire": null,
       "piecesJustificatives": [
         {
-          "idPieceJustificative": "e496f1d1-18c3-48ca-ae87-e97582fbf188",
+          "id": "e496f1d1-18c3-48ca-ae87-e97582fbf188",
           "nom": "11984-pi-j-3.PNG",
           "mimeType": "image/png",
           "taille": 47790,
@@ -157,7 +157,7 @@
           "requete": null
         },
         {
-          "idPieceJustificative": "a70237ca-83e5-4f6f-ac86-ec15086c5e3e",
+          "id": "a70237ca-83e5-4f6f-ac86-ec15086c5e3e",
           "nom": "11984-pi-j-3.pdf",
           "mimeType": "application/pdf",
           "taille": 151807,
@@ -262,7 +262,7 @@
       "nbExemplaire": null,
       "piecesJustificatives": [
         {
-          "idPieceJustificative": "e496f1d1-18c3-48ca-ae87-e97582fbf188",
+          "id": "e496f1d1-18c3-48ca-ae87-e97582fbf188",
           "nom": "11984-pi-j-3.PNG",
           "mimeType": "image/png",
           "taille": 47790,
@@ -270,7 +270,7 @@
           "requete": null
         },
         {
-          "idPieceJustificative": "a70237ca-83e5-4f6f-ac86-ec15086c5e3e",
+          "id": "a70237ca-83e5-4f6f-ac86-ec15086c5e3e",
           "nom": "11984-pi-j-3.pdf",
           "mimeType": "application/pdf",
           "taille": 151807,
