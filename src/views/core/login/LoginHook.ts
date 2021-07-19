@@ -3,6 +3,7 @@ import { getLogin } from "../../../api/appels/agentApi";
 import { IDroit, IHabilitation, IProfil } from "../../../model/Habilitation";
 import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 import { IPerimetre } from "../../../model/IPerimetre";
+import { GestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { formatNom, formatPrenom } from "../../common/util/Utils";
 
 export interface ILoginApi {
@@ -15,17 +16,23 @@ export function useLoginApi() {
   const [erreurState, setErreurState] = useState(undefined);
 
   useEffect(() => {
-    getLogin()
-      .then(result => {
-        const officier = setUtilisateurSSOApi(result.headers, result.body.data);
-        officier.habilitations = setHabilitationsUtilisateur(
-          result.body.data.habilitations
-        );
-        setOfficierDataState(officier);
-      })
-      .catch(error => {
-        setErreurState(error);
-      });
+    if (GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()) {
+      getLogin()
+        .then(result => {
+          const officier = setUtilisateurSSOApi(
+            result.headers,
+            result.body.data
+          );
+          officier.habilitations = setHabilitationsUtilisateur(
+            result.body.data.habilitations
+          );
+          setOfficierDataState(officier);
+        })
+        .catch(error => {
+          setErreurState(error);
+        });
+    }
+    GestionnaireDoubleOuverture.incrementeNAppliOuverte();
   }, []);
 
   return {

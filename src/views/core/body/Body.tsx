@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { GestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { logError } from "../../common/util/LogManager";
 import { storeRece } from "../../common/util/storeRece";
 import { FilAriane } from "../../common/widget/filAriane/FilAriane";
@@ -54,6 +55,8 @@ function getMessageLogin(officier: OfficierContextProps) {
       error: officier.erreurState
     });
     return "pages.login.erreurSysteme";
+  } else if (GestionnaireDoubleOuverture.verifSiAppliDejaOuverte()) {
+    return "pages.login.appliOuverte";
   } else {
     return "pages.login.connexion";
   }

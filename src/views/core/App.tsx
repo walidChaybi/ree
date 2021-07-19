@@ -19,6 +19,7 @@ import {
 import { ErrorManager } from "../common/util/ErrorManager";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
+import { GestionnaireDoubleOuverture } from "../common/util/GestionnaireDoubleOuverture";
 import {
   appelRequetesASigner,
   GestionnaireFermeture,
@@ -43,9 +44,11 @@ const etape2 = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
 
 const App: React.FC = () => {
   const login = useLoginApi();
+
   useEffect(() => {
     cacheUtilisateurs(0);
     cacheEntites(0);
+    GestionnaireDoubleOuverture.decroitNAppliOnUnload();
   }, []);
   return (
     <SeulementNavigateur

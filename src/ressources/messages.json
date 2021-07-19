@@ -204,7 +204,8 @@
       "connexion": "Connexion en cours ...",
       "deconnexion": "Déconnexion en cours ...",
       "erreurAuthentifacition": "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BAG.",
-      "erreurSysteme": "Erreur Système"
+      "erreurSysteme": "Erreur Système",
+      "appliOuverte": "L'application est déjà ouverte sur cette ordinateur"
     }
   },
   "signature": {

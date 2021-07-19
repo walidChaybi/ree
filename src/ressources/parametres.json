@@ -5,5 +5,6 @@
   "signature": {
     "time_out_ms": 20000,
     "max_len_doc_in_bytes": 5242880
-  }
+  },
+  "pass": "RECE"
 }

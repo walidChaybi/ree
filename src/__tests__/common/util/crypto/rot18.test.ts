@@ -1,4 +1,4 @@
-import { Rot18 } from "../../../../views/common/util/crypto/cryptos";
+import { Rot18 } from "../../../../views/common/util/crypto/Rot18";
 
 test("Attendu: Crypte Rot18 fonctionne correctement", () => {
   expect(Rot18.crypte()).toBe(undefined);
