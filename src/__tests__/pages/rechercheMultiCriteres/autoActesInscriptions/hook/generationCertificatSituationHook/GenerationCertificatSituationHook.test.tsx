@@ -7,6 +7,7 @@ import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../m
 import { idRequete1 } from "../../../../../../mock/data/RequeteV2";
 import { configMultiAPi } from "../../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
+import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import {
   IRequeteTableau,
   ITitulaireRequeteTableau
@@ -50,6 +51,10 @@ const HookConsummer: React.FC = () => {
     </div>
   );
 };
+
+beforeAll(() => {
+  DocumentDelivrance.init();
+});
 
 test("Attendu: la génération d'un certificat de situation pour une recherche RMC auto vide et une demande PACS et tituliare Masculin fonctionne correctement", async () => {
   render(<HookConsummer></HookConsummer>);

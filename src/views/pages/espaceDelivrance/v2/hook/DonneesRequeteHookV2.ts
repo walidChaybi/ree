@@ -31,10 +31,7 @@ export function useRequeteApi(
           listeStatuts,
           queryParameters
         );
-        const mesRequetes = await mappingRequetesTableau(
-          result?.body?.data,
-          false
-        );
+        const mesRequetes = mappingRequetesTableau(result?.body?.data, false);
         setDataState(mesRequetes);
         setParamsTableau(getParamsTableau(result));
         setEnChargement(false);

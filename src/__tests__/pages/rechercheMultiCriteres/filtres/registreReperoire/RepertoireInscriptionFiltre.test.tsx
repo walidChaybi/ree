@@ -1,13 +1,21 @@
-import {Field, Form, Formik} from "formik";
-import {act, fireEvent, render, screen, waitFor} from "@testing-library/react";
-import React, {useState} from "react";
-import RepertoireInscriptionFiltre, {
-  RepertoireInscriptionFiltreProps,
-  RepertoireInscriptionDefaultValues
-} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RepertoireInscriptionFiltre";
-import {REPERTOIRE} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 import request from "superagent";
-import {configEtatcivil} from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
+import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
+import { REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
+import RepertoireInscriptionFiltre, {
+  RepertoireInscriptionDefaultValues,
+  RepertoireInscriptionFiltreProps
+} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RepertoireInscriptionFiltre";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
@@ -21,6 +29,9 @@ const HookRepertoireInscriptionFiltre: React.FC = () => {
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));
   };
+
+  NatureRc.init();
+  NatureRca.init();
 
   return (
     <Formik
@@ -83,7 +94,7 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   await waitFor(() => {
     expect(natureInscription.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-        '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RC","natureInscription":"058a436b-330d-4c3c-83e0-e49d27390123"}}'
+      '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RC","natureInscription":"058a436b-330d-4c3c-83e0-e49d27390123"}}'
     );
   });
 });
@@ -133,7 +144,7 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   await waitFor(() => {
     expect(natureInscription.disabled).toBeFalsy();
     expect(result.innerHTML).toBe(
-        '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RCA","natureInscription":"358a436b-330d-4c3c-83e0-e49d27390123"}}'
+      '{"repertoire":{"numeroInscription":"1982-123456789","typeRepertoire":"RCA","natureInscription":"358a436b-330d-4c3c-83e0-e49d27390123"}}'
     );
   });
 });

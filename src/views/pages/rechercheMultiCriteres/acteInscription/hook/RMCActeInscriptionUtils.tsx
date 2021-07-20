@@ -109,11 +109,7 @@ export function mappingActes(data: any): IResultatRMCActe[] {
 }
 
 /** RC/RCA/PACS: mapping après appel d'api */
-export async function mappingInscriptions(
-  data: any
-): Promise<IResultatRMCInscription[]> {
-  await NatureRc.init();
-  await NatureRca.init();
+export function mappingInscriptions(data: any): IResultatRMCInscription[] {
   return data?.map((inscription: any) => {
     return {
       idInscription: inscription?.id,

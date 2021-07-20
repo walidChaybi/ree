@@ -15,12 +15,11 @@ test("ficheUtils rc works", async () => {
 });
 
 test("peupleMandataireRc", async () => {
+  await MandataireRc.init();
   const mandataires = MandataireRc.getAllEnumsAsOptions();
   await waitFor(() => {
-    mandataires.then((result: any) => {
-      expect(result).toBeDefined();
-      expect(result).toHaveLength(4);
-    });
+    expect(mandataires).toBeDefined();
+    expect(mandataires).toHaveLength(4);
   });
 });
 

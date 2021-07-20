@@ -58,7 +58,7 @@ const PiecesJointesForm: React.FC<SubFormProps> = props => {
   }, []);
 
   const getPiecesJustificatives = async () => {
-    const piecesJustificatives = await TypePieceJustificative.getAllEnumsAsOptions();
+    const piecesJustificatives = TypePieceJustificative.getAllEnumsAsOptions();
     setMenuItemsState(piecesJustificatives);
   };
 

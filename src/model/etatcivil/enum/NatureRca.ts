@@ -26,8 +26,7 @@ export class NatureRca extends EnumWithLibelle {
     return EnumWithLibelle.getEnumFor(str, NatureRca);
   }
 
-  public static async getAllEnumsAsOptions(): Promise<Options> {
-    await NatureRca.init();
+  public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(NatureRca);
   }
 }

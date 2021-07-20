@@ -5,6 +5,10 @@ import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle
 import { Options } from "../../../views/common/util/Type";
 
 export class MandataireRc extends EnumWithLibelle {
+  public static async init() {
+    await peupleMandataireRc();
+  }
+
   //AddEnum specifique aux nomenclatures !
   public static addEnum(key: string, obj: MandataireRc) {
     (MandataireRc as any)[key] = obj;
@@ -22,8 +26,7 @@ export class MandataireRc extends EnumWithLibelle {
     return EnumWithLibelle.getEnumFor(str, MandataireRc);
   }
 
-  public static async getAllEnumsAsOptions(): Promise<Options> {
-    await peupleMandataireRc();
+  public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(MandataireRc);
   }
 }

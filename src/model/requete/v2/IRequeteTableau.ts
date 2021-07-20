@@ -57,25 +57,19 @@ export interface ITitulaireRequeteTableau {
 /** Requetes: mapping après appel d'api */
 //////////////////////////////////////////
 
-export async function mappingRequetesTableau(
+export function mappingRequetesTableau(
   resultatsRecherche: any,
   mappingSupplementaire: boolean
-): Promise<IRequeteTableau[]> {
-  const requetes: Array<Promise<IRequeteTableau>> = resultatsRecherche?.map(
-    async (requete: any) => {
-      return mappingUneRequeteTableau(requete, true);
-    }
-  );
-  return Promise.all(requetes);
+): IRequeteTableau[] {
+  return resultatsRecherche?.map((requete: any) => {
+    return mappingUneRequeteTableau(requete, mappingSupplementaire);
+  });
 }
 
-export async function mappingUneRequeteTableau(
+export function mappingUneRequeteTableau(
   requete: any,
   mappingSupplementaire: boolean
-): Promise<IRequeteTableau> {
-  const documentDelivrance: DocumentDelivrance = await DocumentDelivrance.getDocumentDelivrance(
-    requete?.document
-  );
+): IRequeteTableau {
   return {
     idRequete: valeurOuUndefined(requete?.id),
     numero: getValeurOuVide(requete?.numero),
@@ -87,7 +81,8 @@ export async function mappingUneRequeteTableau(
       ? NatureActe.getEnumFor(requete?.nature)?.libelle
       : "",
     document: requete?.document, // id du type de document demandé
-    documentLibelle: documentDelivrance.libelle, // libellé du type de document demandé
+    documentLibelle: DocumentDelivrance.getDocumentDelivrance(requete?.document)
+      .libelle, // libellé du type de document demandé
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     requerant: requete?.requerant,
     nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),

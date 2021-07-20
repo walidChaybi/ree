@@ -1,27 +1,27 @@
+import { connect, FormikValues, getIn } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
+import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
+import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoire";
+import {
+  CarateresAutorise,
+  NumeroInscription
+} from "../../../../../ressources/Regex";
+import { Options } from "../../../../common/util/Type";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
+import {
+  CARATERES_AUTORISES_MESSAGE,
+  NUMERO_INSCRIPTION_MESSAGE
+} from "../../../../common/widget/formulaire/FormulaireMessages";
+import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
 } from "../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../common/widget/Text";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoire";
-import { Options } from "../../../../common/util/Type";
-import { connect, FormikValues, getIn } from "formik";
-import {
-  CarateresAutorise,
-  NumeroInscription
-} from "../../../../../ressources/Regex";
-import {
-  CARATERES_AUTORISES_MESSAGE,
-  NUMERO_INSCRIPTION_MESSAGE
-} from "../../../../common/widget/formulaire/FormulaireMessages";
-import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
-import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
-import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
 
 // Noms des champs
 export const NUMERO_INSCRIPTION = "numeroInscription";
@@ -76,9 +76,9 @@ const RepertoireInscriptionFiltre: React.FC<RepertoireInscriptionFiltreProps> = 
 
   const manageNatureOptions = async (type: string) => {
     if (type === "RC") {
-      setNatureOptions(await NatureRc.getAllEnumsAsOptions());
+      setNatureOptions(NatureRc.getAllEnumsAsOptions());
     } else if (type === "RCA") {
-      setNatureOptions(await NatureRca.getAllEnumsAsOptions());
+      setNatureOptions(NatureRca.getAllEnumsAsOptions());
     } else {
       setNatureOptions([]);
     }

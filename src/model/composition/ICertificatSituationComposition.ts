@@ -32,14 +32,14 @@ export interface ICertificatSituationComposition
 }
 
 export const CertificatSituationComposition = {
-  async creerCertificatSituation(
+  creerCertificatSituation(
     titre: string,
     decrets: string[],
     phraseLiees: string,
     phrasesPiecesJointes?: string,
     requerant?: IRequerant,
     titulaire?: ITitulaireRequeteTableau
-  ): Promise<ICertificatSituationComposition> {
+  ): ICertificatSituationComposition {
     const certificatSituation = {
       titre,
       phrases_liees: phraseLiees,
@@ -53,7 +53,7 @@ export const CertificatSituationComposition = {
       });
     }
 
-    await ParametresComposition.ajoutParametres(certificatSituation);
+    ParametresComposition.ajoutParametres(certificatSituation);
     RequerantComposition.ajoutInfosRequerant(certificatSituation, requerant);
     TitulaireComposition.ajoutInfosTitulaire(certificatSituation, titulaire);
 

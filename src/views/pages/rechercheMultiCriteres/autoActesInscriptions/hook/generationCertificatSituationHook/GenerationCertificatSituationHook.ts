@@ -61,22 +61,19 @@ export function useGenerationCertificatSituation(
       dataRMCAutoActe
     ) {
       if (requete.titulaires && requete.titulaires.length > 0) {
-        specificationPhrase
-          .getPhrasesJasper(
-            requete.document, // id du type de document demandé
-            requete.titulaires[0].sexe,
-            dataRMCAutoActe,
-            dataRMCAutoInscription
-          )
-          .then((phrases: IPhrasesJasperCertificatSituation) => {
-            construitCertificatSituation(
-              phrases.phrasesLiees,
-              requete,
-              setCertificatSituationComposition,
-              setResultGenerationCertificatSituation,
-              phrases.phrasesPiecesJointes
-            );
-          });
+        const phrases: IPhrasesJasperCertificatSituation = specificationPhrase.getPhrasesJasper(
+          requete.document, // id du type de document demandé
+          requete.titulaires[0].sexe,
+          dataRMCAutoActe,
+          dataRMCAutoInscription
+        );
+        construitCertificatSituation(
+          phrases.phrasesLiees,
+          requete,
+          setCertificatSituationComposition,
+          setResultGenerationCertificatSituation,
+          phrases.phrasesPiecesJointes
+        );
       } else {
         setResultGenerationCertificatSituation(RESULTAT_VIDE);
       }

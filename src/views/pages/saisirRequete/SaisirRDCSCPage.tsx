@@ -93,7 +93,7 @@ export const SaisirRDCSCPage: React.FC = () => {
   >();
 
   useState(async () => {
-    const documentDelivrance = await DocumentDelivrance.getAllCertificatSituationAsOptions();
+    const documentDelivrance = DocumentDelivrance.getAllCertificatSituationAsOptions();
     setDocumentDemandeOptions(documentDelivrance);
   });
 
@@ -138,7 +138,7 @@ export const SaisirRDCSCPage: React.FC = () => {
         // Redirection si l'enregistrement n'est pas un brouillon
         if (!brouillon) {
           if (refus) {
-            const reponse = await createReponseNegative(
+            const reponse = createReponseNegative(
               OBJET_COURRIER_CERTIFICAT_SITUATION,
               saisieRequeteRDCSC
             );
@@ -378,14 +378,11 @@ function getPiecesJointesForm(): JSX.Element {
   return <PiecesJointesForm key={PIECES_JOINTES} {...piecesJointesFormProps} />;
 }
 
-async function createReponseNegative(
-  objet: string,
-  requete?: SaisieRequeteRDCSC
-) {
+function createReponseNegative(objet: string, requete?: SaisieRequeteRDCSC) {
   let reponseNegative: IReponseNegativeDemandeIncompleteComposition | undefined;
   if (requete && requete.requerant) {
     const requerant = getRequerant(requete) as IRequerant;
-    reponseNegative = await ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+    reponseNegative = ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
       objet,
       requerant
     );

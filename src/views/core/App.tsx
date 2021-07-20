@@ -5,10 +5,8 @@ import React, { useEffect } from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import {
-  getTousLesUtilisateurs,
-  getToutesLesEntiteRattachement
-} from "../../api/appels/agentApi";
+import { GestionnaireCacheApi } from "../../api/appels/cache/GestionnaireCacheApi";
+import { GestionnaireNomenclature } from "../../api/nomenclature/GestionnaireNomenclature";
 import "../../scss/_colors.scss";
 import "../../scss/_library.scss";
 import {
@@ -25,7 +23,6 @@ import {
   GestionnaireFermeture,
   traiteAppelRequeteASigner
 } from "../common/util/GestionnaireFermeture";
-import { logError } from "../common/util/LogManager";
 import { storeRece } from "../common/util/storeRece";
 import { URL_MES_REQUETES, URL_MES_REQUETES_V2 } from "../router/ReceUrls";
 import "./App.scss";
@@ -38,16 +35,14 @@ import { useLoginApi } from "./login/LoginHook";
 registerLocale("fr", fr);
 setDefaultLocale("fr");
 
-const PLAGE_IMPORT = 100;
-
 const etape2 = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
-
 const App: React.FC = () => {
   const login = useLoginApi();
 
   useEffect(() => {
-    cacheUtilisateurs(0);
-    cacheEntites(0);
+    GestionnaireNomenclature.chargerToutesLesNomenclatures();
+    GestionnaireCacheApi.chargerTousLesUtilisateurs();
+    GestionnaireCacheApi.chargerToutesLesEntites();
     GestionnaireDoubleOuverture.decroitNAppliOnUnload();
   }, []);
   return (
@@ -97,48 +92,5 @@ const App: React.FC = () => {
     </SeulementNavigateur>
   );
 };
-
-export function cacheUtilisateurs(page: number) {
-  getTousLesUtilisateurs(`${page}-${PLAGE_IMPORT}`, true)
-    .then(utilisateurs => {
-      storeRece.listeUtilisateurs = [
-        ...storeRece.listeUtilisateurs,
-        ...utilisateurs.body.data
-      ];
-      if (
-        utilisateurs.headers &&
-        utilisateurs.headers.link &&
-        utilisateurs.headers.link.indexOf(`rel="next"`) > 0
-      ) {
-        cacheUtilisateurs(page + 1);
-      }
-    })
-    .catch(error => {
-      logError({
-        messageUtilisateur: "Impossible de récupérer les utilisateurs",
-        error
-      });
-    });
-}
-
-export function cacheEntites(page: number) {
-  getToutesLesEntiteRattachement(`${page}-${PLAGE_IMPORT}`)
-    .then(entites => {
-      storeRece.listeEntite = [...storeRece.listeEntite, ...entites.body.data];
-      if (
-        entites.headers &&
-        entites.headers.link &&
-        entites.headers.link.indexOf(`rel="next"`) > 0
-      ) {
-        cacheEntites(page + 1);
-      }
-    })
-    .catch(error => {
-      logError({
-        messageUtilisateur: "Impossible de récupérer les entités",
-        error
-      });
-    });
-}
 
 export default App;

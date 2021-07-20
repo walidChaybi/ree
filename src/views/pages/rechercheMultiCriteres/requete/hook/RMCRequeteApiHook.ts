@@ -28,7 +28,7 @@ export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
             criteresRequest,
             criteres.range
           );
-          const requetes = await mappingRequetesTableau(
+          const requetes = mappingRequetesTableau(
             result?.body?.data?.resultatsRecherche,
             true
           );

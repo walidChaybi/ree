@@ -34,7 +34,7 @@ export function useRMCAutoRequeteApiHook(
             criteresRequest,
             range
           );
-          const requetes = await mappingRequetesTableau(
+          const requetes = mappingRequetesTableau(
             result?.body?.data?.resultatsRecherche,
             true
           );

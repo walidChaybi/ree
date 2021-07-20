@@ -325,7 +325,7 @@ class SpecificationDeliverPhrase {
     );
   }
 
-  async getPhrasesJasper(
+  getPhrasesJasper(
     idDocumentDemande: string,
     sexe: Sexe,
     dataRMCAutoActe?: IResultatRMCActe[],
@@ -333,7 +333,7 @@ class SpecificationDeliverPhrase {
   ) {
     let phrasesJasper = {} as IPhrasesJasperCertificatSituation;
 
-    await DocumentDelivrance.init();
+    DocumentDelivrance.init();
     if (this.MAP_SPECIFICATION.size === 0) {
       this.init();
     }

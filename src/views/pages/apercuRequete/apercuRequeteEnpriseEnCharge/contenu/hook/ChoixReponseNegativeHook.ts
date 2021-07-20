@@ -32,20 +32,16 @@ export function useReponseNegative(
   // 2- Création du document réponse (après appel 'useCompositionReponseNegativeDemandeIncompleteApi') pour stockage dans la BDD et Swift
   useEffect(() => {
     if (contenuComposition) {
-      DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID().then(
-        uuidTypeDocument => {
-          setDocumentsReponsePourStockage([
-            {
-              contenu: contenuComposition,
-              nom: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE,
-              mimeType: MimeType.APPLI_PDF,
-              typeDocument: uuidTypeDocument,
-              nbPages: 1,
-              orientation: Orientation.PORTRAIT
-            } as IDocumentReponse
-          ]);
-        }
-      );
+      setDocumentsReponsePourStockage([
+        {
+          contenu: contenuComposition,
+          nom: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE,
+          mimeType: MimeType.APPLI_PDF,
+          typeDocument: DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
+          nbPages: 1,
+          orientation: Orientation.PORTRAIT
+        } as IDocumentReponse
+      ]);
     }
   }, [contenuComposition]);
 

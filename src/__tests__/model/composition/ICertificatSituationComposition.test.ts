@@ -4,12 +4,14 @@ import { certificatSituation } from "../../../mock/data/Composition";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 import { CertificatSituationComposition } from "../../../model/composition/ICertificatSituationComposition";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
+import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresBaseRequete";
 import { IRequerant } from "../../../model/requete/v2/IRequerant";
 import { ITitulaireRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionne correctement", async () => {
+  await ParametreBaseRequete.init();
   const attendu = certificatSituation;
 
   const titre = "titre";

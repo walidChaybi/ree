@@ -79,8 +79,8 @@ class SpecificationTitre {
     );
   }
 
-  async getTitre(idDocumentDemande: string): Promise<string> {
-    await DocumentDelivrance.init();
+  getTitre(idDocumentDemande: string): string {
+    DocumentDelivrance.init();
     if (this.MAP_SPECIFICATION.size === 0) {
       this.init();
     }

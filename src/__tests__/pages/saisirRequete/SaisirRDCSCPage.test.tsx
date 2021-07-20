@@ -10,6 +10,7 @@ import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { getLastPathElem } from "../../../views/common/util/route/routeUtil";
 import { SaisirRDCSCPage } from "../../../views/pages/saisirRequete/SaisirRDCSCPage";
@@ -21,6 +22,7 @@ const history = createMemoryHistory();
 history.push(URL_MES_REQUETES_SAISIR_RDCSC);
 
 beforeEach(async () => {
+  DocumentDelivrance.init();
   render(
     <Router history={history}>
       <SaisirRDCSCPage />)

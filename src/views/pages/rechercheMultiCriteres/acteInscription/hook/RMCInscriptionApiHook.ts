@@ -37,7 +37,7 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRecherche) {
               criteresRecherche,
               criteres.range
             );
-            const inscriptions = await mappingInscriptions(
+            const inscriptions = mappingInscriptions(
               result?.body?.data?.repertoiresCiviles
             );
             setDataRMCInscription(inscriptions);

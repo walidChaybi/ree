@@ -1,4 +1,3 @@
-import { peupleParametresBaseRequete } from "../../../api/nomenclature/NomenclatureParametresBaseRequete";
 import {
   ADRESSE_INTERNET_MINISTERE,
   BLOC_MARQUES_MINISTERE,
@@ -33,9 +32,7 @@ export interface IParametresComposition {
 }
 
 export const ParametresComposition = {
-  async ajoutParametres(obj: IParametresComposition) {
-    await peupleParametresBaseRequete();
-
+  ajoutParametres(obj: IParametresComposition) {
     obj = obj || {};
 
     obj.image_bloc_marques = ParametreBaseRequete.getEnumFor(

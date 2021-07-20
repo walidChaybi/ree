@@ -50,10 +50,7 @@ export function useDetailRequeteApiHook(idRequete: string) {
           const result = await getDetailRequete(idRequete);
           const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
           if (typeRequete === TypeRequete.DELIVRANCE) {
-            await TypePieceJustificative.init();
-            const detailRequete = await mappingRequeteDelivrance(
-              result?.body?.data
-            );
+            const detailRequete = mappingRequeteDelivrance(result?.body?.data);
             setDetailRequeteState(detailRequete);
           }
         }
@@ -72,12 +69,7 @@ export function useDetailRequeteApiHook(idRequete: string) {
   };
 }
 
-export async function mappingRequeteDelivrance(
-  data: any
-): Promise<IRequeteDelivrance> {
-  const documentDemande: DocumentDelivrance = await DocumentDelivrance.getDocumentDelivrance(
-    data?.documentDemande
-  );
+export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
   return {
     // Partie Requête
     id: data.id,
@@ -98,7 +90,9 @@ export async function mappingRequeteDelivrance(
 
     //Partie Requête Delivrance
     sousType: SousTypeDelivrance.getEnumFor(data?.sousType),
-    documentDemande,
+    documentDemande: DocumentDelivrance.getDocumentDelivrance(
+      data?.documentDemande
+    ),
     nbExemplaireImpression: data?.nombreExemplairesDemandes,
     provenanceRequete: getProvenance(data),
     evenement: data?.evenement ? getEvenement(data.evenement) : undefined,

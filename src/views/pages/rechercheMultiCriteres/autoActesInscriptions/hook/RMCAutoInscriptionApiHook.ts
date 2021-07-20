@@ -33,7 +33,7 @@ export function useRMCAutoInscriptionApiHook(
             criteresRequest,
             range
           );
-          const inscriptions = await mappingInscriptions(
+          const inscriptions = mappingInscriptions(
             result?.body?.data?.repertoiresCiviles
           );
           setDataRMCAutoInscription(inscriptions);

@@ -16,9 +16,9 @@ export interface IReponseNegativeDemandeIncompleteComposition
     IRequerantComposition {}
 
 export const ReponseNegativeDemandeIncompleteComposition = {
-  async creerReponseNegative(objet: string, requerant: IRequerant) {
+  creerReponseNegative(objet: string, requerant: IRequerant) {
     const reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
-    await ParametresComposition.ajoutParametres(reponseNegative);
+    ParametresComposition.ajoutParametres(reponseNegative);
 
     reponseNegative.objet_courrier = objet;
 

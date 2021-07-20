@@ -3,15 +3,21 @@ import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../.
 import { DataRMCInscriptionAvecResultat } from "../../../../../../../mock/data/RMCInscription";
 import { configMultiAPi } from "../../../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { Sexe } from "../../../../../../../model/etatcivil/enum/Sexe";
+import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { specificationPhraseDelivrer } from "../../../../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
 const dataRMCAutoActe: IResultatRMCActe[] = [];
+
+beforeAll(() => {
+  DocumentDelivrance.init();
+});
+
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS et il n'y a pas de PACS", async () => {
   const dataRMCAutoInscription: IResultatRMCInscription[] = [];
-  const phrase = await specificationPhraseDelivrer.getPhrasesJasper(
+  const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[1].id, // CERTIFICAT_SITUATION_PACS
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -24,7 +30,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RC et il n'y a pas de RC", async () => {
   const dataRMCAutoInscription: IResultatRMCInscription[] = [];
-  const phrase = await specificationPhraseDelivrer.getPhrasesJasper(
+  const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[5].id, // CERTIFICAT_SITUATION_RC
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -35,7 +41,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RCA et il n'y a pas de PACS", async () => {
   const dataRMCAutoInscription: IResultatRMCInscription[] = [];
-  const phrase = await specificationPhraseDelivrer.getPhrasesJasper(
+  const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[7].id, // CERTIFICAT_SITUATION_RCA
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -48,7 +54,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS et il y a au moins un PACS", async () => {
   const dataRMCAutoInscription: IResultatRMCInscription[] = DataRMCInscriptionAvecResultat;
-  const phrase = await specificationPhraseDelivrer.getPhrasesJasper(
+  const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[1].id, //CERTIFICAT_SITUATION_PACS
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -61,7 +67,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RC et il y a au moins un RC", async () => {
   const dataRMCAutoInscription: IResultatRMCInscription[] = DataRMCInscriptionAvecResultat;
-  const phrase = await specificationPhraseDelivrer.getPhrasesJasper(
+  const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[5].id, //CERTIFICAT_SITUATION_RC
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -74,7 +80,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_RCA et il y a au moins un RC", async () => {
   const dataRMCAutoInscription: IResultatRMCInscription[] = DataRMCInscriptionAvecResultat;
-  const phrase = await specificationPhraseDelivrer.getPhrasesJasper(
+  const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[7].id, //CERTIFICAT_SITUATION_RCA
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -87,7 +93,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
 
 test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTIFICAT_SITUATION_PACS_RC_RCA et il y a au moins un PACS, un RC et un RCA", async () => {
   const dataRMCAutoInscription: IResultatRMCInscription[] = DataRMCInscriptionAvecResultat;
-  const phrase = await specificationPhraseDelivrer.getPhrasesJasper(
+  const phrase = specificationPhraseDelivrer.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[4].id, //CERTIFICAT_SITUATION_PACS_RC_RCA
     Sexe.FEMININ,
     dataRMCAutoActe,

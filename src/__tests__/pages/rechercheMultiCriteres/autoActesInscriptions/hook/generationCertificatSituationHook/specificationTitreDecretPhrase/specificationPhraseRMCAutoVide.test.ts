@@ -4,14 +4,20 @@ import { DataRMCActeAvecResultat } from "../../../../../../../mock/data/RMCActe"
 import { DataRMCInscriptionAvecResultat } from "../../../../../../../mock/data/RMCInscription";
 import { configMultiAPi } from "../../../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { Sexe } from "../../../../../../../model/etatcivil/enum/Sexe";
+import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { specificationPhraseRMCAutoVide } from "../../../../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
+
+beforeAll(() => {
+  DocumentDelivrance.init();
+});
+
 test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien car il y a des actes et des inscritptions", async () => {
   const dataRMCAutoActe: IResultatRMCActe[] = DataRMCActeAvecResultat;
   const dataRMCAutoInscription: IResultatRMCInscription[] = DataRMCInscriptionAvecResultat;
-  const phrase = await specificationPhraseRMCAutoVide.getPhrasesJasper(
+  const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[6].id,
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -23,7 +29,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien 
 test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien car il y a des actes", async () => {
   const dataRMCAutoActe: IResultatRMCActe[] = DataRMCActeAvecResultat;
   const dataRMCAutoInscription: IResultatRMCInscription[] = [];
-  const phrase = await specificationPhraseRMCAutoVide.getPhrasesJasper(
+  const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[6].id,
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -35,7 +41,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper ne retourne rien 
 test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phrase car pour une demande de cs RC/RCA il n'y a ni actes ni inscriptions", async () => {
   const dataRMCAutoActe: IResultatRMCActe[] = [];
   const dataRMCAutoInscription: IResultatRMCInscription[] = [];
-  const phrase = await specificationPhraseRMCAutoVide.getPhrasesJasper(
+  const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[6].id, // CERTIFICAT_SITUATION_RC_RCA
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -51,7 +57,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phra
   const dataRMCAutoInscription: IResultatRMCInscription[] = DataRMCInscriptionAvecResultat.filter(
     res => res.categorie === "PACS"
   );
-  const phrase = await specificationPhraseRMCAutoVide.getPhrasesJasper(
+  const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[6].id, // CERTIFICAT_SITUATION_RC_RCA
     Sexe.FEMININ,
     dataRMCAutoActe,
@@ -67,7 +73,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phra
   const dataRMCAutoInscription: IResultatRMCInscription[] = DataRMCInscriptionAvecResultat.filter(
     res => res.categorie !== "PACS"
   );
-  const phrase = await specificationPhraseRMCAutoVide.getPhrasesJasper(
+  const phrase = specificationPhraseRMCAutoVide.getPhrasesJasper(
     ReponseAppelNomenclatureDocummentDelivrance.data[1].id, // CERTIFICAT_SITUATION_PACS
     Sexe.MASCULIN,
     dataRMCAutoActe,

@@ -74,26 +74,3 @@ export async function peupleMandataireRc() {
     }
   }
 }
-
-export async function getNatureInscription(
-  categorie: string,
-  nature: string
-): Promise<string> {
-  await peupleNatureRc();
-  await peupleNatureRca();
-  let natureInscription = "";
-  if (categorie) {
-    const categorieToUpper = categorie?.toUpperCase();
-    switch (categorieToUpper) {
-      case "RC":
-        natureInscription = NatureRc.getEnumFor(nature)?.libelle;
-        break;
-      case "RCA":
-        natureInscription = NatureRca.getEnumFor(nature)?.libelle;
-        break;
-      default:
-        break;
-    }
-  }
-  return natureInscription;
-}

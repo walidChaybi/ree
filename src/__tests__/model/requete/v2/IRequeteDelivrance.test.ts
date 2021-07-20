@@ -10,23 +10,21 @@ import {
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctement", async () => {
+  await DocumentDelivrance.init();
   let documentDelivrance: IDocumentReponse;
   let requete: IRequeteDelivrance;
-  DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID().then(
-    uuidTypeDocument => {
-      documentDelivrance = {
-        nom: "test",
-        typeDocument: uuidTypeDocument
-      } as IDocumentReponse;
-      const autreDocument = {
-        nom: "autre",
-        typeDocument: "123456"
-      } as IDocumentReponse;
-      requete = {
-        documentsReponses: [autreDocument, documentDelivrance, autreDocument]
-      } as IRequeteDelivrance;
-    }
-  );
+
+  documentDelivrance = {
+    nom: "test",
+    typeDocument: DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID()
+  } as IDocumentReponse;
+  const autreDocument = {
+    nom: "autre",
+    typeDocument: "123456"
+  } as IDocumentReponse;
+  requete = {
+    documentsReponses: [autreDocument, documentDelivrance, autreDocument]
+  } as IRequeteDelivrance;
 
   await waitFor(() => {
     expect(RequeteDelivrance.getDocumentsDeDelivrance(requete)).toEqual([

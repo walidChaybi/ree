@@ -22,6 +22,10 @@ import {
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
+beforeAll(() => {
+  DocumentDelivrance.init();
+});
+
 test("renders du bloc Menu Delivrer", async () => {
   const history = createMemoryHistory();
   history.push(
@@ -32,7 +36,7 @@ test("renders du bloc Menu Delivrer", async () => {
   );
 
   await act(async () => {
-    requete1.documentDemande = await DocumentDelivrance.getDocumentDelivrance(
+    requete1.documentDemande = DocumentDelivrance.getDocumentDelivrance(
       "ec161aa5-5c0c-429d-abdf-f9017e8e26b4"
     );
 

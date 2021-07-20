@@ -90,13 +90,12 @@ export class DocumentDelivrance extends EnumWithComplete {
     return EnumWithComplete.getKeyForNom(DocumentDelivrance, nom);
   }
 
-  public static async getAllEnumsAsOptions(): Promise<Options> {
-    await DocumentDelivrance.init();
+  public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(DocumentDelivrance);
   }
 
-  public static async getAllCertificatSituationAsOptions(): Promise<Options> {
-    const options = await DocumentDelivrance.getAllEnumsAsOptions();
+  public static getAllCertificatSituationAsOptions(): Options {
+    const options = DocumentDelivrance.getAllEnumsAsOptions();
     return options.filter(opt =>
       DocumentDelivrance.getEnumFor(opt.value)._nom.startsWith(
         CERTIFICAT_SITUATION_PREFIX
@@ -104,10 +103,7 @@ export class DocumentDelivrance extends EnumWithComplete {
     );
   }
 
-  public static async getCourrierNonDelivranceAttestationPacsUUID(): Promise<
-    string
-  > {
-    await DocumentDelivrance.init();
+  public static getCourrierNonDelivranceAttestationPacsUUID(): string {
     const uuid = EnumWithComplete.getKeyForNom(
       DocumentDelivrance,
       COURRIER_NON_DELIVRANCE_ATTESTATION_PACS
@@ -133,10 +129,9 @@ export class DocumentDelivrance extends EnumWithComplete {
     );
   }
 
-  public static async getDocumentDelivrance(
+  public static getDocumentDelivrance(
     documentDemandeUUID: string
-  ): Promise<DocumentDelivrance> {
-    await DocumentDelivrance.init();
+  ): DocumentDelivrance {
     return DocumentDelivrance.getEnumFor(documentDemandeUUID);
   }
 }

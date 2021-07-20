@@ -25,8 +25,7 @@ export class TypePieceJustificative extends EnumWithLibelle {
     return EnumWithLibelle.getEnumFor(uuid, TypePieceJustificative);
   }
 
-  public static async getAllEnumsAsOptions(): Promise<Options> {
-    await peupleTypePieceJustificative();
+  public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(TypePieceJustificative);
   }
 }
