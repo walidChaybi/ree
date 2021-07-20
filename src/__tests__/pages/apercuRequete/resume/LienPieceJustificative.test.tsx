@@ -18,7 +18,7 @@ test("renders Lien Pièces Justificatives fonctionne correctement", async () => 
     />
   );
 
-  const link = getByText("Journal d'Anne Franck - Triste");
+  const link = getByText("Triste");
   fireEvent.click(
     link,
     new MouseEvent("click", {

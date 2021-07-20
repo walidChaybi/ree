@@ -36,7 +36,7 @@ export const LienPieceJustificative: React.FC<IDataLienFicheProps> = props => {
         onClick={onClick}
         title={props.nom}
       >
-        {`${props.nom} - ${props.type}`}
+        {props.type}
       </Link>
 
       {fenetreOuverteState && (
