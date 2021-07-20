@@ -28,9 +28,7 @@
           "status": 200,
           "url": "/rece-requete-api/v1/requetes/count",
           "data": 0,
-          "errors": [
-
-          ]
+          "errors": []
         },
         "matchingRules": {
           "$.body.data": {
@@ -91,7 +89,7 @@
               "mandantLien": null,
               "piecesJustificatives": [
                 {
-                  "id": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
+                  "idPieceJustificative": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
                   "nom": "1_c45606fb-f0e3-4647-ab4a-a6c5c416e809.pdf",
                   "mimeType": "application/pdf",
                   "typePieceJustificative": "cpro",
@@ -174,9 +172,7 @@
               ]
             }
           ],
-          "errors": [
-
-          ]
+          "errors": []
         },
         "matchingRules": {
           "$.body.data": {
@@ -258,7 +254,7 @@
               "mandantLien": null,
               "piecesJustificatives": [
                 {
-                  "id": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
+                  "idPieceJustificative": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
                   "nom": "1_c45606fb-f0e3-4647-ab4a-a6c5c416e809.pdf",
                   "mimeType": "application/pdf",
                   "typePieceJustificative": "cpro",
@@ -341,9 +337,7 @@
               ]
             }
           ],
-          "errors": [
-
-          ]
+          "errors": []
         },
         "matchingRules": {
           "$.body.data": {
@@ -394,12 +388,8 @@
           "hasBusinessError": false,
           "status": 200,
           "url": "/rece-requete-api/v1/requetes",
-          "data": [
-
-          ],
-          "errors": [
-
-          ]
+          "data": [],
+          "errors": []
         }
       }
     },
@@ -421,12 +411,8 @@
           "hasBusinessError": false,
           "status": 200,
           "url": "/rece-requete-api/v1/requetes",
-          "data": [
-
-          ],
-          "errors": [
-
-          ]
+          "data": [],
+          "errors": []
         }
       }
     },
@@ -482,7 +468,7 @@
               "mandantLien": null,
               "piecesJustificatives": [
                 {
-                  "id": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
+                  "idPieceJustificative": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
                   "nom": "1_c45606fb-f0e3-4647-ab4a-a6c5c416e809.pdf",
                   "mimeType": "application/pdf",
                   "typePieceJustificative": "cpro",
@@ -565,9 +551,7 @@
               ]
             }
           ],
-          "errors": [
-
-          ]
+          "errors": []
         },
         "matchingRules": {
           "$.body.data": {
@@ -649,7 +633,7 @@
               "mandantLien": null,
               "piecesJustificatives": [
                 {
-                  "id": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
+                  "idPieceJustificative": "c456939a-09ad-4a94-8dd2-0425b22ff4c4",
                   "nom": "1_c45606fb-f0e3-4647-ab4a-a6c5c416e809.pdf",
                   "mimeType": "application/pdf",
                   "typePieceJustificative": "cpro",
@@ -732,9 +716,7 @@
               ]
             }
           ],
-          "errors": [
-
-          ]
+          "errors": []
         },
         "matchingRules": {
           "$.body.data": {
@@ -785,12 +767,8 @@
           "hasBusinessError": false,
           "status": 200,
           "url": "/rece-requete-api/v1/requetes/requetesService",
-          "data": [
-
-          ],
-          "errors": [
-
-          ]
+          "data": [],
+          "errors": []
         }
       }
     },
@@ -827,9 +805,7 @@
             "nbPages": 2,
             "orientation": "P"
           },
-          "errors": [
-
-          ]
+          "errors": []
         },
         "matchingRules": {
           "$.body.data": {
