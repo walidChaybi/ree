@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import requete from "../../../../mock/data/requete";
 import { IPieceJustificative } from "../../../common/types/RequeteType";
 import "../../../common/widget/section/scss/SectionPanel.scss";
 import "../../../common/widget/section/scss/SectionPanelArea.scss";
@@ -7,6 +6,7 @@ import { LienPieceJustificative } from "./LienPieceJustificative";
 
 interface IListePiecesJustificatives {
   pieces: IPieceJustificative[];
+  numRequete: string;
 }
 
 export const ListePiecesJustificatives: React.FC<IListePiecesJustificatives> =
@@ -25,7 +25,7 @@ export const ListePiecesJustificatives: React.FC<IListePiecesJustificatives> =
                     nom={content.nom}
                     type={content.typePieceJustificative.libelle}
                     contenu={content.contenu}
-                    numRequete={requete.idRequeteInitiale.toString()}
+                    numRequete={props.numRequete}
                     idPiece={content.id}
                   ></LienPieceJustificative>
                 </span>

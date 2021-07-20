@@ -43,6 +43,7 @@ export const ResumeRequeteV2: React.FC<ResumeRequeteV2Props> = props => {
           <hr className={"SectionPanelAreaSeparation"} />
           <ListePiecesJustificatives
             pieces={props.requete.piecesJustificatives}
+            numRequete={props.requete.numero}
           />
         </>
       )}
