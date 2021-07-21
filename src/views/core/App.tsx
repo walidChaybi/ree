@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import fr from "date-fns/locale/fr";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -17,7 +17,6 @@ import {
 import { ErrorManager } from "../common/util/ErrorManager";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
-import { GestionnaireDoubleOuverture } from "../common/util/GestionnaireDoubleOuverture";
 import {
   appelRequetesASigner,
   GestionnaireFermeture,
@@ -37,14 +36,20 @@ setDefaultLocale("fr");
 
 const etape2 = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
 const App: React.FC = () => {
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(true);
   const login = useLoginApi();
 
   useEffect(() => {
-    GestionnaireNomenclature.chargerToutesLesNomenclatures();
-    GestionnaireCacheApi.chargerTousLesUtilisateurs();
-    GestionnaireCacheApi.chargerToutesLesEntites();
-    GestionnaireDoubleOuverture.decroitNAppliOnUnload();
-  }, []);
+    if (login.officierDataState) {
+      Promise.all([
+        GestionnaireNomenclature.chargerToutesLesNomenclatures(),
+        GestionnaireCacheApi.chargerTousLesUtilisateurs(),
+        GestionnaireCacheApi.chargerToutesLesEntites()
+      ]).then(values => {
+        setOperationEnCours(false);
+      });
+    }
+  }, [login.officierDataState]);
   return (
     <SeulementNavigateur
       navigateurs={
@@ -74,7 +79,7 @@ const App: React.FC = () => {
                 )}
               </OfficierContext.Consumer>
               <Header />
-              <Body />
+              {!operationEnCours && <Body />}
               <ToastContainer
                 className={"toast-container"}
                 position="top-center"

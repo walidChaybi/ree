@@ -16,6 +16,7 @@ export function useLoginApi() {
   const [erreurState, setErreurState] = useState(undefined);
 
   useEffect(() => {
+    GestionnaireDoubleOuverture.decroitNAppliOnUnload();
     if (GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()) {
       getLogin()
         .then(result => {

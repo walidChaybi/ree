@@ -9,15 +9,15 @@ const PLAGE_IMPORT = 100;
 
 export class GestionnaireCacheApi {
   static chargerTousLesUtilisateurs() {
-    GestionnaireCacheApi.chargerTousLesUtilisateursPourLaPage(0);
+    return GestionnaireCacheApi.chargerTousLesUtilisateursPourLaPage(0);
   }
 
   static chargerToutesLesEntites() {
-    GestionnaireCacheApi.chargerToutesLesEntitesPourLaPage(0);
+    return GestionnaireCacheApi.chargerToutesLesEntitesPourLaPage(0);
   }
 
   private static chargerTousLesUtilisateursPourLaPage(page: number) {
-    getTousLesUtilisateurs(`${page}-${PLAGE_IMPORT}`, true)
+    return getTousLesUtilisateurs(`${page}-${PLAGE_IMPORT}`, true)
       .then(utilisateurs => {
         storeRece.listeUtilisateurs = [
           ...storeRece.listeUtilisateurs,
@@ -36,7 +36,7 @@ export class GestionnaireCacheApi {
   }
 
   private static chargerToutesLesEntitesPourLaPage(page: number) {
-    getToutesLesEntiteRattachement(`${page}-${PLAGE_IMPORT}`)
+    return getToutesLesEntiteRattachement(`${page}-${PLAGE_IMPORT}`)
       .then(entites => {
         storeRece.listeEntite = [
           ...storeRece.listeEntite,
