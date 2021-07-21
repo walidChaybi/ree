@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import * as Yup from "yup";
 import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { MIN_YEAR } from "../../../common/util/DateUtils";
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
+import { AutoScroll } from "../../../common/widget/autoScroll/autoScroll";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
 import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
@@ -121,6 +122,8 @@ export const RMCActeInscriptionPage: React.FC = () => {
     rappelCriteres
   } as RMCBoutonsProps;
 
+  const RMCActeInscriptionRef = useRef();
+
   return (
     <>
       <title>{titreForm}</title>
@@ -133,6 +136,10 @@ export const RMCActeInscriptionPage: React.FC = () => {
         <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
         <RMCBoutons {...boutonsProps} />
       </Formulaire>
+      <AutoScroll
+        autoScroll={nouvelleRecherche}
+        baliseRef={RMCActeInscriptionRef}
+      />
       {dataRMCActe &&
         dataTableauRMCActe &&
         dataRMCInscription &&

@@ -1,35 +1,36 @@
-import React, { useState } from "react";
-import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import RequeteFiltre, {
-  RequeteDefaultValues,
-  RequeteFiltreProps,
-  RequeteValidationSchema
-} from "../filtres/requete/RequeteFiltre";
+import React, { useRef, useState } from "react";
 import * as Yup from "yup";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
-import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
-import { useRMCRequeteApiHook } from "./hook/RMCRequeteApiHook";
 import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
-import TitulaireFiltre, {
-  TitulaireDefaultValues,
-  TitulaireFiltreProps,
-  TitulaireValidationSchema
-} from "../filtres/titulaire/TitulaireFiltre";
-import "./scss/RMCRequetePage.scss";
+import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
+import { MEP_YEAR } from "../../../common/util/DateUtils";
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
+import { AutoScroll } from "../../../common/widget/autoScroll/autoScroll";
+import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
+import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
-import RequerantFiltre, {
-  RequerantDefaultValues,
-  RequerantFiltreProps,
-  RequerantValidationSchema
-} from "../filtres/requerant/RequerantFiltre";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps,
   DatesDebutFinAnneeValidationSchema
 } from "../filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
-import { MEP_YEAR } from "../../../common/util/DateUtils";
+import RequerantFiltre, {
+  RequerantDefaultValues,
+  RequerantFiltreProps,
+  RequerantValidationSchema
+} from "../filtres/requerant/RequerantFiltre";
+import RequeteFiltre, {
+  RequeteDefaultValues,
+  RequeteFiltreProps,
+  RequeteValidationSchema
+} from "../filtres/requete/RequeteFiltre";
+import TitulaireFiltre, {
+  TitulaireDefaultValues,
+  TitulaireFiltreProps,
+  TitulaireValidationSchema
+} from "../filtres/titulaire/TitulaireFiltre";
+import { useRMCRequeteApiHook } from "./hook/RMCRequeteApiHook";
 import { RMCRequeteResultats } from "./resultats/RMCRequeteResultats";
+import "./scss/RMCRequetePage.scss";
 
 // Nom des filtres
 export const REQUETE = "requete";
@@ -104,6 +105,8 @@ export const RMCRequetePage: React.FC = () => {
     rappelCriteres
   } as RMCBoutonsProps;
 
+  const RMCRequeteRef = useRef();
+
   return (
     <>
       <title>{titreForm}</title>
@@ -116,6 +119,7 @@ export const RMCRequetePage: React.FC = () => {
         <div className="DeuxColonnes FormulaireRMCRequete">{blocsForm}</div>
         <RMCBoutons {...boutonsProps} />
       </Formulaire>
+      <AutoScroll autoScroll={nouvelleRecherche} baliseRef={RMCRequeteRef} />
       {dataRMCRequete && dataTableauRMCRequete && (
         <RMCRequeteResultats
           dataRMCRequete={dataRMCRequete}
