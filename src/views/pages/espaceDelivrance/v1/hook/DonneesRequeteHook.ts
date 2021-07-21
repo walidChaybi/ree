@@ -1,4 +1,3 @@
-import moment from "moment";
 import { useEffect, useState } from "react";
 import {
   getRequetes,
@@ -20,7 +19,7 @@ import {
   IPieceJustificative,
   ITitulaire
 } from "../../../../common/types/RequeteType";
-import { FormatDate } from "../../../../common/util/DateUtils";
+import { getFormatDateFromTimestamp } from "../../../../common/util/DateUtils";
 import {
   getMaxRange,
   getMinRange,
@@ -168,13 +167,11 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
     requeteMapper = {
       idRequete: data.idRequete,
       idSagaDila: +data.idSagaDila,
-      dateCreation: moment.unix(data.dateCreation).format(FormatDate.DDMMYYYY),
-      dateDerniereMaj: moment
-        .unix(data.dateDerniereMaj)
-        .format(FormatDate.DDMMYYYY),
+      dateCreation: getFormatDateFromTimestamp(data.dateCreation),
+      dateDerniereMaj: getFormatDateFromTimestamp(data.dateDerniereMaj),
       provenance: data.provenance,
       statut: data.statut,
-      dateStatut: moment.unix(data.dateStatut).format(FormatDate.DDMMYYYY),
+      dateStatut: getFormatDateFromTimestamp(data.dateStatut),
       idRequeteInitiale: data.idRequeteInitiale,
       sousTypeRequete: data.sousTypeRequete,
       typeRequete: data.typeRequete,
