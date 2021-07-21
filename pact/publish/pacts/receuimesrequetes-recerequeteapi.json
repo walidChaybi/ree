@@ -28,7 +28,9 @@
           "status": 200,
           "url": "/rece-requete-api/v1/requetes/count",
           "data": 0,
-          "errors": []
+          "errors": [
+
+          ]
         },
         "matchingRules": {
           "$.body.data": {
@@ -172,7 +174,9 @@
               ]
             }
           ],
-          "errors": []
+          "errors": [
+
+          ]
         },
         "matchingRules": {
           "$.body.data": {
@@ -337,7 +341,9 @@
               ]
             }
           ],
-          "errors": []
+          "errors": [
+
+          ]
         },
         "matchingRules": {
           "$.body.data": {
@@ -388,8 +394,12 @@
           "hasBusinessError": false,
           "status": 200,
           "url": "/rece-requete-api/v1/requetes",
-          "data": [],
-          "errors": []
+          "data": [
+
+          ],
+          "errors": [
+
+          ]
         }
       }
     },
@@ -411,8 +421,12 @@
           "hasBusinessError": false,
           "status": 200,
           "url": "/rece-requete-api/v1/requetes",
-          "data": [],
-          "errors": []
+          "data": [
+
+          ],
+          "errors": [
+
+          ]
         }
       }
     },
@@ -551,7 +565,9 @@
               ]
             }
           ],
-          "errors": []
+          "errors": [
+
+          ]
         },
         "matchingRules": {
           "$.body.data": {
@@ -716,7 +732,9 @@
               ]
             }
           ],
-          "errors": []
+          "errors": [
+
+          ]
         },
         "matchingRules": {
           "$.body.data": {
@@ -767,8 +785,12 @@
           "hasBusinessError": false,
           "status": 200,
           "url": "/rece-requete-api/v1/requetes/requetesService",
-          "data": [],
-          "errors": []
+          "data": [
+
+          ],
+          "errors": [
+
+          ]
         }
       }
     },
@@ -805,7 +827,9 @@
             "nbPages": 2,
             "orientation": "P"
           },
-          "errors": []
+          "errors": [
+
+          ]
         },
         "matchingRules": {
           "$.body.data": {

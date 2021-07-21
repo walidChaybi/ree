@@ -15,7 +15,7 @@ import {
   useGetRequeteAleatoire
 } from "../hook/PrendreEnChargeAleatoirementHook";
 
-const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
+export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
   const history = useHistory();
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);

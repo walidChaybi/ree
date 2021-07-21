@@ -20,3 +20,5 @@ if (window.document) {
     }
   });
 }
+
+jest.setTimeout(30000);

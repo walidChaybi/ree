@@ -20,22 +20,14 @@ export function useGetRequeteAleatoire(prendreEnCharge: boolean) {
       try {
         if (prendreEnCharge) {
           const resultat = await getRequeteAleatoire();
-          const requeteResultatMappee = await mappingUneRequeteTableau(
+          const requeteResultatMappee = mappingUneRequeteTableau(
             resultat.body.data,
             true
           );
           setRequeteAleatoireResultat({ requete: requeteResultatMappee });
         }
       } catch (error) {
-        if (error.response && error.response.status === HTTP_NOT_FOUND) {
-          setRequeteAleatoireResultat({ requete: undefined });
-        } else {
-          logError({
-            messageUtilisateur:
-              "Impossible de prendre en charge aléatoirement une requête",
-            error
-          });
-        }
+        gereErreur(error, setRequeteAleatoireResultat);
       }
     }
 
@@ -43,4 +35,16 @@ export function useGetRequeteAleatoire(prendreEnCharge: boolean) {
   }, [prendreEnCharge]);
 
   return requeteAleatoireResultat;
+}
+
+export function gereErreur(error: any, setRequeteAleatoireResultat: any) {
+  if (error.response && error.response.status === HTTP_NOT_FOUND) {
+    setRequeteAleatoireResultat({ requete: undefined });
+  } else {
+    logError({
+      messageUtilisateur:
+        "Impossible de prendre en charge aléatoirement une requête",
+      error
+    });
+  }
 }

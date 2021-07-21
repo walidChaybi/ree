@@ -19,6 +19,12 @@ export const configOutiltech = [
       if (match[1] === "/log") {
         return { headers: mockConnectedUser, data: null };
       }
+
+      const error = { msg: "url api outiltech non mockée", url: match[1] };
+      console.log("Erreur mock api: ", error);
+      return {
+        data: error
+      };
     },
 
     /**

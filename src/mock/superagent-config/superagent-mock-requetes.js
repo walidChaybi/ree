@@ -206,6 +206,12 @@ export const configRequetes = [
       if (match[1] === "/parametres" && context.method === "post") {
         return { data: parametresBaseRequete };
       }
+
+      const error = { msg: "url api requete V1 non mockée", url: match[1] };
+      console.log("Erreur mock api: ", error);
+      return {
+        data: error
+      };
     },
 
     /**

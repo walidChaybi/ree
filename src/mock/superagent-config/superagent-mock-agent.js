@@ -41,6 +41,12 @@ export const configAgent = [
       ) {
         return { data: INFOS_UTILISATEURS.data };
       }
+
+      const error = { msg: "url api agent non mockée", url: match[1] };
+      console.log("Erreur mock api: ", error);
+      return {
+        data: error
+      };
     },
 
     /**

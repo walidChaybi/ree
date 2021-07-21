@@ -84,6 +84,12 @@ export const configMultiAPi = [
         // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
         return { data: imagePngVideBase64 };
       }
+
+      const error = { msg: "url api multiples non mockée", url: match[1] };
+      console.log("Erreur mock api: ", error);
+      return {
+        data: error
+      };
     },
 
     /**

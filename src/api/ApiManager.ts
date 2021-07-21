@@ -167,6 +167,7 @@ export class ApiManager {
     if (httpRequestConfig.responseType) {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
+
     return httpRequete
       .then(response => {
         if (useCache) {
@@ -184,6 +185,8 @@ export class ApiManager {
         });
       })
       .catch(error => {
+        error.uri = httpRequestConfig.uri;
+        error.parameters = httpRequestConfig.parameters;
         const errorType = this.manageApiError(error);
         if (errorType === "erreurOffLine") {
           // Permet à l'application de se recharger avant l'affichage de  l'erreur
@@ -214,6 +217,12 @@ export class ApiManager {
       errorType = "toutesErreursSaufForbidden";
       messageManager.showError(
         `Une erreur est survenue: ${error ? error.message : "inconnue"}`
+      );
+    } else if (error && process.env.NODE_ENV === "test") {
+      console.log("Erreur mock api: ", error.uri);
+      console.log(
+        "     parameters: ",
+        error.parameters ? error.parameters : "pas de paramètres"
       );
     }
     return errorType;

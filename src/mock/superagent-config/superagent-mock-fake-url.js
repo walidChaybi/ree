@@ -23,6 +23,15 @@ export const configFakeUrl = [
       } else if (match[1] === "/requetes/count?statuts=A_SIGNER") {
         return { data: this.nbRequetes };
       }
+
+      const error = {
+        msg: "url api fake requete v1 non mockée",
+        url: match[1]
+      };
+      console.log("Erreur mock api: ", error);
+      return {
+        data: error
+      };
     },
 
     /**

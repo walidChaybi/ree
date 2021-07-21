@@ -231,6 +231,12 @@ export const configEtatcivil = [
           data: ReponseAppelRMCInscription.data
         };
       }
+
+      const error = { msg: "url api etat civil non mockée", url: match[1] };
+      console.log("Erreur mock api: ", error);
+      return {
+        data: error
+      };
     },
 
     /**
