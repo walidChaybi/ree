@@ -11,7 +11,6 @@ import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDeliv
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequerant } from "../../../model/requete/v2/enum/TypeRequerant";
 import { IRequerant } from "../../../model/requete/v2/IRequerant";
-import { logError } from "../../common/util/LogManager";
 import messageManager from "../../common/util/messageManager";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
@@ -113,18 +112,15 @@ export const SaisirRDCSCPage: React.FC = () => {
     donneesNaissanceIncomplete,
     setDonneesNaissanceIncomplete
   ] = React.useState<boolean>(false);
-  const [
-    saisieRequeteRDCSC,
-    setSaisieRequeteRDCSC
-  ] = useState<SaisieRequeteRDCSC>();
-  const [
-    creationRequeteRDCSC,
-    setCreationRequeteRDCSC
-  ] = useState<CreationRequeteRDCSC>();
-  const [
-    updateRequeteRDCSC,
-    setUpdateRequeteRDCSC
-  ] = useState<UpdateRequeteRDCSC>();
+  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] = useState<
+    SaisieRequeteRDCSC
+  >();
+  const [creationRequeteRDCSC, setCreationRequeteRDCSC] = useState<
+    CreationRequeteRDCSC
+  >();
+  const [updateRequeteRDCSC, setUpdateRequeteRDCSC] = useState<
+    UpdateRequeteRDCSC
+  >();
 
   const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 
@@ -252,13 +248,6 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const enregistrerValider = (refus: boolean) => {
     if (saisieRequeteRDCSC) {
-      if (refus) {
-        logError({
-          errorInfo:
-            "TODO appel du Hook de l'US 137 : Réponse automatique - req Certificat Situation incomplète"
-        });
-        // TODO appel du Hook de l'US 137 : Réponse automatique - req Certificat Situation incomplète
-      }
       setOperationEnCours(true);
       if (idRequete) {
         setUpdateRequeteRDCSC({
