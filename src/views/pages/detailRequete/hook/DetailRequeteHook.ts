@@ -198,7 +198,7 @@ function getMandataireHabilite(mandataire: any): IMandataireHabilite {
       type: TypeMandataireReq.getEnumFor(mandataire.type),
       raisonSociale: mandataire.raisonSociale,
       nature: mandataire.nature,
-      CRPCEN: mandataire.crpcen
+      crpcen: mandataire.crpcen
     };
   }
   return {} as IMandataireHabilite;

@@ -4,5 +4,5 @@ export interface IMandataireHabilite {
   type: TypeMandataireReq;
   raisonSociale?: string;
   nature?: string;
-  CRPCEN?: string;
+  crpcen?: string;
 }
