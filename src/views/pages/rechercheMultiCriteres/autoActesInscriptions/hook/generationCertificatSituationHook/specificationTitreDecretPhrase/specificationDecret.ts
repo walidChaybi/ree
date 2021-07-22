@@ -70,7 +70,6 @@ class SpecificationDecret {
     );
   }
   getDecret(idDocumentDemande: string): string[] {
-    DocumentDelivrance.init();
     if (this.MAP_SPECIFICATION.size === 0) {
       this.init();
     }
