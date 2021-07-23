@@ -1,4 +1,5 @@
 import { getValeurOuVide } from "../../../views/common/util/Utils";
+import { LieuxUtils } from "../../LieuxUtils";
 import { IRequerant } from "../../requete/v2/IRequerant";
 
 export interface IRequerantComposition {
@@ -24,8 +25,10 @@ export const RequerantComposition = {
           ligne3: getValeurOuVide(requerant.adresse.ligne3),
           ligne4: getValeurOuVide(requerant.adresse.ligne4),
           ligne5: getValeurOuVide(requerant.adresse.ligne5),
-          ligne6: getValeurOuVide(requerant.adresse.codePostal),
-          ligne7: getValeurOuVide(requerant.adresse.ville)
+          ligne6: `${getValeurOuVide(
+            requerant.adresse.codePostal
+          )} ${getValeurOuVide(requerant.adresse.ville)}`,
+          ligne7: LieuxUtils.affichagePaysCourrier(requerant.adresse.pays)
         };
       }
     }

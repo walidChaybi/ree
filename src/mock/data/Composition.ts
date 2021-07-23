@@ -46,8 +46,8 @@ export const certificatSituation: ICertificatSituationComposition = {
     ligne3: "l3",
     ligne4: "l4",
     ligne5: "l5",
-    ligne6: "123456",
-    ligne7: "ville"
+    ligne6: "123456 ville",
+    ligne7: "pays"
   },
   annee_naissance: "2000",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",

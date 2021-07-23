@@ -1,7 +1,7 @@
 import {
+  formatMajusculesMinusculesAvecSeparateur,
   getValeurOuVide,
-  premiereLettreEnMajuscule,
-  formatMajusculesMinusculesAvecSeparateur
+  premiereLettreEnMajuscule
 } from "../views/common/util/Utils";
 
 const FRANCE = "FRANCE";
@@ -110,5 +110,9 @@ export class LieuxUtils {
       const paysAffichage = paysString ? ` (${paysString})` : "";
       return `${villeString}${region ? regionAffichage : ""}${paysAffichage}`;
     }
+  }
+
+  public static affichagePaysCourrier(pays: string) {
+    return this.isPaysFrance(pays) ? "" : pays;
   }
 }
