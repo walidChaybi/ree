@@ -61,7 +61,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
     dataRMCAutoInscription
   );
   expect(phrase.phrasesLiees).toBe(
-    "Est inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 1er Décembre 2020 sous la référence PAC n°1001-2020.\nEst inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 11 Février 2000 sous la référence PAC n°1006-2000."
+    "Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 1er Décembre 2020 sous la référence PAC n°2020-1001.\nEst inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 11 Février 2000 sous la référence PAC n°2000-1006."
   );
 });
 
@@ -74,7 +74,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
     dataRMCAutoInscription
   );
   expect(phrase.phrasesLiees).toBe(
-    "Est inscrite au répertoire civil depuis le 5 Novembre 2019 sous la référence RC n°1002-2019.\nEst inscrite au répertoire civil depuis le 5 Février 2009 sous la référence RC n°1004-2009."
+    "Est inscrite au répertoire civil depuis le 5 Novembre 2019 sous la référence RC n°2019-1002.\nEst inscrite au répertoire civil depuis le 5 Février 2009 sous la référence RC n°2009-1004."
   );
 });
 
@@ -87,7 +87,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
     dataRMCAutoInscription
   );
   expect(phrase.phrasesLiees).toBe(
-    "Est inscrite au répertoire civil annexe depuis le 7 Mai 2017 sous la référence RCA n°1003-2017.\nEst inscrite au répertoire civil annexe depuis le 7 Juillet 2007 sous la référence RCA n°1005-2007."
+    "Est inscrite au répertoire civil annexe depuis le 7 Mai 2017 sous la référence RCA n°2017-1003.\nEst inscrite au répertoire civil annexe depuis le 7 Juillet 2007 sous la référence RCA n°2007-1005."
   );
 });
 
@@ -100,7 +100,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
     dataRMCAutoInscription
   );
   expect(phrase.phrasesLiees).toBe(
-    "Est inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 1er Décembre 2020 sous la référence PAC n°1001-2020.\nEst inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 11 Février 2000 sous la référence PAC n°1006-2000.\nEst inscrite au répertoire civil depuis le 5 Novembre 2019 sous la référence RC n°1002-2019.\nEst inscrite au répertoire civil depuis le 5 Février 2009 sous la référence RC n°1004-2009.\nEst inscrite au répertoire civil annexe depuis le 7 Mai 2017 sous la référence RCA n°1003-2017.\nEst inscrite au répertoire civil annexe depuis le 7 Juillet 2007 sous la référence RCA n°1005-2007."
+    "Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 1er Décembre 2020 sous la référence PAC n°2020-1001.\nEst inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le 11 Février 2000 sous la référence PAC n°2000-1006.\nEst inscrite au répertoire civil depuis le 5 Novembre 2019 sous la référence RC n°2019-1002.\nEst inscrite au répertoire civil depuis le 5 Février 2009 sous la référence RC n°2009-1004.\nEst inscrite au répertoire civil annexe depuis le 7 Mai 2017 sous la référence RCA n°2017-1003.\nEst inscrite au répertoire civil annexe depuis le 7 Juillet 2007 sous la référence RCA n°2007-1005."
   );
 });
 

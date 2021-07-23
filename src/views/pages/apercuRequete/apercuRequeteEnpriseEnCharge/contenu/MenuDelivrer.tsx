@@ -4,6 +4,7 @@ import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTyp
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { supprimerNullEtUndefinedDuTableau } from "../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import {
   IActionOption,
@@ -49,9 +50,15 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
 
   const handleDelivrerMenu = async () => {
     setInscriptionSelected(
-      props.inscriptionSelected ? props.inscriptionSelected : []
+      props.inscriptionSelected
+        ? supprimerNullEtUndefinedDuTableau(props.inscriptionSelected)
+        : []
     );
-    setActeSelected(props.acteSelected ? props.acteSelected : []);
+    setActeSelected(
+      props.acteSelected
+        ? supprimerNullEtUndefinedDuTableau(props.acteSelected)
+        : []
+    );
     setOperationEnCours(true);
   };
 

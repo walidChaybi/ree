@@ -90,9 +90,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
 
     //Partie Requête Delivrance
     sousType: SousTypeDelivrance.getEnumFor(data?.sousType),
-    documentDemande: DocumentDelivrance.getDocumentDelivrance(
-      data?.documentDemande
-    ),
+    documentDemande: DocumentDelivrance.getEnumFor(data?.documentDemande),
     nbExemplaireImpression: data?.nombreExemplairesDemandes,
     provenanceRequete: getProvenance(data),
     evenement: data?.evenement ? getEvenement(data.evenement) : undefined,

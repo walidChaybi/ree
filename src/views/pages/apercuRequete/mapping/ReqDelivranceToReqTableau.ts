@@ -19,7 +19,7 @@ export function mappingRequeteDelivranceToRequeteTableau(
     idUtilisateur: requete.idUtilisateur,
     type: requete.type?.libelle,
     statut: requete.statutCourant.statut.libelle,
-    document: DocumentDelivrance.getKeyForNom(requete.documentDemande?.nom)
+    document: DocumentDelivrance.getKeyForNom(requete.documentDemande?.nom) // getKey ?
   };
 }
 
@@ -47,7 +47,9 @@ const getTitulaires = (
 };
 
 const getPrenoms = (prenoms: IPrenomOrdonnes[]): string[] => {
-  return prenoms.map((p: IPrenomOrdonnes) => {
-    return p.prenom;
-  });
+  return prenoms
+    .sort((a, b) => (a.numeroOrdre > b.numeroOrdre ? 1 : -1))
+    .map((p: IPrenomOrdonnes) => {
+      return p.prenom;
+    });
 };

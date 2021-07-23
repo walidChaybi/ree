@@ -18,6 +18,7 @@ import {
   normaliserNomOec,
   numberToString,
   premiereLettreEnMajusculeLeResteEnMinuscule,
+  supprimerNullEtUndefinedDuTableau,
   triListeObjetsSurPropriete,
   valeurOuUndefined
 } from "../../../views/common/util/Utils";
@@ -228,4 +229,11 @@ test("3 petits points si la phrase en grande", () => {
   expect(finirAvec3petitsPoints(phrase2, 30)).toStrictEqual(
     "Je ne fais pas 30 charactères"
   );
+});
+
+test("Attendu: supprimerNullEtUndefinedDuTableau fonctionne correctement", () => {
+  expect(supprimerNullEtUndefinedDuTableau([null, undefined])).toEqual([]);
+  expect(
+    supprimerNullEtUndefinedDuTableau(["", "a", null, "b", undefined])
+  ).toEqual(["", "a", "b"]);
 });

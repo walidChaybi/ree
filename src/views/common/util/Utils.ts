@@ -202,3 +202,7 @@ export function finirAvec3petitsPoints(
     ? `${texte.slice(0, charactereAvantPoints - "...".length)}...`
     : texte;
 }
+
+export function supprimerNullEtUndefinedDuTableau(elements?: any[]) {
+  return elements?.filter((el: any) => el != null);
+}

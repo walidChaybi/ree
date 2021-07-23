@@ -9,6 +9,7 @@ import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTyp
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import messageManager from "../../../../common/util/messageManager";
+import { supprimerNullEtUndefinedDuTableau } from "../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import {
   IActionOption,
@@ -97,7 +98,10 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
         break;
       case 1:
         if (
-          !estSeulementActeMariage(props.requete, props.acteSelected) ||
+          !estSeulementActeMariage(
+            props.requete,
+            supprimerNullEtUndefinedDuTableau(props.acteSelected)
+          ) ||
           props.inscriptionSelected?.length !== 0
         ) {
           setHasMessageBloquant(true);

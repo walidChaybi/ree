@@ -13,24 +13,19 @@ export interface IActionProps {
 }
 
 export const ChoixAction: React.FC<IActionProps> = props => {
-  const acteSelectedFilter = props.acteSelected?.filter(acte => acte !== null);
-  const inscriptionSelectedFilter = props.inscriptionSelected?.filter(
-    inscription => inscription !== null
-  );
-
   return (
     <>
       <div className="bloc-choix-action">
         <div className="panel">Actions</div>
         <MenuDelivrer
           requete={props.requete}
-          acteSelected={acteSelectedFilter}
-          inscriptionSelected={inscriptionSelectedFilter}
+          acteSelected={props.acteSelected}
+          inscriptionSelected={props.inscriptionSelected}
         />
         <MenuReponseNegative
           requete={props.requete}
-          acteSelected={acteSelectedFilter}
-          inscriptionSelected={inscriptionSelectedFilter}
+          acteSelected={props.acteSelected}
+          inscriptionSelected={props.inscriptionSelected}
         />
       </div>
     </>
