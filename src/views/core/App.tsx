@@ -40,7 +40,7 @@ const App: React.FC = () => {
   const login = useLoginApi();
 
   useEffect(() => {
-    if (login.officierDataState) {
+    if (etape2 && login.officierDataState) {
       Promise.all([
         GestionnaireNomenclature.chargerToutesLesNomenclatures(),
         GestionnaireCacheApi.chargerTousLesUtilisateurs(),
@@ -79,7 +79,7 @@ const App: React.FC = () => {
                 )}
               </OfficierContext.Consumer>
               <Header />
-              {!operationEnCours && <Body />}
+              {(!operationEnCours || !etape2) && <Body />}
               <ToastContainer
                 className={"toast-container"}
                 position="top-center"
