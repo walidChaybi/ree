@@ -1,6 +1,10 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
-import { LienPieceJustificative } from "../../../../views/pages/apercuRequete/resume/LienPieceJustificative";
+import request from "superagent";
+import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { LienPieceJustificative } from "../../../../views/pages/apercuRequete/resume/contenu/piecesJustificatives/LienPieceJustificative";
+
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 test("renders Lien Pièces Justificatives fonctionne correctement", async () => {
   global.open = () => {
@@ -30,4 +34,8 @@ test("renders Lien Pièces Justificatives fonctionne correctement", async () => 
   await waitFor(() => {
     expect(document.title).toStrictEqual("Journal d'Anne Franck - Req N°69");
   });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

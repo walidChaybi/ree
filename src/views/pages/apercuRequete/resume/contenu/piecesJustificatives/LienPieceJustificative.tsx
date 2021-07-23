@@ -1,9 +1,7 @@
 import { Link } from "@material-ui/core";
 import { MimeType } from "file-type/core";
 import React, { useState } from "react";
-import { useGetPieceJustificativeApi } from "../../../common/hook/v2/PieceJustificativeHook";
-import { FenetreExterne } from "../../../common/util/FenetreExterne";
-import { VisionneuseDocument } from "../../../common/widget/document/VisionneuseDocument";
+import { FenetrePiecesJustificatives } from "./FenetrePiecesJustificatives";
 
 interface IDataLienFicheProps {
   type: string;
@@ -18,7 +16,6 @@ interface IDataLienFicheProps {
 
 export const LienPieceJustificative: React.FC<IDataLienFicheProps> = props => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(false);
-  const contenuPiece = useGetPieceJustificativeApi(props.idPiece);
 
   const onClick = () => {
     toggleFenetre();
@@ -40,20 +37,12 @@ export const LienPieceJustificative: React.FC<IDataLienFicheProps> = props => {
       </Link>
 
       {fenetreOuverteState && (
-        <FenetreExterne
-          titre={`${props.nom} - Req N°${props.numRequete}`}
-          onCloseHandler={() => {
-            toggleFenetre();
-          }}
-          ratioWidth={0.33}
-          ratioHeight={0.66}
-        >
-          <VisionneuseDocument
-            titre={"Pièce Justificative"}
-            contenu={contenuPiece?.contenu}
-            typeMime={contenuPiece?.mimeType as MimeType}
-          ></VisionneuseDocument>
-        </FenetreExterne>
+        <FenetrePiecesJustificatives
+          toggleFenetre={toggleFenetre}
+          numRequete={props.numRequete}
+          nom={props.nom}
+          idPiece={props.idPiece}
+        ></FenetrePiecesJustificatives>
       )}
     </>
   );

@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { getUrlWithoutIdParam } from "../../../common/util/route/routeUtil";
 import { SectionPanel } from "../../../common/widget/section/SectionPanel";
-import { ListePiecesJustificatives } from "./ListePiecesJustificatives";
+import { ListePiecesJustificatives } from "./contenu/piecesJustificatives/ListePiecesJustificatives";
 import { getPanelsResumeRequete } from "./ResumeRequeteUtils";
 
 export const titreDetail = "Détails de requête";
