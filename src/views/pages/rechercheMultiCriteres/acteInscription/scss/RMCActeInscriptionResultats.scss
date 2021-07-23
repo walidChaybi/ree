@@ -1,8 +1,7 @@
 @import "../../../../../scss/colors";
 
-.ResultatsRMCClassique {
-  margin: 1.5rem 5rem;
-
+.ResultatsRMCClassique,
+.ResultatsRMCAuto {
   .SousTitre {
     margin: 0.5rem 0rem;
     color: black;
@@ -17,6 +16,19 @@
       text-align: center;
       margin: 1rem;
     }
+  }
+}
+
+.ResultatsRMCClassique {
+  margin: 1.5rem 5rem;
+  .SubResultatsRMC {
+    margin: 0 1rem;
+  }
+}
+
+.ResultatsRMCAuto {
+  .SubResultatsRMC {
+    margin: 0 5px;
   }
 }
 

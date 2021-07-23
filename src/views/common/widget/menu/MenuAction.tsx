@@ -1,7 +1,7 @@
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import React from "react";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
@@ -32,18 +32,18 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
   };
 
   return (
-    <>
-      <button className="menu-choix-action" onClick={e => handleClickBouton(e)}>
-        {props.titre}
+    <div className="MenuAction">
+      <button onClick={e => handleClickBouton(e)}>
+        <span>{props.titre}</span>
         {!Boolean(menu) && (
-          <ExpandMoreIcon className="icon-menu" fontSize="large" />
+          <ArrowForwardIosIcon className="icon-menu" fontSize="small" />
         )}
         {Boolean(menu) && (
-          <ExpandLessIcon className="icon-menu" fontSize="large" />
+          <ArrowBackIosIcon className="icon-menu" fontSize="small" />
         )}
       </button>
       <Menu
-        id="menu"
+        className="Menu"
         anchorEl={menu}
         keepMounted
         getContentAnchorEl={null}
@@ -56,14 +56,12 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
         }}
         PaperProps={{
           style: {
-            width: "58%",
-            left: 0,
-            right: 0
+            width: "35%"
           }
         }}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left"
+          vertical: "top",
+          horizontal: "right"
         }}
         transformOrigin={{
           vertical: "top",
@@ -84,6 +82,6 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
           </MenuItem>
         ))}
       </Menu>
-    </>
+    </div>
   );
 };

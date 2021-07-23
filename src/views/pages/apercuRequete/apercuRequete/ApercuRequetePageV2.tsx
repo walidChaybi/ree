@@ -17,7 +17,7 @@ export const ApercuRequetePageV2: React.FC = () => {
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 
   return (
-    <>
+    <div className="ApercuRequete">
       <title>{getLibelle("Aperçu de la requête")}</title>
       {detailRequeteState && (
         <>
@@ -41,6 +41,6 @@ export const ApercuRequetePageV2: React.FC = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };

@@ -16,7 +16,7 @@
     display: grid;
     grid-template-columns: 66% 33%;
     .SectionPanel:nth-child(2) {
-      border-left: 2px solid $border-array;
+      border-left: 2px solid $border;
       padding-left: 2rem;
       margin: 4rem 0;
     }

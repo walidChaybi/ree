@@ -16,7 +16,6 @@ import { useGenerationCertificatSituation } from "../../../rechercheMultiCritere
 import { specificationPhraseDelivrer } from "../../../rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { IActionProps } from "./ChoixAction";
-import "./scss/ChoixAction.scss";
 
 export const MenuDelivrer: React.FC<IActionProps> = props => {
   const history = useHistory();

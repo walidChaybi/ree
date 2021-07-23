@@ -25,3 +25,27 @@
     }
   }
 }
+
+.ApercuRequete,
+.ApercuRequetePriseEnCharge,
+.ApercuRequeteTraitement {
+  .Fieldset {
+    border-radius: 0.25rem;
+    border: 1px solid;
+    border-color: $border;
+    background-color: white;
+    margin-top: 0.5em;
+    width: 100%;
+
+    > .Titre {
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: white;
+      background-color: $application-color;
+      padding: 0.5em 1em 0.5em 1.325em;
+      margin: 0em;
+      border-radius: 0.25em;
+    }
+  }
+}

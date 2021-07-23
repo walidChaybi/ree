@@ -27,7 +27,7 @@ export const ResumeRequeteV2: React.FC<ResumeRequeteV2Props> = props => {
     <div className="ResumeRequeteV2 Fieldset">
       <div className="ResumeRequeteTitle">
         <span>
-          Résumé de la requête{" "}
+          {`Résumé de la requête `}
           <span className="LinkNumeroRequete" onClick={onClickNumero}>
             {props.requete.numero}
           </span>

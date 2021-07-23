@@ -2,9 +2,10 @@ import React from "react";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import { getLibelle } from "../../../../common/widget/Text";
 import { MenuDelivrer } from "./MenuDelivrer";
 import { MenuReponseNegative } from "./MenuReponseNegative";
-import "./scss/ChoixAction.scss";
 
 export interface IActionProps {
   requete: TRequete;
@@ -14,20 +15,17 @@ export interface IActionProps {
 
 export const ChoixAction: React.FC<IActionProps> = props => {
   return (
-    <>
-      <div className="bloc-choix-action">
-        <div className="panel">Actions</div>
-        <MenuDelivrer
-          requete={props.requete}
-          acteSelected={props.acteSelected}
-          inscriptionSelected={props.inscriptionSelected}
-        />
-        <MenuReponseNegative
-          requete={props.requete}
-          acteSelected={props.acteSelected}
-          inscriptionSelected={props.inscriptionSelected}
-        />
-      </div>
-    </>
+    <Fieldset titre={getLibelle("Actions")}>
+      <MenuDelivrer
+        requete={props.requete}
+        acteSelected={props.acteSelected}
+        inscriptionSelected={props.inscriptionSelected}
+      />
+      <MenuReponseNegative
+        requete={props.requete}
+        acteSelected={props.acteSelected}
+        inscriptionSelected={props.inscriptionSelected}
+      />
+    </Fieldset>
   );
 };

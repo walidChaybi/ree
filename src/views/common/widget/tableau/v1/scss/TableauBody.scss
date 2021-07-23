@@ -30,10 +30,10 @@
 
 table {
   &.MuiTable-root {
-    border: 2px $border-array;
+    border: 2px $border;
     border-style: solid;
     .MuiTableCell-root {
-      padding: 0.5rem 0;
+      padding: 0.4rem;
     }
   }
 }

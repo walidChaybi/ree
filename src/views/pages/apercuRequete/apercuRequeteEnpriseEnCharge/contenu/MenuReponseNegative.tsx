@@ -20,7 +20,6 @@ import { getLibelle } from "../../../../common/widget/Text";
 import { receUrl } from "../../../../router/ReceUrls";
 import { IActionProps } from "./ChoixAction";
 import { useReponseNegative } from "./hook/ChoixReponseNegativeHook";
-import "./scss/ChoixAction.scss";
 import { estSeulementActeMariage } from "./VerificationChoixSeulementActeMariage";
 
 export const MenuReponseNegative: React.FC<IActionProps> = props => {

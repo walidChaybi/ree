@@ -93,14 +93,14 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="ApercuRequetePriseEnCharge">
       <title>{getLibelle("Aperçu de la requête en prise en charge")}</title>
       {detailRequeteState && (
         <>
           <BandeauRequete detailRequete={detailRequeteState} />
           <div className="contenu-requete">
             <div className="side left">
-              <ResumeRequeteV2 requete={detailRequeteState}></ResumeRequeteV2>
+              <ResumeRequeteV2 requete={detailRequeteState} />
               <SuiviActionsRequete actions={detailRequeteState?.actions} />
               <SuiviObservationsRequete
                 observations={detailRequeteState?.observations}
@@ -142,6 +142,6 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };

@@ -15,7 +15,7 @@ import { BandeauRequete } from "../contenu/BandeauRequete";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
-
+import "./scss/ApercuRequeteTraitementPage.scss";
 interface IdRequeteParams {
   idRequete: string;
 }
@@ -32,7 +32,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
   );
 
   return (
-    <>
+    <div className="ApercuRequeteTraitement">
       <title>{getLibelle("Aperçu du traitement de la requête")}</title>
       {detailRequeteState && (
         <>
@@ -48,7 +48,9 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
               />
             </div>
             <div className="side right">
-              {dataHistory && dataHistory.info && <div>{dataHistory.info}</div>}
+              {dataHistory && dataHistory.info && (
+                <div className="MessageInfo">{dataHistory.info}</div>
+              )}
               <VisionneuseDocument
                 titre={getLibelle("Aperçu des documents")}
                 contenu={contenuDocument?.contenu}
@@ -60,7 +62,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 
   function getIdDocumentReponseAAfficher(requete?: TRequete) {
