@@ -1,8 +1,12 @@
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
-import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
+import {
+  getUrlPrecedente,
+  getUrlWithParam
+} from "../../../../common/util/route/routeUtil";
 import { valeurOuUndefined } from "../../../../common/util/Utils";
 import {
+  PATH_APERCU_REQ_PRISE,
   receUrl,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
@@ -26,6 +30,7 @@ export function redirectionRMCAuto(
   dataRMCAutoInscription: any[]
 ) {
   let url = "";
+
   if (urlCourante === URL_REQUETES_SERVICE_V2) {
     url = getUrlWithParam(
       URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -36,12 +41,15 @@ export function redirectionRMCAuto(
       URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequete
     );
-  } else if (
-    urlCourante === URL_MES_REQUETES_V2 ||
-    receUrl.estUrlApercuRequete(urlCourante)
-  ) {
+  } else if (urlCourante === URL_MES_REQUETES_V2) {
     url = getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      idRequete
+    );
+  } else if (receUrl.estUrlApercuRequete(urlCourante)) {
+    const urlPrecedente = getUrlPrecedente(urlCourante);
+    url = getUrlWithParam(
+      `${urlPrecedente}/${PATH_APERCU_REQ_PRISE}/:idRequete`,
       idRequete
     );
   }

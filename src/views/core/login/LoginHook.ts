@@ -13,7 +13,7 @@ export interface ILoginApi {
 
 export function useLoginApi() {
   const [officierDataState, setOfficierDataState] = useState<IOfficierSSOApi>();
-  const [erreurState, setErreurState] = useState(undefined);
+  const [erreurState, setErreurState] = useState<any>(undefined);
 
   useEffect(() => {
     GestionnaireDoubleOuverture.decroitNAppliOnUnload();
@@ -32,8 +32,10 @@ export function useLoginApi() {
         .catch(error => {
           setErreurState(error);
         });
+      GestionnaireDoubleOuverture.incrementeNAppliOuverte();
+    } else {
+      setErreurState({});
     }
-    GestionnaireDoubleOuverture.incrementeNAppliOuverte();
   }, []);
 
   return {

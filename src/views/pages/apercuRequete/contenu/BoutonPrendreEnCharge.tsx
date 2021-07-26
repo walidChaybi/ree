@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Droit } from "../../../../model/Droit";
 import { officierHabiliterPourLeDroit } from "../../../../model/IOfficierSSOApi";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
@@ -9,7 +10,6 @@ import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { storeRece } from "../../../common/util/storeRece";
 import { getLibelle } from "../../../common/widget/Text";
-import { URL_MES_REQUETES_APERCU_REQUETE } from "../../../router/ReceUrls";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
@@ -22,6 +22,7 @@ interface BoutonPrendreEnChargeProps {
 }
 
 export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props => {
+  const history = useHistory();
   const [estDisabled, setEstDisabled] = useState(true);
 
   const [params, setParams] = useState<
@@ -34,10 +35,7 @@ export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props
       dataRequetes: [],
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
       statutRequete: StatutRequete.PRISE_EN_CHARGE,
-      urlCourante: getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE,
-        props.requete.id
-      )
+      urlCourante: getUrlWithParam(history.location.pathname, props.requete.id)
     });
   };
 

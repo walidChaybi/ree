@@ -7,6 +7,7 @@ import {
   IRMCAutoParams,
   useRMCAutoHook
 } from "../../../../views/common/hook/v2/navigationApercuRequeteRmcAuto/RMCAutoHook";
+import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import {
   URL_MES_REQUETES_APERCU_REQUETE,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -37,7 +38,10 @@ const paramsRechercheRequete = {
 
 const paramsApercuRequete = {
   ...paramsRequete,
-  urlCourante: URL_MES_REQUETES_APERCU_REQUETE
+  urlCourante: getUrlWithParam(
+    URL_MES_REQUETES_APERCU_REQUETE,
+    "34da88e2-c5c7-4324-ac8e-b35193352e64"
+  )
 };
 
 const HookConsummerRequete: React.FC = () => {

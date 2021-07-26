@@ -50,6 +50,13 @@ const App: React.FC = () => {
       });
     }
   }, [login.officierDataState]);
+
+  useEffect(() => {
+    if (login.erreurState) {
+      setOperationEnCours(false);
+    }
+  }, [login.erreurState]);
+
   return (
     <SeulementNavigateur
       navigateurs={

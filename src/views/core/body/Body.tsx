@@ -48,6 +48,8 @@ function getMessageLogin(officier: OfficierContextProps) {
     officier.erreurState.status === codeErreurForbidden
   ) {
     return "pages.login.erreurAuthentifacition";
+  } else if (GestionnaireDoubleOuverture.verifSiAppliDejaOuverte()) {
+    return "pages.login.appliOuverte";
   } else if (officier !== undefined && officier.erreurState !== undefined) {
     logError({
       messageUtilisateur:
@@ -55,8 +57,6 @@ function getMessageLogin(officier: OfficierContextProps) {
       error: officier.erreurState
     });
     return "pages.login.erreurSysteme";
-  } else if (GestionnaireDoubleOuverture.verifSiAppliDejaOuverte()) {
-    return "pages.login.appliOuverte";
   } else {
     return "pages.login.connexion";
   }
