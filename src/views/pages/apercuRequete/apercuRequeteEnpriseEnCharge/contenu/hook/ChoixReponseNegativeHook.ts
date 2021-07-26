@@ -52,8 +52,8 @@ export function useReponseNegative(
     idAction,
     uuidDocumentsReponse
   } = useStockerDocumentCreerActionMajStatutRequete(
-    StatutRequete.A_VALIDER.libelle,
-    StatutRequete.A_VALIDER,
+    libelleAction,
+    statutRequete,
     documentsReponsePourStockage,
     requeteId
   );
