@@ -70,7 +70,7 @@ function parsePiecesJustificatives(
   const documentsDetails: IDocumentDetail[] = [];
   piecesJustificatives.forEach((element, index) => {
     documentsDetails.push({
-      identifiantDocument: element.id,
+      identifiantDocument: element.idPieceJustificative,
       mimeType: element.mimeType as MimeType.IMAGE_PNG | MimeType.APPLI_PDF,
       nom: getText("pages.requete.consultation.pieceJustificative.nomFichier", [
         `${index}`

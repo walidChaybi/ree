@@ -1,6 +1,5 @@
 /* istanbul ignore file */
 
-import { IPieceJustificative } from "../../../views/common/types/RequeteType";
 import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
 import { numberToString } from "../../../views/common/util/Utils";
 import { TypeCanal } from "./enum/TypeCanal";
@@ -8,6 +7,7 @@ import { TypeRequete } from "./enum/TypeRequete";
 import { IAction } from "./IActions";
 import { IMandant } from "./IMandant";
 import { IObservation } from "./IObservation";
+import { IPieceJustificativeV2 } from "./IPieceJustificativeV2";
 import { IRequerant } from "./IRequerant";
 import { IRequeteCreation } from "./IRequeteCreation";
 import { IRequeteDelivrance } from "./IRequeteDelivrance";
@@ -35,7 +35,7 @@ export interface IRequete {
   mandant?: IMandant;
   idUtilisateur: string;
   idEntite: string;
-  piecesJustificatives: IPieceJustificative[];
+  piecesJustificatives: IPieceJustificativeV2[];
   actions?: IAction[];
   observations?: IObservation[];
 }

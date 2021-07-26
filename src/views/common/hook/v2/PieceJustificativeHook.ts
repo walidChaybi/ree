@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { getPieceJustificativeById } from "../../../../api/appels/requeteApi";
-import { IPieceJustificative } from "../../types/RequeteType";
+import { IPieceJustificativeV2 } from "../../../../model/requete/v2/IPieceJustificativeV2";
 import { logError } from "../../util/LogManager";
 
 export function useGetPieceJustificativeApi(
   id?: string
-): IPieceJustificative | undefined {
+): IPieceJustificativeV2 | undefined {
   const [PieceJustificative, setPieceJustificative] =
-    useState<IPieceJustificative | undefined>();
+    useState<IPieceJustificativeV2 | undefined>();
   useEffect(() => {
     if (id) {
       getPieceJustificativeById(id)

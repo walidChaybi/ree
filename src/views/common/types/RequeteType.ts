@@ -19,7 +19,7 @@ export interface ITitulaire {
 }
 
 export interface IPieceJustificative {
-  id: string;
+  idPieceJustificative: string;
   nom: string;
   mimeType: string | MimeType;
   extension?: string;

@@ -26,6 +26,7 @@ import { IMandant } from "../../../../model/requete/v2/IMandant";
 import { IMandataireHabilite } from "../../../../model/requete/v2/IMandataireHabilite";
 import { IObservation } from "../../../../model/requete/v2/IObservation";
 import { IParticulier } from "../../../../model/requete/v2/IParticulier";
+import { IPieceJustificativeV2 } from "../../../../model/requete/v2/IPieceJustificativeV2";
 import { IProvenanceRequete } from "../../../../model/requete/v2/IProvenanceRequete";
 import { IQualiteRequerant } from "../../../../model/requete/v2/IQualiteRequerant";
 import { IRequerant } from "../../../../model/requete/v2/IRequerant";
@@ -34,14 +35,12 @@ import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivra
 import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
 import { ITitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
 import { IUtilisateurRece } from "../../../../model/requete/v2/IUtilisateurRece";
-import { IPieceJustificative } from "../../../common/types/RequeteType";
 import { logError } from "../../../common/util/LogManager";
 import { storeRece } from "../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] = useState<
-    TRequete | undefined
-  >();
+  const [detailRequeteState, setDetailRequeteState] =
+    useState<TRequete | undefined>();
 
   useEffect(() => {
     async function fetchDetailRequete() {
@@ -102,8 +101,8 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
   };
 }
 
-function mapPiecesJustificatives(data: any): IPieceJustificative[] {
-  const piecesJustificatives: IPieceJustificative[] = data;
+function mapPiecesJustificatives(data: any): IPieceJustificativeV2[] {
+  const piecesJustificatives: IPieceJustificativeV2[] = data;
   piecesJustificatives.forEach((pj: any) => {
     pj.typePieceJustificative = TypePieceJustificative?.getEnumFor(
       pj.typePieceJustificative
@@ -185,7 +184,8 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     mandataireHabilite: getMandataireHabilite(
       requerant.detailQualiteMandataireHabilite
     ),
-    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    autreProfessionnel:
+      requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }
