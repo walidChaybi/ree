@@ -22,7 +22,7 @@ export function useGetRequeteAleatoire(prendreEnCharge: boolean) {
           const resultat = await getRequeteAleatoire();
           const requeteResultatMappee = mappingUneRequeteTableau(
             resultat.body.data,
-            true
+            false
           );
           setRequeteAleatoireResultat({ requete: requeteResultatMappee });
         }

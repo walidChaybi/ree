@@ -139,7 +139,7 @@ export function useGenerationCertificatSituation(
   return resultGenerationCertificatSituation;
 }
 
-function construitCertificatSituation(
+async function construitCertificatSituation(
   phrasesLiees: string | undefined,
   requete: IRequeteTableau,
   setCertificatSituationComposition: any,
@@ -147,20 +147,17 @@ function construitCertificatSituation(
   phrasesPiecesJointes: string | undefined
 ) {
   if (phrasesLiees && requete && requete.document) {
-    getTitre(requete.document ? requete.document : "").then(titre => {
-      //@ts-ignore
-      getDecrets(requete.document).then(decrets => {
-        creerCertificatSituationComposition(
-          titre,
-          decrets,
-          phrasesLiees,
-          phrasesPiecesJointes,
-          requete
-        ).then(composition => {
-          setCertificatSituationComposition(composition);
-        });
-      });
-    });
+    const titre = getTitre(requete.document ? requete.document : "");
+    const decrets = getDecrets(requete.document);
+
+    const composition = await creerCertificatSituationComposition(
+      titre,
+      decrets,
+      phrasesLiees,
+      phrasesPiecesJointes,
+      requete
+    );
+    setCertificatSituationComposition(composition);
   } else {
     setResultGenerationCertificatSituation(RESULTAT_VIDE);
   }
@@ -179,11 +176,11 @@ function estNonVide(
   );
 }
 
-async function getTitre(idDocumentDemande: string): Promise<string> {
+function getTitre(idDocumentDemande: string): string {
   return specificationTitre.getTitre(idDocumentDemande);
 }
 
-async function getDecrets(idDocumentDemande: string): Promise<string[]> {
+function getDecrets(idDocumentDemande: string): string[] {
   return specificationDecret.getDecret(idDocumentDemande);
 }
 
