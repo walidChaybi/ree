@@ -11,10 +11,13 @@ import {
   FicheUtil,
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { TypeJuridiction } from "../../../../../../model/etatcivil/enum/TypeJuridiction";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
 import { LieuxUtils } from "../../../../../../model/LieuxUtils";
-import { formatNom, formatPrenom } from "../../../../../common/util/Utils";
+import {
+  formatNom,
+  formatPrenom,
+  getValeurOuVide
+} from "../../../../../common/util/Utils";
 import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
@@ -192,10 +195,12 @@ function getTypeAutoriteContent(type?: TypeAutorite): SectionContentProps {
   return { libelle: "Type", value: TypeAutoriteUtil.getLibelle(type) };
 }
 
-function getTypeJuridictionContent(type?: string): SectionContentProps {
+function getTypeJuridictionContent(
+  libelleTypeJuridiction?: string
+): SectionContentProps {
   return {
     libelle: "Type",
-    value: type ? TypeJuridiction.getEnumFor(type).libelle : ""
+    value: getValeurOuVide(libelleTypeJuridiction)
   };
 }
 
