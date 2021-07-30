@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { IDocumentReponse } from "../../../../model/requete/v2/IDocumentReponse";
 import {
   getDocumentReponseById,
   postDocumentReponseApi
 } from "../../../../api/appels/requeteApi";
+import { IDocumentReponse } from "../../../../model/requete/v2/IDocumentReponse";
 import { logError } from "../../util/LogManager";
 
 export function useGetDocumentReponseApi(
@@ -13,18 +13,20 @@ export function useGetDocumentReponseApi(
     IDocumentReponse | undefined
   >();
   useEffect(() => {
-    if (idDocumentReponse) {
-      getDocumentReponseById(idDocumentReponse)
-        .then(result => {
+    async function fetchData() {
+      if (idDocumentReponse) {
+        try {
+          const result = await getDocumentReponseById(idDocumentReponse);
           setDocumentReponse(result.body.data);
-        })
-        .catch(error => {
+        } catch (error) {
           logError({
             messageUtilisateur: "Impossible de récupérer le document",
             error
           });
-        });
+        }
+      }
     }
+    fetchData();
   }, [idDocumentReponse]);
 
   return documentReponse;
@@ -38,18 +40,23 @@ export function usePostDocumentsReponseApi(
     string[] | undefined
   >();
   useEffect(() => {
-    if (idRequete && documentsReponse && documentsReponse.length > 0) {
-      postDocumentReponseApi(idRequete, documentsReponse)
-        .then(result => {
+    async function fetchData() {
+      if (idRequete && documentsReponse && documentsReponse.length > 0) {
+        try {
+          const result = await postDocumentReponseApi(
+            idRequete,
+            documentsReponse
+          );
           setUuidPostDocuments(result.body.data);
-        })
-        .catch(error => {
+        } catch (error) {
           logError({
             messageUtilisateur: "Impossible de stocker les documents",
             error
           });
-        });
+        }
+      }
     }
+    fetchData();
   }, [idRequete, documentsReponse]);
 
   return uuidPostDocuments;

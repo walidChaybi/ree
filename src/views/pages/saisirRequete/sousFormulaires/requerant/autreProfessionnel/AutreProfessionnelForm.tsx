@@ -5,10 +5,6 @@ import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
 import {
-  sortieChampEnMajuscule,
-  sortieChampPremiereLettreEnMajuscule
-} from "../../../../../common/widget/formulaire/utils/ControlesUtil";
-import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
@@ -20,6 +16,7 @@ import {
   PRENOM,
   RAISON_SOCIALE
 } from "../../../modelForm/ISaisirRequetePageModel";
+import { getBlockRaisonSocialeNomPrenom } from "../../commun/communForm";
 import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
@@ -47,6 +44,7 @@ export const AutreProfessionnelFormValidationSchema = Yup.object().shape({
 const AutreProfessionnelForm: React.FC<SubFormProps> = props => {
   const nomWithNamespace = withNamespace(props.nom, NOM);
   const prenomWithNamespace = withNamespace(props.nom, PRENOM);
+  const raisonSocialeWithNamespace = withNamespace(props.nom, RAISON_SOCIALE);
 
   return (
     <div className="RequerantSousForm">
@@ -55,29 +53,15 @@ const AutreProfessionnelForm: React.FC<SubFormProps> = props => {
         label={getLibelle("Nature")}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
-      <InputField
-        name={withNamespace(props.nom, RAISON_SOCIALE)}
-        label={getLibelle("Raison sociale")}
-        maxLength={NB_CARACT_MAX_SAISIE}
-      />
-      <InputField
-        name={nomWithNamespace}
-        label={getLibelle("Nom professionnel")}
-        maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e => sortieChampEnMajuscule(e, props.formik, nomWithNamespace)}
-      />
-      <InputField
-        name={prenomWithNamespace}
-        label={getLibelle("Prénom professionnel")}
-        maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e =>
-          sortieChampPremiereLettreEnMajuscule(
-            e,
-            props.formik,
-            prenomWithNamespace
-          )
-        }
-      />
+      {getBlockRaisonSocialeNomPrenom(
+        raisonSocialeWithNamespace,
+        getLibelle("Raison sociale"),
+        nomWithNamespace,
+        getLibelle("Nom professionnel"),
+        prenomWithNamespace,
+        getLibelle("Prénom professionnel"),
+        props.formik
+      )}
     </div>
   );
 };

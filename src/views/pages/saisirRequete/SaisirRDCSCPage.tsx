@@ -1,38 +1,28 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import {
-  IReponseNegativeDemandeIncompleteComposition,
-  ReponseNegativeDemandeIncompleteComposition
-} from "../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
+import { IReponseNegativeDemandeIncompleteComposition } from "../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
 import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../model/composition/ObjetsComposition";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
-import { TypeRequerant } from "../../../model/requete/v2/enum/TypeRequerant";
-import { IRequerant } from "../../../model/requete/v2/IRequerant";
 import messageManager from "../../common/util/messageManager";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
-import { SelectField } from "../../common/widget/formulaire/champsSaisie/SelectField";
 import { Formulaire } from "../../common/widget/formulaire/Formulaire";
 import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
-import PiecesJointesForm from "../../common/widget/formulaire/piecesJointes/PiecesJointesForm";
-import { SubFormProps } from "../../common/widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../common/widget/Text";
-import {
-  URL_MES_REQUETES_SAISIR_RDCSC,
-  URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
-  URL_REQUETES_SERVICE_SAISIR_RDCSC,
-  URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE
-} from "../../router/ReceUrls";
 import { useReponseNegative } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/hook/ChoixReponseNegativeHook";
-import { getUrlWithParam } from "./../../common/util/route/routeUtil";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
-import { getRequerant } from "./hook/mappingFormulaireRDCSCVersRequeteDelivrance";
+import {
+  createReponseNegative,
+  getMessagesPopin,
+  getRedirectionVersApercuRequete
+} from "./contenu/SaisirRDCSCPageFonctions";
+import { getBlocsForm, getBoutonsPopin } from "./contenu/SaisirRDCSCPageForms";
 import { useCreationRequeteDelivranceRDCSC } from "./hook/SaisirRDCSCApiHook";
 import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
 import {
@@ -46,16 +36,15 @@ import {
   UpdateRequeteRDCSC
 } from "./modelForm/ISaisirRDCSCPageModel";
 import "./scss/SaisirRequetePage.scss";
-import AdresseForm, {
+import {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "./sousFormulaires/adresse/AdresseForm";
-import IdentiteForm, {
+import {
   IdentiteFormDefaultValues,
-  IdentiteFormValidationSchema,
-  IdentiteSubFormProps
+  IdentiteFormValidationSchema
 } from "./sousFormulaires/identite/IdentiteForm";
-import RequerantForm, {
+import {
   RequerantFormDefaultValues,
   RequerantFormValidationSchema
 } from "./sousFormulaires/requerant/RequerantForm";
@@ -95,14 +84,6 @@ export const SaisirRDCSCPage: React.FC = () => {
     const documentDelivrance = DocumentDelivrance.getAllCertificatSituationAsOptions();
     setDocumentDemandeOptions(documentDelivrance);
   });
-
-  const blocsForm: JSX.Element[] = [
-    getDocumentDemande(documentDemandeOptions),
-    getInteresseForm(),
-    getRequerantForm(),
-    getAdresseForm(),
-    getPiecesJointesForm()
-  ];
 
   /** Enregistrer la requête */
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
@@ -146,20 +127,9 @@ export const SaisirRDCSCPage: React.FC = () => {
             );
             setOperationEnCours(false);
             const pathname = history.location.pathname;
-            if (pathname.startsWith(URL_MES_REQUETES_SAISIR_RDCSC)) {
-              const url = getUrlWithParam(
-                URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
-                idRequeteSauvegardee
-              );
-              history.push(url);
-            }
-            if (pathname.startsWith(URL_REQUETES_SERVICE_SAISIR_RDCSC)) {
-              const url = getUrlWithParam(
-                URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE,
-                idRequeteSauvegardee
-              );
-              history.push(url);
-            }
+            history.push(
+              getRedirectionVersApercuRequete(pathname, idRequeteSauvegardee)
+            );
           }
         }
       }
@@ -262,40 +232,6 @@ export const SaisirRDCSCPage: React.FC = () => {
     }
   };
 
-  /** Elements Popin "Courrier de refus" */
-  const messagesPopin = [
-    getLibelle(
-      "Des données obligatoires de la naissance du titulaire sont manquantes."
-    ),
-    getLibelle(
-      "Un courrier de refus va être automatiquement envoyé au requérant (Veuillez vérifier son adresse postale)."
-    ),
-    getLibelle("Voulez-vous valider le refus ?")
-  ];
-
-  const boutonsPopin = [
-    {
-      label: getLibelle("oui"),
-      action: () => {
-        enregistrerValider(true);
-        setDonneesNaissanceIncomplete(false);
-      }
-    },
-    {
-      label: getLibelle("non"),
-      action: () => {
-        enregistrerValider(false);
-        setDonneesNaissanceIncomplete(false);
-      }
-    },
-    {
-      label: getLibelle("annuler"),
-      action: () => {
-        setDonneesNaissanceIncomplete(false);
-      }
-    }
-  ];
-
   return (
     <>
       <OperationEnCours
@@ -310,76 +246,17 @@ export const SaisirRDCSCPage: React.FC = () => {
         onSubmit={onSubmitSaisirRDCSC}
         className="FormulaireSaisirRDCSC"
       >
-        <div>{blocsForm}</div>
+        <div>{getBlocsForm(documentDemandeOptions)}</div>
         <SaisirRequeteBoutons {...boutonsProps} />
       </Formulaire>
       <ConfirmationPopin
         isOpen={donneesNaissanceIncomplete}
-        messages={messagesPopin}
-        boutons={boutonsPopin}
+        messages={getMessagesPopin()}
+        boutons={getBoutonsPopin(
+          enregistrerValider,
+          setDonneesNaissanceIncomplete
+        )}
       />
     </>
   );
 };
-
-function getDocumentDemande(documentDemandeOptions: Options): JSX.Element {
-  return (
-    <div className="DocumentInput" key={DOCUMENT}>
-      <SelectField
-        name={DOCUMENT}
-        label={getLibelle("Document demandé")}
-        options={documentDemandeOptions}
-      />
-    </div>
-  );
-}
-
-function getInteresseForm(): JSX.Element {
-  const interesseFormProps = {
-    nom: INTERESSE,
-    titre: getLibelle("Intéressé")
-  } as IdentiteSubFormProps;
-  return <IdentiteForm key={INTERESSE} {...interesseFormProps} />;
-}
-
-function getRequerantForm(): JSX.Element {
-  const requerantFromProps = {
-    nom: REQUERANT,
-    titre: getLibelle("Identité du requérant"),
-    options: TypeRequerant.getAllEnumsAsOptions()
-  } as SubFormProps;
-  return <RequerantForm key={REQUERANT} {...requerantFromProps} />;
-}
-
-function getAdresseForm(): JSX.Element {
-  const adresseFormProps = {
-    nom: ADRESSE,
-    titre: getLibelle("Adresse postale du requérant")
-  } as SubFormProps;
-  return <AdresseForm key={ADRESSE} {...adresseFormProps} />;
-}
-
-function getPiecesJointesForm(): JSX.Element {
-  const piecesJointesFormProps = {
-    nom: PIECES_JOINTES,
-    titre: getLibelle("Pièces justificatives")
-  } as SubFormProps;
-  return <PiecesJointesForm key={PIECES_JOINTES} {...piecesJointesFormProps} />;
-}
-
-function createReponseNegative(objet: string, requete?: SaisieRequeteRDCSC) {
-  let reponseNegative: IReponseNegativeDemandeIncompleteComposition | undefined;
-  if (requete && requete.requerant) {
-    const requerant = getRequerant(requete) as IRequerant;
-    reponseNegative = ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
-      objet,
-      requerant
-    );
-  } else {
-    messageManager.showErrorAndClose(
-      "Erreur inattendue: Pas de requérent pour la requête"
-    );
-  }
-
-  return reponseNegative;
-}

@@ -19,7 +19,9 @@ export const BandeauRequete: React.FC<BandeauRequeteProps> = props => {
   const styles = classNames(getClassName(statut));
   return (
     <div className="BandeauRequete">
-      <h1 className={styles}>{getStatutLibelle(props.detailRequete)}</h1>
+      <h1 className={styles}>
+        {getStatutLibellePourRequete(props.detailRequete)}
+      </h1>
     </div>
   );
 };
@@ -122,7 +124,7 @@ const getRequeteRejet = (responsable: string, requete: TRequete) => {
   );
 };
 
-const getStatutLibelle = (requete: TRequete) => {
+const getStatutLibellePourRequete = (requete: TRequete) => {
   // TODO US 532 Appel au cache (Store RECE) pour récupérer les informations de l'OEC
   let responsable = requete.idUtilisateur
     ? `${premiereLettreEnMajusculeLeResteEnMinuscule(
@@ -131,43 +133,71 @@ const getStatutLibelle = (requete: TRequete) => {
     : storeRece.getLibelleEntite(requete.idEntite);
   responsable = responsable ? responsable : "";
 
+  return getStatutLibelle(requete, responsable);
+};
+
+function getStatutLibelle(requete: TRequete, responsable: string) {
+  let libelle;
   switch (requete.statutCourant.statut) {
     case StatutRequete.TRAITE_A_DELIVRER_DEMAT:
     case StatutRequete.TRAITE_DELIVRE_DEMAT:
     case StatutRequete.TRAITE_A_IMPRIMER:
     case StatutRequete.TRAITE_IMPRIME:
-    case StatutRequete.TRAITE_REPONDU: {
-      return getRequeteTraiteeLibelle(responsable, requete);
-    }
-    case StatutRequete.PRISE_EN_CHARGE: {
-      return getRequetePriseEnCharge(responsable, requete);
-    }
-    case StatutRequete.A_TRAITER: {
-      return getRequeteATraiter(responsable, requete);
-    }
-    case StatutRequete.DOUBLON: {
-      return getRequeteDoublon(requete);
-    }
-    case StatutRequete.TRANSFEREE: {
-      return getRequeteTransferee(responsable, requete);
-    }
-    case StatutRequete.A_SIGNER: {
-      return getRequeteASigner(responsable, requete);
-    }
-    case StatutRequete.BROUILLON: {
-      return getRequeteBrouillon(responsable, requete);
-    }
-    case StatutRequete.A_VALIDER: {
-      return getRequeteAValider(responsable, requete);
-    }
-    case StatutRequete.IGNOREE: {
-      return getRequeteIgnoree(responsable, requete);
-    }
-    case StatutRequete.REJET: {
-      return getRequeteRejet(responsable, requete);
-    }
+    case StatutRequete.TRAITE_REPONDU:
+      libelle = getRequeteTraiteeLibelle(responsable, requete);
+      break;
+
+    case StatutRequete.PRISE_EN_CHARGE:
+      libelle = getRequetePriseEnCharge(responsable, requete);
+      break;
+
+    case StatutRequete.A_TRAITER:
+      libelle = getRequeteATraiter(responsable, requete);
+      break;
+
+    case StatutRequete.DOUBLON:
+      libelle = getRequeteDoublon(requete);
+      break;
+
+    default:
+      libelle = "";
+      break;
   }
-};
+
+  return libelle ? libelle : getStatutLibelleSuite(requete, responsable);
+}
+function getStatutLibelleSuite(requete: TRequete, responsable: string) {
+  let libelle;
+  switch (requete.statutCourant.statut) {
+    case StatutRequete.TRANSFEREE:
+      libelle = getRequeteTransferee(responsable, requete);
+      break;
+
+    case StatutRequete.A_SIGNER:
+      libelle = getRequeteASigner(responsable, requete);
+      break;
+
+    case StatutRequete.BROUILLON:
+      libelle = getRequeteBrouillon(responsable, requete);
+      break;
+
+    case StatutRequete.A_VALIDER:
+      libelle = getRequeteAValider(responsable, requete);
+      break;
+
+    case StatutRequete.IGNOREE:
+      libelle = getRequeteIgnoree(responsable, requete);
+      break;
+
+    case StatutRequete.REJET:
+      libelle = getRequeteRejet(responsable, requete);
+      break;
+    default:
+      libelle = "";
+      break;
+  }
+  return libelle;
+}
 function getClassName(statut: StatutRequete) {
   return {
     bleu: estBleu(),

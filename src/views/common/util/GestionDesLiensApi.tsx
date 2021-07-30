@@ -44,14 +44,16 @@ export function getRowsNumber(result: any) {
 }
 
 export function getMinRange(result: any) {
-  return result.headers[contentRange]
-    ? +(result.headers[contentRange] as string).split("/")[0].split("-")[0]
-    : undefined;
+  return getRange(result, 0);
 }
 
 export function getMaxRange(result: any) {
+  return getRange(result, 1);
+}
+
+function getRange(result: any, nb: number) {
   return result.headers[contentRange]
-    ? +(result.headers[contentRange] as string).split("/")[0].split("-")[1]
+    ? +(result.headers[contentRange] as string).split("/")[0].split("-")[nb]
     : undefined;
 }
 

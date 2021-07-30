@@ -218,11 +218,11 @@ export class ApiManager {
       messageManager.showError(
         `Une erreur est survenue: ${error ? error.message : "inconnue"}`
       );
-    } else if (error && process.env.NODE_ENV === "test") {
-      console.log("Erreur mock api: ", error.uri);
+    } else if (process.env.NODE_ENV === "test") {
+      console.log("Erreur mock api: ", error?.uri);
       console.log(
         "     parameters: ",
-        error.parameters ? error.parameters : "pas de paramètres"
+        error?.parameters ? error?.parameters : "pas de paramètres"
       );
     }
     return errorType;

@@ -12,6 +12,10 @@ interface ResumeRequeteV2Props {
   requete: TRequete;
 }
 
+const ZERO = 0;
+const UN = 1;
+const DEUX = 2;
+const TROIS = 3;
 export const ResumeRequeteV2: React.FC<ResumeRequeteV2Props> = props => {
   const panels = getPanelsResumeRequete(props.requete);
   const history = useHistory();
@@ -35,11 +39,11 @@ export const ResumeRequeteV2: React.FC<ResumeRequeteV2Props> = props => {
       </div>
       {panels.length > 1 && (
         <>
-          <SectionPanel {...panels[0]} />
-          <SectionPanel {...panels[1]} />
-          <SectionPanel {...panels[2]} />
+          <SectionPanel {...panels[ZERO]} />
+          <SectionPanel {...panels[UN]} />
+          <SectionPanel {...panels[DEUX]} />
           <hr className={"SectionPanelAreaSeparation"} />
-          <SectionPanel {...panels[3]} />
+          <SectionPanel {...panels[TROIS]} />
           <hr className={"SectionPanelAreaSeparation"} />
           <ListePiecesJustificatives
             pieces={props.requete.piecesJustificatives}

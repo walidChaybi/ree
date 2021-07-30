@@ -16,42 +16,42 @@ export class GestionnaireCacheApi {
     return GestionnaireCacheApi.chargerToutesLesEntitesPourLaPage(0);
   }
 
-  private static chargerTousLesUtilisateursPourLaPage(page: number) {
-    return getTousLesUtilisateurs(`${page}-${PLAGE_IMPORT}`, true)
-      .then(utilisateurs => {
-        storeRece.listeUtilisateurs = [
-          ...storeRece.listeUtilisateurs,
-          ...utilisateurs.body.data
-        ];
-        if (utilisateurs.headers.link.indexOf(`rel="next"`) > 0) {
-          GestionnaireCacheApi.chargerTousLesUtilisateursPourLaPage(page + 1);
-        }
-      })
-      .catch(error => {
-        GestionnaireCacheApi.gereErreur(
-          error,
-          "Impossible de récupérer les utilisateurs"
-        );
-      });
+  private static async chargerTousLesUtilisateursPourLaPage(page: number) {
+    try {
+      const utilisateurs = await getTousLesUtilisateurs(
+        `${page}-${PLAGE_IMPORT}`,
+        true
+      );
+      storeRece.listeUtilisateurs = [
+        ...storeRece.listeUtilisateurs,
+        ...utilisateurs.body.data
+      ];
+      if (utilisateurs.headers.link.indexOf(`rel="next"`) > 0) {
+        GestionnaireCacheApi.chargerTousLesUtilisateursPourLaPage(page + 1);
+      }
+    } catch (error) {
+      GestionnaireCacheApi.gereErreur(
+        error,
+        "Impossible de récupérer les utilisateurs"
+      );
+    }
   }
 
-  private static chargerToutesLesEntitesPourLaPage(page: number) {
-    return getToutesLesEntiteRattachement(`${page}-${PLAGE_IMPORT}`)
-      .then(entites => {
-        storeRece.listeEntite = [
-          ...storeRece.listeEntite,
-          ...entites.body.data
-        ];
-        if (entites.headers.link.indexOf(`rel="next"`) > 0) {
-          GestionnaireCacheApi.chargerToutesLesEntitesPourLaPage(page + 1);
-        }
-      })
-      .catch(error => {
-        GestionnaireCacheApi.gereErreur(
-          error,
-          "Impossible de récupérer les entités"
-        );
-      });
+  private static async chargerToutesLesEntitesPourLaPage(page: number) {
+    try {
+      const entites = await getToutesLesEntiteRattachement(
+        `${page}-${PLAGE_IMPORT}`
+      );
+      storeRece.listeEntite = [...storeRece.listeEntite, ...entites.body.data];
+      if (entites.headers.link.indexOf(`rel="next"`) > 0) {
+        GestionnaireCacheApi.chargerToutesLesEntitesPourLaPage(page + 1);
+      }
+    } catch (error) {
+      GestionnaireCacheApi.gereErreur(
+        error,
+        "Impossible de récupérer les entités"
+      );
+    }
   }
 
   private static gereErreur(error: any, message: string) {

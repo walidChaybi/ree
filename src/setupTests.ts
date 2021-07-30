@@ -21,4 +21,5 @@ if (window.document) {
   });
 }
 
-jest.setTimeout(30000);
+const TIME_OUT_MS = 30000;
+jest.setTimeout(TIME_OUT_MS);

@@ -8,15 +8,13 @@ interface ActionRequeteProps {
 }
 
 export const ActionRequete: React.FC<ActionRequeteProps> = props => {
+  const trigramme = ` - ${Action.getTrigramme(props.action)}` || "";
+
   return (
     <ListItemText>
       {`${Action.getLibelle(props.action)} - ${Action.getDateAction(
         props.action
-      )} ${
-        Action.getTrigramme(props.action) !== ""
-          ? `- ${Action.getTrigramme(props.action)}`
-          : ""
-      }`}
+      )}${trigramme}`}
     </ListItemText>
   );
 };

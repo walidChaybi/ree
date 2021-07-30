@@ -1,15 +1,8 @@
 import { connect } from "formik";
 import React, { useState } from "react";
-import * as Yup from "yup";
 import { TypeMandataireReq } from "../../../../../../model/requete/v2/enum/TypeMandataireReq";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
-import {
-  sortieChampEnMajuscule,
-  sortieChampPremiereLettreEnMajuscule
-} from "../../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
@@ -23,6 +16,8 @@ import {
   RAISON_SOCIALE,
   TYPE
 } from "../../../modelForm/ISaisirRequetePageModel";
+import { getBlockRaisonSocialeNomPrenom } from "../../commun/communForm";
+import { getFormValidationCarAutorisesEtNAtureObligatoireShema } from "../../commun/communValidation";
 import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
@@ -35,41 +30,13 @@ export const MandataireFormDefaultValues = {
 };
 
 // Schéma de validation des champs
-export const MandataireFormValidationSchema = Yup.object()
-  .shape({
-    [TYPE]: Yup.string(),
-    [NATURE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [RAISON_SOCIALE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [NOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
-    [PRENOM]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    )
-  })
-  .test("natureObligatoire", function (value, error) {
-    const type = value[TYPE] as string;
-    const nature = value[NATURE] as string;
-
-    const paramsError = {
-      path: `${error.path}.nature`,
-      message: getLibelle(
-        'La saisie d\'une Nature est obligatoire pour le Type "Autre"'
-      )
-    };
-    return type === "AUTRE" && nature == null
-      ? this.createError(paramsError)
-      : true;
-  });
-
+export const MandataireFormValidationSchema = getFormValidationCarAutorisesEtNAtureObligatoireShema(
+  RAISON_SOCIALE
+);
 const MandataireForm: React.FC<SubFormProps> = props => {
   const nomWithNamespace = withNamespace(props.nom, NOM);
   const prenomWithNamespace = withNamespace(props.nom, PRENOM);
+  const raisonSocialeWithNamespace = withNamespace(props.nom, RAISON_SOCIALE);
   const [natureInactif, setNatureInactif] = useState<boolean>(true);
 
   const onChangeTypeMandataire = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,29 +68,15 @@ const MandataireForm: React.FC<SubFormProps> = props => {
           disabled={natureInactif}
         />
       )}
-      <InputField
-        name={withNamespace(props.nom, RAISON_SOCIALE)}
-        label={getLibelle("Raison sociale")}
-        maxLength={NB_CARACT_MAX_SAISIE}
-      />
-      <InputField
-        name={nomWithNamespace}
-        label={getLibelle("Nom mandataire")}
-        maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e => sortieChampEnMajuscule(e, props.formik, nomWithNamespace)}
-      />
-      <InputField
-        name={prenomWithNamespace}
-        label={getLibelle("Prénom mandataire")}
-        maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e =>
-          sortieChampPremiereLettreEnMajuscule(
-            e,
-            props.formik,
-            prenomWithNamespace
-          )
-        }
-      />
+      {getBlockRaisonSocialeNomPrenom(
+        raisonSocialeWithNamespace,
+        getLibelle("Raison sociale"),
+        nomWithNamespace,
+        getLibelle("Nom mandataire"),
+        prenomWithNamespace,
+        getLibelle("Prénom mandataire"),
+        props.formik
+      )}
     </div>
   );
 };

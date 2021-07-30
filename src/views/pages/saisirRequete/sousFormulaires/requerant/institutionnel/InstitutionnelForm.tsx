@@ -1,11 +1,8 @@
 import { connect } from "formik";
 import React, { useState } from "react";
-import * as Yup from "yup";
 import { TypeInstitutionnel } from "../../../../../../model/requete/v2/enum/TypeInstitutionnel";
-import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
 import {
   sortieChampEnMajuscule,
   sortieChampPremiereLettreEnMajuscule
@@ -23,6 +20,7 @@ import {
   PRENOM,
   TYPE
 } from "../../../modelForm/ISaisirRequetePageModel";
+import { getFormValidationCarAutorisesEtNAtureObligatoireShema } from "../../commun/communValidation";
 import "./../scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
@@ -35,37 +33,9 @@ export const InstitutionnelFormDefaultValues = {
 };
 
 // Schéma de validation des champs
-export const InstitutionnelFormValidationSchema = Yup.object()
-  .shape({
-    [TYPE]: Yup.string(),
-    [NATURE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [NOM_INSTITUTION]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [NOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
-    [PRENOM]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    )
-  })
-  .test("natureObligatoire", function (value, error) {
-    const type = value[TYPE] as string;
-    const nature = value[NATURE] as string;
-
-    const paramsError = {
-      path: `${error.path}.nature`,
-      message: getLibelle(
-        'Saisie d\'une Nature est obligatoire pour le Type "Autre"'
-      )
-    };
-    return type === "AUTRE" && nature == null
-      ? this.createError(paramsError)
-      : true;
-  });
+export const InstitutionnelFormValidationSchema = getFormValidationCarAutorisesEtNAtureObligatoireShema(
+  NOM_INSTITUTION
+);
 
 const InstitutionnelForm: React.FC<SubFormProps> = props => {
   const nomWithNamespace = withNamespace(props.nom, NOM);
