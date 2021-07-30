@@ -18,7 +18,7 @@ export class DecisionUtil {
     [TypeDecision.ACTE_NOTARIE]: "Acte notarié",
     [TypeDecision.DECLARATION]: "Déclaration",
     [TypeDecision.ONAC]: "Onac",
-    [TypeDecision.ORDONNANCE]: "Ordonances",
+    [TypeDecision.ORDONNANCE]: "Ordonnance",
     [TypeDecision.JUDICIAIRE]: "Judiciaire",
     [TypeDecision.REQUETE]: "Requête"
   };
