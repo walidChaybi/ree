@@ -1,12 +1,12 @@
 import { IHabilitation } from "../Habilitation";
-import { IEntiteRattachement } from "./IEntiteRattachement";
+import { IEntite } from "./IEntiteRattachement";
 
 export interface IUtilisateur {
   actif?: boolean;
   dateDebut?: number;
   dateFin?: number;
   dateMaj?: number;
-  entiteRattachement?: IEntiteRattachement[];
+  entiteRattachement?: IEntite[];
   fonctionAgent?: {
     idFonctionAgent: string;
     libelleFonction: string;

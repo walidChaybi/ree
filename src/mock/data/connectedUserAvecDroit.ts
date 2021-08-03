@@ -1,3 +1,4 @@
+import { TypeEntite } from "../../model/agent/enum/TypeEntite";
 import { Droit } from "../../model/Droit";
 import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
 
@@ -19,7 +20,13 @@ export const userDroitConsulterArchive: IOfficierSSOApi = {
       idHabilitation: "h12345",
       profil: {
         idProfil: "p12345",
-        nom: "pNom",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
         droits: [{ idDroit: "d12345", nom: Droit.CONSULTER_ARCHIVES }]
       },
       perimetre: {
@@ -52,7 +59,13 @@ export const userDroitConsulterConsulterArchive: IOfficierSSOApi = {
       idHabilitation: "h12345",
       profil: {
         idProfil: "p12345",
-        nom: "pNom",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
         droits: [
           { idDroit: "d12345", nom: Droit.CONSULTER_ARCHIVES },
           { idDroit: "d12345", nom: Droit.CONSULTER }
@@ -88,7 +101,13 @@ export const userDroitConsulterPerimetreMEAE: IOfficierSSOApi = {
       idHabilitation: "h12345",
       profil: {
         idProfil: "p12345",
-        nom: "pNom",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
         droits: [{ idDroit: "d12345", nom: Droit.CONSULTER }]
       },
       perimetre: {
@@ -102,10 +121,10 @@ export const userDroitConsulterPerimetreMEAE: IOfficierSSOApi = {
     }
   ],
   entite: {
-    codeService: "E 1/3",
+    code: "E 1/3",
     idEntite: "6737e047-16cc-4731-9a2e-d2e228f7d75f",
-    libelleService: "Exploitation 1 Section 3",
-    type: "Section",
+    libelleEntite: "Exploitation 1 Section 3",
+    type: TypeEntite.SECTION,
     utilisateur: null
   }
 };
@@ -128,7 +147,13 @@ export const userDroitConsulterPerimetreTUNIS: IOfficierSSOApi = {
       idHabilitation: "h12345",
       profil: {
         idProfil: "p12345",
-        nom: "pNom",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
         droits: [{ idDroit: "d12345", nom: Droit.CONSULTER }]
       },
       perimetre: {
@@ -161,7 +186,13 @@ export const userDroitnonCOMEDEC: IOfficierSSOApi = {
       idHabilitation: "h12345",
       profil: {
         idProfil: "p12345",
-        nom: "pNom",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
         droits: [{ idDroit: "d12345", nom: Droit.DELIVRER }]
       },
       perimetre: {
@@ -175,19 +206,19 @@ export const userDroitnonCOMEDEC: IOfficierSSOApi = {
     }
   ],
   entite: {
-    codeService: "E 1/3",
+    code: "E 1/3",
     idEntite: "1",
-    libelleService: "Exploitation 1 Section 3",
-    type: "Section",
+    libelleEntite: "Exploitation 1 Section 3",
+    type: TypeEntite.SECTION,
     utilisateur: null,
     hierarchieEntite: [
       {
         entite: undefined,
         entiteMere: {
-          codeService: "E 1/3",
+          code: "E 1/3",
           idEntite: "11",
-          libelleService: "Exploitation 1 Section 3",
-          type: "Section",
+          libelleEntite: "Exploitation 1 Section 3",
+          type: TypeEntite.SECTION,
           utilisateur: null
         }
       }
@@ -195,10 +226,10 @@ export const userDroitnonCOMEDEC: IOfficierSSOApi = {
   },
   entitesFilles: [
     {
-      codeService: "E 1/3",
+      code: "E 1/3",
       idEntite: "111",
-      libelleService: "Exploitation 1 Section 3",
-      type: "Section",
+      libelleEntite: "Exploitation 1 Section 3",
+      type: TypeEntite.SECTION,
       utilisateur: null
     }
   ]
@@ -222,7 +253,13 @@ export const userDroitCOMEDEC: IOfficierSSOApi = {
       idHabilitation: "h12345",
       profil: {
         idProfil: "p12345",
-        nom: "pNom",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
         droits: [{ idDroit: "d12345", nom: Droit.DELIVRER_COMEDEC }]
       },
       perimetre: {
@@ -236,19 +273,19 @@ export const userDroitCOMEDEC: IOfficierSSOApi = {
     }
   ],
   entite: {
-    codeService: "E 1/3",
+    code: "E 1/3",
     idEntite: "1",
-    libelleService: "Exploitation 1 Section 3",
-    type: "Section",
+    libelleEntite: "Exploitation 1 Section 3",
+    type: TypeEntite.SECTION,
     utilisateur: null,
     hierarchieEntite: [
       {
         entite: undefined,
         entiteMere: {
-          codeService: "E 1/3",
+          code: "E 1/3",
           idEntite: "11",
-          libelleService: "Exploitation 1 Section 3",
-          type: "Section",
+          libelleEntite: "Exploitation 1 Section 3",
+          type: TypeEntite.SECTION,
           utilisateur: null
         }
       }
@@ -256,10 +293,10 @@ export const userDroitCOMEDEC: IOfficierSSOApi = {
   },
   entitesFilles: [
     {
-      codeService: "E 1/3",
+      code: "E 1/3",
       idEntite: "111",
-      libelleService: "Exploitation 1 Section 3",
-      type: "Section",
+      libelleEntite: "Exploitation 1 Section 3",
+      type: TypeEntite.SECTION,
       utilisateur: null
     }
   ]

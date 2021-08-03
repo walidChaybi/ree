@@ -41,8 +41,8 @@ test("store rece listeEntite ", async () => {
     {
       idEntite: "1234",
       type: "Salle",
-      codeService: "1234",
-      libelleService: "Salut"
+      code: "1234",
+      libelleEntite: "Salut"
     }
   ];
   expect(storeRece.listeEntite).toBeDefined();
@@ -78,9 +78,9 @@ test("get nom d'une entité ", () => {
   storeRece.listeEntite = [
     {
       idEntite: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
-      libelleService: "BAG Assitance Informatique",
+      libelleEntite: "BAG Assitance Informatique",
       type: "etrange",
-      codeService: "1234"
+      code: "1234"
     }
   ];
   expect(

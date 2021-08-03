@@ -1,13 +1,15 @@
+import { TypeEntite } from "./enum/TypeEntite";
+
 export interface IHierarchieEntite {
-  entite?: IEntiteRattachement;
-  entiteMere: IEntiteRattachement;
+  entite?: IEntite;
+  entiteMere: IEntite;
 }
 
-export interface IEntiteRattachement {
+export interface IEntite {
   idEntite: string;
-  type: string;
-  codeService: string;
-  libelleService: string;
+  type: TypeEntite;
+  code: string;
+  libelleEntite: string;
   hierarchieEntite?: IHierarchieEntite[];
   utilisateur?: any;
 }

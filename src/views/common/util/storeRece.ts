@@ -1,4 +1,4 @@
-import { IEntiteRattachement } from "../../../model/agent/IEntiteRattachement";
+import { IEntite } from "../../../model/agent/IEntiteRattachement";
 import { IUtilisateur } from "../../../model/agent/IUtilisateur";
 import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 import parametres from "../../../ressources/parametres.json";
@@ -12,7 +12,7 @@ class StoreRece {
   private _timerCodePin?: number;
   private _retourUrl = "";
   private _listeUtilisateurs: IUtilisateur[] = [];
-  private _listeEntite: IEntiteRattachement[] = [];
+  private _listeEntite: IEntite[] = [];
 
   set retourUrl(ru: string) {
     this._retourUrl = ru;
@@ -43,11 +43,11 @@ class StoreRece {
     return this._listeUtilisateurs;
   }
 
-  set listeEntite(liste: IEntiteRattachement[]) {
+  set listeEntite(liste: IEntite[]) {
     this._listeEntite = liste;
   }
 
-  get listeEntite(): IEntiteRattachement[] {
+  get listeEntite(): IEntite[] {
     return this._listeEntite;
   }
 
@@ -79,7 +79,7 @@ class StoreRece {
 
   public getLibelleEntite(id: string) {
     return this.listeEntite.find(entite => entite.idEntite === id)
-      ?.libelleService;
+      ?.libelleEntite;
   }
 
   public getTrigrammeFromID(id: string) {

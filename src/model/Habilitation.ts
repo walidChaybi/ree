@@ -1,4 +1,5 @@
 import { Droit } from "./Droit";
+import { INomenclatureAgentApi } from "./INomenclatureAgentApi";
 import { IPerimetre } from "./IPerimetre";
 
 export interface IDroit {
@@ -8,7 +9,7 @@ export interface IDroit {
 
 export interface IProfil {
   idProfil: string;
-  nom: string;
+  nom: INomenclatureAgentApi;
   droits: IDroit[];
 }
 

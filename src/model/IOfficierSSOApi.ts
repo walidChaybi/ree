@@ -1,5 +1,5 @@
 import { storeRece } from "../views/common/util/storeRece";
-import { IEntiteRattachement } from "./agent/IEntiteRattachement";
+import { IEntite } from "./agent/IEntiteRattachement";
 import { Droit } from "./Droit";
 import { IDroit, IHabilitation } from "./Habilitation";
 
@@ -17,8 +17,8 @@ export interface IOfficierSSOApi {
   service: string;
   habilitations: IHabilitation[];
   idUtilisateur: string;
-  entite?: IEntiteRattachement;
-  entitesFilles?: IEntiteRattachement[];
+  entite?: IEntite;
+  entitesFilles?: IEntite[];
 }
 
 /** Savoir si l'officier connecté à le droit ou le profilt demandé en paramètre */

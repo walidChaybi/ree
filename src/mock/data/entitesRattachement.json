@@ -5,51 +5,51 @@
   "url": "/rece/rece-agent-api/v1/utilisateurs",
   "data": [
     {
-      "codeService": "SCEC",
+      "code": "SCEC",
       "hierarchieEntite": null,
       "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
-      "libelleService": "Service Central de l'Etat-Civil",
-      "type": "Service",
+      "libelleEntite": "Service Central de l'Etat-Civil",
+      "type": "SERVICE",
       "utilisateur": null
     },
     {
-      "codeService": "SCEC",
+      "code": "SCEC",
       "hierarchieEntite": null,
       "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
-      "libelleService": "Service Central de l'Etat-Civil",
-      "type": "Service",
+      "libelleEntite": "Service Central de l'Etat-Civil",
+      "type": "SERVICE",
       "utilisateur": null
     },
     {
-      "codeService": "SCEC",
+      "code": "SCEC",
       "hierarchieEntite": null,
       "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
-      "libelleService": "Service Central de l'Etat-Civil",
-      "type": "Service",
+      "libelleEntite": "Service Central de l'Etat-Civil",
+      "type": "SERVICE",
       "utilisateur": null
     },
     {
-      "codeService": "SCEC",
+      "code": "SCEC",
       "hierarchieEntite": null,
       "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
-      "libelleService": "Service Central de l'Etat-Civil",
-      "type": "Service",
+      "libelleEntite": "Service Central de l'Etat-Civil",
+      "type": "SERVICE",
       "utilisateur": null
     },
     {
-      "codeService": "SCEC",
+      "code": "SCEC",
       "hierarchieEntite": null,
       "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
-      "libelleService": "Service Central de l'Etat-Civil",
-      "type": "Service",
+      "libelleEntite": "Service Central de l'Etat-Civil",
+      "type": "SERVICE",
       "utilisateur": null
     },
     {
-      "codeService": "SCEC",
+      "code": "SCEC",
       "hierarchieEntite": null,
       "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61df",
-      "libelleService": "Service Central de l'Etat-Civil",
-      "type": "Service",
+      "libelleEntite": "Service Central de l'Etat-Civil",
+      "type": "SERVICE",
       "utilisateur": null
     }
   ]
