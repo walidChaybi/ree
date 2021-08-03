@@ -25,9 +25,8 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   const [acteSelected, setActeSelected] = useState<IResultatRMCActe[]>();
-  const [inscriptionSelected, setInscriptionSelected] = useState<
-    IResultatRMCInscription[]
-  >();
+  const [inscriptionSelected, setInscriptionSelected] =
+    useState<IResultatRMCInscription[]>();
 
   const delivrerOptions: IActionOption[] = [
     {

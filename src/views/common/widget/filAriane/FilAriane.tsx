@@ -90,7 +90,6 @@ export const FilAriane: React.FC<FilArianeProps> = ({
             />
 
             {pagesInfos.map((pageInfo: IPageInfo, index: number) => {
-              console.log(pageInfo);
               return (
                 <Categorie
                   url={pageInfo.url}

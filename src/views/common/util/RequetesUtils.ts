@@ -1,5 +1,9 @@
 import classNames from "classnames";
 import moment from "moment";
+import { Droit } from "../../../model/Droit";
+import { officierHabiliterPourLeDroit } from "../../../model/IOfficierSSOApi";
+import { Provenance } from "../../../model/requete/v2/enum/Provenance";
+import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance";
 import { getText } from "../../common/widget/Text";
 import { FormatDate } from "./DateUtils";
 
@@ -41,3 +45,12 @@ export function getMessagePrioriteDeLaRequete(dateStatut: string): string {
     return getText("pages.delivrance.mesRequetes.tableau.body.priorite.haute");
   }
 }
+
+export const aDroitPrendreEnCharge = (requete: IRequeteDelivrance) => {
+  return (
+    (requete?.provenanceRequete?.provenance === Provenance.COMEDEC &&
+      officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)) ||
+    (requete?.provenanceRequete?.provenance !== Provenance.COMEDEC &&
+      officierHabiliterPourLeDroit(Droit.DELIVRER))
+  );
+};

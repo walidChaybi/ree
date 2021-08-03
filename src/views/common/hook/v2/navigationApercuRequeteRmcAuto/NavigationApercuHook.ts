@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { PATH_APERCU_REQ_TRAITEMENT } from "../../../../router/ReceUrls";
 import { getUrlWithParam } from "../../../util/route/routeUtil";
 import { storeRece } from "../../../util/storeRece";
 
@@ -14,9 +15,8 @@ export function useNavigationApercu(
   urlWithParam?: string,
   requete?: IRequeteTableau
 ): INavigationApercu | undefined {
-  const [redirection, setRedirection] = useState<
-    INavigationApercu | undefined
-  >();
+  const [redirection, setRedirection] =
+    useState<INavigationApercu | undefined>();
 
   useEffect(() => {
     if (requete && urlWithParam) {
@@ -37,6 +37,18 @@ export function useNavigationApercu(
         console.log(
           "Attention les redirections des US 207 / 210 / 316 ne sont pas encore développées"
         );
+
+        if (
+          requete.type === TypeRequete.DELIVRANCE.libelle &&
+          requete.statut === StatutRequete.A_VALIDER.libelle
+        ) {
+          setRedirection({
+            url: getUrlWithParam(
+              `${urlWithParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
+              requete.idRequete
+            )
+          });
+        }
 
         if (
           requete.type === TypeRequete.DELIVRANCE.libelle &&

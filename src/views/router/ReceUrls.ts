@@ -128,7 +128,7 @@ function getUrlApercuTraitementAPartirDe(url: string) {
   )}${URL_SEPARATEUR}${PATH_APERCU_REQ_TRAITEMENT}${URL_SEPARATEUR}${id}`;
 }
 
-function replaceUrl(history: any, url: string, data?: any) {
+export function replaceUrl(history: any, url: string, data?: any) {
   gestionnaireNavigation.deleteLastUrl();
   history.replace(url, data);
 }

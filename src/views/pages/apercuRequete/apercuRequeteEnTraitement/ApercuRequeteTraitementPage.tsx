@@ -12,6 +12,7 @@ import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { BandeauRequete } from "../contenu/BandeauRequete";
+import { BoutonSignerValider } from "../contenu/BoutonSignerValider";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
@@ -56,7 +57,9 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
                 contenu={contenuDocument?.contenu}
                 typeMime={contenuDocument?.mimeType}
               />
-
+              <BoutonSignerValider
+                requete={detailRequeteState}
+              ></BoutonSignerValider>
               <BoutonRetour message={getLibelle("<< Retour")} />
             </div>
           </div>
@@ -70,9 +73,8 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
     if (requete?.type === TypeRequete.DELIVRANCE) {
       const requeteDelivrance = requete as IRequeteDelivrance;
 
-      const documentsDeDelivrance = RequeteDelivrance.getDocumentsDeDelivrance(
-        requeteDelivrance
-      );
+      const documentsDeDelivrance =
+        RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
       if (documentsDeDelivrance.length > 0) {
         idDocumentAAfficher = documentsDeDelivrance[0].id;
       } else if (requeteDelivrance.documentsReponses.length > 0) {

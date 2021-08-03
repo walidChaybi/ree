@@ -31,9 +31,8 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
   const refReponseNegativeOptions3 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [reponseNegative, setReponseNegative] = useState<
-    IReponseNegativeDemandeIncompleteComposition | undefined
-  >();
+  const [reponseNegative, setReponseNegative] =
+    useState<IReponseNegativeDemandeIncompleteComposition | undefined>();
 
   const resultatReponseNegative = useReponseNegative(
     StatutRequete.A_VALIDER.libelle,
@@ -89,10 +88,11 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
     switch (indexMenu) {
       case 0:
         setOperationEnCours(true);
-        const newReponseNegative = await createReponseNegativePourCompositionApi(
-          OBJET_COURRIER_CERTIFICAT_SITUATION,
-          props.requete as IRequeteDelivrance
-        );
+        const newReponseNegative =
+          await createReponseNegativePourCompositionApi(
+            OBJET_COURRIER_CERTIFICAT_SITUATION,
+            props.requete as IRequeteDelivrance
+          );
         setReponseNegative(newReponseNegative);
         break;
       case 1:

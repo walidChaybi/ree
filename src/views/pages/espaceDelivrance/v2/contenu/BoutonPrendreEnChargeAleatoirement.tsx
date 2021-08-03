@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import WithHabilitation from "../../../../common/util/habilitation/WithHabilitation";
 import messageManager from "../../../../common/util/messageManager";
-import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
+import { BoutonOperationEnCours } from "../../../../common/widget/attente/BoutonOperationEnCours";
 import { getLibelle } from "../../../../common/widget/Text";
 import { receUrl } from "../../../../router/ReceUrls";
 import {
@@ -18,14 +18,12 @@ import {
 export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
   const history = useHistory();
 
-  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
-  const [params, setParams] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
-  const requeteAleatoireResultat:
-    | IRequeteAleatoireResultat
-    | undefined = useGetRequeteAleatoire(prendreEnCharge);
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const [params, setParams] =
+    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined =
+    useGetRequeteAleatoire(prendreEnCharge);
 
   useEffect(() => {
     if (requeteAleatoireResultat) {
@@ -44,30 +42,26 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
           )
         );
       }
-      setOperationEnCours(false);
       setPrendreEnCharge(false);
+      setOperationEnCours(false);
     }
   }, [requeteAleatoireResultat, history]);
 
   useCreationActionMiseAjourStatutEtRmcAuto(params);
 
-  function onClickPrendreEnCharge() {
-    setOperationEnCours(true);
+  const onClickPrendreEnCharge = () => {
     setPrendreEnCharge(true);
-  }
+    setOperationEnCours(true);
+  };
 
   return (
-    <>
-      <OperationEnCours
-        visible={operationEnCours}
-        onTimeoutEnd={() => setOperationEnCours(false)}
-        onClick={() => setOperationEnCours(false)}
-      />
-
-      <button onClick={onClickPrendreEnCharge} disabled={props.disabled}>
-        {getLibelle("Prendre en charge")}
-      </button>
-    </>
+    <BoutonOperationEnCours
+      onClick={onClickPrendreEnCharge}
+      estDesactive={props.disabled}
+      visible={operationEnCours}
+    >
+      {getLibelle("Prendre en charge")}
+    </BoutonOperationEnCours>
   );
 };
 

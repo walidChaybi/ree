@@ -76,12 +76,12 @@ export const SaisirRDCSCPage: React.FC = () => {
     []
   );
 
-  const [reponseNegative, setReponseNegative] = useState<
-    IReponseNegativeDemandeIncompleteComposition | undefined
-  >();
+  const [reponseNegative, setReponseNegative] =
+    useState<IReponseNegativeDemandeIncompleteComposition | undefined>();
 
   useState(async () => {
-    const documentDelivrance = DocumentDelivrance.getAllCertificatSituationAsOptions();
+    const documentDelivrance =
+      DocumentDelivrance.getAllCertificatSituationAsOptions();
     setDocumentDemandeOptions(documentDelivrance);
   });
 
@@ -89,19 +89,14 @@ export const SaisirRDCSCPage: React.FC = () => {
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [
-    donneesNaissanceIncomplete,
-    setDonneesNaissanceIncomplete
-  ] = React.useState<boolean>(false);
-  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] = useState<
-    SaisieRequeteRDCSC
-  >();
-  const [creationRequeteRDCSC, setCreationRequeteRDCSC] = useState<
-    CreationRequeteRDCSC
-  >();
-  const [updateRequeteRDCSC, setUpdateRequeteRDCSC] = useState<
-    UpdateRequeteRDCSC
-  >();
+  const [donneesNaissanceIncomplete, setDonneesNaissanceIncomplete] =
+    React.useState<boolean>(false);
+  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] =
+    useState<SaisieRequeteRDCSC>();
+  const [creationRequeteRDCSC, setCreationRequeteRDCSC] =
+    useState<CreationRequeteRDCSC>();
+  const [updateRequeteRDCSC, setUpdateRequeteRDCSC] =
+    useState<UpdateRequeteRDCSC>();
 
   const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 
@@ -137,13 +132,11 @@ export const SaisirRDCSCPage: React.FC = () => {
     [history, saisieRequeteRDCSC]
   );
 
-  const creationRequeteDelivranceRDCSCResultat = useCreationRequeteDelivranceRDCSC(
-    creationRequeteRDCSC
-  );
+  const creationRequeteDelivranceRDCSCResultat =
+    useCreationRequeteDelivranceRDCSC(creationRequeteRDCSC);
 
-  const UpdateRequeteDelivranceRDCSCResultat = useUpdateRequeteDelivranceRDCSC(
-    updateRequeteRDCSC
-  );
+  const UpdateRequeteDelivranceRDCSCResultat =
+    useUpdateRequeteDelivranceRDCSC(updateRequeteRDCSC);
 
   useEffect(() => {
     if (creationRequeteDelivranceRDCSCResultat) {
