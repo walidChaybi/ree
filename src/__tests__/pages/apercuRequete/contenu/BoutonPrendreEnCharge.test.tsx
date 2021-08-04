@@ -13,6 +13,7 @@ import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
+import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { BoutonPrendreEnCharge } from "../../../../views/pages/apercuRequete/contenu/BoutonPrendreEnCharge";
@@ -23,6 +24,7 @@ const superagentMock = require("superagent-mock")(request, configMultiAPi);
 const requeteTestCOURRIER = {
   id: idRequete1,
   idEntite: "11",
+  type: TypeRequete.DELIVRANCE,
   dateCreation: 1577836800000,
   statutCourant: {
     statut: StatutRequete.A_TRAITER,
@@ -80,6 +82,7 @@ const requeteTestCOMEDEC = {
   id: idRequete1,
   idEntite: "11",
   dateCreation: 1577836800000,
+  type: TypeRequete.DELIVRANCE,
   statutCourant: {
     statut: StatutRequete.A_TRAITER,
     dateEffet: 1577923200000

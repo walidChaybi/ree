@@ -2,6 +2,7 @@ import { storeRece } from "../views/common/util/storeRece";
 import { IEntite } from "./agent/IEntiteRattachement";
 import { Droit } from "./Droit";
 import { IDroit, IHabilitation } from "./Habilitation";
+import { Provenance } from "./requete/v2/enum/Provenance";
 
 export interface IOfficierSSOApi {
   idSSO: string;
@@ -119,3 +120,26 @@ export function officierALeDroitSurLePerimetre(
 
   return res;
 }
+
+export const mAppartientOuAppartientAPersonne = (idUtilisateur: string) =>
+  !idUtilisateur ||
+  idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
+
+export const provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer = (
+  provenance: string
+) =>
+  (provenance === Provenance.COMEDEC.libelle &&
+    officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)) ||
+  (provenance !== Provenance.COMEDEC.libelle &&
+    officierHabiliterPourLeDroit(Droit.DELIVRER));
+
+export const appartientAMonServiceMereServiceOuFillesServices = (
+  idEntite: string
+) =>
+  storeRece.utilisateurCourant?.entite?.idEntite === idEntite ||
+  storeRece.utilisateurCourant?.entitesFilles?.some(
+    el => el.idEntite === idEntite
+  ) ||
+  storeRece.utilisateurCourant?.entite?.hierarchieEntite?.some(
+    el => el.entiteMere.idEntite === idEntite
+  );

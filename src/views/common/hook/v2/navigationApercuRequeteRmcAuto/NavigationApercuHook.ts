@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
 import { PATH_APERCU_REQ_TRAITEMENT } from "../../../../router/ReceUrls";
+import { logError } from "../../../util/LogManager";
+import {
+  autorisePrendreEnChargeTableau,
+  statutEstASignerAValider,
+  statutEstATraiterOuATransferee,
+  statutEstPrendreEnCharge,
+  typeEstDelivrance
+} from "../../../util/RequetesUtils";
 import { getUrlWithParam } from "../../../util/route/routeUtil";
 import { storeRece } from "../../../util/storeRece";
+import {
+  CreationActionEtMiseAjourStatutParams,
+  usePostCreationActionEtMiseAjourStatutApi
+} from "../requete/ActionHook";
 
 export interface INavigationApercu {
   isRmcAuto?: boolean;
@@ -18,6 +29,11 @@ export function useNavigationApercu(
   const [redirection, setRedirection] =
     useState<INavigationApercu | undefined>();
 
+  const [params, setParams] =
+    useState<CreationActionEtMiseAjourStatutParams | undefined>();
+
+  usePostCreationActionEtMiseAjourStatutApi(params);
+
   useEffect(() => {
     if (requete && urlWithParam) {
       const officier = storeRece.utilisateurCourant;
@@ -29,39 +45,18 @@ export function useNavigationApercu(
         requete.type &&
         requete.statut
       ) {
-        // OU et de type RDC au statut "Traité - A imprimer" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
-        // OU et de type RDD au statut "Traiter - A Délivrer démat" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
-        // US 210  et au statut "A traiter" ou "Transférée", on lance la "RMC Auto"  et redirection suivant le résultat
+        // US 207 et de type RDC au statut "Traité - A imprimer" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
+        // US 207 et de type RDD au statut "Traiter - A Délivrer démat" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
         // US 316  et au statut "Brouillon", redirection vers "Saisir une requête"
         console.log(
-          "Attention les redirections des 210 / 316 ne sont pas encore développées"
+          "Attention la redirections de US 316 n'est pas encore développée"
         );
-        if (
-          requete.type === TypeRequete.DELIVRANCE.libelle &&
-          (requete.statut === StatutRequete.A_VALIDER.libelle ||
-            requete.statut === StatutRequete.A_SIGNER.libelle)
-        ) {
-          // US 207 et au statut "A signer" ou "A valider", redirection vers "Aperçu du traitement"
-          setRedirection({
-            url: getUrlWithParam(
-              `${urlWithParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
-              requete.idRequete
-            )
-          });
-        } else if (
-          requete.type === TypeRequete.DELIVRANCE.libelle &&
-          requete.statut === StatutRequete.PRISE_EN_CHARGE.libelle
-        ) {
-          // US 211 ... et au statut "Prise en charge", on lance la "RMC Auto" et redirection suivant le résultat
-          setRedirection({ isRmcAuto: true });
-        } else {
-          setRedirection({
-            url: getUrlWithParam(
-              `${urlWithParam}/apercurequete/:idRequete`,
-              requete.idRequete
-            )
-          });
-        }
+        redirectionEnFonctionMaRequete(
+          requete,
+          setParams,
+          setRedirection,
+          urlWithParam
+        );
       } else if (!requete.idUtilisateur) {
         setRedirection({ isRmcAuto: true });
       } else {
@@ -78,3 +73,68 @@ export function useNavigationApercu(
 
   return redirection;
 }
+
+const redirectionEnFonctionMaRequete = (
+  requete: IRequeteTableau,
+  setParams: (
+    value: React.SetStateAction<
+      CreationActionEtMiseAjourStatutParams | undefined
+    >
+  ) => void,
+  setRedirection: (
+    value: React.SetStateAction<INavigationApercu | undefined>
+  ) => void,
+  urlWithParam: string
+) => {
+  if (requete.statut && requete.type) {
+    if (
+      statutEstATraiterOuATransferee(requete.statut) &&
+      typeEstDelivrance(requete.type)
+    ) {
+      // US 210 et au statut "A traiter" ou "Transférée", on lance la "RMC Auto" et redirection suivant le résultat
+      if (autorisePrendreEnChargeTableau(requete)) {
+        setParams({
+          libelleAction: "Prendre en charge",
+          statutRequete: StatutRequete.PRISE_EN_CHARGE,
+          requeteId: requete.idRequete
+        });
+        setRedirection({ isRmcAuto: true });
+      } else {
+        logError({
+          messageUtilisateur:
+            "Vous n'avez pas le droit de prendre en charge cette requête"
+        });
+        setRedirection({
+          url: getUrlWithParam(
+            `${urlWithParam}/apercurequete/:idRequete`,
+            requete.idRequete
+          )
+        });
+      }
+    } else if (
+      statutEstPrendreEnCharge(requete.statut) &&
+      typeEstDelivrance(requete.type)
+    ) {
+      // US 211 ... et au statut "Prise en charge", on lance la "RMC Auto" et redirection suivant le résultat
+      setRedirection({ isRmcAuto: true });
+    } else if (
+      statutEstASignerAValider(requete.statut) &&
+      typeEstDelivrance(requete.type)
+    ) {
+      // US 207 et au statut "A signer" ou "A valider", redirection vers "Aperçu du traitement"
+      setRedirection({
+        url: getUrlWithParam(
+          `${urlWithParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
+          requete.idRequete
+        )
+      });
+    } else {
+      setRedirection({
+        url: getUrlWithParam(
+          `${urlWithParam}/apercurequete/:idRequete`,
+          requete.idRequete
+        )
+      });
+    }
+  }
+};

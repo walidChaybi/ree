@@ -1,9 +1,14 @@
 import classNames from "classnames";
 import moment from "moment";
-import { Droit } from "../../../model/Droit";
-import { officierHabiliterPourLeDroit } from "../../../model/IOfficierSSOApi";
-import { Provenance } from "../../../model/requete/v2/enum/Provenance";
+import {
+  appartientAMonServiceMereServiceOuFillesServices,
+  mAppartientOuAppartientAPersonne,
+  provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
+} from "../../../model/IOfficierSSOApi";
+import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
+import { TypeRequete } from "../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
 import { getText } from "../../common/widget/Text";
 import { FormatDate } from "./DateUtils";
 
@@ -46,11 +51,40 @@ export function getMessagePrioriteDeLaRequete(dateStatut: string): string {
   }
 }
 
-export const aDroitPrendreEnCharge = (requete: IRequeteDelivrance) => {
-  return (
-    (requete?.provenanceRequete?.provenance === Provenance.COMEDEC &&
-      officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)) ||
-    (requete?.provenanceRequete?.provenance !== Provenance.COMEDEC &&
-      officierHabiliterPourLeDroit(Droit.DELIVRER))
+export const statutEstATraiterOuATransferee = (statut: string) =>
+  statut === StatutRequete.A_TRAITER.libelle ||
+  statut === StatutRequete.TRANSFEREE.libelle;
+
+export const statutEstPrendreEnCharge = (statut: string) =>
+  statut === StatutRequete.PRISE_EN_CHARGE.libelle;
+
+export const statutEstASignerAValider = (statut: string) =>
+  statut === StatutRequete.A_VALIDER.libelle ||
+  statut === StatutRequete.A_SIGNER.libelle;
+
+export const typeEstDelivrance = (type: string) =>
+  type === TypeRequete.DELIVRANCE.libelle;
+
+export const autorisePrendreEnChargeDelivrance = (
+  requete: IRequeteDelivrance
+) =>
+  typeEstDelivrance(requete.type.libelle) &&
+  statutEstATraiterOuATransferee(requete.statutCourant.statut.libelle) &&
+  mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
+  provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+    requete.provenanceRequete.provenance.libelle
+  ) &&
+  appartientAMonServiceMereServiceOuFillesServices(requete.idEntite);
+
+export const autorisePrendreEnChargeTableau = (requete: IRequeteTableau) =>
+  typeEstDelivrance(requete.type ? requete.type : "") &&
+  statutEstATraiterOuATransferee(requete.statut ? requete.statut : "") &&
+  mAppartientOuAppartientAPersonne(
+    requete.idUtilisateur ? requete.idUtilisateur : ""
+  ) &&
+  provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+    requete.provenance ? requete.provenance : ""
+  ) &&
+  appartientAMonServiceMereServiceOuFillesServices(
+    requete.idEntiteRattachement ? requete.idEntiteRattachement : ""
   );
-};

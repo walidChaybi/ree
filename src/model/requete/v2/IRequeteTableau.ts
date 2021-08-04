@@ -40,6 +40,7 @@ export interface IRequeteTableau {
   idUtilisateur?: string;
   idCorbeilleAgent?: string;
   nomUtilisateurAttribueA?: string;
+  idEntiteRattachement?: string;
 }
 
 export interface ITitulaireRequeteTableau {
@@ -96,7 +97,8 @@ export function mappingUneRequeteTableau(
         ? mapObservations(requete?.observations)
         : requete?.observations,
     idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
-    idCorbeilleAgent: valeurOuUndefined(requete?.idCorbeilleAgent)
+    idCorbeilleAgent: valeurOuUndefined(requete?.idCorbeilleAgent),
+    idEntiteRattachement: valeurOuUndefined(requete?.idEntiteRattachement)
   } as IRequeteTableau;
 }
 

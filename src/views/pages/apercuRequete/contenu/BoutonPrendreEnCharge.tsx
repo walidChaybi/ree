@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
-import { aDroitPrendreEnCharge } from "../../../common/util/RequetesUtils";
+import { autorisePrendreEnChargeDelivrance } from "../../../common/util/RequetesUtils";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
-import { storeRece } from "../../../common/util/storeRece";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
 import { getLibelle } from "../../../common/widget/Text";
 import {
@@ -43,49 +42,22 @@ export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> =
 
     useCreationActionMiseAjourStatutEtRmcAuto(params);
 
-    const estATraiterOuATransferee =
-      props.requete.statutCourant.statut === StatutRequete.A_TRAITER ||
-      props.requete.statutCourant.statut === StatutRequete.TRANSFEREE;
-
-    const mAppartientOuAppartientAPersonne =
-      !props.requete.idUtilisateur ||
-      props.requete.idUtilisateur ===
-        storeRece.utilisateurCourant?.idUtilisateur;
-
-    const comedecDroitDelivrerCOMEDECouDroitDelivrer = aDroitPrendreEnCharge(
-      props.requete as IRequeteDelivrance
-    );
-
-    const appartientAMonServiceMereServiceOuFillesServices =
-      storeRece.utilisateurCourant?.entite?.idEntite ===
-        props.requete.idEntite ||
-      storeRece.utilisateurCourant?.entitesFilles?.some(
-        el => el.idEntite === props.requete.idEntite
-      ) ||
-      storeRece.utilisateurCourant?.entite?.hierarchieEntite?.some(
-        el => el.entiteMere.idEntite === props.requete.idEntite
-      );
-
-    if (
-      estATraiterOuATransferee &&
-      mAppartientOuAppartientAPersonne &&
-      comedecDroitDelivrerCOMEDECouDroitDelivrer &&
-      appartientAMonServiceMereServiceOuFillesServices &&
-      estDisabled
-    ) {
-      setEstDisabled(false);
-    }
+    useEffect(() => {
+      if (
+        autorisePrendreEnChargeDelivrance(props.requete as IRequeteDelivrance)
+      ) {
+        setEstDisabled(false);
+      }
+    }, [props.requete]);
 
     return (
-      <>
-        <BoutonOperationEnCours
-          onClick={setActionEtUpdateStatut}
-          class="BoutonPriseEnCharge"
-          estDesactive={estDisabled}
-        >
-          {getLibelle("Prendre en charge")}
-        </BoutonOperationEnCours>
-      </>
+      <BoutonOperationEnCours
+        onClick={setActionEtUpdateStatut}
+        class="BoutonPriseEnCharge"
+        estDesactive={estDisabled}
+      >
+        {getLibelle("Prendre en charge")}
+      </BoutonOperationEnCours>
     );
   };
 

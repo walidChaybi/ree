@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../model/IOfficierSSOApi";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
@@ -8,7 +9,6 @@ import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "../../../common/hook/v2/requete/ActionHook";
-import { aDroitPrendreEnCharge } from "../../../common/util/RequetesUtils";
 import { storeRece } from "../../../common/util/storeRece";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
 import { getLibelle } from "../../../common/widget/Text";
@@ -20,6 +20,7 @@ interface BoutonSignerValiderProps {
 
 export const BoutonSignerValider: React.FC<BoutonSignerValiderProps> =
   props => {
+    const requeteDelivrance = props.requete as IRequeteDelivrance;
     const history = useHistory();
     const [estDisabled, setEstDisabled] = useState(true);
 
@@ -64,7 +65,9 @@ export const BoutonSignerValider: React.FC<BoutonSignerValiderProps> =
     if (
       estAValider &&
       mAppartient &&
-      aDroitPrendreEnCharge(props.requete as IRequeteDelivrance) &&
+      provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+        requeteDelivrance.provenanceRequete.provenance.libelle
+      ) &&
       estDisabled
     ) {
       setEstDisabled(false);
