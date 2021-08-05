@@ -27,7 +27,7 @@ export function getPanelsRc(rc: IFicheRcRca): IAccordionReceSection {
             nbColonne: 2
           },
           {
-            parts: getStatuts(rc),
+            parts: getStatuts(rc.statutsFiche),
             title: getLibelle("Historique des statuts de la fiche")
           }
         ],

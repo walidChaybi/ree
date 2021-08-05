@@ -11,7 +11,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   const panels = getPanelsPacs(pacsModificationNotaireMap as IFichePacs);
 
   expect(panels.panels.length).toBe(1);
-  expect(panels.panels[0].panelAreas.length).toBe(4);
+  expect(panels.panels[0].panelAreas.length).toBe(5);
 
   ///////////// PARTIE 1: Inscription des registre des PACS des étrangers nés à l'étranger
   expect(panels.panels[0].panelAreas[0].parts.length).toBe(1);
@@ -153,6 +153,8 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
     panels.panels[0].panelAreas[3].parts[0].partContent.contents[4].value
   ).toBe("22/01/2021");
 
+  // PARTIE 5: Historique Statut
+
   // 4.2: Localisation
   expect(
     panels.panels[0].panelAreas[3].parts[1].partContent.contents.length
@@ -163,7 +165,7 @@ test("ficheUtils Pacs fonctionne avec annulation juridiction", async () => {
   const panels = getPanelsPacs(annulationJuridictionMap as IFichePacs);
 
   expect(panels.panels.length).toBe(1);
-  expect(panels.panels[0].panelAreas.length).toBe(4);
+  expect(panels.panels[0].panelAreas.length).toBe(5);
 
   ///////////// PARTIE 3: Enregistrement du PACS
   expect(panels.panels[0].panelAreas[2].parts.length).toBe(2);
@@ -205,7 +207,7 @@ test("ficheUtils Pacs fonctionne avec dissoultion juridiction", async () => {
   const panels = getPanelsPacs(dissolutionJuridictionMap as IFichePacs);
 
   expect(panels.panels.length).toBe(1);
-  expect(panels.panels[0].panelAreas.length).toBe(4);
+  expect(panels.panels[0].panelAreas.length).toBe(5);
 
   ///////////// PARTIE 4: Dissolution du pacs
   expect(panels.panels[0].panelAreas[3].parts.length).toBe(2);
@@ -217,7 +219,7 @@ test("ficheUtils Pacs fonctionne avec dissolution poste", async () => {
   const panels = getPanelsPacs(dissolutionPosteMap as IFichePacs);
 
   expect(panels.panels.length).toBe(1);
-  expect(panels.panels[0].panelAreas.length).toBe(4);
+  expect(panels.panels[0].panelAreas.length).toBe(5);
 
   ///////////// PARTIE 3: Enregistrement du PACS
   expect(panels.panels[0].panelAreas[2].parts.length).toBe(2);

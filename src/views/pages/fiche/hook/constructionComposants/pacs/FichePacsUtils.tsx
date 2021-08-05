@@ -22,8 +22,10 @@ import { SectionPanelProps } from "../../../../../common/widget/section/SectionP
 import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { AjoutePartAuPanelAreas } from "../../../../../common/widget/section/SectionUtils";
+import { getLibelle } from "../../../../../common/widget/Text";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getFichesPersonne } from "../personne/FichePersonne";
+import { getStatuts } from "../statut/StatutUtils";
 import { getPartenaires } from "./PartenairesUtils";
 
 const DATE_EFFET = "Date d'effet à l'égard des tiers";
@@ -84,6 +86,11 @@ export function getPanelsPacs(pacs: IFichePacs): IAccordionReceSection {
     "Annulation du PACS",
     deuxColonnes
   );
+
+  panelAreas.push({
+    parts: getStatuts(pacs.statutsFiche),
+    title: getLibelle("Historique des statuts de la fiche")
+  });
 
   const fichesPersonne: SectionPanelProps[] = getFichesPersonne(pacs.personnes);
 

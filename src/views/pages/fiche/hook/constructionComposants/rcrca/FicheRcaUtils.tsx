@@ -1,9 +1,11 @@
 import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
+import { getLibelle } from "../../../../../common/widget/Text";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getInscriptionRepertoireCivil } from "../inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
 import { getInteresse } from "../interesses/InteresseUtils";
 import { getFichesPersonne } from "../personne/FichePersonne";
+import { getStatuts } from "../statut/StatutUtils";
 import { getAutorite } from "./AutoriteUtils";
 import { getDecision } from "./DecisionUtils";
 
@@ -20,7 +22,11 @@ export function getPanelsRca(rca: IFicheRcRca): IAccordionReceSection {
             nbColonne: 2
           },
           { parts: getDecision(rca), nbColonne: 2 },
-          { parts: getAutorite(rca), title: "Autorité", nbColonne: 2 }
+          { parts: getAutorite(rca), title: "Autorité", nbColonne: 2 },
+          {
+            parts: getStatuts(rca.statutsFiche),
+            title: getLibelle("Historique des statuts de la fiche")
+          }
         ],
         title: "Vue du RCA"
       },
