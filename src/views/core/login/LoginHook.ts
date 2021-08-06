@@ -28,11 +28,11 @@ export function useLoginApi() {
             result.body.data.habilitations
           );
           setOfficierDataState(officier);
+          GestionnaireDoubleOuverture.incrementeNAppliOuverte();
         })
         .catch(error => {
           setErreurState(error);
         });
-      GestionnaireDoubleOuverture.incrementeNAppliOuverte();
     } else {
       setErreurState({});
     }
