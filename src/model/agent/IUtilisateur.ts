@@ -6,7 +6,7 @@ export interface IUtilisateur {
   dateDebut?: number;
   dateFin?: number;
   dateMaj?: number;
-  entiteRattachement?: IEntite[];
+  entite?: IEntite[];
   fonctionAgent?: {
     idFonctionAgent: string;
     libelleFonction: string;

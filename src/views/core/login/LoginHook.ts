@@ -59,7 +59,7 @@ function setUtilisateurSSOApi(headers: any, body: any): IOfficierSSOApi {
     departement: headers.departement,
     service: headers.service,
     habilitations: [],
-    entite: body.entiteRattachement,
+    entite: body.entite,
     entitesFilles: body.entitesFillesDirectes
   };
 }
