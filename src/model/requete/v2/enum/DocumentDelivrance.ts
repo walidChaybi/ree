@@ -60,7 +60,7 @@ export class DocumentDelivrance extends EnumWithComplete {
       [CODE_CERTIFICAT_SITUATION_RCA]: (type: string): boolean =>
         TypeRepertoire.RCA.libelle === type
     };
-    return switchCase[codeDocumentDemande]
+    return codeDocumentDemande && switchCase[codeDocumentDemande]
       ? switchCase[codeDocumentDemande](categorieInscription)
       : false;
   }

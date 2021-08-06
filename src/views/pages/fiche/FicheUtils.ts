@@ -32,7 +32,7 @@ export interface IAccordionReceSection {
 }
 export interface IFiche {
   bandeauFiche: IBandeauFiche;
-  alerteVisible: boolean;
+  ajouterAlerte: boolean;
   panelsFiche: IAccordionReceSection;
 }
 
@@ -58,7 +58,7 @@ export function setFiche(dataFiche: IDataFicheProps, data: any): IFiche {
       case TypeFiche.ACTE:
         const ficheActe = data as IFicheActe;
         fiche.panelsFiche = getPanelsActe(ficheActe);
-        fiche.alerteVisible = getParamsAffichageFicheActe(
+        fiche.ajouterAlerte = getParamsAffichageFicheActe(
           ficheActe.registre.type.id,
           ficheActe.visibiliteArchiviste
         ).ajouterAlerte;

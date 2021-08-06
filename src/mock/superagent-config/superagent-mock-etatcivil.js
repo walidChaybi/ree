@@ -8,7 +8,8 @@ import {
 import {
   ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureRC,
-  ReponseAppelNomenclatureNatureRCA
+  ReponseAppelNomenclatureNatureRCA,
+  ReponseAppelNomenclatureTypeAlerte
 } from "../data/nomenclatures";
 import { pacsModificationNotaire } from "../data/PACS";
 import mockRC from "../data/RC.json";
@@ -88,7 +89,8 @@ export const configEtatcivil = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCActe?.data?.registres?.length,
-            link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCActe.data
         };
@@ -100,7 +102,8 @@ export const configEtatcivil = [
             "content-range":
               "0-15/" +
               ReponseAppelRMCInscription?.data?.repertoiresCiviles?.length,
-            link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCInscription.data
         };
@@ -116,6 +119,10 @@ export const configEtatcivil = [
 
       if (match[1] === "/nomenclature/MANDATAIRE") {
         return { data: ReponseAppelNomenclatureMandataire.data };
+      }
+
+      if (match[1] === "/nomenclature/TYPE_ALERTE") {
+        return { data: ReponseAppelNomenclatureTypeAlerte.data };
       }
 
       if (
@@ -210,7 +217,8 @@ export const configEtatcivil = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCActe?.data?.registres?.length,
-            link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCActe.data
         };
@@ -222,7 +230,8 @@ export const configEtatcivil = [
             "content-range":
               "0-15/" +
               ReponseAppelRMCInscription?.data?.repertoiresCiviles?.length,
-            link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCInscription.data
         };

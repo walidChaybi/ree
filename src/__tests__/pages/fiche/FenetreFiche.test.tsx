@@ -1,9 +1,9 @@
+import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, waitFor, screen, act } from "@testing-library/react";
-import { FenetreFiche } from "../../../views/pages/fiche/FenetreFiche";
 import request from "superagent";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
 import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
+import { FenetreFiche } from "../../../views/pages/fiche/FenetreFiche";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
@@ -21,6 +21,8 @@ test("renders Lien fiche fonctionne correctement", async () => {
       identifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
       categorie={TypeFiche.RC}
       onClose={onClose}
+      datasFiches={[]}
+      index={0}
     />
   );
   await waitFor(() => {

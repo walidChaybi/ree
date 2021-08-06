@@ -1,6 +1,7 @@
 import { MandataireRc } from "../../model/etatcivil/enum/MandataireRc";
 import { NatureRc } from "../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../model/etatcivil/enum/NatureRca";
+import { TypeAlerte } from "../../model/etatcivil/enum/TypeAlerte";
 import { logError } from "../../views/common/util/LogManager";
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../views/common/util/Utils";
 import { getNomenclatureEtatCivil } from "../appels/etatcivilApi";
@@ -8,6 +9,7 @@ import { getNomenclatureEtatCivil } from "../appels/etatcivilApi";
 const NATURE_RC = "NATURE_RC";
 const NATURE_RCA = "NATURE_RCA";
 const MANDATAIRE = "MANDATAIRE";
+const TYPE_ALERTE = "TYPE_ALERTE";
 
 export async function peupleNatureRc() {
   if (!NatureRc.contientEnums()) {
@@ -69,6 +71,31 @@ export async function peupleMandataireRc() {
     } catch (error) {
       logError({
         messageUtilisateur: "Impossible de charger les mandataires RC",
+        error
+      });
+    }
+  }
+}
+
+export async function peupleTypeAlerte() {
+  if (!TypeAlerte.contientEnums()) {
+    try {
+      const typeAlerte = await getNomenclatureEtatCivil(TYPE_ALERTE);
+      TypeAlerte.clean();
+      for (const data of typeAlerte.body.data) {
+        TypeAlerte.addEnum(
+          data?.id,
+          new TypeAlerte(
+            data?.code,
+            data?.type,
+            data?.sousType,
+            premiereLettreEnMajusculeLeResteEnMinuscule(data?.libelle)
+          )
+        );
+      }
+    } catch (error) {
+      logError({
+        messageUtilisateur: "Impossible de charger les types alerte",
         error
       });
     }

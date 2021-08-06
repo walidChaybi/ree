@@ -4,11 +4,11 @@ import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
 import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
 import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
+import { AlerteActe } from "./contenu/AlerteActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
 import { setFiche } from "./FicheUtils";
-import AlerteActe from "./hook/constructionComposants/acte/AlerteActe";
 import { useFichePageApiHook } from "./hook/FichePageApiHook";
 
 export interface FichePageProps {
@@ -40,7 +40,7 @@ export const FichePage: React.FC<FichePageProps> = props => {
     indexCourant
   );
 
-  const { bandeauFiche, alerteVisible, panelsFiche } = setFiche(
+  const { bandeauFiche, ajouterAlerte, panelsFiche } = setFiche(
     dataFicheCourante,
     dataFicheState.data
   );
@@ -91,7 +91,12 @@ export const FichePage: React.FC<FichePageProps> = props => {
         setIndex={setIndexFiche}
       />
       {/* Le bandeau d'ajout d'alerte pour les actes */}
-      {alerteVisible && <AlerteActe />}
+      {dataFicheState && (
+        <AlerteActe
+          dataFiche={dataFicheState.data}
+          ajouterAlerte={ajouterAlerte}
+        />
+      )}
       {/* Les Accordéons */}
       {panelsFiche &&
         panelsFiche.panels.map((panel, index) => (
