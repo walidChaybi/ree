@@ -120,7 +120,6 @@ export const SaisirRDCSCPage: React.FC = () => {
             messageManager.showSuccessAndClose(
               getLibelle("La requête a bien été enregistrée")
             );
-            setOperationEnCours(false);
             const pathname = history.location.pathname;
             history.push(
               getRedirectionVersApercuRequete(pathname, idRequeteSauvegardee)
@@ -128,6 +127,7 @@ export const SaisirRDCSCPage: React.FC = () => {
           }
         }
       }
+      setOperationEnCours(false);
     },
     [history, saisieRequeteRDCSC]
   );
@@ -230,6 +230,7 @@ export const SaisirRDCSCPage: React.FC = () => {
       <OperationEnCours
         visible={operationEnCours}
         onTimeoutEnd={() => setOperationEnCours(false)}
+        onClick={() => setOperationEnCours(false)}
       />
       <title>{titreForm}</title>
       <Formulaire
