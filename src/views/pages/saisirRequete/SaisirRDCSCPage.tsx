@@ -13,7 +13,7 @@ import { Formulaire } from "../../common/widget/formulaire/Formulaire";
 import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../common/widget/Text";
-import { useReponseNegative } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/hook/ChoixReponseNegativeHook";
+import { useReponseNegativeDemandeIncomplete } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/hook/ChoixReponseNegativeDemandeIncompleteHook";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
@@ -158,7 +158,7 @@ export const SaisirRDCSCPage: React.FC = () => {
     }
   }, [UpdateRequeteDelivranceRDCSCResultat, redirectionPage]);
 
-  const resultatReponseNegative = useReponseNegative(
+  const resultatReponseNegative = useReponseNegativeDemandeIncomplete(
     StatutRequete.TRAITE_A_IMPRIMER.libelle,
     StatutRequete.TRAITE_A_IMPRIMER,
     reponseNegative,

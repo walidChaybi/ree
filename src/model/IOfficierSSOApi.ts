@@ -135,11 +135,14 @@ export const provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer = (
 
 export const appartientAMonServiceMereServiceOuFillesServices = (
   idEntite: string
-) =>
-  storeRece.utilisateurCourant?.entite?.idEntite === idEntite ||
-  storeRece.utilisateurCourant?.entitesFilles?.some(
-    el => el.idEntite === idEntite
-  ) ||
-  storeRece.utilisateurCourant?.entite?.hierarchieEntite?.some(
-    el => el.entiteMere.idEntite === idEntite
+) => {
+  return (
+    storeRece.utilisateurCourant?.entite?.idEntite === idEntite ||
+    storeRece.utilisateurCourant?.entitesFilles?.some(
+      el => el.idEntite === idEntite
+    ) ||
+    storeRece.utilisateurCourant?.entite?.hierarchieEntite?.some(
+      el => el.entiteMere.idEntite === idEntite
+    )
   );
+};

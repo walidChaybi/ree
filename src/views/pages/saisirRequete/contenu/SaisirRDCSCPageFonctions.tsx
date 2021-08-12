@@ -42,10 +42,11 @@ export function createReponseNegative(
   let reponseNegative: IReponseNegativeDemandeIncompleteComposition | undefined;
   if (requete && requete.requerant) {
     const requerant = getRequerant(requete) as IRequerant;
-    reponseNegative = ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
-      objet,
-      requerant
-    );
+    reponseNegative =
+      ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+        objet,
+        requerant
+      );
   } else {
     messageManager.showErrorAndClose(
       "Erreur inattendue: Pas de requérent pour la requête"

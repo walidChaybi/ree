@@ -1,8 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { idDocumentReponse1 } from "../../../../../../mock/data/DocumentReponse";
-import { imagePngVideBase64 } from "../../../../../../mock/data/ImagePng";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import { idRequete1 } from "../../../../../../mock/data/RequeteV2";
 import { configMultiAPi } from "../../../../../../mock/superagent-config/superagent-mock-multi-apis";
@@ -44,9 +42,10 @@ const HookConsummer: React.FC = () => {
     dataRMCAutoActe,
     specificationPhraseRMCAutoVide
   );
+  console.log(res);
   return (
     <div data-testid="resulat">
-      {`idDocumentReponse=${res?.idDocumentReponse}, idAction=${res?.idAction},
+      {`idDocumentReponse=${res?.idDocumentReponse?.idParametre}, idAction=${res?.idAction},
       contenuDocumentReponse=${res?.contenuDocumentReponse}`}
     </div>
   );
@@ -61,7 +60,7 @@ test("Attendu: la génération d'un certificat de situation pour une recherche R
   await waitFor(() => {
     expect(
       screen.getByText(
-        `idDocumentReponse=${idDocumentReponse1}, idAction=123456789, contenuDocumentReponse=${imagePngVideBase64}`
+        /idDocumentReponse=188c2a72-1942-4592-8c2d-5d1e47d1d57b/i
       )
     ).toBeInTheDocument();
   });

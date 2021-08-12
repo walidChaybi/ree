@@ -1,5 +1,9 @@
+import { getValeurOuVide } from "../../views/common/util/Utils";
 import { IRequerant } from "../requete/v2/IRequerant";
-import { ICommunComposition } from "./commun/ICommunComposition";
+import {
+  CommunComposition,
+  ICommunComposition
+} from "./commun/ICommunComposition";
 import {
   IParametresComposition,
   ParametresComposition
@@ -16,14 +20,23 @@ export interface IReponseNegativeDemandeIncompleteComposition
     IRequerantComposition {}
 
 export const ReponseNegativeDemandeIncompleteComposition = {
-  creerReponseNegative(objet: string, requerant: IRequerant) {
+  creerReponseNegative(
+    objet: string,
+    requerant: IRequerant,
+    numeroRequete?: string
+  ) {
     const reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
     ParametresComposition.ajoutParametres(reponseNegative);
 
-    reponseNegative.objet_courrier = objet;
+    CommunComposition.ajoutParametres(
+      reponseNegative,
+      getValeurOuVide(numeroRequete),
+      objet
+    );
 
     reponseNegative.identite_requerant = `${requerant.nomFamille} ${requerant.prenom}`;
     RequerantComposition.ajoutInfosRequerant(reponseNegative, requerant);
+
     return reponseNegative;
   }
 };

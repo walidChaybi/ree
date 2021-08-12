@@ -47,6 +47,13 @@ export const TitulaireRequete = {
     const indexPrenom3 = 2;
     return this.getPrenom(indexPrenom3, titulaire);
   },
+  getPrenoms(titulaire?: ITitulaireRequete): string {
+    return `${this.getPrenom1(titulaire)}${
+      this.getPrenom2(titulaire) ? " " : ""
+    }${this.getPrenom2(titulaire)}${
+      this.getPrenom3(titulaire) ? " " : ""
+    }${this.getPrenom3(titulaire)}`;
+  },
   getDateNaissance(titulaire?: ITitulaireRequete): string {
     return titulaire && titulaire.anneeNaissance
       ? getDateStringFromDateCompose({

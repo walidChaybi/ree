@@ -2,7 +2,7 @@ import { Orientation } from "../../model/composition/enum/Orientation";
 import { IDocumentReponse } from "../../model/requete/v2/IDocumentReponse";
 import { imagePngVideBase64 } from "./ImagePng";
 
-export const idDocumentReponse1 = "bbac2335-562c-4b14-96aa-4386814c02a2";
+export const idDocumentReponse1 = "188c2a72-1942-4592-8c2d-5d1e47d1d57b";
 
 export const documentReponseCARN_CSPAC_01: IDocumentReponse = {
   id: idDocumentReponse1,

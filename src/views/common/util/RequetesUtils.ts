@@ -67,14 +67,17 @@ export const typeEstDelivrance = (type: string) =>
 
 export const autorisePrendreEnChargeDelivrance = (
   requete: IRequeteDelivrance
-) =>
-  typeEstDelivrance(requete.type.libelle) &&
-  statutEstATraiterOuATransferee(requete.statutCourant.statut.libelle) &&
-  mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
-  provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-    requete.provenanceRequete.provenance.libelle
-  ) &&
-  appartientAMonServiceMereServiceOuFillesServices(requete.idEntite);
+) => {
+  return (
+    typeEstDelivrance(requete.type.libelle) &&
+    statutEstATraiterOuATransferee(requete.statutCourant.statut.libelle) &&
+    mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
+    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+      requete.provenanceRequete.provenance.libelle
+    ) &&
+    appartientAMonServiceMereServiceOuFillesServices(requete.idEntite)
+  );
+};
 
 export const autorisePrendreEnChargeTableau = (requete: IRequeteTableau) =>
   typeEstDelivrance(requete.type ? requete.type : "") &&

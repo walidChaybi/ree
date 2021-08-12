@@ -34,8 +34,9 @@ export const configMultiAPi = [
 
       // Récupération des paramètres de la base requête
       if (
-        match[1] === REQUETE_V1_API_URL + "/parametres" &&
-        context.method === "post"
+        match[1] ===
+          (REQUETE_V1_API_URL + "/parametres" && context.method === "post") ||
+        (REQUETE_V2_API_URL + "/parametres" && context.method === "post")
       ) {
         return { data: parametresBaseRequete };
       }

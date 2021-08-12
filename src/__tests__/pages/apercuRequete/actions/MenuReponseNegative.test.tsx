@@ -9,16 +9,24 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
+import { reponseNegativeMariage } from "../../../../mock/data/Composition";
+import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 import { idRequete1, requete1 } from "../../../../mock/data/RequeteV2";
 import { configMultiAPi } from "../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { ParametreBaseRequete } from "../../../../model/parametres/enum/ParametresBaseRequete";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { MenuReponseNegative } from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/MenuReponseNegative";
+import {
+  createReponseNegativePourCompositionApiMariage,
+  MenuReponseNegative
+} from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/MenuReponseNegative";
 import {
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
+const superagentMock2 = require("superagent-mock")(request, configRequetesV2);
 
 test("renders du bloc Menu Reponse Negative", async () => {
   const history = createMemoryHistory();
@@ -44,10 +52,6 @@ test("renders du bloc Menu Reponse Negative", async () => {
     expect(menuReponseNegative).toBeDefined();
   });
 
-  await act(async () => {
-    fireEvent.click(menuReponseNegative);
-  });
-
   await waitFor(() => {
     choixRequeteIncomplete = screen.getByText(
       /Requête incomplète ou illisible.+/
@@ -56,16 +60,34 @@ test("renders du bloc Menu Reponse Negative", async () => {
     expect(choixRequeteIncomplete).toBeDefined();
     expect(choixTraceMariage).toBeDefined();
   });
+});
+
+test("Réponse négative demande incomplète", async () => {
+  const history = createMemoryHistory();
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      idRequete1
+    )
+  );
+
+  render(
+    <Router history={history}>
+      <MenuReponseNegative requete={requete1} />
+    </Router>
+  );
+
+  let menuReponseNegative = screen.getByText("Réponse négative");
+  let choixRequeteIncomplete: HTMLElement;
 
   await act(async () => {
-    fireEvent.click(choixTraceMariage);
-  });
-
-  await waitFor(() => {
-    expect(screen.getByRole("dialog")).toBeDefined();
+    fireEvent.click(menuReponseNegative);
   });
 
   await act(async () => {
+    choixRequeteIncomplete = screen.getByText(
+      /Requête incomplète ou illisible.+/
+    );
     fireEvent.click(choixRequeteIncomplete);
   });
 
@@ -76,6 +98,50 @@ test("renders du bloc Menu Reponse Negative", async () => {
   });
 });
 
+test("Reponse négative mariage", async () => {
+  const history = createMemoryHistory();
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      idRequete1
+    )
+  );
+
+  render(
+    <Router history={history}>
+      <MenuReponseNegative requete={requete1} />
+    </Router>
+  );
+  let menuReponseNegative = screen.getByText("Réponse négative");
+  let choixTraceMariage: HTMLElement;
+
+  await act(async () => {
+    fireEvent.click(menuReponseNegative);
+  });
+
+  await waitFor(() => {
+    choixTraceMariage = screen.getByText(/Trace d'un mariage actif.+/);
+  });
+
+  await act(async () => {
+    fireEvent.click(choixTraceMariage);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByRole("dialog")).toBeDefined();
+  });
+});
+
+test("test de création réponse négative mariage", async () => {
+  await ParametreBaseRequete.init();
+  const requete = requeteDelivrance;
+  const reponseNegative = await createReponseNegativePourCompositionApiMariage(
+    requete
+  );
+  expect(reponseNegative).toStrictEqual(reponseNegativeMariage);
+});
+
 afterAll(() => {
   superagentMock.unset();
+  superagentMock2.unset();
 });
