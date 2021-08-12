@@ -7,7 +7,7 @@ import { Sexe } from "../../../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { specificationPhraseRMCAutoVide } from "../../../../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import { specificationPhraseRMCAutoVide } from "../../../../../../../views/common/hook/v2/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
 beforeAll(() => {

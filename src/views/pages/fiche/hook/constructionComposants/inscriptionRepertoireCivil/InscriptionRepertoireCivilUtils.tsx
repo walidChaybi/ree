@@ -4,8 +4,8 @@ import {
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
-import { IDureeInscription } from "../../../../../../model/etatcivil/fiche/IDureeInscription";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { IDureeInscription } from "../../../../../../model/etatcivil/rcrca/IDureeInscription";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import {
   getDateFromTimestamp,
   getDateString

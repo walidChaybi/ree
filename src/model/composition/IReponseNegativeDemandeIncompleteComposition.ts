@@ -13,7 +13,7 @@ import {
   RequerantComposition
 } from "./commun/IRequerantComposition";
 
-export const NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE = "CARN_CSPAC_01.pdf";
+export const NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE = "CARN_CSPAC_01";
 export interface IReponseNegativeDemandeIncompleteComposition
   extends IParametresComposition,
     ICommunComposition,

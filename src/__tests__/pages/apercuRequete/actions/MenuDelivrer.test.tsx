@@ -10,8 +10,10 @@ import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { idRequete1, requete1 } from "../../../../mock/data/RequeteV2";
-import { DataRMCInscriptionAvecResultat } from "../../../../mock/data/RMCInscription";
+import { DataRMCInscriptionAvecUnSeulResultat } from "../../../../mock/data/RMCInscription";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configMultiAPi } from "../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { MenuDelivrer } from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/MenuDelivrer";
@@ -21,6 +23,14 @@ import {
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
+const superagentMockRequete = require("superagent-mock")(
+  request,
+  configRequetesV2
+);
+const superagentMockEtatCivil = require("superagent-mock")(
+  request,
+  configEtatcivil
+);
 
 beforeAll(() => {
   DocumentDelivrance.init();
@@ -44,7 +54,7 @@ test("renders du bloc Menu Delivrer", async () => {
       <Router history={history}>
         <MenuDelivrer
           requete={requete1}
-          inscriptionSelected={DataRMCInscriptionAvecResultat}
+          inscriptionSelected={DataRMCInscriptionAvecUnSeulResultat}
         />
       </Router>
     );
@@ -78,4 +88,6 @@ test("renders du bloc Menu Delivrer", async () => {
 
 afterAll(() => {
   superagentMock.unset();
+  superagentMockRequete.unset();
+  superagentMockEtatCivil.unset();
 });

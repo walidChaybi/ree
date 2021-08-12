@@ -1,7 +1,7 @@
 import { pacsModificationNotaireMap } from "../../../mock/data/PACS";
 import { NatureRca } from "../../../model/etatcivil/enum/NatureRca";
 import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
-import { IFicheRcRca } from "../../../model/etatcivil/fiche/IFicheRcRca";
+import { IFicheRcRca } from "../../../model/etatcivil/rcrca/IFicheRcRca";
 import { IDataFicheProps } from "../../../views/pages/fiche/FichePage";
 import { getFicheTitle, setFiche } from "../../../views/pages/fiche/FicheUtils";
 
@@ -59,7 +59,7 @@ test("ficheUtils setFiche RCA works", () => {
     alertes: [{ alerte: "ouhou", dateCreation: 1 }],
     interesses: [],
     statutsFiche: [],
-    nature: "hi" as unknown as NatureRca,
+    nature: ("hi" as unknown) as NatureRca,
     mandataires: [],
     inscriptionsImpactees: [],
     inscriptionsLiees: [],
@@ -67,7 +67,6 @@ test("ficheUtils setFiche RCA works", () => {
   };
 
   const fiche = setFiche(dataFiche, data);
-  console.log(fiche);
 
   expect(fiche.bandeauFiche.titreFenetre).toBe("RCA -  - N° 1992 - 1");
   expect(fiche.bandeauFiche.annee).toBe("1992");

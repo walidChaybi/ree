@@ -3,12 +3,14 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
+import { userDroitConsulterPerimetreMEAE } from "../../../../../mock/data/connectedUserAvecDroit";
 import {
   DataRMCRequeteAvecResultat,
   DataTableauRequete
 } from "../../../../../mock/data/RMCRequete";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { getLastPathElem } from "../../../../../views/common/util/route/routeUtil";
+import { storeRece } from "../../../../../views/common/util/storeRece";
 import { RMCTableauRequetes } from "../../../../../views/pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
 import { URL_RECHERCHE_REQUETE } from "../../../../../views/router/ReceUrls";
 
@@ -94,62 +96,64 @@ test("renders Resultat Requetes Recherche Multi Critères => Sans résultat", ()
   expect(getByText(/Aucune requête n'a été trouvée/i)).toBeDefined();
 });
 
-//     // TODO A remplacer quand une des US 207 / 210 / 316 sera réalisée
-// test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () => {
-//   userDroitConsulterPerimetreMEAE.idUtilisateur =
-//     "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
+test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () => {
+  userDroitConsulterPerimetreMEAE.idUtilisateur =
+    "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
 
-//   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-//   const { getByTestId } = render(
-//     <Router history={history}>
-//       <RMCTableauRequetes
-//         dataRMCRequete={DataRMCRequeteAvecResultat}
-//         dataTableauRMCRequete={DataTableauRequete}
-//       />
-//     </Router>
-//   );
+  const { getByTestId } = render(
+    <Router history={history}>
+      <RMCTableauRequetes
+        dataRMCRequete={DataRMCRequeteAvecResultat}
+        dataTableauRMCRequete={DataTableauRequete}
+      />
+    </Router>
+  );
 
-//   const ligne = getByTestId("8ef11b8b-652c-4c6a-ad27-a544fce635d1");
+  const ligne = getByTestId("8ef11b8b-652c-4c6a-ad27-a544fce635d1");
 
-//   act(() => {
-//     fireEvent.click(ligne);
-//   });
+  act(() => {
+    fireEvent.click(ligne);
+  });
 
-//   await waitFor(() => {
-//     expect(history.location.pathname).toEqual("rece/rece-ui/rechercherequete");
-//     // expect(getLastPathElem(history.location.pathname)).toEqual(
-//     //   "8ef11b8b-652c-4c6a-ad27-a544fce635d1"
-//     // );
-//   });
-// });
+  await waitFor(() => {
+    expect(history.location.pathname).toEqual(
+      "/rece/rece-ui/rechercherequete/apercurequetepriseencharge/8ef11b8b-652c-4c6a-ad27-a544fce635d1"
+    );
+    expect(getLastPathElem(history.location.pathname)).toEqual(
+      "8ef11b8b-652c-4c6a-ad27-a544fce635d1"
+    );
+  });
+});
 
-//     // TODO A remplacer quand une des US 207 / 210 / 316 sera réalisée
-// test("Clic sur une Requête avec des titulaire", async () => {
-//   userDroitConsulterPerimetreMEAE.idUtilisateur =
-//     "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
+test("Clic sur une Requête avec des titulaire", async () => {
+  userDroitConsulterPerimetreMEAE.idUtilisateur =
+    "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
 
-//   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
-//   const { getByTestId } = render(
-//     <Router history={history}>
-//       <RMCTableauRequetes
-//         dataRMCRequete={DataRMCRequeteAvecResultat}
-//         dataTableauRMCRequete={DataTableauRequete}
-//       />
-//     </Router>
-//   );
+  const { getByTestId } = render(
+    <Router history={history}>
+      <RMCTableauRequetes
+        dataRMCRequete={DataRMCRequeteAvecResultat}
+        dataTableauRMCRequete={DataTableauRequete}
+      />
+    </Router>
+  );
 
-//   const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf9");
+  const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf9");
 
-//   act(() => {
-//     fireEvent.click(ligne);
-//   });
+  act(() => {
+    fireEvent.click(ligne);
+  });
 
-//   await waitFor(() => {
-//     expect(history.location.pathname).toEqual("rece/rece-ui/rechercherequete");
-//     // expect(getLastPathElem(history.location.pathname)).toEqual(
-//     //   "8ef11b8b-652c-4c6a-ad27-a544fce635d1"
-//     // );
-//   });
-// });
+  await waitFor(() => {
+    expect(history.location.pathname).toEqual(
+      "/rece/rece-ui/rechercherequete/apercurequetepriseencharge/4578e56c-421c-4e6a-b587-a238a665daf9"
+    );
+    expect(getLastPathElem(history.location.pathname)).toEqual(
+      "4578e56c-421c-4e6a-b587-a238a665daf9"
+    );
+  });
+});

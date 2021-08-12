@@ -31,6 +31,11 @@ export const configComposition = [
         return { data: imagePngVideBase64 };
       }
 
+      if (match[1] === "/composition/CERTIFICAT_INSCRIPTION_RCA/1") {
+        // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+        return { data: imagePngVideBase64 };
+      }
+
       const error = { msg: "url api composition non mockée", url: match[1] };
       console.log("Erreur mock api: ", error);
       return {

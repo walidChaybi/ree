@@ -206,3 +206,16 @@ export function finirAvec3petitsPoints(
 export function supprimerNullEtUndefinedDuTableau(elements?: any[]) {
   return elements?.filter((el: any) => el != null);
 }
+
+export function replaceIndexByValue(
+  phrase: string,
+  values: (string | number)[]
+) {
+  if (phrase && values) {
+    values.forEach((value: string | number, index: number) => {
+      const valueToUse = typeof value === "number" ? value.toString() : value;
+      phrase = phrase.replace(`{${index}}`, valueToUse);
+    });
+  }
+  return phrase;
+}

@@ -3,7 +3,7 @@ import React from "react";
 import request from "superagent";
 import {
   documentReponseCARN_CSPAC_01,
-  idDocumentReponse1
+  idDocumentsReponse
 } from "../../../../mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
@@ -11,13 +11,11 @@ import { useGetPieceJustificativeApi } from "../../../../views/common/hook/v2/Pi
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 const HookConsumerUseGetPieceJustificativeApi: React.FC = () => {
-  const doc = useGetPieceJustificativeApi(idDocumentReponse1);
+  const doc = useGetPieceJustificativeApi(idDocumentsReponse[0]);
 
   return <div>{doc?.contenu}</div>;
 };
-
 const piecesJustificatives = [documentReponseCARN_CSPAC_01];
-
 test("Attendu: useGetDocumentReponseApi fonctionne correctement", async () => {
   render(<HookConsumerUseGetPieceJustificativeApi />);
 

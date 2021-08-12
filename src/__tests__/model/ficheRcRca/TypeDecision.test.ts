@@ -1,15 +1,15 @@
 import {
-  DecisionUtil,
-  TypeDecision
+  TypeDecision,
+  TypeDecisionUtil
 } from "../../../model/etatcivil/enum/TypeDecision";
 
 test("TypeDecision model", () => {
-  expect(DecisionUtil.isJugement(TypeDecision.JUGEMENT)).toBe(true);
-  expect(DecisionUtil.isJugement(TypeDecision.ARRET)).toBe(false);
-  expect(DecisionUtil.isJugement(TypeDecision.CONVENTION)).toBe(false);
-  expect(DecisionUtil.isJugement(TypeDecision.ACTE_NOTARIE)).toBe(false);
+  expect(TypeDecisionUtil.isJugement(TypeDecision.JUGEMENT)).toBe(true);
+  expect(TypeDecisionUtil.isJugement(TypeDecision.ARRET)).toBe(false);
+  expect(TypeDecisionUtil.isJugement(TypeDecision.CONVENTION)).toBe(false);
+  expect(TypeDecisionUtil.isJugement(TypeDecision.ACTE_NOTARIE)).toBe(false);
 
-  expect(DecisionUtil.getLibelle(TypeDecision.JUGEMENT)).toBe("Jugement");
+  expect(TypeDecisionUtil.getLibelle(TypeDecision.JUGEMENT)).toBe("Jugement");
 
-  expect(DecisionUtil.getLibelle()).toBe("");
+  expect(TypeDecisionUtil.getLibelle()).toBe("");
 });

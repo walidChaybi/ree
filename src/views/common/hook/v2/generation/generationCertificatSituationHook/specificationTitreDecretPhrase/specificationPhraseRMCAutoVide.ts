@@ -15,7 +15,7 @@ import {
 } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { getLibelle } from "../../../../../../common/widget/Text";
+import { getLibelle } from "../../../../../widget/Text";
 import { IPhrasesJasperCertificatSituation } from "../GenerationCertificatSituationHook";
 
 interface INbInscriptionsInfos {

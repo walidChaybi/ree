@@ -15,11 +15,9 @@ import {
 } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import {
-  getJourOu1er,
-  getMoisNaissanceEnLettre
-} from "../../../../../../common/util/DateUtils";
-import { getLibelle } from "../../../../../../common/widget/Text";
+import { getDateFormatJasper } from "../../../../../util/DateUtils";
+import { replaceIndexByValue } from "../../../../../util/Utils";
+import { getLibelle } from "../../../../../widget/Text";
 import { IPhrasesJasperCertificatSituation } from "../GenerationCertificatSituationHook";
 interface IInscriptionsInfos {
   infosPacs: IResultatRMCInscription[];
@@ -125,10 +123,8 @@ class SpecificationDeliver {
           phraseSuivante =
             sexe === Sexe.FEMININ ? messages.inscrite : messages.inscrit;
           const date = new Date(info.dateInscription);
-          phraseSuivante = this.replaceIndexByValue(phraseSuivante, [
-            `${getJourOu1er(date.getDate())} ${getMoisNaissanceEnLettre(
-              date.getMonth() + 1
-            )} ${date.getFullYear()}`,
+          phraseSuivante = replaceIndexByValue(phraseSuivante, [
+            getDateFormatJasper(date),
             info.anneeInscription,
             info.numeroInscription
           ]);
@@ -151,16 +147,6 @@ class SpecificationDeliver {
     } else {
       return `${phrase}\n${phraseSuivante}`;
     }
-  }
-
-  replaceIndexByValue(phrase: string, values: string[] | number[]) {
-    if (phrase && values) {
-      values.forEach((value: string | number, index: number) => {
-        const valueToUse = typeof value === "number" ? value.toString() : value;
-        phrase = phrase.replace(`{${index}}`, valueToUse);
-      });
-    }
-    return phrase;
   }
 
   getText(type: TypeFiche) {

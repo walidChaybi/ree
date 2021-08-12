@@ -47,7 +47,7 @@ export const ReponseAppelRMCInscription = {
         typeInscription: "MAIN_LEVEE"
       },
       {
-        id: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
+        id: "8244d136-729b-4fd3-b88a-fa1fe30a2215",
         nom: "Rose",
         autresNoms: ["DUPE"],
         prenoms: ["Jean-pierre", "Michel"],
@@ -112,7 +112,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     anneeInscription: "2017"
   },
   {
-    idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
+    idInscription: "135e4dfe-9757-4d5d-8715-359c6e73289b",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -127,7 +127,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     anneeInscription: "2009"
   },
   {
-    idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2214",
+    idInscription: "8244d136-729b-4fd3-b88a-fa1fe30a2216",
     nom: "ROSE",
     autresNoms: "DUPE",
     prenoms: "Jean-pierre, Michel",
@@ -155,5 +155,23 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     typeInscription: "CADUCITE 2",
     dateInscription: "2000-02-11",
     anneeInscription: "2000"
+  }
+];
+
+export const DataRMCInscriptionAvecUnSeulResultat: IResultatRMCInscription[] = [
+  {
+    idInscription: "135e4dfe-9757-4d5d-8715-359c6e73289b",
+    nom: "ROSE",
+    autresNoms: "DUPE",
+    prenoms: "Jean-pierre, Michel",
+    dateNaissance: "08/06/1960",
+    paysNaissance: "Tunisie",
+    numeroInscription: "1005",
+    nature: "Annulation de reconnaissance",
+    categorie: "RCA",
+    statutInscription: "Actif",
+    typeInscription: "RENOUVELLEMENT",
+    dateInscription: "2007-07-07",
+    anneeInscription: "2007"
   }
 ];

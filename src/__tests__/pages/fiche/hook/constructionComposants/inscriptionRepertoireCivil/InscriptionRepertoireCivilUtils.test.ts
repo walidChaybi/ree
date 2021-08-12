@@ -1,4 +1,4 @@
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { getInscriptionRepertoireCivil } from "../../../../../../views/pages/fiche/hook/constructionComposants/inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
 import {
   ficheInscriptionRepertoireCivil,

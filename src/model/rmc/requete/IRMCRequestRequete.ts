@@ -4,8 +4,8 @@ export interface IRMCRequestRequete {
   // Filtre Requete
   numeroRequete?: string;
   typeRequete?: TypeRequete;
-  sousTypeRequete?: string; // TODO SousTypeRequete
-  statutRequete?: string; // TODO StatutRequete
+  sousTypeRequete?: string; // SousTypeRequete ?
+  statutRequete?: string; // StatutRequete ?
 
   // Filtre Titulaire
   nomTitulaire?: string;

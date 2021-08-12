@@ -1,8 +1,8 @@
 import React from "react";
-import { IInscriptionLiee } from "../../../../../../model/etatcivil/fiche/IInscriptionLiee";
-import { LienFiche } from "../../../LienFiche";
-import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
+import { InscriptionRcUtil } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
+import { IInscriptionLiee } from "../../../../../../model/etatcivil/rcrca/IInscriptionLiee";
+import { LienFiche } from "../../../LienFiche";
 
 interface IInscriptionsLieesProps {
   inscriptionsLiees: IInscriptionLiee[];

@@ -1,4 +1,4 @@
-import { IFicheRcRca } from "../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { IFicheRcRca } from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { getDecision } from "../../../../../views/pages/fiche/hook/constructionComposants/rcrca/DecisionUtils";
 import {
   ficheAutoriteJuridictionFranceAvecConfirmation,

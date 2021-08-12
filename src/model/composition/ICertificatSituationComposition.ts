@@ -14,7 +14,7 @@ import {
   TitulaireComposition
 } from "./commun/ITitulaireComposition";
 
-export const NOM_DOCUMENT_CERTIFICAT_SITUATION = "CERTIFICAT_SITUATION.pdf";
+export const NOM_DOCUMENT_CERTIFICAT_SITUATION = "CERTIFICAT_SITUATION";
 export interface ICertificatSituationComposition
   extends IParametresComposition,
     ICommunComposition,

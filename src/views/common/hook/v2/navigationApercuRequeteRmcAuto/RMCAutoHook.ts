@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
+import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import {
-  IResultGenerationCertificatSituation,
-  useGenerationCertificatSituation
-} from "../../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/GenerationCertificatSituationHook";
-import { specificationPhraseRMCAutoVide } from "../../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { useRMCAutoActeApiHook } from "../../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActeApiHook";
 import {
   redirectionRMCAuto,
@@ -17,6 +13,16 @@ import { IUrlData } from "../../../../router/ReceUrls";
 import { IParamsTableau } from "../../../util/GestionDesLiensApi";
 import { NB_LIGNES_PAR_APPEL } from "../../../widget/tableau/TableUtils";
 import { getLibelle } from "../../../widget/Text";
+import {
+  IGenerationCertificatSituationParams,
+  useGenerationCertificatSituationHook
+} from "../generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
+import { specificationPhraseRMCAutoVide } from "../generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import { IResultGenerationUnDocument } from "../generation/generationUtils";
+import {
+  IActionStatutRequete,
+  useCreerActionMajStatutRequete
+} from "../requete/CreerActionMajStatutRequete";
 
 const INFO_CS_RMC_AUTO_VIDE = getLibelle(
   "La recherche multi-critères sur les actes/ RC / RCA et PACS n'ayant donné aucun résultat, il vous est proposé de délivrer le certificat ci-dessous."
@@ -45,12 +51,47 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
     `0-${NB_LIGNES_PAR_APPEL}`
   );
 
-  const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituation(
-    params?.requete,
-    dataRMCAutoInscription,
-    dataRMCAutoActe,
-    specificationPhraseRMCAutoVide
+  const [
+    paramsCertificatSituation,
+    setParamsCertificatSituation
+  ] = useState<IGenerationCertificatSituationParams>();
+
+  const [
+    actionStatutRequete,
+    setActionStatutRequete
+  ] = useState<IActionStatutRequete>();
+
+  useEffect(() => {
+    if (params) {
+      setParamsCertificatSituation({
+        requete: params.requete,
+        dataRMCAutoInscription,
+        dataRMCAutoActe,
+        specificationPhrase: specificationPhraseRMCAutoVide
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataRMCAutoInscription, dataRMCAutoActe]);
+
+  // Génération du certificat de situation
+  const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituationHook(
+    paramsCertificatSituation
   );
+
+  // Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
+  useEffect(() => {
+    if (resultGenerationCertificatSituationRMCAutoVide?.idDocumentReponse) {
+      setActionStatutRequete({
+        libelleAction: StatutRequete.A_VALIDER.libelle,
+        statutRequete: StatutRequete.A_VALIDER,
+        requeteId: params?.requete?.idRequete
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultGenerationCertificatSituationRMCAutoVide]);
+
+  // Mise à jour du status de la requête + création d'une action
+  const { idAction } = useCreerActionMajStatutRequete(actionStatutRequete);
 
   useEffect(() => {
     if (
@@ -75,16 +116,18 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
         //@ts-ignore
         resultGenerationCertificatSituationRMCAutoVide.idDocumentReponse
       ) {
-        data.info = INFO_CS_RMC_AUTO_VIDE;
-        setUrlDataRMCAuto({
-          url: redirectionRMCAutoApercuTraitement(
-            //@ts-ignore
-            params.requete.idRequete,
-            //@ts-ignore
-            params.urlCourante
-          ),
-          data
-        });
+        if (idAction) {
+          data.info = INFO_CS_RMC_AUTO_VIDE;
+          setUrlDataRMCAuto({
+            url: redirectionRMCAutoApercuTraitement(
+              //@ts-ignore
+              params.requete.idRequete,
+              //@ts-ignore
+              params.urlCourante
+            ),
+            data
+          });
+        }
       } else {
         setUrlDataRMCAuto({
           url: redirectionRMCAuto(
@@ -105,7 +148,8 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
     dataTableauRMCAutoActe,
     dataRMCAutoInscription,
     dataTableauRMCAutoInscription,
-    resultGenerationCertificatSituationRMCAutoVide
+    resultGenerationCertificatSituationRMCAutoVide,
+    idAction
   ]);
 
   return urlDataRMCAuto;
@@ -116,7 +160,7 @@ function estNonVide(
   dataTableauRMCAutoActe?: IParamsTableau,
   dataRMCAutoInscription?: IResultatRMCInscription[],
   dataTableauRMCAutoInscription?: IParamsTableau,
-  resultGenerationCertificatSituationRMCAutoVide?: IResultGenerationCertificatSituation
+  resultGenerationCertificatSituationRMCAutoVide?: IResultGenerationUnDocument
 ) {
   return (
     params?.requete &&

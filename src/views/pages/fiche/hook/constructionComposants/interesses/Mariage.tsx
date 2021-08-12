@@ -1,12 +1,12 @@
 import React from "react";
 import {
-  IMariageInteresse,
   getLibelleLieuMariage,
-  getLieuMariage
-} from "../../../../../../model/etatcivil/fiche/IMariageInteresse";
+  getLieuMariage,
+  IMariageInteresse
+} from "../../../../../../model/etatcivil/rcrca/IMariageInteresse";
 import {
-  getDateStringFromDateCompose,
-  formatDeOuLe
+  formatDeOuLe,
+  getDateStringFromDateCompose
 } from "../../../../../common/util/DateUtils";
 import "./scss/Mariage.scss";
 

@@ -1,4 +1,4 @@
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { getLibelle } from "../../../../../common/widget/Text";
 import { IAccordionReceSection } from "../../../FicheUtils";

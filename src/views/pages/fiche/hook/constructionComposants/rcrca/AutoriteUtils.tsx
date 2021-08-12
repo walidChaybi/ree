@@ -11,7 +11,7 @@ import {
   FicheUtil,
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import {
   formatNom,

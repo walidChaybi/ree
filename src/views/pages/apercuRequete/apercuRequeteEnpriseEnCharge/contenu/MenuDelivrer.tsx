@@ -12,10 +12,9 @@ import {
 } from "../../../../common/widget/menu/MenuAction";
 import { getLibelle } from "../../../../common/widget/Text";
 import { receUrl } from "../../../../router/ReceUrls";
-import { useGenerationCertificatSituation } from "../../../rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/GenerationCertificatSituationHook";
-import { specificationPhraseDelivrer } from "../../../rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { IActionProps } from "./ChoixAction";
+import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 
 export const MenuDelivrer: React.FC<IActionProps> = props => {
   const history = useHistory();
@@ -25,8 +24,9 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   const [acteSelected, setActeSelected] = useState<IResultatRMCActe[]>();
-  const [inscriptionSelected, setInscriptionSelected] =
-    useState<IResultatRMCInscription[]>();
+  const [inscriptionSelected, setInscriptionSelected] = useState<
+    IResultatRMCInscription[]
+  >();
 
   const delivrerOptions: IActionOption[] = [
     {
@@ -37,13 +37,12 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     }
   ];
 
-  const resultGenerationCertificatSituation = useGenerationCertificatSituation(
+  const resultDeliverCertificatSituation = useDelivrerCertificatSituationHook(
     mappingRequeteDelivranceToRequeteTableau(
       props.requete as IRequeteDelivrance
     ),
     inscriptionSelected,
-    acteSelected,
-    specificationPhraseDelivrer
+    acteSelected
   );
 
   const handleDelivrerMenu = async () => {
@@ -61,14 +60,14 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   };
 
   useEffect(() => {
-    if (resultGenerationCertificatSituation) {
+    if (resultDeliverCertificatSituation) {
       const url = receUrl.getUrlApercuTraitementAPartirDe(
         history.location.pathname
       );
       receUrl.replaceUrl(history, url);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultGenerationCertificatSituation, history]);
+  }, [resultDeliverCertificatSituation, history]);
 
   return (
     <>

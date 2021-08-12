@@ -1,6 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
+import { idDocumentsReponse } from "../../../../../../mock/data/DocumentReponse";
+import { imagePngVideBase64 } from "../../../../../../mock/data/ImagePng";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import { idRequete1 } from "../../../../../../mock/data/RequeteV2";
 import { configMultiAPi } from "../../../../../../mock/superagent-config/superagent-mock-multi-apis";
@@ -12,8 +14,12 @@ import {
 } from "../../../../../../model/requete/v2/IRequeteTableau";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { useGenerationCertificatSituation } from "../../../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/GenerationCertificatSituationHook";
-import { specificationPhraseRMCAutoVide } from "../../../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import {
+  IGenerationCertificatSituationParams,
+  useGenerationCertificatSituationHook
+} from "../../../../../../views/common/hook/v2/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
+import { specificationPhraseRMCAutoVide } from "../../../../../../views/common/hook/v2/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
 const titulaire = {
@@ -32,22 +38,29 @@ const requete = {
   document: ReponseAppelNomenclatureDocummentDelivrance.data[1].id, //CERTIFICAT_SITUATION_PACS
   titulaires: [titulaire]
 } as IRequeteTableau;
+
 const dataRMCAutoInscription = [] as IResultatRMCInscription[];
 const dataRMCAutoActe = [] as IResultatRMCActe[];
 
+const params = {
+  requete,
+  dataRMCAutoInscription,
+  dataRMCAutoActe,
+  specificationPhrase: specificationPhraseRMCAutoVide
+} as IGenerationCertificatSituationParams;
+
 const HookConsummer: React.FC = () => {
-  const res = useGenerationCertificatSituation(
-    requete,
-    dataRMCAutoInscription,
-    dataRMCAutoActe,
-    specificationPhraseRMCAutoVide
-  );
-  console.log(res);
+  const res = useGenerationCertificatSituationHook(params);
+
   return (
-    <div data-testid="resulat">
-      {`idDocumentReponse=${res?.idDocumentReponse?.idParametre}, idAction=${res?.idAction},
-      contenuDocumentReponse=${res?.contenuDocumentReponse}`}
-    </div>
+    <>
+      <div data-testid="resulatIdDoc">
+        <>{`idDocumentReponse=${res?.idDocumentReponse}`}</>
+      </div>
+      <div data-testid="resulatContenu">
+        <>{`contenuDocumentReponse=${res?.contenuDocumentReponse}`}</>
+      </div>
+    </>
   );
 };
 
@@ -57,12 +70,16 @@ beforeAll(() => {
 
 test("Attendu: la génération d'un certificat de situation pour une recherche RMC auto vide et une demande PACS et tituliare Masculin fonctionne correctement", async () => {
   render(<HookConsummer></HookConsummer>);
+  const resulatIdDoc = screen.getByTestId("resulatIdDoc");
+  const resulatContenu = screen.getByTestId("resulatContenu");
+
   await waitFor(() => {
-    expect(
-      screen.getByText(
-        /idDocumentReponse=188c2a72-1942-4592-8c2d-5d1e47d1d57b/i
-      )
-    ).toBeInTheDocument();
+    expect(resulatIdDoc.innerHTML).toBe(
+      `idDocumentReponse=${idDocumentsReponse[0]}`
+    );
+    expect(resulatContenu.innerHTML).toBe(
+      `contenuDocumentReponse=${imagePngVideBase64}`
+    );
   });
 });
 

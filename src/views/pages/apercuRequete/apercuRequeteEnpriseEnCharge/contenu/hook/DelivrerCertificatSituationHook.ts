@@ -1,0 +1,133 @@
+import { useEffect, useState } from "react";
+import {
+  FicheUtil,
+  TypeFiche
+} from "../../../../../../model/etatcivil/enum/TypeFiche";
+import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
+import { IRequeteTableau } from "../../../../../../model/requete/v2/IRequeteTableau";
+import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import {
+  IGenerationCertificatSituationParams,
+  useGenerationCertificatSituationHook
+} from "../../../../../common/hook/v2/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
+import { specificationPhraseDelivrer } from "../../../../../common/hook/v2/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
+import { useGenerationCertificatRCAHook } from "../../../../../common/hook/v2/generation/generationInscriptionsHook/GenerationCertificatRCAHook";
+import {
+  IActionStatutRequete,
+  useCreerActionMajStatutRequete
+} from "../../../../../common/hook/v2/requete/CreerActionMajStatutRequete";
+
+export interface IResultDelivrerCertificatSituation {
+  idDocumentReponse?: string;
+  idAction?: string;
+  contenuDocumentReponse?: string;
+}
+
+export interface IPhrasesJasperCertificatSituation {
+  phrasesLiees?: string;
+  phrasesPiecesJointes?: string;
+}
+
+export function useDelivrerCertificatSituationHook(
+  requete?: IRequeteTableau,
+  dataRMCAutoInscription?: IResultatRMCInscription[],
+  dataRMCAutoActe?: IResultatRMCActe[]
+) {
+  const [listeRCA, setListeRCA] = useState<IResultatRMCInscription[]>();
+
+  const [
+    resultDelivrerCertificatSituation,
+    setResultDelivrerCertificatSituation
+  ] = useState<IResultDelivrerCertificatSituation>();
+
+  const [
+    paramsCertificatSituation,
+    setParamsCertificatSituation
+  ] = useState<IGenerationCertificatSituationParams>();
+
+  const [
+    actionStatutRequete,
+    setActionStatutRequete
+  ] = useState<IActionStatutRequete>();
+
+  // 1 - On récupère les RCA puis génération du ou des incriptions RCA
+  useEffect(() => {
+    if (dataRMCAutoInscription) {
+      setListeRCA(
+        dataRMCAutoInscription?.filter(
+          rca =>
+            TypeFiche.RCA === FicheUtil.getTypeFicheFromString(rca.categorie)
+        )
+      );
+    }
+  }, [dataRMCAutoInscription]);
+
+  const resultGenerationCertificatRCA = useGenerationCertificatRCAHook(
+    requete,
+    listeRCA
+  );
+
+  useEffect(() => {
+    if (resultGenerationCertificatRCA) {
+      setParamsCertificatSituation({
+        requete,
+        dataRMCAutoInscription,
+        dataRMCAutoActe,
+        specificationPhrase: specificationPhraseDelivrer
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultGenerationCertificatRCA]);
+
+  // 1 - Génération du certificat de situation
+  const resultGenerationCertificatSituation = useGenerationCertificatSituationHook(
+    paramsCertificatSituation
+  );
+
+  // 2 - Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
+  useEffect(() => {
+    if (resultGenerationCertificatSituation) {
+      setActionStatutRequete({
+        libelleAction: StatutRequete.A_VALIDER.libelle,
+        statutRequete: StatutRequete.A_VALIDER,
+        requeteId: requete?.idRequete
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultGenerationCertificatSituation]);
+
+  // 3 - Mise à jour du status de la requête + création d'une action
+  const { idAction } = useCreerActionMajStatutRequete(actionStatutRequete);
+
+  // 4 - une fois l'action créée, création du résultat
+  useEffect(() => {
+    const uuidDocumentsReponse =
+      resultGenerationCertificatSituation?.idDocumentReponse;
+    const contenuComposition =
+      resultGenerationCertificatSituation?.contenuDocumentReponse;
+
+    if (
+      resultGenerationCertificatSituation &&
+      estNonVide(idAction, uuidDocumentsReponse, contenuComposition)
+    ) {
+      setResultDelivrerCertificatSituation({
+        //@ts-ignore
+        idDocumentReponse: uuidDocumentsReponse[0],
+        idAction,
+        contenuDocumentReponse: contenuComposition
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idAction]);
+
+  return resultDelivrerCertificatSituation;
+}
+
+function estNonVide(
+  idAction: string | undefined,
+  uuidDocumentsReponse: string | undefined,
+  contenuComposition: string | undefined
+) {
+  return idAction && uuidDocumentsReponse && contenuComposition;
+}

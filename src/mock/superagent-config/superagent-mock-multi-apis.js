@@ -1,6 +1,7 @@
 import {
   documentReponseCARN_CSPAC_01,
-  idDocumentReponse1
+  documentReponseCertificatRCA,
+  idDocumentsReponse
 } from "../data/DocumentReponse";
 import { imagePngVideBase64 } from "../data/ImagePng";
 import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
@@ -34,9 +35,9 @@ export const configMultiAPi = [
 
       // Récupération des paramètres de la base requête
       if (
-        match[1] ===
-          (REQUETE_V1_API_URL + "/parametres" && context.method === "post") ||
-        (REQUETE_V2_API_URL + "/parametres" && context.method === "post")
+        (match[1] === REQUETE_V1_API_URL + "/parametres" ||
+          match[1] === REQUETE_V2_API_URL + "/parametres") &&
+        context.method === "post"
       ) {
         return { data: parametresBaseRequete };
       }
@@ -44,9 +45,16 @@ export const configMultiAPi = [
       // Récupération d'un document par son id
       if (
         match[1] ===
-        REQUETE_V2_API_URL + "/documentsreponses/" + idDocumentReponse1
+        REQUETE_V2_API_URL + "/documentsreponses/" + idDocumentsReponse[0]
       ) {
         return { data: documentReponseCARN_CSPAC_01 };
+      }
+
+      if (
+        match[1] ===
+        REQUETE_V2_API_URL + "/documentsreponses/" + idDocumentsReponse[1]
+      ) {
+        return { data: documentReponseCertificatRCA };
       }
 
       // Stockage d'un document (POST)
@@ -54,7 +62,7 @@ export const configMultiAPi = [
         match[1] === REQUETE_V2_API_URL + "/documentsreponses" &&
         context.method === "post"
       ) {
-        return { data: [idDocumentReponse1] };
+        return { data: idDocumentsReponse };
       }
 
       // Création d'une action et maj statut de la requête
@@ -81,6 +89,14 @@ export const configMultiAPi = [
       if (
         match[1] ===
         COMPOSITION_API_URL + "/composition/CERTIFICAT_SITUATION/1"
+      ) {
+        // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+        return { data: imagePngVideBase64 };
+      }
+
+      if (
+        match[1] ===
+        COMPOSITION_API_URL + "/composition/CERTIFICAT_INSCRIPTION_RCA/1"
       ) {
         // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
         return { data: imagePngVideBase64 };

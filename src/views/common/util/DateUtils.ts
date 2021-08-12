@@ -214,6 +214,15 @@ export function getFormatDateFromTimestamp(timestamp: number): string {
   return "";
 }
 
+// - jour en chiffres, pas de 0 entre 1 et 9. 1er pour le premier jour du mois
+// - mois en lettre
+// - année en chiffres
+export function getDateFormatJasper(date: Date) {
+  return `${getJourOu1er(date.getDate())} ${getMoisNaissanceEnLettre(
+    date.getMonth() + 1
+  )} ${date.getFullYear()}`;
+}
+
 /**
  *
  * 12 04 => à 12h04

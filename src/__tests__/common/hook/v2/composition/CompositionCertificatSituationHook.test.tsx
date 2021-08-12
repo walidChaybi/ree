@@ -13,7 +13,7 @@ const HookConsumer: React.FC = () => {
   return <div>{doc}</div>;
 };
 
-test("Attendu: useCertificatSituationRmcAutoVideApi fonctionne correctement", async () => {
+test("Attendu: useCertificatSituationApiHook fonctionne correctement", async () => {
   render(<HookConsumer />);
 
   await waitFor(() => {

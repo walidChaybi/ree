@@ -1,11 +1,11 @@
 import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/enum/TypeAutorite";
-import { DecisionUtil } from "../../../../../../model/etatcivil/enum/TypeDecision";
+import { TypeDecisionUtil } from "../../../../../../model/etatcivil/enum/TypeDecision";
 import {
   FicheUtil,
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { IDecisionRc } from "../../../../../../model/etatcivil/fiche/IDecisionRc";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { IDecisionRcRca } from "../../../../../../model/etatcivil/rcrca/IDecisionRcRca";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import {
   getDateFromTimestamp,
   getDateString
@@ -57,13 +57,13 @@ export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
 }
 
 function getContentJuridiction(
-  decision: IDecisionRc,
+  decision: IDecisionRcRca,
   typeFiche: TypeFiche
 ): SectionContentProps[] {
   const result = [
     {
       libelle: "Type",
-      value: DecisionUtil.getLibelle(decision.type)
+      value: TypeDecisionUtil.getLibelle(decision.type)
     },
     {
       libelle: "Date",
@@ -98,11 +98,11 @@ function getContentJuridiction(
   ]);
 }
 
-function getContentNotaire(decision: IDecisionRc): SectionContentProps[] {
+function getContentNotaire(decision: IDecisionRcRca): SectionContentProps[] {
   return [
     {
       libelle: "Type",
-      value: DecisionUtil.getLibelle(decision.type)
+      value: TypeDecisionUtil.getLibelle(decision.type)
     },
     {
       libelle: "Date",
@@ -115,7 +115,7 @@ function getContentNotaire(decision: IDecisionRc): SectionContentProps[] {
 }
 
 function getContentConfirmationDecision(
-  decision: IDecisionRc,
+  decision: IDecisionRcRca,
   typeFiche: TypeFiche
 ): SectionContentProps[] {
   if (
@@ -126,7 +126,7 @@ function getContentConfirmationDecision(
     const confirmationDecision = [
       {
         libelle: "Type",
-        value: DecisionUtil.getLibelle(decision.sourceConfirmation.type)
+        value: TypeDecisionUtil.getLibelle(decision.sourceConfirmation.type)
       },
       {
         libelle: "Date",

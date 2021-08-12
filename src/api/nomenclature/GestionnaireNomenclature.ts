@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { MandataireRc } from "../../model/etatcivil/enum/MandataireRc";
 import { NatureRc } from "../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../model/etatcivil/enum/NatureRca";

@@ -3,7 +3,7 @@ import React from "react";
 import request from "superagent";
 import {
   documentReponseCARN_CSPAC_01,
-  idDocumentReponse1
+  idDocumentsReponse
 } from "../../../../mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
 import { requete1 } from "../../../../mock/data/RequeteV2";
@@ -15,7 +15,7 @@ import {
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 const HookConsumerUseGetDocumentReponseApi: React.FC = () => {
-  const doc = useGetDocumentReponseApi(idDocumentReponse1);
+  const doc = useGetDocumentReponseApi(idDocumentsReponse[0]);
 
   return <div>{doc?.contenu}</div>;
 };
@@ -40,7 +40,7 @@ test("Attendu: usePostDocumentsReponseApi fonctionne correctement", async () => 
   render(<HookConsumerUsePostDocumentsReponseApi />);
 
   await waitFor(() => {
-    expect(screen.getByText(idDocumentReponse1)).toBeInTheDocument();
+    expect(screen.getByText(idDocumentsReponse[0])).toBeInTheDocument();
   });
 });
 

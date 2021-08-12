@@ -1,7 +1,7 @@
 import React from "react";
 import { FicheUtil } from "../../../../../../model/etatcivil/enum/TypeFiche";
-import { IFicheRcRca } from "../../../../../../model/etatcivil/fiche/IFicheRcRca";
-import { IInteresse } from "../../../../../../model/etatcivil/fiche/IInteresse";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
+import { IInteresse } from "../../../../../../model/etatcivil/rcrca/IInteresse";
 import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
 import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";

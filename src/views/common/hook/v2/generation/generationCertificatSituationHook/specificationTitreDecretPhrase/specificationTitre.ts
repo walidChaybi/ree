@@ -8,7 +8,7 @@ import {
   CODE_CERTIFICAT_SITUATION_RC_RCA,
   DocumentDelivrance
 } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { getLibelle } from "../../../../../../common/widget/Text";
+import { getLibelle } from "../../../../../widget/Text";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Specifications pour le titre à renvoyer en fonction du document demandé

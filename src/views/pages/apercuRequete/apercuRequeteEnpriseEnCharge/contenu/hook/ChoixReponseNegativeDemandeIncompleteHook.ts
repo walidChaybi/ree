@@ -19,12 +19,15 @@ export function useReponseNegativeDemandeIncomplete(
 ) {
   const [resultat, setResultat] = useState<any>();
 
-  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
-    useState<IDocumentReponse[] | undefined>();
+  const [
+    documentsReponsePourStockage,
+    setDocumentsReponsePourStockage
+  ] = useState<IDocumentReponse[] | undefined>();
 
   // 1- Réponse négative demandée: appel api composition
-  const contenuComposition =
-    useCompositionReponseNegativeDemandeIncompleteApi(reponseNegative);
+  const contenuComposition = useCompositionReponseNegativeDemandeIncompleteApi(
+    reponseNegative
+  );
 
   // 2- Création du document réponse (après appel 'useCompositionReponseNegativeDemandeIncompleteApi') pour stockage dans la BDD et Swift
   useEffect(() => {
@@ -34,8 +37,7 @@ export function useReponseNegativeDemandeIncomplete(
           contenu: contenuComposition,
           nom: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE,
           mimeType: MimeType.APPLI_PDF,
-          typeDocument:
-            DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
+          typeDocument: DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
           nbPages: 1,
           orientation: Orientation.PORTRAIT
         } as IDocumentReponse
@@ -46,13 +48,15 @@ export function useReponseNegativeDemandeIncomplete(
   // 3- Stockage du document réponse une fois celui-ci créé
   // 4- Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   // 5- Mise à jour du status de la requête + création d'une action
-  const { idAction, uuidDocumentsReponse } =
-    useStockerDocumentCreerActionMajStatutRequete(
-      libelleAction,
-      statutRequete,
-      documentsReponsePourStockage,
-      requeteId
-    );
+  const {
+    idAction,
+    uuidDocumentsReponse
+  } = useStockerDocumentCreerActionMajStatutRequete(
+    libelleAction,
+    statutRequete,
+    documentsReponsePourStockage,
+    requeteId
+  );
 
   // 6- Une fois la requête mise à jour et l'action créé, changement de page
   useEffect(
@@ -61,12 +65,12 @@ export function useReponseNegativeDemandeIncomplete(
         idAction &&
         requeteId &&
         uuidDocumentsReponse &&
-        uuidDocumentsReponse.length === 1
+        uuidDocumentsReponse.length > 0
       ) {
         setResultat({
           requeteId,
           idAction,
-          uuidDocumentsReponse
+          uuidDocumentsReponse: uuidDocumentsReponse[0]
         });
       }
     },

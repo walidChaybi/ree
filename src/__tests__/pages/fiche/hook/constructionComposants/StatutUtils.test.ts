@@ -1,4 +1,4 @@
-import { IFicheRcRca } from "../../../../../model/etatcivil/fiche/IFicheRcRca";
+import { IFicheRcRca } from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { getStatuts } from "../../../../../views/pages/fiche/hook/constructionComposants/statut/StatutUtils";
 import { ficheInscriptionRepertoireCivil } from "./mock/InscriptionRepertoireCivilMock";
 

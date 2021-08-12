@@ -55,7 +55,7 @@ export const acte: any = {
     {
       appositionNumerique: 1606086000,
       appositionPapier: 1606086000,
-      statut: "TODO",
+      statut: "statut",
       delivrable: false,
       nomOec: "Screens",
       prenomOec: "Gabriellia",
@@ -230,7 +230,7 @@ export const acte1: any = {
     {
       appositionNumerique: 1606086000,
       appositionPapier: 1606086000,
-      statut: "TODO",
+      statut: "statut",
       delivrable: false,
       nomOec: "Screens",
       prenomOec: "Gabriellia",
@@ -405,7 +405,7 @@ export const acte2: any = {
     {
       appositionNumerique: 1606086000,
       appositionPapier: 1606086000,
-      statut: "TODO",
+      statut: "statut",
       delivrable: false,
       nomOec: "Screens",
       prenomOec: "Gabriellia",
@@ -580,7 +580,7 @@ export const acte3: any = {
     {
       appositionNumerique: 1606086000,
       appositionPapier: 1606086000,
-      statut: "TODO",
+      statut: "statut",
       delivrable: false,
       nomOec: "Screens",
       prenomOec: "Gabriellia",
@@ -755,7 +755,7 @@ export const acte4: any = {
     {
       appositionNumerique: 1606086000,
       appositionPapier: 1606086000,
-      statut: "TODO",
+      statut: "statut",
       delivrable: false,
       nomOec: "Screens",
       prenomOec: "Gabriellia",

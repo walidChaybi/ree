@@ -1,5 +1,5 @@
 import { IDateCompose } from "../../../views/common/util/DateUtils";
-import { IPrenom } from "./IPrenom";
+import { IPrenom } from "../fiche/IPrenom";
 
 export interface IInteresse {
   numeroOrdreSaisi: number;

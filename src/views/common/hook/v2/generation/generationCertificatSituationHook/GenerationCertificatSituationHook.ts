@@ -5,7 +5,6 @@ import {
   ICertificatSituationComposition,
   NOM_DOCUMENT_CERTIFICAT_SITUATION
 } from "../../../../../../model/composition/ICertificatSituationComposition";
-import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import {
   IRequeteTableau,
@@ -14,34 +13,30 @@ import {
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { MimeType } from "../../../../../../ressources/MimeType";
-import { useCertificatSituationApiHook } from "../../../../../common/hook/v2/composition/CompositionCertificatSituationHook";
-import { useStockerDocumentCreerActionMajStatutRequete } from "../../../../../common/hook/v2/requete/StockerDocumentCreerActionMajStatutRequete";
+import { useCertificatSituationApiHook } from "../../composition/CompositionCertificatSituationHook";
+import { usePostDocumentsReponseApi } from "../../DocumentReponseHook";
+import { IResultGenerationUnDocument, RESULTAT_VIDE } from "../generationUtils";
 import { specificationDecret } from "./specificationTitreDecretPhrase/specificationDecret";
 import { specificationTitre } from "./specificationTitreDecretPhrase/specificationTitre";
 
-const RESULTAT_VIDE = {};
-
-export interface IResultGenerationCertificatSituation {
-  idDocumentReponse?: string;
-  idAction?: string;
-  contenuDocumentReponse?: string;
+export interface IGenerationCertificatSituationParams {
+  requete?: IRequeteTableau;
+  dataRMCAutoInscription?: IResultatRMCInscription[];
+  dataRMCAutoActe?: IResultatRMCActe[];
+  specificationPhrase?: any;
 }
-
 export interface IPhrasesJasperCertificatSituation {
   phrasesLiees?: string;
   phrasesPiecesJointes?: string;
 }
 
-export function useGenerationCertificatSituation(
-  requete?: IRequeteTableau,
-  dataRMCAutoInscription?: IResultatRMCInscription[],
-  dataRMCAutoActe?: IResultatRMCActe[],
-  specificationPhrase?: any
+export function useGenerationCertificatSituationHook(
+  params?: IGenerationCertificatSituationParams
 ) {
   const [
     resultGenerationCertificatSituation,
     setResultGenerationCertificatSituation
-  ] = useState<IResultGenerationCertificatSituation>();
+  ] = useState<IResultGenerationUnDocument>();
 
   const [
     certificatSituationComposition,
@@ -53,23 +48,25 @@ export function useGenerationCertificatSituation(
     setDocumentsReponsePourStockage
   ] = useState<IDocumentReponse[] | undefined>();
 
+  // 1 - Construction du Certificat de situation
   useEffect(() => {
     if (
-      requete &&
-      requete.document &&
-      dataRMCAutoInscription &&
-      dataRMCAutoActe
+      params &&
+      params.requete &&
+      params.requete.document &&
+      params.dataRMCAutoInscription &&
+      params.dataRMCAutoActe
     ) {
-      if (requete.titulaires && requete.titulaires.length > 0) {
-        const phrases: IPhrasesJasperCertificatSituation = specificationPhrase.getPhrasesJasper(
-          requete.document, // id du type de document demandé
-          requete.titulaires[0].sexe,
-          dataRMCAutoActe,
-          dataRMCAutoInscription
+      if (params?.requete.titulaires && params.requete.titulaires.length > 0) {
+        const phrases: IPhrasesJasperCertificatSituation = params.specificationPhrase.getPhrasesJasper(
+          params.requete.document, // id du type de document demandé
+          params.requete.titulaires[0].sexe,
+          params.dataRMCAutoActe,
+          params.dataRMCAutoInscription
         );
         construitCertificatSituation(
           phrases.phrasesLiees,
-          requete,
+          params.requete,
           setCertificatSituationComposition,
           setResultGenerationCertificatSituation,
           phrases.phrasesPiecesJointes
@@ -79,62 +76,48 @@ export function useGenerationCertificatSituation(
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataRMCAutoInscription, dataRMCAutoActe]);
+  }, [params]);
 
-  // 1- création du certificat de situation: appel api composition
+  // 2 - Création du certificat de situation: appel api composition
   // récupération du document en base64
   const contenuComposition: string | undefined = useCertificatSituationApiHook(
     certificatSituationComposition
   );
 
-  // 2- Création du document réponse (après appel 'useCertificatSituationRmcAutoVideApi') pour stockage dans la BDD et Swift
-  useEffect(
-    () => {
-      if (contenuComposition && requete) {
-        setDocumentsReponsePourStockage([
-          {
-            contenu: contenuComposition,
-            nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
-            mimeType: MimeType.APPLI_PDF,
-            typeDocument: requete.document, // UUID du type de document demandé (nomenclature)
-            nbPages: 1,
-            orientation: Orientation.PORTRAIT
-          } as IDocumentReponse
-        ]);
-      }
-    },
+  // 3 - Création du document réponse (après appel 'useCertificatSituationRmcAutoVideApi') pour stockage dans la BDD et Swift
+  useEffect(() => {
+    if (contenuComposition && params?.requete) {
+      setDocumentsReponsePourStockage([
+        {
+          contenu: contenuComposition,
+          nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
+          mimeType: MimeType.APPLI_PDF,
+          typeDocument: params.requete.document, // UUID du type de document demandé (nomenclature)
+          nbPages: 1,
+          orientation: Orientation.PORTRAIT
+        } as IDocumentReponse
+      ]);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [contenuComposition]
+  }, [contenuComposition]);
+
+  // 4- Stockage du document réponse une fois celui-ci créé
+  const uuidDocumentsReponse = usePostDocumentsReponseApi(
+    params?.requete?.idRequete,
+    documentsReponsePourStockage
   );
 
-  // 3- Stockage du document réponse une fois celui-ci créé
-  // 4- Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
-  // 5- Mise à jour du status de la requête + création d'une action
-  const {
-    idAction,
-    uuidDocumentsReponse
-  } = useStockerDocumentCreerActionMajStatutRequete(
-    StatutRequete.A_VALIDER.libelle,
-    StatutRequete.A_VALIDER,
-    documentsReponsePourStockage,
-    requete?.idRequete
-  );
-
-  // 6- une fois l'action créée, création du résultat
-  useEffect(
-    () => {
-      if (estNonVide(idAction, uuidDocumentsReponse, contenuComposition)) {
-        setResultGenerationCertificatSituation({
-          //@ts-ignore
-          idDocumentReponse: uuidDocumentsReponse[0],
-          idAction,
-          contenuDocumentReponse: contenuComposition
-        });
-      }
-    },
+  // 5 - Une fois le document stocker, création du résultat
+  useEffect(() => {
+    if (uuidDocumentsReponse && contenuComposition) {
+      setResultGenerationCertificatSituation({
+        //@ts-ignore
+        idDocumentReponse: uuidDocumentsReponse[0],
+        contenuDocumentReponse: contenuComposition
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [idAction]
-  );
+  }, [uuidDocumentsReponse]);
 
   return resultGenerationCertificatSituation;
 }
@@ -161,19 +144,6 @@ async function construitCertificatSituation(
   } else {
     setResultGenerationCertificatSituation(RESULTAT_VIDE);
   }
-}
-
-function estNonVide(
-  idAction: string | undefined,
-  uuidDocumentsReponse: string[] | undefined,
-  contenuComposition: string | undefined
-) {
-  return (
-    idAction &&
-    uuidDocumentsReponse &&
-    uuidDocumentsReponse.length > 0 &&
-    contenuComposition
-  );
 }
 
 function getTitre(idDocumentDemande: string): string {
