@@ -39,8 +39,9 @@ import { logError } from "../../../common/util/LogManager";
 import { storeRece } from "../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] =
-    useState<TRequete | undefined>();
+  const [detailRequeteState, setDetailRequeteState] = useState<
+    TRequete | undefined
+  >();
 
   useEffect(() => {
     async function fetchDetailRequete() {
@@ -72,7 +73,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
   return {
     // Partie Requête
     id: data.id,
-    numero: data.numeroRequete,
+    numero: data.numeroFonctionnel,
     idSagaDila: data.idSagaDila,
     dateCreation: data.dateCreation,
     canal: TypeCanal.getEnumFor(data.canal),
@@ -184,8 +185,7 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     mandataireHabilite: getMandataireHabilite(
       requerant.detailQualiteMandataireHabilite
     ),
-    autreProfessionnel:
-      requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }

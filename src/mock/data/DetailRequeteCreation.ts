@@ -5,7 +5,7 @@ export const ReponseAppelDetailRequeteCreation = {
   url: "/rece-requete-api/v2/requetes/a4cefb71-8457-4f6b-937e-34b49335d404",
   data: {
     id: "a4cefb71-8457-4f6b-937e-34b49335d404",
-    numeroRequete: "54j654j4jyfjtj456j4",
+    numeroFonctionnel: "54j654j4jyfjtj456j4",
     idSagaDila: 45,
     dateCreation: 1612342296,
     canal: "COURRIER",

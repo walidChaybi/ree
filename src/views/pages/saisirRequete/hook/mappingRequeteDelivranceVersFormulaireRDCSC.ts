@@ -205,7 +205,7 @@ const saisiePJ = (requete: IRequeteDelivrance) => {
         base64String: PJ.contenu,
         taille: PJ.taille,
         conteneurSwift: PJ.conteneurSwift,
-        identifiantSwift: PJ.identifiantSwift,
+        identifiantSwift: PJ.referenceSwift,
         mimeType: PJ.mimeType as MimeType,
         extension: PJ.extension as FileExtension
       },

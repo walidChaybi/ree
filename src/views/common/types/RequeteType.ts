@@ -24,7 +24,7 @@ export interface IPieceJustificative {
   mimeType: string | MimeType;
   extension?: string;
   taille: number;
-  identifiantSwift?: string;
+  referenceSwift?: string;
   conteneurSwift?: string;
   contenu: string;
   typePieceJustificative: TypePieceJustificative;

@@ -5,7 +5,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
   url: "/rece-requete-api/v2/requetes/a4cefb71-8457-4f6b-937e-34b49335d404",
   data: {
     id: "a4cefb71-8457-4f6b-937e-34b49335d404",
-    numeroRequete: "54j654j4jyfjtj456j4",
+    numeroFonctionnel: "54j654j4jyfjtj456j4",
     idSagaDila: 45,
     dateCreation: 1612342296,
     canal: "COURRIER",
@@ -146,7 +146,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
         contenu: null,
         extension: null,
         id: "3feb09fb-1222-4356-a1ad-9a12fc03b218",
-        identifiantSwift: "reference_swift",
+        referenceSwift: "reference_swift",
         mimeType: "application/pdf",
         nom: "justif carte",
         taille: 200,
@@ -355,7 +355,7 @@ export const ReponseAppelDetailRequeteDelivranceUnTitulaire = {
   url: "/rece-requete-api/v2/requetes/a4cefb71-8457-4f6b-937e-34b49335d404",
   data: {
     id: "a4cefb71-8457-4f6b-937e-34b49335d404",
-    numeroRequete: "54j654j4jyfjtj456j4",
+    numeroFonctionnel: "54j654j4jyfjtj456j4",
     idSagaDila: 45,
     dateCreation: 1612342296,
     canal: "COURRIER",
@@ -562,7 +562,7 @@ export const ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ = {
   url: "/rece-requete-api/v2/requetes/a4cefb71-8457-4f6b-937e-34b49335d404",
   data: {
     id: "a4cefb71-8457-4f6b-937e-34b49335d404",
-    numeroRequete: "54j654j4jyfjtj456j4",
+    numeroFonctionnel: "54j654j4jyfjtj456j4",
     idSagaDila: 45,
     dateCreation: 1612342296,
     canal: "COURRIER",
