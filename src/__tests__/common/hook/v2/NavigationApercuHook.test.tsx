@@ -76,6 +76,36 @@ test("test apercu traitement", async () => {
   });
 });
 
+const requete3: IRequeteTableau = {
+  idRequete: "0",
+  type: TypeRequete.DELIVRANCE.libelle,
+  statut: StatutRequete.BROUILLON.libelle,
+  idUtilisateur: "idUtilisateurConnectedUser",
+  provenance: Provenance.COURRIER.libelle,
+  idEntiteRattachement: "1"
+};
+
+const HookConsummerNavigation3: React.FC = () => {
+  const res = useNavigationApercu("/rece/rece-ui/mesrequetesv2", requete3);
+  return (
+    <>
+      <div data-testid="url">{res?.url}</div>
+      <div data-testid="isRmcAuto">{res?.isRmcAuto}</div>
+    </>
+  );
+};
+
+test("test Brouillon", async () => {
+  await act(async () => {
+    const { getByTestId } = render(<HookConsummerNavigation3 />);
+    await waitFor(() =>
+      expect(getByTestId("url").textContent).toBe(
+        "/rece/rece-ui/mesrequetesv2/saisircertificatsituation/0"
+      )
+    );
+  });
+});
+
 afterAll(() => {
   superagentMock.unset();
 });

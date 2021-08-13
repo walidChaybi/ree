@@ -7,7 +7,7 @@ import { BoutonPrendreEnCharge } from "../contenu/BoutonPrendreEnCharge";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
-export interface IdRequeteParams {
+interface IdRequeteParams {
   idRequete: string;
 }
 

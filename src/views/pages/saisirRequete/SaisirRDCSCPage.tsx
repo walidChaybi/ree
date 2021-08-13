@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { IReponseNegativeDemandeIncompleteComposition } from "../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
 import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../model/composition/ObjetsComposition";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
+import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance";
+import { logError } from "../../common/util/LogManager";
 import messageManager from "../../common/util/messageManager";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
@@ -14,6 +16,7 @@ import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireM
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../common/widget/Text";
 import { useReponseNegativeDemandeIncomplete } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/hook/ChoixReponseNegativeDemandeIncompleteHook";
+import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
@@ -23,6 +26,7 @@ import {
   getRedirectionVersApercuRequete
 } from "./contenu/SaisirRDCSCPageFonctions";
 import { getBlocsForm, getBoutonsPopin } from "./contenu/SaisirRDCSCPageForms";
+import { mappingRequeteDelivranceVersFormulaireRDCSC } from "./hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { useCreationRequeteDelivranceRDCSC } from "./hook/SaisirRDCSCApiHook";
 import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
 import {
@@ -66,11 +70,37 @@ const ValidationSchemaSaisirRDCSC = Yup.object({
   [ADRESSE]: AdresseFormValidationSchema
 });
 
+interface idRequeteParam {
+  idRequete: string;
+}
+
 export const titreForm = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
 
 export const SaisirRDCSCPage: React.FC = () => {
   /** Formulaire */
   const history = useHistory();
+  const [idRequete, setIdRequete] = useState<string>(
+    useParams<idRequeteParam>().idRequete
+  );
+
+  const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
+
+  useEffect(() => {
+    if (detailRequeteState) {
+      if (detailRequeteState.statutCourant.statut === StatutRequete.BROUILLON) {
+        setSaisieRequeteRDCSC(
+          mappingRequeteDelivranceVersFormulaireRDCSC(
+            detailRequeteState as IRequeteDelivrance
+          )
+        );
+      } else {
+        logError({
+          messageUtilisateur:
+            "La requête doit être un brouillon pour être ouverte ici"
+        });
+      }
+    }
+  }, [detailRequeteState]);
 
   const [documentDemandeOptions, setDocumentDemandeOptions] = useState<Options>(
     []
@@ -99,8 +129,6 @@ export const SaisirRDCSCPage: React.FC = () => {
     useState<UpdateRequeteRDCSC>();
 
   const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
-
-  const [idRequete, setIdRequete] = useState<string>();
 
   const redirectionPage = useCallback(
     async (idRequeteSauvegardee: string, brouillon = false, refus = false) => {

@@ -28,21 +28,22 @@ import {
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 const superagentMock2 = require("superagent-mock")(request, configRequetesV2);
 
-test("renders du bloc Menu Reponse Negative", async () => {
-  const history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequete1
-    )
-  );
+const history = createMemoryHistory();
+history.push(
+  getUrlWithParam(
+    URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    idRequete1
+  )
+);
 
+beforeEach(() => {
   render(
     <Router history={history}>
       <MenuReponseNegative requete={requete1} />
     </Router>
   );
-
+});
+test("renders du bloc Menu Reponse Negative", async () => {
   let menuReponseNegative: HTMLElement;
   let choixRequeteIncomplete: HTMLElement;
   let choixTraceMariage: HTMLElement;
@@ -63,20 +64,6 @@ test("renders du bloc Menu Reponse Negative", async () => {
 });
 
 test("Réponse négative demande incomplète", async () => {
-  const history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequete1
-    )
-  );
-
-  render(
-    <Router history={history}>
-      <MenuReponseNegative requete={requete1} />
-    </Router>
-  );
-
   let menuReponseNegative = screen.getByText("Réponse négative");
   let choixRequeteIncomplete: HTMLElement;
 
@@ -99,19 +86,6 @@ test("Réponse négative demande incomplète", async () => {
 });
 
 test("Reponse négative mariage", async () => {
-  const history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequete1
-    )
-  );
-
-  render(
-    <Router history={history}>
-      <MenuReponseNegative requete={requete1} />
-    </Router>
-  );
   let menuReponseNegative = screen.getByText("Réponse négative");
   let choixTraceMariage: HTMLElement;
 

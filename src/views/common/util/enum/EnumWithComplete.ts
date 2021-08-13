@@ -41,4 +41,14 @@ export class EnumWithComplete extends EnumWithLibelle {
     }
     return keyResult;
   }
+
+  public static getKeyForLibelle(clazz: any, libelle: string) {
+    let keyResult = "";
+    for (const key in clazz) {
+      if (clazz.hasOwnProperty(key) && clazz[key].libelle === libelle) {
+        keyResult = key;
+      }
+    }
+    return keyResult;
+  }
 }

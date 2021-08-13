@@ -58,6 +58,9 @@ export const statutEstATraiterOuATransferee = (statut: string) =>
 export const statutEstPrendreEnCharge = (statut: string) =>
   statut === StatutRequete.PRISE_EN_CHARGE.libelle;
 
+export const statutEstBrouillon = (statut: string) =>
+  statut === StatutRequete.BROUILLON.libelle;
+
 export const statutEstASignerAValider = (statut: string) =>
   statut === StatutRequete.A_VALIDER.libelle ||
   statut === StatutRequete.A_SIGNER.libelle;

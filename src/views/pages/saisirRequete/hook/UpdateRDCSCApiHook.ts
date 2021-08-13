@@ -19,9 +19,8 @@ export interface IUpdateRequeteDelivranceRDCSCResultat {
 export function useUpdateRequeteDelivranceRDCSC(
   requeteRDCSC?: UpdateRequeteRDCSC
 ): IUpdateRequeteDelivranceRDCSCResultat | undefined {
-  const [resultat, setResultat] = useState<
-    IUpdateRequeteDelivranceRDCSCResultat | undefined
-  >();
+  const [resultat, setResultat] =
+    useState<IUpdateRequeteDelivranceRDCSCResultat | undefined>();
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
       const requete = mappingFormulaireRDCSCVersRequeteDelivrance(requeteRDCSC);

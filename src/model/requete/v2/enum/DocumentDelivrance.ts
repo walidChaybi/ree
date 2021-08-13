@@ -111,6 +111,14 @@ export class DocumentDelivrance extends EnumWithComplete {
     return uuid ? uuid : "";
   }
 
+  public static getUuidFromDocument(document: DocumentDelivrance): string {
+    const uuid = EnumWithComplete.getKeyForNom(
+      DocumentDelivrance,
+      document.nom
+    );
+    return uuid ? uuid : "";
+  }
+
   public static estDocumentDelivrance(typeDocumentUUID: string): boolean {
     const doc = DocumentDelivrance.getEnumFor(typeDocumentUUID);
     // _libelle_court correspond à la catégorie

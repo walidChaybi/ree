@@ -1,7 +1,7 @@
+import { Form, Formik } from "formik";
 import React from "react";
-import { Formik, Form } from "formik";
-import "./scss/Formulaire.scss";
 import { Fieldset } from "../fieldset/Fieldset";
+import "./scss/Formulaire.scss";
 
 interface FomulaireProps {
   titre: string;
@@ -23,6 +23,7 @@ export const Formulaire: React.FC<FomulaireProps> = props => {
           onSubmit={props.onSubmit}
           initialValues={props.formDefaultValues}
           validationSchema={props.formValidationSchema}
+          enableReinitialize={true}
         >
           <Form>{props.children}</Form>
         </Formik>

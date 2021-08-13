@@ -1,4 +1,7 @@
-import { ReponseAppelDetailRequeteDelivrance } from "../data/DetailRequeteDelivrance";
+import {
+  ReponseAppelDetailRequeteDelivrance,
+  ReponseAppelDetailRequeteDelivranceBrouillon
+} from "../data/DetailRequeteDelivrance";
 import {
   documentReponseCARN_CSPAC_01,
   idDocumentsReponse
@@ -112,6 +115,9 @@ export const configRequetesV2 = [
       // Détail requête Délivrance
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d404") {
         return { data: ReponseAppelDetailRequeteDelivrance.data };
+      }
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d405") {
+        return { data: ReponseAppelDetailRequeteDelivranceBrouillon.data };
       }
 
       // Compteurs requêtes A_SIGNER

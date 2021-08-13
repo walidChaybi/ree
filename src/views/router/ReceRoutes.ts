@@ -71,7 +71,10 @@ import {
   URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE,
   URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE_TRAITEMENT_ID,
-  URL_REQUETES_SERVICE_V2
+  URL_REQUETES_SERVICE_V2,
+  URL_SAISIR_RDCSC_MES_REQUETES,
+  URL_SAISIR_RDCSC_MES_REQUETES_SERVICE,
+  URL_SAISIR_RDCSC_RMC
 } from "./ReceUrls";
 
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
@@ -261,6 +264,16 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
+  {
+    url: URL_SAISIR_RDCSC_MES_REQUETES,
+    component: SaisirRDCSCPage,
+    droits: [Droit.CONSULTER, Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(
+      "Modifier un brouillon d'une requête de délivrance certificat de situation depuis mes requêtes"
+    )
+  },
+
   /////////////////////////////////////////
   ///// REQUETES DE MON SERVICE (RMS) /////
   /////////////////////////////////////////
@@ -384,6 +397,15 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
+  {
+    url: URL_SAISIR_RDCSC_MES_REQUETES_SERVICE,
+    component: SaisirRDCSCPage,
+    droits: [Droit.CONSULTER, Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(
+      "Modifier un brouillon d'une requête de délivrance certificat de situation depuis mes requêtes de service"
+    )
+  },
   //////////////////////////////////////////
   ///// RECHERCHE MULTI-CRITERES (RMC) /////
   //////////////////////////////////////////
@@ -449,5 +471,14 @@ export const routesRece: IRoute[] = [
     droits: droitsSaufConsulterArchives,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_SAISIR_RDCSC_RMC,
+    component: SaisirRDCSCPage,
+    droits: [Droit.CONSULTER, Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(
+      "Modifier un brouillon d'une requête de délivrance certificat de situation depuis la RMC"
+    )
   }
 ];

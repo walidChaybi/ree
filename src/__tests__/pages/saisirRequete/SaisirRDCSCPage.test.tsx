@@ -7,14 +7,20 @@ import {
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
-import { Router } from "react-router-dom";
+import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
-import { getLastPathElem } from "../../../views/common/util/route/routeUtil";
+import {
+  getLastPathElem,
+  getUrlWithParam
+} from "../../../views/common/util/route/routeUtil";
 import { SaisirRDCSCPage } from "../../../views/pages/saisirRequete/SaisirRDCSCPage";
-import { URL_MES_REQUETES_SAISIR_RDCSC } from "../../../views/router/ReceUrls";
+import {
+  URL_MES_REQUETES_SAISIR_RDCSC,
+  URL_SAISIR_RDCSC_MES_REQUETES
+} from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
@@ -23,14 +29,15 @@ history.push(URL_MES_REQUETES_SAISIR_RDCSC);
 
 beforeEach(async () => {
   DocumentDelivrance.init();
-  render(
-    <Router history={history}>
-      <SaisirRDCSCPage />)
-    </Router>
-  );
 });
 
 test("renders formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
+  render(
+    <Router history={history}>
+      <SaisirRDCSCPage />
+    </Router>
+  );
+
   const titre = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
   await waitFor(() => {
     expect(screen.getAllByText(titre)).toHaveLength(2);
@@ -38,6 +45,11 @@ test("renders formulaire de saisie d'une Requête de Délivrance Certificat de S
 });
 
 test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
+  render(
+    <Router history={history}>
+      <SaisirRDCSCPage />
+    </Router>
+  );
   const inputDocumentDemande = screen.getByLabelText(
     "document"
   ) as HTMLSelectElement;
@@ -105,6 +117,11 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
 });
 
 test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in OUI", async () => {
+  render(
+    <Router history={history}>
+      <SaisirRDCSCPage />
+    </Router>
+  );
   const inputDocumentDemande = screen.getByLabelText(
     "document"
   ) as HTMLSelectElement;
@@ -153,6 +170,12 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
 });
 
 test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in NON", async () => {
+  render(
+    <Router history={history}>
+      <SaisirRDCSCPage />
+    </Router>
+  );
+
   const inputDocumentDemande = screen.getByLabelText(
     "document"
   ) as HTMLSelectElement;
@@ -209,6 +232,11 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
 });
 
 test("test du Enregistrer du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
+  render(
+    <Router history={history}>
+      <SaisirRDCSCPage />
+    </Router>
+  );
   const inputDocumentDemande = screen.getByLabelText(
     "document"
   ) as HTMLSelectElement;
@@ -270,6 +298,72 @@ test("test du Enregistrer du formulaire de saisie d'une Requête de Délivrance 
     expect(getLastPathElem(history.location.pathname)).toEqual(
       "saisircertificatsituation"
     );
+  });
+});
+
+test("Remplissage du formulaire avec requete", () => {
+  history.push(
+    getUrlWithParam(
+      URL_SAISIR_RDCSC_MES_REQUETES,
+      "a4cefb71-8457-4f6b-937e-34b49335d405"
+    )
+  );
+
+  render(
+    <Router history={history}>
+      <Route exact={true} path={URL_SAISIR_RDCSC_MES_REQUETES}>
+        <SaisirRDCSCPage />
+      </Route>
+    </Router>
+  );
+
+  const inputDocumentDemande = screen.getByLabelText(
+    "document"
+  ) as HTMLSelectElement;
+  waitFor(() => {
+    expect(inputDocumentDemande.value).toEqual(
+      "34da88e2-c5c7-4324-ac8e-b35193352e64"
+    );
+  });
+
+  const inputPaysNaissance = screen.getByLabelText(
+    "interesse.naissance.paysEvenement"
+  ) as HTMLInputElement;
+  waitFor(() => {
+    expect(inputPaysNaissance.value).toEqual("Samoa");
+  });
+
+  const inputVilleNaissance = screen.getByLabelText(
+    "interesse.naissance.villeEvenement"
+  ) as HTMLInputElement;
+  waitFor(() => {
+    expect(inputVilleNaissance.value).toEqual("Guangzhou");
+  });
+
+  const inputAnneeNaissance = screen.getByLabelText(
+    "interesse.naissance.dateEvenement.annee"
+  ) as HTMLInputElement;
+  waitFor(() => {
+    expect(inputAnneeNaissance.value).toEqual("1963");
+  });
+
+  const adresseVoie = screen.getByLabelText("adresse.voie") as HTMLInputElement;
+  waitFor(() => {
+    expect(adresseVoie.value).toEqual("5 place de l'Eglise");
+  });
+
+  const adresseCodePostal = screen.getByLabelText(
+    "adresse.codePostal"
+  ) as HTMLInputElement;
+  waitFor(() => {
+    expect(adresseCodePostal.value).toEqual("44000");
+  });
+
+  const requerantParticulier = screen.getByLabelText(
+    "requerant.typerequerant.particulier"
+  ) as HTMLInputElement;
+  waitFor(() => {
+    expect(requerantParticulier.value).toBeTruthy();
   });
 });
 

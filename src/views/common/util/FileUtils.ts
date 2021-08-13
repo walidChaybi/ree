@@ -21,6 +21,8 @@ export interface Base64File {
   extension?: FileExtension | "jpeg";
   mimeType?: MimeType;
   taille: number;
+  conteneurSwift?: string;
+  identifiantSwift?: string;
 }
 
 function toBase64String(file: File): Promise<string> {

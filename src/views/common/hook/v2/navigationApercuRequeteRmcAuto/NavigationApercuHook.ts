@@ -7,6 +7,7 @@ import {
   autorisePrendreEnChargeTableau,
   statutEstASignerAValider,
   statutEstATraiterOuATransferee,
+  statutEstBrouillon,
   statutEstPrendreEnCharge,
   typeEstDelivrance
 } from "../../../util/RequetesUtils";
@@ -47,7 +48,6 @@ export function useNavigationApercu(
       ) {
         // US 207 et de type RDC au statut "Traité - A imprimer" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
         // US 207 et de type RDD au statut "Traiter - A Délivrer démat" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
-        // US 316  et au statut "Brouillon", redirection vers "Saisir une requête"
         console.log(
           "Attention la redirections de US 316 n'est pas encore développée"
         );
@@ -125,6 +125,14 @@ const redirectionEnFonctionMaRequete = (
       setRedirection({
         url: getUrlWithParam(
           `${urlWithParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
+          requete.idRequete
+        )
+      });
+    } else if (statutEstBrouillon(requete.statut)) {
+      // US 316  et au statut "Brouillon", redirection vers "Saisir une requête"
+      setRedirection({
+        url: getUrlWithParam(
+          `${urlWithParam}/saisircertificatsituation/:idRequete`,
           requete.idRequete
         )
       });

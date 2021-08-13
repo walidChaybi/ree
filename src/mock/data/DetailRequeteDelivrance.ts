@@ -256,6 +256,98 @@ export const ReponseAppelDetailRequeteDelivrance = {
   }
 };
 
+export const ReponseAppelDetailRequeteDelivranceBrouillon = {
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-requete-api/v2/requetes/a4cefb71-8457-4f6b-937e-34b49335d405",
+  data: {
+    id: "a4cefb71-8457-4f6b-937e-34b49335d405",
+    numeroRequete: "54j654j4jyfjtj456j4",
+    idSagaDila: 45,
+    dateCreation: 1612342296,
+    canal: "COURRIER",
+    type: "DELIVRANCE",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+    actions: [],
+    titulaires: [
+      {
+        id: "0343e28b-b6f7-4dd4-bb81-3a38454907fb",
+        position: 1,
+        nomNaissance: "Campball",
+        nomUsage: "",
+        anneeNaissance: 1963,
+        moisNaissance: 10,
+        jourNaissance: 10,
+        villeNaissance: "Guangzhou",
+        paysNaissance: "Samoa",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        prenoms: [],
+        parentsTitulaire: []
+      }
+    ],
+    corbeilleAgent: {
+      id: "4072e911-9f39-4910-8f58-bc355012bf7c",
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+    },
+    corbeilleService: {
+      id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
+      idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+    },
+    piecesJustificatives: [
+      {
+        conteneurSwift: "conteneur-swift",
+        contenu: null,
+        extension: null,
+        id: "3feb09fb-1222-4356-a1ad-9a12fc03b218",
+        identifiantSwift: "reference_swift",
+        mimeType: "application/pdf",
+        nom: "justif carte",
+        taille: 200,
+        typePieceJustificative: "00c885c9-2918-46fe-b743-798b1b90e5dd"
+      }
+    ],
+    requerant: {
+      id: "97d0e400-19d3-47fa-aedb-137002a96f18",
+      dateCreation: 1528192343,
+      nomFamille: "CHOULARD",
+      prenom: "Thierry",
+      courriel: "cjacques@candw.fr",
+      telephone: "0152698741",
+      adresse: {
+        id: "074acd89-be79-4272-afe0-bb64925ee9ca",
+        ligne2: "5 place de l'Eglise",
+        ligne3: "",
+        ligne4: "",
+        ligne5: "",
+        codePostal: "44000",
+        ville: "Nantes",
+        pays: "FRANCE"
+      },
+      qualite: "PARTICULIER",
+      detailQualiteRece: null,
+      detailQualiteParticulier: null,
+      detailQualiteMandataireHabilite: null,
+      detailQualiteInstitutionnel: null,
+      detailQualiteAutreProfessionnel: null,
+      lienRequerant: {
+        id: "a4cefb71-8457-4f6b-937e-34b49335d406",
+        typeLienRequerant: "PERE_MERE",
+        natureLien: null
+      }
+    },
+
+    statut: {
+      id: "37a528fa-fbec-4f6d-a58b-3f728345650a",
+      statutRequete: "BROUILLON",
+      dateEffet: 1594714272000,
+      raisonStatut: ""
+    },
+    documentDemande: "Certificat de situation au pacs"
+  }
+};
+
 export const ReponseAppelDetailRequeteDelivranceUnTitulaire = {
   hasTechnicalError: false,
   hasBusinessError: false,
