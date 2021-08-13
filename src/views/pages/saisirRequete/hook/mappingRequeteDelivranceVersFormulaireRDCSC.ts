@@ -1,3 +1,4 @@
+import { FileExtension, MimeType } from "file-type";
 import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
 import { TypePieceJustificative } from "../../../../model/requete/v2/enum/TypePieceJustificative";
@@ -201,10 +202,12 @@ const saisiePJ = (requete: IRequeteDelivrance) => {
     return {
       base64File: {
         fileName: PJ.nom || "",
-        base64String: "",
-        taille: 0,
+        base64String: PJ.contenu,
+        taille: PJ.taille,
         conteneurSwift: PJ.conteneurSwift,
-        identifiantSwift: PJ.identifiantSwift
+        identifiantSwift: PJ.identifiantSwift,
+        mimeType: PJ.mimeType as MimeType,
+        extension: PJ.extension as FileExtension
       },
       type: {
         value: TypePieceJustificative.getKeyForLibelle(

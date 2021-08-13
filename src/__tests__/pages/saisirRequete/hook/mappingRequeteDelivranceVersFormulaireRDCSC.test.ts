@@ -60,7 +60,9 @@ test("test du mapping Particulier", () => {
           base64String: "",
           taille: 0,
           conteneurSwift: undefined,
-          identifiantSwift: undefined
+          identifiantSwift: undefined,
+          mimeType: "",
+          extension: undefined
         },
         type: { value: "", str: undefined }
       }
@@ -126,7 +128,9 @@ test("test du mapping Institutionnel", () => {
           base64String: "",
           taille: 0,
           conteneurSwift: undefined,
-          identifiantSwift: undefined
+          identifiantSwift: undefined,
+          mimeType: "",
+          extension: undefined
         },
         type: { value: "", str: undefined }
       }
