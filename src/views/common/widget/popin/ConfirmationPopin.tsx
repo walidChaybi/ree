@@ -7,7 +7,8 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { Button } from "reakit/Button";
-interface IBoutonPopin {
+
+export interface IBoutonPopin {
   label: string;
   action: () => void;
   color?: string;
@@ -16,7 +17,7 @@ interface IBoutonPopin {
 export interface ConfirmationPopinProps {
   isOpen: boolean;
   messages: string[];
-  boutons: IBoutonPopin[];
+  boutons?: IBoutonPopin[];
   title?: string;
 }
 

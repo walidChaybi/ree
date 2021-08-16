@@ -7,6 +7,7 @@ import {
 } from "../../../../../model/etatcivil/enum/TypeFiche";
 import { officierALeDroitSurLePerimetre } from "../../../../../model/IOfficierSSOApi";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
@@ -96,16 +97,25 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
 
   const isCheckboxDisabled = (data: IResultatRMCInscription): boolean => {
     if (dataRequete?.type === TypeRequete.DELIVRANCE) {
+      const requeteDelivrance = dataRequete as IRequeteDelivrance;
+
       if (data?.statutInscription === StatutFiche.INACTIF.libelle) {
         return true;
       }
-      const documentDemande: DocumentDelivrance = (dataRequete as IRequeteDelivrance)
-        ?.documentDemande;
+
+      if (
+        requeteDelivrance?.sousType?.nom === SousTypeDelivrance.RDC.nom ||
+        requeteDelivrance?.sousType?.nom === SousTypeDelivrance.RDD.nom
+      ) {
+        return true;
+      }
+
       return !DocumentDelivrance.estDocumentDelivranceValide(
         data?.categorie,
-        documentDemande
+        requeteDelivrance?.documentDemande
       );
     }
+
     return false;
   };
 

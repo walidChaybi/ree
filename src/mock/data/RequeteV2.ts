@@ -66,3 +66,11 @@ export const requete1 = ({
     }
   ]
 } as any) as IRequeteDelivrance;
+
+export const requeteRDD = {
+  type: TypeRequete.DELIVRANCE,
+  sousType: SousTypeDelivrance.RDC,
+  statutCourant: {
+    statut: StatutRequete.PRISE_EN_CHARGE
+  }
+} as IRequeteDelivrance;

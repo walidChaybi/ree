@@ -10,6 +10,7 @@ import { TypeRequete } from "../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance";
 import { IRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
 import { getText } from "../../common/widget/Text";
+import { IActionOption } from "../widget/menu/MenuAction";
 import { FormatDate } from "./DateUtils";
 
 export const indexParamsReq = {
@@ -94,3 +95,14 @@ export const autorisePrendreEnChargeTableau = (requete: IRequeteTableau) =>
   appartientAMonServiceMereServiceOuFillesServices(
     requete.idEntiteRattachement ? requete.idEntiteRattachement : ""
   );
+
+export const filtrerListeActions = (
+  requete: IRequeteDelivrance,
+  listeOptions: IActionOption[]
+): IActionOption[] => {
+  return listeOptions?.filter(r => {
+    return r.sousTypes
+      ? r.sousTypes.find(st => st === requete?.sousType) != null
+      : true;
+  });
+};

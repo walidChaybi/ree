@@ -9,7 +9,11 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
-import { idRequete1, requete1 } from "../../../../mock/data/RequeteV2";
+import {
+  idRequete1,
+  requete1,
+  requeteRDD
+} from "../../../../mock/data/RequeteV2";
 import { DataRMCInscriptionAvecUnSeulResultat } from "../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configMultiAPi } from "../../../../mock/superagent-config/superagent-mock-multi-apis";
@@ -83,6 +87,64 @@ test("renders du bloc Menu Delivrer", async () => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID, idRequete1)
     );
+  });
+});
+
+test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-type RDD", async () => {
+  const history = createMemoryHistory();
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      idRequete1
+    )
+  );
+
+  await act(async () => {
+    render(
+      <Router history={history}>
+        <MenuDelivrer
+          requete={requeteRDD}
+          inscriptionSelected={DataRMCInscriptionAvecUnSeulResultat}
+        />
+      </Router>
+    );
+  });
+
+  let menuDelivrer = screen.getByText("Délivrer");
+  let copieIntergale: HTMLElement;
+  let extraitAvecFiliation: HTMLElement;
+  let extraitSansFiliation: HTMLElement;
+  let extraitPlurilingue: HTMLElement;
+  let copieArchive: HTMLElement;
+
+  await waitFor(() => {
+    expect(menuDelivrer).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(menuDelivrer);
+  });
+
+  await waitFor(() => {
+    copieIntergale = screen.getByText(/Copie intégrale/i);
+    extraitAvecFiliation = screen.getByText(/Extrait avec filiation/i);
+    extraitSansFiliation = screen.getByText(/Extrait sans filiation/i);
+    extraitPlurilingue = screen.getByText(/Extrait plurilingue/i);
+    copieArchive = screen.getByText(/Copie archive \(118\)/i);
+
+    expect(copieIntergale).toBeDefined();
+    expect(extraitAvecFiliation).toBeDefined();
+    expect(extraitSansFiliation).toBeDefined();
+    expect(extraitPlurilingue).toBeDefined();
+    expect(copieArchive).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(copieIntergale);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByRole("dialog")).toBeDefined();
   });
 });
 

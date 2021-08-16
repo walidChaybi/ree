@@ -16,6 +16,7 @@ import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDeli
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { mapActe } from "../../../../common/hook/v2/repertoires/MappingRepertoires";
 import messageManager from "../../../../common/util/messageManager";
+import { filtrerListeActions } from "../../../../common/util/RequetesUtils";
 import { supprimerNullEtUndefinedDuTableau } from "../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import {
@@ -43,16 +44,16 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
     reponseNegativeDemandeIncomplete,
     setReponseNegativeDemandeIncomplete
   ] = useState<IReponseNegativeDemandeIncompleteComposition | undefined>();
-  const [reponseNegativeMariage, setReponseNegativeMariage] =
-    useState<IReponseNegativeMariageComposition | undefined>();
+  const [reponseNegativeMariage, setReponseNegativeMariage] = useState<
+    IReponseNegativeMariageComposition | undefined
+  >();
 
-  const resultatReponseNegativeDemandeIncomplete =
-    useReponseNegativeDemandeIncomplete(
-      StatutRequete.A_VALIDER.libelle,
-      StatutRequete.A_VALIDER,
-      reponseNegativeDemandeIncomplete,
-      props.requete.id
-    );
+  const resultatReponseNegativeDemandeIncomplete = useReponseNegativeDemandeIncomplete(
+    StatutRequete.A_VALIDER.libelle,
+    StatutRequete.A_VALIDER,
+    reponseNegativeDemandeIncomplete,
+    props.requete.id
+  );
 
   const resultatReponseNegativeMariage = useReponseNegativeMariage(
     StatutRequete.A_VALIDER.libelle,
@@ -116,11 +117,10 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
     switch (indexMenu) {
       case 0:
         setOperationEnCours(true);
-        const newReponseNegativeDemandeIncomplete =
-          await createReponseNegativePourCompositionApiDemandeIncomplete(
-            OBJET_COURRIER_CERTIFICAT_SITUATION,
-            props.requete as IRequeteDelivrance
-          );
+        const newReponseNegativeDemandeIncomplete = await createReponseNegativePourCompositionApiDemandeIncomplete(
+          OBJET_COURRIER_CERTIFICAT_SITUATION,
+          props.requete as IRequeteDelivrance
+        );
         setReponseNegativeDemandeIncomplete(
           newReponseNegativeDemandeIncomplete
         );
@@ -134,11 +134,10 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
           estSeulementActeMariage(props.requete, acteSelected)
         ) {
           setOperationEnCours(true);
-          const newReponseNegativeMariage =
-            await createReponseNegativePourCompositionApiMariage(
-              props.requete as IRequeteDelivrance,
-              acteSelected[0]
-            );
+          const newReponseNegativeMariage = await createReponseNegativePourCompositionApiMariage(
+            props.requete as IRequeteDelivrance,
+            acteSelected[0]
+          );
           setReponseNegativeMariage(newReponseNegativeMariage);
         } else if (
           !estSeulementActeMariage(
@@ -162,12 +161,10 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
       />
       <MenuAction
         titre={"Réponse négative"}
-        listeActions={reponseNegativeOptions.filter(r => {
-          const requete = props.requete as IRequeteDelivrance;
-          return r.sousTypes
-            ? r.sousTypes.find(st => st === requete?.sousType) != null
-            : true;
-        })}
+        listeActions={filtrerListeActions(
+          props.requete as IRequeteDelivrance,
+          reponseNegativeOptions
+        )}
         onSelect={handleReponseNegativeMenu}
       />
       {hasMessageBloquant === true && (
@@ -198,12 +195,11 @@ async function createReponseNegativePourCompositionApiDemandeIncomplete(
 ) {
   let reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
   if (requete && requete.requerant) {
-    reponseNegative =
-      ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
-        objet,
-        requete.requerant,
-        requete.numero
-      );
+    reponseNegative = ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+      objet,
+      requete.requerant,
+      requete.numero
+    );
   } else {
     messageManager.showErrorAndClose(
       "Erreur inattendue: Pas de requérant pour la requête"

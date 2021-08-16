@@ -6,6 +6,7 @@ import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { getLibelle } from "../../../../common/widget/Text";
 import { MenuDelivrer } from "./MenuDelivrer";
 import { MenuReponseNegative } from "./MenuReponseNegative";
+import { MenuReponseSansDelivrance } from "./MenuReponseSansDelivrance";
 
 export interface IActionProps {
   requete: TRequete;
@@ -25,6 +26,10 @@ export const ChoixAction: React.FC<IActionProps> = props => {
         requete={props.requete}
         acteSelected={props.acteSelected}
         inscriptionSelected={props.inscriptionSelected}
+      />
+      <MenuReponseSansDelivrance
+        requete={props.requete}
+        acteSelected={props.acteSelected}
       />
     </Fieldset>
   );
