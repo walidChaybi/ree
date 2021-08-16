@@ -1,5 +1,6 @@
+import { IFicheActe } from "../etatcivil/acte/IFicheActe";
+import { TitulaireActe } from "../etatcivil/acte/ITitulaireActe";
 import { IRequeteDelivrance } from "../requete/v2/IRequeteDelivrance";
-import { TitulaireRequete } from "../requete/v2/ITitulaireRequete";
 import {
   CommunComposition,
   ICommunComposition
@@ -26,7 +27,7 @@ export interface IReponseNegativeMariageComposition
 }
 
 export const ReponseNegativeMariageComposition = {
-  creerReponseNegative(requete: IRequeteDelivrance) {
+  creerReponseNegative(requete: IRequeteDelivrance, infoActe: IFicheActe) {
     const reponseNegative = {} as IReponseNegativeMariageComposition;
     ParametresComposition.ajoutParametres(reponseNegative);
 
@@ -41,17 +42,17 @@ export const ReponseNegativeMariageComposition = {
     );
 
     if (requete.titulaires) {
-      reponseNegative.nom_titulaire1 = TitulaireRequete.getNom(
-        requete.titulaires[0]
+      reponseNegative.nom_titulaire1 = TitulaireActe.getNom(
+        infoActe.titulaires[0]
       );
-      reponseNegative.prenoms_titulaire1 = TitulaireRequete.getPrenoms(
-        requete.titulaires[0]
+      reponseNegative.prenoms_titulaire1 = TitulaireActe.getPrenoms(
+        infoActe.titulaires[0]
       );
-      reponseNegative.nom_titulaire2 = TitulaireRequete.getNom(
-        requete.titulaires[1]
+      reponseNegative.nom_titulaire2 = TitulaireActe.getNom(
+        infoActe.titulaires[1]
       );
-      reponseNegative.prenoms_titulaire2 = TitulaireRequete.getPrenoms(
-        requete.titulaires[1]
+      reponseNegative.prenoms_titulaire2 = TitulaireActe.getPrenoms(
+        infoActe.titulaires[1]
       );
     }
 

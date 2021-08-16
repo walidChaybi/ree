@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { getInformationsFicheActe } from "../../../../../api/appels/etatcivilApi";
 import {
   IReponseNegativeDemandeIncompleteComposition,
   ReponseNegativeDemandeIncompleteComposition
@@ -12,6 +13,8 @@ import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../../../model/compos
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { mapActe } from "../../../../common/hook/v2/repertoires/MappingRepertoires";
 import messageManager from "../../../../common/util/messageManager";
 import { supprimerNullEtUndefinedDuTableau } from "../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
@@ -123,16 +126,18 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
         );
         break;
       case 1:
+        const acteSelected = supprimerNullEtUndefinedDuTableau(
+          props.acteSelected
+        );
         if (
-          estSeulementActeMariage(
-            props.requete,
-            supprimerNullEtUndefinedDuTableau(props.acteSelected)
-          )
+          acteSelected &&
+          estSeulementActeMariage(props.requete, acteSelected)
         ) {
           setOperationEnCours(true);
           const newReponseNegativeMariage =
             await createReponseNegativePourCompositionApiMariage(
-              props.requete as IRequeteDelivrance
+              props.requete as IRequeteDelivrance,
+              acteSelected[0]
             );
           setReponseNegativeMariage(newReponseNegativeMariage);
         } else if (
@@ -209,12 +214,16 @@ async function createReponseNegativePourCompositionApiDemandeIncomplete(
 }
 
 export async function createReponseNegativePourCompositionApiMariage(
-  requete?: IRequeteDelivrance
+  requete: IRequeteDelivrance,
+  acte: IResultatRMCActe | undefined
 ) {
   let reponseNegative = {} as IReponseNegativeMariageComposition;
-  if (requete && requete.requerant && requete.titulaires) {
-    reponseNegative =
-      ReponseNegativeMariageComposition.creerReponseNegative(requete);
+  if (requete && requete.requerant && acte) {
+    const infoActe = await getInformationsFicheActe(acte.idActe);
+    reponseNegative = ReponseNegativeMariageComposition.creerReponseNegative(
+      requete,
+      mapActe(infoActe.body.data)
+    );
   } else {
     messageManager.showErrorAndClose(
       "Erreur inattendue: Pas de requérant pour la requête"

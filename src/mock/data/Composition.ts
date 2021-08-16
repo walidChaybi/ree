@@ -64,10 +64,10 @@ export const reponseNegativeMariage: IReponseNegativeMariageComposition = {
   numero_requete: "L5UG3Q",
   document_demande: "Certificat de situation au rca",
   identite_requerant: "DUBOIS Léonard",
-  nom_titulaire1: "PRODESK",
-  prenoms_titulaire1: "Elodie",
-  nom_titulaire2: "DANIEL",
-  prenoms_titulaire2: "Jack"
+  nom_titulaire1: "GREENWALD",
+  prenoms_titulaire1: "Paulita Zaria",
+  nom_titulaire2: "DUPE",
+  prenoms_titulaire2: "Laurent"
 };
 
 export const certificatSituation: ICertificatSituationComposition = {

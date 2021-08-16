@@ -1,15 +1,14 @@
-import { IEvenement } from "./IEvenement";
-import { IAdresse } from "./IAdresse";
-import { IFiliation } from "./IFiliation";
-
+import { getDateStringFromDateCompose } from "../../../views/common/util/DateUtils";
 import {
   formatNom,
   formatPrenom,
   numberToString
 } from "../../../views/common/util/Utils";
-import { getDateStringFromDateCompose } from "../../../views/common/util/DateUtils";
 import { LieuxUtils } from "../../LieuxUtils";
 import { Sexe } from "../enum/Sexe";
+import { IAdresse } from "./IAdresse";
+import { IEvenement } from "./IEvenement";
+import { IFiliation } from "./IFiliation";
 
 export interface ITitulaireActe {
   nom?: string;
@@ -41,6 +40,13 @@ export const TitulaireActe = {
   getPrenom3(titulaire?: ITitulaireActe): string {
     const deux = 2;
     return this.getPrenom(deux, titulaire);
+  },
+  getPrenoms(titulaire?: ITitulaireActe): string {
+    return `${this.getPrenom1(titulaire)}${
+      this.getPrenom2(titulaire) ? " " : ""
+    }${this.getPrenom2(titulaire)}${
+      this.getPrenom3(titulaire) ? " " : ""
+    }${this.getPrenom3(titulaire)}`;
   },
   getDateNaissance(titulaire?: ITitulaireActe): string {
     return titulaire && titulaire.naissance

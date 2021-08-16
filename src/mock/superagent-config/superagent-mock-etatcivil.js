@@ -3,7 +3,8 @@ import {
   acte1,
   acte2,
   acte3,
-  acte4
+  acte4,
+  acteMariage
 } from "../../__tests__/pages/fiche/data/ficheActe";
 import {
   ReponseAppelNomenclatureMandataire,
@@ -65,6 +66,8 @@ export const configEtatcivil = [
         return { data: acte3 };
       } else if (match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9") {
         return { data: acte4 };
+      } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348") {
+        return { data: acteMariage };
       } else if (
         // acte corps
         match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g" ||
@@ -89,8 +92,7 @@ export const configEtatcivil = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCActe?.data?.registres?.length,
-            link:
-              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCActe.data
         };
@@ -102,8 +104,7 @@ export const configEtatcivil = [
             "content-range":
               "0-15/" +
               ReponseAppelRMCInscription?.data?.repertoiresCiviles?.length,
-            link:
-              '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCInscription.data
         };
@@ -217,8 +218,7 @@ export const configEtatcivil = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCActe?.data?.registres?.length,
-            link:
-              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCActe.data
         };
@@ -230,8 +230,7 @@ export const configEtatcivil = [
             "content-range":
               "0-15/" +
               ReponseAppelRMCInscription?.data?.repertoiresCiviles?.length,
-            link:
-              '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCInscription.data
         };
