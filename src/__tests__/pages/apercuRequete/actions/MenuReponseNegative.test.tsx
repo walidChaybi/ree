@@ -115,9 +115,8 @@ test("test de création réponse négative mariage", async () => {
   const acte = { idActe: "b41079a5-9e8d-478c-b04c-c4c2ac671348" };
   const reponseNegative = await createReponseNegativePourCompositionApiMariage(
     requete,
-    acte as unknown as IResultatRMCActe
+    acte as any as IResultatRMCActe
   );
-  console.log(reponseNegative);
   expect(reponseNegative).toStrictEqual(reponseNegativeMariage);
 });
 
