@@ -4,16 +4,20 @@ import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 
 export function estSeulementActeMariage(
   requete: TRequete,
-  acteSelected: IResultatRMCActe[] | undefined
+  acteSelected: IResultatRMCActe[] | undefined,
+  inscriptionSelected: IResultatRMCInscription[] | undefined
 ): boolean {
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const sousType: string = (requete as IRequeteDelivrance)?.sousType?.nom;
     return (
       (SousTypeDelivrance.RDCSC.nom === sousType ||
         SousTypeDelivrance.RDCSD.nom === sousType) &&
+      (inscriptionSelected?.length === undefined ||
+        inscriptionSelected?.length === 0) &&
       estSeulementActeMariageSelectionne(acteSelected)
     );
   }

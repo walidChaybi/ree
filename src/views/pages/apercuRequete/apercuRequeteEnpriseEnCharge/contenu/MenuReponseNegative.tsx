@@ -44,16 +44,16 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
     reponseNegativeDemandeIncomplete,
     setReponseNegativeDemandeIncomplete
   ] = useState<IReponseNegativeDemandeIncompleteComposition | undefined>();
-  const [reponseNegativeMariage, setReponseNegativeMariage] =
-    useState<IReponseNegativeMariageComposition | undefined>();
+  const [reponseNegativeMariage, setReponseNegativeMariage] = useState<
+    IReponseNegativeMariageComposition | undefined
+  >();
 
-  const resultatReponseNegativeDemandeIncomplete =
-    useReponseNegativeDemandeIncomplete(
-      StatutRequete.A_VALIDER.libelle,
-      StatutRequete.A_VALIDER,
-      reponseNegativeDemandeIncomplete,
-      props.requete.id
-    );
+  const resultatReponseNegativeDemandeIncomplete = useReponseNegativeDemandeIncomplete(
+    StatutRequete.A_VALIDER.libelle,
+    StatutRequete.A_VALIDER,
+    reponseNegativeDemandeIncomplete,
+    props.requete.id
+  );
 
   const resultatReponseNegativeMariage = useReponseNegativeMariage(
     StatutRequete.A_VALIDER.libelle,
@@ -82,9 +82,14 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
 
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 
+  const INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE = 0;
+  const INDEX_ACTION_TRACE_MARIAGE_ACTIF = 1;
+  const INDEX_ACTION_RESSORTISSANT_FRANCAIS = 2;
+  const INDEX_ACTION_IGNORER_REQUETE = 3;
+
   const reponseNegativeOptions: IActionOption[] = [
     {
-      value: 0,
+      value: INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE,
       label: getLibelle(
         "Requête incomplète ou illisible, complément d'information nécessaire"
       ),
@@ -92,13 +97,13 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
       ref: refReponseNegativeOptions0
     },
     {
-      value: 1,
+      value: INDEX_ACTION_TRACE_MARIAGE_ACTIF,
       label: getLibelle("Trace d'un mariage actif, courrier de non délivrance"),
       sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
       ref: refReponseNegativeOptions1
     },
     {
-      value: 2,
+      value: INDEX_ACTION_RESSORTISSANT_FRANCAIS,
       label: getLibelle(
         "Ressortissant français ou né en France, courrier de non délivrance"
       ),
@@ -106,7 +111,7 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
       ref: refReponseNegativeOptions2
     },
     {
-      value: 3,
+      value: INDEX_ACTION_IGNORER_REQUETE,
       label: getLibelle("Ignorer la requête (fin du traitement)"),
       sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
       ref: refReponseNegativeOptions3
@@ -115,40 +120,38 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
 
   const handleReponseNegativeMenu = async (indexMenu: number) => {
     switch (indexMenu) {
-      case 0:
+      case INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE:
         setOperationEnCours(true);
-        const newReponseNegativeDemandeIncomplete =
-          await createReponseNegativePourCompositionApiDemandeIncomplete(
-            OBJET_COURRIER_CERTIFICAT_SITUATION,
-            props.requete as IRequeteDelivrance
-          );
+        const newReponseNegativeDemandeIncomplete = await createReponseNegativePourCompositionApiDemandeIncomplete(
+          OBJET_COURRIER_CERTIFICAT_SITUATION,
+          props.requete as IRequeteDelivrance
+        );
         setReponseNegativeDemandeIncomplete(
           newReponseNegativeDemandeIncomplete
         );
         break;
-      case 1:
+      case INDEX_ACTION_TRACE_MARIAGE_ACTIF:
         const acteSelected = supprimerNullEtUndefinedDuTableau(
           props.acteSelected
         );
+        const inscriptionSelected = supprimerNullEtUndefinedDuTableau(
+          props.inscriptionSelected
+        );
         if (
-          acteSelected &&
-          estSeulementActeMariage(props.requete, acteSelected)
-        ) {
-          setOperationEnCours(true);
-          const newReponseNegativeMariage =
-            await createReponseNegativePourCompositionApiMariage(
-              props.requete as IRequeteDelivrance,
-              acteSelected[0]
-            );
-          setReponseNegativeMariage(newReponseNegativeMariage);
-        } else if (
           !estSeulementActeMariage(
             props.requete,
-            supprimerNullEtUndefinedDuTableau(props.acteSelected)
-          ) ||
-          props.inscriptionSelected?.length !== 0
+            acteSelected,
+            inscriptionSelected
+          )
         ) {
           setHasMessageBloquant(true);
+        } else {
+          setOperationEnCours(true);
+          const newReponseNegativeMariage = await createReponseNegativePourCompositionApiMariage(
+            props.requete as IRequeteDelivrance,
+            acteSelected?.[0]
+          );
+          setReponseNegativeMariage(newReponseNegativeMariage);
         }
         break;
     }
@@ -197,12 +200,11 @@ async function createReponseNegativePourCompositionApiDemandeIncomplete(
 ) {
   let reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
   if (requete && requete.requerant) {
-    reponseNegative =
-      ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
-        objet,
-        requete.requerant,
-        requete.numero
-      );
+    reponseNegative = ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+      objet,
+      requete.requerant,
+      requete.numero
+    );
   } else {
     messageManager.showErrorAndClose(
       "Erreur inattendue: Pas de requérant pour la requête"
