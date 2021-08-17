@@ -4,9 +4,8 @@ import { Options } from "../../../../views/common/util/Type";
 
 export class TypeInstitutionnel extends EnumWithLibelle {
   public static readonly TRIBUNAL = new TypeInstitutionnel("Tribunal");
-  public static readonly ADMINISTRATION_PUBLIQUE_ETABLISSEMENT_PUBLIC = new TypeInstitutionnel(
-    "Administration publique / Etablissement public"
-  );
+  public static readonly ADMINISTRATION_PUBLIQUE_ETABLISSEMENT_PUBLIC =
+    new TypeInstitutionnel("Administration publique / Etablissement public");
   public static readonly OFFICIER_ETAT_CIVIL = new TypeInstitutionnel(
     "Officier de l'état civil"
   );
@@ -26,5 +25,9 @@ export class TypeInstitutionnel extends EnumWithLibelle {
 
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(TypeInstitutionnel);
+  }
+
+  public static getKey(obj?: any): string {
+    return EnumWithLibelle.getKey(TypeInstitutionnel, obj);
   }
 }

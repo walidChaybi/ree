@@ -32,22 +32,27 @@ export const TitulaireRequete = {
   getNom(titulaire?: ITitulaireRequete): string {
     return titulaire ? formatNom(titulaire.nomNaissance) : "";
   },
-  getPrenom(numero: number, titulaire?: ITitulaireRequete): string {
-    return titulaire && titulaire.prenoms && titulaire.prenoms[numero]
-      ? formatPrenom(titulaire.prenoms[numero].prenom)
-      : "";
+  getPrenom(numero: number, titulaire: ITitulaireRequete): string {
+    let res = "";
+    if (titulaire && titulaire.prenoms) {
+      const prenom = titulaire.prenoms.find(
+        element => element.numeroOrdre === numero
+      );
+      res = prenom ? formatPrenom(prenom.prenom) : "";
+    }
+    return res;
   },
-  getPrenom1(titulaire?: ITitulaireRequete): string {
-    return this.getPrenom(0, titulaire);
-  },
-  getPrenom2(titulaire?: ITitulaireRequete): string {
+  getPrenom1(titulaire: ITitulaireRequete): string {
     return this.getPrenom(1, titulaire);
   },
-  getPrenom3(titulaire?: ITitulaireRequete): string {
-    const indexPrenom3 = 2;
+  getPrenom2(titulaire: ITitulaireRequete): string {
+    return this.getPrenom(2, titulaire);
+  },
+  getPrenom3(titulaire: ITitulaireRequete): string {
+    const indexPrenom3 = 3;
     return this.getPrenom(indexPrenom3, titulaire);
   },
-  getPrenoms(titulaire?: ITitulaireRequete): string {
+  getPrenoms(titulaire: ITitulaireRequete): string {
     return `${this.getPrenom1(titulaire)}${
       this.getPrenom2(titulaire) ? " " : ""
     }${this.getPrenom2(titulaire)}${

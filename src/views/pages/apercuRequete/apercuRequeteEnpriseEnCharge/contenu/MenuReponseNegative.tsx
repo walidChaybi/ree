@@ -73,7 +73,6 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
       receUrl.replaceUrl(history, url);
     }
     setOperationEnCours(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     resultatReponseNegativeDemandeIncomplete,
     resultatReponseNegativeMariage,

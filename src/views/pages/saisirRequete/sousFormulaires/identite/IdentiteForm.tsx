@@ -80,7 +80,8 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
   const [afficherParents, setAfficherParents] = useState(false);
 
   const prenomsFormProps = {
-    nom: withNamespace(props.nom, PRENOMS)
+    nom: withNamespace(props.nom, PRENOMS),
+    requete: props.requete
   } as SubFormProps;
 
   const naissanceFormProps = {

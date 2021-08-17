@@ -1,6 +1,8 @@
 import { FileExtension, MimeType } from "file-type";
 import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
+import { TypeInstitutionnel } from "../../../../model/requete/v2/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "../../../../model/requete/v2/enum/TypeMandataireReq";
 import { TypePieceJustificative } from "../../../../model/requete/v2/enum/TypePieceJustificative";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { TitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
@@ -107,7 +109,9 @@ const saisieRequerant = (requete: IRequeteDelivrance) => {
         [MANDATAIRE]: mandataireVide,
         [INSTITUTI0NNEL]: {
           [TYPE]: getValeurOuVide(
-            requete.requerant.qualiteRequerant.institutionnel?.type
+            TypeInstitutionnel.getKey(
+              requete.requerant.qualiteRequerant.institutionnel?.type
+            )
           ),
           [NATURE]: getValeurOuVide(
             requete.requerant.qualiteRequerant.institutionnel?.nature
@@ -125,7 +129,9 @@ const saisieRequerant = (requete: IRequeteDelivrance) => {
         [TYPE_REQUERANT]: "MANDATAIRE",
         [MANDATAIRE]: {
           [TYPE]: getValeurOuVide(
-            requete.requerant.qualiteRequerant.mandataireHabilite?.type
+            TypeMandataireReq.getKey(
+              requete.requerant.qualiteRequerant.mandataireHabilite?.type
+            )
           ),
           [NATURE]: getValeurOuVide(
             requete.requerant.qualiteRequerant.mandataireHabilite?.nature

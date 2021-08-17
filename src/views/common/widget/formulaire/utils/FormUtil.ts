@@ -1,4 +1,5 @@
 import { FormikProps, FormikValues } from "formik";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { Options } from "../../../util/Type";
 
 export const NB_CARACT_MAX_SAISIE = "100";
@@ -26,6 +27,7 @@ export interface ISubForm {
   reset?: boolean;
   options: Options;
   onChange?: (value: string) => void;
+  requete: TRequete;
 }
 
 export type SubFormProps = ISubForm & FormikComponentProps;

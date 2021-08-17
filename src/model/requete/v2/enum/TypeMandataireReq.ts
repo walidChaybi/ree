@@ -16,4 +16,8 @@ export class TypeMandataireReq extends EnumWithLibelle {
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(TypeMandataireReq);
   }
+
+  public static getKey(obj?: any): string {
+    return EnumWithLibelle.getKey(TypeMandataireReq, obj);
+  }
 }

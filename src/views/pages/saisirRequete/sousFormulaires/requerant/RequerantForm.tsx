@@ -1,6 +1,7 @@
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import { Qualite } from "../../../../../model/requete/v2/enum/Qualite";
 import { RadioField } from "../../../../common/widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
 import {
@@ -110,6 +111,21 @@ export const RequerantFormValidationSchema = Yup.object()
 const RequerantForm: React.FC<SubFormProps> = props => {
   const typeRequerantWithNamespace = withNamespace(props.nom, TYPE_REQUERANT);
   const [requerantSousForm, setRequerantSousForm] = useState<string>();
+
+  useEffect(() => {
+    if (props.requete) {
+      if (
+        props.requete.requerant.qualiteRequerant.qualite ===
+        Qualite.MANDATAIRE_HABILITE
+      ) {
+        setRequerantSousForm("MANDATAIRE");
+      } else {
+        setRequerantSousForm(
+          props.requete.requerant.qualiteRequerant.qualite.nom
+        );
+      }
+    }
+  }, [props.requete]);
 
   const mandataireFromProps = {
     nom: withNamespace(props.nom, MANDATAIRE)

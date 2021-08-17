@@ -1,7 +1,6 @@
 import requeteDelivrance, {
   requeteDelivranceInstitutionnel
 } from "../../../../mock/data/requeteDelivrance";
-import { TypeInstitutionnel } from "../../../../model/requete/v2/enum/TypeInstitutionnel";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "../../../../views/pages/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 
 test("test du mapping Particulier", () => {
@@ -102,7 +101,7 @@ test("test du mapping Institutionnel", () => {
         prenom: ""
       },
       institutionnel: {
-        type: TypeInstitutionnel.AMBASSADE,
+        type: "AMBASSADE",
         nature: "",
         nomInstitution: "",
         nom: "DUBOIS",

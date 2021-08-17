@@ -94,6 +94,17 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
   };
 
   useEffect(() => {
+    if (
+      props.requete &&
+      props.requete.titulaires &&
+      props.requete.titulaires[0] &&
+      props.requete.titulaires[0].prenoms
+    ) {
+      setNbPrenom(props.requete.titulaires[0].prenoms?.length);
+    }
+  }, [props.requete]);
+
+  useEffect(() => {
     setBtnAjouterInactif(nbPrenom === NB_MAX_PRENOMS);
     setBtnSupprimerInactif(nbPrenom === NB_MIN_PRENOMS);
   }, [nbPrenom]);

@@ -268,7 +268,7 @@ export const SaisirRDCSCPage: React.FC = () => {
         onSubmit={onSubmitSaisirRDCSC}
         className="FormulaireSaisirRDCSC"
       >
-        <div>{getBlocsForm(documentDemandeOptions)}</div>
+        <div>{getBlocsForm(documentDemandeOptions, detailRequeteState)}</div>
         <SaisirRequeteBoutons {...boutonsProps} />
       </Formulaire>
       <ConfirmationPopin

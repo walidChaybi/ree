@@ -1,5 +1,6 @@
 import React from "react";
 import { TypeRequerant } from "../../../../model/requete/v2/enum/TypeRequerant";
+import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { Options } from "../../../common/util/Type";
 import { SelectField } from "../../../common/widget/formulaire/champsSaisie/SelectField";
 import PiecesJointesForm from "../../../common/widget/formulaire/piecesJointes/PiecesJointesForm";
@@ -18,10 +19,13 @@ import IdentiteForm, {
 } from "../sousFormulaires/identite/IdentiteForm";
 import RequerantForm from "../sousFormulaires/requerant/RequerantForm";
 
-export const getBlocsForm = (documentDemandeOptions: any): JSX.Element[] => [
+export const getBlocsForm = (
+  documentDemandeOptions: any,
+  detailRequeteState: TRequete | undefined
+): JSX.Element[] => [
   getDocumentDemande(documentDemandeOptions),
-  getInteresseForm(),
-  getRequerantForm(),
+  getInteresseForm(detailRequeteState),
+  getRequerantForm(detailRequeteState),
   getAdresseForm(),
   getPiecesJointesForm()
 ];
@@ -40,19 +44,25 @@ export function getDocumentDemande(
   );
 }
 
-export function getInteresseForm(): JSX.Element {
+export function getInteresseForm(
+  detailRequeteState: TRequete | undefined
+): JSX.Element {
   const interesseFormProps = {
     nom: INTERESSE,
-    titre: getLibelle("Intéressé")
+    titre: getLibelle("Intéressé"),
+    requete: detailRequeteState
   } as IdentiteSubFormProps;
   return <IdentiteForm key={INTERESSE} {...interesseFormProps} />;
 }
 
-export function getRequerantForm(): JSX.Element {
+export function getRequerantForm(
+  detailRequeteState: TRequete | undefined
+): JSX.Element {
   const requerantFromProps = {
     nom: REQUERANT,
     titre: getLibelle("Identité du requérant"),
-    options: TypeRequerant.getAllEnumsAsOptions()
+    options: TypeRequerant.getAllEnumsAsOptions(),
+    requete: detailRequeteState
   } as SubFormProps;
   return <RequerantForm key={REQUERANT} {...requerantFromProps} />;
 }
