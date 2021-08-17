@@ -70,7 +70,7 @@ const ValidationSchemaSaisirRDCSC = Yup.object({
   [ADRESSE]: AdresseFormValidationSchema
 });
 
-interface idRequeteParam {
+interface IdRequeteParam {
   idRequete: string;
 }
 
@@ -80,11 +80,10 @@ export const SaisirRDCSCPage: React.FC = () => {
   /** Formulaire */
   const history = useHistory();
   const [idRequete, setIdRequete] = useState<string>(
-    useParams<idRequeteParam>().idRequete
+    useParams<IdRequeteParam>().idRequete
   );
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
-
   useEffect(() => {
     if (detailRequeteState) {
       if (detailRequeteState.statutCourant.statut === StatutRequete.BROUILLON) {
@@ -118,7 +117,6 @@ export const SaisirRDCSCPage: React.FC = () => {
   /** Enregistrer la requête */
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-
   const [donneesNaissanceIncomplete, setDonneesNaissanceIncomplete] =
     React.useState<boolean>(false);
   const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] =
@@ -142,7 +140,6 @@ export const SaisirRDCSCPage: React.FC = () => {
               OBJET_COURRIER_CERTIFICAT_SITUATION,
               saisieRequeteRDCSC
             );
-
             setReponseNegative(reponse);
           } else {
             messageManager.showSuccessAndClose(
@@ -162,10 +159,8 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const creationRequeteDelivranceRDCSCResultat =
     useCreationRequeteDelivranceRDCSC(creationRequeteRDCSC);
-
   const UpdateRequeteDelivranceRDCSCResultat =
     useUpdateRequeteDelivranceRDCSC(updateRequeteRDCSC);
-
   useEffect(() => {
     if (creationRequeteDelivranceRDCSCResultat) {
       redirectionPage(
@@ -175,7 +170,6 @@ export const SaisirRDCSCPage: React.FC = () => {
       );
     }
   }, [creationRequeteDelivranceRDCSCResultat, redirectionPage]);
-
   useEffect(() => {
     if (UpdateRequeteDelivranceRDCSCResultat) {
       redirectionPage(
@@ -192,7 +186,6 @@ export const SaisirRDCSCPage: React.FC = () => {
     reponseNegative,
     idRequete
   );
-
   useEffect(() => {
     if (resultatReponseNegative) {
       messageManager.showSuccessAndClose(
@@ -207,7 +200,6 @@ export const SaisirRDCSCPage: React.FC = () => {
     const villeNaissance = values.interesse.naissance.villeEvenement;
     const paysNaissance = values.interesse.naissance.paysEvenement;
     const anneeNaissance = values.interesse.naissance.dateEvenement.annee;
-
     setSaisieRequeteRDCSC(values);
     if (
       (villeNaissance !== "" &&

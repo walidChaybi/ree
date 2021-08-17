@@ -46,11 +46,12 @@ export const TitulaireRequete = {
     return this.getPrenom(1, titulaire);
   },
   getPrenom2(titulaire: ITitulaireRequete): string {
-    return this.getPrenom(2, titulaire);
+    const indexPrenom = 2;
+    return this.getPrenom(indexPrenom, titulaire);
   },
   getPrenom3(titulaire: ITitulaireRequete): string {
-    const indexPrenom3 = 3;
-    return this.getPrenom(indexPrenom3, titulaire);
+    const indexPrenom = 3;
+    return this.getPrenom(indexPrenom, titulaire);
   },
   getPrenoms(titulaire: ITitulaireRequete): string {
     return `${this.getPrenom1(titulaire)}${

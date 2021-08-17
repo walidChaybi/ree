@@ -2,6 +2,7 @@ import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Qualite } from "../../../../../model/requete/v2/enum/Qualite";
+import { Requerant } from "../../../../../model/requete/v2/IRequerant";
 import { RadioField } from "../../../../common/widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
 import {
@@ -114,15 +115,25 @@ const RequerantForm: React.FC<SubFormProps> = props => {
 
   useEffect(() => {
     if (props.requete) {
-      if (
-        props.requete.requerant.qualiteRequerant.qualite ===
-        Qualite.MANDATAIRE_HABILITE
-      ) {
-        setRequerantSousForm("MANDATAIRE");
-      } else {
-        setRequerantSousForm(
-          props.requete.requerant.qualiteRequerant.qualite.nom
-        );
+      switch (props.requete.requerant.qualiteRequerant.qualite) {
+        case Qualite.MANDATAIRE_HABILITE:
+          setRequerantSousForm("MANDATAIRE");
+          break;
+        case Qualite.PARTICULIER:
+          if (
+            props.requete.titulaires &&
+            !Requerant.estInteresse(
+              props.requete.requerant,
+              props.requete.titulaires[0]
+            )
+          ) {
+            setRequerantSousForm("PARTICULIER");
+          }
+          break;
+        default:
+          setRequerantSousForm(
+            props.requete.requerant.qualiteRequerant.qualite.nom
+          );
       }
     }
   }, [props.requete]);

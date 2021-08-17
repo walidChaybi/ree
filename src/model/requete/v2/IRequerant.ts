@@ -4,6 +4,7 @@ import { formatNom, formatPrenom } from "../../../views/common/util/Utils";
 import { IAdresseRequerant } from "./IAdresseRequerant";
 import { ILienRequerant } from "./ILienRequerant";
 import { IQualiteRequerant } from "./IQualiteRequerant";
+import { ITitulaireRequete, TitulaireRequete } from "./ITitulaireRequete";
 
 export interface IRequerant {
   id: string;
@@ -23,5 +24,11 @@ export const Requerant = {
   },
   getPrenom(requerant?: IRequerant): string {
     return requerant && requerant.prenom ? formatPrenom(requerant.prenom) : "";
+  },
+  estInteresse(requerant: IRequerant, titulaire: ITitulaireRequete) {
+    return (
+      titulaire.nomNaissance === requerant.nomFamille &&
+      TitulaireRequete.getPrenom1(titulaire) === requerant.prenom
+    );
   }
 };
