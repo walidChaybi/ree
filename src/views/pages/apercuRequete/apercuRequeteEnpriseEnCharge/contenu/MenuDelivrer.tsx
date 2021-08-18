@@ -118,36 +118,42 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
 
   const controleCoherenceDocument = async (indexMenu: number) => {
     const requeteDelivrance = props.requete as IRequeteDelivrance;
+    const sousType = requeteDelivrance?.sousType?.nom;
     const actes = props.acteSelected;
-    if (actes?.length === 1) {
-      if (
-        (indexMenu === INDEX_ACTION_EXTRAIT_AVEC_FILIATION ||
-          indexMenu === INDEX_ACTION_EXTRAIT_SANS_FILIATION) &&
-        actes?.[0]?.nature === TypeNatureActe.DECES.libelle
-      ) {
+    if (
+      sousType === SousTypeDelivrance.RDC.nom ||
+      sousType === SousTypeDelivrance.RDD.nom
+    ) {
+      if (actes?.length === 1) {
+        if (
+          (indexMenu === INDEX_ACTION_EXTRAIT_AVEC_FILIATION ||
+            indexMenu === INDEX_ACTION_EXTRAIT_SANS_FILIATION) &&
+          actes?.[0]?.nature === TypeNatureActe.DECES.libelle
+        ) {
+          setMessagesBloquant([
+            getLibelle(
+              "Pas de délivrance d'extrait avec ou sans filiation pour un acte de décès."
+            )
+          ]);
+          setBoutonsPopin(boutonOK);
+        }
+        if (
+          props.acteSelected?.[0]?.nature !==
+          requeteDelivrance?.evenement?.natureActe?.libelle
+        ) {
+          setMessagesBloquant([
+            getLibelle(
+              "La nature de l'acte sélectionné ne correspond pas à la nature de l'acte demandé. Voulez-vous continuer ?"
+            )
+          ]);
+          setBoutonsPopin(boutonsOuiNon);
+        }
+      } else {
         setMessagesBloquant([
-          getLibelle(
-            "Pas de délivrance d'extrait avec ou sans filiation pour un acte de décès."
-          )
+          getLibelle("Veuillez sélectionner un et un seul acte à délivrer.")
         ]);
         setBoutonsPopin(boutonOK);
       }
-      if (
-        props.acteSelected?.[0]?.nature !==
-        requeteDelivrance?.evenement?.natureActe?.libelle
-      ) {
-        setMessagesBloquant([
-          getLibelle(
-            "La nature de l'acte sélectionné ne correspond pas à la nature de l'acte demandé. Voulez-vous continuer ?"
-          )
-        ]);
-        setBoutonsPopin(boutonsOuiNon);
-      }
-    } else {
-      setMessagesBloquant([
-        getLibelle("Veuillez sélectionner un et un seul acte à délivrer.")
-      ]);
-      setBoutonsPopin(boutonOK);
     }
   };
 
