@@ -136,8 +136,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
             )
           ]);
           setBoutonsPopin(boutonOK);
-        }
-        if (
+        } else if (
           props.acteSelected?.[0]?.nature !==
           requeteDelivrance?.evenement?.natureActe?.libelle
         ) {
