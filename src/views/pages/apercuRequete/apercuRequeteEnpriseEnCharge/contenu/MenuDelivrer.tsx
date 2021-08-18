@@ -119,7 +119,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const controleCoherenceDocument = async (indexMenu: number) => {
     const requeteDelivrance = props.requete as IRequeteDelivrance;
     const sousType = requeteDelivrance?.sousType?.nom;
-    const actes = props.acteSelected;
+    const actes = supprimerNullEtUndefinedDuTableau(props.acteSelected);
     if (
       sousType === SousTypeDelivrance.RDC.nom ||
       sousType === SousTypeDelivrance.RDD.nom
