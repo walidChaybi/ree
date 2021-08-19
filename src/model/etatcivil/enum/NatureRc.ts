@@ -5,6 +5,14 @@ import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle
 import { Options } from "../../../views/common/util/Type";
 
 export class NatureRc extends EnumWithLibelle {
+  constructor(private readonly _article: string, libelle: string) {
+    super(libelle);
+  }
+
+  get article() {
+    return this._article;
+  }
+
   public static async init() {
     await peupleNatureRc();
   }

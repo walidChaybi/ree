@@ -43,7 +43,6 @@ export function useFichePageApiHook(
             default:
               break;
           }
-
           setDataFicheState(dataFiche);
         })
         .catch((error: any) => {

@@ -20,6 +20,7 @@ export const IFicheRcRcaDecisionJuridictionEtrangere = ({
     autorite: {
       typeAutorite: "JURIDICTION",
       numeroDepartement: "75",
+      region: "",
       ville: "Paris",
       pays: "France",
       arrondissement: "18",
@@ -126,9 +127,10 @@ export const IFicheRcRcaDecisionAvecInstructionProcureur = ({
     type: "ONAC",
     autorite: {
       typeAutorite: "ONAC",
+      region: "",
       ville: "Pékin",
       pays: "Chine",
-      titreOnac: "Consul"
+      titreOnac: "Directrice générale"
     },
     instructionProcureur: {
       dateInstruction: 1606374000000,
@@ -212,6 +214,244 @@ export const IFicheRcRcaDecisionAvecInstructionProcureur = ({
     estActif: true,
     decisionCouple: false,
     article: "l'",
+    categorieRCRCA: "FILIATION"
+  },
+  typeInscription: "INSCRIPTION"
+} as any) as IFicheRcRca;
+
+export const IFicheRcRcaDecisionNotaireConvention = ({
+  id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
+  categorie: "RCA",
+  annee: "1998",
+  numero: "4094",
+  dateInscription: getDateFromDateCompose({
+    jour: "1998",
+    mois: "11",
+    annee: "23"
+  }),
+  dateDerniereMaj: new Date(1552554000000),
+  dateDerniereDelivrance: new Date(1554105600000),
+  alertes: [],
+  decision: {
+    dateDecision: 1591167600000,
+    type: "CONVENTION",
+    autorite: {
+      typeAutorite: "NOTAIRE",
+      numeroDepartement: "44",
+      region: "Pays de la Loire",
+      ville: "Nantes",
+      libelleDepartement: "Loire-Atlantique",
+      pays: "France",
+      nomNotaire: "Le-Grand",
+      prenomNotaire: "Flavie",
+      numeroCrpcen: "9AKLO"
+    }
+  },
+  mariageInteresses: {
+    villeMariage: "Rome",
+    regionMariage: "Latium",
+    paysMariage: "Italie",
+    dateMariage: {
+      jour: "28",
+      mois: "06",
+      annee: "2018"
+    },
+    aletranger: false
+  },
+  interesses: [
+    {
+      numeroOrdreSaisi: 1,
+      nomFamille: "DURANT",
+      villeNaissance: "Brooklyn",
+      paysNaissance: "États-unis d'Amériques",
+      regionNaissance: "New-York",
+      villeDeces: "Londres",
+      paysDeces: "Royaume-Uni",
+      regionDeces: "Grand-Londres",
+      nationalite: "ETRANGERE",
+      sexe: "FEMININ",
+      autreNoms: ["O"],
+      autrePrenoms: ["Mireille"],
+      prenoms: [
+        {
+          numeroOrdre: 2,
+          valeur: "Sarah"
+        },
+        {
+          numeroOrdre: 1,
+          valeur: "Julie"
+        }
+      ],
+      dateNaissance: {
+        mois: "10",
+        annee: "1960"
+      },
+      dateDeces: {
+        mois: "03",
+        annee: "2003"
+      }
+    },
+    {
+      numeroOrdreSaisi: 2,
+      nomFamille: "Quinzel",
+      villeNaissance: "Nantes",
+      paysNaissance: "France",
+      regionNaissance: "Loire-Atlantique",
+      villeDeces: "Lille",
+      paysDeces: "France",
+      regionDeces: "Nord",
+      nationalite: "FRANCAISE",
+      sexe: "FEMININ",
+      autreNoms: [],
+      autrePrenoms: [],
+      prenoms: [
+        {
+          numeroOrdre: 2,
+          valeur: "Charlène"
+        },
+        {
+          numeroOrdre: 1,
+          valeur: "Harleen"
+        }
+      ],
+      dateNaissance: {
+        annee: "1993"
+      },
+      dateDeces: {
+        annee: "2003"
+      }
+    }
+  ],
+  statutsFiche: [
+    {
+      statut: "ACTIF",
+      motif: "",
+      statutFicheEvenement: {
+        id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
+        date: {
+          annee: "2019"
+        },
+        ville: "nantes",
+        region: "Pays de Loire",
+        pays: "France"
+      },
+      complementMotif: "",
+      dateStatut: 1618480800000
+    }
+  ],
+  personnes: [
+    {
+      nom: "Durant",
+      sexe: "FEMININ",
+      nationalite: "FRANCAISE",
+      naissance: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 10,
+        annee: 1960,
+        voie: null,
+        ville: "nantes",
+        arrondissement: null,
+        region: "Pays de Loire",
+        pays: "France",
+        lieuReprise: null
+      },
+      deces: {
+        minute: null,
+        heure: null,
+        jour: 2,
+        mois: 12,
+        annee: 2020,
+        voie: null,
+        ville: "bordeau",
+        arrondissement: null,
+        region: "Nouvelle-Aquitaine",
+        pays: "France",
+        lieuReprise: null
+      },
+      autresNoms: [
+        {
+          nom: "O",
+          type: "ANCIEN_NOM"
+        }
+      ],
+      prenoms: ["Julie", "Sarah"],
+      autresPrenoms: ["Mireille"],
+      parents: [
+        {
+          id: null,
+          typeLienParente: "DIRECT",
+          nom: "Glenn",
+          prenoms: ["Pearl", "Ginger"]
+        },
+        {
+          id: null,
+          typeLienParente: "DIRECT",
+          nom: "Nora",
+          prenoms: ["Reed"]
+        }
+      ],
+      enfants: [
+        {
+          id: null,
+          typeLienParente: "DIRECT",
+          nom: "Janine",
+          prenoms: ["Alyce"]
+        },
+        {
+          id: null,
+          typeLienParente: "DIRECT",
+          nom: "Barton",
+          prenoms: ["Buck"]
+        },
+        {
+          id: null,
+          typeLienParente: "DIRECT",
+          nom: "Kirsten",
+          prenoms: ["Louella"]
+        },
+        {
+          id: null,
+          typeLienParente: "ADOPTION",
+          nom: "Reynolds",
+          prenoms: ["Mcleod", "Bates"]
+        }
+      ],
+      rcs: [
+        {
+          id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
+          numero: "4"
+        },
+        {
+          id: "76b62678-8b06-4442-ad5b-b9207627a6e3",
+          numero: "1"
+        }
+      ],
+      rcas: [
+        {
+          id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
+          numero: "4094"
+        }
+      ],
+      pacss: [],
+      actes: [
+        {
+          id: "923a10fb-0b15-452d-83c0-d24c76d1de8d",
+          numero: "254",
+          nature: "NAISSANCE"
+        }
+      ]
+    }
+  ],
+  nature: {
+    id: "868a436b-330d-4c3c-83e0-e49d27390139",
+    nom: "NATURE_RCA",
+    code: "CONTESTATION_PATERNITE",
+    libelle: "contestation de paternité",
+    estActif: true,
+    decisionCouple: false,
+    article: "la",
     categorieRCRCA: "FILIATION"
   },
   typeInscription: "INSCRIPTION"

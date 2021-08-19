@@ -27,11 +27,13 @@ export function useNavigationApercu(
   urlWithParam?: string,
   requete?: IRequeteTableau
 ): INavigationApercu | undefined {
-  const [redirection, setRedirection] =
-    useState<INavigationApercu | undefined>();
+  const [redirection, setRedirection] = useState<
+    INavigationApercu | undefined
+  >();
 
-  const [params, setParams] =
-    useState<CreationActionEtMiseAjourStatutParams | undefined>();
+  const [params, setParams] = useState<
+    CreationActionEtMiseAjourStatutParams | undefined
+  >();
 
   usePostCreationActionEtMiseAjourStatutApi(params);
 
@@ -48,9 +50,6 @@ export function useNavigationApercu(
       ) {
         // US 207 et de type RDC au statut "Traité - A imprimer" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
         // US 207 et de type RDD au statut "Traiter - A Délivrer démat" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
-        console.log(
-          "Attention la redirections de US 316 n'est pas encore développée"
-        );
         redirectionEnFonctionMaRequete(
           requete,
           setParams,

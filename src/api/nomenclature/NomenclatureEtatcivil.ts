@@ -20,6 +20,7 @@ export async function peupleNatureRc() {
         NatureRc.addEnum(
           data.id,
           new NatureRc(
+            data.article,
             premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle)
           )
         );
@@ -42,6 +43,7 @@ export async function peupleNatureRca() {
         NatureRca.addEnum(
           data.id,
           new NatureRca(
+            data.article,
             premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle)
           )
         );
