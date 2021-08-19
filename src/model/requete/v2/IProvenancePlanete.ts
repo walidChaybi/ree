@@ -7,4 +7,5 @@ export interface IProvenancePlanete {
   champSaisieLibre?: string;
   referenceDemande?: string;
   dateDemande?: Date;
+  identifiantDemande?: string;
 }

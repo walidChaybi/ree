@@ -1,3 +1,4 @@
+import { ChoixDelivrance } from "./enum/ChoixDelivrance";
 import { DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { MotifDelivrance } from "./enum/MotifDelivrance";
 import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
@@ -15,6 +16,7 @@ export interface IRequeteDelivrance extends IRequete {
   motif?: MotifDelivrance;
   complementMotif?: string;
   documentsReponses: IDocumentReponse[];
+  choixDelivrance?: ChoixDelivrance;
 }
 
 export const RequeteDelivrance = {
