@@ -7,7 +7,6 @@ import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDeliv
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance";
-import { logError } from "../../common/util/LogManager";
 import messageManager from "../../common/util/messageManager";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
@@ -85,19 +84,15 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
   useEffect(() => {
-    if (detailRequeteState) {
-      if (detailRequeteState.statutCourant.statut === StatutRequete.BROUILLON) {
-        setSaisieRequeteRDCSC(
-          mappingRequeteDelivranceVersFormulaireRDCSC(
-            detailRequeteState as IRequeteDelivrance
-          )
-        );
-      } else {
-        logError({
-          messageUtilisateur:
-            "La requête doit être un brouillon pour être ouverte ici"
-        });
-      }
+    if (
+      detailRequeteState &&
+      detailRequeteState.statutCourant.statut === StatutRequete.BROUILLON
+    ) {
+      setSaisieRequeteRDCSC(
+        mappingRequeteDelivranceVersFormulaireRDCSC(
+          detailRequeteState as IRequeteDelivrance
+        )
+      );
     }
   }, [detailRequeteState]);
 
