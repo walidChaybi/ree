@@ -1,8 +1,8 @@
-import { fournisseurDonneesBandeauFactory } from "../../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
-
-import { acte } from "../../data/ficheActe";
-import { FournisseurDonneesBandeau } from "../../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/FournisseurDonneesBandeau";
 import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
+import { FournisseurDonneesBandeau } from "../../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/FournisseurDonneesBandeau";
+import { fournisseurDonneesBandeauFactory } from "../../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+import { acte } from "../../data/ficheActe";
+
 test("Attendu: fournisseur de donnée bandeau pour acte fonctionne correctement", () => {
   const fdActe: FournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(
     TypeFiche.ACTE,
@@ -17,5 +17,5 @@ test("Attendu: fournisseur de donnée bandeau pour acte fonctionne correctement"
   expect(fdActe.getType()).toBe("Acte d'Absence");
 
   expect(fdActe.getAnnee()).toBe(1921);
-  expect(fdActe.getRegistre()).toBe("CSL.DX.1921.410.681.NA.T");
+  expect(fdActe.getRegistre()).toBe("CSL.DX.1922.NA.T.410.681");
 });

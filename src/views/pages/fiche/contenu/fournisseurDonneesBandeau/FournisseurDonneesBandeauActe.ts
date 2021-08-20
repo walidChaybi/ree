@@ -1,4 +1,3 @@
-import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 import {
   formatDe,
   formatNom,
@@ -8,6 +7,7 @@ import {
   premiereLettreEnMajusculeLeResteEnMinuscule,
   triListeObjetsSurPropriete
 } from "../../../../common/util/Utils";
+import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 import { SimplePersonne } from "./IFournisseurDonneesBandeau";
 
 export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
@@ -52,12 +52,12 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   getRegistre() {
     let res = "";
     if (this.data) {
-      const annee = getValeurOuVide(this.data.evenement.annee);
       const noActe = getValeurOuVide(this.data.numero);
       const numeroBisTer = getValeurOuVide(this.data.numeroBisTer);
 
       let famille = "";
       let pocopa = "";
+      let annee = "";
       let support1 = "";
       let support2 = "";
       if (this.data.registre) {
@@ -65,6 +65,7 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
           this.data.registre.famille
         ).toLocaleUpperCase();
         pocopa = getValeurOuVide(this.data.registre.pocopa).toLocaleUpperCase();
+        annee = getValeurOuVide(this.data.registre.annee);
         support1 = getValeurOuVide(
           this.data.registre.support1
         ).toLocaleUpperCase();
@@ -72,7 +73,7 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
           this.data.registre.support2
         ).toLocaleUpperCase();
       }
-      res = `${famille}.${pocopa}.${annee}.${noActe}.${numeroBisTer}.${support1}.${support2}`;
+      res = `${famille}.${pocopa}.${annee}.${support1}.${support2}.${noActe}.${numeroBisTer}`;
     }
     return res;
   }

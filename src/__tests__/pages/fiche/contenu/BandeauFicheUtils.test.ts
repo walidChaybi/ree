@@ -1,10 +1,9 @@
-import { setDataBandeau } from "../../../../views/pages/fiche/contenu/BandeauFicheUtils";
-import DATA_FICHE_RC from "../data/bandeauRc";
-import DATA_FICHE_PACS from "../data/bandeauPacs";
-import { fournisseurDonneesBandeauFactory } from "../../../../views/pages/fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
-import { acte } from "../data/ficheActe";
 import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
+import { setDataBandeau } from "../../../../views/pages/fiche/contenu/BandeauFicheUtils";
 import { IDataFicheProps } from "../../../../views/pages/fiche/FichePage";
+import DATA_FICHE_PACS from "../data/bandeauPacs";
+import DATA_FICHE_RC from "../data/bandeauRc";
+import { acte } from "../data/ficheActe";
 
 test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
   const dataFiche = {
@@ -63,5 +62,5 @@ test("bandeauFicheUtils setDataBandeau works Acte", async () => {
     "ABSENCE - GREENWALD et DUPE - N° 1921 - 410"
   );
   expect(bandeauFiche.personnes[0].prenom).toBe("Paulita");
-  expect(bandeauFiche.registre).toBe("CSL.DX.1921.410.681.NA.T");
+  expect(bandeauFiche.registre).toBe("CSL.DX.1922.NA.T.410.681");
 });

@@ -37,7 +37,8 @@ export const acte: any = {
     famille: "CSL",
     pocopa: "DX",
     support1: "NA",
-    support2: "T"
+    support2: "T",
+    annee: 1922
   },
   evenement: {
     minute: 54,
