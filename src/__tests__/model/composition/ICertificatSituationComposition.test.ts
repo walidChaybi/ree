@@ -5,6 +5,8 @@ import { configRequetes } from "../../../mock/superagent-config/superagent-mock-
 import { CertificatSituationComposition } from "../../../model/composition/ICertificatSituationComposition";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
 import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresBaseRequete";
+import { Qualite } from "../../../model/requete/v2/enum/Qualite";
+import { TypeCanal } from "../../../model/requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../../model/requete/v2/IRequerant";
 import { ITitulaireRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
 
@@ -30,6 +32,9 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
       ville: "ville",
       codePostal: "123456",
       pays: "pays"
+    },
+    qualiteRequerant: {
+      qualite: Qualite.PARTICULIER
     }
   } as IRequerant;
   const titulaire = {
@@ -47,6 +52,7 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     titre,
     decrets,
     phrase,
+    TypeCanal.COURRIER,
     phrasesPiecesJointes,
     requerant,
     titulaire

@@ -37,6 +37,7 @@ export const ReponseNegativeMariageComposition = {
 
     RequerantComposition.ajoutInfosRequerant(
       reponseNegative,
+      requete.canal,
       requete.requerant
     );
 

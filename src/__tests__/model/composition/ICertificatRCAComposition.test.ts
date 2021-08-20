@@ -5,6 +5,8 @@ import { configRequetes } from "../../../mock/superagent-config/superagent-mock-
 import { CertificatRCAComposition } from "../../../model/composition/ICertificatRCAComposition";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
 import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresBaseRequete";
+import { Qualite } from "../../../model/requete/v2/enum/Qualite";
+import { TypeCanal } from "../../../model/requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../../model/requete/v2/IRequerant";
 import { ITitulaireRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
 import { IElementsJasperCertificatRCA } from "../../../views/common/hook/v2/generation/generationInscriptionsHook/GenerationCertificatRCAHook";
@@ -36,6 +38,9 @@ test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correcteme
       ville: "ville",
       codePostal: "123456",
       pays: "pays"
+    },
+    qualiteRequerant: {
+      qualite: Qualite.PARTICULIER
     }
   } as IRequerant;
   const titulaire = {
@@ -51,6 +56,7 @@ test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correcteme
 
   const resultat = await CertificatRCAComposition.creerCertificatRCA(
     elementsJasper,
+    TypeCanal.COURRIER,
     requerant,
     titulaire
   );

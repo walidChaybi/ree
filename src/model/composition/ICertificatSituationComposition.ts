@@ -1,3 +1,4 @@
+import { TypeCanal } from "../requete/v2/enum/TypeCanal";
 import { IRequerant } from "../requete/v2/IRequerant";
 import { ITitulaireRequeteTableau } from "../requete/v2/IRequeteTableau";
 import { ICommunComposition } from "./commun/ICommunComposition";
@@ -36,6 +37,7 @@ export const CertificatSituationComposition = {
     titre: string,
     decrets: string[],
     phraseLiees: string,
+    canal?: TypeCanal,
     phrasesPiecesJointes?: string,
     requerant?: IRequerant,
     titulaire?: ITitulaireRequeteTableau
@@ -54,7 +56,11 @@ export const CertificatSituationComposition = {
     }
 
     ParametresComposition.ajoutParametres(certificatSituation);
-    RequerantComposition.ajoutInfosRequerant(certificatSituation, requerant);
+    RequerantComposition.ajoutInfosRequerant(
+      certificatSituation,
+      canal,
+      requerant
+    );
     TitulaireComposition.ajoutInfosTitulaire(certificatSituation, titulaire);
 
     return certificatSituation;

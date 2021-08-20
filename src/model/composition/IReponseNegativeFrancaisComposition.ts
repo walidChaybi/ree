@@ -36,6 +36,7 @@ export const ReponseNegativeFrancaisComposition = {
 
     RequerantComposition.ajoutInfosRequerant(
       reponseNegative,
+      requete.canal,
       requete.requerant
     );
 

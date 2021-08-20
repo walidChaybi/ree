@@ -46,8 +46,9 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
   const refReponseNegativeOptions3 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [reponseNegative, setReponseNegative] =
-    useState<IReponseNegative | undefined>();
+  const [reponseNegative, setReponseNegative] = useState<
+    IReponseNegative | undefined
+  >();
 
   const resultatReponseNegative = useReponseNegative(
     StatutRequete.A_VALIDER.libelle,
@@ -108,10 +109,9 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
     switch (indexMenu) {
       case INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE:
         setOperationEnCours(true);
-        const contenuReponseNegativeDemandeIncomplete =
-          await createReponseNegativePourCompositionApiDemandeIncomplete(
-            props.requete as IRequeteDelivrance
-          );
+        const contenuReponseNegativeDemandeIncomplete = await createReponseNegativePourCompositionApiDemandeIncomplete(
+          props.requete as IRequeteDelivrance
+        );
         setReponseNegative({
           contenu: contenuReponseNegativeDemandeIncomplete,
           fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
@@ -134,11 +134,10 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
           setHasMessageBloquant(true);
         } else {
           setOperationEnCours(true);
-          const newReponseNegativeMariage =
-            await createReponseNegativePourCompositionApiMariage(
-              props.requete as IRequeteDelivrance,
-              acteSelected?.[0]
-            );
+          const newReponseNegativeMariage = await createReponseNegativePourCompositionApiMariage(
+            props.requete as IRequeteDelivrance,
+            acteSelected?.[0]
+          );
           setReponseNegative({
             contenu: newReponseNegativeMariage,
             fichier: NOM_DOCUMENT_REFUS_MARIAGE
@@ -147,10 +146,9 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
         break;
       case INDEX_ACTION_RESSORTISSANT_FRANCAIS:
         setOperationEnCours(true);
-        const newReponseNegativeFrancais =
-          await createReponseNegativePourCompositionApiFrancais(
-            props.requete as IRequeteDelivrance
-          );
+        const newReponseNegativeFrancais = await createReponseNegativePourCompositionApiFrancais(
+          props.requete as IRequeteDelivrance
+        );
         setReponseNegative({
           contenu: newReponseNegativeFrancais,
           fichier: NOM_DOCUMENT_REFUS_FRANCAIS
@@ -201,11 +199,11 @@ export const createReponseNegativePourCompositionApiDemandeIncomplete = async (
 ) => {
   let reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
   if (requete && requete.requerant) {
-    reponseNegative =
-      ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
-        requete.requerant,
-        requete.numero
-      );
+    reponseNegative = ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+      requete.requerant,
+      requete.canal,
+      requete.numero
+    );
   } else {
     messageManager.showErrorAndClose(
       "Erreur inattendue: Pas de requérant pour la requête"
@@ -240,8 +238,9 @@ export const createReponseNegativePourCompositionApiFrancais = async (
 ) => {
   let reponseNegative = {} as IReponseNegativeFrancaisComposition;
   if (requete && requete.requerant) {
-    reponseNegative =
-      ReponseNegativeFrancaisComposition.creerReponseNegative(requete);
+    reponseNegative = ReponseNegativeFrancaisComposition.creerReponseNegative(
+      requete
+    );
   } else {
     messageManager.showErrorAndClose(
       "Erreur inattendue: Pas de requérant pour la requête"

@@ -2,6 +2,7 @@ import {
   IReponseNegativeDemandeIncompleteComposition,
   ReponseNegativeDemandeIncompleteComposition
 } from "../../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
+import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../../../model/requete/v2/IRequerant";
 import messageManager from "../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
@@ -39,10 +40,10 @@ export function createReponseNegative(requete?: SaisieRequeteRDCSC) {
   let reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
   if (requete && requete.requerant) {
     const requerant = getRequerant(requete) as IRequerant;
-    reponseNegative =
-      ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
-        requerant
-      );
+    reponseNegative = ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+      requerant,
+      TypeCanal.COURRIER
+    );
   } else {
     messageManager.showErrorAndClose(
       "Erreur inattendue: Pas de requérent pour la requête"

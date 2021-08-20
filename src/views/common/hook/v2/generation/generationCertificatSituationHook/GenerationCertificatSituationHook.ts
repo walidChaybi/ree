@@ -5,6 +5,7 @@ import {
   ICertificatSituationComposition,
   NOM_DOCUMENT_CERTIFICAT_SITUATION
 } from "../../../../../../model/composition/ICertificatSituationComposition";
+import { TypeCanal } from "../../../../../../model/requete/v2/enum/TypeCanal";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import {
   IRequeteTableau,
@@ -169,6 +170,7 @@ async function creerCertificatSituationComposition(
     titre,
     decrets,
     phrasesLiees,
+    TypeCanal.COURRIER,
     phrasesPiecesJointes,
     requete?.requerant,
     titulaire

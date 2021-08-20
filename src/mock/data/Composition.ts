@@ -21,7 +21,7 @@ const baseReponseNegative = {
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
-  identite_requerant: "DUBOIS Léonard",
+  identite_requerant_ligne_1: "DUBOIS Léonard",
   adresse_requerant: {
     ligne2: "61 avenue Foch",
     ligne3: "Appartement 258",
@@ -34,12 +34,11 @@ const baseReponseNegative = {
   titre: undefined
 };
 
-export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncompleteComposition =
-  {
-    ...baseReponseNegative,
-    objet_courrier:
-      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil"
-  };
+export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncompleteComposition = {
+  ...baseReponseNegative,
+  objet_courrier:
+    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil"
+};
 
 export const reponseNegativeMariage: IReponseNegativeMariageComposition = {
   ...baseReponseNegative,
@@ -78,7 +77,7 @@ export const certificatSituation: ICertificatSituationComposition = {
   },
   annee_naissance: "2000",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
-  identite_requerant: "nomFamille prenom",
+  identite_requerant_ligne_1: "nomFamille prenom",
   image_bloc_marques: imagePngVideBase64,
   jour_naissance: "1er",
   mois_naissance: "Février",
@@ -120,7 +119,7 @@ export const certificatRCA: ICertificatRCAComposition = {
   },
   annee_naissance: "2000",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
-  identite_requerant: "nomFamille prenom",
+  identite_requerant_ligne_1: "nomFamille prenom",
   image_bloc_marques: imagePngVideBase64,
   jour_naissance: "1er",
   mois_naissance: "Février",

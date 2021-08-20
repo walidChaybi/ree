@@ -1,3 +1,4 @@
+import { TypeCanal } from "../requete/v2/enum/TypeCanal";
 import { IRequerant } from "../requete/v2/IRequerant";
 import {
   CommunComposition,
@@ -20,7 +21,11 @@ export interface IReponseNegativeDemandeIncompleteComposition
     IRequerantComposition {}
 
 export const ReponseNegativeDemandeIncompleteComposition = {
-  creerReponseNegative(requerant: IRequerant, numeroRequete?: string) {
+  creerReponseNegative(
+    requerant: IRequerant,
+    canal: TypeCanal,
+    numeroRequete?: string
+  ) {
     const reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
     ParametresComposition.ajoutParametres(reponseNegative);
 
@@ -30,7 +35,7 @@ export const ReponseNegativeDemandeIncompleteComposition = {
       OBJET_COURRIER_CERTIFICAT_SITUATION
     );
 
-    RequerantComposition.ajoutInfosRequerant(reponseNegative, requerant);
+    RequerantComposition.ajoutInfosRequerant(reponseNegative, canal, requerant);
 
     return reponseNegative;
   }
