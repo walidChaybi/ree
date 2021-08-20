@@ -31,7 +31,7 @@ export const NB_INSCRIPTION_PAR_PAGE = 5;
 
 export function determinerColonnes(
   typeRMC: TypeRMC,
-  isCheckboxDisabled: (data: IResultatRMCInscription) => boolean,
+  isDisabled: (data: IResultatRMCInscription) => boolean,
   onClickCheckbox: (
     index: number,
     isChecked: boolean,
@@ -44,11 +44,7 @@ export function determinerColonnes(
       new TableauTypeColumn({
         keys: [HeaderTableauRMCInscription.Checkbox],
         title: "",
-        getElement: getCheckBoxElement.bind(
-          null,
-          isCheckboxDisabled,
-          onClickCheckbox
-        )
+        getElement: getCheckBoxElement.bind(null, isDisabled, onClickCheckbox)
       })
     ];
   }
@@ -56,8 +52,8 @@ export function determinerColonnes(
 }
 
 function getCheckBoxElement(
-  isDisabled: (data: IResultatRMCInscription) => boolean,
-  onClickParentCallBack: (
+  isDisabledCallBack: (data: IResultatRMCInscription) => boolean,
+  onClickCheckboxCallBack: (
     index: number,
     isChecked: boolean,
     data: IResultatRMCInscription
@@ -72,8 +68,8 @@ function getCheckBoxElement(
       disabledMessage={getLibelle(
         "Ce résultat ne correspond pas au document demandé par le requérant"
       )}
-      isDisabled={isDisabled}
-      onClickParentCallBack={onClickParentCallBack}
+      isDisabledCallBack={isDisabledCallBack}
+      onClickCheckboxCallBack={onClickCheckboxCallBack}
     />
   );
 }

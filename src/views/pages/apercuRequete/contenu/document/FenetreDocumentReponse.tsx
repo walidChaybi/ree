@@ -12,15 +12,19 @@ interface DocumentReponseProps {
 }
 
 export const FenetreDocumentReponse: React.FC<DocumentReponseProps> = props => {
+  const ratioWidth = 0.33;
+  const ratioHeight = 0.66;
+
   const contenuPiece = useGetDocumentReponseApi(props.idDocument);
+
   return (
     <FenetreExterne
       titre={`${props.nom} - Req N°${props.numRequete}`}
       onCloseHandler={() => {
         onClose(props);
       }}
-      ratioWidth={0.33}
-      ratioHeight={0.66}
+      ratioWidth={ratioWidth}
+      ratioHeight={ratioHeight}
     >
       <VisionneuseDocument
         titre={"Document réponse"}

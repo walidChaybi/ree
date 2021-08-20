@@ -19,7 +19,7 @@ const A_NE_PAS_DELIVRER = "A ne pas délivrer";
 const A_DELIVRER_SOUS_CONDITIONS = "A délivrer sous conditions";
 const ACTE_NON_EXPLOITABLE = "Acte non exploitable";
 const PROBLEME_FONCTIONNEL = "Problème fonctionnel";
-const DESCRIPTION_SAGA = "Description SAGA";
+export const DESCRIPTION_SAGA = "Description SAGA";
 
 /**
  * types alerte associés à un code couleur rouge : types 'A ne pas délivrer' et 'Problème fonctionnel'

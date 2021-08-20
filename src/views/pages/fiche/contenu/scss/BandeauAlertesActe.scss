@@ -1,0 +1,21 @@
+@import "../../../../../scss/colors";
+
+.BandeauAlertesActe {
+  border: 1px solid;
+  border-color: $border;
+  border-radius: 0.25em;
+  display: flex;
+  text-align: justify;
+  padding: 0.5rem;
+
+  .BoutonAjouterAlertes {
+    order: 2;
+    margin-left: auto;
+
+    .IconeBoutonAjoutAlertes {
+      font-size: 2em;
+      color: $alertes;
+      cursor: pointer;
+    }
+  }
+}

@@ -8,27 +8,23 @@ import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscriptio
 
 export function estSeulementActeMariage(
   requete: TRequete,
-  acteSelected: IResultatRMCActe[] | undefined,
-  inscriptionSelected: IResultatRMCInscription[] | undefined
+  actes: IResultatRMCActe[] | undefined,
+  inscriptions: IResultatRMCInscription[] | undefined
 ): boolean {
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const sousType: string = (requete as IRequeteDelivrance)?.sousType?.nom;
     return (
       (SousTypeDelivrance.RDCSC.nom === sousType ||
         SousTypeDelivrance.RDCSD.nom === sousType) &&
-      (inscriptionSelected?.length === undefined ||
-        inscriptionSelected?.length === 0) &&
-      estSeulementActeMariageSelectionne(acteSelected)
+      (inscriptions?.length === undefined || inscriptions?.length === 0) &&
+      estSeulementActeMariageSelectionne(actes)
     );
   }
   return true;
 }
 
 function estSeulementActeMariageSelectionne(
-  acteSelected: IResultatRMCActe[] | undefined
+  actes: IResultatRMCActe[] | undefined
 ): boolean {
-  return (
-    acteSelected?.length === 1 &&
-    acteSelected[0].nature === NatureActe.MARIAGE.libelle
-  );
+  return actes?.length === 1 && actes[0].nature === NatureActe.MARIAGE.libelle;
 }

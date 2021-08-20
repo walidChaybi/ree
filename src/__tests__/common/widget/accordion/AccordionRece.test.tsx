@@ -49,7 +49,7 @@ test("render composant AccordionRece", async () => {
       titre={"titlePanel"}
       index={0}
       disabled={false}
-      defaultExpanded={true}
+      expanded={true}
     />
   );
 
@@ -106,7 +106,7 @@ test("render composant AccordionRece can close", async () => {
       titre={"titlePanel"}
       index={0}
       disabled={false}
-      defaultExpanded={true}
+      expanded={true}
     />
   );
   const button = container.firstChild?.firstChild?.childNodes[1].firstChild;

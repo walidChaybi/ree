@@ -44,9 +44,7 @@ export const RMCTableauRequetesAssociees: React.FC<RMCTableauRequetesAssocieesPr
     <>
       <TableauRece
         idKey={"idRequete"}
-        onClickOnLine={() => {
-          alert("Implémenté à l'avenir dans l'US 220 ");
-        }}
+        onClickOnLine={() => {}} //TODO: US-220
         columnHeaders={columnsTableauRequeteAssociees}
         dataState={dataRMCAutoRequete}
         paramsTableau={dataTableauRMCAutoRequete}

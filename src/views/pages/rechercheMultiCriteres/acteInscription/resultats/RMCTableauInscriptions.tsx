@@ -15,6 +15,7 @@ import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscriptio
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getValeurOuVide } from "../../../../common/util/Utils";
 import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
+import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
 import { getLibelle } from "../../../../common/widget/Text";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { getMessageZeroInscription } from "../hook/RMCActeInscriptionUtils";
@@ -94,56 +95,65 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
 
   // Gestion du clic sur une colonne de type checkbox.
   const [selected, setSelected] = useState<Map<number, string>>(new Map([]));
+  const [columnHeaders, setColumnHeaders] = useState<TableauTypeColumn[]>([]);
 
-  const isCheckboxDisabled = (data: IResultatRMCInscription): boolean => {
-    if (dataRequete?.type === TypeRequete.DELIVRANCE) {
-      const requeteDelivrance = dataRequete as IRequeteDelivrance;
-
-      if (data?.statutInscription === StatutFiche.INACTIF.libelle) {
-        return true;
+  const isCheckboxDisabled = useCallback(
+    (data: IResultatRMCInscription): boolean => {
+      if (dataRequete?.type === TypeRequete.DELIVRANCE) {
+        const requeteDelivrance = dataRequete as IRequeteDelivrance;
+        if (data?.statutInscription === StatutFiche.INACTIF.libelle) {
+          return true;
+        }
+        if (
+          requeteDelivrance?.sousType?.nom === SousTypeDelivrance.RDC.nom ||
+          requeteDelivrance?.sousType?.nom === SousTypeDelivrance.RDD.nom
+        ) {
+          return true;
+        }
+        return !DocumentDelivrance.estDocumentDelivranceValide(
+          data?.categorie,
+          requeteDelivrance?.documentDemande
+        );
       }
+      return false;
+    },
+    [dataRequete]
+  );
 
-      if (
-        requeteDelivrance?.sousType?.nom === SousTypeDelivrance.RDC.nom ||
-        requeteDelivrance?.sousType?.nom === SousTypeDelivrance.RDD.nom
-      ) {
-        return true;
+  const onClickCheckbox = useCallback(
+    (
+      index: number,
+      isChecked: boolean,
+      data: IResultatRMCInscription
+    ): void => {
+      const newSelected = new Map(selected);
+      if (isChecked) {
+        newSelected.set(index, data?.idInscription);
+      } else {
+        newSelected.delete(index);
       }
+      setSelected(newSelected);
+      onClickCheckboxCallBack &&
+        onClickCheckboxCallBack(index, isChecked, data);
+    },
+    [selected, onClickCheckboxCallBack]
+  );
 
-      return !DocumentDelivrance.estDocumentDelivranceValide(
-        data?.categorie,
-        requeteDelivrance?.documentDemande
-      );
-    }
-
-    return false;
-  };
-
-  const onClickCheckbox = (
-    index: number,
-    isChecked: boolean,
-    data: IResultatRMCInscription
-  ): void => {
-    const newSelected = new Map(selected);
-    if (isChecked) {
-      newSelected.set(index, data?.idInscription);
-    } else {
-      newSelected.delete(index);
-    }
-    onClickCheckboxCallBack && onClickCheckboxCallBack(index, isChecked, data);
-    setSelected(newSelected);
-  };
+  useEffect(() => {
+    const colonnes = determinerColonnes(
+      typeRMC,
+      isCheckboxDisabled,
+      onClickCheckbox
+    );
+    setColumnHeaders(colonnes);
+  }, [typeRMC, isCheckboxDisabled, onClickCheckbox]);
 
   return (
     <>
       <TableauRece
         idKey={"idInscription"}
         onClickOnLine={onClickOnLine}
-        columnHeaders={determinerColonnes(
-          typeRMC,
-          isCheckboxDisabled,
-          onClickCheckbox
-        )}
+        columnHeaders={columnHeaders}
         dataState={dataRMCInscription}
         paramsTableau={dataTableauRMCInscription}
         goToLink={goToLink}

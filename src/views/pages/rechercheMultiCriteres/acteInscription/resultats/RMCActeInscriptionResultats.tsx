@@ -1,4 +1,5 @@
 import React from "react";
+import { IAlerte } from "../../../../../model/etatcivil/fiche/IAlerte";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -12,13 +13,14 @@ import { RMCTableauInscriptions } from "./RMCTableauInscriptions";
 
 export interface RMCActeInscriptionResultatsProps {
   typeRMC: TypeRMC;
+  dataAlertes?: IAlerte[];
   dataRequete?: TRequete;
   dataRMCActe: IResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
   dataRMCInscription: IResultatRMCInscription[];
   dataTableauRMCInscription: IParamsTableau;
-  setRangeInscription?: (range: string) => void;
   setRangeActe?: (range: string) => void;
+  setRangeInscription?: (range: string) => void;
   resetRMC?: boolean;
   onClickCheckboxTableauActes?: (
     index: number,
@@ -42,6 +44,7 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
           </div>
           <RMCTableauActes
             typeRMC={props.typeRMC}
+            dataAlertes={props.dataAlertes}
             dataRMCActe={props.dataRMCActe}
             dataTableauRMCActe={props.dataTableauRMCActe}
             setRangeActe={props.setRangeActe}

@@ -61,7 +61,7 @@ import {
 export function mappingRequeteDelivranceVersFormulaireRDCSC(
   requete: IRequeteDelivrance
 ): SaisieRequeteRDCSC {
-  let saisie = {
+  const saisie = {
     [DOCUMENT]: DocumentDelivrance.getUuidFromDocument(requete.documentDemande),
     [INTERESSE]: saisieInteresse(requete),
     [REQUERANT]: saisieRequerant(requete),

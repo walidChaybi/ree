@@ -118,25 +118,17 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
         });
         break;
       case INDEX_ACTION_TRACE_MARIAGE_ACTIF:
-        const acteSelected = supprimerNullEtUndefinedDuTableau(
-          props.acteSelected
+        const actes = supprimerNullEtUndefinedDuTableau(props.actes);
+        const inscriptions = supprimerNullEtUndefinedDuTableau(
+          props.inscriptions
         );
-        const inscriptionSelected = supprimerNullEtUndefinedDuTableau(
-          props.inscriptionSelected
-        );
-        if (
-          !estSeulementActeMariage(
-            props.requete,
-            acteSelected,
-            inscriptionSelected
-          )
-        ) {
+        if (!estSeulementActeMariage(props.requete, actes, inscriptions)) {
           setHasMessageBloquant(true);
         } else {
           setOperationEnCours(true);
           const newReponseNegativeMariage = await createReponseNegativePourCompositionApiMariage(
             props.requete as IRequeteDelivrance,
-            acteSelected?.[0]
+            actes?.[0]
           );
           setReponseNegative({
             contenu: newReponseNegativeMariage,

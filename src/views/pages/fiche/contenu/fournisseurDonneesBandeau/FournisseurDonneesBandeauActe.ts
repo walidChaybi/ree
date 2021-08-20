@@ -1,4 +1,5 @@
 import {
+  compactObject,
   formatDe,
   formatNom,
   formatPrenom,
@@ -49,32 +50,22 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
     return this.data ? this.data.evenement.annee : "";
   }
 
-  getRegistre() {
-    let res = "";
-    if (this.data) {
-      const noActe = getValeurOuVide(this.data.numero);
-      const numeroBisTer = getValeurOuVide(this.data.numeroBisTer);
-
-      let famille = "";
-      let pocopa = "";
-      let annee = "";
-      let support1 = "";
-      let support2 = "";
-      if (this.data.registre) {
-        famille = getValeurOuVide(
-          this.data.registre.famille
-        ).toLocaleUpperCase();
-        pocopa = getValeurOuVide(this.data.registre.pocopa).toLocaleUpperCase();
-        annee = getValeurOuVide(this.data.registre.annee);
-        support1 = getValeurOuVide(
-          this.data.registre.support1
-        ).toLocaleUpperCase();
-        support2 = getValeurOuVide(
-          this.data.registre.support2
-        ).toLocaleUpperCase();
-      }
-      res = `${famille}.${pocopa}.${annee}.${support1}.${support2}.${noActe}.${numeroBisTer}`;
-    }
-    return res;
+  getRegistre(): string {
+    const registre: any = {
+      famille: getValeurOuVide(
+        this.data?.registre?.famille
+      ).toLocaleUpperCase(),
+      pocopa: getValeurOuVide(this.data?.registre?.pocopa).toLocaleUpperCase(),
+      annee: getValeurOuVide(this.data?.registre?.annee),
+      support1: getValeurOuVide(
+        this.data?.registre?.support1
+      ).toLocaleUpperCase(),
+      support2: getValeurOuVide(
+        this.data?.registre?.support2
+      ).toLocaleUpperCase(),
+      numeroActe: getValeurOuVide(this.data?.numero),
+      numeroBisTer: getValeurOuVide(this.data?.numeroBisTer)
+    };
+    return Object.values(compactObject(registre)).join(".");
   }
 }

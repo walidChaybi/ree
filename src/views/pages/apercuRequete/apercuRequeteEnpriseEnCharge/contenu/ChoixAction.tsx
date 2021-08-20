@@ -13,8 +13,8 @@ import { MenuTransfert } from "./MenuTransfert";
 
 export interface IActionProps {
   requete: TRequete;
-  acteSelected?: IResultatRMCActe[];
-  inscriptionSelected?: IResultatRMCInscription[];
+  actes?: IResultatRMCActe[];
+  inscriptions?: IResultatRMCInscription[];
   dataHistory?: any;
 }
 
@@ -27,19 +27,16 @@ export const ChoixAction: React.FC<IActionProps> = props => {
     <Fieldset titre={getLibelle("Actions")}>
       <MenuDelivrer
         requete={props.requete}
-        acteSelected={props.acteSelected}
-        inscriptionSelected={props.inscriptionSelected}
+        actes={props.actes}
+        inscriptions={props.inscriptions}
         dataHistory={props.dataHistory}
       />
       <MenuReponseNegative
         requete={props.requete}
-        acteSelected={props.acteSelected}
-        inscriptionSelected={props.inscriptionSelected}
+        actes={props.actes}
+        inscriptions={props.inscriptions}
       />
-      <MenuReponseSansDelivrance
-        requete={props.requete}
-        acteSelected={props.acteSelected}
-      />
+      <MenuReponseSansDelivrance requete={props.requete} actes={props.actes} />
       {checkSiMenuTransferer && <MenuTransfert requete={props.requete} />}
     </Fieldset>
   );

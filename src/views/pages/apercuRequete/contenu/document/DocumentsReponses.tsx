@@ -31,7 +31,7 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
       <AccordionRece
         titre={"Documents à délivrer"}
         disabled={false}
-        defaultExpanded={true}
+        expanded={true}
       >
         <List>
           {documents.map(el => (

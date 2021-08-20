@@ -100,8 +100,7 @@ export function mappingActes(data: any): IResultatRMCActe[] {
       }),
       paysNaissance: getValeurOuVide(acte.paysNaissance),
       nature: NatureActe.getEnumFor(acte.nature).libelle,
-      registre: getValeurOuVide(acte.registre),
-      alertes: getValeurOuVide(acte.alertes)
+      registre: getValeurOuVide(acte.registre)
     };
     actesMapper.push(acteMapper);
   });

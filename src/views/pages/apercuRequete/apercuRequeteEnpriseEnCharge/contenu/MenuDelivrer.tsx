@@ -32,9 +32,8 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const refDelivrerOptions0 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [acteSelected, setActeSelected] = useState<IResultatRMCActe[]>();
-  const [inscriptionSelected, setInscriptionSelected] =
-    useState<IResultatRMCInscription[]>();
+  const [actes, setActes] = useState<IResultatRMCActe[]>();
+  const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[]>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
 
@@ -115,23 +114,26 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     mappingRequeteDelivranceToRequeteTableau(
       props.requete as IRequeteDelivrance
     ),
-    inscriptionSelected,
-    acteSelected
+    inscriptions,
+    actes
   );
 
   const controleCoherenceDocument = async (indexMenu: number) => {
     const requeteDelivrance = props.requete as IRequeteDelivrance;
     const sousType = requeteDelivrance?.sousType?.nom;
-    const actes = supprimerNullEtUndefinedDuTableau(props.acteSelected);
+    const listeActes = supprimerNullEtUndefinedDuTableau(props.actes);
+    const listeInscriptions = supprimerNullEtUndefinedDuTableau(
+      props.inscriptions
+    );
     if (
       sousType === SousTypeDelivrance.RDC.nom ||
       sousType === SousTypeDelivrance.RDD.nom
     ) {
-      if (actes?.length === 1) {
+      if (listeActes?.length === 1 && listeInscriptions?.length === 0) {
         if (
           (indexMenu === INDEX_ACTION_EXTRAIT_AVEC_FILIATION ||
             indexMenu === INDEX_ACTION_EXTRAIT_SANS_FILIATION) &&
-          actes?.[0]?.nature === TypeNatureActe.DECES.libelle
+          listeActes?.[0]?.nature === TypeNatureActe.DECES.libelle
         ) {
           setMessagesBloquant([
             getLibelle(
@@ -140,7 +142,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
           ]);
           setBoutonsPopin(boutonOK);
         } else if (
-          props.acteSelected?.[0]?.nature !==
+          listeActes?.[0]?.nature !==
           requeteDelivrance?.evenement?.natureActe?.libelle
         ) {
           setMessagesBloquant([
@@ -160,16 +162,14 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   };
 
   const handleDelivrerMenu = async (indexMenu: number) => {
-    if (indexMenu === 0) {
-      setInscriptionSelected(
-        props.inscriptionSelected
-          ? supprimerNullEtUndefinedDuTableau(props.inscriptionSelected)
+    if (indexMenu === INDEX_ACTION_CERTIFICAT_SITUATION) {
+      setInscriptions(
+        props.inscriptions
+          ? supprimerNullEtUndefinedDuTableau(props.inscriptions)
           : []
       );
-      setActeSelected(
-        props.acteSelected
-          ? supprimerNullEtUndefinedDuTableau(props.acteSelected)
-          : []
+      setActes(
+        props.actes ? supprimerNullEtUndefinedDuTableau(props.actes) : []
       );
       setOperationEnCours(true);
     } else {

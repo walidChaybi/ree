@@ -15,6 +15,7 @@ export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
 export const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
+export const URL_ALERTES_ACTE = "/acte/alertes";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -145,5 +146,12 @@ export function rechercheMultiCriteresAutoInscription(
     parameters: {
       range
     }
+  });
+}
+
+export function getAlertesActe(identifiant: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_ALERTES_ACTE}/${identifiant}`
   });
 }

@@ -219,3 +219,20 @@ export function replaceIndexByValue(
   }
   return phrase;
 }
+
+export function aplatirTableau(tableau: any[]): any[] {
+  return [].concat(...tableau);
+}
+
+export function compactObject(object: any): any {
+  for (const property in object) {
+    if (
+      object[property] === undefined ||
+      object[property] === null ||
+      object[property] === ""
+    ) {
+      delete object[property];
+    }
+  }
+  return object;
+}

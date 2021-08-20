@@ -8,9 +8,9 @@ export interface CheckboxColumnProps {
   index: number;
   data: any;
   disabledMessage?: string;
-  isDisabled?: (data: any) => boolean;
-  hasWarning?: (isChecked: boolean, data: any) => boolean;
-  onClickParentCallBack?: (
+  isDisabledCallBack?: (data: any) => boolean;
+  hasWarningCallBack?: (isChecked: boolean, data: any) => boolean;
+  onClickCheckboxCallBack?: (
     index: number,
     isChecked: boolean,
     data: any
@@ -21,26 +21,27 @@ export const CheckboxColumn: React.FC<CheckboxColumnProps> = ({
   index,
   data,
   disabledMessage = "",
-  isDisabled,
-  hasWarning,
-  onClickParentCallBack
+  isDisabledCallBack,
+  hasWarningCallBack,
+  onClickCheckboxCallBack
 }) => {
+  const [checked, setChecked] = useState<boolean>(false);
   const [displayWarning, setDisplayWarning] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
-    isDisabled && setDisabled(isDisabled(data));
-  }, [data, isDisabled]);
+    isDisabledCallBack && setDisabled(isDisabledCallBack(data));
+  }, [data, isDisabledCallBack]);
+
+  useEffect(() => {
+    hasWarningCallBack && setDisplayWarning(hasWarningCallBack(checked, data));
+  }, [checked, data, hasWarningCallBack]);
 
   const onClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation();
     const isChecked: boolean = (event?.target as any)?.checked;
-    if (hasWarning && hasWarning(isChecked, data)) {
-      setDisplayWarning(true);
-    } else {
-      setDisplayWarning(false);
-    }
-    onClickParentCallBack && onClickParentCallBack(index, isChecked, data);
+    setChecked(isChecked);
+    onClickCheckboxCallBack && onClickCheckboxCallBack(index, isChecked, data);
   };
 
   return (

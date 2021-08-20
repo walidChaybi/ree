@@ -1,0 +1,18 @@
+@import "./../../../../../scss/colors";
+
+.ListeAlertes {
+  padding: 0.5rem;
+
+  .CodeCouleurAlerteRouge {
+    color: $code-couleur-alertes-rouge;
+  }
+  .CodeCouleurAlerteOrange {
+    color: $code-couleur-alertes-orange;
+  }
+  .CodeCouleurAlerteVert {
+    color: $code-couleur-alertes-vert;
+  }
+  .CodeCouleurAlerteNoir {
+    color: $code-couleur-alertes-noir;
+  }
+}

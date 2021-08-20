@@ -1,7 +1,9 @@
 import { TypeCodeCouleur } from "../enum/TypeAlerte";
 
 export interface IAlerte {
+  idActe?: string;
   alerte?: string;
+  type?: string;
   famille?: string;
   pocopa?: string;
   annee?: string;
@@ -15,4 +17,5 @@ export interface IAlerte {
   dateCreation?: number;
   dateCreationStr?: string;
   codeCouleur?: TypeCodeCouleur;
+  registre?: string;
 }

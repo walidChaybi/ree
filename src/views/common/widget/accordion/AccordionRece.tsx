@@ -1,6 +1,6 @@
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SectionPanel, SectionPanelProps } from "../section/SectionPanel";
 import { AccordionTitle } from "./AccordionTitle";
 import "./scss/AccordionRece.scss";
@@ -8,27 +8,42 @@ import "./scss/AccordionRece.scss";
 export interface AccordionReceProps {
   panel?: SectionPanelProps;
   index?: number;
-  defaultExpanded: boolean;
+  expanded: boolean;
   disabled: boolean;
   titre: string;
 }
 
-export const AccordionRece: React.FC<AccordionReceProps> = props => {
+export const AccordionRece: React.FC<AccordionReceProps> = ({
+  children,
+  panel,
+  index,
+  expanded,
+  disabled,
+  titre
+}) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsExpanded(expanded);
+  }, [expanded]);
+
+  const handleChange = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <>
       <Accordion
-        defaultExpanded={props.defaultExpanded}
-        key={`rece-accordion-${props.index}`}
+        key={`rece-accordion-${index}`}
         className="accordionRece"
-        disabled={props.disabled}
+        expanded={isExpanded}
+        disabled={disabled}
+        onChange={handleChange}
       >
-        <AccordionTitle title={props.titre} />
-
+        <AccordionTitle title={titre} />
         <AccordionDetails>
-          {props.panel && (
-            <SectionPanel {...props.panel} id={`${props.index}`} />
-          )}
-          {props.children}
+          {panel && <SectionPanel {...panel} id={`${index}`} />}
+          {children}
         </AccordionDetails>
       </Accordion>
     </>

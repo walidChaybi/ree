@@ -58,7 +58,7 @@ test("renders du bloc Menu Delivrer", async () => {
       <Router history={history}>
         <MenuDelivrer
           requete={requete1}
-          inscriptionSelected={DataRMCInscriptionAvecUnSeulResultat}
+          inscriptions={DataRMCInscriptionAvecUnSeulResultat}
         />
       </Router>
     );
@@ -104,7 +104,7 @@ test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-typ
       <Router history={history}>
         <MenuDelivrer
           requete={requeteRDD}
-          inscriptionSelected={DataRMCInscriptionAvecUnSeulResultat}
+          inscriptions={DataRMCInscriptionAvecUnSeulResultat}
         />
       </Router>
     );

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "../../../common/util/GestionDesLiensApi";
-import { getValeurOuVide } from "../../../common/util/Utils";
+import { aplatirTableau, getValeurOuVide } from "../../../common/util/Utils";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableUtils";
 import { getLibelle } from "../../../common/widget/Text";
@@ -22,7 +22,13 @@ import { FenetreDocumentReponse } from "../contenu/document/FenetreDocumentRepon
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
+import { AlertesActes } from "./contenu/AlertesActes/AlertesActes";
 import { BoutonAjouterRMC } from "./contenu/BoutonAjouterRMC";
+import {
+  AlertesActeApiHookParameters,
+  useAlertesActeApiHook
+} from "./contenu/hook/AlertesActeApiHook";
+
 interface DataRMCAuto {
   dataRequetes: any[];
   dataRMCAutoActe: IResultatRMCActe[];
@@ -52,7 +58,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   const dataTableauRMCAutoInscription =
     dataHistory?.dataTableauRMCAutoInscription;
 
-  //**** RMC AUTO ****//
+  // Gestion RMC auto
   const [range, setRange] = useState<string>(`0-${NB_LIGNES_PAR_APPEL}`);
 
   const {
@@ -67,48 +73,65 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   };
 
   // Gestion du clic sur une colonne de type checkbox
-  const [acteSelected, setActeSelected] = useState<IResultatRMCActe[]>();
+  const [
+    alertesActeApiParameters,
+    setalertesActeApiParameters
+  ] = useState<AlertesActeApiHookParameters>();
+  const [actes, setActes] = useState<Map<number, IResultatRMCActe>>(
+    new Map([])
+  );
+  const [inscriptions, setInscriptions] = useState<
+    Map<number, IResultatRMCInscription>
+  >(new Map([]));
+
+  const alertes = useAlertesActeApiHook(alertesActeApiParameters);
+
+  const onClickCheckboxActe = useCallback(
+    (index: number, isChecked: boolean, data: IResultatRMCActe): void => {
+      const newSelected = new Map(actes);
+      if (isChecked) {
+        newSelected.set(index, data);
+      } else {
+        newSelected.delete(index);
+      }
+      setActes(newSelected);
+      setalertesActeApiParameters({
+        isChecked,
+        idActe: data?.idActe,
+        registre: data?.registre,
+        alertes
+      });
+    },
+    [actes, alertes]
+  );
+
+  const onClickCheckboxInscription = useCallback(
+    (
+      index: number,
+      isChecked: boolean,
+      data: IResultatRMCInscription
+    ): void => {
+      const newSelected = new Map(inscriptions);
+      if (isChecked) {
+        newSelected.set(index, data);
+      } else {
+        newSelected.delete(index);
+      }
+      setInscriptions(newSelected);
+    },
+    [inscriptions]
+  );
+
+  // Gestion des documents délivrés
   const [documentReponse, setDocumentReponse] = useState<infoDocumentAffiche>({
     id: "",
     nom: ""
   });
-  const [fenetreOuverteState, setFenetreOuverteState] = useState<boolean>(
-    false
-  );
-  const [inscriptionSelected, setInscriptionSelected] = useState<
-    IResultatRMCInscription[]
-  >();
 
-  const onClickCheckboxActe = (
-    index: number,
-    isChecked: boolean,
-    data: IResultatRMCActe
-  ): void => {
-    const tableau = !acteSelected ? [] : [...acteSelected];
-    if (isChecked) {
-      tableau[index] = data;
-    } else {
-      tableau.splice(index, 1);
-    }
-    setActeSelected(tableau);
-  };
-
-  const onClickCheckboxInscription = (
-    index: number,
-    isChecked: boolean,
-    data: IResultatRMCInscription
-  ): void => {
-    const tableau = !inscriptionSelected ? [] : [...inscriptionSelected];
-    if (isChecked) {
-      tableau[index] = data;
-    } else {
-      tableau.splice(index, 1);
-    }
-    setInscriptionSelected(tableau);
-  };
+  const [isFenetreOuverte, setIsFenetreOuverte] = useState<boolean>(false);
 
   function toggleFenetre() {
-    setFenetreOuverteState(!fenetreOuverteState);
+    setIsFenetreOuverte(!isFenetreOuverte);
   }
 
   function openFenetre(infoDoc: infoDocumentAffiche) {
@@ -121,13 +144,13 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
       <title>{getLibelle("Aperçu de la requête en prise en charge")}</title>
       {detailRequeteState && (
         <>
-          {fenetreOuverteState && (
+          {isFenetreOuverte === true && (
             <FenetreDocumentReponse
               toggleFenetre={toggleFenetre}
               numRequete={detailRequeteState.numero}
               idDocument={documentReponse.id}
               nom={getValeurOuVide(documentReponse.nom)}
-            ></FenetreDocumentReponse>
+            />
           )}
           <BandeauRequete detailRequete={detailRequeteState} />
           <div className="contenu-requete">
@@ -157,6 +180,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
                 dataRMCAutoInscription &&
                 dataTableauRMCAutoInscription && (
                   <RMCAutoResultats
+                    dataAlertes={aplatirTableau(Array.from(alertes.values()))}
                     dataRequete={detailRequeteState}
                     dataRMCAutoActe={dataRMCAutoActe}
                     dataTableauRMCAutoActe={dataTableauRMCAutoActe}
@@ -170,15 +194,14 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
                     }
                   />
                 )}
-              <div>
-                <BoutonAjouterRMC
-                  libelle={getLibelle("Ajouter une recherche multicritères")}
-                />
-              </div>
+              <BoutonAjouterRMC
+                libelle={getLibelle("Ajouter une recherche multicritères")}
+              />
+              <AlertesActes alertesActes={alertes} ajouterAlerte={true} />
               <ChoixAction
                 requete={detailRequeteState}
-                acteSelected={acteSelected}
-                inscriptionSelected={inscriptionSelected}
+                actes={Array.from(actes.values())}
+                inscriptions={Array.from(inscriptions.values())}
               />
               <BoutonRetour message={getLibelle("<< Retour")} />
             </div>

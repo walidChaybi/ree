@@ -23,6 +23,7 @@ export const NB_ACTE_PAR_PAGE = 10;
 
 export function determinerColonnes(
   typeRMC: TypeRMC,
+  hasWarning: (isChecked: boolean, data: IResultatRMCActe) => boolean,
   onClickCheckbox: (
     index: number,
     isChecked: boolean,
@@ -35,7 +36,7 @@ export function determinerColonnes(
       new TableauTypeColumn({
         keys: [HeaderTableauRMCActe.Checkbox],
         title: "",
-        getElement: getCheckBoxElement.bind(null, onClickCheckbox)
+        getElement: getCheckBoxElement.bind(null, hasWarning, onClickCheckbox)
       })
     ];
   }
@@ -43,7 +44,8 @@ export function determinerColonnes(
 }
 
 function getCheckBoxElement(
-  onClickParentCallBack: (
+  hasWarningCallBack: (isChecked: boolean, data: IResultatRMCActe) => boolean,
+  onClickCheckboxCallBack: (
     index: number,
     isChecked: boolean,
     data: IResultatRMCActe
@@ -51,15 +53,12 @@ function getCheckBoxElement(
   data: IResultatRMCActe,
   index: number
 ): JSX.Element {
-  const hasWarning = (isChecked: boolean, value: IResultatRMCActe): boolean => {
-    return isChecked && value?.alertes?.length !== 0;
-  };
   return (
     <CheckboxColumn
       index={index}
       data={data}
-      onClickParentCallBack={onClickParentCallBack}
-      hasWarning={hasWarning}
+      hasWarningCallBack={hasWarningCallBack}
+      onClickCheckboxCallBack={onClickCheckboxCallBack}
     />
   );
 }

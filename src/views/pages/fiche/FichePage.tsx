@@ -4,7 +4,7 @@ import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
 import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
 import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
-import { AlerteActe } from "./contenu/AlerteActe";
+import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
 import { BandeauFicheRcRcaPacsNumero } from "./contenu/BandeauFicheRcRcaPacsNumero";
@@ -91,9 +91,9 @@ export const FichePage: React.FC<FichePageProps> = props => {
         setIndex={setIndexFiche}
       />
       {/* Le bandeau d'ajout d'alerte pour les actes */}
-      {dataFicheState && (
-        <AlerteActe
-          dataFiche={dataFicheState.data}
+      {dataFicheState && ajouterAlerte !== undefined && (
+        <BandeauAlertesActe
+          dataFiche={dataFicheState}
           ajouterAlerte={ajouterAlerte}
         />
       )}
@@ -104,7 +104,7 @@ export const FichePage: React.FC<FichePageProps> = props => {
             key={`accordion-rece-${index}`}
             panel={panel}
             index={index}
-            defaultExpanded={index === 0}
+            expanded={index === 0}
             titre={panel.title}
             disabled={panel?.panelAreas.every(pa => !pa.value && !pa.parts)}
           />
