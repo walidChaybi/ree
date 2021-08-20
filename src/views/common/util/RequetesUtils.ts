@@ -7,7 +7,11 @@ import {
 } from "../../../model/IOfficierSSOApi";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../model/requete/v2/enum/TypeRequete";
-import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance";
+import { TRequete } from "../../../model/requete/v2/IRequete";
+import {
+  IRequeteDelivrance,
+  RequeteDelivrance
+} from "../../../model/requete/v2/IRequeteDelivrance";
 import { IRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
 import { getText } from "../../common/widget/Text";
 import { IActionOption } from "../widget/menu/MenuAction";
@@ -106,3 +110,19 @@ export const filtrerListeActions = (
       : true;
   });
 };
+
+export function getIdDocumentReponseAAfficher(requete?: TRequete): string {
+  let idDocumentAAfficher = "";
+  if (requete?.type === TypeRequete.DELIVRANCE) {
+    const requeteDelivrance = requete as IRequeteDelivrance;
+
+    const documentsDeDelivrance =
+      RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
+    if (documentsDeDelivrance.length > 0) {
+      idDocumentAAfficher = documentsDeDelivrance[0].id;
+    } else if (requeteDelivrance.documentsReponses.length > 0) {
+      idDocumentAAfficher = requeteDelivrance.documentsReponses[0].id;
+    }
+  }
+  return idDocumentAAfficher;
+}

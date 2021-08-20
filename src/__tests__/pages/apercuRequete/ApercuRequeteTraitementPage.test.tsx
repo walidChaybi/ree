@@ -1,4 +1,10 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
@@ -12,6 +18,7 @@ import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../views/ro
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
+global.URL.createObjectURL = jest.fn();
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
@@ -66,6 +73,33 @@ test("renders ApercuRequeteTraitementPage", async () => {
     expect(listeAction2).toBeDefined();
     expect(listeObservation1).toBeDefined();
     expect(listeObservation2).toBeDefined();
+  });
+});
+
+test("renders document réponses", async () => {
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID}
+          >
+            <ApercuRequeteTraitementPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+  const title = screen.getByText(/Documents à délivrer/i);
+  const doc1 = screen.getByText(/CARN_CSPAC_01/i);
+  const doc2 = screen.getByText(/CERTIFICAT_INSCRIPTION_RCA/i);
+
+  await waitFor(() => {
+    expect(title).toBeDefined();
+    expect(doc1).toBeDefined();
+    expect(doc2).toBeDefined();
+    fireEvent.click(doc2);
   });
 });
 

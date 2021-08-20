@@ -3,17 +3,17 @@ import React from "react";
 import request from "superagent";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import {
-  FenetrePiecesJustificatives,
+  FenetreDocumentReponse,
   onClose
-} from "../../../../views/pages/apercuRequete/resume/contenu/piecesJustificatives/FenetrePiecesJustificatives";
+} from "../../../../views/pages/apercuRequete/contenu/document/FenetreDocumentReponse";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-test("renders Fenetre Pièces Justificatives fonctionne correctement", async () => {
+test("renders Fenetre Document réponse fonctionne correctement", async () => {
   const toggle = jest.fn();
 
   render(
-    <FenetrePiecesJustificatives
+    <FenetreDocumentReponse
       toggleFenetre={toggle}
       idPiece="12345"
       nom="Journal d'Anne Franck"

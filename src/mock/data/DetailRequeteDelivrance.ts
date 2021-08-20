@@ -1,3 +1,8 @@
+import {
+  documentReponseCARN_CSPAC_01,
+  documentReponseCertificatRCA
+} from "./DocumentReponse";
+
 export const ReponseAppelDetailRequeteDelivrance = {
   hasTechnicalError: false,
   hasBusinessError: false,
@@ -243,7 +248,10 @@ export const ReponseAppelDetailRequeteDelivrance = {
     },
     provenanceRece: null,
     provenanceServicePublic: null,
-    documentsReponses: [],
+    documentsReponses: [
+      documentReponseCARN_CSPAC_01,
+      documentReponseCertificatRCA
+    ],
     evenement: {
       id: "0fb80e4f-ab5c-4f26-afcc-3199b67aa2f0",
       natureActe: "MARIAGE",

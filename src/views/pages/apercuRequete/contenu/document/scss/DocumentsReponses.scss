@@ -1,6 +1,6 @@
-@import "../../../../../scss/colors";
+@import "../../../../../../scss/colors";
 
-.suivis-requete {
+.documents-reponses {
   margin-top: 0.5em;
   border: 1px solid;
   border-color: $border;
@@ -28,10 +28,26 @@
     overflow-x: hidden;
     overflow-y: auto;
     text-align: left;
-    margin-left: 1em;
     div.RECE {
       span {
         color: $error-icon-color;
+      }
+    }
+  }
+
+  .documentReponse {
+    &:hover {
+      cursor: pointer;
+      background-color: $application-hoover !important;
+    }
+
+    &.Mui-selected,
+    &.Mui-selected:hover {
+      background-color: $button-application-color !important;
+      color: white;
+
+      .MuiTypography-colorTextSecondary {
+        color: white !important;
       }
     }
   }

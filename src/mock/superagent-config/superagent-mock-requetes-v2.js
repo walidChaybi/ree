@@ -4,6 +4,7 @@ import {
 } from "../data/DetailRequeteDelivrance";
 import {
   documentReponseCARN_CSPAC_01,
+  documentReponseCertificatRCA,
   idDocumentsReponse
 } from "../data/DocumentReponse";
 import {
@@ -42,8 +43,7 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -56,8 +56,7 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -71,8 +70,7 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -85,8 +83,7 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -105,8 +102,7 @@ export const configRequetesV2 = [
         return {
           headers: {
             "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
         };
@@ -199,8 +195,7 @@ export const configRequetesV2 = [
             "content-range":
               "0-15/" +
               ReponseAppelRMCRequete?.data?.ReponseAppelRMCRequete?.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
         };
@@ -214,6 +209,10 @@ export const configRequetesV2 = [
       // Récupération d'un document par son id
       if (match[1] === "/documentsreponses/" + idDocumentsReponse[0]) {
         return { data: documentReponseCARN_CSPAC_01 };
+      }
+      // Récupération d'un document par son id
+      if (match[1] === "/documentsreponses/" + idDocumentsReponse[1]) {
+        return { data: documentReponseCertificatRCA };
       }
 
       // Stockage d'un document (POST)

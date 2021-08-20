@@ -11,7 +11,7 @@ import { ApercuRequetePageV2 } from "../../../views/pages/apercuRequete/apercuRe
 import { URL_MES_REQUETES_APERCU_REQUETE } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
-
+global.URL.createObjectURL = jest.fn();
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(

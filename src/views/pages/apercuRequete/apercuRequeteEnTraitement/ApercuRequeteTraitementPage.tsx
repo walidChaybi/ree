@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
-import { TRequete } from "../../../../model/requete/v2/IRequete";
-import {
-  IRequeteDelivrance,
-  RequeteDelivrance
-} from "../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { useGetDocumentReponseApi } from "../../../common/hook/v2/DocumentReponseHook";
+import { getIdDocumentReponseAAfficher } from "../../../common/util/RequetesUtils";
 import { VisionneuseDocument } from "../../../common/widget/document/VisionneuseDocument";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { BandeauRequete } from "../contenu/BandeauRequete";
 import { BoutonSignerValider } from "../contenu/BoutonSignerValider";
+import {
+  DocumentsReponses,
+  infoDocumentAffiche
+} from "../contenu/document/DocumentsReponses";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
@@ -25,12 +25,18 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
   const history = useHistory();
   const { idRequete } = useParams<IdRequeteParams>();
   const [dataHistory] = useState<any>(history.location.state);
+  const [documentAffiche, setDocumentAffiche] = useState<infoDocumentAffiche>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
+  const contenuDocument = useGetDocumentReponseApi(documentAffiche?.id);
 
-  const contenuDocument = useGetDocumentReponseApi(
-    getIdDocumentReponseAAfficher(detailRequeteState)
-  );
+  useEffect(() => {
+    if (detailRequeteState) {
+      setDocumentAffiche({
+        id: getIdDocumentReponseAAfficher(detailRequeteState)
+      });
+    }
+  }, [detailRequeteState]);
 
   return (
     <div className="ApercuRequeteTraitement">
@@ -46,6 +52,12 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
               ></SuiviActionsRequete>
               <SuiviObservationsRequete
                 observations={detailRequeteState?.observations}
+              />
+              <DocumentsReponses
+                documents={
+                  (detailRequeteState as IRequeteDelivrance).documentsReponses
+                }
+                setDocumentAffiche={setDocumentAffiche}
               />
             </div>
             <div className="side right">
@@ -67,20 +79,4 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
       )}
     </div>
   );
-
-  function getIdDocumentReponseAAfficher(requete?: TRequete) {
-    let idDocumentAAfficher;
-    if (requete?.type === TypeRequete.DELIVRANCE) {
-      const requeteDelivrance = requete as IRequeteDelivrance;
-
-      const documentsDeDelivrance =
-        RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
-      if (documentsDeDelivrance.length > 0) {
-        idDocumentAAfficher = documentsDeDelivrance[0].id;
-      } else if (requeteDelivrance.documentsReponses.length > 0) {
-        idDocumentAAfficher = requeteDelivrance.documentsReponses[0].id;
-      }
-    }
-    return idDocumentAAfficher;
-  }
 };
