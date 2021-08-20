@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { IReponseNegativeDemandeIncompleteComposition } from "../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
-import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../model/composition/ObjetsComposition";
+import { IReponseNegative } from "../../../model/composition/IReponseNegative";
+import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
@@ -14,7 +14,7 @@ import { Formulaire } from "../../common/widget/formulaire/Formulaire";
 import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../common/widget/Text";
-import { useReponseNegativeDemandeIncomplete } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/hook/ChoixReponseNegativeDemandeIncompleteHook";
+import { useReponseNegative } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/hook/ChoixReponseNegativeHook";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
@@ -101,7 +101,7 @@ export const SaisirRDCSCPage: React.FC = () => {
   );
 
   const [reponseNegative, setReponseNegative] =
-    useState<IReponseNegativeDemandeIncompleteComposition | undefined>();
+    useState<IReponseNegative | undefined>();
 
   useState(async () => {
     const documentDelivrance =
@@ -131,11 +131,11 @@ export const SaisirRDCSCPage: React.FC = () => {
         // Redirection si l'enregistrement n'est pas un brouillon
         if (!brouillon) {
           if (refus) {
-            const reponse = createReponseNegative(
-              OBJET_COURRIER_CERTIFICAT_SITUATION,
-              saisieRequeteRDCSC
-            );
-            setReponseNegative(reponse);
+            const reponse = createReponseNegative(saisieRequeteRDCSC);
+            setReponseNegative({
+              contenu: reponse,
+              fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
+            });
           } else {
             messageManager.showSuccessAndClose(
               getLibelle("La requête a bien été enregistrée")
@@ -175,7 +175,7 @@ export const SaisirRDCSCPage: React.FC = () => {
     }
   }, [UpdateRequeteDelivranceRDCSCResultat, redirectionPage]);
 
-  const resultatReponseNegative = useReponseNegativeDemandeIncomplete(
+  const resultatReponseNegative = useReponseNegative(
     StatutRequete.TRAITE_A_IMPRIMER.libelle,
     StatutRequete.TRAITE_A_IMPRIMER,
     reponseNegative,

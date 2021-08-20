@@ -27,6 +27,7 @@ export const URL_DOCUMENT_REPONSE = "/documentsreponses";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/action";
+export const URL_TRANSFERT = "action/transfert";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
 
 const URL_REPONSES = "/reponses";
@@ -351,6 +352,24 @@ export function postCreationActionEtMiseAjourStatut(
       idRequete,
       libelleAction,
       statutRequete: StatutRequeteV2.getKey(statutRequete)
+    }
+  });
+}
+
+export function postTransfertRequete(
+  idRequete: string,
+  idEntite: string,
+  idUtilisateur: string,
+  statutRequete: StatutRequeteV2
+) {
+  return apiV2.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_TRANSFERT}`,
+    parameters: {
+      idRequete,
+      idEntite,
+      idUtilisateur,
+      statutRequete
     }
   });
 }

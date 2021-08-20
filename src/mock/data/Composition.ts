@@ -1,41 +1,11 @@
 import { ICertificatRCAComposition } from "../../model/composition/ICertificatRCAComposition";
 import { ICertificatSituationComposition } from "../../model/composition/ICertificatSituationComposition";
 import { IReponseNegativeDemandeIncompleteComposition } from "../../model/composition/IReponseNegativeDemandeIncompleteComposition";
+import { IReponseNegativeFrancaisComposition } from "../../model/composition/IReponseNegativeFrancaisComposition";
 import { IReponseNegativeMariageComposition } from "../../model/composition/IReponseNegativeMariageComposition";
 import { imagePngVideBase64 } from "./ImagePng";
 
-export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncompleteComposition =
-  {
-    image_bloc_marques: imagePngVideBase64,
-    nom_direction: {
-      ligne1: "Direction",
-      ligne2: "des Français à l'étranger",
-      ligne3: "et de l’administration consulaire"
-    },
-    adresse_internet: "courrier.scec@diplomatie.gouv.fr",
-    service_delivreur: "Service central d'état civil",
-    adr_service_delivreur: {
-      ligne4: "11, rue de la Maison Blanche",
-      ligne6: "44941 Nantes CEDEX 9"
-    },
-    tel_service_delivreur: "01.41.86.42.47",
-    ville_delivrance: "Nantes",
-    cachet_signature:
-      "P/le sous-directeur,chef du service central d’état civil",
-    objet_courrier:
-      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil",
-    identite_requerant: "Dubois Alice",
-    adresse_requerant: {
-      ligne2: "61 avenue Foch",
-      ligne3: "Appartement 258",
-      ligne4: "",
-      ligne5: "",
-      ligne6: "310 GL24",
-      ligne7: "Saint-Germain-de-Tallevende-la-Lande-Vaumont"
-    }
-  };
-
-export const reponseNegativeMariage: IReponseNegativeMariageComposition = {
+const baseReponseNegative = {
   image_bloc_marques: imagePngVideBase64,
   nom_direction: {
     ligne1: "Direction",
@@ -48,6 +18,10 @@ export const reponseNegativeMariage: IReponseNegativeMariageComposition = {
     ligne4: "11, rue de la Maison Blanche",
     ligne6: "44941 Nantes CEDEX 9"
   },
+  tel_service_delivreur: "01.41.86.42.47",
+  ville_delivrance: "Nantes",
+  cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  identite_requerant: "DUBOIS Léonard",
   adresse_requerant: {
     ligne2: "61 avenue Foch",
     ligne3: "Appartement 258",
@@ -56,18 +30,32 @@ export const reponseNegativeMariage: IReponseNegativeMariageComposition = {
     ligne6: "310 GL24 Saint-Germain-de-Tallevende-la-Lande-Vaumont",
     ligne7: ""
   },
-  tel_service_delivreur: "01.41.86.42.47",
-  ville_delivrance: "Nantes",
-  cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
-  objet_courrier: undefined,
-  titre: undefined,
   numero_requete: "L5UG3Q",
+  titre: undefined
+};
+
+export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncompleteComposition =
+  {
+    ...baseReponseNegative,
+    objet_courrier:
+      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil"
+  };
+
+export const reponseNegativeMariage: IReponseNegativeMariageComposition = {
+  ...baseReponseNegative,
+  objet_courrier: undefined,
   document_demande: "Certificat de situation au rca",
-  identite_requerant: "DUBOIS Léonard",
   nom_titulaire1: "GREENWALD",
   prenoms_titulaire1: "Paulita Zaria",
   nom_titulaire2: "DUPE",
   prenoms_titulaire2: "Laurent"
+};
+
+export const reponseNegativeFrancais: IReponseNegativeFrancaisComposition = {
+  ...baseReponseNegative,
+  objet_courrier:
+    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil",
+  url: "https://www.service-public.fr"
 };
 
 export const certificatSituation: ICertificatSituationComposition = {

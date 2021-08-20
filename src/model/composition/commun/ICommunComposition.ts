@@ -1,3 +1,5 @@
+import { getValeurOuVide } from "../../../views/common/util/Utils";
+
 export interface ICommunComposition {
   objet_courrier?: string;
   titre?: string;
@@ -7,7 +9,7 @@ export interface ICommunComposition {
 export const CommunComposition = {
   ajoutParametres(
     obj: ICommunComposition,
-    numero: string,
+    numero?: string,
     objet?: string,
     titre?: string
   ) {
@@ -15,7 +17,7 @@ export const CommunComposition = {
 
     obj.objet_courrier = objet;
     obj.titre = titre;
-    obj.numero_requete = numero;
+    obj.numero_requete = getValeurOuVide(numero);
     return obj;
   }
 };

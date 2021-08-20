@@ -14,7 +14,7 @@ import {
   RequerantComposition
 } from "./commun/IRequerantComposition";
 
-export const NOM_DOCUMENT_REFUS_MARIAGE = "CARN_CS_01.pdf";
+export const NOM_DOCUMENT_REFUS_MARIAGE = "CARN_CS_01";
 export interface IReponseNegativeMariageComposition
   extends IParametresComposition,
     ICommunComposition,
@@ -35,7 +35,6 @@ export const ReponseNegativeMariageComposition = {
 
     reponseNegative.document_demande = requete.documentDemande.libelle;
 
-    reponseNegative.identite_requerant = `${requete.requerant.nomFamille} ${requete.requerant.prenom}`;
     RequerantComposition.ajoutInfosRequerant(
       reponseNegative,
       requete.requerant

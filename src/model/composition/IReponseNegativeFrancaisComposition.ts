@@ -1,4 +1,4 @@
-import { IRequerant } from "../requete/v2/IRequerant";
+import { IRequeteDelivrance } from "../requete/v2/IRequeteDelivrance";
 import {
   CommunComposition,
   ICommunComposition
@@ -13,24 +13,31 @@ import {
 } from "./commun/IRequerantComposition";
 import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "./ObjetsComposition";
 
-export const NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE = "CARN_CSPAC_01";
-export interface IReponseNegativeDemandeIncompleteComposition
+export const NOM_DOCUMENT_REFUS_FRANCAIS = "CARN_CSPAC_02";
+export interface IReponseNegativeFrancaisComposition
   extends IParametresComposition,
     ICommunComposition,
-    IRequerantComposition {}
+    IRequerantComposition {
+  url: string;
+}
 
-export const ReponseNegativeDemandeIncompleteComposition = {
-  creerReponseNegative(requerant: IRequerant, numeroRequete?: string) {
-    const reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
+export const ReponseNegativeFrancaisComposition = {
+  creerReponseNegative(requete: IRequeteDelivrance) {
+    const reponseNegative = {} as IReponseNegativeFrancaisComposition;
     ParametresComposition.ajoutParametres(reponseNegative);
 
     CommunComposition.ajoutParametres(
       reponseNegative,
-      numeroRequete,
+      requete.numero,
       OBJET_COURRIER_CERTIFICAT_SITUATION
     );
 
-    RequerantComposition.ajoutInfosRequerant(reponseNegative, requerant);
+    reponseNegative.url = "https://www.service-public.fr";
+
+    RequerantComposition.ajoutInfosRequerant(
+      reponseNegative,
+      requete.requerant
+    );
 
     return reponseNegative;
   }

@@ -9,7 +9,11 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
-import { reponseNegativeMariage } from "../../../../mock/data/Composition";
+import {
+  reponseNegativeDemandeIncomplete,
+  reponseNegativeFrancais,
+  reponseNegativeMariage
+} from "../../../../mock/data/Composition";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 import { idRequete1, requete1 } from "../../../../mock/data/RequeteV2";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
@@ -19,13 +23,12 @@ import { ParametreBaseRequete } from "../../../../model/parametres/enum/Parametr
 import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import {
+  createReponseNegativePourCompositionApiDemandeIncomplete,
+  createReponseNegativePourCompositionApiFrancais,
   createReponseNegativePourCompositionApiMariage,
   MenuReponseNegative
 } from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/MenuReponseNegative";
-import {
-  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID
-} from "../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 const superagentMock2 = require("superagent-mock")(request, configRequetesV2);
@@ -80,11 +83,21 @@ test("Réponse négative demande incomplète", async () => {
     );
     fireEvent.click(choixRequeteIncomplete);
   });
+});
 
-  await waitFor(() => {
-    expect(history.location.pathname).toBe(
-      getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID, idRequete1)
+test("Réponse négative français", async () => {
+  let menuReponseNegative = screen.getByText("Réponse négative");
+  let choixFrancais: HTMLElement;
+
+  await act(async () => {
+    fireEvent.click(menuReponseNegative);
+  });
+
+  await act(async () => {
+    choixFrancais = screen.getByText(
+      /Ressortissant français ou né en France, courrier de non délivrance+/
     );
+    fireEvent.click(choixFrancais);
   });
 });
 
@@ -118,6 +131,37 @@ test("test de création réponse négative mariage", async () => {
     acte as any as IResultatRMCActe
   );
   expect(reponseNegative).toStrictEqual(reponseNegativeMariage);
+});
+
+test("test de création réponse négative français", async () => {
+  await ParametreBaseRequete.init();
+  const requete = requeteDelivrance;
+  const reponseNegative = await createReponseNegativePourCompositionApiFrancais(
+    requete
+  );
+  expect(reponseNegative).toStrictEqual(reponseNegativeFrancais);
+});
+
+test("test de création réponse négative demande incomplete", async () => {
+  await ParametreBaseRequete.init();
+  const requete = requeteDelivrance;
+  const reponseNegative =
+    await createReponseNegativePourCompositionApiDemandeIncomplete(requete);
+  expect(reponseNegative).toStrictEqual(reponseNegativeDemandeIncomplete);
+});
+
+test("message erreur", async () => {
+  const reponseNegative1 =
+    await createReponseNegativePourCompositionApiDemandeIncomplete("", {});
+  expect(reponseNegative1).toStrictEqual({});
+  const reponseNegative2 = await createReponseNegativePourCompositionApiMariage(
+    {},
+    {}
+  );
+  expect(reponseNegative2).toStrictEqual({});
+  const reponseNegative3 =
+    await createReponseNegativePourCompositionApiFrancais({});
+  expect(reponseNegative3).toStrictEqual({});
 });
 
 afterAll(() => {

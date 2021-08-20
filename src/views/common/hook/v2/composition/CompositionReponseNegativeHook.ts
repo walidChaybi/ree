@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { compositionApi } from "../../../../../api/appels/compositionApi";
-import { IReponseNegativeDemandeIncompleteComposition } from "../../../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
+import { IContenuReponseNegative } from "../../../../../model/composition/IReponseNegative";
 import { logError } from "../../../util/LogManager";
 import { getLibelle } from "../../../widget/Text";
 
-export function useCompositionReponseNegativeDemandeIncompleteApi(
-  reponseNegative?: IReponseNegativeDemandeIncompleteComposition
+export function useCompositionReponseNegativeApi(
+  document?: string,
+  reponseNegative?: IContenuReponseNegative
 ) {
   const [contenuComposition, setContenuComposition] = useState<string>();
 
   useEffect(() => {
-    if (reponseNegative) {
+    if (reponseNegative && document) {
       compositionApi
-        .getCompositionReponseNegativeDemandeIncomplete(reponseNegative)
+        .getCompositionReponseNegative(document, reponseNegative)
         .then(result => {
           setContenuComposition(result.body.data);
         })
@@ -25,7 +26,7 @@ export function useCompositionReponseNegativeDemandeIncompleteApi(
           });
         });
     }
-  }, [reponseNegative]);
+  }, [reponseNegative, document]);
 
   return contenuComposition;
 }

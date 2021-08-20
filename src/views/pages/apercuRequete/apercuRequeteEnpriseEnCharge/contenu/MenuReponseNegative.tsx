@@ -1,15 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { getInformationsFicheActe } from "../../../../../api/appels/etatcivilApi";
+import { IReponseNegative } from "../../../../../model/composition/IReponseNegative";
 import {
   IReponseNegativeDemandeIncompleteComposition,
+  NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE,
   ReponseNegativeDemandeIncompleteComposition
 } from "../../../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
 import {
+  IReponseNegativeFrancaisComposition,
+  NOM_DOCUMENT_REFUS_FRANCAIS,
+  ReponseNegativeFrancaisComposition
+} from "../../../../../model/composition/IReponseNegativeFrancaisComposition";
+import {
   IReponseNegativeMariageComposition,
+  NOM_DOCUMENT_REFUS_MARIAGE,
   ReponseNegativeMariageComposition
 } from "../../../../../model/composition/IReponseNegativeMariageComposition";
-import { OBJET_COURRIER_CERTIFICAT_SITUATION } from "../../../../../model/composition/ObjetsComposition";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
@@ -27,8 +34,7 @@ import { ConfirmationPopin } from "../../../../common/widget/popin/ConfirmationP
 import { getLibelle } from "../../../../common/widget/Text";
 import { receUrl } from "../../../../router/ReceUrls";
 import { IActionProps } from "./ChoixAction";
-import { useReponseNegativeDemandeIncomplete } from "./hook/ChoixReponseNegativeDemandeIncompleteHook";
-import { useReponseNegativeMariage } from "./hook/ChoixReponseNegativeMariageHook";
+import { useReponseNegative } from "./hook/ChoixReponseNegativeHook";
 import { estSeulementActeMariage } from "./VerificationChoixSeulementActeMariage";
 
 export const MenuReponseNegative: React.FC<IActionProps> = props => {
@@ -40,44 +46,25 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
   const refReponseNegativeOptions3 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [
-    reponseNegativeDemandeIncomplete,
-    setReponseNegativeDemandeIncomplete
-  ] = useState<IReponseNegativeDemandeIncompleteComposition | undefined>();
-  const [reponseNegativeMariage, setReponseNegativeMariage] = useState<
-    IReponseNegativeMariageComposition | undefined
-  >();
+  const [reponseNegative, setReponseNegative] =
+    useState<IReponseNegative | undefined>();
 
-  const resultatReponseNegativeDemandeIncomplete = useReponseNegativeDemandeIncomplete(
+  const resultatReponseNegative = useReponseNegative(
     StatutRequete.A_VALIDER.libelle,
     StatutRequete.A_VALIDER,
-    reponseNegativeDemandeIncomplete,
-    props.requete.id
-  );
-
-  const resultatReponseNegativeMariage = useReponseNegativeMariage(
-    StatutRequete.A_VALIDER.libelle,
-    StatutRequete.A_VALIDER,
-    reponseNegativeMariage,
+    reponseNegative,
     props.requete.id
   );
 
   useEffect(() => {
-    if (
-      resultatReponseNegativeMariage ||
-      resultatReponseNegativeDemandeIncomplete
-    ) {
+    if (resultatReponseNegative) {
       const url = receUrl.getUrlApercuTraitementAPartirDe(
         history.location.pathname
       );
       receUrl.replaceUrl(history, url);
     }
     setOperationEnCours(false);
-  }, [
-    resultatReponseNegativeDemandeIncomplete,
-    resultatReponseNegativeMariage,
-    history
-  ]);
+  }, [resultatReponseNegative, history]);
 
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 
@@ -121,13 +108,14 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
     switch (indexMenu) {
       case INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE:
         setOperationEnCours(true);
-        const newReponseNegativeDemandeIncomplete = await createReponseNegativePourCompositionApiDemandeIncomplete(
-          OBJET_COURRIER_CERTIFICAT_SITUATION,
-          props.requete as IRequeteDelivrance
-        );
-        setReponseNegativeDemandeIncomplete(
-          newReponseNegativeDemandeIncomplete
-        );
+        const contenuReponseNegativeDemandeIncomplete =
+          await createReponseNegativePourCompositionApiDemandeIncomplete(
+            props.requete as IRequeteDelivrance
+          );
+        setReponseNegative({
+          contenu: contenuReponseNegativeDemandeIncomplete,
+          fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
+        });
         break;
       case INDEX_ACTION_TRACE_MARIAGE_ACTIF:
         const acteSelected = supprimerNullEtUndefinedDuTableau(
@@ -146,12 +134,27 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
           setHasMessageBloquant(true);
         } else {
           setOperationEnCours(true);
-          const newReponseNegativeMariage = await createReponseNegativePourCompositionApiMariage(
-            props.requete as IRequeteDelivrance,
-            acteSelected?.[0]
-          );
-          setReponseNegativeMariage(newReponseNegativeMariage);
+          const newReponseNegativeMariage =
+            await createReponseNegativePourCompositionApiMariage(
+              props.requete as IRequeteDelivrance,
+              acteSelected?.[0]
+            );
+          setReponseNegative({
+            contenu: newReponseNegativeMariage,
+            fichier: NOM_DOCUMENT_REFUS_MARIAGE
+          });
         }
+        break;
+      case INDEX_ACTION_RESSORTISSANT_FRANCAIS:
+        setOperationEnCours(true);
+        const newReponseNegativeFrancais =
+          await createReponseNegativePourCompositionApiFrancais(
+            props.requete as IRequeteDelivrance
+          );
+        setReponseNegative({
+          contenu: newReponseNegativeFrancais,
+          fichier: NOM_DOCUMENT_REFUS_FRANCAIS
+        });
         break;
     }
   };
@@ -193,17 +196,16 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
   );
 };
 
-async function createReponseNegativePourCompositionApiDemandeIncomplete(
-  objet: string,
+export const createReponseNegativePourCompositionApiDemandeIncomplete = async (
   requete?: IRequeteDelivrance
-) {
+) => {
   let reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
   if (requete && requete.requerant) {
-    reponseNegative = ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
-      objet,
-      requete.requerant,
-      requete.numero
-    );
+    reponseNegative =
+      ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+        requete.requerant,
+        requete.numero
+      );
   } else {
     messageManager.showErrorAndClose(
       "Erreur inattendue: Pas de requérant pour la requête"
@@ -211,12 +213,12 @@ async function createReponseNegativePourCompositionApiDemandeIncomplete(
   }
 
   return reponseNegative;
-}
+};
 
-export async function createReponseNegativePourCompositionApiMariage(
+export const createReponseNegativePourCompositionApiMariage = async (
   requete: IRequeteDelivrance,
   acte: IResultatRMCActe | undefined
-) {
+) => {
   let reponseNegative = {} as IReponseNegativeMariageComposition;
   if (requete && requete.requerant && acte) {
     const infoActe = await getInformationsFicheActe(acte.idActe);
@@ -231,4 +233,20 @@ export async function createReponseNegativePourCompositionApiMariage(
   }
 
   return reponseNegative;
-}
+};
+
+export const createReponseNegativePourCompositionApiFrancais = async (
+  requete: IRequeteDelivrance
+) => {
+  let reponseNegative = {} as IReponseNegativeFrancaisComposition;
+  if (requete && requete.requerant) {
+    reponseNegative =
+      ReponseNegativeFrancaisComposition.creerReponseNegative(requete);
+  } else {
+    messageManager.showErrorAndClose(
+      "Erreur inattendue: Pas de requérant pour la requête"
+    );
+  }
+
+  return reponseNegative;
+};

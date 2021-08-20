@@ -34,14 +34,14 @@ const requerant: IRequerant = {
 } as IRequerant;
 
 export const idRequete1 = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
-export const requete1 = ({
+export const requete1 = {
   id: idRequete1,
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDCSC,
   statutCourant: {
     statut: StatutRequete.PRISE_EN_CHARGE
   },
-  requerant,
+  requerant: requerant,
   titulaires: [
     {
       id: "8ef12021-61df-421b-9b3d-ab6b4344df88",
@@ -65,7 +65,7 @@ export const requete1 = ({
       parentsTitulaire: []
     }
   ]
-} as any) as IRequeteDelivrance;
+} as any as IRequeteDelivrance;
 
 export const requeteRDD = {
   type: TypeRequete.DELIVRANCE,

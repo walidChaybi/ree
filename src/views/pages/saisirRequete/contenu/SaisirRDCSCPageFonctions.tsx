@@ -35,16 +35,12 @@ export function getRedirectionVersApercuRequete(
   return url;
 }
 
-export function createReponseNegative(
-  objet: string,
-  requete?: SaisieRequeteRDCSC
-) {
-  let reponseNegative: IReponseNegativeDemandeIncompleteComposition | undefined;
+export function createReponseNegative(requete?: SaisieRequeteRDCSC) {
+  let reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
   if (requete && requete.requerant) {
     const requerant = getRequerant(requete) as IRequerant;
     reponseNegative =
       ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
-        objet,
         requerant
       );
   } else {
