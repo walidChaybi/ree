@@ -59,7 +59,7 @@ export const ApercuRequetePageV2: React.FC = () => {
             <div className="side right">
               <VisionneuseDocument
                 titre={getLibelle("Aperçu des documents")}
-                contenu={contenuDocument?.contenu}
+                contenu={contenuDocument ? contenuDocument.contenu : ""}
                 typeMime={contenuDocument?.mimeType}
               />
               <BoutonPrendreEnCharge
