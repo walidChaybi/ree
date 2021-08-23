@@ -6,7 +6,7 @@ import {
   acte4,
   acteMariage
 } from "../../__tests__/pages/fiche/data/ficheActe";
-import { IFicheRcRcaDecisionJuridictionEtrangere } from "../data/ficheRCA";
+import { FicheRcaDecisionJuridictionEtrangere } from "../data/ficheRCA";
 import {
   ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureRC,
@@ -50,7 +50,13 @@ export const configEtatcivil = [
       if (
         match[1] === "/repertoirecivil/rca/215e4dfe-9757-4d5d-8715-359c6e73288c"
       ) {
-        return { data: IFicheRcRcaDecisionJuridictionEtrangere };
+        return { data: FicheRcaDecisionJuridictionEtrangere };
+      }
+
+      if (
+        match[1] === "/repertoirecivil/rc/135e4dfe-9757-4d5d-8715-359c6e73289b"
+      ) {
+        return { data: FicheRcaDecisionJuridictionEtrangere };
       }
 
       if (

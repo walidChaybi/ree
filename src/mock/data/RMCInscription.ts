@@ -158,7 +158,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
   }
 ];
 
-export const DataRMCInscriptionAvecUnSeulResultat: IResultatRMCInscription[] = [
+export const DataRMCInscriptionAvecUnRCA: IResultatRMCInscription[] = [
   {
     idInscription: "215e4dfe-9757-4d5d-8715-359c6e73288c",
     nom: "ROSE",
@@ -173,5 +173,23 @@ export const DataRMCInscriptionAvecUnSeulResultat: IResultatRMCInscription[] = [
     typeInscription: "RENOUVELLEMENT",
     dateInscription: "2007-07-07",
     anneeInscription: "2007"
+  }
+];
+
+export const DataRMCInscriptionAvecUnRC: IResultatRMCInscription[] = [
+  {
+    idInscription: "135e4dfe-9757-4d5d-8715-359c6e73289b",
+    nom: "ROSE",
+    autresNoms: "DUPE",
+    prenoms: "Jean-pierre, Michel",
+    dateNaissance: "08/06/1960",
+    paysNaissance: "Tunisie",
+    numeroInscription: "1004",
+    nature: "Sauvegarde justice (433cc)",
+    categorie: "RC",
+    statutInscription: "Actif",
+    typeInscription: "RENOUVELLEMENT",
+    dateInscription: "2009-02-05",
+    anneeInscription: "2009"
   }
 ];

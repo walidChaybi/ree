@@ -5,12 +5,20 @@ import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle
 import { Options } from "../../../views/common/util/Type";
 
 export class NatureRca extends EnumWithLibelle {
-  constructor(private readonly _article: string, libelle: string) {
+  constructor(
+    private readonly _article: string,
+    private readonly _type: string,
+    libelle: string
+  ) {
     super(libelle);
   }
 
   get article() {
     return this._article;
+  }
+
+  get type() {
+    return this._type;
   }
 
   public static async init() {

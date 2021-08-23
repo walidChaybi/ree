@@ -1,8 +1,4 @@
 import { useEffect, useState } from "react";
-import {
-  FicheUtil,
-  TypeFiche
-} from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteTableau } from "../../../../../../model/requete/v2/IRequeteTableau";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -12,7 +8,7 @@ import {
   useGenerationCertificatSituationHook
 } from "../../../../../common/hook/v2/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
 import { specificationPhraseDelivrer } from "../../../../../common/hook/v2/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
-import { useGenerationCertificatRCAHook } from "../../../../../common/hook/v2/generation/generationInscriptionsHook/GenerationCertificatRCAHook";
+import { useGenerationInscriptionsHook } from "../../../../../common/hook/v2/generation/generationInscriptionsHook/GenerationInscriptionsHook";
 import {
   IActionStatutRequete,
   useCreerActionMajStatutRequete
@@ -34,8 +30,6 @@ export function useDelivrerCertificatSituationHook(
   dataRMCAutoInscription?: IResultatRMCInscription[],
   dataRMCAutoActe?: IResultatRMCActe[]
 ) {
-  const [listeRCA, setListeRCA] = useState<IResultatRMCInscription[]>();
-
   const [
     resultDelivrerCertificatSituation,
     setResultDelivrerCertificatSituation
@@ -51,25 +45,14 @@ export function useDelivrerCertificatSituationHook(
     setActionStatutRequete
   ] = useState<IActionStatutRequete>();
 
-  // 1 - On récupère les RCA puis génération du ou des incriptions RCA
-  useEffect(() => {
-    if (dataRMCAutoInscription) {
-      setListeRCA(
-        dataRMCAutoInscription?.filter(
-          rca =>
-            TypeFiche.RCA === FicheUtil.getTypeFicheFromString(rca.categorie)
-        )
-      );
-    }
-  }, [dataRMCAutoInscription]);
-
-  const resultGenerationCertificatRCA = useGenerationCertificatRCAHook(
+  // 1 - Génération du ou des incriptions RC et/ou RCA
+  const resultGenerationInscription = useGenerationInscriptionsHook(
     requete,
-    listeRCA
+    dataRMCAutoInscription
   );
 
   useEffect(() => {
-    if (resultGenerationCertificatRCA) {
+    if (resultGenerationInscription) {
       setParamsCertificatSituation({
         requete,
         dataRMCAutoInscription,
@@ -78,7 +61,7 @@ export function useDelivrerCertificatSituationHook(
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultGenerationCertificatRCA]);
+  }, [resultGenerationInscription]);
 
   // 1 - Génération du certificat de situation
   const resultGenerationCertificatSituation = useGenerationCertificatSituationHook(

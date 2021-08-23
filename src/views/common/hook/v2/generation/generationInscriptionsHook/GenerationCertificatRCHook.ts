@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import {
-  CertificatRCAComposition,
-  ICertificatRCAComposition,
-  NOM_DOCUMENT_CERTIFICAT_RCA
-} from "../../../../../../model/composition/ICertificatRCAComposition";
+  CertificatRCComposition,
+  ICertificatRCComposition,
+  NOM_DOCUMENT_CERTIFICAT_RC
+} from "../../../../../../model/composition/ICertificatRCComposition";
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
@@ -12,7 +12,7 @@ import {
   ITitulaireRequeteTableau
 } from "../../../../../../model/requete/v2/IRequeteTableau";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { useCertificatRCAApiHook } from "../../composition/CompositionCertificatRCAHook";
+import { useCertificatRCApiHook } from "../../composition/CompositionCertificatRCHook";
 import { usePostDocumentsReponseApi } from "../../DocumentReponseHook";
 import { useInformationsRepertoireApiHook } from "../../repertoires/RepertoireApiHook";
 import {
@@ -24,27 +24,31 @@ import {
   sauvegardeContenuInscriptionSuivante,
   setResultGenerationCertificatInscription
 } from "./GenerationInscriptionsUtils";
-import { specificationRCA } from "./specificationInscriptions/specificationRCA";
+import { specificationRC } from "./specificationInscriptions/specificationRC";
 
-export interface IElementsJasperCertificatRCA {
+export interface IElementsJasperCertificatRC {
   anneeInscription?: string;
   numeroInscription?: string;
-  decisionRecue?: string;
+  decisionRecue1?: string;
+  decisionRecue2?: string;
   interesseDecision?: string;
-  paragrapheFin?: string;
+  regime?: string;
+  renouvellementModification?: string;
   decisionExequatur?: string;
+  duree?: string;
+  paragrapheFin?: string;
 }
 
-export function useGenerationCertificatRCAHook(
+export function useGenerationCertificatRCHook(
   requete?: IRequeteTableau,
-  listeRCA?: IResultatRMCInscription[]
+  listeRC?: IResultatRMCInscription[]
 ) {
-  const [rca, setRca] = useState<IResultatRMCInscription>();
+  const [rc, setRc] = useState<IResultatRMCInscription>();
 
   const [
-    certificatRCAComposition,
-    setCertificatRCAComposition
-  ] = useState<ICertificatRCAComposition>();
+    certificatRCComposition,
+    setCertificatRCComposition
+  ] = useState<ICertificatRCComposition>();
 
   const [
     documentsReponsePourStockage,
@@ -57,22 +61,22 @@ export function useGenerationCertificatRCAHook(
   ] = useState<string[]>([]);
 
   const [
-    resultGenerationCertificatRCA,
-    setResultGenerationCertificatRCA
+    resultGenerationCertificatRC,
+    setResultGenerationCertificatRC
   ] = useState<IResultGenerationPlusieursDocument>();
 
   useEffect(() => {
-    if (requete && listeRCA && listeRCA.length > 0) {
-      setRca(listeRCA[listeRCA.length - 1]);
-    } else if (listeRCA && listeRCA.length === 0) {
-      setResultGenerationCertificatRCA(RESULTAT_VIDE);
+    if (requete && listeRC && listeRC.length > 0) {
+      setRc(listeRC[listeRC.length - 1]);
+    } else if (listeRC && listeRC.length === 0) {
+      setResultGenerationCertificatRC(RESULTAT_VIDE);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listeRCA]);
+  }, [listeRC]);
 
-  const informationsRCA = useInformationsRepertoireApiHook(
-    TypeFiche.RCA,
-    rca?.idInscription
+  const informationsRC = useInformationsRepertoireApiHook(
+    TypeFiche.RC,
+    rc?.idInscription
   ) as IFicheRcRca;
 
   useEffect(() => {
@@ -80,52 +84,52 @@ export function useGenerationCertificatRCAHook(
       requete &&
       requete.titulaires &&
       requete.titulaires.length > 0 &&
-      informationsRCA
+      informationsRC
     ) {
-      const elementsJasper: IElementsJasperCertificatRCA = specificationRCA.getElementsJasper(
-        informationsRCA
+      const elementsJasper: IElementsJasperCertificatRC = specificationRC.getElementsJasper(
+        informationsRC
       );
-      construitCertificatRCA(
+      construitCertificatRC(
         requete,
-        setCertificatRCAComposition,
-        setResultGenerationCertificatRCA,
+        setCertificatRCComposition,
+        setResultGenerationCertificatRC,
         elementsJasper
       );
-    } else if (informationsRCA !== undefined) {
-      setResultGenerationCertificatRCA(RESULTAT_VIDE);
+    } else if (informationsRC !== undefined) {
+      setResultGenerationCertificatRC(RESULTAT_VIDE);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [informationsRCA]);
+  }, [informationsRC]);
 
   // 1- création du certificat de situation: appel api composition
   // récupération du document en base64
-  const contenuComposition: string | undefined = useCertificatRCAApiHook(
-    certificatRCAComposition
+  const contenuComposition: string | undefined = useCertificatRCApiHook(
+    certificatRCComposition
   );
 
   useEffect(() => {
     sauvegardeContenuInscriptionSuivante(
       contenuComposition,
-      listeRCA,
+      listeRC,
       [...contenuDocumentsComposition],
       setContenuDocumentsComposition,
-      setRca
+      setRc
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contenuComposition]);
 
-  // 2- Création du document réponse (après appel 'useCertificatRCARmcAutoVideApi') pour stockage dans la BDD et Swift
+  // 2- Création du document réponse (après appel 'useCertificatRCRmcAutoVideApi') pour stockage dans la BDD et Swift
   useEffect(() => {
     creationDocumentReponseInscription(
       contenuDocumentsComposition,
-      listeRCA,
+      listeRC,
       requete,
       setDocumentsReponsePourStockage,
-      NOM_DOCUMENT_CERTIFICAT_RCA
+      NOM_DOCUMENT_CERTIFICAT_RC
     );
     // TODO ajouter le typeDocument: DocumentDelivrance.getKeyForNom(
-    //   "CERTIFICAT_SITUATION_RCA"
-    // ), // UUID CERTIFICAT_SITUATION_RCA (nomenclature)
+    //   "CERTIFICAT_SITUATION_RC"
+    // ), // UUID CERTIFICAT_SITUATION_RC (nomenclature)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contenuDocumentsComposition]);
 
@@ -139,38 +143,38 @@ export function useGenerationCertificatRCAHook(
     setResultGenerationCertificatInscription(
       uuidDocumentsReponse,
       contenuDocumentsComposition,
-      setResultGenerationCertificatRCA
+      setResultGenerationCertificatRC
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uuidDocumentsReponse]);
 
-  return resultGenerationCertificatRCA;
+  return resultGenerationCertificatRC;
 }
 
-function construitCertificatRCA(
+function construitCertificatRC(
   requete: IRequeteTableau,
-  setCertificatRCAComposition: any,
-  setResultGenerationCertificatRCA: any,
-  elementsJasper: IElementsJasperCertificatRCA
+  setCertificatRCComposition: any,
+  setResultGenerationCertificatRC: any,
+  elementsJasper: IElementsJasperCertificatRC
 ) {
   if (estRenseigne(elementsJasper, requete)) {
-    creerCertificatRCAComposition(elementsJasper, requete).then(composition => {
-      setCertificatRCAComposition(composition);
+    creerCertificatRCComposition(elementsJasper, requete).then(composition => {
+      setCertificatRCComposition(composition);
     });
   } else {
-    setResultGenerationCertificatRCA(RESULTAT_VIDE);
+    setResultGenerationCertificatRC(RESULTAT_VIDE);
   }
 }
 
-async function creerCertificatRCAComposition(
-  elementsJasper: IElementsJasperCertificatRCA,
+async function creerCertificatRCComposition(
+  elementsJasper: IElementsJasperCertificatRC,
   requete?: IRequeteTableau
-): Promise<ICertificatRCAComposition> {
+): Promise<ICertificatRCComposition> {
   let titulaire: ITitulaireRequeteTableau | undefined;
   if (requete?.titulaires) {
     titulaire = requete.titulaires[0];
   }
-  return CertificatRCAComposition.creerCertificatRCA(
+  return CertificatRCComposition.creerCertificatRC(
     elementsJasper,
     requete?.requerant,
     titulaire
@@ -178,14 +182,14 @@ async function creerCertificatRCAComposition(
 }
 
 function estRenseigne(
-  elementsJasper: IElementsJasperCertificatRCA | undefined,
+  elementsJasper: IElementsJasperCertificatRC | undefined,
   requete: IRequeteTableau | undefined
 ) {
   return (
     elementsJasper &&
     elementsJasper.anneeInscription !== "" &&
     elementsJasper.numeroInscription !== "" &&
-    elementsJasper.decisionRecue !== "" &&
+    elementsJasper.decisionRecue1 !== "" &&
     elementsJasper.interesseDecision !== "" &&
     elementsJasper.paragrapheFin !== "" &&
     requete &&

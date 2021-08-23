@@ -21,6 +21,7 @@ export async function peupleNatureRc() {
           data.id,
           new NatureRc(
             data.article,
+            data.type,
             premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle)
           )
         );
@@ -44,6 +45,7 @@ export async function peupleNatureRca() {
           data.id,
           new NatureRca(
             data.article,
+            data.type,
             premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle)
           )
         );

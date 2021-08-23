@@ -1,12 +1,12 @@
 import {
-  IFicheRcRcaDecisionAvecInstructionProcureur,
-  IFicheRcRcaDecisionJuridictionEtrangere,
-  IFicheRcRcaDecisionNotaireConvention
+  FicheRcaDecisionAvecInstructionProcureur,
+  FicheRcaDecisionJuridictionEtrangere,
+  FicheRcaDecisionNotaireConvention
 } from "../../../../../../../mock/data/ficheRCA";
 import { specificationRCA } from "../../../../../../../views/common/hook/v2/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
 
 test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur", async () => {
-  const data = IFicheRcRcaDecisionAvecInstructionProcureur;
+  const data = FicheRcaDecisionAvecInstructionProcureur;
   const elementsJasper = specificationRCA.getElementsJasper(data);
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("4012");
@@ -21,7 +21,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur
 });
 
 test("Attendu: specificationRCA.getElementsJasper AVEC une decision Juridiction étrangère", async () => {
-  const data = IFicheRcRcaDecisionJuridictionEtrangere;
+  const data = FicheRcaDecisionJuridictionEtrangere;
   const elementsJasper = specificationRCA.getElementsJasper(data);
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("4013");
@@ -38,7 +38,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une decision Juridiction 
 });
 
 test("Attendu: specificationRCA.getElementsJasper AVEC une decision Notaire type convention", async () => {
-  const data = IFicheRcRcaDecisionNotaireConvention;
+  const data = FicheRcaDecisionNotaireConvention;
   const elementsJasper = specificationRCA.getElementsJasper(data);
   expect(elementsJasper.anneeInscription).toBe("1998");
   expect(elementsJasper.numeroInscription).toBe("4094");

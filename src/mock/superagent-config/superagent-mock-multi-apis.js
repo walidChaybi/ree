@@ -88,15 +88,11 @@ export const configMultiAPi = [
 
       if (
         match[1] ===
-        COMPOSITION_API_URL + "/composition/CERTIFICAT_SITUATION/1"
-      ) {
-        // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-        return { data: imagePngVideBase64 };
-      }
-
-      if (
+          COMPOSITION_API_URL + "/composition/CERTIFICAT_SITUATION/1" ||
         match[1] ===
-        COMPOSITION_API_URL + "/composition/CERTIFICAT_INSCRIPTION_RCA/1"
+          COMPOSITION_API_URL + "/composition/CERTIFICAT_INSCRIPTION_RCA/1" ||
+        match[1] ===
+          COMPOSITION_API_URL + "/composition/CERTIFICAT_INSCRIPTION_RC/1"
       ) {
         // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
         return { data: imagePngVideBase64 };

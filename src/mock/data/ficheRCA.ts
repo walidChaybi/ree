@@ -1,7 +1,7 @@
 import { IFicheRcRca } from "../../model/etatcivil/rcrca/IFicheRcRca";
 import { getDateFromDateCompose } from "../../views/common/util/DateUtils";
 
-export const IFicheRcRcaDecisionJuridictionEtrangere = ({
+export const FicheRcaDecisionJuridictionEtrangere = ({
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61d",
   categorie: "RCA",
   annee: "2020",
@@ -109,7 +109,7 @@ export const IFicheRcRcaDecisionJuridictionEtrangere = ({
   typeInscription: "INSCRIPTION"
 } as any) as IFicheRcRca;
 
-export const IFicheRcRcaDecisionAvecInstructionProcureur = ({
+export const FicheRcaDecisionAvecInstructionProcureur = ({
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61c",
   categorie: "RCA",
   annee: "2020",
@@ -219,7 +219,7 @@ export const IFicheRcRcaDecisionAvecInstructionProcureur = ({
   typeInscription: "INSCRIPTION"
 } as any) as IFicheRcRca;
 
-export const IFicheRcRcaDecisionNotaireConvention = ({
+export const FicheRcaDecisionNotaireConvention = ({
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
   categorie: "RCA",
   annee: "1998",

@@ -42,6 +42,19 @@ export const ReponseAppelNomenclatureNatureRC = {
       decisionCouple: false,
       article: "la",
       categorieRCRCA: "CURATELLE"
+    },
+    {
+      id: "058a436b-330d-4c3c-83e0-e49d2739012d",
+      nom: "NATURE_RC",
+      code: "CURATELLE_SIMPLE",
+      libelle: "curatelle simple",
+      estActif: true,
+      usagePacs: null,
+      type: "Protection des majeurs",
+      sousType: null,
+      decisionCouple: false,
+      article: "la",
+      categorieRCRCA: "CURATELLE"
     }
   ]
 };

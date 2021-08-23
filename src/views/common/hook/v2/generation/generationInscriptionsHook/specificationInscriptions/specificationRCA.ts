@@ -7,11 +7,11 @@ import {
   getDateFormatJasper,
   getDateFromTimestamp
 } from "../../../../../util/DateUtils";
-import { getLibelle } from "../../../../../widget/Text";
 import { IElementsJasperCertificatRCA } from "../GenerationCertificatRCAHook";
-import { getDecisionExequatur } from "./specificationCommunes";
-
-const DECRET_RCA = getLibelle("Article 4-1 du décret 65-422 du 1er juin 1965");
+import {
+  getDecisionExequatur,
+  getParagrapheFin
+} from "./specificationCommunes";
 
 function getParagrapheDecisionRecue(infosRCA: IFicheRcRca) {
   let decisionRecue = "";
@@ -134,34 +134,6 @@ function getDecisionNotaireInscription(
 
   decisionRecue += `le ${dateDecision} concernant ${infosRCA.nature.article} ${infosRCA.nature.libelle} de : `;
   return decisionRecue;
-}
-
-function getParagrapheFin(infosRCA: IFicheRcRca) {
-  let paragrapheFin = `Conformément à l'article ${DECRET_RCA},`;
-
-  if (infosRCA.decision?.instructionProcureur) {
-    const procureur = infosRCA.decision?.instructionProcureur;
-
-    paragrapheFin += ` et sur instruction du procureur de la République de ${procureur.ville}`;
-    paragrapheFin += procureur.arrondissement
-      ? ` Arr.${procureur.arrondissement}`
-      : "";
-    paragrapheFin += procureur.departement ? ` (${procureur.departement})` : "";
-
-    const dateInstruction = getDateFormatJasper(
-      getDateFromTimestamp(procureur.dateInstruction)
-    );
-
-    paragrapheFin += ` (N° réf. ${procureur.numeroRef}) du ${dateInstruction},`;
-  }
-
-  const dateInscription = infosRCA.dateInscription
-    ? getDateFormatJasper(infosRCA.dateInscription)
-    : "";
-
-  paragrapheFin += ` une inscription a été prise au répertoire civil annexe le ${dateInscription} sous la référence : RCA n°${infosRCA.annee} - ${infosRCA.numero}`;
-
-  return paragrapheFin;
 }
 
 /////////////////////////////////////////////////////////////////////

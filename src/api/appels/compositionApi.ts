@@ -7,6 +7,8 @@ const URL_COMPOSITION_CERTIFICAT_SITUATION =
   "/composition/CERTIFICAT_SITUATION/1";
 const URL_COMPOSITION_CERTIFICAT_RCA =
   "/composition/CERTIFICAT_INSCRIPTION_RCA/1";
+const URL_COMPOSITION_CERTIFICAT_RC =
+  "/composition/CERTIFICAT_INSCRIPTION_RC/1";
 
 function getCompositionReponseNegative(
   document: string,
@@ -21,6 +23,10 @@ function getCompositionCertificatSituation(obj: any): Promise<any> {
 
 function getCompositionCertificatRCA(obj: any): Promise<any> {
   return getComposition(URL_COMPOSITION_CERTIFICAT_RCA, obj);
+}
+
+function getCompositionCertificatRC(obj: any): Promise<any> {
+  return getComposition(URL_COMPOSITION_CERTIFICAT_RC, obj);
 }
 
 function getComposition(
@@ -38,5 +44,6 @@ Promise<any> {
 export const compositionApi = {
   getCompositionCertificatSituation,
   getCompositionCertificatRCA,
-  getCompositionReponseNegative
+  getCompositionReponseNegative,
+  getCompositionCertificatRC
 };

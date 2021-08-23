@@ -5,7 +5,10 @@ import { idDocumentsReponse } from "../../../../../../mock/data/DocumentReponse"
 import { imagePngVideBase64 } from "../../../../../../mock/data/ImagePng";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import { idRequete1 } from "../../../../../../mock/data/RequeteV2";
-import { DataRMCInscriptionAvecUnRCA } from "../../../../../../mock/data/RMCInscription";
+import {
+  DataRMCInscriptionAvecUnRC,
+  DataRMCInscriptionAvecUnRCA
+} from "../../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configMultiAPi } from "../../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
@@ -14,7 +17,7 @@ import {
   IRequeteTableau,
   ITitulaireRequeteTableau
 } from "../../../../../../model/requete/v2/IRequeteTableau";
-import { useGenerationCertificatRCAHook } from "../../../../../../views/common/hook/v2/generation/generationInscriptionsHook/GenerationCertificatRCAHook";
+import { useGenerationInscriptionsHook } from "../../../../../../views/common/hook/v2/generation/generationInscriptionsHook/GenerationInscriptionsHook";
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 const superagentMockEtatCivil = require("superagent-mock")(
@@ -35,25 +38,27 @@ const titulaire = {
 
 const requete = {
   idRequete: idRequete1,
-  document: ReponseAppelNomenclatureDocummentDelivrance.data[7].id, //CERTIFICAT_SITUATION_RCA
+  document: ReponseAppelNomenclatureDocummentDelivrance.data[6].id, //CERTIFICAT_SITUATION_RC_RCA
   titulaires: [titulaire]
 } as IRequeteTableau;
 
-const dataRMCAutoInscription = DataRMCInscriptionAvecUnRCA;
+const dataRMCAutoInscription = DataRMCInscriptionAvecUnRC.concat(
+  DataRMCInscriptionAvecUnRCA
+);
 
 const HookConsummer: React.FC = () => {
-  const res = useGenerationCertificatRCAHook(requete, dataRMCAutoInscription);
+  const res = useGenerationInscriptionsHook(requete, dataRMCAutoInscription);
 
   return (
     <>
       <div data-testid="resulatIdDoc">
         {res?.idDocumentsReponse && (
-          <>{`idDocumentReponse=${res?.idDocumentsReponse[1]}`}</>
+          <>{`idDocumentsReponse=${res?.idDocumentsReponse}`}</>
         )}
       </div>
       <div data-testid="resulatContenu">
         {res?.contenuDocumentsReponse && (
-          <>{`contenuDocumentReponse=${res?.contenuDocumentsReponse[0]}`}</>
+          <>{`contenuDocumentReponse1=${res?.contenuDocumentsReponse[0]}`}</>
         )}
       </div>
     </>
@@ -64,17 +69,17 @@ beforeAll(() => {
   DocumentDelivrance.init();
 });
 
-test("Attendu: la génération d'un certificat d'inscription RCA", async () => {
+test("Attendu: la génération d'un certificat d'inscription RC", async () => {
   render(<HookConsummer></HookConsummer>);
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
   const resulatContenu = screen.getByTestId("resulatContenu");
 
   await waitFor(() => {
     expect(resulatIdDoc.innerHTML).toBe(
-      `idDocumentReponse=${idDocumentsReponse[1]}`
+      `idDocumentsReponse=${idDocumentsReponse}`
     );
     expect(resulatContenu.innerHTML).toBe(
-      `contenuDocumentReponse=${imagePngVideBase64}`
+      `contenuDocumentReponse1=${imagePngVideBase64}`
     );
   });
 });
