@@ -18,7 +18,13 @@ export const MANDANT = "mandant";
 export const LIEN_TITULAIRE = "lienTitulaire";
 export const ADRESSE = "adresse";
 
-export interface SaisieRequeteRDCSC {
+export interface CreationRequeteRDC {
+  saisie: SaisieRequeteRDC;
+  refus?: boolean;
+  brouillon?: boolean;
+}
+
+export interface SaisieRequeteRDC {
   [REQUETE]: Requete;
   [EVENEMENT]: Evenement;
   [TITULAIRE1]: Identite;

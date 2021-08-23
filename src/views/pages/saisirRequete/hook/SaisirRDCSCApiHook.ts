@@ -10,12 +10,6 @@ export interface ICreationRequeteDelivranceRDCSCResultat {
   refus?: boolean;
 }
 
-export interface ICreationRequeteDelivranceRDCSCResultat {
-  idRequete: string;
-  brouillon?: boolean;
-  refus?: boolean;
-}
-
 export function useCreationRequeteDelivranceRDCSC(
   requeteRDCSC?: CreationRequeteRDCSC
 ): ICreationRequeteDelivranceRDCSCResultat | undefined {

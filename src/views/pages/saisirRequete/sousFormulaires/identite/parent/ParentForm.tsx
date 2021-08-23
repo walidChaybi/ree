@@ -11,7 +11,10 @@ import {
   withNamespace
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../../common/widget/Text";
-import { NOM, PRENOMS } from "../../../modelForm/ISaisirRequetePageModel";
+import {
+  NOM_FAMILLE,
+  PRENOMS
+} from "../../../modelForm/ISaisirRequetePageModel";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
@@ -20,13 +23,16 @@ import "./scss/ParentForm.scss";
 
 // Valeurs par défaut des champs
 export const ParentFormDefaultValues = {
-  [NOM]: "",
+  [NOM_FAMILLE]: "",
   [PRENOMS]: PrenomsFormDefaultValues
 };
 
 // Schéma de validation des champs
 export const ParentFormValidationSchema = Yup.object().shape({
-  [NOM]: Yup.string().matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+  [NOM_FAMILLE]: Yup.string().matches(
+    CarateresAutorise,
+    CARATERES_AUTORISES_MESSAGE
+  ),
   [PRENOMS]: PrenomsFormValidationSchema
 });
 
@@ -37,7 +43,7 @@ interface ParentFormProps {
 export type ParentSubFormProps = SubFormProps & ParentFormProps;
 
 const ParentForm: React.FC<ParentSubFormProps> = props => {
-  const nomWithNamespace = withNamespace(props.nom, NOM);
+  const nomWithNamespace = withNamespace(props.nom, NOM_FAMILLE);
 
   const prenomsFormProps = {
     nom: withNamespace(props.nom, PRENOMS)

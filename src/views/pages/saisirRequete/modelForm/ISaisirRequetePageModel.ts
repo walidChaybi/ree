@@ -72,10 +72,18 @@ export interface Requerant {
   [MANDATAIRE]: Mandataire;
   [INSTITUTI0NNEL]: Institutionnel;
   [PARTICULIER]: Particulier;
+  [AUTRE_PROFESSIONNEL]: AutreProfessionnel;
 }
 
 export interface Mandataire {
   [TYPE]: string;
+  [NATURE]: string;
+  [RAISON_SOCIALE]: string;
+  [NOM]: string;
+  [PRENOM]: string;
+}
+
+export interface AutreProfessionnel {
   [NATURE]: string;
   [RAISON_SOCIALE]: string;
   [NOM]: string;
@@ -103,6 +111,8 @@ export interface Identite {
   [SEXE]: string;
   [NAISSANCE]: Evenement;
   [NATIONALITE]: string;
+  [PARENT1]: Identite;
+  [PARENT2]: Identite;
 }
 
 export interface Adresse {

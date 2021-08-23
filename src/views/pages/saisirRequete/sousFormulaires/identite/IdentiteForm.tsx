@@ -30,7 +30,10 @@ import EvenementForm, {
   EvenementFormValidationSchema,
   EvenementSubFormProps
 } from "../evenement/EvenementForm";
-import ParentForm, { ParentSubFormProps } from "./parent/ParentForm";
+import ParentForm, {
+  ParentFormValidationSchema,
+  ParentSubFormProps
+} from "./parent/ParentForm";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
@@ -45,8 +48,8 @@ export const IdentiteFormDefaultValues = {
   [SEXE]: "INCONNU",
   [NAISSANCE]: EvenementFormDefaultValues,
   [NATIONALITE]: "INCONNUE",
-  [PARENT1]: "",
-  [PARENT2]: ""
+  [PARENT1]: undefined,
+  [PARENT2]: undefined
 };
 
 // Schéma de validation des champs
@@ -63,8 +66,8 @@ export const IdentiteFormValidationSchema = Yup.object().shape({
   [SEXE]: Yup.string(),
   [NAISSANCE]: EvenementFormValidationSchema,
   [NATIONALITE]: Yup.string(),
-  [PARENT1]: Yup.string(),
-  [PARENT2]: Yup.string()
+  [PARENT1]: ParentFormValidationSchema,
+  [PARENT2]: ParentFormValidationSchema
 });
 
 interface IdentiteFormProps {
@@ -103,6 +106,11 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
 
   const ajouterFiliation = () => {
     setAfficherParents(!afficherParents);
+    // Permet de re-initilaiser les champs PARENT1 et PARENT2
+    if (afficherParents) {
+      props.formik.setFieldValue(withNamespace(props.nom, PARENT1), undefined);
+      props.formik.setFieldValue(withNamespace(props.nom, PARENT2), undefined);
+    }
   };
 
   useEffect(() => {

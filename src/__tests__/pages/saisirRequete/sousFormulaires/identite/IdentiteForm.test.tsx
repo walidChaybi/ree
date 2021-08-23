@@ -89,7 +89,7 @@ test("render composant Identite Formulaire", async () => {
   await waitFor(() => {
     expect(ajouterFiliation).toBeDefined();
     expect(result.innerHTML).toBe(
-      '{"interesse":{"nomFamille":"MOCKNOMFAMILLE","nomUsage":"MOCKNOMUSAGE","prenoms":{"prenom1":"","prenom2":"","prenom3":""},"sexe":"MASCULIN","naissance":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"","paysEvenement":""},"nationalite":"FRANCAISE","parent1":"","parent2":""}}'
+      '{"interesse":{"nomFamille":"MOCKNOMFAMILLE","nomUsage":"MOCKNOMUSAGE","prenoms":{"prenom1":"","prenom2":"","prenom3":""},"sexe":"MASCULIN","naissance":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"","paysEvenement":""},"nationalite":"FRANCAISE"}}'
     );
   });
 

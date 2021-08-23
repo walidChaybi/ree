@@ -48,7 +48,9 @@ test("render composant Parent Formulaire", async () => {
     render(<HookParentForm />);
   });
 
-  const inputNom = screen.getByLabelText("parent1.nom") as HTMLInputElement;
+  const inputNom = screen.getByLabelText(
+    "parent1.nomFamille"
+  ) as HTMLInputElement;
 
   act(() => {
     fireEvent.change(inputNom, {
@@ -72,7 +74,7 @@ test("render composant Parent Formulaire", async () => {
   await waitFor(() => {
     expect(titreParent1).toBeDefined();
     expect(result.innerHTML).toBe(
-      '{"parent1":{"nom":"MOCKNOM","prenoms":{"prenom1":"","prenom2":"","prenom3":""}}}'
+      '{"parent1":{"nomFamille":"MOCKNOM","prenoms":{"prenom1":"","prenom2":"","prenom3":""}}}'
     );
   });
 });

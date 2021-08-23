@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeLienMandant } from "../../../model/requete/v2/enum/TypeLienMandant";
@@ -11,52 +12,70 @@ import {
   TypeRequerantRDC,
   UN_TITULAIRE
 } from "../../../model/requete/v2/enum/TypeRequerantRDC";
+import messageManager from "../../common/util/messageManager";
 import { Options } from "../../common/util/Type";
+import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
 import { Formulaire } from "../../common/widget/formulaire/Formulaire";
-import { SousFormulaire } from "../../common/widget/formulaire/SousFormulaire";
-import { SubFormProps } from "../../common/widget/formulaire/utils/FormUtil";
+import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../common/widget/Text";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
 import {
+  getMessagesPopin,
+  getRedirectionVersApercuRequete,
+  verifierDonneesObligatoires
+} from "./contenu/SaisirRDCPageFonctions";
+import {
+  getAdresseForm,
+  getBoutonsPopin,
+  getEvenementForm,
+  getLienTitulaireForm,
+  getMandantForm,
+  getRequerantForm,
+  getRequeteForm,
+  getTitulaire1Form,
+  getTitulaire2Form
+} from "./contenu/SaisirRDCPageForms";
+import { useCreationRequeteDelivranceRDC } from "./hook/SaisirRDCApiHook";
+import {
   ADRESSE,
+  CreationRequeteRDC,
   EVENEMENT,
   LIEN_TITULAIRE,
   MANDANT,
   REQUERANT,
   REQUETE,
+  SaisieRequeteRDC,
   TITULAIRE1,
   TITULAIRE2
 } from "./modelForm/ISaisirRDCPageModel";
 import "./scss/SaisirRequetePage.scss";
-import AdresseForm, {
+import {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "./sousFormulaires/adresse/AdresseForm";
-import EvenementForm, {
+import {
   EvenementFormDefaultValues,
-  EvenementFormValidationSchema,
-  EvenementSubFormProps
+  EvenementFormValidationSchema
 } from "./sousFormulaires/evenement/EvenementForm";
-import IdentiteForm, {
+import {
   IdentiteFormDefaultValues,
-  IdentiteFormValidationSchema,
-  IdentiteSubFormProps
+  IdentiteFormValidationSchema
 } from "./sousFormulaires/identite/IdentiteForm";
-import LienTitulaireForm, {
+import {
   LienTitulaireFormDefaultValues,
   LienTitulaireFormValidationSchema
 } from "./sousFormulaires/lienTitulaire/LienTitulaireForm";
-import MandantForm, {
+import {
   MandantFormDefaultValues,
   MandantFormValidationSchema
 } from "./sousFormulaires/mandant/MandantForm";
-import RequerantForm, {
+import {
   RequerantFormValidationSchema,
   TitulairesFormDefaultValues
 } from "./sousFormulaires/requerant/RequerantForm";
-import RequeteForm, {
+import {
   RequeteFormDefaultValues,
   RequeteFormValidationSchema
 } from "./sousFormulaires/requete/RequeteForm";
@@ -88,6 +107,8 @@ const ValidationSchemaRDCRequete = Yup.object({
 export const titreForm = SousTypeDelivrance.getEnumFor("RDC").libelle;
 
 export const SaisirRDCPage: React.FC = () => {
+  const history = useHistory();
+
   const [evenementVisible, setEvenementVisible] = useState<boolean>(false);
   const [titulaire2Visible, setTitulaire2Visible] = useState<boolean>(false);
   const [mandantVisible, setMandantVisible] = useState<boolean>(false);
@@ -102,6 +123,17 @@ export const SaisirRDCPage: React.FC = () => {
   const [optionsLienTitulaire, setOptionsLienTitulaire] = useState<Options>(
     TypeLienRequerant.getListEnumsAsOptions(TYPE_LIEN_REQUERANT_POUR_TITULAIRE)
   );
+
+  const [donneesIncompletes, setDonneesIncompletes] = React.useState<boolean>(
+    false
+  );
+  const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const [saisieRequeteRDC, setSaisieRequeteRDC] = useState<SaisieRequeteRDC>();
+  const [
+    creationRequeteRDC,
+    setCreationRequeteRDC
+  ] = useState<CreationRequeteRDC>();
 
   const onChangeNature = (nature: string) => {
     setEvenementVisible(
@@ -165,12 +197,63 @@ export const SaisirRDCPage: React.FC = () => {
     getAdresseForm()
   ];
 
-  const onSubmitSaisirRequete = (values: any, errors: any) => {};
+  const creationRequeteDelivranceRDCResultat = useCreationRequeteDelivranceRDC(
+    creationRequeteRDC
+  );
 
-  const boutonsProps = {} as SaisirRequeteBoutonsProps;
+  const redirectionPage = useCallback(
+    async (idRequeteSauvegardee: string) => {
+      // Si l'appel c'est terminé sans erreur
+      if (idRequeteSauvegardee) {
+        messageManager.showSuccessAndClose(
+          getLibelle("La requête a bien été enregistrée")
+        );
+        const pathname = history.location.pathname;
+        history.push(
+          getRedirectionVersApercuRequete(pathname, idRequeteSauvegardee)
+        );
+      }
+      setOperationEnCours(false);
+    },
+    [history]
+  );
+
+  useEffect(() => {
+    if (creationRequeteDelivranceRDCResultat) {
+      redirectionPage(creationRequeteDelivranceRDCResultat.idRequete);
+    }
+  }, [creationRequeteDelivranceRDCResultat, redirectionPage]);
+
+  const onSubmitSaisirRequete = (values: SaisieRequeteRDC) => {
+    setSaisieRequeteRDC(values);
+    if (verifierDonneesObligatoires(values)) {
+      setCreationRequeteRDC({
+        saisie: values,
+        refus: false,
+        brouillon: isBrouillon
+      });
+    } else {
+      // popin confirmation
+      setDonneesIncompletes(true);
+    }
+  };
+
+  const enregistrerValider = () => {
+    if (saisieRequeteRDC) {
+      setOperationEnCours(true);
+      setCreationRequeteRDC({ saisie: saisieRequeteRDC });
+    }
+  };
+
+  const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 
   return (
     <>
+      <OperationEnCours
+        visible={operationEnCours}
+        onTimeoutEnd={() => setOperationEnCours(false)}
+        onClick={() => setOperationEnCours(false)}
+      />
       <title>{titreForm}</title>
       <Formulaire
         titre={titreForm}
@@ -182,106 +265,11 @@ export const SaisirRDCPage: React.FC = () => {
         <div>{blocsForm}</div>
         <SaisirRequeteBoutons {...boutonsProps} />
       </Formulaire>
+      <ConfirmationPopin
+        isOpen={donneesIncompletes}
+        messages={getMessagesPopin()}
+        boutons={getBoutonsPopin(enregistrerValider, setDonneesIncompletes)}
+      />
     </>
   );
 };
-
-function getRequeteForm(onChangeNature: (nature: string) => void): JSX.Element {
-  const requeteFormProps = {
-    nom: REQUETE,
-    titre: getLibelle("Requête"),
-    onChange: onChangeNature
-  } as SubFormProps;
-  return <RequeteForm key={REQUETE} {...requeteFormProps} />;
-}
-
-function getEvenementForm(visible: boolean): JSX.Element {
-  const evenementFormProps = {
-    nom: EVENEMENT,
-    libelle: getLibelle("l'évènement"),
-    reset: visible
-  } as EvenementSubFormProps;
-  return (
-    <div key={EVENEMENT}>
-      {visible && (
-        <SousFormulaire titre={getLibelle("Évènement")}>
-          <div className="EvenementForm">
-            <EvenementForm {...evenementFormProps} />
-          </div>
-        </SousFormulaire>
-      )}
-    </div>
-  );
-}
-
-function getTitulaire1Form(): JSX.Element {
-  const interesseFormProps = {
-    nom: TITULAIRE1,
-    titre: getLibelle("Titulaire 1"),
-    filiation: true
-  } as IdentiteSubFormProps;
-  return <IdentiteForm key={TITULAIRE1} {...interesseFormProps} />;
-}
-
-function getTitulaire2Form(visible: boolean): JSX.Element {
-  const interesseFormProps = {
-    nom: TITULAIRE2,
-    titre: getLibelle("Titulaire 2"),
-    reset: visible,
-    filiation: true
-  } as IdentiteSubFormProps;
-  return (
-    <div key={TITULAIRE2}>
-      {visible && <IdentiteForm {...interesseFormProps} />}
-    </div>
-  );
-}
-
-function getRequerantForm(
-  optionsRequerant: Options,
-  onChangeRequerant: (requerant: string) => void
-): JSX.Element {
-  const requerantFromProps = {
-    nom: REQUERANT,
-    titre: getLibelle("Identité du requérant"),
-    options: optionsRequerant,
-    onChange: onChangeRequerant
-  } as SubFormProps;
-  return <RequerantForm key={REQUERANT} {...requerantFromProps} />;
-}
-
-function getMandantForm(visible: boolean): JSX.Element {
-  const mandantFromProps = {
-    nom: MANDANT,
-    titre: getLibelle("Mandant"),
-    reset: visible
-  } as SubFormProps;
-  return (
-    <div key={MANDANT}>{visible && <MandantForm {...mandantFromProps} />}</div>
-  );
-}
-
-function getLienTitulaireForm(
-  visible: boolean,
-  optionsLienTitulaire: Options
-): JSX.Element {
-  const titulaireFromProps = {
-    nom: LIEN_TITULAIRE,
-    titre: getLibelle("Lien avec le titulaire"),
-    reset: visible,
-    options: optionsLienTitulaire
-  } as SubFormProps;
-  return (
-    <div key={LIEN_TITULAIRE}>
-      {visible && <LienTitulaireForm {...titulaireFromProps} />}
-    </div>
-  );
-}
-
-function getAdresseForm(): JSX.Element {
-  const adresseFormProps = {
-    nom: ADRESSE,
-    titre: getLibelle("Adresse postale du requérant")
-  } as SubFormProps;
-  return <AdresseForm key={ADRESSE} {...adresseFormProps} />;
-}

@@ -6,7 +6,7 @@ export const PARTENAIRE2 = "partenaire2";
 export const REQUERANT = "requerant";
 export const ADRESSE = "adresse";
 
-export interface SaisieRequeteRDCSC {
+export interface SaisieRequeteRDAPC {
   [PARTENAIRE1]: Identite;
   [PARTENAIRE2]: Identite;
   [REQUERANT]: Requerant;

@@ -12,7 +12,6 @@ import { InputField } from "../../../../common/widget/formulaire/champsSaisie/In
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
 import {
   DOCUMENT_DEMANDE_OBLIGATOIRE,
-  MOTIF_OBLIGATOIRE,
   NATURE_ACTE_OBLIGATOIRE,
   NB_EXEMPLAIRE_MAXIMUM,
   NB_EXEMPLAIRE_MINIMUM,
@@ -54,7 +53,7 @@ export const RequeteFormValidationSchema = Yup.object()
       .min(1, NB_EXEMPLAIRE_MINIMUM)
       .max(NB_EXEMPLAIRE_MAX, NB_EXEMPLAIRE_MAXIMUM)
       .required(NB_EXEMPLAIRE_OBLIGATOIRE),
-    [MOTIF]: Yup.string().required(MOTIF_OBLIGATOIRE),
+    [MOTIF]: Yup.string().notRequired(),
     [COMPLEMENT_MOTIF]: Yup.string()
   })
   .test("complementMotifObligatoire", function (value, error) {
@@ -77,8 +76,9 @@ const RequeteForm: React.FC<SubFormProps> = props => {
     DocumentDemande.getAllEnumsAsOptions()
   );
 
-  const [complementMotifInactif, setComplementMotifInactif] =
-    useState<boolean>(true);
+  const [complementMotifInactif, setComplementMotifInactif] = useState<boolean>(
+    true
+  );
 
   const onChangeTypeNatureActe = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (props.onChange) {

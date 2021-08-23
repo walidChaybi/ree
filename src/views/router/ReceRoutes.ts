@@ -43,6 +43,12 @@ import {
   URL_MES_REQUETES_SAISIR_RDCSC_DETAIL_REQUETE,
   URL_MES_REQUETES_SAISIR_RDCSC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_SAISIR_RDCSC_DETAIL_REQUETE_TRAITEMENT_ID,
+  URL_MES_REQUETES_SAISIR_RDC_APERCU_REQUETE,
+  URL_MES_REQUETES_SAISIR_RDC_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_SAISIR_RDC_APERCU_REQUETE_TRAITEMENT_ID,
+  URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE,
+  URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_V2,
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
@@ -71,6 +77,12 @@ import {
   URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE,
   URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE_TRAITEMENT_ID,
+  URL_REQUETES_SERVICE_SAISIR_RDC_APERCU_REQUETE,
+  URL_REQUETES_SERVICE_SAISIR_RDC_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_REQUETES_SERVICE_SAISIR_RDC_APERCU_REQUETE_TRAITEMENT_ID,
+  URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE,
+  URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE_V2,
   URL_SAISIR_RDCSC_MES_REQUETES,
   URL_SAISIR_RDCSC_MES_REQUETES_SERVICE,
@@ -273,7 +285,50 @@ export const routesRece: IRoute[] = [
       "Modifier un brouillon d'une requête de délivrance certificat de situation depuis mes requêtes"
     )
   },
-
+  // Aperçu requête ... après saisie de requête RDC depuis Mes Requêtes de DELIVRANCE
+  {
+    url: URL_MES_REQUETES_SAISIR_RDC_APERCU_REQUETE,
+    component: ApercuRequetePageV2,
+    droits: [Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_MES_REQUETES_SAISIR_RDC_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    component: ApercuRequetePriseEnChargePage,
+    droits: [Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+  },
+  {
+    url: URL_MES_REQUETES_SAISIR_RDC_APERCU_REQUETE_TRAITEMENT_ID,
+    component: ApercuRequeteTraitementPage,
+    droits: [Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
+  },
+  // Détail d'une requête dans une page Aperçu requête ... après saisie de requête RDC depuis Mes Requêtes de DELIVRANCE
+  {
+    url: URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
   /////////////////////////////////////////
   ///// REQUETES DE MON SERVICE (RMS) /////
   /////////////////////////////////////////
@@ -375,7 +430,6 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
   },
   // Détail d'une requête dans une page Aperçu requête ... après saisie de requête RDCSC depuis Mes Requêtes de SERVICE
-
   {
     url: URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE,
     component: DetailRequetePage,
@@ -405,6 +459,50 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(
       "Modifier un brouillon d'une requête de délivrance certificat de situation depuis mes requêtes de service"
     )
+  },
+  // Aperçu requête ... après saisie de requête RDC depuis Mes Requêtes de SERVICE
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_RDC_APERCU_REQUETE,
+    component: ApercuRequetePageV2,
+    droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_RDC_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    component: ApercuRequetePriseEnChargePage,
+    droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_PRISE_EN_CHARGE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_RDC_APERCU_REQUETE_TRAITEMENT_ID,
+    component: ApercuRequeteTraitementPage,
+    droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
+  },
+  // Détail d'une requête dans une page Aperçu requête ... après saisie de requête RDC depuis Mes Requêtes de SERVICE
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   //////////////////////////////////////////
   ///// RECHERCHE MULTI-CRITERES (RMC) /////
