@@ -5,8 +5,8 @@ import { TypeCanal } from "../../requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../requete/v2/IRequerant";
 
 export interface IRequerantComposition {
-  identite_requerant_ligne_1: string;
-  identite_requerant_ligne_2?: string;
+  identite_requerant_ligne1: string;
+  identite_requerant_ligne2?: string;
   adresse_requerant: {
     ligne2: string;
     ligne3: string;
@@ -42,7 +42,7 @@ function isAdresseToutesLignes(
   obj: IRequerantComposition
 ): obj is IRequerantComposition {
   return (
-    isNotEmpty(obj.identite_requerant_ligne_2) &&
+    isNotEmpty(obj.identite_requerant_ligne2) &&
     isNotEmpty(obj.adresse_requerant.ligne2) &&
     isNotEmpty(obj.adresse_requerant.ligne3) &&
     isNotEmpty(obj.adresse_requerant.ligne5) &&
@@ -59,14 +59,14 @@ export const RequerantComposition = {
     if (requerant) {
       // Affichage de l'identité du requérant sur 1 ou 2 lignes selon le type
       if (isParticulierOuUtilisateur(requerant)) {
-        obj.identite_requerant_ligne_1 = `${requerant.nomFamille} ${requerant.prenom}`;
+        obj.identite_requerant_ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
       }
       if (isRaisonSociale(requerant)) {
         if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
-          obj.identite_requerant_ligne_1 = `${requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale}`;
-          obj.identite_requerant_ligne_2 = `${requerant.nomFamille} ${requerant.prenom}`;
+          obj.identite_requerant_ligne1 = `${requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale}`;
+          obj.identite_requerant_ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
         } else {
-          obj.identite_requerant_ligne_1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          obj.identite_requerant_ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
         }
       }
 
