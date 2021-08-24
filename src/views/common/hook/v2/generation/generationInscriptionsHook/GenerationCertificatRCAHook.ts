@@ -6,7 +6,6 @@ import {
 } from "../../../../../../model/composition/ICertificatRCAComposition";
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { TypeCanal } from "../../../../../../model/requete/v2/enum/TypeCanal";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import {
   IRequeteTableau,
@@ -173,7 +172,7 @@ async function creerCertificatRCAComposition(
   }
   return CertificatRCAComposition.creerCertificatRCA(
     elementsJasper,
-    TypeCanal.COURRIER,
+    requete?.canal,
     requete?.requerant,
     titulaire
   );

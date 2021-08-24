@@ -33,7 +33,7 @@ export interface ICertificatRCAComposition
 export const CertificatRCAComposition = {
   creerCertificatRCA(
     elementsJasper: IElementsJasperCertificatRCA,
-    canal: TypeCanal,
+    canal?: TypeCanal,
     requerant?: IRequerant,
     titulaire?: ITitulaireRequeteTableau
   ): ICertificatRCAComposition {

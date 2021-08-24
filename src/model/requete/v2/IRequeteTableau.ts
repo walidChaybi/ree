@@ -15,6 +15,7 @@ import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { SousTypeMiseAJour } from "./enum/SousTypeMiseAJour";
 import { StatutRequete } from "./enum/StatutRequete";
+import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
 import { IRequerant } from "./IRequerant";
 
@@ -41,6 +42,7 @@ export interface IRequeteTableau {
   idCorbeilleAgent?: string;
   nomUtilisateurAttribueA?: string;
   idEntiteRattachement?: string;
+  canal?: TypeCanal;
 }
 
 export interface ITitulaireRequeteTableau {

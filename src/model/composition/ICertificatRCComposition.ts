@@ -1,4 +1,5 @@
 import { IElementsJasperCertificatRC } from "../../views/common/hook/v2/generation/generationInscriptionsHook/GenerationCertificatRCHook";
+import { TypeCanal } from "../requete/v2/enum/TypeCanal";
 import { IRequerant } from "../requete/v2/IRequerant";
 import { ITitulaireRequeteTableau } from "../requete/v2/IRequeteTableau";
 import { ICommunComposition } from "./commun/ICommunComposition";
@@ -36,6 +37,7 @@ export interface ICertificatRCComposition
 export const CertificatRCComposition = {
   creerCertificatRC(
     elementsJasper: IElementsJasperCertificatRC,
+    canal?: TypeCanal,
     requerant?: IRequerant,
     titulaire?: ITitulaireRequeteTableau
   ): ICertificatRCComposition {
@@ -55,7 +57,7 @@ export const CertificatRCComposition = {
     } as ICertificatRCComposition;
 
     ParametresComposition.ajoutParametres(certificatRC);
-    RequerantComposition.ajoutInfosRequerant(certificatRC, requerant);
+    RequerantComposition.ajoutInfosRequerant(certificatRC, canal, requerant);
     TitulaireComposition.ajoutInfosTitulaire(certificatRC, titulaire);
 
     return certificatRC;

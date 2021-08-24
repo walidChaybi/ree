@@ -15,6 +15,7 @@ export function mappingRequeteDelivranceToRequeteTableau(
     idRequete: requete.id,
     numero: requete.numero,
     titulaires: requete.titulaires ? getTitulaires(requete.titulaires) : [],
+    canal: requete.canal,
     requerant: requete.requerant,
     idUtilisateur: requete.idUtilisateur,
     type: requete.type?.libelle,

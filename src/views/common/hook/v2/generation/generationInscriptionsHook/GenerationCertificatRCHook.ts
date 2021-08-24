@@ -176,6 +176,7 @@ async function creerCertificatRCComposition(
   }
   return CertificatRCComposition.creerCertificatRC(
     elementsJasper,
+    requete?.canal,
     requete?.requerant,
     titulaire
   );
