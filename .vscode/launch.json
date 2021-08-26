@@ -44,6 +44,20 @@
       "sourceMapPathOverrides": {
         "/data/src/*": "${webRoot}/*"
       }
+    },
+    {
+      "type": "firefox",
+      "request": "launch",
+      "name": "Firefox Debug",
+      "reAttach": true,
+      "url": "http://localhost/rece/rece-ui",
+      "webRoot": "${workspaceFolder}/src",
+      "pathMappings": [
+        {
+          "url": "file:///data/src",
+          "path": "${workspaceFolder}/src"
+        }
+      ]
     }
   ]
 }
