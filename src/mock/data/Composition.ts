@@ -21,7 +21,9 @@ const baseReponseNegative = {
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
-  identite_requerant_ligne1: "DUBOIS Léonard",
+  identite_requerant: {
+    ligne1: "DUBOIS Léonard"
+  },
   adresse_requerant: {
     ligne2: "61 avenue Foch",
     ligne3: "Appartement 258",
@@ -77,7 +79,9 @@ export const certificatSituation: ICertificatSituationComposition = {
   },
   annee_naissance: "2000",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
-  identite_requerant_ligne1: "nomFamille prenom",
+  identite_requerant: {
+    ligne1: "nomFamille prenom"
+  },
   image_bloc_marques: imagePngVideBase64,
   jour_naissance: "1er",
   mois_naissance: "Février",
@@ -119,7 +123,9 @@ export const certificatRCA: ICertificatRCAComposition = {
   },
   annee_naissance: "2000",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
-  identite_requerant_ligne1: "nomFamille prenom",
+  identite_requerant: {
+    ligne1: "nomFamille prenom"
+  },
   image_bloc_marques: imagePngVideBase64,
   jour_naissance: "1er",
   mois_naissance: "Février",

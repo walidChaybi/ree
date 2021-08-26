@@ -5,8 +5,10 @@ import { TypeCanal } from "../../requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../requete/v2/IRequerant";
 
 export interface IRequerantComposition {
-  identite_requerant_ligne1: string;
-  identite_requerant_ligne2?: string;
+  identite_requerant: {
+    ligne1: string;
+    ligne2?: string;
+  };
   adresse_requerant: {
     ligne2: string;
     ligne3: string;
@@ -42,7 +44,7 @@ function isAdresseToutesLignes(
   obj: IRequerantComposition
 ): obj is IRequerantComposition {
   return (
-    isNotEmpty(obj.identite_requerant_ligne2) &&
+    isNotEmpty(obj.identite_requerant.ligne2) &&
     isNotEmpty(obj.adresse_requerant.ligne2) &&
     isNotEmpty(obj.adresse_requerant.ligne3) &&
     isNotEmpty(obj.adresse_requerant.ligne5) &&
@@ -58,15 +60,18 @@ export const RequerantComposition = {
   ) {
     if (requerant) {
       // Affichage de l'identité du requérant sur 1 ou 2 lignes selon le type
+      obj.identite_requerant = {
+        ligne1: ""
+      };
       if (isParticulierOuUtilisateur(requerant)) {
-        obj.identite_requerant_ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+        obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
       }
       if (isRaisonSociale(requerant)) {
         if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
-          obj.identite_requerant_ligne1 = `${requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale}`;
-          obj.identite_requerant_ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+          obj.identite_requerant.ligne1 = `${requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale}`;
+          obj.identite_requerant.ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
         } else {
-          obj.identite_requerant_ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
         }
       }
 
@@ -81,14 +86,14 @@ export const RequerantComposition = {
           )} ${getValeurOuVide(requerant.adresse.ville)}`,
           ligne7: LieuxUtils.affichagePaysCourrier(requerant.adresse.pays)
         };
-      }
 
-      if (isAdresseToutesLignes(obj)) {
-        obj.adresse_requerant.ligne2 = `${obj.adresse_requerant.ligne2} ${obj.adresse_requerant.ligne3}`;
-        obj.adresse_requerant.ligne3 = obj.adresse_requerant.ligne4;
-        obj.adresse_requerant.ligne4 = obj.adresse_requerant.ligne5;
-        obj.adresse_requerant.ligne6 = obj.adresse_requerant.ligne7;
-        obj.adresse_requerant.ligne7 = "";
+        if (isAdresseToutesLignes(obj)) {
+          obj.adresse_requerant.ligne2 = `${obj.adresse_requerant.ligne2} ${obj.adresse_requerant.ligne3}`;
+          obj.adresse_requerant.ligne3 = obj.adresse_requerant.ligne4;
+          obj.adresse_requerant.ligne4 = obj.adresse_requerant.ligne5;
+          obj.adresse_requerant.ligne6 = obj.adresse_requerant.ligne7;
+          obj.adresse_requerant.ligne7 = "";
+        }
       }
     }
   }
