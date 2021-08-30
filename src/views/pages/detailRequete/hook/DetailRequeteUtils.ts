@@ -306,7 +306,7 @@ function getRequerantInfo2(requerant: IRequerant): SectionContentProps[] {
 
   ajouterContentPartAuPartUneValeur(
     infosRequerant,
-    getLibelle("Type (si Mandatire ou Institutionnel"),
+    getLibelle("Type (si Mandataire ou Institutionnel"),
     getTypeRequerant(requerant)
   );
   ajouterContentPartAuPartUneValeur(

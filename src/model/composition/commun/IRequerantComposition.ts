@@ -19,23 +19,6 @@ export interface IRequerantComposition {
   };
 }
 
-function isParticulierOuUtilisateur(
-  requerant: IRequerant
-): requerant is IRequerant {
-  return (
-    requerant.qualiteRequerant?.qualite === Qualite.PARTICULIER ||
-    requerant.qualiteRequerant?.qualite === Qualite.UTILISATEUR_RECE
-  );
-}
-
-function isRaisonSociale(requerant: IRequerant): requerant is IRequerant {
-  return (
-    requerant.qualiteRequerant?.qualite === Qualite.MANDATAIRE_HABILITE ||
-    requerant.qualiteRequerant?.qualite === Qualite.INSTITUTIONNEL ||
-    requerant.qualiteRequerant?.qualite === Qualite.AUTRE_PROFESSIONNEL
-  );
-}
-
 function isNotEmpty(str: any) {
   return str && str.length !== 0;
 }
@@ -63,16 +46,39 @@ export const RequerantComposition = {
       obj.identite_requerant = {
         ligne1: ""
       };
-      if (isParticulierOuUtilisateur(requerant)) {
-        obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
-      }
-      if (isRaisonSociale(requerant)) {
-        if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
-          obj.identite_requerant.ligne1 = `${requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale}`;
-          obj.identite_requerant.ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
-        } else {
+
+      switch (requerant.qualiteRequerant?.qualite) {
+        case Qualite.PARTICULIER:
+        case Qualite.UTILISATEUR_RECE:
           obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
-        }
+          break;
+        case Qualite.INSTITUTIONNEL:
+          if (requerant?.qualiteRequerant.institutionnel?.nomInstitution) {
+            obj.identite_requerant.ligne1 = `${requerant?.qualiteRequerant.institutionnel?.nomInstitution}`;
+            obj.identite_requerant.ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+          } else {
+            obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          }
+          break;
+        case Qualite.MANDATAIRE_HABILITE:
+          if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
+            obj.identite_requerant.ligne1 = `${requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale}`;
+            obj.identite_requerant.ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+          } else {
+            obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          }
+          break;
+        case Qualite.AUTRE_PROFESSIONNEL:
+          if (requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale) {
+            obj.identite_requerant.ligne1 = `${requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale}`;
+            obj.identite_requerant.ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+          } else {
+            obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          }
+          break;
+
+        default:
+          break;
       }
 
       if (canal === TypeCanal.COURRIER && requerant.adresse) {
@@ -91,6 +97,7 @@ export const RequerantComposition = {
           obj.adresse_requerant.ligne2 = `${obj.adresse_requerant.ligne2} ${obj.adresse_requerant.ligne3}`;
           obj.adresse_requerant.ligne3 = obj.adresse_requerant.ligne4;
           obj.adresse_requerant.ligne4 = obj.adresse_requerant.ligne5;
+          obj.adresse_requerant.ligne5 = obj.adresse_requerant.ligne6;
           obj.adresse_requerant.ligne6 = obj.adresse_requerant.ligne7;
           obj.adresse_requerant.ligne7 = "";
         }
