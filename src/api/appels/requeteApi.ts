@@ -27,7 +27,7 @@ export const URL_DOCUMENT_REPONSE = "/documentsreponses";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/action";
-export const URL_TRANSFERT = "action/transfert";
+export const URL_TRANSFERT = "/action/transfert";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
 
 const URL_REPONSES = "/reponses";
@@ -360,6 +360,7 @@ export function postTransfertRequete(
   idRequete: string,
   idEntite: string,
   idUtilisateur: string,
+  libelleAction: string,
   statutRequete: StatutRequeteV2
 ) {
   return apiV2.fetch({
@@ -369,7 +370,8 @@ export function postTransfertRequete(
       idRequete,
       idEntite,
       idUtilisateur,
-      statutRequete
+      statutRequete: StatutRequeteV2.getKey(statutRequete),
+      libelleAction
     }
   });
 }

@@ -220,6 +220,15 @@ export const configRequetesV2 = [
         return { data: idDocumentsReponse };
       }
 
+      // Transfert requête
+      if (
+        match[1] ===
+          "/action/transfert?idRequete=12345&idEntite=12345&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=libelleAction" &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
+      }
+
       // Création d'une action et maj statut de la requête
       if (
         (match[1] ===
