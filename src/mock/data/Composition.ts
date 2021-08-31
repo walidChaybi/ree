@@ -25,10 +25,10 @@ const baseReponseNegative = {
     ligne1: "DUBOIS Léonard"
   },
   adresse_requerant: {
-    ligne2: "61 avenue Foch",
-    ligne3: "Appartement 258",
-    ligne4: "",
-    ligne5: "",
+    ligne2: "Appartement 258",
+    ligne3: "Batiment Z",
+    ligne4: "61 avenue Foch",
+    ligne5: "lieu dit la martinière",
     ligne6: "310 GL24 Saint-Germain-de-Tallevende-la-Lande-Vaumont",
     ligne7: ""
   },

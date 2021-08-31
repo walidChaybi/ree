@@ -13,10 +13,10 @@ const requerant: IRequerant = {
   telephone: "123456793",
   adresse: {
     id: "8ef11f43-caac-47d3-a28a-c4e1f1d29c77",
-    ligne2: "61 avenue Foch",
-    ligne3: "Appartement 258",
-    ligne4: "",
-    ligne5: "",
+    ligne2: "Appartement 258",
+    ligne3: "Batiment Z",
+    ligne4: "61 avenue Foch",
+    ligne5: "lieu dit la martinière",
     codePostal: "310 GL24",
     ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
     pays: "France"
@@ -34,7 +34,7 @@ const requerant: IRequerant = {
 } as IRequerant;
 
 export const idRequete1 = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
-export const requete1 = {
+export const requete1 = ({
   id: idRequete1,
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDCSC,
@@ -65,7 +65,7 @@ export const requete1 = {
       parentsTitulaire: []
     }
   ]
-} as any as IRequeteDelivrance;
+} as any) as IRequeteDelivrance;
 
 export const requeteRDD = {
   type: TypeRequete.DELIVRANCE,

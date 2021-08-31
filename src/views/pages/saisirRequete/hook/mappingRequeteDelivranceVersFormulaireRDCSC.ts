@@ -189,12 +189,12 @@ const checkTitulaireEstRequerant = (requete: IRequeteDelivrance) => {
 
 const saisieAdresse = (requete: IRequeteDelivrance) => {
   return {
-    [VOIE]: getValeurOuVide(requete.requerant.adresse?.ligne2),
-    [LIEU_DIT]: getValeurOuVide(requete.requerant.adresse?.ligne3),
+    [VOIE]: getValeurOuVide(requete.requerant.adresse?.ligne4),
+    [LIEU_DIT]: getValeurOuVide(requete.requerant.adresse?.ligne5),
     [COMPLEMENT_DESTINATAIRE]: getValeurOuVide(
-      requete.requerant.adresse?.ligne4
+      requete.requerant.adresse?.ligne2
     ),
-    [COMPLEMENT_POINT_GEO]: getValeurOuVide(requete.requerant.adresse?.ligne5),
+    [COMPLEMENT_POINT_GEO]: getValeurOuVide(requete.requerant.adresse?.ligne3),
     [CODE_POSTAL]: getValeurOuVide(requete.requerant.adresse?.codePostal),
     [COMMUNE]: getValeurOuVide(requete.requerant.adresse?.ville),
     [PAYS]: getValeurOuVide(requete.requerant.adresse?.pays),

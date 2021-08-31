@@ -42,7 +42,7 @@ const requeteDelivrance: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
+      typePieceJustificative: ("Carte" as unknown) as TypePieceJustificative
     }
   ],
   provenanceRequete: {
@@ -56,10 +56,10 @@ const requeteDelivrance: IRequeteDelivrance = {
 
   requerant: {
     adresse: {
-      ligne2: "61 avenue Foch",
-      ligne3: "Appartement 258",
-      ligne4: "",
-      ligne5: "",
+      ligne2: "Appartement 258",
+      ligne3: "Batiment Z",
+      ligne4: "61 avenue Foch",
+      ligne5: "lieu dit la martinière",
       codePostal: "310 GL24",
       ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
       pays: ""
@@ -162,7 +162,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
+      typePieceJustificative: ("Carte" as unknown) as TypePieceJustificative
     }
   ],
   provenanceRequete: {
@@ -176,10 +176,10 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
 
   requerant: {
     adresse: {
-      ligne2: "61 avenue Foch",
-      ligne3: "Appartement 258",
-      ligne4: "",
-      ligne5: "",
+      ligne2: "Appartement 258",
+      ligne3: "Batiment Z",
+      ligne4: "61 avenue Foch",
+      ligne5: "lieu dit la martinière",
       codePostal: "310 GL24",
       ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
       pays: ""
