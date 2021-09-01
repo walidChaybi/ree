@@ -22,6 +22,7 @@ import { FenetreDocumentReponse } from "../contenu/document/FenetreDocumentRepon
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
+import { BoutonAjouterRMC } from "./contenu/BoutonAjouterRMC";
 interface DataRMCAuto {
   dataRequetes: any[];
   dataRMCAutoActe: IResultatRMCActe[];
@@ -54,8 +55,10 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   //**** RMC AUTO ****//
   const [range, setRange] = useState<string>(`0-${NB_LIGNES_PAR_APPEL}`);
 
-  const { dataRMCAutoRequete, dataTableauRMCAutoRequete } =
-    useRMCAutoRequeteApiHook(idRequete, dataRequetes, range);
+  const {
+    dataRMCAutoRequete,
+    dataTableauRMCAutoRequete
+  } = useRMCAutoRequeteApiHook(idRequete, dataRequetes, range);
 
   const setRangeRequete = (value: string) => {
     if (value !== "") {
@@ -69,10 +72,12 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     id: "",
     nom: ""
   });
-  const [fenetreOuverteState, setFenetreOuverteState] =
-    useState<boolean>(false);
-  const [inscriptionSelected, setInscriptionSelected] =
-    useState<IResultatRMCInscription[]>();
+  const [fenetreOuverteState, setFenetreOuverteState] = useState<boolean>(
+    false
+  );
+  const [inscriptionSelected, setInscriptionSelected] = useState<
+    IResultatRMCInscription[]
+  >();
 
   const onClickCheckboxActe = (
     index: number,
@@ -165,6 +170,11 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
                     }
                   />
                 )}
+              <div>
+                <BoutonAjouterRMC
+                  libelle={getLibelle("Ajouter une recherche multicritères")}
+                />
+              </div>
               <ChoixAction
                 requete={detailRequeteState}
                 acteSelected={acteSelected}

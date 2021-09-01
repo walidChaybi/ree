@@ -51,7 +51,13 @@ const ValidationSchemaRMCActeInscription = Yup.object({
 
 export const titreForm = "Critères de recherche d'un acte ou d'une inscription";
 
-export const RMCActeInscriptionPage: React.FC = () => {
+export interface RMCActeInscriptionPageProps {
+  autoScroll: boolean;
+}
+
+export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
+  autoScroll = true
+}) => {
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(),
     getRegistreRepertoire(),
@@ -136,10 +142,12 @@ export const RMCActeInscriptionPage: React.FC = () => {
         <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
         <RMCBoutons {...boutonsProps} />
       </Formulaire>
-      <AutoScroll
-        autoScroll={nouvelleRecherche}
-        baliseRef={RMCActeInscriptionRef}
-      />
+      {autoScroll === true && (
+        <AutoScroll
+          autoScroll={nouvelleRecherche}
+          baliseRef={RMCActeInscriptionRef}
+        />
+      )}
       {dataRMCActe &&
         dataTableauRMCActe &&
         dataRMCInscription &&
