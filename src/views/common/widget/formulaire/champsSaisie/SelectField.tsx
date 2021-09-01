@@ -11,6 +11,7 @@ interface SelectFiledProps {
   disabled?: boolean;
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  pasPremiereOptionVide?: boolean;
 }
 export const SelectField: React.FC<SelectFiledProps> = ({
   name,
@@ -20,7 +21,8 @@ export const SelectField: React.FC<SelectFiledProps> = ({
   options,
   disabled,
   onInput,
-  onChange
+  onChange,
+  pasPremiereOptionVide
 }) => {
   const otherProps = {} as any;
   if (onInput) {
@@ -41,7 +43,9 @@ export const SelectField: React.FC<SelectFiledProps> = ({
           disabled={disabled}
           {...otherProps}
         >
-          <option defaultValue={""}>{description ? description : ""}</option>
+          {!pasPremiereOptionVide && (
+            <option defaultValue={""}>{description ? description : ""}</option>
+          )}
           {options.map(({ value, str }) => (
             <option key={value} value={value}>
               {str}

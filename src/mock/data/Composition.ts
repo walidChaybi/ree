@@ -36,11 +36,44 @@ const baseReponseNegative = {
   titre: undefined
 };
 
-export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncompleteComposition = {
-  ...baseReponseNegative,
-  objet_courrier:
-    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil"
+const baseReponseNegativeInstitutionnel = {
+  image_bloc_marques: imagePngVideBase64,
+  nom_direction: {
+    ligne1: "Direction",
+    ligne2: "des Français à l'étranger",
+    ligne3: "et de l’administration consulaire"
+  },
+  adresse_internet: "courrier.scec@diplomatie.gouv.fr",
+  service_delivreur: "Service central d'état civil",
+  adr_service_delivreur: {
+    ligne4: "11, rue de la Maison Blanche",
+    ligne6: "44941 Nantes CEDEX 9"
+  },
+  tel_service_delivreur: "01.41.86.42.47",
+  ville_delivrance: "Nantes",
+  cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  identite_requerant: {
+    ligne1: "Ambassade du Rwanda",
+    ligne2: "DUBOIS Léonard"
+  },
+  adresse_requerant: {
+    ligne2: "Appartement 258 Batiment Z",
+    ligne3: "61 avenue Foch",
+    ligne4: "lieu dit la martinière",
+    ligne5: "310 GL24 Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+    ligne6: "Rwanda",
+    ligne7: ""
+  },
+  numero_requete: "L5UG3Q",
+  titre: undefined
 };
+
+export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncompleteComposition =
+  {
+    ...baseReponseNegativeInstitutionnel,
+    objet_courrier:
+      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil"
+  };
 
 export const reponseNegativeMariage: IReponseNegativeMariageComposition = {
   ...baseReponseNegative,

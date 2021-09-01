@@ -1,4 +1,5 @@
 import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
+import { ChoixDelivrance } from "../../model/requete/v2/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../model/requete/v2/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../model/requete/v2/enum/MotifDelivrance";
 import { Provenance } from "../../model/requete/v2/enum/Provenance";
@@ -42,7 +43,7 @@ const requeteDelivrance: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: ("Carte" as unknown) as TypePieceJustificative
+      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
     }
   ],
   provenanceRequete: {
@@ -62,7 +63,7 @@ const requeteDelivrance: IRequeteDelivrance = {
       ligne5: "lieu dit la martinière",
       codePostal: "310 GL24",
       ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: ""
+      pays: "France"
     },
     courriel: "ldubois@wanadoo.fr",
     dateCreation: new Date("1624615266000"),
@@ -131,7 +132,8 @@ const requeteDelivrance: IRequeteDelivrance = {
       villeNaissance: "Barcelone"
     }
   ],
-  type: TypeRequete.DELIVRANCE
+  type: TypeRequete.DELIVRANCE,
+  choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE
 };
 
 export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
@@ -162,7 +164,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: ("Carte" as unknown) as TypePieceJustificative
+      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
     }
   ],
   provenanceRequete: {
@@ -182,7 +184,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       ligne5: "lieu dit la martinière",
       codePostal: "310 GL24",
       ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: ""
+      pays: "Rwanda"
     },
     courriel: "ldubois@wanadoo.fr",
     dateCreation: new Date("1624615266000"),
@@ -192,8 +194,11 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
     prenom: "Léonard",
     qualiteRequerant: {
       autreProfessionnel: undefined,
-      institutionnel: { type: TypeInstitutionnel.AMBASSADE },
-      mandataireHabilite: { type: TypeMandataireReq.AUTRE },
+      institutionnel: {
+        type: TypeInstitutionnel.AMBASSADE,
+        nomInstitution: "Ambassade du Rwanda"
+      },
+      mandataireHabilite: undefined,
       particulier: undefined,
       qualite: Qualite.INSTITUTIONNEL,
       utilisateurRece: undefined

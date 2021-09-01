@@ -1,8 +1,7 @@
 import { getValeurOuVide } from "../../../views/common/util/Utils";
 import { LieuxUtils } from "../../LieuxUtils";
-import { Qualite } from "../../requete/v2/enum/Qualite";
 import { TypeCanal } from "../../requete/v2/enum/TypeCanal";
-import { IRequerant } from "../../requete/v2/IRequerant";
+import { IRequerant, Requerant } from "../../requete/v2/IRequerant";
 
 export interface IRequerantComposition {
   identite_requerant: {
@@ -42,43 +41,14 @@ export const RequerantComposition = {
     requerant?: IRequerant
   ) {
     if (requerant) {
-      // Affichage de l'identité du requérant sur 1 ou 2 lignes selon le type
       obj.identite_requerant = {
         ligne1: ""
       };
-
-      switch (requerant.qualiteRequerant?.qualite) {
-        case Qualite.PARTICULIER:
-        case Qualite.UTILISATEUR_RECE:
-          obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
-          break;
-        case Qualite.INSTITUTIONNEL:
-          if (requerant?.qualiteRequerant.institutionnel?.nomInstitution) {
-            obj.identite_requerant.ligne1 = `${requerant?.qualiteRequerant.institutionnel?.nomInstitution}`;
-            obj.identite_requerant.ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
-          } else {
-            obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
-          }
-          break;
-        case Qualite.MANDATAIRE_HABILITE:
-          if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
-            obj.identite_requerant.ligne1 = `${requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale}`;
-            obj.identite_requerant.ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
-          } else {
-            obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
-          }
-          break;
-        case Qualite.AUTRE_PROFESSIONNEL:
-          if (requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale) {
-            obj.identite_requerant.ligne1 = `${requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale}`;
-            obj.identite_requerant.ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
-          } else {
-            obj.identite_requerant.ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
-          }
-          break;
-
-        default:
-          break;
+      // Affichage de l'identité du requérant sur 1 ou 2 lignes selon le type
+      const identiteRequerant = Requerant.organiserIdentite(requerant);
+      obj.identite_requerant.ligne1 = identiteRequerant.premiereLigne;
+      if (identiteRequerant.deuxiemeLigne !== "") {
+        obj.identite_requerant.ligne2 = identiteRequerant.deuxiemeLigne;
       }
 
       if (canal === TypeCanal.COURRIER && requerant.adresse) {

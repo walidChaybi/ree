@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 
 import { formatNom, formatPrenom } from "../../../views/common/util/Utils";
+import { Qualite } from "./enum/Qualite";
 import { IAdresseRequerant } from "./IAdresseRequerant";
 import { ILienRequerant } from "./ILienRequerant";
 import { IQualiteRequerant } from "./IQualiteRequerant";
@@ -30,5 +31,59 @@ export const Requerant = {
       titulaire.nomNaissance === requerant.nomFamille &&
       TitulaireRequete.getPrenom1(titulaire) === requerant.prenom
     );
+  },
+  isParticulierOuUtilisateur(requerant: IRequerant): requerant is IRequerant {
+    return (
+      requerant.qualiteRequerant?.qualite === Qualite.PARTICULIER ||
+      requerant.qualiteRequerant?.qualite === Qualite.UTILISATEUR_RECE
+    );
+  },
+  isRaisonSociale(requerant: IRequerant): requerant is IRequerant {
+    return (
+      requerant.qualiteRequerant?.qualite === Qualite.MANDATAIRE_HABILITE ||
+      requerant.qualiteRequerant?.qualite === Qualite.INSTITUTIONNEL ||
+      requerant.qualiteRequerant?.qualite === Qualite.AUTRE_PROFESSIONNEL
+    );
+  },
+  organiserIdentite(requerant?: IRequerant) {
+    // Affichage de l'identité du requérant sur 1 ou 2 lignes selon le type
+    let ligne1 = "";
+    let ligne2 = "";
+    if (requerant) {
+      switch (requerant.qualiteRequerant?.qualite) {
+        case Qualite.PARTICULIER:
+        case Qualite.UTILISATEUR_RECE:
+          ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          break;
+        case Qualite.INSTITUTIONNEL:
+          if (requerant?.qualiteRequerant.institutionnel?.nomInstitution) {
+            ligne1 = `${requerant?.qualiteRequerant.institutionnel?.nomInstitution}`;
+            ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+          } else {
+            ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          }
+          break;
+        case Qualite.MANDATAIRE_HABILITE:
+          if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
+            ligne1 = `${requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale}`;
+            ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+          } else {
+            ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          }
+          break;
+        case Qualite.AUTRE_PROFESSIONNEL:
+          if (requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale) {
+            ligne1 = `${requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale}`;
+            ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+          } else {
+            ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+    return { premiereLigne: ligne1, deuxiemeLigne: ligne2 };
   }
 };

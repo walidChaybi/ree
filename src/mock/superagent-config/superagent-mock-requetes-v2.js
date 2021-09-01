@@ -1,6 +1,7 @@
 import {
   ReponseAppelDetailRequeteDelivrance,
-  ReponseAppelDetailRequeteDelivranceBrouillon
+  ReponseAppelDetailRequeteDelivranceBrouillon,
+  ReponseAppelDetailRequeteDelivranceRDC
 } from "../data/DetailRequeteDelivrance";
 import {
   documentReponseCARN_CSPAC_01,
@@ -114,6 +115,9 @@ export const configRequetesV2 = [
       }
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d405") {
         return { data: ReponseAppelDetailRequeteDelivranceBrouillon.data };
+      }
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d666") {
+        return { data: ReponseAppelDetailRequeteDelivranceRDC.data };
       }
 
       // Compteurs requêtes A_SIGNER

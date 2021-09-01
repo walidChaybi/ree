@@ -8,6 +8,7 @@ import { IRoute } from "../common/util/route/IRoute";
 import { getLibelle } from "../common/widget/Text";
 import { LoginPage } from "../core/login/LoginPage";
 import { AccueilPage } from "../pages/accueil/AccueilPage";
+import { ApercuCourrierAccompagnement } from "../pages/apercuRequete/apercuCourrierAccompagnement/ApercuCourrierAccompagnement";
 import { ApercuRequetePageV2 } from "../pages/apercuRequete/apercuRequete/ApercuRequetePageV2";
 import { ApercuRequetePriseEnChargePage } from "../pages/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "../pages/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
@@ -26,9 +27,11 @@ import {
   URL_CONTEXT_APP,
   URL_DECONNEXION,
   URL_MES_REQUETES,
+  URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
   URL_MES_REQUETES_APERCU_REQUETE,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
+  URL_MES_REQUETES_APERCU_TRAITEMENT_COURRIER,
   URL_MES_REQUETES_DETAIL_REQUETE_ID,
   URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
   URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
@@ -60,9 +63,11 @@ import {
   URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_DETAIL_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE,
+  URL_REQUETES_SERVICE_APERCU_PRISE_EN_CHARGE_COURRIER,
   URL_REQUETES_SERVICE_APERCU_REQUETE,
   URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
+  URL_REQUETES_SERVICE_APERCU_TRAITEMENT_COURRIER,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
@@ -329,6 +334,21 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
+  {
+    url: URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
+    component: ApercuCourrierAccompagnement,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Création d'un courrier d'accompagnement")
+  },
+  {
+    url: URL_MES_REQUETES_APERCU_TRAITEMENT_COURRIER,
+    component: ApercuCourrierAccompagnement,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Modification d'un courrier d'accompagnement")
+  },
+
   /////////////////////////////////////////
   ///// REQUETES DE MON SERVICE (RMS) /////
   /////////////////////////////////////////
@@ -503,6 +523,20 @@ export const routesRece: IRoute[] = [
     droits: [Droit.ATTRIBUER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_APERCU_PRISE_EN_CHARGE_COURRIER,
+    component: ApercuCourrierAccompagnement,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Création d'un courrier d'accompagnement")
+  },
+  {
+    url: URL_REQUETES_SERVICE_APERCU_TRAITEMENT_COURRIER,
+    component: ApercuCourrierAccompagnement,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Modification d'un courrier d'accompagnement")
   },
   //////////////////////////////////////////
   ///// RECHERCHE MULTI-CRITERES (RMC) /////

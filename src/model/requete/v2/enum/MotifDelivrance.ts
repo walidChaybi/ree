@@ -4,12 +4,10 @@ import { Options } from "../../../../views/common/util/Type";
 
 export class MotifDelivrance extends EnumWithLibelle {
   public static readonly AUTRE = new MotifDelivrance("Autre");
-  public static readonly CERTIFICAT_DE_NATIONALITE_FRANCAISE = new MotifDelivrance(
-    "Certificat de nationalité française"
-  );
-  public static readonly DECLARATION_ACQUISITION_DE_NATIONALITE_FRANCAISE = new MotifDelivrance(
-    "Déclaration d'acquisiton de nationalité française"
-  );
+  public static readonly CERTIFICAT_DE_NATIONALITE_FRANCAISE =
+    new MotifDelivrance("Certificat de nationalité française");
+  public static readonly DECLARATION_ACQUISITION_DE_NATIONALITE_FRANCAISE =
+    new MotifDelivrance("Déclaration d'acquisiton de nationalité française");
   public static readonly DIVORCE_CONTENTIEUX = new MotifDelivrance(
     "Divorce / contentieux"
   );
@@ -18,9 +16,8 @@ export class MotifDelivrance extends EnumWithLibelle {
   public static readonly PENSION_REVERSION = new MotifDelivrance(
     "Pension de reversion"
   );
-  public static readonly PRESTATIONS_SOCIALES_OU_FAMILIALES = new MotifDelivrance(
-    "Prestations sociales ou familiales"
-  );
+  public static readonly PRESTATIONS_SOCIALES_OU_FAMILIALES =
+    new MotifDelivrance("Prestations sociales ou familiales");
   public static readonly RETRAITE = new MotifDelivrance("Retraite");
   public static readonly TITRE_DE_SEJOUR_VISA_ETRANGER = new MotifDelivrance(
     "Titre de séjour / Visa étranger"
@@ -39,5 +36,9 @@ export class MotifDelivrance extends EnumWithLibelle {
 
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(MotifDelivrance);
+  }
+
+  public static getKey(motif: MotifDelivrance): string {
+    return EnumWithLibelle.getKey(MotifDelivrance, motif);
   }
 }

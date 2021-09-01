@@ -14,6 +14,8 @@ export interface IUrlData {
 export const PATH_APERCU_REQ = "apercurequete";
 export const PATH_APERCU_REQ_PRISE = "apercurequetepriseencharge";
 export const PATH_APERCU_REQ_TRAITEMENT = "apercurequetetraitement";
+export const PATH_APERCU_COURRIER_ACCOMPAGNEMENT =
+  "apercucourrieraccompagnement";
 export const PATH_DETAIL_REQ = "detailrequete";
 
 ///////////// URLs    //////////////
@@ -82,6 +84,10 @@ export const URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID = `${URL_M
 // Modification Brouillon dans Saisie RDCSC depuis Mes Requêtes de DELIVRANCE
 export const URL_SAISIR_RDCSC_MES_REQUETES = `${URL_MES_REQUETES_SAISIR_RDCSC}/:idRequete`;
 
+// Modification courrier accompagnement depuis apercu
+export const URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER = `${URL_MES_REQUETES_V2}/${PATH_APERCU_REQ_PRISE}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/:idRequete`;
+export const URL_MES_REQUETES_APERCU_TRAITEMENT_COURRIER = `${URL_MES_REQUETES_V2}/${PATH_APERCU_REQ_TRAITEMENT}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/:idRequete`;
+
 /////////////////////////////////////////
 ///// REQUETES DE MON SERVICE (RMS) /////
 /////////////////////////////////////////
@@ -125,6 +131,10 @@ export const URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID = `${U
 
 // Modification Brouillon dans Saisie RDCSC depuis Mes Requêtes service de DELIVRANCE
 export const URL_SAISIR_RDCSC_MES_REQUETES_SERVICE = `${URL_REQUETES_SERVICE_SAISIR_RDCSC}/:idRequete`;
+
+// Modification courrier accompagnement depuis apercu
+export const URL_REQUETES_SERVICE_APERCU_PRISE_EN_CHARGE_COURRIER = `${URL_REQUETES_SERVICE_V2}/${PATH_APERCU_REQ_PRISE}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/:idRequete`;
+export const URL_REQUETES_SERVICE_APERCU_TRAITEMENT_COURRIER = `${URL_REQUETES_SERVICE_V2}/${PATH_APERCU_REQ_TRAITEMENT}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/:idRequete`;
 
 //////////////////////////////////////////
 ///// RECHERCHE MULTI-CRITERES (RMC) /////

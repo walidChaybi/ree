@@ -48,7 +48,7 @@ test("test du mapping Particulier", () => {
       complementPointGeo: "Batiment Z",
       codePostal: "310 GL24",
       commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: "",
+      pays: "France",
       adresseCourriel: "ldubois@wanadoo.fr",
       numeroTelephone: ""
     },
@@ -103,7 +103,7 @@ test("test du mapping Institutionnel", () => {
       institutionnel: {
         type: "AMBASSADE",
         nature: "",
-        nomInstitution: "",
+        nomInstitution: "Ambassade du Rwanda",
         nom: "DUBOIS",
         prenom: "Léonard"
       },
@@ -116,7 +116,7 @@ test("test du mapping Institutionnel", () => {
       complementPointGeo: "Batiment Z",
       codePostal: "310 GL24",
       commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: "",
+      pays: "Rwanda",
       adresseCourriel: "ldubois@wanadoo.fr",
       numeroTelephone: ""
     },

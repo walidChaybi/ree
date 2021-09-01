@@ -6,6 +6,7 @@ import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDeli
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { filtrerListeActions } from "../../../../common/util/RequetesUtils";
+import { getUrlWithoutIdParam } from "../../../../common/util/route/routeUtil";
 import { supprimerNullEtUndefinedDuTableau } from "../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import {
@@ -17,7 +18,10 @@ import {
   IBoutonPopin
 } from "../../../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../../../common/widget/Text";
-import { receUrl } from "../../../../router/ReceUrls";
+import {
+  PATH_APERCU_COURRIER_ACCOMPAGNEMENT,
+  receUrl
+} from "../../../../router/ReceUrls";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { IActionProps } from "./ChoixAction";
 import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
@@ -29,9 +33,8 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [acteSelected, setActeSelected] = useState<IResultatRMCActe[]>();
-  const [inscriptionSelected, setInscriptionSelected] = useState<
-    IResultatRMCInscription[]
-  >();
+  const [inscriptionSelected, setInscriptionSelected] =
+    useState<IResultatRMCInscription[]>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
 
@@ -171,6 +174,15 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
       setOperationEnCours(true);
     } else {
       controleCoherenceDocument(indexMenu);
+    }
+    if (
+      (props.requete as IRequeteDelivrance).sousType === SousTypeDelivrance.RDC
+    ) {
+      history.push(
+        `${getUrlWithoutIdParam(
+          history.location.pathname
+        )}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/${props.requete.id}`
+      );
     }
   };
 

@@ -14,7 +14,9 @@ import {
   reponseNegativeFrancais,
   reponseNegativeMariage
 } from "../../../../mock/data/Composition";
-import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
+import requeteDelivrance, {
+  requeteDelivranceInstitutionnel
+} from "../../../../mock/data/requeteDelivrance";
 import { idRequete1, requete1 } from "../../../../mock/data/RequeteV2";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configMultiAPi } from "../../../../mock/superagent-config/superagent-mock-multi-apis";
@@ -144,7 +146,7 @@ test("test de création réponse négative français", async () => {
 
 test("test de création réponse négative demande incomplete", async () => {
   await ParametreBaseRequete.init();
-  const requete = requeteDelivrance;
+  const requete = requeteDelivranceInstitutionnel;
   const reponseNegative =
     await createReponseNegativePourCompositionApiDemandeIncomplete(requete);
   expect(reponseNegative).toStrictEqual(reponseNegativeDemandeIncomplete);

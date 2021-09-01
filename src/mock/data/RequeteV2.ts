@@ -67,6 +67,40 @@ export const requete1 = ({
   ]
 } as any) as IRequeteDelivrance;
 
+export const idRequete2 = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
+export const requete2 = {
+  id: idRequete1,
+  type: TypeRequete.DELIVRANCE,
+  sousType: SousTypeDelivrance.RDC,
+  statutCourant: {
+    statut: StatutRequete.PRISE_EN_CHARGE
+  },
+  requerant: requerant,
+  titulaires: [
+    {
+      id: "8ef12021-61df-421b-9b3d-ab6b4344df88",
+      position: 1,
+      nomNaissance: "Brown",
+      nomUsage: "",
+      anneeNaissance: 1993,
+      moisNaissance: 10,
+      jourNaissance: 14,
+      villeNaissance: "Sydney",
+      paysNaissance: "Australie",
+      sexe: "MASCULIN",
+      nationalite: "FRANCAISE",
+      prenoms: [
+        {
+          id: "8ef12d35-0d01-4ed1-b026-0038f901a13e",
+          numeroOrdre: 1,
+          prenom: "Alphonse"
+        }
+      ],
+      parentsTitulaire: []
+    }
+  ]
+} as any as IRequeteDelivrance;
+
 export const requeteRDD = {
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDC,

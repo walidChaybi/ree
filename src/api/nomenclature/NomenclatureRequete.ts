@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 
+import { CourrierDelivrance } from "../../model/requete/v2/enum/CourrierDelivrance";
 import { DocumentDelivrance } from "../../model/requete/v2/enum/DocumentDelivrance";
 import { TypePieceJustificative } from "../../model/requete/v2/enum/TypePieceJustificative";
 import { logError } from "../../views/common/util/LogManager";
@@ -8,6 +9,7 @@ import { getNomenclatureRequete } from "../appels/requeteApi";
 
 const TYPE_PIECE_JUSTIFICATIVE = "TYPE_PIECE_JUSTIFICATIVE";
 const DOCUMENT_DELIVRANCE = "DOCUMENT_DELIVRANCE";
+export const COURRIER_DELIVRANCE = "COURRIER_DELIVRANCE";
 
 export async function peupleTypePieceJustificative() {
   if (!TypePieceJustificative.contientEnums()) {
@@ -57,6 +59,34 @@ export async function peupleDocumentDelivrance() {
       logError({
         messageUtilisateur:
           "Impossible de charger les types de documents de délivrance",
+        error
+      });
+    }
+  }
+}
+
+export async function peupleCourrierDelivrance() {
+  if (!CourrierDelivrance.contientEnums()) {
+    try {
+      const courriersDelivrence = await getNomenclatureRequete(
+        COURRIER_DELIVRANCE
+      );
+
+      CourrierDelivrance.clean();
+      for (const data of courriersDelivrence.body.data) {
+        CourrierDelivrance.addEnum(
+          data.id,
+          new CourrierDelivrance(
+            data.code,
+            premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle),
+            data.categorie
+          )
+        );
+      }
+    } catch (error) {
+      logError({
+        messageUtilisateur:
+          "Impossible de charger les types de courriers de délivrance",
         error
       });
     }
