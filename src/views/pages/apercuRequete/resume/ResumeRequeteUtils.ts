@@ -210,6 +210,9 @@ function getNomOuRaisonSociale(requerant: IRequerant) {
     case Qualite.MANDATAIRE_HABILITE:
       nom = requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale;
       break;
+    case Qualite.AUTRE_PROFESSIONNEL:
+      nom = requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale;
+      break;
     case Qualite.INSTITUTIONNEL:
       nom = requerant?.qualiteRequerant.institutionnel?.nomInstitution;
       break;

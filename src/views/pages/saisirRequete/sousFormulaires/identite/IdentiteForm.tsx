@@ -31,6 +31,7 @@ import EvenementForm, {
   EvenementSubFormProps
 } from "../evenement/EvenementForm";
 import ParentForm, {
+  ParentFormDefaultValues,
   ParentFormValidationSchema,
   ParentSubFormProps
 } from "./parent/ParentForm";
@@ -107,10 +108,14 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
   const ajouterFiliation = () => {
     setAfficherParents(!afficherParents);
     // Permet de re-initilaiser les champs PARENT1 et PARENT2
-    if (afficherParents) {
-      props.formik.setFieldValue(withNamespace(props.nom, PARENT1), undefined);
-      props.formik.setFieldValue(withNamespace(props.nom, PARENT2), undefined);
-    }
+    props.formik.setFieldValue(
+      withNamespace(props.nom, PARENT1),
+      afficherParents ? undefined : ParentFormDefaultValues
+    );
+    props.formik.setFieldValue(
+      withNamespace(props.nom, PARENT2),
+      afficherParents ? undefined : ParentFormDefaultValues
+    );
   };
 
   useEffect(() => {

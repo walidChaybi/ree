@@ -257,7 +257,7 @@ function getAutreProfessionnel(saisie: SaisieRequeteRDC) {
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
     qualite: Qualite.AUTRE_PROFESSIONNEL.nom,
-    detailQualiteAutreProfessionnelHabilite: {
+    detailQualiteAutreProfessionnel: {
       nature: requerant.autreProfessionnel.nature,
       raisonSociale: requerant.autreProfessionnel.raisonSociale
     }
