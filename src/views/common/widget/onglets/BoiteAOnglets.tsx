@@ -8,6 +8,16 @@ import { getLibelle } from "../Text";
 import { LinkTab } from "./LinkTabV2";
 import { TabPanel } from "./TabPanel";
 
+const TabPanelMesRequetesWithHabilitation = WithHabilitation(
+  TabPanel,
+  "TabPanelMesRequetes"
+);
+
+const LinkTabMesRequeteWithHabilitation = WithHabilitation(
+  LinkTab,
+  "LinkTabMesRequetes"
+);
+
 export interface IBoiteAOngletsProps {
   onglets: IOngletProps[];
   elementEntreTitreEtContenu?: JSX.Element;
@@ -47,25 +57,29 @@ export const BoiteAOnglet: React.FC<IBoiteAOngletsProps> = props => {
           indicatorColor="primary"
         >
           {props.onglets.map((onglet, index) => {
-            const LinkTabWithHabilitation = WithHabilitation(
-              LinkTab,
-              onglet.enTete.nomHabilitation!
-            );
-            return onglet.enTete.nomHabilitation ? (
-              <LinkTabWithHabilitation
-                key={index}
-                label={getLibelle(onglet.enTete.titre)}
-                href={onglet.enTete.url}
-                {...a11yProps(index)}
-              />
-            ) : (
-              <LinkTab
-                key={index}
-                label={getLibelle(onglet.enTete.titre)}
-                href={onglet.enTete.url}
-                {...a11yProps(index)}
-              />
-            );
+            switch (onglet.enTete.nomHabilitation) {
+              case "LinkTabMesRequetes":
+                // On est obligé de créer le composant LinkPanel_XXX_WithHabilitation à l'avance
+                // car s'il est créé dynamiquement le composant parent (RequeteServicePageV2)
+                // est démonté et remonté intempestivement plusieurs fois
+                return (
+                  <LinkTabMesRequeteWithHabilitation
+                    key={index}
+                    label={getLibelle(onglet.enTete.titre)}
+                    href={onglet.enTete.url}
+                    {...a11yProps(index)}
+                  />
+                );
+              default:
+                return (
+                  <LinkTab
+                    key={index}
+                    label={getLibelle(onglet.enTete.titre)}
+                    href={onglet.enTete.url}
+                    {...a11yProps(index)}
+                  />
+                );
+            }
           })}
         </Tabs>
       </AppBar>
@@ -73,23 +87,27 @@ export const BoiteAOnglet: React.FC<IBoiteAOngletsProps> = props => {
       {props.elementEntreTitreEtContenu}
 
       {props.onglets.map((onglet, index) => {
-        const TabPanelWithHabilitation = WithHabilitation(
-          TabPanel,
-          onglet.corps.nomHabilitation!
-        );
-        return onglet.corps.nomHabilitation ? (
-          <TabPanelWithHabilitation
-            value={selectedTabState}
-            index={index}
-            key={index}
-          >
-            {onglet.corps.composant}
-          </TabPanelWithHabilitation>
-        ) : (
-          <TabPanel value={selectedTabState} index={index} key={index}>
-            {onglet.corps.composant}
-          </TabPanel>
-        );
+        switch (onglet.corps.nomHabilitation) {
+          case "TabPanelMesRequetes":
+            // On est obligé de créer le composant TabPanel_XXX_WithHabilitation à l'avance
+            // car s'il est créé dynamiquement le composant parent (RequeteServicePageV2)
+            // est démonté et remonté intempestivement plusieurs fois
+            return (
+              <TabPanelMesRequetesWithHabilitation
+                value={selectedTabState}
+                index={index}
+                key={index}
+              >
+                {onglet.corps.composant}
+              </TabPanelMesRequetesWithHabilitation>
+            );
+          default:
+            return (
+              <TabPanel value={selectedTabState} index={index} key={index}>
+                {onglet.corps.composant}
+              </TabPanel>
+            );
+        }
       })}
     </>
   );
