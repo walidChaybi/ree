@@ -1,68 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../model/IOfficierSSOApi";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
-import {
-  CreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "../../../common/hook/v2/requete/ActionHook";
+import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { storeRece } from "../../../common/util/storeRece";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
 import { getLibelle } from "../../../common/widget/Text";
-import { receUrl } from "../../../router/ReceUrls";
+import {
+  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  useCreationActionMiseAjourStatutEtRmcAuto
+} from "../commun/hook/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import "./scss/BoutonPrendreEnCharge.scss";
-interface BoutonSignerValiderProps {
+interface BoutonModifierTraitementProps {
   requete: TRequete;
+  dataHistory: any;
 }
 
-export const BoutonSignerValider: React.FC<BoutonSignerValiderProps> = props => {
+export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> = props => {
   const requeteDelivrance = props.requete as IRequeteDelivrance;
   const history = useHistory();
   const [estDisabled, setEstDisabled] = useState(true);
 
   const [params, setParams] = useState<
-    CreationActionEtMiseAjourStatutParams | undefined
+    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
-
-  let futurStatut: StatutRequete;
-  switch (props.requete.canal) {
-    case TypeCanal.COURRIER:
-      futurStatut = StatutRequete.TRAITE_A_IMPRIMER;
-      break;
-    case TypeCanal.INTERNET:
-      futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
-      break;
-    default:
-      futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
-  }
 
   const setActionEtUpdateStatut = () => {
     setParams({
-      requeteId: props.requete.id,
-      libelleAction: futurStatut.libelle,
-      statutRequete: futurStatut
+      statutRequete: StatutRequete.PRISE_EN_CHARGE,
+      libelleAction: getLibelle("Revue du traitement"),
+      urlCourante: getUrlWithParam(history.location.pathname, props.requete.id),
+      requete: mappingRequeteDelivranceToRequeteTableau(
+        props.requete as IRequeteDelivrance
+      ),
+      dataRequetes: [],
+      pasDeTraitementAuto: true
     });
   };
 
-  const idAction = usePostCreationActionEtMiseAjourStatutApi(params);
-
-  useEffect(() => {
-    if (idAction) {
-      receUrl.replaceUrl(history, storeRece.retourUrl);
-    }
-  }, [idAction, history]);
+  useCreationActionMiseAjourStatutEtRmcAuto(params);
 
   const estAValider =
     props.requete.statutCourant.statut === StatutRequete.A_VALIDER;
+
+  const estASigner =
+    props.requete.statutCourant.statut === StatutRequete.A_SIGNER;
 
   const mAppartient =
     props.requete.idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
 
   if (
-    estAValider &&
+    (estAValider || estASigner) &&
     mAppartient &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
       requeteDelivrance.provenanceRequete.provenance.libelle
@@ -78,8 +69,11 @@ export const BoutonSignerValider: React.FC<BoutonSignerValiderProps> = props => 
         onClick={setActionEtUpdateStatut}
         class="BoutonPriseEnCharge"
         estDesactive={estDisabled}
+        title={getLibelle(
+          "Retour à la prise en charge de la requête, les documents constitués seront supprimés"
+        )}
       >
-        {getLibelle("Valider et terminer")}
+        {getLibelle("Modifier le traitement")}
       </BoutonOperationEnCours>
     </>
   );

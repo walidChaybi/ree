@@ -17,6 +17,7 @@ export interface CreationActionMiseAjourStatutEtRmcAutoHookParams {
   urlCourante: string;
   requete?: IRequeteTableau;
   dataRequetes?: any[];
+  pasDeTraitementAuto?: boolean;
 }
 
 export function useCreationActionMiseAjourStatutEtRmcAuto(
@@ -34,7 +35,7 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
   useEffect(() => {
     if (params) {
       setCreationActionEtMiseAjourStatutParams({
-        libelleAction: params?.statutRequete.libelle,
+        libelleAction: params?.libelleAction,
         statutRequete: params?.statutRequete,
         requeteId: params?.requete?.idRequete
       });
@@ -55,11 +56,11 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
       setParamsRMCAuto({
         requete: params.requete,
         dataRequetes: params.dataRequetes,
-        urlCourante: params.urlCourante
+        urlCourante: params.urlCourante,
+        pasDeTraitementAuto: params.pasDeTraitementAuto
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idAction]);
+  }, [idAction, params]);
 
   useNavigationApercuRMCAuto(paramsRMCAuto);
 }

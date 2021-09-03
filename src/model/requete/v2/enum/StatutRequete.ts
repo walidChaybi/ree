@@ -60,4 +60,8 @@ export class StatutRequete extends EnumWithComplete {
   public static getKey(obj: StatutRequete) {
     return EnumWithLibelle.getKey(StatutRequete, obj);
   }
+
+  public static getEnumFromLibelle(libelle: string) {
+    return EnumWithLibelle.getEnumFromLibelle(StatutRequete, libelle);
+  }
 }

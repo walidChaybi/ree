@@ -5,26 +5,29 @@ import {
   redirectionRMCAutoApercuTraitement
 } from "../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import {
+  PATH_APERCU_REQ_TRAITEMENT,
   URL_MES_REQUETES_V2,
   URL_REQUETES_SERVICE_V2
 } from "../../../../views/router/ReceUrls";
 
+const requete = {
+  idRequete: "0",
+  statut: "Prise en charge",
+  titulaires: [
+    {
+      nom: "Dylan",
+      prenoms: ["Bob"],
+      jourNaissance: 31,
+      moisNaissance: 1,
+      anneeNaissance: 1992,
+      villeNaissance: "Nantes",
+      paysNaissance: "France",
+      sexe: Sexe.MASCULIN
+    }
+  ]
+};
+
 test("criteresRMCAutoMapper", () => {
-  const requete = {
-    idRequete: "0",
-    titulaires: [
-      {
-        nom: "Dylan",
-        prenoms: ["Bob"],
-        jourNaissance: 31,
-        moisNaissance: 1,
-        anneeNaissance: 1992,
-        villeNaissance: "Nantes",
-        paysNaissance: "France",
-        sexe: Sexe.MASCULIN
-      }
-    ]
-  };
   const data = [{ idRequete: "1" }];
 
   const res = determinerCriteresRMCAuto(requete, data);
@@ -43,7 +46,12 @@ test("criteresRMCAutoMapper", () => {
 });
 
 test("redirectionRMCAuto", () => {
-  const res = redirectionRMCAuto("0", URL_REQUETES_SERVICE_V2, [null], [null]);
+  const res = redirectionRMCAuto(
+    requete,
+    URL_REQUETES_SERVICE_V2,
+    [null],
+    [null]
+  );
   expect(res).toStrictEqual(
     "/rece/rece-ui/requetesservicev2/apercurequetepriseencharge/0"
   );
@@ -52,5 +60,16 @@ test("redirectionRMCAutoApercuTraitement", () => {
   const res = redirectionRMCAutoApercuTraitement("0", URL_MES_REQUETES_V2);
   expect(res).toStrictEqual(
     "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/0"
+  );
+});
+test("redirectionRMCAutoModifierTraitement", () => {
+  const res = redirectionRMCAuto(
+    requete,
+    `${URL_REQUETES_SERVICE_V2}/${PATH_APERCU_REQ_TRAITEMENT}/0`,
+    [null],
+    [null]
+  );
+  expect(res).toStrictEqual(
+    "/rece/rece-ui/requetesservicev2/apercurequetepriseencharge/0"
   );
 });

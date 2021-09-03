@@ -20,10 +20,12 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
 
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [params, setParams] =
-    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
-  const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined =
-    useGetRequeteAleatoire(prendreEnCharge);
+  const [params, setParams] = useState<
+    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
+  const requeteAleatoireResultat:
+    | IRequeteAleatoireResultat
+    | undefined = useGetRequeteAleatoire(prendreEnCharge);
 
   useEffect(() => {
     if (requeteAleatoireResultat) {

@@ -1,3 +1,4 @@
+import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import {
@@ -24,7 +25,7 @@ export interface ICriteresRMCAuto {
 }
 
 export function redirectionRMCAuto(
-  idRequete: string,
+  requete: IRequeteTableau,
   urlCourante: string,
   dataRMCAutoActe: any[],
   dataRMCAutoInscription: any[]
@@ -34,26 +35,37 @@ export function redirectionRMCAuto(
   if (urlCourante === URL_REQUETES_SERVICE_V2) {
     url = getUrlWithParam(
       URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequete
+      requete.idRequete
     );
   } else if (urlCourante === URL_RECHERCHE_REQUETE) {
     url = getUrlWithParam(
       URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequete
+      requete.idRequete
     );
   } else if (urlCourante === URL_MES_REQUETES_V2) {
     url = getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequete
+      requete.idRequete
     );
   } else if (receUrl.estUrlApercuRequete(urlCourante)) {
-    const urlPrecedente = getUrlPrecedente(urlCourante);
-    url = getUrlWithParam(
-      `${urlPrecedente}/${PATH_APERCU_REQ_PRISE}/:idRequete`,
-      idRequete
-    );
+    url = getUrlApercuTraitement(urlCourante, requete);
+  } else if (
+    receUrl.estUrlApercuTraitementRequete(urlCourante) &&
+    requete.statut &&
+    StatutRequete.getEnumFromLibelle(requete.statut) ===
+      StatutRequete.PRISE_EN_CHARGE
+  ) {
+    url = getUrlApercuTraitement(urlCourante, requete);
   }
   return url;
+}
+
+function getUrlApercuTraitement(urlCourante: string, requete: IRequeteTableau) {
+  const urlPrecedente = getUrlPrecedente(urlCourante);
+  return getUrlWithParam(
+    `${urlPrecedente}/${PATH_APERCU_REQ_PRISE}/:idRequete`,
+    requete.idRequete
+  );
 }
 
 export function redirectionRMCAutoApercuTraitement(
@@ -83,8 +95,7 @@ export function redirectionRMCAutoApercuTraitement(
 }
 
 export function determinerCriteresRMCAuto(
-  requete: IRequeteTableau,
-  data: IRequeteTableau[]
+  requete: IRequeteTableau
 ): ICriteresRMCAuto {
   const criteresRMCAuto = {} as ICriteresRMCAuto;
 

@@ -191,7 +191,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
       const url = receUrl.getUrlApercuTraitementAPartirDe(
         history.location.pathname
       );
-      receUrl.replaceUrl(history, url);
+      receUrl.replaceUrl(history, url, props.dataHistory);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultDeliverCertificatSituation, history]);

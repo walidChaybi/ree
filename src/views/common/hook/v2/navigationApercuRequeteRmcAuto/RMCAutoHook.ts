@@ -18,7 +18,6 @@ import {
   useGenerationCertificatSituationHook
 } from "../generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
 import { specificationPhraseRMCAutoVide } from "../generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
-import { IResultGenerationUnDocument } from "../generation/generationUtils";
 import {
   IActionStatutRequete,
   useCreerActionMajStatutRequete
@@ -31,6 +30,7 @@ export interface IRMCAutoParams {
   requete: IRequeteTableau;
   dataRequetes: any[];
   urlCourante: string;
+  pasDeTraitementAuto?: boolean;
 }
 
 export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
@@ -62,7 +62,8 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
   ] = useState<IActionStatutRequete>();
 
   useEffect(() => {
-    if (params) {
+    // si pasDeTraitementAuto=true alors pas de génération de certificat de situation automatiquement en fonction des résultats de la RMC auto
+    if (params && !params.pasDeTraitementAuto) {
       setParamsCertificatSituation({
         requete: params.requete,
         dataRMCAutoInscription,
@@ -79,6 +80,7 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
   );
 
   // Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
+  // si pasDeTraitementAuto=true alors pas de génération de certificat de situation et donc pas de création d'action ni de mise à jour du statut de la requête
   useEffect(() => {
     if (resultGenerationCertificatSituationRMCAutoVide?.idDocumentReponse) {
       setActionStatutRequete({
@@ -100,9 +102,12 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
         dataRMCAutoActe,
         dataTableauRMCAutoActe,
         dataRMCAutoInscription,
-        dataTableauRMCAutoInscription,
-        resultGenerationCertificatSituationRMCAutoVide
-      )
+        dataTableauRMCAutoInscription
+      ) &&
+      // Si la génération automatique de certificat de situation n'a pas été faite mais que pasDeTraitementAuto=true alors on continue le traitement
+      (resultGenerationCertificatSituationRMCAutoVide ||
+        //@ts-ignore (param est forcément non vide)
+        params.pasDeTraitementAuto)
     ) {
       const data = {
         dataRequetes: params?.dataRequetes,
@@ -112,10 +117,7 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
         dataTableauRMCAutoInscription,
         info: ""
       };
-      if (
-        //@ts-ignore
-        resultGenerationCertificatSituationRMCAutoVide.idDocumentReponse
-      ) {
+      if (resultGenerationCertificatSituationRMCAutoVide?.idDocumentReponse) {
         if (idAction) {
           data.info = INFO_CS_RMC_AUTO_VIDE;
           setUrlDataRMCAuto({
@@ -132,7 +134,7 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
         setUrlDataRMCAuto({
           url: redirectionRMCAuto(
             //@ts-ignore
-            params.requete.idRequete,
+            params.requete,
             //@ts-ignore
             params.urlCourante,
             [dataRMCAutoActe, dataTableauRMCAutoActe],
@@ -159,8 +161,7 @@ function estNonVide(
   dataRMCAutoActe?: IResultatRMCActe[],
   dataTableauRMCAutoActe?: IParamsTableau,
   dataRMCAutoInscription?: IResultatRMCInscription[],
-  dataTableauRMCAutoInscription?: IParamsTableau,
-  resultGenerationCertificatSituationRMCAutoVide?: IResultGenerationUnDocument
+  dataTableauRMCAutoInscription?: IParamsTableau
 ) {
   return (
     params?.requete &&
@@ -168,7 +169,6 @@ function estNonVide(
     dataRMCAutoActe &&
     dataTableauRMCAutoActe &&
     dataRMCAutoInscription &&
-    dataTableauRMCAutoInscription &&
-    resultGenerationCertificatSituationRMCAutoVide
+    dataTableauRMCAutoInscription
   );
 }

@@ -27,8 +27,8 @@ export function useRMCAutoInscriptionApiHook(
   useEffect(() => {
     async function fetchInscriptions() {
       try {
-        if (requete && data) {
-          const criteresRequest = determinerCriteresRMCAuto(requete, data);
+        if (requete) {
+          const criteresRequest = determinerCriteresRMCAuto(requete);
           const result = await rechercheMultiCriteresAutoInscription(
             criteresRequest,
             range

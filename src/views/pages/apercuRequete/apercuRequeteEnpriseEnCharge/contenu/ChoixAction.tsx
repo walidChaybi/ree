@@ -15,6 +15,7 @@ export interface IActionProps {
   requete: TRequete;
   acteSelected?: IResultatRMCActe[];
   inscriptionSelected?: IResultatRMCInscription[];
+  dataHistory?: any;
 }
 
 export const ChoixAction: React.FC<IActionProps> = props => {
@@ -28,6 +29,7 @@ export const ChoixAction: React.FC<IActionProps> = props => {
         requete={props.requete}
         acteSelected={props.acteSelected}
         inscriptionSelected={props.inscriptionSelected}
+        dataHistory={props.dataHistory}
       />
       <MenuReponseNegative
         requete={props.requete}

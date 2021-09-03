@@ -16,13 +16,14 @@ export function useRMCAutoActeApiHook(
   range?: string
 ) {
   const [dataRMCAutoActe, setDataRMCAutoActe] = useState<IResultatRMCActe[]>();
-  const [dataTableauRMCAutoActe, setDataTableauRMCAutoActe] = useState<
-    IParamsTableau
-  >();
+  const [
+    dataTableauRMCAutoActe,
+    setDataTableauRMCAutoActe
+  ] = useState<IParamsTableau>();
 
   useEffect(() => {
-    if (requete && data) {
-      const criteresRequest = determinerCriteresRMCAuto(requete, data);
+    if (requete) {
+      const criteresRequest = determinerCriteresRMCAuto(requete);
 
       rechercheMultiCriteresAutoActes(criteresRequest, range)
         .then((result: any) => {

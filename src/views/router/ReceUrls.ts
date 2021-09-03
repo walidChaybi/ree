@@ -160,6 +160,10 @@ function estUrlApercuRequete(url: string) {
   return url.indexOf(`/${PATH_APERCU_REQ}/`) > 0;
 }
 
+function estUrlApercuTraitementRequete(url: string) {
+  return url.indexOf(`/${PATH_APERCU_REQ_TRAITEMENT}/`) > 0;
+}
+
 function getUrlApercuTraitementAPartirDe(url: string) {
   const id = getUrlParamId(url);
   return `${getUrlPrecedente(
@@ -167,7 +171,7 @@ function getUrlApercuTraitementAPartirDe(url: string) {
   )}${URL_SEPARATEUR}${PATH_APERCU_REQ_TRAITEMENT}${URL_SEPARATEUR}${id}`;
 }
 
-export function replaceUrl(history: any, url: string, data?: any) {
+function replaceUrl(history: any, url: string, data?: any) {
   gestionnaireNavigation.deleteLastUrl();
   history.replace(url, data);
 }
@@ -178,6 +182,7 @@ function getUrlCourante(history: any) {
 
 export const receUrl = {
   estUrlApercuRequete,
+  estUrlApercuTraitementRequete,
   getUrlApercuTraitementAPartirDe,
   replaceUrl,
   getUrlCourante

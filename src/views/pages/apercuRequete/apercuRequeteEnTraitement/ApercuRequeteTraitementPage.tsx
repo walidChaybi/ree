@@ -8,6 +8,7 @@ import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { BandeauRequete } from "../contenu/BandeauRequete";
+import { BoutonModifierTraitement } from "../contenu/BoutonModifierTraitement";
 import { BoutonSignerValider } from "../contenu/BoutonSignerValider";
 import {
   DocumentsReponses,
@@ -69,9 +70,11 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
                 contenu={contenuDocument?.contenu}
                 typeMime={contenuDocument?.mimeType}
               />
-              <BoutonSignerValider
+              <BoutonModifierTraitement
                 requete={detailRequeteState}
-              ></BoutonSignerValider>
+                dataHistory={dataHistory}
+              />
+              <BoutonSignerValider requete={detailRequeteState} />
               <BoutonRetour message={getLibelle("<< Retour")} />
             </div>
           </div>

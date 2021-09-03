@@ -9,6 +9,7 @@ export interface INavigationApercuRMCAutoParams {
   requete: IRequeteTableau;
   dataRequetes: any[];
   urlCourante: string;
+  pasDeTraitementAuto?: boolean;
 }
 
 export function useNavigationApercuRMCAuto(
@@ -46,7 +47,12 @@ export function useNavigationApercuRMCAuto(
   useEffect(
     () => {
       if (urlDataToPush && rmcAutoNavigationParams) {
-        if (receUrl.estUrlApercuRequete(rmcAutoNavigationParams?.urlCourante)) {
+        if (
+          receUrl.estUrlApercuRequete(rmcAutoNavigationParams?.urlCourante) ||
+          receUrl.estUrlApercuTraitementRequete(
+            rmcAutoNavigationParams?.urlCourante
+          )
+        ) {
           receUrl.replaceUrl(history, urlDataToPush.url, urlDataToPush.data);
         } else {
           history.push(urlDataToPush.url, urlDataToPush.data);
