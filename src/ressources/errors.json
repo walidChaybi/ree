@@ -12,7 +12,7 @@
       "TECH_3": "Erreur technique en scannant les slots",
       "FONC_1": "Aucune carte RECE détectée",
       "FONC_2": "Votre carte est bloquée dans RECE, veuillez contacter votre administrateur",
-      "FONC_3": "Code PIN invalide, doit être un entier",
+      "FONC_3": "Code PIN invalide",
       "FONC_4": "Document à signer vide ou null",
       "FONC_5": "Le document n'est pas au format PDF",
       "FONC_6": "Mode de signature inconnu",

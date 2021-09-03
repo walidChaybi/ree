@@ -35,6 +35,15 @@ class StoreRece {
     this.timeoutCodePin();
   }
 
+  get codePin(): string | undefined {
+    this.timeoutCodePin();
+    return Rot18.decrypte(this._codePin);
+  }
+
+  resetCodePin() {
+    this._codePin = undefined;
+  }
+
   set listeUtilisateurs(liste: IUtilisateur[]) {
     this._listeUtilisateurs = liste;
   }
@@ -49,11 +58,6 @@ class StoreRece {
 
   get listeEntite(): IEntite[] {
     return this._listeEntite;
-  }
-
-  get codePin(): string | undefined {
-    this.timeoutCodePin();
-    return Rot18.decrypte(this._codePin);
   }
 
   // La sauvegarde du code pin est de 30 min (1800000 millisecondes) depuis sa dernière utilisation

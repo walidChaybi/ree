@@ -1,23 +1,21 @@
-import React from "react";
 import {
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
-  DialogActions
+  DialogTitle
 } from "@material-ui/core";
-
+import React from "react";
 import { getText } from "../../../common/widget/Text";
-
-import { ProgressSignature } from "./ProgressSignature";
-import { FormPinCode } from "./FormPinCode";
-import { ErrorsSignature } from "./messages/ErrorsSignature";
-import "./scss/PopinSignature.scss";
-import {
-  useSignatureDocumentHook,
-  DocumentsByRequete
-} from "./hook/SignatureDocumentHook";
-import { SuccessSignature } from "./messages/SuccessSignature";
 import { storeRece } from "../../util/storeRece";
+import { FormPinCode } from "./FormPinCode";
+import {
+  DocumentsByRequete,
+  useSignatureDocumentHook
+} from "./hook/SignatureDocumentHook";
+import { ErrorsSignature } from "./messages/ErrorsSignature";
+import { SuccessSignature } from "./messages/SuccessSignature";
+import { ProgressSignature } from "./ProgressSignature";
+import "./scss/PopinSignature.scss";
 
 interface PopinSignatureProps {
   documentsByRequete: DocumentsByRequete;
@@ -40,6 +38,12 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
     idRequetesToSign
   } = useSignatureDocumentHook(documentsByRequete, pinCode);
 
+  // Si une des erreurs concerne le code Pin on le réinitialise pour que l'utilisateur le saisisse à nouveau lors d'une prochaine tentative de signature
+  if (storeRece.codePin && erreurDeCodePin()) {
+    storeRece.resetCodePin();
+    setPinCode(storeRece.codePin);
+  }
+
   return (
     <>
       <Dialog
@@ -57,7 +61,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
           {errorsSignature !== undefined && (
             <ErrorsSignature errors={errorsSignature} />
           )}
-          {pinCode !== undefined ? (
+          {pinCode !== undefined || erreurDeCodePin() ? (
             <>
               <ProgressSignature
                 onClose={onClose}
@@ -74,4 +78,8 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
       </Dialog>
     </>
   );
+
+  function erreurDeCodePin() {
+    return errorsSignature?.erreurs.find(erreur => erreur.code === "FONC_3");
+  }
 };
