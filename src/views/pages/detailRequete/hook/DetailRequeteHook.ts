@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDetailRequete } from "../../../../api/appels/requeteApi";
 import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
+import { ChoixDelivrance } from "../../../../model/requete/v2/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../model/requete/v2/enum/MotifDelivrance";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
@@ -39,9 +40,8 @@ import { logError } from "../../../common/util/LogManager";
 import { storeRece } from "../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] = useState<
-    TRequete | undefined
-  >();
+  const [detailRequeteState, setDetailRequeteState] =
+    useState<TRequete | undefined>();
 
   useEffect(() => {
     async function fetchDetailRequete() {
@@ -96,6 +96,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     evenement: data?.evenement ? getEvenement(data.evenement) : undefined,
     motif: MotifDelivrance.getEnumFor(data?.motif),
     complementMotif: data?.complementMotif,
+    choixDelivrance: ChoixDelivrance.getEnumFor(data?.choixDelivrance),
 
     // Documents réponse avec contenu vide
     documentsReponses: data?.documentsReponses
@@ -185,7 +186,8 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     mandataireHabilite: getMandataireHabilite(
       requerant.detailQualiteMandataireHabilite
     ),
-    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    autreProfessionnel:
+      requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }

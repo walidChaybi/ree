@@ -12,7 +12,7 @@ const BoutonsCourrierAccompagnement: React.FC<BoutonsCourrierAccompagnementProps
   props => {
     return (
       <>
-        <div className="Boutons" key="boutons">
+        <div className="BoutonsCourrierAccompagnement" key="boutons">
           <button
             disabled={!props.formik.dirty}
             type="button"
