@@ -33,7 +33,7 @@ export function mappingFormulaireRDCVersRequeteDelivrance(
       requeteRDC.saisie.requete.documentDemande
     ),
     motif: requeteRDC.saisie.requete.motif,
-    nbExemplaireImpression: requeteRDC.saisie.requete.nbExemplaire,
+    nombreExemplairesDemandes: requeteRDC.saisie.requete.nbExemplaire,
     evenement: getEvenement(requeteRDC.saisie),
     mandant: getMandant(requeteRDC.saisie),
     titulaires: getTitulairesRequete(requeteRDC.saisie),
