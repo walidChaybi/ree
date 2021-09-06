@@ -39,6 +39,7 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({
         expanded={isExpanded}
         disabled={disabled}
         onChange={handleChange}
+        TransitionProps={{ timeout: 0 }}
       >
         <AccordionTitle title={titre} />
         <AccordionDetails>
