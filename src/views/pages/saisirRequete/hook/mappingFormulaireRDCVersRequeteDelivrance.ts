@@ -280,10 +280,10 @@ function getLienRequerant(saisie: SaisieRequeteRDC) {
 function getAdresse(adresse: Adresse) {
   return adresse
     ? {
-        ligne2: adresse.voie,
+        ligne2: adresse.complementDestinataire,
+        ligne3: adresse.complementPointGeo,
+        ligne4: adresse.voie,
         ligne5: adresse.lieuDit,
-        ligne3: adresse.complementDestinataire,
-        ligne4: adresse.complementPointGeo,
         codePostal: adresse.codePostal,
         ville: adresse.commune,
         pays: adresse.pays
