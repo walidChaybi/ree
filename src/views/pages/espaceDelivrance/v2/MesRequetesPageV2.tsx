@@ -3,7 +3,9 @@ import {
   IQueryParametersPourRequetesV2,
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
+import { autorisePrendreEnChargeTableau } from "../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
@@ -14,6 +16,10 @@ import {
 } from "../../../common/widget/tableau/TableUtils";
 import { TableauRece } from "../../../common/widget/tableau/v2/TableauRece";
 import { URL_MES_REQUETES_V2 } from "../../../router/ReceUrls";
+import {
+  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  useCreationActionMiseAjourStatutEtRmcAuto
+} from "../../apercuRequete/commun/hook/CreationActionMiseAjourStatutEtRmcAutoHook";
 import {
   dateStatutColumnHeaders,
   requerantColumnHeaders,
@@ -43,21 +49,24 @@ interface MesRequetesPageProps {
 export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const [paramsMiseAJour, setParamsMiseAJour] =
+    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
 
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetesV2
-  >({
-    statuts: StatutsRequetesEspaceDelivrance,
-    tri: "dateStatut",
-    sens: "ASC",
-    range: `0-${NB_LIGNES_PAR_APPEL}`
-  });
+  const [linkParameters, setLinkParameters] =
+    React.useState<IQueryParametersPourRequetesV2>({
+      statuts: StatutsRequetesEspaceDelivrance,
+      tri: "dateStatut",
+      sens: "ASC",
+      range: `0-${NB_LIGNES_PAR_APPEL}`
+    });
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteApi(
     linkParameters,
     TypeAppelRequete.MES_REQUETES,
     setEnChargement
   );
+
+  useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
 
   const goToLink = useCallback((link: string) => {
     const queryParametersPourRequetes = goToLinkRequete(link, "requetes");
@@ -94,7 +103,18 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
     idx: number
   ) {
     setOperationEnCours(true);
-    props.setParamsRMCAuto(idRequete, data, URL_MES_REQUETES_V2, idx);
+    const requeteSelect = data[idx];
+    if (autorisePrendreEnChargeTableau(requeteSelect)) {
+      setParamsMiseAJour({
+        libelleAction: "Prendre en charge",
+        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        requete: requeteSelect,
+        dataRequetes: data,
+        urlCourante: URL_MES_REQUETES_V2
+      });
+    } else {
+      props.setParamsRMCAuto(idRequete, data, URL_MES_REQUETES_V2, idx);
+    }
   }
 
   useEffect(() => {

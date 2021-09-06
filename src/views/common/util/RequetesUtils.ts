@@ -16,6 +16,7 @@ import { IRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
 import { getText } from "../../common/widget/Text";
 import { IActionOption } from "../widget/menu/MenuAction";
 import { FormatDate } from "./DateUtils";
+import { storeRece } from "./storeRece";
 
 export const indexParamsReq = {
   Statut: 0,
@@ -56,7 +57,7 @@ export function getMessagePrioriteDeLaRequete(dateStatut: string): string {
   }
 }
 
-export const statutEstATraiterOuATransferee = (statut: string) =>
+export const statutEstATraiterOuTransferee = (statut: string) =>
   statut === StatutRequete.A_TRAITER.libelle ||
   statut === StatutRequete.TRANSFEREE.libelle;
 
@@ -78,7 +79,7 @@ export const autorisePrendreEnChargeDelivrance = (
 ) => {
   return (
     typeEstDelivrance(requete.type.libelle) &&
-    statutEstATraiterOuATransferee(requete.statutCourant.statut.libelle) &&
+    statutEstATraiterOuTransferee(requete.statutCourant.statut.libelle) &&
     mAppartientOuAppartientAPersonne(requete.idUtilisateur) &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
       requete.provenanceRequete.provenance.libelle
@@ -89,10 +90,23 @@ export const autorisePrendreEnChargeDelivrance = (
 
 export const autorisePrendreEnChargeTableau = (requete: IRequeteTableau) =>
   typeEstDelivrance(requete.type ? requete.type : "") &&
-  statutEstATraiterOuATransferee(requete.statut ? requete.statut : "") &&
+  statutEstATraiterOuTransferee(requete.statut ? requete.statut : "") &&
   mAppartientOuAppartientAPersonne(
     requete.idUtilisateur ? requete.idUtilisateur : ""
   ) &&
+  provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+    requete.provenance ? requete.provenance : ""
+  ) &&
+  appartientAMonServiceMereServiceOuFillesServices(
+    requete.idEntiteRattachement ? requete.idEntiteRattachement : ""
+  );
+
+export const autorisePrendreEnChargeTableauService = (
+  requete: IRequeteTableau
+) =>
+  typeEstDelivrance(requete.type ? requete.type : "") &&
+  statutEstATraiterOuTransferee(requete.statut ? requete.statut : "") &&
+  requete.idCorbeilleAgent === storeRece.utilisateurCourant?.idUtilisateur &&
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
     requete.provenance ? requete.provenance : ""
   ) &&
