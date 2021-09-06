@@ -86,7 +86,7 @@ function getMandataire(saisie: SaisieRequeteRDCSC) {
   const requerant = saisie.requerant;
   return {
     nomFamille: requerant.mandataire.nom ? requerant.mandataire.nom : SNP,
-    prenom: requerant.mandataire.prenom,
+    prenom: getValeurOuVide(requerant.mandataire.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
@@ -105,7 +105,7 @@ function getInstitutionnel(saisie: SaisieRequeteRDCSC) {
     nomFamille: requerant.institutionnel.nom
       ? requerant.institutionnel.nom
       : SNP,
-    prenom: requerant.institutionnel.prenom,
+    prenom: getValeurOuVide(requerant.institutionnel.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
@@ -124,7 +124,7 @@ function getParticulier(saisie: SaisieRequeteRDCSC) {
     nomFamille: requerant.particulier.nomFamille
       ? requerant.particulier.nomFamille
       : SNP,
-    prenom: requerant.particulier.prenom,
+    prenom: getValeurOuVide(requerant.particulier.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),

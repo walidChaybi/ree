@@ -8,6 +8,7 @@ import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IPrenomOrdonnes } from "../../../../model/requete/v2/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { supprimeProprietesVides } from "../../../common/util/supprimeProprietesVides";
+import { getValeurOuVide } from "../../../common/util/Utils";
 import {
   CreationRequeteRDC,
   SaisieRequeteRDC
@@ -181,7 +182,7 @@ function getMandataire(saisie: SaisieRequeteRDC) {
   const requerant = saisie.requerant;
   return {
     nomFamille: requerant.mandataire.nom ? requerant.mandataire.nom : SNP,
-    prenom: requerant.mandataire.prenom,
+    prenom: getValeurOuVide(requerant.mandataire.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
@@ -200,7 +201,7 @@ function getInstitutionnel(saisie: SaisieRequeteRDC) {
     nomFamille: requerant.institutionnel.nom
       ? requerant.institutionnel.nom
       : SNP,
-    prenom: requerant.institutionnel.prenom,
+    prenom: getValeurOuVide(requerant.institutionnel.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
@@ -219,7 +220,7 @@ function getParticulier(saisie: SaisieRequeteRDC) {
     nomFamille: requerant.particulier.nomFamille
       ? requerant.particulier.nomFamille
       : SNP,
-    prenom: requerant.particulier.prenom,
+    prenom: getValeurOuVide(requerant.particulier.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
@@ -252,7 +253,7 @@ function getAutreProfessionnel(saisie: SaisieRequeteRDC) {
     nomFamille: requerant.autreProfessionnel.nom
       ? requerant.autreProfessionnel.nom
       : SNP,
-    prenom: requerant.autreProfessionnel.prenom,
+    prenom: getValeurOuVide(requerant.autreProfessionnel.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
     adresse: getAdresse(saisie.adresse),
