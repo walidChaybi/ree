@@ -229,13 +229,13 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
   await act(async () => {
     fireEvent.change(inputMotif, {
       target: {
-        value: "CERTIFICAT_DE_NATIONALITE_FRANCAISE"
+        value: "CERTIFICAT_NATIONALITE_FRANCAISE"
       }
     });
   });
 
   await waitFor(() => {
-    expect(inputMotif.value).toEqual("CERTIFICAT_DE_NATIONALITE_FRANCAISE");
+    expect(inputMotif.value).toEqual("CERTIFICAT_NATIONALITE_FRANCAISE");
   });
 
   await act(async () => {
@@ -346,13 +346,13 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
   await act(async () => {
     fireEvent.change(inputMotif, {
       target: {
-        value: "CERTIFICAT_DE_NATIONALITE_FRANCAISE"
+        value: "CERTIFICAT_NATIONALITE_FRANCAISE"
       }
     });
   });
 
   await waitFor(() => {
-    expect(inputMotif.value).toEqual("CERTIFICAT_DE_NATIONALITE_FRANCAISE");
+    expect(inputMotif.value).toEqual("CERTIFICAT_NATIONALITE_FRANCAISE");
   });
 
   await act(async () => {

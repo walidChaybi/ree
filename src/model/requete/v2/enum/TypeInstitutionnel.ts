@@ -4,12 +4,13 @@ import { Options } from "../../../../views/common/util/Type";
 
 export class TypeInstitutionnel extends EnumWithLibelle {
   public static readonly TRIBUNAL = new TypeInstitutionnel("Tribunal");
-  public static readonly ADMINISTRATION_PUBLIQUE_ETABLISSEMENT_PUBLIC =
-    new TypeInstitutionnel("Administration publique / Etablissement public");
+  public static readonly ADMINISTRATION_PUBLIQUE_ETABLISSEMENT_PUBLIC = new TypeInstitutionnel(
+    "Administration publique / Etablissement public"
+  );
   public static readonly OFFICIER_ETAT_CIVIL = new TypeInstitutionnel(
     "Officier de l'état civil"
   );
-  public static readonly PROCUREUR_DE_LA_REPUBLIQUE = new TypeInstitutionnel(
+  public static readonly PROCUREUR_REPUBLIQUE = new TypeInstitutionnel(
     "Procureur de la République"
   );
   public static readonly MAIRIE = new TypeInstitutionnel("Mairie");
