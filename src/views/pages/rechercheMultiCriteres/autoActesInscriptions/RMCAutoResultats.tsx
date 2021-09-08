@@ -23,6 +23,7 @@ export interface RMCAutoResultatsProps {
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => void;
+  enableBoutonAjouterRMC?: boolean;
 }
 
 export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = props => {
@@ -44,6 +45,7 @@ export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = props => {
             onClickCheckboxTableauInscriptions={
               props.onClickCheckboxTableauInscriptions
             }
+            enableBoutonAjouterRMC={props.enableBoutonAjouterRMC}
           />
         )}
     </>

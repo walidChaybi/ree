@@ -36,14 +36,14 @@ export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 export const REGISTRE_REPERTOIRE = "registreRepertoire";
 
 // Valeurs par défaut des champs
-const DefaultValuesRMCActeInscription = {
+export const DefaultValuesRMCActeInscription = {
   [TITULAIRE]: TitulaireDefaultValues,
   [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues,
   [REGISTRE_REPERTOIRE]: RegistreRepertoireDefaultValues
 };
 
 // Schéma de validation en sortie de champs
-const ValidationSchemaRMCActeInscription = Yup.object({
+export const ValidationSchemaRMCActeInscription = Yup.object({
   [TITULAIRE]: TitulaireValidationSchema,
   [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema,
   [REGISTRE_REPERTOIRE]: RegistreRepertoireValidationSchema
@@ -51,13 +51,7 @@ const ValidationSchemaRMCActeInscription = Yup.object({
 
 export const titreForm = "Critères de recherche d'un acte ou d'une inscription";
 
-export interface RMCActeInscriptionPageProps {
-  autoScroll: boolean;
-}
-
-export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
-  autoScroll = true
-}) => {
+export const RMCActeInscriptionPage: React.FC = () => {
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(),
     getRegistreRepertoire(),
@@ -142,12 +136,10 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
         <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
         <RMCBoutons {...boutonsProps} />
       </Formulaire>
-      {autoScroll === true && (
-        <AutoScroll
-          autoScroll={nouvelleRecherche}
-          baliseRef={RMCActeInscriptionRef}
-        />
-      )}
+      <AutoScroll
+        autoScroll={nouvelleRecherche}
+        baliseRef={RMCActeInscriptionRef}
+      />
       {dataRMCActe &&
         dataTableauRMCActe &&
         dataRMCInscription &&
@@ -167,14 +159,14 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
   );
 };
 
-function getFormTitulaire(): JSX.Element {
+export function getFormTitulaire(): JSX.Element {
   const titulaireFiltreProps = {
     nomFiltre: TITULAIRE
   } as TitulaireFiltreProps;
   return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} />;
 }
 
-function getFormDatesDebutFinAnnee(): JSX.Element {
+export function getFormDatesDebutFinAnnee(): JSX.Element {
   const datesDebutFinAnneeFiltreProps = {
     nomFiltre: DATES_DEBUT_FIN_ANNEE,
     anneeVisible: true,
@@ -188,7 +180,7 @@ function getFormDatesDebutFinAnnee(): JSX.Element {
   );
 }
 
-function getRegistreRepertoire(): JSX.Element {
+export function getRegistreRepertoire(): JSX.Element {
   const registreRepertoireFiltreFiltreProps = {
     nomFiltre: REGISTRE_REPERTOIRE
   } as RegistreRepertoireFiltreProps;

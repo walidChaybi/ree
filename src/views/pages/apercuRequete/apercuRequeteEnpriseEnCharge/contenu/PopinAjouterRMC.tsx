@@ -1,13 +1,24 @@
 import {
   Dialog,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import React from "react";
-import { RMCActeInscriptionPage } from "../../../rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import { stockageDonnees } from "../../../../common/util/stockageDonnees";
+import { Formulaire } from "../../../../common/widget/formulaire/Formulaire";
+import {
+  DefaultValuesRMCActeInscription,
+  getFormDatesDebutFinAnnee,
+  getFormTitulaire,
+  getRegistreRepertoire,
+  titreForm,
+  ValidationSchemaRMCActeInscription
+} from "../../../rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import RMCBoutons, {
+  RMCBoutonsProps
+} from "../../../rechercheMultiCriteres/boutons/RMCBoutons";
 import "./../scss/PopinAjouterRMC.scss";
 
 interface PopinAjouterRMCProps {
@@ -22,6 +33,21 @@ export const PopinAjouterRMC: React.FC<PopinAjouterRMCProps> = ({
   const handleClose = () => {
     onClose(false);
   };
+  const blocsForm: JSX.Element[] = [
+    getFormTitulaire(),
+    getRegistreRepertoire(),
+    getFormDatesDebutFinAnnee()
+  ];
+
+  const onSubmit = () => {};
+
+  const rappelCriteres = () => {
+    return stockageDonnees.recupererCriteresRMCActeInspt();
+  };
+
+  const boutonsProps = {
+    rappelCriteres
+  } as RMCBoutonsProps;
 
   return (
     <Dialog
@@ -40,9 +66,15 @@ export const PopinAjouterRMC: React.FC<PopinAjouterRMCProps> = ({
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          <RMCActeInscriptionPage autoScroll={false} />
-        </DialogContentText>
+        <Formulaire
+          titre={titreForm}
+          formDefaultValues={DefaultValuesRMCActeInscription}
+          formValidationSchema={ValidationSchemaRMCActeInscription}
+          onSubmit={onSubmit}
+        >
+          <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
+          <RMCBoutons {...boutonsProps} />
+        </Formulaire>
       </DialogContent>
     </Dialog>
   );

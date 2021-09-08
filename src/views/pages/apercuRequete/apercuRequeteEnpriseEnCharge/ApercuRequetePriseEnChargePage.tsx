@@ -23,12 +23,10 @@ import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
 import { AlertesActes } from "./contenu/AlertesActes/AlertesActes";
-import { BoutonAjouterRMC } from "./contenu/BoutonAjouterRMC";
 import {
   AlertesActeApiHookParameters,
   useAlertesActeApiHook
 } from "./contenu/hook/AlertesActeApiHook";
-
 interface DataRMCAuto {
   dataRequetes: any[];
   dataRMCAutoActe: IResultatRMCActe[];
@@ -192,11 +190,9 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
                     onClickCheckboxTableauInscriptions={
                       onClickCheckboxInscription
                     }
+                    enableBoutonAjouterRMC={true}
                   />
                 )}
-              <BoutonAjouterRMC
-                libelle={getLibelle("Ajouter une recherche multicritères")}
-              />
               <AlertesActes alertesActes={alertes} ajouterAlerte={true} />
               <ChoixAction
                 requete={detailRequeteState}
