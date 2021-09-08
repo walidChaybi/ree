@@ -5,23 +5,6 @@ import {
   CarateresAutorise,
   NumeroTelephone
 } from "../../../../../ressources/Regex";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import {
-  ADRESSE_MAIL_NON_CONFORME,
-  CARATERES_AUTORISES_MESSAGE,
-  NUMERO_TELEPHONE_NON_CONFORME
-} from "../../../../common/widget/formulaire/FormulaireMessages";
-import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
-import { sortieChampEnMajuscule } from "../../../../common/widget/formulaire/utils/ControlesUtil";
-import {
-  NB_CARACT_ADRESSE,
-  NB_CARACT_CODE_POSTAL,
-  NB_CARACT_COMMUNE,
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../common/widget/Text";
 import {
   ADRESSE_COURRIEL,
   CODE_POSTAL,
@@ -32,7 +15,24 @@ import {
   NUMERO_TELEPHONE,
   PAYS,
   VOIE
-} from "../../modelForm/ISaisirRequetePageModel";
+} from "../../../../pages/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { getLibelle } from "../../Text";
+import { InputField } from "../champsSaisie/InputField";
+import {
+  ADRESSE_MAIL_NON_CONFORME,
+  CARATERES_AUTORISES_MESSAGE,
+  NUMERO_TELEPHONE_NON_CONFORME
+} from "../FormulaireMessages";
+import { SousFormulaire } from "../SousFormulaire";
+import { sortieChampEnMajuscule } from "../utils/ControlesUtil";
+import {
+  NB_CARACT_ADRESSE,
+  NB_CARACT_CODE_POSTAL,
+  NB_CARACT_COMMUNE,
+  NB_CARACT_MAX_SAISIE,
+  SubFormProps,
+  withNamespace
+} from "../utils/FormUtil";
 import "./scss/AdresseForm.scss";
 
 // Valeurs par défaut des champs
@@ -161,19 +161,23 @@ const AdresseForm: React.FC<SubFormProps> = props => {
               sortieChampEnMajuscule(e, props.formik, paysWithNamespace)
             }
           />
-          <InputField
-            name={withNamespace(props.nom, ADRESSE_COURRIEL)}
-            label={getLibelle("Adresse courriel du requérant")}
-            maxLength={NB_CARACT_MAX_SAISIE}
-          />
-          <div className="Telephone">
-            <InputField
-              name={withNamespace(props.nom, NUMERO_TELEPHONE)}
-              label={getLibelle("Numéro téléphone du requérant")}
-              placeholder={getLibelle("(Indicatif) numero")}
-              maxLength={NB_CARACT_MAX_SAISIE}
-            />
-          </div>
+          {!props.formulaireReduit && (
+            <>
+              <InputField
+                name={withNamespace(props.nom, ADRESSE_COURRIEL)}
+                label={getLibelle("Adresse courriel du requérant")}
+                maxLength={NB_CARACT_MAX_SAISIE}
+              />
+              <div className="Telephone">
+                <InputField
+                  name={withNamespace(props.nom, NUMERO_TELEPHONE)}
+                  label={getLibelle("Numéro téléphone du requérant")}
+                  placeholder={getLibelle("(Indicatif) numero")}
+                  maxLength={NB_CARACT_MAX_SAISIE}
+                />
+              </div>
+            </>
+          )}
         </div>
       </SousFormulaire>
     </>

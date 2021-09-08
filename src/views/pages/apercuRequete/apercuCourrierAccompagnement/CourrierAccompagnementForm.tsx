@@ -1,47 +1,49 @@
 import React from "react";
-import { MotifDelivrance } from "../../../../model/requete/v2/enum/MotifDelivrance";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { Options } from "../../../common/util/Type";
+import AdresseForm from "../../../common/widget/formulaire/adresse/AdresseForm";
 import { InputField } from "../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../common/widget/formulaire/champsSaisie/SelectField";
+import RequeteForm from "../../../common/widget/formulaire/requete/RequeteForm";
 import { SousFormulaire } from "../../../common/widget/formulaire/SousFormulaire";
 import {
   NB_CARACT_MAX_SAISIE,
+  SubFormProps,
   withNamespace
 } from "../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../common/widget/Text";
 import {
-  ADRESSE_CODEPOSTAL,
-  ADRESSE_LIGNE_2,
-  ADRESSE_LIGNE_3,
-  ADRESSE_LIGNE_4,
-  ADRESSE_LIGNE_5,
-  ADRESSE_PAYS,
-  ADRESSE_VILLE,
-  COMPLEMENT,
+  ADRESSE,
   COURRIER,
   DELIVRANCE,
   EN_TETE,
-  MOTIF,
-  NB_EXEMPLAIRE,
   REQUERANT,
   REQUERANT_LIGNE_1,
   REQUERANT_LIGNE_2,
   REQUETE
 } from "./modelForm/ISaisieAccompagnementPageModel";
 
-export const getFormCA = (
-  optionsCourrier: Options,
-  requete: IRequeteDelivrance
-): JSX.Element[] => {
-  return [
-    getHeader(optionsCourrier),
-    //getTexteLibre(),
-    getRequerant(requete),
-    getRequete(requete)
-  ];
-};
+interface CourrierAccompagnementFormProps {
+  optionsCourrier: Options;
+  requete: IRequeteDelivrance;
+}
+
+export const CourrierAccompagnementForm: React.FC<CourrierAccompagnementFormProps> =
+  props => {
+    return (
+      <>
+        {getHeader(props.optionsCourrier)}
+        {getRequerant(props.requete)}
+        {props.requete.sousType === SousTypeDelivrance.RDC && (
+          <>
+            {getAdresseForm()}
+            {getRequeteForm()}
+          </>
+        )}
+      </>
+    );
+  };
 
 const getHeader = (options: Options): JSX.Element => {
   return (
@@ -61,6 +63,24 @@ const getHeader = (options: Options): JSX.Element => {
     </div>
   );
 };
+
+export function getAdresseForm(): JSX.Element {
+  const adresseFormProps = {
+    nom: ADRESSE,
+    titre: "ADRESSE POSTALE DU REQUÉRANT",
+    formulaireReduit: true
+  } as SubFormProps;
+  return <AdresseForm key={ADRESSE} {...adresseFormProps} />;
+}
+
+export function getRequeteForm(): JSX.Element {
+  const requeteFormProps = {
+    nom: REQUETE,
+    titre: getLibelle("Requête"),
+    formulaireReduit: true
+  } as SubFormProps;
+  return <RequeteForm key={REQUETE} {...requeteFormProps} />;
+}
 
 // TODO ajouter section texte libre
 /*const getTexteLibre = () => {
@@ -86,83 +106,17 @@ const getHeader = (options: Options): JSX.Element => {
 
 const getRequerant = (requete: IRequeteDelivrance) => {
   return (
-    <div key={REQUERANT}>
-      <SousFormulaire titre={getLibelle("Identité du requérant")}>
-        <div className="DeuxColonnesSansLabel">
-          <InputField
-            name={withNamespace(REQUERANT, REQUERANT_LIGNE_1)}
-            disabled={requete.sousType === SousTypeDelivrance.RDC}
-          />
-          <InputField
-            name={withNamespace(REQUERANT, REQUERANT_LIGNE_2)}
-            disabled={requete.sousType === SousTypeDelivrance.RDC}
-          />
-        </div>
-      </SousFormulaire>
-      {requete.sousType === SousTypeDelivrance.RDC && (
-        <SousFormulaire titre={getLibelle("Adresse postale du requérant")}>
-          <InputField
-            name={withNamespace(REQUERANT, ADRESSE_LIGNE_2)}
-            label={getLibelle("Numéro, type et nom de la voie")}
-          />
-          <InputField
-            name={withNamespace(REQUERANT, ADRESSE_LIGNE_3)}
-            label={getLibelle(
-              "Lieu-dit, boîte postale ou état/province (à l'étranger)"
-            )}
-          />
-          <InputField
-            name={withNamespace(REQUERANT, ADRESSE_LIGNE_4)}
-            label={getLibelle("Complément d'identification du destinataire")}
-          />
-          <InputField
-            name={withNamespace(REQUERANT, ADRESSE_LIGNE_5)}
-            label={getLibelle(
-              "Complément d'identification du point géographique"
-            )}
-          />
-          <div className="DeuxColonnes">
-            <InputField
-              name={withNamespace(REQUERANT, ADRESSE_CODEPOSTAL)}
-              label={getLibelle("Code Postal")}
-              key={ADRESSE_CODEPOSTAL}
-            />
-            <InputField
-              name={withNamespace(REQUERANT, ADRESSE_VILLE)}
-              label={getLibelle("Commune")}
-            />
-          </div>
-          <InputField
-            name={withNamespace(REQUERANT, ADRESSE_PAYS)}
-            label={getLibelle("Pays")}
-          />
-        </SousFormulaire>
-      )}
-    </div>
-  );
-};
-
-const getRequete = (requete: IRequeteDelivrance) => {
-  return (
-    <div key="REQUETE">
-      {requete.sousType === SousTypeDelivrance.RDC && (
-        <SousFormulaire titre={getLibelle("Requête")}>
-          <InputField
-            name={withNamespace(REQUETE, NB_EXEMPLAIRE)}
-            label={getLibelle("Nombre d'exemplaires")}
-          />
-          <SelectField
-            name={withNamespace(REQUETE, MOTIF)}
-            label={getLibelle("Motif")}
-            options={MotifDelivrance.getAllEnumsAsOptions()}
-            pasPremiereOptionVide={true}
-          />
-          <InputField
-            name={withNamespace(REQUETE, COMPLEMENT)}
-            label={getLibelle("Complément motif")}
-          />
-        </SousFormulaire>
-      )}
-    </div>
+    <SousFormulaire titre={getLibelle("Identité du requérant")} key={REQUERANT}>
+      <div className="DeuxColonnesSansLabel">
+        <InputField
+          name={withNamespace(REQUERANT, REQUERANT_LIGNE_1)}
+          disabled={requete.sousType === SousTypeDelivrance.RDC}
+        />
+        <InputField
+          name={withNamespace(REQUERANT, REQUERANT_LIGNE_2)}
+          disabled={requete.sousType === SousTypeDelivrance.RDC}
+        />
+      </div>
+    </SousFormulaire>
   );
 };

@@ -89,10 +89,11 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
       case INDEX_ACTION_TRANSFERT_SERVICE:
         setPopinServiceOpen(true);
         break;
-      case INDEX_ACTION_TRANSFERT_OFFICIER:
+      //TODO
+      /*case INDEX_ACTION_TRANSFERT_OFFICIER:
         break;
       case INDEX_ACTION_TRANSFERT_ABANDON:
-        break;
+        break;*/
     }
   };
 

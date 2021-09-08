@@ -7,12 +7,12 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { ADRESSE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import AdresseForm, {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
-} from "../../../../../views/pages/saisirRequete/sousFormulaires/adresse/AdresseForm";
+} from "../../../../../views/common/widget/formulaire/adresse/AdresseForm";
+import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
+import { ADRESSE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 
 const HookAdresseForm: React.FC = () => {
   const [result, setResult] = useState("");

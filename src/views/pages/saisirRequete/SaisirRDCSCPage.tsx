@@ -10,6 +10,10 @@ import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance
 import messageManager from "../../common/util/messageManager";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
+import {
+  AdresseFormDefaultValues,
+  AdresseFormValidationSchema
+} from "../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../common/widget/formulaire/Formulaire";
 import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
@@ -39,10 +43,6 @@ import {
   UpdateRequeteRDCSC
 } from "./modelForm/ISaisirRDCSCPageModel";
 import "./scss/SaisirRequetePage.scss";
-import {
-  AdresseFormDefaultValues,
-  AdresseFormValidationSchema
-} from "./sousFormulaires/adresse/AdresseForm";
 import {
   IdentiteFormDefaultValues,
   IdentiteFormValidationSchema

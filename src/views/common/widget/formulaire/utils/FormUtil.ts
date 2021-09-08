@@ -28,6 +28,7 @@ export interface ISubForm {
   options: Options;
   onChange?: (value: string) => void;
   requete: TRequete;
+  formulaireReduit?: boolean;
 }
 
 export type SubFormProps = ISubForm & FormikComponentProps;

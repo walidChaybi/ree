@@ -1,5 +1,7 @@
 import React from "react";
 import { Options } from "../../../common/util/Type";
+import AdresseForm from "../../../common/widget/formulaire/adresse/AdresseForm";
+import RequeteForm from "../../../common/widget/formulaire/requete/RequeteForm";
 import { SousFormulaire } from "../../../common/widget/formulaire/SousFormulaire";
 import { SubFormProps } from "../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../common/widget/Text";
@@ -13,7 +15,6 @@ import {
   TITULAIRE1,
   TITULAIRE2
 } from "../modelForm/ISaisirRDCPageModel";
-import AdresseForm from "../sousFormulaires/adresse/AdresseForm";
 import EvenementForm, {
   EvenementSubFormProps
 } from "../sousFormulaires/evenement/EvenementForm";
@@ -23,7 +24,6 @@ import IdentiteForm, {
 import LienTitulaireForm from "../sousFormulaires/lienTitulaire/LienTitulaireForm";
 import MandantForm from "../sousFormulaires/mandant/MandantForm";
 import RequerantForm from "../sousFormulaires/requerant/RequerantForm";
-import RequeteForm from "../sousFormulaires/requete/RequeteForm";
 
 export function getRequeteForm(
   onChangeNature: (nature: string) => void

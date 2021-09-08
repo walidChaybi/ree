@@ -7,30 +7,30 @@ import {
 } from "../../../../../model/requete/v2/enum/DocumentDemande";
 import { MotifDelivrance } from "../../../../../model/requete/v2/enum/MotifDelivrance";
 import { TypeNatureActe } from "../../../../../model/requete/v2/enum/TypeNatureActe";
-import { Options } from "../../../../common/util/Type";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
-import {
-  DOCUMENT_DEMANDE_OBLIGATOIRE,
-  NATURE_ACTE_OBLIGATOIRE,
-  NB_EXEMPLAIRE_MAXIMUM,
-  NB_EXEMPLAIRE_MINIMUM,
-  NB_EXEMPLAIRE_OBLIGATOIRE
-} from "../../../../common/widget/formulaire/FormulaireMessages";
-import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
-import {
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../common/widget/Text";
 import {
   COMPLEMENT_MOTIF,
   DOCUMENT_DEMANDE,
   MOTIF,
   NATURE_ACTE,
   NB_EXEMPLAIRE
-} from "../../modelForm/ISaisirRequetePageModel";
+} from "../../../../pages/saisirRequete/modelForm/ISaisirRequetePageModel";
+import { Options } from "../../../util/Type";
+import { getLibelle } from "../../Text";
+import { InputField } from "../champsSaisie/InputField";
+import { SelectField } from "../champsSaisie/SelectField";
+import {
+  DOCUMENT_DEMANDE_OBLIGATOIRE,
+  NATURE_ACTE_OBLIGATOIRE,
+  NB_EXEMPLAIRE_MAXIMUM,
+  NB_EXEMPLAIRE_MINIMUM,
+  NB_EXEMPLAIRE_OBLIGATOIRE
+} from "../FormulaireMessages";
+import { SousFormulaire } from "../SousFormulaire";
+import {
+  NB_CARACT_MAX_SAISIE,
+  SubFormProps,
+  withNamespace
+} from "../utils/FormUtil";
 import "./scss/RequeteForm.scss";
 
 // Valeurs par défaut des champs
@@ -76,9 +76,8 @@ const RequeteForm: React.FC<SubFormProps> = props => {
     DocumentDemande.getAllEnumsAsOptions()
   );
 
-  const [complementMotifInactif, setComplementMotifInactif] = useState<boolean>(
-    true
-  );
+  const [complementMotifInactif, setComplementMotifInactif] =
+    useState<boolean>(true);
 
   const onChangeTypeNatureActe = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (props.onChange) {
@@ -112,19 +111,23 @@ const RequeteForm: React.FC<SubFormProps> = props => {
     <>
       <SousFormulaire titre={props.titre}>
         <div className="RequeteForm">
-          <SelectField
-            name={withNamespace(props.nom, NATURE_ACTE)}
-            label={getLibelle("Nature d'acte concerné")}
-            options={TypeNatureActe.getAllEnumsAsOptions()}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              onChangeTypeNatureActe(e);
-            }}
-          />
-          <SelectField
-            name={withNamespace(props.nom, DOCUMENT_DEMANDE)}
-            label={getLibelle("Document demandé")}
-            options={documentDemandeOptions}
-          />
+          {!props.formulaireReduit && (
+            <>
+              <SelectField
+                name={withNamespace(props.nom, NATURE_ACTE)}
+                label={getLibelle("Nature d'acte concerné")}
+                options={TypeNatureActe.getAllEnumsAsOptions()}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onChangeTypeNatureActe(e);
+                }}
+              />
+              <SelectField
+                name={withNamespace(props.nom, DOCUMENT_DEMANDE)}
+                label={getLibelle("Document demandé")}
+                options={documentDemandeOptions}
+              />
+            </>
+          )}
           <InputField
             name={withNamespace(props.nom, NB_EXEMPLAIRE)}
             label={getLibelle("Nombre d'exemplaires")}
@@ -137,6 +140,7 @@ const RequeteForm: React.FC<SubFormProps> = props => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onChangeMotif(e);
             }}
+            pasPremiereOptionVide={props.formulaireReduit}
           />
           {!complementMotifInactif && (
             <InputField

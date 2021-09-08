@@ -2,6 +2,7 @@ import React from "react";
 import { TypeRequerant } from "../../../../model/requete/v2/enum/TypeRequerant";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { Options } from "../../../common/util/Type";
+import AdresseForm from "../../../common/widget/formulaire/adresse/AdresseForm";
 import { SelectField } from "../../../common/widget/formulaire/champsSaisie/SelectField";
 import PiecesJointesForm from "../../../common/widget/formulaire/piecesJointes/PiecesJointesForm";
 import { SubFormProps } from "../../../common/widget/formulaire/utils/FormUtil";
@@ -13,7 +14,6 @@ import {
   PIECES_JOINTES,
   REQUERANT
 } from "../modelForm/ISaisirRDCSCPageModel";
-import AdresseForm from "../sousFormulaires/adresse/AdresseForm";
 import IdentiteForm, {
   IdentiteSubFormProps
 } from "../sousFormulaires/identite/IdentiteForm";

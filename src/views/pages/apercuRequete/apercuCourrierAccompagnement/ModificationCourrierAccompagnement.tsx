@@ -23,29 +23,31 @@ import { MotifDelivrance } from "../../../../model/requete/v2/enum/MotifDelivran
 import { Requerant } from "../../../../model/requete/v2/IRequerant";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { CarateresAutorise } from "../../../../ressources/Regex";
 import { Option, Options } from "../../../common/util/Type";
+import { getValeurOuVide } from "../../../common/util/Utils";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../common/widget/formulaire/FormulaireMessages";
 import { getLibelle } from "../../../common/widget/Text";
+import {
+  CODE_POSTAL,
+  COMMUNE,
+  COMPLEMENT_DESTINATAIRE,
+  COMPLEMENT_MOTIF,
+  COMPLEMENT_POINT_GEO,
+  LIEU_DIT,
+  MOTIF,
+  NB_EXEMPLAIRE,
+  PAYS,
+  VOIE
+} from "../../saisirRequete/modelForm/ISaisirRequetePageModel";
 import BoutonsCourrierAccompagnement, {
   BoutonsCourrierAccompagnementProps
 } from "./BoutonsCourrierAccompagnement";
-import { getFormCA } from "./CourrierAccompagnementForm";
+import { CourrierAccompagnementForm } from "./CourrierAccompagnementForm";
 import {
-  ADRESSE_CODEPOSTAL,
-  ADRESSE_LIGNE_2,
-  ADRESSE_LIGNE_3,
-  ADRESSE_LIGNE_4,
-  ADRESSE_LIGNE_5,
-  ADRESSE_PAYS,
-  ADRESSE_VILLE,
-  COMPLEMENT,
+  ADRESSE,
   COURRIER,
   DELIVRANCE,
   EN_TETE,
-  MOTIF,
-  NB_EXEMPLAIRE,
   REQUERANT,
   REQUERANT_LIGNE_1,
   REQUERANT_LIGNE_2,
@@ -63,36 +65,6 @@ const ValidationSchemaAccompagnement = Yup.object({
   [EN_TETE]: Yup.object().shape({
     [DELIVRANCE]: Yup.string(),
     [COURRIER]: Yup.string()
-  }),
-  [REQUERANT]: Yup.object().shape({
-    [ADRESSE_LIGNE_2]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [ADRESSE_LIGNE_3]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [ADRESSE_LIGNE_4]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [ADRESSE_LIGNE_5]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [ADRESSE_CODEPOSTAL]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [ADRESSE_VILLE]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    ),
-    [ADRESSE_PAYS]: Yup.string().matches(
-      CarateresAutorise,
-      CARATERES_AUTORISES_MESSAGE
-    )
   })
 });
 
@@ -131,7 +103,10 @@ export const ModificationCourrierAccompagnement: React.FC<ModificationCourrierAc
           onSubmit={onSubmit}
           className="FormulaireAccompagnement"
         >
-          <div>{getFormCA(optionsCourrier, props.requete)}</div>
+          <CourrierAccompagnementForm
+            optionsCourrier={optionsCourrier}
+            requete={props.requete}
+          />
           <BoutonsCourrierAccompagnement
             {...boutonsProps}
           ></BoutonsCourrierAccompagnement>
@@ -218,19 +193,21 @@ export const getDefaultValuesAccompagnement = (
     },
     [REQUERANT]: {
       [REQUERANT_LIGNE_1]: identiteRequerant.premiereLigne,
-      [REQUERANT_LIGNE_2]: identiteRequerant.deuxiemeLigne,
-      [ADRESSE_LIGNE_2]: requete.requerant.adresse?.ligne2,
-      [ADRESSE_LIGNE_3]: requete.requerant.adresse?.ligne3,
-      [ADRESSE_LIGNE_4]: requete.requerant.adresse?.ligne4,
-      [ADRESSE_LIGNE_5]: requete.requerant.adresse?.ligne5,
-      [ADRESSE_CODEPOSTAL]: requete.requerant.adresse?.codePostal,
-      [ADRESSE_VILLE]: requete.requerant.adresse?.ville,
-      [ADRESSE_PAYS]: requete.requerant.adresse?.pays
+      [REQUERANT_LIGNE_2]: identiteRequerant.deuxiemeLigne
+    },
+    [ADRESSE]: {
+      [VOIE]: requete.requerant.adresse?.ligne4,
+      [LIEU_DIT]: requete.requerant.adresse?.ligne5,
+      [COMPLEMENT_DESTINATAIRE]: requete.requerant.adresse?.ligne2,
+      [COMPLEMENT_POINT_GEO]: requete.requerant.adresse?.ligne3,
+      [CODE_POSTAL]: requete.requerant.adresse?.codePostal,
+      [COMMUNE]: requete.requerant.adresse?.ville,
+      [PAYS]: requete.requerant.adresse?.pays
     },
     [REQUETE]: {
       [MOTIF]: requete.motif ? MotifDelivrance.getKey(requete.motif) : "",
-      [COMPLEMENT]: requete.complementMotif,
-      [NB_EXEMPLAIRE]: requete.nbExemplaireImpression
+      [COMPLEMENT_MOTIF]: getValeurOuVide(requete.complementMotif),
+      [NB_EXEMPLAIRE]: getValeurOuVide(requete.nbExemplaireImpression)
     }
   };
 };

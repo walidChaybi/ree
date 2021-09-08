@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeNatureActe } from "../../../../../model/requete/v2/enum/TypeNatureActe";
@@ -26,9 +26,15 @@ import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDeliv
 import { IActionProps } from "./ChoixAction";
 import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 
+const INDEX_ACTION_CERTIFICAT_SITUATION = 0;
+const INDEX_ACTION_COPIE_INTEGRALE = 1;
+const INDEX_ACTION_EXTRAIT_AVEC_FILIATION = 2;
+const INDEX_ACTION_EXTRAIT_SANS_FILIATION = 3;
+const INDEX_ACTION_EXTRAIT_PLURILINGUE = 4;
+const INDEX_ACTION_COPIE_ARCHIVE = 5;
+
 export const MenuDelivrer: React.FC<IActionProps> = props => {
   const history = useHistory();
-
   const refDelivrerOptions0 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -36,13 +42,6 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[]>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
-
-  const INDEX_ACTION_CERTIFICAT_SITUATION = 0;
-  const INDEX_ACTION_COPIE_INTEGRALE = 1;
-  const INDEX_ACTION_EXTRAIT_AVEC_FILIATION = 2;
-  const INDEX_ACTION_EXTRAIT_SANS_FILIATION = 3;
-  const INDEX_ACTION_EXTRAIT_PLURILINGUE = 4;
-  const INDEX_ACTION_COPIE_ARCHIVE = 5;
 
   const boutonOK: IBoutonPopin[] = [
     {
@@ -52,15 +51,11 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
       }
     }
   ];
-
   const boutonsOuiNon: IBoutonPopin[] = [
     {
       label: getLibelle("Oui"),
       action: () => {
-        const url = receUrl.getUrlApercuTraitementAPartirDe(
-          history.location.pathname
-        );
-        receUrl.replaceUrl(history, url);
+        setMessagesBloquant([]);
       }
     },
     {
@@ -118,63 +113,84 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     actes
   );
 
-  const controleCoherenceDocument = async (indexMenu: number) => {
+  const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = (
+    indexMenu: number,
+    listeActes: any[] | undefined,
+    listeInscriptions: any[] | undefined
+  ) => {
     const requeteDelivrance = props.requete as IRequeteDelivrance;
     const sousType = requeteDelivrance?.sousType?.nom;
-    const listeActes = supprimerNullEtUndefinedDuTableau(props.actes);
-    const listeInscriptions = supprimerNullEtUndefinedDuTableau(
-      props.inscriptions
-    );
+    let message: string[] = [];
     if (
       sousType === SousTypeDelivrance.RDC.nom ||
       sousType === SousTypeDelivrance.RDD.nom
     ) {
-      if (listeActes?.length === 1 && listeInscriptions?.length === 0) {
+      if (unActeEtUnSeulSelectionne(listeActes, listeInscriptions)) {
         if (
-          (indexMenu === INDEX_ACTION_EXTRAIT_AVEC_FILIATION ||
-            indexMenu === INDEX_ACTION_EXTRAIT_SANS_FILIATION) &&
+          estChoixExtraitAvecOuSansFiliation(indexMenu) &&
           listeActes?.[0]?.nature === TypeNatureActe.DECES.libelle
         ) {
-          setMessagesBloquant([
+          message = [
             getLibelle(
               "Pas de délivrance d'extrait avec ou sans filiation pour un acte de décès."
             )
-          ]);
+          ];
           setBoutonsPopin(boutonOK);
         } else if (
           listeActes?.[0]?.nature !==
           requeteDelivrance?.evenement?.natureActe?.libelle
         ) {
-          setMessagesBloquant([
+          message = [
             getLibelle(
               "La nature de l'acte sélectionné ne correspond pas à la nature de l'acte demandé. Voulez-vous continuer ?"
             )
-          ]);
+          ];
           setBoutonsPopin(boutonsOuiNon);
         }
       } else {
-        setMessagesBloquant([
+        message = [
           getLibelle("Veuillez sélectionner un et un seul acte à délivrer.")
-        ]);
+        ];
         setBoutonsPopin(boutonOK);
       }
     }
+    setMessagesBloquant(message);
   };
 
   const handleDelivrerMenu = async (indexMenu: number) => {
-    if (indexMenu === INDEX_ACTION_CERTIFICAT_SITUATION) {
-      setInscriptions(
-        props.inscriptions
-          ? supprimerNullEtUndefinedDuTableau(props.inscriptions)
-          : []
-      );
-      setActes(
-        props.actes ? supprimerNullEtUndefinedDuTableau(props.actes) : []
-      );
-      setOperationEnCours(true);
-    } else {
-      controleCoherenceDocument(indexMenu);
+    switch (indexMenu) {
+      case INDEX_ACTION_CERTIFICAT_SITUATION:
+        setOperationEnCours(true);
+        setInscriptions(
+          props.inscriptions
+            ? supprimerNullEtUndefinedDuTableau(props.inscriptions)
+            : []
+        );
+        setActes(
+          props.actes ? supprimerNullEtUndefinedDuTableau(props.actes) : []
+        );
+        redirection();
+        break;
+      case INDEX_ACTION_EXTRAIT_AVEC_FILIATION:
+      case INDEX_ACTION_EXTRAIT_SANS_FILIATION:
+      case INDEX_ACTION_COPIE_INTEGRALE:
+      case INDEX_ACTION_EXTRAIT_PLURILINGUE:
+      case INDEX_ACTION_COPIE_ARCHIVE:
+        const listeActes = supprimerNullEtUndefinedDuTableau(props.actes);
+        const listeInscriptions = supprimerNullEtUndefinedDuTableau(
+          props.inscriptions
+        );
+        controleCoherenceEntreDocumentSelectionneEtActionDelivrer(
+          indexMenu,
+          listeActes,
+          listeInscriptions
+        );
+        // La redirection (cf. useEffect) s'effectue uniquement s'il n'y a pas de message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionDelivrer'
+        break;
     }
+  };
+
+  const redirection = useCallback(() => {
     if (
       (props.requete as IRequeteDelivrance).sousType === SousTypeDelivrance.RDC
     ) {
@@ -183,15 +199,24 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
           history.location.pathname
         )}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/${props.requete.id}`
       );
-    }
-  };
-
-  useEffect(() => {
-    if (resultDeliverCertificatSituation) {
+    } else {
       const url = receUrl.getUrlApercuTraitementAPartirDe(
         history.location.pathname
       );
-      receUrl.replaceUrl(history, url, props.dataHistory);
+      receUrl.replaceUrl(history, url);
+    }
+  }, [history, props.requete]);
+
+  useEffect(() => {
+    if (messagesBloquant && messagesBloquant.length === 0) {
+      // Le contrôle de cohérence a eu lieu et pas de message bloquant
+      redirection();
+    }
+  }, [messagesBloquant, redirection]);
+
+  useEffect(() => {
+    if (resultDeliverCertificatSituation) {
+      redirection();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultDeliverCertificatSituation, history]);
@@ -210,13 +235,31 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
         )}
         onSelect={handleDelivrerMenu}
       />
-      {messagesBloquant && (
+      {nonVide(messagesBloquant) && (
         <ConfirmationPopin
           isOpen={true}
+          // @ts-ignore messagesBloquant est forcément !== undefined
           messages={messagesBloquant}
           boutons={boutonsPopin}
         />
       )}
     </>
   );
+
+  function unActeEtUnSeulSelectionne(
+    listeActes?: any[],
+    listeInscriptions?: any[]
+  ) {
+    return listeActes?.length === 1 && listeInscriptions?.length === 0;
+  }
 };
+function estChoixExtraitAvecOuSansFiliation(indexMenu: number) {
+  return (
+    indexMenu === INDEX_ACTION_EXTRAIT_AVEC_FILIATION ||
+    indexMenu === INDEX_ACTION_EXTRAIT_SANS_FILIATION
+  );
+}
+
+function nonVide(messages?: string[]) {
+  return messages !== undefined && messages.length > 0;
+}

@@ -7,12 +7,12 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
-import { REQUETE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCPageModel";
 import RequeteForm, {
   RequeteFormDefaultValues,
   RequeteFormValidationSchema
-} from "../../../../../views/pages/saisirRequete/sousFormulaires/requete/RequeteForm";
+} from "../../../../../views/common/widget/formulaire/requete/RequeteForm";
+import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
+import { REQUETE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCPageModel";
 
 const HookRequeteForm: React.FC = () => {
   const [result, setResult] = useState("");

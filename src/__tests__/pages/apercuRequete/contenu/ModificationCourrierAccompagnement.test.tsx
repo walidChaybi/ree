@@ -20,16 +20,18 @@ test("getDefaultValuesAccompagnement", () => {
     },
     requerant: {
       requerantLigne1: "DUBOIS Léonard",
-      requerantLigne2: "",
-      adresseLigne2: "Appartement 258",
-      adresseLigne3: "Batiment Z",
-      adresseLigne4: "61 avenue Foch",
-      adresseLigne5: "lieu dit la martinière",
-      adresseCodePostal: "310 GL24",
-      adresseVille: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      adressePays: "France"
+      requerantLigne2: ""
     },
-    requete: { motif: "MARIAGE_PACS", complement: "", nbExemplaire: 2 }
+    adresse: {
+      codePostal: "310 GL24",
+      commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+      complementDestinataire: "Appartement 258",
+      complementPointGeo: "Batiment Z",
+      lieuDit: "lieu dit la martinière",
+      pays: "France",
+      voie: "61 avenue Foch"
+    },
+    requete: { motif: "MARIAGE_PACS", complementMotif: "", nbExemplaire: 2 }
   });
 
   expect(
@@ -44,16 +46,18 @@ test("getDefaultValuesAccompagnement", () => {
     },
     requerant: {
       requerantLigne1: "Ambassade du Rwanda",
-      requerantLigne2: "DUBOIS Léonard",
-      adresseLigne2: "Appartement 258",
-      adresseLigne3: "Batiment Z",
-      adresseLigne4: "61 avenue Foch",
-      adresseLigne5: "lieu dit la martinière",
-      adresseCodePostal: "310 GL24",
-      adresseVille: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      adressePays: "Rwanda"
+      requerantLigne2: "DUBOIS Léonard"
     },
-    requete: { motif: "MARIAGE_PACS", complement: "", nbExemplaire: 2 }
+    adresse: {
+      codePostal: "310 GL24",
+      commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+      complementDestinataire: "Appartement 258",
+      complementPointGeo: "Batiment Z",
+      lieuDit: "lieu dit la martinière",
+      pays: "Rwanda",
+      voie: "61 avenue Foch"
+    },
+    requete: { motif: "MARIAGE_PACS", complementMotif: "", nbExemplaire: 2 }
   });
 });
 
@@ -71,7 +75,6 @@ test("getOptionscourrier", () => {
   ]);
   let requete3 = requeteDelivrance;
   requete3.choixDelivrance = ChoixDelivrance.REP_SANS_DEL_EC_DIVERS;
-  console.log(getOptionsCourrier(requete3, undefined));
   expect(getOptionsCourrier(requete3, undefined)).toStrictEqual([
     { value: "", str: "Divers (17)" }
   ]);

@@ -36,6 +36,7 @@ import {
   URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
   URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
   URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2,
+  URL_MES_REQUETES_EXTRAIT_COPIE_COURRIER,
   URL_MES_REQUETES_ID,
   URL_MES_REQUETES_SAISIR_RDAPC,
   URL_MES_REQUETES_SAISIR_RDC,
@@ -72,6 +73,7 @@ import {
   URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_ID_V2,
+  URL_REQUETES_SERVICE_EXTRAIT_COPIE_COURRIER,
   URL_REQUETES_SERVICE_ID,
   URL_REQUETES_SERVICE_SAISIR_RDAPC,
   URL_REQUETES_SERVICE_SAISIR_RDC,
@@ -98,6 +100,8 @@ const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête V2";
 const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
 const LIBELLE_DETAIL_REQUETE = "Détail de la requête";
+const LIBELLE_CREATION_ACCOMPAGNEMENT =
+  "Création d'un courrier d'accompagnement";
 
 export const routesRece: IRoute[] = [
   {
@@ -339,7 +343,14 @@ export const routesRece: IRoute[] = [
     component: ApercuCourrierAccompagnement,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Création d'un courrier d'accompagnement")
+    libelle: getLibelle(LIBELLE_CREATION_ACCOMPAGNEMENT)
+  },
+  {
+    url: URL_MES_REQUETES_EXTRAIT_COPIE_COURRIER,
+    component: ApercuCourrierAccompagnement,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_CREATION_ACCOMPAGNEMENT)
   },
   {
     url: URL_MES_REQUETES_APERCU_TRAITEMENT_COURRIER,
@@ -529,7 +540,14 @@ export const routesRece: IRoute[] = [
     component: ApercuCourrierAccompagnement,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Création d'un courrier d'accompagnement")
+    libelle: getLibelle(LIBELLE_CREATION_ACCOMPAGNEMENT)
+  },
+  {
+    url: URL_REQUETES_SERVICE_EXTRAIT_COPIE_COURRIER,
+    component: ApercuCourrierAccompagnement,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_CREATION_ACCOMPAGNEMENT)
   },
   {
     url: URL_REQUETES_SERVICE_APERCU_TRAITEMENT_COURRIER,

@@ -15,7 +15,15 @@ import {
 import messageManager from "../../common/util/messageManager";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
+import {
+  AdresseFormDefaultValues,
+  AdresseFormValidationSchema
+} from "../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../common/widget/formulaire/Formulaire";
+import {
+  RequeteFormDefaultValues,
+  RequeteFormValidationSchema
+} from "../../common/widget/formulaire/requete/RequeteForm";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../common/widget/Text";
 import SaisirRequeteBoutons, {
@@ -52,10 +60,6 @@ import {
 } from "./modelForm/ISaisirRDCPageModel";
 import "./scss/SaisirRequetePage.scss";
 import {
-  AdresseFormDefaultValues,
-  AdresseFormValidationSchema
-} from "./sousFormulaires/adresse/AdresseForm";
-import {
   EvenementFormDefaultValues,
   EvenementFormValidationSchema
 } from "./sousFormulaires/evenement/EvenementForm";
@@ -75,10 +79,6 @@ import {
   RequerantFormValidationSchema,
   TitulairesFormDefaultValues
 } from "./sousFormulaires/requerant/RequerantForm";
-import {
-  RequeteFormDefaultValues,
-  RequeteFormValidationSchema
-} from "./sousFormulaires/requete/RequeteForm";
 
 // Valeurs par défaut des champs
 const DefaultValuesRDCRequete = {
@@ -112,9 +112,8 @@ export const SaisirRDCPage: React.FC = () => {
   const [evenementVisible, setEvenementVisible] = useState<boolean>(false);
   const [titulaire2Visible, setTitulaire2Visible] = useState<boolean>(false);
   const [mandantVisible, setMandantVisible] = useState<boolean>(false);
-  const [lienTitulaireVisible, setLienTitulaireVisible] = useState<boolean>(
-    true
-  );
+  const [lienTitulaireVisible, setLienTitulaireVisible] =
+    useState<boolean>(true);
 
   const [optionsRequerant, setOptionsRequerant] = useState<Options>(
     TypeRequerantRDC.getListEnumsAsOptions(UN_TITULAIRE)
@@ -124,16 +123,13 @@ export const SaisirRDCPage: React.FC = () => {
     TypeLienRequerant.getListEnumsAsOptions(TYPE_LIEN_REQUERANT_POUR_TITULAIRE)
   );
 
-  const [donneesIncompletes, setDonneesIncompletes] = React.useState<boolean>(
-    false
-  );
+  const [donneesIncompletes, setDonneesIncompletes] =
+    React.useState<boolean>(false);
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [saisieRequeteRDC, setSaisieRequeteRDC] = useState<SaisieRequeteRDC>();
-  const [
-    creationRequeteRDC,
-    setCreationRequeteRDC
-  ] = useState<CreationRequeteRDC>();
+  const [creationRequeteRDC, setCreationRequeteRDC] =
+    useState<CreationRequeteRDC>();
 
   const onChangeNature = (nature: string) => {
     setEvenementVisible(
@@ -197,9 +193,8 @@ export const SaisirRDCPage: React.FC = () => {
     getAdresseForm()
   ];
 
-  const creationRequeteDelivranceRDCResultat = useCreationRequeteDelivranceRDC(
-    creationRequeteRDC
-  );
+  const creationRequeteDelivranceRDCResultat =
+    useCreationRequeteDelivranceRDC(creationRequeteRDC);
 
   const redirectionPage = useCallback(
     async (idRequeteSauvegardee: string) => {

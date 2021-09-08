@@ -1,7 +1,13 @@
+import {
+  Adresse,
+  Requete
+} from "../../../saisirRequete/modelForm/ISaisirRequetePageModel";
+
 export const EN_TETE = "enTete";
 export const OPTIONS = "options";
 export const TEXTE_LIBRE = "texteLibre";
 export const REQUERANT = "requerant";
+export const ADRESSE = "adresse";
 export const REQUETE = "requete";
 
 export const DELIVRANCE = "delivrance";
@@ -18,23 +24,12 @@ export const TEXTE = "texte";
 export const REQUERANT_LIGNE_1 = "requerantLigne1";
 export const REQUERANT_LIGNE_2 = "requerantLigne2";
 
-export const ADRESSE_LIGNE_2 = "adresseLigne2";
-export const ADRESSE_LIGNE_3 = "adresseLigne3";
-export const ADRESSE_LIGNE_4 = "adresseLigne4";
-export const ADRESSE_LIGNE_5 = "adresseLigne5";
-export const ADRESSE_CODEPOSTAL = "adresseCodePostal";
-export const ADRESSE_VILLE = "adresseVille";
-export const ADRESSE_PAYS = "adressePays";
-
-export const MOTIF = "motif";
-export const COMPLEMENT = "complement";
-export const NB_EXEMPLAIRE = "nbExemplaire";
-
 export interface SaisieAccompagnement {
   [EN_TETE]: EnTete;
   [OPTIONS]: Option[];
   [TEXTE_LIBRE]: TexteLibre;
   [REQUERANT]: Requerant;
+  [ADRESSE]: Adresse;
   [REQUETE]: Requete;
 }
 
@@ -58,17 +53,4 @@ export interface TexteLibre {
 export interface Requerant {
   [REQUERANT_LIGNE_1]: string;
   [REQUERANT_LIGNE_2]: string;
-  [ADRESSE_LIGNE_2]: string;
-  [ADRESSE_LIGNE_3]: string;
-  [ADRESSE_LIGNE_4]: string;
-  [ADRESSE_LIGNE_5]: string;
-  [ADRESSE_CODEPOSTAL]: string;
-  [ADRESSE_VILLE]: string;
-  [ADRESSE_PAYS]: string;
-}
-
-export interface Requete {
-  [MOTIF]: string;
-  [COMPLEMENT]: string;
-  [NB_EXEMPLAIRE]: string;
 }
