@@ -38,12 +38,6 @@ export const columnsTableauRequete = [
     style: { width: "100px" }
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRequete.IdSagaDila],
-    title: "N° Saga/Dila",
-    align: "center",
-    style: { width: "100px" }
-  }),
-  new TableauTypeColumn({
     keys: [HeaderTableauRequete.Type],
     title: "Type",
     align: "center"

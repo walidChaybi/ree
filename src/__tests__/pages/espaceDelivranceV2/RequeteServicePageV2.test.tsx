@@ -24,7 +24,7 @@ test("renders Page requete interactions works, no errors returned", async () => 
   const pageSuivante = screen.getByTitle("Page suivante");
 
   await waitFor(() => {
-    const numero = screen.getByText("999");
+    const numero = screen.getByText("1234");
     expect(titreNumero).toBeDefined();
     expect(numero).toBeDefined();
   });
@@ -34,7 +34,7 @@ test("renders Page requete interactions works, no errors returned", async () => 
   });
 
   await waitFor(() => {
-    const numero = screen.getByText("118");
+    const numero = screen.getByText("9021");
     expect(numero).toBeDefined();
     // Clic sur une ligne
     fireEvent.click(numero);

@@ -13,7 +13,7 @@ export const StatutsRequetesEspaceDelivrance = [
 ];
 
 export enum HeaderTableauRequete {
-  IdSagaDila = "idSagaDila",
+  Numero = "numero",
   SousType = "sousType",
   Provenance = "provenance",
   Canal = "canal",
@@ -34,7 +34,7 @@ const style = {
 
 export const requeteColumnHeaders = [
   new TableauTypeColumn({
-    keys: [HeaderTableauRequete.IdSagaDila],
+    keys: [HeaderTableauRequete.Numero],
     title: getLibelle("N°"),
     align: "center",
     style
