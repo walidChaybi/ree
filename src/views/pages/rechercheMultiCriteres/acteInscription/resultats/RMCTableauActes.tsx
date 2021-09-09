@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { DESCRIPTION_SAGA } from "../../../../../model/etatcivil/enum/TypeAlerte";
 import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
 import { IAlerte } from "../../../../../model/etatcivil/fiche/IAlerte";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
+import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { getValeurOuVide } from "../../../../common/util/Utils";
@@ -15,7 +17,9 @@ import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
 
 export interface RMCResultatActeProps {
   typeRMC: TypeRMC;
+  dataRequete?: TRequete;
   dataAlertes?: IAlerte[];
+  ajoutAlertePossible?: boolean;
   dataRMCActe: IResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
   setRangeActe?: (range: string) => void;
@@ -29,7 +33,9 @@ export interface RMCResultatActeProps {
 
 export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   typeRMC,
+  dataRequete,
   dataAlertes,
+  ajoutAlertePossible = false,
   dataRMCActe,
   dataTableauRMCActe,
   setRangeActe,
@@ -150,6 +156,11 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
                   datasFiches={datasFiches}
                   index={index}
                   onClose={closeFenetre}
+                  provenanceRequete={
+                    (dataRequete as IRequeteDelivrance)?.provenanceRequete
+                      ?.provenance?.libelle
+                  }
+                  ajoutAlertePossible={ajoutAlertePossible}
                 />
               )
             );

@@ -1,0 +1,40 @@
+import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
+import React from "react";
+import { getLibelle } from "../../../Text";
+
+export interface PopinSupprimerAlerteProps {
+  open: boolean;
+  onClosePopin: () => void;
+  onSubmit: () => void;
+}
+
+export const PopinSupprimerAlerte: React.FC<PopinSupprimerAlerteProps> = ({
+  open,
+  onClosePopin,
+  onSubmit
+}) => {
+  const onCancelClick = (): void => {
+    onClosePopin();
+  };
+
+  return (
+    <Dialog
+      disablePortal={true}
+      open={open}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogContent>
+        {getLibelle("Etes-vous sur de vouloir supprimer cette alerte ?")}
+      </DialogContent>
+      <DialogActions>
+        <button type="button" onClick={onCancelClick}>
+          {getLibelle("Annuler")}
+        </button>
+        <button type="button" onClick={onSubmit}>
+          {getLibelle("Valider")}
+        </button>
+      </DialogActions>
+    </Dialog>
+  );
+};

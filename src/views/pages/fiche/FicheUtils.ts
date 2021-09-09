@@ -1,6 +1,8 @@
 import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
 import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
+import { IAlerte } from "../../../model/etatcivil/fiche/IAlerte";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
+import { mapAlertesActe } from "../../common/hook/v2/alertes/MappingAlertesActe";
 import { formatNom, jointAvec } from "../../common/util/Utils";
 import { SectionPanelProps } from "../../common/widget/section/SectionPanel";
 import { setDataBandeau } from "./contenu/BandeauFicheUtils";
@@ -30,10 +32,12 @@ export function getFicheTitle(
 export interface IAccordionReceSection {
   panels: SectionPanelProps[];
 }
+
 export interface IFiche {
   bandeauFiche: IBandeauFiche;
-  ajouterAlerte: boolean;
   panelsFiche: IAccordionReceSection;
+  alertes: IAlerte[];
+  visuAlertes: boolean;
 }
 
 export function setFiche(dataFiche: IDataFicheProps, data: any): IFiche {
@@ -58,15 +62,17 @@ export function setFiche(dataFiche: IDataFicheProps, data: any): IFiche {
       case TypeFiche.ACTE:
         const ficheActe = data as IFicheActe;
         fiche.panelsFiche = getPanelsActe(ficheActe);
-        fiche.ajouterAlerte = getParamsAffichageFicheActe(
+        fiche.alertes = mapAlertesActe(data?.alerteActes);
+        fiche.visuAlertes = getParamsAffichageFicheActe(
           ficheActe.registre.type.id,
           ficheActe.visibiliteArchiviste
-        ).ajouterAlerte;
+        ).visuAlertes;
         break;
 
       default:
         break;
     }
   }
+
   return fiche;
 }

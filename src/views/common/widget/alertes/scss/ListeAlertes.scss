@@ -15,4 +15,11 @@
   .CodeCouleurAlerteNoir {
     color: $code-couleur-alertes-noir;
   }
+
+  .IconeBoutonSupprimerAlerte {
+    padding-left: 1em;
+    font-size: 1em;
+    color: $application-color;
+    cursor: pointer;
+  }
 }

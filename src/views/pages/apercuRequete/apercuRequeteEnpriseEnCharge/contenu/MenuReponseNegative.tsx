@@ -167,24 +167,22 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
         )}
         onSelect={handleReponseNegativeMenu}
       />
-      {hasMessageBloquant === true && (
-        <ConfirmationPopin
-          isOpen={true}
-          messages={[
-            getLibelle(
-              "Votre sélection n'est pas cohérente avec le choix de l'action de réponse négative."
-            )
-          ]}
-          boutons={[
-            {
-              label: getLibelle("OK"),
-              action: () => {
-                setHasMessageBloquant(false);
-              }
+      <ConfirmationPopin
+        isOpen={hasMessageBloquant}
+        messages={[
+          getLibelle(
+            "Votre sélection n'est pas cohérente avec le choix de l'action de réponse négative."
+          )
+        ]}
+        boutons={[
+          {
+            label: getLibelle("OK"),
+            action: () => {
+              setHasMessageBloquant(false);
             }
-          ]}
-        />
-      )}
+          }
+        ]}
+      />
     </>
   );
 };

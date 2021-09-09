@@ -30,7 +30,6 @@ export type NomComposant =
   | "BoutonAccueilEspaceDelivranceV2"
   | "BoutonAccueilRechercheActe"
   | "BoutonAccueilTableau"
-  | "AlerteActe"
   | "MenuSaisirRequete"
   | "TabPanelMesRequetes"
   | "BoutonPrendreEnChargeAleatoirement";
@@ -127,10 +126,6 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     nomComposant: "BoutonAccueilTableau",
     tousLesDroits: etape2([]),
     comportementSiNonAutorise: { disabled: true }
-  },
-  {
-    nomComposant: "AlerteActe",
-    visiblePourLesDroits: droitsSaufConsulterArchives
   },
   {
     nomComposant: "MenuSaisirRequete",

@@ -8,6 +8,7 @@ import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCAct
 
 export interface RMCAutoResultatsProps {
   dataAlertes: IAlerte[];
+  ajoutAlertePossible: boolean;
   dataRequete: TRequete;
   dataRMCAutoActe: IResultatRMCActe[];
   dataTableauRMCAutoActe: IParamsTableau;
@@ -28,28 +29,42 @@ export interface RMCAutoResultatsProps {
   setRangeInscription?: (range: string) => void;
 }
 
-export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = props => {
+export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = ({
+  dataAlertes,
+  ajoutAlertePossible,
+  dataRequete,
+  dataRMCAutoActe,
+  dataTableauRMCAutoActe,
+  dataRMCAutoInscription,
+  dataTableauRMCAutoInscription,
+  onClickCheckboxTableauActes,
+  onClickCheckboxTableauInscriptions,
+  resetRMC,
+  setRangeInscription,
+  setRangeActe
+}) => {
   return (
     <>
-      {props.dataRMCAutoActe &&
-        props.dataTableauRMCAutoActe &&
-        props.dataRMCAutoInscription &&
-        props.dataTableauRMCAutoInscription && (
+      {dataRMCAutoActe &&
+        dataTableauRMCAutoActe &&
+        dataRMCAutoInscription &&
+        dataTableauRMCAutoInscription && (
           <RMCActeInscriptionResultats
             typeRMC="Auto"
-            dataAlertes={props.dataAlertes}
-            dataRequete={props.dataRequete}
-            dataRMCActe={props.dataRMCAutoActe}
-            dataTableauRMCActe={props.dataTableauRMCAutoActe}
-            dataRMCInscription={props.dataRMCAutoInscription}
-            dataTableauRMCInscription={props.dataTableauRMCAutoInscription}
-            onClickCheckboxTableauActes={props.onClickCheckboxTableauActes}
+            dataAlertes={dataAlertes}
+            ajoutAlertePossible={ajoutAlertePossible}
+            dataRequete={dataRequete}
+            dataRMCActe={dataRMCAutoActe}
+            dataTableauRMCActe={dataTableauRMCAutoActe}
+            dataRMCInscription={dataRMCAutoInscription}
+            dataTableauRMCInscription={dataTableauRMCAutoInscription}
+            onClickCheckboxTableauActes={onClickCheckboxTableauActes}
             onClickCheckboxTableauInscriptions={
-              props.onClickCheckboxTableauInscriptions
+              onClickCheckboxTableauInscriptions
             }
-            resetRMC={props.resetRMC}
-            setRangeInscription={props.setRangeInscription}
-            setRangeActe={props.setRangeActe}
+            resetRMC={resetRMC}
+            setRangeInscription={setRangeInscription}
+            setRangeActe={setRangeActe}
           />
         )}
     </>

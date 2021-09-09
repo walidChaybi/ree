@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
+import {
+  AddAlerteActeApiHookParameters,
+  useAddAlerteActeApiHook
+} from "../../common/hook/v2/alertes/AddAlerteActeHookApi";
+import {
+  DeleteAlerteActeApiHookParameters,
+  useDeleteAlerteActeApiHook
+} from "../../common/hook/v2/alertes/DeleteAlerteActeHookApi";
 import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
 import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
+import { IAjouterAlerteFormValue } from "../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
+import { SectionPanelProps } from "../../common/widget/section/SectionPanel";
+import { SectionPanelAreaProps } from "../../common/widget/section/SectionPanelArea";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
@@ -15,8 +26,10 @@ export interface FichePageProps {
   dataFicheIdentifiant: string;
   dataFicheCategorie: TypeFiche;
   datasFiches?: IDataFicheProps[];
-  index?: number;
+  index: number;
   fenetreExterneUtil?: FenetreExterneUtil;
+  provenanceRequete?: string;
+  ajoutAlertePossible?: boolean;
 }
 
 export interface IDataFicheProps {
@@ -24,23 +37,34 @@ export interface IDataFicheProps {
   categorie: TypeFiche;
 }
 
-export const FichePage: React.FC<FichePageProps> = props => {
+export const FichePage: React.FC<FichePageProps> = ({
+  dataFicheIdentifiant,
+  dataFicheCategorie,
+  datasFiches,
+  index,
+  fenetreExterneUtil,
+  provenanceRequete = "",
+  ajoutAlertePossible = false
+}) => {
+  const [
+    actualisationInfosFiche,
+    setActualisationInfosFiche
+  ] = useState<boolean>(false);
   const [dataFicheCourante, setDataFicheCourante] = useState<IDataFicheProps>({
-    identifiant: props.dataFicheIdentifiant,
-    categorie: props.dataFicheCategorie
+    identifiant: dataFicheIdentifiant,
+    categorie: dataFicheCategorie
   });
 
-  const [indexCourant, setIndexCourant] = useState<number>(
-    props.index != null ? props.index : 0
-  );
+  const [indexCourant, setIndexCourant] = useState<number>(index);
 
   const { dataFicheState } = useFichePageApiHook(
     dataFicheCourante.categorie,
     dataFicheCourante.identifiant,
-    indexCourant
+    indexCourant,
+    actualisationInfosFiche
   );
 
-  const { bandeauFiche, ajouterAlerte, panelsFiche } = setFiche(
+  const { bandeauFiche, panelsFiche, alertes, visuAlertes } = setFiche(
     dataFicheCourante,
     dataFicheState.data
   );
@@ -55,61 +79,116 @@ export const FichePage: React.FC<FichePageProps> = props => {
         const event = new CustomEvent("refreshStyles");
         window.top.dispatchEvent(event);
       }
-      if (props.fenetreExterneUtil && bandeauFiche) {
-        props.fenetreExterneUtil.ref.document.title = bandeauFiche.titreFenetre;
+      if (fenetreExterneUtil && bandeauFiche) {
+        fenetreExterneUtil.ref.document.title = bandeauFiche.titreFenetre;
       }
     }
   }, [
     dataFicheState.data,
-    props.fenetreExterneUtil,
+    fenetreExterneUtil,
     bandeauFiche,
     dataFicheCourante
   ]);
 
-  function setIndexFiche(index: number) {
-    if (props.datasFiches && index >= 0 && index < props.datasFiches.length) {
-      setDataFicheCourante(props.datasFiches[index]);
-      setIndexCourant(index);
+  function setIndexFiche(idx: number) {
+    if (datasFiches && idx >= 0 && idx < datasFiches.length) {
+      setDataFicheCourante(datasFiches[idx]);
+      setIndexCourant(idx);
     }
   }
 
+  /* Ajout d'une alerte */
+  const [
+    ajouterAlerteActeApiHookParameters,
+    setAjouterAlerteActeApiHookParameters
+  ] = useState<AddAlerteActeApiHookParameters>();
+
+  const ajouterAlerteCallBack = useCallback(
+    (value: IAjouterAlerteFormValue) => {
+      setAjouterAlerteActeApiHookParameters({
+        idActe: dataFicheState?.data?.id,
+        idTypeAlerte: value?.idTypeAlerte,
+        complementDescription: value?.complementDescription,
+        provenanceRequete
+      });
+    },
+    [dataFicheState, provenanceRequete]
+  );
+
+  const alerte = useAddAlerteActeApiHook(ajouterAlerteActeApiHookParameters);
+  useEffect(() => {
+    if (alerte) {
+      setActualisationInfosFiche(!actualisationInfosFiche);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alerte]);
+
+  /* Suppression d'une alerte */
+  const [
+    deleteAlerteActeApiHookParameters,
+    setDeleteAlerteActeApiHookParameters
+  ] = useState<DeleteAlerteActeApiHookParameters>();
+
+  const supprimerAlerteCallBack = useCallback(
+    (idAlerteActe: string, idActe: string) => {
+      setDeleteAlerteActeApiHookParameters({
+        idAlerteActe,
+        idActe,
+        provenanceRequete
+      });
+    },
+    [provenanceRequete]
+  );
+
+  const resultatSuppressionAlerte = useDeleteAlerteActeApiHook(
+    deleteAlerteActeApiHookParameters
+  );
+  useEffect(() => {
+    if (resultatSuppressionAlerte) {
+      setActualisationInfosFiche(!actualisationInfosFiche);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatSuppressionAlerte]);
+
   return (
-    <div>
-      {/* Le Bandeau */}
-      {bandeauFiche && (
-        <BandeauFiche
-          dataBandeau={bandeauFiche}
-          elementNumeroLigne={getElementNumeroLigne(
-            bandeauFiche,
-            props.dataFicheCategorie
-          )}
-        />
-      )}
-      <BarreNavigationSuivPrec
-        index={indexCourant}
-        max={props.datasFiches ? props.datasFiches.length : 0}
-        setIndex={setIndexFiche}
-      />
-      {/* Le bandeau d'ajout d'alerte pour les actes */}
-      {dataFicheState && ajouterAlerte !== undefined && (
-        <BandeauAlertesActe
-          dataFiche={dataFicheState}
-          ajouterAlerte={ajouterAlerte}
-        />
-      )}
-      {/* Les Accordéons */}
-      {panelsFiche &&
-        panelsFiche.panels.map((panel, index) => (
-          <AccordionRece
-            key={`accordion-rece-${index}`}
-            panel={panel}
-            index={index}
-            expanded={index === 0}
-            titre={panel.title}
-            disabled={panel?.panelAreas.every(pa => !pa.value && !pa.parts)}
+    <>
+      {bandeauFiche && panelsFiche && dataFicheState && (
+        <>
+          <BandeauFiche
+            dataBandeau={bandeauFiche}
+            elementNumeroLigne={getElementNumeroLigne(
+              bandeauFiche,
+              dataFicheCategorie
+            )}
           />
-        ))}
-    </div>
+          <BarreNavigationSuivPrec
+            index={indexCourant}
+            max={datasFiches ? datasFiches.length : 0}
+            setIndex={setIndexFiche}
+          />
+          {visuAlertes === true && (
+            <BandeauAlertesActe
+              alertes={alertes}
+              ajoutAlertePossible={ajoutAlertePossible}
+              ajouterAlerteCallBack={ajouterAlerteCallBack}
+              supprimerAlerteCallBack={supprimerAlerteCallBack}
+            />
+          )}
+          {panelsFiche?.panels?.map((panel: SectionPanelProps, idx: number) => (
+            <AccordionRece
+              key={`accordion-rece-${idx}`}
+              panel={panel}
+              index={idx}
+              expanded={idx === 0}
+              titre={panel?.title}
+              disabled={panel?.panelAreas.every(
+                (pa: SectionPanelAreaProps) => !pa.value && !pa.parts
+              )}
+            />
+          ))}
+        </>
+      )}
+    </>
   );
 };
 

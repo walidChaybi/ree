@@ -19,16 +19,19 @@ export interface ConfirmationPopinProps {
   messages: string[];
   boutons?: IBoutonPopin[];
   title?: string;
+  disablePortal?: boolean;
 }
 
 export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
   isOpen,
   messages,
   boutons,
-  title
+  title,
+  disablePortal = false
 }) => {
   return (
     <Dialog
+      disablePortal={disablePortal}
       open={isOpen}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"

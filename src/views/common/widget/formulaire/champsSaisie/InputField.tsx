@@ -16,6 +16,7 @@ interface InputFieldProps {
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   typeInput?: TypeInput;
+  component?: "input" | "select" | "textarea";
 }
 
 interface TypeInput {
@@ -36,7 +37,8 @@ export const InputField: React.FC<InputFieldProps> = ({
   onInput,
   onBlur,
   onChange,
-  typeInput
+  typeInput,
+  component = "input"
 }) => {
   const otherProps = {} as any;
   if (maxLength) {
@@ -69,7 +71,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         {label && <label htmlFor={name}>{label}</label>}
         <Field
           aria-label={`${ariaLabel ? ariaLabel : name}`}
-          component="input"
+          component={component}
           name={name}
           id={name}
           disabled={disabled}

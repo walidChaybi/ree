@@ -1,5 +1,7 @@
 import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
 import { IRMCRequestActesInscriptions } from "../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import { AddAlerteActeApiHookParameters } from "../../views/common/hook/v2/alertes/AddAlerteActeHookApi";
+import { DeleteAlerteActeApiHookParameters } from "../../views/common/hook/v2/alertes/DeleteAlerteActeHookApi";
 import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
@@ -15,7 +17,8 @@ export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
 export const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
-export const URL_ALERTES_ACTE = "/acte/alertes";
+export const URL_ALERTES_ACTE = "/alertes";
+export const URL_ALERTE_ACTE = "/alerte";
 export const URL_DECRETS = "/repertoirecivil/decrets";
 
 /**
@@ -150,10 +153,39 @@ export function rechercheMultiCriteresAutoInscription(
   });
 }
 
-export function getAlertesActe(identifiant: string): Promise<any> {
+export function getAlertesActe(idActe: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_ALERTES_ACTE}/${identifiant}`
+    uri: `${URL_ACTE}/${idActe}${URL_ALERTES_ACTE}`
+  });
+}
+
+export function addAlerteActe(
+  parameters: AddAlerteActeApiHookParameters
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_ACTE}/${URL_ALERTE_ACTE}`,
+    data: {
+      idActe: parameters?.idActe,
+      idTypeAlerte: parameters?.idTypeAlerte,
+      complementDescription: parameters?.complementDescription
+    },
+    parameters: {
+      provenanceRequete: parameters?.provenanceRequete
+    }
+  });
+}
+
+export function deleteAlerteActe(
+  parameters: DeleteAlerteActeApiHookParameters
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.DELETE,
+    uri: `${URL_ACTE}${URL_ALERTE_ACTE}/${parameters?.idAlerteActe}`,
+    parameters: {
+      provenanceRequete: parameters?.provenanceRequete
+    }
   });
 }
 

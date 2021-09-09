@@ -17,16 +17,15 @@ import { getEvenement } from "./EvenementActeUtils";
 import { getTitulaires } from "./TitulairesActeUtils";
 
 export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
-  const idTypeRegistre = acte.registre.type.id;
+  const idTypeRegistre = acte?.registre?.type?.id;
   const paramsAffichage = getParamsAffichageFicheActe(
     idTypeRegistre,
     acte.visibiliteArchiviste
   );
   const fichesPersonne: SectionPanelProps[] = getFichesPersonneActe(
-    acte.personnes,
+    acte?.personnes,
     paramsAffichage
   );
-
   return {
     panels: [
       {
@@ -44,7 +43,6 @@ export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
         panelAreas: getPanelAreasActeImage(acte, paramsAffichage),
         title: "Vue de l'acte"
       },
-
       ...fichesPersonne
     ]
   };
@@ -75,7 +73,7 @@ function getPanelAreasActeImage(
 }
 
 export interface IParamsAffichage {
-  ajouterAlerte: boolean;
+  visuAlertes: boolean;
   visuActe: "classique" | "filigrane" | "disabled";
   personnes: "visible" | "disabled" | "none";
 }
@@ -83,15 +81,14 @@ export interface IParamsAffichage {
 export function getParamsAffichageFicheActe(
   idTypeRegistre: string,
   typeVisibiliteArchiviste: TypeVisibiliteArchiviste
-) {
-  const params = {
-    ajouterAlerte: true,
+): IParamsAffichage {
+  const params: IParamsAffichage = {
+    visuAlertes: true,
     visuActe: "disabled",
     personnes: "disabled"
-  } as IParamsAffichage;
+  };
 
   // Vérification que l'officier à le droit de consulter la visualisation de l'acte
-
   // S'il a le droit CONSULTER sur le périmètre MEAE
   // ou
   // S'il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
@@ -99,7 +96,7 @@ export function getParamsAffichageFicheActe(
     officierALeDroitSurLePerimetre(Droit.CONSULTER, PERIMETRE_MEAE) ||
     officierAutoriserSurLeTypeRegistre(idTypeRegistre)
   ) {
-    params.ajouterAlerte = true;
+    params.visuAlertes = true;
     params.visuActe = "classique";
     params.personnes = "visible";
   }
@@ -109,7 +106,7 @@ export function getParamsAffichageFicheActe(
     typeVisibiliteArchiviste !== TypeVisibiliteArchiviste.NON &&
     officierHabiliterPourLeDroit(Droit.CONSULTER_ARCHIVES)
   ) {
-    params.ajouterAlerte = false;
+    params.visuAlertes = false;
     params.visuActe = "filigrane";
     params.personnes = "none";
   }
@@ -117,9 +114,10 @@ export function getParamsAffichageFicheActe(
   // S'il a un droit CONSULTER mais pas sur le périmètre de l'acte
   // ou Si le type de registre n'est présent dans le périmètre de l'acte
   else if (!officierAutoriserSurLeTypeRegistre(idTypeRegistre)) {
-    params.ajouterAlerte = false;
+    params.visuAlertes = false;
     params.visuActe = "disabled";
     params.personnes = "disabled";
   }
+
   return params;
 }

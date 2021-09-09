@@ -3,21 +3,21 @@ import {
   userDroitConsulterPerimetreMEAE,
   userDroitConsulterPerimetreTUNIS
 } from "../../../../../../mock/data/connectedUserAvecDroit";
-import { storeRece } from "../../../../../../views/common/util/storeRece";
-import {
-  getPanelsActe,
-  IParamsAffichage,
-  getParamsAffichageFicheActe
-} from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/FicheActeUtils";
-import { acte } from "../../../data/ficheActe";
-import { IOfficierSSOApi } from "../../../../../../model/IOfficierSSOApi";
-import { IPerimetre, PERIMETRE_MEAE } from "../../../../../../model/IPerimetre";
-import { IProfil, IDroit } from "../../../../../../model/Habilitation";
 import { Droit } from "../../../../../../model/Droit";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { IRegistre } from "../../../../../../model/etatcivil/acte/IRegistre";
-import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { ITypeRegistre } from "../../../../../../model/etatcivil/acte/ITypeRegistre";
+import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
+import { IDroit, IProfil } from "../../../../../../model/Habilitation";
+import { IOfficierSSOApi } from "../../../../../../model/IOfficierSSOApi";
+import { IPerimetre, PERIMETRE_MEAE } from "../../../../../../model/IPerimetre";
+import { storeRece } from "../../../../../../views/common/util/storeRece";
+import {
+  getPanelsActe,
+  getParamsAffichageFicheActe,
+  IParamsAffichage
+} from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/FicheActeUtils";
+import { acte } from "../../../data/ficheActe";
 
 const resumeActeLibelle = "Résumé de l'acte";
 test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmètre MEAE", async () => {
@@ -48,7 +48,7 @@ test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmèt
 //////////////////////////////////////////
 /**
  * Pour rappel (cf. FicheActeUtils.ts)
- * ajouterAlerte: boolean;
+ * visuAlertes: boolean;
  * visuActe: "classique" | "filigrane" | "disabled";
  * personnes: "visible" | "disabled" | "none";
  *
@@ -184,21 +184,21 @@ const ActeArchiveSEOUL: IFicheActe = {
 // COMPORTEMENTS POSSIBLES
 ////////////////////////////////////
 const tousLesAcces = {
-  ajouterAlerte: true,
   visuActe: "classique",
-  personnes: "visible"
+  personnes: "visible",
+  visuAlertes: true
 } as IParamsAffichage;
 
 const pasLeBonPerimetre = {
-  ajouterAlerte: false,
   visuActe: "disabled",
-  personnes: "disabled"
+  personnes: "disabled",
+  visuAlertes: false
 } as IParamsAffichage;
 
 const restraintArchive = {
-  ajouterAlerte: false,
   visuActe: "filigrane",
-  personnes: "none"
+  personnes: "none",
+  visuAlertes: false
 } as IParamsAffichage;
 
 // UTILS

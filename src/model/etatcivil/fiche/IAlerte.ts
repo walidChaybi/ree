@@ -1,6 +1,7 @@
 import { TypeCodeCouleur } from "../enum/TypeAlerte";
 
 export interface IAlerte {
+  id?: string;
   idActe?: string;
   alerte?: string;
   type?: string;
@@ -10,12 +11,11 @@ export interface IAlerte {
   support1?: string;
   support2?: string;
   numeroActe?: string;
-  numeroBisTer?: string;
+  numeroBisTerActe?: string;
   description?: string;
   complementDescription?: string;
-  trigramme?: string;
+  trigrammeUtilisateur?: string;
   dateCreation?: number;
   dateCreationStr?: string;
   codeCouleur?: TypeCodeCouleur;
-  registre?: string;
 }

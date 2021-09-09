@@ -4,28 +4,31 @@ import { Fieldset } from "../fieldset/Fieldset";
 import "./scss/Formulaire.scss";
 
 interface FomulaireProps {
-  titre: string;
+  titre?: string;
   formDefaultValues: any;
   formValidationSchema: any;
   onSubmit: (values: any, errors?: any) => void;
   className?: string;
 }
 
-export const Formulaire: React.FC<FomulaireProps> = props => {
+export const Formulaire: React.FC<FomulaireProps> = ({
+  children,
+  titre = "",
+  formDefaultValues,
+  formValidationSchema,
+  onSubmit,
+  className
+}) => {
   return (
-    <div
-      className={
-        props.className ? `${props.className} Formulaire` : "Formulaire"
-      }
-    >
-      <Fieldset titre={props.titre}>
+    <div className={className ? `${className} Formulaire` : "Formulaire"}>
+      <Fieldset titre={titre}>
         <Formik
-          onSubmit={props.onSubmit}
-          initialValues={props.formDefaultValues}
-          validationSchema={props.formValidationSchema}
+          onSubmit={onSubmit}
+          initialValues={formDefaultValues}
+          validationSchema={formValidationSchema}
           enableReinitialize={true}
         >
-          <Form>{props.children}</Form>
+          <Form>{children}</Form>
         </Formik>
       </Fieldset>
     </div>

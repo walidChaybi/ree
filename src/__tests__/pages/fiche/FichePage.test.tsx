@@ -17,6 +17,7 @@ beforeEach(() => {
 test("rendersFichePage render RC correcty", async () => {
   render(
     <FichePage
+      index={0}
       dataFicheIdentifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
       dataFicheCategorie={TypeFiche.RC}
     />
@@ -31,6 +32,7 @@ test("rendersFichePage render ACTE correcty", async () => {
   await TypeAlerte.init();
   render(
     <FichePage
+      index={0}
       dataFicheIdentifiant={"2748bb45-22cd-41ea-90db-0483b8ffc8a9"}
       dataFicheCategorie={TypeFiche.ACTE}
     />

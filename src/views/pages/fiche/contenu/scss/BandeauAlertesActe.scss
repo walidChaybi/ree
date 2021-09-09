@@ -8,14 +8,19 @@
   text-align: justify;
   padding: 0.5rem;
 
-  .BoutonAjouterAlertes {
+  .BoutonAjouterAlerte {
     order: 2;
     margin-left: auto;
 
-    .IconeBoutonAjoutAlertes {
+    .IconeBoutonAjoutAlerte {
       font-size: 2em;
       color: $alertes;
       cursor: pointer;
+
+      &.Disabled {
+        color: $disabled-button;
+        cursor: not-allowed;
+      }
     }
   }
 }

@@ -14,6 +14,7 @@ import { RMCTableauInscriptions } from "./RMCTableauInscriptions";
 export interface RMCActeInscriptionResultatsProps {
   typeRMC: TypeRMC;
   dataAlertes?: IAlerte[];
+  ajoutAlertePossible?: boolean;
   dataRequete?: TRequete;
   dataRMCActe: IResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
@@ -34,22 +35,38 @@ export interface RMCActeInscriptionResultatsProps {
   ) => void;
 }
 
-export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = props => {
+export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = ({
+  typeRMC,
+  dataAlertes,
+  ajoutAlertePossible = false,
+  dataRequete,
+  dataRMCActe,
+  dataTableauRMCActe,
+  dataRMCInscription,
+  dataTableauRMCInscription,
+  setRangeActe,
+  setRangeInscription,
+  resetRMC,
+  onClickCheckboxTableauActes,
+  onClickCheckboxTableauInscriptions
+}) => {
   return (
-    <div className={`ResultatsRMC${props.typeRMC}`}>
+    <div className={`ResultatsRMC${typeRMC}`}>
       <Fieldset titre={getLibelle("Résultats de la recherche multi-critères")}>
         <div className="SubResultatsRMC">
           <div className="SousTitre">
             <span>{getLibelle("Recherche dans les registres")}</span>
           </div>
           <RMCTableauActes
-            typeRMC={props.typeRMC}
-            dataAlertes={props.dataAlertes}
-            dataRMCActe={props.dataRMCActe}
-            dataTableauRMCActe={props.dataTableauRMCActe}
-            setRangeActe={props.setRangeActe}
-            resetTableauActe={props.resetRMC}
-            onClickCheckboxCallBack={props.onClickCheckboxTableauActes}
+            typeRMC={typeRMC}
+            dataRequete={dataRequete}
+            dataAlertes={dataAlertes}
+            ajoutAlertePossible={ajoutAlertePossible}
+            dataRMCActe={dataRMCActe}
+            dataTableauRMCActe={dataTableauRMCActe}
+            setRangeActe={setRangeActe}
+            resetTableauActe={resetRMC}
+            onClickCheckboxCallBack={onClickCheckboxTableauActes}
           />
         </div>
         <div className="SubResultatsRMC">
@@ -61,13 +78,13 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
             </span>
           </div>
           <RMCTableauInscriptions
-            typeRMC={props.typeRMC}
-            dataRequete={props.dataRequete}
-            dataRMCInscription={props.dataRMCInscription}
-            dataTableauRMCInscription={props.dataTableauRMCInscription}
-            setRangeInscription={props.setRangeInscription}
-            resetTableauInscription={props.resetRMC}
-            onClickCheckboxCallBack={props.onClickCheckboxTableauInscriptions}
+            typeRMC={typeRMC}
+            dataRequete={dataRequete}
+            dataRMCInscription={dataRMCInscription}
+            dataTableauRMCInscription={dataTableauRMCInscription}
+            setRangeInscription={setRangeInscription}
+            resetTableauInscription={resetRMC}
+            onClickCheckboxCallBack={onClickCheckboxTableauInscriptions}
           />
         </div>
       </Fieldset>

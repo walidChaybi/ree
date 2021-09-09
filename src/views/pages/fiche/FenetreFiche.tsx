@@ -13,18 +13,28 @@ interface IFenetreFicheProps {
   onClose: (id: string, index: number) => void;
   datasFiches: IDataFicheProps[];
   index: number;
+  provenanceRequete?: string;
+  ajoutAlertePossible?: boolean;
 }
 
-export const FenetreFiche: React.FC<IFenetreFicheProps> = props => {
+export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
+  identifiant,
+  categorie,
+  onClose,
+  datasFiches,
+  index,
+  provenanceRequete = "",
+  ajoutAlertePossible = false
+}) => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(true);
   const [
     fenetreExterneUtil,
     setFenetreExterneUtil
   ] = useState<FenetreExterneUtil>();
 
-  const closeFenetre = (id: string, index: number) => {
+  const closeFenetre = (id: string, idx: number) => {
     setFenetreOuverteState(!fenetreOuverteState);
-    props.onClose(id, index);
+    onClose(id, idx);
   };
 
   return (
@@ -32,16 +42,18 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = props => {
       {fenetreOuverteState && (
         <FenetreExterne
           onCloseHandler={() => {
-            closeFenetre(props.identifiant, props.index);
+            closeFenetre(identifiant, index);
           }}
           setFenetreExterneUtil={setFenetreExterneUtil}
         >
           <FichePage
-            datasFiches={props.datasFiches}
-            dataFicheIdentifiant={props.identifiant}
-            dataFicheCategorie={props.categorie}
+            datasFiches={datasFiches}
+            dataFicheIdentifiant={identifiant}
+            dataFicheCategorie={categorie}
             fenetreExterneUtil={fenetreExterneUtil}
-            index={props.index}
+            index={index}
+            provenanceRequete={provenanceRequete}
+            ajoutAlertePossible={ajoutAlertePossible}
           />
         </FenetreExterne>
       )}
