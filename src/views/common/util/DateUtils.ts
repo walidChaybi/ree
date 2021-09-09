@@ -223,6 +223,24 @@ export function getDateFormatJasper(date: Date) {
   )} ${date.getFullYear()}`;
 }
 
+// - jour en chiffres, pas de 0 entre 1 et 9. 1er pour le premier jour du mois
+// - mois en lettre
+// - année en chiffres
+export function getDateFormatJasperFromCompose(date?: IDateCompose) {
+  let dateString = "";
+
+  if (date && date.annee) {
+    dateString += date.annee;
+  }
+  if (date && date.mois) {
+    dateString = `${getMoisNaissanceEnLettre(Number(date.mois))} ${dateString}`;
+  }
+  if (date && date.jour) {
+    dateString = `${date.jour} ${dateString}`;
+  }
+  return dateString;
+}
+
 /**
  *
  * 12 04 => à 12h04

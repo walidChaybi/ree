@@ -48,8 +48,10 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
-    useState<UpdateChoixDelivrancePops>();
+  const [
+    paramUpdateChoixDelivrance,
+    setParamUpdateChoixDelivrance
+  ] = useState<UpdateChoixDelivrancePops>();
 
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
 
@@ -64,8 +66,9 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const boutonOK: IBoutonPopin[] = getBoutonOK(setMessagesBloquant);
   const boutonsOuiNon: IBoutonPopin[] = getBoutonsOuiNon(setMessagesBloquant);
 
-  const delivrerOptions: ActionOptionAvecChoixDelivrance[] =
-    getOptionsMenuDelivrer(refDelivrerOptions0);
+  const delivrerOptions: ActionOptionAvecChoixDelivrance[] = getOptionsMenuDelivrer(
+    refDelivrerOptions0
+  );
 
   const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = (
     indexMenu: number,

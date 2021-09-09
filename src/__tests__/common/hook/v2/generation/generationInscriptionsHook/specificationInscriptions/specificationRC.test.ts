@@ -15,11 +15,14 @@ beforeAll(() => {
 test("Attendu: specificationRC.getElementsJasper ", async () => {
   const data = FicheRcDecisionNotaire;
   const elementsJasper = specificationRC.getElementsJasper(data);
+  const interesse = `Mathieu SLAOUI
+Date de naissance: 01 Septembre 1983
+Lieu de naissance: Paris Arrdt 20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe("TODO US 499");
   expect(elementsJasper.decisionRecue2).toBe("TODO US 499");
-  expect(elementsJasper.interesseDecision).toBe("TODO US 398");
+  expect(elementsJasper.interesseDecision).toBe(interesse);
   expect(elementsJasper.regime).toBe("sous le régime de curatelle simple");
   expect(elementsJasper.renouvellementModification).toBeUndefined();
   expect(elementsJasper.decisionExequatur).toBeUndefined();
@@ -32,11 +35,19 @@ test("Attendu: specificationRC.getElementsJasper ", async () => {
 test("Attendu: specificationRC.getElementsJasper ", async () => {
   const data = FicheRcRenouvellement;
   const elementsJasper = specificationRC.getElementsJasper(data);
+  const interesses = `Marie-charlotte, Anne-claire, Lily-rose, Abby-gaëlle SLAOUI
+Date de naissance: 01 Septembre 1983
+Lieu de naissance: Brest (Finistère)
+et
+Pierre-olivier, Félix-antoine, François-xavier LE ROUX
+Date de naissance: 24 Décembre 1987
+Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
+Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du soleil levant) le 12 Juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe("TODO US 499");
   expect(elementsJasper.decisionRecue2).toBe("TODO US 499");
-  expect(elementsJasper.interesseDecision).toBe("TODO US 398");
+  expect(elementsJasper.interesseDecision).toBe(interesses);
   expect(elementsJasper.regime).toBeUndefined();
   expect(elementsJasper.renouvellementModification).toBe(
     "prononçant le renouvellement de la mesure de curatelle simple RC n° 2020 - 1"

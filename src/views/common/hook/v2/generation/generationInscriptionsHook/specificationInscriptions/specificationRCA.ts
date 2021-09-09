@@ -10,6 +10,7 @@ import {
 import { IElementsJasperCertificatRCA } from "../GenerationCertificatRCAHook";
 import {
   getDecisionExequatur,
+  getInteressesDecision,
   getParagrapheFin
 } from "./specificationCommunes";
 
@@ -145,7 +146,7 @@ class SpecificationRCA {
       elementsJasper.anneeInscription = infosRCA.annee;
       elementsJasper.numeroInscription = infosRCA.numero;
       elementsJasper.decisionRecue = getParagrapheDecisionRecue(infosRCA);
-      elementsJasper.interesseDecision = "TODO US 398"; // TODO US 398
+      elementsJasper.interesseDecision = getInteressesDecision(infosRCA);
       elementsJasper.decisionExequatur = getDecisionExequatur(infosRCA);
       elementsJasper.paragrapheFin = getParagrapheFin(infosRCA);
     }

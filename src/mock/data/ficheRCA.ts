@@ -44,7 +44,33 @@ export const FicheRcaDecisionJuridictionEtrangere = ({
         { numeroOrdre: 2, valeur: "Jules" },
         { numeroOrdre: 1, valeur: "Léo" }
       ],
-      dateNaissance: { jour: "01", mois: "09", annee: "1983" }
+      dateNaissance: { jour: "01", mois: "09", annee: "1983" },
+      parents: [
+        {
+          sexe: "MASCULIN",
+          nomFamille: "Dupont",
+          lienParente: "ADOPTANT",
+          numeroOrdre: 1,
+          dateNaissance: {
+            jour: "01",
+            mois: "02",
+            annee: "1993"
+          },
+          paysNaissance: "France",
+          prenoms: [
+            {
+              valeur: "Didier",
+              numeroOrdre: 2
+            },
+            {
+              valeur: "Lucas",
+              numeroOrdre: 1
+            }
+          ],
+          villeNaissance: "Nantes",
+          regionNaissance: "Loire-Atlantique"
+        }
+      ]
     }
   ],
   statutsFiche: [
@@ -156,6 +182,10 @@ export const FicheRcaDecisionAvecInstructionProcureur = ({
         { numeroOrdre: 2, valeur: "Jules" },
         { numeroOrdre: 1, valeur: "Léo" }
       ],
+      dateDeces: { mois: "03", annee: "2003" },
+      villeDeces: "Londres",
+      paysDeces: "Royaume-Uni",
+      regionDeces: "Grand-Londres",
       dateNaissance: { jour: "01", mois: "09", annee: "1983" }
     }
   ],

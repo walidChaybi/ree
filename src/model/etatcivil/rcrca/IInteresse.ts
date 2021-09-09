@@ -1,5 +1,6 @@
 import { IDateCompose } from "../../../views/common/util/DateUtils";
 import { IPrenom } from "../fiche/IPrenom";
+import { IParent } from "./IParent";
 
 export interface IInteresse {
   numeroOrdreSaisi: number;
@@ -19,4 +20,5 @@ export interface IInteresse {
   prenoms: IPrenom[];
   dateNaissance: IDateCompose;
   dateDeces: IDateCompose;
+  parents?: IParent[];
 }

@@ -7,6 +7,7 @@ import { IFicheRcRca } from "../../../../../../../model/etatcivil/rcrca/IFicheRc
 import { IElementsJasperCertificatRC } from "../GenerationCertificatRCHook";
 import {
   getDecisionExequatur,
+  getInteressesDecision,
   getParagrapheFin
 } from "./specificationCommunes";
 
@@ -62,7 +63,7 @@ class SpecificationRC {
       elementsJasper.numeroInscription = infosRC.numero;
       elementsJasper.decisionRecue1 = "TODO US 499"; // TODO US 499
       elementsJasper.decisionRecue2 = "TODO US 499"; // TODO US 499
-      elementsJasper.interesseDecision = "TODO US 398"; // TODO US 398
+      elementsJasper.interesseDecision = getInteressesDecision(infosRC);
       elementsJasper.regime = getResume(infosRC);
       elementsJasper.renouvellementModification = getRenouvellementModification(
         infosRC
