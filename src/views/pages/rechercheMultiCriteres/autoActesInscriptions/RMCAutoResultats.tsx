@@ -23,7 +23,9 @@ export interface RMCAutoResultatsProps {
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => void;
-  enableBoutonAjouterRMC?: boolean;
+  resetRMC?: boolean;
+  setRangeActe?: (range: string) => void;
+  setRangeInscription?: (range: string) => void;
 }
 
 export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = props => {
@@ -45,7 +47,9 @@ export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = props => {
             onClickCheckboxTableauInscriptions={
               props.onClickCheckboxTableauInscriptions
             }
-            enableBoutonAjouterRMC={props.enableBoutonAjouterRMC}
+            resetRMC={props.resetRMC}
+            setRangeInscription={props.setRangeInscription}
+            setRangeActe={props.setRangeActe}
           />
         )}
     </>

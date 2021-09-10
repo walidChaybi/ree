@@ -1,8 +1,3 @@
-import React from "react";
-import RegistreRepertoireFiltre, {
-  RegistreRepertoireDefaultValues,
-  RegistreRepertoireFiltreProps
-} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 import {
   act,
   fireEvent,
@@ -10,11 +5,16 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { getLibelle } from "../../../../../views/common/widget/Text";
 import { Form, Formik } from "formik";
-import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { getLibelle } from "../../../../../views/common/widget/Text";
+import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import RegistreRepertoireFiltre, {
+  RegistreRepertoireDefaultValues,
+  RegistreRepertoireFiltreProps
+} from "../../../../../views/pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreReperoireFiltre";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 

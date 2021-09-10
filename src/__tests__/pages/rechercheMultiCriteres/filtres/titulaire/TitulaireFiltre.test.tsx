@@ -1,17 +1,17 @@
-import React, { useState } from "react";
 import {
+  act,
   fireEvent,
   render,
-  waitFor,
-  act,
-  screen
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
+import { TITULAIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/titulaire/TitulaireFiltre";
-import { TITULAIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 
 const HookConsummerTitulaireForm: React.FC = () => {
   const [result, setResult] = useState("");

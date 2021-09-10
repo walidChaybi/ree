@@ -15,7 +15,9 @@ const columnsTableauRmc = [
   ...natureHeadersTableauRMC,
   new TableauTypeColumn({
     keys: [HeaderTableauRMCInscription.NumeroRef],
-    title: "N° Réf."
+    title: "N° Réf.",
+    getElement: getCellNumeroRef,
+    align: "left"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRMCInscription.Type],
@@ -71,5 +73,14 @@ function getCheckBoxElement(
       isDisabledCallBack={isDisabledCallBack}
       onClickCheckboxCallBack={onClickCheckboxCallBack}
     />
+  );
+}
+
+function getCellNumeroRef(data: IResultatRMCInscription): JSX.Element {
+  const numeroRef = `${data.categorie} - ${data.anneeInscription} - ${data.numeroInscription}`;
+  return (
+    <div className="TableauFontBody ColOverflow" title={numeroRef}>
+      {numeroRef}
+    </div>
   );
 }

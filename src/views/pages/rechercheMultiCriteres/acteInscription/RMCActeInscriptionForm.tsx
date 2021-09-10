@@ -1,0 +1,138 @@
+import React from "react";
+import * as Yup from "yup";
+import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { MIN_YEAR } from "../../../common/util/DateUtils";
+import { stockageDonnees } from "../../../common/util/stockageDonnees";
+import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
+import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
+import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
+import DatesDebutFinAnneeFiltre, {
+  DatesDebutFinAnneeDefaultValues,
+  DatesDebutFinAnneeFiltreProps,
+  DatesDebutFinAnneeValidationSchema
+} from "../filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
+import RegistreRepertoireFiltre, {
+  RegistreRepertoireDefaultValues,
+  RegistreRepertoireFiltreProps,
+  RegistreRepertoireValidationSchema
+} from "../filtres/registreReperoire/RegistreReperoireFiltre";
+import TitulaireFiltre, {
+  TitulaireDefaultValues,
+  TitulaireFiltreProps,
+  TitulaireValidationSchema
+} from "../filtres/titulaire/TitulaireFiltre";
+import { ICriteresRecherche } from "./hook/RMCInscriptionApiHook";
+import "./scss/RMCActeInscriptionPage.scss";
+
+// Nom des filtres
+export const TITULAIRE = "titulaire";
+export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
+export const REGISTRE_REPERTOIRE = "registreRepertoire";
+
+// Valeurs par défaut des champs
+export const DefaultValuesRMCActeInscription = {
+  [TITULAIRE]: TitulaireDefaultValues,
+  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues,
+  [REGISTRE_REPERTOIRE]: RegistreRepertoireDefaultValues
+};
+
+// Schéma de validation en sortie de champs
+export const ValidationSchemaRMCActeInscription = Yup.object({
+  [TITULAIRE]: TitulaireValidationSchema,
+  [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema,
+  [REGISTRE_REPERTOIRE]: RegistreRepertoireValidationSchema
+});
+
+export const titreForm = "Critères de recherche d'un acte ou d'une inscription";
+
+interface RMCActeInscriptionFormProps {
+  setValuesRMC: React.Dispatch<React.SetStateAction<IRMCActeInscription>>;
+  setNouvelleRecherche: React.Dispatch<React.SetStateAction<boolean>>;
+  setCriteresRechercheActe: React.Dispatch<
+    React.SetStateAction<ICriteresRecherche | undefined>
+  >;
+  setCriteresRechercheInscription: React.Dispatch<
+    React.SetStateAction<ICriteresRecherche | undefined>
+  >;
+  closePopIn?: () => void;
+}
+
+export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = props => {
+  const blocsForm: JSX.Element[] = [
+    getFormTitulaire(),
+    getRegistreRepertoire(),
+    getFormDatesDebutFinAnnee()
+  ];
+
+  const onSubmitRMCActeInscription = (values: any) => {
+    props.setNouvelleRecherche(true);
+    props.setValuesRMC(values);
+    props.setCriteresRechercheActe({
+      valeurs: values,
+      range: `0-${NB_LIGNES_PAR_APPEL}`
+    });
+    props.setCriteresRechercheInscription({
+      valeurs: values,
+      range: `0-${NB_LIGNES_PAR_APPEL}`
+    });
+    stockageDonnees.stockerCriteresRMCActeInspt(values);
+    props.setNouvelleRecherche(false);
+  };
+
+  const rappelCriteres = () => {
+    return stockageDonnees.recupererCriteresRMCActeInspt();
+  };
+
+  const boutonsProps = {
+    rappelCriteres,
+    closePopIn: props.closePopIn
+  } as RMCBoutonsProps;
+
+  return (
+    <>
+      <title>{titreForm}</title>
+      <Formulaire
+        titre={titreForm}
+        formDefaultValues={DefaultValuesRMCActeInscription}
+        formValidationSchema={ValidationSchemaRMCActeInscription}
+        onSubmit={onSubmitRMCActeInscription}
+      >
+        <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
+        <RMCBoutons {...boutonsProps} />
+      </Formulaire>
+    </>
+  );
+};
+
+export function getFormTitulaire(): JSX.Element {
+  const titulaireFiltreProps = {
+    nomFiltre: TITULAIRE
+  } as TitulaireFiltreProps;
+  return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} />;
+}
+
+export function getFormDatesDebutFinAnnee(): JSX.Element {
+  const datesDebutFinAnneeFiltreProps = {
+    nomFiltre: DATES_DEBUT_FIN_ANNEE,
+    anneeVisible: true,
+    anneeMin: MIN_YEAR
+  } as DatesDebutFinAnneeFiltreProps;
+  return (
+    <DatesDebutFinAnneeFiltre
+      key={DATES_DEBUT_FIN_ANNEE}
+      {...datesDebutFinAnneeFiltreProps}
+    />
+  );
+}
+
+export function getRegistreRepertoire(): JSX.Element {
+  const registreRepertoireFiltreFiltreProps = {
+    nomFiltre: REGISTRE_REPERTOIRE
+  } as RegistreRepertoireFiltreProps;
+  return (
+    <RegistreRepertoireFiltre
+      key={REGISTRE_REPERTOIRE}
+      {...registreRepertoireFiltreFiltreProps}
+    />
+  );
+}

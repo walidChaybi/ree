@@ -1,14 +1,15 @@
-import React from "react";
 import { connect } from "formik";
+import React from "react";
 import { FormikComponentProps } from "../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../common/widget/Text";
-import "./scss/RMCBoutons.scss";
 import RMCBoutonRappelCriteres, {
   RMCBoutonRappelCriteresProps
 } from "./RMCBoutonRappelCriteres";
+import "./scss/RMCBoutons.scss";
 
 export interface IRMCBoutonsProps {
   rappelCriteres?: () => any;
+  closePopIn?: () => void;
 }
 
 export type RMCBoutonsProps = IRMCBoutonsProps & FormikComponentProps;
@@ -17,6 +18,12 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
   const rmcBoutonRappelCriteresProps = {
     rappelCriteres: props.rappelCriteres
   } as RMCBoutonRappelCriteresProps;
+
+  const closePopIn = () => {
+    if (props.closePopIn) {
+      props.closePopIn();
+    }
+  };
 
   return (
     <>
@@ -32,6 +39,7 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
         <button
           disabled={!props.formik.isValid || !props.formik.dirty}
           type="submit"
+          onClick={closePopIn}
         >
           {getLibelle("Rechercher")}
         </button>

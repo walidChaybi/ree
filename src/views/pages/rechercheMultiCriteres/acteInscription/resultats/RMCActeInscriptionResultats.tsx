@@ -6,7 +6,6 @@ import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscriptio
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { getLibelle } from "../../../../common/widget/Text";
-import { BoutonAjouterRMC } from "../../../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/BoutonAjouterRMC";
 import "../scss/RMCActeInscriptionResultats.scss";
 import { RMCTableauActes } from "./RMCTableauActes";
 import { TypeRMC } from "./RMCTableauCommun";
@@ -33,7 +32,6 @@ export interface RMCActeInscriptionResultatsProps {
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => void;
-  enableBoutonAjouterRMC?: boolean;
 }
 
 export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = props => {
@@ -72,11 +70,6 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
             onClickCheckboxCallBack={props.onClickCheckboxTableauInscriptions}
           />
         </div>
-        {props.enableBoutonAjouterRMC ? (
-          <BoutonAjouterRMC
-            libelle={getLibelle("Ajouter une recherche multicritères")}
-          />
-        ) : null}
       </Fieldset>
     </div>
   );

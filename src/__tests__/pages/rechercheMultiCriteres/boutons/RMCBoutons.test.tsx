@@ -1,17 +1,17 @@
-import React, { useState } from "react";
 import {
-  render,
-  waitFor,
-  screen,
   act,
-  fireEvent
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
+import { stockageDonnees } from "../../../../views/common/util/stockageDonnees";
+import { TITULAIRE } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import RMCBoutons, {
   RMCBoutonsProps
 } from "../../../../views/pages/rechercheMultiCriteres/boutons/RMCBoutons";
-import { stockageDonnees } from "../../../../views/common/util/stockageDonnees";
-import { Formik, Form, Field } from "formik";
-import { TITULAIRE } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireFiltreProps

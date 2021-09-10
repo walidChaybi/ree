@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { DATES_DEBUT_FIN_ANNEE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import { DATES_DEBUT_FIN_ANNEE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps

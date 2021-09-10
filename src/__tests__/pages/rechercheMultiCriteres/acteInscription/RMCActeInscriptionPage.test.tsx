@@ -8,10 +8,8 @@ import {
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import {
-  RMCActeInscriptionPage,
-  titreForm
-} from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
+import { titreForm } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import { RMCActeInscriptionPage } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
