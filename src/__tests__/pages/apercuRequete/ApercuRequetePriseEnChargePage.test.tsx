@@ -128,6 +128,98 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
     expect(elementsCoches).toBeDefined();
   });
 });
+test("redirection requete RDD", async () => {
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
+          >
+            <ApercuRequetePriseEnChargePage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
+
+  // Tableau Acte
+  await act(async () => {
+    fireEvent.click(checkboxColumns[0], { target: { checked: true } });
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Délivrer"));
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText(/Copie intégrale/i));
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText(/Oui/i));
+  });
+
+  expect(history.location.pathname).toBe(
+    "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/a4cefb71-8457-4f6b-937e-34b49335d404"
+  );
+});
+test("redirection requete RDC", async () => {
+  const history2 = createMemoryHistory();
+  history2.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      "a4cefb71-8457-4f6b-937e-34b49335d666"
+    ),
+    {
+      dataRequetes: [],
+      dataRMCAutoActe: DataRMCActeAvecResultat,
+      dataTableauRMCAutoActe: { DataTableauActe },
+      dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
+      dataTableauRMCAutoInscription: { DataTableauInscription }
+    }
+  );
+  await act(async () => {
+    render(
+      <>
+        <Router history={history2}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
+          >
+            <ApercuRequetePriseEnChargePage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
+
+  // Tableau Acte
+  await act(async () => {
+    fireEvent.click(checkboxColumns[0], { target: { checked: true } });
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Délivrer"));
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText(/Copie intégrale/i));
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText(/Oui/i));
+  });
+
+  expect(history2.location.pathname).toBe(
+    "/rece/rece-ui/mesrequetesv2/apercurequetepriseencharge/apercucourrieraccompagnement/a4cefb71-8457-4f6b-937e-34b49335d666"
+  );
+});
 
 afterAll(() => {
   superagentMock.unset();

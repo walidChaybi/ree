@@ -20,7 +20,12 @@ import { configMultiAPi } from "../../../../mock/superagent-config/superagent-mo
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { MenuDelivrer } from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/MenuDelivrer";
+import {
+  estChoixExtraitAvecOuSansFiliation,
+  MenuDelivrer,
+  nonVide,
+  unActeEtUnSeulSelectionne
+} from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/MenuDelivrer";
 import {
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID
@@ -146,6 +151,16 @@ test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-typ
   await waitFor(() => {
     expect(screen.getByRole("dialog")).toBeDefined();
   });
+});
+
+test("unActeEtUnSeulSelectionne", () => {
+  expect(unActeEtUnSeulSelectionne([null], [null])).toBe(false);
+});
+test("estChoixExtraitAvecOuSansFiliation", () => {
+  expect(estChoixExtraitAvecOuSansFiliation(1)).toBe(false);
+});
+test("nonVide", () => {
+  expect(nonVide(["salut"])).toBe(true);
 });
 
 afterAll(() => {

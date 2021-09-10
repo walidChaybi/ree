@@ -23,6 +23,7 @@ export const URL_REQUETES_RMC = "/requetes/rmc";
 export const URL_REQUETES_RMC_AUTO = "/requetes/rmcauto";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
+export const URL_REQUETES_CHOIX_DELIVRANCE = "/requetes/choixdelivrance";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PARAMETRE = "/parametres";
@@ -295,6 +296,17 @@ export async function updateRequeteDelivrance({
       refus,
       brouillon
     }
+  });
+}
+
+export async function updateChoixDelivrance(
+  idRequete: string,
+  choixDelivrance: string
+) {
+  return apiV2.fetch({
+    method: HttpMethod.PATCH,
+    uri: URL_REQUETES_CHOIX_DELIVRANCE,
+    parameters: { idRequete, choixDelivrance }
   });
 }
 

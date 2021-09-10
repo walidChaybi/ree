@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { ChoixDelivrance } from "../../../../../model/requete/v2/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeNatureActe } from "../../../../../model/requete/v2/enum/TypeNatureActe";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
@@ -25,6 +26,10 @@ import {
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { IActionProps } from "./ChoixAction";
 import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
+import {
+  UpdateChoixDelivrancePops,
+  useUpdateChoixDelivrance
+} from "./hook/UpdateChoixDelivranceHook";
 
 const INDEX_ACTION_CERTIFICAT_SITUATION = 0;
 const INDEX_ACTION_COPIE_INTEGRALE = 1;
@@ -42,68 +47,11 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[]>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
+  const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
+    useState<UpdateChoixDelivrancePops>();
 
-  const boutonOK: IBoutonPopin[] = [
-    {
-      label: getLibelle("OK"),
-      action: () => {
-        setMessagesBloquant(undefined);
-      }
-    }
-  ];
-  const boutonsOuiNon: IBoutonPopin[] = [
-    {
-      label: getLibelle("Oui"),
-      action: () => {
-        setMessagesBloquant([]);
-      }
-    },
-    {
-      label: getLibelle("Non"),
-      action: () => {
-        setMessagesBloquant(undefined);
-      }
-    }
-  ];
-
-  const delivrerOptions: IActionOption[] = [
-    {
-      value: INDEX_ACTION_CERTIFICAT_SITUATION,
-      label: getLibelle("Certificat de situation"),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refDelivrerOptions0
-    },
-    {
-      value: INDEX_ACTION_COPIE_INTEGRALE,
-      label: getLibelle("Copie intégrale"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0
-    },
-    {
-      value: INDEX_ACTION_EXTRAIT_AVEC_FILIATION,
-      label: getLibelle("Extrait avec filiation"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0
-    },
-    {
-      value: INDEX_ACTION_EXTRAIT_SANS_FILIATION,
-      label: getLibelle("Extrait sans filiation"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0
-    },
-    {
-      value: INDEX_ACTION_EXTRAIT_PLURILINGUE,
-      label: getLibelle("Extrait plurilingue"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0
-    },
-    {
-      value: INDEX_ACTION_COPIE_ARCHIVE,
-      label: getLibelle("Copie archive (118)"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0
-    }
-  ];
+  const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
 
   const resultDeliverCertificatSituation = useDelivrerCertificatSituationHook(
     mappingRequeteDelivranceToRequeteTableau(
@@ -112,6 +60,12 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     inscriptions,
     actes
   );
+
+  const boutonOK: IBoutonPopin[] = getBoutonOK(setMessagesBloquant);
+  const boutonsOuiNon: IBoutonPopin[] = getBoutonsOuiNon(setMessagesBloquant);
+
+  const delivrerOptions: ActionOptionAvecChoixDelivrance[] =
+    getOptionsMenuDelivrer(refDelivrerOptions0);
 
   const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = (
     indexMenu: number,
@@ -169,44 +123,50 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
         setActes(
           props.actes ? supprimerNullEtUndefinedDuTableau(props.actes) : []
         );
-        redirection();
         break;
+      case INDEX_ACTION_COPIE_INTEGRALE:
       case INDEX_ACTION_EXTRAIT_AVEC_FILIATION:
       case INDEX_ACTION_EXTRAIT_SANS_FILIATION:
-      case INDEX_ACTION_COPIE_INTEGRALE:
       case INDEX_ACTION_EXTRAIT_PLURILINGUE:
       case INDEX_ACTION_COPIE_ARCHIVE:
         const listeActes = supprimerNullEtUndefinedDuTableau(props.actes);
         const listeInscriptions = supprimerNullEtUndefinedDuTableau(
           props.inscriptions
         );
+        setChoixDelivrance(delivrerOptions[indexMenu].choixDelivrance);
         controleCoherenceEntreDocumentSelectionneEtActionDelivrer(
           indexMenu,
           listeActes,
           listeInscriptions
         );
-        // La redirection (cf. useEffect) s'effectue uniquement s'il n'y a pas de message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionDelivrer'
+        // La redirection (cf. useEffect) s'effectue uniquement s'il n'y a pas de
+        // message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionDelivrer'
         break;
     }
   };
 
+  /////////////////////////////////////
+  // DELIVRANCE CI,EC, Extraits (avec/sans fil., plurilingue), (Copie archive)
+  /////////////////////////////////////
   const redirection = useCallback(() => {
     if (
       (props.requete as IRequeteDelivrance).sousType === SousTypeDelivrance.RDC
     ) {
-      history.push(
-        `${getUrlWithoutIdParam(
-          history.location.pathname
-        )}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/${props.requete.id}`
-      );
+      setOperationEnCours(true);
+      // Déclanche le hook de mise à jour du choix de délivrance
+      setParamUpdateChoixDelivrance({
+        requete: props.requete as IRequeteDelivrance,
+        choixDelivrance
+      });
     } else {
       const url = receUrl.getUrlApercuTraitementAPartirDe(
         history.location.pathname
       );
       receUrl.replaceUrl(history, url);
     }
-  }, [history, props.requete]);
+  }, [history, props.requete, choixDelivrance]);
 
+  // Le contrôle de cohérence a eu lieu
   useEffect(() => {
     if (messagesBloquant && messagesBloquant.length === 0) {
       // Le contrôle de cohérence a eu lieu et pas de message bloquant
@@ -214,9 +174,26 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     }
   }, [messagesBloquant, redirection]);
 
+  // La mise à jour du choix de délivrance a été effectuée (cf.)
+  useEffect(() => {
+    if (idRequete) {
+      history.push(
+        `${getUrlWithoutIdParam(
+          history.location.pathname
+        )}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/${idRequete}`
+      );
+    }
+  }, [idRequete, history]);
+
+  /////////////////////////////////////
+  // Certificat de situation
+  /////////////////////////////////////
   useEffect(() => {
     if (resultDeliverCertificatSituation) {
-      redirection();
+      const url = receUrl.getUrlApercuTraitementAPartirDe(
+        history.location.pathname
+      );
+      receUrl.replaceUrl(history, url);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultDeliverCertificatSituation, history]);
@@ -245,21 +222,113 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
       )}
     </>
   );
-
-  function unActeEtUnSeulSelectionne(
-    listeActes?: any[],
-    listeInscriptions?: any[]
-  ) {
-    return listeActes?.length === 1 && listeInscriptions?.length === 0;
-  }
 };
-function estChoixExtraitAvecOuSansFiliation(indexMenu: number) {
+
+interface IChoixDelivrance {
+  choixDelivrance?: ChoixDelivrance;
+}
+
+type ActionOptionAvecChoixDelivrance = IActionOption & IChoixDelivrance;
+
+function getBoutonOK(
+  setMessagesBloquant: React.Dispatch<
+    React.SetStateAction<string[] | undefined>
+  >
+): IBoutonPopin[] {
+  return [
+    {
+      label: getLibelle("OK"),
+      action: () => {
+        setMessagesBloquant(undefined);
+      }
+    }
+  ];
+}
+
+function getBoutonsOuiNon(
+  setMessagesBloquant: React.Dispatch<
+    React.SetStateAction<string[] | undefined>
+  >
+): IBoutonPopin[] {
+  return [
+    {
+      label: getLibelle("Oui"),
+      action: () => {
+        setMessagesBloquant([]);
+      }
+    },
+    {
+      label: getLibelle("Non"),
+      action: () => {
+        setMessagesBloquant(undefined);
+      }
+    }
+  ];
+}
+
+function getOptionsMenuDelivrer(
+  refDelivrerOptions0: React.MutableRefObject<null>
+): ActionOptionAvecChoixDelivrance[] {
+  return [
+    {
+      value: INDEX_ACTION_CERTIFICAT_SITUATION,
+      label: getLibelle("Certificat de situation"),
+      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
+      ref: refDelivrerOptions0
+    },
+    {
+      value: INDEX_ACTION_COPIE_INTEGRALE,
+      label: getLibelle("Copie intégrale"),
+      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+      ref: refDelivrerOptions0,
+      choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE
+    },
+    {
+      value: INDEX_ACTION_EXTRAIT_AVEC_FILIATION,
+      label: getLibelle("Extrait avec filiation"),
+      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+      ref: refDelivrerOptions0,
+      // attribut supplémentaire pour trouver facilement le choix de délivrance en fonction de l'index du menu sélectionné
+      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+    },
+    {
+      value: INDEX_ACTION_EXTRAIT_SANS_FILIATION,
+      label: getLibelle("Extrait sans filiation"),
+      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+      ref: refDelivrerOptions0,
+      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
+    },
+    {
+      value: INDEX_ACTION_EXTRAIT_PLURILINGUE,
+      label: getLibelle("Extrait plurilingue"),
+      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+      ref: refDelivrerOptions0,
+      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
+    },
+    {
+      value: INDEX_ACTION_COPIE_ARCHIVE,
+      label: getLibelle("Copie archive (118)"),
+      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+      ref: refDelivrerOptions0,
+      choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
+    }
+  ];
+}
+
+export function unActeEtUnSeulSelectionne(
+  listeActes?: any[],
+  listeInscriptions?: any[]
+) {
+  return listeActes?.length === 1 && listeInscriptions?.length === 0;
+}
+
+export function estChoixExtraitAvecOuSansFiliation(indexMenu: number) {
   return (
     indexMenu === INDEX_ACTION_EXTRAIT_AVEC_FILIATION ||
     indexMenu === INDEX_ACTION_EXTRAIT_SANS_FILIATION
   );
 }
 
-function nonVide(messages?: string[]) {
+export function nonVide(messages?: string[]) {
   return messages !== undefined && messages.length > 0;
 }
