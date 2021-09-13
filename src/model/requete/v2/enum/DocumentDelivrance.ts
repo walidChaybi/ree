@@ -5,8 +5,7 @@ import { EnumWithLibelle } from "../../../../views/common/util/enum/EnumWithLibe
 import { Options } from "../../../../views/common/util/Type";
 import { TypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
 
-const COURRIER_NON_DELIVRANCE_ATTESTATION_PACS =
-  "COURRIER_NON_DELIVRANCE_ATTESTATION_PACS";
+const CARN_PAC_01 = "CARN_PAC_01";
 const CATEGORIE_DOCUMENT_DELIVRANCE = "DOCUMENT_DELIVRANCE";
 const CERTIFICAT_SITUATION_PREFIX = "CERTIFICAT_SITUATION";
 
@@ -104,10 +103,7 @@ export class DocumentDelivrance extends EnumWithComplete {
   }
 
   public static getCourrierNonDelivranceAttestationPacsUUID(): string {
-    const uuid = EnumWithComplete.getKeyForNom(
-      DocumentDelivrance,
-      COURRIER_NON_DELIVRANCE_ATTESTATION_PACS
-    );
+    const uuid = EnumWithComplete.getKeyForNom(DocumentDelivrance, CARN_PAC_01);
     return uuid ? uuid : "";
   }
 

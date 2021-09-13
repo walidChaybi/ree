@@ -241,7 +241,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
     {
       id: "5fe1799c-121d-4027-88c4-4542f176513d",
       categorie: "DOCUMENT_DELIVRANCE",
-      code: "COURRIER_NON_DELIVRANCE_ATTESTATION_PACS",
+      code: "CARN_PAC_01",
       libelle: "Courrier de non délivrance attestation PACS",
       estActif: null,
       usageTeleprocedure: null,
@@ -252,7 +252,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
     {
       id: "bdf30e59-3447-4114-a127-aa1310337761",
       categorie: "DOCUMENT_DELIVRANCE",
-      code: "COURRIER_REFUS_RESSORTISSANTS_FRANCAIS",
+      code: "CARN_CSPAC_02",
       libelle: "Courrier de refus ressortissants français",
       estActif: null,
       usageTeleprocedure: null,
@@ -274,7 +274,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
     {
       id: "8b808725-a83e-4ce5-81a2-192cd09e0cb2",
       categorie: "DOCUMENT_DELIVRANCE",
-      code: "COPIE_ACTE_NON_SIGNEE",
+      code: "COPIE_NON_SIGNEE",
       libelle: "Copie d'acte non signée",
       estActif: null,
       usageTeleprocedure: null,

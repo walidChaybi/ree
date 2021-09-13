@@ -5,6 +5,7 @@ import {
   ICertificatSituationComposition,
   NOM_DOCUMENT_CERTIFICAT_SITUATION
 } from "../../../../../../model/composition/ICertificatSituationComposition";
+import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import {
   IRequeteTableau,
@@ -92,7 +93,7 @@ export function useGenerationCertificatSituationHook(
           contenu: contenuComposition,
           nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
           mimeType: MimeType.APPLI_PDF,
-          typeDocument: params.requete.document, // UUID du type de document demandé (nomenclature)
+          typeDocument: DocumentDelivrance.getKeyForNom("CERTIFICAT_SITUATION"), // UUID du type de document demandé (nomenclature)
           nbPages: 1,
           orientation: Orientation.PORTRAIT
         } as IDocumentReponse

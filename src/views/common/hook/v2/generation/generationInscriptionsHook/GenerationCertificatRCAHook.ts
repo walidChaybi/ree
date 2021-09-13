@@ -6,6 +6,7 @@ import {
 } from "../../../../../../model/composition/ICertificatRCAComposition";
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
+import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import {
   IRequeteTableau,
@@ -121,11 +122,9 @@ export function useGenerationCertificatRCAHook(
       listeRCA,
       requete,
       setDocumentsReponsePourStockage,
-      NOM_DOCUMENT_CERTIFICAT_RCA
+      NOM_DOCUMENT_CERTIFICAT_RCA,
+      DocumentDelivrance.getKeyForNom("CERTIFICAT_INSCRIPTION_RCA")
     );
-    // TODO ajouter le typeDocument: DocumentDelivrance.getKeyForNom(
-    //   "CERTIFICAT_SITUATION_RCA"
-    // ), // UUID CERTIFICAT_SITUATION_RCA (nomenclature)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contenuDocumentsComposition]);
 

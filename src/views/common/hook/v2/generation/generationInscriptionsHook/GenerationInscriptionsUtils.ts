@@ -33,7 +33,8 @@ export function creationDocumentReponseInscription(
   setDocumentsReponsePourStockage: React.Dispatch<
     React.SetStateAction<IDocumentReponse[] | undefined>
   >,
-  nomDocument: string
+  nomDocument: string,
+  idTypeDocument: string
 ) {
   if (
     setDocumentsReponsePourStockage &&
@@ -49,7 +50,7 @@ export function creationDocumentReponseInscription(
         contenu,
         nom: nomDocument,
         mimeType: MimeType.APPLI_PDF,
-        typeDocument: requete?.document, // UUID du type de document demandé (nomenclature)
+        typeDocument: idTypeDocument, // UUID du type de document demandé (nomenclature)
         nbPages: 1,
         orientation: Orientation.PORTRAIT
       } as IDocumentReponse);
