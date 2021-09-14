@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { rechercheMultiCriteresActes } from "../../../../../api/appels/etatcivilApi";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import {
@@ -6,8 +6,8 @@ import {
   IParamsTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
+import { mappingActes } from "../../common/mapping/RMCMappingUtil";
 import {
-  mappingActes,
   mappingCriteres,
   rechercherActeAutorise
 } from "./RMCActeInscriptionUtils";
@@ -15,10 +15,9 @@ import { ICriteresRecherche } from "./RMCInscriptionApiHook";
 
 export function useRMCActeApiHook(criteres?: ICriteresRecherche) {
   const [dataRMCActe, setDataRMCActe] = useState<IResultatRMCActe[]>();
-  const [
-    dataTableauRMCActe,
-    setDataTableauRMCActe
-  ] = useState<IParamsTableau>();
+  const [dataTableauRMCActe, setDataTableauRMCActe] = useState<
+    IParamsTableau
+  >();
   useEffect(() => {
     if (criteres != null && criteres.valeurs != null) {
       const criteresRequest = mappingCriteres(criteres.valeurs);

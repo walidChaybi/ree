@@ -10,7 +10,7 @@ import { BandeauRequete } from "../contenu/BandeauRequete";
 import { BoutonPrendreEnCharge } from "../contenu/BoutonPrendreEnCharge";
 import {
   DocumentsReponses,
-  infoDocumentAffiche
+  InfoDocumentAffiche
 } from "../contenu/document/DocumentsReponses";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
@@ -21,7 +21,7 @@ interface IdRequeteParams {
 
 export const ApercuRequetePageV2: React.FC = () => {
   const { idRequete } = useParams<IdRequeteParams>();
-  const [documentAffiche, setDocumentAffiche] = useState<infoDocumentAffiche>();
+  const [documentAffiche, setDocumentAffiche] = useState<InfoDocumentAffiche>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
   const contenuDocument = useGetDocumentReponseApi(documentAffiche?.id);

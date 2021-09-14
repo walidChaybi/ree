@@ -1,49 +1,25 @@
-import React from "react";
-import { Title } from "../../../core/title/Title";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
-import Box from "@material-ui/core/Box";
-import { RequetesServicePage } from "./RequetesServicePage";
-import "./scss/EspaceDelivrancePage.scss";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { OfficierContext } from "../../../core/contexts/OfficierContext";
-import { MesRequetesPage } from "./MesRequetesPage";
-import { CompteurRequete } from "./contenu/CompteurRequete";
+import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
+import { getUrlWithParam } from "../../../common/util/route/routeUtil";
+import { TabPanel } from "../../../common/widget/onglets/TabPanel";
 import { getText } from "../../../common/widget/Text";
+import { OfficierContext } from "../../../core/contexts/OfficierContext";
+import { Title } from "../../../core/title/Title";
 import {
   URL_MES_REQUETES,
   URL_REQUETES_SERVICE
 } from "../../../router/ReceUrls";
-import { getUrlWithParam } from "../../../common/util/route/routeUtil";
+import { CompteurRequete } from "./contenu/CompteurRequete";
 import {
-  LinkTabMesRequetesDeServiceWithHabilitation,
-  LinkTabMesRequetes
+  LinkTabMesRequetes,
+  LinkTabMesRequetesDeServiceWithHabilitation
 } from "./contenu/LinkTabMesRequetes";
-import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-export function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-  const paddingBox = 3;
-
-  return (
-    <div
-      className="TabPanel"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`nav-tabpanel-${index}`}
-      aria-labelledby={`nav-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={paddingBox}>{children}</Box>}
-    </div>
-  );
-}
+import { MesRequetesPage } from "./MesRequetesPage";
+import { RequetesServicePage } from "./RequetesServicePage";
+import "./scss/EspaceDelivrancePage.scss";
 
 export const TabPanelWithHabilitation = WithHabilitation(
   TabPanel,

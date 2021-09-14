@@ -13,13 +13,13 @@ import { AccordionRece } from "../../../../common/widget/accordion/AccordionRece
 import { getLibelle } from "../../../../common/widget/Text";
 import "./scss/DocumentsReponses.scss";
 
-export interface infoDocumentAffiche {
+export interface InfoDocumentAffiche {
   id: string;
   nom?: string;
 }
 interface IDocumentsReponsesProps {
   documents: IDocumentReponse[];
-  setDocumentAffiche?: (infoDoc: infoDocumentAffiche) => void;
+  setDocumentAffiche?: (infoDoc: InfoDocumentAffiche) => void;
 }
 
 export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({

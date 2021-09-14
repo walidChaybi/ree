@@ -186,7 +186,7 @@ export function reponseRequeteMapperUnitaire(data: IRequeteApi): IDataTable {
       piecesJustificatives: data.piecesJustificatives,
       nomOec: createNomOec(data.reponse),
       typeActe: data.typeActe,
-      reponse: harmoniserReponse(data.reponse),
+      reponse: harmoniseNomPrenomReponse(data.reponse),
       anneeEvenement: data.anneeEvenement,
       jourEvenement: data.jourEvenement,
       moisEvenement: data.moisEvenement,
@@ -254,7 +254,7 @@ function createNomOec(reponse: IReponseApi) {
   return nomOec;
 }
 
-function harmoniserReponse(reponse: IReponseApi) {
+function harmoniseNomPrenomReponse(reponse: IReponseApi) {
   if (reponse) {
     reponse.nomOec = reponse.nomOec
       ? `${formatNom(reponse.nomOec)}`
@@ -262,6 +262,6 @@ function harmoniserReponse(reponse: IReponseApi) {
     reponse.prenomOec = reponse.prenomOec
       ? `${formatPrenom(reponse.prenomOec)}`
       : reponse.prenomOec;
-    return reponse;
   }
+  return reponse;
 }

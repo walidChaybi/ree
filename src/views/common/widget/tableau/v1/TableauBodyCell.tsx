@@ -1,10 +1,12 @@
-import React from "react";
 import TableCell from "@material-ui/core/TableCell";
-import "./scss/Tableau.scss";
+import React from "react";
 import "../../../../../scss/_library.scss";
-import { TableauTypeColumn } from "./TableauRece";
 import { getValeurOuVide } from "../../../util/Utils";
 import { getText } from "../../Text";
+// Utilisation des fonctions V2 pour éviter le code dupliqué (sera nettoyé lors de la fin de l'étape 1)
+import { formaterData, getValeursCellule } from "../v2/TableauBodyCell";
+import "./scss/Tableau.scss";
+import { TableauTypeColumn } from "./TableauRece";
 
 interface TableauBodyCellProps {
   column: TableauTypeColumn;
@@ -45,25 +47,3 @@ export const TableauBodyCell: React.FC<TableauBodyCellProps> = ({
     </TableCell>
   );
 };
-
-function formaterData(datas: any[]) {
-  let data: string = "";
-  datas.forEach((d: any, i: number) => {
-    if (i === 0) {
-      data = d;
-    } else if (d != null) {
-      data = `${data}\n${d}`;
-    }
-  });
-  return data;
-}
-
-function getValeursCellule(datas: any[]): JSX.Element {
-  return (
-    <>
-      {datas.map((d: any, index: number) => {
-        return <div key={`valeur-${index}`}>{d}</div>;
-      })}
-    </>
-  );
-}

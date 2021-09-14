@@ -3,16 +3,14 @@ import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import { configAgent } from "../../../../mock/superagent-config/superagent-mock-agent";
-import { useUtilisateurApi } from "../../../../views/pages/espaceDelivrance/v2/hook/DonneesUtilisateursServiceHookV2";
+import { useUtilisateurApi } from "../../../../views/common/hook/DonneesUtilisateursServiceHook";
 
 const superagentMock = require("superagent-mock")(request, configAgent);
 
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const { dataState = [] } = useUtilisateurApi({
-    idArobas: "5ef4b1da1e3ee4adf9615ec7"
-  });
+  const { dataState = [] } = useUtilisateurApi();
 
   return (
     <>

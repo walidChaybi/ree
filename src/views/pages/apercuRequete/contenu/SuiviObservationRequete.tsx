@@ -32,7 +32,7 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
               >
                 {`${Observation.getTexte(el)} - ${Observation.getDate(el)} ${
                   Observation.getTrigramme(el) !== "RECE"
-                    ? `- ${Observation.getTrigramme(el)}`
+                    ? getTrigramme(el)
                     : ""
                 }`}
               </ListItemText>
@@ -42,3 +42,6 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
     </div>
   );
 };
+function getTrigramme(observation: IObservation) {
+  return `- ${Observation.getTrigramme(observation)}`;
+}

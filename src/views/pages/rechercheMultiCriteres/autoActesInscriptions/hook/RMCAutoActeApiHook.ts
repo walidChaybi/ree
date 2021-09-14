@@ -7,7 +7,7 @@ import {
   IParamsTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
-import { mappingActes } from "../../acteInscription/hook/RMCActeInscriptionUtils";
+import { mappingActes } from "../../common/mapping/RMCMappingUtil";
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoActeApiHook(
@@ -16,10 +16,9 @@ export function useRMCAutoActeApiHook(
   range?: string
 ) {
   const [dataRMCAutoActe, setDataRMCAutoActe] = useState<IResultatRMCActe[]>();
-  const [
-    dataTableauRMCAutoActe,
-    setDataTableauRMCAutoActe
-  ] = useState<IParamsTableau>();
+  const [dataTableauRMCAutoActe, setDataTableauRMCAutoActe] = useState<
+    IParamsTableau
+  >();
 
   useEffect(() => {
     if (requete) {

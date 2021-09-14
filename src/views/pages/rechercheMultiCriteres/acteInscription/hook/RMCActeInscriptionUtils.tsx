@@ -1,6 +1,5 @@
 import ReportIcon from "@material-ui/icons/Report";
 import React from "react";
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
 import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
@@ -9,7 +8,6 @@ import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoi
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { RMCRepertoire } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   getDateDebutFromDateCompose,
@@ -23,6 +21,7 @@ import {
   getValeurOuVide,
   valeurOuUndefined
 } from "../../../../common/util/Utils";
+import { getCriteresTitulaire } from "../../common/mapping/RMCMappingUtil";
 
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(
@@ -31,12 +30,7 @@ export function mappingCriteres(
   let criteresMapper: IRMCRequestActesInscriptions;
   criteresMapper = {
     // Filtre Titulaire
-    nomTitulaire: valeurOuUndefined(criteres.titulaire?.nom),
-    prenomTitulaire: valeurOuUndefined(criteres.titulaire?.prenom),
-    jourNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.jour),
-    moisNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.mois),
-    anneeNaissance: valeurOuUndefined(criteres.titulaire?.dateNaissance?.annee),
-    paysNaissance: valeurOuUndefined(criteres.titulaire?.paysNaissance),
+    ...getCriteresTitulaire(criteres),
     // Filtre Date de création
     dateCreationDebut: getDateDebutFromDateCompose(
       criteres.datesDebutFinAnnee?.dateDebut
@@ -82,29 +76,6 @@ export function mappingCriteres(
     )
   };
   return criteresMapper;
-}
-
-/** Actes: mapping après appel d'api */
-export function mappingActes(data: any): IResultatRMCActe[] {
-  const actesMapper: IResultatRMCActe[] = [];
-  data.forEach((acte: any) => {
-    const acteMapper: IResultatRMCActe = {
-      idActe: acte.id,
-      nom: formatNom(acte.nom),
-      autresNoms: formatNoms(acte.autresNoms),
-      prenoms: formatPrenoms(acte.prenoms),
-      dateNaissance: getDateStringFromDateCompose({
-        jour: acte.jourNaissance,
-        mois: acte.moisNaissance,
-        annee: acte.anneeNaissance
-      }),
-      paysNaissance: getValeurOuVide(acte.paysNaissance),
-      nature: NatureActe.getEnumFor(acte.nature).libelle,
-      registre: getValeurOuVide(acte.registre)
-    };
-    actesMapper.push(acteMapper);
-  });
-  return actesMapper;
 }
 
 /** RC/RCA/PACS: mapping après appel d'api */

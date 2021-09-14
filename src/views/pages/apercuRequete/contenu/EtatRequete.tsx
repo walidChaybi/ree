@@ -1,11 +1,11 @@
-import React from "react";
-import "./scss/EtatRequete.scss";
-import { getText } from "../../../common/widget/Text";
-import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import classNames from "classnames";
+import React from "react";
 import { IDataTable } from "../../../../model/requete/IDataTable";
-import { IReponseApi } from "../../espaceDelivrance/v1/hook/DonneesRequeteHook";
+import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../../common/util/Utils";
+import { getText } from "../../../common/widget/Text";
+import { IReponseApi } from "../../espaceDelivrance/v1/hook/DonneesRequeteHook";
+import "./scss/EtatRequete.scss";
 
 interface EtatRequeteProps {
   requete: IDataTable;
@@ -31,14 +31,6 @@ export const EtatRequete: React.FC<EtatRequeteProps> = props => {
       <h1 className={styles}>{getStatutLibelle(props.requete)}</h1>
     </div>
   );
-};
-
-const getRequeteTraiteeLibelle = (data: IDataTable) => {
-  return getText("pages.delivrance.apercu.entete.traitee", [
-    data.reponse?.prenomOec || "",
-    data.reponse?.nomOec || "",
-    data.dateStatut
-  ]);
 };
 
 const isReponseAttribuee = (reponse: IReponseApi) => {
@@ -72,64 +64,90 @@ const getRequeteATraiter = (data: IDataTable) => {
 };
 
 const getRequeteDoublon = (data: IDataTable) => {
+  let text = "";
   if (data.idRequeteInitiale) {
-    return getText("pages.delivrance.apercu.entete.enDoublon", [
+    text = getText("pages.delivrance.apercu.entete.enDoublon", [
       data.idRequeteInitiale.toString(),
       data.dateCreation
     ]);
   }
+  return text;
 };
 
-const getRequeteTransferee = (data: IDataTable) => {
-  return getText("pages.delivrance.apercu.entete.transferee", [
-    data.reponse?.prenomOec || "",
-    data.reponse?.nomOec || "",
-    data.dateStatut
-  ]);
+const getRequeteTraiteeLibelle = (data: IDataTable) => {
+  return getTextAvecPrenomNomStatut(
+    data,
+    "pages.delivrance.apercu.entete.traitee"
+  );
 };
 
-const getRequeteASigner = (data: IDataTable) => {
-  return getText("pages.delivrance.apercu.entete.aSigner", [
-    data.reponse?.prenomOec || "",
-    data.reponse?.nomOec || "",
-    data.dateStatut
-  ]);
+const getRequeteTransferee = (dataRT: IDataTable) => {
+  return getTextAvecPrenomNomStatut(
+    dataRT,
+    "pages.delivrance.apercu.entete.transferee"
+  );
+};
+
+const getRequeteASigner = (dataRaS: IDataTable) => {
+  return getTextAvecPrenomNomStatut(
+    dataRaS,
+    "pages.delivrance.apercu.entete.aSigner"
+  );
 };
 
 const getStatutLibelle = (data: IDataTable) => {
+  let statutLibelle = "";
+  formatNomPrenom(data);
+  switch (data.statut) {
+    case StatutRequete.ATraiterDemat:
+    case StatutRequete.TraiteDemat:
+    case StatutRequete.AImprimer:
+    case StatutRequete.Imprime: {
+      statutLibelle = getRequeteTraiteeLibelle(data);
+      break;
+    }
+
+    case StatutRequete.PriseEnCharge: {
+      statutLibelle = getRequetePriseEnCharge(data);
+      break;
+    }
+    case StatutRequete.ATraiter: {
+      statutLibelle = getRequeteATraiter(data);
+      break;
+    }
+    case StatutRequete.Doublon: {
+      statutLibelle = getRequeteDoublon(data);
+      break;
+    }
+    case StatutRequete.Transferee: {
+      statutLibelle = getRequeteTransferee(data);
+      break;
+    }
+    case StatutRequete.ASigner: {
+      statutLibelle = getRequeteASigner(data);
+      break;
+    }
+    default: {
+      statutLibelle = "";
+      break;
+    }
+  }
+  return statutLibelle;
+};
+
+function formatNomPrenom(data: IDataTable) {
   if (data.reponse) {
     data.reponse.prenomOec = premiereLettreEnMajusculeLeResteEnMinuscule(
       data.reponse.prenomOec
     );
     data.reponse.nomOec = data.reponse.nomOec.toLocaleUpperCase();
   }
-  switch (data.statut) {
-    case StatutRequete.ATraiterDemat: {
-      return getRequeteTraiteeLibelle(data);
-    }
-    case StatutRequete.TraiteDemat: {
-      return getRequeteTraiteeLibelle(data);
-    }
-    case StatutRequete.AImprimer: {
-      return getRequeteTraiteeLibelle(data);
-    }
-    case StatutRequete.Imprime: {
-      return getRequeteTraiteeLibelle(data);
-    }
-    case StatutRequete.PriseEnCharge: {
-      return getRequetePriseEnCharge(data);
-    }
-    case StatutRequete.ATraiter: {
-      return getRequeteATraiter(data);
-    }
-    case StatutRequete.Doublon: {
-      return getRequeteDoublon(data);
-    }
-    case StatutRequete.Transferee: {
-      return getRequeteTransferee(data);
-    }
-    case StatutRequete.ASigner: {
-      return getRequeteASigner(data);
-    }
-  }
-};
+}
+
+function getTextAvecPrenomNomStatut(data: IDataTable, msgKey: string) {
+  return getText(msgKey, [
+    data.reponse?.prenomOec || "",
+    data.reponse?.nomOec || "",
+    data.dateStatut
+  ]);
+}

@@ -20,7 +20,7 @@ import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/auto
 import { BandeauRequete } from "../contenu/BandeauRequete";
 import {
   DocumentsReponses,
-  infoDocumentAffiche
+  InfoDocumentAffiche
 } from "../contenu/document/DocumentsReponses";
 import { FenetreDocumentReponse } from "../contenu/document/FenetreDocumentReponse";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
@@ -73,20 +73,13 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     dataHistory?.dataTableauRMCAutoInscription
   );
 
-  // const dataRMCAutoActe = dataHistory?.dataRMCAutoActe;
-  // const dataTableauRMCAutoActe = dataHistory?.dataTableauRMCAutoActe;
-  // const dataRMCAutoInscription = dataHistory?.dataRMCAutoInscription;
-  // const dataTableauRMCAutoInscription =
-  // dataHistory?.dataTableauRMCAutoInscription;
-
   const [valuesRMC, setValuesRMC] = useState<IRMCActeInscription>({});
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [
-    criteresRechercheActe,
-    setCriteresRechercheActe
-  ] = useState<ICriteresRecherche>();
+  const [criteresRechercheActe, setCriteresRechercheActe] = useState<
+    ICriteresRecherche
+  >();
 
   const [
     criteresRechercheInscription,
@@ -116,20 +109,20 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     }
   }, [dataRMCInscription, dataTableauRMCInscription]);
 
-  const setRangeActe = (range: string) => {
-    if (valuesRMC && range !== "") {
+  const setRangeActe = (rangeActe: string) => {
+    if (valuesRMC && rangeActe !== "") {
       setCriteresRechercheActe({
         valeurs: valuesRMC,
-        range
+        range: rangeActe
       });
     }
   };
 
-  const setRangeInscription = (range: string) => {
-    if (valuesRMC && range !== "") {
+  const setRangeInscription = (rangeInscription: string) => {
+    if (valuesRMC && rangeInscription !== "") {
       setCriteresRechercheInscription({
         valeurs: valuesRMC,
-        range
+        range: rangeInscription
       });
     }
   };
@@ -150,10 +143,9 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   };
 
   // Gestion du clic sur une colonne de type checkbox
-  const [
-    alertesActeApiParameters,
-    setalertesActeApiParameters
-  ] = useState<AlertesActeApiHookParameters>();
+  const [alertesActeApiParameters, setalertesActeApiParameters] = useState<
+    AlertesActeApiHookParameters
+  >();
   const [actes, setActes] = useState<Map<number, IResultatRMCActe>>(
     new Map([])
   );
@@ -200,7 +192,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   );
 
   // Gestion des documents délivrés
-  const [documentReponse, setDocumentReponse] = useState<infoDocumentAffiche>({
+  const [documentReponse, setDocumentReponse] = useState<InfoDocumentAffiche>({
     id: "",
     nom: ""
   });
@@ -211,7 +203,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     setIsFenetreOuverte(!isFenetreOuverte);
   }
 
-  function openFenetre(infoDoc: infoDocumentAffiche) {
+  function openFenetre(infoDoc: InfoDocumentAffiche) {
     setDocumentReponse(infoDoc);
     toggleFenetre();
   }

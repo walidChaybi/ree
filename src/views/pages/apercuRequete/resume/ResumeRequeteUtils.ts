@@ -11,8 +11,10 @@ import {
   TitulaireRequete
 } from "../../../../model/requete/v2/ITitulaireRequete";
 import {
+  DEUX,
   formatPrenom,
-  triListeObjetsSurPropriete
+  triListeObjetsSurPropriete,
+  TROIS
 } from "../../../common/util/Utils";
 import { SectionContentProps } from "../../../common/widget/section/SectionContent";
 import { SectionPanelProps } from "../../../common/widget/section/SectionPanel";
@@ -31,12 +33,12 @@ export function getPanelsResumeRequete(requete?: TRequete) {
     panels[1] = getPanelTitulaireRequeteDelivrance(requete);
     if (requete.type === TypeRequete.DELIVRANCE) {
       panels[0] = getRequeteDelivranceSousType(requete as IRequeteDelivrance);
-      panels[2] = getRequeteDelivranceInfos(requete as IRequeteDelivrance);
+      panels[DEUX] = getRequeteDelivranceInfos(requete as IRequeteDelivrance);
     } else {
       panels[0] = getRequeteSansSousType();
-      panels[2] = getRequeteAutreInfos(requete);
+      panels[DEUX] = getRequeteAutreInfos(requete);
     }
-    panels[3] = getPanelRequerantRequeteDelivrance(requete);
+    panels[TROIS] = getPanelRequerantRequeteDelivrance(requete);
   }
   return panels;
 }

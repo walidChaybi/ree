@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { getUtilisateurs } from "../../../../../api/appels/agentApi";
-import { logError } from "../../../../common/util/LogManager";
+import { useEffect, useState } from "react";
+import { getUtilisateurs } from "../../../api/appels/agentApi";
+import { logError } from "../util/LogManager";
 
 export interface IUtilisateurApi {
   idUtilisateur: string;

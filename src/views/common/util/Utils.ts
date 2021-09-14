@@ -236,3 +236,7 @@ export function compactObject(object: any): any {
   }
   return object;
 }
+
+export function tousNonVides(...args: any[]): boolean {
+  return args.length > 0 && args.every(elem => elem);
+}

@@ -1,10 +1,8 @@
-import "../../../../../scss/_library.scss";
-import "./scss/Tableau.scss";
-
 import TableCell from "@material-ui/core/TableCell";
 import React from "react";
-
+import "../../../../../scss/_library.scss";
 import { getValeurOuVide } from "../../../util/Utils";
+import "./scss/Tableau.scss";
 import { TableauTypeColumn } from "./TableauTypeColumn";
 
 interface TableauBodyCellProps {
@@ -42,8 +40,8 @@ export const TableauBodyCell: React.FC<TableauBodyCellProps> = ({
   );
 };
 
-function formaterData(datas: any[]) {
-  let data: string = "";
+export function formaterData(datas: any[]) {
+  let data = "";
   datas.forEach((d: any, i: number) => {
     if (i === 0) {
       data = d;
@@ -54,7 +52,7 @@ function formaterData(datas: any[]) {
   return data;
 }
 
-function getValeursCellule(datas: any[]): JSX.Element {
+export function getValeursCellule(datas: any[]): JSX.Element {
   return (
     <>
       {datas.map((d: any, index: number) => {

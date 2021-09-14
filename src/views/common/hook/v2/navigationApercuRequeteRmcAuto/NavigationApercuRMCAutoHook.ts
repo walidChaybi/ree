@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
 import { IUrlData, receUrl } from "../../../../router/ReceUrls";
+import { tousNonVides } from "../../../util/Utils";
 import { INavigationApercu, useNavigationApercu } from "./NavigationApercuHook";
 import { IRMCAutoParams, useRMCAutoHook } from "./RMCAutoHook";
 
@@ -30,7 +31,7 @@ export function useNavigationApercuRMCAuto(
 
   useEffect(() => {
     if (navigation) {
-      if (navigation.isRmcAuto && rmcAutoNavigationParams) {
+      if (tousNonVides(navigation.isRmcAuto, rmcAutoNavigationParams)) {
         setParamsRMCAuto(rmcAutoNavigationParams);
       } else if (navigation.url) {
         setUrlDataToPush({ url: navigation.url });
@@ -46,20 +47,26 @@ export function useNavigationApercuRMCAuto(
 
   useEffect(
     () => {
-      if (urlDataToPush && rmcAutoNavigationParams) {
+      if (tousNonVides(urlDataToPush, rmcAutoNavigationParams)) {
         if (
-          receUrl.estUrlApercuRequete(rmcAutoNavigationParams?.urlCourante) ||
-          receUrl.estUrlApercuTraitementRequete(
-            rmcAutoNavigationParams?.urlCourante
-          )
+          // @ts-ignore (forcément valué)
+          estUrlApercuOuTraitementRequete(rmcAutoNavigationParams?.urlCourante)
         ) {
+          // @ts-ignore (forcément valué)
           receUrl.replaceUrl(history, urlDataToPush.url, urlDataToPush.data);
         } else {
+          // @ts-ignore (forcément valué)
           history.push(urlDataToPush.url, urlDataToPush.data);
         }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [urlDataToPush, rmcAutoNavigationParams?.dataRequetes]
+  );
+}
+function estUrlApercuOuTraitementRequete(url: string) {
+  return (
+    receUrl.estUrlApercuRequete(url) ||
+    receUrl.estUrlApercuTraitementRequete(url)
   );
 }

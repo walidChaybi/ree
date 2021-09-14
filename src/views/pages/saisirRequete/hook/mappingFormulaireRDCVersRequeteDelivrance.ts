@@ -5,10 +5,9 @@ import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDe
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { TypeNatureActe } from "../../../../model/requete/v2/enum/TypeNatureActe";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
-import { IPrenomOrdonnes } from "../../../../model/requete/v2/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { supprimeProprietesVides } from "../../../common/util/supprimeProprietesVides";
-import { getValeurOuVide } from "../../../common/util/Utils";
+import { DEUX, getValeurOuVide } from "../../../common/util/Utils";
 import {
   CreationRequeteRDC,
   SaisieRequeteRDC
@@ -18,6 +17,7 @@ import {
   Identite,
   LienTitulaire
 } from "../modelForm/ISaisirRequetePageModel";
+import { getPrenoms } from "./mappingCommun";
 
 const SNP = "SNP";
 
@@ -80,7 +80,7 @@ function getTitulairesRequete(saisie: SaisieRequeteRDC) {
 
   newTitulaires.push(getTitulaire(titulaire1, 1));
   if (TypeNatureActe.MARIAGE === natureActe) {
-    newTitulaires.push(getTitulaire(titulaire2, 2));
+    newTitulaires.push(getTitulaire(titulaire2, DEUX));
   }
   return newTitulaires;
 }
@@ -122,20 +122,6 @@ function getFiliation(titulaire: Identite) {
     return parents;
   }
   return null;
-}
-
-function getPrenoms(prenoms: any): IPrenomOrdonnes[] {
-  const prenomsInteresse = [] as IPrenomOrdonnes[];
-  if (prenoms.prenom1 !== "") {
-    prenomsInteresse.push({ prenom: prenoms.prenom1, numeroOrdre: 1 });
-  }
-  if (prenoms.prenom2 !== "") {
-    prenomsInteresse.push({ prenom: prenoms.prenom2, numeroOrdre: 2 });
-  }
-  if (prenoms.prenom3 !== "") {
-    prenomsInteresse.push({ prenom: prenoms.prenom3, numeroOrdre: 3 });
-  }
-  return prenomsInteresse;
 }
 
 function getMandant(saisie: SaisieRequeteRDC) {

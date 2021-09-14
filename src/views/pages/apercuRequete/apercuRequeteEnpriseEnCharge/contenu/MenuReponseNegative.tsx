@@ -37,6 +37,9 @@ import { IActionProps } from "./ChoixAction";
 import { useReponseNegative } from "./hook/ChoixReponseNegativeHook";
 import { estSeulementActeMariage } from "./VerificationChoixSeulementActeMariage";
 
+const ERREUR_PAS_DE_REQUERENT =
+  "Erreur inattendue: Pas de requérant pour la requête";
+
 export const MenuReponseNegative: React.FC<IActionProps> = props => {
   const history = useHistory();
 
@@ -197,9 +200,7 @@ export const createReponseNegativePourCompositionApiDemandeIncomplete = async (
       requete.numero
     );
   } else {
-    messageManager.showErrorAndClose(
-      "Erreur inattendue: Pas de requérant pour la requête"
-    );
+    messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
   }
 
   return reponseNegative;
@@ -217,9 +218,7 @@ export const createReponseNegativePourCompositionApiMariage = async (
       mapActe(infoActe.body.data)
     );
   } else {
-    messageManager.showErrorAndClose(
-      "Erreur inattendue: Pas de requérant pour la requête"
-    );
+    messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
   }
 
   return reponseNegative;
@@ -234,9 +233,7 @@ export const createReponseNegativePourCompositionApiFrancais = async (
       requete
     );
   } else {
-    messageManager.showErrorAndClose(
-      "Erreur inattendue: Pas de requérant pour la requête"
-    );
+    messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
   }
 
   return reponseNegative;

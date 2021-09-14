@@ -11,6 +11,8 @@ interface FenetrePieceProps {
   toggleFenetre: () => void;
 }
 
+const RATIO_WIDTH = 0.33;
+const RATIO_HEIGHT = 0.66;
 export const FenetrePiecesJustificatives: React.FC<FenetrePieceProps> = props => {
   const contenuPiece = useGetPieceJustificativeApi(props.idPiece);
   return (
@@ -19,8 +21,8 @@ export const FenetrePiecesJustificatives: React.FC<FenetrePieceProps> = props =>
       onCloseHandler={() => {
         onClose(props);
       }}
-      ratioWidth={0.33}
-      ratioHeight={0.66}
+      ratioWidth={RATIO_WIDTH}
+      ratioHeight={RATIO_HEIGHT}
     >
       <VisionneuseDocument
         titre={"Pièce Justificative"}

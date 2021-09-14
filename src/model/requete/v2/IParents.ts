@@ -1,6 +1,11 @@
 /* istanbul ignore file */
 
-import { formatNom, formatPrenoms } from "../../../views/common/util/Utils";
+import {
+  DEUX,
+  formatNom,
+  formatPrenoms,
+  UN
+} from "../../../views/common/util/Utils";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 
 export interface IParent {
@@ -18,8 +23,8 @@ export const Parent = {
     return parent && parent.prenoms && parent.prenoms.length > 0
       ? formatPrenoms([
           parent.prenoms[0].prenom,
-          parent.prenoms[1]?.prenom,
-          parent.prenoms[2]?.prenom
+          parent.prenoms[UN]?.prenom,
+          parent.prenoms[DEUX]?.prenom
         ])
       : "";
   }

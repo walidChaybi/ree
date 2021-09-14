@@ -1,10 +1,10 @@
-import React from "react";
 import TableCell, { SortDirection } from "@material-ui/core/TableCell";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
+import classNames from "classnames";
+import React from "react";
+import "../../../../../scss/_library.scss";
 import { getLibelle } from "../../Text";
 import { SortOrder } from "./../TableUtils";
-import classNames from "classnames";
-import "../../../../../scss/_library.scss";
 import { TableauTypeColumn } from "./TableauTypeColumn";
 
 interface TableauHeaderCellProps {
@@ -23,7 +23,7 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
   const styles = classNames({
     OrderedHeaderCell: orderBy === column.keys[0],
     TableauFontHeader: true,
-    CursorHeader: !(orderBy && orderBy && sortHandler)
+    CursorHeader: !(orderBy && sortHandler)
   });
 
   let orderTableCell: SortDirection = false;
@@ -50,7 +50,7 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
         active={orderBy === column.keys[0]}
         direction={orderBy === column.keys[0] ? orderTableLabel : "asc"}
         onClick={sortHandler(column.keys[0])}
-        hideSortIcon={!(orderBy === column.keys[0])}
+        hideSortIcon={orderBy !== column.keys[0]}
       >
         {getLibelle(column.title)}
       </TableSortLabel>

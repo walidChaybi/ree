@@ -19,6 +19,7 @@ import {
   numberToString,
   premiereLettreEnMajusculeLeResteEnMinuscule,
   supprimerNullEtUndefinedDuTableau,
+  tousNonVides,
   triListeObjetsSurPropriete,
   valeurOuUndefined
 } from "../../../views/common/util/Utils";
@@ -236,4 +237,12 @@ test("Attendu: supprimerNullEtUndefinedDuTableau fonctionne correctement", () =>
   expect(
     supprimerNullEtUndefinedDuTableau(["", "a", null, "b", undefined])
   ).toEqual(["", "a", "b"]);
+});
+
+test("Attendu: tousNonVides fonctionne correctement", () => {
+  expect(tousNonVides(undefined)).toBeFalsy();
+  expect(tousNonVides("a", "b", null)).toBeFalsy();
+  expect(tousNonVides("a", "b", undefined)).toBeFalsy();
+  expect(tousNonVides("a", "b", "")).toBeFalsy();
+  expect(tousNonVides("a", "b", "c")).toBeTruthy();
 });

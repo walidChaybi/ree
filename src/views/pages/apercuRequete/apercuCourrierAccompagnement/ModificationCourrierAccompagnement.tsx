@@ -68,52 +68,49 @@ const ValidationSchemaAccompagnement = Yup.object({
   })
 });
 
-export const ModificationCourrierAccompagnement: React.FC<ModificationCourrierAccompagnementProps> =
-  props => {
-    const optionsCourrier = getOptionsCourrier(
-      props.requete,
-      props.acteSelected
-    );
+export const ModificationCourrierAccompagnement: React.FC<ModificationCourrierAccompagnementProps> = props => {
+  const optionsCourrier = getOptionsCourrier(props.requete, props.acteSelected);
 
-    const titre = accompagnementExiste(props.requete)
-      ? getLibelle("Modification du courrier")
-      : getLibelle("Création du courrier");
+  const titre = accompagnementExiste(props.requete)
+    ? getLibelle("Modification du courrier")
+    : getLibelle("Création du courrier");
 
-    // TODO Modification du courrier existant
-    // eslint-disable-next-line
-    const [saisieAccompagnement, setSaisieAccompagnement] =
-      useState<SaisieAccompagnement>();
+  // TODO Modification du courrier existant
+  // eslint-disable-next-line
+  const [saisieAccompagnement, setSaisieAccompagnement] = useState<
+    SaisieAccompagnement
+  >();
 
-    const boutonsProps = {} as BoutonsCourrierAccompagnementProps;
+  const boutonsProps = {} as BoutonsCourrierAccompagnementProps;
 
-    const onSubmit = () => {};
+  const onSubmit = () => {};
 
-    useEffect(() => {}, []);
+  useEffect(() => {}, []);
 
-    return (
-      <>
-        <title>{titre}</title>
-        <Formulaire
-          titre={titre}
-          formDefaultValues={
-            saisieAccompagnement ||
-            getDefaultValuesAccompagnement(props.requete, optionsCourrier[0])
-          }
-          formValidationSchema={ValidationSchemaAccompagnement}
-          onSubmit={onSubmit}
-          className="FormulaireAccompagnement"
-        >
-          <CourrierAccompagnementForm
-            optionsCourrier={optionsCourrier}
-            requete={props.requete}
-          />
-          <BoutonsCourrierAccompagnement
-            {...boutonsProps}
-          ></BoutonsCourrierAccompagnement>
-        </Formulaire>
-      </>
-    );
-  };
+  return (
+    <>
+      <title>{titre}</title>
+      <Formulaire
+        titre={titre}
+        formDefaultValues={
+          saisieAccompagnement ||
+          getDefaultValuesAccompagnement(props.requete, optionsCourrier[0])
+        }
+        formValidationSchema={ValidationSchemaAccompagnement}
+        onSubmit={onSubmit}
+        className="FormulaireAccompagnement"
+      >
+        <CourrierAccompagnementForm
+          optionsCourrier={optionsCourrier}
+          requete={props.requete}
+        />
+        <BoutonsCourrierAccompagnement
+          {...boutonsProps}
+        ></BoutonsCourrierAccompagnement>
+      </Formulaire>
+    </>
+  );
+};
 
 export const getOptionsCourrier = (
   requete: IRequeteDelivrance,
@@ -143,18 +140,10 @@ export const getOptionsCourrier = (
       break;
     case ChoixDelivrance.REP_SANS_DEL_EC_DIVERS:
       courrierOptions = [CourrierDelivrance.getOptionFromLibelle(DIVERS)];
-      if (
-        acteSelected &&
-        acteSelected.some(
-          element =>
-            element.nature === NatureActe.NAISSANCE.libelle ||
-            element.nature === NatureActe.DECES.libelle
-        )
-      ) {
-        courrierOptions.push(
-          CourrierDelivrance.getOptionFromLibelle(REFUS_DELIVRANCE_MARIAGE)
-        );
-      }
+      majOptionsPourActeNaissaneOuDecesSelectionne(
+        acteSelected,
+        courrierOptions
+      );
       break;
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
       courrierOptions = [
@@ -217,3 +206,20 @@ const accompagnementExiste = (requete: IRequeteDelivrance) => {
     element => element.typeDocument === TypeDocument.CourrierAccompagnement
   );
 };
+function majOptionsPourActeNaissaneOuDecesSelectionne(
+  acteSelected: IResultatRMCActe[] | undefined,
+  courrierOptions: Options
+) {
+  if (
+    acteSelected &&
+    acteSelected.some(
+      element =>
+        element.nature === NatureActe.NAISSANCE.libelle ||
+        element.nature === NatureActe.DECES.libelle
+    )
+  ) {
+    courrierOptions.push(
+      CourrierDelivrance.getOptionFromLibelle(REFUS_DELIVRANCE_MARIAGE)
+    );
+  }
+}

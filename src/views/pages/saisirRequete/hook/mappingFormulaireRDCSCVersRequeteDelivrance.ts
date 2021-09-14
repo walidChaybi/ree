@@ -3,7 +3,6 @@ import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
-import { IPrenomOrdonnes } from "../../../../model/requete/v2/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IPieceJustificative } from "../../../common/types/RequeteType";
 import { supprimeProprietesVides } from "../../../common/util/supprimeProprietesVides";
@@ -13,6 +12,7 @@ import {
   SaisieRequeteRDCSC
 } from "../modelForm/ISaisirRDCSCPageModel";
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
+import { getPrenoms } from "./mappingCommun";
 
 const SNP = "SNP";
 
@@ -52,20 +52,6 @@ function getInteresseRequete(interesse: Identite) {
         parentsTitulaire: []
       }
     : {};
-}
-
-function getPrenoms(prenoms: any): IPrenomOrdonnes[] {
-  const prenomsInteresse = [] as IPrenomOrdonnes[];
-  if (prenoms.prenom1 !== "") {
-    prenomsInteresse.push({ prenom: prenoms.prenom1, numeroOrdre: 1 });
-  }
-  if (prenoms.prenom2 !== "") {
-    prenomsInteresse.push({ prenom: prenoms.prenom2, numeroOrdre: 2 });
-  }
-  if (prenoms.prenom3 !== "") {
-    prenomsInteresse.push({ prenom: prenoms.prenom3, numeroOrdre: 3 });
-  }
-  return prenomsInteresse;
 }
 
 export function getRequerant(saisie: SaisieRequeteRDCSC) {

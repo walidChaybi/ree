@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { rechercheMultiCriteresActes } from "../../../../../api/appels/etatcivilApi";
 import { IRMCActeArchive } from "../../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -7,7 +7,8 @@ import {
   IParamsTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
-import { mappingActes, mappingCriteres } from "./RMCActeArchiveUtils";
+import { mappingActes } from "../../common/mapping/RMCMappingUtil";
+import { mappingCriteres } from "./RMCActeArchiveUtils";
 
 export interface ICriteresRecherche {
   valeurs: IRMCActeArchive;
@@ -16,10 +17,9 @@ export interface ICriteresRecherche {
 
 export function useRMCActeArchiveApiHook(criteres?: ICriteresRecherche) {
   const [dataRMCActe, setDataRMCActe] = useState<IResultatRMCActe[]>();
-  const [
-    dataTableauRMCActe,
-    setDataTableauRMCActe
-  ] = useState<IParamsTableau>();
+  const [dataTableauRMCActe, setDataTableauRMCActe] = useState<
+    IParamsTableau
+  >();
   useEffect(() => {
     if (criteres != null && criteres.valeurs != null) {
       const criteresRequest = mappingCriteres(criteres.valeurs);
