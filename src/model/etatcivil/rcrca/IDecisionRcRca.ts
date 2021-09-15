@@ -12,4 +12,6 @@ export interface IDecisionRcRca {
   autorite: IAutorite;
   sourceConfirmation: ISourceConfirmation;
   instructionProcureur: IInstructionProcureur;
+  // cas d'une décision Notaire de type Requête exécutée par une juridiction
+  juridictionExecutante?: IAutorite;
 }

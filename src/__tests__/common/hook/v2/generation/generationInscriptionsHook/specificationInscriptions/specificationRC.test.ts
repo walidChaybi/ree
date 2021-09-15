@@ -1,7 +1,10 @@
 import request from "superagent";
 import {
   FicheRcDecisionNotaire,
-  FicheRcRenouvellement
+  FicheRcDecisionNotaireTypeRequete,
+  FicheRcDecisionNotaireTypeRequete2,
+  FicheRcRenouvellementTypeJugement,
+  FicheRcRenouvellementTypeOrdonnance
 } from "../../../../../../../mock/data/ficheRC";
 import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { NatureRc } from "../../../../../../../model/etatcivil/enum/NatureRc";
@@ -12,7 +15,7 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 beforeAll(() => {
   NatureRc.init();
 });
-test("Attendu: specificationRC.getElementsJasper ", async () => {
+test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autre que Requete", async () => {
   const data = FicheRcDecisionNotaire;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
@@ -20,8 +23,10 @@ Date de naissance: 01 Septembre 1983
 Lieu de naissance: Paris Arrdt 20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
-  expect(elementsJasper.decisionRecue1).toBe("TODO US 499");
-  expect(elementsJasper.decisionRecue2).toBe("TODO US 499");
+  expect(elementsJasper.decisionRecue1).toBe(
+    "Le service central d'état civil a reçu un acte établi par Maitre Jean DUPONT, notaire à Paris Arrdt 18, office notarial n°1234567, le 26 Novembre 2020"
+  );
+  expect(elementsJasper.decisionRecue2).toBe("concernant le placement de : ");
   expect(elementsJasper.interesseDecision).toBe(interesse);
   expect(elementsJasper.regime).toBe("sous le régime de curatelle simple");
   expect(elementsJasper.renouvellementModification).toBeUndefined();
@@ -32,8 +37,56 @@ Lieu de naissance: Paris Arrdt 20`;
   );
 });
 
-test("Attendu: specificationRC.getElementsJasper ", async () => {
-  const data = FicheRcRenouvellement;
+test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de type Requete", async () => {
+  const data = FicheRcDecisionNotaireTypeRequete;
+  const elementsJasper = specificationRC.getElementsJasper(data);
+  const interesse = `Mathieu SLAOUI
+Date de naissance: 01 Septembre 1983
+Lieu de naissance: Paris Arrdt 20`;
+  expect(elementsJasper.anneeInscription).toBe("2020");
+  expect(elementsJasper.numeroInscription).toBe("11");
+  expect(elementsJasper.decisionRecue1).toBe(
+    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris Arrdt 20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris Arrdt 18, office notarial n°1234567, le 26 Novembre 2020"
+  );
+  expect(elementsJasper.decisionRecue2).toBe(
+    "concernant le transfert des pouvoirs de : "
+  );
+  expect(elementsJasper.interesseDecision).toBe(interesse);
+  expect(elementsJasper.regime).toBeUndefined();
+  expect(elementsJasper.renouvellementModification).toBeUndefined();
+  expect(elementsJasper.decisionExequatur).toBeUndefined();
+  expect(elementsJasper.duree).toBe("pour une durée de 1 année");
+  expect(elementsJasper.paragrapheFin).toBe(
+    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11"
+  );
+});
+
+test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de type Requete 2", async () => {
+  const data = FicheRcDecisionNotaireTypeRequete2;
+  const elementsJasper = specificationRC.getElementsJasper(data);
+  const interesse = `Mathieu SLAOUI
+Date de naissance: 01 Septembre 1983
+Lieu de naissance: Paris Arrdt 20`;
+  expect(elementsJasper.anneeInscription).toBe("2020");
+  expect(elementsJasper.numeroInscription).toBe("11");
+  expect(elementsJasper.decisionRecue1).toBe(
+    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris Arrdt 20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris Arrdt 18, office notarial n°1234567, le 26 Novembre 2020"
+  );
+  expect(elementsJasper.decisionRecue2).toBe(
+    "concernant l'habilitation familiale générale de : "
+  );
+  expect(elementsJasper.interesseDecision).toBe(interesse);
+  expect(elementsJasper.regime).toBeUndefined();
+  expect(elementsJasper.renouvellementModification).toBeUndefined();
+  expect(elementsJasper.decisionExequatur).toBeUndefined();
+  expect(elementsJasper.duree).toBe("pour une durée de 1 année");
+  expect(elementsJasper.paragrapheFin).toBe(
+    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11"
+  );
+});
+
+test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Jugement'", async () => {
+  const data = FicheRcRenouvellementTypeJugement;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesses = `Marie-charlotte, Anne-claire, Lily-rose, Abby-gaëlle SLAOUI
 Date de naissance: 01 Septembre 1983
@@ -45,13 +98,44 @@ Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
 Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du soleil levant) le 12 Juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
-  expect(elementsJasper.decisionRecue1).toBe("TODO US 499");
-  expect(elementsJasper.decisionRecue2).toBe("TODO US 499");
+  expect(elementsJasper.decisionRecue1).toBe(
+    "Le service central d'état civil a reçu le jugement du Tribunal judiciaire de Nantes (Loire-Atlantique), en date du 26 Novembre 2020"
+  );
+  expect(elementsJasper.decisionRecue2).toBe("concernant : ");
   expect(elementsJasper.interesseDecision).toBe(interesses);
   expect(elementsJasper.regime).toBeUndefined();
   expect(elementsJasper.renouvellementModification).toBe(
     "prononçant le renouvellement de la mesure de curatelle simple RC n° 2020 - 1"
   );
+  expect(elementsJasper.decisionExequatur).toBeUndefined();
+  expect(elementsJasper.duree).toBe("pour une durée de 1 mois");
+  expect(elementsJasper.paragrapheFin).toBe(
+    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 22 Novembre 2020 sous la référence : RC n°2020 - 2"
+  );
+});
+
+test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Ordonnance'", async () => {
+  const data = FicheRcRenouvellementTypeOrdonnance;
+  const elementsJasper = specificationRC.getElementsJasper(data);
+  const interesses = `Marie-charlotte, Anne-claire, Lily-rose, Abby-gaëlle SLAOUI
+Date de naissance: 01 Septembre 1983
+Lieu de naissance: Brest (Finistère)
+et
+Pierre-olivier, Félix-antoine, François-xavier LE ROUX
+Date de naissance: 24 Décembre 1987
+Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
+Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du soleil levant) le 12 Juin 2020`;
+  expect(elementsJasper.anneeInscription).toBe("2020");
+  expect(elementsJasper.numeroInscription).toBe("2");
+  expect(elementsJasper.decisionRecue1).toBe(
+    "Le service central d'état civil a reçu l'ordonnance du Tribunal judiciaire de Paris Arrdt 18, en date du 26 Novembre 2020"
+  );
+  expect(elementsJasper.decisionRecue2).toBe("concernant le placement de : ");
+  expect(elementsJasper.interesseDecision).toBe(interesses);
+  expect(elementsJasper.regime).toBe(
+    "sous le régime de tutelle aux biens et à la personne"
+  );
+  expect(elementsJasper.renouvellementModification).toBeUndefined();
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 mois");
   expect(elementsJasper.paragrapheFin).toBe(

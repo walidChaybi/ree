@@ -36,6 +36,74 @@ export function getDecisionExequatur(data: IFicheRcRca) {
   return decision;
 }
 
+export function getDecisionJuridiction(
+  infos: IFicheRcRca,
+  dateDecision: string,
+  localite: string
+) {
+  let decisionRecue = "";
+  let typeDecision = "";
+
+  switch (infos.decision?.type) {
+    case TypeDecision.JUGEMENT:
+      typeDecision = "le jugement";
+      break;
+    case TypeDecision.ORDONNANCE:
+      typeDecision = "l'ordonnance";
+      break;
+    case TypeDecision.JUDICIAIRE:
+      typeDecision = "la décision judicaire";
+      break;
+    default:
+      typeDecision = "";
+      break;
+  }
+
+  decisionRecue = `Le service central d'état civil a reçu ${typeDecision} `;
+  decisionRecue += `du ${infos.decision?.autorite.typeJuridiction} de ${localite}, `;
+  decisionRecue += `en date du ${dateDecision}`;
+
+  return decisionRecue;
+}
+
+export function getDecisionNotaire(
+  infos: IFicheRcRca,
+  dateDecision: string,
+  localite: string
+) {
+  let decisionRecue = "";
+  // décision de Notaire de type "Convention"
+  if (infos.decision?.type === TypeDecision.CONVENTION) {
+    decisionRecue = `Le service central d'état civil a reçu la convention déposée au rang des minutes de Maitre `;
+  }
+  // décision de Notaire de type "Requete"
+  else if (infos.decision?.type === TypeDecision.REQUETE) {
+    const localiteJuridictionExecutante = LieuxUtils.getLieu(
+      infos.decision?.juridictionExecutante?.ville,
+      infos.decision?.juridictionExecutante?.region,
+      infos.decision?.juridictionExecutante?.pays,
+      infos.decision?.juridictionExecutante?.arrondissement
+    );
+    decisionRecue = `Le service central d'état civil a reçu un extrait de la requête présentée auprès du ${infos.decision?.juridictionExecutante?.typeJuridiction} `;
+    decisionRecue += `de ${localiteJuridictionExecutante} afin d'obtenir homologation de l'acte reçu par Maitre `;
+  }
+  // décision de Notaire autre que de type "Convention" ou "Requete"
+  else {
+    decisionRecue = `Le service central d'état civil a reçu un acte établi par Maitre `;
+  }
+
+  decisionRecue += `${infos.decision?.autorite.prenomNotaire} ${infos.decision?.autorite.nomNotaire}, `;
+  decisionRecue += `notaire à ${localite}, `;
+
+  if (infos.decision?.autorite.numeroCrpcen) {
+    decisionRecue += `office notarial n°${infos.decision?.autorite.numeroCrpcen}, `;
+  }
+
+  decisionRecue += `le ${dateDecision}`;
+
+  return decisionRecue;
+}
+
 export function getParagrapheFin(infosRcRca: IFicheRcRca) {
   let paragrapheFin = `Conformément à l'article`;
 

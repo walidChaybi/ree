@@ -1,15 +1,75 @@
 import { NatureRc } from "../../../../../../../model/etatcivil/enum/NatureRc";
+import { TypeAutoriteUtil } from "../../../../../../../model/etatcivil/enum/TypeAutorite";
 import {
   InscriptionRcUtil,
   TypeInscriptionRc
 } from "../../../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import { IFicheRcRca } from "../../../../../../../model/etatcivil/rcrca/IFicheRcRca";
+import { LieuxUtils } from "../../../../../../../model/LieuxUtils";
+import {
+  getDateFormatJasper,
+  getDateFromTimestamp
+} from "../../../../../util/DateUtils";
 import { IElementsJasperCertificatRC } from "../GenerationCertificatRCHook";
 import {
   getDecisionExequatur,
+  getDecisionJuridiction,
+  getDecisionNotaire,
   getInteressesDecision,
   getParagrapheFin
 } from "./specificationCommunes";
+
+function getParagrapheDecisionRecue1(infosRC: IFicheRcRca) {
+  let decisionRecue = "";
+
+  if (infosRC.decision) {
+    const dateDecision = getDateFormatJasper(
+      getDateFromTimestamp(infosRC.decision?.dateDecision)
+    );
+    const localite = LieuxUtils.getLocalisationAutorite(
+      infosRC.decision?.autorite.ville,
+      infosRC.decision?.autorite.libelleDepartement,
+      infosRC.decision?.autorite.region,
+      infosRC.decision?.autorite.pays,
+      infosRC.decision?.autorite.arrondissement
+    );
+    // Si la décision au RC est une décision de Juridiction
+    if (
+      TypeAutoriteUtil.isJuridiction(infosRC.decision?.autorite.typeAutorite)
+    ) {
+      decisionRecue = getDecisionJuridiction(infosRC, dateDecision, localite);
+    }
+    // Si la décision au RC est une décision de Notaire
+    else if (
+      TypeAutoriteUtil.isNotaire(infosRC.decision?.autorite.typeAutorite)
+    ) {
+      decisionRecue = getDecisionNotaire(infosRC, dateDecision, localite);
+    }
+  }
+  return decisionRecue;
+}
+
+function getParagrapheDecisionRecue2(infosRC: IFicheRcRca) {
+  let decisionRecue = "";
+  if (infosRC.decision) {
+    if (
+      infosRC.typeInscription === TypeInscriptionRc.RENOUVELLEMENT ||
+      infosRC.typeInscription === TypeInscriptionRc.MODIFICATION
+    ) {
+      decisionRecue = "concernant : ";
+    } else if (infosRC.typeInscription === TypeInscriptionRc.INSCRIPTION) {
+      if (infosRC.nature.type === "Protection des majeurs") {
+        decisionRecue = `concernant le placement de : `;
+      } else {
+        decisionRecue =
+          infosRC.nature.article === "l'"
+            ? `concernant ${infosRC.nature.article}${infosRC.nature.libelle} de : `
+            : `concernant ${infosRC.nature.article} ${infosRC.nature.libelle} de : `;
+      }
+    }
+  }
+  return decisionRecue;
+}
 
 export function getResume(data: IFicheRcRca) {
   let resume = undefined;
@@ -61,8 +121,8 @@ class SpecificationRC {
     if (infosRC) {
       elementsJasper.anneeInscription = infosRC.annee;
       elementsJasper.numeroInscription = infosRC.numero;
-      elementsJasper.decisionRecue1 = "TODO US 499"; // TODO US 499
-      elementsJasper.decisionRecue2 = "TODO US 499"; // TODO US 499
+      elementsJasper.decisionRecue1 = getParagrapheDecisionRecue1(infosRC);
+      elementsJasper.decisionRecue2 = getParagrapheDecisionRecue2(infosRC);
       elementsJasper.interesseDecision = getInteressesDecision(infosRC);
       elementsJasper.regime = getResume(infosRC);
       elementsJasper.renouvellementModification = getRenouvellementModification(

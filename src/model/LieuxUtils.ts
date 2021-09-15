@@ -94,22 +94,74 @@ export class LieuxUtils {
     const regionString = region ? premiereLettreEnMajuscule(region) : "";
     const paysString = pays ? premiereLettreEnMajuscule(pays) : "";
 
+    const regionStringEntreParentheses = LieuxUtils.getRegionEntreParentheses(
+      regionString
+    );
     if (LieuxUtils.isPaysFrance(pays)) {
       if (
         !LieuxUtils.isVilleAvecArrondissement(ville) ||
         arrondissement == null
       ) {
-        return `${villeString} (${regionString})`;
+        return `${villeString}${regionStringEntreParentheses}`;
       } else if (!LieuxUtils.isVilleParis(villeString)) {
-        return `${villeString} Arrdt ${arrondissement} (${regionString})`;
+        return `${villeString} Arrdt ${arrondissement}${regionStringEntreParentheses}`;
       } else {
         return `${villeString} Arrdt ${arrondissement}`;
       }
     } else {
-      const regionAffichage = ` - ${regionString}`;
-      const paysAffichage = paysString ? ` (${paysString})` : "";
-      return `${villeString}${region ? regionAffichage : ""}${paysAffichage}`;
+      return LieuxUtils.formatAdresseEtrangere(
+        paysString,
+        regionString,
+        villeString
+      );
     }
+  }
+  private static getRegionEntreParentheses(regionString: string) {
+    return regionString ? ` (${regionString})` : "";
+  }
+
+  public static getLocalisationAutorite(
+    ville?: string,
+    libelleDepartement?: string,
+    region?: string,
+    pays?: string,
+    arrondissement?: string
+  ): string {
+    const villeString = ville ? premiereLettreEnMajuscule(ville) : "";
+    const libelleDepartementString = LieuxUtils.getRegionEntreParentheses(
+      libelleDepartement ? premiereLettreEnMajuscule(libelleDepartement) : ""
+    );
+    const regionString = region ? premiereLettreEnMajuscule(region) : "";
+    const paysString = pays ? premiereLettreEnMajuscule(pays) : "";
+
+    if (LieuxUtils.isPaysFrance(pays)) {
+      if (
+        !LieuxUtils.isVilleAvecArrondissement(ville) ||
+        arrondissement == null
+      ) {
+        return `${villeString}${libelleDepartementString}`;
+      } else if (!LieuxUtils.isVilleParis(villeString)) {
+        return `${villeString} Arrdt ${arrondissement}${libelleDepartementString}`;
+      } else {
+        return `${villeString} Arrdt ${arrondissement}`;
+      }
+    } else {
+      return LieuxUtils.formatAdresseEtrangere(
+        paysString,
+        regionString,
+        villeString
+      );
+    }
+  }
+
+  public static formatAdresseEtrangere(
+    pays: string,
+    region: string,
+    ville: string
+  ) {
+    const regionAffichage = ` - ${region}`;
+    const paysAffichage = pays ? ` (${pays})` : "";
+    return `${ville}${region ? regionAffichage : ""}${paysAffichage}`;
   }
 
   public static affichagePaysCourrier(pays: string) {

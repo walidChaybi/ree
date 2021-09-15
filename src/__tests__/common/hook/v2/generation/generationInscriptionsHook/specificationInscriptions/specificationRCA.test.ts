@@ -38,7 +38,7 @@ Lieu de naissance: Nantes (Loire-Atlantique)`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("4013");
   expect(elementsJasper.decisionRecue).toBe(
-    "Le service central d'état civil a reçu le jugement du Tribunal judiciaire de Paris Arrdt 18, en date du 26 Novembre 2020 concernant le changement de régime matrimonial par acte notarié étranger / instruction du Procureur de :  "
+    "Le service central d'état civil a reçu le jugement du Tribunal judiciaire de Paris Arrdt 18, en date du 26 Novembre 2020 concernant le changement de régime matrimonial par acte notarié étranger / instruction du Procureur de : "
   );
   expect(elementsJasper.interesseDecision).toBe(interesse);
   expect(elementsJasper.decisionExequatur).toBe(
@@ -63,7 +63,7 @@ Mariés devant les autorités consulaires de Italie en France le 28 Juin 2018`;
   expect(elementsJasper.anneeInscription).toBe("1998");
   expect(elementsJasper.numeroInscription).toBe("4094");
   expect(elementsJasper.decisionRecue).toBe(
-    "Le service central d'état civil a reçu la convention déposée au rang des minutes de Maitre Flavie Le-Grand, notaire à Nantes (Pays de la Loire), office notarial n°9AKLO, le 3 Juin 2020 concernant la contestation de paternité de : "
+    "Le service central d'état civil a reçu la convention déposée au rang des minutes de Maitre Flavie Le-Grand, notaire à Nantes (Loire-Atlantique), office notarial n°9AKLO, le 3 Juin 2020 concernant la contestation de paternité de : "
   );
   expect(elementsJasper.interesseDecision).toBe(interesses);
   expect(elementsJasper.decisionExequatur).toBeUndefined();
