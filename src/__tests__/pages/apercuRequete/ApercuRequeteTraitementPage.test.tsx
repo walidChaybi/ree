@@ -99,8 +99,39 @@ test("renders document réponses", async () => {
     expect(title).toBeDefined();
     expect(doc1).toBeDefined();
     expect(doc2).toBeDefined();
-    fireEvent.click(doc2);
   });
+
+  await act(async () => {
+    fireEvent.click(doc1);
+  });
+});
+
+test("test du bouton de modification du courrier", async () => {
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID}
+          >
+            <ApercuRequeteTraitementPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Actions"));
+  });
+  await act(async () => {
+    fireEvent.click(screen.getByText(/Modifier le courrier/i));
+  });
+  console.log(history.location.pathname);
+  expect(history.location.pathname).toBe(
+    "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/apercucourrieraccompagnement/a4cefb71-8457-4f6b-937e-34b49335d404"
+  );
 });
 
 afterAll(() => {

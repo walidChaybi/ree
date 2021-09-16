@@ -3,7 +3,6 @@ import { useHistory, useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { useGetDocumentReponseApi } from "../../../common/hook/v2/DocumentReponseHook";
 import { getIdDocumentReponseAAfficher } from "../../../common/util/RequetesUtils";
-import { VisionneuseDocument } from "../../../common/widget/document/VisionneuseDocument";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
@@ -18,6 +17,7 @@ import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
 import "./scss/ApercuRequeteTraitementPage.scss";
+import { VisionneuseApercuTraitement } from "./VisionneuseApercuTraitement";
 interface IdRequeteParams {
   idRequete: string;
 }
@@ -65,8 +65,8 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
               {dataHistory && dataHistory.info && (
                 <div className="MessageInfo">{dataHistory.info}</div>
               )}
-              <VisionneuseDocument
-                titre={getLibelle("Aperçu des documents")}
+              <VisionneuseApercuTraitement
+                requete={detailRequeteState}
                 contenu={contenuDocument?.contenu}
                 typeMime={contenuDocument?.mimeType}
               />

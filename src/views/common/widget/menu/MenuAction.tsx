@@ -2,6 +2,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 import React from "react";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
@@ -18,37 +20,51 @@ interface IMenuActionProps {
   titre: string;
   onSelect: (indexMenu: number) => any;
   listeActions: IActionOption[];
+  deplierEnBas?: boolean;
+  className?: string;
+  widthMenuItem?: string;
 }
 
 export const MenuAction: React.FC<IMenuActionProps> = props => {
-  const [menu, setMenu] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleClickBouton = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setMenu(e.currentTarget);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleCloseMenu = () => {
-    setMenu(null);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const afficheFleche = () => {
+    if (props.deplierEnBas) {
+      return Boolean(anchorEl) ? (
+        <ExpandLess className="icon-menu" fontSize="small" />
+      ) : (
+        <ExpandMore className="icon-menu" fontSize="small" />
+      );
+    } else {
+      return Boolean(anchorEl) ? (
+        <ArrowBackIosIcon className="icon-menu" fontSize="small" />
+      ) : (
+        <ArrowForwardIosIcon className="icon-menu" fontSize="small" />
+      );
+    }
   };
 
   return (
-    <div className="MenuAction">
-      <button onClick={e => handleClickBouton(e)}>
+    <div className={`MenuAction ${props.className}`}>
+      <button onClick={handleClick}>
         <span>{props.titre}</span>
-        {!Boolean(menu) && (
-          <ArrowForwardIosIcon className="icon-menu" fontSize="small" />
-        )}
-        {Boolean(menu) && (
-          <ArrowBackIosIcon className="icon-menu" fontSize="small" />
-        )}
+        {afficheFleche()}
       </button>
       <Menu
         className="Menu"
-        anchorEl={menu}
+        anchorEl={anchorEl}
         keepMounted
         getContentAnchorEl={null}
-        open={Boolean(menu)}
-        onClose={handleCloseMenu}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
         onEnter={() => {
           props.listeActions.forEach(el => {
             DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
@@ -56,12 +72,12 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
         }}
         PaperProps={{
           style: {
-            width: "35%"
+            width: props.widthMenuItem ? props.widthMenuItem : "35%"
           }
         }}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right"
+          vertical: props.deplierEnBas ? "bottom" : "top",
+          horizontal: props.deplierEnBas ? "left" : "right"
         }}
         transformOrigin={{
           vertical: "top",
@@ -73,7 +89,7 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
             ref={el.ref}
             onClick={event => {
               DoubleSubmitUtil.eviteDoubleSubmit(el.ref?.current);
-              setMenu(null);
+              handleClose();
               props.onSelect(el.value);
             }}
             key={el.value}

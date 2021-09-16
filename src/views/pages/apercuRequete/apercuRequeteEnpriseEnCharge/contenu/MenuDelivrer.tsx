@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../model/requete/v2/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
@@ -151,42 +151,40 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   /////////////////////////////////////
   // DELIVRANCE CI,EC, Extraits (avec/sans fil., plurilingue), (Copie archive)
   /////////////////////////////////////
-  const redirection = useCallback(() => {
-    if (
-      (props.requete as IRequeteDelivrance).sousType === SousTypeDelivrance.RDC
-    ) {
+
+  // Le contrôle de cohérence a eu lieu
+  useEffect(() => {
+    if (messagesBloquant && messagesBloquant.length === 0) {
+      // Le contrôle de cohérence a eu lieu et pas de message bloquant
       setOperationEnCours(true);
       // Déclanche le hook de mise à jour du choix de délivrance
       setParamUpdateChoixDelivrance({
         requete: props.requete as IRequeteDelivrance,
         choixDelivrance
       });
-    } else {
-      const url = receUrl.getUrlApercuTraitementAPartirDe(
-        history.location.pathname
-      );
-      receUrl.replaceUrl(history, url);
     }
-  }, [history, props.requete, choixDelivrance]);
-
-  // Le contrôle de cohérence a eu lieu
-  useEffect(() => {
-    if (messagesBloquant && messagesBloquant.length === 0) {
-      // Le contrôle de cohérence a eu lieu et pas de message bloquant
-      redirection();
-    }
-  }, [messagesBloquant, redirection]);
+  }, [messagesBloquant, choixDelivrance, props.requete]);
 
   // La mise à jour du choix de délivrance a été effectuée (cf.)
   useEffect(() => {
     if (idRequete) {
-      history.push(
-        `${getUrlWithoutIdParam(
+      if (
+        (props.requete as IRequeteDelivrance).sousType ===
+        SousTypeDelivrance.RDC
+      ) {
+        history.push(
+          `${getUrlWithoutIdParam(
+            history.location.pathname
+          )}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/${idRequete}`
+        );
+      } else {
+        const url = receUrl.getUrlApercuTraitementAPartirDe(
           history.location.pathname
-        )}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/${idRequete}`
-      );
+        );
+        receUrl.replaceUrl(history, url);
+      }
     }
-  }, [idRequete, history]);
+  }, [idRequete, history, props.requete]);
 
   /////////////////////////////////////
   // Certificat de situation
