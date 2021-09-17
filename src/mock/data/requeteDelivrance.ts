@@ -22,8 +22,8 @@ const requeteDelivrance: IRequeteDelivrance = {
   dateCreation: 1624603295000,
   documentDemande: {
     libelle: "Certificat de situation au rca",
-    libelleCourt: "DOCUMENT_DELIVRANCE",
-    nom: "CERTIFICAT_SITUATION_RCA"
+    categorie: "DOCUMENT_DELIVRANCE",
+    code: "CERTIFICAT_SITUATION_RCA"
   } as DocumentDelivrance,
   documentsReponses: [],
   evenement: undefined,
@@ -143,8 +143,8 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
   dateCreation: 1624603295000,
   documentDemande: {
     libelle: "Certificat de situation au rca",
-    libelleCourt: "DOCUMENT_DELIVRANCE",
-    nom: "CERTIFICAT_SITUATION_RCA"
+    categorie: "DOCUMENT_DELIVRANCE",
+    code: "CERTIFICAT_SITUATION_RCA"
   } as DocumentDelivrance,
   documentsReponses: [],
   evenement: undefined,

@@ -8,17 +8,17 @@ import {
   ACTE_NON_TROUVE,
   ACTE_NON_TROUVE_ALGERIE,
   ATTESTATION_PENSION,
-  CourrierDelivrance,
   DELIVRANCE_ACTE,
   DELIVRANCE_ACTE_INCOMPLET,
   DELIVRANCE_ACTE_NON_ANTHENTIQUE,
   DIVERS,
+  DocumentDelivrance,
   INFORMATION_DIVERSES_MANQUANTE,
   JUSTIFICATIF_REPRESENTANT_MANQUANT,
   MANDAT_GENEALOGIQUE,
   PROPOSITION_TRANSCRIPTION,
   REFUS_DELIVRANCE_MARIAGE
-} from "../../../../model/requete/v2/enum/CourrierDelivrance";
+} from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../model/requete/v2/enum/MotifDelivrance";
 import { Requerant } from "../../../../model/requete/v2/IRequerant";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
@@ -68,49 +68,52 @@ const ValidationSchemaAccompagnement = Yup.object({
   })
 });
 
-export const ModificationCourrierAccompagnement: React.FC<ModificationCourrierAccompagnementProps> = props => {
-  const optionsCourrier = getOptionsCourrier(props.requete, props.acteSelected);
+export const ModificationCourrierAccompagnement: React.FC<ModificationCourrierAccompagnementProps> =
+  props => {
+    const optionsCourrier = getOptionsCourrier(
+      props.requete,
+      props.acteSelected
+    );
 
-  const titre = accompagnementExiste(props.requete)
-    ? getLibelle("Modification du courrier")
-    : getLibelle("Création du courrier");
+    const titre = accompagnementExiste(props.requete)
+      ? getLibelle("Modification du courrier")
+      : getLibelle("Création du courrier");
 
-  // TODO Modification du courrier existant
-  // eslint-disable-next-line
-  const [saisieAccompagnement, setSaisieAccompagnement] = useState<
-    SaisieAccompagnement
-  >();
+    // TODO Modification du courrier existant
+    // eslint-disable-next-line
+    const [saisieAccompagnement, setSaisieAccompagnement] =
+      useState<SaisieAccompagnement>();
 
-  const boutonsProps = {} as BoutonsCourrierAccompagnementProps;
+    const boutonsProps = {} as BoutonsCourrierAccompagnementProps;
 
-  const onSubmit = () => {};
+    const onSubmit = () => {};
 
-  useEffect(() => {}, []);
+    useEffect(() => {}, []);
 
-  return (
-    <>
-      <title>{titre}</title>
-      <Formulaire
-        titre={titre}
-        formDefaultValues={
-          saisieAccompagnement ||
-          getDefaultValuesAccompagnement(props.requete, optionsCourrier[0])
-        }
-        formValidationSchema={ValidationSchemaAccompagnement}
-        onSubmit={onSubmit}
-        className="FormulaireAccompagnement"
-      >
-        <CourrierAccompagnementForm
-          optionsCourrier={optionsCourrier}
-          requete={props.requete}
-        />
-        <BoutonsCourrierAccompagnement
-          {...boutonsProps}
-        ></BoutonsCourrierAccompagnement>
-      </Formulaire>
-    </>
-  );
-};
+    return (
+      <>
+        <title>{titre}</title>
+        <Formulaire
+          titre={titre}
+          formDefaultValues={
+            saisieAccompagnement ||
+            getDefaultValuesAccompagnement(props.requete, optionsCourrier[0])
+          }
+          formValidationSchema={ValidationSchemaAccompagnement}
+          onSubmit={onSubmit}
+          className="FormulaireAccompagnement"
+        >
+          <CourrierAccompagnementForm
+            optionsCourrier={optionsCourrier}
+            requete={props.requete}
+          />
+          <BoutonsCourrierAccompagnement
+            {...boutonsProps}
+          ></BoutonsCourrierAccompagnement>
+        </Formulaire>
+      </>
+    );
+  };
 
 export const getOptionsCourrier = (
   requete: IRequeteDelivrance,
@@ -120,26 +123,22 @@ export const getOptionsCourrier = (
   switch (requete.choixDelivrance) {
     case ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE:
       courrierOptions = [
-        CourrierDelivrance.getOptionFromLibelle(INFORMATION_DIVERSES_MANQUANTE),
-        CourrierDelivrance.getOptionFromLibelle(MANDAT_GENEALOGIQUE),
-        CourrierDelivrance.getOptionFromLibelle(
-          JUSTIFICATIF_REPRESENTANT_MANQUANT
-        )
+        DocumentDelivrance.getOptionFromCode(INFORMATION_DIVERSES_MANQUANTE),
+        DocumentDelivrance.getOptionFromCode(MANDAT_GENEALOGIQUE),
+        DocumentDelivrance.getOptionFromCode(JUSTIFICATIF_REPRESENTANT_MANQUANT)
       ];
       break;
     case ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC:
       courrierOptions = [
-        CourrierDelivrance.getOptionFromLibelle(ACTE_NON_TROUVE),
-        CourrierDelivrance.getOptionFromLibelle(ACTE_NON_TROUVE_ALGERIE),
-        CourrierDelivrance.getOptionFromLibelle(
-          ACTE_NAISSANCE_NON_TROUVE_MARIAGE
-        ),
-        CourrierDelivrance.getOptionFromLibelle(ATTESTATION_PENSION),
-        CourrierDelivrance.getOptionFromLibelle(PROPOSITION_TRANSCRIPTION)
+        DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE),
+        DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE_ALGERIE),
+        DocumentDelivrance.getOptionFromCode(ACTE_NAISSANCE_NON_TROUVE_MARIAGE),
+        DocumentDelivrance.getOptionFromCode(ATTESTATION_PENSION),
+        DocumentDelivrance.getOptionFromCode(PROPOSITION_TRANSCRIPTION)
       ];
       break;
     case ChoixDelivrance.REP_SANS_DEL_EC_DIVERS:
-      courrierOptions = [CourrierDelivrance.getOptionFromLibelle(DIVERS)];
+      courrierOptions = [DocumentDelivrance.getOptionFromCode(DIVERS)];
       majOptionsPourActeNaissaneOuDecesSelectionne(
         acteSelected,
         courrierOptions
@@ -147,7 +146,7 @@ export const getOptionsCourrier = (
       break;
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
       courrierOptions = [
-        CourrierDelivrance.getOptionFromLibelle(DELIVRANCE_ACTE_NON_ANTHENTIQUE)
+        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE_NON_ANTHENTIQUE)
       ];
       break;
     case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
@@ -155,8 +154,8 @@ export const getOptionsCourrier = (
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
       courrierOptions = [
-        CourrierDelivrance.getOptionFromLibelle(DELIVRANCE_ACTE),
-        CourrierDelivrance.getOptionFromLibelle(DELIVRANCE_ACTE_INCOMPLET)
+        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE),
+        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE_INCOMPLET)
       ];
       break;
   }
@@ -219,7 +218,7 @@ function majOptionsPourActeNaissaneOuDecesSelectionne(
     )
   ) {
     courrierOptions.push(
-      CourrierDelivrance.getOptionFromLibelle(REFUS_DELIVRANCE_MARIAGE)
+      DocumentDelivrance.getOptionFromCode(REFUS_DELIVRANCE_MARIAGE)
     );
   }
 }

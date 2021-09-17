@@ -37,9 +37,8 @@ class Condition {
     dataRMCAutoInscription?: IResultatRMCInscription[]
   ) {
     let cond = dataRMCAutoActe?.length === this.nbActe;
-    const nbInscriptionsInfos: INbInscriptionsInfos = this.getNbInscriptionsInfos(
-      dataRMCAutoInscription
-    );
+    const nbInscriptionsInfos: INbInscriptionsInfos =
+      this.getNbInscriptionsInfos(dataRMCAutoInscription);
 
     if (this.nbPacs !== undefined) {
       cond = cond && this.nbPacs === nbInscriptionsInfos.nbPacs;
@@ -133,7 +132,7 @@ class SpecificationPhrase {
   MAP_SPECIFICATION: Map<string, Specification> = new Map();
   private init() {
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS),
       new Specification(
         //            Acte, Pacs, Rc, Rca
         new Condition(0, 0, undefined, undefined),
@@ -142,7 +141,7 @@ class SpecificationPhrase {
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_RC),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC),
       new Specification(
         //            Acte, Pacs, Rc, Rca
         new Condition(0, undefined, 0, undefined),
@@ -151,7 +150,7 @@ class SpecificationPhrase {
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RCA),
       new Specification(
         //            Acte, Pacs, Rc, Rca
         new Condition(0, undefined, undefined, 0),
@@ -160,7 +159,7 @@ class SpecificationPhrase {
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_RC_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC_RCA),
       new Specification(
         //            Acte, Pacs, Rc, Rca
         new Condition(0, undefined, 0, 0),
@@ -169,7 +168,7 @@ class SpecificationPhrase {
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS_RC_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC_RCA),
       new Specification(
         //            Acte, Pacs, Rc, Rca
         new Condition(0, 0, 0, 0),
@@ -178,7 +177,7 @@ class SpecificationPhrase {
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS_RC),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC),
       new Specification(
         //            Acte, Pacs, Rc, Rca
         new Condition(0, 0, 0, undefined),
@@ -188,7 +187,7 @@ class SpecificationPhrase {
     );
 
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RCA),
       new Specification(
         //            Acte, Pacs, Rc, Rca
         new Condition(0, 0, undefined, 0),

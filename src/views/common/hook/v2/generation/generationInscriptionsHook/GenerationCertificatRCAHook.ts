@@ -42,25 +42,17 @@ export function useGenerationCertificatRCAHook(
 ) {
   const [rca, setRca] = useState<IResultatRMCInscription>();
 
-  const [
-    certificatRCAComposition,
-    setCertificatRCAComposition
-  ] = useState<ICertificatRCAComposition>();
+  const [certificatRCAComposition, setCertificatRCAComposition] =
+    useState<ICertificatRCAComposition>();
 
-  const [
-    documentsReponsePourStockage,
-    setDocumentsReponsePourStockage
-  ] = useState<IDocumentReponse[] | undefined>();
+  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
+    useState<IDocumentReponse[] | undefined>();
 
-  const [
-    contenuDocumentsComposition,
-    setContenuDocumentsComposition
-  ] = useState<string[]>([]);
+  const [contenuDocumentsComposition, setContenuDocumentsComposition] =
+    useState<string[]>([]);
 
-  const [
-    resultGenerationCertificatRCA,
-    setResultGenerationCertificatRCA
-  ] = useState<IResultGenerationPlusieursDocument>();
+  const [resultGenerationCertificatRCA, setResultGenerationCertificatRCA] =
+    useState<IResultGenerationPlusieursDocument>();
 
   useEffect(() => {
     if (requete && listeRCA && listeRCA.length > 0) {
@@ -83,9 +75,8 @@ export function useGenerationCertificatRCAHook(
       requete.titulaires.length > 0 &&
       informationsRCA
     ) {
-      const elementsJasper: IElementsJasperCertificatRCA = specificationRCA.getElementsJasper(
-        informationsRCA
-      );
+      const elementsJasper: IElementsJasperCertificatRCA =
+        specificationRCA.getElementsJasper(informationsRCA);
       construitCertificatRCA(
         requete,
         setCertificatRCAComposition,
@@ -123,7 +114,7 @@ export function useGenerationCertificatRCAHook(
       requete,
       setDocumentsReponsePourStockage,
       NOM_DOCUMENT_CERTIFICAT_RCA,
-      DocumentDelivrance.getKeyForNom("CERTIFICAT_INSCRIPTION_RCA")
+      DocumentDelivrance.getKeyForCode("CERTIFICAT_INSCRIPTION_RCA")
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contenuDocumentsComposition]);

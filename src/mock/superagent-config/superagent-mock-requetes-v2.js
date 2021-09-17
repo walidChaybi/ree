@@ -194,17 +194,17 @@ export const configRequetesV2 = [
       // Update choix delivrance
       if (
         match[1] ===
-          "/requetes/choixdelivrance?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&choixDelivrance=REP_SANS_DEL_EC_REQUETE_INCOMPLETE" ||
+          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_REQUETE_INCOMPLETE" ||
         match[1] ===
-          "/requetes/choixdelivrance?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&choixDelivrance=REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC" ||
+          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC" ||
         match[1] ===
-          "/requetes/choixdelivrance?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&choixDelivrance=REP_SANS_DEL_EC_DIVERS"
+          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_DIVERS"
       ) {
         return { data: "d19650ed-012b-41ec-b7be-9e6ea9101eaa" };
       }
       if (
         match[1] ===
-        "/requetes/choixdelivrance?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&choixDelivrance=DELIVRER_EC_COPIE_INTEGRALE"
+        "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/choixdelivrance?choixDelivrance=DELIVRER_EC_COPIE_INTEGRALE"
       ) {
         return { data: "a4cefb71-8457-4f6b-937e-34b49335d666" };
       }

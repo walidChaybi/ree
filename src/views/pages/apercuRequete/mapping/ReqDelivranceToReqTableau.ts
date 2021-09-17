@@ -20,7 +20,7 @@ export function mappingRequeteDelivranceToRequeteTableau(
     idUtilisateur: requete.idUtilisateur,
     type: requete.type?.libelle,
     statut: requete.statutCourant.statut.libelle,
-    document: DocumentDelivrance.getKeyForNom(requete.documentDemande?.nom) // getKey ?
+    document: DocumentDelivrance.getKeyForCode(requete.documentDemande?.code) // getKey ?
   };
 }
 

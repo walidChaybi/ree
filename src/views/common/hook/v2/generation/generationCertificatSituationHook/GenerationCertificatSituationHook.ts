@@ -39,15 +39,11 @@ export function useGenerationCertificatSituationHook(
     setResultGenerationCertificatSituation
   ] = useState<IResultGenerationUnDocument>();
 
-  const [
-    certificatSituationComposition,
-    setCertificatSituationComposition
-  ] = useState<ICertificatSituationComposition>();
+  const [certificatSituationComposition, setCertificatSituationComposition] =
+    useState<ICertificatSituationComposition>();
 
-  const [
-    documentsReponsePourStockage,
-    setDocumentsReponsePourStockage
-  ] = useState<IDocumentReponse[] | undefined>();
+  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
+    useState<IDocumentReponse[] | undefined>();
 
   // 1 - Construction du Certificat de situation
   useEffect(() => {
@@ -59,12 +55,13 @@ export function useGenerationCertificatSituationHook(
       params.dataRMCAutoActe
     ) {
       if (params?.requete.titulaires && params.requete.titulaires.length > 0) {
-        const phrases: IPhrasesJasperCertificatSituation = params.specificationPhrase.getPhrasesJasper(
-          params.requete.document, // id du type de document demandé
-          params.requete.titulaires[0].sexe,
-          params.dataRMCAutoActe,
-          params.dataRMCAutoInscription
-        );
+        const phrases: IPhrasesJasperCertificatSituation =
+          params.specificationPhrase.getPhrasesJasper(
+            params.requete.document, // id du type de document demandé
+            params.requete.titulaires[0].sexe,
+            params.dataRMCAutoActe,
+            params.dataRMCAutoInscription
+          );
         construitCertificatSituation(
           phrases.phrasesLiees,
           params.requete,
@@ -93,7 +90,9 @@ export function useGenerationCertificatSituationHook(
           contenu: contenuComposition,
           nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
           mimeType: MimeType.APPLI_PDF,
-          typeDocument: DocumentDelivrance.getKeyForNom("CERTIFICAT_SITUATION"), // UUID du type de document demandé (nomenclature)
+          typeDocument: DocumentDelivrance.getKeyForCode(
+            "CERTIFICAT_SITUATION"
+          ), // UUID du type de document demandé (nomenclature)
           nbPages: 1,
           orientation: Orientation.PORTRAIT
         } as IDocumentReponse

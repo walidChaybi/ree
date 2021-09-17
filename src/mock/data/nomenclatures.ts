@@ -314,6 +314,149 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       usageRECE: null,
       categorieDocumentDelivrance: "extrait",
       correspondanceDila: true
+    },
+    {
+      id: "062526c5-e5a7-48d1-bc22-11938347f0bc",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_PTA",
+      libelle: "Proposition de transcription d'acte",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "db0a3d5a-34ca-47bf-bce5-33ec7ffb9148",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_APR",
+      libelle: "Attestation de pension de réversion",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "002f64ff-b3da-4ff1-8f81-704059134327",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_24",
+      libelle: "Acte de naissance non trouvé pour mariage (24)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "c40bccfd-8e65-47fc-a3eb-1d25d7779a29",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_64",
+      libelle: "Acte non trouvé Algérie (64)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "c1c17758-98ce-444e-82eb-a4f885fddc2c",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_115",
+      libelle: "Acte non trouvé (115)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "fd2c6d07-367f-4770-994c-397c0bc63fba",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_19",
+      libelle: "Justificatif représentant légal manquant (19)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "0296fc7a-fb81-4eb7-a72f-94286b8d8301",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_18",
+      libelle: "Mandat généalogiste manquant (18)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_117",
+      libelle: "Informations diverses manquantes (117)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "2776c0c7-2ad4-4949-9743-046c4c687eec",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_RDM",
+      libelle: "Refus délivrance mariage",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "fce55a9f-4f4b-4996-a60b-59332bc10565",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_EC_17",
+      libelle: "Divers (17)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "34877875-f86f-4a62-9bdc-c0989ad6c4eb",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CAD_ARCH_118",
+      libelle: "Délivrance d'acte non authentique (118)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "4b60aab4-2e9f-479c-bec6-f38edbd6e647",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CAD_EC_50",
+      libelle: "Délivrance d'acte incomplet (50)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
+    },
+    {
+      id: "cb1f3518-9457-471d-a31c-10bc8d34c9a2",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CAD_EC_116",
+      libelle: "Délivrance d'acte (116)",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: null,
+      correspondanceDila: true
     }
   ],
   errors: []

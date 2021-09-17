@@ -1,10 +1,11 @@
 /* istanbul ignore file */
 import { peupleTypePieceJustificative } from "../../../../api/nomenclature/NomenclatureRequete";
+import { EnumNomemclature } from "../../../../views/common/util/enum/EnumNomenclature";
 import { EnumWithComplete } from "../../../../views/common/util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "../../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../../views/common/util/Type";
 
-export class TypePieceJustificative extends EnumWithLibelle {
+export class TypePieceJustificative extends EnumNomemclature {
   public static async init() {
     return peupleTypePieceJustificative();
   }

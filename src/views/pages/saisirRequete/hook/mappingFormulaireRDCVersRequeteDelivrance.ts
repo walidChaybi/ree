@@ -24,12 +24,12 @@ const SNP = "SNP";
 export function mappingFormulaireRDCVersRequeteDelivrance(
   requeteRDC: CreationRequeteRDC
 ): IRequeteDelivrance {
-  const requete = ({
+  const requete = {
     type: TypeRequete.DELIVRANCE.nom,
     sousType: SousTypeDelivrance.RDC.nom,
     canal: TypeCanal.COURRIER.nom,
     provenance: Provenance.COURRIER.nom,
-    documentDemande: DocumentDelivrance.getKeyForNom(
+    documentDemande: DocumentDelivrance.getKeyForCode(
       requeteRDC.saisie.requete.documentDemande
     ),
     motif: requeteRDC.saisie.requete.motif,
@@ -39,7 +39,7 @@ export function mappingFormulaireRDCVersRequeteDelivrance(
     titulaires: getTitulairesRequete(requeteRDC.saisie),
     requerant: getRequerant(requeteRDC.saisie),
     lienRequerant: getLienRequerant(requeteRDC.saisie)
-  } as any) as IRequeteDelivrance;
+  } as any as IRequeteDelivrance;
 
   return supprimeProprietesVides(requete);
 }

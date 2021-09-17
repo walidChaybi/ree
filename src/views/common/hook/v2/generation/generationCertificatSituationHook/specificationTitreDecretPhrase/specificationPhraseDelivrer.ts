@@ -259,42 +259,42 @@ class SpecificationDeliverPhrase {
   MAP_SPECIFICATION: Map<string, SpecificationDeliver> = new Map();
   private init() {
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(true, false, false)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_RC),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(false, true, false)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RCA),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(false, false, true)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_RC_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC_RCA),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(false, true, true)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS_RC_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC_RCA),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(true, true, true)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS_RC),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(true, true, false)
@@ -302,7 +302,7 @@ class SpecificationDeliverPhrase {
     );
 
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RCA),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(true, false, true)

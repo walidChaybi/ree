@@ -46,25 +46,17 @@ export function useGenerationCertificatRCHook(
 ) {
   const [rc, setRc] = useState<IResultatRMCInscription>();
 
-  const [
-    certificatRCComposition,
-    setCertificatRCComposition
-  ] = useState<ICertificatRCComposition>();
+  const [certificatRCComposition, setCertificatRCComposition] =
+    useState<ICertificatRCComposition>();
 
-  const [
-    documentsReponsePourStockage,
-    setDocumentsReponsePourStockage
-  ] = useState<IDocumentReponse[] | undefined>();
+  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
+    useState<IDocumentReponse[] | undefined>();
 
-  const [
-    contenuDocumentsComposition,
-    setContenuDocumentsComposition
-  ] = useState<string[]>([]);
+  const [contenuDocumentsComposition, setContenuDocumentsComposition] =
+    useState<string[]>([]);
 
-  const [
-    resultGenerationCertificatRC,
-    setResultGenerationCertificatRC
-  ] = useState<IResultGenerationPlusieursDocument>();
+  const [resultGenerationCertificatRC, setResultGenerationCertificatRC] =
+    useState<IResultGenerationPlusieursDocument>();
 
   useEffect(() => {
     if (requete && listeRC && listeRC.length > 0) {
@@ -87,9 +79,8 @@ export function useGenerationCertificatRCHook(
       requete.titulaires.length > 0 &&
       informationsRC
     ) {
-      const elementsJasper: IElementsJasperCertificatRC = specificationRC.getElementsJasper(
-        informationsRC
-      );
+      const elementsJasper: IElementsJasperCertificatRC =
+        specificationRC.getElementsJasper(informationsRC);
       construitCertificatRC(
         requete,
         setCertificatRCComposition,
@@ -127,7 +118,7 @@ export function useGenerationCertificatRCHook(
       requete,
       setDocumentsReponsePourStockage,
       NOM_DOCUMENT_CERTIFICAT_RC,
-      DocumentDelivrance.getKeyForNom("CERTIFICAT_INSCRIPTION_RC")
+      DocumentDelivrance.getKeyForCode("CERTIFICAT_INSCRIPTION_RC")
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contenuDocumentsComposition]);

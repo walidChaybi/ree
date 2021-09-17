@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { peupleDocumentDelivrance } from "../../../../api/nomenclature/NomenclatureRequete";
-import { EnumWithComplete } from "../../../../views/common/util/enum/EnumWithComplete";
+import { EnumNomemclature } from "../../../../views/common/util/enum/EnumNomenclature";
 import { EnumWithLibelle } from "../../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../../views/common/util/Type";
 import { TypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
@@ -19,6 +19,20 @@ export const CODE_CERTIFICAT_SITUATION_RC = "CERTIFICAT_SITUATION_RC";
 export const CODE_CERTIFICAT_SITUATION_RCA = "CERTIFICAT_SITUATION_RCA";
 export const CODE_CERTIFICAT_SITUATION_RC_RCA = "CERTIFICAT_SITUATION_RC_RCA";
 
+export const INFORMATION_DIVERSES_MANQUANTE = "CARN_EC_117";
+export const MANDAT_GENEALOGIQUE = "CARN_EC_18";
+export const JUSTIFICATIF_REPRESENTANT_MANQUANT = "CARN_EC_19";
+export const ACTE_NON_TROUVE = "CARN_EC_115";
+export const ACTE_NON_TROUVE_ALGERIE = "CARN_EC_64";
+export const ACTE_NAISSANCE_NON_TROUVE_MARIAGE = "CARN_EC_24";
+export const ATTESTATION_PENSION = "CARN_EC_APR";
+export const PROPOSITION_TRANSCRIPTION = "CARN_EC_PTA";
+export const DIVERS = "CARN_EC_17";
+export const REFUS_DELIVRANCE_MARIAGE = "CARN_EC_RDM";
+export const DELIVRANCE_ACTE_NON_ANTHENTIQUE = "CAD_ARCH_118";
+export const DELIVRANCE_ACTE = "CAD_EC_116";
+export const DELIVRANCE_ACTE_INCOMPLET = "CAD_EC_50";
+
 /**
  * Attention:
  *  _nom = code
@@ -28,7 +42,7 @@ export const CODE_CERTIFICAT_SITUATION_RC_RCA = "CERTIFICAT_SITUATION_RC_RCA";
  *  FIXME développer un "EnumNomenclature(code, categorie, libelle)"" pour plus de cohérence
  *
  */
-export class DocumentDelivrance extends EnumWithComplete {
+export class DocumentDelivrance extends EnumNomemclature {
   /**
    *
    * Méthode contrôlant que le document demandé est en accord avec un résultat de la RMC
@@ -85,8 +99,8 @@ export class DocumentDelivrance extends EnumWithComplete {
     return EnumWithLibelle.getEnumFor(str, DocumentDelivrance);
   }
 
-  public static getKeyForNom(nom: string) {
-    return EnumWithComplete.getKeyForNom(DocumentDelivrance, nom);
+  public static getKeyForCode(code: string) {
+    return EnumNomemclature.getKeyForCode(DocumentDelivrance, code);
   }
 
   public static getAllEnumsAsOptions(): Options {
@@ -96,21 +110,24 @@ export class DocumentDelivrance extends EnumWithComplete {
   public static getAllCertificatSituationAsOptions(): Options {
     const options = DocumentDelivrance.getAllEnumsAsOptions();
     return options.filter(opt =>
-      DocumentDelivrance.getEnumFor(opt.value)._nom.startsWith(
+      DocumentDelivrance.getEnumFor(opt.value).code.startsWith(
         CERTIFICAT_SITUATION_PREFIX
       )
     );
   }
 
   public static getCourrierNonDelivranceAttestationPacsUUID(): string {
-    const uuid = EnumWithComplete.getKeyForNom(DocumentDelivrance, CARN_PAC_01);
+    const uuid = EnumNomemclature.getKeyForCode(
+      DocumentDelivrance,
+      CARN_PAC_01
+    );
     return uuid ? uuid : "";
   }
 
   public static getUuidFromDocument(document: DocumentDelivrance): string {
-    const uuid = EnumWithComplete.getKeyForNom(
+    const uuid = EnumNomemclature.getKeyForCode(
       DocumentDelivrance,
-      document.nom
+      document.code
     );
     return uuid ? uuid : "";
   }
@@ -118,14 +135,14 @@ export class DocumentDelivrance extends EnumWithComplete {
   public static estDocumentDelivrance(typeDocumentUUID: string): boolean {
     const doc = DocumentDelivrance.getEnumFor(typeDocumentUUID);
     // _libelle_court correspond à la catégorie
-    return doc._libelleCourt === CATEGORIE_DOCUMENT_DELIVRANCE;
+    return doc.categorie === CATEGORIE_DOCUMENT_DELIVRANCE;
   }
 
   public static estDocumentDelivranceValide(
     categorieInscription: string,
     documentDemande: DocumentDelivrance
   ): boolean {
-    const codeDocumentDemande: string = documentDemande?.nom;
+    const codeDocumentDemande: string = documentDemande?.code;
     const categorie: string = categorieInscription?.toUpperCase();
     return DocumentDelivrance.controleDocumentDelivranceSelonTypeRepertoire(
       codeDocumentDemande,
@@ -137,5 +154,13 @@ export class DocumentDelivrance extends EnumWithComplete {
     documentDemandeUUID: string
   ): DocumentDelivrance {
     return DocumentDelivrance.getEnumFor(documentDemandeUUID);
+  }
+
+  public static getOptionFromCode(code: string) {
+    const key = this.getKeyForCode(code);
+    return {
+      value: this.getKeyForCode(code),
+      str: this.getEnumFor(key).libelle
+    };
   }
 }

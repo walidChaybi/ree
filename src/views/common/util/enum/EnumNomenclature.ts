@@ -19,13 +19,13 @@ export class EnumNomemclature extends EnumWithLibelle {
     return this._categorie;
   }
 
-  public static getAllNomsAsOptions(clazz: any): Options {
+  public static getAllCodesAsOptions(clazz: any): Options {
     const options: Options = [];
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key)) {
         options.push({
           value: key,
-          str: clazz[key]._nom
+          str: clazz[key]._code
         });
       }
     }

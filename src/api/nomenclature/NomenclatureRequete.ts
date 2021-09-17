@@ -1,10 +1,9 @@
 /* istanbul ignore file */
 
-import { CourrierDelivrance } from "../../model/requete/v2/enum/CourrierDelivrance";
 import { DocumentDelivrance } from "../../model/requete/v2/enum/DocumentDelivrance";
 import { TypePieceJustificative } from "../../model/requete/v2/enum/TypePieceJustificative";
 import { logError } from "../../views/common/util/LogManager";
-import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../views/common/util/Utils";
+import { premiereLettreEnMajuscule } from "../../views/common/util/Utils";
 import { getNomenclatureRequete } from "../appels/requeteApi";
 
 const TYPE_PIECE_JUSTIFICATIVE = "TYPE_PIECE_JUSTIFICATIVE";
@@ -23,7 +22,9 @@ export async function peupleTypePieceJustificative() {
         TypePieceJustificative.addEnum(
           data.id,
           new TypePieceJustificative(
-            premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle)
+            data.code,
+            premiereLettreEnMajuscule(data.libelle),
+            data.categorie
           )
         );
       }
@@ -50,7 +51,7 @@ export async function peupleDocumentDelivrance() {
           data.id,
           new DocumentDelivrance(
             data.code,
-            premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle),
+            premiereLettreEnMajuscule(data.libelle),
             data.categorie
           )
         );
@@ -59,34 +60,6 @@ export async function peupleDocumentDelivrance() {
       logError({
         messageUtilisateur:
           "Impossible de charger les types de documents de délivrance",
-        error
-      });
-    }
-  }
-}
-
-export async function peupleCourrierDelivrance() {
-  if (!CourrierDelivrance.contientEnums()) {
-    try {
-      const courriersDelivrence = await getNomenclatureRequete(
-        COURRIER_DELIVRANCE
-      );
-
-      CourrierDelivrance.clean();
-      for (const data of courriersDelivrence.body.data) {
-        CourrierDelivrance.addEnum(
-          data.id,
-          new CourrierDelivrance(
-            data.code,
-            premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle),
-            data.categorie
-          )
-        );
-      }
-    } catch (error) {
-      logError({
-        messageUtilisateur:
-          "Impossible de charger les types de courriers de délivrance",
         error
       });
     }

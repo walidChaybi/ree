@@ -45,36 +45,36 @@ class SpecificationTitre {
   MAP_SPECIFICATION: Map<string, string> = new Map();
   private init() {
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS),
       TITRE_PACS
     );
 
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS_RC),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC),
       TITRE_PACS_RC
     );
 
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RCA),
       TITRE_PACS_RCA
     );
 
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_PACS_RC_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC_RCA),
       TITRE_PACS_RC_RCA
     );
 
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_RC_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC_RCA),
       TITRE_RC_RCA
     );
 
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_RC),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC),
       TITRE_RC
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForNom(CODE_CERTIFICAT_SITUATION_RCA),
+      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RCA),
       TITRE_RCA
     );
   }

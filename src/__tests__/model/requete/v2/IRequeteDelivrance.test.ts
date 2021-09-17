@@ -16,12 +16,15 @@ test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctemen
 
   documentDelivrance = {
     nom: "test",
-    typeDocument: DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID()
+    typeDocument:
+      DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID()
   } as IDocumentReponse;
+
   const autreDocument = {
     nom: "autre",
     typeDocument: "123456"
   } as IDocumentReponse;
+
   requete = {
     documentsReponses: [autreDocument, documentDelivrance, autreDocument]
   } as IRequeteDelivrance;
