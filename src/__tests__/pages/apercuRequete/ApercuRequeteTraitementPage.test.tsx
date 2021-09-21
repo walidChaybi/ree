@@ -128,7 +128,6 @@ test("test du bouton de modification du courrier", async () => {
   await act(async () => {
     fireEvent.click(screen.getByText(/Modifier le courrier/i));
   });
-  console.log(history.location.pathname);
   expect(history.location.pathname).toBe(
     "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/apercucourrieraccompagnement/a4cefb71-8457-4f6b-937e-34b49335d404"
   );

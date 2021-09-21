@@ -48,10 +48,10 @@ export const MenuCourrier: React.FC<IActionProps> = props => {
         sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
         ref: refAction0
       });
-      if (requete.documentsReponses.length > NB_DOCUMENTS_GENERES_2) {
+      if (requete.documentsReponses.length >= NB_DOCUMENTS_GENERES_2) {
         temp.push({
           value: INDEX_AFFICHER_EC_COMPLEMENTAIRE,
-          label: getLibelle("Afficher le document E/C complémentaire"),
+          label: getLibelle("Afficher E/C complémentaire"),
           sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
           ref: refAction0
         });
@@ -84,7 +84,7 @@ export const MenuCourrier: React.FC<IActionProps> = props => {
       onSelect={handleAction}
       titre="Actions"
       className="MenuCourrier"
-      widthMenuItem="13rem"
+      widthMenuItem="14.5rem"
     ></MenuAction>
   );
 };
@@ -94,7 +94,8 @@ const estReponseAvecDelivrance = (requete: IRequeteDelivrance) => {
     requete.choixDelivrance ===
       ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC ||
     requete.choixDelivrance === ChoixDelivrance.REP_SANS_DEL_EC_DIVERS ||
-    requete.choixDelivrance === ChoixDelivrance.REP_SANS_DEL_EC_DIVERS
+    requete.choixDelivrance ===
+      ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE
   ) {
     return false;
   } else return true;

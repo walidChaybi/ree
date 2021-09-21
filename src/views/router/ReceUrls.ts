@@ -158,6 +158,10 @@ export const URL_RECHERCHE_REQUETE_DETAIL_REQUETE_TRAITEMENT_ID = `${URL_RECHERC
 // Modification Brouillon dans Saisie RDCSC depuis RMC de DELIVRANCE
 export const URL_SAISIR_RDCSC_RMC = `${URL_RECHERCHE_REQUETE}/saisircertificatsituation/:idRequete`;
 
+// Modification courrier accompagnement depuis apercu
+export const URL_RECHERCHE_REQUETE_APERCU_PRISE_EN_CHARGE_COURRIER = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_PRISE}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/:idRequete`;
+export const URL_RECHERCHE_REQUETE_APERCU_TRAITEMENT_COURRIER = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_TRAITEMENT}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/:idRequete`;
+
 function estUrlApercuRequete(url: string) {
   return url.indexOf(`/${PATH_APERCU_REQ}/`) > 0;
 }

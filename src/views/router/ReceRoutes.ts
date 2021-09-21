@@ -102,6 +102,8 @@ const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
 const LIBELLE_DETAIL_REQUETE = "Détail de la requête";
 const LIBELLE_CREATION_ACCOMPAGNEMENT =
   "Création d'un courrier d'accompagnement";
+const LIBELLE_MODIFICATION_ACCOMPAGNEMENT =
+  "Modification d'un courrier d'accompagnement";
 
 export const routesRece: IRoute[] = [
   {
@@ -357,7 +359,7 @@ export const routesRece: IRoute[] = [
     component: ApercuCourrierAccompagnement,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Modification d'un courrier d'accompagnement")
+    libelle: getLibelle(LIBELLE_MODIFICATION_ACCOMPAGNEMENT)
   },
 
   /////////////////////////////////////////
@@ -554,7 +556,7 @@ export const routesRece: IRoute[] = [
     component: ApercuCourrierAccompagnement,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Modification d'un courrier d'accompagnement")
+    libelle: getLibelle(LIBELLE_MODIFICATION_ACCOMPAGNEMENT)
   },
   //////////////////////////////////////////
   ///// RECHERCHE MULTI-CRITERES (RMC) /////
@@ -630,5 +632,19 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(
       "Modifier un brouillon d'une requête de délivrance certificat de situation depuis la RMC"
     )
+  },
+  {
+    url: URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
+    component: ApercuCourrierAccompagnement,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_CREATION_ACCOMPAGNEMENT)
+  },
+  {
+    url: URL_MES_REQUETES_APERCU_TRAITEMENT_COURRIER,
+    component: ApercuCourrierAccompagnement,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_MODIFICATION_ACCOMPAGNEMENT)
   }
 ];
