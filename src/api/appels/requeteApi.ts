@@ -301,7 +301,7 @@ export async function updateRequeteDelivrance({
 
 export async function updateChoixDelivrance(
   idRequete: string,
-  choixDelivrance: string
+  choixDelivrance: string | null
 ) {
   return apiV2.fetch({
     method: HttpMethod.PATCH,

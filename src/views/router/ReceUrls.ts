@@ -182,6 +182,11 @@ function replaceUrl(history: any, url: string, data?: any) {
   history.replace(url, data);
 }
 
+function goBack(history: any) {
+  gestionnaireNavigation.deleteLastUrl();
+  history.goBack();
+}
+
 function getUrlCourante(history: any) {
   return history.location.pathname; // history.location.pathname renvoie une url du type /rece/rece-ui/xxx
 }
@@ -191,5 +196,6 @@ export const receUrl = {
   estUrlApercuTraitementRequete,
   getUrlApercuTraitementAPartirDe,
   replaceUrl,
+  goBack,
   getUrlCourante
 };

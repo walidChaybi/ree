@@ -68,52 +68,52 @@ const ValidationSchemaAccompagnement = Yup.object({
   })
 });
 
-export const ModificationCourrierAccompagnement: React.FC<ModificationCourrierAccompagnementProps> =
-  props => {
-    const optionsCourrier = getOptionsCourrier(
-      props.requete,
-      props.acteSelected
-    );
+export const ModificationCourrierAccompagnement: React.FC<ModificationCourrierAccompagnementProps> = props => {
+  const optionsCourrier = getOptionsCourrier(props.requete, props.acteSelected);
 
-    const titre = accompagnementExiste(props.requete)
-      ? getLibelle("Modification du courrier")
-      : getLibelle("Création du courrier");
+  const titre = accompagnementExiste(props.requete)
+    ? getLibelle("Modification du courrier")
+    : getLibelle("Création du courrier");
 
-    // TODO Modification du courrier existant
+  // TODO Modification du courrier existant
+  const [
+    saisieAccompagnement,
     // eslint-disable-next-line
-    const [saisieAccompagnement, setSaisieAccompagnement] =
-      useState<SaisieAccompagnement>();
+    setSaisieAccompagnement
+  ] = useState<SaisieAccompagnement>();
 
-    const boutonsProps = {} as BoutonsCourrierAccompagnementProps;
+  const boutonsProps = {} as BoutonsCourrierAccompagnementProps;
+  const boutonsPropsWithRequete = {
+    ...boutonsProps,
+    requete: props.requete
+  } as BoutonsCourrierAccompagnementProps;
 
-    const onSubmit = () => {};
+  const onSubmit = () => {};
 
-    useEffect(() => {}, []);
+  useEffect(() => {}, []);
 
-    return (
-      <>
-        <title>{titre}</title>
-        <Formulaire
-          titre={titre}
-          formDefaultValues={
-            saisieAccompagnement ||
-            getDefaultValuesAccompagnement(props.requete, optionsCourrier[0])
-          }
-          formValidationSchema={ValidationSchemaAccompagnement}
-          onSubmit={onSubmit}
-          className="FormulaireAccompagnement"
-        >
-          <CourrierAccompagnementForm
-            optionsCourrier={optionsCourrier}
-            requete={props.requete}
-          />
-          <BoutonsCourrierAccompagnement
-            {...boutonsProps}
-          ></BoutonsCourrierAccompagnement>
-        </Formulaire>
-      </>
-    );
-  };
+  return (
+    <>
+      <title>{titre}</title>
+      <Formulaire
+        titre={titre}
+        formDefaultValues={
+          saisieAccompagnement ||
+          getDefaultValuesAccompagnement(props.requete, optionsCourrier[0])
+        }
+        formValidationSchema={ValidationSchemaAccompagnement}
+        onSubmit={onSubmit}
+        className="FormulaireAccompagnement"
+      >
+        <CourrierAccompagnementForm
+          optionsCourrier={optionsCourrier}
+          requete={props.requete}
+        />
+        <BoutonsCourrierAccompagnement {...boutonsPropsWithRequete} />
+      </Formulaire>
+    </>
+  );
+};
 
 export const getOptionsCourrier = (
   requete: IRequeteDelivrance,

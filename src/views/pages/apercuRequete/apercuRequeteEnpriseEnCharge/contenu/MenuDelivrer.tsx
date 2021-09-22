@@ -27,7 +27,7 @@ import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDeliv
 import { IActionProps } from "./ChoixAction";
 import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 import {
-  UpdateChoixDelivrancePops,
+  UpdateChoixDelivranceProps,
   useUpdateChoixDelivrance
 } from "./hook/UpdateChoixDelivranceHook";
 
@@ -51,7 +51,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const [
     paramUpdateChoixDelivrance,
     setParamUpdateChoixDelivrance
-  ] = useState<UpdateChoixDelivrancePops>();
+  ] = useState<UpdateChoixDelivranceProps>();
 
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
 

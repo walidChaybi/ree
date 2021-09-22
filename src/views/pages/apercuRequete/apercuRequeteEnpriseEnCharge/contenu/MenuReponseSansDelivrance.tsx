@@ -13,7 +13,7 @@ import { getLibelle } from "../../../../common/widget/Text";
 import { PATH_APERCU_COURRIER_ACCOMPAGNEMENT } from "../../../../router/ReceUrls";
 import { IActionProps } from "./ChoixAction";
 import {
-  UpdateChoixDelivrancePops,
+  UpdateChoixDelivranceProps,
   useUpdateChoixDelivrance
 } from "./hook/UpdateChoixDelivranceHook";
 
@@ -26,8 +26,10 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
   const history = useHistory();
   const refRepondreSansDelivranceOptions0 = useRef(null);
 
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
-    useState<UpdateChoixDelivrancePops>();
+  const [
+    paramUpdateChoixDelivrance,
+    setParamUpdateChoixDelivrance
+  ] = useState<UpdateChoixDelivranceProps>();
 
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
 
