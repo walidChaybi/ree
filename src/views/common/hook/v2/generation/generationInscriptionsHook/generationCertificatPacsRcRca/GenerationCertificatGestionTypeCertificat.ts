@@ -110,6 +110,7 @@ export function construitCertificatPacsRcRca(
         specificationRC.getElementsJasper(fichePacs as IFicheRcRca),
         requete?.canal,
         requete?.requerant,
+        requete?.numero,
         titulaire
       );
       break;
@@ -119,6 +120,7 @@ export function construitCertificatPacsRcRca(
         specificationRCA.getElementsJasper(fichePacs as IFicheRcRca),
         requete?.canal,
         requete?.requerant,
+        requete?.numero,
         titulaire
       );
       break;

@@ -9,7 +9,10 @@ import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresB
 import { Qualite } from "../../../model/requete/v2/enum/Qualite";
 import { TypeCanal } from "../../../model/requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../../model/requete/v2/IRequerant";
-import { ITitulaireRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
+import {
+  IRequeteTableau,
+  ITitulaireRequeteTableau
+} from "../../../model/requete/v2/IRequeteTableau";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -52,13 +55,18 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     sexe: Sexe.MASCULIN
   } as ITitulaireRequeteTableau;
 
+  const requete = {
+    numero: "012345",
+    canal: TypeCanal.COURRIER,
+    requerant: requerant
+  } as IRequeteTableau;
+
   const resultat = await CertificatSituationComposition.creerCertificatSituation(
     titre,
     decrets,
     phrase,
-    TypeCanal.COURRIER,
+    requete,
     phrasesPiecesJointes,
-    requerant,
     titulaire
   );
   await waitFor(() => {

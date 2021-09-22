@@ -40,11 +40,15 @@ export function useGenerationCertificatSituationHook(
     setResultGenerationCertificatSituation
   ] = useState<IResultGenerationUnDocument>();
 
-  const [certificatSituationComposition, setCertificatSituationComposition] =
-    useState<ICertificatSituationComposition>();
+  const [
+    certificatSituationComposition,
+    setCertificatSituationComposition
+  ] = useState<ICertificatSituationComposition>();
 
-  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
-    useState<IDocumentReponse[] | undefined>();
+  const [
+    documentsReponsePourStockage,
+    setDocumentsReponsePourStockage
+  ] = useState<IDocumentReponse[] | undefined>();
 
   // 1 - Construction du Certificat de situation
   useEffect(() => {
@@ -56,13 +60,12 @@ export function useGenerationCertificatSituationHook(
       params.dataRMCAutoActe
     ) {
       if (params?.requete.titulaires && params.requete.titulaires.length > 0) {
-        const phrases: IPhrasesJasperCertificatSituation =
-          params.specificationPhrase.getPhrasesJasper(
-            params.requete.document, // id du type de document demandé
-            params.requete.titulaires[0].sexe,
-            params.dataRMCAutoActe,
-            params.dataRMCAutoInscription
-          );
+        const phrases: IPhrasesJasperCertificatSituation = params.specificationPhrase.getPhrasesJasper(
+          params.requete.document, // id du type de document demandé
+          params.requete.titulaires[0].sexe,
+          params.dataRMCAutoActe,
+          params.dataRMCAutoInscription
+        );
         construitCertificatSituation(
           phrases.phrasesLiees,
           params.requete,
@@ -170,9 +173,8 @@ function creerCertificatSituationComposition(
     titre,
     decrets,
     phrasesLiees,
-    requete?.canal,
+    requete,
     phrasesPiecesJointes,
-    requete?.requerant,
     titulaire
   );
 }

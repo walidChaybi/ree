@@ -1,8 +1,12 @@
 import { IDecret } from "../etatcivil/commun/IDecret";
-import { TypeCanal } from "../requete/v2/enum/TypeCanal";
-import { IRequerant } from "../requete/v2/IRequerant";
-import { ITitulaireRequeteTableau } from "../requete/v2/IRequeteTableau";
-import { ICommunComposition } from "./commun/ICommunComposition";
+import {
+  IRequeteTableau,
+  ITitulaireRequeteTableau
+} from "../requete/v2/IRequeteTableau";
+import {
+  CommunComposition,
+  ICommunComposition
+} from "./commun/ICommunComposition";
 import {
   IParametresComposition,
   ParametresComposition
@@ -36,9 +40,8 @@ export const CertificatSituationComposition = {
     titre: string,
     decrets: IDecret[],
     phraseLiees: string,
-    canal?: TypeCanal,
+    requete?: IRequeteTableau,
     phrasesPiecesJointes?: string,
-    requerant?: IRequerant,
     titulaire?: ITitulaireRequeteTableau
   ): ICertificatSituationComposition {
     const certificatSituation = {
@@ -48,11 +51,17 @@ export const CertificatSituationComposition = {
       decrets: formatLibellesDecrets(decrets)
     } as ICertificatSituationComposition;
 
+    CommunComposition.ajoutParamCommuns(
+      certificatSituation,
+      requete?.numero,
+      undefined,
+      titre
+    );
     ParametresComposition.ajoutParametres(certificatSituation);
     RequerantComposition.ajoutInfosRequerant(
       certificatSituation,
-      canal,
-      requerant
+      requete?.canal,
+      requete?.requerant
     );
     TitulaireComposition.ajoutInfosTitulaire(certificatSituation, titulaire);
 

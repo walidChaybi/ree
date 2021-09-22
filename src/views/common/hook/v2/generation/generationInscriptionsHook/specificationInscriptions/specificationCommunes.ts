@@ -17,6 +17,7 @@ import {
 } from "../../../../../util/DateUtils";
 import { storeRece } from "../../../../../util/storeRece";
 import {
+  compareNombre,
   enMajuscule,
   premiereLettreEnMajusculeLeResteEnMinuscule,
   triListeObjetsSurPropriete
@@ -226,7 +227,7 @@ function getLignesInteresseDecision(data: IInteresse, showDeces: boolean) {
   // Filtre pour n'afficher que les parents "adoptant" ou "adoptant conjoint du parent"
   const parents = data.parents?.filter(el => {
     return (
-      el.lienParente === LienParente.ADOPTANT ||
+      el.lienParente === LienParente.PARENT_ADOPTANT ||
       el.lienParente === LienParente.ADOPTANT_CONJOINT_DU_PARENT
     );
   });
@@ -264,6 +265,9 @@ export function getInteressesDecision(data: IFicheRcRca) {
     data.categorie === TypeFiche.RCA &&
     data.decision?.type === TypeDecision.ONAC;
   // Partie Interesses
+  data.interesses.sort((n1, n2) =>
+    compareNombre(n1.numeroOrdreSaisi, n2.numeroOrdreSaisi)
+  );
   data.interesses.forEach(interesse => {
     if (interesses !== "") {
       interesses = addPhrase(interesses, "et");

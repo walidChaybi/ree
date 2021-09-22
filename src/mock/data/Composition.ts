@@ -92,6 +92,8 @@ export const reponseNegativeFrancais: IReponseNegativeFrancaisComposition = {
 };
 
 export const certificatSituation: ICertificatSituationComposition = {
+  numero_requete: "012345",
+  objet_courrier: undefined,
   phrases_liees: "phrase",
   phrases_pieces_jointes: "phrasesPiecesJointes",
   decrets: [{ decret: "decret1" }, { decret: "decret2" }],
@@ -133,6 +135,7 @@ export const certificatSituation: ICertificatSituationComposition = {
 } as ICertificatSituationComposition;
 
 export const certificatRCA: ICertificatRCAComposition = {
+  numero_requete: "012345",
   annee_inscription: "2020",
   numero_inscription: "1234",
   decision_recue: "phrase decision recue",

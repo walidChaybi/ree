@@ -236,7 +236,8 @@ export function getDateFormatJasperFromCompose(date?: IDateCompose) {
     dateString = `${getMoisEnLettre(Number(date.mois))} ${dateString}`;
   }
   if (date && date.jour) {
-    dateString = `${date.jour} ${dateString}`;
+    const jour = Number(date.jour);
+    dateString = `${getJourOu1er(jour)} ${dateString}`;
   }
   return dateString;
 }

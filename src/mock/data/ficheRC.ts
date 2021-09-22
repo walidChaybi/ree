@@ -622,7 +622,7 @@ export const FicheRcRenouvellementTypeOrdonnance = ({
   },
   interesses: [
     {
-      numeroOrdreSaisi: 1,
+      numeroOrdreSaisi: 2,
       nomFamille: "SLAOUI",
       villeNaissance: "Brest",
       paysNaissance: "France",
@@ -640,7 +640,7 @@ export const FicheRcRenouvellementTypeOrdonnance = ({
       dateNaissance: { jour: "01", mois: "09", annee: "1983" }
     },
     {
-      numeroOrdreSaisi: 2,
+      numeroOrdreSaisi: 1,
       nomFamille: "LE ROUX",
       villeNaissance: "Châteauneuf-du-Faou",
       paysNaissance: "France",

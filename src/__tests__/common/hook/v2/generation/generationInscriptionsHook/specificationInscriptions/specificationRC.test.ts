@@ -22,7 +22,7 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autr
   const data = FicheRcDecisionNotaire;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
-Date de naissance: 01 Septembre 1983
+Date de naissance: 1er Septembre 1983
 Lieu de naissance: Paris Arrdt 20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
@@ -44,7 +44,7 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const data = FicheRcDecisionNotaireTypeRequete;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
-Date de naissance: 01 Septembre 1983
+Date de naissance: 1er Septembre 1983
 Lieu de naissance: Paris Arrdt 20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
@@ -68,7 +68,7 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const data = FicheRcDecisionNotaireTypeRequete2;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
-Date de naissance: 01 Septembre 1983
+Date de naissance: 1er Septembre 1983
 Lieu de naissance: Paris Arrdt 20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
@@ -92,7 +92,7 @@ test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une dé
   const data = FicheRcRenouvellementTypeJugement;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesses = `Marie-charlotte, Anne-claire, Lily-rose, Abby-gaëlle SLAOUI
-Date de naissance: 01 Septembre 1983
+Date de naissance: 1er Septembre 1983
 Lieu de naissance: Brest (Finistère)
 et
 Pierre-olivier, Félix-antoine, François-xavier LE ROUX
@@ -120,13 +120,13 @@ Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du soleil levant) le 12 Juin
 test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Ordonnance'", async () => {
   const data = FicheRcRenouvellementTypeOrdonnance;
   const elementsJasper = specificationRC.getElementsJasper(data);
-  const interesses = `Marie-charlotte, Anne-claire, Lily-rose, Abby-gaëlle SLAOUI
-Date de naissance: 01 Septembre 1983
-Lieu de naissance: Brest (Finistère)
-et
-Pierre-olivier, Félix-antoine, François-xavier LE ROUX
+  const interesses = `Pierre-olivier, Félix-antoine, François-xavier LE ROUX
 Date de naissance: 24 Décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
+et
+Marie-charlotte, Anne-claire, Lily-rose, Abby-gaëlle SLAOUI
+Date de naissance: 1er Septembre 1983
+Lieu de naissance: Brest (Finistère)
 Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du soleil levant) le 12 Juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");

@@ -49,7 +49,7 @@ export const FicheRcaDecisionJuridictionEtrangere = ({
         {
           sexe: "MASCULIN",
           nomFamille: "Dupont",
-          lienParente: "ADOPTANT",
+          lienParente: "PARENT_ADOPTANT",
           numeroOrdre: 1,
           dateNaissance: {
             jour: "01",
@@ -186,7 +186,7 @@ export const FicheRcaDecisionAvecInstructionProcureur = ({
       villeDeces: "Londres",
       paysDeces: "Royaume-Uni",
       regionDeces: "Grand-Londres",
-      dateNaissance: { jour: "01", mois: "09", annee: "1983" }
+      dateNaissance: { jour: "02", mois: "09", annee: "1983" }
     }
   ],
   statutsFiche: [
