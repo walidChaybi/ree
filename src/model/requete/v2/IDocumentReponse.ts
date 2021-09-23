@@ -22,3 +22,7 @@ export const DocumentReponse = {
     );
   }
 };
+
+export const estExtraitCopie = (document: IDocumentReponse) => {
+  return DocumentDelivrance.estExtraitCopie(document.nom);
+};

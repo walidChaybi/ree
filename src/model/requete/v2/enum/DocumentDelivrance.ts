@@ -36,6 +36,13 @@ export const DELIVRANCE_ACTE_NON_ANTHENTIQUE = "CAD_ARCH_118";
 export const DELIVRANCE_ACTE = "CAD_EC_116";
 export const DELIVRANCE_ACTE_INCOMPLET = "CAD_EC_50";
 
+export const COPIE_INTEGRALE = "COPIE_INTEGRALE";
+export const COPIE_NON_SIGNEE = "COPIE_NON_SIGNEE";
+export const DECISION_PROTECTION = "DECISION_PROTECTION";
+export const EXTRAIT_AVEC_FILIATION = "EXTRAIT_AVEC_FILIATION";
+export const EXTRAIT_PLURILINGUE = "EXTRAIT_PLURILINGUE";
+export const EXTRAIT_SANS_FILIATION = "EXTRAIT_SANS_FILIATION";
+
 /**
  * Attention:
  *  _nom = code
@@ -174,6 +181,17 @@ export class DocumentDelivrance extends EnumNomemclature {
     return DocumentDelivrance.controleDocumentDelivranceSelonTypeRepertoire(
       codeDocumentDemande,
       categorie
+    );
+  }
+
+  public static estExtraitCopie(categorie: string): boolean {
+    return (
+      categorie === COPIE_INTEGRALE ||
+      categorie === COPIE_NON_SIGNEE ||
+      categorie === DECISION_PROTECTION ||
+      categorie === EXTRAIT_AVEC_FILIATION ||
+      categorie === EXTRAIT_PLURILINGUE ||
+      categorie === EXTRAIT_SANS_FILIATION
     );
   }
 

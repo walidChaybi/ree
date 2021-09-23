@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../model/requete/v2/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { estExtraitCopie } from "../../../../model/requete/v2/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { getUrlWithoutIdParam } from "../../../common/util/route/routeUtil";
 import {
@@ -48,7 +49,10 @@ export const MenuCourrier: React.FC<IActionProps> = props => {
         sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
         ref: refAction0
       });
-      if (requete.documentsReponses.length >= NB_DOCUMENTS_GENERES_2) {
+      if (
+        requete.documentsReponses.filter(res => estExtraitCopie(res)).length >=
+        NB_DOCUMENTS_GENERES_2
+      ) {
         temp.push({
           value: INDEX_AFFICHER_EC_COMPLEMENTAIRE,
           label: getLibelle("Afficher E/C complémentaire"),
