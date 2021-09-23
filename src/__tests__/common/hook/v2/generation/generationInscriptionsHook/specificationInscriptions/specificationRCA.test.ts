@@ -16,7 +16,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesse = `Léo, Jules FLECK
 Date de naissance: 2 Septembre 1983
-Lieu de naissance: Lyon Arrdt 8 (Rhône)
+Lieu de naissance: Lyon arr.8 (Rhône)
 Date de décès: Mars 2003
 Lieu de décès: Londres - Grand-Londres (Royaume-Uni)`;
   expect(elementsJasper.anneeInscription).toBe("2020");
@@ -36,7 +36,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une decision Juridiction 
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesse = `Léo, Jules FLECK
 Date de naissance: 1er Septembre 1983
-Lieu de naissance: Lyon Arrdt 8 (Rhône)
+Lieu de naissance: Lyon arr.8 (Rhône)
 par
 Lucas, Didier DUPONT
 Date de naissance: 1er Février 1993
@@ -44,7 +44,7 @@ Lieu de naissance: Nantes (Loire-Atlantique)`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("4013");
   expect(elementsJasper.decisionRecue).toBe(
-    "Le service central d'état civil a reçu le jugement du Tribunal judiciaire de Paris Arrdt 18, en date du 26 Novembre 2020 concernant le changement de régime matrimonial par acte notarié étranger / instruction du Procureur de : "
+    "Le service central d'état civil a reçu le jugement du Tribunal judiciaire de Paris arr.18, en date du 26 Novembre 2020 concernant le changement de régime matrimonial par acte notarié étranger / instruction du Procureur de : "
   );
   expect(elementsJasper.interesseDecision).toBe(interesse);
   expect(elementsJasper.decisionExequatur).toBe(

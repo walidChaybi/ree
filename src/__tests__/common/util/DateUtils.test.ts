@@ -360,13 +360,19 @@ test("formatJour", () => {
   expect(formatJour("02")).toBe("2");
   expect(formatJour("AAA")).toBe("");
   expect(formatJour("12")).toBe("12");
+  expect(formatJour("10")).toBe("10");
+  expect(formatJour("20")).toBe("20");
+  expect(formatJour("30")).toBe("30");
 });
 
 test("formatMois", () => {
   expect(formatMois(undefined)).toBe("");
   expect(formatMois("")).toBe("");
   expect(formatMois("1")).toBe("Janvier");
+  expect(formatMois("01")).toBe("Janvier");
   expect(formatMois("02")).toBe("Février");
   expect(formatMois("AAA")).toBe("");
   expect(formatMois("12")).toBe("Décembre");
+  expect(formatMois("10")).toBe("Octobre");
+  expect(formatMois("010")).toBe("Octobre");
 });

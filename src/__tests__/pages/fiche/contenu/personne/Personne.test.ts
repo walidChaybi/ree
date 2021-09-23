@@ -1,6 +1,6 @@
 import { Personne } from "../../../../../model/etatcivil/commun/IPersonne";
-import { personneMock } from "../../../fiche/hook/constructionComposants/mock/PersonneMock";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { personneMock } from "../../../fiche/hook/constructionComposants/mock/PersonneMock";
 test("render composant SectionPart", async () => {
   expect(Personne.getNom(personneMock)).toBe("FAULKNER");
   expect(Personne.getAutresNoms(personneMock)).toBe("ELISA (Pseudonyme)");
@@ -9,7 +9,7 @@ test("render composant SectionPart", async () => {
   );
   expect(Personne.getAutresPrenom(personneMock)).toBe("Solomon");
   expect(Personne.getLieuNaissance(personneMock)).toBe(
-    "Marseille Arrdt 2 (Provence-Aples-côte d'azur)"
+    "Marseille arr.2 (Provence-Aples-côte d'azur)"
   );
   expect(Personne.getLieuDeces(personneMock)).toBe(
     "Londres - Angleterre (Grande bretagne)"

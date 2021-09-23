@@ -23,11 +23,11 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autr
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er Septembre 1983
-Lieu de naissance: Paris Arrdt 20`;
+Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le service central d'état civil a reçu un acte établi par Maitre Jean DUPONT, notaire à Paris Arrdt 18, office notarial n°1234567, le 26 Novembre 2020"
+    "Le service central d'état civil a reçu un acte établi par Maitre Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 Novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe("concernant le placement de : ");
   expect(elementsJasper.interesseDecision).toBe(interesse);
@@ -45,11 +45,11 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er Septembre 1983
-Lieu de naissance: Paris Arrdt 20`;
+Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris Arrdt 20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris Arrdt 18, office notarial n°1234567, le 26 Novembre 2020"
+    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris arr.20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 Novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe(
     "concernant le transfert des pouvoirs de : "
@@ -69,11 +69,11 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
 Date de naissance: 1er Septembre 1983
-Lieu de naissance: Paris Arrdt 20`;
+Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris Arrdt 20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris Arrdt 18, office notarial n°1234567, le 26 Novembre 2020"
+    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris arr.20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 Novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe(
     "concernant l'habilitation familiale générale de : "
@@ -131,7 +131,7 @@ Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du soleil levant) le 12 Juin
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le service central d'état civil a reçu l'ordonnance du Tribunal judiciaire de Paris Arrdt 18, en date du 26 Novembre 2020"
+    "Le service central d'état civil a reçu l'ordonnance du Tribunal judiciaire de Paris arr.18, en date du 26 Novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe("concernant le placement de : ");
   expect(elementsJasper.interesseDecision).toBe(interesses);

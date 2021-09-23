@@ -104,9 +104,9 @@ export class LieuxUtils {
       ) {
         return `${villeString}${regionStringEntreParentheses}`;
       } else if (!LieuxUtils.isVilleParis(villeString)) {
-        return `${villeString} Arrdt ${arrondissement}${regionStringEntreParentheses}`;
+        return `${villeString} arr.${arrondissement}${regionStringEntreParentheses}`;
       } else {
-        return `${villeString} Arrdt ${arrondissement}`;
+        return `${villeString} arr.${arrondissement}`;
       }
     } else {
       return LieuxUtils.formatAdresseEtrangere(
@@ -141,9 +141,9 @@ export class LieuxUtils {
       ) {
         return `${villeString}${libelleDepartementString}`;
       } else if (!LieuxUtils.isVilleParis(villeString)) {
-        return `${villeString} Arrdt ${arrondissement}${libelleDepartementString}`;
+        return `${villeString} arr.${arrondissement}${libelleDepartementString}`;
       } else {
-        return `${villeString} Arrdt ${arrondissement}`;
+        return `${villeString} arr.${arrondissement}`;
       }
     } else {
       return LieuxUtils.formatAdresseEtrangere(

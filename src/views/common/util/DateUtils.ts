@@ -296,7 +296,7 @@ export function getJourOu1er(jour?: number) {
 export function formatJour(str?: string): string {
   let jourFormate = "";
   if (str) {
-    jourFormate = str.trim().replace(/0/g, "");
+    jourFormate = supprimeLesZeroAuDebut(str);
   }
   return jourFormate ? getJourOu1er(Number(jourFormate)) : "";
 }
@@ -304,8 +304,12 @@ export function formatJour(str?: string): string {
 export function formatMois(str?: string): string {
   let moisFormate = "";
   if (str) {
-    moisFormate = str.trim().replace(/0/g, "");
+    moisFormate = supprimeLesZeroAuDebut(str);
   }
   const moisEnLettre = moisFormate ? getMoisEnLettre(Number(moisFormate)) : "";
   return moisEnLettre ? moisEnLettre : "";
+}
+
+function supprimeLesZeroAuDebut(str: string): string {
+  return str.trim().replace(/0+(.+)/, "$1");
 }
