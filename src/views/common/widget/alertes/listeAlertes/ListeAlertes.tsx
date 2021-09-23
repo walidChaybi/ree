@@ -9,8 +9,8 @@ import {
 import { storeRece } from "../../../util/storeRece";
 import { ConfirmationPopin } from "../../popin/ConfirmationPopin";
 import { getLibelle } from "../../Text";
-import "../scss/ListeAlertes.scss";
-import { PopinSupprimerAlerte } from "./contenu/PopinSupprimerAlertes";
+import { PopinSupprimerAlerte } from "./contenu/PopinSupprimerAlerte";
+import "./scss/ListeAlertes.scss";
 
 interface PopinSupprimerAlerteState {
   idAlerteActe: string;

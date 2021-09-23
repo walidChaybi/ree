@@ -17,6 +17,7 @@ interface InputFieldProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   typeInput?: TypeInput;
   component?: "input" | "select" | "textarea";
+  rows?: number;
 }
 
 interface TypeInput {
@@ -38,7 +39,8 @@ export const InputField: React.FC<InputFieldProps> = ({
   onBlur,
   onChange,
   typeInput,
-  component = "input"
+  component = "input",
+  rows
 }) => {
   const otherProps = {} as any;
   if (maxLength) {
@@ -76,11 +78,12 @@ export const InputField: React.FC<InputFieldProps> = ({
           id={name}
           disabled={disabled}
           title={title}
-          placeholder={placeholder ? placeholder : label}
           {...otherProps}
           type={typeInput?.type}
           min={typeInput?.min}
           max={typeInput?.max}
+          placeholder={placeholder ? placeholder : label}
+          {...(component === "textarea" ? { rows: rows } : {})}
         />
       </div>
       {!noErrorMessage && (

@@ -9,6 +9,7 @@ import { getLibelle } from "../../../Text";
 import FormAjouterAlerteBoutons, {
   FormAjouterAlerteBoutonsProps
 } from "./FormAjouterAlerteBoutons";
+import "./scss/PopinAjouterAlertes.scss";
 
 export const ID_TYPE_ALERTE = "idTypeAlerte";
 export const COMPLEMENT_DESCRIPTION = "complementDescription";
@@ -55,35 +56,39 @@ export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
   } as FormAjouterAlerteBoutonsProps;
 
   return (
-    <Dialog
-      disablePortal={true}
-      open={open}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogContent>
-        <Formulaire
-          formDefaultValues={DefaultValues}
-          formValidationSchema={ValidationSchema}
-          onSubmit={onSubmit}
-        >
-          <SelectField
-            name={ID_TYPE_ALERTE}
-            label={getLibelle("Sélectionner l'alerte à ajouter :")}
-            options={TypeAlerte.getAllEnumsAsOptions()}
-          />
-          <InputField
-            name={COMPLEMENT_DESCRIPTION}
-            component="textarea"
-            label={getLibelle(
-              "Compléter l'alerte avec votre description (si nécessaire) :"
-            )}
-            placeholder="..."
-            maxLength={"150"}
-          />
-          <FormAjouterAlerteBoutons {...boutonsProps} />
-        </Formulaire>
-      </DialogContent>
-    </Dialog>
+    <div className="PopinAjouterAlertes">
+      <Dialog
+        disablePortal={true}
+        open={open}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <Formulaire
+            className="FormulaireAjouterAlertes"
+            formDefaultValues={DefaultValues}
+            formValidationSchema={ValidationSchema}
+            onSubmit={onSubmit}
+          >
+            <SelectField
+              name={ID_TYPE_ALERTE}
+              label={getLibelle("Sélectionner l'alerte à ajouter :")}
+              options={TypeAlerte.getAllEnumsAsOptions()}
+            />
+            <InputField
+              name={COMPLEMENT_DESCRIPTION}
+              component="textarea"
+              label={getLibelle(
+                "Compléter l'alerte avec votre description (si nécessaire) :"
+              )}
+              placeholder={getLibelle("Description")}
+              rows={10}
+              maxLength={"150"}
+            />
+            <FormAjouterAlerteBoutons {...boutonsProps} />
+          </Formulaire>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };

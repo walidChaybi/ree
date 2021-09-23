@@ -1,0 +1,27 @@
+@import "./../../../../../../../scss/colors";
+
+.PopinAjouterAlertes {
+  .MuiDialog-paperWidthSm {
+    max-width: unset;
+  }
+  .MuiDialogContent-root {
+    padding: 0px !important;
+  }
+
+  .FormulaireAjouterAlertes {
+    margin: 1em;
+
+    .Fieldset {
+      background-color: unset;
+      border-style: none;
+
+      .Titre {
+        display: none;
+      }
+
+      .FormAjouterAlerteBoutons {
+        float: right;
+      }
+    }
+  }
+}
