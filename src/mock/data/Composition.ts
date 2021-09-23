@@ -68,12 +68,11 @@ const baseReponseNegativeInstitutionnel = {
   titre: undefined
 };
 
-export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncompleteComposition =
-  {
-    ...baseReponseNegativeInstitutionnel,
-    objet_courrier:
-      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil"
-  };
+export const reponseNegativeDemandeIncomplete: IReponseNegativeDemandeIncompleteComposition = {
+  ...baseReponseNegativeInstitutionnel,
+  objet_courrier:
+    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil"
+};
 
 export const reponseNegativeMariage: IReponseNegativeMariageComposition = {
   ...baseReponseNegative,
@@ -95,8 +94,7 @@ export const reponseNegativeFrancais: IReponseNegativeFrancaisComposition = {
 export const certificatSituation: ICertificatSituationComposition = {
   phrases_liees: "phrase",
   phrases_pieces_jointes: "phrasesPiecesJointes",
-  decret1: "decret1",
-  decret2: "decret2",
+  decrets: [{ decret: "decret1" }, { decret: "decret2" }],
   adr_service_delivreur: {
     ligne4: "11, rue de la Maison Blanche",
     ligne6: "44941 Nantes CEDEX 9"

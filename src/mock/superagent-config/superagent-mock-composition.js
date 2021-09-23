@@ -31,12 +31,12 @@ export const configComposition = [
         return { data: imagePngVideBase64 };
       }
 
-      if (match[1] === "/composition/CERTIFICAT_SITUATION/1") {
-        // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-        return { data: imagePngVideBase64 };
-      }
-
-      if (match[1] === "/composition/CERTIFICAT_INSCRIPTION_RCA/1") {
+      if (
+        match[1] === "/composition/CERTIFICAT_SITUATION/1" ||
+        match[1] === "/composition/CERTIFICAT_INSCRIPTION_RCA/1" ||
+        match[1] === "/composition/CERTIFICAT_INSCRIPTION_RC/1" ||
+        match[1] === "/composition/ATTESTATION_PACS/1"
+      ) {
         // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
         return { data: imagePngVideBase64 };
       }

@@ -1,16 +1,17 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { idDocumentsReponse } from "../../../../../../mock/data/DocumentReponse";
-import { imagePngVideBase64 } from "../../../../../../mock/data/ImagePng";
+import { idDocumentsReponse2 } from "../../../../../../mock/data/DocumentReponse";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import { idRequete1 } from "../../../../../../mock/data/RequeteV2";
 import {
+  DataRMCInscriptionAvecUnPACS,
   DataRMCInscriptionAvecUnRC,
   DataRMCInscriptionAvecUnRCA
 } from "../../../../../../mock/data/RMCInscription";
+import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configMultiAPi } from "../../../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2-gene-inscription";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import {
@@ -19,11 +20,11 @@ import {
 } from "../../../../../../model/requete/v2/IRequeteTableau";
 import { useGenerationInscriptionsHook } from "../../../../../../views/common/hook/v2/generation/generationInscriptionsHook/GenerationInscriptionsHook";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
-const superagentMockEtatCivil = require("superagent-mock")(
-  request,
-  configEtatcivil
-);
+const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
+  configComposition[0],
+  configRequetesV2[0]
+]);
 
 const titulaire = {
   nom: "nom",
@@ -42,10 +43,11 @@ const requete = {
   titulaires: [titulaire]
 } as IRequeteTableau;
 
-const dataRMCAutoInscription = DataRMCInscriptionAvecUnRC.concat(
-  DataRMCInscriptionAvecUnRCA
-);
-
+const dataRMCAutoInscription = [
+  ...DataRMCInscriptionAvecUnRC,
+  ...DataRMCInscriptionAvecUnRCA,
+  ...DataRMCInscriptionAvecUnPACS
+];
 const HookConsummer: React.FC = () => {
   const res = useGenerationInscriptionsHook(requete, dataRMCAutoInscription);
 
@@ -54,11 +56,6 @@ const HookConsummer: React.FC = () => {
       <div data-testid="resulatIdDoc">
         {res?.idDocumentsReponse && (
           <>{`idDocumentsReponse=${res?.idDocumentsReponse}`}</>
-        )}
-      </div>
-      <div data-testid="resulatContenu">
-        {res?.contenuDocumentsReponse && (
-          <>{`contenuDocumentReponse1=${res?.contenuDocumentsReponse[0]}`}</>
         )}
       </div>
     </>
@@ -72,19 +69,14 @@ beforeAll(() => {
 test("Attendu: la génération d'un certificat d'inscription RC", async () => {
   render(<HookConsummer></HookConsummer>);
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
-  const resulatContenu = screen.getByTestId("resulatContenu");
 
   await waitFor(() => {
     expect(resulatIdDoc.innerHTML).toBe(
-      `idDocumentsReponse=${idDocumentsReponse}`
-    );
-    expect(resulatContenu.innerHTML).toBe(
-      `contenuDocumentReponse1=${imagePngVideBase64}`
+      `idDocumentsReponse=${idDocumentsReponse2}`
     );
   });
 });
 
 afterAll(() => {
   superagentMock.unset();
-  superagentMockEtatCivil.unset();
 });

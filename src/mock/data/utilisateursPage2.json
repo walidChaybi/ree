@@ -1,0 +1,20 @@
+{
+  "hasTechnicalError": false,
+  "hasBusinessError": false,
+  "status": 200,
+  "url": "/rece/rece-agent-api/v1/utilisateurs",
+  "data": [
+    {
+      "idUtilisateur": "5ef4b1da1e3ee4adf9615ec8",
+      "nom": "Lolita2",
+      "prenom": "Young2"
+    },
+    {
+      "idUtilisateur": "5ef4b1da52a10e5afa4b448d",
+      "nom": "Estrada2",
+      "prenom": "Hudson2"
+    }
+  ],
+  "errors": [],
+  "httpHeaders": {}
+}

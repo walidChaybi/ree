@@ -1,5 +1,10 @@
 import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 
+export const SPC = "SPC";
+export const SANS_PRENOM_CONNU = "Sans prénom connu";
+export const SNP = "SNP";
+export const SANS_NOM_PATRONYMIQUE = "Sans nom patronymique";
+
 export const UN = 1;
 export const DEUX = 2;
 export const TROIS = 3;
@@ -65,11 +70,25 @@ export function enMajuscule(str?: string): string {
 }
 
 export function formatPrenom(prenom?: string): string {
-  return formatMajusculesMinusculesAvecSeparateur(prenom);
+  let prenomFormate = "";
+  if (prenom === SPC) {
+    prenomFormate = SANS_PRENOM_CONNU;
+  } else {
+    prenomFormate = formatMajusculesMinusculesAvecSeparateur(prenom);
+  }
+
+  return prenomFormate;
 }
 
 export function formatNom(nom?: string): string {
-  return enMajuscule(nom);
+  let nomFormate = "";
+  if (nom === SNP) {
+    nomFormate = SANS_NOM_PATRONYMIQUE;
+  } else {
+    nomFormate = enMajuscule(nom);
+  }
+
+  return nomFormate;
 }
 
 export function formatDe(str: string) {

@@ -29,7 +29,7 @@ export const ReponseNegativeDemandeIncompleteComposition = {
     const reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
     ParametresComposition.ajoutParametres(reponseNegative);
 
-    CommunComposition.ajoutParametres(
+    CommunComposition.ajoutParamCommuns(
       reponseNegative,
       numeroRequete,
       OBJET_COURRIER_CERTIFICAT_SITUATION

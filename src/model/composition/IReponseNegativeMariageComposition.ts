@@ -31,7 +31,7 @@ export const ReponseNegativeMariageComposition = {
     const reponseNegative = {} as IReponseNegativeMariageComposition;
     ParametresComposition.ajoutParametres(reponseNegative);
 
-    CommunComposition.ajoutParametres(reponseNegative, requete.numero);
+    CommunComposition.ajoutParamCommuns(reponseNegative, requete.numero);
 
     reponseNegative.document_demande = requete.documentDemande.libelle;
 

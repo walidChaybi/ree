@@ -1,8 +1,10 @@
 import mockConnectedUser from "../data/connectedUser.json";
 import DONNEES_ENTITES from "../data/entitesRattachement.json";
+import DONNEES_ENTITES_PAGE2 from "../data/entitesRattachementPage2.json";
 import { MockHabilitation } from "../data/habilitationMock";
 import INFOS_UTILISATEURS from "../data/infosUtilisateurs";
 import DONNEES_UTILISATEURS from "../data/utilisateurs";
+import DONNEES_UTILISATEURS_PAGE2 from "../data/utilisateursPage2.json";
 
 export const configAgent = [
   {
@@ -28,11 +30,20 @@ export const configAgent = [
         return { data: DONNEES_UTILISATEURS.data };
       }
 
-      if (match[1].startsWith("/utilisateurs/all")) {
-        return { data: DONNEES_UTILISATEURS.data };
+      if (match[1] === "/utilisateurs/all?range=0-100&lite=true") {
+        return { ...DONNEES_UTILISATEURS };
       }
-      if (match[1].startsWith("/entiterattachement/all")) {
-        return { data: DONNEES_ENTITES.data };
+
+      if (match[1] === "/utilisateurs/all?range=1-100&lite=true") {
+        return { ...DONNEES_UTILISATEURS_PAGE2 };
+      }
+
+      if (match[1].startsWith("/entiterattachement/all?range=0-100")) {
+        return { ...DONNEES_ENTITES };
+      }
+
+      if (match[1].startsWith("/entiterattachement/all?range=1-100")) {
+        return { ...DONNEES_ENTITES_PAGE2 };
       }
 
       if (

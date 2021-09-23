@@ -1,4 +1,4 @@
-import { IElementsJasperCertificatRCA } from "../../views/common/hook/v2/generation/generationInscriptionsHook/GenerationCertificatRCAHook";
+import { IElementsJasperCertificatRCA } from "../../views/common/hook/v2/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
 import { TypeCanal } from "../requete/v2/enum/TypeCanal";
 import { IRequerant } from "../requete/v2/IRequerant";
 import { ITitulaireRequeteTableau } from "../requete/v2/IRequeteTableau";
@@ -16,7 +16,7 @@ import {
   TitulaireComposition
 } from "./commun/ITitulaireComposition";
 
-export const NOM_DOCUMENT_CERTIFICAT_RCA = "CERTIFICAT_INSCRIPTION_RCA";
+export const NOM_DOCUMENT_CERTIFICAT_RCA = "Certificat d'inscription au RCA";
 export interface ICertificatRCAComposition
   extends IParametresComposition,
     ICommunComposition,

@@ -48,10 +48,9 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [
-    paramUpdateChoixDelivrance,
-    setParamUpdateChoixDelivrance
-  ] = useState<UpdateChoixDelivranceProps>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<
+    UpdateChoixDelivranceProps
+  >();
 
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
 
@@ -191,6 +190,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   /////////////////////////////////////
   useEffect(() => {
     if (resultDeliverCertificatSituation) {
+      setOperationEnCours(false);
       const url = receUrl.getUrlApercuTraitementAPartirDe(
         history.location.pathname
       );

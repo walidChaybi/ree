@@ -7,5 +7,4 @@ export interface IResultGenerationUnDocument {
 
 export interface IResultGenerationPlusieursDocument {
   idDocumentsReponse?: string[];
-  contenuDocumentsReponse?: string[];
 }

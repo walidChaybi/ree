@@ -17,10 +17,7 @@ import {
   getUrlWithParam
 } from "../../../views/common/util/route/routeUtil";
 import { SaisirRDCSCPage } from "../../../views/pages/saisirRequete/SaisirRDCSCPage";
-import {
-  URL_MES_REQUETES_SAISIR_RDCSC,
-  URL_SAISIR_RDCSC_MES_REQUETES
-} from "../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_SAISIR_RDCSC } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
@@ -304,14 +301,14 @@ test("test du Enregistrer du formulaire de saisie d'une Requête de Délivrance 
 test("Remplissage du formulaire avec requete", () => {
   history.push(
     getUrlWithParam(
-      URL_SAISIR_RDCSC_MES_REQUETES,
+      URL_MES_REQUETES_SAISIR_RDCSC,
       "a4cefb71-8457-4f6b-937e-34b49335d405"
     )
   );
 
   render(
     <Router history={history}>
-      <Route exact={true} path={URL_SAISIR_RDCSC_MES_REQUETES}>
+      <Route exact={true} path={URL_MES_REQUETES_SAISIR_RDCSC}>
         <SaisirRDCSCPage />
       </Route>
     </Router>

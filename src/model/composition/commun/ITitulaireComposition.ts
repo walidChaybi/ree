@@ -1,6 +1,6 @@
 import {
   getJourOu1er,
-  getMoisNaissanceEnLettre
+  getMoisEnLettre
 } from "../../../views/common/util/DateUtils";
 import {
   getValeurOuVide,
@@ -30,7 +30,7 @@ export const TitulaireComposition = {
       obj.sexe = titulaire.sexe.libelle;
 
       obj.jour_naissance = getJourOu1er(titulaire.jourNaissance);
-      obj.mois_naissance = getMoisNaissanceEnLettre(titulaire.moisNaissance);
+      obj.mois_naissance = getMoisEnLettre(titulaire.moisNaissance);
       obj.annee_naissance = String(getValeurOuVide(titulaire.anneeNaissance));
       obj.ville_naissance = getValeurOuVide(titulaire.villeNaissance);
       obj.pays_naissance = getValeurOuVide(titulaire.paysNaissance);

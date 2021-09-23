@@ -1,3 +1,4 @@
+import { IDecret } from "../etatcivil/commun/IDecret";
 import { TypeCanal } from "../requete/v2/enum/TypeCanal";
 import { IRequerant } from "../requete/v2/IRequerant";
 import { ITitulaireRequeteTableau } from "../requete/v2/IRequeteTableau";
@@ -14,20 +15,18 @@ import {
   ITitulaireComposition,
   TitulaireComposition
 } from "./commun/ITitulaireComposition";
+import {
+  formatLibellesDecrets,
+  TypeLibelleDecretComposition
+} from "./commun/TypeDecretComposition";
 
-export const NOM_DOCUMENT_CERTIFICAT_SITUATION = "CERTIFICAT_SITUATION";
+export const NOM_DOCUMENT_CERTIFICAT_SITUATION = "Certificat de situation";
 export interface ICertificatSituationComposition
   extends IParametresComposition,
     ICommunComposition,
     IRequerantComposition,
     ITitulaireComposition {
-  decret1: string;
-  decret2: string;
-  decret3: string;
-  decret4: string;
-  decret5: string;
-  decret6: string;
-
+  decrets: TypeLibelleDecretComposition[];
   phrases_liees: string;
   phrases_pieces_jointes?: string;
 }
@@ -35,7 +34,7 @@ export interface ICertificatSituationComposition
 export const CertificatSituationComposition = {
   creerCertificatSituation(
     titre: string,
-    decrets: string[],
+    decrets: IDecret[],
     phraseLiees: string,
     canal?: TypeCanal,
     phrasesPiecesJointes?: string,
@@ -45,15 +44,9 @@ export const CertificatSituationComposition = {
     const certificatSituation = {
       titre,
       phrases_liees: phraseLiees,
-      phrases_pieces_jointes: phrasesPiecesJointes
+      phrases_pieces_jointes: phrasesPiecesJointes,
+      decrets: formatLibellesDecrets(decrets)
     } as ICertificatSituationComposition;
-
-    if (decrets) {
-      decrets.forEach((decret, idx) => {
-        //@ts-ignore
-        certificatSituation[`decret${idx + 1}`] = decret;
-      });
-    }
 
     ParametresComposition.ajoutParametres(certificatSituation);
     RequerantComposition.ajoutInfosRequerant(

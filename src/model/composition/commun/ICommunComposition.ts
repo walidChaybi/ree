@@ -7,17 +7,17 @@ export interface ICommunComposition {
 }
 
 export const CommunComposition = {
-  ajoutParametres(
-    obj: ICommunComposition,
+  ajoutParamCommuns(
+    objJson: ICommunComposition,
     numero?: string,
     objet?: string,
     titre?: string
   ) {
-    obj = obj || {};
+    objJson = objJson || {};
 
-    obj.objet_courrier = objet;
-    obj.titre = titre;
-    obj.numero_requete = getValeurOuVide(numero);
-    return obj;
+    objJson.objet_courrier = objet;
+    objJson.titre = titre;
+    objJson.numero_requete = getValeurOuVide(numero);
+    return objJson;
   }
 };

@@ -1,5 +1,6 @@
 import { IEntite } from "../../../model/agent/IEntiteRattachement";
 import { IUtilisateur } from "../../../model/agent/IUtilisateur";
+import { IDecret } from "../../../model/etatcivil/commun/IDecret";
 import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 import parametres from "../../../ressources/parametres.json";
 import { Rot18 } from "./crypto/Rot18";
@@ -13,6 +14,7 @@ class StoreRece {
   private _retourUrl = "";
   private _listeUtilisateurs: IUtilisateur[] = [];
   private _listeEntite: IEntite[] = [];
+  private _decrets: IDecret[] = [];
 
   set retourUrl(ru: string) {
     this._retourUrl = ru;
@@ -54,6 +56,14 @@ class StoreRece {
 
   set listeEntite(liste: IEntite[]) {
     this._listeEntite = liste;
+  }
+
+  get decrets(): IDecret[] {
+    return this._decrets;
+  }
+
+  set decrets(decrets: IDecret[]) {
+    this._decrets = decrets;
   }
 
   get listeEntite(): IEntite[] {

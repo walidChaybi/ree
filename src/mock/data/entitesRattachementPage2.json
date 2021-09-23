@@ -1,0 +1,24 @@
+{
+  "hasTechnicalError": false,
+  "hasBusinessError": false,
+  "status": 200,
+  "url": "/rece/rece-agent-api/v1/utilisateurs",
+  "data": [
+    {
+      "code": "SCEC",
+      "hierarchieEntite": null,
+      "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61de",
+      "libelleEntite": "Service Central de l'Etat-Civil2",
+      "type": "SERVICE",
+      "utilisateur": null
+    },
+    {
+      "code": "SCEC",
+      "hierarchieEntite": null,
+      "idEntite": "6737dca8-2f96-4086-8288-fd1a136a61de",
+      "libelleEntite": "Service Central de l'Etat-Civil2",
+      "type": "SERVICE",
+      "utilisateur": null
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import request from "superagent";
 import { certificatSituation } from "../../../mock/data/Composition";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 import { CertificatSituationComposition } from "../../../model/composition/ICertificatSituationComposition";
+import { IDecret } from "../../../model/etatcivil/commun/IDecret";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
 import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresBaseRequete";
 import { Qualite } from "../../../model/requete/v2/enum/Qualite";
@@ -17,7 +18,10 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
   const attendu = certificatSituation;
 
   const titre = "titre";
-  const decrets = ["decret1", "decret2"];
+  const decrets: IDecret[] = [
+    { libelle: "decret1" } as IDecret,
+    { libelle: "decret2" } as IDecret
+  ];
   const phrase = "phrase";
   const phrasesPiecesJointes = "phrasesPiecesJointes";
   const requerant = {

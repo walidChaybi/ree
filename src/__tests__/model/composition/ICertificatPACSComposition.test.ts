@@ -1,0 +1,86 @@
+import {
+  annulationJuridictionMap,
+  dissolutionJuridictionMap,
+  pacsModificationNotaireMap
+} from "../../../mock/data/PACS";
+import { ICertificatPACSComposition } from "../../../model/composition/pacs/ICertificatPACSComposition";
+import { ParagrapheComposition } from "../../../model/composition/pacs/IParagraphesPacsComposition";
+import { IAutorite } from "../../../model/etatcivil/commun/IAutorite";
+import { TypeAutorite } from "../../../model/etatcivil/enum/TypeAutorite";
+import { TypeJuridiction } from "../../../model/etatcivil/enum/TypeJuridiction";
+import { IAnnulation } from "../../../model/etatcivil/pacs/IAnnulation";
+import { IDissolution } from "../../../model/etatcivil/pacs/IDissolution";
+import { IModification } from "../../../model/etatcivil/pacs/IModification";
+
+test("ajoutParagrapheEnregistrementPACS", () => {
+  let temp = {} as ICertificatPACSComposition;
+  ParagrapheComposition.ajoutParagrapheEnregistrementPACS(
+    temp,
+    pacsModificationNotaireMap
+  );
+  ParagrapheComposition.ajoutParagrapheModificationPACS(
+    temp,
+    pacsModificationNotaireMap.autorite,
+    pacsModificationNotaireMap.modifications
+      ? pacsModificationNotaireMap.modifications
+      : ([] as IModification[])
+  );
+  ParagrapheComposition.ajoutParagrapheDissolutionPACS(
+    temp,
+    dissolutionJuridictionMap.autorite,
+    dissolutionJuridictionMap.dissolution
+      ? dissolutionJuridictionMap.dissolution
+      : ({} as IDissolution)
+  );
+  ParagrapheComposition.ajoutParagrapheAnnulationPACS(
+    temp,
+    annulationJuridictionMap.autorite,
+    annulationJuridictionMap.annulation
+      ? annulationJuridictionMap.annulation
+      : ({} as IAnnulation)
+  );
+
+  expect(temp).toStrictEqual({
+    paragraphe_enregistrement: `Enregistrée par Maître dominique Ester, notaire à Paris Arrdt 18, office notarial n°1235467890, le 19 Janvier 1970.
+Date d'effet de la déclaration du PACS à l'égard des tiers: 4 Décembre 2020`,
+    paragraphe_modification: `Modifiée par Maître dominique Ester, notaire à Paris Arrdt 18, office notarial n°1235467890, le 22 Janvier 2021.
+Date d'effet de la modification du PACS à l'égard des tiers: 22 Janvier 2021.`,
+    paragraphe_dissolution: `Dissoute par jugement du tribunal judicicaire de Paris Arrdt 18, le 26 Novembre 2020.
+Date d'effet de la modification du PACS à l'égard des tiers: 26 Novembre 2020.`,
+    paragraphe_annulation: `Annulée par jugement du tribunal judicicaire de Paris Arrdt 18, le 26 Novembre 2020.
+Date d'effet de la dissolution du PACS à l'égard des tiers: 26 Novembre 2020.`
+  });
+});
+
+test("getLibelleJuridiction", () => {
+  expect(ParagrapheComposition.getLibelleJuridiction("Cour d'appel")).toBe(
+    "par arrêt de la cour d'appel de"
+  );
+});
+test("getLibelleJuridiction defaut", () => {
+  expect(
+    ParagrapheComposition.getLibelleJuridiction(TypeJuridiction.GREFFE_TRIBUNAL)
+  ).toBe("au Greffe du tribunal de");
+});
+test("getAutorite commune", () => {
+  expect(
+    ParagrapheComposition.getAutorite({
+      typeAutorite: TypeAutorite.COMMUNE
+    } as unknown as IAutorite)
+  ).toBe("en la commune de");
+});
+test("getAutorite commune", () => {
+  expect(
+    ParagrapheComposition.getAutorite({
+      typeAutorite: "salut"
+    } as unknown as IAutorite)
+  ).toBe("");
+});
+test("getAutorite poste", () => {
+  expect(
+    ParagrapheComposition.getAutorite({
+      typeAutorite: TypeAutorite.POSTE_ETRANGER,
+      typePoste: "Benoît"
+    } as unknown as IAutorite)
+  ).toBe("par Benoît à");
+});

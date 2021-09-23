@@ -7,6 +7,7 @@ import {
   acteMariage
 } from "../../__tests__/pages/fiche/data/ficheActe";
 import { FicheRcaDecisionJuridictionEtrangere } from "../data/ficheRCA";
+import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
   ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureRC,
@@ -251,6 +252,10 @@ export const configEtatcivil = [
           },
           data: ReponseAppelRMCInscription.data
         };
+      }
+
+      if (match[1].startsWith("/repertoirecivil/decrets")) {
+        return { data: decrets };
       }
 
       const error = { msg: "url api etat civil non mockée", url: match[1] };

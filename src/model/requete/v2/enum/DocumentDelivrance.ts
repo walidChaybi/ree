@@ -18,6 +18,9 @@ export const CODE_CERTIFICAT_SITUATION_PACS_RC_RCA =
 export const CODE_CERTIFICAT_SITUATION_RC = "CERTIFICAT_SITUATION_RC";
 export const CODE_CERTIFICAT_SITUATION_RCA = "CERTIFICAT_SITUATION_RCA";
 export const CODE_CERTIFICAT_SITUATION_RC_RCA = "CERTIFICAT_SITUATION_RC_RCA";
+export const CODE_ATTESTATION_PACS = "ATTESTATION_PACS";
+export const CODE_CERTIFICAT_INSCRIPTION_RC = "CERTIFICAT_INSCRIPTION_RC";
+export const CODE_CERTIFICAT_INSCRIPTION_RCA = "CERTIFICAT_INSCRIPTION_RCA";
 
 export const INFORMATION_DIVERSES_MANQUANTE = "CARN_EC_117";
 export const MANDAT_GENEALOGIQUE = "CARN_EC_18";
@@ -120,6 +123,30 @@ export class DocumentDelivrance extends EnumNomemclature {
     const uuid = EnumNomemclature.getKeyForCode(
       DocumentDelivrance,
       CARN_PAC_01
+    );
+    return uuid ? uuid : "";
+  }
+
+  public static getAttestationPacsUUID(): string {
+    const uuid = EnumNomemclature.getKeyForCode(
+      DocumentDelivrance,
+      CODE_ATTESTATION_PACS
+    );
+    return uuid ? uuid : "";
+  }
+
+  public static getCertificatInscriptionRcUUID(): string {
+    const uuid = EnumNomemclature.getKeyForCode(
+      DocumentDelivrance,
+      CODE_CERTIFICAT_INSCRIPTION_RC
+    );
+    return uuid ? uuid : "";
+  }
+
+  public static getCertificatInscriptionRcaUUID(): string {
+    const uuid = EnumNomemclature.getKeyForCode(
+      DocumentDelivrance,
+      CODE_CERTIFICAT_INSCRIPTION_RCA
     );
     return uuid ? uuid : "";
   }

@@ -5,6 +5,7 @@ import {
   ICertificatSituationComposition,
   NOM_DOCUMENT_CERTIFICAT_SITUATION
 } from "../../../../../../model/composition/ICertificatSituationComposition";
+import { IDecret } from "../../../../../../model/etatcivil/commun/IDecret";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import {
@@ -133,7 +134,7 @@ async function construitCertificatSituation(
     const titre = getTitre(requete.document ? requete.document : "");
     const decrets = getDecrets(requete.document);
 
-    const composition = await creerCertificatSituationComposition(
+    const composition = creerCertificatSituationComposition(
       titre,
       decrets,
       phrasesLiees,
@@ -150,17 +151,17 @@ function getTitre(idDocumentDemande: string): string {
   return specificationTitre.getTitre(idDocumentDemande);
 }
 
-function getDecrets(idDocumentDemande: string): string[] {
+function getDecrets(idDocumentDemande: string): IDecret[] {
   return specificationDecret.getDecret(idDocumentDemande);
 }
 
-async function creerCertificatSituationComposition(
+function creerCertificatSituationComposition(
   titre: string,
-  decrets: string[],
+  decrets: IDecret[],
   phrasesLiees: string,
   phrasesPiecesJointes?: string,
   requete?: IRequeteTableau
-): Promise<ICertificatSituationComposition> {
+): ICertificatSituationComposition {
   let titulaire: ITitulaireRequeteTableau | undefined;
   if (requete?.titulaires) {
     titulaire = requete.titulaires[0];

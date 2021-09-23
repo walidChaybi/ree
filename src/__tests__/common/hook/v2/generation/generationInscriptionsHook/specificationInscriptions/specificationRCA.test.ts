@@ -3,7 +3,13 @@ import {
   FicheRcaDecisionJuridictionEtrangere,
   FicheRcaDecisionNotaireConvention
 } from "../../../../../../../mock/data/ficheRCA";
+import { decrets } from "../../../../../../../mock/data/NomenclatureEtatCivilDecrets";
 import { specificationRCA } from "../../../../../../../views/common/hook/v2/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
+import { storeRece } from "../../../../../../../views/common/util/storeRece";
+
+beforeAll(() => {
+  storeRece.decrets = decrets;
+});
 
 test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur", async () => {
   const data = FicheRcaDecisionAvecInstructionProcureur;

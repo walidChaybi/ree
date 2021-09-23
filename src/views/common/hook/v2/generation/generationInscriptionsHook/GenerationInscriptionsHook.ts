@@ -3,11 +3,11 @@ import {
   FicheUtil,
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
+import { TypePacsRcRca } from "../../../../../../model/etatcivil/enum/TypePacsRcRca";
 import { IRequeteTableau } from "../../../../../../model/requete/v2/IRequeteTableau";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IResultGenerationPlusieursDocument } from "../generationUtils";
-import { useGenerationCertificatRCAHook } from "./GenerationCertificatRCAHook";
-import { useGenerationCertificatRCHook } from "./GenerationCertificatRCHook";
+import { useGenerationCertificatPACSOuRCOuRCAHook } from "./generationCertificatPacsRcRca/GenerationCertificatPACSOuRCOuRCAHook";
 
 export function useGenerationInscriptionsHook(
   requete?: IRequeteTableau,
@@ -17,9 +17,7 @@ export function useGenerationInscriptionsHook(
 
   const [listeRCA, setListeRCA] = useState<IResultatRMCInscription[]>();
 
-  const [contenuDocumentsReponse, setContenuDocumentsReponse] = useState<
-    string[]
-  >([]);
+  const [listePACS, setListePACS] = useState<IResultatRMCInscription[]>();
 
   const [idDocumentsReponse, setIdDocumentsReponse] = useState<string[]>([]);
 
@@ -28,7 +26,7 @@ export function useGenerationInscriptionsHook(
     setResultGenerationInscription
   ] = useState<IResultGenerationPlusieursDocument>();
 
-  // 1 - On récupère les RCA puis génération du ou des incriptions RCA
+  // 1 - Récupération des RC
   useEffect(() => {
     if (dataRMCAutoInscription) {
       setListeRC(
@@ -37,60 +35,86 @@ export function useGenerationInscriptionsHook(
     }
   }, [dataRMCAutoInscription]);
 
-  const resultGenerationCertificatRC = useGenerationCertificatRCHook(
+  // 1.1 - Génération d'une ou des incriptions RC
+  const resultGenerationCertificatRC = useGenerationCertificatPACSOuRCOuRCAHook(
+    TypePacsRcRca.RC,
     requete,
     listeRC
   );
 
+  // 2 - Stockage en mémoire des RC générés
+  //   - Puis on récupère les RCA
   useEffect(() => {
-    if (dataRMCAutoInscription && resultGenerationCertificatRC) {
-      if (
-        resultGenerationCertificatRC?.idDocumentsReponse &&
-        resultGenerationCertificatRC?.contenuDocumentsReponse
-      ) {
+    if (nonVide(dataRMCAutoInscription, resultGenerationCertificatRC)) {
+      if (resultGenerationCertificatRC?.idDocumentsReponse) {
         setIdDocumentsReponse(resultGenerationCertificatRC.idDocumentsReponse);
-        setContenuDocumentsReponse(
-          resultGenerationCertificatRC.contenuDocumentsReponse
-        );
       }
       setListeRCA(
+        // @ts-ignore dataRMCAutoInscription forcément non vide
         filterInscriptionsSurUnType(dataRMCAutoInscription, TypeFiche.RCA)
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultGenerationCertificatRC]);
 
-  const resultGenerationCertificatRCA = useGenerationCertificatRCAHook(
+  // 2.1 Génération d'une ou des incriptions RCA
+  const resultGenerationCertificatRCA = useGenerationCertificatPACSOuRCOuRCAHook(
+    TypePacsRcRca.RCA,
     requete,
     listeRCA
   );
 
+  // 3 - Stockage en mémoire des RCA générés
+  //   - On récupère les PACS
   useEffect(() => {
-    if (
-      resultGenerationCertificatRCA &&
-      resultGenerationCertificatRCA?.idDocumentsReponse &&
-      resultGenerationCertificatRCA?.contenuDocumentsReponse
-    ) {
-      setIdDocumentsReponse(
-        idDocumentsReponse.concat(
-          resultGenerationCertificatRCA.idDocumentsReponse
-        )
-      );
-      setContenuDocumentsReponse(
-        contenuDocumentsReponse.concat(
-          resultGenerationCertificatRCA.contenuDocumentsReponse
-        )
+    if (nonVide(dataRMCAutoInscription, resultGenerationCertificatRCA)) {
+      if (resultGenerationCertificatRCA?.idDocumentsReponse) {
+        setIdDocumentsReponse([
+          ...idDocumentsReponse,
+          ...resultGenerationCertificatRCA.idDocumentsReponse
+        ]);
+      }
+      setListePACS(
+        // @ts-ignore dataRMCAutoInscription forcément non vide
+        filterInscriptionsSurUnType(dataRMCAutoInscription, TypeFiche.PACS)
       );
     }
 
-    setResultGenerationInscription({
-      idDocumentsReponse,
-      contenuDocumentsReponse
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultGenerationCertificatRCA]);
 
+  // 3.1 Génération d'une ou des incriptions PACS
+  const resultGenerationCertificatPACS = useGenerationCertificatPACSOuRCOuRCAHook(
+    TypePacsRcRca.PACS,
+    requete,
+    listePACS
+  );
+
+  // 4 - Maj du state résultat 'resultGenerationInscription' pour invoquer ensuite la génération du certificat de situation général (cf. DelivrerCertificatSituationHook.ts)
+  useEffect(() => {
+    if (
+      resultGenerationCertificatPACS &&
+      resultGenerationCertificatPACS.idDocumentsReponse
+    ) {
+      setResultGenerationInscription({
+        idDocumentsReponse: [
+          ...idDocumentsReponse,
+          ...resultGenerationCertificatPACS.idDocumentsReponse
+        ]
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultGenerationCertificatPACS]);
+
   return resultGenerationInscription;
+}
+
+function nonVide(
+  dataRMCAutoInscription?: IResultatRMCInscription[],
+  resultGenerationCertificat?: IResultGenerationPlusieursDocument | undefined
+) {
+  return dataRMCAutoInscription && resultGenerationCertificat;
 }
 
 function filterInscriptionsSurUnType(

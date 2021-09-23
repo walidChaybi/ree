@@ -26,7 +26,7 @@ export const ReponseNegativeFrancaisComposition = {
     const reponseNegative = {} as IReponseNegativeFrancaisComposition;
     ParametresComposition.ajoutParametres(reponseNegative);
 
-    CommunComposition.ajoutParametres(
+    CommunComposition.ajoutParamCommuns(
       reponseNegative,
       requete.numero,
       OBJET_COURRIER_CERTIFICAT_SITUATION

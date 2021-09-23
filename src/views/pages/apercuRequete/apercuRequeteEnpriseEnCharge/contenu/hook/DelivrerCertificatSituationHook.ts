@@ -35,17 +35,15 @@ export function useDelivrerCertificatSituationHook(
     setResultDelivrerCertificatSituation
   ] = useState<IResultDelivrerCertificatSituation>();
 
-  const [
-    paramsCertificatSituation,
-    setParamsCertificatSituation
-  ] = useState<IGenerationCertificatSituationParams>();
+  const [paramsCertificatSituation, setParamsCertificatSituation] = useState<
+    IGenerationCertificatSituationParams
+  >();
 
-  const [
-    actionStatutRequete,
-    setActionStatutRequete
-  ] = useState<IActionStatutRequete>();
+  const [actionStatutRequete, setActionStatutRequete] = useState<
+    IActionStatutRequete
+  >();
 
-  // 1 - Génération du ou des incriptions RC et/ou RCA
+  // 1 - Génération d'une ou des incriptions RC et/ou RCA et/ou PACS
   const resultGenerationInscription = useGenerationInscriptionsHook(
     requete,
     dataRMCAutoInscription
@@ -63,12 +61,12 @@ export function useDelivrerCertificatSituationHook(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultGenerationInscription]);
 
-  // 1 - Génération du certificat de situation
+  // 2 - Génération du certificat de situation
   const resultGenerationCertificatSituation = useGenerationCertificatSituationHook(
     paramsCertificatSituation
   );
 
-  // 2 - Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
+  // 3 - Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   useEffect(() => {
     if (resultGenerationCertificatSituation) {
       setActionStatutRequete({
@@ -80,10 +78,10 @@ export function useDelivrerCertificatSituationHook(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultGenerationCertificatSituation]);
 
-  // 3 - Mise à jour du status de la requête + création d'une action
+  // 4 - Mise à jour du status de la requête + création d'une action
   const { idAction } = useCreerActionMajStatutRequete(actionStatutRequete);
 
-  // 4 - une fois l'action créée, création du résultat
+  // 5 - une fois l'action créée, création du résultat
   useEffect(() => {
     const uuidDocumentsReponse =
       resultGenerationCertificatSituation?.idDocumentReponse;

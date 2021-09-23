@@ -44,7 +44,8 @@ const App: React.FC = () => {
       Promise.all([
         GestionnaireNomenclature.chargerToutesLesNomenclatures(),
         GestionnaireCacheApi.chargerTousLesUtilisateurs(),
-        GestionnaireCacheApi.chargerToutesLesEntites()
+        GestionnaireCacheApi.chargerToutesLesEntites(),
+        GestionnaireCacheApi.chargerTousLesDecrets()
       ]).then(values => {
         setOperationEnCours(false);
       });

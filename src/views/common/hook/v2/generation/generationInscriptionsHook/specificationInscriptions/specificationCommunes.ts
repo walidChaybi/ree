@@ -1,3 +1,4 @@
+import { Decret } from "../../../../../../../model/etatcivil/commun/IDecret";
 import { LienParente } from "../../../../../../../model/etatcivil/enum/LienParente";
 import {
   TypeDecision,
@@ -14,6 +15,7 @@ import {
   getDateFormatJasperFromCompose,
   getDateFromTimestamp
 } from "../../../../../util/DateUtils";
+import { storeRece } from "../../../../../util/storeRece";
 import {
   enMajuscule,
   premiereLettreEnMajusculeLeResteEnMinuscule,
@@ -108,9 +110,11 @@ export function getParagrapheFin(infosRcRca: IFicheRcRca) {
   let paragrapheFin = `Conformément à l'article`;
 
   if (infosRcRca.categorie === TypeFiche.RCA) {
-    paragrapheFin += ` Article 4-1 du décret 65-422 du 1er juin 1965,`;
+    const decret = Decret.getDecretInscriptionRCA(storeRece.decrets)?.libelle;
+    paragrapheFin += ` ${decret},`;
   } else if (infosRcRca.categorie === TypeFiche.RC) {
-    paragrapheFin += ` Article 4 du décret 65-422 du 1er juin 1965,`;
+    const decret = Decret.getDecretInscriptionRC(storeRece.decrets)?.libelle;
+    paragrapheFin += ` ${decret},`;
   }
 
   if (infosRcRca.decision?.instructionProcureur) {

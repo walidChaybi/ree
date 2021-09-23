@@ -193,3 +193,20 @@ export const DataRMCInscriptionAvecUnRC: IResultatRMCInscription[] = [
     anneeInscription: "2009"
   }
 ];
+
+export const DataRMCInscriptionAvecUnPACS: IResultatRMCInscription[] = [
+  {
+    idInscription: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
+    nom: "Rose",
+    autresNoms: "DUPE",
+    prenoms: "Jean-pierre, Michel",
+    dateNaissance: "08/06/1960",
+    paysNaissance: "Tunisie",
+    numeroInscription: "1234508",
+    typeInscription: "",
+    categorie: "PACS",
+    statutInscription: "ACTIF",
+    dateInscription: "2013-05-02",
+    anneeInscription: "2013"
+  }
+];

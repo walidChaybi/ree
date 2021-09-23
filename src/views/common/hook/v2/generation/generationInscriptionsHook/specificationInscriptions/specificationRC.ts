@@ -10,7 +10,6 @@ import {
   getDateFormatJasper,
   getDateFromTimestamp
 } from "../../../../../util/DateUtils";
-import { IElementsJasperCertificatRC } from "../GenerationCertificatRCHook";
 import {
   getDecisionExequatur,
   getDecisionJuridiction,
@@ -18,6 +17,19 @@ import {
   getInteressesDecision,
   getParagrapheFin
 } from "./specificationCommunes";
+
+export interface IElementsJasperCertificatRC {
+  anneeInscription?: string;
+  numeroInscription?: string;
+  decisionRecue1?: string;
+  decisionRecue2?: string;
+  interesseDecision?: string;
+  regime?: string;
+  renouvellementModification?: string;
+  decisionExequatur?: string;
+  duree?: string;
+  paragrapheFin?: string;
+}
 
 function getParagrapheDecisionRecue1(infosRC: IFicheRcRca) {
   let decisionRecue = "";

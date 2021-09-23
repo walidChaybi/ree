@@ -7,7 +7,7 @@ import { TypeNatureActe } from "../../../../model/requete/v2/enum/TypeNatureActe
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { supprimeProprietesVides } from "../../../common/util/supprimeProprietesVides";
-import { DEUX, getValeurOuVide } from "../../../common/util/Utils";
+import { DEUX, getValeurOuVide, SNP } from "../../../common/util/Utils";
 import {
   CreationRequeteRDC,
   SaisieRequeteRDC
@@ -18,8 +18,6 @@ import {
   LienTitulaire
 } from "../modelForm/ISaisirRequetePageModel";
 import { getPrenoms } from "./mappingCommun";
-
-const SNP = "SNP";
 
 export function mappingFormulaireRDCVersRequeteDelivrance(
   requeteRDC: CreationRequeteRDC

@@ -6,14 +6,17 @@ import {
   FicheRcRenouvellementTypeJugement,
   FicheRcRenouvellementTypeOrdonnance
 } from "../../../../../../../mock/data/ficheRC";
+import { decrets } from "../../../../../../../mock/data/NomenclatureEtatCivilDecrets";
 import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { NatureRc } from "../../../../../../../model/etatcivil/enum/NatureRc";
 import { specificationRC } from "../../../../../../../views/common/hook/v2/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
+import { storeRece } from "../../../../../../../views/common/util/storeRece";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 beforeAll(() => {
   NatureRc.init();
+  storeRece.decrets = decrets;
 });
 test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autre que Requete", async () => {
   const data = FicheRcDecisionNotaire;

@@ -7,6 +7,12 @@ export const idDocumentsReponse = [
   "ccac2335-562c-4b14-96aa-4386814c02b3"
 ];
 
+export const idDocumentsReponse2 = [
+  "bbac2335-562c-4b14-96aa-4386814c02a2", // intentionnel: 3 uuid identiques
+  "bbac2335-562c-4b14-96aa-4386814c02a2",
+  "bbac2335-562c-4b14-96aa-4386814c02a2"
+];
+
 export const documentReponseCARN_CSPAC_01: IDocumentReponse = {
   id: idDocumentsReponse[0],
   nom: "CARN_CSPAC_01",

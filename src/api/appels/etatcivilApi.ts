@@ -16,6 +16,7 @@ export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
 export const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
 export const URL_ALERTES_ACTE = "/acte/alertes";
+export const URL_DECRETS = "/repertoirecivil/decrets";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -153,5 +154,12 @@ export function getAlertesActe(identifiant: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ALERTES_ACTE}/${identifiant}`
+  });
+}
+
+export function getToutesLesDecrets(): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_DECRETS}`
   });
 }

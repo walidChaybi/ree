@@ -6,15 +6,13 @@ import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IPieceJustificative } from "../../../common/types/RequeteType";
 import { supprimeProprietesVides } from "../../../common/util/supprimeProprietesVides";
-import { getValeurOuVide } from "../../../common/util/Utils";
+import { getValeurOuVide, SNP } from "../../../common/util/Utils";
 import {
   CreationRequeteRDCSC,
   SaisieRequeteRDCSC
 } from "../modelForm/ISaisirRDCSCPageModel";
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
 import { getPrenoms } from "./mappingCommun";
-
-const SNP = "SNP";
 
 export function mappingFormulaireRDCSCVersRequeteDelivrance(
   requeteRDCSC: CreationRequeteRDCSC

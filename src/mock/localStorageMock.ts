@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export const localStorageMock = (function () {
   let store: any = { featureFlag: "LOG_SERVEUR" };
   return {

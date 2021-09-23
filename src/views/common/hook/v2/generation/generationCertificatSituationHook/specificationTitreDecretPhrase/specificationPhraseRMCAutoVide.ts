@@ -202,7 +202,7 @@ class SpecificationPhrase {
     sexe: Sexe,
     dataRMCAutoActe?: IResultatRMCActe[],
     dataRMCAutoInscription?: IResultatRMCInscription[]
-  ) {
+  ): IPhrasesJasperCertificatSituation {
     let phrasesJasper = {} as IPhrasesJasperCertificatSituation;
     if (this.MAP_SPECIFICATION.size === 0) {
       this.init();

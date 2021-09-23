@@ -218,7 +218,7 @@ export function getFormatDateFromTimestamp(timestamp: number): string {
 // - mois en lettre
 // - année en chiffres
 export function getDateFormatJasper(date: Date) {
-  return `${getJourOu1er(date.getDate())} ${getMoisNaissanceEnLettre(
+  return `${getJourOu1er(date.getDate())} ${getMoisEnLettre(
     date.getMonth() + 1
   )} ${date.getFullYear()}`;
 }
@@ -233,7 +233,7 @@ export function getDateFormatJasperFromCompose(date?: IDateCompose) {
     dateString += date.annee;
   }
   if (date && date.mois) {
-    dateString = `${getMoisNaissanceEnLettre(Number(date.mois))} ${dateString}`;
+    dateString = `${getMoisEnLettre(Number(date.mois))} ${dateString}`;
   }
   if (date && date.jour) {
     dateString = `${date.jour} ${dateString}`;
@@ -280,10 +280,31 @@ MAP_MOIS_LETTRES.set(NEUF, getLibelle("Septembre"));
 MAP_MOIS_LETTRES.set(DIX, getLibelle("Octobre"));
 MAP_MOIS_LETTRES.set(ONZE, getLibelle("Novembre"));
 MAP_MOIS_LETTRES.set(DOUZE, getLibelle("Décembre"));
-export function getMoisNaissanceEnLettre(mois?: number): string | undefined {
+export function getMoisEnLettre(mois?: number): string | undefined {
   return mois ? MAP_MOIS_LETTRES.get(mois) : undefined;
 }
 
 export function getJourOu1er(jour?: number) {
-  return jour === 1 ? "1er" : String(jour);
+  let jourOu1er = "";
+  if (jour && typeof jour === "number") {
+    jourOu1er = jour === 1 ? "1er" : String(jour);
+  }
+  return jourOu1er;
+}
+
+export function formatJour(str?: string): string {
+  let jourFormate = "";
+  if (str) {
+    jourFormate = str.trim().replace(/0/g, "");
+  }
+  return jourFormate ? getJourOu1er(Number(jourFormate)) : "";
+}
+
+export function formatMois(str?: string): string {
+  let moisFormate = "";
+  if (str) {
+    moisFormate = str.trim().replace(/0/g, "");
+  }
+  const moisEnLettre = moisFormate ? getMoisEnLettre(Number(moisFormate)) : "";
+  return moisEnLettre ? moisEnLettre : "";
 }

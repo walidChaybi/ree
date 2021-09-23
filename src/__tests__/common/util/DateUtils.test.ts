@@ -4,6 +4,8 @@ import {
   estDateReceValide,
   estDateValide,
   estDateVide,
+  formatJour,
+  formatMois,
   getDateComposeFromDate,
   getDateDebutFromDateCompose,
   getDateFinFromDateCompose,
@@ -15,7 +17,7 @@ import {
   getDernierJourDuMois,
   getIsoStringFromDateCompose,
   getJourOu1er,
-  getMoisNaissanceEnLettre,
+  getMoisEnLettre,
   IDateCompose
 } from "../../../views/common/util/DateUtils";
 
@@ -340,13 +342,31 @@ test("getDateStringFromDateCompose", () => {
 });
 
 test("getMoisNaissanceEnLettre", () => {
-  expect(getMoisNaissanceEnLettre(undefined)).toBeUndefined();
-  expect(getMoisNaissanceEnLettre(13)).toBeUndefined();
-  expect(getMoisNaissanceEnLettre(3)).toBe("Mars");
+  expect(getMoisEnLettre(undefined)).toBeUndefined();
+  expect(getMoisEnLettre(13)).toBeUndefined();
+  expect(getMoisEnLettre(3)).toBe("Mars");
 });
 
 test("getJourSuffixeAvec1erSiBesoin", () => {
-  expect(getJourOu1er(undefined)).toBe("undefined");
+  expect(getJourOu1er(undefined)).toBe("");
   expect(getJourOu1er(1)).toBe("1er");
   expect(getJourOu1er(2)).toBe("2");
+});
+
+test("formatJour", () => {
+  expect(formatJour(undefined)).toBe("");
+  expect(formatMois("")).toBe("");
+  expect(formatJour("1")).toBe("1er");
+  expect(formatJour("02")).toBe("2");
+  expect(formatJour("AAA")).toBe("");
+  expect(formatJour("12")).toBe("12");
+});
+
+test("formatMois", () => {
+  expect(formatMois(undefined)).toBe("");
+  expect(formatMois("")).toBe("");
+  expect(formatMois("1")).toBe("Janvier");
+  expect(formatMois("02")).toBe("Février");
+  expect(formatMois("AAA")).toBe("");
+  expect(formatMois("12")).toBe("Décembre");
 });

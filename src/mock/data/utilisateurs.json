@@ -1,4 +1,7 @@
 {
+  "headers": {
+    "link": "rel=\"next\""
+  },
   "hasTechnicalError": false,
   "hasBusinessError": false,
   "status": 200,
