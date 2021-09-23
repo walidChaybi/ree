@@ -571,7 +571,7 @@ export const FicheRcRenouvellementTypeJugement = ({
       numero: "3",
       typeInscription: "RADIATION",
       annee: "2020",
-      nature: "058a436b-330d-4c3c-83e0-e49d27390133"
+      nature: "058a436b-330d-4c3c-83e0-e49d2739012d"
     }
   ],
   inscriptionsLiees: [

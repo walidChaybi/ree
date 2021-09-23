@@ -102,12 +102,12 @@ export function getRenouvellementModification(data: IFicheRcRca) {
     data.typeInscription === TypeInscriptionRc.MODIFICATION
   ) {
     const typeInscription = InscriptionRcUtil.getLibelle(data.typeInscription);
-    const natureInscriptionLiee = NatureRc.getEnumFor(
-      data.inscriptionsLiees[0].nature
+    const natureInscriptionImpactee = NatureRc.getEnumFor(
+      data.inscriptionsImpactees[0].nature
     ).libelle as string;
 
-    renouvellementModification = `prononçant le ${typeInscription.toLocaleLowerCase()} de la mesure de ${natureInscriptionLiee.toLocaleLowerCase()} RC n°`;
-    renouvellementModification += ` ${data.inscriptionsLiees[0].annee} - ${data.inscriptionsLiees[0].numero}`;
+    renouvellementModification = `prononçant le ${typeInscription.toLocaleLowerCase()} de la mesure de ${natureInscriptionImpactee.toLocaleLowerCase()} RC n°`;
+    renouvellementModification += ` ${data.inscriptionsImpactees[0].annee} - ${data.inscriptionsImpactees[0].numero}`;
     renouvellementModification +=
       data.typeInscription === TypeInscriptionRc.MODIFICATION
         ? ` en ${data.nature.libelle}`

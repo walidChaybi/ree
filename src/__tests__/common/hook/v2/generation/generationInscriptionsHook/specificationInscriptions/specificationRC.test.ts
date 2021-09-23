@@ -108,7 +108,7 @@ Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du soleil levant) le 12 Juin
   expect(elementsJasper.interesseDecision).toBe(interesses);
   expect(elementsJasper.regime).toBeUndefined();
   expect(elementsJasper.renouvellementModification).toBe(
-    "prononçant le renouvellement de la mesure de curatelle simple RC n° 2020 - 1"
+    "prononçant le renouvellement de la mesure de curatelle simple RC n° 2020 - 3"
   );
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 mois");
