@@ -1,9 +1,9 @@
-import { IActionDatee } from "../commun/IActionDatee";
 import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
+import { IActionDatee } from "../commun/IActionDatee";
 import { IAutorite } from "../commun/IAutorite";
 
 export interface IModification extends IActionDatee {
-  autorite?: IAutorite;
+  autorite: IAutorite;
 }
 
 export const Modification = {

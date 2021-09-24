@@ -133,13 +133,13 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   ).toBe("Prénom nom");
   expect(
     panels.panels[0].panelAreas[3].parts[0].partContent.contents[1].value
-  ).toBe("Maître Dominique ESTER");
+  ).toBe("Maître Martin DE LA PLUME DANS LE BEC");
   expect(
     panels.panels[0].panelAreas[3].parts[0].partContent.contents[2].libelle
   ).toBe("N° CRPCEN");
   expect(
     panels.panels[0].panelAreas[3].parts[0].partContent.contents[2].value
-  ).toBe("1235467890");
+  ).toBe("987563141");
   expect(
     panels.panels[0].panelAreas[3].parts[0].partContent.contents[3].libelle
   ).toBe("Date d'enregistrement de la convention modificative");
