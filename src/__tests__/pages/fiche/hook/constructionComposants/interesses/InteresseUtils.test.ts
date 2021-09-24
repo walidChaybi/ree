@@ -165,7 +165,7 @@ test("Interesse utils get interesse :  affichage lieu naissance à l'étranger "
   expect(idxLieuNaissance).toBeGreaterThan(-1);
 
   expect(components[0].partContent?.contents[idxLieuNaissance].value).toBe(
-    "Berlin - RegionBerlin (Allemagne)"
+    "Berlin - Regionberlin (Allemagne)"
   );
 });
 
@@ -193,6 +193,6 @@ test("Interesse utils get interesse :  affichage date désèc et lieu décès rc
   expect(idxLieuDeces).toBeGreaterThan(idxDateDeces);
 
   expect(components[0].partContent?.contents[idxLieuDeces].value).toBe(
-    "Berlin - RegionBerlin (Allemagne)"
+    "Berlin - Regionberlin (Allemagne)"
   );
 });

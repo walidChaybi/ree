@@ -60,7 +60,7 @@ test("Attendu: specificationRCA.getElementsJasper AVEC une decision Notaire type
   const elementsJasper = specificationRCA.getElementsJasper(data);
   const interesses = `Julie, Sarah DURANT
 Date de naissance: Octobre 1960
-Lieu de naissance: Brooklyn - New-York (États-unis d'Amériques)
+Lieu de naissance: Brooklyn - New-York (États-Unis d'Amériques)
 et
 Harleen, Charlène QUINZEL
 Date de naissance: 1993

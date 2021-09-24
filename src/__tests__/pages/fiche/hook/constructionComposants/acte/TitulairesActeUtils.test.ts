@@ -79,6 +79,6 @@ test("Acte utils : affichage correcte des infos d'un titulaire", async () => {
     idxLieuNaissance
   ].value as JSX.Element;
   expect(valueLieuNaissance.props.children).toBe(
-    "Marseille arr.10 (Provence-Alpes-Côte d’Azur)"
+    "Marseille arr.10 (Provence-Alpes-Côte d'Azur)"
   );
 });

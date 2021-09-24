@@ -84,7 +84,7 @@ export const acte: any = {
         mois: 10,
         annee: 1901,
         pays: "France",
-        region: "Provence-Alpes-Côte d’Azur",
+        region: "Provence-Alpes-Côte d'Azur",
         ville: "Marseille",
         arrondissement: "10",
         voie: ""

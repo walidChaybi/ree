@@ -1,5 +1,6 @@
 import {
   formatMajusculesMinusculesAvecSeparateur,
+  formatPremieresLettresMajusculesNomCompose,
   getValeurOuVide,
   premiereLettreEnMajuscule
 } from "../views/common/util/Utils";
@@ -90,9 +91,15 @@ export class LieuxUtils {
     pays?: string,
     arrondissement?: string
   ): string {
-    const villeString = ville ? premiereLettreEnMajuscule(ville) : "";
-    const regionString = region ? premiereLettreEnMajuscule(region) : "";
-    const paysString = pays ? premiereLettreEnMajuscule(pays) : "";
+    const villeString = ville
+      ? formatPremieresLettresMajusculesNomCompose(ville)
+      : "";
+    const regionString = region
+      ? formatPremieresLettresMajusculesNomCompose(region)
+      : "";
+    const paysString = pays
+      ? formatPremieresLettresMajusculesNomCompose(pays)
+      : "";
 
     const regionStringEntreParentheses = LieuxUtils.getRegionEntreParentheses(
       regionString
@@ -127,12 +134,20 @@ export class LieuxUtils {
     pays?: string,
     arrondissement?: string
   ): string {
-    const villeString = ville ? premiereLettreEnMajuscule(ville) : "";
+    const villeString = ville
+      ? formatPremieresLettresMajusculesNomCompose(ville)
+      : "";
     const libelleDepartementString = LieuxUtils.getRegionEntreParentheses(
-      libelleDepartement ? premiereLettreEnMajuscule(libelleDepartement) : ""
+      libelleDepartement
+        ? formatPremieresLettresMajusculesNomCompose(libelleDepartement)
+        : ""
     );
-    const regionString = region ? premiereLettreEnMajuscule(region) : "";
-    const paysString = pays ? premiereLettreEnMajuscule(pays) : "";
+    const regionString = region
+      ? formatPremieresLettresMajusculesNomCompose(region)
+      : "";
+    const paysString = pays
+      ? formatPremieresLettresMajusculesNomCompose(pays)
+      : "";
 
     if (LieuxUtils.isPaysFrance(pays)) {
       if (
