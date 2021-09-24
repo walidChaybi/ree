@@ -7,7 +7,7 @@ export interface IParent {
   nomFamille: string;
   sexe: string;
   lienParente: LienParente;
-  prenoms?: IPrenom[];
+  prenomsParents?: IPrenom[];
   dateNaissance?: IDateCompose;
   villeNaissance?: string;
   paysNaissance?: string;

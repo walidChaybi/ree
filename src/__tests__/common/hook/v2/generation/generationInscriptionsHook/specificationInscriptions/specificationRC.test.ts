@@ -91,11 +91,11 @@ Lieu de naissance: Paris arr.20`;
 test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Jugement'", async () => {
   const data = FicheRcRenouvellementTypeJugement;
   const elementsJasper = specificationRC.getElementsJasper(data);
-  const interesses = `Marie-charlotte, Anne-claire, Lily-rose, Abby-gaëlle SLAOUI
+  const interesses = `Marie-Charlotte, Anne-Claire, Lily-Rose, Abby-Gaëlle SLAOUI
 Date de naissance: 1er Septembre 1983
 Lieu de naissance: Brest (Finistère)
 et
-Pierre-olivier, Félix-antoine, François-xavier LE ROUX
+Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX
 Date de naissance: 24 Décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
 Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 Juin 2020`;
@@ -120,11 +120,11 @@ Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 Juin
 test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une décision de type 'Ordonnance'", async () => {
   const data = FicheRcRenouvellementTypeOrdonnance;
   const elementsJasper = specificationRC.getElementsJasper(data);
-  const interesses = `Pierre-olivier, Félix-antoine, François-xavier LE ROUX
+  const interesses = `Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX
 Date de naissance: 24 Décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
 et
-Marie-charlotte, Anne-claire, Lily-rose, Abby-gaëlle SLAOUI
+Marie-Charlotte, Anne-Claire, Lily-Rose, Abby-Gaëlle SLAOUI
 Date de naissance: 1er Septembre 1983
 Lieu de naissance: Brest (Finistère)
 Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 Juin 2020`;

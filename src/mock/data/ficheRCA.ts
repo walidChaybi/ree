@@ -57,7 +57,7 @@ export const FicheRcaDecisionJuridictionEtrangere = ({
             annee: "1993"
           },
           paysNaissance: "France",
-          prenoms: [
+          prenomsParents: [
             {
               valeur: "Didier",
               numeroOrdre: 2

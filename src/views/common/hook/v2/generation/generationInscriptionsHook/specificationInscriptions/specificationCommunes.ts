@@ -18,8 +18,8 @@ import {
 import { storeRece } from "../../../../../util/storeRece";
 import {
   compareNombre,
-  enMajuscule,
-  premiereLettreEnMajusculeLeResteEnMinuscule,
+  formatNom,
+  formatPrenom,
   triListeObjetsSurPropriete
 } from "../../../../../util/Utils";
 
@@ -155,24 +155,43 @@ function addPhrase(phrase: string, phraseSuivante: string) {
   }
 }
 
-function getLignesPrenomsNomNaissance(data: IInteresse | IParent) {
-  // Partie Prenoms/Nom
+function getPrenomsParents(data: IParent) {
   let prenoms = "";
-  if (data.prenoms) {
-    prenoms = triListeObjetsSurPropriete([...data.prenoms], "numeroOrdre")
-      .map(prenom =>
-        enMajuscule(prenom.valeur) === "SPC"
-          ? "Sans prénom connu"
-          : premiereLettreEnMajusculeLeResteEnMinuscule(prenom.valeur)
-      )
+
+  if (data.prenomsParents) {
+    prenoms = triListeObjetsSurPropriete(
+      [...data.prenomsParents],
+      "numeroOrdre"
+    )
+      .map(prenom => formatPrenom(prenom.valeur))
       .join(", ");
     prenoms += " ";
   }
-  let result = `${prenoms}${
-    enMajuscule(data.nomFamille) === "SNP"
-      ? "Sans nom patronymique"
-      : enMajuscule(data.nomFamille)
-  }`;
+  return prenoms;
+}
+
+function getPrenomsInteresse(data: IInteresse) {
+  let prenoms = "";
+
+  if (data.prenoms) {
+    prenoms = triListeObjetsSurPropriete([...data.prenoms], "numeroOrdre")
+      .map(prenom => formatPrenom(prenom.valeur))
+      .join(", ");
+    prenoms += " ";
+  }
+  return prenoms;
+}
+
+function getLignesPrenomsNomNaissance(
+  data: IInteresse | IParent,
+  isParent: boolean
+) {
+  // Partie Prenoms/Nom
+  const prenoms = isParent
+    ? getPrenomsParents(data as IParent)
+    : getPrenomsInteresse(data as IInteresse);
+
+  let result = `${prenoms}${formatNom(data.nomFamille)}`;
 
   // Partie Naissance
   result = addPhrase(
@@ -197,14 +216,14 @@ function getLignesParentsInteresse(data: IParent[]) {
     if (parents !== "") {
       parents = addPhrase(parents, "et");
     }
-    parents = addPhrase(parents, getLignesPrenomsNomNaissance(parent));
+    parents = addPhrase(parents, getLignesPrenomsNomNaissance(parent, true));
   });
   return parents;
 }
 
 function getLignesInteresseDecision(data: IInteresse, showDeces: boolean) {
   // Partie Prenoms/Nom/Naissance
-  let interesse = `${getLignesPrenomsNomNaissance(data)}`;
+  let interesse = `${getLignesPrenomsNomNaissance(data, false)}`;
 
   // Partie Deces
   if (showDeces && data.dateDeces) {
