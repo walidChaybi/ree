@@ -1,10 +1,10 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 import "./scss/Icones.scss";
 
 interface IconeCroixProps {
-  onClick: (e: any) => void;
+  onClick?: (e: any) => void;
   title?: string;
 }
 

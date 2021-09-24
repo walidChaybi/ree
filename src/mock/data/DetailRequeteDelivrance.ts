@@ -1,7 +1,9 @@
+import { ChoixDelivrance } from "../../model/requete/v2/enum/ChoixDelivrance";
 import {
   documentReponseCARN_CSPAC_01,
   documentReponseCertificatRCA
 } from "./DocumentReponse";
+import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
 
 export const ReponseAppelDetailRequeteDelivrance = {
   hasTechnicalError: false,
@@ -155,7 +157,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
         mimeType: "application/pdf",
         nom: "justif carte",
         taille: 200,
-        typePieceJustificative: "00c885c9-2918-46fe-b743-798b1b90e5dd"
+        typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0]
       }
     ],
     requerant: {
@@ -276,7 +278,7 @@ export const ReponseAppelDetailRequeteDelivranceRDC = {
     dateCreation: 1612342296,
     canal: "COURRIER",
     type: "DELIVRANCE",
-    choixDelivrance: "Délivrer E/C - Extrait avec filiation",
+    choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION,
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
     actions: [
       {
@@ -417,7 +419,7 @@ export const ReponseAppelDetailRequeteDelivranceRDC = {
         mimeType: "application/pdf",
         nom: "justif carte",
         taille: 200,
-        typePieceJustificative: "00c885c9-2918-46fe-b743-798b1b90e5dd"
+        typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0]
       }
     ],
     requerant: {
@@ -575,7 +577,7 @@ export const ReponseAppelDetailRequeteDelivranceBrouillon = {
         mimeType: "application/pdf",
         nom: "justif carte",
         taille: 200,
-        typePieceJustificative: "00c885c9-2918-46fe-b743-798b1b90e5dd"
+        typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0]
       }
     ],
     requerant: {
@@ -872,7 +874,7 @@ export const ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ = {
         mimeType: "png",
         taille: 20,
         contenu: "contenu",
-        typePieceJustificative: "00c885c9-2918-46fe-b743-798b1b90e5dd"
+        typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0]
       }
     ],
     requerant: {

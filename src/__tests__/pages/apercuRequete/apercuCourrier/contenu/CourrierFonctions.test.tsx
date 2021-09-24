@@ -1,14 +1,14 @@
 import request from "superagent";
 import requeteDelivrance, {
   requeteDelivranceInstitutionnel
-} from "../../../../mock/data/requeteDelivrance";
-import { configMultiAPi } from "../../../../mock/superagent-config/superagent-mock-multi-apis";
-import { ChoixDelivrance } from "../../../../model/requete/v2/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
+} from "../../../../../mock/data/requeteDelivrance";
+import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { ChoixDelivrance } from "../../../../../model/requete/v2/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import {
-  getDefaultValuesAccompagnement,
-  getOptionsCourrier
-} from "../../../../views/pages/apercuRequete/apercuCourrierAccompagnement/ModificationCourrierAccompagnement";
+  getDefaultValuesCourrier,
+  getTypesCourrier
+} from "../../../../../views/pages/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
@@ -16,16 +16,18 @@ beforeAll(() => {
   DocumentDelivrance.init();
 });
 
-test("getDefaultValuesAccompagnement", () => {
-  expect(
-    getDefaultValuesAccompagnement(requeteDelivrance, {
-      value: "test",
-      str: "test"
-    })
-  ).toStrictEqual({
-    enTete: {
-      courrier: "test",
+test("getDefaultValues", () => {
+  expect(getDefaultValuesCourrier(requeteDelivrance)).toStrictEqual({
+    choixCourrier: {
+      courrier: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2",
       delivrance: "Réponse sans délivrance E/C - Requête incomplète"
+    },
+    option: {
+      contenu: "",
+      libelleOption: ""
+    },
+    texteLibre: {
+      texte: "Texte libre Courrier 117"
     },
     requerant: {
       requerantLigne1: "DUBOIS Léonard",
@@ -44,14 +46,18 @@ test("getDefaultValuesAccompagnement", () => {
   });
 
   expect(
-    getDefaultValuesAccompagnement(requeteDelivranceInstitutionnel, {
-      value: "test",
-      str: "test"
-    })
+    getDefaultValuesCourrier(requeteDelivranceInstitutionnel)
   ).toStrictEqual({
-    enTete: {
+    choixCourrier: {
       delivrance: undefined,
-      courrier: "test"
+      courrier: ""
+    },
+    option: {
+      contenu: "",
+      libelleOption: ""
+    },
+    texteLibre: {
+      texte: ""
     },
     requerant: {
       requerantLigne1: "Ambassade du Rwanda",
@@ -70,8 +76,8 @@ test("getDefaultValuesAccompagnement", () => {
   });
 });
 
-test("getOptionscourrier", () => {
-  expect(getOptionsCourrier(requeteDelivrance, undefined)).toStrictEqual([
+test("getTypesCourrier", () => {
+  expect(getTypesCourrier(requeteDelivrance, undefined)).toStrictEqual([
     {
       value: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2",
       str: "Informations diverses manquantes (117)"
@@ -87,7 +93,7 @@ test("getOptionscourrier", () => {
   ]);
   let requete2 = requeteDelivrance;
   requete2.choixDelivrance = ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
-  expect(getOptionsCourrier(requete2, undefined)).toStrictEqual([
+  expect(getTypesCourrier(requete2, undefined)).toStrictEqual([
     {
       value: "cb1f3518-9457-471d-a31c-10bc8d34c9a2",
       str: "Délivrance d'acte (116)"
@@ -99,13 +105,17 @@ test("getOptionscourrier", () => {
   ]);
   let requete3 = requeteDelivrance;
   requete3.choixDelivrance = ChoixDelivrance.REP_SANS_DEL_EC_DIVERS;
-  expect(getOptionsCourrier(requete3, undefined)).toStrictEqual([
-    { value: "fce55a9f-4f4b-4996-a60b-59332bc10565", str: "Divers (17)" }
+  expect(getTypesCourrier(requete3, undefined)).toStrictEqual([
+    { value: "fce55a9f-4f4b-4996-a60b-59332bc10565", str: "Divers (17)" },
+    {
+      value: "2776c0c7-2ad4-4949-9743-046c4c687eec",
+      str: "Refus délivrance mariage"
+    }
   ]);
   let requete4 = requeteDelivrance;
   requete4.choixDelivrance =
     ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC;
-  expect(getOptionsCourrier(requete4, undefined)).toStrictEqual([
+  expect(getTypesCourrier(requete4, undefined)).toStrictEqual([
     {
       value: "c1c17758-98ce-444e-82eb-a4f885fddc2c",
       str: "Acte non trouvé (115)"

@@ -23,11 +23,11 @@ export interface ComponentFiltreProps {
 
 export interface ISubForm {
   nom: string;
+  options: Options;
   titre?: string;
   reset?: boolean;
-  options: Options;
   onChange?: (value: string) => void;
-  requete: TRequete;
+  requete?: TRequete;
   formulaireReduit?: boolean;
 }
 

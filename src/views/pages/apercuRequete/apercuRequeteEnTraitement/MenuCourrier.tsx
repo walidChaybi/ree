@@ -10,7 +10,7 @@ import {
   MenuAction
 } from "../../../common/widget/menu/MenuAction";
 import { getLibelle } from "../../../common/widget/Text";
-import { PATH_APERCU_COURRIER_ACCOMPAGNEMENT } from "../../../router/ReceUrls";
+import { PATH_APERCU_COURRIER } from "../../../router/ReceUrls";
 import { IActionProps } from "../apercuRequeteEnpriseEnCharge/contenu/ChoixAction";
 
 const INDEX_MODIFIER_COURRIER = 0;
@@ -70,7 +70,7 @@ export const MenuCourrier: React.FC<IActionProps> = props => {
         history.push(
           `${getUrlWithoutIdParam(
             history.location.pathname
-          )}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/${props.requete.id}`
+          )}/${PATH_APERCU_COURRIER}/${props.requete.id}`
         );
         break;
       // TODO

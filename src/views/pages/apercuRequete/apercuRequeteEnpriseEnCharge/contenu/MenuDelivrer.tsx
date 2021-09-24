@@ -19,10 +19,7 @@ import {
   IBoutonPopin
 } from "../../../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../../../common/widget/Text";
-import {
-  PATH_APERCU_COURRIER_ACCOMPAGNEMENT,
-  receUrl
-} from "../../../../router/ReceUrls";
+import { PATH_APERCU_COURRIER, receUrl } from "../../../../router/ReceUrls";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { IActionProps } from "./ChoixAction";
 import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
@@ -174,7 +171,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
         history.push(
           `${getUrlWithoutIdParam(
             history.location.pathname
-          )}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/${idRequete}`
+          )}/${PATH_APERCU_COURRIER}/${idRequete}`
         );
       } else {
         const url = receUrl.getUrlApercuTraitementAPartirDe(

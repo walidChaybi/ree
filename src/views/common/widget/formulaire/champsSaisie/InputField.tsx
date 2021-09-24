@@ -18,6 +18,7 @@ interface InputFieldProps {
   typeInput?: TypeInput;
   component?: "input" | "select" | "textarea";
   rows?: number;
+  className?: string;
 }
 
 interface TypeInput {
@@ -40,7 +41,8 @@ export const InputField: React.FC<InputFieldProps> = ({
   onChange,
   typeInput,
   component = "input",
-  rows
+  rows,
+  className
 }) => {
   const otherProps = {} as any;
   if (maxLength) {
@@ -83,7 +85,8 @@ export const InputField: React.FC<InputFieldProps> = ({
           min={typeInput?.min}
           max={typeInput?.max}
           placeholder={placeholder ? placeholder : label}
-          {...(component === "textarea" ? { rows: rows } : {})}
+          {...(component === "textarea" ? { rows } : {})}
+          className={className}
         />
       </div>
       {!noErrorMessage && (

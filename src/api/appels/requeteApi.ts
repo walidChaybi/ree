@@ -30,6 +30,7 @@ export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/action";
 export const URL_TRANSFERT = "/action/transfert";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
+export const URL_OPTION_COURRIER = "/optioncourrier";
 
 const URL_REPONSES = "/reponses";
 
@@ -406,5 +407,12 @@ export function getRequeteAleatoire() {
   return apiV2.fetch({
     method: HttpMethod.GET,
     uri: URL_REQUETE_ALEATOIRE
+  });
+}
+
+export async function getOptionsCourriers(): Promise<any> {
+  return apiV2.fetchCache({
+    method: HttpMethod.GET,
+    uri: `${URL_NOMENCLATURE}${URL_OPTION_COURRIER}`
   });
 }

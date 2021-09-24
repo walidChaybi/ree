@@ -52,7 +52,9 @@ export async function peupleDocumentDelivrance() {
           new DocumentDelivrance(
             data.code,
             premiereLettreEnMajuscule(data.libelle),
-            data.categorie
+            data.categorie,
+            data.texteLibre,
+            data.categorieDocumentDelivrance
           )
         );
       }

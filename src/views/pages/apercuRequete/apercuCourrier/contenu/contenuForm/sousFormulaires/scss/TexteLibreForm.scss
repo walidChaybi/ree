@@ -1,0 +1,12 @@
+.TexteLibreForm {
+  .BlockInput {
+    grid-template-columns: 20% 80%;
+  }
+  .BlockErreur {
+    margin-left: 20%;
+  }
+  textarea {
+    height: 5rem;
+    cursor: auto;
+  }
+}

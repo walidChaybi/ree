@@ -24,10 +24,10 @@ test("Appel d'api retournant le contenu d'une pièce justificative", async () =>
   expect(blob.type).toBe(MimeType.IMAGE_PNG);
 });
 
-test("Appel d'api retournant le contenu d'un courrier d'accompagnement", async () => {
-  const courrierAccompagnement = requetes.data[0].reponse.documentsDelivres[1];
+test("Appel d'api retournant le contenu d'un courrier", async () => {
+  const courrier = requetes.data[0].reponse.documentsDelivres[1];
   const resultApi = await requestDocumentApi(
-    courrierAccompagnement.idDocumentDelivre,
+    courrier.idDocumentDelivre,
     GroupementDocument.DocumentDelivre
   );
   const base64 = resultApi.documentDelivre.contenu;
@@ -37,10 +37,10 @@ test("Appel d'api retournant le contenu d'un courrier d'accompagnement", async (
   expect(blob.type).toBe(MimeType.APPLI_PDF);
 });
 
-test("Appel d'api retournant le contenu d'un courrier d'accompagnement KO", async () => {
-  const courrierAccompagnement = requetes.data[0].reponse.documentsDelivres[1];
+test("Appel d'api retournant le contenu d'un courrier KO", async () => {
+  const courrier = requetes.data[0].reponse.documentsDelivres[1];
   return requestDocumentApi(
-    `${courrierAccompagnement.idDocumentDelivre}fakedoc`,
+    `${courrier.idDocumentDelivre}fakedoc`,
     GroupementDocument.DocumentDelivre
   )
     .then(result => {

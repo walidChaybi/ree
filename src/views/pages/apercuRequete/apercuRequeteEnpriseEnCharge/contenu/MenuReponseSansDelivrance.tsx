@@ -10,7 +10,7 @@ import {
   MenuAction
 } from "../../../../common/widget/menu/MenuAction";
 import { getLibelle } from "../../../../common/widget/Text";
-import { PATH_APERCU_COURRIER_ACCOMPAGNEMENT } from "../../../../router/ReceUrls";
+import { PATH_APERCU_COURRIER } from "../../../../router/ReceUrls";
 import { IActionProps } from "./ChoixAction";
 import {
   UpdateChoixDelivranceProps,
@@ -38,7 +38,7 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
       history.push(
         `${getUrlWithoutIdParam(
           history.location.pathname
-        )}/${PATH_APERCU_COURRIER_ACCOMPAGNEMENT}/${idRequete}`
+        )}/${PATH_APERCU_COURRIER}/${idRequete}`
       );
     }
   }, [idRequete, history]);

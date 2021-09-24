@@ -8,14 +8,13 @@ import { DocumentsReponses } from "../contenu/document/DocumentsReponses";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
-import { ModificationCourrierAccompagnement } from "./ModificationCourrierAccompagnement";
-import "./scss/ApercuCourrierAccompagnement.scss";
+import { Courrier } from "./contenu/Courrier";
 
 interface IdRequeteParams {
   idRequete: string;
 }
 
-export const ApercuCourrierAccompagnement: React.FC = () => {
+export const ApercuCourrier: React.FC = () => {
   const { idRequete } = useParams<IdRequeteParams>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
@@ -42,9 +41,7 @@ export const ApercuCourrierAccompagnement: React.FC = () => {
               />
             </div>
             <div className="side right">
-              <ModificationCourrierAccompagnement
-                requete={detailRequeteState as IRequeteDelivrance}
-              />
+              <Courrier requete={detailRequeteState as IRequeteDelivrance} />
             </div>
           </div>
         </>

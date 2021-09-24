@@ -1,6 +1,8 @@
 import { MimeType } from "file-type/core";
 import { Orientation } from "../../composition/enum/Orientation";
 import { DocumentDelivrance } from "./enum/DocumentDelivrance";
+import { IOptionCourrierDocumentReponse } from "./IOptionCourrierDocumentReponse";
+import { ITexteLibreCourrier } from "./ITexteLibreCourrier";
 
 export interface IDocumentReponse {
   id: string;
@@ -11,6 +13,8 @@ export interface IDocumentReponse {
   contenu: string; // Base64
   nbPages: number;
   orientation: Orientation;
+  texteLibreCourrier?: ITexteLibreCourrier;
+  optionsCourrier?: IOptionCourrierDocumentReponse[];
 }
 
 export const DocumentReponse = {

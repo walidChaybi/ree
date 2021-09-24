@@ -10,9 +10,9 @@ import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
-import BoutonsCourrierAccompagnement, {
-  BoutonsCourrierAccompagnementProps
-} from "../../../../views/pages/apercuRequete/apercuCourrierAccompagnement/BoutonsCourrierAccompagnement";
+import BoutonsCourrier, {
+  BoutonsCourrierProps
+} from "../../../../views/pages/apercuRequete/apercuCourrier/contenu/contenuForm/BoutonsCourrier";
 import {
   URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
@@ -20,7 +20,7 @@ import {
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-const boutonsProps = {} as BoutonsCourrierAccompagnementProps;
+const boutonsProps = {} as BoutonsCourrierProps;
 
 test("render composant bouton annuler avec requete prise en charge", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
@@ -28,7 +28,7 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
   const boutonsPropsWithRequete = {
     ...boutonsProps,
     requete: requete1
-  } as BoutonsCourrierAccompagnementProps;
+  } as BoutonsCourrierProps;
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -44,7 +44,7 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
   const { getByText } = render(
     <Router history={history}>
       <Formik initialValues={{}} onSubmit={(values: any) => {}}>
-        <BoutonsCourrierAccompagnement {...boutonsPropsWithRequete} />
+        <BoutonsCourrier {...boutonsPropsWithRequete} />
       </Formik>
     </Router>
   );
@@ -76,7 +76,7 @@ test("render composant bouton annuler avec requete a valider", async () => {
   const boutonsPropsWithRequete = {
     ...boutonsProps,
     requete: requete1
-  } as BoutonsCourrierAccompagnementProps;
+  } as BoutonsCourrierProps;
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -92,7 +92,7 @@ test("render composant bouton annuler avec requete a valider", async () => {
   const { getByText } = render(
     <Router history={history}>
       <Formik initialValues={{}} onSubmit={(values: any) => {}}>
-        <BoutonsCourrierAccompagnement {...boutonsPropsWithRequete} />
+        <BoutonsCourrier {...boutonsPropsWithRequete} />
       </Formik>
     </Router>
   );

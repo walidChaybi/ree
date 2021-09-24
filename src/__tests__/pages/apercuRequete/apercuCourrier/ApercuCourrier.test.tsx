@@ -9,12 +9,12 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
-import { LISTE_UTILISATEURS } from "../../../mock/data/ListeUtilisateurs";
-import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
-import { storeRece } from "../../../views/common/util/storeRece";
-import { ApercuCourrierAccompagnement } from "../../../views/pages/apercuRequete/apercuCourrierAccompagnement/ApercuCourrierAccompagnement";
-import { URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER } from "../../../views/router/ReceUrls";
+import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
+import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
+import { storeRece } from "../../../../views/common/util/storeRece";
+import { ApercuCourrier } from "../../../../views/pages/apercuRequete/apercuCourrier/ApercuCourrier";
+import { URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
@@ -30,7 +30,7 @@ beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 
-test("renders apercu courrier accompagnement", async () => {
+test("renders apercu courrier", async () => {
   await act(async () => {
     render(
       <>
@@ -39,7 +39,7 @@ test("renders apercu courrier accompagnement", async () => {
             exact={true}
             path={URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER}
           >
-            <ApercuCourrierAccompagnement />
+            <ApercuCourrier />
           </Route>
         </Router>
       </>

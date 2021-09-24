@@ -27,22 +27,26 @@ export const LienPieceJustificative: React.FC<IDataLienFicheProps> = props => {
 
   return (
     <>
-      <Link
-        className={"lienFiche"}
-        href={"#"}
-        onClick={onClick}
-        title={props.nom}
-      >
-        {props.type}
-      </Link>
+      {props.idPiece && (
+        <>
+          <Link
+            className={"lienFiche"}
+            href={"#"}
+            onClick={onClick}
+            title={props.nom}
+          >
+            {props.type}
+          </Link>
 
-      {fenetreOuverteState && (
-        <FenetrePiecesJustificatives
-          toggleFenetre={toggleFenetre}
-          numRequete={props.numRequete}
-          nom={props.nom}
-          idPiece={props.idPiece}
-        ></FenetrePiecesJustificatives>
+          {fenetreOuverteState && (
+            <FenetrePiecesJustificatives
+              toggleFenetre={toggleFenetre}
+              numRequete={props.numRequete}
+              nom={props.nom}
+              idPiece={props.idPiece}
+            ></FenetrePiecesJustificatives>
+          )}
+        </>
       )}
     </>
   );

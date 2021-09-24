@@ -14,6 +14,7 @@ import { TypeRequete } from "../../model/requete/v2/enum/TypeRequete";
 import { IProvenancePlanete } from "../../model/requete/v2/IProvenancePlanete";
 import { IProvenanceRece } from "../../model/requete/v2/IProvenanceRece";
 import { IRequeteDelivrance } from "../../model/requete/v2/IRequeteDelivrance";
+import { documentReponseCourrier117 } from "./DocumentReponse";
 
 const requeteDelivrance: IRequeteDelivrance = {
   actions: [],
@@ -25,7 +26,7 @@ const requeteDelivrance: IRequeteDelivrance = {
     categorie: "DOCUMENT_DELIVRANCE",
     code: "CERTIFICAT_SITUATION_RCA"
   } as DocumentDelivrance,
-  documentsReponses: [],
+  documentsReponses: [documentReponseCourrier117],
   evenement: undefined,
   id: "0ad85c1f-57cf-45cc-ab66-6a17f31247df",
   idEntite: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
@@ -43,7 +44,7 @@ const requeteDelivrance: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
+      typePieceJustificative: ("Carte" as unknown) as TypePieceJustificative
     }
   ],
   provenanceRequete: {
@@ -112,7 +113,7 @@ const requeteDelivrance: IRequeteDelivrance = {
     },
     {
       anneeNaissance: 1990,
-      id: "0b7dfdd9-9672-409e-b4f1-46e6f001bcfb",
+      id: "0b7dfdd9-9672-409e-b4f1-46e6f001bcfd",
       jourNaissance: 25,
       moisNaissance: 6,
       nationalite: Nationalite.ETRANGERE,
@@ -164,7 +165,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
+      typePieceJustificative: ("Carte" as unknown) as TypePieceJustificative
     }
   ],
   provenanceRequete: {
@@ -215,7 +216,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
   titulaires: [
     {
       anneeNaissance: 1990,
-      id: "0b7dfdd9-9672-409e-b4f1-46e6f001bcfb",
+      id: "0b7dfdd9-9672-409e-b4f1-46e6f001bcfc",
       jourNaissance: 25,
       moisNaissance: 6,
       nationalite: Nationalite.ETRANGERE,

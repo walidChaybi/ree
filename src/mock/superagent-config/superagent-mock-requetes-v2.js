@@ -12,6 +12,7 @@ import {
   ReponseAppelMesRequetes,
   ReponseAppelRequetesService
 } from "../data/EspaceDelivrance";
+import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
 import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
 import {
   ReponseAppelNomenclatureDocummentDelivrance,
@@ -100,6 +101,10 @@ export const configRequetesV2 = [
 
       if (match[1] === "/nomenclature/TYPE_PIECE_JUSTIFICATIVE") {
         return { data: ReponseAppelNomenclatureTypePiecesJustificative.data };
+      }
+
+      if (match[1] === "/nomenclature/optioncourrier") {
+        return { data: NOMENCLATURE_OPTION_COURRIER };
       }
 
       // RMC Requete

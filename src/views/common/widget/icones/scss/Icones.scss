@@ -1,5 +1,8 @@
 @import "../../../../../scss/colors";
-.IconeCroix {
+.IconeCroix,
+.IconePoubelle,
+.IconeMoins,
+.IconePlus {
   color: $application-color;
   &:hover {
     cursor: pointer;
@@ -8,8 +11,17 @@
   margin-left: 2px;
 }
 
-.IconePoubelle {
-  color: $application-color;
+.IconeDanger {
+  color: $code-couleur-alertes-rouge;
+  &:hover {
+    cursor: pointer;
+  }
+  align-self: center;
+  margin-left: 2px;
+}
+
+.IconeValider {
+  color: $code-couleur-alertes-vert;
   &:hover {
     cursor: pointer;
   }

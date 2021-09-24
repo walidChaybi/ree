@@ -217,7 +217,7 @@ test("redirection requete RDC", async () => {
   });
 
   expect(history2.location.pathname).toBe(
-    "/rece/rece-ui/mesrequetesv2/apercurequetepriseencharge/apercucourrieraccompagnement/a4cefb71-8457-4f6b-937e-34b49335d666"
+    "/rece/rece-ui/mesrequetesv2/apercurequetepriseencharge/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d666"
   );
 });
 

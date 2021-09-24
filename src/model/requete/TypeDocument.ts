@@ -2,7 +2,7 @@ import { IDocumentDelivre } from "../../views/common/types/RequeteType";
 
 export enum TypeDocument {
   AtestationPACS = "ATTESTATION_PACS",
-  CourrierAccompagnement = "COURRIER_ACCOMPAGNEMENT",
+  Courrier = "COURRIER_ACCOMPAGNEMENT",
   CertificatSituationRC = "CERTIFICAT_SITUATION_RC",
   CertificatSituationRCA = "CERTIFICAT_SITUATION_RCA",
   CertificatSituationRCetRCA = "CERTIFICAT_SITUATION_RC_RCA",

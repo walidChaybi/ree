@@ -29,7 +29,8 @@ a {
   }
 }
 
-input {
+input,
+textarea {
   font-family: "NotoSansUI-Regular", sans-serif;
 }
 
@@ -125,14 +126,9 @@ option {
   font: 400 13.3333px Arial, sans-serif;
 }
 
-select {
+select,
+textarea {
   padding: 0.5em 2.5em 0.5em 0.2em;
-
-  background-image: url(../img/expand-close.svg);
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-position-x: 100%;
-  background-position-y: 50%;
 
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -143,8 +139,29 @@ select {
   cursor: pointer;
 
   &:disabled {
+    border-color: $form-border-input-disabled;
     background-color: $form-input-disabled;
     cursor: default;
+  }
+}
+
+select {
+  padding: 0.5em 2.5em 0.5em 0.2em;
+  background-image: url(../img/expand-close.svg);
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 50%;
+}
+
+textarea {
+  padding: 0.2em 1em 0.5em 0.5em;
+  font-size: 0.9rem;
+  cursor: auto;
+  height: auto;
+
+  &:disabled {
+    cursor: pointer;
   }
 }
 

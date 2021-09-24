@@ -400,8 +400,10 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance:
+        "Courrier sans délivrance E/C - Requête incomplète",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "2776c0c7-2ad4-4949-9743-046c4c687eec",

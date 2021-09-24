@@ -102,8 +102,8 @@ function getTableauPiecesJointes(
 ): JSX.Element {
   const tableauSimpleProps: TableauSimpleProps = {
     entetes: [
-      { className: "EnteteNomPJ", libelle: getLibelle("Nom") },
-      { className: "EnteteTypePJ", libelle: getLibelle("Type") },
+      { libelle: getLibelle("Nom") },
+      { libelle: getLibelle("Type") },
       { className: "EnteteActionPJ", libelle: getLibelle("Action") }
     ],
     lignes: piecesJointes.map(pj => ({
@@ -137,14 +137,7 @@ function getColonneSuppressionPJ(
   supprimePieceJointe: (libelle: string) => void,
   pj: PieceJointe
 ): JSX.Element {
-  return (
-    <IconePoubelle
-      onClick={() => {
-        supprimePieceJointe(pj.base64File.fileName);
-      }}
-      title={getLibelle("Supprimer")}
-    />
-  );
+  return <IconePoubelle title={getLibelle("Supprimer")} />;
 }
 
 function getColonneNomPJ(pj: PieceJointe): JSX.Element {

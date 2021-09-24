@@ -53,6 +53,24 @@ export const EXTRAIT_SANS_FILIATION = "EXTRAIT_SANS_FILIATION";
  *
  */
 export class DocumentDelivrance extends EnumNomemclature {
+  constructor(
+    code: string,
+    libelle: string,
+    categorie: string,
+    private readonly _texteLibre: boolean,
+    private readonly _categorieDocumentDelivrance: string
+  ) {
+    super(code, libelle, categorie);
+  }
+
+  get texteLibre() {
+    return this._texteLibre;
+  }
+
+  get categorieDocumentDelivrance() {
+    return this._categorieDocumentDelivrance;
+  }
+
   /**
    *
    * Méthode contrôlant que le document demandé est en accord avec un résultat de la RMC
@@ -207,5 +225,14 @@ export class DocumentDelivrance extends EnumNomemclature {
       value: this.getKeyForCode(code),
       str: this.getEnumFor(key).libelle
     };
+  }
+
+  public static estCourrierDelivranceEC(typeDocumentUUID: string): boolean {
+    const doc = DocumentDelivrance.getEnumFor(typeDocumentUUID);
+    return (
+      doc.categorieDocumentDelivrance &&
+      doc.categorieDocumentDelivrance.startsWith("Courrier") &&
+      doc.categorieDocumentDelivrance.includes("délivrance E/C")
+    );
   }
 }

@@ -8,12 +8,14 @@ export interface Entete {
 export interface Ligne {
   key: string;
   colonnes: Colonne[];
+  className?: string;
 }
 
 export interface Colonne {
   className?: string;
   contenu: JSX.Element | string;
   onClick?: (idxColonne: number) => void;
+  onDoubleClick?: (idxColonne: number) => void;
   title?: string;
 }
 
@@ -25,7 +27,11 @@ export interface TableauSimpleProps {
 
 export const TableauSimple: React.FC<TableauSimpleProps> = props => {
   return (
-    <table className={`TableauSimple ${props.className}`}>
+    <table
+      className={
+        props.className ? `${props.className} TableauSimple` : "TableauSimple"
+      }
+    >
       <thead>
         <tr>
           {props.entetes.map((e: Entete, idx: number) => (
@@ -37,7 +43,7 @@ export const TableauSimple: React.FC<TableauSimpleProps> = props => {
       </thead>
       <tbody>
         {props.lignes.map((ligne: Ligne, idxLigne: number) => (
-          <tr key={`${ligne.key}-${idxLigne}`}>
+          <tr key={`${ligne.key}-${idxLigne}`} className={ligne.className}>
             {ligne.colonnes.map((colonne: Colonne, idxColonne: number) => (
               <td
                 key={`${ligne.key}-${idxLigne}${idxColonne}`}
@@ -45,6 +51,11 @@ export const TableauSimple: React.FC<TableauSimpleProps> = props => {
                 onClick={() => {
                   if (colonne.onClick) {
                     colonne.onClick(idxColonne);
+                  }
+                }}
+                onDoubleClick={() => {
+                  if (colonne.onDoubleClick) {
+                    colonne.onDoubleClick(idxColonne);
                   }
                 }}
                 title={colonne.title}
