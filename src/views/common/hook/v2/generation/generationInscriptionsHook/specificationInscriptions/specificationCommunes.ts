@@ -108,14 +108,14 @@ export function getDecisionNotaire(
 }
 
 export function getParagrapheFin(infosRcRca: IFicheRcRca) {
-  let paragrapheFin = `Conformément à l'article`;
+  let paragrapheFin = `Conformément à l'`;
 
   if (infosRcRca.categorie === TypeFiche.RCA) {
     const decret = Decret.getDecretInscriptionRCA(storeRece.decrets)?.libelle;
-    paragrapheFin += ` ${decret},`;
+    paragrapheFin += `${decret},`;
   } else if (infosRcRca.categorie === TypeFiche.RC) {
     const decret = Decret.getDecretInscriptionRC(storeRece.decrets)?.libelle;
-    paragrapheFin += ` ${decret},`;
+    paragrapheFin += `${decret},`;
   }
 
   if (infosRcRca.decision?.instructionProcureur) {

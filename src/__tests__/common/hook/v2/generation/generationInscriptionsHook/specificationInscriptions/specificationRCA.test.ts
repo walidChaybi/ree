@@ -27,7 +27,7 @@ Lieu de décès: Londres - Grand-Londres (Royaume-Uni)`;
   expect(elementsJasper.interesseDecision).toBe(interesse);
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'article Article 4-1 du décret 65-422 du 1er juin 1965, et sur instruction du procureur de la République de Nantes Arr.arrondissement (Loire-Atlantique) (N° réf. 56848) du 26 Novembre 2020, une inscription a été prise au répertoire civil annexe le 23 Février 2020 sous la référence : RCA n°2020 - 4012."
+    "Conformément à l'Article 4-1 du décret 65-422 du 1er juin 1965, et sur instruction du procureur de la République de Nantes Arr.arrondissement (Loire-Atlantique) (N° réf. 56848) du 26 Novembre 2020, une inscription a été prise au répertoire civil annexe le 23 Février 2020 sous la référence : RCA n°2020 - 4012."
   );
 });
 
@@ -51,7 +51,7 @@ Lieu de naissance: Nantes (Loire-Atlantique)`;
     "prise en exequatur de la décision étrangère en date du 26 Novembre 2020"
   );
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'article Article 4-1 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil annexe le 23 Février 2020 sous la référence : RCA n°2020 - 4013."
+    "Conformément à l'Article 4-1 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil annexe le 23 Février 2020 sous la référence : RCA n°2020 - 4013."
   );
 });
 
@@ -74,6 +74,6 @@ Mariés devant les autorités consulaires de Italie en France le 28 Juin 2018`;
   expect(elementsJasper.interesseDecision).toBe(interesses);
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'article Article 4-1 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil annexe le 20 Avril 1929 sous la référence : RCA n°1998 - 4094."
+    "Conformément à l'Article 4-1 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil annexe le 20 Avril 1929 sous la référence : RCA n°1998 - 4094."
   );
 });
