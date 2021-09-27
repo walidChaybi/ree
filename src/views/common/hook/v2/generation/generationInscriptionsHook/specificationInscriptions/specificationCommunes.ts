@@ -54,8 +54,8 @@ export function getDecisionJuridiction(
     case TypeDecision.ORDONNANCE:
       typeDecision = "l'ordonnance";
       break;
-    case TypeDecision.JUDICIAIRE:
-      typeDecision = "la décision judicaire";
+    case TypeDecision.DECISION_JUDICIAIRE:
+      typeDecision = "la décision judiciaire";
       break;
     default:
       typeDecision = "";

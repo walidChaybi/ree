@@ -6,7 +6,7 @@ export enum TypeDecision {
   DECLARATION = "DECLARATION",
   ONAC = "ONAC",
   ORDONNANCE = "ORDONNANCE",
-  JUDICIAIRE = "JUDICIAIRE",
+  DECISION_JUDICIAIRE = "DECISION_JUDICIAIRE",
   REQUETE = "REQUETE"
 }
 
@@ -26,7 +26,7 @@ export class TypeDecisionUtil {
     [TypeDecision.DECLARATION]: "Déclaration",
     [TypeDecision.ONAC]: "Onac",
     [TypeDecision.ORDONNANCE]: "Ordonnance",
-    [TypeDecision.JUDICIAIRE]: "Judiciaire",
+    [TypeDecision.DECISION_JUDICIAIRE]: "Décision Judiciaire",
     [TypeDecision.REQUETE]: "Requête"
   };
 
