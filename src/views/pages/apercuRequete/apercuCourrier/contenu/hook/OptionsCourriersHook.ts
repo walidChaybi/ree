@@ -2,26 +2,29 @@ import { useEffect, useState } from "react";
 import { getOptionsCourriers } from "../../../../../../api/appels/requeteApi";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { OptionsCourrier } from "../../../../../../model/requete/v2/IOptionCourrier";
+import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
 import { logError } from "../../../../../common/util/LogManager";
-import { recupererLesOptionsParDefautDuCourrier } from "../contenuForm/sousFormulaires/GestionOptionsCourrier";
+import { recupererLesOptionsDisponiblesPourLeCourrier } from "../contenuForm/sousFormulaires/GestionOptionsCourrier";
 
 export function useOptionsCourriersApiHook(
-  documentDelivranceChoisi?: DocumentDelivrance
+  documentDelivranceChoisi?: DocumentDelivrance,
+  requete?: IRequeteDelivrance
 ) {
   const [
-    optionsCourrierPossible,
-    setOptionsCourrierPossible
+    optionsCourrierDisponibles,
+    setOptionsCourrierDisponibles
   ] = useState<OptionsCourrier>([]);
 
   useEffect(() => {
-    if (documentDelivranceChoisi) {
+    if (documentDelivranceChoisi && requete) {
       getOptionsCourriers()
         .then(result => {
-          const options = recupererLesOptionsParDefautDuCourrier(
+          const options = recupererLesOptionsDisponiblesPourLeCourrier(
             result.body.data,
-            documentDelivranceChoisi
+            documentDelivranceChoisi,
+            requete?.evenement?.natureActe
           );
-          setOptionsCourrierPossible(options);
+          setOptionsCourrierDisponibles(options);
         })
         .catch(error => {
           logError({
@@ -30,8 +33,8 @@ export function useOptionsCourriersApiHook(
           });
         });
     }
-  }, [documentDelivranceChoisi]);
+  }, [documentDelivranceChoisi, requete]);
   return {
-    optionsCourrierPossible
+    optionsCourrierDisponibles
   };
 }

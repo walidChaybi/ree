@@ -1,4 +1,5 @@
 import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { TypeNatureActe } from "../../../../../../../model/requete/v2/enum/TypeNatureActe";
 import {
   OptionCourrier,
   OptionsCourrier
@@ -91,27 +92,29 @@ export function switchOption(
 }
 
 export function initialisationOptions(
-  optsDispos: OptionsCourrier,
-  optsChoisies: OptionsCourrier
+  optionsDisponibles: OptionsCourrier,
+  optionsChoisies: OptionsCourrier
 ) {
-  if (optsChoisies.length === 0) {
-    optsDispos.forEach((optDispo: OptionCourrier, index: number) => {
+  const optsDispos: OptionsCourrier = [];
+  if (optionsChoisies.length === 0) {
+    optionsDisponibles.forEach((optDispo: OptionCourrier, index: number) => {
       if (optDispo.optionParDefaut) {
-        optsDispos.splice(index, 1);
-        optsChoisies.push(optDispo);
+        optionsChoisies.push(optDispo);
+      } else {
+        optsDispos.push(optDispo);
       }
     });
   } else {
-    optsChoisies.forEach((optChoisie: OptionCourrier) => {
-      optsDispos.forEach((optDispo: OptionCourrier, index: number) => {
-        if (optDispo.code === optChoisie.code) {
-          optsDispos.splice(index, 1);
+    optionsChoisies.forEach((optChoisie: OptionCourrier) => {
+      optionsDisponibles.forEach((optDispo: OptionCourrier, index: number) => {
+        if (optDispo.code !== optChoisie.code) {
+          optsDispos.push(optDispo);
         }
       });
     });
   }
 
-  return { optsDispos, optsChoisies };
+  return { optsDispos, optsChoisies: optionsChoisies };
 }
 
 export function recupererLesOptionsDuCourrier(
@@ -148,17 +151,41 @@ function mappingOptionCourrierDocumentReponse(
   return optionsDocumentReponse;
 }
 
-export function recupererLesOptionsParDefautDuCourrier(
-  options: any,
-  documentDelivranceChoisi: DocumentDelivrance
+export function recupererLesOptionsDisponiblesPourLeCourrier(
+  options: OptionsCourrier,
+  documentDelivranceChoisi: DocumentDelivrance,
+  nature?: TypeNatureActe
 ): OptionsCourrier {
   const idDocumentDelivrance = DocumentDelivrance.getKeyForCode(
     documentDelivranceChoisi.code
   );
   options = options.filter(
-    (opt: OptionCourrier) => opt.documentDelivrance === idDocumentDelivrance
+    (opt: OptionCourrier) =>
+      opt.documentDelivrance === idDocumentDelivrance && opt.estActif
   );
+  if (nature) {
+    options = filtreSurNatureActe(options, nature);
+  }
+
   return initialisationDesOptionsModifiables(options);
+}
+
+function filtreSurNatureActe(
+  options: OptionsCourrier,
+  nature: TypeNatureActe
+): OptionsCourrier {
+  switch (nature) {
+    case TypeNatureActe.NAISSANCE:
+      return options.filter((opt: OptionCourrier) => opt.acteNaissance);
+
+    case TypeNatureActe.DECES:
+      return options.filter((opt: OptionCourrier) => opt.acteDeces);
+
+    case TypeNatureActe.MARIAGE:
+      return options.filter((opt: OptionCourrier) => opt.acteDeces);
+    default:
+      return options;
+  }
 }
 
 function initialisationDesOptionsModifiables(
@@ -170,4 +197,8 @@ function initialisationDesOptionsModifiables(
     }
   });
   return options;
+}
+
+export function messageOptionVariables(options: OptionsCourrier) {
+  return options.some(opt => opt.presenceVariables === true);
 }

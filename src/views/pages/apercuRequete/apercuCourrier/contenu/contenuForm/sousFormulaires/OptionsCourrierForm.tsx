@@ -6,6 +6,7 @@ import {
   OptionCourrier,
   OptionsCourrier
 } from "../../../../../../../model/requete/v2/IOptionCourrier";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
 import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SousFormulaire } from "../../../../../../common/widget/formulaire/SousFormulaire";
 import {
@@ -19,6 +20,7 @@ import {
   classNameContenu,
   contenuDisabled,
   initialisationOptions,
+  messageOptionVariables,
   optionAPuce,
   optionOptionLibre,
   optionPresenceVariables,
@@ -31,6 +33,7 @@ import {
   getTableauOptionsDisponibles
 } from "./OptionsCourrierFormTableau";
 import "./scss/OptionsCourrierForm.scss";
+
 interface OptionsCourrierFormProps {
   documentDelivranceChoisi?: DocumentDelivrance;
 }
@@ -55,8 +58,9 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
   const [optionSelectionne, setOptionSelectionne] = useState<OptionCourrier>();
 
-  const { optionsCourrierPossible } = useOptionsCourriersApiHook(
-    props.documentDelivranceChoisi
+  const { optionsCourrierDisponibles } = useOptionsCourriersApiHook(
+    props.documentDelivranceChoisi,
+    props.requete as IRequeteDelivrance
   );
 
   useEffect(() => {
@@ -64,12 +68,12 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
       // Récupérer les options du courrier s'il y a déjà un document réponse
       const optionsDuCourrier = recupererLesOptionsDuCourrier(
         props.requete,
-        optionsCourrierPossible
+        optionsCourrierDisponibles
       );
 
       // Trier entre les options par défaut et les options du courrier, pour ne pas avoir de doublon
       const { optsDispos, optsChoisies } = initialisationOptions(
-        optionsCourrierPossible,
+        optionsCourrierDisponibles,
         optionsDuCourrier
       );
       setOptionsDisponibles(optsDispos);
@@ -77,7 +81,7 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
       resetOptionSelectionne();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [optionsCourrierPossible]);
+  }, [optionsCourrierDisponibles]);
 
   const ajouterUneOption = (opt: OptionCourrier) => {
     const { optionsAvecAjout, optionsAvecSuppression } = switchOption(
@@ -149,9 +153,13 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
           <div className="OptionsCourrierForm">
             <span>
               <label>{getLibelle("Ajouter un paragraphe")}</label>
-              <p>
-                {getLibelle("(*) option comportant des variables à saisir")}
-              </p>
+              {messageOptionVariables(
+                optionsDisponibles.concat(optionsChoisies)
+              ) && (
+                <p>
+                  {getLibelle("(*) option comportant des variables à saisir")}
+                </p>
+              )}
             </span>
             {getTableauOptionsDisponibles(
               optionsDisponibles,
@@ -177,7 +185,7 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
               disabled={true}
             />
             {optionAPuce(optionSelectionne) && (
-              <div className="OptionPuce">{getLibelle("Option à puces")}</div>
+              <div className="OptionPuce">{getLibelle("Option à puce(s)")}</div>
             )}
           </div>
           <div className="ContenuOptionForm">

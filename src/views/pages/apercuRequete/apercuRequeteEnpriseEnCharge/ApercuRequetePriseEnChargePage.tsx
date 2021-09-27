@@ -203,6 +203,11 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     alertesActeApiHookParameters
   );
 
+  useEffect(() => {
+    setActes(new Map([]));
+    setInscriptions(new Map([]));
+  }, [nouvelleRecherche]);
+
   /* Actualisation de la liste des alertes des actes sélectionnés */
   useEffect(() => {
     if (alertesActeApiHookParameters) {

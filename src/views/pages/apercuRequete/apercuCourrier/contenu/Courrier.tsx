@@ -56,7 +56,9 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     setSaisieCourrier
   ] = useState<SaisieCourrier>();
 
-  const boutonsProps = {} as BoutonsCourrierProps;
+  const boutonsProps = {
+    requete: props.requete
+  } as BoutonsCourrierProps;
 
   const onSubmit = () => {};
 
@@ -115,7 +117,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         className="FormulaireCourrier"
       >
         <div>{blocsForm}</div>
-        <BoutonsCourrier {...boutonsProps}></BoutonsCourrier>
+        <BoutonsCourrier {...boutonsProps} />
       </Formulaire>
     </>
   );

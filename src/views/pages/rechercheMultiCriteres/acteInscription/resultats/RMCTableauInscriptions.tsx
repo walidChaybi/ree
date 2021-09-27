@@ -148,6 +148,10 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     setColumnHeaders(colonnes);
   }, [typeRMC, isCheckboxDisabled, onClickCheckbox]);
 
+  useEffect(() => {
+    setSelected(new Map([]));
+  }, [resetTableauInscription]);
+
   return (
     <>
       <TableauRece

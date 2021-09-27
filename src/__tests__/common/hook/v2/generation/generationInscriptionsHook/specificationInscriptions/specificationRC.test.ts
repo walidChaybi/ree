@@ -36,7 +36,7 @@ Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 année");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11"
+    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11."
   );
 });
 
@@ -60,7 +60,7 @@ Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 année");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11"
+    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11."
   );
 });
 
@@ -84,7 +84,7 @@ Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 année");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11"
+    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11."
   );
 });
 
@@ -113,7 +113,7 @@ Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 Juin
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 mois");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 22 Novembre 2020 sous la référence : RC n°2020 - 2"
+    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 22 Novembre 2020 sous la référence : RC n°2020 - 2."
   );
 });
 
@@ -142,7 +142,7 @@ Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 Juin
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 mois");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 22 Novembre 2020 sous la référence : RC n°2020 - 2"
+    "Conformément à l'article Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 22 Novembre 2020 sous la référence : RC n°2020 - 2."
   );
 });
 

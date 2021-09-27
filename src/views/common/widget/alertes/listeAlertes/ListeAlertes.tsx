@@ -102,7 +102,7 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
         isOpen={hasMessageBloquant}
         messages={[
           getLibelle(
-            "Vous pouvez supprimer seulement les alertes que vous avez ajouté vous-même."
+            "Vous pouvez supprimer seulement les alertes que vous avez ajoutées vous-même."
           )
         ]}
         boutons={[

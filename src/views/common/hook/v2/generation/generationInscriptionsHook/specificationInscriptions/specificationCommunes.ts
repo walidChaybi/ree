@@ -139,9 +139,9 @@ export function getParagrapheFin(infosRcRca: IFicheRcRca) {
     : "";
 
   if (infosRcRca.categorie === TypeFiche.RCA) {
-    paragrapheFin += ` une inscription a été prise au répertoire civil annexe le ${dateInscription} sous la référence : RCA n°${infosRcRca.annee} - ${infosRcRca.numero}`;
+    paragrapheFin += ` une inscription a été prise au répertoire civil annexe le ${dateInscription} sous la référence : RCA n°${infosRcRca.annee} - ${infosRcRca.numero}.`;
   } else if (infosRcRca.categorie === TypeFiche.RC) {
-    paragrapheFin += ` une inscription a été prise au répertoire civil le ${dateInscription} sous la référence : RC n°${infosRcRca.annee} - ${infosRcRca.numero}`;
+    paragrapheFin += ` une inscription a été prise au répertoire civil le ${dateInscription} sous la référence : RC n°${infosRcRca.annee} - ${infosRcRca.numero}.`;
   }
 
   return paragrapheFin;

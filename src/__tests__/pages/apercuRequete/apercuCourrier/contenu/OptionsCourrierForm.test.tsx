@@ -77,7 +77,7 @@ test("renders OptionsCourrierForm DoubleClick pour ajouter, bouton moins pour su
   const inputContenuOption = screen.getByLabelText(
     "option.contenu"
   ) as HTMLInputElement;
-  const optionAPuce = screen.getByText("Option à puces");
+  const optionAPuce = screen.getByText("Option à puce(s)");
 
   await waitFor(() => {
     expect(inputLibelleOption.value).toBe("Absence de date");

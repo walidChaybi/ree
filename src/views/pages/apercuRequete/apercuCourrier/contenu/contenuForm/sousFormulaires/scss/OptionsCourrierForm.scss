@@ -11,6 +11,7 @@
 
   p {
     text-align: start;
+    font-size: 0.85rem;
   }
 
   .TableauOptions {
@@ -62,6 +63,9 @@
   display: grid;
   .BlockInput {
     grid-template-columns: 23.5% 71%;
+    label {
+      align-self: flex-start;
+    }
   }
   .BlockErreur {
     margin-left: 20%;

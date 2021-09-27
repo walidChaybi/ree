@@ -124,6 +124,10 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     setColumnHeaders(colonnes);
   }, [typeRMC, hasWarning, onClickCheckbox]);
 
+  useEffect(() => {
+    setSelected(new Map([]));
+  }, [resetTableauActe]);
+
   return (
     <>
       <TableauRece

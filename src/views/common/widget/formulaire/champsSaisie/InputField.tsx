@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field } from "formik";
 import React from "react";
 
+const NB_LIGNE = 5;
 interface InputFieldProps {
   name: string;
   label?: string;
@@ -41,7 +42,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   onChange,
   typeInput,
   component = "input",
-  rows,
+  rows = NB_LIGNE,
   className
 }) => {
   const otherProps = {} as any;

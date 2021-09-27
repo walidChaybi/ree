@@ -9,6 +9,7 @@ import { StatutRequete } from "../../model/requete/v2/enum/StatutRequete";
 import { TypeCanal } from "../../model/requete/v2/enum/TypeCanal";
 import { TypeInstitutionnel } from "../../model/requete/v2/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "../../model/requete/v2/enum/TypeMandataireReq";
+import { TypeNatureActe } from "../../model/requete/v2/enum/TypeNatureActe";
 import { TypePieceJustificative } from "../../model/requete/v2/enum/TypePieceJustificative";
 import { TypeRequete } from "../../model/requete/v2/enum/TypeRequete";
 import { IProvenancePlanete } from "../../model/requete/v2/IProvenancePlanete";
@@ -27,7 +28,10 @@ const requeteDelivrance: IRequeteDelivrance = {
     code: "CERTIFICAT_SITUATION_RCA"
   } as DocumentDelivrance,
   documentsReponses: [documentReponseCourrier117],
-  evenement: undefined,
+  evenement: {
+    id: "755e30c2-2586-4a32-b2a4-8d52d4ed32e0",
+    natureActe: TypeNatureActe.NAISSANCE
+  },
   id: "0ad85c1f-57cf-45cc-ab66-6a17f31247df",
   idEntite: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
   idSagaDila: 8701,
