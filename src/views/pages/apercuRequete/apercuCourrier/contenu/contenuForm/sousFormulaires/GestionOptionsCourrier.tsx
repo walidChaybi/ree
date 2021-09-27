@@ -95,7 +95,7 @@ export function initialisationOptions(
   optionsDisponibles: OptionsCourrier,
   optionsChoisies: OptionsCourrier
 ) {
-  const optsDispos: OptionsCourrier = [];
+  let optsDispos: OptionsCourrier = [];
   if (optionsChoisies.length === 0) {
     optionsDisponibles.forEach((optDispo: OptionCourrier, index: number) => {
       if (optDispo.optionParDefaut) {
@@ -105,12 +105,11 @@ export function initialisationOptions(
       }
     });
   } else {
+    optsDispos = optionsDisponibles;
     optionsChoisies.forEach((optChoisie: OptionCourrier) => {
-      optionsDisponibles.forEach((optDispo: OptionCourrier, index: number) => {
-        if (optDispo.code !== optChoisie.code) {
-          optsDispos.push(optDispo);
-        }
-      });
+      optsDispos = optsDispos.filter(
+        (_, index: number) => index !== optsDispos.indexOf(optChoisie)
+      );
     });
   }
 
