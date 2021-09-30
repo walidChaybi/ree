@@ -137,7 +137,14 @@ function getColonneSuppressionPJ(
   supprimePieceJointe: (libelle: string) => void,
   pj: PieceJointe
 ): JSX.Element {
-  return <IconePoubelle title={getLibelle("Supprimer")} />;
+  return (
+    <IconePoubelle
+      onClick={() => {
+        supprimePieceJointe(pj.base64File.fileName);
+      }}
+      title={getLibelle("Supprimer")}
+    />
+  );
 }
 
 function getColonneNomPJ(pj: PieceJointe): JSX.Element {

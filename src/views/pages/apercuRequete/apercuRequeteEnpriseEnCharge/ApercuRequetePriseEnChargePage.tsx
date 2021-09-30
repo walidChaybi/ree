@@ -19,6 +19,7 @@ import {
   useGetAlertesActeApiHook
 } from "../../../common/hook/v2/alertes/GetAlertesActeApiHook";
 import { IParamsTableau } from "../../../common/util/GestionDesLiensApi";
+import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { aplatirTableau, getValeurOuVide } from "../../../common/util/Utils";
 import { IAjouterAlerteFormValue } from "../../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
@@ -78,35 +79,27 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     IResultatRMCInscription[] | undefined
   >(dataHistory?.dataRMCAutoInscription);
 
-  const [
-    dataTableauRMCAutoInscription,
-    setDataTableauRMCAutoInscription
-  ] = useState<IParamsTableau | undefined>(
-    dataHistory?.dataTableauRMCAutoInscription
-  );
+  const [dataTableauRMCAutoInscription, setDataTableauRMCAutoInscription] =
+    useState<IParamsTableau | undefined>(
+      dataHistory?.dataTableauRMCAutoInscription
+    );
 
   const [valuesRMC, setValuesRMC] = useState<IRMCActeInscription>({});
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [
-    criteresRechercheActe,
-    setCriteresRechercheActe
-  ] = useState<ICriteresRecherche>();
+  const [criteresRechercheActe, setCriteresRechercheActe] =
+    useState<ICriteresRecherche>();
 
-  const [
-    criteresRechercheInscription,
-    setCriteresRechercheInscription
-  ] = useState<ICriteresRecherche>();
+  const [criteresRechercheInscription, setCriteresRechercheInscription] =
+    useState<ICriteresRecherche>();
 
   const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(
     criteresRechercheActe
   );
 
-  const {
-    dataRMCInscription,
-    dataTableauRMCInscription
-  } = useRMCInscriptionApiHook(criteresRechercheInscription);
+  const { dataRMCInscription, dataTableauRMCInscription } =
+    useRMCInscriptionApiHook(criteresRechercheInscription);
 
   useEffect(() => {
     if (dataRMCActe && dataTableauRMCActe) {
@@ -144,10 +137,8 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   const dataRequetes = dataHistory?.dataRequetes;
   const [range, setRange] = useState<string>(`0-${NB_LIGNES_PAR_APPEL}`);
 
-  const {
-    dataRMCAutoRequete,
-    dataTableauRMCAutoRequete
-  } = useRMCAutoRequeteApiHook(idRequete, dataRequetes, range);
+  const { dataRMCAutoRequete, dataTableauRMCAutoRequete } =
+    useRMCAutoRequeteApiHook(idRequete, dataRequetes, range);
 
   const setRangeRequete = (value: string) => {
     if (value !== "") {
@@ -159,10 +150,8 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   const [inscriptions, setInscriptions] = useState<
     Map<number, IResultatRMCInscription>
   >(new Map([]));
-  const [
-    alertesActeApiHookParameters,
-    setAlertesActeApiHookParameters
-  ] = useState<GetAlertesActeApiHookParameters>();
+  const [alertesActeApiHookParameters, setAlertesActeApiHookParameters] =
+    useState<GetAlertesActeApiHookParameters>();
   const [actes, setActes] = useState<Map<number, IResultatRMCActe>>(
     new Map([])
   );
@@ -243,9 +232,8 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   }
 
   // Gestion affichage des boutons d'ajout des alertes
-  const [ajoutAlertePossible, setAjoutAlertePossible] = useState<boolean>(
-    false
-  );
+  const [ajoutAlertePossible, setAjoutAlertePossible] =
+    useState<boolean>(false);
   useEffect(() => {
     if (detailRequeteState) {
       setAjoutAlertePossible(
@@ -332,7 +320,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     <div className="ApercuRequetePriseEnCharge">
       <title>{getLibelle("Aperçu de la requête en prise en charge")}</title>
       {detailRequeteState && (
-        <>
+        <ProtectionApercu statut={detailRequeteState?.statutCourant.statut}>
           {isFenetreOuverte === true && (
             <FenetreDocumentReponse
               toggleFenetre={toggleFenetre}
@@ -409,7 +397,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
               <BoutonRetour message={getLibelle("<< Retour")} />
             </div>
           </div>
-        </>
+        </ProtectionApercu>
       )}
     </div>
   );

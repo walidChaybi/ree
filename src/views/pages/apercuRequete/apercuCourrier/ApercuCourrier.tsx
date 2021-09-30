@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { BandeauRequete } from "../contenu/BandeauRequete";
@@ -20,10 +21,10 @@ export const ApercuCourrier: React.FC = () => {
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 
   return (
-    <div className="ApercuRequete">
+    <div className="ApercuCourrierAccompagnement">
       <title>{getLibelle("Aperçu de la requête")}</title>
       {detailRequeteState && (
-        <>
+        <ProtectionApercu statut={detailRequeteState?.statutCourant.statut}>
           <BandeauRequete detailRequete={detailRequeteState} />
           <div className="contenu-requete">
             <div className="side left">
@@ -44,7 +45,7 @@ export const ApercuCourrier: React.FC = () => {
               <Courrier requete={detailRequeteState as IRequeteDelivrance} />
             </div>
           </div>
-        </>
+        </ProtectionApercu>
       )}
     </div>
   );

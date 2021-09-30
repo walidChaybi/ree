@@ -8,6 +8,7 @@ import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDeliv
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance";
 import messageManager from "../../common/util/messageManager";
+import { ProtectionApercu } from "../../common/util/route/Protection/ProtectionApercu";
 import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
 import {
@@ -241,7 +242,7 @@ export const SaisirRDCSCPage: React.FC = () => {
   };
 
   return (
-    <>
+    <ProtectionApercu statut={detailRequeteState?.statutCourant.statut}>
       <OperationEnCours
         visible={operationEnCours}
         onTimeoutEnd={() => setOperationEnCours(false)}
@@ -266,6 +267,6 @@ export const SaisirRDCSCPage: React.FC = () => {
           setDonneesNaissanceIncomplete
         )}
       />
-    </>
+    </ProtectionApercu>
   );
 };

@@ -62,11 +62,11 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     [setRangeRequete]
   );
 
-  function onClickOnLine(
+  const onClickOnLine = (
     idRequete: string,
     data: IRequeteTableau[],
     idx: number
-  ) {
+  ) => {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
     if (autorisePrendreEnChargeTableau(requeteSelect)) {
@@ -84,13 +84,17 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         urlCourante: URL_RECHERCHE_REQUETE
       });
     }
-  }
+  };
+  const finOperationEnCours = () => {
+    setOperationEnCours(false);
+  };
+
   return (
     <>
       <OperationEnCours
         visible={operationEnCours}
-        onTimeoutEnd={() => setOperationEnCours(false)}
-        onClick={() => setOperationEnCours(false)}
+        onTimeoutEnd={finOperationEnCours}
+        onClick={finOperationEnCours}
       />
       <TableauRece
         idKey={"idRequete"}

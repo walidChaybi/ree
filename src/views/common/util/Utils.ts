@@ -50,17 +50,15 @@ export function normaliserNomOec(nom: string) {
   return result;
 }
 
-export function formatMajusculesMinusculesAvecSeparateur(
-  str?: string,
-  sep?: string
-) {
+export function formatMajusculesMinusculesMotCompose(str?: string) {
   let res = "";
-  sep = sep ? sep : "-";
   if (str) {
-    const strParts = str.split(/[ -]+/);
-    res = strParts
-      .map(p => premiereLettreEnMajusculeLeResteEnMinuscule(p))
-      .join(sep);
+    let espaceOuTiret = true;
+    for (const c of str) {
+      // On formate le mot suivant les tirets et espaces avec une majuscule et le reste en minuscule
+      res += espaceOuTiret ? c.toUpperCase() : c.toLowerCase();
+      espaceOuTiret = c === "-" || c === " ";
+    }
   }
   return res;
 }
@@ -71,7 +69,8 @@ export function formatPremieresLettresMajusculesNomCompose(str?: string) {
     str = str.toLowerCase();
     // Selectionne les caractères de debut et ceux aprés un espace ou un tiret
     // mais qui ne sont pas des mots de liaison ou des lettres suivis d'une apostrophe
-    const reg = /(?![ -](de|du|la|le|sous|sur|en|des|les|et)[ -])(?! [a-z]')(^.|[' -].)/gi;
+    const reg =
+      /(?![ -](de|du|la|le|sous|sur|en|des|les|et)[ -])(?! [a-z]')(^.|[' -].)/gi;
     res = str.replace(reg, function (s) {
       return s.toUpperCase();
     });
@@ -88,7 +87,7 @@ export function formatPrenom(prenom?: string): string {
   if (prenom === SPC) {
     prenomFormate = SANS_PRENOM_CONNU;
   } else {
-    prenomFormate = formatMajusculesMinusculesAvecSeparateur(prenom);
+    prenomFormate = formatMajusculesMinusculesMotCompose(prenom);
   }
 
   return prenomFormate;

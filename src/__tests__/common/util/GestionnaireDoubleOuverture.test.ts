@@ -28,3 +28,12 @@ test("test resetNAppli", () => {
   GestionnaireDoubleOuverture.resetNAppli();
   expect(GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()).toBeTruthy();
 });
+
+test("test delete nAppli", () => {
+  localStorageMock.removeItem("nAppliOuverte");
+  expect(GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()).toBeTruthy();
+});
+test("test resetNAppli", () => {
+  localStorageMock.clear();
+  expect(GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()).toBeTruthy();
+});

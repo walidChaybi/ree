@@ -54,7 +54,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   ).toBe("Prénoms");
   expect(
     panels.panels[0].panelAreas[1].parts[0].partContent.contents[2].value
-  ).toBe("Marie-Charlotte, Sara");
+  ).toBe("Marie Charlotte, Sara");
 
   expect(
     panels.panels[0].panelAreas[1].parts[0].partContent.contents[3].libelle

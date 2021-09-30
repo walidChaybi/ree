@@ -23,7 +23,7 @@ const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
     URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
-    "a4cefb71-8457-4f6b-937e-34b49335d404"
+    "a4cefb71-8457-4f6b-937e-34b49335d494"
   )
 );
 
@@ -49,7 +49,7 @@ test("renders ApercuRequeteTraitementPage", async () => {
 
   const title = screen.getByText(/Aperçu du traitement de la requête/i);
   const bandeau = screen.getByText(
-    /Requête à traiter, attribuée à Ashley YOUNG - Le : 14\/07\/2020/i
+    "Requête à signer le 14/07/2020 par Ashley YOUNG"
   );
   const actions = screen.getByText(/Suivi des actions/i);
 
@@ -129,7 +129,7 @@ test("test du bouton de modification du courrier", async () => {
     fireEvent.click(screen.getByText(/Modifier le courrier/i));
   });
   expect(history.location.pathname).toBe(
-    "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d404"
+    "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d494"
   );
 });
 

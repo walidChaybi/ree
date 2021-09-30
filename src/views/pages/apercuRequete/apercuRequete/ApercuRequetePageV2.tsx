@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { useGetDocumentReponseApi } from "../../../common/hook/v2/DocumentReponseHook";
 import { getIdDocumentReponseAAfficher } from "../../../common/util/RequetesUtils";
+import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { VisionneuseDocument } from "../../../common/widget/document/VisionneuseDocument";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
@@ -38,7 +39,7 @@ export const ApercuRequetePageV2: React.FC = () => {
     <div className="ApercuRequete">
       <title>{getLibelle("Aperçu de la requête")}</title>
       {detailRequeteState && (
-        <>
+        <ProtectionApercu statut={detailRequeteState?.statutCourant.statut}>
           <BandeauRequete detailRequete={detailRequeteState} />
           <div className="contenu-requete">
             <div className="side left">
@@ -67,7 +68,7 @@ export const ApercuRequetePageV2: React.FC = () => {
               ></BoutonPrendreEnCharge>
             </div>
           </div>
-        </>
+        </ProtectionApercu>
       )}
     </div>
   );

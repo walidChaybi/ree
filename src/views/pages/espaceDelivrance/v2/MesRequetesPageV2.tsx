@@ -123,12 +123,16 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
     }
   }, [dataState]);
 
+  const finOperationEnCours = () => {
+    setOperationEnCours(false);
+  };
+
   return (
     <>
       <OperationEnCours
         visible={operationEnCours}
-        onTimeoutEnd={() => setOperationEnCours(false)}
-        onClick={() => setOperationEnCours(false)}
+        onTimeoutEnd={finOperationEnCours}
+        onClick={finOperationEnCours}
       />
       <TableauRece
         idKey={"idRequete"}

@@ -148,7 +148,7 @@ test("Attendu: premiereLettreEnMajuscule fonctionne correctement", () => {
 
 test("Attendu: formatPrenom fonctionne correctement", () => {
   expect(formatPrenom()).toBe("");
-  expect(formatPrenom("marie chantAl")).toBe("Marie-Chantal");
+  expect(formatPrenom("marie chantAl")).toBe("Marie Chantal");
 });
 
 test("Attendu: formatNom fonctionne correctement", () => {
@@ -164,7 +164,7 @@ test("Attendu: formatNoms fonctionne correctement", () => {
 test("Attendu: formatPrenoms fonctionne correctement", () => {
   expect(formatPrenoms()).toBe("");
   expect(formatPrenoms(["marie chantal", "jean-paul"])).toBe(
-    "Marie-Chantal, Jean-Paul"
+    "Marie Chantal, Jean-Paul"
   );
 });
 
@@ -176,10 +176,10 @@ test("Attendu: jointPrenoms fonctionne correctement", () => {
   };
   const p2: IPrenom = {
     numeroOrdre: 2,
-    valeur: "jean paul"
+    valeur: "jean-paul"
   };
 
-  expect(jointPrenoms([p2, p1])).toBe("Marie-Chantal, Jean-Paul");
+  expect(jointPrenoms([p2, p1])).toBe("Marie Chantal, Jean-Paul");
 });
 
 test("Attendu: numberToString fonctionne correctement", () => {

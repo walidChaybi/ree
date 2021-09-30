@@ -1,5 +1,5 @@
 import {
-  formatMajusculesMinusculesAvecSeparateur,
+  formatMajusculesMinusculesMotCompose,
   formatPremieresLettresMajusculesNomCompose,
   getValeurOuVide,
   premiereLettreEnMajuscule
@@ -34,9 +34,7 @@ export class LieuxUtils {
     // Quand la ville vaut "Paris" le champ "Département" est vide
     return LieuxUtils.isVilleParis(ville)
       ? ""
-      : getValeurOuVide(
-          formatMajusculesMinusculesAvecSeparateur(departement, " ")
-        );
+      : getValeurOuVide(formatMajusculesMinusculesMotCompose(departement));
   }
 
   public static getArrondissement(ville?: string, arrondissement?: string) {
@@ -101,9 +99,8 @@ export class LieuxUtils {
       ? formatPremieresLettresMajusculesNomCompose(pays)
       : "";
 
-    const regionStringEntreParentheses = LieuxUtils.getRegionEntreParentheses(
-      regionString
-    );
+    const regionStringEntreParentheses =
+      LieuxUtils.getRegionEntreParentheses(regionString);
     if (LieuxUtils.isPaysFrance(pays)) {
       if (
         !LieuxUtils.isVilleAvecArrondissement(ville) ||

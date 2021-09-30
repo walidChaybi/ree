@@ -191,12 +191,16 @@ export const RequetesServicePageV2: React.FC<MesRequetesServicePageProps> =
       }
     }, [dataState]);
 
+    const finOperationEnCours = () => {
+      setOperationEnCours(false);
+    };
+
     return (
       <>
         <OperationEnCours
           visible={operationEnCours}
-          onTimeoutEnd={() => setOperationEnCours(false)}
-          onClick={() => setOperationEnCours(false)}
+          onTimeoutEnd={finOperationEnCours}
+          onClick={finOperationEnCours}
         />
         <TableauRece
           idKey={"idRequete"}

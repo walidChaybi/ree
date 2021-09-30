@@ -1,4 +1,10 @@
-import { act, fireEvent, render, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
@@ -156,4 +162,29 @@ test("Clic sur une Requête avec des titulaire", async () => {
       "4578e56c-421c-4e6a-b587-a238a665daf9"
     );
   });
+});
+
+test("Changement de page", async () => {
+  userDroitConsulterPerimetreMEAE.idUtilisateur =
+    "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
+
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+
+  const { getByTestId } = render(
+    <Router history={history}>
+      <RMCTableauRequetes
+        dataRMCRequete={DataRMCRequeteAvecResultat}
+        dataTableauRMCRequete={DataTableauRequete}
+        setRangeRequete={jest.fn()}
+      />
+    </Router>
+  );
+
+  const pageSuivante = screen.getByTitle("Page suivante");
+
+  act(() => {
+    fireEvent.click(pageSuivante);
+  });
+
+  expect(getByTestId("54ddf213-d9b7-4747-8e92-68c220f66de3")).toBeDefined();
 });

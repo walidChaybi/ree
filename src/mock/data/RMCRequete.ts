@@ -4,10 +4,10 @@ import { IRequeteTableau } from "../../model/requete/v2/IRequeteTableau";
 export const DataTableauRequete = {
   previousDataLinkState: "previousDataLinkState",
   nextDataLinkState:
-    "http://localhost:8089/rece-requete-api/v2/requetes/rmc?range=1-105",
-  rowsNumberState: 15,
+    "http://localhost:8089/rece-requete-api/v2/requetes/rmc?range=1-5",
+  rowsNumberState: 5,
   minRangeState: 0,
-  maxRangeState: 105
+  maxRangeState: 5
 };
 
 export const DataTableauRequeteVide = {};

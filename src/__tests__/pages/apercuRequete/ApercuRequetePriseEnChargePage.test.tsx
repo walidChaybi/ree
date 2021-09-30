@@ -26,11 +26,12 @@ import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../vie
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
+global.URL.createObjectURL = jest.fn();
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
     URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-    "a4cefb71-8457-4f6b-937e-34b49335d404"
+    "a4cefb71-8457-4f6b-937e-34b49335d884"
   ),
   {
     dataRequetes: [],
@@ -61,9 +62,11 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
     );
   });
 
+  screen.debug();
+
   const title = screen.getByText(/Aperçu de la requête en prise en charge/i);
   const bandeau = screen.getByText(
-    /Requête à traiter, attribuée à Ashley YOUNG - Le : 14\/07\/2020/i
+    "Requête prise en charge par : Ashley YOUNG - Le : 14/07/2020"
   );
   const actions = screen.getByText(/Suivi des actions/i);
 
@@ -164,7 +167,7 @@ test("redirection requete RDD", async () => {
   });
 
   expect(history.location.pathname).toBe(
-    "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/a4cefb71-8457-4f6b-937e-34b49335d404"
+    "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/a4cefb71-8457-4f6b-937e-34b49335d884"
   );
 });
 test("redirection requete RDC", async () => {
@@ -219,6 +222,50 @@ test("redirection requete RDC", async () => {
   expect(history2.location.pathname).toBe(
     "/rece/rece-ui/mesrequetesv2/apercurequetepriseencharge/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d666"
   );
+});
+
+test("renders document réponses", async () => {
+  const history3 = createMemoryHistory();
+  history3.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      "a4cefb71-8457-4f6b-937e-34b49335d884"
+    ),
+    {
+      dataRequetes: [],
+      dataRMCAutoActe: DataRMCActeAvecResultat,
+      dataTableauRMCAutoActe: { DataTableauActe },
+      dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
+      dataTableauRMCAutoInscription: { DataTableauInscription }
+    }
+  );
+  await act(async () => {
+    render(
+      <>
+        <Router history={history3}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
+          >
+            <ApercuRequetePriseEnChargePage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+  const title = screen.getByText(/Documents à délivrer/i);
+  const doc1 = screen.getByText(/CARN_CSPAC_01/i);
+  const doc2 = screen.getByText(/CERTIFICAT_INSCRIPTION_RCA/i);
+
+  await waitFor(() => {
+    expect(title).toBeDefined();
+    expect(doc1).toBeDefined();
+    expect(doc2).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(doc2);
+  });
 });
 
 afterAll(() => {

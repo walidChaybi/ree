@@ -54,8 +54,8 @@ export const MenuCourrier: React.FC<IActionProps> = props => {
         NB_DOCUMENTS_GENERES_2
       ) {
         temp.push({
-          value: INDEX_AFFICHER_EC_COMPLEMENTAIRE,
           label: getLibelle("Afficher E/C complémentaire"),
+          value: INDEX_AFFICHER_EC_COMPLEMENTAIRE,
           sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
           ref: refAction0
         });

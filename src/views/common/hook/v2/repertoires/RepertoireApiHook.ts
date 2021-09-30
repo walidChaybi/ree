@@ -13,9 +13,8 @@ export function useInformationsRepertoireApiHook(
   typeFiche?: TypeFiche,
   identifiant?: string
 ) {
-  const [informationsRepertoire, setInformationsRepertoire] = useState<
-    TFiche | undefined
-  >();
+  const [informationsRepertoire, setInformationsRepertoire] =
+    useState<TFiche | undefined>();
 
   useEffect(() => {
     if (identifiant != null && typeFiche != null) {
@@ -28,12 +27,8 @@ export function useInformationsRepertoireApiHook(
             case TypeFiche.RCA:
               infoRepertoire = mapRcRca(result.body.data);
               break;
-
             case TypeFiche.PACS:
               infoRepertoire = mapPacs(result.body.data);
-              break;
-
-            default:
               break;
           }
 

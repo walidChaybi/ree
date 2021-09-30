@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { useGetDocumentReponseApi } from "../../../common/hook/v2/DocumentReponseHook";
 import { getIdDocumentReponseAAfficher } from "../../../common/util/RequetesUtils";
+import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
@@ -43,7 +44,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
     <div className="ApercuRequeteTraitement">
       <title>{getLibelle("Aperçu du traitement de la requête")}</title>
       {detailRequeteState && (
-        <>
+        <ProtectionApercu statut={detailRequeteState?.statutCourant.statut}>
           <BandeauRequete detailRequete={detailRequeteState} />
           <div className="contenu-requete">
             <div className="side left">
@@ -78,7 +79,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
               <BoutonRetour message={getLibelle("<< Retour")} />
             </div>
           </div>
-        </>
+        </ProtectionApercu>
       )}
     </div>
   );

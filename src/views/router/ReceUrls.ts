@@ -16,6 +16,8 @@ export const PATH_APERCU_REQ_PRISE = "apercurequetepriseencharge";
 export const PATH_APERCU_REQ_TRAITEMENT = "apercurequetetraitement";
 export const PATH_APERCU_COURRIER = "apercucourrier";
 export const PATH_DETAIL_REQ = "detailrequete";
+export const PATH_APERCU_REQ_COURRIER = "courrieraccompagnement";
+export const PATH_SAISIR_RDCSC = "saisircertificatsituation";
 
 ///////////// URLs    //////////////
 export const GO_BACK = "goBack";
@@ -186,7 +188,7 @@ function goBack(history: any) {
   history.goBack();
 }
 
-function getUrlCourante(history: any) {
+function getUrlCourante(history: any): string {
   return history.location.pathname; // history.location.pathname renvoie une url du type /rece/rece-ui/xxx
 }
 

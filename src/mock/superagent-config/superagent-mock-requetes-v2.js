@@ -1,6 +1,8 @@
 import {
   ReponseAppelDetailRequeteDelivrance,
+  ReponseAppelDetailRequeteDelivranceASigner,
   ReponseAppelDetailRequeteDelivranceBrouillon,
+  ReponseAppelDetailRequeteDelivrancePriseEnCharge,
   ReponseAppelDetailRequeteDelivranceRDC
 } from "../data/DetailRequeteDelivrance";
 import {
@@ -122,6 +124,12 @@ export const configRequetesV2 = [
       // Détail requête Délivrance
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d404") {
         return { data: ReponseAppelDetailRequeteDelivrance.data };
+      }
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d494") {
+        return { data: ReponseAppelDetailRequeteDelivranceASigner.data };
+      }
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d884") {
+        return { data: ReponseAppelDetailRequeteDelivrancePriseEnCharge.data };
       }
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d405") {
         return { data: ReponseAppelDetailRequeteDelivranceBrouillon.data };
