@@ -52,12 +52,14 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
   const [reponseNegative, setReponseNegative] = useState<
     IReponseNegative | undefined
   >();
+  const [idActeSelectionne, setIdActeSelectionne] = useState<string>();
 
   const resultatReponseNegative = useReponseNegative(
     StatutRequete.A_VALIDER.libelle,
     StatutRequete.A_VALIDER,
     reponseNegative,
-    props.requete.id
+    props.requete.id,
+    idActeSelectionne
   );
 
   useEffect(() => {
@@ -129,6 +131,7 @@ export const MenuReponseNegative: React.FC<IActionProps> = props => {
           setHasMessageBloquant(true);
         } else {
           setOperationEnCours(true);
+          setIdActeSelectionne(actes?.[0].idActe);
           const newReponseNegativeMariage = await createReponseNegativePourCompositionApiMariage(
             props.requete as IRequeteDelivrance,
             actes?.[0]

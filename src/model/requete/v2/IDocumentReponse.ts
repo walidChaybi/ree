@@ -15,6 +15,7 @@ export interface IDocumentReponse {
   orientation: Orientation;
   texteLibreCourrier?: ITexteLibreCourrier;
   optionsCourrier?: IOptionCourrierDocumentReponse[];
+  idActe?: string;
 }
 
 export const DocumentReponse = {

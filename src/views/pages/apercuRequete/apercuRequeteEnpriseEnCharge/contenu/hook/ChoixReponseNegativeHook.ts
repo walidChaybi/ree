@@ -12,12 +12,15 @@ export function useReponseNegative(
   libelleAction: string,
   statutRequete: StatutRequete,
   reponseNegative?: IReponseNegative,
-  requeteId?: string
+  requeteId?: string,
+  idActe?: string
 ) {
   const [resultat, setResultat] = useState<any>();
 
-  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
-    useState<IDocumentReponse[] | undefined>();
+  const [
+    documentsReponsePourStockage,
+    setDocumentsReponsePourStockage
+  ] = useState<IDocumentReponse[] | undefined>();
 
   // 1- Réponse négative demandée: appel api composition
   const contenuComposition = useCompositionReponseNegativeApi(
@@ -33,25 +36,27 @@ export function useReponseNegative(
           contenu: contenuComposition,
           nom: reponseNegative?.fichier,
           mimeType: MimeType.APPLI_PDF,
-          typeDocument:
-            DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
+          typeDocument: DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
           nbPages: 1,
-          orientation: Orientation.PORTRAIT
+          orientation: Orientation.PORTRAIT,
+          idActe
         } as IDocumentReponse
       ]);
     }
-  }, [contenuComposition, reponseNegative]);
+  }, [contenuComposition, reponseNegative, idActe]);
 
   // 3- Stockage du document réponse une fois celui-ci créé
   // 4- Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   // 5- Mise à jour du status de la requête + création d'une action
-  const { idAction, uuidDocumentsReponse } =
-    useStockerDocumentCreerActionMajStatutRequete(
-      libelleAction,
-      statutRequete,
-      documentsReponsePourStockage,
-      requeteId
-    );
+  const {
+    idAction,
+    uuidDocumentsReponse
+  } = useStockerDocumentCreerActionMajStatutRequete(
+    libelleAction,
+    statutRequete,
+    documentsReponsePourStockage,
+    requeteId
+  );
 
   // 6- Une fois la requête mise à jour et l'action créé, changement de page
   useEffect(
