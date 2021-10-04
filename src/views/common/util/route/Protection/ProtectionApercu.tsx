@@ -22,41 +22,16 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
 }) => {
   const history = useHistory();
   const [estBonStatut, setEstBonStatut] = useState<boolean>(true);
+
   useEffect(() => {
-    // @ts-ignore
-    if (window.protectionOff) {
+    if (
+      // @ts-ignore
+      window.protectionOff ||
+      receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ + "/")
+    ) {
       setEstBonStatut(true);
     } else {
-      switch (statut) {
-        case StatutRequete.BROUILLON:
-          setEstBonStatut(
-            receUrl.getUrlCourante(history).includes(PATH_SAISIR_RDCSC)
-          );
-          break;
-        case StatutRequete.PRISE_EN_CHARGE:
-          setEstBonStatut(
-            receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE) ||
-              receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
-          );
-          break;
-        case StatutRequete.TRANSFEREE:
-        case StatutRequete.A_TRAITER:
-          setEstBonStatut(
-            receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ)
-          );
-          break;
-        case StatutRequete.A_VALIDER:
-        case StatutRequete.A_SIGNER:
-          setEstBonStatut(
-            receUrl
-              .getUrlCourante(history)
-              .includes(PATH_APERCU_REQ_TRAITEMENT) ||
-              receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
-          );
-          break;
-        default:
-          setEstBonStatut(true);
-      }
+      checkURLEnFonctionDuStatut(statut, setEstBonStatut, history);
     }
   }, [statut, history]);
 
@@ -71,3 +46,37 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     </Protection>
   );
 };
+function checkURLEnFonctionDuStatut(
+  statut: StatutRequete | undefined,
+  setEstBonStatut: React.Dispatch<React.SetStateAction<boolean>>,
+  history: any
+) {
+  switch (statut) {
+    case StatutRequete.BROUILLON:
+      setEstBonStatut(
+        receUrl.getUrlCourante(history).includes(PATH_SAISIR_RDCSC)
+      );
+      break;
+    case StatutRequete.PRISE_EN_CHARGE:
+      setEstBonStatut(
+        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE) ||
+          receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
+      );
+      break;
+    case StatutRequete.TRANSFEREE:
+    case StatutRequete.A_TRAITER:
+      setEstBonStatut(
+        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ + "/")
+      );
+      break;
+    case StatutRequete.A_VALIDER:
+    case StatutRequete.A_SIGNER:
+      setEstBonStatut(
+        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
+          receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
+      );
+      break;
+    default:
+      setEstBonStatut(true);
+  }
+}
