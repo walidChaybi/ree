@@ -1,6 +1,8 @@
-import { IDateCompose } from "../../../views/common/util/DateUtils";
-import { IPrenom } from "../fiche/IPrenom";
-import { IParent } from "./IParent";
+import {IDateCompose} from "../../../views/common/util/DateUtils";
+import {IPrenom} from "../fiche/IPrenom";
+import {IParent} from "./IParent";
+import {Sexe} from "../enum/Sexe";
+import {Nationalite} from "../enum/Nationalite";
 
 export interface IInteresse {
   numeroOrdreSaisi: number;
@@ -22,3 +24,18 @@ export interface IInteresse {
   dateDeces: IDateCompose;
   parents?: IParent[];
 }
+
+
+export const Interesse = {
+  getSexe(interesse?: IInteresse): string {
+    return interesse && interesse.sexe
+        ? Sexe.getEnumFor(interesse.sexe).libelle
+        : "";
+  },
+  getNationalite(interesse?: IInteresse): string {
+    return interesse && interesse.nationalite
+        ? Nationalite.getEnumFor(interesse.nationalite).libelle
+        : "";
+  }
+};
+
