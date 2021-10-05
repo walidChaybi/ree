@@ -332,6 +332,13 @@ export function postDocumentReponseApi(
   });
 }
 
+export function deleteDocumentsReponseApi(idRequete: string) {
+  return apiV2.fetch({
+    method: HttpMethod.DELETE,
+    uri: `${URL_DOCUMENT_REPONSE}/${idRequete}`
+  });
+}
+
 export function getPieceJustificativeById(idPiece: string): Promise<any> {
   return apiV2.fetch({
     method: HttpMethod.GET,

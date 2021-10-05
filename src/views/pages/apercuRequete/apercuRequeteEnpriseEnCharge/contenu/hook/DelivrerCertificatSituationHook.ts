@@ -13,6 +13,7 @@ import {
   IActionStatutRequete,
   useCreerActionMajStatutRequete
 } from "../../../../../common/hook/v2/requete/CreerActionMajStatutRequete";
+import { useSupprimerAnciensDocumentsReponseHook } from "./SupprimerAnciensDocumentsReponseHook";
 
 export interface IResultDelivrerCertificatSituation {
   idDocumentReponse?: string;
@@ -35,18 +36,27 @@ export function useDelivrerCertificatSituationHook(
     setResultDelivrerCertificatSituation
   ] = useState<IResultDelivrerCertificatSituation>();
 
-  const [paramsCertificatSituation, setParamsCertificatSituation] = useState<
-    IGenerationCertificatSituationParams
-  >();
+  const [
+    paramsCertificatSituation,
+    setParamsCertificatSituation
+  ] = useState<IGenerationCertificatSituationParams>();
 
-  const [actionStatutRequete, setActionStatutRequete] = useState<
-    IActionStatutRequete
-  >();
+  const [
+    actionStatutRequete,
+    setActionStatutRequete
+  ] = useState<IActionStatutRequete>();
+
+  // 0 - Suppression des eventuels documents générés au préalable
+  const isOldDocumentsDeleted = useSupprimerAnciensDocumentsReponseHook(
+    requete?.idRequete,
+    dataRMCAutoInscription
+  );
 
   // 1 - Génération d'une ou des incriptions RC et/ou RCA et/ou PACS
   const resultGenerationInscription = useGenerationInscriptionsHook(
     requete,
-    dataRMCAutoInscription
+    dataRMCAutoInscription,
+    isOldDocumentsDeleted
   );
 
   useEffect(() => {

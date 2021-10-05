@@ -11,7 +11,8 @@ import { useGenerationCertificatPACSOuRCOuRCAHook } from "./generationCertificat
 
 export function useGenerationInscriptionsHook(
   requete?: IRequeteTableau,
-  dataRMCAutoInscription?: IResultatRMCInscription[]
+  dataRMCAutoInscription?: IResultatRMCInscription[],
+  isOldDocumentsDeleted?: boolean | false
 ) {
   const [listeRC, setListeRC] = useState<IResultatRMCInscription[]>();
 
@@ -28,12 +29,12 @@ export function useGenerationInscriptionsHook(
 
   // 1 - Récupération des RC
   useEffect(() => {
-    if (dataRMCAutoInscription) {
+    if (dataRMCAutoInscription && isOldDocumentsDeleted) {
       setListeRC(
         filterInscriptionsSurUnType(dataRMCAutoInscription, TypeFiche.RC)
       );
     }
-  }, [dataRMCAutoInscription]);
+  }, [dataRMCAutoInscription, isOldDocumentsDeleted]);
 
   // 1.1 - Génération d'une ou des incriptions RC
   const resultGenerationCertificatRC = useGenerationCertificatPACSOuRCOuRCAHook(
@@ -92,10 +93,7 @@ export function useGenerationInscriptionsHook(
 
   // 4 - Maj du state résultat 'resultGenerationInscription' pour invoquer ensuite la génération du certificat de situation général (cf. DelivrerCertificatSituationHook.ts)
   useEffect(() => {
-    if (
-      resultGenerationCertificatPACS &&
-      resultGenerationCertificatPACS.idDocumentsReponse
-    ) {
+    if (resultGenerationCertificatPACS?.idDocumentsReponse) {
       setResultGenerationInscription({
         idDocumentsReponse: [
           ...idDocumentsReponse,

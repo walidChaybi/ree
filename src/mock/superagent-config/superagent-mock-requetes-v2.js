@@ -20,6 +20,7 @@ import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
+import { idRequete1 } from "../data/RequeteV2";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const configRequetesV2 = [
@@ -267,6 +268,14 @@ export const configRequetesV2 = [
         return { data: idDocumentsReponse };
       }
 
+      // Supression des documents reponses (DELETE)
+      if (
+        match[1] === "/documentsreponses/" + idRequete1 &&
+        context.method === "delete"
+      ) {
+        return { data: {} };
+      }
+
       // Transfert requête
       if (
         match[1] ===
@@ -347,6 +356,13 @@ export const configRequetesV2 = [
      * @param data  mixed Data returns by `fixtures` attribute
      */
     patch: function (match, data) {
+      return {
+        body: data,
+        header: data.headers
+      };
+    },
+
+    delete: function (match, data) {
       return {
         body: data,
         header: data.headers

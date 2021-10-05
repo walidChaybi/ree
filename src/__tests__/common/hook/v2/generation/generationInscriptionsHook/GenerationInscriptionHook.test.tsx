@@ -49,7 +49,11 @@ const dataRMCAutoInscription = [
   ...DataRMCInscriptionAvecUnPACS
 ];
 const HookConsummer: React.FC = () => {
-  const res = useGenerationInscriptionsHook(requete, dataRMCAutoInscription);
+  const res = useGenerationInscriptionsHook(
+    requete,
+    dataRMCAutoInscription,
+    true
+  );
 
   return (
     <>
