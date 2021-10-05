@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
+import { goToLinkRMC } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
 import {
   determinerCriteresRMCAuto,
-  getMessageZeroRequete,
-  goToLinkRMCAuto
+  getMessageZeroRequete
 } from "../../../../views/pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequetesUtils";
 
 test("determinerCriteresRMCAuto", () => {
@@ -43,7 +43,8 @@ test("getMessageZeroRequete", () => {
   const titreNumero = screen.getByText("Aucune requête n'a été trouvée");
   expect(titreNumero).toBeDefined();
 });
-test("goToLinkRMCAuto", () => {
-  const res = goToLinkRMCAuto("rmcauto?range=0-100&hauteur=10");
+
+test("goToLinkRMC", () => {
+  const res = goToLinkRMC("rmcauto?range=0-100");
   expect(res).toStrictEqual("0-100");
 });

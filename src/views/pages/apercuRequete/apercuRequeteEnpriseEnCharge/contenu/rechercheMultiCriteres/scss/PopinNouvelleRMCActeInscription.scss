@@ -1,0 +1,27 @@
+.PopinNouvelleRMCActeInscription {
+  margin: 0;
+  padding: 0%;
+  .h2 {
+    text-align: center;
+  }
+
+  .CloseButtonNouvelleRMCActeInscription {
+    float: right;
+    margin-top: 1em;
+  }
+
+  .MuiDialog-paperWidthSm {
+    max-width: 100%;
+  }
+
+  .MuiPaper-root {
+    li.MuiListItem-root {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+  }
+
+  .MuiDialogTitle-root {
+    padding: 0;
+  }
+}

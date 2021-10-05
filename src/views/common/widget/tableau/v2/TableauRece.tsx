@@ -180,7 +180,6 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
         backIconButtonText={getText("pagination.pagePrecedente")}
         nextIconButtonText={getText("pagination.pageSuivante")}
       />
-
       <div className="ToolbarBottom">
         {props.children &&
           React.Children.map(props.children, (child: any) => {

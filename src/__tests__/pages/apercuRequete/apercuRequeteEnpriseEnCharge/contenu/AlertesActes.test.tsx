@@ -1,16 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { BandeauAlertesActe } from "../../../../../../views/pages/fiche/contenu/BandeauAlertesActe";
+import { Alertes } from "../../../../../mock/data/Alertes";
+import { AlertesActes } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/alertesActes/AlertesActes";
 
 test("render texte du bouton d'ajout d'alerte", () => {
   render(
-    <BandeauAlertesActe
-      alertes={[]}
+    <AlertesActes
+      alertes={new Map([["fakeId", Alertes]])}
       ajoutAlertePossible={false}
       ajouterAlerteCallBack={jest.fn()}
       supprimerAlerteCallBack={jest.fn()}
     />
   );
-  const boutonElement = screen.getByText("Ajouter une alerte");
+  const boutonElement = screen.queryByText("Ajouter une alerte");
   expect(boutonElement).toBeInTheDocument();
 });

@@ -39,8 +39,7 @@ export const natureHeadersTableauRMC = [
 export function goToLinkRMC(link: string): string {
   let range = "";
   if (link.indexOf("range") > 0) {
-    let params = [];
-    params = link.split("rmc?")[1].split("&");
+    const params: string[] = link.split(/rmc\?|rmcauto\?/)[1].split("&");
     range = params[0].split("=")[1];
   }
   return range;

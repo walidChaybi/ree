@@ -21,8 +21,8 @@ import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 export interface RMCResultatRequetesProps {
   dataRMCRequete: IRequeteTableau[];
   dataTableauRMCRequete: IParamsTableau;
-  setRangeRequete?: (range: string) => void;
-  resetTableauRequete?: boolean;
+  setRangeRequete: (range: string) => void;
+  resetTableauRequete: boolean;
 }
 
 const NB_REQUETE_PAR_PAGE = 10;
@@ -37,11 +37,13 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsMiseAJour, setParamsMiseAJour] =
-    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<
+    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] =
-    useState<INavigationApercuRMCAutoParams | undefined>();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+    INavigationApercuRMCAutoParams | undefined
+  >();
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuRMCAuto(paramsRMCAuto);

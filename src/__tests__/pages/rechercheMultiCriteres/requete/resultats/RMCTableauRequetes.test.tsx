@@ -50,6 +50,8 @@ test("Clic sur une Requête du tableau avec un idUtilisateur", async () => {
       <RMCTableauRequetes
         dataRMCRequete={DataRMCRequeteAvecResultat}
         dataTableauRMCRequete={DataTableauRequete}
+        setRangeRequete={jest.fn()}
+        resetTableauRequete={true}
       />
     </Router>
   );

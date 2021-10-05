@@ -15,8 +15,8 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Avec ré
   const { getAllByText } = render(
     <Router history={history}>
       <RMCTableauRequetesAssociees
-        dataRMCAutoRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCAutoRequete={DataTableauRequete}
+        dataRMCRequete={DataRMCRequeteAvecResultat}
+        dataTableauRMCRequete={DataTableauRequete}
       />
     </Router>
   );
@@ -35,11 +35,16 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Sans ré
   const { getByText } = render(
     <Router history={history}>
       <RMCTableauRequetesAssociees
-        dataRMCAutoRequete={[]}
-        dataTableauRMCAutoRequete={{}}
+        dataRMCRequete={[]}
+        dataTableauRMCRequete={{}}
+        setRangeRequete={jest.fn()}
+        setNouvelleRMCRequete={jest.fn()}
+        setValuesRMCRequete={jest.fn()}
+        setCriteresRechercheRequete={jest.fn()}
+        resetTableauRequete={true}
       />
     </Router>
   );
 
-  expect(getByText(/Aucune requête n'a été trouvée/i)).toBeDefined();
+  expect(getByText("Aucune requête n'a été trouvée")).toBeDefined();
 });

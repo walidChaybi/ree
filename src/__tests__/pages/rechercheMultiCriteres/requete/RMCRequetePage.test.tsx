@@ -6,10 +6,8 @@ import {
   waitFor
 } from "@testing-library/react";
 import React from "react";
-import {
-  RMCRequetePage,
-  titreForm
-} from "../../../../views/pages/rechercheMultiCriteres/requete/RMCRequetePage";
+import { titreForm } from "../../../../views/pages/rechercheMultiCriteres/requete/RMCRequeteForm";
+import { RMCRequetePage } from "../../../../views/pages/rechercheMultiCriteres/requete/RMCRequetePage";
 
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {

@@ -7,12 +7,12 @@ import { TypePieceJustificative } from "../../../../model/requete/v2/enum/TypePi
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { TitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
 import { getValeurOuVide } from "../../../common/util/Utils";
-import { REQUERANT } from "../../rechercheMultiCriteres/requete/RMCRequetePage";
-import { ADRESSE } from "../modelForm/ISaisirRDAPCPageModel";
 import {
+  ADRESSE,
   DOCUMENT,
   INTERESSE,
   PIECES_JOINTES,
+  REQUERANT,
   SaisieRequeteRDCSC
 } from "../modelForm/ISaisirRDCSCPageModel";
 import {

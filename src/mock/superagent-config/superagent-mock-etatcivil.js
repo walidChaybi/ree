@@ -21,6 +21,8 @@ import mockRCA from "../data/RCA.json";
 import { ReponseAppelRMCActe } from "../data/RMCActe";
 import { ReponseAppelRMCInscription } from "../data/RMCInscription";
 
+export const NORESULT = "NORESULT";
+
 export const configEtatcivil = [
   {
     /**
@@ -104,29 +106,57 @@ export const configEtatcivil = [
         };
       }
 
+      // RMC Acte
       if (match[1] === "/acte/rmc?range=0-105") {
-        return {
-          headers: {
-            "content-range":
-              "0-15/" + ReponseAppelRMCActe.data.registres.length,
-            link:
-              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-105>;rel="next"'
-          },
-          data: ReponseAppelRMCActe.data
-        };
+        // RMC Acte Manuelle suite RMC Auto (vue ApercuRequetePriseEnChargePartieDroite)
+        if (params?.nomTitulaire === NORESULT) {
+          return {
+            headers: {
+              "content-range": "0-105/0",
+              link: ""
+            },
+            data: { registres: [] }
+          };
+        }
+        // RMC Acte Manuelle (vue RMCActeInscriptionPage)
+        else {
+          return {
+            headers: {
+              "content-range":
+                "0-15/" + ReponseAppelRMCActe.data.registres.length,
+              link:
+                '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-105>;rel="next"'
+            },
+            data: ReponseAppelRMCActe.data
+          };
+        }
       }
 
+      // RMC Inscription
       if (match[1] === "/repertoirecivil/rmc?range=0-105") {
-        return {
-          headers: {
-            "content-range":
-              "0-15/" +
-              ReponseAppelRMCInscription.data.repertoiresCiviles.length,
-            link:
-              '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
-          },
-          data: ReponseAppelRMCInscription.data
-        };
+        // RMC Inscription Manuelle suite RMC Auto (vue ApercuRequetePriseEnChargePartieDroite)
+        if (params?.nomTitulaire === NORESULT) {
+          return {
+            headers: {
+              "content-range": "0-105/0",
+              link: ""
+            },
+            data: { repertoiresCiviles: [] }
+          };
+        }
+        // RMC Inscription Manuelle (vue RMCActeInscriptionPage)
+        else {
+          return {
+            headers: {
+              "content-range":
+                "0-15/" +
+                ReponseAppelRMCInscription.data.repertoiresCiviles.length,
+              link:
+                '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
+            },
+            data: ReponseAppelRMCInscription.data
+          };
+        }
       }
 
       if (match[1] === "/nomenclature/NATURE_RC") {

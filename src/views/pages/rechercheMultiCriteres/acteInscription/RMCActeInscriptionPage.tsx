@@ -11,9 +11,15 @@ import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";
 import "./scss/RMCActeInscriptionPage.scss";
 
 export const RMCActeInscriptionPage: React.FC = () => {
-  const [valuesRMC, setValuesRMC] = useState<IRMCActeInscription>({});
+  const [
+    valuesRMCActeInscription,
+    setValuesRMCActeInscription
+  ] = useState<IRMCActeInscription>({});
 
-  const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
+  const [
+    nouvelleRMCActeInscription,
+    setNouvelleRMCActeInscription
+  ] = useState<boolean>(false);
 
   const [
     criteresRechercheActe,
@@ -35,18 +41,18 @@ export const RMCActeInscriptionPage: React.FC = () => {
   } = useRMCInscriptionApiHook(criteresRechercheInscription);
 
   const setRangeActe = (range: string) => {
-    if (valuesRMC && range !== "") {
+    if (valuesRMCActeInscription && range !== "") {
       setCriteresRechercheActe({
-        valeurs: valuesRMC,
+        valeurs: valuesRMCActeInscription,
         range
       });
     }
   };
 
   const setRangeInscription = (range: string) => {
-    if (valuesRMC && range !== "") {
+    if (valuesRMCActeInscription && range !== "") {
       setCriteresRechercheInscription({
-        valeurs: valuesRMC,
+        valeurs: valuesRMCActeInscription,
         range
       });
     }
@@ -57,13 +63,13 @@ export const RMCActeInscriptionPage: React.FC = () => {
   return (
     <>
       <RMCActeInscriptionForm
-        setValuesRMC={setValuesRMC}
-        setNouvelleRecherche={setNouvelleRecherche}
+        setValuesRMCActeInscription={setValuesRMCActeInscription}
+        setNouvelleRMCActeInscription={setNouvelleRMCActeInscription}
         setCriteresRechercheActe={setCriteresRechercheActe}
         setCriteresRechercheInscription={setCriteresRechercheInscription}
       />
       <AutoScroll
-        autoScroll={nouvelleRecherche}
+        autoScroll={nouvelleRMCActeInscription}
         baliseRef={RMCActeInscriptionRef}
       />
       {dataRMCActe &&
@@ -78,7 +84,7 @@ export const RMCActeInscriptionPage: React.FC = () => {
             dataTableauRMCInscription={dataTableauRMCInscription}
             setRangeInscription={setRangeInscription}
             setRangeActe={setRangeActe}
-            resetRMC={nouvelleRecherche}
+            resetRMC={nouvelleRMCActeInscription}
           />
         )}
     </>

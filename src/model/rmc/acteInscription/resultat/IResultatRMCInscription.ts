@@ -13,9 +13,3 @@ export interface IResultatRMCInscription {
   anneeInscription?: string;
   dateInscription?: string;
 }
-
-export function isInstanceOfInscription(
-  data: any
-): data is IResultatRMCInscription {
-  return data && "idInscription" in data;
-}

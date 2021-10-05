@@ -4,7 +4,7 @@ import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/reche
 import { MIN_YEAR } from "../../../common/util/DateUtils";
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
+import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableUtils";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
@@ -46,8 +46,10 @@ export const ValidationSchemaRMCActeInscription = Yup.object({
 export const titreForm = "Critères de recherche d'un acte ou d'une inscription";
 
 interface RMCActeInscriptionFormProps {
-  setValuesRMC: React.Dispatch<React.SetStateAction<IRMCActeInscription>>;
-  setNouvelleRecherche: React.Dispatch<React.SetStateAction<boolean>>;
+  setValuesRMCActeInscription: React.Dispatch<
+    React.SetStateAction<IRMCActeInscription>
+  >;
+  setNouvelleRMCActeInscription: React.Dispatch<React.SetStateAction<boolean>>;
   setCriteresRechercheActe: React.Dispatch<
     React.SetStateAction<ICriteresRecherche | undefined>
   >;
@@ -57,7 +59,13 @@ interface RMCActeInscriptionFormProps {
   closePopIn?: () => void;
 }
 
-export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = props => {
+export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
+  setValuesRMCActeInscription,
+  setNouvelleRMCActeInscription,
+  setCriteresRechercheActe,
+  setCriteresRechercheInscription,
+  closePopIn
+}) => {
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(),
     getRegistreRepertoire(),
@@ -65,18 +73,18 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = pro
   ];
 
   const onSubmitRMCActeInscription = (values: any) => {
-    props.setNouvelleRecherche(true);
-    props.setValuesRMC(values);
-    props.setCriteresRechercheActe({
+    setNouvelleRMCActeInscription(true);
+    setValuesRMCActeInscription(values);
+    setCriteresRechercheActe({
       valeurs: values,
       range: `0-${NB_LIGNES_PAR_APPEL}`
     });
-    props.setCriteresRechercheInscription({
+    setCriteresRechercheInscription({
       valeurs: values,
       range: `0-${NB_LIGNES_PAR_APPEL}`
     });
     stockageDonnees.stockerCriteresRMCActeInspt(values);
-    props.setNouvelleRecherche(false);
+    setNouvelleRMCActeInscription(false);
   };
 
   const rappelCriteres = () => {
@@ -85,7 +93,7 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = pro
 
   const boutonsProps = {
     rappelCriteres,
-    closePopIn: props.closePopIn
+    closePopIn
   } as RMCBoutonsProps;
 
   return (

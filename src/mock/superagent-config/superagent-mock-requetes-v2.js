@@ -23,6 +23,8 @@ import {
 import { idRequeteRDCSC } from "../data/RequeteV2";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
+export const NORESULT = "NORESULT";
+
 export const configRequetesV2 = [
   {
     /**
@@ -112,14 +114,27 @@ export const configRequetesV2 = [
 
       // RMC Requete
       if (match[1] === "/requetes/rmc?range=0-105") {
-        return {
-          headers: {
-            "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-105>;rel="next"'
-          },
-          data: ReponseAppelRMCRequete.data
-        };
+        // RMC Manuelle suite RMC Auto (vue ApercuRequetePriseEnChargePartieGauche)
+        if (params?.nomTitulaire === NORESULT) {
+          return {
+            headers: {
+              "content-range": "0-105/0",
+              link: ""
+            },
+            data: { resultatsRecherche: [] }
+          };
+        }
+        // RMC Manuelle (vue RMCRequetePage)
+        else {
+          return {
+            headers: {
+              "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
+              link:
+                '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-105>;rel="next"'
+            },
+            data: ReponseAppelRMCRequete.data
+          };
+        }
       }
 
       // Détail requête Délivrance

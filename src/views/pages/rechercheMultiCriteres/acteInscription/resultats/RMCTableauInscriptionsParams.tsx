@@ -77,7 +77,9 @@ function getCheckBoxElement(
 }
 
 function getCellNumeroRef(data: IResultatRMCInscription): JSX.Element {
-  const numeroRef = `${data.categorie} - ${data.anneeInscription} - ${data.numeroInscription}`;
+  const numeroRef = `${data?.categorie?.toUpperCase()} - ${
+    data?.anneeInscription
+  } - ${data?.numeroInscription}`;
   return (
     <div className="TableauFontBody ColOverflow" title={numeroRef}>
       {numeroRef}

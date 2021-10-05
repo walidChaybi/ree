@@ -9,8 +9,8 @@ import { RMCTableauRequetes } from "./RMCTableauRequetes";
 export interface RMCRequeteResultatsProps {
   dataRMCRequete: IRequeteTableau[];
   dataTableauRMCRequete: IParamsTableau;
-  setRangeRequete?: (range: string) => void;
-  resetRMC?: boolean;
+  setRangeRequete: (range: string) => void;
+  resetRMC: boolean;
 }
 
 export const RMCRequeteResultats: React.FC<RMCRequeteResultatsProps> = props => {

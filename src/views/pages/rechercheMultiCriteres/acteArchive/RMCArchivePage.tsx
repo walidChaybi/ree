@@ -1,31 +1,31 @@
 import React, { useState } from "react";
-import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import TitulaireFiltre, {
-  TitulaireFiltreProps,
-  TitulaireDefaultValues,
-  TitulaireValidationSchema
-} from "../filtres/titulaire/TitulaireFiltre";
 import * as Yup from "yup";
-import "./scss/RMCActeArchivePage.scss";
+import { IRMCActeArchive } from "../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
+import { stockageDonnees } from "../../../common/util/stockageDonnees";
+import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
+import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableUtils";
+import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
-  DatesDebutFinAnneeValidationSchema,
   DatesDebutFinAnneeDefaultValues,
-  DatesDebutFinAnneeFiltreProps
+  DatesDebutFinAnneeFiltreProps,
+  DatesDebutFinAnneeValidationSchema
 } from "../filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
-import {
-  ICriteresRecherche,
-  useRMCActeArchiveApiHook
-} from "./hook/RMCActeArchiveApiHook";
-import { RMCActeArchiveResultats } from "./resultats/RMCActeArchiveResultats";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
 import RegistreArchiveFiltre, {
   RegistreArchiveDefaultValues,
   RegistreArchiveFiltreProps,
   RegistreArchiveValidationSchema
 } from "../filtres/registreArchive/RegistreArchiveFiltre";
-import { IRMCActeArchive } from "../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
-import { stockageDonnees } from "../../../common/util/stockageDonnees";
-import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
+import TitulaireFiltre, {
+  TitulaireDefaultValues,
+  TitulaireFiltreProps,
+  TitulaireValidationSchema
+} from "../filtres/titulaire/TitulaireFiltre";
+import {
+  ICriteresRecherche,
+  useRMCActeArchiveApiHook
+} from "./hook/RMCActeArchiveApiHook";
+import { RMCActeArchiveResultats } from "./resultats/RMCActeArchiveResultats";
+import "./scss/RMCActeArchivePage.scss";
 
 // Nom des filtres
 export const TITULAIRE = "titulaire";

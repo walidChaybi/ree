@@ -1,0 +1,152 @@
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import React from "react";
+import { Alertes } from "../../../../mock/data/Alertes";
+import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
+import { storeRece } from "../../../../views/common/util/storeRece";
+import { ListeAlertes } from "../../../../views/common/widget/alertes/listeAlertes/ListeAlertes";
+
+storeRece.utilisateurCourant = userDroitCOMEDEC;
+
+test("render ListeAlertes avec droit suppression alerte : test ouverture / fermeture popin", async () => {
+  await act(async () => {
+    render(
+      <ListeAlertes
+        ajoutAlertePossible={true}
+        alertes={Alertes}
+        displayReference={false}
+        supprimerAlerteCallBack={jest.fn()}
+      />
+    );
+  });
+
+  const boutonsSupprimerAlerte = screen.getAllByTitle(
+    "Supprimer l'alerte"
+  ) as HTMLButtonElement[];
+
+  await waitFor(() => {
+    expect(boutonsSupprimerAlerte).toHaveLength(2);
+  });
+
+  await act(async () => {
+    fireEvent.click(boutonsSupprimerAlerte[0]);
+  });
+
+  const popinSupprimerAlerte = screen.getByRole("dialog", {
+    hidden: true
+  });
+
+  await waitFor(() => {
+    expect(popinSupprimerAlerte).toBeInTheDocument();
+    expect(popinSupprimerAlerte.textContent).toContain(
+      "Etes-vous sur de vouloir supprimer cette alerte ?"
+    );
+  });
+
+  const boutonAnnuler = screen.getByText("Annuler") as HTMLButtonElement;
+
+  await act(async () => {
+    fireEvent.click(boutonAnnuler);
+  });
+
+  await waitFor(() => {
+    expect(popinSupprimerAlerte).not.toBeInTheDocument();
+  });
+});
+
+test("render ListeAlertes sans droit suppression alerte", async () => {
+  await act(async () => {
+    render(
+      <ListeAlertes
+        ajoutAlertePossible={true}
+        alertes={Alertes}
+        displayReference={false}
+        supprimerAlerteCallBack={jest.fn()}
+      />
+    );
+  });
+
+  const boutonsSupprimerAlerte = screen.getAllByTitle(
+    "Supprimer l'alerte"
+  ) as HTMLButtonElement[];
+
+  await waitFor(() => {
+    expect(boutonsSupprimerAlerte).toHaveLength(2);
+  });
+
+  await act(async () => {
+    fireEvent.click(boutonsSupprimerAlerte[1]);
+  });
+
+  const popinConfirmation = screen.getByRole("dialog", {
+    hidden: true
+  });
+
+  await waitFor(() => {
+    expect(popinConfirmation).toBeInTheDocument();
+    expect(popinConfirmation.textContent).toContain(
+      "Vous pouvez supprimer seulement les alertes que vous avez ajoutées vous-même."
+    );
+  });
+
+  const boutonOK = screen.getByText("OK") as HTMLButtonElement;
+
+  await act(async () => {
+    fireEvent.click(boutonOK);
+  });
+
+  await waitFor(() => {
+    expect(popinConfirmation).not.toBeInTheDocument();
+  });
+});
+
+test("render ListeAlertes avec droit suppression alerte : test soumission formulaire", async () => {
+  await act(async () => {
+    render(
+      <ListeAlertes
+        ajoutAlertePossible={true}
+        alertes={Alertes}
+        displayReference={false}
+        supprimerAlerteCallBack={jest.fn()}
+      />
+    );
+  });
+
+  const boutonsSupprimerAlerte = screen.getAllByTitle(
+    "Supprimer l'alerte"
+  ) as HTMLButtonElement[];
+
+  await waitFor(() => {
+    expect(boutonsSupprimerAlerte).toHaveLength(2);
+  });
+
+  await act(async () => {
+    fireEvent.click(boutonsSupprimerAlerte[0]);
+  });
+
+  const popinSupprimerAlerte = screen.getByRole("dialog", {
+    hidden: true
+  });
+
+  await waitFor(() => {
+    expect(popinSupprimerAlerte).toBeInTheDocument();
+    expect(popinSupprimerAlerte.textContent).toContain(
+      "Etes-vous sur de vouloir supprimer cette alerte ?"
+    );
+  });
+
+  const boutonValider = screen.getByText("Valider") as HTMLButtonElement;
+
+  await act(async () => {
+    fireEvent.click(boutonValider);
+  });
+
+  await waitFor(() => {
+    expect(popinSupprimerAlerte).not.toBeInTheDocument();
+  });
+});

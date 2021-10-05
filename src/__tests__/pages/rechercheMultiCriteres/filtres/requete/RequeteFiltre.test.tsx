@@ -1,17 +1,17 @@
-import { Field, Form, Formik } from "formik";
 import {
-  render,
-  waitFor,
   act,
+  fireEvent,
+  render,
   screen,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
+import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { REQUETE } from "../../../../../views/pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import RequeteFiltre, {
   RequeteDefaultValues,
   RequeteFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/requete/RequeteFiltre";
+import { REQUETE } from "../../../../../views/pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 
 const HookRequeteFiltre: React.FC = () => {
   const [result, setResult] = useState("");

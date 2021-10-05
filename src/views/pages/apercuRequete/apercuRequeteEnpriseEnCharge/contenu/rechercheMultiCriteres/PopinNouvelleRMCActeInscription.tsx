@@ -9,13 +9,15 @@ import React from "react";
 import { IRMCActeInscription } from "../../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { ICriteresRecherche } from "../../../../rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
 import { RMCActeInscriptionForm } from "../../../../rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
-import "./scss/PopinNouvelleRMC.scss";
+import "./scss/PopinNouvelleRMCActeInscription.scss";
 
-interface PopinNouvelleRMCProps {
+interface PopinNouvelleRMCActeInscriptionProps {
   open: boolean;
   onClose: (isOpen: boolean) => void;
-  setValuesRMC: React.Dispatch<React.SetStateAction<IRMCActeInscription>>;
-  setNouvelleRecherche: React.Dispatch<React.SetStateAction<boolean>>;
+  setValuesRMCActeInscription: React.Dispatch<
+    React.SetStateAction<IRMCActeInscription>
+  >;
+  setNouvelleRMCActeInscription: React.Dispatch<React.SetStateAction<boolean>>;
   setCriteresRechercheActe: React.Dispatch<
     React.SetStateAction<ICriteresRecherche | undefined>
   >;
@@ -24,22 +26,29 @@ interface PopinNouvelleRMCProps {
   >;
 }
 
-export const PopinNouvelleRMC: React.FC<PopinNouvelleRMCProps> = props => {
+export const PopinNouvelleRMCActeInscription: React.FC<PopinNouvelleRMCActeInscriptionProps> = ({
+  open,
+  onClose,
+  setValuesRMCActeInscription,
+  setNouvelleRMCActeInscription,
+  setCriteresRechercheActe,
+  setCriteresRechercheInscription
+}) => {
   const handleClose = () => {
-    props.onClose(false);
+    onClose(false);
   };
 
   return (
     <Dialog
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      open={props.open}
-      className="PopinNouvelleRMC"
+      open={open}
+      className="PopinNouvelleRMCActeInscription"
     >
       <DialogTitle>
         <IconButton
-          aria-label="CloseButtonNouvelleRMC"
-          className="CloseButtonNouvelleRMC"
+          aria-label="CloseButtonNouvelleRMCActeInscription"
+          className="CloseButtonNouvelleRMCActeInscription"
           onClick={handleClose}
         >
           <CloseIcon />
@@ -47,12 +56,10 @@ export const PopinNouvelleRMC: React.FC<PopinNouvelleRMCProps> = props => {
       </DialogTitle>
       <DialogContent>
         <RMCActeInscriptionForm
-          setValuesRMC={props.setValuesRMC}
-          setNouvelleRecherche={props.setNouvelleRecherche}
-          setCriteresRechercheActe={props.setCriteresRechercheActe}
-          setCriteresRechercheInscription={
-            props.setCriteresRechercheInscription
-          }
+          setValuesRMCActeInscription={setValuesRMCActeInscription}
+          setNouvelleRMCActeInscription={setNouvelleRMCActeInscription}
+          setCriteresRechercheActe={setCriteresRechercheActe}
+          setCriteresRechercheInscription={setCriteresRechercheInscription}
           closePopIn={handleClose}
         />
       </DialogContent>

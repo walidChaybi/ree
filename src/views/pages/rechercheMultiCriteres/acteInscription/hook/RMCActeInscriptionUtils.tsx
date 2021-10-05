@@ -146,7 +146,6 @@ export function getMessageZeroInscription(): JSX.Element {
   );
 }
 
-//TODO a supprimer voir avec Rodolphe dupplication dans NomenclatureEtatcivil.ts
 export function getNatureInscription(
   categorie: string,
   nature: string

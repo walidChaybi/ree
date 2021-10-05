@@ -18,6 +18,8 @@ test("renders Fielset Recherche Multi Critères Requêtes", () => {
       <RMCRequeteResultats
         dataRMCRequete={DataRMCRequeteAvecResultat}
         dataTableauRMCRequete={DataTableauRequete}
+        setRangeRequete={jest.fn()}
+        resetRMC={true}
       />
     </Router>
   );

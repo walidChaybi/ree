@@ -15,8 +15,13 @@ test("renders Fielset Recherche Requêtes associées aux titulaires", () => {
   render(
     <Router history={history}>
       <RMCRequetesAssocieesResultats
-        dataRMCAutoRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCAutoRequete={DataTableauRequete}
+        dataRMCRequete={DataRMCRequeteAvecResultat}
+        dataTableauRMCRequete={DataTableauRequete}
+        setRangeRequete={jest.fn()}
+        setNouvelleRMCRequete={jest.fn()}
+        setValuesRMCRequete={jest.fn()}
+        setCriteresRechercheRequete={jest.fn()}
+        resetRMC={true}
       />
     </Router>
   );

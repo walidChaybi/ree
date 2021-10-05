@@ -6,12 +6,15 @@ import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { IRMCActeInscription } from "../../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { getLibelle } from "../../../../../common/widget/Text";
 import { ICriteresRecherche } from "../../../../rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
-import { PopinNouvelleRMC } from "./PopinNouvelleRMC";
-import "./scss/BoutonNouvelleRMC.scss";
+import { PopinNouvelleRMCActeInscription } from "./PopinNouvelleRMCActeInscription";
+import "./scss/BoutonNouvelleRMCActeInscription.scss";
 
-interface BoutonNouvelleRMCProps extends DialogDisclosureHTMLProps {
-  setValuesRMC: React.Dispatch<React.SetStateAction<IRMCActeInscription>>;
-  setNouvelleRecherche: React.Dispatch<React.SetStateAction<boolean>>;
+interface BoutonNouvelleRMCActeInscriptionProps
+  extends DialogDisclosureHTMLProps {
+  setValuesRMCActeInscription: React.Dispatch<
+    React.SetStateAction<IRMCActeInscription>
+  >;
+  setNouvelleRMCActeInscription: React.Dispatch<React.SetStateAction<boolean>>;
   setCriteresRechercheActe: React.Dispatch<
     React.SetStateAction<ICriteresRecherche | undefined>
   >;
@@ -20,7 +23,12 @@ interface BoutonNouvelleRMCProps extends DialogDisclosureHTMLProps {
   >;
 }
 
-export const BoutonNouvelleRMC: React.FC<BoutonNouvelleRMCProps> = props => {
+export const BoutonNouvelleRMCActeInscription: React.FC<BoutonNouvelleRMCActeInscriptionProps> = ({
+  setValuesRMCActeInscription,
+  setNouvelleRMCActeInscription,
+  setCriteresRechercheActe,
+  setCriteresRechercheInscription
+}) => {
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
   const closePopin = useCallback(
     (showPopin: boolean) => {
@@ -42,13 +50,13 @@ export const BoutonNouvelleRMC: React.FC<BoutonNouvelleRMCProps> = props => {
         {getLibelle("Nouvelle recherche multi-critères")}
       </Button>
 
-      <PopinNouvelleRMC
+      <PopinNouvelleRMCActeInscription
         open={showWaitState}
         onClose={closePopin}
-        setValuesRMC={props.setValuesRMC}
-        setNouvelleRecherche={props.setNouvelleRecherche}
-        setCriteresRechercheActe={props.setCriteresRechercheActe}
-        setCriteresRechercheInscription={props.setCriteresRechercheInscription}
+        setValuesRMCActeInscription={setValuesRMCActeInscription}
+        setNouvelleRMCActeInscription={setNouvelleRMCActeInscription}
+        setCriteresRechercheActe={setCriteresRechercheActe}
+        setCriteresRechercheInscription={setCriteresRechercheInscription}
       />
     </>
   );

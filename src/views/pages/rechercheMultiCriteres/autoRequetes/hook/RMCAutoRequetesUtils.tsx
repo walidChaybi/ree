@@ -43,13 +43,3 @@ export function getMessageZeroRequete(): JSX.Element {
     </>
   );
 }
-
-export function goToLinkRMCAuto(link: string): string {
-  let range = "";
-  if (link.indexOf("range") > 0) {
-    let params = [];
-    params = link.split("rmcauto?")[1].split("&");
-    range = params[0].split("=")[1];
-  }
-  return range;
-}

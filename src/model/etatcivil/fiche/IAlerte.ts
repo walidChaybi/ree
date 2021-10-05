@@ -4,7 +4,7 @@ export interface IAlerte {
   id?: string;
   idActe?: string;
   alerte?: string;
-  type?: string;
+  type?: any;
   famille?: string;
   pocopa?: string;
   annee?: string;

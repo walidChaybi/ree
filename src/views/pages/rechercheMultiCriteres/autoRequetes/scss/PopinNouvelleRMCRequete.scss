@@ -1,27 +1,27 @@
-.PopinNouvelleRMC {
+.PopinNouvelleRMCRequete {
   margin: 0;
   padding: 0%;
   .h2 {
     text-align: center;
   }
 
-  .CloseButtonNouvelleRMC {
+  .CloseButtonNouvelleRMCRequete {
     float: right;
-    margin-top: 1em;
   }
 
   .MuiDialog-paperWidthSm {
     max-width: 100%;
   }
 
-  .MuiPaper-root {
-    li.MuiListItem-root {
-      padding-top: 4px;
-      padding-bottom: 4px;
-    }
-  }
-
   .MuiDialogTitle-root {
     padding: 0;
+  }
+
+  .MuiDialogContent-root {
+    padding: 8px;
+
+    .Formulaire {
+      margin: 0;
+    }
   }
 }
