@@ -269,18 +269,18 @@ export function formatDeOuLe(date: IDateCompose) {
 }
 
 const MAP_MOIS_LETTRES = new Map<number, string>();
-MAP_MOIS_LETTRES.set(UN, getLibelle("Janvier"));
-MAP_MOIS_LETTRES.set(DEUX, getLibelle("Février"));
-MAP_MOIS_LETTRES.set(TROIS, getLibelle("Mars"));
-MAP_MOIS_LETTRES.set(QUATRE, getLibelle("Avril"));
-MAP_MOIS_LETTRES.set(CINQ, getLibelle("Mai"));
-MAP_MOIS_LETTRES.set(SIX, getLibelle("Juin"));
-MAP_MOIS_LETTRES.set(SEPT, getLibelle("Juillet"));
-MAP_MOIS_LETTRES.set(HUIT, getLibelle("Août"));
-MAP_MOIS_LETTRES.set(NEUF, getLibelle("Septembre"));
-MAP_MOIS_LETTRES.set(DIX, getLibelle("Octobre"));
-MAP_MOIS_LETTRES.set(ONZE, getLibelle("Novembre"));
-MAP_MOIS_LETTRES.set(DOUZE, getLibelle("Décembre"));
+MAP_MOIS_LETTRES.set(UN, getLibelle("janvier"));
+MAP_MOIS_LETTRES.set(DEUX, getLibelle("février"));
+MAP_MOIS_LETTRES.set(TROIS, getLibelle("mars"));
+MAP_MOIS_LETTRES.set(QUATRE, getLibelle("avril"));
+MAP_MOIS_LETTRES.set(CINQ, getLibelle("mai"));
+MAP_MOIS_LETTRES.set(SIX, getLibelle("juin"));
+MAP_MOIS_LETTRES.set(SEPT, getLibelle("juillet"));
+MAP_MOIS_LETTRES.set(HUIT, getLibelle("août"));
+MAP_MOIS_LETTRES.set(NEUF, getLibelle("septembre"));
+MAP_MOIS_LETTRES.set(DIX, getLibelle("octobre"));
+MAP_MOIS_LETTRES.set(ONZE, getLibelle("novembre"));
+MAP_MOIS_LETTRES.set(DOUZE, getLibelle("décembre"));
 export function getMoisEnLettre(mois?: number): string | undefined {
   return mois ? MAP_MOIS_LETTRES.get(mois) : undefined;
 }

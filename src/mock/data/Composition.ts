@@ -117,7 +117,7 @@ export const certificatSituation: ICertificatSituationComposition = {
   },
   image_bloc_marques: imagePngVideBase64,
   jour_naissance: "1er",
-  mois_naissance: "Février",
+  mois_naissance: "février",
   nom: "nom",
   nom_direction: {
     ligne1: "Direction",
@@ -162,7 +162,7 @@ export const certificatRCA: ICertificatRCAComposition = {
   },
   image_bloc_marques: imagePngVideBase64,
   jour_naissance: "1er",
-  mois_naissance: "Février",
+  mois_naissance: "février",
   nom: "nom",
   nom_direction: {
     ligne1: "Direction",

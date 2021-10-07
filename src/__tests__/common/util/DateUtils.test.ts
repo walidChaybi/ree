@@ -344,7 +344,7 @@ test("getDateStringFromDateCompose", () => {
 test("getMoisNaissanceEnLettre", () => {
   expect(getMoisEnLettre(undefined)).toBeUndefined();
   expect(getMoisEnLettre(13)).toBeUndefined();
-  expect(getMoisEnLettre(3)).toBe("Mars");
+  expect(getMoisEnLettre(3)).toBe("mars");
 });
 
 test("getJourSuffixeAvec1erSiBesoin", () => {
@@ -368,11 +368,11 @@ test("formatJour", () => {
 test("formatMois", () => {
   expect(formatMois(undefined)).toBe("");
   expect(formatMois("")).toBe("");
-  expect(formatMois("1")).toBe("Janvier");
-  expect(formatMois("01")).toBe("Janvier");
-  expect(formatMois("02")).toBe("Février");
+  expect(formatMois("1")).toBe("janvier");
+  expect(formatMois("01")).toBe("janvier");
+  expect(formatMois("02")).toBe("février");
   expect(formatMois("AAA")).toBe("");
-  expect(formatMois("12")).toBe("Décembre");
-  expect(formatMois("10")).toBe("Octobre");
-  expect(formatMois("010")).toBe("Octobre");
+  expect(formatMois("12")).toBe("décembre");
+  expect(formatMois("10")).toBe("octobre");
+  expect(formatMois("010")).toBe("octobre");
 });

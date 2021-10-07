@@ -22,12 +22,12 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire autr
   const data = FicheRcDecisionNotaire;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
-Date de naissance: 1er Septembre 1983
+Date de naissance: 1er septembre 1983
 Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le service central d'état civil a reçu un acte établi par Maitre Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 Novembre 2020"
+    "Le service central d'état civil a reçu un acte établi par Maitre Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe("concernant le placement de : ");
   expect(elementsJasper.interesseDecision).toBe(interesse);
@@ -36,7 +36,7 @@ Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 année");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11."
+    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 novembre 2020 sous la référence : RC n°2020 - 11."
   );
 });
 
@@ -44,12 +44,12 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const data = FicheRcDecisionNotaireTypeRequete;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
-Date de naissance: 1er Septembre 1983
+Date de naissance: 1er septembre 1983
 Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris arr.20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 Novembre 2020"
+    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris arr.20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe(
     "concernant le transfert des pouvoirs de : "
@@ -60,7 +60,7 @@ Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 année");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11."
+    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 novembre 2020 sous la référence : RC n°2020 - 11."
   );
 });
 
@@ -68,12 +68,12 @@ test("Attendu: specificationRC.getElementsJasper avec une décision Notaire de t
   const data = FicheRcDecisionNotaireTypeRequete2;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesse = `Mathieu SLAOUI
-Date de naissance: 1er Septembre 1983
+Date de naissance: 1er septembre 1983
 Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("11");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris arr.20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 Novembre 2020"
+    "Le service central d'état civil a reçu un extrait de la requête présentée auprès du Tribunal judiciaire de Paris arr.20 afin d'obtenir homologation de l'acte reçu par Maitre Jean DUPONT, notaire à Paris arr.18, office notarial n°1234567, le 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe(
     "concernant l'habilitation familiale générale de : "
@@ -84,7 +84,7 @@ Lieu de naissance: Paris arr.20`;
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 année");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 Novembre 2020 sous la référence : RC n°2020 - 11."
+    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 18 novembre 2020 sous la référence : RC n°2020 - 11."
   );
 });
 
@@ -92,17 +92,17 @@ test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une dé
   const data = FicheRcRenouvellementTypeJugement;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesses = `Marie-Charlotte, Anne-Claire, Lily-Rose, Abby-Gaëlle SLAOUI
-Date de naissance: 1er Septembre 1983
+Date de naissance: 1er septembre 1983
 Lieu de naissance: Brest (Finistère)
 et
 Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX
-Date de naissance: 24 Décembre 1987
+Date de naissance: 24 décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
-Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 Juin 2020`;
+Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le service central d'état civil a reçu le jugement du Tribunal judiciaire de Nantes (Loire-Atlantique), en date du 26 Novembre 2020"
+    "Le service central d'état civil a reçu le jugement du Tribunal judiciaire de Nantes (Loire-Atlantique), en date du 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe("concernant : ");
   expect(elementsJasper.interesseDecision).toBe(interesses);
@@ -113,7 +113,7 @@ Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 Juin
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 mois");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 22 Novembre 2020 sous la référence : RC n°2020 - 2."
+    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 22 novembre 2020 sous la référence : RC n°2020 - 2."
   );
 });
 
@@ -121,17 +121,17 @@ test("Attendu: specificationRC.getElementsJasper avec une Juridiction et une dé
   const data = FicheRcRenouvellementTypeOrdonnance;
   const elementsJasper = specificationRC.getElementsJasper(data);
   const interesses = `Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX
-Date de naissance: 24 Décembre 1987
+Date de naissance: 24 décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
 et
 Marie-Charlotte, Anne-Claire, Lily-Rose, Abby-Gaëlle SLAOUI
-Date de naissance: 1er Septembre 1983
+Date de naissance: 1er septembre 1983
 Lieu de naissance: Brest (Finistère)
-Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 Juin 2020`;
+Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe(
-    "Le service central d'état civil a reçu l'ordonnance du Tribunal judiciaire de Paris arr.18, en date du 26 Novembre 2020"
+    "Le service central d'état civil a reçu l'ordonnance du Tribunal judiciaire de Paris arr.18, en date du 26 novembre 2020"
   );
   expect(elementsJasper.decisionRecue2).toBe("concernant le placement de : ");
   expect(elementsJasper.interesseDecision).toBe(interesses);
@@ -142,7 +142,7 @@ Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 Juin
   expect(elementsJasper.decisionExequatur).toBeUndefined();
   expect(elementsJasper.duree).toBe("pour une durée de 1 mois");
   expect(elementsJasper.paragrapheFin).toBe(
-    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 22 Novembre 2020 sous la référence : RC n°2020 - 2."
+    "Conformément à l'Article 4 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil le 22 novembre 2020 sous la référence : RC n°2020 - 2."
   );
 });
 

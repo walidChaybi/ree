@@ -2,10 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../model/requete/v2/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { TypeNatureActe } from "../../../../../model/requete/v2/enum/TypeNatureActe";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import {
+  IActionStatutRequete,
+  useCreerActionMajStatutRequete
+} from "../../../../common/hook/v2/requete/CreerActionMajStatutRequete";
 import { filtrerListeActions } from "../../../../common/util/RequetesUtils";
 import { getUrlWithoutIdParam } from "../../../../common/util/route/routeUtil";
 import { supprimerNullEtUndefinedDuTableau } from "../../../../common/util/Utils";
@@ -45,11 +50,36 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<
-    UpdateChoixDelivranceProps
-  >();
+  const [
+    paramUpdateChoixDelivrance,
+    setParamUpdateChoixDelivrance
+  ] = useState<UpdateChoixDelivranceProps>();
+  const [
+    actionStatutRequete,
+    setActionStatutRequete
+  ] = useState<IActionStatutRequete>();
 
+  // 1 - Mise à jour du choix delivrance
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
+
+  // 2 - Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
+  useEffect(() => {
+    if (idRequete) {
+      const statutRequete =
+        choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
+          ? StatutRequete.A_VALIDER
+          : StatutRequete.A_SIGNER;
+      setActionStatutRequete({
+        libelleAction: statutRequete.libelle,
+        statutRequete,
+        requeteId: idRequete
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idRequete]);
+
+  // 3 -  Mise à jour du status de la requête + création d'une action
+  const { idAction } = useCreerActionMajStatutRequete(actionStatutRequete);
 
   const resultDeliverCertificatSituation = useDelivrerCertificatSituationHook(
     mappingRequeteDelivranceToRequeteTableau(
@@ -161,9 +191,9 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     }
   }, [messagesBloquant, choixDelivrance, props.requete]);
 
-  // La mise à jour du choix de délivrance a été effectuée (cf.)
+  // La mise à jour du choix de délivrance et du statut ont été effectués (cf.)
   useEffect(() => {
-    if (idRequete) {
+    if (idRequete && idAction) {
       if (
         (props.requete as IRequeteDelivrance).sousType ===
         SousTypeDelivrance.RDC
@@ -180,7 +210,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
         receUrl.replaceUrl(history, url);
       }
     }
-  }, [idRequete, history, props.requete]);
+  }, [idRequete, idAction, history, props.requete]);
 
   /////////////////////////////////////
   // Certificat de situation

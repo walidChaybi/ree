@@ -41,14 +41,14 @@ test("ajoutParagrapheEnregistrementPACS", () => {
   );
 
   expect(temp).toStrictEqual({
-    paragraphe_enregistrement: `Enregistrée par Maître dominique Ester, notaire à Paris arr.18, office notarial n°1235467890, le 19 Janvier 1970.
-Date d'effet de la déclaration du PACS à l'égard des tiers : 4 Décembre 2020`,
-    paragraphe_modification: `Modifiée par Maître Martin De la plume dans le bec, notaire à Nantes (Loire-Atlantique), office notarial n°987563141, le 22 Janvier 2021.
-Date d'effet de la modification du PACS à l'égard des tiers : 22 Janvier 2021.`,
-    paragraphe_dissolution: `Dissoute par jugement du tribunal judicicaire de Paris arr.18, le 26 Novembre 2020.
-Date d'effet de la modification du PACS à l'égard des tiers : 26 Novembre 2020.`,
-    paragraphe_annulation: `Annulée au Greffe du tribunal de Paris, le 26 Novembre 2020.
-Date d'effet de la dissolution du PACS à l'égard des tiers : 26 Novembre 2020.`
+    paragraphe_enregistrement: `Enregistrée par Maître dominique Ester, notaire à Paris arr.18, office notarial n°1235467890, le 19 janvier 1970.
+Date d'effet de la déclaration du PACS à l'égard des tiers : 4 décembre 2020`,
+    paragraphe_modification: `Modifiée par Maître Martin De la plume dans le bec, notaire à Nantes (Loire-Atlantique), office notarial n°987563141, le 22 janvier 2021.
+Date d'effet de la modification du PACS à l'égard des tiers : 22 janvier 2021.`,
+    paragraphe_dissolution: `Dissoute par jugement du tribunal judicicaire de Paris arr.18, le 26 novembre 2020.
+Date d'effet de la modification du PACS à l'égard des tiers : 26 novembre 2020.`,
+    paragraphe_annulation: `Annulée au Greffe du tribunal de Paris, le 26 novembre 2020.
+Date d'effet de la dissolution du PACS à l'égard des tiers : 26 novembre 2020.`
   });
 });
 

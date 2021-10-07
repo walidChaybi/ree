@@ -8,7 +8,7 @@ test("Attendu: getDecisionExequatur AVEC une decision Juridiction étrangère", 
   const data = FicheRcaDecisionJuridictionEtrangere;
   const phrase = getDecisionExequatur(data);
   expect(phrase).toBe(
-    "prise en exequatur de la décision étrangère en date du 26 Novembre 2020"
+    "prise en exequatur de la décision étrangère en date du 26 novembre 2020"
   );
 });
 
