@@ -1,6 +1,10 @@
 /* istanbul ignore file */
 
-import { formatNom, formatPrenom } from "../../../views/common/util/Utils";
+import {
+  enMajuscule,
+  formatNom,
+  formatPrenom
+} from "../../../views/common/util/Utils";
 import { Qualite } from "./enum/Qualite";
 import { IAdresseRequerant } from "./IAdresseRequerant";
 import { ILienRequerant } from "./ILienRequerant";
@@ -53,30 +57,50 @@ export const Requerant = {
       switch (requerant.qualiteRequerant?.qualite) {
         case Qualite.PARTICULIER:
         case Qualite.UTILISATEUR_RECE:
-          ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+          ligne1 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
+            requerant.nomFamille
+          )}`;
           break;
         case Qualite.INSTITUTIONNEL:
           if (requerant?.qualiteRequerant.institutionnel?.nomInstitution) {
-            ligne1 = `${requerant?.qualiteRequerant.institutionnel?.nomInstitution}`;
-            ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+            ligne1 = `${enMajuscule(
+              requerant?.qualiteRequerant.institutionnel?.nomInstitution
+            )}`;
+            ligne2 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
+              requerant.nomFamille
+            )}`;
           } else {
-            ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+            ligne1 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
+              requerant.nomFamille
+            )}`;
           }
           break;
         case Qualite.MANDATAIRE_HABILITE:
           if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
-            ligne1 = `${requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale}`;
-            ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+            ligne1 = `${enMajuscule(
+              requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale
+            )}`;
+            ligne2 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
+              requerant.nomFamille
+            )}`;
           } else {
-            ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+            ligne1 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
+              requerant.nomFamille
+            )}`;
           }
           break;
         case Qualite.AUTRE_PROFESSIONNEL:
           if (requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale) {
-            ligne1 = `${requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale}`;
-            ligne2 = `${requerant.nomFamille} ${requerant.prenom}`;
+            ligne1 = `${enMajuscule(
+              requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale
+            )}`;
+            ligne2 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
+              requerant.nomFamille
+            )}`;
           } else {
-            ligne1 = `${requerant.nomFamille} ${requerant.prenom}`;
+            ligne1 = `${enMajuscule(requerant.prenom)} ${enMajuscule(
+              requerant.nomFamille
+            )}`;
           }
           break;
 

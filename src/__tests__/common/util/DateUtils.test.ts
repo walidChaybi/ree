@@ -1,6 +1,7 @@
 import {
   compareDatesCompose,
   compareNumber,
+  dateCourrier,
   estDateReceValide,
   estDateValide,
   estDateVide,
@@ -375,4 +376,9 @@ test("formatMois", () => {
   expect(formatMois("12")).toBe("décembre");
   expect(formatMois("10")).toBe("octobre");
   expect(formatMois("010")).toBe("octobre");
+});
+
+test("dateCourrier()", () => {
+  const today = dateCourrier();
+  expect(today).not.toBeNull();
 });

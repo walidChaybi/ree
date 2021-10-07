@@ -1,5 +1,5 @@
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
 import { customHeaderRenderer } from "../../../../../views/common/widget/formulaire/datePicker/CustomHeader";
 
 test("Attendu: customHeaderRenderer fonctionne correctement", async () => {

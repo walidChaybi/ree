@@ -313,3 +313,11 @@ export function formatMois(str?: string): string {
 function supprimeLesZeroAuDebut(str: string): string {
   return str.trim().replace(/0+(.+)/, "$1");
 }
+
+export function dateCourrier(): string {
+  const today = new Date();
+  const day = formatJour(today.getDate().toString());
+  const month = formatMois((today.getMonth() + 1).toString());
+  const year = today.getFullYear().toString();
+  return `${day} ${month} ${year}`;
+}

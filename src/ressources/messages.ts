@@ -1,5 +1,5 @@
-import { getLibelle } from "../views/common/widget/Text";
 import { MIN_YEAR } from "../views/common/util/DateUtils";
+import { getLibelle } from "../views/common/widget/Text";
 
 export const MSG_MIN_YEAR = getLibelle(
   `L'année doit être supérieure ou égale à ${MIN_YEAR}`

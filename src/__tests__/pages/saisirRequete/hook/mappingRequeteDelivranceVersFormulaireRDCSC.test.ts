@@ -39,7 +39,7 @@ test("test du mapping Particulier", () => {
         nom: "",
         prenom: ""
       },
-      particulier: { nomFamille: "DUBOIS", nomUsage: "", prenom: "Léonard" }
+      particulier: { nomFamille: "RUIZ", nomUsage: "", prenom: "Paul" }
     },
     adresse: {
       voie: "61 avenue Foch",
@@ -104,8 +104,8 @@ test("test du mapping Institutionnel", () => {
         type: "AMBASSADE",
         nature: "",
         nomInstitution: "Ambassade du Rwanda",
-        nom: "DUBOIS",
-        prenom: "Léonard"
+        nom: "Ruiz",
+        prenom: "Paul"
       },
       particulier: { nomFamille: "", nomUsage: "", prenom: "" }
     },

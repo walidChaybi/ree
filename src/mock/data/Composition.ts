@@ -3,6 +3,7 @@ import { ICertificatSituationComposition } from "../../model/composition/ICertif
 import { IReponseNegativeDemandeIncompleteComposition } from "../../model/composition/IReponseNegativeDemandeIncompleteComposition";
 import { IReponseNegativeFrancaisComposition } from "../../model/composition/IReponseNegativeFrancaisComposition";
 import { IReponseNegativeMariageComposition } from "../../model/composition/IReponseNegativeMariageComposition";
+import { dateCourrier } from "../../views/common/util/DateUtils";
 import { imagePngVideBase64 } from "./ImagePng";
 
 const baseReponseNegative = {
@@ -19,11 +20,12 @@ const baseReponseNegative = {
     ligne6: "44941 Nantes CEDEX 9"
   },
   tel_service_delivreur: "01.41.86.42.47",
+  date_delivrance: dateCourrier(),
   ville_delivrance: "Nantes",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
-    ligne1: "DUBOIS Léonard"
+    ligne1: "PAUL RUIZ"
   },
   adresse_requerant: {
     ligne2: "Appartement 258",
@@ -52,11 +54,12 @@ const baseReponseNegativeInstitutionnel = {
   },
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
+  date_delivrance: dateCourrier(),
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
-    ligne1: "Ambassade du Rwanda",
-    ligne2: "DUBOIS Léonard"
+    ligne1: "AMBASSADE DU RWANDA",
+    ligne2: "PAUL RUIZ"
   },
   adresse_requerant: {
     ligne2: "Appartement 258 Batiment Z",
@@ -116,7 +119,7 @@ export const certificatSituation: ICertificatSituationComposition = {
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
-    ligne1: "nomFamille prenom"
+    ligne1: "PRENOM NOMFAMILLE"
   },
   image_bloc_marques: imagePngVideBase64,
   jour_naissance: "1er",
@@ -134,6 +137,7 @@ export const certificatSituation: ICertificatSituationComposition = {
   tel_service_delivreur: "01.41.86.42.47",
   titre: "titre",
   ville_delivrance: "Nantes",
+  date_delivrance: dateCourrier(),
   ville_naissance: "villeNaissance"
 } as ICertificatSituationComposition;
 
@@ -162,7 +166,7 @@ export const certificatRCA: ICertificatRCAComposition = {
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
-    ligne1: "nomFamille prenom"
+    ligne1: "PRENOM NOMFAMILLE"
   },
   image_bloc_marques: imagePngVideBase64,
   jour_naissance: "1er",
@@ -179,5 +183,6 @@ export const certificatRCA: ICertificatRCAComposition = {
   sexe: "Masculin",
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
+  date_delivrance: dateCourrier(),
   ville_naissance: "villeNaissance"
 } as ICertificatRCAComposition;

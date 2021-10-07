@@ -130,7 +130,7 @@ test("test de création réponse négative mariage", async () => {
   const acte = { idActe: "b41079a5-9e8d-478c-b04c-c4c2ac671348" };
   const reponseNegative = await createReponseNegativePourCompositionApiMariage(
     requete,
-    acte as any as IResultatRMCActe
+    (acte as any) as IResultatRMCActe
   );
   expect(reponseNegative).toStrictEqual(reponseNegativeMariage);
 });
@@ -147,22 +147,26 @@ test("test de création réponse négative français", async () => {
 test("test de création réponse négative demande incomplete", async () => {
   await ParametreBaseRequete.init();
   const requete = requeteDelivranceInstitutionnel;
-  const reponseNegative =
-    await createReponseNegativePourCompositionApiDemandeIncomplete(requete);
+  const reponseNegative = await createReponseNegativePourCompositionApiDemandeIncomplete(
+    requete
+  );
   expect(reponseNegative).toStrictEqual(reponseNegativeDemandeIncomplete);
 });
 
 test("message erreur", async () => {
-  const reponseNegative1 =
-    await createReponseNegativePourCompositionApiDemandeIncomplete("", {});
+  const reponseNegative1 = await createReponseNegativePourCompositionApiDemandeIncomplete(
+    "",
+    {}
+  );
   expect(reponseNegative1).toStrictEqual({});
   const reponseNegative2 = await createReponseNegativePourCompositionApiMariage(
     {},
     {}
   );
   expect(reponseNegative2).toStrictEqual({});
-  const reponseNegative3 =
-    await createReponseNegativePourCompositionApiFrancais({});
+  const reponseNegative3 = await createReponseNegativePourCompositionApiFrancais(
+    {}
+  );
   expect(reponseNegative3).toStrictEqual({});
 });
 

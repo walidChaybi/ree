@@ -1,3 +1,4 @@
+import { dateCourrier } from "../../../views/common/util/DateUtils";
 import {
   ADRESSE_INTERNET_MINISTERE,
   BLOC_MARQUES_MINISTERE,
@@ -29,6 +30,7 @@ export interface IParametresComposition {
   };
   tel_service_delivreur: string; //"00.33.1.41.86.42.47";
   ville_delivrance: string; //"Nantes";
+  date_delivrance: string;
   cachet_signature: string; //"P/le sous-directeur, chef du service central d’état civil."
   sceau_ministere: string;
 }
@@ -61,7 +63,7 @@ export const ParametresComposition = {
     obj.ville_delivrance = ParametreBaseRequete.getEnumFor(
       SERVICE_DELIVREUR_SERVICE_VILLE
     )?.libelle;
-
+    obj.date_delivrance = dateCourrier();
     obj.cachet_signature = ParametreBaseRequete.getEnumFor(
       LIBELLE_FONCTION_AGENT_2
     )?.libelle;

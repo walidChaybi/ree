@@ -18,18 +18,18 @@ function getMonth(date: Date) {
 const ANNEE_MIN = 1900;
 const years = range(ANNEE_MIN, getYear(new Date()) + 1);
 const months = [
-  "Janvier",
-  "Février",
-  "Mars",
-  "Avril",
-  "Mai",
-  "Juin",
-  "Juillet",
-  "Août",
-  "Septembre",
-  "Octobre",
-  "Novembre",
-  "Décembre"
+  "janvier",
+  "février",
+  "mars",
+  "avril",
+  "mai",
+  "juin",
+  "juillet",
+  "août",
+  "septembre",
+  "octobre",
+  "novembre",
+  "décembre"
 ];
 
 export const customHeaderRenderer = ({

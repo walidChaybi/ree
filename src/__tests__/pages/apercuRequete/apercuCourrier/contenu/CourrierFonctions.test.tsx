@@ -30,7 +30,7 @@ test("getDefaultValues", () => {
       texte: "Texte libre Courrier 117"
     },
     requerant: {
-      requerantLigne1: "DUBOIS Léonard",
+      requerantLigne1: "PAUL RUIZ",
       requerantLigne2: ""
     },
     adresse: {
@@ -60,8 +60,8 @@ test("getDefaultValues", () => {
       texte: ""
     },
     requerant: {
-      requerantLigne1: "Ambassade du Rwanda",
-      requerantLigne2: "DUBOIS Léonard"
+      requerantLigne1: "AMBASSADE DU RWANDA",
+      requerantLigne2: "PAUL RUIZ"
     },
     adresse: {
       codePostal: "310 GL24",
