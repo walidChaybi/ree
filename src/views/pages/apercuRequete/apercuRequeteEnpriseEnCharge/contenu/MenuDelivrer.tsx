@@ -62,9 +62,13 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   // 1 - Mise à jour du choix delivrance
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
 
-  // 2 - Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
+  // 2 - Création des paramètres pour la création de l'action
+  // et la mise à jour du statut de la requête si celle-ci est une RDD
   useEffect(() => {
-    if (idRequete) {
+    if (
+      idRequete &&
+      (props.requete as IRequeteDelivrance).sousType === SousTypeDelivrance.RDD
+    ) {
       const statutRequete =
         choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
           ? StatutRequete.A_VALIDER
@@ -193,7 +197,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
 
   // La mise à jour du choix de délivrance et du statut ont été effectués (cf.)
   useEffect(() => {
-    if (idRequete && idAction) {
+    if (idRequete) {
       if (
         (props.requete as IRequeteDelivrance).sousType ===
         SousTypeDelivrance.RDC
@@ -203,7 +207,8 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
             history.location.pathname
           )}/${PATH_APERCU_COURRIER}/${idRequete}`
         );
-      } else {
+      } else if (idAction) {
+        // Si la requete est une RDD et que l'action est enregistré
         const url = receUrl.getUrlApercuTraitementAPartirDe(
           history.location.pathname
         );
