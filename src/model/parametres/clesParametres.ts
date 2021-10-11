@@ -13,6 +13,7 @@ export const SERVICE_DELIVREUR_SERVICE_TELEPHONE =
 export const SERVICE_DELIVREUR_SERVICE_VILLE =
   "service.delivreur.service.ville";
 export const BLOC_MARQUES_MINISTERE = "sceau.ministere.affaires.etrangeres";
+export const SCEAU_MINISTERE = "sceau.signature";
 
 export const CLES_COMPOSITION = [
   LIBELLE_FONCTION_AGENT_1,
@@ -27,7 +28,8 @@ export const CLES_COMPOSITION = [
   SERVICE_DELIVREUR_VILLE,
   SERVICE_DELIVREUR_SERVICE_TELEPHONE,
   SERVICE_DELIVREUR_SERVICE_VILLE,
-  BLOC_MARQUES_MINISTERE
+  BLOC_MARQUES_MINISTERE,
+  SCEAU_MINISTERE
 ];
 
 // Toutes les clés de paramètre (pour l'instant il n'y a que les clés de compostions,

@@ -21,6 +21,7 @@ const baseReponseNegative = {
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  sceau_ministere: imagePngVideBase64,
   identite_requerant: {
     ligne1: "DUBOIS Léonard"
   },
@@ -52,6 +53,7 @@ const baseReponseNegativeInstitutionnel = {
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  sceau_ministere: imagePngVideBase64,
   identite_requerant: {
     ligne1: "Ambassade du Rwanda",
     ligne2: "DUBOIS Léonard"
@@ -112,6 +114,7 @@ export const certificatSituation: ICertificatSituationComposition = {
   },
   annee_naissance: "2000",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  sceau_ministere: imagePngVideBase64,
   identite_requerant: {
     ligne1: "nomFamille prenom"
   },
@@ -157,6 +160,7 @@ export const certificatRCA: ICertificatRCAComposition = {
   },
   annee_naissance: "2000",
   cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  sceau_ministere: imagePngVideBase64,
   identite_requerant: {
     ligne1: "nomFamille prenom"
   },

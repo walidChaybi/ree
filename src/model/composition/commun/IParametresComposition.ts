@@ -5,6 +5,7 @@ import {
   DIRECTION_LIGNE_3,
   LIBELLE_FONCTION_AGENT_2,
   NOM_DIRECTION,
+  SCEAU_MINISTERE,
   SERVICE_DELIVREUR_NOM,
   SERVICE_DELIVREUR_RUE,
   SERVICE_DELIVREUR_SERVICE_TELEPHONE,
@@ -29,6 +30,7 @@ export interface IParametresComposition {
   tel_service_delivreur: string; //"00.33.1.41.86.42.47";
   ville_delivrance: string; //"Nantes";
   cachet_signature: string; //"P/le sous-directeur, chef du service central d’état civil."
+  sceau_ministere: string;
 }
 
 export const ParametresComposition = {
@@ -62,6 +64,9 @@ export const ParametresComposition = {
 
     obj.cachet_signature = ParametreBaseRequete.getEnumFor(
       LIBELLE_FONCTION_AGENT_2
+    )?.libelle;
+    obj.sceau_ministere = ParametreBaseRequete.getEnumFor(
+      SCEAU_MINISTERE
     )?.libelle;
 
     return obj;

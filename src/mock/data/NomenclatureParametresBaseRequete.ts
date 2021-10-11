@@ -78,5 +78,11 @@ export const parametresBaseRequete = [
     cle: "code3.libelle.fonction.agent",
     valeur: "Officier de l'état civil",
     fichierB64: null
+  },
+  {
+    idParametre: "1f0d850c-f66b-46f7-906c-c9d9f0cc6db8",
+    cle: "sceau.signature",
+    valeur: "",
+    fichierB64: imagePngVideBase64
   }
 ];
