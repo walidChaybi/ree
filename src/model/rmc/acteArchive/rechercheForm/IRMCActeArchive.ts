@@ -1,7 +1,7 @@
-import { IRMCTitulaire } from "../../acteInscription/rechercheForm/IRMCTitulaire";
 import { IRMCDateCreation } from "../../acteInscription/rechercheForm/dateCreation/IRMCDateCreation";
-import { IRMCRegistreArchive } from "./IRMCRegistreArchive";
 import { IRMCEvenement } from "../../acteInscription/rechercheForm/IRMCEvenement";
+import { IRMCTitulaire } from "../../acteInscription/rechercheForm/IRMCTitulaire";
+import { IRMCRegistreArchive } from "./IRMCRegistreArchive";
 
 export interface IRMCActeArchive {
   titulaire?: IRMCTitulaire;

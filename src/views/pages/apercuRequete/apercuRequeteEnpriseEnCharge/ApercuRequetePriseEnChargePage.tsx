@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../model/IOfficierSSOApi";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
 import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -33,6 +34,7 @@ import { useRMCInscriptionApiHook } from "../../rechercheMultiCriteres/acteInscr
 import { RMCAutoResultats } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAutoResultats";
 import { useRMCAutoRequeteApiHook } from "../../rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequeteApiHook";
 import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
+import { mappingRequeteDelivranceToRMC } from "../../rechercheMultiCriteres/common/mapping/RMCMappingUtil";
 import { BandeauRequete } from "../contenu/BandeauRequete";
 import {
   DocumentsReponses,
@@ -41,6 +43,7 @@ import {
 import { FenetreDocumentReponse } from "../contenu/document/FenetreDocumentReponse";
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
+import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
 import { AlertesActes } from "./contenu/AlertesActes/AlertesActes";
 import { BoutonNouvelleRMC } from "./contenu/BoutonNouvelleRMC";
@@ -123,6 +126,44 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     }
   }, [dataRMCInscription, dataTableauRMCInscription]);
 
+  // Gestion RMC auto Requete
+  const [dataRequetes, setDataRequete] = useState<
+    IRequeteTableau[] | undefined
+  >(dataHistory?.dataRequetes);
+  const [range, setRange] = useState<string>(`0-${NB_LIGNES_PAR_APPEL}`);
+
+  const {
+    dataRMCAutoRequete,
+    dataTableauRMCAutoRequete
+  } = useRMCAutoRequeteApiHook(idRequete, dataRequetes, range);
+
+  const setRangeRequete = (value: string) => {
+    if (value !== "") {
+      setRange(value);
+    }
+  };
+
+  useEffect(() => {
+    if (dataHistory === undefined && detailRequeteState) {
+      const dataRequete = mappingRequeteDelivranceToRequeteTableau(
+        detailRequeteState as IRequeteDelivrance
+      );
+      setDataRequete([dataRequete]);
+      setCriteresRechercheInscription({
+        valeurs: mappingRequeteDelivranceToRMC(
+          detailRequeteState as IRequeteDelivrance
+        ),
+        range: range
+      });
+      setCriteresRechercheActe({
+        valeurs: mappingRequeteDelivranceToRMC(
+          detailRequeteState as IRequeteDelivrance
+        ),
+        range: range
+      });
+    }
+  }, [dataHistory, detailRequeteState, range]);
+
   const setRangeActe = (rangeActe: string) => {
     if (valuesRMC && rangeActe !== "") {
       setCriteresRechercheActe({
@@ -138,21 +179,6 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
         valeurs: valuesRMC,
         range: rangeInscription
       });
-    }
-  };
-
-  // Gestion RMC auto Requete
-  const dataRequetes = dataHistory?.dataRequetes;
-  const [range, setRange] = useState<string>(`0-${NB_LIGNES_PAR_APPEL}`);
-
-  const {
-    dataRMCAutoRequete,
-    dataTableauRMCAutoRequete
-  } = useRMCAutoRequeteApiHook(idRequete, dataRequetes, range);
-
-  const setRangeRequete = (value: string) => {
-    if (value !== "") {
-      setRange(value);
     }
   };
 

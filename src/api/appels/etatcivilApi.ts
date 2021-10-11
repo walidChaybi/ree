@@ -107,7 +107,7 @@ export function getPocopas(
   familleRegistre: string,
   nombreResultatsMax: number
 ): Promise<any> {
-  return api.fetchCache({
+  return api.fetch({
     method: HttpMethod.GET,
     uri: URL_POCOPAS_DEBUTENT_PAR,
     parameters: {
