@@ -22,6 +22,7 @@ import { configRequetesV2 } from "../../../mock/superagent-config/superagent-moc
 import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../views/common/util/storeRece";
 import { ApercuRequetePriseEnChargePage } from "../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
+import { MOTIF_IGNORE } from "../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
 import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
@@ -224,12 +225,12 @@ test("redirection requete RDC", async () => {
   );
 });
 
-test("renders document réponses", async () => {
-  const history3 = createMemoryHistory();
-  history3.push(
+test("ignorer requete", async () => {
+  const history2 = createMemoryHistory();
+  history2.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      "a4cefb71-8457-4f6b-937e-34b49335d884"
+      "a4cefb71-8457-4f6b-937e-34b49335d666"
     ),
     {
       dataRequetes: [],
@@ -242,7 +243,7 @@ test("renders document réponses", async () => {
   await act(async () => {
     render(
       <>
-        <Router history={history3}>
+        <Router history={history2}>
           <Route
             exact={true}
             path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
@@ -265,6 +266,28 @@ test("renders document réponses", async () => {
 
   await act(async () => {
     fireEvent.click(doc2);
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Réponse sans délivrance"));
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText(/Ignorer+/));
+  });
+
+  const select = screen.getByLabelText(MOTIF_IGNORE) as HTMLSelectElement;
+
+  await act(async () => {
+    fireEvent.change(select, {
+      target: {
+        value: "Adresse incomplète"
+      }
+    });
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Valider"));
   });
 });
 

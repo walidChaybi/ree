@@ -27,8 +27,9 @@ export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PARAMETRE = "/parametres";
-export const URL_ACTION = "/action";
-export const URL_TRANSFERT = "/action/transfert";
+export const URL_ACTION = "/requetes/action";
+export const URL_TRANSFERT = "/requetes/action/transfert";
+export const URL_IGNORER = "/requetes/action/ignorer";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
 export const URL_OPTION_COURRIER = "/optioncourrier";
 
@@ -392,6 +393,20 @@ export function postTransfertRequete(
       idUtilisateur,
       statutRequete: StatutRequeteV2.getKey(statutRequete),
       libelleAction
+    }
+  });
+}
+
+export function postIgnorerRequete(
+  idRequete: string,
+  texteObservation: string
+) {
+  return apiV2.fetch({
+    method: HttpMethod.POST,
+    uri: URL_IGNORER,
+    parameters: {
+      idRequete,
+      texteObservation
     }
   });
 }

@@ -16,20 +16,20 @@ import {
   UpdateChoixDelivranceProps,
   useUpdateChoixDelivrance
 } from "./hook/UpdateChoixDelivranceHook";
+import { IgnoreRequetePopin } from "./IgnoreRequetePopin";
 
 const INDEX_REQUETE_INCOMPLETE = 0;
 const INDEX_ACTE_NON_DETENU = 1;
 const INDEX_DIVERS = 2;
-const INDEX_FIN_TRAITEMENT = 3;
+const INDEX_IGNORER_REQUETE = 3;
 
 export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
   const history = useHistory();
   const refRepondreSansDelivranceOptions0 = useRef(null);
 
-  const [
-    paramUpdateChoixDelivrance,
-    setParamUpdateChoixDelivrance
-  ] = useState<UpdateChoixDelivranceProps>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
+    useState<UpdateChoixDelivranceProps>();
+  const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
 
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
 
@@ -72,44 +72,49 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
       choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_DIVERS
     },
     {
-      value: INDEX_FIN_TRAITEMENT,
+      value: INDEX_IGNORER_REQUETE,
       label: getLibelle("Ignorer la requête (fin du traitement)"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+      sousTypes: [
+        SousTypeDelivrance.RDC,
+        SousTypeDelivrance.RDAPC,
+        SousTypeDelivrance.RDCSC
+      ],
       ref: refRepondreSansDelivranceOptions0
     }
   ];
 
   const handleReponseSansDelivranceMenu = (indexMenu: number) => {
-    if (
-      (props.requete as IRequeteDelivrance).sousType ===
-        SousTypeDelivrance.RDC ||
-      (props.requete as IRequeteDelivrance).sousType === SousTypeDelivrance.RDD
-    ) {
-      switch (indexMenu) {
-        case INDEX_REQUETE_INCOMPLETE:
-        case INDEX_ACTE_NON_DETENU:
-        case INDEX_DIVERS:
-          setParamUpdateChoixDelivrance({
-            choixDelivrance:
-              repondreSansDelivranceOptions[indexMenu].choixDelivrance,
-            requete: props.requete as IRequeteDelivrance
-          });
-          break;
-        // TODO
-        //case INDEX_FIN_TRAITEMENT:
-        //  break;
-      }
+    switch (indexMenu) {
+      case INDEX_REQUETE_INCOMPLETE:
+      case INDEX_ACTE_NON_DETENU:
+      case INDEX_DIVERS:
+        setParamUpdateChoixDelivrance({
+          choixDelivrance:
+            repondreSansDelivranceOptions[indexMenu].choixDelivrance,
+          requete: props.requete as IRequeteDelivrance
+        });
+        break;
+      case INDEX_IGNORER_REQUETE:
+        setPopinOuverte(true);
+        break;
     }
   };
 
   return (
-    <MenuAction
-      titre={getLibelle("Réponse sans délivrance")}
-      listeActions={filtrerListeActions(
-        props.requete as IRequeteDelivrance,
-        repondreSansDelivranceOptions
-      )}
-      onSelect={handleReponseSansDelivranceMenu}
-    />
+    <>
+      <MenuAction
+        titre={getLibelle("Réponse sans délivrance")}
+        listeActions={filtrerListeActions(
+          props.requete as IRequeteDelivrance,
+          repondreSansDelivranceOptions
+        )}
+        onSelect={handleReponseSansDelivranceMenu}
+      />
+      <IgnoreRequetePopin
+        isOpen={popinOuverte}
+        onClosePopin={() => setPopinOuverte(false)}
+        requete={props.requete}
+      />
+    </>
   );
 };

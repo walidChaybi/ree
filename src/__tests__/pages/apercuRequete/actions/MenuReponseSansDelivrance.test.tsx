@@ -85,6 +85,19 @@ test("Réponse divers", async () => {
     )
   );
 });
+test("Réponse divers", async () => {
+  await act(async () => {
+    fireEvent.click(screen.getByText("Réponse sans délivrance"));
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText(/Ignorer+/));
+  });
+
+  const valider = screen.getByText("Valider") as HTMLButtonElement;
+
+  expect(valider.disabled).toBeTruthy();
+});
 
 afterAll(() => {
   superagentMock.unset();
