@@ -20,7 +20,7 @@ import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
-import { idRequete1 } from "../data/RequeteV2";
+import { idRequeteRDCSC } from "../data/RequeteV2";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const configRequetesV2 = [
@@ -48,7 +48,8 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -61,7 +62,8 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -75,7 +77,8 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -88,7 +91,8 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -111,7 +115,8 @@ export const configRequetesV2 = [
         return {
           headers: {
             "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
         };
@@ -235,9 +240,9 @@ export const configRequetesV2 = [
         return {
           headers: {
             "content-range":
-              "0-15/" +
-              ReponseAppelRMCRequete?.data?.ReponseAppelRMCRequete?.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+              "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
         };
@@ -264,7 +269,7 @@ export const configRequetesV2 = [
 
       // Supression des documents reponses (DELETE)
       if (
-        match[1] === "/documentsreponses/" + idRequete1 &&
+        match[1] === "/documentsreponses/" + idRequeteRDCSC &&
         context.method === "delete"
       ) {
         return { data: {} };

@@ -1,0 +1,55 @@
+@import "../../../../../scss/colors";
+
+.GroupeBouton {
+  margin: 0.5rem;
+  padding: 0.3rem;
+  font-family: "NotoSansUI-Bold", sans-serif !important;
+
+  .Titre {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    background-color: $button-application-color;
+    text-align: center;
+    color: white;
+    border: 2px solid $button-application-color;
+    font-size: 1.1rem;
+    width: auto;
+  }
+
+  .MuiButtonGroup-root {
+    width: 100% !important;
+  }
+
+  button {
+    text-align: center;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $button-application-color;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-color: white;
+    color: $button-application-color;
+    text-transform: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    &:hover {
+      background-color: $application-color;
+      box-shadow: none;
+      color: white;
+    }
+    &:disabled {
+      background-color: $disabled-button;
+      pointer-events: none;
+      &:focus,
+      &:hover {
+        background-color: $disabled-button;
+        box-shadow: none;
+      }
+      cursor: default;
+    }
+    &:link {
+      outline-style: none;
+    }
+  }
+}

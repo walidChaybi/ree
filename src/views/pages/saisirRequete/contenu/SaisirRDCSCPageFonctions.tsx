@@ -1,7 +1,7 @@
 import {
-  IReponseNegativeDemandeIncompleteComposition,
-  ReponseNegativeDemandeIncompleteComposition
-} from "../../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
+  IReponseSansDelivranceCSDemandeIncompleteComposition,
+  ReponseSansDelivranceCSDemandeIncompleteComposition
+} from "../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../../../model/requete/v2/IRequerant";
 import messageManager from "../../../common/util/messageManager";
@@ -36,11 +36,11 @@ export function getRedirectionVersApercuRequete(
   return url;
 }
 
-export function createReponseNegative(requete?: SaisieRequeteRDCSC) {
-  let reponseNegative = {} as IReponseNegativeDemandeIncompleteComposition;
+export function createReponseSansDelivranceCS(requete?: SaisieRequeteRDCSC) {
+  let reponseSansDelivranceCS = {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
   if (requete && requete.requerant) {
     const requerant = getRequerant(requete) as IRequerant;
-    reponseNegative = ReponseNegativeDemandeIncompleteComposition.creerReponseNegative(
+    reponseSansDelivranceCS = ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(
       requerant,
       TypeCanal.COURRIER
     );
@@ -50,7 +50,7 @@ export function createReponseNegative(requete?: SaisieRequeteRDCSC) {
     );
   }
 
-  return reponseNegative;
+  return reponseSansDelivranceCS;
 }
 
 /** Elements Popin "Courrier de refus" */

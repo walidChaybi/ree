@@ -47,6 +47,8 @@ export interface IIgnorerFormValue {
 
 export const COMPLEMENT_DESCRIPTION_MAX_LENGTH = 150;
 
+const NB_LIGNE_COMPLEMENT_DESCRIPTION = 10;
+
 // Schéma de validation en sortie de champs
 const ValidationSchema = Yup.object({
   [MOTIF_IGNORE]: Yup.string().required(ALERTE_OBLIGATOIRE),
@@ -142,7 +144,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
               component="textarea"
               label={getLibelle("Observation:")}
               placeholder={getLibelle("Observation")}
-              rows={10}
+              rows={NB_LIGNE_COMPLEMENT_DESCRIPTION}
             />
             <FormAjouterAlerteBoutons {...boutonsProps} />
           </Formulaire>

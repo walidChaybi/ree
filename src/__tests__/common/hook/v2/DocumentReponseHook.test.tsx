@@ -6,7 +6,7 @@ import {
   idDocumentsReponse
 } from "../../../../mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
-import { requete1 } from "../../../../mock/data/RequeteV2";
+import { requeteRDCSC } from "../../../../mock/data/RequeteV2";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import {
   useGetDocumentReponseApi,
@@ -22,7 +22,7 @@ const HookConsumerUseGetDocumentReponseApi: React.FC = () => {
 
 const documentsReponses = [documentReponseCARN_CSPAC_01];
 const HookConsumerUsePostDocumentsReponseApi: React.FC = () => {
-  const uuids = usePostDocumentsReponseApi(requete1.id, documentsReponses);
+  const uuids = usePostDocumentsReponseApi(requeteRDCSC.id, documentsReponses);
 
   return <div>{uuids ? uuids[0] : ""}</div>;
 };

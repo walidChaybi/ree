@@ -105,7 +105,7 @@ export const configEtatcivil = [
         return {
           headers: {
             "content-range":
-              "0-15/" + ReponseAppelRMCActe?.data?.registres?.length,
+              "0-15/" + ReponseAppelRMCActe.data.registres.length,
             link:
               '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-105>;rel="next"'
           },
@@ -118,7 +118,7 @@ export const configEtatcivil = [
           headers: {
             "content-range":
               "0-15/" +
-              ReponseAppelRMCInscription?.data?.repertoiresCiviles?.length,
+              ReponseAppelRMCInscription.data.repertoiresCiviles.length,
             link:
               '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
           },
@@ -233,7 +233,7 @@ export const configEtatcivil = [
         return {
           headers: {
             "content-range":
-              "0-15/" + ReponseAppelRMCActe?.data?.registres?.length,
+              "0-15/" + ReponseAppelRMCActe.data.registres.length,
             link:
               '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-105>;rel="next"'
           },
@@ -246,7 +246,7 @@ export const configEtatcivil = [
           headers: {
             "content-range":
               "0-15/" +
-              ReponseAppelRMCInscription?.data?.repertoiresCiviles?.length,
+              ReponseAppelRMCInscription.data.repertoiresCiviles.length,
             link:
               '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
           },

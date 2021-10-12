@@ -27,6 +27,8 @@ const DefaultValues = {
 
 const COMPLEMENT_DESCRIPTION_MAX_LENGTH = 150;
 
+const NB_LIGNE_COMPLEMENT_DESCRIPTION = 10;
+
 const ALERTE_OBLIGATOIRE = "Le choix d'une alerte est obligatoire";
 
 const COMPLEMENT_DESCRIPTION_LIMITE_TAILLE = `La description ne peut pas dépasser ${COMPLEMENT_DESCRIPTION_MAX_LENGTH} caractères`;
@@ -82,7 +84,7 @@ export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
                 "Compléter l'alerte avec votre description (si nécessaire) :"
               )}
               placeholder={getLibelle("Description")}
-              rows={10}
+              rows={NB_LIGNE_COMPLEMENT_DESCRIPTION}
               maxLength={"150"}
             />
             <FormAjouterAlerteBoutons {...boutonsProps} />

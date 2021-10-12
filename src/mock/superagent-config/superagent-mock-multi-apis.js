@@ -6,7 +6,7 @@ import {
 import { imagePngVideBase64 } from "../data/ImagePng";
 import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../data/nomenclatures";
-import { idRequete1 } from "../data/RequeteV2";
+import { idRequeteRDCSC } from "../data/RequeteV2";
 
 const COMPOSITION_API_URL = "rece-composition-api/v1";
 const REQUETE_V1_API_URL = "rece-requete-api/v1";
@@ -69,10 +69,10 @@ export const configMultiAPi = [
       if (
         (match[1] ===
           REQUETE_V2_API_URL +
-            `/action?idRequete=${idRequete1}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
+            `/action?idRequete=${idRequeteRDCSC}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
           match[1] ===
             REQUETE_V2_API_URL +
-              `/action?idRequete=${idRequete1}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE`) &&
+              `/action?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE`) &&
         context.method === "post"
       ) {
         return { data: "123456789" };

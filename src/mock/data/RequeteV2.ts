@@ -33,15 +33,15 @@ const requerant: IRequerant = {
   lienRequerant: undefined
 } as IRequerant;
 
-export const idRequete1 = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
-export const requete1 = ({
-  id: idRequete1,
+export const idRequeteRDCSC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
+export const requeteRDCSC = ({
+  id: idRequeteRDCSC,
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDCSC,
   statutCourant: {
     statut: StatutRequete.PRISE_EN_CHARGE
   },
-  requerant: requerant,
+  requerant,
   titulaires: [
     {
       id: "8ef12021-61df-421b-9b3d-ab6b4344df88",
@@ -67,15 +67,15 @@ export const requete1 = ({
   ]
 } as any) as IRequeteDelivrance;
 
-export const idRequete2 = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
-export const requete2 = {
-  id: idRequete1,
+export const idRequeteRDC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
+export const requeteRDC = ({
+  id: idRequeteRDC,
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDC,
   statutCourant: {
     statut: StatutRequete.PRISE_EN_CHARGE
   },
-  requerant: requerant,
+  requerant,
   titulaires: [
     {
       id: "8ef12021-61df-421b-9b3d-ab6b4344df88",
@@ -99,7 +99,7 @@ export const requete2 = {
       parentsTitulaire: []
     }
   ]
-} as any as IRequeteDelivrance;
+} as any) as IRequeteDelivrance;
 
 export const requeteRDD = {
   type: TypeRequete.DELIVRANCE,

@@ -1,18 +1,18 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { ProgressSignature } from "../../../../views/common/widget/signature/ProgressSignature";
+import { fireEvent, render } from "@testing-library/react";
 import { mount } from "enzyme";
+import React from "react";
+import { ProgressSignature } from "../../../../views/common/widget/signature/ProgressSignature";
 
 test("renders progresse bar", () => {
   const component = mount(
     <ProgressSignature
       errors={false}
-      idsRequetesToSign={["idRequete1"]}
+      idsRequetesToSign={["idRequeteRDCSC"]}
       onClose={() => {
         return;
       }}
       documentsByRequete={{
-        idRequete1: {
+        idRequeteRDCSC: {
           documentsToSign: [
             {
               infos: [],
@@ -41,7 +41,7 @@ test("renders progress bar, close function is called automatically", () => {
       idsRequetesToSign={[]}
       onClose={handleClickButton}
       documentsByRequete={{
-        idRequete1: {
+        idRequeteRDCSC: {
           documentsToSign: [
             {
               infos: [],
@@ -72,7 +72,7 @@ test("renders progress bar, close function is called when click on button", () =
       idsRequetesToSign={[]}
       onClose={handleClickButton}
       documentsByRequete={{
-        idRequete1: {
+        idRequeteRDCSC: {
           documentsToSign: [
             {
               infos: [],
@@ -103,9 +103,9 @@ test("renders progress bar, close function can't be called", () => {
     <ProgressSignature
       errors={false}
       onClose={handleClickButton}
-      idsRequetesToSign={["idRequete1", "idRequete2"]}
+      idsRequetesToSign={["idRequeteRDCSC", "idRequeteRDC"]}
       documentsByRequete={{
-        idRequete1: {
+        idRequeteRDCSC: {
           documentsToSign: [
             {
               infos: [],
@@ -119,7 +119,7 @@ test("renders progress bar, close function can't be called", () => {
           ],
           documentsToSave: []
         },
-        idRequete2: {
+        idRequeteRDC: {
           documentsToSign: [
             {
               infos: [],

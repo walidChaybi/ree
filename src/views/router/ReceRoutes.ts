@@ -58,6 +58,7 @@ import {
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_RECHERCHE_REQUETE,
+  URL_RECHERCHE_REQUETE_APERCU_PRISE_EN_CHARGE_COURRIER,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
@@ -360,7 +361,20 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_MODIFICATION)
   },
-
+  {
+    url: URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
+    component: ApercuCourrier,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_CREATION)
+  },
+  {
+    url: URL_MES_REQUETES_APERCU_TRAITEMENT_COURRIER,
+    component: ApercuCourrier,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_MODIFICATION)
+  },
   /////////////////////////////////////////
   ///// REQUETES DE MON SERVICE (RMS) /////
   /////////////////////////////////////////
@@ -633,18 +647,11 @@ export const routesRece: IRoute[] = [
     )
   },
   {
-    url: URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
+    url: URL_RECHERCHE_REQUETE_APERCU_PRISE_EN_CHARGE_COURRIER,
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_CREATION)
-  },
-  {
-    url: URL_MES_REQUETES_APERCU_TRAITEMENT_COURRIER,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_MODIFICATION)
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_TRAITEMENT_COURRIER,

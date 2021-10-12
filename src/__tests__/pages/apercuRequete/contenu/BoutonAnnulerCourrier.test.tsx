@@ -5,7 +5,7 @@ import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
-import { idRequete1, requete1 } from "../../../../mock/data/RequeteV2";
+import { idRequeteRDCSC, requeteRDCSC } from "../../../../mock/data/RequeteV2";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
@@ -27,18 +27,18 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
   const history = createMemoryHistory();
   const boutonsPropsWithRequete = {
     ...boutonsProps,
-    requete: requete1
+    requete: requeteRDCSC
   } as BoutonsCourrierProps;
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequete1
+      idRequeteRDCSC
     )
   );
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
-      idRequete1
+      idRequeteRDCSC
     )
   );
   const { getByText } = render(
@@ -63,7 +63,7 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
     expect(history.location.pathname).toBe(
       getUrlWithParam(
         URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequete1
+        idRequeteRDCSC
       )
     );
   });
@@ -72,21 +72,21 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
 test("render composant bouton annuler avec requete a valider", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   const history = createMemoryHistory();
-  requete1.statutCourant.statut = StatutRequete.A_VALIDER;
+  requeteRDCSC.statutCourant.statut = StatutRequete.A_VALIDER;
   const boutonsPropsWithRequete = {
     ...boutonsProps,
-    requete: requete1
+    requete: requeteRDCSC
   } as BoutonsCourrierProps;
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequete1
+      idRequeteRDCSC
     )
   );
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
-      idRequete1
+      idRequeteRDCSC
     )
   );
   const { getByText } = render(
@@ -111,7 +111,7 @@ test("render composant bouton annuler avec requete a valider", async () => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
         URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequete1
+        idRequeteRDCSC
       )
     );
   });

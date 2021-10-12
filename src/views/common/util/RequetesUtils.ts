@@ -7,6 +7,7 @@ import {
 } from "../../../model/IOfficierSSOApi";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../model/requete/v2/enum/TypeRequete";
+import { IActionOption } from "../../../model/requete/v2/IActionOption";
 import { TRequete } from "../../../model/requete/v2/IRequete";
 import {
   IRequeteDelivrance,
@@ -14,7 +15,6 @@ import {
 } from "../../../model/requete/v2/IRequeteDelivrance";
 import { IRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
 import { getText } from "../../common/widget/Text";
-import { IActionOption } from "../widget/menu/MenuAction";
 import { FormatDate } from "./DateUtils";
 import { storeRece } from "./storeRece";
 
@@ -130,8 +130,9 @@ export function getIdDocumentReponseAAfficher(requete?: TRequete): string {
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const requeteDelivrance = requete as IRequeteDelivrance;
 
-    const documentsDeDelivrance =
-      RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
+    const documentsDeDelivrance = RequeteDelivrance.getDocumentsDeDelivrance(
+      requeteDelivrance
+    );
     if (documentsDeDelivrance.length > 0) {
       idDocumentAAfficher = documentsDeDelivrance[0].id;
     } else if (requeteDelivrance.documentsReponses.length > 0) {

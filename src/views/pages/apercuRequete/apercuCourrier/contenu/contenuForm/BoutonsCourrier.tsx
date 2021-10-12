@@ -9,7 +9,7 @@ import { receUrl } from "../../../../../router/ReceUrls";
 import {
   UpdateChoixDelivranceProps,
   useUpdateChoixDelivrance
-} from "../../../apercuRequeteEnpriseEnCharge/contenu/hook/UpdateChoixDelivranceHook";
+} from "../../../apercuRequeteEnpriseEnCharge/contenu/actions/hook/UpdateChoixDelivranceHook";
 import "./scss/BoutonsCourrier.scss";
 
 export type BoutonsCourrierProps = {

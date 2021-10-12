@@ -1,4 +1,4 @@
-import { act, render, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { DataRMCRequeteAvecResultat } from "../../../../mock/data/RMCRequete";
@@ -26,13 +26,13 @@ const HookConsummerRequete: React.FC = () => {
 
 test("Test useRMCAutoRequeteApiHook", async () => {
   await act(async () => {
-    const { getByTestId } = render(<HookConsummerRequete />);
-    await waitFor(() =>
-      expect(getByTestId("idRequete").textContent).toBe(
-        "54ddf213-d9b7-4747-8e92-68c220f66de3"
-      )
-    );
+    render(<HookConsummerRequete />);
   });
+  await waitFor(() =>
+    expect(screen.getByTestId("idRequete").textContent).toBe(
+      "54ddf213-d9b7-4747-8e92-68c220f66de3"
+    )
+  );
 });
 
 afterAll(() => {

@@ -3,7 +3,7 @@ import React from "react";
 import request from "superagent";
 import { idDocumentsReponse2 } from "../../../../../../mock/data/DocumentReponse";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
-import { idRequete1 } from "../../../../../../mock/data/RequeteV2";
+import { idRequeteRDCSC } from "../../../../../../mock/data/RequeteV2";
 import {
   DataRMCInscriptionAvecUnPACS,
   DataRMCInscriptionAvecUnRC,
@@ -38,7 +38,7 @@ const titulaire = {
 } as ITitulaireRequeteTableau;
 
 const requete = {
-  idRequete: idRequete1,
+  idRequete: idRequeteRDCSC,
   document: ReponseAppelNomenclatureDocummentDelivrance.data[6].id, //CERTIFICAT_SITUATION_RC_RCA
   titulaires: [titulaire]
 } as IRequeteTableau;

@@ -1,0 +1,73 @@
+import { render, screen, waitFor } from "@testing-library/react";
+import React from "react";
+import request from "superagent";
+import {
+  reponseSansDelivranceCSDemandeIncomplete,
+  reponseSansDelivranceCSFrancais,
+  reponseSansDelivranceCSMariage
+} from "../../../../../mock/data/Composition";
+import { imagePngVideBase64 } from "../../../../../mock/data/ImagePng";
+import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
+import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "../../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
+import { NOM_DOCUMENT_REFUS_FRANCAIS } from "../../../../../model/composition/IReponseSansDelivranceCSFrancaisComposition";
+import { NOM_DOCUMENT_REFUS_MARIAGE } from "../../../../../model/composition/IReponseSansDelivranceCSMariageComposition";
+import { useCompositionReponseSansDelivranceCSApi } from "../../../../../views/common/hook/v2/composition/CompositionReponseSansDelivranceCSHook";
+const superagentMock = require("superagent-mock")(request, configComposition);
+
+const HookConsumerMariage: React.FC = () => {
+  const doc = useCompositionReponseSansDelivranceCSApi(
+    NOM_DOCUMENT_REFUS_MARIAGE,
+    reponseSansDelivranceCSMariage
+  );
+
+  return <div>{doc}</div>;
+};
+
+test("Attendu: useCompositionReponseSansDelivranceCSApi avec mariage fonctionne correctement", async () => {
+  render(<HookConsumerMariage />);
+
+  await waitFor(() => {
+    // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+    expect(screen.getByText(imagePngVideBase64)).toBeInTheDocument();
+  });
+});
+
+const HookConsumerDemandeIncomplete: React.FC = () => {
+  const doc = useCompositionReponseSansDelivranceCSApi(
+    NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE,
+    reponseSansDelivranceCSDemandeIncomplete
+  );
+
+  return <div>{doc}</div>;
+};
+
+test("Attendu: useCompositionReponseSansDelivranceCSApi avec demande incomplete fonctionne correctement", async () => {
+  render(<HookConsumerDemandeIncomplete />);
+
+  await waitFor(() => {
+    // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+    expect(screen.getByText(imagePngVideBase64)).toBeInTheDocument();
+  });
+});
+
+const HookConsumerFrancais: React.FC = () => {
+  const doc = useCompositionReponseSansDelivranceCSApi(
+    NOM_DOCUMENT_REFUS_FRANCAIS,
+    reponseSansDelivranceCSFrancais
+  );
+
+  return <div>{doc}</div>;
+};
+
+test("Attendu: useCompositionReponseSansDelivranceCSApi avec francais fonctionne correctement", async () => {
+  render(<HookConsumerFrancais />);
+
+  await waitFor(() => {
+    // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+    expect(screen.getByText(imagePngVideBase64)).toBeInTheDocument();
+  });
+});
+
+afterAll(() => {
+  superagentMock.unset();
+});

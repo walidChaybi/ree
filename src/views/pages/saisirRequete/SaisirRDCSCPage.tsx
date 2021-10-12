@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { IReponseNegative } from "../../../model/composition/IReponseNegative";
-import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "../../../model/composition/IReponseNegativeDemandeIncompleteComposition";
+import { IReponseSansDelivranceCS } from "../../../model/composition/IReponseSansDelivranceCS";
+import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
@@ -19,13 +19,13 @@ import { Formulaire } from "../../common/widget/formulaire/Formulaire";
 import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireMessages";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../common/widget/Text";
-import { useReponseNegative } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/hook/ChoixReponseNegativeHook";
+import { useReponseSansDelivranceCS } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/hook/ChoixReponseSansDelivranceCSHook";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
 import {
-  createReponseNegative,
+  createReponseSansDelivranceCS,
   getMessagesPopin,
   getRedirectionVersApercuRequete
 } from "./contenu/SaisirRDCSCPageFonctions";
@@ -101,26 +101,34 @@ export const SaisirRDCSCPage: React.FC = () => {
     []
   );
 
-  const [reponseNegative, setReponseNegative] =
-    useState<IReponseNegative | undefined>();
+  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<
+    IReponseSansDelivranceCS | undefined
+  >();
 
   useState(async () => {
-    const documentDelivrance =
-      DocumentDelivrance.getAllCertificatSituationAsOptions();
+    const documentDelivrance = DocumentDelivrance.getAllCertificatSituationAsOptions();
     setDocumentDemandeOptions(documentDelivrance);
   });
 
   /** Enregistrer la requête */
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [donneesNaissanceIncomplete, setDonneesNaissanceIncomplete] =
-    React.useState<boolean>(false);
-  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] =
-    useState<SaisieRequeteRDCSC>();
-  const [creationRequeteRDCSC, setCreationRequeteRDCSC] =
-    useState<CreationRequeteRDCSC>();
-  const [updateRequeteRDCSC, setUpdateRequeteRDCSC] =
-    useState<UpdateRequeteRDCSC>();
+  const [
+    donneesNaissanceIncomplete,
+    setDonneesNaissanceIncomplete
+  ] = React.useState<boolean>(false);
+  const [
+    saisieRequeteRDCSC,
+    setSaisieRequeteRDCSC
+  ] = useState<SaisieRequeteRDCSC>();
+  const [
+    creationRequeteRDCSC,
+    setCreationRequeteRDCSC
+  ] = useState<CreationRequeteRDCSC>();
+  const [
+    updateRequeteRDCSC,
+    setUpdateRequeteRDCSC
+  ] = useState<UpdateRequeteRDCSC>();
 
   const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 
@@ -132,8 +140,8 @@ export const SaisirRDCSCPage: React.FC = () => {
         // Redirection si l'enregistrement n'est pas un brouillon
         if (!brouillon) {
           if (refus) {
-            const reponse = createReponseNegative(saisieRequeteRDCSC);
-            setReponseNegative({
+            const reponse = createReponseSansDelivranceCS(saisieRequeteRDCSC);
+            setReponseSansDelivranceCS({
               contenu: reponse,
               fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
             });
@@ -153,10 +161,12 @@ export const SaisirRDCSCPage: React.FC = () => {
     [history, saisieRequeteRDCSC]
   );
 
-  const creationRequeteDelivranceRDCSCResultat =
-    useCreationRequeteDelivranceRDCSC(creationRequeteRDCSC);
-  const UpdateRequeteDelivranceRDCSCResultat =
-    useUpdateRequeteDelivranceRDCSC(updateRequeteRDCSC);
+  const creationRequeteDelivranceRDCSCResultat = useCreationRequeteDelivranceRDCSC(
+    creationRequeteRDCSC
+  );
+  const UpdateRequeteDelivranceRDCSCResultat = useUpdateRequeteDelivranceRDCSC(
+    updateRequeteRDCSC
+  );
   useEffect(() => {
     if (creationRequeteDelivranceRDCSCResultat) {
       redirectionPage(
@@ -176,21 +186,21 @@ export const SaisirRDCSCPage: React.FC = () => {
     }
   }, [UpdateRequeteDelivranceRDCSCResultat, redirectionPage]);
 
-  const resultatReponseNegative = useReponseNegative(
+  const resultatReponseSansDelivranceCS = useReponseSansDelivranceCS(
     StatutRequete.TRAITE_A_IMPRIMER.libelle,
     StatutRequete.TRAITE_A_IMPRIMER,
-    reponseNegative,
+    reponseSansDelivranceCS,
     idRequete
   );
   useEffect(() => {
-    if (resultatReponseNegative) {
+    if (resultatReponseSansDelivranceCS) {
       messageManager.showSuccessAndClose(
         getLibelle("Le refus a bien été enregistré")
       );
 
       history.goBack();
     }
-  }, [resultatReponseNegative, history]);
+  }, [resultatReponseSansDelivranceCS, history]);
 
   const onSubmitSaisirRDCSC = (values: SaisieRequeteRDCSC) => {
     const villeNaissance = values.interesse.naissance.villeEvenement;

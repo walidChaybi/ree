@@ -1,4 +1,4 @@
-import { IContenuReponseNegative } from "../../model/composition/IReponseNegative";
+import { IContenuReponseSansDelivranceCS } from "../../model/composition/IReponseSansDelivranceCS";
 import { TypePacsRcRca } from "../../model/etatcivil/enum/TypePacsRcRca";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
@@ -13,11 +13,11 @@ const URL_COMPOSITION_CERTIFICAT_RC =
 
 const URL_COMPOSITION_ATTESTATION_PACS = "/composition/ATTESTATION_PACS/1";
 
-function getCompositionReponseNegative(
+function getCompositionReponseSansDelivranceCS(
   document: string,
-  reponseNegative: IContenuReponseNegative
+  reponseSansDelivranceCS: IContenuReponseSansDelivranceCS
 ): Promise<any> {
-  return getComposition(`/composition/${document}/1`, reponseNegative);
+  return getComposition(`/composition/${document}/1`, reponseSansDelivranceCS);
 }
 
 function getCompositionCertificatSituation(obj: any): Promise<any> {
@@ -76,7 +76,7 @@ Promise<any> {
 export const compositionApi = {
   getCompositionCertificatSituation,
   getCompositionCertificatRCA,
-  getCompositionReponseNegative,
+  getCompositionReponseSansDelivranceCS,
   getCompositionCertificatRC,
   getCompositionCertificatPACS,
   getCompositionCertificatPacsRcRca

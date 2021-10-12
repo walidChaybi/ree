@@ -4,7 +4,7 @@ import request from "superagent";
 import { idDocumentsReponse } from "../../../../../../mock/data/DocumentReponse";
 import { imagePngVideBase64 } from "../../../../../../mock/data/ImagePng";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
-import { idRequete1 } from "../../../../../../mock/data/RequeteV2";
+import { idRequeteRDCSC } from "../../../../../../mock/data/RequeteV2";
 import { configMultiAPi } from "../../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
@@ -34,7 +34,7 @@ const titulaire = {
 } as ITitulaireRequeteTableau;
 
 const requete = {
-  idRequete: idRequete1,
+  idRequete: idRequeteRDCSC,
   document: ReponseAppelNomenclatureDocummentDelivrance.data[1].id, //CERTIFICAT_SITUATION_PACS
   titulaires: [titulaire]
 } as IRequeteTableau;

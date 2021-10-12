@@ -26,7 +26,6 @@ import { IAjouterAlerteFormValue } from "../../../common/widget/alertes/ajouterA
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableUtils";
 import { getLibelle } from "../../../common/widget/Text";
-import { ChoixAction } from "../../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ChoixAction";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { ICriteresRecherche } from "../../rechercheMultiCriteres/acteArchive/hook/RMCActeArchiveApiHook";
 import { useRMCActeApiHook } from "../../rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
@@ -45,8 +44,9 @@ import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
-import { AlertesActes } from "./contenu/AlertesActes/AlertesActes";
-import { BoutonNouvelleRMC } from "./contenu/BoutonNouvelleRMC";
+import { ChoixAction } from "./contenu/actions/ChoixAction";
+import { AlertesActes } from "./contenu/alertesActes/AlertesActes";
+import { BoutonNouvelleRMC } from "./contenu/rechercheMultiCriteres/BoutonNouvelleRMC";
 
 interface DataRMCAuto {
   dataRequetes: any[];
@@ -372,16 +372,6 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
           <div className="contenu-requete">
             <div className="side left">
               <ResumeRequeteV2 requete={detailRequeteState} />
-              <SuiviActionsRequete actions={detailRequeteState?.actions} />
-              <SuiviObservationsRequete
-                observations={detailRequeteState?.observations}
-              />
-              <DocumentsReponses
-                documents={
-                  (detailRequeteState as IRequeteDelivrance).documentsReponses
-                }
-                setDocumentAffiche={openFenetre}
-              />
               {dataRMCAutoRequete && dataTableauRMCAutoRequete && (
                 <RMCRequetesAssocieesResultats
                   dataRMCAutoRequete={dataRMCAutoRequete}
@@ -389,6 +379,16 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
                   setRangeRequete={setRangeRequete}
                 />
               )}
+              <SuiviObservationsRequete
+                observations={detailRequeteState?.observations}
+              />
+              <SuiviActionsRequete actions={detailRequeteState?.actions} />
+              <DocumentsReponses
+                documents={
+                  (detailRequeteState as IRequeteDelivrance).documentsReponses
+                }
+                setDocumentAffiche={openFenetre}
+              />
             </div>
             <div className="side right">
               {dataRMCAutoActe &&

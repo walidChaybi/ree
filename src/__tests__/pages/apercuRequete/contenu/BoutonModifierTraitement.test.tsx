@@ -4,7 +4,7 @@ import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
-import { idRequete1 } from "../../../../mock/data/RequeteV2";
+import { idRequeteRDCSC } from "../../../../mock/data/RequeteV2";
 import { configMultiAPi } from "../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
@@ -19,7 +19,7 @@ import { URL_MES_REQUETES_APERCU_REQUETE } from "../../../../views/router/ReceUr
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
 const requeteTestCOURRIER = {
-  id: idRequete1,
+  id: idRequeteRDCSC,
   idEntite: "11",
   type: TypeRequete.DELIVRANCE,
   dateCreation: 1577836800000,
@@ -106,7 +106,7 @@ test("est à A_VALIDER", async () => {
 });
 
 const requeteTestCOMEDEC = {
-  id: idRequete1,
+  id: idRequeteRDCSC,
   idEntite: "11",
   dateCreation: 1577836800000,
   type: TypeRequete.DELIVRANCE,
