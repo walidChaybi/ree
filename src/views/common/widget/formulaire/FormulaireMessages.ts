@@ -1,5 +1,3 @@
-import { COMPLEMENT_DESCRIPTION_MAX_LENGTH } from "../../../pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
-
 // Messages d'erreurs
 export const CARATERES_AUTORISES_MESSAGE =
   "Les caractères autorisés : les lettres, les chiffres, l'espace, le tiret, le point et l'apostrophe";
@@ -35,4 +33,4 @@ export const NB_EXEMPLAIRE_MAXIMUM = "Le nombre maximum d'exemplaires est de 5";
 export const MOTIF_OBLIGATOIRE = "Le motif de délivrance est obligatoire";
 export const ALERTE_OBLIGATOIRE = "Le choix d'un motif est obligatoire";
 export const ALERTE_AUTRE = `L'observation est obligatoire si le motif est "Autre"`;
-export const COMPLEMENT_DESCRIPTION_LIMITE_TAILLE = `L'observation ne peut pas dépasser ${COMPLEMENT_DESCRIPTION_MAX_LENGTH} caractères`;
+export const COMPLEMENT_DESCRIPTION_LIMITE_TAILLE = `L'observation ne peut pas dépasser 150 caractères`;
