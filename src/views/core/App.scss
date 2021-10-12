@@ -12,14 +12,14 @@
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.55);
   color: white;
   display: grid;
-  grid-template-columns: 15% 70% 15%;
+  grid-template-columns: 35% 30% 35%;
 
   .LogoHeader {
     text-align: start;
     img {
       margin: 0.5rem;
       cursor: pointer;
-      width: 50%;
+      width: 20%;
     }
   }
 

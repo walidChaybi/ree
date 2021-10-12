@@ -12,6 +12,7 @@ import {
 import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { logError } from "../../common/util/LogManager";
+import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../common/util/Utils";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle, getText } from "../../common/widget/Text";
 import {
@@ -119,7 +120,9 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
                     aria-haspopup="true"
                     onClick={event => handleClickBoutonOfficer(event)}
                   >
-                    {`${officier.officierDataState.prenom} ${officier.officierDataState.nom}`}
+                    {`${officier.officierDataState.prenom} ${
+                      officier.officierDataState.nom
+                    }${getFonction(officier.officierDataState.fonction)}`}
                   </Button>
 
                   <Menu
@@ -151,3 +154,9 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
     </>
   );
 };
+
+function getFonction(fonction?: string): string {
+  return fonction
+    ? ` - ${premiereLettreEnMajusculeLeResteEnMinuscule(fonction)}`
+    : "";
+}

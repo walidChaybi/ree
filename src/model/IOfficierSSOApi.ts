@@ -16,10 +16,12 @@ export interface IOfficierSSOApi {
   bureau: string;
   departement: string;
   service: string;
+  ministere: string;
   habilitations: IHabilitation[];
   idUtilisateur: string;
   entite?: IEntite;
   entitesFilles?: IEntite[];
+  fonction?: string;
 }
 
 /** Savoir si l'officier connecté à le droit ou le profilt demandé en paramètre */

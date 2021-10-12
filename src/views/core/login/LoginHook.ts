@@ -58,9 +58,11 @@ function setUtilisateurSSOApi(headers: any, body: any): IOfficierSSOApi {
     bureau: headers.bureau,
     departement: headers.departement,
     service: headers.service,
+    ministere: headers.ministere,
     habilitations: [],
     entite: body.entite,
-    entitesFilles: body.entitesFillesDirectes
+    entitesFilles: body.entitesFillesDirectes,
+    fonction: body.fonctionAgent.libelleFonction
   };
 }
 

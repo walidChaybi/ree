@@ -10,7 +10,7 @@ import React from "react";
 import logoRece from "../../../img/logo-rece.svg";
 import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
-import { getText, Text } from "../../common/widget/Text";
+import { getLibelle, getText, Text } from "../../common/widget/Text";
 import {
   OfficierContext,
   OfficierContextProps
@@ -54,14 +54,7 @@ export const AccueilPage: React.FC = () => {
                 }
               />
             </div>
-            <div className="Affectation">
-              <Text
-                messageId={`pages.accueil.affectation.${
-                  getHierarchie(officier).length
-                }`}
-                values={getHierarchie(officier)}
-              />
-            </div>
+            <div className="Affectation">{getAffectation(officier)}</div>
           </>
         )}
       </OfficierContext.Consumer>
@@ -128,11 +121,24 @@ export const AccueilPage: React.FC = () => {
   );
 };
 
+function getAffectation(officier?: OfficierContextProps): string {
+  const hierarchie = getHierarchie(officier);
+  let buildHierarchie = "";
+  if (hierarchie.length > 0) {
+    buildHierarchie = hierarchie.join(" - ");
+  }
+  return getLibelle(buildHierarchie);
+}
+
 function getHierarchie(officier?: OfficierContextProps): string[] {
   const hierarchie = [];
   const officierData = officier?.officierDataState;
 
   if (officier !== undefined && officierData !== undefined) {
+    if (officierData.ministere !== undefined) {
+      hierarchie.push(officierData.ministere);
+    }
+
     if (officierData.service !== undefined) {
       hierarchie.push(officierData.service);
     }

@@ -15,6 +15,7 @@ export const userDroitConsulterArchive: IOfficierSSOApi = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  ministere: "ministereConnectedUser",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -54,6 +55,7 @@ export const userDroitConsulterConsulterArchive: IOfficierSSOApi = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  ministere: "ministereConnectedUser",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -96,6 +98,7 @@ export const userDroitConsulterPerimetreMEAE: IOfficierSSOApi = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  ministere: "ministereConnectedUser",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -142,6 +145,7 @@ export const userDroitConsulterPerimetreTUNIS: IOfficierSSOApi = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  ministere: "ministereConnectedUser",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -181,6 +185,7 @@ export const userDroitnonCOMEDEC: IOfficierSSOApi = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  ministere: "ministereConnectedUser",
   habilitations: [
     {
       idHabilitation: "h12345",
@@ -248,6 +253,7 @@ export const userDroitCOMEDEC: IOfficierSSOApi = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  ministere: "ministereConnectedUser",
   habilitations: [
     {
       idHabilitation: "h12345",
