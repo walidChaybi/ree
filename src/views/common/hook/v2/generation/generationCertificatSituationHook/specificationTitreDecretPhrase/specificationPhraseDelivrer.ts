@@ -209,49 +209,49 @@ class SpecificationDeliver {
 // SpecificationDelivers pour les phrases à renvoyer en fonction des résultats des RMC Actes et inscritptions
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const PAS_INSCRIT_PACS = getLibelle(
-  "N'est pas inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
+  "- N'est pas inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
 );
 const PAS_INSCRITE_PACS = getLibelle(
-  "N'est pas inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
+  "- N'est pas inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
 );
 const INSCRIT_PACS = getLibelle(
-  "Est inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le {0} sous la référence PAC n°{1}-{2}."
+  "- Est inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le {0} sous la référence PAC n°{1}-{2}."
 );
 const INSCRITE_PACS = getLibelle(
-  "Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le {0} sous la référence PAC n°{1}-{2}."
+  "- Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le {0} sous la référence PAC n°{1}-{2}."
 );
-const PAS_INSCRIT_RC = getLibelle("N’est pas inscrit au répertoire civil.");
-const PAS_INSCRITE_RC = getLibelle("N’est pas inscrite au répertoire civil.");
+const PAS_INSCRIT_RC = getLibelle("- N’est pas inscrit au répertoire civil.");
+const PAS_INSCRITE_RC = getLibelle("- N’est pas inscrite au répertoire civil.");
 const INSCRIT_RC = getLibelle(
-  "Est inscrit au répertoire civil depuis le {0} sous la référence RC n°{1}-{2}."
+  "- Est inscrit au répertoire civil depuis le {0} sous la référence RC n°{1}-{2}."
 );
 const INSCRITE_RC = getLibelle(
-  "Est inscrite au répertoire civil depuis le {0} sous la référence RC n°{1}-{2}."
+  "- Est inscrite au répertoire civil depuis le {0} sous la référence RC n°{1}-{2}."
 );
 const PAS_INSCRIT_RCA = getLibelle(
-  "N’est pas inscrit au répertoire civil annexe."
+  "- N’est pas inscrit au répertoire civil annexe."
 );
 const PAS_INSCRITE_RCA = getLibelle(
-  "N’est pas inscrite au répertoire civil annexe."
+  "- N’est pas inscrite au répertoire civil annexe."
 );
 const INSCRIT_RCA = getLibelle(
-  "Est inscrit au répertoire civil annexe depuis le {0} sous la référence RCA n°{1}-{2}."
+  "- Est inscrit au répertoire civil annexe depuis le {0} sous la référence RCA n°{1}-{2}."
 );
 const INSCRITE_RCA = getLibelle(
-  "Est inscrite au répertoire civil annexe depuis le {0} sous la référence RCA n°{1}-{2}."
+  "- Est inscrite au répertoire civil annexe depuis le {0} sous la référence RCA n°{1}-{2}."
 );
 
 const PIECE_JOINTE = getLibelle(
-  "A toutes fins utiles, vous trouverez joint(s) à ce certificat :"
+  "- A toutes fins utiles, vous trouverez joint(s) à ce certificat :"
 );
 const PIECE_JOINTE_PACS = getLibelle(
-  "• la communication des informations relatives à un pacte civil de solidarité"
+  "- la communication des informations relatives à un pacte civil de solidarité"
 );
 const PIECE_JOINTE_RC = getLibelle(
-  "• le(s) certificat(s) d’inscription au répertoire civil"
+  "- le(s) certificat(s) d’inscription au répertoire civil"
 );
 const PIECE_JOINTE_RCA = getLibelle(
-  "• le(s) certificat(s) d’inscription au répertoire civil annexe"
+  "- le(s) certificat(s) d’inscription au répertoire civil annexe"
 );
 
 /////////////////////////////////////////////////////////////////////

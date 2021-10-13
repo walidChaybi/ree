@@ -10,6 +10,7 @@ import {
   getDateFormatJasper,
   getDateFromTimestamp
 } from "../../../../../util/DateUtils";
+import { formatDe } from "../../../../../util/Utils";
 import {
   getDecisionExequatur,
   getDecisionJuridiction,
@@ -106,7 +107,12 @@ export function getRenouvellementModification(data: IFicheRcRca) {
       data.inscriptionsImpactees[0].nature
     ).libelle as string;
 
-    renouvellementModification = `prononçant le ${typeInscription.toLocaleLowerCase()} de la mesure de ${natureInscriptionImpactee.toLocaleLowerCase()} RC n°`;
+    renouvellementModification = TypeInscriptionRc.RENOUVELLEMENT
+      ? `prononçant le ${typeInscription.toLocaleLowerCase()}`
+      : `prononçant la ${typeInscription.toLocaleLowerCase()}`;
+    renouvellementModification += ` de la mesure ${formatDe(
+      natureInscriptionImpactee.toUpperCase()
+    )}${natureInscriptionImpactee.toLocaleLowerCase()} RC n°`;
     renouvellementModification += ` ${data.inscriptionsImpactees[0].annee} - ${data.inscriptionsImpactees[0].numero}`;
     renouvellementModification +=
       data.typeInscription === TypeInscriptionRc.MODIFICATION
