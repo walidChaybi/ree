@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
-import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
+import { IOfficier } from "../../../model/agent/IOfficier";
 import apiResources from "../../../ressources/api.json";
 import { OfficierContextProps } from "../../core/contexts/OfficierContext";
 import { getText } from "../widget/Text";
@@ -19,43 +19,44 @@ interface GestionnaireFermetureProps {
   urlRedirection?: string;
 }
 
-export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = props => {
-  const history = useHistory();
-  useEffect(() => {
-    const handleBackBeforUnload = (event: any) => {
-      let resTraitement: any = true;
-      if (props.fctAAppeler) {
-        const res = props.fctAAppeler(props.paramsFctAAppler);
+export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> =
+  props => {
+    const history = useHistory();
+    useEffect(() => {
+      const handleBackBeforUnload = (event: any) => {
+        let resTraitement: any = true;
+        if (props.fctAAppeler) {
+          const res = props.fctAAppeler(props.paramsFctAAppler);
 
-        if (props.fctTraitementResultat) {
-          resTraitement = props.fctTraitementResultat(res);
+          if (props.fctTraitementResultat) {
+            resTraitement = props.fctTraitementResultat(res);
+          }
         }
-      }
-      if (resTraitement) {
-        // Cancel the default event
-        event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-        // Older browsers supported custom message
-        event.returnValue = "Are you sur to close this window";
-        if (props.urlRedirection) {
-          executeEnDiffere(function () {
-            if (props.urlRedirection) {
-              history.push(props.urlRedirection);
-            }
-          });
+        if (resTraitement) {
+          // Cancel the default event
+          event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+          // Older browsers supported custom message
+          event.returnValue = "Are you sur to close this window";
+          if (props.urlRedirection) {
+            executeEnDiffere(function () {
+              if (props.urlRedirection) {
+                history.push(props.urlRedirection);
+              }
+            });
+          }
+        } else {
+          delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
         }
-      } else {
-        delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
-      }
-    };
-    window.top.addEventListener("beforeunload", handleBackBeforUnload);
+      };
+      window.top.addEventListener("beforeunload", handleBackBeforUnload);
 
-    return () => {
-      window.top.removeEventListener("beforeunload", handleBackBeforUnload);
-    };
-  }, [props, history]);
+      return () => {
+        window.top.removeEventListener("beforeunload", handleBackBeforUnload);
+      };
+    }, [props, history]);
 
-  return null;
-};
+    return null;
+  };
 
 const HTTP_STATUS_OK = 200;
 
@@ -68,7 +69,7 @@ export const appelRequetesASigner = (officier: OfficierContextProps) => {
     : 0;
 };
 
-const appelApi = (officierPayload: IOfficierSSOApi | undefined) => {
+const appelApi = (officierPayload: IOfficier | undefined) => {
   const req = new XMLHttpRequest();
   const api = apiResources.apis[0];
   const version = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2)

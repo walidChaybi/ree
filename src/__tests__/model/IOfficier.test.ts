@@ -1,23 +1,23 @@
-import {
-  estOfficierHabiliterPourTousLesDroits,
-  officierAutoriserSurLeTypeRegistre,
-  officierHabiliterUniquementPourLeDroit
-} from "../../model/IOfficierSSOApi";
-import { storeRece } from "../../views/common/util/storeRece";
 import mockConnectedUser from "../../mock/data/connectedUser.json";
-import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
-import { Droit } from "../../model/Droit";
 import {
   userDroitConsulterArchive,
   userDroitConsulterConsulterArchive,
   userDroitConsulterPerimetreMEAE,
   userDroitConsulterPerimetreTUNIS
 } from "../../mock/data/connectedUserAvecDroit";
+import {
+  estOfficierHabiliterPourTousLesDroits,
+  IOfficier,
+  officierAutoriserSurLeTypeRegistre,
+  officierHabiliterUniquementPourLeDroit
+} from "../../model/agent/IOfficier";
+import { Droit } from "../../model/Droit";
+import { storeRece } from "../../views/common/util/storeRece";
 
 const u: any = mockConnectedUser;
 
 test("Habilitation model", () => {
-  storeRece.utilisateurCourant = u as IOfficierSSOApi;
+  storeRece.utilisateurCourant = u as IOfficier;
   let estAutorise = estOfficierHabiliterPourTousLesDroits([Droit.ATTRIBUER]);
   expect(estAutorise).toBe(true);
 
@@ -48,9 +48,8 @@ test("Attendu: officierHabiliterUniquementPourLeDroit fonctionne correctement", 
 test("Utilisateur autoriser à consulter l'acte dont l'idTypeRegistre est passé", () => {
   storeRece.utilisateurCourant = userDroitConsulterPerimetreTUNIS;
   const idTypeRegistre = "b66a9304-48b4-4aa3-920d-6cb27dd76c83";
-  let autoriserAConsulterActe = officierAutoriserSurLeTypeRegistre(
-    idTypeRegistre
-  );
+  let autoriserAConsulterActe =
+    officierAutoriserSurLeTypeRegistre(idTypeRegistre);
   expect(autoriserAConsulterActe).toBe(true);
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;

@@ -12,4 +12,5 @@ export interface IEntite {
   libelleEntite: string;
   hierarchieEntite?: IHierarchieEntite[];
   utilisateur?: any;
+  estDansSCEC?: boolean;
 }

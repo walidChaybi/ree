@@ -1,12 +1,12 @@
 import React from "react";
-import { Droit } from "../../../../../../model/Droit";
-import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
-import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 import {
   officierALeDroitSurLePerimetre,
   officierAutoriserSurLeTypeRegistre,
   officierHabiliterPourLeDroit
-} from "../../../../../../model/IOfficierSSOApi";
+} from "../../../../../../model/agent/IOfficier";
+import { Droit } from "../../../../../../model/Droit";
+import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
+import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { PERIMETRE_MEAE } from "../../../../../../model/IPerimetre";
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";

@@ -1,9 +1,12 @@
+import { act } from "@testing-library/react";
 import React from "react";
 import ReactDOM from "react-dom";
 import request from "superagent";
-import { useLoginApi } from "../../../views/core/login/LoginHook";
-import { act } from "@testing-library/react";
 import { configAgent } from "../../../mock/superagent-config/superagent-mock-agent";
+import {
+  setProfilsOfficier,
+  useLoginApi
+} from "../../../views/core/login/LoginHook";
 
 const superagentMock = require("superagent-mock")(request, configAgent);
 
@@ -39,6 +42,10 @@ test("monter un composant de test pour vérifier que tout va bien", async () => 
   if (container instanceof Element) {
     expect(container.querySelector).toBeTruthy();
   }
+});
+
+test("setProfilsOfficier", () => {
+  expect(setProfilsOfficier("BEUH\\NOIX")).toStrictEqual(["BEUH\\NOIX"]);
 });
 
 afterAll(() => {

@@ -6,34 +6,31 @@ import {
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import React, { useState } from "react";
-import { storeRece } from "../../util/storeRece";
 import { Option, Options } from "../../util/Type";
 import { BoutonOperationEnCours } from "../attente/BoutonOperationEnCours";
 import { getLibelle } from "../Text";
-import "./scss/TransfertServicePopin.scss";
+import "./scss/TransfertPopin.scss";
 
-interface TransfertServicePopinProps {
+interface TransfertPopinProps {
   open: boolean;
   onClose: () => void;
   onValidate: (entite: Option) => void;
+  options: Options;
+  titre: string;
 }
 
-export const TransfertServicePopin: React.FC<TransfertServicePopinProps> = ({
+export const TransfertPopin: React.FC<TransfertPopinProps> = ({
   open,
   onClose,
-  onValidate
+  onValidate,
+  options,
+  titre
 }) => {
-  const [entiteChoisie, setEntiteChoisie] = useState<Option>({
+  const [optionChoisie, setOptionChoisie] = useState<Option>({
     value: "",
     str: ""
   });
   const [validerDesactive, setvaliderDesactive] = useState<boolean>(true);
-
-  function listeEntiteToOptions(): Options {
-    return storeRece.listeEntite.map(entite => {
-      return { value: entite.idEntite, str: entite.libelleEntite };
-    });
-  }
 
   return (
     <>
@@ -41,9 +38,9 @@ export const TransfertServicePopin: React.FC<TransfertServicePopinProps> = ({
         open={open}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="PopinService"
+        className="PopinTransfert"
       >
-        <DialogTitle>{getLibelle("Transfert à un service")}</DialogTitle>
+        <DialogTitle>{getLibelle(titre)}</DialogTitle>
         <DialogContent>
           <Autocomplete
             data-testid="autocomplete"
@@ -53,10 +50,10 @@ export const TransfertServicePopin: React.FC<TransfertServicePopinProps> = ({
             getOptionSelected={(option, val) => {
               return option.value === val.value;
             }}
-            options={listeEntiteToOptions()}
+            options={options}
             onChange={(event, newValue) => {
               if (newValue != null) {
-                setEntiteChoisie(newValue);
+                setOptionChoisie(newValue);
                 setvaliderDesactive(false);
               }
             }}
@@ -66,7 +63,7 @@ export const TransfertServicePopin: React.FC<TransfertServicePopinProps> = ({
                   type="text"
                   placeholder={"Recherche..."}
                   {...params.inputProps}
-                  aria-label={"Recherche service"}
+                  aria-label={"Recherche"}
                 />
               </div>
             )}
@@ -80,7 +77,7 @@ export const TransfertServicePopin: React.FC<TransfertServicePopinProps> = ({
             {getLibelle("Annuler")}
           </button>
           <BoutonOperationEnCours
-            onClick={() => onValidate(entiteChoisie)}
+            onClick={() => onValidate(optionChoisie)}
             estDesactive={validerDesactive}
           >
             {getLibelle("Valider")}

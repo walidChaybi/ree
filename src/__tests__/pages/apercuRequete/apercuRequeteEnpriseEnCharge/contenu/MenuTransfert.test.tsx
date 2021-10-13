@@ -17,6 +17,14 @@ import { configEtatcivil } from "../../../../../mock/superagent-config/superagen
 import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { TypeEntite } from "../../../../../model/agent/enum/TypeEntite";
+import { IEntite } from "../../../../../model/agent/IEntiteRattachement";
+import { IUtilisateur } from "../../../../../model/agent/IUtilisateur";
+import { Droit } from "../../../../../model/Droit";
+import {
+  IDroit,
+  IHabilitation,
+  IProfil
+} from "../../../../../model/Habilitation";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
 import { MenuTransfert } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuTransfert";
@@ -65,7 +73,7 @@ test("renders du bloc Menu Reponse Negative", async () => {
   });
 });
 
-test("check popin", async () => {
+test("check popin service", async () => {
   let choixService: HTMLElement;
   await waitFor(() => {
     const menuTransfert = screen.getByText("Transférer");
@@ -83,9 +91,7 @@ test("check popin", async () => {
   expect(valider).toBeDefined();
   expect(valider.disabled).toBeTruthy();
   expect(title).toBeDefined();
-  const autocomplete = screen.getByLabelText(
-    /Recherche service+/
-  ) as HTMLInputElement;
+  const autocomplete = screen.getByLabelText(/Recherche+/) as HTMLInputElement;
   expect(autocomplete).toBeDefined();
 
   await waitFor(() => {
@@ -93,19 +99,47 @@ test("check popin", async () => {
   });
 });
 
-test("check autocomplete", async () => {
+test("check popin agent", async () => {
+  let choixService: HTMLElement;
+  await waitFor(() => {
+    const menuTransfert = screen.getByText("Transférer");
+    fireEvent.click(menuTransfert);
+  });
+
+  await waitFor(() => {
+    choixService = screen.getByText(/À un Officier d'État Civil+/);
+    fireEvent.click(choixService);
+  });
+
+  const valider = screen.getByText(/Valider+/) as HTMLButtonElement;
+  const annuler = screen.getByText(/Annuler+/) as HTMLButtonElement;
+  const title = screen.getByText("Transfert à un Officier d'État Civil");
+  expect(valider).toBeDefined();
+  expect(valider.disabled).toBeTruthy();
+  expect(title).toBeDefined();
+  const autocomplete = screen.getByLabelText(/Recherche+/) as HTMLInputElement;
+  expect(autocomplete).toBeDefined();
+
+  await waitFor(() => {
+    fireEvent.click(annuler);
+  });
+});
+
+test("check autocomplete service", async () => {
   storeRece.listeEntite = [
     {
       idEntite: "1234",
       type: TypeEntite.BUREAU,
       code: "1234",
-      libelleEntite: "str1"
+      libelleEntite: "str1",
+      estDansSCEC: true
     },
     {
       idEntite: "12345",
       type: TypeEntite.DEPARTEMENT,
       code: "12345",
-      libelleEntite: "str2"
+      libelleEntite: "str2",
+      estDansSCEC: true
     }
   ];
   await waitFor(() => {
@@ -120,7 +154,7 @@ test("check autocomplete", async () => {
 
   const autocomplete = screen.getByTestId("autocomplete");
   const inputChampRecherche = screen.getByLabelText(
-    "Recherche service"
+    "Recherche"
   ) as HTMLInputElement;
   autocomplete.focus();
   act(() => {
@@ -141,6 +175,77 @@ test("check autocomplete", async () => {
   const valider = screen.getByText("Valider") as HTMLButtonElement;
 
   expect(inputChampRecherche.value).toStrictEqual("str1");
+  expect(valider.disabled).toBeFalsy();
+
+  await waitFor(() => {
+    fireEvent.click(valider);
+  });
+
+  expect(history.location.pathname).toBe(
+    getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE, idRequeteRDCSC)
+  );
+});
+
+test("check autocomplete agent", async () => {
+  storeRece.listeUtilisateurs = [
+    {
+      entite: { estDansSCEC: true } as IEntite,
+      prenom: "str1",
+      nom: "",
+      habilitations: [
+        {
+          profil: {
+            droits: [{ nom: Droit.DELIVRER } as IDroit]
+          } as IProfil
+        } as IHabilitation
+      ]
+    } as IUtilisateur,
+    {
+      entite: { estDansSCEC: true } as IEntite,
+      prenom: "str2",
+      nom: "",
+      habilitations: [
+        {
+          profil: {
+            droits: [{ nom: Droit.DELIVRER } as IDroit]
+          } as IProfil
+        } as IHabilitation
+      ]
+    } as IUtilisateur
+  ];
+  await waitFor(() => {
+    const menuTransfert = screen.getByText("Transférer");
+    fireEvent.click(menuTransfert);
+  });
+
+  await waitFor(() => {
+    const choixService = screen.getByText(/À un Officier d'État Civil+/);
+    fireEvent.click(choixService);
+  });
+
+  const autocomplete = screen.getByTestId("autocomplete");
+  const inputChampRecherche = screen.getByLabelText(
+    "Recherche"
+  ) as HTMLInputElement;
+  autocomplete.focus();
+  act(() => {
+    fireEvent.change(inputChampRecherche, {
+      target: {
+        value: "s"
+      }
+    });
+  });
+  const str1 = screen.getByText("str1");
+  expect(str1).toBeInTheDocument();
+  expect(screen.getByText("str2")).toBeInTheDocument();
+
+  await waitFor(() => {
+    fireEvent.click(str1);
+  });
+
+  const valider = screen.getByText("Valider") as HTMLButtonElement;
+
+  expect(inputChampRecherche.value).toStrictEqual("str1 ");
   expect(valider.disabled).toBeFalsy();
 
   await waitFor(() => {

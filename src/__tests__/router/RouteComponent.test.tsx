@@ -1,16 +1,16 @@
-import React from "react";
-import { createMemoryHistory } from "history";
-import { URL_REQUETES_SERVICE } from "../../views/router/ReceUrls";
 import { render, waitFor } from "@testing-library/react";
-import { RouterComponent } from "../../views/router/RouteComponent";
+import { createMemoryHistory } from "history";
+import React from "react";
 import { Router } from "react-router-dom";
 import mockConnectedUser from "../../mock/data/connectedUser.json";
-import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
-import { storeRece } from "../../views/common/util/storeRece";
+import { IOfficier } from "../../model/agent/IOfficier";
 import { Droit } from "../../model/Droit";
+import { storeRece } from "../../views/common/util/storeRece";
+import { URL_REQUETES_SERVICE } from "../../views/router/ReceUrls";
+import { RouterComponent } from "../../views/router/RouteComponent";
 
 const u: any = mockConnectedUser;
-storeRece.utilisateurCourant = u as IOfficierSSOApi;
+storeRece.utilisateurCourant = u as IOfficier;
 
 test("L'utilisateur est redirigé vers la page d'accueil car il n'a pa le droit attribuer", () => {
   storeRece.utilisateurCourant!.habilitations[0].profil.droits = [];

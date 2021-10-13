@@ -1,12 +1,12 @@
 import React from "react";
-import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
-import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
-import "./scss/ActionButtonsRequestPage.scss";
+import { IOfficier } from "../../../../model/agent/IOfficier";
 import { IDataTable } from "../../../../model/requete/IDataTable";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { BoutonARetraiterSaga } from "./BoutonARetraiterSaga";
-import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
 import { BarreNavigationSuivPrec } from "../../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
+import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
+import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
+import { BoutonARetraiterSaga } from "./BoutonARetraiterSaga";
+import "./scss/ActionButtonsRequestPage.scss";
 
 export interface ActionsProps {
   indexRequete: number;
@@ -15,7 +15,7 @@ export interface ActionsProps {
   requetes: IDataTable[];
   idRequete: string;
   reloadData: (allsigned: boolean) => void;
-  connectedUser?: IOfficierSSOApi;
+  connectedUser?: IOfficier;
 }
 
 export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({

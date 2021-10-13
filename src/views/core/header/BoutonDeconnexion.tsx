@@ -31,9 +31,8 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   onClick
 }) => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
-  const [confirmationDeco, setConfirmationDeco] = React.useState<boolean>(
-    false
-  );
+  const [confirmationDeco, setConfirmationDeco] =
+    React.useState<boolean>(false);
   const [nbRequetes, setNbRequetes] = React.useState<number>(0);
   const history = useHistory();
 
@@ -122,7 +121,9 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
                   >
                     {`${officier.officierDataState.prenom} ${
                       officier.officierDataState.nom
-                    }${getFonction(officier.officierDataState.fonction)}`}
+                    }${getFonction(
+                      officier.officierDataState.fonctionAgent?.libelleFonction
+                    )}`}
                   </Button>
 
                   <Menu

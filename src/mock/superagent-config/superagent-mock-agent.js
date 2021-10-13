@@ -30,11 +30,11 @@ export const configAgent = [
         return { data: DONNEES_UTILISATEURS.data };
       }
 
-      if (match[1] === "/utilisateurs/all?range=0-100&lite=true") {
+      if (match[1] === "/utilisateurs/all?range=0-100&lite=false") {
         return { ...DONNEES_UTILISATEURS };
       }
 
-      if (match[1] === "/utilisateurs/all?range=1-100&lite=true") {
+      if (match[1] === "/utilisateurs/all?range=1-100&lite=false") {
         return { ...DONNEES_UTILISATEURS_PAGE2 };
       }
 

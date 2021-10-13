@@ -232,7 +232,7 @@ export class ApiManager {
     const parameters = httpRequestConfig.parameters;
     let cacheKey = `${httpRequestConfig.method}.${httpRequestConfig.uri}`;
     if (parameters) {
-      cacheKey = `${cacheKey}.${parameters}`;
+      cacheKey = `${cacheKey}.${JSON.stringify(parameters)}`;
     }
     return cacheKey;
   }

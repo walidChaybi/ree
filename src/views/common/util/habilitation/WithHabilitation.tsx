@@ -3,8 +3,8 @@ import {
   estOfficierHabiliterPourSeulementLesDroits,
   estOfficierHabiliterPourTousLesDroits,
   estOfficierHabiliterPourUnDesDroits,
-  IOfficierSSOApi
-} from "../../../../model/IOfficierSSOApi";
+  IOfficier
+} from "../../../../model/agent/IOfficier";
 import { storeRece } from "../storeRece";
 import {
   habilitationsDescription,
@@ -21,7 +21,7 @@ function getHabilitationPourLeComposant(
 
 function getComportement(
   habilitationPourLeComposant: IHabiliationDescription,
-  utilisateurCourant: IOfficierSSOApi
+  utilisateurCourant: IOfficier
 ) {
   const authorise = habilitationPourLeComposant.tousLesDroits
     ? estOfficierHabiliterPourTousLesDroits(
@@ -88,7 +88,7 @@ export default WithHabilitation;
 
 function visibiliteComposant(
   habilitationPourLeComposant: IHabiliationDescription,
-  utilisateurCourant: IOfficierSSOApi
+  utilisateurCourant: IOfficier
 ): boolean {
   if (
     habilitationPourLeComposant.visiblePourLesDroits &&

@@ -63,8 +63,6 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
     );
   });
 
-  screen.debug();
-
   const title = screen.getByText(/Aperçu de la requête en prise en charge/i);
   const bandeau = screen.getByText(
     "Requête prise en charge par : Ashley YOUNG - Le : 14/07/2020"

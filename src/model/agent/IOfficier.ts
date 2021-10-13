@@ -1,15 +1,10 @@
-import { storeRece } from "../views/common/util/storeRece";
-import { IEntite } from "./agent/IEntiteRattachement";
-import { Droit } from "./Droit";
-import { IDroit, IHabilitation } from "./Habilitation";
-import { Provenance } from "./requete/v2/enum/Provenance";
+import { storeRece } from "../../views/common/util/storeRece";
+import { Droit } from "../Droit";
+import { Provenance } from "../requete/v2/enum/Provenance";
+import { IUtilisateur, utilisateurADroit } from "./IUtilisateur";
 
-export interface IOfficierSSOApi {
+export interface IOfficier extends IUtilisateur {
   idSSO: string;
-  nom: string;
-  prenom: string;
-  trigramme: string;
-  mail: string;
   profils: string[];
   telephone: string;
   section: string;
@@ -17,22 +12,13 @@ export interface IOfficierSSOApi {
   departement: string;
   service: string;
   ministere: string;
-  habilitations: IHabilitation[];
-  idUtilisateur: string;
-  entite?: IEntite;
-  entitesFilles?: IEntite[];
-  fonction?: string;
 }
 
 /** Savoir si l'officier connecté à le droit ou le profilt demandé en paramètre */
 export function officierHabiliterPourLeDroit(droit: Droit) {
-  const officier = storeRece.utilisateurCourant;
-  let droitTrouve: IDroit | undefined;
-  officier?.habilitations.forEach(
-    h =>
-      (droitTrouve = droitTrouve || h.profil.droits.find(d => d.nom === droit))
-  );
-  return droitTrouve != null;
+  return storeRece.utilisateurCourant
+    ? utilisateurADroit(droit, storeRece.utilisateurCourant)
+    : false;
 }
 
 export function estOfficierHabiliterPourTousLesDroits(droits: Droit[]) {
@@ -56,7 +42,7 @@ export function estOfficierHabiliterPourSeulementLesDroits(droits: Droit[]) {
     return true;
   }
   return (
-    droits.length === officier?.habilitations.length &&
+    droits.length === officier?.habilitations?.length &&
     droits.every(droit => officierHabiliterPourLeDroit(droit))
   );
 }
@@ -67,8 +53,8 @@ export function officierHabiliterUniquementPourLeDroit(droit: Droit): boolean {
 
   if (
     officier &&
-    officier.habilitations.length === 1 &&
-    officier.habilitations[0].profil.droits.length === 1
+    officier?.habilitations?.length === 1 &&
+    officier?.habilitations[0].profil.droits.length === 1
   ) {
     droitTrouve = officier.habilitations[0].profil.droits[0].nom === droit;
   }

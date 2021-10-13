@@ -31,7 +31,7 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     ) {
       setEstBonStatut(true);
     } else {
-      checkURLEnFonctionDuStatut(statut, setEstBonStatut, history);
+      setEstBonStatut(checkURLEnFonctionDuStatut(statut, history));
     }
   }, [statut, history]);
 
@@ -46,37 +46,28 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     </Protection>
   );
 };
-function checkURLEnFonctionDuStatut(
+export function checkURLEnFonctionDuStatut(
   statut: StatutRequete | undefined,
-  setEstBonStatut: React.Dispatch<React.SetStateAction<boolean>>,
   history: any
 ) {
   switch (statut) {
     case StatutRequete.BROUILLON:
-      setEstBonStatut(
-        receUrl.getUrlCourante(history).includes(PATH_SAISIR_RDCSC)
-      );
-      break;
+      return receUrl.getUrlCourante(history).includes(PATH_SAISIR_RDCSC);
     case StatutRequete.PRISE_EN_CHARGE:
-      setEstBonStatut(
+      return (
         receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE) ||
-          receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
+        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
       );
-      break;
     case StatutRequete.TRANSFEREE:
     case StatutRequete.A_TRAITER:
-      setEstBonStatut(
-        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ + "/")
-      );
-      break;
+      return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ + "/");
     case StatutRequete.A_VALIDER:
     case StatutRequete.A_SIGNER:
-      setEstBonStatut(
+      return (
         receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
-          receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
+        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
       );
-      break;
     default:
-      setEstBonStatut(true);
+      return true;
   }
 }

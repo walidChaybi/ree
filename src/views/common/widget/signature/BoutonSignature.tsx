@@ -1,21 +1,21 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
+import { IOfficier } from "../../../../model/agent/IOfficier";
+import { IDataTable } from "../../../../model/requete/IDataTable";
+import { StatutRequete } from "../../../../model/requete/StatutRequete";
+import { normaliserNomOec } from "../../util/Utils";
 import { PopinSignature } from "../signature/PopinSignature";
+import { getText } from "../Text";
 import {
   DocumentsATraiter,
   DocumentsByRequete
 } from "./hook/SignatureDocumentHook";
-import { IDataTable } from "../../../../model/requete/IDataTable";
-import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { getText } from "../Text";
-import { Button } from "reakit/Button";
-import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
-import { normaliserNomOec } from "../../util/Utils";
 
 interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
   libelle: string;
   uniqueSignature?: boolean;
-  connectedUser?: IOfficierSSOApi;
+  connectedUser?: IOfficier;
 }
 
 export interface TableauDataToUse {
@@ -33,10 +33,8 @@ export const BoutonSignature: React.FC<
   connectedUser
 }) => {
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
-  const [
-    documentsByRequeteToSign,
-    setDocumentsByRequeteToSign
-  ] = useState<DocumentsByRequete>({});
+  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] =
+    useState<DocumentsByRequete>({});
   const closePopin = useCallback(
     (showPopin: boolean, canReload: boolean) => {
       if (showWaitState && showPopin === false) {
@@ -116,7 +114,7 @@ export const BoutonSignature: React.FC<
 const signaturePossible = (
   requetes: IDataTable[],
   uniqueSignature = false,
-  connectedUser?: IOfficierSSOApi
+  connectedUser?: IOfficier
 ): boolean => {
   if (uniqueSignature === true) {
     return (

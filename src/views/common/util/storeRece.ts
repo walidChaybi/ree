@@ -1,14 +1,14 @@
 import { IEntite } from "../../../model/agent/IEntiteRattachement";
+import { IOfficier } from "../../../model/agent/IOfficier";
 import { IUtilisateur } from "../../../model/agent/IUtilisateur";
 import { IDecret } from "../../../model/etatcivil/commun/IDecret";
-import { IOfficierSSOApi } from "../../../model/IOfficierSSOApi";
 import parametres from "../../../ressources/parametres.json";
 import { Rot18 } from "./crypto/Rot18";
 
 const codePin = parametres.code_pin;
 
 class StoreRece {
-  private _utilisateurCourant?: IOfficierSSOApi;
+  private _utilisateurCourant?: IOfficier;
   private _codePin?: string;
   private _timerCodePin?: number;
   private _retourUrl = "";
@@ -24,7 +24,7 @@ class StoreRece {
     return this._retourUrl;
   }
 
-  set utilisateurCourant(uc: IOfficierSSOApi | undefined) {
+  set utilisateurCourant(uc: IOfficier | undefined) {
     this._utilisateurCourant = uc;
   }
 

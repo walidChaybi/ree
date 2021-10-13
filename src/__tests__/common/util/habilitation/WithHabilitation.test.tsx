@@ -1,11 +1,11 @@
-import React from "react";
-import WithHabilitation from "../../../../views/common/util/habilitation/WithHabilitation";
 import { render } from "@testing-library/react";
-import { storeRece } from "../../../../views/common/util/storeRece";
+import React from "react";
 import mockConnectedUser from "../../../../mock/data/connectedUser.json";
-import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
+import { IOfficier } from "../../../../model/agent/IOfficier";
 import { Droit } from "../../../../model/Droit";
 import { IHabiliationDescription } from "../../../../views/common/util/habilitation/habilitationsDescription";
+import WithHabilitation from "../../../../views/common/util/habilitation/WithHabilitation";
+import { storeRece } from "../../../../views/common/util/storeRece";
 
 interface BoutonTestProps {
   disabled?: boolean;
@@ -19,7 +19,7 @@ const BoutonTest: React.FC<BoutonTestProps> = props => {
   );
 };
 const u: any = mockConnectedUser;
-storeRece.utilisateurCourant = u as IOfficierSSOApi;
+storeRece.utilisateurCourant = u as IOfficier;
 
 const habsDesc: IHabiliationDescription[] = [
   {

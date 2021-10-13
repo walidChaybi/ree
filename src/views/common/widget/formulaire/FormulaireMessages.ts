@@ -30,7 +30,7 @@ export const NB_EXEMPLAIRE_OBLIGATOIRE =
 export const NB_EXEMPLAIRE_MINIMUM = "Le nombre minimum d'exemplaires est de 1";
 export const NB_EXEMPLAIRE_MAXIMUM = "Le nombre maximum d'exemplaires est de 5";
 
-export const MOTIF_OBLIGATOIRE = "Le motif de délivrance est obligatoire";
 export const ALERTE_OBLIGATOIRE = "Le choix d'un motif est obligatoire";
+export const MOTIF_OBLIGATOIRE = "Le motif de délivrance est obligatoire";
 export const ALERTE_AUTRE = `L'observation est obligatoire si le motif est "Autre"`;
 export const COMPLEMENT_DESCRIPTION_LIMITE_TAILLE = `L'observation ne peut pas dépasser 150 caractères`;

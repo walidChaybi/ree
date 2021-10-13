@@ -1,3 +1,4 @@
+import { mappingUtilisateurs } from "../../../model/agent/IUtilisateur";
 import { Decret, IDecret } from "../../../model/etatcivil/commun/IDecret";
 import { logError } from "../../../views/common/util/LogManager";
 import { storeRece } from "../../../views/common/util/storeRece";
@@ -22,11 +23,11 @@ export class GestionnaireCacheApi {
     try {
       const utilisateurs = await getTousLesUtilisateurs(
         `${page}-${PLAGE_IMPORT}`,
-        true
+        false
       );
       storeRece.listeUtilisateurs = [
         ...storeRece.listeUtilisateurs,
-        ...utilisateurs.body.data
+        ...mappingUtilisateurs(utilisateurs.body.data)
       ];
       if (
         utilisateurs.headers &&

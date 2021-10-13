@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../model/IOfficierSSOApi";
+import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../model/agent/IOfficier";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
@@ -18,69 +18,70 @@ interface BoutonSignerValiderProps {
   requete: TRequete;
 }
 
-export const BoutonSignerValider: React.FC<BoutonSignerValiderProps> = props => {
-  const requeteDelivrance = props.requete as IRequeteDelivrance;
-  const history = useHistory();
-  const [estDisabled, setEstDisabled] = useState(true);
+export const BoutonSignerValider: React.FC<BoutonSignerValiderProps> =
+  props => {
+    const requeteDelivrance = props.requete as IRequeteDelivrance;
+    const history = useHistory();
+    const [estDisabled, setEstDisabled] = useState(true);
 
-  const [params, setParams] = useState<
-    CreationActionEtMiseAjourStatutParams | undefined
-  >();
+    const [params, setParams] =
+      useState<CreationActionEtMiseAjourStatutParams | undefined>();
 
-  let futurStatut: StatutRequete;
-  switch (props.requete.canal) {
-    case TypeCanal.COURRIER:
-      futurStatut = StatutRequete.TRAITE_A_IMPRIMER;
-      break;
-    case TypeCanal.INTERNET:
-      futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
-      break;
-    default:
-      futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
-  }
-
-  const setActionEtUpdateStatut = () => {
-    setParams({
-      requeteId: props.requete.id,
-      libelleAction: futurStatut.libelle,
-      statutRequete: futurStatut
-    });
-  };
-
-  const idAction = usePostCreationActionEtMiseAjourStatutApi(params);
-
-  useEffect(() => {
-    if (idAction) {
-      receUrl.replaceUrl(history, storeRece.retourUrl);
+    let futurStatut: StatutRequete;
+    switch (props.requete.canal) {
+      case TypeCanal.COURRIER:
+        futurStatut = StatutRequete.TRAITE_A_IMPRIMER;
+        break;
+      case TypeCanal.INTERNET:
+        futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
+        break;
+      default:
+        futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
     }
-  }, [idAction, history]);
 
-  const estAValider =
-    props.requete.statutCourant.statut === StatutRequete.A_VALIDER;
+    const setActionEtUpdateStatut = () => {
+      setParams({
+        requeteId: props.requete.id,
+        libelleAction: futurStatut.libelle,
+        statutRequete: futurStatut
+      });
+    };
 
-  const mAppartient =
-    props.requete.idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
+    const idAction = usePostCreationActionEtMiseAjourStatutApi(params);
 
-  if (
-    estAValider &&
-    mAppartient &&
-    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-      requeteDelivrance.provenanceRequete.provenance.libelle
-    ) &&
-    estDisabled
-  ) {
-    setEstDisabled(false);
-  }
+    useEffect(() => {
+      if (idAction) {
+        receUrl.replaceUrl(history, storeRece.retourUrl);
+      }
+    }, [idAction, history]);
 
-  return (
-    <>
-      <BoutonOperationEnCours
-        onClick={setActionEtUpdateStatut}
-        class="BoutonPriseEnCharge"
-        estDesactive={estDisabled}
-      >
-        {getLibelle("Valider et terminer")}
-      </BoutonOperationEnCours>
-    </>
-  );
-};
+    const estAValider =
+      props.requete.statutCourant.statut === StatutRequete.A_VALIDER;
+
+    const mAppartient =
+      props.requete.idUtilisateur ===
+      storeRece.utilisateurCourant?.idUtilisateur;
+
+    if (
+      estAValider &&
+      mAppartient &&
+      provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
+        requeteDelivrance.provenanceRequete.provenance.libelle
+      ) &&
+      estDisabled
+    ) {
+      setEstDisabled(false);
+    }
+
+    return (
+      <>
+        <BoutonOperationEnCours
+          onClick={setActionEtUpdateStatut}
+          class="BoutonPriseEnCharge"
+          estDesactive={estDisabled}
+        >
+          {getLibelle("Valider et terminer")}
+        </BoutonOperationEnCours>
+      </>
+    );
+  };

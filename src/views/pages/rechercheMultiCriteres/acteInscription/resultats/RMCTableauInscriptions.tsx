@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { officierALeDroitSurLePerimetre } from "../../../../../model/agent/IOfficier";
 import { Droit } from "../../../../../model/Droit";
 import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
 import {
   FicheUtil,
   TypeFiche
 } from "../../../../../model/etatcivil/enum/TypeFiche";
-import { officierALeDroitSurLePerimetre } from "../../../../../model/IOfficierSSOApi";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";

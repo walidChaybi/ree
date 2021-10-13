@@ -29,7 +29,7 @@ export function getUtilisateurs(): Promise<any> {
 
 export function getTousLesUtilisateurs(
   plage?: string,
-  leger = true
+  leger = false
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,

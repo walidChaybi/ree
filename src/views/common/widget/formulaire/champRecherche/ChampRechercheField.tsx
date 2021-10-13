@@ -1,12 +1,12 @@
-import React from "react";
 import { makeStyles } from "@material-ui/core";
-import "./scss/ChampRecherche.scss";
 import { Autocomplete } from "@material-ui/lab";
+import { connect, Field } from "formik";
+import React from "react";
 import { Option } from "../../../util/Type";
-import { Field, connect } from "formik";
-import { getLibelle } from "../../Text";
 import { IconeCroix } from "../../icones/IconeCroix";
+import { getLibelle } from "../../Text";
 import { FormikComponentProps } from "../utils/FormUtil";
+import "./scss/ChampRecherche.scss";
 
 interface ChampRechercheProps {
   componentName: string;
@@ -15,7 +15,7 @@ interface ChampRechercheProps {
   noOptionsText?: string;
   onInput?: (value: string | null) => void;
   onChange?: (option?: Option) => void;
-  getValue: () => Option;
+  value: Option;
   onClickClear: (e: any) => void;
 }
 
@@ -49,7 +49,7 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
         return option.value === val.value;
       }}
       options={props.options}
-      value={props.getValue()}
+      value={props.value}
       onChange={(event, newValue) => {
         if (newValue != null) {
           if (props.onChange) {
@@ -142,9 +142,7 @@ const _ChampRechercheField: React.FC<ChampRechercheFieldProps> = ({
         component={ChampRecherche}
         disabled={disabled}
         noOptionsText={noOptionsText}
-        getValue={() => {
-          return formik.getFieldProps(name).value;
-        }}
+        value={formik.getFieldProps(name).value}
       />
     </div>
   );

@@ -4,7 +4,7 @@ import {
   appartientAMonServiceMereServiceOuFillesServices,
   mAppartientOuAppartientAPersonne,
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
-} from "../../../model/IOfficierSSOApi";
+} from "../../../model/agent/IOfficier";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../model/requete/v2/enum/TypeRequete";
 import { IActionOption } from "../../../model/requete/v2/IActionOption";

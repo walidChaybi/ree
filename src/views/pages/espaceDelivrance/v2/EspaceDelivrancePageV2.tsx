@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IOfficierSSOApi } from "../../../../model/IOfficierSSOApi";
+import { IOfficier } from "../../../../model/agent/IOfficier";
 import { IOngletProps } from "../../../../model/IOnglet";
 import {
   INavigationApercuRMCAutoParams,
@@ -24,10 +24,7 @@ interface LocalProps {
   selectedTab?: number;
 }
 
-const getElementEntreDeux = (
-  selectedTabState: number,
-  officier: IOfficierSSOApi
-) => (
+const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => (
   <div className="BlocBoutons">
     <MenuSaisirRequete indexTabPanel={selectedTabState} />
     <BoutonPrendreEnChargeAleatoirement />
@@ -82,9 +79,8 @@ const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
   const selectedTabState = selectedTab || 0;
 
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
-    INavigationApercuRMCAutoParams | undefined
-  >();
+  const [paramsRMCAuto, setParamsRMCAuto] =
+    useState<INavigationApercuRMCAutoParams | undefined>();
   useNavigationApercuRMCAuto(paramsRMCAuto);
 
   const recuperationParamsRMCAuto = (

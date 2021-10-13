@@ -1,8 +1,8 @@
 import { TypeEntite } from "../../model/agent/enum/TypeEntite";
+import { IOfficier } from "../../model/agent/IOfficier";
 import { Droit } from "../../model/Droit";
-import { IOfficierSSOApi } from "../../model/IOfficierSSOApi";
 
-export const userDroitConsulterArchive: IOfficierSSOApi = {
+export const userDroitConsulterArchive: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
@@ -42,7 +42,7 @@ export const userDroitConsulterArchive: IOfficierSSOApi = {
   ]
 };
 
-export const userDroitConsulterConsulterArchive: IOfficierSSOApi = {
+export const userDroitConsulterConsulterArchive: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
@@ -85,7 +85,7 @@ export const userDroitConsulterConsulterArchive: IOfficierSSOApi = {
   ]
 };
 
-export const userDroitConsulterPerimetreMEAE: IOfficierSSOApi = {
+export const userDroitConsulterPerimetreMEAE: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
@@ -132,7 +132,7 @@ export const userDroitConsulterPerimetreMEAE: IOfficierSSOApi = {
   }
 };
 
-export const userDroitConsulterPerimetreTUNIS: IOfficierSSOApi = {
+export const userDroitConsulterPerimetreTUNIS: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
@@ -172,7 +172,7 @@ export const userDroitConsulterPerimetreTUNIS: IOfficierSSOApi = {
   ]
 };
 
-export const userDroitnonCOMEDEC: IOfficierSSOApi = {
+export const userDroitnonCOMEDEC: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",
@@ -240,7 +240,7 @@ export const userDroitnonCOMEDEC: IOfficierSSOApi = {
   ]
 };
 
-export const userDroitCOMEDEC: IOfficierSSOApi = {
+export const userDroitCOMEDEC: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",
   nom: "nomConnectedUser",

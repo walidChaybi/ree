@@ -1,16 +1,16 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { routesRece } from "./ReceRoutes";
-import { storeRece } from "../common/util/storeRece";
-import messageManager from "../common/util/messageManager";
+import { Redirect, Route, Switch } from "react-router-dom";
 import {
-  estOfficierHabiliterPourUnDesDroits,
-  estOfficierHabiliterPourSeulementLesDroits
-} from "../../model/IOfficierSSOApi";
+  estOfficierHabiliterPourSeulementLesDroits,
+  estOfficierHabiliterPourUnDesDroits
+} from "../../model/agent/IOfficier";
 import { Droit } from "../../model/Droit";
-import { URL_ACCUEIL } from "./ReceUrls";
-import { getLibelle } from "../common/widget/Text";
+import messageManager from "../common/util/messageManager";
 import { IRoute } from "../common/util/route/IRoute";
+import { storeRece } from "../common/util/storeRece";
+import { getLibelle } from "../common/widget/Text";
+import { routesRece } from "./ReceRoutes";
+import { URL_ACCUEIL } from "./ReceUrls";
 
 export const RouterComponent: React.FC = () => {
   return (
