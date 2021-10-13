@@ -15,6 +15,7 @@ export const userDroitConsulterArchive: IOfficier = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
   habilitations: [
     {
@@ -55,6 +56,7 @@ export const userDroitConsulterConsulterArchive: IOfficier = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
   habilitations: [
     {
@@ -98,6 +100,7 @@ export const userDroitConsulterPerimetreMEAE: IOfficier = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
   habilitations: [
     {
@@ -145,6 +148,7 @@ export const userDroitConsulterPerimetreTUNIS: IOfficier = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
   habilitations: [
     {
@@ -185,6 +189,7 @@ export const userDroitnonCOMEDEC: IOfficier = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
   habilitations: [
     {
@@ -253,6 +258,7 @@ export const userDroitCOMEDEC: IOfficier = {
   bureau: "bureauConnectedUser",
   departement: "departementConnectedUser",
   service: "serviceConnectedUser",
+  poste: "posteConnectedUser",
   ministere: "ministereConnectedUser",
   habilitations: [
     {

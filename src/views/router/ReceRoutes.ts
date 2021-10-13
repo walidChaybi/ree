@@ -128,14 +128,14 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES,
     component: EspaceDelivrancePage,
     props: { selectedTab: 0 },
-    droits: droitsSaufConsulterArchives,
+    droits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
     libelle: getLibelle("Mes requêtes")
   },
   {
     url: URL_REQUETES_SERVICE,
     component: EspaceDelivrancePage,
     props: { selectedTab: 1 },
-    droits: [Droit.ATTRIBUER],
+    droits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
     libelle: getLibelle("Requête du service")
   },
   // Aperçu requête
@@ -173,7 +173,7 @@ export const routesRece: IRoute[] = [
     component: EspaceDelivrancePageV2,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     props: { selectedTab: 0 },
-    droits: droitsSaufConsulterArchives,
+    droits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
     libelle: getLibelle("Mes requêtes V2")
   },
   // Aperçu requête ... depuis Mes Requêtes de DELIVRANCE
@@ -383,7 +383,7 @@ export const routesRece: IRoute[] = [
     component: EspaceDelivrancePageV2,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     props: { selectedTab: 1 },
-    droits: [Droit.ATTRIBUER],
+    droits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
     libelle: getLibelle("Requête du service V2")
   },
   // Aperçu requête ... V2 depuis le tableau Requêtes de mon SERVICE

@@ -139,6 +139,10 @@ function getHierarchie(officier?: OfficierContextProps): string[] {
       hierarchie.push(officierData.ministere);
     }
 
+    if (officierData.poste !== undefined) {
+      hierarchie.push(officierData.poste);
+    }
+
     if (officierData.service !== undefined) {
       hierarchie.push(officierData.service);
     }

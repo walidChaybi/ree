@@ -11,6 +11,7 @@ export interface IOfficier extends IUtilisateur {
   bureau: string;
   departement: string;
   service: string;
+  poste: string;
   ministere: string;
 }
 

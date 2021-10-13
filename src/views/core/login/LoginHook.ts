@@ -54,6 +54,7 @@ function mappingOfficier(headers: any, body: any): IOfficier {
     bureau: headers.bureau,
     departement: headers.departement,
     service: headers.service,
+    poste: headers.poste,
     ministere: headers.ministere,
     habilitations: [],
     entite: body.entite,
