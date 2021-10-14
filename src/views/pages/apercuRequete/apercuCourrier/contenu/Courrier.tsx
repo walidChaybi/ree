@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { OptionsCourrier } from "../../../../../model/requete/v2/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import messageManager from "../../../../common/util/messageManager";
+import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
 import { Formulaire } from "../../../../common/widget/formulaire/Formulaire";
 import { getLibelle } from "../../../../common/widget/Text";
+import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../router/ReceUrls";
 import BoutonsCourrier, {
   BoutonsCourrierProps
 } from "./contenuForm/BoutonsCourrier";
@@ -25,6 +30,7 @@ import {
 } from "./contenuForm/CourrierForms";
 import { ValidationSchemaChoixCourrier } from "./contenuForm/sousFormulaires/ChoixCourrierForm";
 import { ValidationSchemaOptionCourrier } from "./contenuForm/sousFormulaires/OptionsCourrierForm";
+import { useGenerationCourrierHook } from "./hook/GenerationCourrierHook";
 import {
   CHOIX_COURRIER,
   OPTION,
@@ -34,7 +40,7 @@ import "./scss/Courrier.scss";
 
 interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
-  acteSelected?: IResultatRMCActe[];
+  acte?: IResultatRMCActe;
 }
 
 // Schéma de validation en sortie de champs
@@ -44,23 +50,10 @@ const ValidationSchemaCourrier = Yup.object({
 });
 
 export const Courrier: React.FC<ModificationCourrierProps> = props => {
-  const typesCourrier = getTypesCourrier(props.requete, props.acteSelected);
+  const typesCourrier = getTypesCourrier(props.requete);
   const titre = courrierExiste(props.requete)
     ? getLibelle("Modification du courrier")
     : getLibelle("Création du courrier");
-
-  // TODO Modification du courrier existant
-  const [
-    saisieCourrier,
-    // eslint-disable-next-line
-    setSaisieCourrier
-  ] = useState<SaisieCourrier>();
-
-  const boutonsProps = {
-    requete: props.requete
-  } as BoutonsCourrierProps;
-
-  const onSubmit = () => {};
 
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
 
@@ -103,6 +96,42 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     getAdresseCourrierForm(isSousTypeRDC),
     getRequeteCourrierForm(isSousTypeRDC)
   ];
+
+  const boutonsProps = {
+    requete: props.requete
+  } as BoutonsCourrierProps;
+
+  /** Saisie du courrier */
+  const history = useHistory();
+  const [saisieCourrier, setSaisieCourrier] = useState<SaisieCourrier>();
+
+  const optionsChoisies: OptionsCourrier = [];
+
+  const generationCourrier = useGenerationCourrierHook({
+    saisieCourrier,
+    optionsChoisies,
+    requete: props.requete,
+    acte: props.acte
+  });
+
+  const onSubmit = (values: SaisieCourrier) => {
+    setSaisieCourrier(values);
+  };
+
+  useEffect(() => {
+    if (generationCourrier) {
+      messageManager.showSuccessAndClose(
+        getLibelle("Le courrier a bien été enregistrée")
+      );
+      history.push(
+        getUrlWithParam(
+          URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
+          props.requete.id
+        )
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [generationCourrier]);
 
   return (
     <>

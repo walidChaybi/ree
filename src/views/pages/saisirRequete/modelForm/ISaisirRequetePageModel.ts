@@ -148,7 +148,7 @@ export interface DateJourMoisAnne {
 export interface Requete {
   [NATURE_ACTE]: string;
   [DOCUMENT_DEMANDE]: string;
-  [NB_EXEMPLAIRE]: string;
+  [NB_EXEMPLAIRE]: number;
   [MOTIF]: string;
   [COMPLEMENT_MOTIF]: string;
 }

@@ -6,6 +6,7 @@ import {
   acte4,
   acteMariage
 } from "../../__tests__/pages/fiche/data/ficheActe";
+import { ActeAnalyseMarginales } from "../data/ActeAnalyseMarginales";
 import { FicheRcaDecisionJuridictionEtrangere } from "../data/ficheRCA";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
@@ -82,6 +83,8 @@ export const configEtatcivil = [
         return { data: acte4 };
       } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348") {
         return { data: acteMariage };
+      } else if (match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d") {
+        return { data: ActeAnalyseMarginales };
       } else if (
         // acte corps
         match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g" ||

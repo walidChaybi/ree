@@ -9,12 +9,7 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
-import {
-  idRequeteRDC,
-  idRequeteRDCSC,
-  requeteRDC,
-  requeteRDCSC
-} from "../../../../../mock/data/RequeteV2";
+import { idRequeteRDC, requeteRDC } from "../../../../../mock/data/RequeteV2";
 import { DataRMCInscriptionAvecUnRCA } from "../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
@@ -27,10 +22,7 @@ import {
   nonVide,
   unActeEtUnSeulSelectionne
 } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrer";
-import {
-  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID
-} from "../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 const superagentMockRequete = require("superagent-mock")(
@@ -44,51 +36,6 @@ const superagentMockEtatCivil = require("superagent-mock")(
 
 beforeAll(() => {
   DocumentDelivrance.init();
-});
-
-test("renders du bloc Menu Delivrer", async () => {
-  const history = createMemoryHistory();
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequeteRDCSC
-    )
-  );
-
-  await act(async () => {
-    requeteRDCSC.documentDemande = DocumentDelivrance.getDocumentDelivrance(
-      "ec161aa5-5c0c-429d-abdf-f9017e8e26b4"
-    );
-
-    render(
-      <Router history={history}>
-        <MenuDelivrer
-          requete={requeteRDCSC}
-          inscriptions={DataRMCInscriptionAvecUnRCA}
-        />
-      </Router>
-    );
-  });
-  let menuDelivrer = screen.getByText("Délivrer");
-  let certificatSituation = screen.getByText(/Certificat de situation/i);
-
-  await waitFor(() => {
-    expect(menuDelivrer).toBeDefined();
-    expect(certificatSituation).toBeDefined();
-  });
-
-  await act(async () => {
-    fireEvent.click(certificatSituation);
-  });
-
-  await waitFor(() => {
-    expect(history.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
-        idRequeteRDC
-      )
-    );
-  });
 });
 
 test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-type RDD", async () => {
@@ -146,7 +93,7 @@ test("unActeEtUnSeulSelectionne", () => {
   expect(unActeEtUnSeulSelectionne([null], [null])).toBe(false);
 });
 test("estChoixExtraitAvecOuSansFiliation", () => {
-  expect(estChoixExtraitAvecOuSansFiliation(1)).toBe(false);
+  expect(estChoixExtraitAvecOuSansFiliation(0)).toBe(false);
 });
 test("nonVide", () => {
   expect(nonVide(["salut"])).toBe(true);

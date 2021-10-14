@@ -43,8 +43,8 @@ export interface OptionCourrierForm {
 }
 
 export interface TexteLibre {
-  [TYPE_MEMO]: string;
-  [MEMO]: string;
+  [TYPE_MEMO]?: string;
+  [MEMO]?: string;
   [TEXTE]: string;
 }
 

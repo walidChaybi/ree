@@ -186,13 +186,16 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   const [inscriptions, setInscriptions] = useState<
     Map<number, IResultatRMCInscription>
   >(new Map([]));
+
   const [
     alertesActeApiHookParameters,
     setAlertesActeApiHookParameters
   ] = useState<GetAlertesActeApiHookParameters>();
+
   const [actes, setActes] = useState<Map<number, IResultatRMCActe>>(
     new Map([])
   );
+
   const [alertes, setAlertes] = useState<Map<string, IAlerte[]>>(new Map([]));
 
   const onClickCheckboxInscription = useCallback(

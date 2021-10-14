@@ -1,11 +1,11 @@
-import { IProvenanceServicePublic } from "./IProvenanceServicePublic";
+import { Provenance } from "./enum/Provenance";
 import { IProvenancePlanete } from "./IProvenancePlanete";
 import { IProvenanceRece } from "./IProvenanceRece";
-import { Provenance } from "./enum/Provenance";
+import { IProvenanceServicePublic } from "./IProvenanceServicePublic";
 
 export interface IProvenanceRequete {
   provenance: Provenance;
-  provenanceRece: IProvenanceRece;
-  provenancePlanete: IProvenancePlanete;
-  provenanceServicePublic: IProvenanceServicePublic;
+  provenanceRece?: IProvenanceRece;
+  provenancePlanete?: IProvenancePlanete;
+  provenanceServicePublic?: IProvenanceServicePublic;
 }

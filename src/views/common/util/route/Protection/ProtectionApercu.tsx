@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import {
+  PATH_APERCU_COURRIER,
   PATH_APERCU_REQ,
-  PATH_APERCU_REQ_COURRIER,
   PATH_APERCU_REQ_PRISE,
   PATH_APERCU_REQ_TRAITEMENT,
   PATH_SAISIR_RDCSC,
@@ -56,7 +56,7 @@ export function checkURLEnFonctionDuStatut(
     case StatutRequete.PRISE_EN_CHARGE:
       return (
         receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE) ||
-        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
+        receUrl.getUrlCourante(history).includes(PATH_APERCU_COURRIER)
       );
     case StatutRequete.TRANSFEREE:
     case StatutRequete.A_TRAITER:
@@ -65,7 +65,7 @@ export function checkURLEnFonctionDuStatut(
     case StatutRequete.A_SIGNER:
       return (
         receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
-        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_COURRIER)
+        receUrl.getUrlCourante(history).includes(PATH_APERCU_COURRIER)
       );
     default:
       return true;

@@ -1,6 +1,7 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
@@ -19,6 +20,12 @@ export const ApercuCourrier: React.FC = () => {
   const { idRequete } = useParams<IdRequeteParams>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
+
+  const history = useHistory();
+
+  const [acte] = useState<IResultatRMCActe | undefined>(
+    history.location.state as IResultatRMCActe
+  );
 
   return (
     <div className="ApercuCourrierAccompagnement">
@@ -42,7 +49,10 @@ export const ApercuCourrier: React.FC = () => {
               />
             </div>
             <div className="side right">
-              <Courrier requete={detailRequeteState as IRequeteDelivrance} />
+              <Courrier
+                requete={detailRequeteState as IRequeteDelivrance}
+                acte={acte}
+              />
             </div>
           </div>
         </ProtectionApercu>

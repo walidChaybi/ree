@@ -77,7 +77,7 @@ test("getDefaultValues", () => {
 });
 
 test("getTypesCourrier", () => {
-  expect(getTypesCourrier(requeteDelivrance, undefined)).toStrictEqual([
+  expect(getTypesCourrier(requeteDelivrance)).toStrictEqual([
     {
       value: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2",
       str: "Informations diverses manquantes (117)"
@@ -93,7 +93,7 @@ test("getTypesCourrier", () => {
   ]);
   let requete2 = requeteDelivrance;
   requete2.choixDelivrance = ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
-  expect(getTypesCourrier(requete2, undefined)).toStrictEqual([
+  expect(getTypesCourrier(requete2)).toStrictEqual([
     {
       value: "cb1f3518-9457-471d-a31c-10bc8d34c9a2",
       str: "Délivrance d'acte (116)"
@@ -105,7 +105,7 @@ test("getTypesCourrier", () => {
   ]);
   let requete3 = requeteDelivrance;
   requete3.choixDelivrance = ChoixDelivrance.REP_SANS_DEL_EC_DIVERS;
-  expect(getTypesCourrier(requete3, undefined)).toStrictEqual([
+  expect(getTypesCourrier(requete3)).toStrictEqual([
     { value: "fce55a9f-4f4b-4996-a60b-59332bc10565", str: "Divers (17)" },
     {
       value: "2776c0c7-2ad4-4949-9743-046c4c687eec",
@@ -115,7 +115,7 @@ test("getTypesCourrier", () => {
   let requete4 = requeteDelivrance;
   requete4.choixDelivrance =
     ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC;
-  expect(getTypesCourrier(requete4, undefined)).toStrictEqual([
+  expect(getTypesCourrier(requete4)).toStrictEqual([
     {
       value: "c1c17758-98ce-444e-82eb-a4f885fddc2c",
       str: "Acte non trouvé (115)"

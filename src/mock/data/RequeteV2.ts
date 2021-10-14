@@ -21,15 +21,6 @@ const requerant: IRequerant = {
     ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
     pays: "France"
   },
-  //qualiteRequerant: {qualite : IQualite},
-  //detailQualiteRece: null,
-  // detailQualiteParticulier: {
-  //   id: "0ae3fbca-7945-46f6-b2a4-aba889376259",
-  //   nomUsage: "Briand"
-  // },
-  //detailQualiteMandataireHabilite: null,
-  //detailQualiteInstitutionnel: null,
-  //detailQualiteAutreProfessionnel: null,
   lienRequerant: undefined
 } as IRequerant;
 

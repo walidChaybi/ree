@@ -11,6 +11,7 @@ import { Fieldset } from "../../../../../common/widget/fieldset/Fieldset";
 import { getLibelle } from "../../../../../common/widget/Text";
 import { MenuAutre } from "./MenuAutre";
 import { MenuDelivrer } from "./MenuDelivrer";
+import { MenuDelivrerCS } from "./MenuDelivrerCS";
 import { MenuReponseSansDelivrance } from "./MenuReponseSansDelivrance";
 import { MenuReponseSansDelivranceCS } from "./MenuReponseSansDelivranceCS";
 import { MenuTransfert } from "./MenuTransfert";
@@ -33,25 +34,35 @@ export const ChoixAction: React.FC<IActionProps> = props => {
   return (
     <Fieldset titre={getLibelle("Actions")}>
       <div className="ChoixAction">
-        <MenuDelivrer
-          requete={props.requete}
-          actes={props.actes}
-          inscriptions={props.inscriptions}
-          dataHistory={props.dataHistory}
-        />
         {soustypeRDDouRDC(sousType) && (
-          <MenuReponseSansDelivrance
-            requete={props.requete}
-            actes={props.actes}
-            inscriptions={props.inscriptions}
-          />
+          <>
+            <MenuDelivrer
+              requete={props.requete}
+              actes={props.actes}
+              inscriptions={props.inscriptions}
+              dataHistory={props.dataHistory}
+            />
+            <MenuReponseSansDelivrance
+              requete={props.requete}
+              actes={props.actes}
+              inscriptions={props.inscriptions}
+            />
+          </>
         )}
         {soustypeRDCSDouRDCSC(sousType) && (
-          <MenuReponseSansDelivranceCS
-            requete={props.requete}
-            actes={props.actes}
-            inscriptions={props.inscriptions}
-          />
+          <>
+            <MenuDelivrerCS
+              requete={props.requete}
+              actes={props.actes}
+              inscriptions={props.inscriptions}
+              dataHistory={props.dataHistory}
+            />
+            <MenuReponseSansDelivranceCS
+              requete={props.requete}
+              actes={props.actes}
+              inscriptions={props.inscriptions}
+            />
+          </>
         )}
         <MenuAutre requete={props.requete} />
         {checkSiMenuTransferer && <MenuTransfert requete={props.requete} />}

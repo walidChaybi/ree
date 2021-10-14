@@ -1,39 +1,43 @@
-import {IFicheActe} from "../../../../../model/etatcivil/acte/IFicheActe";
-import {IRegistre} from "../../../../../model/etatcivil/acte/IRegistre";
-import {ITypeRegistre} from "../../../../../model/etatcivil/acte/ITypeRegistre";
-import {IAutresNoms} from "../../../../../model/etatcivil/commun/IAutresNoms";
-import {IFicheLien} from "../../../../../model/etatcivil/commun/IFicheLien";
-import {ILieuEvenement} from "../../../../../model/etatcivil/commun/ILieuEvenement";
-import {IPersonne} from "../../../../../model/etatcivil/commun/IPersonne";
-import {AutresNoms} from "../../../../../model/etatcivil/enum/AutresNoms";
-import {Nationalite} from "../../../../../model/etatcivil/enum/Nationalite";
-import {NatureActe} from "../../../../../model/etatcivil/enum/NatureActe";
-import {NatureRc} from "../../../../../model/etatcivil/enum/NatureRc";
-import {NatureRca} from "../../../../../model/etatcivil/enum/NatureRca";
-import {Sexe} from "../../../../../model/etatcivil/enum/Sexe";
-import {TypeVisibiliteArchiviste} from "../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
-import {IFichePacs} from "../../../../../model/etatcivil/pacs/IFichePacs";
-import {IPartenaire} from "../../../../../model/etatcivil/pacs/IPartenaire";
-import {IFicheRcRca} from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import {IInteresse, Interesse} from "../../../../../model/etatcivil/rcrca/IInteresse";
-import {getDateFromTimestamp, IDateCompose} from "../../../util/DateUtils";
-import {formatNom, formatPrenom} from "../../../util/Utils";
+import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
+import { IRegistre } from "../../../../../model/etatcivil/acte/IRegistre";
+import { ITypeRegistre } from "../../../../../model/etatcivil/acte/ITypeRegistre";
+import { IAutresNoms } from "../../../../../model/etatcivil/commun/IAutresNoms";
+import { IFicheLien } from "../../../../../model/etatcivil/commun/IFicheLien";
+import { ILieuEvenement } from "../../../../../model/etatcivil/commun/ILieuEvenement";
+import { IPersonne } from "../../../../../model/etatcivil/commun/IPersonne";
+import { AutresNoms } from "../../../../../model/etatcivil/enum/AutresNoms";
+import { Nationalite } from "../../../../../model/etatcivil/enum/Nationalite";
+import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
+import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
+import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
+import { TypeVisibiliteArchiviste } from "../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
+import { IFichePacs } from "../../../../../model/etatcivil/pacs/IFichePacs";
+import { IPartenaire } from "../../../../../model/etatcivil/pacs/IPartenaire";
+import { IFicheRcRca } from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
+import {
+  IInteresse,
+  Interesse
+} from "../../../../../model/etatcivil/rcrca/IInteresse";
+import { getDateFromTimestamp, IDateCompose } from "../../../util/DateUtils";
+import { formatNom, formatPrenom } from "../../../util/Utils";
+
+export type TFiche = IFicheRcRca | IFichePacs | IFicheActe;
 
 export function mapRcRca(data: any): IFicheRcRca {
   const dataRcRca: IFicheRcRca = data;
   if (dataRcRca.interesses !== undefined) {
     dataRcRca.interesses.forEach(interesse => {
-          harmoniserNomPrenomsInteresse(interesse);
-          harmoniserSexeEtNationalite(interesse);
-        }
-    );
+      harmoniserNomPrenomsInteresse(interesse);
+      harmoniserSexeEtNationalite(interesse);
+    });
   }
   dataRcRca.dateDerniereDelivrance = data.dateDerniereDelivrance
-      ? getDateFromTimestamp(data.dateDerniereDelivrance)
-      : undefined;
+    ? getDateFromTimestamp(data.dateDerniereDelivrance)
+    : undefined;
   dataRcRca.dateDerniereMaj = data.dateDerniereMaj
-      ? getDateFromTimestamp(data.dateDerniereMaj)
-      : undefined;
+    ? getDateFromTimestamp(data.dateDerniereMaj)
+    : undefined;
   dataRcRca.dateInscription = getDateFromTimestamp(data.dateInscription);
 
   dataRcRca.personnes = mapPersonnes(data.personnes, data.numero);

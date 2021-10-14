@@ -4,12 +4,12 @@ import { ChoixDelivrance } from "../../../../model/requete/v2/enum/ChoixDelivran
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { IActionOption } from "../../../../model/requete/v2/IActionOption";
 import { estExtraitCopie } from "../../../../model/requete/v2/IDocumentReponse";
+import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { getUrlWithoutIdParam } from "../../../common/util/route/routeUtil";
 import { MenuAction } from "../../../common/widget/menu/MenuAction";
 import { getLibelle } from "../../../common/widget/Text";
 import { PATH_APERCU_COURRIER } from "../../../router/ReceUrls";
-import { IActionProps } from "../apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 
 const INDEX_MODIFIER_COURRIER = 0;
 const INDEX_AFFICHER_EC = 1;
@@ -18,7 +18,11 @@ const INDEX_OUVRIR_ACTE = 3;
 
 const NB_DOCUMENTS_GENERES_2 = 2;
 
-export const MenuCourrier: React.FC<IActionProps> = props => {
+interface IMenuCourrierProps {
+  requete: TRequete;
+}
+
+export const MenuCourrier: React.FC<IMenuCourrierProps> = props => {
   const history = useHistory();
   const refAction0 = useRef(null);
 
@@ -34,7 +38,10 @@ export const MenuCourrier: React.FC<IActionProps> = props => {
   useEffect(() => {
     const requete = props.requete as IRequeteDelivrance;
     const temp = listeActions;
-    if (estReponseAvecDelivrance(requete)) {
+    if (
+      requete.choixDelivrance &&
+      ChoixDelivrance.estReponseAvecDelivrance(requete.choixDelivrance)
+    ) {
       temp.push({
         value: INDEX_AFFICHER_EC,
         label: getLibelle("Afficher l'extrait/copie"),
@@ -89,16 +96,4 @@ export const MenuCourrier: React.FC<IActionProps> = props => {
       widthMenuItem="14.5rem"
     ></MenuAction>
   );
-};
-
-const estReponseAvecDelivrance = (requete: IRequeteDelivrance) => {
-  if (
-    requete.choixDelivrance ===
-      ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC ||
-    requete.choixDelivrance === ChoixDelivrance.REP_SANS_DEL_EC_DIVERS ||
-    requete.choixDelivrance ===
-      ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE
-  ) {
-    return false;
-  } else return true;
 };

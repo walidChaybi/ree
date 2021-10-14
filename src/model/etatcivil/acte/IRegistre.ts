@@ -2,6 +2,8 @@ import { ITypeRegistre } from "./ITypeRegistre";
 
 export interface IRegistre {
   id: string;
+  famille: string;
+  pocopa: string;
   type: ITypeRegistre;
   annee: string;
   support1: string;

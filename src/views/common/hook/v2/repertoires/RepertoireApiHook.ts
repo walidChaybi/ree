@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import { getInformationsFicheRepertoire } from "../../../../../api/appels/etatcivilApi";
-import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
-import { IFichePacs } from "../../../../../model/etatcivil/pacs/IFichePacs";
-import { IFicheRcRca } from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { logError } from "../../../util/LogManager";
-import { mapPacs, mapRcRca } from "./MappingRepertoires";
-
-export type TFiche = IFicheRcRca | IFichePacs | IFicheActe;
+import { mapPacs, mapRcRca, TFiche } from "./MappingRepertoires";
 
 export function useInformationsRepertoireApiHook(
   typeFiche?: TypeFiche,
   identifiant?: string
 ) {
-  const [informationsRepertoire, setInformationsRepertoire] =
-    useState<TFiche | undefined>();
+  const [informationsRepertoire, setInformationsRepertoire] = useState<
+    TFiche | undefined
+  >();
 
   useEffect(() => {
     if (identifiant != null && typeFiche != null) {

@@ -30,7 +30,7 @@ const requeteDelivrance: IRequeteDelivrance = {
   documentsReponses: [documentReponseCourrier117],
   evenement: {
     id: "755e30c2-2586-4a32-b2a4-8d52d4ed32e0",
-    natureActe: TypeNatureActe.NAISSANCE
+    natureActe: TypeNatureActe.MARIAGE
   },
   id: "0ad85c1f-57cf-45cc-ab66-6a17f31247df",
   idEntite: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",

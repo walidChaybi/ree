@@ -1,4 +1,3 @@
-import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
 import { ChoixDelivrance } from "../../../../../../model/requete/v2/enum/ChoixDelivrance";
 import {
   ACTE_NAISSANCE_NON_TROUVE_MARIAGE,
@@ -17,10 +16,10 @@ import {
   REFUS_DELIVRANCE_MARIAGE
 } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../../../model/requete/v2/enum/MotifDelivrance";
+import { TypeNatureActe } from "../../../../../../model/requete/v2/enum/TypeNatureActe";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import { Requerant } from "../../../../../../model/requete/v2/IRequerant";
 import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
-import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { Options } from "../../../../../common/util/Type";
 import { getValeurOuVide } from "../../../../../common/util/Utils";
 import {
@@ -50,10 +49,7 @@ import {
 } from "../modelForm/ISaisiePageModel";
 import { OptionCourrierFormDefaultValues } from "./sousFormulaires/OptionsCourrierForm";
 
-export const getTypesCourrier = (
-  requete: IRequeteDelivrance,
-  acteSelected?: IResultatRMCActe[]
-): Options => {
+export const getTypesCourrier = (requete: IRequeteDelivrance): Options => {
   let typesCourrier: Options = [];
   switch (requete.choixDelivrance) {
     case ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE:
@@ -74,10 +70,12 @@ export const getTypesCourrier = (
       break;
     case ChoixDelivrance.REP_SANS_DEL_EC_DIVERS:
       typesCourrier = [
-        DocumentDelivrance.getOptionFromCode(DIVERS), // Courrier 17
-        DocumentDelivrance.getOptionFromCode(REFUS_DELIVRANCE_MARIAGE) // Courrier ???
+        DocumentDelivrance.getOptionFromCode(DIVERS) // Courrier 17
       ];
-      majOptionsPourActeNaissaneOuDecesSelectionne(typesCourrier, acteSelected);
+      majOptionsPourActeNaissaneOuDecesDemande(
+        typesCourrier,
+        requete.evenement?.natureActe
+      );
       break;
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
       typesCourrier = [
@@ -155,20 +153,17 @@ export function getDocumentReponseAModifier(
   return doc;
 }
 
-function majOptionsPourActeNaissaneOuDecesSelectionne(
+function majOptionsPourActeNaissaneOuDecesDemande(
   typesCourrier: Options,
-  acteSelected?: IResultatRMCActe[]
+  typeNatureActe?: TypeNatureActe
 ) {
   if (
-    acteSelected &&
-    acteSelected.some(
-      element =>
-        element.nature === NatureActe.NAISSANCE.libelle ||
-        element.nature === NatureActe.DECES.libelle
-    )
+    typeNatureActe &&
+    typeNatureActe !== TypeNatureActe.NAISSANCE &&
+    typeNatureActe !== TypeNatureActe.DECES
   ) {
     typesCourrier.push(
-      DocumentDelivrance.getOptionFromCode(REFUS_DELIVRANCE_MARIAGE)
+      DocumentDelivrance.getOptionFromCode(REFUS_DELIVRANCE_MARIAGE) // ???
     );
   }
 }

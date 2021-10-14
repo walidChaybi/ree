@@ -58,3 +58,25 @@ export const documentReponseCourrier117: IDocumentReponse = {
     }
   ]
 };
+
+export const documentReponseCopieIntegrale: IDocumentReponse = {
+  id: idDocumentsReponse[1],
+  nom: "COPIE_INTEGRALE",
+  typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+  mimeType: "image/png",
+  taille: 37236,
+  contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+  nbPages: 1,
+  orientation: Orientation.PORTRAIT
+};
+
+export const documentReponseCopieNonSigne: IDocumentReponse = {
+  id: idDocumentsReponse[1],
+  nom: "COPIE_NON_SIGNEE",
+  typeDocument: "8b808725-a83e-4ce5-81a2-192cd09e0cb2",
+  mimeType: "image/png",
+  taille: 37236,
+  contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+  nbPages: 1,
+  orientation: Orientation.PORTRAIT
+};

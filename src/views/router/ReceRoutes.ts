@@ -659,5 +659,12 @@ export const routesRece: IRoute[] = [
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_MODIFICATION)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_PRISE_EN_CHARGE_COURRIER,
+    component: ApercuCourrier,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_MODIFICATION)
   }
 ];

@@ -16,7 +16,6 @@ export const PATH_APERCU_REQ_PRISE = "apercurequetepriseencharge";
 export const PATH_APERCU_REQ_TRAITEMENT = "apercurequetetraitement";
 export const PATH_APERCU_COURRIER = "apercucourrier";
 export const PATH_DETAIL_REQ = "detailrequete";
-export const PATH_APERCU_REQ_COURRIER = "courrieraccompagnement";
 export const PATH_SAISIR_RDCSC = "saisircertificatsituation";
 
 ///////////// URLs    //////////////

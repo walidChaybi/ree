@@ -23,28 +23,27 @@ import {
 } from "../../../../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../../../../common/widget/Text";
 import { PATH_APERCU_COURRIER, receUrl } from "../../../../../router/ReceUrls";
-import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDelivranceToReqTableau";
 import { IActionProps } from "./ChoixAction";
-import { useDelivrerCertificatSituationHook } from "./hook/DelivrerCertificatSituationHook";
 import {
   UpdateChoixDelivranceProps,
   useUpdateChoixDelivrance
 } from "./hook/UpdateChoixDelivranceHook";
 
-const INDEX_ACTION_CERTIFICAT_SITUATION = 0;
-const INDEX_ACTION_COPIE_INTEGRALE = 1;
-const INDEX_ACTION_EXTRAIT_AVEC_FILIATION = 2;
-const INDEX_ACTION_EXTRAIT_SANS_FILIATION = 3;
-const INDEX_ACTION_EXTRAIT_PLURILINGUE = 4;
-const INDEX_ACTION_COPIE_ARCHIVE = 5;
+const INDEX_ACTION_COPIE_INTEGRALE = 0;
+const INDEX_ACTION_EXTRAIT_AVEC_FILIATION = 1;
+const INDEX_ACTION_EXTRAIT_SANS_FILIATION = 2;
+const INDEX_ACTION_EXTRAIT_PLURILINGUE = 3;
+const INDEX_ACTION_COPIE_ARCHIVE = 4;
 
 export const MenuDelivrer: React.FC<IActionProps> = props => {
   const history = useHistory();
   const refDelivrerOptions0 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [actes, setActes] = useState<IResultatRMCActe[]>();
-  const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[]>();
+  const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
+  const [inscriptions, setInscriptions] = useState<
+    IResultatRMCInscription[] | undefined
+  >();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
@@ -57,6 +56,17 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     actionStatutRequete,
     setActionStatutRequete
   ] = useState<IActionStatutRequete>();
+
+  useEffect(() => {
+    setInscriptions(
+      props.inscriptions
+        ? supprimerNullEtUndefinedDuTableau(props.inscriptions)
+        : undefined
+    );
+    setActes(
+      props.actes ? supprimerNullEtUndefinedDuTableau(props.actes) : undefined
+    );
+  }, [props.actes, props.inscriptions]);
 
   // 1 - Mise à jour du choix delivrance
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
@@ -84,25 +94,17 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   // 3 -  Mise à jour du status de la requête + création d'une action
   const { idAction } = useCreerActionMajStatutRequete(actionStatutRequete);
 
-  const resultDeliverCertificatSituation = useDelivrerCertificatSituationHook(
-    mappingRequeteDelivranceToRequeteTableau(
-      props.requete as IRequeteDelivrance
-    ),
-    inscriptions,
-    actes
-  );
-
   const boutonOK: IBoutonPopin[] = getBoutonOK(setMessagesBloquant);
   const boutonsOuiNon: IBoutonPopin[] = getBoutonsOuiNon(setMessagesBloquant);
 
-  const delivrerOptions: ActionOptionAvecChoixDelivrance[] = getOptionsMenuDelivrer(
+  const delivrerOptions: IActionOption[] = getOptionsMenuDelivrer(
     refDelivrerOptions0
   );
 
   const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = (
     indexMenu: number,
-    listeActes: any[] | undefined,
-    listeInscriptions: any[] | undefined
+    listeActes: IResultatRMCActe[] | undefined,
+    listeInscriptions: IResultatRMCInscription[] | undefined
   ) => {
     const requeteDelivrance = props.requete as IRequeteDelivrance;
     const sousType = requeteDelivrance?.sousType?.nom;
@@ -143,38 +145,15 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     setMessagesBloquant(message);
   };
 
-  const handleDelivrerMenu = async (indexMenu: number) => {
-    switch (indexMenu) {
-      case INDEX_ACTION_CERTIFICAT_SITUATION:
-        setOperationEnCours(true);
-        setInscriptions(
-          props.inscriptions
-            ? supprimerNullEtUndefinedDuTableau(props.inscriptions)
-            : []
-        );
-        setActes(
-          props.actes ? supprimerNullEtUndefinedDuTableau(props.actes) : []
-        );
-        break;
-      case INDEX_ACTION_COPIE_INTEGRALE:
-      case INDEX_ACTION_EXTRAIT_AVEC_FILIATION:
-      case INDEX_ACTION_EXTRAIT_SANS_FILIATION:
-      case INDEX_ACTION_EXTRAIT_PLURILINGUE:
-      case INDEX_ACTION_COPIE_ARCHIVE:
-        const listeActes = supprimerNullEtUndefinedDuTableau(props.actes);
-        const listeInscriptions = supprimerNullEtUndefinedDuTableau(
-          props.inscriptions
-        );
-        setChoixDelivrance(delivrerOptions[indexMenu].choixDelivrance);
-        controleCoherenceEntreDocumentSelectionneEtActionDelivrer(
-          indexMenu,
-          listeActes,
-          listeInscriptions
-        );
-        // La redirection (cf. useEffect) s'effectue uniquement s'il n'y a pas de
-        // message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionDelivrer'
-        break;
-    }
+  const handleDelivrerMenu = (indexMenu: number) => {
+    setChoixDelivrance(delivrerOptions[indexMenu].choixDelivrance);
+    controleCoherenceEntreDocumentSelectionneEtActionDelivrer(
+      indexMenu,
+      actes,
+      inscriptions
+    );
+    // La redirection (cf. useEffect) s'effectue uniquement s'il n'y a pas de
+    // message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionDelivrer'
   };
 
   /////////////////////////////////////
@@ -204,7 +183,8 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
         history.push(
           `${getUrlWithoutIdParam(
             history.location.pathname
-          )}/${PATH_APERCU_COURRIER}/${idRequete}`
+          )}/${PATH_APERCU_COURRIER}/${idRequete}`,
+          actes?.[0]
         );
       } else if (idAction) {
         // Si la requete est une RDD et que l'action est enregistré
@@ -214,21 +194,8 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
         receUrl.replaceUrl(history, url);
       }
     }
-  }, [idRequete, idAction, history, props.requete]);
-
-  /////////////////////////////////////
-  // Certificat de situation
-  /////////////////////////////////////
-  useEffect(() => {
-    if (resultDeliverCertificatSituation) {
-      setOperationEnCours(false);
-      const url = receUrl.getUrlApercuTraitementAPartirDe(
-        history.location.pathname
-      );
-      receUrl.replaceUrl(history, url);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultDeliverCertificatSituation, history]);
+  }, [idRequete, idAction, history, props.requete]);
 
   return (
     <>
@@ -255,12 +222,6 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     </>
   );
 };
-
-interface IChoixDelivrance {
-  choixDelivrance?: ChoixDelivrance;
-}
-
-type ActionOptionAvecChoixDelivrance = IActionOption & IChoixDelivrance;
 
 function getBoutonOK(
   setMessagesBloquant: React.Dispatch<
@@ -300,14 +261,8 @@ function getBoutonsOuiNon(
 
 function getOptionsMenuDelivrer(
   refDelivrerOptions0: React.MutableRefObject<null>
-): ActionOptionAvecChoixDelivrance[] {
+): IActionOption[] {
   return [
-    {
-      value: INDEX_ACTION_CERTIFICAT_SITUATION,
-      label: getLibelle("Certificat de situation"),
-      sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refDelivrerOptions0
-    },
     {
       value: INDEX_ACTION_COPIE_INTEGRALE,
       label: getLibelle("Copie intégrale"),

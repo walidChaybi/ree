@@ -46,7 +46,7 @@ const BoutonsCourrier: React.FC<BoutonsCourrierProps> = props => {
           type="button"
           id="boutonEnregistrer"
           onClick={() => {
-            // TODO props.formik.submitForm();
+            props.formik.submitForm();
           }}
           key={"valider"}
         >

@@ -16,6 +16,8 @@ export interface IDocumentReponse {
   texteLibreCourrier?: ITexteLibreCourrier;
   optionsCourrier?: IOptionCourrierDocumentReponse[];
   idActe?: string;
+  avecCtv?: boolean;
+  nbExemplaireImpression?: number;
 }
 
 export const DocumentReponse = {

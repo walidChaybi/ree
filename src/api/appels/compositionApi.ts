@@ -61,6 +61,10 @@ function getCompositionCertificatPACS(obj: any): Promise<any> {
   return getComposition(URL_COMPOSITION_ATTESTATION_PACS, obj);
 }
 
+function getCompositionCourrier(codeCourrier: string, obj: any): Promise<any> {
+  return getComposition(`/composition/${codeCourrier}/1`, obj);
+}
+
 function getComposition(
   uri: string,
   data: any
@@ -79,5 +83,6 @@ export const compositionApi = {
   getCompositionReponseSansDelivranceCS,
   getCompositionCertificatRC,
   getCompositionCertificatPACS,
-  getCompositionCertificatPacsRcRca
+  getCompositionCertificatPacsRcRca,
+  getCompositionCourrier
 };

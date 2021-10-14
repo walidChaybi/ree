@@ -35,13 +35,14 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
 
   useEffect(() => {
     if (idRequete) {
-      history.push(
-        `${getUrlWithoutIdParam(
-          history.location.pathname
-        )}/${PATH_APERCU_COURRIER}/${idRequete}`
-      );
+      const url = `${getUrlWithoutIdParam(
+        history.location.pathname
+      )}/${PATH_APERCU_COURRIER}/${idRequete}`;
+
+      history.push(url, props.actes);
     }
-  }, [idRequete, history]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idRequete]);
 
   interface IChoixDelivrance {
     choixDelivrance?: ChoixDelivrance;
