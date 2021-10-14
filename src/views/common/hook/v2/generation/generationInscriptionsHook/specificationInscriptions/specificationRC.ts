@@ -107,9 +107,10 @@ export function getRenouvellementModification(data: IFicheRcRca) {
       data.inscriptionsImpactees[0].nature
     ).libelle as string;
 
-    renouvellementModification = TypeInscriptionRc.RENOUVELLEMENT
-      ? `prononçant le ${typeInscription.toLocaleLowerCase()}`
-      : `prononçant la ${typeInscription.toLocaleLowerCase()}`;
+    renouvellementModification =
+      data.typeInscription === TypeInscriptionRc.RENOUVELLEMENT
+        ? `prononçant le ${typeInscription.toLocaleLowerCase()}`
+        : `prononçant la ${typeInscription.toLocaleLowerCase()}`;
     renouvellementModification += ` de la mesure ${formatDe(
       natureInscriptionImpactee.toUpperCase()
     )}${natureInscriptionImpactee.toLocaleLowerCase()} RC n°`;
