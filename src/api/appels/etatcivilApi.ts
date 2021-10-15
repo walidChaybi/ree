@@ -165,7 +165,7 @@ export function addAlerteActe(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_ACTE}/${URL_ALERTE_ACTE}`,
+    uri: `${URL_ACTE}${URL_ALERTE_ACTE}`,
     data: {
       idActe: parameters?.idActe,
       idTypeAlerte: parameters?.idTypeAlerte,

@@ -6,11 +6,11 @@ import { compactObject, triListeObjetsSurPropriete } from "../../../util/Utils";
 const dotCharacter = "\u2022";
 
 export function mapAlerteActe(data: any): IAlerte {
-  const type = TypeAlerte.getEnumFor(data?.idTypeAlerte);
+  const typeAlerte = TypeAlerte.getEnumFor(data?.idTypeAlerte);
   return {
     id: data?.id,
     idActe: data?.idActe,
-    type,
+    type: typeAlerte?.type,
     famille: data?.famille,
     pocopa: data?.pocopa,
     annee: data?.annee,
@@ -18,24 +18,24 @@ export function mapAlerteActe(data: any): IAlerte {
     support2: data?.support2,
     numeroActe: data?.numeroActe,
     numeroBisTerActe: data?.numeroBisTerActe,
-    description: `${type?.type} ${type?.libelle}`,
+    description: `${typeAlerte?.type} ${typeAlerte?.libelle}`,
     complementDescription: data?.complementDescription,
     trigrammeUtilisateur: data?.trigrammeUtilisateur,
     dateCreationStr: data?.dateCreation
       ? getDateString(getDateFromTimestamp(data?.dateCreation))
       : "",
-    codeCouleur: TypeAlerte.getCodeCouleurAlerte(type?.type)
+    codeCouleur: TypeAlerte.getCodeCouleurAlerte(typeAlerte?.type)
   } as IAlerte;
 }
 
 export function mapAlertesActe(data: any[]): IAlerte[] {
   return trierAlertesActeParDateCreationDesc(data)?.map(
     (alerteActe: any, index: number) => {
-      const type = TypeAlerte.getEnumFor(alerteActe?.idTypeAlerte);
+      const typeAlerte = TypeAlerte.getEnumFor(alerteActe?.idTypeAlerte);
       return {
         id: alerteActe?.id,
         idActe: alerteActe?.idActe,
-        type,
+        type: typeAlerte?.type,
         famille: alerteActe?.famille,
         pocopa: alerteActe?.pocopa,
         annee: alerteActe?.annee,
@@ -43,13 +43,13 @@ export function mapAlertesActe(data: any[]): IAlerte[] {
         support2: alerteActe?.support2,
         numeroActe: alerteActe?.numeroActe,
         numeroBisTerActe: alerteActe?.numeroBisTerActe,
-        description: `${type?.type} ${type?.libelle}`,
+        description: `${typeAlerte?.type} ${typeAlerte?.libelle}`,
         complementDescription: alerteActe?.complementDescription,
         trigrammeUtilisateur: alerteActe?.trigrammeUtilisateur,
         dateCreationStr: alerteActe?.dateCreation
           ? getDateString(getDateFromTimestamp(alerteActe?.dateCreation))
           : "",
-        codeCouleur: TypeAlerte.getCodeCouleurAlerte(type?.type)
+        codeCouleur: TypeAlerte.getCodeCouleurAlerte(typeAlerte?.type)
       } as IAlerte;
     }
   );

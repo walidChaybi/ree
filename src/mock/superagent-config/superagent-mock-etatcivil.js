@@ -7,6 +7,10 @@ import {
   acteMariage
 } from "../../__tests__/pages/fiche/data/ficheActe";
 import { ActeAnalyseMarginales } from "../data/ActeAnalyseMarginales";
+import {
+  ReponseAppelAddAlerteActe,
+  ReponseAppelGetAlertesActe
+} from "../data/Alertes";
 import { FicheRcaDecisionJuridictionEtrangere } from "../data/ficheRCA";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
@@ -291,6 +295,21 @@ export const configEtatcivil = [
         return { data: decrets };
       }
 
+      if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/alertes") {
+        return { data: ReponseAppelGetAlertesActe.data };
+      }
+
+      if (match[1] === "/acte/alerte?provenanceRequete=Service%20Public") {
+        return { data: ReponseAppelAddAlerteActe.data };
+      }
+
+      if (
+        match[1] ===
+        "/acte/alerte/a0adc2b2-03b6-4b80-a90d-7f96e780df15?provenanceRequete=Service%20Public"
+      ) {
+        return { data: null };
+      }
+
       const error = { msg: "url api etat civil non mockée", url: match[1] };
       console.log("Erreur mock api: ", error);
       return {
@@ -318,6 +337,13 @@ export const configEtatcivil = [
      * @param data  mixed Data returns by `fixtures` attribute
      */
     post: function (match, data) {
+      return {
+        body: data,
+        header: data.headers
+      };
+    },
+
+    delete: function (match, data) {
       return {
         body: data,
         header: data.headers
