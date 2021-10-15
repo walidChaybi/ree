@@ -130,7 +130,7 @@ function getInteresse(saisie: SaisieRequeteRDCSC) {
   };
 }
 
-function getAdresse(adresse: Adresse) {
+export function getAdresse(adresse: Adresse) {
   return adresse
     ? {
         ligne2: adresse.complementDestinataire,

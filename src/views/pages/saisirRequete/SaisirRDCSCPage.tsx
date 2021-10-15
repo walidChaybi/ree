@@ -140,7 +140,10 @@ export const SaisirRDCSCPage: React.FC = () => {
         // Redirection si l'enregistrement n'est pas un brouillon
         if (!brouillon) {
           if (refus) {
-            const reponse = createReponseSansDelivranceCS(saisieRequeteRDCSC);
+            const reponse = createReponseSansDelivranceCS(
+              saisieRequeteRDCSC,
+              detailRequeteState?.numero
+            );
             setReponseSansDelivranceCS({
               contenu: reponse,
               fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
@@ -158,7 +161,7 @@ export const SaisirRDCSCPage: React.FC = () => {
       }
       setOperationEnCours(false);
     },
-    [history, saisieRequeteRDCSC]
+    [history, saisieRequeteRDCSC, detailRequeteState]
   );
 
   const creationRequeteDelivranceRDCSCResultat = useCreationRequeteDelivranceRDCSC(

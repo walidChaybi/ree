@@ -1,11 +1,14 @@
-/* istanbul ignore file */
-
 import {
   enMajuscule,
   formatNom,
-  formatPrenom
+  formatPrenom,
+  getValeurOuVide,
+  SNP
 } from "../../../views/common/util/Utils";
+import { getAdresse } from "../../../views/pages/saisirRequete/hook/mappingFormulaireRDCSCVersRequeteDelivrance";
 import { Qualite } from "./enum/Qualite";
+import { TypeInstitutionnel } from "./enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "./enum/TypeMandataireReq";
 import { IAdresseRequerant } from "./IAdresseRequerant";
 import { ILienRequerant } from "./ILienRequerant";
 import { IQualiteRequerant } from "./IQualiteRequerant";
@@ -109,5 +112,93 @@ export const Requerant = {
       }
     }
     return { premiereLigne: ligne1, deuxiemeLigne: ligne2 };
+  },
+
+  setRequerant(requeteSaisie: any): IRequerant | undefined {
+    if (requeteSaisie.requerant.typeRequerant === "MANDATAIRE") {
+      return getRequerantMandataire(requeteSaisie);
+    } else if (requeteSaisie.requerant.typeRequerant === "INSTITUTIONNEL") {
+      return getRequerantInstitutionnel(requeteSaisie);
+    } else if (requeteSaisie.requerant.typeRequerant === "PARTICULIER") {
+      return getRequerantParticulier(requeteSaisie);
+    } else if (requeteSaisie.requerant.typeRequerant === "INTERESSE") {
+      return getRequerantInteresse(requeteSaisie);
+    } else {
+      return undefined;
+    }
   }
 };
+
+function getRequerantMandataire(requeteSaisie: any): IRequerant {
+  const requerantSaisi = requeteSaisie.requerant;
+  return {
+    nomFamille: requerantSaisi.mandataire.nom
+      ? requerantSaisi.mandataire.nom
+      : SNP,
+    prenom: getValeurOuVide(requerantSaisi.mandataire.prenom),
+    courriel: requeteSaisie.adresse.adresseCourriel,
+    telephone: requeteSaisie.adresse.numeroTelephone,
+    adresse: getAdresse(requeteSaisie.adresse),
+    qualiteRequerant: {
+      qualite: Qualite.MANDATAIRE_HABILITE,
+      mandataireHabilite: {
+        type: TypeMandataireReq.getEnumFor(requerantSaisi.mandataire.type),
+        nature: requerantSaisi.mandataire.nature,
+        raisonSociale: requerantSaisi.mandataire.raisonSociale
+      }
+    }
+  } as IRequerant;
+}
+
+function getRequerantInstitutionnel(requeteSaisie: any): IRequerant {
+  const requerantSaisi = requeteSaisie.requerant;
+  return {
+    nomFamille: requerantSaisi.institutionnel.nom
+      ? requerantSaisi.institutionnel.nom
+      : SNP,
+    prenom: getValeurOuVide(requerantSaisi.institutionnel.prenom),
+    courriel: requeteSaisie.adresse.adresseCourriel,
+    telephone: requeteSaisie.adresse.numeroTelephone,
+    adresse: getAdresse(requeteSaisie.adresse),
+    qualiteRequerant: {
+      qualite: Qualite.INSTITUTIONNEL,
+      institutionnel: {
+        type: TypeInstitutionnel.getEnumFor(requerantSaisi.institutionnel.type),
+        nature: requerantSaisi.institutionnel.nature,
+        nomInstitution: requerantSaisi.institutionnel.nomInstitution
+      }
+    }
+  } as IRequerant;
+}
+
+function getRequerantParticulier(requeteSaisie: any): IRequerant {
+  const requerantSaisi = requeteSaisie.requerant;
+  return {
+    nomFamille: requerantSaisi.particulier.nomFamille
+      ? requerantSaisi.particulier.nomFamille
+      : SNP,
+    prenom: getValeurOuVide(requerantSaisi.particulier.prenom),
+    courriel: requeteSaisie.adresse.adresseCourriel,
+    telephone: requeteSaisie.adresse.numeroTelephone,
+    adresse: getAdresse(requeteSaisie.adresse),
+    qualiteRequerant: {
+      qualite: Qualite.PARTICULIER,
+      particulier: {
+        nomUsage: requerantSaisi.particulier.nomUsage
+      }
+    }
+  } as IRequerant;
+}
+
+function getRequerantInteresse(requeteSaisie: any): IRequerant {
+  return {
+    nomFamille: requeteSaisie.interesse.nomFamille,
+    prenom: requeteSaisie.interesse.prenoms.prenom1,
+    courriel: requeteSaisie.adresse.adresseCourriel,
+    telephone: requeteSaisie.adresse.numeroTelephone,
+    adresse: getAdresse(requeteSaisie.adresse),
+    qualiteRequerant: {
+      qualite: Qualite.PARTICULIER
+    }
+  } as IRequerant;
+}

@@ -3,7 +3,7 @@ import {
   ReponseSansDelivranceCSDemandeIncompleteComposition
 } from "../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
-import { IRequerant } from "../../../../model/requete/v2/IRequerant";
+import { IRequerant, Requerant } from "../../../../model/requete/v2/IRequerant";
 import messageManager from "../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { getLibelle } from "../../../common/widget/Text";
@@ -13,7 +13,6 @@ import {
   URL_REQUETES_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE
 } from "../../../router/ReceUrls";
-import { getRequerant } from "../hook/mappingFormulaireRDCSCVersRequeteDelivrance";
 import { SaisieRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
 
 export function getRedirectionVersApercuRequete(
@@ -36,13 +35,17 @@ export function getRedirectionVersApercuRequete(
   return url;
 }
 
-export function createReponseSansDelivranceCS(requete?: SaisieRequeteRDCSC) {
+export function createReponseSansDelivranceCS(
+  requete?: SaisieRequeteRDCSC,
+  numeroRequete?: string
+) {
   let reponseSansDelivranceCS = {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
   if (requete && requete.requerant) {
-    const requerant = getRequerant(requete) as IRequerant;
+    const requerant = Requerant.setRequerant(requete) as IRequerant;
     reponseSansDelivranceCS = ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(
       requerant,
-      TypeCanal.COURRIER
+      TypeCanal.COURRIER,
+      numeroRequete
     );
   } else {
     messageManager.showErrorAndClose(
