@@ -131,34 +131,24 @@ function getAffectation(officier?: OfficierContextProps): string {
 }
 
 function getHierarchie(officier?: OfficierContextProps): string[] {
-  const hierarchie = [];
+  const hierarchie: string[] = [];
   const officierData = officier?.officierDataState;
 
   if (officier !== undefined && officierData !== undefined) {
-    if (officierData.ministere !== undefined) {
-      hierarchie.push(officierData.ministere);
-    }
-
-    if (officierData.poste !== undefined) {
-      hierarchie.push(officierData.poste);
-    }
-
-    if (officierData.service !== undefined) {
-      hierarchie.push(officierData.service);
-    }
-
-    if (officierData.departement !== undefined) {
-      hierarchie.push(officierData.departement);
-    }
-
-    if (officierData.bureau !== undefined) {
-      hierarchie.push(officierData.bureau);
-    }
-
-    if (officierData.section !== undefined) {
-      hierarchie.push(officierData.section);
-    }
+    pushIfExists(officierData.ministere, hierarchie);
+    pushIfExists(officierData.poste, hierarchie);
+    pushIfExists(officierData.service, hierarchie);
+    pushIfExists(officierData.departement, hierarchie);
+    pushIfExists(officierData.sectionConsulaire, hierarchie);
+    pushIfExists(officierData.bureau, hierarchie);
+    pushIfExists(officierData.section, hierarchie);
   }
 
   return hierarchie;
+}
+
+function pushIfExists(entite: string, table: string[]) {
+  if (entite) {
+    table.push(entite);
+  }
 }
