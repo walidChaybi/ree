@@ -18,6 +18,14 @@ import { RMCTableauInscriptions } from "../../../../../views/pages/rechercheMult
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
+const globalAny: any = global;
+
+globalAny.URL.createObjectURL = jest.fn();
+globalAny.open = () => {
+  return { ...window };
+};
+globalAny.close = jest.fn();
+
 test("renders Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
   render(
     <RMCTableauInscriptions
@@ -51,11 +59,6 @@ test("Navigation dans les pages du tableau Resultat Inscription Recherche Multi 
 });
 
 test("Ouverture d'une inscription", async () => {
-  global.open = () => {
-    return { ...window };
-  };
-  global.close = jest.fn();
-
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
   const { getByTestId } = render(
     <RMCTableauInscriptions
@@ -148,4 +151,8 @@ test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résul
     const elementsCoches = screen.getAllByText("0 élément(s) coché(s)");
     expect(elementsCoches).toBeDefined();
   });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

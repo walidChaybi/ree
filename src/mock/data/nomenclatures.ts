@@ -158,8 +158,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "attestation",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Attestation",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "34da88e2-c5c7-4324-ac8e-b35193352e64",
@@ -169,8 +170,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Certificat de situation demandé",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "b902e0a8-1cdb-48a6-841a-7fb77da22898",
@@ -180,8 +182,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Certificat de situation demandé",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "ec161aa5-5c0c-429d-abdf-f9017e8e26b4",
@@ -191,8 +194,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Certificat de situation demandé",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "25d725b1-d62e-4024-ba37-be5935a00869",
@@ -202,8 +206,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Certificat de situation demandé",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "0617a018-0f4b-4143-b593-0537c1536b09",
@@ -213,8 +218,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Certificat de situation demandé",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "2587ab13-cf95-4a99-95ea-62014a9d6309",
@@ -224,8 +230,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Certificat de situation demandé",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
@@ -235,19 +242,21 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Certificat de situation demandé",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "5fe1799c-121d-4027-88c4-4542f176513d",
       categorie: "DOCUMENT_DELIVRANCE",
       code: "CARN_PAC_01",
       libelle: "Courrier de non délivrance attestation PACS",
-      estActif: null,
+      estActif: true,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Courrier sans délivrance PACS/Certificat",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "bdf30e59-3447-4114-a127-aa1310337761",
@@ -257,8 +266,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "certificat",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Courrier sans délivrance PACS/Certificat",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
@@ -268,19 +278,21 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "copie",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Copie intégrale",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "8b808725-a83e-4ce5-81a2-192cd09e0cb2",
       categorie: "DOCUMENT_DELIVRANCE",
       code: "COPIE_NON_SIGNEE",
-      libelle: "Copie d'acte non signée",
+      libelle: "Copie intégrale archive",
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "copie",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Copie non signée",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "28580709-06dd-4df2-bf6e-70a9482940a1",
@@ -290,8 +302,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "extrait",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Extrait avec filiation",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "318a2726-0d04-4558-8b36-8fe48780def5",
@@ -301,19 +314,21 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "extrait",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Extrait sans filiation",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6",
       categorie: "DOCUMENT_DELIVRANCE",
       code: "EXTRAIT_PLURILINGUE",
-      libelle: "Extrait plurilingue",
+      libelle: "Extrait avec filiation plurilingue",
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: "extrait",
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Extrait avec filiation plurilingue",
+      correspondanceDila: true,
+      texteLibre: null
     },
     {
       id: "062526c5-e5a7-48d1-bc22-11938347f0bc",
@@ -323,8 +338,10 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance:
+        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "db0a3d5a-34ca-47bf-bce5-33ec7ffb9148",
@@ -334,8 +351,10 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance:
+        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "002f64ff-b3da-4ff1-8f81-704059134327",
@@ -345,8 +364,10 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance:
+        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "c40bccfd-8e65-47fc-a3eb-1d25d7779a29",
@@ -356,8 +377,10 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance:
+        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "c1c17758-98ce-444e-82eb-a4f885fddc2c",
@@ -367,8 +390,10 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance:
+        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "fd2c6d07-367f-4770-994c-397c0bc63fba",
@@ -378,8 +403,10 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance:
+        "Courrier sans délivrance E/C - Requête incomplète",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "0296fc7a-fb81-4eb7-a72f-94286b8d8301",
@@ -389,8 +416,10 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance:
+        "Courrier sans délivrance E/C - Requête incomplète",
+      correspondanceDila: true,
+      texteLibre: false
     },
     {
       id: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2",
@@ -413,8 +442,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Divers",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "fce55a9f-4f4b-4996-a60b-59332bc10565",
@@ -424,8 +454,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Divers",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "34877875-f86f-4a62-9bdc-c0989ad6c4eb",
@@ -435,8 +466,10 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance:
+        "Courrier avec délivrance E/C - Copie archive",
+      correspondanceDila: true,
+      texteLibre: false
     },
     {
       id: "4b60aab4-2e9f-479c-bec6-f38edbd6e647",
@@ -446,8 +479,9 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Courrier avec délivrance E/C",
+      correspondanceDila: true,
+      texteLibre: true
     },
     {
       id: "cb1f3518-9457-471d-a31c-10bc8d34c9a2",
@@ -457,8 +491,71 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance: null,
-      correspondanceDila: true
+      categorieDocumentDelivrance: "Courrier avec délivrance E/C",
+      correspondanceDila: true,
+      texteLibre: true
+    },
+    {
+      id: "d407f403-ca22-4e06-9c46-b7ab7fa5b9fc",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CERTIFICAT_INSCRIPTION_RCA",
+      libelle: "Certificat d'inscription au RCA",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: "Certificat d'inscription",
+      correspondanceDila: false,
+      texteLibre: null
+    },
+    {
+      id: "5ce13f3a-d98c-401a-a2fe-8fde23878b4c",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_CS_01",
+      libelle:
+        "Courrier de non délivrance certificat de situation - mariage actif",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: "Courrier sans délivrance PACS/Certificat",
+      correspondanceDila: false,
+      texteLibre: null
+    },
+    {
+      id: "0c82b27a-7ade-4dce-aa61-b88f07726c1b",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CARN_CSPAC_01",
+      libelle: "Courrier de refus demande incomplète ou illisible PACS/RC/RCA",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: "Courrier sans délivrance PACS/Certificat",
+      correspondanceDila: false,
+      texteLibre: null
+    },
+
+    {
+      id: "516f0133-1618-444e-ad41-59863c8c9412",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CERTIFICAT_INSCRIPTION_RC",
+      libelle: "Certificat d'inscription au RC",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: "Certificat d'inscription",
+      correspondanceDila: false,
+      texteLibre: null
+    },
+    {
+      id: "46e32744-1056-4f96-af3e-e1df1ba9b6a4",
+      categorie: "DOCUMENT_DELIVRANCE",
+      code: "CERTIFICAT_SITUATION",
+      libelle: "Certificat de situation",
+      estActif: null,
+      usageTeleprocedure: null,
+      usageRECE: null,
+      categorieDocumentDelivrance: "Certificat de situation délivré",
+      correspondanceDila: false,
+      texteLibre: null
     }
   ],
   errors: []

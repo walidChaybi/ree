@@ -150,6 +150,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
               label={getLibelle("Observation:")}
               placeholder={getLibelle("Observation")}
               rows={NB_LIGNE_COMPLEMENT_DESCRIPTION}
+              maxLength={"150"}
             />
             <FormAjouterAlerteBoutons {...boutonsProps} />
           </Formulaire>

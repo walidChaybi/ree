@@ -9,6 +9,9 @@ import React from "react";
 import { titreForm } from "../../../../views/pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 import { RMCRequetePage } from "../../../../views/pages/rechercheMultiCriteres/requete/RMCRequetePage";
 
+const globalAny: any = global;
+globalAny.scroll = jest.fn();
+
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {
     render(<RMCRequetePage />);

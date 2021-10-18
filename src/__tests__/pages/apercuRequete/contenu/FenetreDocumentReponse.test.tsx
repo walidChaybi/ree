@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
@@ -9,25 +9,33 @@ import {
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
+const globalAny: any = global;
+globalAny.open = () => {
+  return { ...window };
+};
+globalAny.close = jest.fn();
+
 test("renders Fenetre Document réponse fonctionne correctement", async () => {
   const toggle = jest.fn();
 
   render(
     <FenetreDocumentReponse
       toggleFenetre={toggle}
-      idPiece="12345"
+      idDocument="bbac2335-562c-4b14-96aa-4386814c02a2"
       nom="Journal d'Anne Franck"
       numRequete="69"
     />
   );
 
-  expect(toggle).not.toHaveBeenCalled();
+  await waitFor(() => {
+    expect(toggle).not.toHaveBeenCalled();
+  });
 });
 
 test("onClose", () => {
   const toggleFenetre = jest.fn();
   onClose({
-    idPiece: "string",
+    idDocument: "bbac2335-562c-4b14-96aa-4386814c02a2",
     nom: "string",
     numRequete: "string",
     toggleFenetre

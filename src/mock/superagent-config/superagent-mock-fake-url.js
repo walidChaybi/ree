@@ -24,6 +24,10 @@ export const configFakeUrl = [
         return { data: this.nbRequetes };
       }
 
+      if (match[1] === "/fakes") {
+        return true;
+      }
+
       const error = {
         msg: "url api fake requete v1 non mockée",
         url: match[1]

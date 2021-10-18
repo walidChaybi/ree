@@ -38,7 +38,9 @@ export const configRequetes = [
           "/requetes?statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105" ||
         match[1] === "/requetes?statuts=A_SIGNER&tri=dateStatut&sens=ASC" ||
         match[1] ===
-          "/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105"
+          "/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105" ||
+        match[1] ===
+          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105"
       ) {
         return {
           data: mockRequetes.data.slice(0, 105),
@@ -127,6 +129,8 @@ export const configRequetes = [
       }
       if (
         match[1] ===
+          "/requetes/requetesService?statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
+        match[1] ===
           "/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
         match[1] === "/requetes/requetesService?statut=A_SIGNER"
       ) {
@@ -164,6 +168,10 @@ export const configRequetes = [
         return { data: mockPng.data };
       }
 
+      if (match[1] === "/documentsdelivres") {
+        return {};
+      }
+
       if (
         match[1] ===
           "/piecesjustificatives/a70237ca-83e5-4f6f-ac86-ec15086c5e3e" ||
@@ -192,6 +200,18 @@ export const configRequetes = [
         return { data: documentDelivre };
       }
 
+      if (
+        match[1] ===
+        "/documentsdelivres/f9279c00-5d2b-11ea-bc55-0242ac130003fakedoc"
+      ) {
+        return { data: null };
+      }
+
+      // UtilisateurAssigneRequeteHook
+      if (match[1] === "/reponses/1?nomOec=SecondNom&prenomOec=SecondPrenom") {
+        return {};
+      }
+
       // Modification des requetes
       if (match[1] === "/requetes" && context.method === "post") {
         return this.post;
@@ -205,6 +225,14 @@ export const configRequetes = [
       // Récupération des paramètres de la base requête
       if (match[1] === "/parametres" && context.method === "post") {
         return { data: parametresBaseRequete };
+      }
+
+      //
+      if (
+        match[1] ===
+        "/requetes?statut=A_IMPRIMER&idRequete=1d189cd9-0df0-45dc-a4cf-0174eb62cbbc"
+      ) {
+        return { data: DONNEES_REQUETE };
       }
 
       const error = { msg: "url api requete V1 non mockée", url: match[1] };

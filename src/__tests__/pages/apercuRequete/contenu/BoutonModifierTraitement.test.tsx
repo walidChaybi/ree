@@ -16,7 +16,7 @@ import { storeRece } from "../../../../views/common/util/storeRece";
 import { BoutonModifierTraitement } from "../../../../views/pages/apercuRequete/contenu/BoutonModifierTraitement";
 import { URL_MES_REQUETES_APERCU_REQUETE } from "../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
+const superagentMock = require("superagent-mock")(request, [configMultiAPi]);
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,

@@ -11,12 +11,17 @@ import {
   ReponseAppelDetailRequeteDelivranceUnTitulaire
 } from "../../../../mock/data/DetailRequeteDelivrance";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { TypePieceJustificative } from "../../../../model/requete/v2/enum/TypePieceJustificative";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { ResumeRequeteV2 } from "../../../../views/pages/apercuRequete/resume/ResumeRequeteV2";
 import { mappingRequeteDelivrance } from "../../../../views/pages/detailRequete/hook/DetailRequeteHook";
 import { URL_MES_REQUETES_ID } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
+
+beforeAll(() => {
+  TypePieceJustificative.init();
+});
 
 test("renders Page requete with all elements", async () => {
   await act(async () => {

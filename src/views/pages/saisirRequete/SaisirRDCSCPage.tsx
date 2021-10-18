@@ -9,7 +9,6 @@ import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance";
 import messageManager from "../../common/util/messageManager";
 import { ProtectionApercu } from "../../common/util/route/Protection/ProtectionApercu";
-import { Options } from "../../common/util/Type";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
 import {
   AdresseFormDefaultValues,
@@ -97,18 +96,11 @@ export const SaisirRDCSCPage: React.FC = () => {
     }
   }, [detailRequeteState]);
 
-  const [documentDemandeOptions, setDocumentDemandeOptions] = useState<Options>(
-    []
-  );
+  const documentDemandeOptions = DocumentDelivrance.getAllCertificatSituationDemandeAsOptions();
 
   const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<
     IReponseSansDelivranceCS | undefined
   >();
-
-  useState(async () => {
-    const documentDelivrance = DocumentDelivrance.getAllCertificatSituationAsOptions();
-    setDocumentDemandeOptions(documentDelivrance);
-  });
 
   /** Enregistrer la requête */
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);

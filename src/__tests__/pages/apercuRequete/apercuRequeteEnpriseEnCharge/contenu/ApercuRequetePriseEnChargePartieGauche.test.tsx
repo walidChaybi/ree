@@ -16,13 +16,18 @@ import {
   configRequetesV2,
   NORESULT
 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { TypePieceJustificative } from "../../../../../model/requete/v2/enum/TypePieceJustificative";
 import { ApercuRequetePriseEnChargePartieGauche } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ApercuRequetePriseEnChargePartieGauche";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-test("render ApercuRequetePriseEnChargePartieGauche", async () => {
-  const history = createMemoryHistory();
+beforeEach(() => {
+  TypePieceJustificative.init();
+});
 
+const history = createMemoryHistory();
+
+test("render ApercuRequetePriseEnChargePartieGauche", async () => {
   await act(async () => {
     render(
       <Router history={history}>
@@ -36,11 +41,12 @@ test("render ApercuRequetePriseEnChargePartieGauche", async () => {
     );
   });
 
+  const boutonNouvelleRMC = screen.getByLabelText(
+    "NouvelleRMCRequete"
+  ) as HTMLButtonElement;
+  expect(boutonNouvelleRMC).toBeInTheDocument();
+
   await act(async () => {
-    const boutonNouvelleRMC = screen.getByLabelText(
-      "NouvelleRMCRequete"
-    ) as HTMLButtonElement;
-    expect(boutonNouvelleRMC).toBeInTheDocument();
     fireEvent.click(boutonNouvelleRMC);
   });
 

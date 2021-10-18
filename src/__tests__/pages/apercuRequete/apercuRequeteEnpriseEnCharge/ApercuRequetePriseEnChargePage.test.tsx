@@ -18,7 +18,9 @@ import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "../../../../mock/data/RMCInscription";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { TypePieceJustificative } from "../../../../model/requete/v2/enum/TypePieceJustificative";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { ApercuRequetePriseEnChargePage } from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
@@ -28,10 +30,18 @@ import {
   URL_MES_REQUETES_V2
 } from "../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, [
+  configRequetesV2[0],
+  configEtatcivil[0]
+]);
 
-global.URL.createObjectURL = jest.fn();
-window.open = jest.fn();
+const globalAny: any = global;
+globalAny.URL.createObjectURL = jest.fn();
+globalAny.open = () => {
+  return { ...window };
+};
+globalAny.close = jest.fn();
+
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
@@ -48,6 +58,7 @@ history.push(
 );
 
 beforeAll(() => {
+  TypePieceJustificative.init();
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 

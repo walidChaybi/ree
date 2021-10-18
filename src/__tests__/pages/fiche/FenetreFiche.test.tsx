@@ -7,13 +7,13 @@ import { FenetreFiche } from "../../../views/pages/fiche/FenetreFiche";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
+const globalAny: any = global;
+globalAny.open = () => {
+  return { ...window };
+};
+globalAny.close = jest.fn();
+
 test("renders Lien fiche fonctionne correctement", async () => {
-  global.open = () => {
-    return { ...window };
-  };
-
-  global.close = jest.fn();
-
   const onClose = jest.fn();
 
   render(

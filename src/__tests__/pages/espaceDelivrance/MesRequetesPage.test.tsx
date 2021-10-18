@@ -19,8 +19,10 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
+  if (container) {
+    document.body.removeChild(container);
+    container = null;
+  }
 });
 
 const data = {

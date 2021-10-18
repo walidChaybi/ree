@@ -17,7 +17,7 @@ test("getLogin utilisateur", () => {
 });
 
 test("getUtilisateur", () => {
-  getUtilisateurs("5ef4b1da1e3ee4adf9615ec7").then((result: any) => {
+  getUtilisateurs().then((result: any) => {
     expect(result).toBeDefined();
   });
 });

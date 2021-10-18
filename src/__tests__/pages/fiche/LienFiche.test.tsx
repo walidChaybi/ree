@@ -1,18 +1,19 @@
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
-import { LienFiche } from "../../../views/pages/fiche/LienFiche";
 import request from "superagent";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
 import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
+import { LienFiche } from "../../../views/pages/fiche/LienFiche";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
-test("renders Lien fiche fonctionne correctement", async () => {
-  global.open = () => {
-    return { ...window };
-  };
-  global.close = jest.fn();
+const globalAny: any = global;
+globalAny.open = () => {
+  return { ...window };
+};
+globalAny.close = jest.fn();
 
+test("renders Lien fiche fonctionne correctement", async () => {
   const { getByText } = render(
     <LienFiche
       identifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}

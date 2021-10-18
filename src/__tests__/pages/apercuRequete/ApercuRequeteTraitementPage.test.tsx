@@ -11,6 +11,7 @@ import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../mock/data/ListeUtilisateurs";
 import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { TypePieceJustificative } from "../../../model/requete/v2/enum/TypePieceJustificative";
 import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../views/common/util/storeRece";
 import { ApercuRequeteTraitementPage } from "../../../views/pages/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
@@ -18,7 +19,13 @@ import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../views/ro
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-global.URL.createObjectURL = jest.fn();
+const globalAny: any = global;
+globalAny.URL.createObjectURL = jest.fn();
+
+beforeAll(() => {
+  TypePieceJustificative.init();
+});
+
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(

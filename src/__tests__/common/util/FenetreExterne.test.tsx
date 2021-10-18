@@ -1,14 +1,15 @@
-import React from "react";
-
-import { render, waitFor } from "@testing-library/react";
-import { FenetreExterne } from "../../../views/common/util/FenetreExterne";
 import { Button } from "@material-ui/core";
+import { render, waitFor } from "@testing-library/react";
+import React from "react";
+import { FenetreExterne } from "../../../views/common/util/FenetreExterne";
+
+const globalAny: any = global;
+globalAny.open = () => {
+  return { ...window };
+};
+globalAny.close = jest.fn();
 
 test("open new external window", async () => {
-  global.open = () => {
-    return { ...window };
-  };
-  global.close = jest.fn();
   const { getByText } = render(
     <FenetreExterne titre={"Nouvelle Fenêtre"}>
       <span>Fenetre externe</span>
@@ -21,13 +22,8 @@ test("open new external window", async () => {
 });
 
 test("open new external window", async () => {
-  global.open = () => {
-    return { ...window };
-  };
-  global.close = jest.fn();
-
   const onCloseHandler = jest.fn();
-  const {} = render(
+  const { container } = render(
     <FenetreExterne titre={"Nouvelle Fenêtre"} onCloseHandler={onCloseHandler}>
       <span>Fenetre externe</span>
     </FenetreExterne>
@@ -35,6 +31,7 @@ test("open new external window", async () => {
 
   const event = new CustomEvent("beforeunload");
   window.top.dispatchEvent(event);
+  expect(container).toBeDefined();
 
   await waitFor(() => {
     expect(onCloseHandler).toBeCalled();
@@ -42,14 +39,6 @@ test("open new external window", async () => {
 });
 
 test("external window recveive refreshStyles event", async () => {
-  global.open = () => {
-    return {
-      ...window
-    };
-  };
-
-  global.close = jest.fn();
-
   const { container } = render(
     <FenetreExterne titre={"Nouvelle Fenêtre"}>
       <Button />

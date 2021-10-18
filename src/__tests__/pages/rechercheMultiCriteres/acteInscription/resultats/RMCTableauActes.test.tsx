@@ -16,6 +16,14 @@ import { RMCTableauActes } from "../../../../../views/pages/rechercheMultiCriter
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
+const globalAny: any = global;
+
+//globalAny.URL.createObjectURL = jest.fn();
+globalAny.open = () => {
+  return { ...window };
+};
+globalAny.close = jest.fn();
+
 test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => {
   const { getAllByText } = render(
     <RMCTableauActes
@@ -30,11 +38,6 @@ test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => 
 });
 
 test("Ouverture d'un acte", async () => {
-  global.open = () => {
-    return { ...window };
-  };
-  global.close = jest.fn();
-
   const { getByTestId } = render(
     <RMCTableauActes
       typeRMC="Classique"
@@ -75,11 +78,6 @@ test("Ouverture d'un acte", async () => {
 });
 
 test("Ouverture d'un acte et navigation via bouton Suivant", async () => {
-  global.open = () => {
-    return { ...window };
-  };
-  global.close = jest.fn();
-
   const { getByTestId } = render(
     <RMCTableauActes
       typeRMC="Classique"
@@ -110,11 +108,6 @@ test("Ouverture d'un acte et navigation via bouton Suivant", async () => {
 });
 
 test("Ouverture d'un acte et navigation via bouton Précédent", async () => {
-  global.open = () => {
-    return { ...window };
-  };
-  global.close = jest.fn();
-
   const { getByTestId } = render(
     <RMCTableauActes
       typeRMC="Classique"
@@ -206,4 +199,8 @@ test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat", a
     const elementsCoches = screen.getAllByText("0 élément(s) coché(s)");
     expect(elementsCoches).toBeDefined();
   });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

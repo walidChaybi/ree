@@ -30,7 +30,10 @@ export const configAgent = [
         return { data: DONNEES_UTILISATEURS.data };
       }
 
-      if (match[1] === "/utilisateurs/all?range=0-100&lite=false") {
+      if (
+        match[1] === "/utilisateurs/all?range=0-100&lite=false" ||
+        match[1] === "/utilisateurs/all?range=0-200&lite=false"
+      ) {
         return { ...DONNEES_UTILISATEURS };
       }
 
@@ -38,7 +41,10 @@ export const configAgent = [
         return { ...DONNEES_UTILISATEURS_PAGE2 };
       }
 
-      if (match[1].startsWith("/entiterattachement/all?range=0-100")) {
+      if (
+        match[1] === "/entiterattachement/all" ||
+        match[1].startsWith("/entiterattachement/all?range=0-100")
+      ) {
         return { ...DONNEES_ENTITES };
       }
 

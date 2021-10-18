@@ -13,6 +13,9 @@ import { RMCActeInscriptionPage } from "../../../../views/pages/rechercheMultiCr
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
+const globalAny: any = global;
+globalAny.scroll = jest.fn();
+
 test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {
     render(<RMCActeInscriptionPage />);
@@ -100,4 +103,8 @@ test("Bouton Rechercher du Formulaire Recherche Multi Critères Actes et Inscrip
   await act(async () => {
     fireEvent.click(submit);
   });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

@@ -25,8 +25,10 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
   const history = useHistory();
   const refRepondreSansDelivranceOptions0 = useRef(null);
 
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
-    useState<UpdateChoixDelivranceProps>();
+  const [
+    paramUpdateChoixDelivrance,
+    setParamUpdateChoixDelivrance
+  ] = useState<UpdateChoixDelivranceProps>();
   const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
 
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
@@ -42,13 +44,7 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idRequete]);
 
-  interface IChoixDelivrance {
-    choixDelivrance?: ChoixDelivrance;
-  }
-
-  type ActionOptionAvecChoixDelivrance = IActionOption & IChoixDelivrance;
-
-  const repondreSansDelivranceOptions: ActionOptionAvecChoixDelivrance[] = [
+  const repondreSansDelivranceOptions: IActionOption[] = [
     {
       value: INDEX_REQUETE_INCOMPLETE,
       label: getLibelle("Requête incomplète (117 - 18 - 19)"),

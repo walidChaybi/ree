@@ -137,6 +137,7 @@ export class DocumentDelivrance extends EnumNomemclature {
 
   public static getAllCertificatSituationAsOptions(): Options {
     const options = DocumentDelivrance.getAllEnumsAsOptions();
+
     return options.filter(opt =>
       DocumentDelivrance.getEnumFor(opt.value).code.startsWith(
         CERTIFICAT_SITUATION_PREFIX
@@ -233,6 +234,15 @@ export class DocumentDelivrance extends EnumNomemclature {
       doc.categorieDocumentDelivrance &&
       doc.categorieDocumentDelivrance.startsWith("Courrier") &&
       doc.categorieDocumentDelivrance.includes("délivrance E/C")
+    );
+  }
+
+  public static getAllCertificatSituationDemandeAsOptions(): Options {
+    const options = DocumentDelivrance.getAllEnumsAsOptions();
+    return options.filter(
+      opt =>
+        DocumentDelivrance.getEnumFor(opt.value).categorieDocumentDelivrance ===
+        "Certificat de situation demandé"
     );
   }
 }

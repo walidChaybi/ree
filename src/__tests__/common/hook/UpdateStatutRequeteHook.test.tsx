@@ -1,9 +1,9 @@
+import { act } from "@testing-library/react";
 import React from "react";
 import ReactDOM from "react-dom";
-import { act } from "@testing-library/react";
-import { StatutRequete } from "../../../model/requete/StatutRequete";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 import request from "superagent";
+import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
+import { StatutRequete } from "../../../model/requete/StatutRequete";
 import { useUpdateStatutRequeteApi } from "../../../views/common/hook/UpdateStatutRequeteHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -21,6 +21,7 @@ const HookConsummer: React.FC = () => {
   );
   return <div>{""}</div>;
 };
+
 beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
