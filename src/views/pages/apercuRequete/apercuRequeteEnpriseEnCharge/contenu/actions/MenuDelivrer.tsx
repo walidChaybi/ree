@@ -12,6 +12,7 @@ import {
   IActionStatutRequete,
   useCreerActionMajStatutRequete
 } from "../../../../../common/hook/v2/requete/CreerActionMajStatutRequete";
+import { DoubleSubmitUtil } from "../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../common/util/RequetesUtils";
 import { getUrlWithoutIdParam } from "../../../../../common/util/route/routeUtil";
 import { supprimerNullEtUndefinedDuTableau } from "../../../../../common/util/Utils";
@@ -94,8 +95,20 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
   // 3 -  Mise à jour du status de la requête + création d'une action
   const { idAction } = useCreerActionMajStatutRequete(actionStatutRequete);
 
-  const boutonOK: IBoutonPopin[] = getBoutonOK(setMessagesBloquant);
-  const boutonsOuiNon: IBoutonPopin[] = getBoutonsOuiNon(setMessagesBloquant);
+  const resetDoubleSubmit = () => {
+    listeActions.forEach(el => {
+      DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+    });
+  };
+
+  const boutonOK: IBoutonPopin[] = getBoutonOK(
+    setMessagesBloquant,
+    resetDoubleSubmit
+  );
+  const boutonsOuiNon: IBoutonPopin[] = getBoutonsOuiNon(
+    setMessagesBloquant,
+    resetDoubleSubmit
+  );
 
   const delivrerOptions: IActionOption[] = getOptionsMenuDelivrer(
     refDelivrerOptions0
@@ -197,6 +210,11 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idRequete, idAction, history, props.requete]);
 
+  const listeActions = filtrerListeActions(
+    props.requete as IRequeteDelivrance,
+    delivrerOptions
+  );
+
   return (
     <>
       <OperationEnCours
@@ -205,10 +223,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
       />
       <GroupeBouton
         titre={getLibelle("Délivrer")}
-        listeActions={filtrerListeActions(
-          props.requete as IRequeteDelivrance,
-          delivrerOptions
-        )}
+        listeActions={listeActions}
         onSelect={handleDelivrerMenu}
       />
       {nonVide(messagesBloquant) && (
@@ -226,13 +241,15 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
 function getBoutonOK(
   setMessagesBloquant: React.Dispatch<
     React.SetStateAction<string[] | undefined>
-  >
+  >,
+  resetDoubleSubmit: Function
 ): IBoutonPopin[] {
   return [
     {
       label: getLibelle("OK"),
       action: () => {
         setMessagesBloquant(undefined);
+        resetDoubleSubmit();
       }
     }
   ];
@@ -241,7 +258,8 @@ function getBoutonOK(
 function getBoutonsOuiNon(
   setMessagesBloquant: React.Dispatch<
     React.SetStateAction<string[] | undefined>
-  >
+  >,
+  resetDoubleSubmit: Function
 ): IBoutonPopin[] {
   return [
     {
@@ -254,6 +272,7 @@ function getBoutonsOuiNon(
       label: getLibelle("Non"),
       action: () => {
         setMessagesBloquant(undefined);
+        resetDoubleSubmit();
       }
     }
   ];

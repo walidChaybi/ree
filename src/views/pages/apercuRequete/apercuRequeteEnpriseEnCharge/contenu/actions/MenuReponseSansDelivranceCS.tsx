@@ -8,6 +8,7 @@ import { SousTypeDelivrance } from "../../../../../../model/requete/v2/enum/Sous
 import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
 import { IActionOption } from "../../../../../../model/requete/v2/IActionOption";
 import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+import { DoubleSubmitUtil } from "../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../common/util/RequetesUtils";
 import { supprimerNullEtUndefinedDuTableau } from "../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
@@ -34,8 +35,9 @@ export const MenuReponseSansDelivranceCS: React.FC<IActionProps> = props => {
   const refReponseSansDelivranceCSOptions3 = useRef(null);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] =
-    useState<IReponseSansDelivranceCS | undefined>();
+  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<
+    IReponseSansDelivranceCS | undefined
+  >();
   const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
 
   const resultatReponseSansDelivranceCS = useReponseSansDelivranceCS(
@@ -89,8 +91,7 @@ export const MenuReponseSansDelivranceCS: React.FC<IActionProps> = props => {
       value: INDEX_ACTION_IGNORER_REQUETE,
       label: getLibelle("Ignorer la requête (fin du traitement)"),
       sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-      ref: refReponseSansDelivranceCSOptions3,
-      eviterAntiDoubleClic: true
+      ref: refReponseSansDelivranceCSOptions3
     }
   ];
 
@@ -98,10 +99,9 @@ export const MenuReponseSansDelivranceCS: React.FC<IActionProps> = props => {
     switch (indexMenu) {
       case INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE:
         setOperationEnCours(true);
-        const contenuReponseSansDelivranceCSDemandeIncomplete =
-          await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
-            props.requete as IRequeteDelivrance
-          );
+        const contenuReponseSansDelivranceCSDemandeIncomplete = await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+          props.requete as IRequeteDelivrance
+        );
         setReponseSansDelivranceCS({
           contenu: contenuReponseSansDelivranceCSDemandeIncomplete,
           fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
@@ -116,11 +116,10 @@ export const MenuReponseSansDelivranceCS: React.FC<IActionProps> = props => {
           setHasMessageBloquant(true);
         } else {
           setOperationEnCours(true);
-          const newReponseSansDelivranceCSMariage =
-            await createReponseSansDelivranceCSPourCompositionApiMariage(
-              props.requete as IRequeteDelivrance,
-              actes?.[0]
-            );
+          const newReponseSansDelivranceCSMariage = await createReponseSansDelivranceCSPourCompositionApiMariage(
+            props.requete as IRequeteDelivrance,
+            actes?.[0]
+          );
           setReponseSansDelivranceCS({
             contenu: newReponseSansDelivranceCSMariage,
             fichier: NOM_DOCUMENT_REFUS_MARIAGE
@@ -129,10 +128,9 @@ export const MenuReponseSansDelivranceCS: React.FC<IActionProps> = props => {
         break;
       case INDEX_ACTION_RESSORTISSANT_FRANCAIS:
         setOperationEnCours(true);
-        const newReponseSansDelivranceCSFrancais =
-          await createReponseSansDelivranceCSPourCompositionApiFrancais(
-            props.requete as IRequeteDelivrance
-          );
+        const newReponseSansDelivranceCSFrancais = await createReponseSansDelivranceCSPourCompositionApiFrancais(
+          props.requete as IRequeteDelivrance
+        );
         setReponseSansDelivranceCS({
           contenu: newReponseSansDelivranceCSFrancais,
           fichier: NOM_DOCUMENT_REFUS_FRANCAIS
@@ -144,6 +142,17 @@ export const MenuReponseSansDelivranceCS: React.FC<IActionProps> = props => {
     }
   };
 
+  const resetDoubleSubmit = () => {
+    listeActions.forEach(el => {
+      DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+    });
+  };
+
+  const listeActions = filtrerListeActions(
+    props.requete as IRequeteDelivrance,
+    reponseSansDelivranceCSOptions
+  );
+
   return (
     <>
       <OperationEnCours
@@ -153,15 +162,15 @@ export const MenuReponseSansDelivranceCS: React.FC<IActionProps> = props => {
       />
       <GroupeBouton
         titre={"Réponse sans délivrance"}
-        listeActions={filtrerListeActions(
-          props.requete as IRequeteDelivrance,
-          reponseSansDelivranceCSOptions
-        )}
+        listeActions={listeActions}
         onSelect={handleReponseSansDelivranceCSMenu}
       />
       <IgnoreRequetePopin
         isOpen={popinOuverte}
-        onClosePopin={() => setPopinOuverte(false)}
+        onClosePopin={() => {
+          setPopinOuverte(false);
+          resetDoubleSubmit();
+        }}
         requete={props.requete}
       />
       <ConfirmationPopin
@@ -176,6 +185,7 @@ export const MenuReponseSansDelivranceCS: React.FC<IActionProps> = props => {
             label: getLibelle("OK"),
             action: () => {
               setHasMessageBloquant(false);
+              resetDoubleSubmit();
             }
           }
         ]}

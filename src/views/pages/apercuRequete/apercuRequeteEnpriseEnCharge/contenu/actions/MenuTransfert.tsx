@@ -11,6 +11,7 @@ import {
   TransfertParams,
   useTransfertApi
 } from "../../../../../common/hook/v2/requete/TransfertHook";
+import { DoubleSubmitUtil } from "../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../common/util/RequetesUtils";
 import { getUrlWithParam } from "../../../../../common/util/route/routeUtil";
 import { storeRece } from "../../../../../common/util/storeRece";
@@ -42,9 +43,11 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
 
   const onCloseService = () => {
     setServicePopinOpen(false);
+    resetDoubleSubmit();
   };
   const onCloseAgent = () => {
     setAgentPopinOpen(false);
+    resetDoubleSubmit();
   };
 
   const onValidateService = (entite: Option | undefined) => {
@@ -88,14 +91,12 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
     {
       value: INDEX_ACTION_TRANSFERT_SERVICE,
       label: getLibelle("À un service"),
-      ref: refReponseTransfertOptions0,
-      eviterAntiDoubleClic: true
+      ref: refReponseTransfertOptions0
     },
     {
       value: INDEX_ACTION_TRANSFERT_OFFICIER,
       label: getLibelle("À un Officier d'État Civil"),
-      ref: refReponseTransfertOptions1,
-      eviterAntiDoubleClic: true
+      ref: refReponseTransfertOptions1
     },
     {
       value: INDEX_ACTION_TRANSFERT_ABANDON,
@@ -118,6 +119,17 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
     }
   };
 
+  const resetDoubleSubmit = () => {
+    listeActions.forEach(el => {
+      DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+    });
+  };
+
+  const listeActions = filtrerListeActions(
+    props.requete as IRequeteDelivrance,
+    reponseSansDelivranceCSOptions
+  );
+
   return (
     <>
       <OperationEnCours
@@ -127,10 +139,7 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
       />
       <GroupeBouton
         titre={"Transférer"}
-        listeActions={filtrerListeActions(
-          props.requete as IRequeteDelivrance,
-          reponseSansDelivranceCSOptions
-        )}
+        listeActions={listeActions}
         onSelect={handleTransfertMenu}
       />
       <TransfertPopin

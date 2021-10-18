@@ -4,6 +4,7 @@ import { ChoixDelivrance } from "../../../../../../model/requete/v2/enum/ChoixDe
 import { SousTypeDelivrance } from "../../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { IActionOption } from "../../../../../../model/requete/v2/IActionOption";
 import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+import { DoubleSubmitUtil } from "../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../common/util/RequetesUtils";
 import { getUrlWithoutIdParam } from "../../../../../common/util/route/routeUtil";
 import { GroupeBouton } from "../../../../../common/widget/menu/GroupeBouton";
@@ -74,8 +75,7 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
         SousTypeDelivrance.RDAPC,
         SousTypeDelivrance.RDCSC
       ],
-      ref: refRepondreSansDelivranceOptions0,
-      eviterAntiDoubleClic: true
+      ref: refRepondreSansDelivranceOptions0
     }
   ];
 
@@ -96,19 +96,30 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
     }
   };
 
+  const resetDoubleSubmit = () => {
+    listeActions.forEach(el => {
+      DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+    });
+  };
+
+  const listeActions = filtrerListeActions(
+    props.requete as IRequeteDelivrance,
+    repondreSansDelivranceOptions
+  );
+
   return (
     <>
       <GroupeBouton
         titre={getLibelle("Réponse sans délivrance")}
-        listeActions={filtrerListeActions(
-          props.requete as IRequeteDelivrance,
-          repondreSansDelivranceOptions
-        )}
+        listeActions={listeActions}
         onSelect={handleReponseSansDelivranceMenu}
       />
       <IgnoreRequetePopin
         isOpen={popinOuverte}
-        onClosePopin={() => setPopinOuverte(false)}
+        onClosePopin={() => {
+          setPopinOuverte(false);
+          resetDoubleSubmit();
+        }}
         requete={props.requete}
       />
     </>
