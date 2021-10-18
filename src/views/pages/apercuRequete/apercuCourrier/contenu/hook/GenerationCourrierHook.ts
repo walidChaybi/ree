@@ -110,9 +110,10 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
         construitCourrier(
           elements,
           // @ts-ignore presenceDesElementsPourLaGeneration
-          params.requete,
+          requeteAvecAdresseSaisie(params?.requete, params?.saisieCourrier),
           setCourrierParams,
           setResultatGenerationCourrier,
+          // @ts-ignore presenceDesElementsPourLaGeneration
           courrier
         );
       } else {
@@ -230,19 +231,7 @@ function mapCourrierPourSauvergarde(
 ): ISauvegardeCourrier {
   return {
     requerant: {
-      adresse: {
-        ligne2: getValeurOuVide(
-          saisieCourrier?.[ADRESSE][COMPLEMENT_DESTINATAIRE]
-        ),
-        ligne3: getValeurOuVide(
-          saisieCourrier?.[ADRESSE][COMPLEMENT_POINT_GEO]
-        ),
-        ligne4: getValeurOuVide(saisieCourrier?.[ADRESSE][VOIE]),
-        ligne5: getValeurOuVide(saisieCourrier?.[ADRESSE][LIEU_DIT]),
-        codePostal: getValeurOuVide(saisieCourrier?.[ADRESSE][CODE_POSTAL]),
-        ville: getValeurOuVide(saisieCourrier?.[ADRESSE][COMMUNE]),
-        pays: getValeurOuVide(saisieCourrier?.[ADRESSE][PAYS])
-      } as IAdresseRequerant
+      adresse: mappingAdresseSaisieToAdresseRequerant(saisieCourrier)
     },
     motif: getValeurOuVide(saisieCourrier?.[REQUETE][MOTIF]),
     nombreExemplairesDemandes: parseInt(
@@ -271,4 +260,27 @@ function mapCourrierPourSauvergarde(
       } as IDocumentReponse
     ]
   };
+}
+
+function mappingAdresseSaisieToAdresseRequerant(
+  saisieCourrier: SaisieCourrier | undefined
+): IAdresseRequerant {
+  return {
+    ligne2: getValeurOuVide(saisieCourrier?.[ADRESSE][COMPLEMENT_DESTINATAIRE]),
+    ligne3: getValeurOuVide(saisieCourrier?.[ADRESSE][COMPLEMENT_POINT_GEO]),
+    ligne4: getValeurOuVide(saisieCourrier?.[ADRESSE][VOIE]),
+    ligne5: getValeurOuVide(saisieCourrier?.[ADRESSE][LIEU_DIT]),
+    codePostal: getValeurOuVide(saisieCourrier?.[ADRESSE][CODE_POSTAL]),
+    ville: getValeurOuVide(saisieCourrier?.[ADRESSE][COMMUNE]),
+    pays: getValeurOuVide(saisieCourrier?.[ADRESSE][PAYS])
+  };
+}
+
+function requeteAvecAdresseSaisie(
+  requete: IRequeteDelivrance,
+  saisieCourrier: SaisieCourrier
+) {
+  requete.requerant.adresse =
+    mappingAdresseSaisieToAdresseRequerant(saisieCourrier);
+  return requete;
 }

@@ -952,9 +952,9 @@ export const ReponseAppelDetailRequeteDelivranceRDC = {
       telephone: "0152698741",
       adresse: {
         id: "074acd89-be79-4272-afe0-bb64925ee9ca",
-        ligne2: "5 place de l'Eglise",
+        ligne2: "",
         ligne3: "",
-        ligne4: "",
+        ligne4: "5 place de l'Eglise",
         ligne5: "",
         codePostal: "44000",
         ville: "Nantes",

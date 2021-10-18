@@ -12,6 +12,10 @@ import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resul
 import messageManager from "../../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
+import {
+  AdresseFormValidationSchema,
+  AdresseFormValidationSchemaRequired
+} from "../../../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../../../common/widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "../../../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../../../common/widget/Text";
@@ -38,6 +42,7 @@ import { ValidationSchemaChoixCourrier } from "./contenuForm/sousFormulaires/Cho
 import { ValidationSchemaOptionCourrier } from "./contenuForm/sousFormulaires/OptionsCourrierForm";
 import { useGenerationCourrierHook } from "./hook/GenerationCourrierHook";
 import {
+  ADRESSE,
   CHOIX_COURRIER,
   OPTION,
   SaisieCourrier
@@ -48,12 +53,6 @@ interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
   acte?: IResultatRMCActe;
 }
-
-// Schéma de validation en sortie de champs
-const ValidationSchemaCourrier = Yup.object({
-  [CHOIX_COURRIER]: ValidationSchemaChoixCourrier,
-  [OPTION]: ValidationSchemaOptionCourrier
-});
 
 export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const typesCourrier = getTypesCourrier(props.requete);
@@ -68,6 +67,16 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
   const [documentDelivranceChoisi, setDocumentDelivranceChoisi] =
     useState<DocumentDelivrance>();
+
+  // Schéma de validation en sortie de champs
+  const ValidationSchemaCourrier = Yup.object({
+    [CHOIX_COURRIER]: ValidationSchemaChoixCourrier,
+    [OPTION]: ValidationSchemaOptionCourrier,
+    [ADRESSE]:
+      props.requete.sousType === SousTypeDelivrance.RDC
+        ? AdresseFormValidationSchemaRequired
+        : AdresseFormValidationSchema
+  });
 
   const onChangeTypeCourrier = (idTypeCourrierSelectionne: string) => {
     setIdTypeCourrier(idTypeCourrierSelectionne);

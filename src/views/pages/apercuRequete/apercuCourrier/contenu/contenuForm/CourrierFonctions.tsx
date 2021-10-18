@@ -231,7 +231,7 @@ function controleDivers(
   if (
     optionsChoisies.filter(option => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
-    }).length === 0 ||
+    }).length === 0 &&
     saisieCourrier[TEXTE_LIBRE][TEXTE].length === 0
   ) {
     setMessagesBloquant(
