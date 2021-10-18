@@ -73,7 +73,7 @@ test("Réponse divers", async () => {
     )
   );
 });
-test("Réponse divers", async () => {
+test("Réponse ignorer", async () => {
   await act(async () => {
     fireEvent.click(screen.getByText("Réponse sans délivrance"));
   });

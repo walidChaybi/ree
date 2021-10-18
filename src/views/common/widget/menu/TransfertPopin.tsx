@@ -4,17 +4,18 @@ import {
   DialogContent,
   DialogTitle
 } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import { FilterOptionsState } from "@material-ui/lab";
 import React, { useState } from "react";
 import { Option, Options } from "../../util/Type";
 import { BoutonOperationEnCours } from "../attente/BoutonOperationEnCours";
+import { ChampRecherche } from "../formulaire/champRecherche/ChampRechercheField";
 import { getLibelle } from "../Text";
 import "./scss/TransfertPopin.scss";
 
 interface TransfertPopinProps {
   open: boolean;
   onClose: () => void;
-  onValidate: (entite: Option) => void;
+  onValidate: (entite: Option | undefined) => void;
   options: Options;
   titre: string;
 }
@@ -32,6 +33,17 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
   });
   const [validerDesactive, setvaliderDesactive] = useState<boolean>(true);
 
+  const filterOptions = (
+    optionsAutocomplete: Option[],
+    state: FilterOptionsState<Option>
+  ) => {
+    return optionsAutocomplete.filter(option => {
+      return option.str
+        .toLowerCase()
+        .startsWith(state.inputValue.toLowerCase());
+    });
+  };
+
   return (
     <>
       <Dialog
@@ -42,33 +54,20 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
       >
         <DialogTitle>{getLibelle(titre)}</DialogTitle>
         <DialogContent>
-          <Autocomplete
-            data-testid="autocomplete"
-            className="Autocomplete"
-            noOptionsText={getLibelle("Aucun résultats")}
-            getOptionLabel={(option: Option) => option.str}
-            getOptionSelected={(option, val) => {
-              return option.value === val.value;
-            }}
+          <ChampRecherche
+            componentName="TransfertPopin"
             options={options}
-            onChange={(event, newValue) => {
-              if (newValue != null) {
+            onClickClear={() => {
+              setvaliderDesactive(true);
+              setOptionChoisie({ value: "", str: "" });
+            }}
+            value={optionChoisie}
+            filterOptions={filterOptions}
+            onChange={newValue => {
+              if (newValue && newValue.str) {
                 setOptionChoisie(newValue);
                 setvaliderDesactive(false);
               }
-            }}
-            renderInput={params => (
-              <div ref={params.InputProps.ref}>
-                <input
-                  type="text"
-                  placeholder={"Recherche..."}
-                  {...params.inputProps}
-                  aria-label={"Recherche"}
-                />
-              </div>
-            )}
-            renderOption={option => {
-              return <span key={option.value}>{option.str}</span>;
             }}
           />
         </DialogContent>

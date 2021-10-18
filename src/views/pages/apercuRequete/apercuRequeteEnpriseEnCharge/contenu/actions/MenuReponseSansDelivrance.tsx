@@ -25,10 +25,8 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
   const history = useHistory();
   const refRepondreSansDelivranceOptions0 = useRef(null);
 
-  const [
-    paramUpdateChoixDelivrance,
-    setParamUpdateChoixDelivrance
-  ] = useState<UpdateChoixDelivranceProps>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
+    useState<UpdateChoixDelivranceProps>();
   const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
 
   const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
@@ -80,7 +78,8 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
         SousTypeDelivrance.RDAPC,
         SousTypeDelivrance.RDCSC
       ],
-      ref: refRepondreSansDelivranceOptions0
+      ref: refRepondreSansDelivranceOptions0,
+      eviterAntiDoubleClic: true
     }
   ];
 

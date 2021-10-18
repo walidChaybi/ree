@@ -107,18 +107,18 @@ test("Reponse sans délivrance mariage", async () => {
 test("test de création réponse sans délivrance mariage", async () => {
   const requete = requeteDelivrance;
   const acte = { idActe: "b41079a5-9e8d-478c-b04c-c4c2ac671348" };
-  const reponseSansDelivranceCS = await createReponseSansDelivranceCSPourCompositionApiMariage(
-    requete,
-    (acte as any) as IResultatRMCActe
-  );
+  const reponseSansDelivranceCS =
+    await createReponseSansDelivranceCSPourCompositionApiMariage(
+      requete,
+      acte as any as IResultatRMCActe
+    );
   expect(reponseSansDelivranceCS).toStrictEqual(reponseSansDelivranceCSMariage);
 });
 
 test("test de création réponse sans délivrance français", async () => {
   const requete = requeteDelivrance;
-  const reponseSansDelivranceCS = await createReponseSansDelivranceCSPourCompositionApiFrancais(
-    requete
-  );
+  const reponseSansDelivranceCS =
+    await createReponseSansDelivranceCSPourCompositionApiFrancais(requete);
   expect(reponseSansDelivranceCS).toStrictEqual(
     reponseSansDelivranceCSFrancais
   );
@@ -126,27 +126,41 @@ test("test de création réponse sans délivrance français", async () => {
 
 test("test de création réponse sans délivrance demande incomplete", async () => {
   const requete = requeteDelivranceInstitutionnel;
-  const reponseSansDelivranceCS = await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
-    requete
-  );
+  const reponseSansDelivranceCS =
+    await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+      requete
+    );
   expect(reponseSansDelivranceCS).toStrictEqual(
     reponseSansDelivranceCSDemandeIncomplete
   );
 });
 
+test("Réponse ignorer", async () => {
+  await act(async () => {
+    fireEvent.click(screen.getByText(/Ignorer+/));
+  });
+
+  const valider = screen.getByText("Valider") as HTMLButtonElement;
+
+  expect(valider.disabled).toBeTruthy();
+});
+
 test("message erreur", async () => {
-  const reponseSansDelivranceCS1 = await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
-    {} as IRequeteDelivrance
-  );
+  const reponseSansDelivranceCS1 =
+    await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+      {} as IRequeteDelivrance
+    );
   expect(reponseSansDelivranceCS1).toStrictEqual({});
-  const reponseSansDelivranceCS2 = await createReponseSansDelivranceCSPourCompositionApiMariage(
-    {} as IRequeteDelivrance,
-    {} as IResultatRMCActe
-  );
+  const reponseSansDelivranceCS2 =
+    await createReponseSansDelivranceCSPourCompositionApiMariage(
+      {} as IRequeteDelivrance,
+      {} as IResultatRMCActe
+    );
   expect(reponseSansDelivranceCS2).toStrictEqual({});
-  const reponseSansDelivranceCS3 = await createReponseSansDelivranceCSPourCompositionApiFrancais(
-    {} as IRequeteDelivrance
-  );
+  const reponseSansDelivranceCS3 =
+    await createReponseSansDelivranceCSPourCompositionApiFrancais(
+      {} as IRequeteDelivrance
+    );
   expect(reponseSansDelivranceCS3).toStrictEqual({});
 });
 

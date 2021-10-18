@@ -21,7 +21,12 @@ export const GroupeBouton: React.FC<IGroupeBoutonProps> = props => {
           <Button
             ref={el.ref}
             onClick={() => {
-              DoubleSubmitUtil.eviteDoubleSubmit(el.ref?.current);
+              if (
+                el.eviterAntiDoubleClic === undefined ||
+                el.eviterAntiDoubleClic === false
+              ) {
+                DoubleSubmitUtil.eviteDoubleSubmit(el.ref?.current);
+              }
               props.onSelect(el.value);
             }}
             key={el.value}

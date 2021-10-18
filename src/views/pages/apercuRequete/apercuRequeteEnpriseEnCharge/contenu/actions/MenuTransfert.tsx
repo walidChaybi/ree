@@ -47,27 +47,31 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
     setAgentPopinOpen(false);
   };
 
-  const onValidateService = (entite: Option) => {
-    setParam({
-      idRequete: props.requete.id,
-      idEntite: entite.value,
-      idUtilisateur: "",
-      statutRequete: StatutRequete.TRANSFEREE,
-      libelleAction: `Requête attribuée à ${entite.str}`
-    });
-    setServicePopinOpen(false);
+  const onValidateService = (entite: Option | undefined) => {
+    if (entite) {
+      setParam({
+        idRequete: props.requete.id,
+        idEntite: entite.value,
+        idUtilisateur: "",
+        statutRequete: StatutRequete.TRANSFEREE,
+        libelleAction: `Requête attribuée à ${entite.str}`
+      });
+      setServicePopinOpen(false);
+    }
   };
-  const onValidateAgent = (agent: Option) => {
-    setParam({
-      idRequete: props.requete.id,
-      idEntite: storeRece.listeUtilisateurs.find(
-        utilisateur => utilisateur.idUtilisateur === agent.value
-      )?.entite?.idEntite,
-      idUtilisateur: agent.value,
-      statutRequete: StatutRequete.TRANSFEREE,
-      libelleAction: `Requête attribuée à ${agent.str}`
-    });
-    setAgentPopinOpen(false);
+  const onValidateAgent = (agent: Option | undefined) => {
+    if (agent) {
+      setParam({
+        idRequete: props.requete.id,
+        idEntite: storeRece.listeUtilisateurs.find(
+          utilisateur => utilisateur.idUtilisateur === agent.value
+        )?.entite?.idEntite,
+        idUtilisateur: agent.value,
+        statutRequete: StatutRequete.TRANSFEREE,
+        libelleAction: `Requête attribuée à ${agent.str}`
+      });
+      setAgentPopinOpen(false);
+    }
   };
 
   const idAction = useTransfertApi(param);
@@ -84,12 +88,14 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
     {
       value: INDEX_ACTION_TRANSFERT_SERVICE,
       label: getLibelle("À un service"),
-      ref: refReponseTransfertOptions0
+      ref: refReponseTransfertOptions0,
+      eviterAntiDoubleClic: true
     },
     {
       value: INDEX_ACTION_TRANSFERT_OFFICIER,
       label: getLibelle("À un Officier d'État Civil"),
-      ref: refReponseTransfertOptions1
+      ref: refReponseTransfertOptions1,
+      eviterAntiDoubleClic: true
     },
     {
       value: INDEX_ACTION_TRANSFERT_ABANDON,
@@ -148,27 +154,33 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
 };
 
 function listeEntiteToOptions(): Options {
-  return storeRece.listeEntite
-    .filter(entite => entite.estDansSCEC)
-    .map(entite => {
-      return { value: entite.idEntite, str: entite.libelleEntite };
-    });
+  return [
+    { value: "", str: "" },
+    ...storeRece.listeEntite
+      .filter(entite => entite.estDansSCEC)
+      .map(entite => {
+        return { value: entite.idEntite, str: entite.libelleEntite };
+      })
+  ];
 }
 
 function listeUtilisateursToOptions(requete: IRequeteDelivrance): Options {
-  return storeRece.listeUtilisateurs
-    .filter(utilisateur => {
-      const estDuSCEC = utilisateur.entite?.estDansSCEC;
-      const aDroit =
-        requete.sousType === SousTypeDelivrance.RDDCO
-          ? utilisateurADroit(Droit.DELIVRER_COMEDEC, utilisateur)
-          : utilisateurADroit(Droit.DELIVRER, utilisateur);
-      return estDuSCEC && aDroit;
-    })
-    .map(utilisateur => {
-      return {
-        value: utilisateur.idUtilisateur,
-        str: `${utilisateur.prenom} ${utilisateur.nom}`
-      };
-    });
+  return [
+    { value: "", str: "" },
+    ...storeRece.listeUtilisateurs
+      .filter(utilisateur => {
+        const estDuSCEC = utilisateur.entite?.estDansSCEC;
+        const aDroit =
+          requete.sousType === SousTypeDelivrance.RDDCO
+            ? utilisateurADroit(Droit.DELIVRER_COMEDEC, utilisateur)
+            : utilisateurADroit(Droit.DELIVRER, utilisateur);
+        return estDuSCEC && aDroit;
+      })
+      .map(utilisateur => {
+        return {
+          value: utilisateur.idUtilisateur,
+          str: `${utilisateur.nom} ${utilisateur.prenom}`
+        };
+      })
+  ];
 }

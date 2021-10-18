@@ -1,12 +1,7 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
+import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import {
@@ -91,7 +86,9 @@ test("check popin service", async () => {
   expect(valider).toBeDefined();
   expect(valider.disabled).toBeTruthy();
   expect(title).toBeDefined();
-  const autocomplete = screen.getByLabelText(/Recherche+/) as HTMLInputElement;
+  const autocomplete = screen.getByLabelText(
+    /TransfertPopin+/
+  ) as HTMLInputElement;
   expect(autocomplete).toBeDefined();
 
   await waitFor(() => {
@@ -112,17 +109,14 @@ test("check popin agent", async () => {
   });
 
   const valider = screen.getByText(/Valider+/) as HTMLButtonElement;
-  const annuler = screen.getByText(/Annuler+/) as HTMLButtonElement;
   const title = screen.getByText("Transfert à un Officier d'État Civil");
   expect(valider).toBeDefined();
   expect(valider.disabled).toBeTruthy();
   expect(title).toBeDefined();
-  const autocomplete = screen.getByLabelText(/Recherche+/) as HTMLInputElement;
+  const autocomplete = screen.getByLabelText(
+    /TransfertPopin+/
+  ) as HTMLInputElement;
   expect(autocomplete).toBeDefined();
-
-  await waitFor(() => {
-    fireEvent.click(annuler);
-  });
 });
 
 test("check autocomplete service", async () => {
@@ -154,7 +148,7 @@ test("check autocomplete service", async () => {
 
   const autocomplete = screen.getByTestId("autocomplete");
   const inputChampRecherche = screen.getByLabelText(
-    "Recherche"
+    "TransfertPopin"
   ) as HTMLInputElement;
   autocomplete.focus();
   act(() => {
@@ -177,55 +171,59 @@ test("check autocomplete service", async () => {
   expect(inputChampRecherche.value).toStrictEqual("str1");
   expect(valider.disabled).toBeFalsy();
 
-  await waitFor(() => {
-    fireEvent.click(valider);
+  const reset = screen.getByTitle("Vider le champ");
+
+  expect(reset).toBeDefined();
+
+  act(() => {
+    fireEvent.click(reset);
   });
 
-  expect(history.location.pathname).toBe(
-    getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE, idRequeteRDCSC)
-  );
+  expect(valider.disabled).toBeTruthy();
 });
 
 test("check autocomplete agent", async () => {
   storeRece.listeUtilisateurs = [
     {
-      entite: { estDansSCEC: true } as IEntite,
-      prenom: "str1",
-      nom: "",
+      entite: { estDansSCEC: true, idEntite: "123" } as IEntite,
+      prenom: "",
+      nom: "str1",
       habilitations: [
         {
           profil: {
             droits: [{ nom: Droit.DELIVRER } as IDroit]
           } as IProfil
         } as IHabilitation
-      ]
+      ],
+      idUtilisateur: "1234"
     } as IUtilisateur,
     {
-      entite: { estDansSCEC: true } as IEntite,
-      prenom: "str2",
-      nom: "",
+      entite: { estDansSCEC: true, idEntite: "1234" } as IEntite,
+      prenom: "",
+      nom: "str2",
       habilitations: [
         {
           profil: {
             droits: [{ nom: Droit.DELIVRER } as IDroit]
           } as IProfil
         } as IHabilitation
-      ]
+      ],
+      idUtilisateur: "12345"
     } as IUtilisateur
   ];
-  await waitFor(() => {
+  act(() => {
     const menuTransfert = screen.getByText("Transférer");
     fireEvent.click(menuTransfert);
   });
 
-  await waitFor(() => {
+  act(() => {
     const choixService = screen.getByText(/À un Officier d'État Civil+/);
     fireEvent.click(choixService);
   });
 
   const autocomplete = screen.getByTestId("autocomplete");
   const inputChampRecherche = screen.getByLabelText(
-    "Recherche"
+    "TransfertPopin"
   ) as HTMLInputElement;
   autocomplete.focus();
   act(() => {
@@ -239,7 +237,7 @@ test("check autocomplete agent", async () => {
   expect(str1).toBeInTheDocument();
   expect(screen.getByText("str2")).toBeInTheDocument();
 
-  await waitFor(() => {
+  act(() => {
     fireEvent.click(str1);
   });
 
@@ -248,7 +246,7 @@ test("check autocomplete agent", async () => {
   expect(inputChampRecherche.value).toStrictEqual("str1 ");
   expect(valider.disabled).toBeFalsy();
 
-  await waitFor(() => {
+  await act(async () => {
     fireEvent.click(valider);
   });
 

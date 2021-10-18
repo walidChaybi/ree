@@ -8,4 +8,5 @@ export interface IActionOption {
   sousTypes?: SousTypeDelivrance[];
   ref: any;
   choixDelivrance?: ChoixDelivrance;
+  eviterAntiDoubleClic?: boolean;
 }

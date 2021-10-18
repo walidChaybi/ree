@@ -25,10 +25,18 @@ export interface IActionProps {
 }
 
 export const ChoixAction: React.FC<IActionProps> = props => {
-  const checkSiMenuTransferer =
-    props.requete.statutCourant.statut === StatutRequete.PRISE_EN_CHARGE &&
-    storeRece.utilisateurCourant?.idUtilisateur === props.requete.idUtilisateur;
+  const checkSiMenuTransferer = () => {
+    const statutPriseEnCharge =
+      props.requete.statutCourant.statut === StatutRequete.PRISE_EN_CHARGE;
+    const mAppartient =
+      storeRece.utilisateurCourant?.idUtilisateur ===
+      props.requete.idUtilisateur;
 
+    const utilisateurDansSCEC =
+      storeRece.utilisateurCourant?.entite?.estDansSCEC;
+
+    return statutPriseEnCharge && mAppartient && utilisateurDansSCEC;
+  };
   const sousType = (props.requete as IRequeteDelivrance).sousType;
 
   return (
@@ -65,7 +73,7 @@ export const ChoixAction: React.FC<IActionProps> = props => {
           </>
         )}
         <MenuAutre requete={props.requete} />
-        {checkSiMenuTransferer && <MenuTransfert requete={props.requete} />}
+        {checkSiMenuTransferer() && <MenuTransfert requete={props.requete} />}
       </div>
     </Fieldset>
   );

@@ -23,11 +23,15 @@ import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { ApercuRequetePriseEnChargePage } from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { MOTIF_IGNORE } from "../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
-import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../views/router/ReceUrls";
+import {
+  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_V2
+} from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 global.URL.createObjectURL = jest.fn();
+window.open = jest.fn();
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
@@ -224,8 +228,8 @@ test("redirection requete RDC", async () => {
 });
 
 test("ignorer requete", async () => {
-  const history2 = createMemoryHistory();
-  history2.push(
+  const history = createMemoryHistory();
+  history.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       "a4cefb71-8457-4f6b-937e-34b49335d666"
@@ -241,7 +245,7 @@ test("ignorer requete", async () => {
   await act(async () => {
     render(
       <>
-        <Router history={history2}>
+        <Router history={history}>
           <Route
             exact={true}
             path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
@@ -284,9 +288,14 @@ test("ignorer requete", async () => {
     });
   });
 
-  await act(async () => {
+  const valider = screen.getByText("Valider");
+  expect(valider).toBeDefined();
+
+  await waitFor(() => {
     fireEvent.click(screen.getByText("Valider"));
   });
+
+  expect(history.location.pathname).toBe(URL_MES_REQUETES_V2);
 });
 
 afterAll(() => {

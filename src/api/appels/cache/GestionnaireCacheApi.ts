@@ -2,6 +2,7 @@ import { mappingUtilisateurs } from "../../../model/agent/IUtilisateur";
 import { Decret, IDecret } from "../../../model/etatcivil/commun/IDecret";
 import { logError } from "../../../views/common/util/LogManager";
 import { storeRece } from "../../../views/common/util/storeRece";
+import { triListeObjetsSurPropriete } from "../../../views/common/util/Utils";
 import {
   getTousLesUtilisateurs,
   getToutesLesEntiteRattachement
@@ -11,8 +12,9 @@ import { getToutesLesDecrets } from "../etatcivilApi";
 const PLAGE_IMPORT = 100;
 
 export class GestionnaireCacheApi {
-  static chargerTousLesUtilisateurs() {
-    return GestionnaireCacheApi.chargerTousLesUtilisateursPourLaPage(0);
+  static async chargerTousLesUtilisateurs() {
+    await GestionnaireCacheApi.chargerTousLesUtilisateursPourLaPage(0);
+    triListeObjetsSurPropriete(storeRece.listeUtilisateurs, "nom");
   }
 
   static chargerToutesLesEntites() {
@@ -33,7 +35,9 @@ export class GestionnaireCacheApi {
         utilisateurs.headers &&
         utilisateurs.headers.link.indexOf(`rel="next"`) >= 0
       ) {
-        GestionnaireCacheApi.chargerTousLesUtilisateursPourLaPage(page + 1);
+        await GestionnaireCacheApi.chargerTousLesUtilisateursPourLaPage(
+          page + 1
+        );
       }
     } catch (error) {
       GestionnaireCacheApi.gereErreur(

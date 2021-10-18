@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import { Autocomplete, FilterOptionsState } from "@material-ui/lab";
 import { connect, Field } from "formik";
 import React from "react";
 import { Option } from "../../../util/Type";
@@ -15,7 +15,11 @@ interface ChampRechercheProps {
   noOptionsText?: string;
   onInput?: (value: string | null) => void;
   onChange?: (option?: Option) => void;
-  value: Option;
+  value?: any;
+  filterOptions?: (
+    options: Option[],
+    state: FilterOptionsState<Option>
+  ) => Option[];
   onClickClear: (e: any) => void;
 }
 
@@ -39,6 +43,7 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
       }}
       className="Autocomplete"
       disabled={props.disabled}
+      filterOptions={props.filterOptions}
       noOptionsText={
         props.noOptionsText
           ? props.noOptionsText

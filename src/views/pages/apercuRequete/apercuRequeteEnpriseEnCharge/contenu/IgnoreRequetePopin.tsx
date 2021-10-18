@@ -5,12 +5,14 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { IRequete } from "../../../../../model/requete/v2/IRequete";
 import {
   IgnorerParams,
   useIgnorerApi
 } from "../../../../common/hook/v2/requete/IgnorerHook";
+import { getUrlPrecedente } from "../../../../common/util/route/routeUtil";
 import FormAjouterAlerteBoutons, {
   FormAjouterAlerteBoutonsProps
 } from "../../../../common/widget/alertes/ajouterAlerte/contenu/FormAjouterAlerteBoutons";
@@ -76,6 +78,8 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
   onClosePopin,
   requete
 }) => {
+  const history = useHistory();
+
   const [param, setParam] = useState<IgnorerParams>({});
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
@@ -105,8 +109,9 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
   useEffect(() => {
     if (idAction) {
       setOperationEnCours(false);
+      history.push(getUrlPrecedente(history.location.pathname));
     }
-  }, [idAction, onClosePopin]);
+  }, [idAction, history]);
 
   return (
     <>
