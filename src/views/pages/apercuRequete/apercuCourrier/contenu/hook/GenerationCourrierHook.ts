@@ -6,10 +6,11 @@ import {
 } from "../../../../../../model/composition/ICourrierComposition";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
+import { IAdresseRequerant } from "../../../../../../model/requete/v2/IAdresseRequerant";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import { OptionsCourrier } from "../../../../../../model/requete/v2/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+import { ISauvegardeCourrier } from "../../../../../../model/requete/v2/ISauvegardeCourrier";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { MimeType } from "../../../../../../ressources/MimeType";
 import {
@@ -25,8 +26,27 @@ import {
   RESULTAT_VIDE
 } from "../../../../../common/hook/v2/generation/generationUtils";
 import { useInformationsActeApiHook } from "../../../../../common/hook/v2/repertoires/ActeApiHook";
-import { useStockerDocumentCreerActionMajStatutRequete } from "../../../../../common/hook/v2/requete/StockerDocumentCreerActionMajStatutRequete";
-import { SaisieCourrier } from "../modelForm/ISaisiePageModel";
+import { useSauvegarderCourrierCreerActionMajStatutRequete } from "../../../../../common/hook/v2/requete/sauvegardeCourrierCreerActionMajStatut";
+import { getValeurOuVide } from "../../../../../common/util/Utils";
+import {
+  CODE_POSTAL,
+  COMMUNE,
+  COMPLEMENT_DESTINATAIRE,
+  COMPLEMENT_POINT_GEO,
+  LIEU_DIT,
+  MOTIF,
+  NB_EXEMPLAIRE,
+  PAYS,
+  VOIE
+} from "../../../../saisirRequete/modelForm/ISaisirRequetePageModel";
+import { getStatutEnTraitement } from "../contenuForm/CourrierFonctions";
+import {
+  ADRESSE,
+  REQUETE,
+  SaisieCourrier,
+  TEXTE,
+  TEXTE_LIBRE
+} from "../modelForm/ISaisiePageModel";
 
 export interface IResultGenerationCourrier {
   idDocumentReponse?: string;
@@ -42,10 +62,8 @@ export interface IGenerationCourrierParams {
 }
 
 export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
-  const [
-    resultatGenerationCourrier,
-    setResultatGenerationCourrier
-  ] = useState<IResultGenerationUnDocument>();
+  const [resultatGenerationCourrier, setResultatGenerationCourrier] =
+    useState<IResultGenerationUnDocument>();
 
   const [courrierParams, setCourrierParams] = useState<ICourrierParams>();
 
@@ -55,10 +73,8 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   const [acte, setActe] = useState<IFicheActe>();
 
-  const [
-    documentsReponsePourStockage,
-    setDocumentsReponsePourStockage
-  ] = useState<IDocumentReponse[] | undefined>();
+  const [requeteDelivrancePourSauvegarde, setRequeteDelivrancePourSauvegarde] =
+    useState<ISauvegardeCourrier | undefined>();
 
   useEffect(() => {
     if (
@@ -81,15 +97,16 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   useEffect(() => {
     if (presenceDeLaRequeteDuDocEtSaisieCourrier(params)) {
       if (presenceDesElementsPourLaGeneration(params, courrier, acte)) {
-        const elements: IElementsJasperCourrier = specificationCourrier.getElementsJasper(
-          // @ts-ignore presenceDesElementsPourLaGeneration
-          params.saisieCourrier,
-          // @ts-ignore presenceDesElementsPourLaGeneration
-          params.requete,
-          // @ts-ignore presenceDesElementsPourLaGeneration
-          params.optionsChoisies,
-          acte
-        );
+        const elements: IElementsJasperCourrier =
+          specificationCourrier.getElementsJasper(
+            // @ts-ignore presenceDesElementsPourLaGeneration
+            params.saisieCourrier,
+            // @ts-ignore presenceDesElementsPourLaGeneration
+            params.requete,
+            // @ts-ignore presenceDesElementsPourLaGeneration
+            params.optionsChoisies,
+            acte
+          );
         construitCourrier(
           elements,
           // @ts-ignore presenceDesElementsPourLaGeneration
@@ -107,23 +124,20 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   // 2 - Création du courrier: appel api composition
   // récupération du document en base64
-  const contenuComposition: string | undefined = useCourrierApiHook(
-    courrierParams
-  );
+  const contenuComposition: string | undefined =
+    useCourrierApiHook(courrierParams);
 
   // 3 - Création du document réponse pour stockage dans la BDD et Swift
   useEffect(() => {
     if (contenuComposition && courrier) {
-      setDocumentsReponsePourStockage([
-        {
-          contenu: contenuComposition,
-          nom: courrier.libelle,
-          mimeType: MimeType.APPLI_PDF,
-          typeDocument: DocumentDelivrance.getUuidFromDocument(courrier), // UUID du courrier (nomenclature)
-          nbPages: 1,
-          orientation: Orientation.PORTRAIT
-        } as IDocumentReponse
-      ]);
+      setRequeteDelivrancePourSauvegarde(
+        mapCourrierPourSauvergarde(
+          params?.saisieCourrier,
+          contenuComposition,
+          params?.optionsChoisies,
+          courrier
+        )
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contenuComposition]);
@@ -131,26 +145,24 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   // 4- Stockage du document réponse une fois celui-ci créé
   // 5- Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   // 6- Mise à jour du status de la requête + création d'une action
-  const {
-    idAction,
-    uuidDocumentsReponse
-  } = useStockerDocumentCreerActionMajStatutRequete(
-    StatutRequete.A_VALIDER.libelle,
-    StatutRequete.A_VALIDER,
-    documentsReponsePourStockage,
-    params?.requete?.id
-  );
+  const uuidDocumentsReponse =
+    useSauvegarderCourrierCreerActionMajStatutRequete(
+      getStatutEnTraitement(params?.requete?.choixDelivrance).libelle,
+      getStatutEnTraitement(params?.requete?.choixDelivrance),
+      requeteDelivrancePourSauvegarde,
+      params?.requete?.id
+    );
 
   // 6- Une fois la requête mise à jour et l'action créé, changement de page
   useEffect(() => {
-    if (idAction && uuidDocumentsReponse && contenuComposition) {
+    if (uuidDocumentsReponse && contenuComposition) {
       setResultatGenerationCourrier({
         idDocumentReponse: uuidDocumentsReponse[0],
         contenuDocumentReponse: contenuComposition
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idAction]);
+  }, [uuidDocumentsReponse]);
 
   return resultatGenerationCourrier;
 }
@@ -208,4 +220,55 @@ function creerCourrierComposition(
   requete: IRequeteDelivrance
 ): ICourrierComposition {
   return CourrierComposition.creerCourrier(requete, elements);
+}
+
+function mapCourrierPourSauvergarde(
+  saisieCourrier: SaisieCourrier | undefined,
+  contenuComposition: string,
+  optionsChoisies: OptionsCourrier | undefined,
+  courrier: any
+): ISauvegardeCourrier {
+  return {
+    requerant: {
+      adresse: {
+        ligne2: getValeurOuVide(
+          saisieCourrier?.[ADRESSE][COMPLEMENT_DESTINATAIRE]
+        ),
+        ligne3: getValeurOuVide(
+          saisieCourrier?.[ADRESSE][COMPLEMENT_POINT_GEO]
+        ),
+        ligne4: getValeurOuVide(saisieCourrier?.[ADRESSE][VOIE]),
+        ligne5: getValeurOuVide(saisieCourrier?.[ADRESSE][LIEU_DIT]),
+        codePostal: getValeurOuVide(saisieCourrier?.[ADRESSE][CODE_POSTAL]),
+        ville: getValeurOuVide(saisieCourrier?.[ADRESSE][COMMUNE]),
+        pays: getValeurOuVide(saisieCourrier?.[ADRESSE][PAYS])
+      } as IAdresseRequerant
+    },
+    motif: getValeurOuVide(saisieCourrier?.[REQUETE][MOTIF]),
+    nombreExemplairesDemandes: parseInt(
+      getValeurOuVide(saisieCourrier?.[REQUETE][NB_EXEMPLAIRE])
+    ),
+    documentsReponses: [
+      {
+        contenu: contenuComposition,
+        nom: courrier.libelle,
+        mimeType: MimeType.APPLI_PDF,
+        typeDocument: DocumentDelivrance.getUuidFromDocument(courrier), // UUID du courrier (nomenclature)
+        nbPages: 1,
+        orientation: Orientation.PORTRAIT,
+        optionsCourrier: optionsChoisies?.map(el => {
+          return {
+            code: el.id,
+            numeroOrdreEdition: el.ordreEdition,
+            texte: el.texteOptionCourrierModifier
+              ? el.texteOptionCourrierModifier
+              : el.texteOptionCourrier
+          };
+        }),
+        texteLibreCourrier: {
+          texte: saisieCourrier?.[TEXTE_LIBRE][TEXTE]
+        }
+      } as IDocumentReponse
+    ]
+  };
 }

@@ -26,7 +26,7 @@ export class TypeDecisionUtil {
     [TypeDecision.DECLARATION]: "Déclaration",
     [TypeDecision.ONAC]: "Onac",
     [TypeDecision.ORDONNANCE]: "Ordonnance",
-    [TypeDecision.DECISION_JUDICIAIRE]: "Décision Judiciaire",
+    [TypeDecision.DECISION_JUDICIAIRE]: "Décision judiciaire",
     [TypeDecision.REQUETE]: "Requête"
   };
 

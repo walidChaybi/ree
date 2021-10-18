@@ -6,11 +6,12 @@ import {
   waitFor
 } from "@testing-library/react";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import request from "superagent";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { OptionsCourrier } from "../../../../../model/requete/v2/IOptionCourrier";
 import OptionsCourrierForm, {
   OptionCourrierFormDefaultValues,
   OptionsCourrierSubFormProps,
@@ -25,6 +26,8 @@ beforeAll(() => {
 });
 
 const HookOptionsCourrierForm: React.FC = () => {
+  const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
+  const setCheckOptions = () => {};
   const optionsCourrierFormProps = {
     nom: OPTION,
     documentDelivranceChoisi: DocumentDelivrance.getDocumentDelivrance(
@@ -32,6 +35,9 @@ const HookOptionsCourrierForm: React.FC = () => {
     ), //INFORMATION_DIVERSES_MANQUANTE (Courrier 117)
     titre: "Options",
     requete: requeteDelivrance,
+    optionsChoisies: optionsChoisies,
+    setOptionsChoisies: setOptionsChoisies,
+    setCheckOptions: setCheckOptions,
     formik: {} as FormikProps<FormikValues>
   } as OptionsCourrierSubFormProps;
 

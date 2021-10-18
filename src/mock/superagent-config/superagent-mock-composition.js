@@ -21,6 +21,10 @@ export const configComposition = [
         return { data: imagePngVideBase64 };
       }
 
+      if (match[1] === "/composition/CARN_EC_17/1") {
+        return { data: imagePngVideBase64 };
+      }
+
       if (match[1] === "/composition/CARN_CS_01/1") {
         // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
         return { data: imagePngVideBase64 };

@@ -163,6 +163,14 @@ export const configRequetesV2 = [
         return {};
       }
 
+      // Sauvegarde courrier Accompagnement
+      if (
+        match[1] ===
+        "/requetes/delivrance/85b32284-d3dd-4502-bfbd-5634ba52ba22/courrier?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=A%20valider&statutRequete=A_VALIDER"
+      ) {
+        return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
+      }
+
       // Creation Requete Delivrance
       // Certificat de Situation Courrier
       if (match[1] === "/requetes/delivrance?refus=false&brouillon=false") {

@@ -35,6 +35,9 @@ import {
 import "./scss/OptionsCourrierForm.scss";
 
 interface OptionsCourrierFormProps {
+  optionsChoisies: OptionsCourrier;
+  setOptionsChoisies: (options: OptionsCourrier) => void;
+  setCheckOptions: () => void;
   documentDelivranceChoisi?: DocumentDelivrance;
 }
 
@@ -55,13 +58,16 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
   const [optionsDisponibles, setOptionsDisponibles] = useState<OptionsCourrier>(
     []
   );
-  const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
   const [optionSelectionne, setOptionSelectionne] = useState<OptionCourrier>();
 
   const { optionsCourrierDisponibles } = useOptionsCourriersApiHook(
     props.documentDelivranceChoisi,
     props.requete as IRequeteDelivrance
   );
+
+  useEffect(() => {
+    props.setCheckOptions();
+  }, [props.setCheckOptions, props]);
 
   useEffect(() => {
     if (props.requete) {
@@ -77,7 +83,7 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
         optionsDuCourrier
       );
       setOptionsDisponibles(optsDispos);
-      setOptionsChoisies(optsChoisies);
+      props.setOptionsChoisies(optsChoisies);
       resetOptionSelectionne();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,11 +92,11 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
   const ajouterUneOption = (opt: OptionCourrier) => {
     const { optionsAvecAjout, optionsAvecSuppression } = switchOption(
       opt,
-      optionsChoisies,
+      props.optionsChoisies,
       optionsDisponibles
     );
     setOptionsDisponibles(optionsAvecSuppression);
-    setOptionsChoisies(optionsAvecAjout);
+    props.setOptionsChoisies(optionsAvecAjout);
     modifierUneOption(opt);
   };
 
@@ -98,10 +104,10 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
     const { optionsAvecAjout, optionsAvecSuppression } = switchOption(
       opt,
       optionsDisponibles,
-      optionsChoisies
+      props.optionsChoisies
     );
     setOptionsDisponibles(optionsAvecAjout);
-    setOptionsChoisies(optionsAvecSuppression);
+    props.setOptionsChoisies(optionsAvecSuppression);
     modifierUneOption(opt);
   };
 
@@ -148,13 +154,13 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
 
   return (
     <SousFormulaire titre={props.titre}>
-      {optionsDisponibles.length > 0 || optionsChoisies.length > 0 ? (
+      {optionsDisponibles.length > 0 || props.optionsChoisies.length > 0 ? (
         <>
           <div className="OptionsCourrierForm">
             <span>
               <label>{getLibelle("Ajouter un paragraphe")}</label>
               {messageOptionVariables(
-                optionsDisponibles.concat(optionsChoisies)
+                optionsDisponibles.concat(props.optionsChoisies)
               ) && (
                 <p>
                   {getLibelle("(*) option comportant des variables à saisir")}
@@ -163,13 +169,13 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
             </span>
             {getTableauOptionsDisponibles(
               optionsDisponibles,
-              optionsChoisies,
+              props.optionsChoisies,
               ajouterUneOption,
               modifierUneOption,
               optionSelectionne
             )}
             {getTableauOptionsChoisies(
-              optionsChoisies,
+              props.optionsChoisies,
               supprimerUneOption,
               modifierUneOption,
               optionSelectionne
@@ -193,8 +199,14 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
               name={withNamespace(props.nom, CONTENU)}
               label={getLibelle("Contenu")}
               onInput={onChangeContenu}
-              disabled={contenuDisabled(optionSelectionne, optionsChoisies)}
-              className={classNameContenu(optionSelectionne, optionsChoisies)}
+              disabled={contenuDisabled(
+                optionSelectionne,
+                props.optionsChoisies
+              )}
+              className={classNameContenu(
+                optionSelectionne,
+                props.optionsChoisies
+              )}
               component={"textarea"}
             />
             <button
@@ -202,7 +214,7 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
               onClick={reinitialerContenu}
               disabled={reinitialiserDisabled(
                 optionSelectionne,
-                optionsChoisies
+                props.optionsChoisies
               )}
             >
               {getLibelle("Réinitialiser")}

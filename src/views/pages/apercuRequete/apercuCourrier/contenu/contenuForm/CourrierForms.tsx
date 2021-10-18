@@ -1,5 +1,6 @@
 import React from "react";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { OptionsCourrier } from "../../../../../../model/requete/v2/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
 import { Options } from "../../../../../common/util/Type";
 import AdresseForm from "../../../../../common/widget/formulaire/adresse/AdresseForm";
@@ -45,14 +46,20 @@ export function getChoixCourrier(
 
 export function getOptionsCourrier(
   requete: IRequeteDelivrance,
+  optionsChoisies: OptionsCourrier,
+  setOptionsChoisies: (value: OptionsCourrier) => void,
+  setCheckOptions: () => void,
   documentDelivranceChoisi?: DocumentDelivrance
 ): JSX.Element {
-  const optionsCourrierFormProps = ({
+  const optionsCourrierFormProps = {
     nom: OPTION,
     documentDelivranceChoisi,
     titre: getLibelle("Options"),
-    requete
-  } as any) as OptionsCourrierSubFormProps;
+    requete,
+    optionsChoisies,
+    setOptionsChoisies,
+    setCheckOptions
+  } as any as OptionsCourrierSubFormProps;
   return <OptionsCourrierForm key={OPTION} {...optionsCourrierFormProps} />;
 }
 

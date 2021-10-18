@@ -9,13 +9,13 @@ import {
 } from "../../../../../mock/data/SaisieCourrier";
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2-gene-inscription";
+import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { useGenerationCourrierHook } from "../../../../../views/pages/apercuRequete/apercuCourrier/contenu/hook/GenerationCourrierHook";
 
 const superagentMock = require("superagent-mock")(request, [
-  configEtatcivil[0],
   configComposition[0],
+  configEtatcivil[0],
   configRequetesV2[0]
 ]);
 

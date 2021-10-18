@@ -5,6 +5,8 @@ import {
   mAppartientOuAppartientAPersonne,
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
 } from "../../../model/agent/IOfficier";
+import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
+import { SousTypeRequete } from "../../../model/requete/v2/enum/SousTypeRequete";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../model/requete/v2/enum/TypeRequete";
 import { IActionOption } from "../../../model/requete/v2/IActionOption";
@@ -130,9 +132,8 @@ export function getIdDocumentReponseAAfficher(requete?: TRequete): string {
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const requeteDelivrance = requete as IRequeteDelivrance;
 
-    const documentsDeDelivrance = RequeteDelivrance.getDocumentsDeDelivrance(
-      requeteDelivrance
-    );
+    const documentsDeDelivrance =
+      RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
     if (documentsDeDelivrance.length > 0) {
       idDocumentAAfficher = documentsDeDelivrance[0].id;
     } else if (requeteDelivrance.documentsReponses.length > 0) {
@@ -140,4 +141,17 @@ export function getIdDocumentReponseAAfficher(requete?: TRequete): string {
     }
   }
   return idDocumentAAfficher;
+}
+
+export function soustypeRDDouRDC(sousType: SousTypeRequete): boolean {
+  return (
+    sousType === SousTypeDelivrance.RDD || sousType === SousTypeDelivrance.RDC
+  );
+}
+
+export function soustypeRDCSDouRDCSC(sousType: SousTypeRequete): boolean {
+  return (
+    sousType === SousTypeDelivrance.RDCSD ||
+    sousType === SousTypeDelivrance.RDCSC
+  );
 }

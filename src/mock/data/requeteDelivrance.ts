@@ -48,7 +48,7 @@ const requeteDelivrance: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: ("Carte" as unknown) as TypePieceJustificative
+      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
     }
   ],
   provenanceRequete: {
@@ -169,7 +169,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: ("Carte" as unknown) as TypePieceJustificative
+      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
     }
   ],
   provenanceRequete: {
@@ -261,7 +261,8 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       villeNaissance: "Barcelone"
     }
   ],
-  type: TypeRequete.DELIVRANCE
+  type: TypeRequete.DELIVRANCE,
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
 };
 
 export default requeteDelivrance;

@@ -5,10 +5,19 @@ import requeteDelivrance, {
 import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { ChoixDelivrance } from "../../../../../model/requete/v2/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import {
+  controleFormulaire,
   getDefaultValuesCourrier,
+  getStatutEnTraitement,
   getTypesCourrier
 } from "../../../../../views/pages/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
+import {
+  CHOIX_COURRIER,
+  COURRIER,
+  TEXTE,
+  TEXTE_LIBRE
+} from "../../../../../views/pages/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
 const superagentMock = require("superagent-mock")(request, configMultiAPi);
 
@@ -49,8 +58,8 @@ test("getDefaultValues", () => {
     getDefaultValuesCourrier(requeteDelivranceInstitutionnel)
   ).toStrictEqual({
     choixCourrier: {
-      delivrance: undefined,
-      courrier: ""
+      courrier: "cb1f3518-9457-471d-a31c-10bc8d34c9a2",
+      delivrance: "Délivrer E/C - Extrait plurilingue"
     },
     option: {
       contenu: "",
@@ -137,6 +146,59 @@ test("getTypesCourrier", () => {
       str: "Proposition de transcription d'acte"
     }
   ]);
+});
+
+test("controle formulaire", () => {
+  expect(
+    controleFormulaire(
+      {
+        [CHOIX_COURRIER]: { [COURRIER]: "062526c5-e5a7-48d1-bc22-11938347f0bc" }
+      },
+      [{ ordreEdition: 20 }],
+      jest.fn()
+    )
+  ).toBeTruthy();
+
+  expect(
+    controleFormulaire(
+      {
+        [CHOIX_COURRIER]: { [COURRIER]: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2" }
+      },
+      [],
+      jest.fn()
+    )
+  ).toBeFalsy();
+
+  expect(
+    controleFormulaire(
+      {
+        [CHOIX_COURRIER]: {
+          [COURRIER]: "fce55a9f-4f4b-4996-a60b-59332bc10565"
+        },
+        [TEXTE_LIBRE]: { [TEXTE]: "je suis gentil" }
+      },
+      [{ ordreEdition: 20 }],
+      jest.fn()
+    )
+  ).toBeTruthy();
+  expect(
+    controleFormulaire(
+      {
+        [CHOIX_COURRIER]: { [COURRIER]: "0296fc7a-fb81-4eb7-a72f-94286b8d8301" }
+      },
+      [],
+      jest.fn()
+    )
+  ).toBeTruthy();
+});
+
+test("getStatutEnTraitement", () => {
+  expect(
+    getStatutEnTraitement(ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION)
+  ).toBe(StatutRequete.A_SIGNER);
+  expect(getStatutEnTraitement(ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE)).toBe(
+    StatutRequete.A_VALIDER
+  );
 });
 
 afterAll(() => {

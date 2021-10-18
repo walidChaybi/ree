@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { OptionsCourrier } from "../../../../../model/requete/v2/IOptionCourrier";
+import {
+  OptionCourrier,
+  OptionsCourrier
+} from "../../../../../model/requete/v2/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import messageManager from "../../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
+import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import { Formulaire } from "../../../../common/widget/formulaire/Formulaire";
+import { ConfirmationPopin } from "../../../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../../../common/widget/Text";
 import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../router/ReceUrls";
 import BoutonsCourrier, {
   BoutonsCourrierProps
 } from "./contenuForm/BoutonsCourrier";
 import {
+  controleFormulaire,
   courrierExiste,
   getDefaultValuesCourrier,
   getDocumentReponseAModifier,
@@ -55,15 +61,43 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     ? getLibelle("Modification du courrier")
     : getLibelle("Création du courrier");
 
+  const [saisieCourrier, setSaisieCourrier] = useState<SaisieCourrier>();
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
-
-  const [
-    documentDelivranceChoisi,
-    setDocumentDelivranceChoisi
-  ] = useState<DocumentDelivrance>();
+  const [messagesBloquant, setMessagesBloquant] = useState<string>();
+  const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
+  const [documentDelivranceChoisi, setDocumentDelivranceChoisi] =
+    useState<DocumentDelivrance>();
 
   const onChangeTypeCourrier = (idTypeCourrierSelectionne: string) => {
     setIdTypeCourrier(idTypeCourrierSelectionne);
+  };
+
+  const checkOptionsToutesValides = useCallback(() => {
+    return optionsChoisies.every((opt: OptionCourrier) => {
+      if (opt.presenceVariables || opt.optionLibre) {
+        return opt.texteOptionCourrierModifier !== opt.texteOptionCourrier;
+      } else return true;
+    });
+  }, [optionsChoisies]);
+
+  const [optionsToutesValides, setOptionsToutesValides] = useState<boolean>(
+    checkOptionsToutesValides()
+  );
+  const boutonsProps = {
+    requete: props.requete,
+    optionsValides: optionsToutesValides
+  } as BoutonsCourrierProps;
+
+  const setCheckOptions = () => {
+    setOptionsToutesValides(checkOptionsToutesValides());
+  };
+
+  const onSubmit = (values: SaisieCourrier) => {
+    if (controleFormulaire(values, optionsChoisies, setMessagesBloquant)) {
+      setOperationEnCours(true);
+      setSaisieCourrier(values);
+    }
   };
 
   useEffect(() => {
@@ -90,22 +124,25 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
 
   const blocsForm: JSX.Element[] = [
     getChoixCourrier(typesCourrier, onChangeTypeCourrier),
-    getOptionsCourrier(props.requete, documentDelivranceChoisi),
+    getOptionsCourrier(
+      props.requete,
+      optionsChoisies,
+      setOptionsChoisies,
+      setCheckOptions,
+      documentDelivranceChoisi
+    ),
     getTexteLibre(props.requete, documentDelivranceChoisi),
     getRequerantCourrierForm(isSousTypeRDC),
     getAdresseCourrierForm(isSousTypeRDC),
     getRequeteCourrierForm(isSousTypeRDC)
   ];
 
-  const boutonsProps = {
-    requete: props.requete
-  } as BoutonsCourrierProps;
+  const finOperationEnCours = () => {
+    setOperationEnCours(false);
+  };
 
   /** Saisie du courrier */
   const history = useHistory();
-  const [saisieCourrier, setSaisieCourrier] = useState<SaisieCourrier>();
-
-  const optionsChoisies: OptionsCourrier = [];
 
   const generationCourrier = useGenerationCourrierHook({
     saisieCourrier,
@@ -114,12 +151,9 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     acte: props.acte
   });
 
-  const onSubmit = (values: SaisieCourrier) => {
-    setSaisieCourrier(values);
-  };
-
   useEffect(() => {
     if (generationCourrier) {
+      setOperationEnCours(false);
       messageManager.showSuccessAndClose(
         getLibelle("Le courrier a bien été enregistrée")
       );
@@ -135,12 +169,15 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
 
   return (
     <>
+      <OperationEnCours
+        visible={operationEnCours}
+        onTimeoutEnd={finOperationEnCours}
+        onClick={finOperationEnCours}
+      />
       <title>{titre}</title>
       <Formulaire
         titre={titre}
-        formDefaultValues={
-          saisieCourrier || getDefaultValuesCourrier(props.requete)
-        }
+        formDefaultValues={getDefaultValuesCourrier(props.requete)}
         formValidationSchema={ValidationSchemaCourrier}
         onSubmit={onSubmit}
         className="FormulaireCourrier"
@@ -148,6 +185,20 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         <div>{blocsForm}</div>
         <BoutonsCourrier {...boutonsProps} />
       </Formulaire>
+      {messagesBloquant && (
+        <ConfirmationPopin
+          isOpen={true}
+          messages={[messagesBloquant]}
+          boutons={[
+            {
+              label: getLibelle("OK"),
+              action: () => {
+                setMessagesBloquant(undefined);
+              }
+            }
+          ]}
+        />
+      )}
     </>
   );
 };

@@ -1,11 +1,13 @@
 import React from "react";
-import { SousTypeDelivrance } from "../../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { SousTypeRequete } from "../../../../../../model/requete/v2/enum/SousTypeRequete";
 import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
 import { TRequete } from "../../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import {
+  soustypeRDCSDouRDCSC,
+  soustypeRDDouRDC
+} from "../../../../../common/util/RequetesUtils";
 import { storeRece } from "../../../../../common/util/storeRece";
 import { Fieldset } from "../../../../../common/widget/fieldset/Fieldset";
 import { getLibelle } from "../../../../../common/widget/Text";
@@ -78,16 +80,3 @@ export const ChoixAction: React.FC<IActionProps> = props => {
     </Fieldset>
   );
 };
-
-function soustypeRDDouRDC(sousType: SousTypeRequete): boolean {
-  return (
-    sousType === SousTypeDelivrance.RDD || sousType === SousTypeDelivrance.RDC
-  );
-}
-
-function soustypeRDCSDouRDCSC(sousType: SousTypeRequete): boolean {
-  return (
-    sousType === SousTypeDelivrance.RDCSD ||
-    sousType === SousTypeDelivrance.RDCSC
-  );
-}

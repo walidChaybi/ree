@@ -10,9 +10,8 @@ export interface ICourrierParams {
 }
 
 export function useCourrierApiHook(courrierParams?: ICourrierParams) {
-  const [contenuComposition, setContenuComposition] = useState<
-    string | undefined
-  >();
+  const [contenuComposition, setContenuComposition] =
+    useState<string | undefined>();
 
   useEffect(() => {
     if (courrierParams?.codeCourrier && courrierParams.courrierComposition) {

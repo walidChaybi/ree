@@ -1,5 +1,5 @@
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
@@ -14,6 +14,7 @@ import "./scss/BoutonsCourrier.scss";
 
 export type BoutonsCourrierProps = {
   requete: IRequeteDelivrance;
+  optionsValides: boolean;
 } & FormikComponentProps;
 
 const BoutonsCourrier: React.FC<BoutonsCourrierProps> = props => {
@@ -27,6 +28,12 @@ const BoutonsCourrier: React.FC<BoutonsCourrierProps> = props => {
     }
     receUrl.goBack(history);
   };
+
+  const refValider = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    refValider.current?.focus();
+  }, []);
 
   useUpdateChoixDelivrance(params);
 
@@ -42,9 +49,10 @@ const BoutonsCourrier: React.FC<BoutonsCourrierProps> = props => {
           {getLibelle("Annuler")}
         </button>
         <button
-          disabled={!props.formik.dirty}
+          disabled={!props.optionsValides || !props.formik.isValid}
           type="button"
           id="boutonEnregistrer"
+          ref={refValider}
           onClick={() => {
             props.formik.submitForm();
           }}

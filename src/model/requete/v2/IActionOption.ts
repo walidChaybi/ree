@@ -6,7 +6,7 @@ export interface IActionOption {
   value: number;
   label: string;
   sousTypes?: SousTypeDelivrance[];
+  eviterAntiDoubleClic?: boolean;
   ref: any;
   choixDelivrance?: ChoixDelivrance;
-  eviterAntiDoubleClic?: boolean;
 }

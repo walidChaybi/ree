@@ -16,11 +16,11 @@ interface ChampRechercheProps {
   onInput?: (value: string | null) => void;
   onChange?: (option?: Option) => void;
   value?: any;
+  onClickClear: (e: any) => void;
   filterOptions?: (
     options: Option[],
     state: FilterOptionsState<Option>
   ) => Option[];
-  onClickClear: (e: any) => void;
 }
 
 const useStyles = makeStyles(theme => ({
