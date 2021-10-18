@@ -17,7 +17,7 @@ interface IdRequeteParams {
   idRequete: string;
 }
 
-interface DataRMCAuto {
+export interface DataRMCAuto {
   dataRequetes: any[];
   dataRMCAutoActe: IResultatRMCActe[];
   dataTableauRMCAutoActe: IParamsTableau;
@@ -69,19 +69,12 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
           <BandeauRequete detailRequete={detailRequeteState} />
           <div className="contenu-requete">
             <ApercuRequetePriseEnChargePartieGauche
-              idRequete={idRequete}
               detailRequete={detailRequeteState}
-              dataRequetes={dataHistory?.dataRequetes}
               openFenetre={openFenetre}
             />
             <ApercuRequetePriseEnChargePartieDroite
               detailRequete={detailRequeteState}
-              dataRMCAutoActe={dataHistory?.dataRMCAutoActe}
-              dataTableauRMCAutoActe={dataHistory?.dataTableauRMCAutoActe}
-              dataRMCAutoInscription={dataHistory?.dataRMCAutoInscription}
-              dataTableauRMCAutoInscription={
-                dataHistory?.dataTableauRMCAutoInscription
-              }
+              dataHistory={dataHistory}
             />
           </div>
         </ProtectionApercu>

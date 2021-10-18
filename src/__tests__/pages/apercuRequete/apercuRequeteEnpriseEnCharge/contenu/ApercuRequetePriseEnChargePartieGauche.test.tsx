@@ -10,8 +10,6 @@ import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
-import { idRequeteRDCSC } from "../../../../../mock/data/RequeteV2";
-import { DataRMCRequeteAvecResultat } from "../../../../../mock/data/RMCRequete";
 import {
   configRequetesV2,
   NORESULT
@@ -32,9 +30,7 @@ test("render ApercuRequetePriseEnChargePartieGauche", async () => {
     render(
       <Router history={history}>
         <ApercuRequetePriseEnChargePartieGauche
-          idRequete={idRequeteRDCSC}
           detailRequete={requeteDelivrance}
-          dataRequetes={DataRMCRequeteAvecResultat}
           openFenetre={jest.fn()}
         />
       </Router>

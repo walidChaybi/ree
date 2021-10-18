@@ -29,26 +29,32 @@ import {
   COMPLEMENT_DESCRIPTION,
   ID_TYPE_ALERTE
 } from "../../../../../views/common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
+import { DataRMCAuto } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequetePriseEnChargePartieDroite } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ApercuRequetePriseEnChargePartieDroite";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
+
+const history = createMemoryHistory();
+
+const dataHistory: DataRMCAuto = {
+  dataRequetes: [],
+  dataRMCAutoActe: DataRMCActeAvecResultat,
+  dataTableauRMCAutoActe: DataTableauActe,
+  dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
+  dataTableauRMCAutoInscription: DataTableauInscription
+};
 
 beforeEach(async () => {
   TypeAlerte.init();
 });
 
 test("render ApercuRequetePriseEnChargePartieDroite : RMC état civil manuelle ", async () => {
-  const history = createMemoryHistory();
-
   await act(async () => {
     render(
       <Router history={history}>
         <ApercuRequetePriseEnChargePartieDroite
           detailRequete={requeteDelivrance}
-          dataRMCAutoActe={DataRMCActeAvecResultat}
-          dataTableauRMCAutoActe={DataTableauActe}
-          dataRMCAutoInscription={DataRMCInscriptionAvecResultat}
-          dataTableauRMCAutoInscription={DataTableauInscription}
+          dataHistory={dataHistory}
         />
       </Router>
     );
@@ -102,17 +108,12 @@ test("render ApercuRequetePriseEnChargePartieDroite : RMC état civil manuelle "
 test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
 
-  const history = createMemoryHistory();
-
   await act(async () => {
     render(
       <Router history={history}>
         <ApercuRequetePriseEnChargePartieDroite
           detailRequete={requeteDelivrance}
-          dataRMCAutoActe={DataRMCActeAvecResultat}
-          dataTableauRMCAutoActe={DataTableauActe}
-          dataRMCAutoInscription={DataRMCInscriptionAvecResultat}
-          dataTableauRMCAutoInscription={DataTableauInscription}
+          dataHistory={dataHistory}
         />
       </Router>
     );
@@ -234,6 +235,27 @@ test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte",
       "Supprimer l'alerte"
     ) as HTMLButtonElement[];
     expect(boutonsSupprimerAlerte).toHaveLength(2);
+  });
+});
+
+test("render ApercuRequetePriseEnChargePartieDroite : relance RMC Auto ", async () => {
+  await act(async () => {
+    render(
+      <Router history={history}>
+        <ApercuRequetePriseEnChargePartieDroite
+          detailRequete={requeteDelivrance}
+        />
+      </Router>
+    );
+  });
+
+  await waitFor(() => {
+    const resultatRMCActe = screen.queryByText("Aucun acte n'a été trouvé");
+    const resultatRMCInscription = screen.queryByText(
+      "Aucune inscription n'a été trouvée"
+    );
+    expect(resultatRMCActe).not.toBeInTheDocument();
+    expect(resultatRMCInscription).not.toBeInTheDocument();
   });
 });
 

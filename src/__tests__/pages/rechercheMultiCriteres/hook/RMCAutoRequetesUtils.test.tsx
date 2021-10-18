@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
+import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 import { goToLinkRMC } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
 import {
   determinerCriteresRMCAuto,
@@ -7,32 +7,23 @@ import {
 } from "../../../../views/pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequetesUtils";
 
 test("determinerCriteresRMCAuto", () => {
-  const data = {
-    idRequete: "0",
-    titulaires: [
-      {
-        nom: "Dylan",
-        prenoms: ["Bob"],
-        jourNaissance: 31,
-        moisNaissance: 1,
-        anneeNaissance: 1992,
-        villeNaissance: "Nantes",
-        paysNaissance: "France",
-        sexe: Sexe.MASCULIN
-      }
-    ]
-  };
-
-  const res = determinerCriteresRMCAuto("0", [data]);
+  const res = determinerCriteresRMCAuto(requeteDelivrance);
 
   expect(res).toStrictEqual({
     criteres: [
       {
-        nomTitulaire: "Dylan",
-        prenomTitulaire: "Bob",
-        jourNaissance: 31,
-        moisNaissance: 1,
-        anneeNaissance: 1992
+        nomTitulaire: "Prodesk",
+        prenomTitulaire: "Elodie",
+        jourNaissance: 25,
+        moisNaissance: 6,
+        anneeNaissance: 1990
+      },
+      {
+        nomTitulaire: "Daniel",
+        prenomTitulaire: "Jack",
+        jourNaissance: 25,
+        moisNaissance: 6,
+        anneeNaissance: 1990
       }
     ]
   });

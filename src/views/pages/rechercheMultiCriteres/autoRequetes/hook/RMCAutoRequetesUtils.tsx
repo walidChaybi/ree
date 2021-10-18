@@ -1,6 +1,6 @@
 import ReportIcon from "@material-ui/icons/Report";
 import React from "react";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRMCRequestRequete } from "../../../../../model/rmc/requete/IRMCRequestRequete";
 import { valeurOuUndefined } from "../../../../common/util/Utils";
 import { getLibelle } from "../../../../common/widget/Text";
@@ -9,30 +9,22 @@ export interface ICriteresRMCAuto {
   criteres: IRMCRequestRequete[];
 }
 
-export function determinerCriteresRMCAuto(
-  idRequete: string,
-  data: IRequeteTableau[]
-): ICriteresRMCAuto {
+export function determinerCriteresRMCAuto(requete: TRequete): ICriteresRMCAuto {
   const criteresRMCAuto = {} as ICriteresRMCAuto;
-  const requete = data?.find(r => r.idRequete === idRequete);
   criteresRMCAuto.criteres = criteresRMCAutoMapper(requete?.titulaires);
   return criteresRMCAuto;
 }
 
 function criteresRMCAutoMapper(titulaires?: any): IRMCRequestRequete[] {
-  const titulairesRMCAuto: IRMCRequestRequete[] = [];
-  if (titulaires) {
-    titulaires.forEach((t: any) => {
-      const critere = {} as IRMCRequestRequete;
-      critere.nomTitulaire = valeurOuUndefined(t?.nom);
-      critere.prenomTitulaire = valeurOuUndefined(t?.prenoms?.[0]);
-      critere.jourNaissance = valeurOuUndefined(t?.jourNaissance);
-      critere.moisNaissance = valeurOuUndefined(t?.moisNaissance);
-      critere.anneeNaissance = valeurOuUndefined(t?.anneeNaissance);
-      titulairesRMCAuto.push(critere);
-    });
-  }
-  return titulairesRMCAuto;
+  return titulaires?.map((t: any) => {
+    return {
+      nomTitulaire: valeurOuUndefined(t?.nomNaissance),
+      prenomTitulaire: valeurOuUndefined(t?.prenoms?.[0]?.prenom),
+      jourNaissance: valeurOuUndefined(t?.jourNaissance),
+      moisNaissance: valeurOuUndefined(t?.moisNaissance),
+      anneeNaissance: valeurOuUndefined(t?.anneeNaissance)
+    } as IRMCRequestRequete;
+  });
 }
 
 export function getMessageZeroRequete(): JSX.Element {

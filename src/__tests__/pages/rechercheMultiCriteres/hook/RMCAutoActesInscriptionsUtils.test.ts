@@ -28,9 +28,7 @@ const requete = {
 };
 
 test("criteresRMCAutoMapper", () => {
-  const data = [{ idRequete: "1" }];
-
-  const res = determinerCriteresRMCAuto(requete, data);
+  const res = determinerCriteresRMCAuto(requete);
 
   expect(res).toStrictEqual({
     criteres: [

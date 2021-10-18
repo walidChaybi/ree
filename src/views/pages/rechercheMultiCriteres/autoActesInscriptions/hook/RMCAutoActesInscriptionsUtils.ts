@@ -1,5 +1,10 @@
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
+import {
+  IRequeteTableau,
+  ITitulaireRequeteTableau
+} from "../../../../../model/requete/v2/IRequeteTableau";
+import { ITitulaireRequete } from "../../../../../model/requete/v2/ITitulaireRequete";
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import {
   getUrlPrecedente,
@@ -95,30 +100,55 @@ export function redirectionRMCAutoApercuTraitement(
 }
 
 export function determinerCriteresRMCAuto(
-  requete: IRequeteTableau
+  requete: TRequete | IRequeteTableau
 ): ICriteresRMCAuto {
   const criteresRMCAuto = {} as ICriteresRMCAuto;
-
   criteresRMCAuto.criteres = criteresRMCAutoMapper(requete?.titulaires);
-
   return criteresRMCAuto;
 }
 
 function criteresRMCAutoMapper(
-  titulaires?: any
+  titulaires?: (ITitulaireRequete | ITitulaireRequeteTableau)[]
 ): IRMCRequestActesInscriptions[] {
-  const titulairesRMCAuto: IRMCRequestActesInscriptions[] = [];
-  if (titulaires) {
-    titulaires.forEach((t: any) => {
-      const critere = {} as IRMCRequestActesInscriptions;
-      critere.nomTitulaire = valeurOuUndefined(t?.nom);
-      critere.prenomTitulaire = valeurOuUndefined(t?.prenoms[0]);
-      critere.jourNaissance = valeurOuUndefined(t?.jourNaissance);
-      critere.moisNaissance = valeurOuUndefined(t?.moisNaissance);
-      critere.anneeNaissance = valeurOuUndefined(t?.anneeNaissance);
-      titulairesRMCAuto.push(critere);
-    });
-  }
+  return (
+    titulaires?.map(
+      (titulaire: ITitulaireRequete | ITitulaireRequeteTableau) => {
+        return {
+          nomTitulaire: getNomTitulaire(titulaire),
+          prenomTitulaire: getPrenomTitulaire(titulaire),
+          jourNaissance: valeurOuUndefined(titulaire?.jourNaissance),
+          moisNaissance: valeurOuUndefined(titulaire?.moisNaissance),
+          anneeNaissance: valeurOuUndefined(titulaire?.anneeNaissance)
+        } as IRMCRequestActesInscriptions;
+      }
+    ) || []
+  );
+}
 
-  return titulairesRMCAuto;
+function getNomTitulaire(
+  titulaire: ITitulaireRequete | ITitulaireRequeteTableau
+): string {
+  let nomTitulaire;
+  /* titulaire de type ITitulaireRequete */
+  if ("id" in titulaire) {
+    nomTitulaire = valeurOuUndefined(titulaire?.nomNaissance);
+  } else {
+    /* titulaire de type ITitulaireRequeteTableau*/
+    nomTitulaire = valeurOuUndefined(titulaire?.nom);
+  }
+  return nomTitulaire;
+}
+
+function getPrenomTitulaire(
+  titulaire: ITitulaireRequeteTableau | ITitulaireRequete
+): string {
+  let prenomTitulaire;
+  /* titulaire de type ITitulaireRequete */
+  if ("id" in titulaire) {
+    prenomTitulaire = valeurOuUndefined(titulaire?.prenoms?.[0]?.prenom);
+  } else {
+    /* titulaire de type ITitulaireRequeteTableau*/
+    prenomTitulaire = valeurOuUndefined(titulaire?.prenoms?.[0]);
+  }
+  return prenomTitulaire;
 }

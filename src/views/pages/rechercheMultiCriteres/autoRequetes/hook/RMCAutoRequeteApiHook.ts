@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoRequetes } from "../../../../../api/appels/requeteApi";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import {
   IRequeteTableau,
   mappingRequetesTableau
@@ -11,11 +12,7 @@ import {
 import { logError } from "../../../../common/util/LogManager";
 import { determinerCriteresRMCAuto } from "./RMCAutoRequetesUtils";
 
-export function useRMCAutoRequeteApiHook(
-  idRequete: string,
-  data: IRequeteTableau[] | undefined,
-  range: string
-) {
+export function useRMCAutoRequeteApiHook(requete: TRequete, range: string) {
   const [dataRMCAutoRequete, setDataRMCAutoRequete] = useState<
     IRequeteTableau[]
   >();
@@ -28,8 +25,8 @@ export function useRMCAutoRequeteApiHook(
   useEffect(() => {
     async function fetchRequetes() {
       try {
-        if (idRequete != null && data != null) {
-          const criteresRequest = determinerCriteresRMCAuto(idRequete, data);
+        if (requete != null) {
+          const criteresRequest = determinerCriteresRMCAuto(requete);
           const result = await rechercheMultiCriteresAutoRequetes(
             criteresRequest,
             range
@@ -50,7 +47,7 @@ export function useRMCAutoRequeteApiHook(
       }
     }
     fetchRequetes();
-  }, [idRequete, data, range]);
+  }, [requete, range]);
 
   return {
     dataRMCAutoRequete,

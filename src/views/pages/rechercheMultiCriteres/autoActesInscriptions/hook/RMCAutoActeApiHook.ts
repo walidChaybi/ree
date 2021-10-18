@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoActes } from "../../../../../api/appels/etatcivilApi";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import {
@@ -11,14 +12,15 @@ import { mappingActes } from "../../common/mapping/RMCMappingUtil";
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoActeApiHook(
-  requete?: IRequeteTableau,
+  requete?: IRequeteTableau | TRequete,
   data?: IRequeteTableau[],
   range?: string
 ) {
   const [dataRMCAutoActe, setDataRMCAutoActe] = useState<IResultatRMCActe[]>();
-  const [dataTableauRMCAutoActe, setDataTableauRMCAutoActe] = useState<
-    IParamsTableau
-  >();
+  const [
+    dataTableauRMCAutoActe,
+    setDataTableauRMCAutoActe
+  ] = useState<IParamsTableau>();
 
   useEffect(() => {
     if (requete) {

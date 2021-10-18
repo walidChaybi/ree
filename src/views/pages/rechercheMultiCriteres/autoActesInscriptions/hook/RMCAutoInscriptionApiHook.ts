@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoInscription } from "../../../../../api/appels/etatcivilApi";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
@@ -11,7 +12,7 @@ import { mappingInscriptions } from "../../acteInscription/hook/RMCActeInscripti
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoInscriptionApiHook(
-  requete?: IRequeteTableau,
+  requete?: IRequeteTableau | TRequete,
   data?: IRequeteTableau[],
   range?: string
 ) {

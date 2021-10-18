@@ -18,9 +18,7 @@ import { SuiviObservationsRequete } from "../../contenu/SuiviObservationRequete"
 import { ResumeRequeteV2 } from "../../resume/ResumeRequeteV2";
 
 interface ApercuRequetePriseEnChargePartieGaucheProps {
-  idRequete: string;
   detailRequete: TRequete;
-  dataRequetes: IRequeteTableau[];
   openFenetre: (infoDoc: InfoDocumentAffiche) => void;
 }
 
@@ -42,11 +40,7 @@ export const ApercuRequetePriseEnChargePartieGauche: React.FC<ApercuRequetePrise
   const {
     dataRMCAutoRequete,
     dataTableauRMCAutoRequete
-  } = useRMCAutoRequeteApiHook(
-    props.idRequete,
-    props.dataRequetes,
-    `0-${NB_LIGNES_PAR_APPEL}`
-  );
+  } = useRMCAutoRequeteApiHook(props.detailRequete, `0-${NB_LIGNES_PAR_APPEL}`);
 
   /* Hook d'appel de l'API RMC manuelle requêtes */
   const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(
