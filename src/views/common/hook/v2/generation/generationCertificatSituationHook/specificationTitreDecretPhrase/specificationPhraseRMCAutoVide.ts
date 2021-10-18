@@ -37,8 +37,9 @@ class Condition {
     dataRMCAutoInscription?: IResultatRMCInscription[]
   ) {
     let cond = dataRMCAutoActe?.length === this.nbActe;
-    const nbInscriptionsInfos: INbInscriptionsInfos =
-      this.getNbInscriptionsInfos(dataRMCAutoInscription);
+    const nbInscriptionsInfos: INbInscriptionsInfos = this.getNbInscriptionsInfos(
+      dataRMCAutoInscription
+    );
 
     if (this.nbPacs !== undefined) {
       cond = cond && this.nbPacs === nbInscriptionsInfos.nbPacs;
@@ -112,18 +113,18 @@ class Specification {
 // Specifications pour les phrases à renvoyer en fonction des résultats des RMC Actes et inscritptions
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const PAS_INSCRIT_PACS = getLibelle(
-  "N'est pas inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
+  "- N'est pas inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
 );
 const PAS_INSCRITE_PACS = getLibelle(
-  "N'est pas inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
+  "- N'est pas inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
 );
-const PAS_INSCRIT_RC = getLibelle("N’est pas inscrit au répertoire civil.");
-const PAS_INSCRITE_RC = getLibelle("N’est pas inscrite au répertoire civil.");
+const PAS_INSCRIT_RC = getLibelle("- N’est pas inscrit au répertoire civil.");
+const PAS_INSCRITE_RC = getLibelle("- N’est pas inscrite au répertoire civil.");
 const PAS_INSCRIT_RCA = getLibelle(
-  "N’est pas inscrit au répertoire civil annexe."
+  "- N’est pas inscrit au répertoire civil annexe."
 );
 const PAS_INSCRITE_RCA = getLibelle(
-  "N’est pas inscrite au répertoire civil annexe."
+  "- N’est pas inscrite au répertoire civil annexe."
 );
 
 /////////////////////////////////////////////////////////////////////

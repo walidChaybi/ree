@@ -48,7 +48,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phra
     dataRMCAutoInscription
   );
   expect(phrase.phrasesLiees).toBe(
-    "N’est pas inscrite au répertoire civil.\nN’est pas inscrite au répertoire civil annexe."
+    "- N’est pas inscrite au répertoire civil.\n- N’est pas inscrite au répertoire civil annexe."
   );
 });
 
@@ -64,7 +64,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phra
     dataRMCAutoInscription
   );
   expect(phrase.phrasesLiees).toBe(
-    "N’est pas inscrite au répertoire civil.\nN’est pas inscrite au répertoire civil annexe."
+    "- N’est pas inscrite au répertoire civil.\n- N’est pas inscrite au répertoire civil annexe."
   );
 });
 
@@ -80,7 +80,7 @@ test("Attendu: specificationPhraseRMCAutoVide.getPhrasesJasper retourne une phra
     dataRMCAutoInscription
   );
   expect(phrase.phrasesLiees).toBe(
-    "N'est pas inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
+    "- N'est pas inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
   );
 });
 
