@@ -40,8 +40,9 @@ import { logError } from "../../../common/util/LogManager";
 import { storeRece } from "../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] =
-    useState<TRequete | undefined>();
+  const [detailRequeteState, setDetailRequeteState] = useState<
+    TRequete | undefined
+  >();
 
   useEffect(() => {
     async function fetchDetailRequete() {
@@ -85,7 +86,9 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
     idEntite: data?.corbeilleService?.idEntiteRattachement,
     actions: getActions(data?.actions),
-    observations: getObservations(data.observations),
+    observations: data.observations
+      ? getObservations(data.observations)
+      : undefined,
     piecesJustificatives: mapPiecesJustificatives(data.piecesJustificatives),
 
     //Partie Requête Delivrance
@@ -186,8 +189,7 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     mandataireHabilite: getMandataireHabilite(
       requerant.detailQualiteMandataireHabilite
     ),
-    autreProfessionnel:
-      requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }

@@ -125,17 +125,18 @@ export const SaisirRDCSCPage: React.FC = () => {
   const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 
   const redirectionPage = useCallback(
-    async (idRequeteSauvegardee: string, brouillon = false, refus = false) => {
+    async (
+      requeteSauvegardee: IRequeteDelivrance,
+      brouillon = false,
+      refus = false
+    ) => {
       // Si l'appel c'est terminé sans erreur
-      if (idRequeteSauvegardee) {
-        setIdRequete(idRequeteSauvegardee);
+      if (requeteSauvegardee) {
+        setIdRequete(requeteSauvegardee.id);
         // Redirection si l'enregistrement n'est pas un brouillon
         if (!brouillon) {
           if (refus) {
-            const reponse = createReponseSansDelivranceCS(
-              saisieRequeteRDCSC,
-              detailRequeteState?.numero
-            );
+            const reponse = createReponseSansDelivranceCS(requeteSauvegardee);
             setReponseSansDelivranceCS({
               contenu: reponse,
               fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
@@ -146,14 +147,14 @@ export const SaisirRDCSCPage: React.FC = () => {
             );
             const pathname = history.location.pathname;
             history.push(
-              getRedirectionVersApercuRequete(pathname, idRequeteSauvegardee)
+              getRedirectionVersApercuRequete(pathname, requeteSauvegardee.id)
             );
           }
         }
       }
       setOperationEnCours(false);
     },
-    [history, saisieRequeteRDCSC, detailRequeteState]
+    [history]
   );
 
   const creationRequeteDelivranceRDCSCResultat = useCreationRequeteDelivranceRDCSC(
@@ -165,7 +166,7 @@ export const SaisirRDCSCPage: React.FC = () => {
   useEffect(() => {
     if (creationRequeteDelivranceRDCSCResultat) {
       redirectionPage(
-        creationRequeteDelivranceRDCSCResultat.idRequete,
+        creationRequeteDelivranceRDCSCResultat.requete,
         creationRequeteDelivranceRDCSCResultat.brouillon,
         creationRequeteDelivranceRDCSCResultat.refus
       );
@@ -174,7 +175,7 @@ export const SaisirRDCSCPage: React.FC = () => {
   useEffect(() => {
     if (UpdateRequeteDelivranceRDCSCResultat) {
       redirectionPage(
-        UpdateRequeteDelivranceRDCSCResultat.idRequete,
+        UpdateRequeteDelivranceRDCSCResultat.requete,
         UpdateRequeteDelivranceRDCSCResultat.brouillon,
         UpdateRequeteDelivranceRDCSCResultat.refus
       );

@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react";
 import { updateRequeteDelivrance } from "../../../../api/appels/requeteApi";
+import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { logError } from "../../../common/util/LogManager";
 import { UpdateRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
 import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
 
 export interface IUpdateRequeteDelivranceRDCSCResultat {
-  idRequete: string;
-  brouillon?: boolean;
-  refus?: boolean;
-}
-
-export interface IUpdateRequeteDelivranceRDCSCResultat {
-  idRequete: string;
+  requete: IRequeteDelivrance;
   brouillon?: boolean;
   refus?: boolean;
 }
@@ -19,8 +14,9 @@ export interface IUpdateRequeteDelivranceRDCSCResultat {
 export function useUpdateRequeteDelivranceRDCSC(
   requeteRDCSC?: UpdateRequeteRDCSC
 ): IUpdateRequeteDelivranceRDCSCResultat | undefined {
-  const [resultat, setResultat] =
-    useState<IUpdateRequeteDelivranceRDCSCResultat | undefined>();
+  const [resultat, setResultat] = useState<
+    IUpdateRequeteDelivranceRDCSCResultat | undefined
+  >();
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
       const requete = mappingFormulaireRDCSCVersRequeteDelivrance(requeteRDCSC);
@@ -33,7 +29,7 @@ export function useUpdateRequeteDelivranceRDCSC(
       })
         .then((result: any) => {
           setResultat({
-            idRequete: result.body.data.id,
+            requete: result.body.data,
             brouillon: requeteRDCSC.brouillon,
             refus: requeteRDCSC.refus
           });

@@ -36,7 +36,7 @@ const saisieParticulier = {
 const HookConsummerInteresse: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieInteresse);
   return (
-    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
   );
 };
 
@@ -48,7 +48,7 @@ test("Maj requête délivrance hook intéressé", async () => {
 const HookConsummerMandataire: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieMandataire);
   return (
-    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
   );
 };
 
@@ -60,7 +60,7 @@ test("Maj requête délivrance hook mandataire", async () => {
 const HookConsummerInstitutionnel: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieInstitution);
   return (
-    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
   );
 };
 
@@ -72,7 +72,7 @@ test("Maj requête délivrance hook institution", async () => {
 const HookConsummerParticulier: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieParticulier);
   return (
-    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
   );
 };
 

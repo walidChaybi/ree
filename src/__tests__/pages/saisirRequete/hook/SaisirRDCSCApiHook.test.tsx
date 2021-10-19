@@ -15,7 +15,7 @@ const superagentMock = require("superagent-mock")(request, configRequetesV2);
 const HookConsummerInteresse: React.FC = () => {
   const resultat = useCreationRequeteDelivranceRDCSC(RequeteRDCSCInteresse);
   return (
-    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
   );
 };
 
@@ -27,7 +27,7 @@ test("Création requête délivrance hook intéressé", async () => {
 const HookConsummerMandataire: React.FC = () => {
   const resultat = useCreationRequeteDelivranceRDCSC(RequeteRDCSCMandataire);
   return (
-    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
   );
 };
 
@@ -41,7 +41,7 @@ const HookConsummerInstitutionnel: React.FC = () => {
     RequeteRDCSCInstitutionnel
   );
   return (
-    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
   );
 };
 
@@ -53,7 +53,7 @@ test("Création requête délivrance hook institutionnel", async () => {
 const HookConsummerParticulier: React.FC = () => {
   const resultat = useCreationRequeteDelivranceRDCSC(RequeteRDCSCParticulier);
   return (
-    <>{`${resultat?.idRequete},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
   );
 };
 

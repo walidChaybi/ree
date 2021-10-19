@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { creationRequeteDelivrance } from "../../../../api/appels/requeteApi";
+import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { logError } from "../../../common/util/LogManager";
+import { mappingRequeteDelivrance } from "../../detailRequete/hook/DetailRequeteHook";
 import { CreationRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
 import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
 
 export interface ICreationRequeteDelivranceRDCSCResultat {
-  idRequete: string;
+  requete: IRequeteDelivrance;
   brouillon?: boolean;
   refus?: boolean;
 }
@@ -27,7 +29,7 @@ export function useCreationRequeteDelivranceRDCSC(
       })
         .then((result: any) => {
           setResultat({
-            idRequete: result.body.data.id,
+            requete: mappingRequeteDelivrance(result.body.data),
             brouillon: requeteRDCSC.brouillon,
             refus: requeteRDCSC.refus
           });
