@@ -128,13 +128,17 @@ export const getDefaultValuesCourrier = (requete: IRequeteDelivrance) => {
         : ""
     },
     [ADRESSE]: {
-      [VOIE]: requete.requerant.adresse?.ligne4,
-      [LIEU_DIT]: requete.requerant.adresse?.ligne5,
-      [COMPLEMENT_DESTINATAIRE]: requete.requerant.adresse?.ligne2,
-      [COMPLEMENT_POINT_GEO]: requete.requerant.adresse?.ligne3,
-      [CODE_POSTAL]: requete.requerant.adresse?.codePostal,
-      [COMMUNE]: requete.requerant.adresse?.ville,
-      [PAYS]: requete.requerant.adresse?.pays
+      [VOIE]: getValeurOuVide(requete.requerant.adresse?.ligne4),
+      [LIEU_DIT]: getValeurOuVide(requete.requerant.adresse?.ligne5),
+      [COMPLEMENT_DESTINATAIRE]: getValeurOuVide(
+        requete.requerant.adresse?.ligne2
+      ),
+      [COMPLEMENT_POINT_GEO]: getValeurOuVide(
+        requete.requerant.adresse?.ligne3
+      ),
+      [CODE_POSTAL]: getValeurOuVide(requete.requerant.adresse?.codePostal),
+      [COMMUNE]: getValeurOuVide(requete.requerant.adresse?.ville),
+      [PAYS]: getValeurOuVide(requete.requerant.adresse?.pays)
     },
     [REQUETE]: {
       [MOTIF]: requete.motif ? MotifDelivrance.getKey(requete.motif) : "",

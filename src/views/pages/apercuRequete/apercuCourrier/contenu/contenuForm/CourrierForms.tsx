@@ -81,20 +81,24 @@ export function getTexteLibre(
   );
 }
 
-export function getRequerantCourrierForm(disabled: boolean) {
+export function getRequerantCourrierForm(visible: boolean) {
   return (
-    <SousFormulaire titre={getLibelle("Identité du requérant")} key={REQUERANT}>
-      <div className="DeuxColonnesSansLabel">
-        <InputField
-          name={withNamespace(REQUERANT, REQUERANT_LIGNE_1)}
-          disabled={disabled}
-        />
-        <InputField
-          name={withNamespace(REQUERANT, REQUERANT_LIGNE_2)}
-          disabled={disabled}
-        />
-      </div>
-    </SousFormulaire>
+    <div key={REQUERANT}>
+      {visible && (
+        <SousFormulaire titre={getLibelle("Identité du requérant")}>
+          <div className="DeuxColonnesSansLabel">
+            <InputField
+              name={withNamespace(REQUERANT, REQUERANT_LIGNE_1)}
+              disabled={true}
+            />
+            <InputField
+              name={withNamespace(REQUERANT, REQUERANT_LIGNE_2)}
+              disabled={true}
+            />
+          </div>
+        </SousFormulaire>
+      )}
+    </div>
   );
 }
 

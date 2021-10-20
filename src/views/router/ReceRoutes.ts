@@ -34,7 +34,9 @@ import {
   URL_MES_REQUETES_APERCU_TRAITEMENT_COURRIER,
   URL_MES_REQUETES_DETAIL_REQUETE_ID,
   URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
+  URL_MES_REQUETES_DETAIL_REQUETE_PRISE_COURRIER,
   URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
+  URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_COURRIER,
   URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2,
   URL_MES_REQUETES_EXTRAIT_COPIE_COURRIER,
   URL_MES_REQUETES_ID,
@@ -64,8 +66,10 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE_APERCU_TRAITEMENT_COURRIER,
   URL_RECHERCHE_REQUETE_DETAIL_REQUETE_ID,
+  URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_COURRIER,
   URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_DETAIL_REQUETE_TRAITEMENT_ID,
+  URL_RECHERCHE_REQUETE_DETAIL_TRAITEMENT_COURRIER,
   URL_REQUETES_SERVICE,
   URL_REQUETES_SERVICE_APERCU_PRISE_EN_CHARGE_COURRIER,
   URL_REQUETES_SERVICE_APERCU_REQUETE,
@@ -74,7 +78,9 @@ import {
   URL_REQUETES_SERVICE_APERCU_TRAITEMENT_COURRIER,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
+  URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_COURRIER,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
+  URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_COURRIER,
   URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_ID_V2,
   URL_REQUETES_SERVICE_EXTRAIT_COPIE_COURRIER,
   URL_REQUETES_SERVICE_ID,
@@ -375,6 +381,20 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_MODIFICATION)
   },
+  {
+    url: URL_MES_REQUETES_DETAIL_REQUETE_PRISE_COURRIER,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_COURRIER,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
   /////////////////////////////////////////
   ///// REQUETES DE MON SERVICE (RMS) /////
   /////////////////////////////////////////
@@ -492,6 +512,20 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE_TRAITEMENT_ID,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_COURRIER,
+    component: DetailRequetePage,
+    droits: [Droit.ATTRIBUER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_COURRIER,
     component: DetailRequetePage,
     droits: [Droit.ATTRIBUER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
@@ -625,6 +659,20 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_COURRIER,
+    component: DetailRequetePage,
+    droits: droitsSaufConsulterArchives,
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_DETAIL_TRAITEMENT_COURRIER,
     component: DetailRequetePage,
     droits: droitsSaufConsulterArchives,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
