@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
-import {EnumWithLibelle} from "../../../views/common/util/enum/EnumWithLibelle";
-import {Options} from "../../../views/common/util/Type";
+import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { Options } from "../../../views/common/util/Type";
 
 export class NatureActe extends EnumWithLibelle {
   public static readonly NAISSANCE = new NatureActe("Naissance");
@@ -19,6 +19,7 @@ export class NatureActe extends EnumWithLibelle {
   public static readonly ADOPTION = new NatureActe("Adoption");
   public static readonly ENFANT_SANS_VIE = new NatureActe("Enfant sans vie");
   public static readonly DOSSIER = new NatureActe("Dossier");
+  public static readonly INCONNUE = new NatureActe("Inconnue");
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, NatureActe);

@@ -26,9 +26,6 @@ export class MotifDelivrance extends EnumWithLibelle {
     "Titre de séjour / Visa étranger"
   );
   public static readonly SUCCESSION = new MotifDelivrance("Succession");
-  public static readonly DEMANDE_NOTAIRE = new MotifDelivrance(
-    "Demande notaire (Planète)"
-  );
   public static readonly PAPIER_IDENTITE_PASSEPORT = new MotifDelivrance(
     "Papier d'identité / Passeport"
   );

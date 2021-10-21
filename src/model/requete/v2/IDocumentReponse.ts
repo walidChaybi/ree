@@ -16,6 +16,9 @@ export interface IDocumentReponse {
   texteLibreCourrier?: ITexteLibreCourrier;
   optionsCourrier?: IOptionCourrierDocumentReponse[];
   idActe?: string;
+  idRc?: string;
+  idRca?: string;
+  idPacs?: string;
   avecCtv?: boolean;
   nbExemplaireImpression?: number;
 }
