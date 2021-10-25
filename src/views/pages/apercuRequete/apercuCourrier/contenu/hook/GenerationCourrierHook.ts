@@ -230,35 +230,31 @@ function mapCourrierPourSauvergarde(
   courrier: any
 ): ISauvegardeCourrier {
   return {
-    requerant: {
-      adresse: mappingAdresseSaisieToAdresseRequerant(saisieCourrier)
-    },
+    adresseRequerant: mappingAdresseSaisieToAdresseRequerant(saisieCourrier),
     motif: getValeurOuVide(saisieCourrier?.[REQUETE][MOTIF]),
     nombreExemplairesDemandes: parseInt(
       getValeurOuVide(saisieCourrier?.[REQUETE][NB_EXEMPLAIRE])
     ),
-    documentsReponses: [
-      {
-        contenu: contenuComposition,
-        nom: courrier.libelle,
-        mimeType: MimeType.APPLI_PDF,
-        typeDocument: DocumentDelivrance.getUuidFromDocument(courrier), // UUID du courrier (nomenclature)
-        nbPages: 1,
-        orientation: Orientation.PORTRAIT,
-        optionsCourrier: optionsChoisies?.map(el => {
-          return {
-            code: el.id,
-            numeroOrdreEdition: el.ordreEdition,
-            texte: el.texteOptionCourrierModifier
-              ? el.texteOptionCourrierModifier
-              : el.texteOptionCourrier
-          };
-        }),
-        texteLibreCourrier: {
-          texte: saisieCourrier?.[TEXTE_LIBRE][TEXTE]
-        }
-      } as IDocumentReponse
-    ]
+    documentReponse: {
+      contenu: contenuComposition,
+      nom: courrier.libelle,
+      mimeType: MimeType.APPLI_PDF,
+      typeDocument: DocumentDelivrance.getUuidFromDocument(courrier), // UUID du courrier (nomenclature)
+      nbPages: 1,
+      orientation: Orientation.PORTRAIT,
+      optionsCourrier: optionsChoisies?.map(el => {
+        return {
+          code: el.id,
+          numeroOrdreEdition: el.ordreEdition,
+          texte: el.texteOptionCourrierModifier
+            ? el.texteOptionCourrierModifier
+            : el.texteOptionCourrier
+        };
+      }),
+      texteLibreCourrier: {
+        texte: saisieCourrier?.[TEXTE_LIBRE][TEXTE]
+      }
+    } as IDocumentReponse
   };
 }
 
