@@ -1,7 +1,7 @@
 import { waitFor } from "@testing-library/react";
 import request from "superagent";
 import { certificatRCA } from "../../../mock/data/Composition";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
+import { configParamsBaseRequete } from "../../../mock/superagent-config/superagent-mock-params";
 import { CertificatRCAComposition } from "../../../model/composition/ICertificatRCAComposition";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
 import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresBaseRequete";
@@ -9,9 +9,12 @@ import { Qualite } from "../../../model/requete/v2/enum/Qualite";
 import { TypeCanal } from "../../../model/requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../../model/requete/v2/IRequerant";
 import { ITitulaireRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
-import { IElementsJasperCertificatRCA } from "../../../views/common/hook/v2/generation/generationInscriptionsHook/GenerationCertificatRCAHook";
+import { IElementsJasperCertificatRCA } from "../../../views/common/hook/v2/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
+const superagentMock = require("superagent-mock")(
+  request,
+  configParamsBaseRequete
+);
 
 test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correctement", async () => {
   await ParametreBaseRequete.init();

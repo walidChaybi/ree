@@ -6,11 +6,15 @@ import {
 } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
+import { configParamsBaseRequete } from "../../../../mock/superagent-config/superagent-mock-params";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { PopinSignature } from "../../../../views/common/widget/signature/PopinSignature";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
+const superagentMock = require("superagent-mock")(request, [
+  configRequetes[0],
+  configParamsBaseRequete[0]
+]);
 
 test("renders PopinSignature, signature event is received and success displayed", async () => {
   const { getByText } = render(

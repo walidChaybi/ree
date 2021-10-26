@@ -12,7 +12,6 @@ import request from "superagent";
 import { idRequeteRDC, requeteRDC } from "../../../../../mock/data/RequeteV2";
 import { DataRMCInscriptionAvecUnRCA } from "../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
@@ -24,7 +23,7 @@ import {
 } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrer";
 import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 const superagentMockRequete = require("superagent-mock")(
   request,
   configRequetesV2

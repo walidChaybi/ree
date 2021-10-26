@@ -1,7 +1,7 @@
 import { waitFor } from "@testing-library/react";
 import request from "superagent";
 import { certificatSituation } from "../../../mock/data/Composition";
-import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
+import { configParamsBaseRequete } from "../../../mock/superagent-config/superagent-mock-params";
 import { CertificatSituationComposition } from "../../../model/composition/ICertificatSituationComposition";
 import { IDecret } from "../../../model/etatcivil/commun/IDecret";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
@@ -14,7 +14,10 @@ import {
   ITitulaireRequeteTableau
 } from "../../../model/requete/v2/IRequeteTableau";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
+const superagentMock = require("superagent-mock")(
+  request,
+  configParamsBaseRequete
+);
 
 test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionne correctement", async () => {
   await ParametreBaseRequete.init();

@@ -1,7 +1,15 @@
-import React from "react";
-import { mount } from "enzyme";
-import { Mariage } from "../../../../../../views/pages/fiche/hook/constructionComposants/interesses/Mariage";
 import { render } from "@testing-library/react";
+import { mount } from "enzyme";
+import React from "react";
+import request from "superagent";
+import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configParamsBaseRequete } from "../../../../../../mock/superagent-config/superagent-mock-params";
+import { Mariage } from "../../../../../../views/pages/fiche/hook/constructionComposants/interesses/Mariage";
+
+const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
+  configParamsBaseRequete[0]
+]);
 
 test("renders mariage field render correcty", () => {
   const component = mount(
@@ -130,4 +138,8 @@ test("renders mariage : il n'y a pas le jour et le mois de la date", () => {
   );
   expect(getByText("2020")).toBeDefined();
   expect(getByText("En")).toBeDefined();
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

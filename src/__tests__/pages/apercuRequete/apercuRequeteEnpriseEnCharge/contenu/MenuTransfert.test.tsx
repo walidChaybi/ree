@@ -9,7 +9,6 @@ import {
   requeteRDCSC
 } from "../../../../../mock/data/RequeteV2";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { TypeEntite } from "../../../../../model/agent/enum/TypeEntite";
 import { IEntite } from "../../../../../model/agent/IEntiteRattachement";
@@ -28,8 +27,7 @@ import {
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
-const superagentMock2 = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 const superagentMock3 = require("superagent-mock")(request, configEtatcivil);
 
 const history = createMemoryHistory();
@@ -257,6 +255,5 @@ test("check autocomplete agent", async () => {
 
 afterAll(() => {
   superagentMock.unset();
-  superagentMock2.unset();
   superagentMock3.unset();
 });

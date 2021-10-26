@@ -5,7 +5,8 @@ import { idDocumentsReponse } from "../../../../../../mock/data/DocumentReponse"
 import { imagePngVideBase64 } from "../../../../../../mock/data/ImagePng";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 import { idRequeteRDCSC } from "../../../../../../mock/data/RequeteV2";
-import { configMultiAPi } from "../../../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
+import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import {
@@ -20,7 +21,10 @@ import {
 } from "../../../../../../views/common/hook/v2/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
 import { specificationPhraseRMCAutoVide } from "../../../../../../views/common/hook/v2/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
+const superagentMock = require("superagent-mock")(request, [
+  configRequetesV2[0],
+  configComposition[0]
+]);
 
 const titulaire = {
   nom: "nom",

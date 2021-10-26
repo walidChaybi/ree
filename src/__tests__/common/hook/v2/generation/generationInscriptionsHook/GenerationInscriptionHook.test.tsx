@@ -11,7 +11,7 @@ import {
 } from "../../../../../../mock/data/RMCInscription";
 import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2-gene-inscription";
+import { configRequetesV2GeneInscription } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2-gene-inscription";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import {
@@ -23,7 +23,7 @@ import { useGenerationInscriptionsHook } from "../../../../../../views/common/ho
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configComposition[0],
-  configRequetesV2[0]
+  configRequetesV2GeneInscription[0]
 ]);
 
 const titulaire = {

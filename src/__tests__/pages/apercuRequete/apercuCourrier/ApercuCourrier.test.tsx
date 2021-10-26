@@ -10,6 +10,7 @@ import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
+import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
@@ -17,7 +18,10 @@ import { storeRece } from "../../../../views/common/util/storeRece";
 import { ApercuCourrier } from "../../../../views/pages/apercuRequete/apercuCourrier/ApercuCourrier";
 import { URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER } from "../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, [
+  configRequetesV2[0],
+  configComposition[0]
+]);
 
 const history = createMemoryHistory();
 history.push(

@@ -7,12 +7,12 @@ import {
   idRequeteRDCSC,
   requeteRDCSC
 } from "../../../../../mock/data/RequeteV2";
-import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { ChoixAction } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 test("renders du bloc choix des actions", async () => {
   const history = createMemoryHistory();

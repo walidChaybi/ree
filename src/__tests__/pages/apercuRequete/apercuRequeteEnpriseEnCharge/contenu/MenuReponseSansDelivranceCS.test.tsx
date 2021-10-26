@@ -21,8 +21,9 @@ import {
   idRequeteRDCSC,
   requeteRDCSC
 } from "../../../../../mock/data/RequeteV2";
+import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { configParamsBaseRequete } from "../../../../../mock/superagent-config/superagent-mock-params";
 import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { ParametreBaseRequete } from "../../../../../model/parametres/enum/ParametresBaseRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
@@ -36,9 +37,12 @@ import {
 } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ReponseSansDelivranceCSFonctions";
 import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
-const superagentMock2 = require("superagent-mock")(request, configRequetesV2);
-const superagentMock3 = require("superagent-mock")(request, configEtatcivil);
+const superagentMock = require("superagent-mock")(request, [
+  configRequetesV2[0],
+  configComposition[0],
+  configEtatcivil[0],
+  configParamsBaseRequete[0]
+]);
 
 const history = createMemoryHistory();
 history.push(
@@ -184,6 +188,4 @@ test("message erreur", async () => {
 
 afterAll(() => {
   superagentMock.unset();
-  superagentMock2.unset();
-  superagentMock3.unset();
 });

@@ -41,6 +41,11 @@ export const configRequetesV2 = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
+      // Récupération des paramètres de la base requête
+      if (match[1] === "/parametres" && context.method === "post") {
+        return { data: parametresBaseRequete };
+      }
+
       // Mes requetes (espace délivrance)
       if (
         match[1] ===
@@ -202,7 +207,9 @@ export const configRequetesV2 = [
       // Sauvegarde courrier Accompagnement
       if (
         match[1] ===
-        "/requetes/delivrance/85b32284-d3dd-4502-bfbd-5634ba52ba22/courrier?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=A%20valider&statutRequete=A_VALIDER"
+          "/requetes/delivrance/85b32284-d3dd-4502-bfbd-5634ba52ba22/courrier?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=A%20valider&statutRequete=A_VALIDER" ||
+        match[1] ===
+          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
       }
@@ -439,15 +446,14 @@ export const configRequetesV2 = [
           match[1] ===
             "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
           match[1] ===
-            "/requetes/action?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER") &&
+            "/requetes/action?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER" ||
+          match[1] ===
+            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
+          match[1] ===
+            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE`) &&
         context.method === "post"
       ) {
         return { data: "123456789" };
-      }
-
-      // Récupération des paramètres de la base requête
-      if (match[1] === "/parametres" && context.method === "post") {
-        return { data: parametresBaseRequete };
       }
 
       // Prise en charge aléatoire

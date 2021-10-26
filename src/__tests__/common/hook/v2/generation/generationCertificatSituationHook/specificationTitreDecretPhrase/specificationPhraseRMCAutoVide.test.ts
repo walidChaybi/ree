@@ -2,13 +2,14 @@ import request from "superagent";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../../mock/data/nomenclatures";
 import { DataRMCActeAvecResultat } from "../../../../../../../mock/data/RMCActe";
 import { DataRMCInscriptionAvecResultat } from "../../../../../../../mock/data/RMCInscription";
-import { configMultiAPi } from "../../../../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { configRequetesV2 } from "../../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { Sexe } from "../../../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { specificationPhraseRMCAutoVide } from "../../../../../../../views/common/hook/v2/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
+
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 beforeAll(() => {
   DocumentDelivrance.init();

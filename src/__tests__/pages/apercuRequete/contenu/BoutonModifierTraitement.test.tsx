@@ -5,7 +5,9 @@ import { Router } from "react-router-dom";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { idRequeteRDCSC } from "../../../../mock/data/RequeteV2";
-import { configMultiAPi } from "../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configParamsBaseRequete } from "../../../../mock/superagent-config/superagent-mock-params";
+import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
@@ -16,7 +18,11 @@ import { storeRece } from "../../../../views/common/util/storeRece";
 import { BoutonModifierTraitement } from "../../../../views/pages/apercuRequete/contenu/BoutonModifierTraitement";
 import { URL_MES_REQUETES_APERCU_REQUETE } from "../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, [configMultiAPi]);
+const superagentMock = require("superagent-mock")(request, [
+  configRequetesV2[0],
+  configEtatcivil[0],
+  configParamsBaseRequete[0]
+]);
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,

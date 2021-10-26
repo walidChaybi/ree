@@ -2,7 +2,7 @@ import request from "superagent";
 import requeteDelivrance, {
   requeteDelivranceInstitutionnel
 } from "../../../../../mock/data/requeteDelivrance";
-import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
+import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { ChoixDelivrance } from "../../../../../model/requete/v2/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
@@ -19,7 +19,7 @@ import {
   TEXTE_LIBRE
 } from "../../../../../views/pages/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 beforeAll(() => {
   DocumentDelivrance.init();

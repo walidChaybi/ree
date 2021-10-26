@@ -1,7 +1,7 @@
 import { idDocumentsReponse } from "../data/DocumentReponse";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../data/nomenclatures";
 
-export const configRequetesV2 = [
+export const configRequetesV2GeneInscription = [
   {
     /**
      * regular expression of URL

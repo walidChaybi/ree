@@ -15,8 +15,8 @@ import {
   requeteRDCSC
 } from "../../../../../mock/data/RequeteV2";
 import { DataRMCInscriptionAvecUnRCA } from "../../../../../mock/data/RMCInscription";
+import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configMultiAPi } from "../../../../../mock/superagent-config/superagent-mock-multi-apis";
 import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
@@ -26,15 +26,11 @@ import {
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID
 } from "../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
-const superagentMockRequete = require("superagent-mock")(
-  request,
-  configRequetesV2
-);
-const superagentMockEtatCivil = require("superagent-mock")(
-  request,
-  configEtatcivil
-);
+const superagentMock = require("superagent-mock")(request, [
+  configRequetesV2[0],
+  configComposition[0],
+  configEtatcivil[0]
+]);
 
 beforeAll(() => {
   DocumentDelivrance.init();
@@ -86,6 +82,4 @@ test("renders du bloc Menu Delivrer Certificat de Situation", async () => {
 
 afterAll(() => {
   superagentMock.unset();
-  superagentMockRequete.unset();
-  superagentMockEtatCivil.unset();
 });

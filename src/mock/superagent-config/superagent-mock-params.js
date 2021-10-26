@@ -1,11 +1,14 @@
-import { imagePngVideBase64 } from "../data/ImagePng";
+import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
 
-export const configComposition = [
+const REQUETE_V1_API_URL = "rece-requete-api/v1";
+const REQUETE_V2_API_URL = "rece-requete-api/v2";
+
+export const configParamsBaseRequete = [
   {
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost/rece/rece-composition-api/v1(.*)",
+    pattern: "http://localhost/rece/(.*)",
 
     /**
      * returns the data
@@ -16,22 +19,16 @@ export const configComposition = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
+      // Récupération des paramètres de la base requête
       if (
-        match[1] === "/composition/CERTIFICAT_SITUATION/1" ||
-        match[1] === "/composition/CERTIFICAT_INSCRIPTION_RCA/1" ||
-        match[1] === "/composition/CERTIFICAT_INSCRIPTION_RC/1" ||
-        match[1] === "/composition/ATTESTATION_PACS/1" ||
-        match[1] === "/composition/CARN_CSPAC_01/1" ||
-        match[1] === "/composition/CARN_CS_01/1" ||
-        match[1] === "/composition/CARN_CSPAC_02/1" ||
-        match[1] === "/composition/CARN_EC_17/1" ||
-        match[1] === "/composition/CAD_EC_116/1"
+        (match[1] === REQUETE_V1_API_URL + "/parametres" ||
+          match[1] === REQUETE_V2_API_URL + "/parametres") &&
+        context.method === "post"
       ) {
-        // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-        return { data: imagePngVideBase64 };
+        return { data: parametresBaseRequete };
       }
 
-      const error = { msg: "url api composition non mockée", url: match[1] };
+      const error = { msg: "url params non mockée", url: match[1] };
       console.log("Erreur mock api: ", error);
       return {
         data: error

@@ -2,12 +2,13 @@ import { waitFor } from "@testing-library/react";
 import request from "superagent";
 import { decrets } from "../../../../../../../mock/data/NomenclatureEtatCivilDecrets";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../../mock/data/nomenclatures";
-import { configMultiAPi } from "../../../../../../../mock/superagent-config/superagent-mock-multi-apis";
+import {} from "../../../../../../../mock/superagent-config/superagent-mock-params";
+import { configRequetesV2 } from "../../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { specificationDecret } from "../../../../../../../views/common/hook/v2/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationDecret";
 import { storeRece } from "../../../../../../../views/common/util/storeRece";
 
-const superagentMock = require("superagent-mock")(request, configMultiAPi);
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 beforeAll(() => {
   DocumentDelivrance.init();
   storeRece.decrets = decrets;
