@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import moment from "moment";
 import {
-  appartientAMonServiceMereServiceOuFillesServices,
+  appartientAMonServiceOuServicesMeresOuServicesFilles,
   mAppartientOuAppartientAPersonne,
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
 } from "../../../model/agent/IOfficier";
@@ -86,7 +86,7 @@ export const autorisePrendreEnChargeDelivrance = (
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
       requete.provenanceRequete.provenance.libelle
     ) &&
-    appartientAMonServiceMereServiceOuFillesServices(requete.idEntite)
+    appartientAMonServiceOuServicesMeresOuServicesFilles(requete.idEntite)
   );
 };
 
@@ -99,7 +99,7 @@ export const autorisePrendreEnChargeTableau = (requete: IRequeteTableau) =>
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
     requete.provenance ? requete.provenance : ""
   ) &&
-  appartientAMonServiceMereServiceOuFillesServices(
+  appartientAMonServiceOuServicesMeresOuServicesFilles(
     requete.idEntiteRattachement ? requete.idEntiteRattachement : ""
   );
 
@@ -112,7 +112,7 @@ export const autorisePrendreEnChargeTableauService = (
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
     requete.provenance ? requete.provenance : ""
   ) &&
-  appartientAMonServiceMereServiceOuFillesServices(
+  appartientAMonServiceOuServicesMeresOuServicesFilles(
     requete.idEntiteRattachement ? requete.idEntiteRattachement : ""
   );
 
@@ -132,8 +132,9 @@ export function getIdDocumentReponseAAfficher(requete?: TRequete): string {
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const requeteDelivrance = requete as IRequeteDelivrance;
 
-    const documentsDeDelivrance =
-      RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
+    const documentsDeDelivrance = RequeteDelivrance.getDocumentsDeDelivrance(
+      requeteDelivrance
+    );
     if (documentsDeDelivrance.length > 0) {
       idDocumentAAfficher = documentsDeDelivrance[0].id;
     } else if (requeteDelivrance.documentsReponses.length > 0) {

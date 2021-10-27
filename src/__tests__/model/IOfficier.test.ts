@@ -3,9 +3,12 @@ import {
   userDroitConsulterArchive,
   userDroitConsulterConsulterArchive,
   userDroitConsulterPerimetreMEAE,
-  userDroitConsulterPerimetreTUNIS
+  userDroitConsulterPerimetreTUNIS,
+  userDroitnonCOMEDEC
 } from "../../mock/data/connectedUserAvecDroit";
 import {
+  appartientAMonServiceOuServicesMeresOuServicesFilles,
+  contientEntiteMere,
   estOfficierHabiliterPourTousLesDroits,
   IOfficier,
   officierAutoriserSurLeTypeRegistre,
@@ -48,11 +51,56 @@ test("Attendu: officierHabiliterUniquementPourLeDroit fonctionne correctement", 
 test("Utilisateur autoriser à consulter l'acte dont l'idTypeRegistre est passé", () => {
   storeRece.utilisateurCourant = userDroitConsulterPerimetreTUNIS;
   const idTypeRegistre = "b66a9304-48b4-4aa3-920d-6cb27dd76c83";
-  let autoriserAConsulterActe =
-    officierAutoriserSurLeTypeRegistre(idTypeRegistre);
+  let autoriserAConsulterActe = officierAutoriserSurLeTypeRegistre(
+    idTypeRegistre
+  );
   expect(autoriserAConsulterActe).toBe(true);
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
   autoriserAConsulterActe = officierAutoriserSurLeTypeRegistre(idTypeRegistre);
   expect(autoriserAConsulterActe).toBe(false);
+});
+
+test("La requete appartient au service de l'utilisateur", () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  const idEntiteRequete = "1";
+  expect(
+    appartientAMonServiceOuServicesMeresOuServicesFilles(idEntiteRequete)
+  ).toBeTruthy();
+});
+
+test("La requete appartient à une entité mère du service de l'utilisateur", () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  const idEntiteRequete = "11";
+  expect(
+    appartientAMonServiceOuServicesMeresOuServicesFilles(idEntiteRequete)
+  ).toBeTruthy();
+});
+
+test("La requete appartient à une entité fille du service de l'utilisateur", () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  const idEntiteRequete = "111";
+  expect(
+    appartientAMonServiceOuServicesMeresOuServicesFilles(idEntiteRequete)
+  ).toBeTruthy();
+});
+
+test("La requete n'appartient ni à  une entité fille, ni une entité mère, ni au service de l'utilisateur", () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  const idEntiteRequete = "999";
+  expect(
+    appartientAMonServiceOuServicesMeresOuServicesFilles(idEntiteRequete)
+  ).toBeFalsy();
+});
+
+test("L'entité rattachée à la requete est une entité mère de celle de l'utilisateur", () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  const idEntiteRequete = "11";
+  expect(contientEntiteMere(idEntiteRequete)).toBeTruthy();
+});
+
+test("L'entité rattachée à la requete n'est pas une entité mère de celle de l'utilisateur", () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  const idEntiteRequete = "9999";
+  expect(contientEntiteMere(idEntiteRequete)).toBeFalsy();
 });

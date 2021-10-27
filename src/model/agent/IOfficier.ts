@@ -1,6 +1,7 @@
 import { storeRece } from "../../views/common/util/storeRece";
 import { Droit } from "../Droit";
 import { Provenance } from "../requete/v2/enum/Provenance";
+import { IEntite } from "./IEntiteRattachement";
 import { IUtilisateur, utilisateurADroit } from "./IUtilisateur";
 
 export interface IOfficier extends IUtilisateur {
@@ -123,16 +124,42 @@ export const provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer = (
   (provenance !== Provenance.COMEDEC.libelle &&
     officierHabiliterPourLeDroit(Droit.DELIVRER));
 
-export const appartientAMonServiceMereServiceOuFillesServices = (
+export const appartientAMonServiceOuServicesMeresOuServicesFilles = (
   idEntite: string
 ) => {
   return (
     storeRece.utilisateurCourant?.entite?.idEntite === idEntite ||
-    storeRece.utilisateurCourant?.entitesFilles?.some(
-      el => el.idEntite === idEntite
-    ) ||
-    storeRece.utilisateurCourant?.entite?.hierarchieEntite?.some(
-      el => el.entiteMere.idEntite === idEntite
-    )
+    contientEntiteFille(idEntite) ||
+    contientEntiteMere(idEntite)
   );
 };
+
+export function contientEntiteFille(idEntiteRequete: string) {
+  return storeRece.utilisateurCourant?.entitesFilles?.some(
+    el => el.idEntite === idEntiteRequete
+  );
+}
+
+export function contientEntiteMere(idEntiteRequete: string): boolean {
+  if (storeRece.utilisateurCourant) {
+    return getIdEntitesMere(storeRece.utilisateurCourant).some(
+      idEntiteMere => idEntiteMere === idEntiteRequete
+    );
+  }
+  return false;
+}
+
+function getIdEntitesMere(utilisateur: IOfficier): string[] {
+  const idEntites: string[] = [];
+  if (utilisateur.entite) {
+    collectIdEntiteMere(utilisateur.entite, idEntites);
+  }
+  return idEntites;
+}
+
+function collectIdEntiteMere(entite: IEntite, idEntites: string[]) {
+  entite.hierarchieEntite?.forEach(h => {
+    idEntites.push(h.entiteMere.idEntite);
+    collectIdEntiteMere(h.entiteMere, idEntites);
+  });
+}
