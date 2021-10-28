@@ -16,39 +16,30 @@ export function useRMCAutoInscriptionApiHook(
   data?: IRequeteTableau[],
   range?: string
 ) {
-  const [dataRMCAutoInscription, setDataRMCAutoInscription] = useState<
-    IResultatRMCInscription[]
-  >();
+  const [dataRMCAutoInscription, setDataRMCAutoInscription] =
+    useState<IResultatRMCInscription[]>();
 
-  const [
-    dataTableauRMCAutoInscription,
-    setDataTableauRMCAutoInscription
-  ] = useState<IParamsTableau>();
+  const [dataTableauRMCAutoInscription, setDataTableauRMCAutoInscription] =
+    useState<IParamsTableau>();
 
   useEffect(() => {
-    async function fetchInscriptions() {
-      try {
-        if (requete) {
-          const criteresRequest = determinerCriteresRMCAuto(requete);
-          const result = await rechercheMultiCriteresAutoInscription(
-            criteresRequest,
-            range
+    if (requete) {
+      const criteresRequest = determinerCriteresRMCAuto(requete);
+      rechercheMultiCriteresAutoInscription(criteresRequest, range)
+        .then(result => {
+          setDataRMCAutoInscription(
+            mappingInscriptions(result?.body?.data?.repertoiresCiviles)
           );
-          const inscriptions = mappingInscriptions(
-            result?.body?.data?.repertoiresCiviles
-          );
-          setDataRMCAutoInscription(inscriptions);
           setDataTableauRMCAutoInscription(getParamsTableau(result));
-        }
-      } catch (error) {
-        logError({
-          messageUtilisateur:
-            "Impossible de récupérer les inscriptions de la recherche multi-critères automatique",
-          error
+        })
+        .catch(error => {
+          logError({
+            messageUtilisateur:
+              "Impossible de récupérer les inscriptions de la recherche multi-critères automatique",
+            error
+          });
         });
-      }
     }
-    fetchInscriptions();
   }, [requete, data, range]);
 
   return {

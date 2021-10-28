@@ -1,4 +1,3 @@
-import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
@@ -27,9 +26,7 @@ export function mappingFormulaireRDCVersRequeteDelivrance(
     sousType: SousTypeDelivrance.RDC.nom,
     canal: TypeCanal.COURRIER.nom,
     provenance: Provenance.COURRIER.nom,
-    documentDemande: DocumentDelivrance.getKeyForCode(
-      requeteRDC.saisie.requete.documentDemande
-    ),
+    documentDemande: requeteRDC.saisie.requete.documentDemande,
     motif: requeteRDC.saisie.requete.motif,
     nombreExemplairesDemandes: requeteRDC.saisie.requete.nbExemplaire,
     evenement: getEvenement(requeteRDC.saisie),

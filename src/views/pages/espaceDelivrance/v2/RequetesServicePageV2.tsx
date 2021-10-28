@@ -5,7 +5,7 @@ import {
 } from "../../../../api/appels/requeteApi";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
-import { autorisePrendreEnChargeTableauService } from "../../../common/util/RequetesUtils";
+import { autorisePrendreEnChargeTableau } from "../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
@@ -172,7 +172,7 @@ export const RequetesServicePageV2: React.FC<MesRequetesServicePageProps> =
     ) {
       setOperationEnCours(true);
       const requeteSelect = data[idx];
-      if (autorisePrendreEnChargeTableauService(requeteSelect)) {
+      if (autorisePrendreEnChargeTableau(requeteSelect)) {
         setParamsMiseAJour({
           libelleAction: "Prendre en charge",
           statutRequete: StatutRequete.PRISE_EN_CHARGE,

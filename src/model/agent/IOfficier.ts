@@ -112,9 +112,11 @@ export function officierALeDroitSurLePerimetre(
   return res;
 }
 
-export const mAppartientOuAppartientAPersonne = (idUtilisateur: string) =>
-  !idUtilisateur ||
+export const mAppartient = (idUtilisateur: string) =>
   idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
+
+export const mAppartientOuAppartientAPersonne = (idUtilisateur: string) =>
+  !idUtilisateur || mAppartient(idUtilisateur);
 
 export const provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer = (
   provenance: string

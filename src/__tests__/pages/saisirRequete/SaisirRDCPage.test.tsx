@@ -10,6 +10,7 @@ import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { getLastPathElem } from "../../../views/common/util/route/routeUtil";
 import { SaisirRDCPage } from "../../../views/pages/saisirRequete/SaisirRDCPage";
@@ -19,6 +20,10 @@ const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 const history = createMemoryHistory();
 history.push(URL_MES_REQUETES_SAISIR_RDC);
+
+beforeAll(() => {
+  DocumentDelivrance.init();
+});
 
 test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie", async () => {
   act(() => {
@@ -253,13 +258,15 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
   await act(async () => {
     fireEvent.change(inputDocumentDemande, {
       target: {
-        value: "COPIE_INTEGRALE"
+        value: "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
       }
     });
   });
 
   await waitFor(() => {
-    expect(inputDocumentDemande.value).toEqual("COPIE_INTEGRALE");
+    expect(inputDocumentDemande.value).toEqual(
+      "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
+    );
   });
 
   const submit = screen.getByText(/Enregistrer et valider/i);
@@ -370,13 +377,15 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
   await act(async () => {
     fireEvent.change(inputDocumentDemande, {
       target: {
-        value: "COPIE_INTEGRALE"
+        value: "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
       }
     });
   });
 
   await waitFor(() => {
-    expect(inputDocumentDemande.value).toEqual("COPIE_INTEGRALE");
+    expect(inputDocumentDemande.value).toEqual(
+      "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
+    );
   });
 
   const submit = screen.getByText(/Enregistrer et valider/i);

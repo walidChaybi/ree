@@ -73,28 +73,31 @@ const baseReponseSansDelivranceCSInstitutionnel = {
   titre: undefined
 };
 
-export const reponseSansDelivranceCSDemandeIncomplete: IReponseSansDelivranceCSDemandeIncompleteComposition = {
-  ...baseReponseSansDelivranceCSInstitutionnel,
-  objet_courrier:
-    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil"
-};
+export const reponseSansDelivranceCSDemandeIncomplete: IReponseSansDelivranceCSDemandeIncompleteComposition =
+  {
+    ...baseReponseSansDelivranceCSInstitutionnel,
+    objet_courrier:
+      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil"
+  };
 
-export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComposition = {
-  ...baseReponseSansDelivranceCS,
-  objet_courrier: undefined,
-  document_demande: "Certificat de situation au rca",
-  nom_titulaire1: "GREENWALD",
-  prenoms_titulaire1: "Paulita Zaria",
-  nom_titulaire2: "DUPE",
-  prenoms_titulaire2: "Laurent"
-};
+export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComposition =
+  {
+    ...baseReponseSansDelivranceCS,
+    objet_courrier: undefined,
+    document_demande: "Certificat de situation au rca",
+    nom_titulaire1: "GREENWALD",
+    prenoms_titulaire1: "Paulita Zaria",
+    nom_titulaire2: "DUPE",
+    prenoms_titulaire2: "Laurent"
+  };
 
-export const reponseSansDelivranceCSFrancais: IReponseSansDelivranceCSFrancaisComposition = {
-  ...baseReponseSansDelivranceCS,
-  objet_courrier:
-    "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le service central d’état civil",
-  url: "https://www.service-public.fr"
-};
+export const reponseSansDelivranceCSFrancais: IReponseSansDelivranceCSFrancaisComposition =
+  {
+    ...baseReponseSansDelivranceCS,
+    objet_courrier:
+      "Certificat de situation relatif au registre des PACS des personnes de nationalité étrangère et nées à l’étranger, répertoire civil et répertoire civil annexe détenus par le Service central d’état civil",
+    url: "https://www.service-public.fr"
+  };
 
 export const certificatSituation: ICertificatSituationComposition = {
   numero_requete: "012345",

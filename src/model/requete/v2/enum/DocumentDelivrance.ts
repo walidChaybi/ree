@@ -43,6 +43,14 @@ export const EXTRAIT_AVEC_FILIATION = "EXTRAIT_AVEC_FILIATION";
 export const EXTRAIT_PLURILINGUE = "EXTRAIT_PLURILINGUE";
 export const EXTRAIT_SANS_FILIATION = "EXTRAIT_SANS_FILIATION";
 
+export const CodesExtraitCopie = [
+  COPIE_INTEGRALE,
+  COPIE_NON_SIGNEE,
+  EXTRAIT_AVEC_FILIATION,
+  EXTRAIT_PLURILINGUE,
+  EXTRAIT_SANS_FILIATION
+];
+
 /**
  * Attention:
  *  _nom = code
@@ -203,15 +211,16 @@ export class DocumentDelivrance extends EnumNomemclature {
     );
   }
 
-  public static estExtraitCopie(categorie: string): boolean {
-    return (
-      categorie === COPIE_INTEGRALE ||
-      categorie === COPIE_NON_SIGNEE ||
-      categorie === DECISION_PROTECTION ||
-      categorie === EXTRAIT_AVEC_FILIATION ||
-      categorie === EXTRAIT_PLURILINGUE ||
-      categorie === EXTRAIT_SANS_FILIATION
-    );
+  public static estExtraitCopie(code: string): boolean {
+    return CodesExtraitCopie.includes(code);
+  }
+
+  public static getCodesAsOptions(codes: string[]) {
+    const res = [];
+    for (const document of codes) {
+      res.push(this.getOptionFromCode(document));
+    }
+    return res;
   }
 
   public static getDocumentDelivrance(

@@ -2,6 +2,7 @@ import classNames from "classnames";
 import moment from "moment";
 import {
   appartientAMonServiceOuServicesMeresOuServicesFilles,
+  mAppartient,
   mAppartientOuAppartientAPersonne,
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
 } from "../../../model/agent/IOfficier";
@@ -18,7 +19,6 @@ import {
 import { IRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
 import { getText } from "../../common/widget/Text";
 import { FormatDate } from "./DateUtils";
-import { storeRece } from "./storeRece";
 
 export const indexParamsReq = {
   Statut: 0,
@@ -93,22 +93,7 @@ export const autorisePrendreEnChargeDelivrance = (
 export const autorisePrendreEnChargeTableau = (requete: IRequeteTableau) =>
   typeEstDelivrance(requete.type ? requete.type : "") &&
   statutEstATraiterOuTransferee(requete.statut ? requete.statut : "") &&
-  mAppartientOuAppartientAPersonne(
-    requete.idUtilisateur ? requete.idUtilisateur : ""
-  ) &&
-  provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-    requete.provenance ? requete.provenance : ""
-  ) &&
-  appartientAMonServiceOuServicesMeresOuServicesFilles(
-    requete.idEntiteRattachement ? requete.idEntiteRattachement : ""
-  );
-
-export const autorisePrendreEnChargeTableauService = (
-  requete: IRequeteTableau
-) =>
-  typeEstDelivrance(requete.type ? requete.type : "") &&
-  statutEstATraiterOuTransferee(requete.statut ? requete.statut : "") &&
-  requete.idCorbeilleAgent === storeRece.utilisateurCourant?.idUtilisateur &&
+  mAppartient(requete.idUtilisateur ? requete.idUtilisateur : "") &&
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
     requete.provenance ? requete.provenance : ""
   ) &&
@@ -132,9 +117,8 @@ export function getIdDocumentReponseAAfficher(requete?: TRequete): string {
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const requeteDelivrance = requete as IRequeteDelivrance;
 
-    const documentsDeDelivrance = RequeteDelivrance.getDocumentsDeDelivrance(
-      requeteDelivrance
-    );
+    const documentsDeDelivrance =
+      RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
     if (documentsDeDelivrance.length > 0) {
       idDocumentAAfficher = documentsDeDelivrance[0].id;
     } else if (requeteDelivrance.documentsReponses.length > 0) {

@@ -7,12 +7,21 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
+import request from "superagent";
+import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import RequeteForm, {
   RequeteFormDefaultValues,
   RequeteFormValidationSchema
 } from "../../../../../views/common/widget/formulaire/requete/RequeteForm";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { REQUETE } from "../../../../../views/pages/saisirRequete/modelForm/ISaisirRDCPageModel";
+
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
+
+beforeAll(() => {
+  DocumentDelivrance.init();
+});
 
 const HookRequeteForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -43,9 +52,7 @@ const HookRequeteForm: React.FC = () => {
 };
 
 test("render component Requete Formulaire", async () => {
-  await act(async () => {
-    render(<HookRequeteForm />);
-  });
+  render(<HookRequeteForm />);
 
   const inputNatureActe = screen.getByLabelText(
     "requete.natureActe"
@@ -68,7 +75,7 @@ test("render component Requete Formulaire", async () => {
     });
     fireEvent.change(inputDocumentDemande, {
       target: {
-        value: "COPIE_INTEGRALE"
+        value: "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
       }
     });
     fireEvent.change(inputNbExemplaire, {
@@ -85,7 +92,9 @@ test("render component Requete Formulaire", async () => {
 
   await waitFor(() => {
     expect(inputNatureActe.value).toBe("NAISSANCE");
-    expect(inputDocumentDemande.value).toBe("COPIE_INTEGRALE");
+    expect(inputDocumentDemande.value).toBe(
+      "0e1e909f-f74c-4b16-9c03-b3733354c6ce"
+    );
     expect(inputNbExemplaire.value).toBe("2");
     expect(inputMotif.value).toBe("AUTRE");
   });
@@ -106,4 +115,8 @@ test("render component Requete Formulaire", async () => {
   await waitFor(() => {
     expect(inputComplementMotif.value).toBe("mockComplementMotif");
   });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

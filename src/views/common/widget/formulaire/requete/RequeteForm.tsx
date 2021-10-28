@@ -2,9 +2,11 @@ import { connect } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import {
-  DocumentDemande,
-  LISTE_DOCUMENT_DEMANDE_DECES
-} from "../../../../../model/requete/v2/enum/DocumentDemande";
+  CodesExtraitCopie,
+  COPIE_INTEGRALE,
+  DocumentDelivrance,
+  EXTRAIT_PLURILINGUE
+} from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../../model/requete/v2/enum/MotifDelivrance";
 import { TypeNatureActe } from "../../../../../model/requete/v2/enum/TypeNatureActe";
 import {
@@ -44,6 +46,11 @@ export const RequeteFormDefaultValues = {
 
 const NB_EXEMPLAIRE_MAX = 5;
 
+export const LISTE_DOCUMENT_DEMANDE_DECES = [
+  COPIE_INTEGRALE,
+  EXTRAIT_PLURILINGUE
+];
+
 // Schéma de validation des champs
 export const RequeteFormValidationSchema = Yup.object()
   .shape({
@@ -73,7 +80,7 @@ export const RequeteFormValidationSchema = Yup.object()
 
 const RequeteForm: React.FC<SubFormProps> = props => {
   const [documentDemandeOptions, setDocumentDemandeOptions] = useState<Options>(
-    DocumentDemande.getAllEnumsAsOptions()
+    DocumentDelivrance.getCodesAsOptions(CodesExtraitCopie)
   );
 
   const [complementMotifInactif, setComplementMotifInactif] =
@@ -89,10 +96,12 @@ const RequeteForm: React.FC<SubFormProps> = props => {
     );
     if (e.target.value === "DECES") {
       setDocumentDemandeOptions(
-        DocumentDemande.getListEnumsAsOptions(LISTE_DOCUMENT_DEMANDE_DECES)
+        DocumentDelivrance.getCodesAsOptions(LISTE_DOCUMENT_DEMANDE_DECES)
       );
     } else {
-      setDocumentDemandeOptions(DocumentDemande.getAllEnumsAsOptions());
+      setDocumentDemandeOptions(
+        DocumentDelivrance.getCodesAsOptions(CodesExtraitCopie)
+      );
     }
   };
 
