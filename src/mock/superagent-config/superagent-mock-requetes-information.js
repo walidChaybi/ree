@@ -30,8 +30,7 @@ export const configRequetesInformation = [
           data: ReponseMesRequetesInformation,
           headers: {
             "content-range": "0-15/" + ReponseMesRequetesInformation.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=numero&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=numero&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -44,6 +43,14 @@ export const configRequetesInformation = [
       // Détail requête Information
       if (match[1] === "/nomenclature/reponse") {
         return { data: NOMENCLATURE_REPONSE };
+      }
+
+      // Sauvegarde réponse
+      if (
+        match[1] ===
+        "/requetes/information/reponse/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+      ) {
+        return { data: "12345" };
       }
     },
 

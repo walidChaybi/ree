@@ -15,7 +15,10 @@ import { configRequetesInformation } from "../../../../mock/superagent-config/su
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { ApercuReqInfoPage } from "../../../../views/pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
-import { URL_MES_REQUETES_INFORMATION_APERCU_ID } from "../../../../views/router/ReceUrls";
+import {
+  URL_MES_REQUETES_INFORMATION,
+  URL_MES_REQUETES_INFORMATION_APERCU_ID
+} from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(
   request,
@@ -23,18 +26,20 @@ const superagentMock = require("superagent-mock")(
 );
 //global.URL.createObjectURL = jest.fn();
 const history = createMemoryHistory();
-history.push(
-  getUrlWithParam(
-    URL_MES_REQUETES_INFORMATION_APERCU_ID,
-    "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-  )
-);
 
 beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 
-test("renders ApercuReqInfoPage", async () => {
+beforeEach(async () => {
+  history.push(URL_MES_REQUETES_INFORMATION);
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+    )
+  );
+
   await act(async () => {
     render(
       <>
@@ -46,7 +51,9 @@ test("renders ApercuReqInfoPage", async () => {
       </>
     );
   });
+});
 
+test("renders ApercuReqInfoPage", async () => {
   const title = screen.getByText(/Aperçu requête d'information/i);
   const bandeau = screen.getByText(
     /Requête à valider, attribuée à Benoît TANGUY - Le : 20\/10\/2021/i
@@ -165,6 +172,30 @@ test("renders ApercuReqInfoPage", async () => {
   await waitFor(() => {
     expect(libelleReponseChoisie).toBeDefined();
     expect(mailReponseChoisie).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(boutonEnvoyer);
+  });
+
+  await waitFor(() => {
+    expect(history.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
+  });
+});
+
+test("bouton annuler", async () => {
+  const boutonAnnuler = screen.getByText(/ANNULER/i);
+
+  await waitFor(() => {
+    expect(boutonAnnuler).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(boutonAnnuler);
+  });
+
+  await waitFor(() => {
+    expect(history.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
   });
 });
 

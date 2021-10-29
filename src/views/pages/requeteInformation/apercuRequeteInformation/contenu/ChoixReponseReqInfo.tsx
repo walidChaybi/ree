@@ -12,10 +12,9 @@ import "./scss/ChoixReponseReqInfo.scss";
 export const ChoixReponseReqInfo: React.FC<RequeteInfoProps> = ({
   requete
 }) => {
-  const [reponseChoisie, setReponeChoisie] = useState<IReponseRequeteInfo>();
-  const [reponsesFiltees, setReponsesFiltees] = useState<
-    IReponseRequeteInfo[]
-  >();
+  const [reponseChoisie, setReponseChoisie] = useState<IReponseRequeteInfo>();
+  const [reponsesFiltees, setReponsesFiltees] =
+    useState<IReponseRequeteInfo[]>();
 
   const { reponsesReqInfo } = useReponsesReqInfoApiHook();
 
@@ -33,7 +32,7 @@ export const ChoixReponseReqInfo: React.FC<RequeteInfoProps> = ({
   }, [reponsesReqInfo]);
 
   const onClick = (reponse: IReponseRequeteInfo) => {
-    setReponeChoisie(reponse);
+    setReponseChoisie(reponse);
   };
 
   return (
@@ -50,7 +49,7 @@ export const ChoixReponseReqInfo: React.FC<RequeteInfoProps> = ({
             </div>
           </div>
         )}
-        <ReponseReqInfo reponse={reponseChoisie} />
+        <ReponseReqInfo reponse={reponseChoisie} requeteId={requete.id} />
       </div>
     </Fieldset>
   );

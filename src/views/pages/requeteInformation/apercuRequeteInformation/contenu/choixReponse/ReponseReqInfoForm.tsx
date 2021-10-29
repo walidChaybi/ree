@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { IReponseRequeteInfo } from "../../../../../../model/requete/v2/IReponseRequeteInfo";
 import { Fieldset } from "../../../../../common/widget/fieldset/Fieldset";
 import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
 import { FormikComponentProps } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../../common/widget/Text";
+import { URL_MES_REQUETES_INFORMATION } from "../../../../../router/ReceUrls";
+import {
+  ISauvegarderReponseReqInfoParams,
+  useSauvegarderReponsesReqInfoHook
+} from "../hook/SauvegarderReponseReqInfoHook";
 import "../scss/ChoixReponseReqInfo.scss";
 import ReponseReqInfoBoutons, {
   ReponseReqInfoBoutonsProps
 } from "./ReponseReqInfoBoutons";
 import ReponseReqInfoForm, {
+  CORPS_MAIL,
   DefaultValuesReponseInfoSubForm,
   IReponseInfoSubFormValue,
   ReponseReqInfoSubFormProps,
@@ -18,6 +25,7 @@ import ReponseReqInfoForm, {
 
 export interface ReponseReqInfoProps {
   reponse?: IReponseRequeteInfo;
+  requeteId: string;
 }
 
 export type ReponseReqInfoFormProps = FormikComponentProps &
@@ -37,10 +45,30 @@ const ValidationSchemaReponseInfoForm = Yup.object({
   [REPONSE]: ValidationSchemaReponseInfoSubForm
 });
 
-export const ReponseReqInfo: React.FC<ReponseReqInfoProps> = ({ reponse }) => {
+export const ReponseReqInfo: React.FC<ReponseReqInfoProps> = ({
+  reponse,
+  requeteId
+}) => {
+  const history = useHistory();
   const blocsForm: JSX.Element[] = [getReponseForm(reponse)];
+  const [reponseAEnvoyer, setReponseAEnvoyer] =
+    useState<ISauvegarderReponseReqInfoParams | undefined>();
 
-  const onSubmit = () => {};
+  const onSubmit = (reponseSaisie: IReponseInfoFormValue) => {
+    setReponseAEnvoyer({
+      idRequete: requeteId,
+      corpsMail: reponseSaisie[REPONSE][CORPS_MAIL],
+      idReponse: reponse?.id
+    });
+  };
+
+  const idReponse = useSauvegarderReponsesReqInfoHook(reponseAEnvoyer);
+
+  useEffect(() => {
+    if (idReponse) {
+      history.push(URL_MES_REQUETES_INFORMATION);
+    }
+  }, [idReponse, history]);
 
   const boutonsProps = {} as ReponseReqInfoBoutonsProps;
 

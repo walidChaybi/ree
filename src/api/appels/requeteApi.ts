@@ -18,6 +18,7 @@ export const URL_REQUETES_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES = "/requetes";
 export const URL_MES_REQUETES = "/requetes/mesrequetes";
 export const URL_MES_REQUETES_INFORMATION = "/requetes/information/mesrequetes";
+export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_REQUETES_COUNT = "/requetes/count";
 export const URL_DOCUMENTSELIVRES = "/documentsdelivres";
 export const URL_REQUETES_RMC = "/requetes/rmc";
@@ -483,5 +484,17 @@ export async function getReponsesReqInfo(): Promise<any> {
   return apiV2.fetchCache({
     method: HttpMethod.GET,
     uri: `${URL_NOMENCLATURE}${URL_REPONSE_REQ_INFO}`
+  });
+}
+
+export async function sauvegarderReponseReqInfo(
+  idRequete: string,
+  corpsMailReponse: string,
+  idReponse?: string
+): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_SAUVEGARDER_REPONSE_REQINFO}/${idRequete}`,
+    data: { corpsMail: corpsMailReponse, idReponse: `${idReponse}` }
   });
 }
