@@ -486,3 +486,222 @@ export const FicheRcaDecisionNotaireConvention = ({
   },
   typeInscription: "INSCRIPTION"
 } as any) as IFicheRcRca;
+
+export const idFicheRca = "8c9ea77f-55dc-494f-8e75-b136ac7ce63d";
+export const ficheRca = {
+  data: {
+    id: idFicheRca,
+    categorie: "RCA",
+    annee: "2020",
+    numero: "4093",
+    dateInscription: [2020, 2, 23],
+    dateDerniereMaj: 1552554000000,
+    dateDerniereDelivrance: 1554105600000,
+    alertes: [],
+    decision: {
+      dateDecision: [2020, 11, 26],
+      type: "ONAC",
+      autorite: {
+        typeAutorite: "ONAC",
+        ville: "Pékin",
+        pays: "Chine",
+        titreOnac: "Consul"
+      }
+    },
+    interesses: [
+      {
+        numeroOrdreSaisi: 1,
+        nomFamille: "Fleck",
+        villeNaissance: "Lyon",
+        paysNaissance: "France",
+        regionNaissance: "Rhône",
+        arrondissementNaissance: "8",
+        nationalite: "FRANCAISE",
+        sexe: "MASCULIN",
+        autreNoms: [],
+        autrePrenoms: [],
+        prenoms: [
+          { numeroOrdre: 2, valeur: "Jules" },
+          { numeroOrdre: 1, valeur: "Léo" }
+        ],
+        dateNaissance: { jour: "01", mois: "09", annee: "1983" }
+      }
+    ],
+    statutsFiche: [
+      {
+        statut: "INACTIF",
+        motif: "",
+        statutFicheEvenement: {
+          id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63f",
+          date: { jour: "8", mois: "10", annee: "2018" },
+          ville: "nantes",
+          region: "Pays de Loire",
+          pays: "France"
+        },
+        complementMotif: "",
+        dateStatut: 1618480800000
+      },
+      {
+        statut: "INACTIF",
+        motif: "",
+        statutFicheEvenement: {
+          id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63d",
+          date: { jour: "22", mois: "3", annee: "2019" },
+          ville: "nantes",
+          region: "Pays de Loire",
+          pays: "France"
+        },
+        complementMotif: "",
+        dateStatut: 1618480800000
+      }
+    ],
+    personnes: [
+      {
+        id: "e7114c57-d00d-48ad-bbee-af2b01e2da64",
+        nom: "Rose",
+        sexe: "FEMININ",
+        nationalite: "ETRANGERE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 8,
+          mois: 6,
+          annee: 1960,
+          voie: null,
+          ville: "tunis",
+          arrondissement: null,
+          region: "",
+          pays: "Tunisie",
+          lieuReprise: null
+        },
+        deces: {
+          minute: null,
+          heure: null,
+          jour: null,
+          mois: null,
+          annee: 2020,
+          voie: null,
+          ville: "nantes",
+          arrondissement: null,
+          region: "Pays de Loire",
+          pays: "France",
+          lieuReprise: null
+        },
+        autresNoms: [{ nom: "DUPE", type: "PSEUDONYME" }],
+        prenoms: ["Jean-pierre", "Michel"],
+        autresPrenoms: [],
+        parents: [
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Glenn",
+            prenoms: ["Pearl", "Ginger"]
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Nora",
+            prenoms: ["Reed"]
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Turner",
+            prenoms: ["Concetta"]
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Meagan",
+            prenoms: ["Emerson"]
+          }
+        ],
+        enfants: [
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Janine",
+            prenoms: ["Alyce"]
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Barton",
+            prenoms: ["Buck"]
+          },
+          {
+            id: null,
+            typeLienParente: "ADOPTION",
+            nom: "Kirsten",
+            prenoms: ["Louella"]
+          }
+        ],
+        rcs: [{ id: "8244d136-729b-4fd3-b88a-fa1fe30a2214", numero: "2" }],
+        rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63d", numero: "4093" }],
+        pacss: [
+          { id: "89c9d030-26c3-41d3-bdde-8b4dcc0420df", numero: "1234506" },
+          { id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e1", numero: "1234508" },
+          { id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e2", numero: "1234509" },
+          { id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e3", numero: "1234510" }
+        ],
+        actes: [
+          {
+            id: "d8708d77-a359-4553-be72-1eb5f246d4da",
+            numero: "754",
+            nature: "RECONNAISSANCE"
+          }
+        ]
+      },
+      {
+        id: "e7114c57-d00d-48ad-bbee-af2b01e2da66",
+        nom: "Latonya",
+        sexe: "FEMININ",
+        nationalite: "ETRANGERE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 14,
+          mois: 12,
+          annee: 2001,
+          voie: null,
+          ville: "angers",
+          arrondissement: null,
+          region: "MAine et Loire",
+          pays: "France",
+          lieuReprise: null
+        },
+        autresNoms: [
+          { nom: "Regina", type: "USAGE" },
+          { nom: "Rosa", type: "USAGE" }
+        ],
+        prenoms: ["Nathan", "Pierre"],
+        autresPrenoms: [],
+        parents: [
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Nora",
+            prenoms: ["Reed"]
+          }
+        ],
+        enfants: [],
+        rcs: [{ id: "8244d136-729b-4fd3-b88a-fa1fe30a2214", numero: "2" }],
+        rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63d", numero: "4093" }],
+        pacss: [],
+        actes: []
+      }
+    ],
+    nature: {
+      id: "168a436b-330d-4c3c-83e0-e49d27390132",
+      nom: "NATURE_RCA",
+      code: "ADOPTION_SIMPLE_ETRANGER_EXEQUATUR",
+      libelle:
+        "adoption simple prononcée à l'étranger avec jugement d'exequatur",
+      estActif: true,
+      decisionCouple: false,
+      article: "l'",
+      categorieRCRCA: "FILIATION"
+    },
+    typeInscription: "INSCRIPTION"
+  }
+};

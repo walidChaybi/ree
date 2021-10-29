@@ -11,6 +11,7 @@ import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { NatureRc } from "../../../../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../../../../model/etatcivil/enum/NatureRca";
 import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
+import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
 import { TypeVisibiliteArchiviste } from "../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { IFichePacs } from "../../../../../model/etatcivil/pacs/IFichePacs";
 import { IPartenaire } from "../../../../../model/etatcivil/pacs/IPartenaire";
@@ -25,7 +26,7 @@ import { formatNom, formatPrenom } from "../../../util/Utils";
 export type TFiche = IFicheRcRca | IFichePacs | IFicheActe;
 
 export function mapRcRca(data: any): IFicheRcRca {
-  const dataRcRca: IFicheRcRca = data;
+  const dataRcRca: IFicheRcRca = { ...data };
   if (dataRcRca.interesses !== undefined) {
     dataRcRca.interesses.forEach(interesse => {
       harmoniserNomPrenomsInteresse(interesse);
@@ -47,11 +48,14 @@ export function mapRcRca(data: any): IFicheRcRca {
       ? NatureRc.getEnumFor(data.nature)
       : NatureRca.getEnumFor(data.nature);
 
+  dataRcRca.statutsFiche = mapStatutFiche(data);
+
   return dataRcRca;
 }
 
 export function mapPacs(data: any): IFichePacs {
-  const dataPacs: IFichePacs = data;
+  const dataPacs: IFichePacs = { ...data };
+  dataPacs.statutsFiche = [];
   if (data.partenaires) {
     data.partenaires.forEach((p: any) => {
       (p as IPartenaire).nationalite = Nationalite.getEnumFor(p.nationalite);
@@ -71,7 +75,16 @@ export function mapPacs(data: any): IFichePacs {
 
   dataPacs.personnes = mapPersonnes(data.personnes, data.numero);
 
+  dataPacs.statutsFiche = mapStatutFiche(data);
+
   return dataPacs;
+}
+
+function mapStatutFiche(data: any) {
+  return data.statutsFiche.map((sf: any) => ({
+    ...sf,
+    statut: StatutFiche.getEnumFor(sf.statut).libelle
+  }));
 }
 
 export function mapActe(data: any): IFicheActe {

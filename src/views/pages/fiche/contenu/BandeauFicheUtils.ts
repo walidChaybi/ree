@@ -2,10 +2,8 @@ import {
   AlerteInscription,
   AlerteInscriptionUtil
 } from "../../../../model/etatcivil/enum/AlerteInscription";
-import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
 import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
 import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
-import { IStatutFiche } from "../../../../model/etatcivil/fiche/IStatutFiche";
 import { getDateStringIso } from "../../../common/util/DateUtils";
 import { IDataFicheProps } from "../FichePage";
 import { getFicheTitle } from "../FicheUtils";
@@ -37,7 +35,7 @@ export function setDataBandeau(
       registre: fournisseurDonneesBandeau.getRegistre(),
       annee,
       numero: dataBandeau.numero,
-      statutsFiche: setStatuts(dataBandeau.statutsFiche),
+      statutsFiche: dataBandeau.statutsFiche,
       personnes: fournisseurDonneesBandeau.getSimplePersonnes(),
       alertes: setAlertes(dataBandeau.alertes),
       dateDerniereMaj: getDateStringIso(dataBandeau.dateDerniereMaj),
@@ -48,17 +46,6 @@ export function setDataBandeau(
   }
 
   return bandeauFiche;
-}
-
-function setStatuts(statuts: IStatutFiche[]) {
-  const statutsInscription: IStatutFiche[] = [];
-  if (statuts) {
-    statuts.forEach(s => {
-      s.statut = StatutFiche.getEnumFor(s.statut).libelle;
-      statutsInscription.push(s);
-    });
-  }
-  return statutsInscription;
 }
 
 function setAlertes(alertes: IAlerte[]) {

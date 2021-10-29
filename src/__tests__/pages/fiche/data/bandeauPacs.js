@@ -24,10 +24,10 @@ export default {
     dateDerniereDelivrance: 1592092800,
     statutsFiche: [
       {
-        statut: "ACTIF"
+        statut: "Actif"
       },
       {
-        statut: "INACTIF"
+        statut: "Inactif"
       }
     ]
   }

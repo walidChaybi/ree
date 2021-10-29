@@ -3,7 +3,6 @@ import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/reche
 import { AutoScroll } from "../../../common/widget/autoScroll/autoScroll";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
@@ -112,7 +111,6 @@ export const RMCActeInscriptionPage: React.FC = () => {
   );
 
   const RMCActeInscriptionRef = useRef();
-
   return (
     <>
       <RMCActeInscriptionForm
@@ -121,7 +119,7 @@ export const RMCActeInscriptionPage: React.FC = () => {
         setCriteresRechercheActe={setCriteresRechercheActe}
         setCriteresRechercheInscription={setCriteresRechercheInscription}
         nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
-        nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
       />
       <AutoScroll
         autoScroll={nouvelleRMCActeInscription}

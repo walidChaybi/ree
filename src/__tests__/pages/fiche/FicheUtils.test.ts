@@ -31,7 +31,7 @@ test("ficheUtils setFiche PACS works", () => {
   );
   expect(fiche.bandeauFiche.statutsFiche).toStrictEqual([
     {
-      statut: undefined,
+      statut: "Actif",
       dateStatut: 1606381200000,
       statutFicheEvenement: {
         ville: "nantes",

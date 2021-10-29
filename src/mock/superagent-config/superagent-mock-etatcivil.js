@@ -11,7 +11,18 @@ import {
   ReponseAppelAddAlerteActe,
   ReponseAppelGetAlertesActe
 } from "../data/Alertes";
-import { FicheRcaDecisionJuridictionEtrangere } from "../data/ficheRCA";
+import {
+  ficheActe1,
+  ficheActe2,
+  idFicheActe1,
+  idFicheActe2
+} from "../data/ficheActe";
+import { fichePacs, idFichePacs } from "../data/fichePacs";
+import {
+  ficheRca,
+  FicheRcaDecisionJuridictionEtrangere,
+  idFicheRca
+} from "../data/ficheRCA";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
   ReponseAppelNomenclatureMandataire,
@@ -22,8 +33,16 @@ import {
 import { pacsModificationNotaire } from "../data/PACS";
 import mockRC from "../data/RC.json";
 import mockRCA from "../data/RCA.json";
-import { ReponseAppelRMCActe } from "../data/RMCActe";
-import { ReponseAppelRMCInscription } from "../data/RMCInscription";
+import {
+  ReponseAppelRMCActe,
+  ReponseAppelRMCActe4DernierResultats,
+  ReponseAppelRMCActe4PremiersResultats
+} from "../data/RMCActe";
+import {
+  ReponseAppelRMCInscription,
+  ReponseAppelRMCInscription4DernierResultats,
+  ReponseAppelRMCInscription4PremiersResultats
+} from "../data/RMCInscription";
 
 export const NORESULT = "NORESULT";
 
@@ -61,10 +80,18 @@ export const configEtatcivil = [
         return { data: FicheRcaDecisionJuridictionEtrangere };
       }
 
+      if (match[1] === `/repertoirecivil/rca/${idFicheRca}`) {
+        return { ...ficheRca };
+      }
+
       if (
         match[1] === "/repertoirecivil/rc/135e4dfe-9757-4d5d-8715-359c6e73289b"
       ) {
         return { data: FicheRcaDecisionJuridictionEtrangere };
+      }
+
+      if (match[1] === `/repertoirecivil/pacs/${idFichePacs}`) {
+        return { ...fichePacs };
       }
 
       if (
@@ -109,6 +136,17 @@ export const configEtatcivil = [
           body: "contenubase64dupdf"
         };
       }
+
+      /////////////////////////////////////////////////////////////////////
+      // actes utilisés pour le test de pagination (avec changement de plage)
+      if (match[1] === `/acte/${idFicheActe1}`) {
+        return ficheActe1;
+      }
+
+      if (match[1] === `/acte/${idFicheActe2}`) {
+        return ficheActe2;
+      }
+      /////////////////////////////////////////////////////////////////////
 
       // RMC Acte
       if (match[1] === "/acte/rmc?range=0-100") {
@@ -162,6 +200,24 @@ export const configEtatcivil = [
           };
         }
       }
+
+      ////////////////////////////////////////////////////////////////////////
+      // RMC Inscription: test de pagination (avec changement de plage) sur les fiches RC/RCA/PACS
+      if (match[1] === "/repertoirecivil/rmc?range=0-4") {
+        return ReponseAppelRMCInscription4PremiersResultats;
+      }
+      if (match[1] === "/repertoirecivil/rmc?range=1-4") {
+        return ReponseAppelRMCInscription4DernierResultats;
+      }
+
+      // RMC Acte: test de pagination (avec changement de plage) sur les fiches Acte
+      if (match[1] === "/acte/rmc?range=0-4") {
+        return ReponseAppelRMCActe4PremiersResultats;
+      }
+      if (match[1] === "/acte/rmc?range=1-4") {
+        return ReponseAppelRMCActe4DernierResultats;
+      }
+      ////////////////////////////////////////////////////////////////////////
 
       if (match[1] === "/nomenclature/NATURE_RC") {
         return { data: ReponseAppelNomenclatureNatureRC.data };
