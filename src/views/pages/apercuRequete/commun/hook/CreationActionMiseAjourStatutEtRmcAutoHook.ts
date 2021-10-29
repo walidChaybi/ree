@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
@@ -15,7 +15,7 @@ export interface CreationActionMiseAjourStatutEtRmcAutoHookParams {
   statutRequete: StatutRequete;
   libelleAction: string;
   urlCourante: string;
-  requete?: IRequeteTableau;
+  requete?: IRequeteTableauDelivrance;
   dataRequetes?: any[];
   pasDeTraitementAuto?: boolean;
 }
@@ -23,9 +23,8 @@ export interface CreationActionMiseAjourStatutEtRmcAutoHookParams {
 export function useCreationActionMiseAjourStatutEtRmcAuto(
   params: CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
 ) {
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
-    INavigationApercuRMCAutoParams | undefined
-  >();
+  const [paramsRMCAuto, setParamsRMCAuto] =
+    useState<INavigationApercuRMCAutoParams | undefined>();
 
   const [
     creationActionEtMiseAjourStatutParams,

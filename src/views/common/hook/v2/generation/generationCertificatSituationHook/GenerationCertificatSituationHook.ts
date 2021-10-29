@@ -8,10 +8,8 @@ import {
 import { IDecret } from "../../../../../../model/etatcivil/commun/IDecret";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
-import {
-  IRequeteTableau,
-  ITitulaireRequeteTableau
-} from "../../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "../../../../../../model/requete/v2/ITitulaireRequeteTableau";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { MimeType } from "../../../../../../ressources/MimeType";
@@ -22,7 +20,7 @@ import { specificationDecret } from "./specificationTitreDecretPhrase/specificat
 import { specificationTitre } from "./specificationTitreDecretPhrase/specificationTitre";
 
 export interface IGenerationCertificatSituationParams {
-  requete?: IRequeteTableau;
+  requete?: IRequeteTableauDelivrance;
   dataRMCAutoInscription?: IResultatRMCInscription[];
   dataRMCAutoActe?: IResultatRMCActe[];
   specificationPhrase?: any;
@@ -40,15 +38,11 @@ export function useGenerationCertificatSituationHook(
     setResultGenerationCertificatSituation
   ] = useState<IResultGenerationUnDocument>();
 
-  const [
-    certificatSituationComposition,
-    setCertificatSituationComposition
-  ] = useState<ICertificatSituationComposition>();
+  const [certificatSituationComposition, setCertificatSituationComposition] =
+    useState<ICertificatSituationComposition>();
 
-  const [
-    documentsReponsePourStockage,
-    setDocumentsReponsePourStockage
-  ] = useState<IDocumentReponse[] | undefined>();
+  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
+    useState<IDocumentReponse[] | undefined>();
 
   // 1 - Construction du Certificat de situation
   useEffect(() => {
@@ -60,12 +54,13 @@ export function useGenerationCertificatSituationHook(
       params.dataRMCAutoActe
     ) {
       if (params?.requete.titulaires && params.requete.titulaires.length > 0) {
-        const phrases: IPhrasesJasperCertificatSituation = params.specificationPhrase.getPhrasesJasper(
-          params.requete.document, // id du type de document demandé
-          params.requete.titulaires[0].sexe,
-          params.dataRMCAutoActe,
-          params.dataRMCAutoInscription
-        );
+        const phrases: IPhrasesJasperCertificatSituation =
+          params.specificationPhrase.getPhrasesJasper(
+            params.requete.document, // id du type de document demandé
+            params.requete.titulaires[0].sexe,
+            params.dataRMCAutoActe,
+            params.dataRMCAutoInscription
+          );
         construitCertificatSituation(
           phrases.phrasesLiees,
           params.requete,
@@ -128,7 +123,7 @@ export function useGenerationCertificatSituationHook(
 
 async function construitCertificatSituation(
   phrasesLiees: string | undefined,
-  requete: IRequeteTableau,
+  requete: IRequeteTableauDelivrance,
   setCertificatSituationComposition: any,
   setResultGenerationCertificatSituation: any,
   phrasesPiecesJointes: string | undefined
@@ -163,7 +158,7 @@ function creerCertificatSituationComposition(
   decrets: IDecret[],
   phrasesLiees: string,
   phrasesPiecesJointes?: string,
-  requete?: IRequeteTableau
+  requete?: IRequeteTableauDelivrance
 ): ICertificatSituationComposition {
   let titulaire: ITitulaireRequeteTableau | undefined;
   if (requete?.titulaires) {

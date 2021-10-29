@@ -21,5 +21,12 @@ export const LISTE_UTILISATEURS = [
     nom: "Dylan",
     trigramme: "BOB",
     habilitations: MockMappedHabilitation.habilitations
+  },
+  {
+    idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646",
+    prenom: "Benoît",
+    nom: "Tanguy",
+    trigramme: "BTY",
+    habilitations: MockMappedHabilitation.habilitations
   }
 ];

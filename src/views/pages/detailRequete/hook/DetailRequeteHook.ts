@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { getDetailRequete } from "../../../../api/appels/requeteApi";
 import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
 import { ChoixDelivrance } from "../../../../model/requete/v2/enum/ChoixDelivrance";
+import { ComplementObjetRequete } from "../../../../model/requete/v2/enum/ComplementObjetRequete";
 import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../model/requete/v2/enum/MotifDelivrance";
+import { ObjetRequete } from "../../../../model/requete/v2/enum/ObjetRequete";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { SousTypeInformation } from "../../../../model/requete/v2/enum/SousTypeInformation";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { TypeInstitutionnel } from "../../../../model/requete/v2/enum/TypeInstitutionnel";
@@ -33,6 +36,7 @@ import { IQualiteRequerant } from "../../../../model/requete/v2/IQualiteRequeran
 import { IRequerant } from "../../../../model/requete/v2/IRequerant";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteInformation } from "../../../../model/requete/v2/IRequeteInformation";
 import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
 import { ITitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
 import { IUtilisateurRece } from "../../../../model/requete/v2/IUtilisateurRece";
@@ -52,6 +56,9 @@ export function useDetailRequeteApiHook(idRequete: string) {
           const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
           if (typeRequete === TypeRequete.DELIVRANCE) {
             const detailRequete = mappingRequeteDelivrance(result?.body?.data);
+            setDetailRequeteState(detailRequete);
+          } else if (typeRequete === TypeRequete.INFORMATION) {
+            const detailRequete = mappingRequeteInformation(result?.body?.data);
             setDetailRequeteState(detailRequete);
           }
         }
@@ -247,5 +254,35 @@ function getEvenement(evenement: any): IEvenementReqDelivrance {
     annee: evenement.annee,
     ville: evenement.ville,
     pays: evenement.pays
+  };
+}
+
+export function mappingRequeteInformation(data: any): IRequeteInformation {
+  return {
+    // Partie Requête
+    id: data.id,
+    numero: data.numeroFonctionnel,
+    dateCreation: data.dateCreation,
+    type: TypeRequete.getEnumFor(data.type),
+    statutCourant: getStatutCourant(data.statut),
+    titulaires: getTitulaires(data.titulaires),
+    requerant: getRequerant(data.requerant),
+    idUtilisateur: data.corbeilleAgent?.idUtilisateur,
+    idEntite: data?.corbeilleService?.idEntiteRattachement,
+    observations: data.observations
+      ? getObservations(data.observations)
+      : undefined,
+    canal: TypeCanal.getEnumFor(data.canal),
+
+    //Partie Requête Delivrance
+    sousType: SousTypeInformation.getEnumFor(data.sousType),
+    objet: ObjetRequete.getEnumFor(data.objet),
+    complementObjet: ComplementObjetRequete.getEnumFor(data.complementObjet),
+    commentaire: data.commentaire,
+    reponse: data.reponse,
+    provenanceRequete: Provenance.getEnumFor(data.provenance),
+    numeroRequeteLiee: data.numeroRequeteLiee,
+    piecesComplementInformation: data.piecesComplementInformation,
+    besoinUsager: data.besoinUsager
   };
 }

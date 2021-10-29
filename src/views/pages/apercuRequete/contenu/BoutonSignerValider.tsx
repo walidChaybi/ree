@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../model/agent/IOfficier";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
-import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import {
   CreationActionEtMiseAjourStatutParams,
@@ -15,7 +14,7 @@ import { getLibelle } from "../../../common/widget/Text";
 import { receUrl } from "../../../router/ReceUrls";
 import "./scss/BoutonPrendreEnCharge.scss";
 interface BoutonSignerValiderProps {
-  requete: TRequete;
+  requete: IRequeteDelivrance;
 }
 
 export const BoutonSignerValider: React.FC<BoutonSignerValiderProps> =

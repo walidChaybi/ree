@@ -8,7 +8,7 @@ import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresB
 import { Qualite } from "../../../model/requete/v2/enum/Qualite";
 import { TypeCanal } from "../../../model/requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../../model/requete/v2/IRequerant";
-import { ITitulaireRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
+import { ITitulaireRequeteTableau } from "../../../model/requete/v2/ITitulaireRequeteTableau";
 import { IElementsJasperCertificatRCA } from "../../../views/common/hook/v2/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
 
 const superagentMock = require("superagent-mock")(

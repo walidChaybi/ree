@@ -9,10 +9,8 @@ import { configComposition } from "../../../../../../mock/superagent-config/supe
 import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import {
-  IRequeteTableau,
-  ITitulaireRequeteTableau
-} from "../../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "../../../../../../model/requete/v2/ITitulaireRequeteTableau";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
@@ -41,7 +39,7 @@ const requete = {
   idRequete: idRequeteRDCSC,
   document: ReponseAppelNomenclatureDocummentDelivrance.data[1].id, //CERTIFICAT_SITUATION_PACS
   titulaires: [titulaire]
-} as IRequeteTableau;
+} as IRequeteTableauDelivrance;
 
 const dataRMCAutoInscription = [] as IResultatRMCInscription[];
 const dataRMCAutoActe = [] as IResultatRMCActe[];

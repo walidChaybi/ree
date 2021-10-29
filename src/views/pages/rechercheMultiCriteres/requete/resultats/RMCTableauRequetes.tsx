@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
@@ -19,7 +19,7 @@ import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
 export interface RMCResultatRequetesProps {
-  dataRMCRequete: IRequeteTableau[];
+  dataRMCRequete: IRequeteTableauDelivrance[];
   dataTableauRMCRequete: IParamsTableau;
   setRangeRequete: (range: string) => void;
   resetTableauRequete: boolean;
@@ -37,13 +37,11 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
+  const [paramsMiseAJour, setParamsMiseAJour] =
+    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
-    INavigationApercuRMCAutoParams | undefined
-  >();
+  const [paramsRMCAuto, setParamsRMCAuto] =
+    useState<INavigationApercuRMCAutoParams | undefined>();
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuRMCAuto(paramsRMCAuto);
@@ -66,7 +64,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
 
   const onClickOnLine = (
     idRequete: string,
-    data: IRequeteTableau[],
+    data: IRequeteTableauDelivrance[],
     idx: number
   ) => {
     setOperationEnCours(true);

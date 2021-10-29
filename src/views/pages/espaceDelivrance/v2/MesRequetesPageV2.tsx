@@ -4,7 +4,7 @@ import {
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { autorisePrendreEnChargeTableau } from "../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
@@ -27,7 +27,7 @@ import {
   StatutsRequetesEspaceDelivrance
 } from "./EspaceDelivranceParamsV2";
 import { goToLinkRequete } from "./EspaceDelivranceUtilsV2";
-import { useRequeteApi } from "./hook/DonneesRequeteHookV2";
+import { useRequeteDelivranceApi } from "./hook/DonneesRequeteDelivranceHookV2";
 import "./scss/RequeteTableauV2.scss";
 
 const columnsMesRequestes = [
@@ -60,7 +60,7 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
       range: `0-${NB_LIGNES_PAR_APPEL}`
     });
   const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState, paramsTableau } = useRequeteApi(
+  const { dataState, paramsTableau } = useRequeteDelivranceApi(
     linkParameters,
     TypeAppelRequete.MES_REQUETES,
     setEnChargement
@@ -99,7 +99,7 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
 
   function onClickOnLine(
     idRequete: string,
-    data: IRequeteTableau[],
+    data: IRequeteTableauDelivrance[],
     idx: number
   ) {
     setOperationEnCours(true);

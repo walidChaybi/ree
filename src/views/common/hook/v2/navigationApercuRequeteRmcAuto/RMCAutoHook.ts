@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { useRMCAutoActeApiHook } from "../../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActeApiHook";
@@ -28,7 +28,7 @@ const INFO_CS_RMC_AUTO_VIDE = getLibelle(
   "La recherche multi-critères sur les actes/ RC / RCA et PACS n'ayant donné aucun résultat, il vous est proposé de délivrer le certificat ci-dessous."
 );
 export interface IRMCAutoParams {
-  requete: IRequeteTableau;
+  requete: IRequeteTableauDelivrance;
   dataRequetes: any[];
   urlCourante: string;
   pasDeTraitementAuto?: boolean;
@@ -39,26 +39,23 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
 
   const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook(
     params?.requete,
-    params?.dataRequetes,
     `0-${NB_LIGNES_PAR_APPEL}`
   );
 
   const {
     dataRMCAutoInscription,
     dataTableauRMCAutoInscription
-  } = useRMCAutoInscriptionApiHook(
-    params?.requete,
-    params?.dataRequetes,
-    `0-${NB_LIGNES_PAR_APPEL}`
-  );
+  } = useRMCAutoInscriptionApiHook(params?.requete, `0-${NB_LIGNES_PAR_APPEL}`);
 
-  const [paramsCertificatSituation, setParamsCertificatSituation] = useState<
-    IGenerationCertificatSituationParams
-  >();
+  const [
+    paramsCertificatSituation,
+    setParamsCertificatSituation
+  ] = useState<IGenerationCertificatSituationParams>();
 
-  const [actionStatutRequete, setActionStatutRequete] = useState<
-    IActionStatutRequete
-  >();
+  const [
+    actionStatutRequete,
+    setActionStatutRequete
+  ] = useState<IActionStatutRequete>();
 
   useEffect(() => {
     // si pasDeTraitementAuto=true alors pas de génération de certificat de situation automatiquement en fonction des résultats de la RMC auto

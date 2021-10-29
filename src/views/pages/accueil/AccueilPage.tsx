@@ -88,7 +88,7 @@ export const AccueilPage: React.FC = () => {
         ></BoutonAccueilEspaceCreation>
         <BoutonAccueilCommunication
           messageId="pages.accueil.boutons.communication"
-          pageUrl="communication"
+          pageUrl="mesrequetesinformation"
           iconFA={faEnvelope}
           titleId="pages.accueil.titles.communication"
         ></BoutonAccueilCommunication>

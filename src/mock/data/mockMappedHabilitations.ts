@@ -27,6 +27,10 @@ export const MockMappedHabilitation = {
           {
             idDroit: "idDroit",
             nom: "DELIVRER"
+          } as IDroit,
+          {
+            idDroit: "idInformerUsager",
+            nom: "INFORMER_USAGER"
           } as IDroit
         ]
       },

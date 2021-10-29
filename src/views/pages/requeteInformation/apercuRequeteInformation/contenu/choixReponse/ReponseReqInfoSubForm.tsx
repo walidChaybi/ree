@@ -1,0 +1,71 @@
+import { connect } from "formik";
+import React, { useEffect } from "react";
+import * as Yup from "yup";
+import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
+import {
+  FormikComponentProps,
+  withNamespace
+} from "../../../../../common/widget/formulaire/utils/FormUtil";
+import { getLibelle } from "../../../../../common/widget/Text";
+import "../scss/ChoixReponseReqInfo.scss";
+import { REPONSE, ReponseReqInfoProps } from "./ReponseReqInfoForm";
+
+export type ReponseReqInfoSubFormProps = FormikComponentProps &
+  ReponseReqInfoProps;
+
+export const LIBELLE = "libelle";
+export const CORPS_MAIL = "corpsMail";
+
+// Valeurs par défaut des champs
+export const DefaultValuesReponseInfoSubForm = {
+  [LIBELLE]: "",
+  [CORPS_MAIL]: ""
+};
+
+export interface IReponseInfoSubFormValue {
+  [LIBELLE]: string;
+  [CORPS_MAIL]: string;
+}
+
+export const ValidationSchemaReponseInfoSubForm = Yup.object({
+  [LIBELLE]: Yup.string().required("Merci de choisir une réponse"),
+  [CORPS_MAIL]: Yup.string().required("Obligatoire")
+});
+
+const NB_LIGNE_CORPS_MAIL = 20;
+const NB_CARACTERES_CORPS_MAIL = "2500";
+
+const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({
+  reponse,
+  formik
+}) => {
+  const libelleWithNamespace = withNamespace(REPONSE, LIBELLE);
+  const corpsMailWithNamespace = withNamespace(REPONSE, CORPS_MAIL);
+
+  useEffect(() => {
+    if (reponse?.libelle) {
+      formik.setFieldValue(libelleWithNamespace, reponse.libelle);
+      formik.setFieldValue(corpsMailWithNamespace, reponse.corpsMail);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reponse]);
+
+  return (
+    <>
+      <InputField
+        name={libelleWithNamespace}
+        label={getLibelle("Libellé de la réponse")}
+        disabled={true}
+      />
+      <InputField
+        name={corpsMailWithNamespace}
+        label={getLibelle("Mail de la réponse")}
+        component={"textarea"}
+        maxLength={NB_CARACTERES_CORPS_MAIL}
+        rows={NB_LIGNE_CORPS_MAIL}
+      />
+    </>
+  );
+};
+
+export default connect(ReponseReqInfoSubForm);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { PATH_APERCU_REQ_TRAITEMENT } from "../../../../router/ReceUrls";
 import {
   autorisePrendreEnChargeTableau,
@@ -16,7 +16,7 @@ export interface INavigationApercu {
 
 export function useNavigationApercu(
   urlWithParam?: string,
-  requete?: IRequeteTableau
+  requete?: IRequeteTableauDelivrance
 ): INavigationApercu | undefined {
   const [redirection, setRedirection] =
     useState<INavigationApercu | undefined>();
@@ -57,7 +57,7 @@ export function useNavigationApercu(
 }
 
 const redirectionEnFonctionMaRequete = (
-  requete: IRequeteTableau,
+  requete: IRequeteTableauDelivrance,
   setRedirection: (
     value: React.SetStateAction<INavigationApercu | undefined>
   ) => void,
@@ -106,7 +106,7 @@ const redirectionEnFonctionMaRequete = (
 };
 
 function redirectionATraiterTransferee(
-  requete: IRequeteTableau,
+  requete: IRequeteTableauDelivrance,
   setRedirection: (
     value: React.SetStateAction<INavigationApercu | undefined>
   ) => void,

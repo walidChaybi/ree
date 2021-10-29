@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoActes } from "../../../../../api/appels/etatcivilApi";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import {
   getParamsTableau,
@@ -12,8 +12,7 @@ import { mappingActes } from "../../common/mapping/RMCMappingUtil";
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoActeApiHook(
-  requete?: IRequeteTableau | TRequete,
-  data?: IRequeteTableau[],
+  requete?: IRequeteTableauDelivrance | IRequeteDelivrance,
   range?: string
 ) {
   const [dataRMCAutoActe, setDataRMCAutoActe] = useState<IResultatRMCActe[]>();
@@ -39,7 +38,7 @@ export function useRMCAutoActeApiHook(
           });
         });
     }
-  }, [requete, data, range]);
+  }, [requete, range]);
 
   return {
     dataRMCAutoActe,

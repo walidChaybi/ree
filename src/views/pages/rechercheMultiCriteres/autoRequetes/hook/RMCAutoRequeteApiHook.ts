@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoRequetes } from "../../../../../api/appels/requeteApi";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import {
-  IRequeteTableau,
+  IRequeteTableauDelivrance,
   mappingRequetesTableau
-} from "../../../../../model/requete/v2/IRequeteTableau";
+} from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import {
   getParamsTableau,
   IParamsTableau
@@ -14,7 +14,7 @@ import { determinerCriteresRMCAuto } from "./RMCAutoRequetesUtils";
 
 export function useRMCAutoRequeteApiHook(requete: TRequete, range: string) {
   const [dataRMCAutoRequete, setDataRMCAutoRequete] = useState<
-    IRequeteTableau[]
+    IRequeteTableauDelivrance[]
   >();
 
   const [

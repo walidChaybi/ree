@@ -1,49 +1,48 @@
 import { useEffect, useState } from "react";
 import {
-  getMesRequetes,
-  IQueryParametersPourRequetesV2,
-  TypeAppelRequete
+  getMesRequetesInformation,
+  IQueryParametersPourRequetesV2
 } from "../../../../../api/appels/requeteApi";
-import {
-  IRequeteTableau,
-  mappingRequetesTableau
-} from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { mappingRequetesTableauInformation } from "../../../../../model/requete/v2/IRequeteTableauInformation";
 import {
   getParamsTableau,
   IParamsTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
 
-export function useRequeteApi(
+export function useRequeteInformationApi(
   queryParameters: IQueryParametersPourRequetesV2,
-  typeRequete: TypeAppelRequete,
   setEnChargement: (enChargement: boolean) => void
 ) {
-  const [dataState, setDataState] = useState<IRequeteTableau[]>([]);
+  const [dataState, setDataState] = useState<IRequeteTableauDelivrance[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
 
   useEffect(() => {
     async function fetchMesRequetes() {
       try {
         const listeStatuts = queryParameters?.statuts?.join(",");
-        const result = await getMesRequetes(
-          typeRequete,
+        const result = await getMesRequetesInformation(
           listeStatuts,
           queryParameters
         );
-        const mesRequetes = mappingRequetesTableau(result?.body?.data, false);
+        const mesRequetes = mappingRequetesTableauInformation(
+          result?.body?.data,
+          false
+        );
         setDataState(mesRequetes);
         setParamsTableau(getParamsTableau(result));
         setEnChargement(false);
       } catch (error) {
         logError({
-          messageUtilisateur: "Impossible de récupérer les requêtes",
+          messageUtilisateur:
+            "Impossible de récupérer les requêtes d'information",
           error
         });
       }
     }
     fetchMesRequetes();
-  }, [queryParameters, typeRequete, setEnChargement]);
+  }, [queryParameters, setEnChargement]);
 
   return {
     dataState,

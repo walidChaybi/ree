@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { IUuidRequeteParams } from "../../../../model/requete/v2/IUuidRequeteParams";
 import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { getLibelle } from "../../../common/widget/Text";
@@ -12,12 +13,8 @@ import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
 import { Courrier } from "./contenu/Courrier";
 
-interface IdRequeteParams {
-  idRequete: string;
-}
-
 export const ApercuCourrier: React.FC = () => {
-  const { idRequete } = useParams<IdRequeteParams>();
+  const { idRequete } = useParams<IUuidRequeteParams>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 
@@ -27,32 +24,35 @@ export const ApercuCourrier: React.FC = () => {
     history.location.state as IResultatRMCActe
   );
 
+  const [requete, setRequete] = useState<IRequeteDelivrance>();
+  useEffect(() => {
+    if (detailRequeteState) {
+      setRequete(detailRequeteState as IRequeteDelivrance);
+    }
+  }, [detailRequeteState]);
+
   return (
     <div className="ApercuCourrierAccompagnement">
       <title>{getLibelle("Aperçu de la requête")}</title>
-      {detailRequeteState && (
-        <ProtectionApercu statut={detailRequeteState?.statutCourant.statut}>
-          <BandeauRequete detailRequete={detailRequeteState} />
+      {requete && (
+        <ProtectionApercu
+          statut={requete.statutCourant.statut}
+          type={requete.type}
+        >
+          <BandeauRequete detailRequete={requete} />
           <div className="contenu-requete">
             <div className="side left">
-              <ResumeRequeteV2 requete={detailRequeteState}></ResumeRequeteV2>
+              <ResumeRequeteV2 requete={requete}></ResumeRequeteV2>
               <SuiviActionsRequete
-                actions={detailRequeteState.actions}
+                actions={requete.actions}
               ></SuiviActionsRequete>
               <SuiviObservationsRequete
-                observations={detailRequeteState?.observations}
+                observations={requete?.observations}
               ></SuiviObservationsRequete>
-              <DocumentsReponses
-                documents={
-                  (detailRequeteState as IRequeteDelivrance).documentsReponses
-                }
-              />
+              <DocumentsReponses documents={requete.documentsReponses} />
             </div>
             <div className="side right">
-              <Courrier
-                requete={detailRequeteState as IRequeteDelivrance}
-                acte={acte}
-              />
+              <Courrier requete={requete} acte={acte} />
             </div>
           </div>
         </ProtectionApercu>

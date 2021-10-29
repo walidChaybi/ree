@@ -1,0 +1,63 @@
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
+import { TableauTypeColumn } from "../../../common/widget/tableau/v2/TableauTypeColumn";
+import { getLibelle } from "../../../common/widget/Text";
+
+export const StatutsRequetesInformation = [
+  StatutRequete.PRISE_EN_CHARGE.nom,
+  StatutRequete.TRANSFEREE.nom
+];
+
+export enum HeaderTableauRequeteInformation {
+  Numero = "numero",
+  SousType = "sousType",
+  Requerant = "nomCompletRequerant",
+  LibelleRequerant = "libelleRequerant",
+  DateCreation = "dateCreation",
+  Statut = "statut",
+  Titulaire = "nomsTitulaires",
+  Objet = "objet"
+}
+
+const style = {
+  width: "7.6em"
+};
+
+export const requeteInformationColumnHeaders = [
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Numero],
+    title: getLibelle("N°"),
+    align: "center",
+    style
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.SousType],
+    title: getLibelle("Sous-type"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Objet],
+    title: getLibelle("Objet"),
+    align: "center"
+  }),
+
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Requerant],
+    title: getLibelle("Requérant"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Titulaire],
+    title: getLibelle("Titulaire"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.DateCreation],
+    title: getLibelle("Date de création"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Statut],
+    title: getLibelle("Statut"),
+    align: "center"
+  })
+];

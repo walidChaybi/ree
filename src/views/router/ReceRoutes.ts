@@ -19,6 +19,8 @@ import EspaceDelivrancePageV2 from "../pages/espaceDelivrance/v2/EspaceDelivranc
 import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
+import { ApercuReqInfoPage } from "../pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
+import EspaceInformationPage from "../pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import { SaisirRDAPCPage } from "../pages/saisirRequete/SaisirRDAPCPage";
 import { SaisirRDCPage } from "../pages/saisirRequete/SaisirRDCPage";
 import { SaisirRDCSCPage } from "../pages/saisirRequete/SaisirRDCSCPage";
@@ -40,6 +42,8 @@ import {
   URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2,
   URL_MES_REQUETES_EXTRAIT_COPIE_COURRIER,
   URL_MES_REQUETES_ID,
+  URL_MES_REQUETES_INFORMATION,
+  URL_MES_REQUETES_INFORMATION_APERCU_ID,
   URL_MES_REQUETES_SAISIR_RDAPC,
   URL_MES_REQUETES_SAISIR_RDC,
   URL_MES_REQUETES_SAISIR_RDCSC,
@@ -714,5 +718,22 @@ export const routesRece: IRoute[] = [
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_MODIFICATION)
+  },
+  /////////////////////////////////////////
+  ///////// REQUETE D'INFORMATION /////////
+  /////////////////////////////////////////
+  {
+    url: URL_MES_REQUETES_INFORMATION,
+    component: EspaceInformationPage,
+    droits: [Droit.INFORMER_USAGER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Espace information")
+  },
+  {
+    url: URL_MES_REQUETES_INFORMATION_APERCU_ID,
+    component: ApercuReqInfoPage,
+    droits: [Droit.INFORMER_USAGER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
+    libelle: getLibelle("Aperçu de la requête")
   }
 ];

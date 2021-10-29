@@ -14,10 +14,8 @@ import { configEtatcivil } from "../../../../../../mock/superagent-config/supera
 import { configRequetesV2GeneInscription } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2-gene-inscription";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import {
-  IRequeteTableau,
-  ITitulaireRequeteTableau
-} from "../../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "../../../../../../model/requete/v2/ITitulaireRequeteTableau";
 import { useGenerationInscriptionsHook } from "../../../../../../views/common/hook/v2/generation/generationInscriptionsHook/GenerationInscriptionsHook";
 
 const superagentMock = require("superagent-mock")(request, [
@@ -41,7 +39,7 @@ const requete = {
   idRequete: idRequeteRDCSC,
   document: ReponseAppelNomenclatureDocummentDelivrance.data[6].id, //CERTIFICAT_SITUATION_RC_RCA
   titulaires: [titulaire]
-} as IRequeteTableau;
+} as IRequeteTableauDelivrance;
 
 const dataRMCAutoInscription = [
   ...DataRMCInscriptionAvecUnRC,

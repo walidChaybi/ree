@@ -4,7 +4,7 @@ import {
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { autorisePrendreEnChargeTableau } from "../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
@@ -29,7 +29,7 @@ import {
   StatutsRequetesEspaceDelivrance
 } from "./EspaceDelivranceParamsV2";
 import { goToLinkRequete } from "./EspaceDelivranceUtilsV2";
-import { useRequeteApi } from "./hook/DonneesRequeteHookV2";
+import { useRequeteDelivranceApi } from "./hook/DonneesRequeteDelivranceHookV2";
 import "./scss/RequeteTableauV2.scss";
 
 /** TODO ETAPE 2 : Bouton "Attribué à" */
@@ -103,7 +103,7 @@ export const RequetesServicePageV2: React.FC<MesRequetesServicePageProps> =
     const [enChargement, setEnChargement] = React.useState(true);
     const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-    const { dataState, paramsTableau } = useRequeteApi(
+    const { dataState, paramsTableau } = useRequeteDelivranceApi(
       linkParameters,
       TypeAppelRequete.REQUETE_SERVICE,
       setEnChargement
@@ -167,7 +167,7 @@ export const RequetesServicePageV2: React.FC<MesRequetesServicePageProps> =
 
     function onClickOnLine(
       idRequete: string,
-      data: IRequeteTableau[],
+      data: IRequeteTableauDelivrance[],
       idx: number
     ) {
       setOperationEnCours(true);

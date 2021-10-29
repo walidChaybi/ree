@@ -2,7 +2,7 @@ import { act, render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
 import {
   IRMCAutoParams,
   useRMCAutoHook
@@ -25,7 +25,7 @@ const paramsRequete: IRMCAutoParams = {
   requete: {
     idRequete: ":idRequete",
     document: "123456"
-  } as IRequeteTableau,
+  } as IRequeteTableauDelivrance,
   dataRequetes: [],
   urlCourante: URL_MES_REQUETES_V2
 };
@@ -53,7 +53,7 @@ const paramsApercuRequeteTraitement: IRMCAutoParams = {
     idRequete: ":idRequete",
     document: "123456",
     statut: "Prise en charge"
-  } as IRequeteTableau,
+  } as IRequeteTableauDelivrance,
   dataRequetes: [],
   urlCourante: getUrlWithParam(
     URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,

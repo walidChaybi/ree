@@ -173,6 +173,15 @@ export const URL_SAISIR_RDCSC_RMC = `${URL_RECHERCHE_REQUETE}/saisircertificatsi
 export const URL_RECHERCHE_REQUETE_APERCU_PRISE_EN_CHARGE_COURRIER = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_PRISE}/${PATH_APERCU_COURRIER}/:idRequete`;
 export const URL_RECHERCHE_REQUETE_APERCU_TRAITEMENT_COURRIER = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_TRAITEMENT}/${PATH_APERCU_COURRIER}/:idRequete`;
 
+/////////////////////////////////////////
+///////// REQUETE D'INFORMATION /////////
+/////////////////////////////////////////
+// Espace requête d'information
+export const URL_MES_REQUETES_INFORMATION = `${URL_CONTEXT_APP}/mesrequetesinformation`;
+
+// Aperçu d'une requête d'information
+export const URL_MES_REQUETES_INFORMATION_APERCU_ID = `${URL_MES_REQUETES_INFORMATION}/${PATH_APERCU_REQ}/:idRequete`;
+
 function estUrlApercuRequete(url: string) {
   return url.indexOf(`/${PATH_APERCU_REQ}/`) > 0;
 }

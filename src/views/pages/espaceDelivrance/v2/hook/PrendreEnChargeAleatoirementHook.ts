@@ -2,19 +2,18 @@ import { useEffect, useState } from "react";
 import { HTTP_NOT_FOUND } from "../../../../../api/ApiManager";
 import { getRequeteAleatoire } from "../../../../../api/appels/requeteApi";
 import {
-  IRequeteTableau,
+  IRequeteTableauDelivrance,
   mappingUneRequeteTableau
-} from "../../../../../model/requete/v2/IRequeteTableau";
+} from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { logError } from "../../../../common/util/LogManager";
 
 export interface IRequeteAleatoireResultat {
-  requete?: IRequeteTableau;
+  requete?: IRequeteTableauDelivrance;
 }
 
 export function useGetRequeteAleatoire(prendreEnCharge: boolean) {
-  const [requeteAleatoireResultat, setRequeteAleatoireResultat] = useState<
-    IRequeteAleatoireResultat | undefined
-  >();
+  const [requeteAleatoireResultat, setRequeteAleatoireResultat] =
+    useState<IRequeteAleatoireResultat | undefined>();
   useEffect(() => {
     async function fetchRequeteAleatoire() {
       try {

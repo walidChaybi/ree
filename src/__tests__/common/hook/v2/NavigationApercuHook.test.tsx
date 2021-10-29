@@ -6,13 +6,13 @@ import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
-import { IRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { useNavigationApercu } from "../../../../views/common/hook/v2/navigationApercuRequeteRmcAuto/NavigationApercuHook";
 import { storeRece } from "../../../../views/common/util/storeRece";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-const requete1: IRequeteTableau = {
+const requete1: IRequeteTableauDelivrance = {
   idRequete: "0",
   type: TypeRequete.DELIVRANCE.libelle,
   statut: StatutRequete.A_TRAITER.libelle,
@@ -44,7 +44,7 @@ test("test apercu traitement", async () => {
   });
 });
 
-const requete2: IRequeteTableau = {
+const requete2: IRequeteTableauDelivrance = {
   idRequete: "0",
   type: TypeRequete.DELIVRANCE.libelle,
   statut: StatutRequete.A_TRAITER.libelle,
@@ -76,7 +76,7 @@ test("test apercu traitement", async () => {
   });
 });
 
-const requete3: IRequeteTableau = {
+const requete3: IRequeteTableauDelivrance = {
   idRequete: "0",
   type: TypeRequete.DELIVRANCE.libelle,
   statut: StatutRequete.BROUILLON.libelle,

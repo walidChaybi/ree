@@ -1,18 +1,16 @@
-import React from "react";
 import {
   act,
-  waitFor,
+  fireEvent,
   render,
   screen,
-  cleanup,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
-import { mount } from "enzyme";
-import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
-import PiecesJointesForm from "../../../../../views/common/widget/formulaire/piecesJointes/PiecesJointesForm";
-import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { Form, Formik } from "formik";
+import React from "react";
 import request from "superagent";
-import { Formik, Form } from "formik";
+import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import PiecesJointesForm from "../../../../../views/common/widget/formulaire/piecesJointes/PiecesJointesForm";
+import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { inputPngFiles } from "../../../../testsUtil";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);

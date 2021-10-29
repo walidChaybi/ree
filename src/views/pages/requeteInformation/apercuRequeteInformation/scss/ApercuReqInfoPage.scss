@@ -1,0 +1,16 @@
+.contenuRequeteInfo {
+  margin-bottom: 5em;
+  display: flex;
+  .side {
+    &.left {
+      width: 35%;
+      min-width: 350px;
+    }
+    &.right {
+      width: 65%;
+      min-width: 500px;
+      margin-left: 0.5em;
+    }
+    display: inline-block;
+  }
+}

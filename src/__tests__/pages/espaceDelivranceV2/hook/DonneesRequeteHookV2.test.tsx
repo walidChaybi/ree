@@ -9,7 +9,7 @@ import {
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { NB_LIGNES_PAR_APPEL } from "../../../../views/common/widget/tableau/TableUtils";
 import { StatutsRequetesEspaceDelivrance } from "../../../../views/pages/espaceDelivrance/v2/EspaceDelivranceParamsV2";
-import { useRequeteApi } from "../../../../views/pages/espaceDelivrance/v2/hook/DonneesRequeteHookV2";
+import { useRequeteDelivranceApi } from "../../../../views/pages/espaceDelivrance/v2/hook/DonneesRequeteDelivranceHookV2";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
@@ -23,7 +23,7 @@ let container: Element | null;
 
 const HookConsummer: React.FC = () => {
   const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState = [] } = useRequeteApi(
+  const { dataState = [] } = useRequeteDelivranceApi(
     queryParam,
     TypeAppelRequete.MES_REQUETES,
     setEnChargement

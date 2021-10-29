@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { StatutRequete } from "../../../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableau } from "../../../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
@@ -27,7 +27,7 @@ export interface IPhrasesJasperCertificatSituation {
 }
 
 export function useDelivrerCertificatSituationHook(
-  requete?: IRequeteTableau,
+  requete?: IRequeteTableauDelivrance,
   dataRMCAutoInscription?: IResultatRMCInscription[],
   dataRMCAutoActe?: IResultatRMCActe[]
 ) {
@@ -36,15 +36,11 @@ export function useDelivrerCertificatSituationHook(
     setResultDelivrerCertificatSituation
   ] = useState<IResultDelivrerCertificatSituation>();
 
-  const [
-    paramsCertificatSituation,
-    setParamsCertificatSituation
-  ] = useState<IGenerationCertificatSituationParams>();
+  const [paramsCertificatSituation, setParamsCertificatSituation] =
+    useState<IGenerationCertificatSituationParams>();
 
-  const [
-    actionStatutRequete,
-    setActionStatutRequete
-  ] = useState<IActionStatutRequete>();
+  const [actionStatutRequete, setActionStatutRequete] =
+    useState<IActionStatutRequete>();
 
   // 0 - Suppression des eventuels documents générés au préalable
   const isOldDocumentsDeleted = useSupprimerAnciensDocumentsReponseHook(
@@ -72,9 +68,8 @@ export function useDelivrerCertificatSituationHook(
   }, [resultGenerationInscription]);
 
   // 2 - Génération du certificat de situation
-  const resultGenerationCertificatSituation = useGenerationCertificatSituationHook(
-    paramsCertificatSituation
-  );
+  const resultGenerationCertificatSituation =
+    useGenerationCertificatSituationHook(paramsCertificatSituation);
 
   // 3 - Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   useEffect(() => {

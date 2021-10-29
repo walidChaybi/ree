@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresRequetes } from "../../../../../api/appels/requeteApi";
 import {
-  IRequeteTableau,
+  IRequeteTableauDelivrance,
   mappingRequetesTableau
-} from "../../../../../model/requete/v2/IRequeteTableau";
+} from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import {
   getParamsTableau,
@@ -13,11 +13,10 @@ import { logError } from "../../../../common/util/LogManager";
 import { mappingCriteresRequete } from "./RMCRequeteMapping";
 
 export function useRMCRequeteApiHook(criteres?: ICriteresRMCRequete) {
-  const [dataRMCRequete, setDataRMCRequete] = useState<IRequeteTableau[]>();
-  const [
-    dataTableauRMCRequete,
-    setDataTableauRMCRequete
-  ] = useState<IParamsTableau>();
+  const [dataRMCRequete, setDataRMCRequete] =
+    useState<IRequeteTableauDelivrance[]>();
+  const [dataTableauRMCRequete, setDataTableauRMCRequete] =
+    useState<IParamsTableau>();
 
   useEffect(() => {
     async function fetchRequetes() {

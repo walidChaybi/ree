@@ -1,0 +1,28 @@
+@import "../../../../../../scss/colors";
+
+.BoutonsReponse {
+  display: flex;
+  flex-direction: row;
+  margin: 0.5rem;
+}
+
+.ReponseReqInfo {
+  margin: 0;
+  .Fieldset {
+    width: auto;
+    .Formulaire {
+      margin: 0 1rem;
+      .Fieldset {
+        border: none;
+        .Titre {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.Boutons {
+  display: flex;
+  justify-content: space-evenly;
+}

@@ -16,10 +16,8 @@ import { TypePacsRcRca } from "../../../../../../../model/etatcivil/enum/TypePac
 import { IFichePacs } from "../../../../../../../model/etatcivil/pacs/IFichePacs";
 import { IFicheRcRca } from "../../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import {
-  IRequeteTableau,
-  ITitulaireRequeteTableau
-} from "../../../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "../../../../../../../model/requete/v2/ITitulaireRequeteTableau";
 import { specificationPACS } from "../specificationInscriptions/specificationPACS";
 import { specificationRC } from "../specificationInscriptions/specificationRC";
 import { specificationRCA } from "../specificationInscriptions/specificationRCA";
@@ -86,7 +84,7 @@ export function getTypeFiche(
 
 export function construitCertificatPacsRcRca(
   typeCertificat: TypePacsRcRca,
-  requete: IRequeteTableau,
+  requete: IRequeteTableauDelivrance,
   fichePacs: IFichePacs | IFicheRcRca
 ): TypeCertificatComposition | undefined {
   let certificatComposition: TypeCertificatComposition | undefined;

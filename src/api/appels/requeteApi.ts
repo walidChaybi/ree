@@ -17,6 +17,7 @@ import { ApiManager, HttpMethod } from "../ApiManager";
 export const URL_REQUETES_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES = "/requetes";
 export const URL_MES_REQUETES = "/requetes/mesrequetes";
+export const URL_MES_REQUETES_INFORMATION = "/requetes/information/mesrequetes";
 export const URL_REQUETES_COUNT = "/requetes/count";
 export const URL_DOCUMENTSELIVRES = "/documentsdelivres";
 export const URL_REQUETES_RMC = "/requetes/rmc";
@@ -33,6 +34,7 @@ export const URL_TRANSFERT = "/requetes/action/transfert";
 export const URL_IGNORER = "/requetes/action/ignorer";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
 export const URL_OPTION_COURRIER = "/optioncourrier";
+export const URL_REPONSE_REQ_INFO = "/reponse";
 
 const URL_REPONSES = "/reponses";
 
@@ -185,7 +187,7 @@ export function getParametresBaseRequete(): Promise<any> {
 /*** API REQUETE V2 ***/
 ////////////////////////
 
-export function getMesRequetes(
+export function getMesRequetesDelivrance(
   typeRequete: TypeAppelRequete,
   listeStatuts: string,
   queryParameters: IQueryParametersPourRequetesV2
@@ -196,6 +198,25 @@ export function getMesRequetes(
       typeRequete === TypeAppelRequete.REQUETE_SERVICE
         ? URL_REQUETES_SERVICE
         : URL_MES_REQUETES,
+    parameters: {
+      statuts: listeStatuts,
+      tri:
+        queryParameters.tri !== "prioriteRequete"
+          ? queryParameters.tri
+          : "dateStatut",
+      sens: queryParameters.sens,
+      range: queryParameters.range
+    }
+  });
+}
+
+export function getMesRequetesInformation(
+  listeStatuts: string,
+  queryParameters: IQueryParametersPourRequetesV2
+): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.GET,
+    uri: URL_MES_REQUETES_INFORMATION,
     parameters: {
       statuts: listeStatuts,
       tri:
@@ -455,5 +476,12 @@ export async function getOptionsCourriers(): Promise<any> {
   return apiV2.fetchCache({
     method: HttpMethod.GET,
     uri: `${URL_NOMENCLATURE}${URL_OPTION_COURRIER}`
+  });
+}
+
+export async function getReponsesReqInfo(): Promise<any> {
+  return apiV2.fetchCache({
+    method: HttpMethod.GET,
+    uri: `${URL_NOMENCLATURE}${URL_REPONSE_REQ_INFO}`
   });
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
@@ -18,13 +17,15 @@ import { SuiviObservationsRequete } from "../../contenu/SuiviObservationRequete"
 import { ResumeRequeteV2 } from "../../resume/ResumeRequeteV2";
 
 interface ApercuRequetePriseEnChargePartieGaucheProps {
-  detailRequete: TRequete;
+  detailRequete: IRequeteDelivrance;
   openFenetre: (infoDoc: InfoDocumentAffiche) => void;
 }
 
 export const ApercuRequetePriseEnChargePartieGauche: React.FC<ApercuRequetePriseEnChargePartieGaucheProps> = props => {
   /* Etats RMC */
-  const [requetesTableau, setRequetesTableau] = useState<IRequeteTableau[]>();
+  const [requetesTableau, setRequetesTableau] = useState<
+    IRequeteTableauDelivrance[]
+  >();
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>();
 
   /* Etats RMC manuelle*/

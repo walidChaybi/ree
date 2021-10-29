@@ -1,21 +1,17 @@
 import React from "react";
-import { useDetailRequeteApiHook } from "./hook/DetailRequeteHook";
-import { getPanelsDetailRequete } from "./hook/DetailRequeteUtils";
-
 import { useParams } from "react-router-dom";
-import { getLibelle } from "../../common/widget/Text";
+import { IUuidRequeteParams } from "../../../model/requete/v2/IUuidRequeteParams";
 import { Fieldset } from "../../common/widget/fieldset/Fieldset";
 import { SectionPanel } from "../../common/widget/section/SectionPanel";
+import { getLibelle } from "../../common/widget/Text";
+import { useDetailRequeteApiHook } from "./hook/DetailRequeteHook";
+import { getPanelsDetailRequete } from "./hook/DetailRequeteUtils";
 import "./scss/DetailRequetePage.scss";
 
 export const titreDetail = "Détails de requête";
 
-interface IdRequeteParams {
-  idRequete: string;
-}
-
 export const DetailRequetePage: React.FC = () => {
-  const { idRequete } = useParams<IdRequeteParams>();
+  const { idRequete } = useParams<IUuidRequeteParams>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IUrlData, receUrl } from "../../../../router/ReceUrls";
 import { tousNonVides } from "../../../util/Utils";
 import { INavigationApercu, useNavigationApercu } from "./NavigationApercuHook";
 import { IRMCAutoParams, useRMCAutoHook } from "./RMCAutoHook";
 
 export interface INavigationApercuRMCAutoParams {
-  requete: IRequeteTableau;
+  requete: IRequeteTableauDelivrance;
   dataRequetes: any[];
   urlCourante: string;
   pasDeTraitementAuto?: boolean;

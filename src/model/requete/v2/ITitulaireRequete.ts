@@ -83,5 +83,19 @@ export const TitulaireRequete = {
     return titulaire && titulaire.paysNaissance
       ? premiereLettreEnMajusculeLeResteEnMinuscule(titulaire.paysNaissance)
       : "";
+  },
+  getLieuNissance(titulaire?: ITitulaireRequete): string {
+    let lieuNissance = "";
+
+    if (titulaire && titulaire.villeNaissance) {
+      lieuNissance = this.getVille(titulaire);
+    }
+
+    if (titulaire && titulaire.paysNaissance) {
+      lieuNissance += lieuNissance !== "" ? ", " : "";
+      lieuNissance += this.getPays(titulaire);
+    }
+
+    return lieuNissance;
   }
 };

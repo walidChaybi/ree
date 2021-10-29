@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IRequeteTableau } from "../../../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IResultGenerationPlusieursDocument } from "../../generationUtils";
 
@@ -11,13 +11,12 @@ export function useGestionCertificatCourant(
     React.SetStateAction<IResultGenerationPlusieursDocument | undefined>
   >,
   listePacsRcRcaATraiter?: IResultatRMCInscription[],
-  requete?: IRequeteTableau,
+  requete?: IRequeteTableauDelivrance,
   listePacsRcRca?: IResultatRMCInscription[],
   uuidDocumentsGeneres?: string[]
 ) {
-  const [pacsRcRcaCourant, setPacsRcRcaCourant] = useState<
-    IResultatRMCInscription
-  >();
+  const [pacsRcRcaCourant, setPacsRcRcaCourant] =
+    useState<IResultatRMCInscription>();
 
   //0.1- Renvoie du résultat vide si pas de PACS sinon alimentation de la liste 'listePACSATraiter' qui sera utilisée dans le code
   useEffect(() => {

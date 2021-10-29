@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { TRequete } from "../../../../model/requete/v2/IRequete";
+import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { getUrlWithoutIdParam } from "../../../common/util/route/routeUtil";
 import { SectionPanel } from "../../../common/widget/section/SectionPanel";
 import { ListePiecesJustificatives } from "./contenu/piecesJustificatives/ListePiecesJustificatives";
@@ -9,7 +9,7 @@ import { getPanelsResumeRequete } from "./ResumeRequeteUtils";
 export const titreDetail = "Détails de requête";
 
 interface ResumeRequeteV2Props {
-  requete: TRequete;
+  requete: IRequeteDelivrance;
 }
 
 const ZERO = 0;

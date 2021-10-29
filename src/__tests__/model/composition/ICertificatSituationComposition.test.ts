@@ -9,10 +9,8 @@ import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresB
 import { Qualite } from "../../../model/requete/v2/enum/Qualite";
 import { TypeCanal } from "../../../model/requete/v2/enum/TypeCanal";
 import { IRequerant } from "../../../model/requete/v2/IRequerant";
-import {
-  IRequeteTableau,
-  ITitulaireRequeteTableau
-} from "../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../model/requete/v2/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "../../../model/requete/v2/ITitulaireRequeteTableau";
 
 const superagentMock = require("superagent-mock")(
   request,
@@ -62,16 +60,17 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     numero: "012345",
     canal: TypeCanal.COURRIER,
     requerant: requerant
-  } as IRequeteTableau;
+  } as IRequeteTableauDelivrance;
 
-  const resultat = await CertificatSituationComposition.creerCertificatSituation(
-    titre,
-    decrets,
-    phrase,
-    requete,
-    phrasesPiecesJointes,
-    titulaire
-  );
+  const resultat =
+    await CertificatSituationComposition.creerCertificatSituation(
+      titre,
+      decrets,
+      phrase,
+      requete,
+      phrasesPiecesJointes,
+      titulaire
+    );
   await waitFor(() => {
     expect(resultat).toEqual(attendu);
   });

@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../model/agent/IOfficier";
 import { IAlerte } from "../../../../../model/etatcivil/fiche/IAlerte";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -39,13 +37,12 @@ import { AlertesActes } from "./alertesActes/AlertesActes";
 import { BoutonNouvelleRMCActeInscription } from "./rechercheMultiCriteres/BoutonNouvelleRMCActeInscription";
 
 interface RMCAutoParams {
-  requete: TRequete;
-  data: IRequeteTableau[];
+  requete: IRequeteDelivrance;
   range: string;
 }
 
 interface ApercuRequetePriseEnChargePartieDroiteProps {
-  detailRequete: TRequete;
+  detailRequete: IRequeteDelivrance;
   dataHistory?: DataRMCAuto;
 }
 
@@ -165,7 +162,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
     if (!dataHistory) {
       setParamsRMCAuto({
         requete: detailRequete,
-        data: [],
         range: `0-${NB_LIGNES_PAR_APPEL}`
       });
     }
@@ -174,7 +170,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   /* Hooks RMC Auto */
   const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook(
     paramsRMCAuto?.requete,
-    paramsRMCAuto?.data,
     paramsRMCAuto?.range
   );
   const {
@@ -182,7 +177,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
     dataTableauRMCAutoInscription
   } = useRMCAutoInscriptionApiHook(
     paramsRMCAuto?.requete,
-    paramsRMCAuto?.data,
     paramsRMCAuto?.range
   );
 

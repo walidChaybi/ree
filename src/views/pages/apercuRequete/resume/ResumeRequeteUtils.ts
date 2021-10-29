@@ -4,7 +4,7 @@ import { TypeLienRequerant } from "../../../../model/requete/v2/enum/TypeLienReq
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { EvenementReqDelivrance } from "../../../../model/requete/v2/IEvenementReqDelivrance";
 import { IRequerant, Requerant } from "../../../../model/requete/v2/IRequerant";
-import { IRequete, TRequete } from "../../../../model/requete/v2/IRequete";
+import { IRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import {
   ITitulaireRequete,
@@ -27,13 +27,13 @@ import {
 import { getLibelle } from "../../../common/widget/Text";
 import "./scss/ResumeRequetePage.scss";
 
-export function getPanelsResumeRequete(requete?: TRequete) {
+export function getPanelsResumeRequete(requete?: IRequeteDelivrance) {
   const panels: SectionPanelProps[] = [];
   if (requete) {
     panels[1] = getPanelTitulaireRequeteDelivrance(requete);
     if (requete.type === TypeRequete.DELIVRANCE) {
-      panels[0] = getRequeteDelivranceSousType(requete as IRequeteDelivrance);
-      panels[DEUX] = getRequeteDelivranceInfos(requete as IRequeteDelivrance);
+      panels[0] = getRequeteDelivranceSousType(requete);
+      panels[DEUX] = getRequeteDelivranceInfos(requete);
     } else {
       panels[0] = getRequeteSansSousType();
       panels[DEUX] = getRequeteAutreInfos(requete);
@@ -44,7 +44,7 @@ export function getPanelsResumeRequete(requete?: TRequete) {
 }
 
 function getPanelTitulaireRequeteDelivrance(
-  requete: IRequete
+  requete: IRequeteDelivrance
 ): SectionPanelProps {
   if (requete.titulaires && requete.titulaires.length !== 0) {
     const panel = {
@@ -147,7 +147,7 @@ function getTitulairesInfo(
   return infosTitulaire;
 }
 
-function getRequerant(requete: IRequete): SectionPartProps[] {
+function getRequerant(requete: IRequeteDelivrance): SectionPartProps[] {
   return [
     {
       partContent: {
@@ -157,7 +157,7 @@ function getRequerant(requete: IRequete): SectionPartProps[] {
   ];
 }
 
-function getLienRequerant(requete: IRequete): string {
+function getLienRequerant(requete: IRequeteDelivrance): string {
   if (
     requete.mandant !== null &&
     requete.mandant !== undefined &&
@@ -180,7 +180,7 @@ function getLienRequerant(requete: IRequete): string {
   return "";
 }
 
-function getRequerantInfo1(requete: IRequete): SectionContentProps[] {
+function getRequerantInfo1(requete: IRequeteDelivrance): SectionContentProps[] {
   const infosRequerant = [] as SectionContentProps[];
 
   ajouterContentPartAuPartUneValeurVide(
@@ -280,7 +280,7 @@ function getRequeteDelivranceInfos(
   };
 }
 
-function getRequeteAutreInfos(requete: IRequete): SectionPanelProps {
+function getRequeteAutreInfos(requete: IRequeteDelivrance): SectionPanelProps {
   return {
     panelAreas: [
       {
@@ -364,7 +364,9 @@ function getRequeteDelivranceInfo(
   return infosRequete;
 }
 
-function getRequeteAutreInfo(requete: IRequete): SectionContentProps[] {
+function getRequeteAutreInfo(
+  requete: IRequeteDelivrance
+): SectionContentProps[] {
   const infosRequete = [] as SectionContentProps[];
 
   ajouterContentPartAuPartUneValeur(

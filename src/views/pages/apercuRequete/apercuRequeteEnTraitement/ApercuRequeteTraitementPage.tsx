@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { IUuidRequeteParams } from "../../../../model/requete/v2/IUuidRequeteParams";
 import { useGetDocumentReponseApi } from "../../../common/hook/v2/DocumentReponseHook";
 import { getIdDocumentReponseAAfficher } from "../../../common/util/RequetesUtils";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
@@ -19,23 +20,25 @@ import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
 import "./scss/ApercuRequeteTraitementPage.scss";
 import { VisionneuseApercuTraitement } from "./VisionneuseApercuTraitement";
-interface IdRequeteParams {
-  idRequete: string;
-}
 
 export const ApercuRequeteTraitementPage: React.FC = () => {
   const history = useHistory();
-  const { idRequete } = useParams<IdRequeteParams>();
+  const { idRequete } = useParams<IUuidRequeteParams>();
   const [dataHistory] = useState<any>(history.location.state);
   const [documentAffiche, setDocumentAffiche] = useState<InfoDocumentAffiche>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
   const contenuDocument = useGetDocumentReponseApi(documentAffiche?.id);
+  const [requete, setRequete] = useState<IRequeteDelivrance>();
 
   useEffect(() => {
     if (detailRequeteState) {
+      setRequete(detailRequeteState as IRequeteDelivrance);
+
       setDocumentAffiche({
-        id: getIdDocumentReponseAAfficher(detailRequeteState)
+        id: getIdDocumentReponseAAfficher(
+          detailRequeteState as IRequeteDelivrance
+        )
       });
     }
   }, [detailRequeteState]);
@@ -43,22 +46,21 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
   return (
     <div className="ApercuRequeteTraitement">
       <title>{getLibelle("Aperçu du traitement de la requête")}</title>
-      {detailRequeteState && (
-        <ProtectionApercu statut={detailRequeteState?.statutCourant.statut}>
-          <BandeauRequete detailRequete={detailRequeteState} />
+      {requete && (
+        <ProtectionApercu
+          statut={requete.statutCourant.statut}
+          type={requete.type}
+        >
+          <BandeauRequete detailRequete={requete} />
           <div className="contenu-requete">
             <div className="side left">
-              <ResumeRequeteV2 requete={detailRequeteState}></ResumeRequeteV2>
+              <ResumeRequeteV2 requete={requete}></ResumeRequeteV2>
               <SuiviActionsRequete
-                actions={detailRequeteState?.actions}
+                actions={requete?.actions}
               ></SuiviActionsRequete>
-              <SuiviObservationsRequete
-                observations={detailRequeteState?.observations}
-              />
+              <SuiviObservationsRequete observations={requete?.observations} />
               <DocumentsReponses
-                documents={
-                  (detailRequeteState as IRequeteDelivrance).documentsReponses
-                }
+                documents={requete.documentsReponses}
                 setDocumentAffiche={setDocumentAffiche}
               />
             </div>
@@ -67,15 +69,15 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
                 <div className="MessageInfo">{dataHistory.info}</div>
               )}
               <VisionneuseApercuTraitement
-                requete={detailRequeteState}
+                requete={requete}
                 contenu={contenuDocument?.contenu}
                 typeMime={contenuDocument?.mimeType}
               />
               <BoutonModifierTraitement
-                requete={detailRequeteState}
+                requete={requete}
                 dataHistory={dataHistory}
               />
-              <BoutonSignerValider requete={detailRequeteState} />
+              <BoutonSignerValider requete={requete} />
               <BoutonRetour message={getLibelle("<< Retour")} />
             </div>
           </div>

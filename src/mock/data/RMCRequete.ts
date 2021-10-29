@@ -1,5 +1,5 @@
 import { Sexe } from "../../model/etatcivil/enum/Sexe";
-import { IRequeteTableau } from "../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../model/requete/v2/IRequeteTableauDelivrance";
 
 export const DataTableauRequete = {
   previousDataLinkState: "previousDataLinkState",
@@ -112,7 +112,7 @@ export const ReponseAppelRMCRequete = {
   }
 };
 
-export const DataRMCRequeteAvecResultat: IRequeteTableau[] = [
+export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
   {
     idRequete: "54ddf213-d9b7-4747-8e92-68c220f66de3",
     idUtilisateur: "d49e7b2d-7cec-4f6a-854c-3cbd6148dc9e",

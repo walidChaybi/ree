@@ -1,8 +1,6 @@
 import { IDecret } from "../etatcivil/commun/IDecret";
-import {
-  IRequeteTableau,
-  ITitulaireRequeteTableau
-} from "../requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../requete/v2/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "../requete/v2/ITitulaireRequeteTableau";
 import {
   CommunComposition,
   ICommunComposition
@@ -40,7 +38,7 @@ export const CertificatSituationComposition = {
     titre: string,
     decrets: IDecret[],
     phraseLiees: string,
-    requete?: IRequeteTableau,
+    requete?: IRequeteTableauDelivrance,
     phrasesPiecesJointes?: string,
     titulaire?: ITitulaireRequeteTableau
   ): ICertificatSituationComposition {

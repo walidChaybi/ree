@@ -7,7 +7,6 @@ import {
   valeurOuUndefined
 } from "../../../views/common/util/Utils";
 import { NatureActe } from "../../etatcivil/enum/NatureActe";
-import { Sexe } from "../../etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
@@ -18,8 +17,12 @@ import { StatutRequete } from "./enum/StatutRequete";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
 import { IRequerant } from "./IRequerant";
+import {
+  ITitulaireRequeteTableau,
+  mapTitulaires
+} from "./ITitulaireRequeteTableau";
 
-export interface IRequeteTableau {
+export interface IRequeteTableauDelivrance {
   idRequete: string;
   numero?: string;
   idSagaDila?: string;
@@ -45,17 +48,6 @@ export interface IRequeteTableau {
   canal?: TypeCanal;
 }
 
-export interface ITitulaireRequeteTableau {
-  nom: string;
-  prenoms: string[];
-  jourNaissance: number;
-  moisNaissance: number;
-  anneeNaissance: number;
-  villeNaissance?: string;
-  paysNaissance?: string;
-  sexe: Sexe;
-}
-
 //////////////////////////////////////////
 /** Requetes: mapping après appel d'api */
 //////////////////////////////////////////
@@ -63,7 +55,7 @@ export interface ITitulaireRequeteTableau {
 export function mappingRequetesTableau(
   resultatsRecherche: any,
   mappingSupplementaire: boolean
-): IRequeteTableau[] {
+): IRequeteTableauDelivrance[] {
   return resultatsRecherche?.map((requete: any) => {
     return mappingUneRequeteTableau(requete, mappingSupplementaire);
   });
@@ -72,7 +64,7 @@ export function mappingRequetesTableau(
 export function mappingUneRequeteTableau(
   requete: any,
   mappingSupplementaire: boolean
-): IRequeteTableau {
+): IRequeteTableauDelivrance {
   return {
     idRequete: valeurOuUndefined(requete?.id),
     numero: getValeurOuVide(requete?.numero),
@@ -101,7 +93,7 @@ export function mappingUneRequeteTableau(
     idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
     idCorbeilleAgent: valeurOuUndefined(requete?.idCorbeilleAgent),
     idEntiteRattachement: valeurOuUndefined(requete?.idEntiteRattachement)
-  } as IRequeteTableau;
+  } as IRequeteTableauDelivrance;
 }
 
 function getSousType(type: string, sousType: string) {
@@ -119,28 +111,6 @@ function getSousType(type: string, sousType: string) {
   }
 }
 
-function mapTitulaires(
-  titulaires: any,
-  mappingSupplementaire: boolean
-): ITitulaireRequeteTableau[] {
-  return titulaires?.map((t: any) => {
-    const titulaire = {} as ITitulaireRequeteTableau;
-    titulaire.nom = formatNom(t?.nom);
-    if (mappingSupplementaire) {
-      titulaire.prenoms = getPrenoms(t?.prenoms);
-    } else {
-      titulaire.prenoms = t?.prenoms;
-    }
-    titulaire.jourNaissance = t?.jourNaissance;
-    titulaire.moisNaissance = t?.moisNaissance;
-    titulaire.anneeNaissance = t?.anneeNaissance;
-    titulaire.sexe = Sexe.getEnumFor(t?.sexe);
-    titulaire.villeNaissance = t?.villeNaissance;
-    titulaire.paysNaissance = t?.paysNaissance;
-    return titulaire;
-  });
-}
-
 function mapAttribueA(requete: any): string | undefined {
   let attribueA: string | undefined;
   if (requete?.idUtilisateur) {
@@ -154,17 +124,7 @@ function mapAttribueA(requete: any): string | undefined {
 }
 
 // Recherche Requete
-const SEPARATOR_NUMERO_ELEMENT = ") ";
-
-function getPrenoms(prenoms: string[]): string[] {
-  const prenomsTitulaire: string[] = [];
-  if (prenoms) {
-    prenoms.forEach((p: any) => {
-      prenomsTitulaire.push(formatPrenom(p.split(SEPARATOR_NUMERO_ELEMENT)[1]));
-    });
-  }
-  return prenomsTitulaire;
-}
+export const SEPARATOR_NUMERO_ELEMENT = ") ";
 
 function mapObservations(observations: string[]) {
   const observationsTitulaire: string[] = [];

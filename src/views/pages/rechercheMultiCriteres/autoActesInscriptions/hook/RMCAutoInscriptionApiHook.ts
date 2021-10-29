@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoInscription } from "../../../../../api/appels/etatcivilApi";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   getParamsTableau,
@@ -12,8 +12,7 @@ import { mappingInscriptions } from "../../acteInscription/hook/RMCActeInscripti
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoInscriptionApiHook(
-  requete?: IRequeteTableau | TRequete,
-  data?: IRequeteTableau[],
+  requete?: IRequeteTableauDelivrance | IRequeteDelivrance,
   range?: string
 ) {
   const [dataRMCAutoInscription, setDataRMCAutoInscription] =
@@ -40,7 +39,7 @@ export function useRMCAutoInscriptionApiHook(
           });
         });
     }
-  }, [requete, data, range]);
+  }, [requete, range]);
 
   return {
     dataRMCAutoInscription,

@@ -1,10 +1,8 @@
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
-import {
-  IRequeteTableau,
-  ITitulaireRequeteTableau
-} from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { ITitulaireRequete } from "../../../../../model/requete/v2/ITitulaireRequete";
+import { ITitulaireRequeteTableau } from "../../../../../model/requete/v2/ITitulaireRequeteTableau";
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import {
   getUrlPrecedente,
@@ -30,7 +28,7 @@ export interface ICriteresRMCAuto {
 }
 
 export function redirectionRMCAuto(
-  requete: IRequeteTableau,
+  requete: IRequeteTableauDelivrance,
   urlCourante: string,
   dataRMCAutoActe: any[],
   dataRMCAutoInscription: any[]
@@ -65,7 +63,10 @@ export function redirectionRMCAuto(
   return url;
 }
 
-function getUrlApercuTraitement(urlCourante: string, requete: IRequeteTableau) {
+function getUrlApercuTraitement(
+  urlCourante: string,
+  requete: IRequeteTableauDelivrance
+) {
   const urlPrecedente = getUrlPrecedente(urlCourante);
   return getUrlWithParam(
     `${urlPrecedente}/${PATH_APERCU_REQ_PRISE}/:idRequete`,
@@ -100,7 +101,7 @@ export function redirectionRMCAutoApercuTraitement(
 }
 
 export function determinerCriteresRMCAuto(
-  requete: TRequete | IRequeteTableau
+  requete: IRequeteDelivrance | IRequeteTableauDelivrance
 ): ICriteresRMCAuto {
   const criteresRMCAuto = {} as ICriteresRMCAuto;
   criteresRMCAuto.criteres = criteresRMCAutoMapper(requete?.titulaires);

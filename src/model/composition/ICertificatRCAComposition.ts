@@ -1,7 +1,7 @@
 import { IElementsJasperCertificatRCA } from "../../views/common/hook/v2/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
 import { TypeCanal } from "../requete/v2/enum/TypeCanal";
 import { IRequerant } from "../requete/v2/IRequerant";
-import { ITitulaireRequeteTableau } from "../requete/v2/IRequeteTableau";
+import { ITitulaireRequeteTableau } from "../requete/v2/ITitulaireRequeteTableau";
 import {
   CommunComposition,
   ICommunComposition

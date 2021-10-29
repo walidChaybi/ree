@@ -2,15 +2,13 @@ import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { IPrenomOrdonnes } from "../../../../model/requete/v2/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
-import {
-  IRequeteTableau,
-  ITitulaireRequeteTableau
-} from "../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { ITitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
+import { ITitulaireRequeteTableau } from "../../../../model/requete/v2/ITitulaireRequeteTableau";
 
 export function mappingRequeteDelivranceToRequeteTableau(
   requete: IRequeteDelivrance
-): IRequeteTableau {
+): IRequeteTableauDelivrance {
   return {
     idRequete: requete.id,
     numero: requete.numero,

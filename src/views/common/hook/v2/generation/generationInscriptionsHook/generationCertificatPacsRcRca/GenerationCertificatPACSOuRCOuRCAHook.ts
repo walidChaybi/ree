@@ -5,7 +5,7 @@ import { TypePacsRcRca } from "../../../../../../../model/etatcivil/enum/TypePac
 import { IFichePacs } from "../../../../../../../model/etatcivil/pacs/IFichePacs";
 import { IFicheRcRca } from "../../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { IDocumentReponse } from "../../../../../../../model/requete/v2/IDocumentReponse";
-import { IRequeteTableau } from "../../../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { MimeType } from "../../../../../../../ressources/MimeType";
 import { useCertificatPacsRcRcaApiHook } from "../../../composition/CompositionCertificatPacsRcRca";
@@ -25,28 +25,23 @@ import {
 
 export function useGenerationCertificatPACSOuRCOuRCAHook(
   typeCertificat: TypePacsRcRca,
-  requete?: IRequeteTableau,
+  requete?: IRequeteTableauDelivrance,
   listePacsRcRca?: IResultatRMCInscription[]
 ): IResultGenerationPlusieursDocument | undefined {
-  const [certificatComposition, setCertificatComposition] = useState<
-    TypeCertificatComposition
-  >();
-  const [listePacsRcRcaATraiter, setListePacsRcRcaATraiter] = useState<
-    IResultatRMCInscription[]
-  >();
-  const [
-    documentsReponsePourStockage,
-    setDocumentsReponsePourStockage
-  ] = useState<IDocumentReponse[]>(); // Ne contiendra qu'un seul IDocumentReponse (on stock les doc un par un)
+  const [certificatComposition, setCertificatComposition] =
+    useState<TypeCertificatComposition>();
+  const [listePacsRcRcaATraiter, setListePacsRcRcaATraiter] =
+    useState<IResultatRMCInscription[]>();
+  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
+    useState<IDocumentReponse[]>(); // Ne contiendra qu'un seul IDocumentReponse (on stock les doc un par un)
 
   const [uuidDocumentsGeneres, setUuidDocumentsGeneres] = useState<string[]>(
     []
   );
 
   // Résultat du hook
-  const [resultGenerationCertificat, setResultGenerationCertificat] = useState<
-    IResultGenerationPlusieursDocument
-  >();
+  const [resultGenerationCertificat, setResultGenerationCertificat] =
+    useState<IResultGenerationPlusieursDocument>();
 
   // 0- récupération du pacs, rc ou rca à traiter
   const { pacsRcRcaCourant } = useGestionPacsRcRcaCourant(

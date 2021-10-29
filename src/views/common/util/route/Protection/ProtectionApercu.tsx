@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
 import {
   PATH_APERCU_COURRIER,
   PATH_APERCU_REQ,
@@ -14,11 +15,13 @@ import { Protection } from "./Protection";
 
 interface ProtectionApercuProps {
   statut?: StatutRequete;
+  type?: TypeRequete;
 }
 
 export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
   children,
-  statut
+  statut,
+  type
 }) => {
   const history = useHistory();
   const [estBonStatut, setEstBonStatut] = useState<boolean>(true);
@@ -31,9 +34,9 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     ) {
       setEstBonStatut(true);
     } else {
-      setEstBonStatut(checkURLEnFonctionDuStatut(statut, history));
+      setEstBonStatut(checkURL(history, statut, type));
     }
-  }, [statut, history]);
+  }, [statut, type, history]);
 
   return (
     <Protection
@@ -46,10 +49,23 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     </Protection>
   );
 };
-export function checkURLEnFonctionDuStatut(
-  statut: StatutRequete | undefined,
-  history: any
+
+export function checkURL(
+  history: any,
+  statut?: StatutRequete,
+  type?: TypeRequete
 ) {
+  switch (type) {
+    case TypeRequete.DELIVRANCE:
+      return checkURLDelivrance(history, statut);
+    case TypeRequete.INFORMATION:
+      return checkURLInformation(history, statut);
+    default:
+      return true;
+  }
+}
+
+function checkURLDelivrance(history: any, statut?: StatutRequete) {
   switch (statut) {
     case StatutRequete.BROUILLON:
       return receUrl.getUrlCourante(history).includes(PATH_SAISIR_RDCSC);
@@ -68,6 +84,16 @@ export function checkURLEnFonctionDuStatut(
         receUrl.getUrlCourante(history).includes(PATH_APERCU_COURRIER)
       );
     default:
-      return true;
+      return false;
+  }
+}
+
+function checkURLInformation(history: any, statut?: StatutRequete) {
+  switch (statut) {
+    case StatutRequete.PRISE_EN_CHARGE:
+    case StatutRequete.TRANSFEREE:
+      return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ);
+    default:
+      return false;
   }
 }

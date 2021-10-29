@@ -248,7 +248,10 @@ export const SaisirRDCSCPage: React.FC = () => {
   };
 
   return (
-    <ProtectionApercu statut={detailRequeteState?.statutCourant.statut}>
+    <ProtectionApercu
+      statut={detailRequeteState?.statutCourant.statut}
+      type={detailRequeteState?.type}
+    >
       <OperationEnCours
         visible={operationEnCours}
         onTimeoutEnd={() => setOperationEnCours(false)}

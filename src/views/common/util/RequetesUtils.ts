@@ -11,12 +11,11 @@ import { SousTypeRequete } from "../../../model/requete/v2/enum/SousTypeRequete"
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../model/requete/v2/enum/TypeRequete";
 import { IActionOption } from "../../../model/requete/v2/IActionOption";
-import { TRequete } from "../../../model/requete/v2/IRequete";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "../../../model/requete/v2/IRequeteDelivrance";
-import { IRequeteTableau } from "../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../model/requete/v2/IRequeteTableauDelivrance";
 import { getText } from "../../common/widget/Text";
 import { FormatDate } from "./DateUtils";
 
@@ -90,7 +89,9 @@ export const autorisePrendreEnChargeDelivrance = (
   );
 };
 
-export const autorisePrendreEnChargeTableau = (requete: IRequeteTableau) =>
+export const autorisePrendreEnChargeTableau = (
+  requete: IRequeteTableauDelivrance
+) =>
   typeEstDelivrance(requete.type ? requete.type : "") &&
   statutEstATraiterOuTransferee(requete.statut ? requete.statut : "") &&
   mAppartient(requete.idUtilisateur ? requete.idUtilisateur : "") &&
@@ -112,10 +113,12 @@ export const filtrerListeActions = (
   });
 };
 
-export function getIdDocumentReponseAAfficher(requete?: TRequete): string {
+export function getIdDocumentReponseAAfficher(
+  requete?: IRequeteDelivrance
+): string {
   let idDocumentAAfficher = "";
   if (requete?.type === TypeRequete.DELIVRANCE) {
-    const requeteDelivrance = requete as IRequeteDelivrance;
+    const requeteDelivrance = requete;
 
     const documentsDeDelivrance =
       RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);

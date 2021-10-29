@@ -1,5 +1,5 @@
 import React from "react";
-import { IRequeteTableau } from "../../../../../model/requete/v2/IRequeteTableau";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
@@ -9,7 +9,7 @@ import "../scss/RMCRequetesAssocieesResultats.scss";
 import { RMCTableauRequetesAssociees } from "./RMCTableauRequetesAssociees";
 
 export interface RMCRequetesAssocieesResultatsProps {
-  dataRMCRequete: IRequeteTableau[];
+  dataRMCRequete: IRequeteTableauDelivrance[];
   dataTableauRMCRequete: IParamsTableau;
   setRangeRequete: (range: string) => void;
   setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,28 +20,29 @@ export interface RMCRequetesAssocieesResultatsProps {
   resetRMC: boolean;
 }
 
-export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResultatsProps> = ({
-  dataRMCRequete,
-  dataTableauRMCRequete,
-  setRangeRequete,
-  setNouvelleRMCRequete,
-  setValuesRMCRequete,
-  setCriteresRechercheRequete,
-  resetRMC
-}) => {
-  return (
-    <Fieldset titre={getLibelle("Requêtes associées aux titulaires")}>
-      <div className="RMCRequetesAssocieesResultats">
-        <RMCTableauRequetesAssociees
-          dataRMCRequete={dataRMCRequete}
-          dataTableauRMCRequete={dataTableauRMCRequete}
-          setRangeRequete={setRangeRequete}
-          setNouvelleRMCRequete={setNouvelleRMCRequete}
-          setValuesRMCRequete={setValuesRMCRequete}
-          setCriteresRechercheRequete={setCriteresRechercheRequete}
-          resetTableauRequete={resetRMC}
-        />
-      </div>
-    </Fieldset>
-  );
-};
+export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResultatsProps> =
+  ({
+    dataRMCRequete,
+    dataTableauRMCRequete,
+    setRangeRequete,
+    setNouvelleRMCRequete,
+    setValuesRMCRequete,
+    setCriteresRechercheRequete,
+    resetRMC
+  }) => {
+    return (
+      <Fieldset titre={getLibelle("Requêtes associées aux titulaires")}>
+        <div className="RMCRequetesAssocieesResultats">
+          <RMCTableauRequetesAssociees
+            dataRMCRequete={dataRMCRequete}
+            dataTableauRMCRequete={dataTableauRMCRequete}
+            setRangeRequete={setRangeRequete}
+            setNouvelleRMCRequete={setNouvelleRMCRequete}
+            setValuesRMCRequete={setValuesRMCRequete}
+            setCriteresRechercheRequete={setCriteresRechercheRequete}
+            resetTableauRequete={resetRMC}
+          />
+        </div>
+      </Fieldset>
+    );
+  };

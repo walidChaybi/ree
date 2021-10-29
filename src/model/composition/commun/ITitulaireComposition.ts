@@ -6,7 +6,7 @@ import {
   getValeurOuVide,
   jointAvecEspace
 } from "../../../views/common/util/Utils";
-import { ITitulaireRequeteTableau } from "../../requete/v2/IRequeteTableau";
+import { ITitulaireRequeteTableau } from "../../requete/v2/ITitulaireRequeteTableau";
 
 export interface ITitulaireComposition {
   prenoms: string;

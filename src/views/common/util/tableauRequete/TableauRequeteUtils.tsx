@@ -4,7 +4,7 @@ import LabelIcon from "@material-ui/icons/Label";
 import ReportIcon from "@material-ui/icons/Report";
 import React from "react";
 import { Priorite } from "../../../../model/requete/v2/enum/Priorite";
-import { ITitulaireRequeteTableau } from "../../../../model/requete/v2/IRequeteTableau";
+import { ITitulaireRequeteTableau } from "../../../../model/requete/v2/ITitulaireRequeteTableau";
 import { getLibelle } from "../../widget/Text";
 import { getDateStringFromDateCompose } from "../DateUtils";
 import { numberToString } from "../Utils";

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { IUuidRequeteParams } from "../../../../model/requete/v2/IUuidRequeteParams";
 import { useGetDocumentReponseApi } from "../../../common/hook/v2/DocumentReponseHook";
 import { getIdDocumentReponseAAfficher } from "../../../common/util/RequetesUtils";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
@@ -16,21 +17,24 @@ import {
 import { SuiviActionsRequete } from "../contenu/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../contenu/SuiviObservationRequete";
 import { ResumeRequeteV2 } from "../resume/ResumeRequeteV2";
-interface IdRequeteParams {
-  idRequete: string;
-}
 
 export const ApercuRequetePageV2: React.FC = () => {
-  const { idRequete } = useParams<IdRequeteParams>();
+  const { idRequete } = useParams<IUuidRequeteParams>();
   const [documentAffiche, setDocumentAffiche] = useState<InfoDocumentAffiche>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
   const contenuDocument = useGetDocumentReponseApi(documentAffiche?.id);
 
+  const [requete, setRequete] = useState<IRequeteDelivrance>();
+
   useEffect(() => {
     if (detailRequeteState) {
+      setRequete(detailRequeteState as IRequeteDelivrance);
+
       setDocumentAffiche({
-        id: getIdDocumentReponseAAfficher(detailRequeteState)
+        id: getIdDocumentReponseAAfficher(
+          detailRequeteState as IRequeteDelivrance
+        )
       });
     }
   }, [detailRequeteState]);
@@ -38,22 +42,23 @@ export const ApercuRequetePageV2: React.FC = () => {
   return (
     <div className="ApercuRequete">
       <title>{getLibelle("Aperçu de la requête")}</title>
-      {detailRequeteState && (
-        <ProtectionApercu statut={detailRequeteState?.statutCourant.statut}>
-          <BandeauRequete detailRequete={detailRequeteState} />
+      {requete && (
+        <ProtectionApercu
+          statut={requete.statutCourant.statut}
+          type={requete.type}
+        >
+          <BandeauRequete detailRequete={requete} />
           <div className="contenu-requete">
             <div className="side left">
-              <ResumeRequeteV2 requete={detailRequeteState}></ResumeRequeteV2>
+              <ResumeRequeteV2 requete={requete}></ResumeRequeteV2>
               <SuiviActionsRequete
-                actions={detailRequeteState.actions}
+                actions={requete.actions}
               ></SuiviActionsRequete>
               <SuiviObservationsRequete
-                observations={detailRequeteState?.observations}
+                observations={requete?.observations}
               ></SuiviObservationsRequete>
               <DocumentsReponses
-                documents={
-                  (detailRequeteState as IRequeteDelivrance).documentsReponses
-                }
+                documents={requete.documentsReponses}
                 setDocumentAffiche={setDocumentAffiche}
               />
             </div>
@@ -63,9 +68,7 @@ export const ApercuRequetePageV2: React.FC = () => {
                 contenu={contenuDocument ? contenuDocument.contenu : ""}
                 typeMime={contenuDocument?.mimeType}
               />
-              <BoutonPrendreEnCharge
-                requete={detailRequeteState}
-              ></BoutonPrendreEnCharge>
+              <BoutonPrendreEnCharge requete={requete}></BoutonPrendreEnCharge>
             </div>
           </div>
         </ProtectionApercu>
