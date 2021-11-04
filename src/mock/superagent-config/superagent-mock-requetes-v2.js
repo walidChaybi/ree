@@ -146,12 +146,15 @@ export const configRequetesV2 = [
       }
 
       // RMC Requete
-      if (match[1] === "/requetes/rmc?range=0-105") {
+      if (
+        match[1] === "/requetes/rmc?range=0-100" ||
+        match[1] === "/requetes/rmc?range=0-105"
+      ) {
         // RMC Manuelle suite RMC Auto (vue ApercuRequetePriseEnChargePartieGauche)
         if (params?.nomTitulaire === NORESULT) {
           return {
             headers: {
-              "content-range": "0-105/0",
+              "content-range": "0-100/0",
               link: ""
             },
             data: { resultatsRecherche: [] }
@@ -163,7 +166,7 @@ export const configRequetesV2 = [
             headers: {
               "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
               link:
-                '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-105>;rel="next"'
+                '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCRequete.data
           };

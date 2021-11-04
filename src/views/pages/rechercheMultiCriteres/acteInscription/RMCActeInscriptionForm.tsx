@@ -4,7 +4,6 @@ import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/reche
 import { MIN_YEAR } from "../../../common/util/DateUtils";
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableUtils";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
@@ -57,6 +56,8 @@ interface RMCActeInscriptionFormProps {
     React.SetStateAction<ICriteresRecherche | undefined>
   >;
   closePopIn?: () => void;
+  nbLignesParAppelActe: number;
+  nbLignesParAppelInscription: number;
 }
 
 export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
@@ -64,7 +65,9 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
   setNouvelleRMCActeInscription,
   setCriteresRechercheActe,
   setCriteresRechercheInscription,
-  closePopIn
+  closePopIn,
+  nbLignesParAppelActe,
+  nbLignesParAppelInscription
 }) => {
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(),
@@ -77,11 +80,11 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
     setValuesRMCActeInscription(values);
     setCriteresRechercheActe({
       valeurs: values,
-      range: `0-${NB_LIGNES_PAR_APPEL}`
+      range: `0-${nbLignesParAppelActe}`
     });
     setCriteresRechercheInscription({
       valeurs: values,
-      range: `0-${NB_LIGNES_PAR_APPEL}`
+      range: `0-${nbLignesParAppelInscription}`
     });
     stockageDonnees.stockerCriteresRMCActeInspt(values);
     setNouvelleRMCActeInscription(false);

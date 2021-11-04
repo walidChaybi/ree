@@ -12,6 +12,10 @@ import {
   DataTableauActe
 } from "../../../../../mock/data/RMCActe";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_PAGE_ACTE
+} from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
 import { RMCTableauActes } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
@@ -30,6 +34,8 @@ test("renders Resultat Acte Recherche Multi Critères => Avec résultat", () => 
       typeRMC="Classique"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
     />
   );
 
@@ -43,6 +49,8 @@ test("Ouverture d'un acte", async () => {
       typeRMC="Classique"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
     />
   );
 
@@ -83,6 +91,8 @@ test("Ouverture d'un acte et navigation via bouton Suivant", async () => {
       typeRMC="Classique"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
     />
   );
 
@@ -113,6 +123,8 @@ test("Ouverture d'un acte et navigation via bouton Précédent", async () => {
       typeRMC="Classique"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
     />
   );
 
@@ -153,6 +165,8 @@ test("renders Resultat Acte Recherche Multi Critères => Sans résultat", () => 
       typeRMC="Classique"
       dataRMCActe={[]}
       dataTableauRMCActe={{}}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
     />
   );
 
@@ -165,6 +179,8 @@ test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat", a
       typeRMC="Auto"
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
     />
   );
 

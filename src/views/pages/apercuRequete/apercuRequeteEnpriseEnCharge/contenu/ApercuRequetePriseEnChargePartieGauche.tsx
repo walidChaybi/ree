@@ -4,7 +4,7 @@ import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequ
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { NB_LIGNES_PAR_APPEL } from "../../../../common/widget/tableau/TableUtils";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { useRMCAutoRequeteApiHook } from "../../../rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequeteApiHook";
 import { RMCRequetesAssocieesResultats } from "../../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { useRMCRequeteApiHook } from "../../../rechercheMultiCriteres/requete/hook/RMCRequeteApiHook";
@@ -32,16 +32,18 @@ export const ApercuRequetePriseEnChargePartieGauche: React.FC<ApercuRequetePrise
   const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
 
-  const [
-    criteresRechercheRequete,
-    setCriteresRechercheRequete
-  ] = useState<ICriteresRMCRequete>();
+  const [criteresRechercheRequete, setCriteresRechercheRequete] = useState<
+    ICriteresRMCRequete
+  >();
 
   /* Hook d'appel de l'API RMC Auto requêtes */
   const {
     dataRMCAutoRequete,
     dataTableauRMCAutoRequete
-  } = useRMCAutoRequeteApiHook(props.detailRequete, `0-${NB_LIGNES_PAR_APPEL}`);
+  } = useRMCAutoRequeteApiHook(
+    props.detailRequete,
+    `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+  );
 
   /* Hook d'appel de l'API RMC manuelle requêtes */
   const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(

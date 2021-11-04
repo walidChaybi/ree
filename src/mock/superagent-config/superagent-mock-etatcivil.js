@@ -111,7 +111,7 @@ export const configEtatcivil = [
       }
 
       // RMC Acte
-      if (match[1] === "/acte/rmc?range=0-105") {
+      if (match[1] === "/acte/rmc?range=0-100") {
         // RMC Acte Manuelle suite RMC Auto (vue ApercuRequetePriseEnChargePartieDroite)
         if (params?.nomTitulaire === NORESULT) {
           return {
@@ -129,7 +129,7 @@ export const configEtatcivil = [
               "content-range":
                 "0-15/" + ReponseAppelRMCActe.data.registres.length,
               link:
-                '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-105>;rel="next"'
+                '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCActe.data
           };
@@ -266,13 +266,13 @@ export const configEtatcivil = [
         };
       }
 
-      if (match[1] === "/acte/rmcauto?range=0-105") {
+      if (match[1] === "/acte/rmcauto?range=0-100") {
         return {
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCActe.data.registres.length,
             link:
-              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-105>;rel="next"'
+              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-100>;rel="next"'
           },
           data: ReponseAppelRMCActe.data
         };

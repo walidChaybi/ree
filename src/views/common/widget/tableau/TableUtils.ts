@@ -1,10 +1,6 @@
 import moment from "moment";
 import { FormatDate } from "../../util/DateUtils";
 
-export const NB_LIGNES_PAR_APPEL = 105;
-
-export const NB_LIGNES_PAR_PAGE = 15;
-
 export type SortOrder = "ASC" | "DESC";
 
 export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -94,13 +90,14 @@ export function getPaginatedData<T>(
 export function laProchainePageEstEnDehors(
   newPage: number,
   pageState: number,
-  rowsPerPageState: number,
+  nbLignesParPage: number,
+  nbLignesParAppel: number,
   multiplicateur: number
 ) {
   return (
     newPage > pageState &&
-    newPage * rowsPerPageState >= NB_LIGNES_PAR_APPEL * multiplicateur &&
-    !(pageState * rowsPerPageState > NB_LIGNES_PAR_APPEL * multiplicateur)
+    newPage * nbLignesParPage >= nbLignesParAppel * multiplicateur &&
+    !(pageState * nbLignesParPage > nbLignesParAppel * multiplicateur)
   );
 }
 
@@ -111,14 +108,15 @@ export function laProchainePageEstEnDehors(
 export function laPageDAvantEstEnDehors(
   pageState: number,
   newPage: number,
-  rowsPerPageState: number,
+  nbLignesParPage: number,
+  nbLignesParAppel: number,
   multiplicateur: number
 ) {
   return (
     pageState > 0 &&
     newPage < pageState &&
     // La numérotation des pages commence à zéro donc c'est newPage+1 qu'il faut tester (= pageState car newPage < pageState)
-    pageState * rowsPerPageState <= NB_LIGNES_PAR_APPEL * (multiplicateur - 1)
+    pageState * nbLignesParPage <= nbLignesParAppel * (multiplicateur - 1)
   );
 }
 

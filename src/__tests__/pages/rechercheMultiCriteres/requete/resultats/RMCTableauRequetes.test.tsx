@@ -30,6 +30,8 @@ test("renders Resultat Requetes Recherche Multi Critères => Avec résultat", ()
       <RMCTableauRequetes
         dataRMCRequete={DataRMCRequeteAvecResultat}
         dataTableauRMCRequete={DataTableauRequete}
+        setRangeRequete={jest.fn()}
+        resetTableauRequete={true}
       />
     </Router>
   );
@@ -97,7 +99,12 @@ test("Clic sur une Requête du tableau avec un idUtilisateur", async () => {
 test("renders Resultat Requetes Recherche Multi Critères => Sans résultat", () => {
   const { getByText } = render(
     <Router history={history}>
-      <RMCTableauRequetes dataRMCRequete={[]} dataTableauRMCRequete={{}} />
+      <RMCTableauRequetes
+        dataRMCRequete={[]}
+        dataTableauRMCRequete={{}}
+        setRangeRequete={jest.fn()}
+        resetTableauRequete={true}
+      />
     </Router>
   );
 
@@ -115,6 +122,8 @@ test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () =
       <RMCTableauRequetes
         dataRMCRequete={DataRMCRequeteAvecResultat}
         dataTableauRMCRequete={DataTableauRequete}
+        setRangeRequete={jest.fn()}
+        resetTableauRequete={true}
       />
     </Router>
   );
@@ -146,6 +155,8 @@ test("Clic sur une Requête avec des titulaire", async () => {
       <RMCTableauRequetes
         dataRMCRequete={DataRMCRequeteAvecResultat}
         dataTableauRMCRequete={DataTableauRequete}
+        setRangeRequete={jest.fn()}
+        resetTableauRequete={true}
       />
     </Router>
   );
@@ -178,6 +189,7 @@ test("Changement de page", async () => {
         dataRMCRequete={DataRMCRequeteAvecResultat}
         dataTableauRMCRequete={DataTableauRequete}
         setRangeRequete={jest.fn()}
+        resetTableauRequete={true}
       />
     </Router>
   );

@@ -19,8 +19,6 @@ const columnsTableauRmc = [
   })
 ];
 
-export const NB_ACTE_PAR_PAGE = 10;
-
 export function determinerColonnes(
   typeRMC: TypeRMC,
   hasWarning: (isChecked: boolean, data: IResultatRMCActe) => boolean,

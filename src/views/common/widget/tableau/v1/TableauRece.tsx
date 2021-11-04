@@ -10,8 +10,7 @@ import { TableauBody } from "./TableauBody";
 import { TableauHeader } from "./TableauHeader";
 
 export const NB_LIGNES_PAR_APPEL = 105;
-
-export const NB_LIGNES_PAR_PAGE = 15;
+const NB_LIGNES_PAR_PAGE = 15;
 
 export interface TableauHeaderProps {
   idKey: string;

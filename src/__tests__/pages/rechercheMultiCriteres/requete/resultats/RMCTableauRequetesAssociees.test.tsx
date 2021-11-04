@@ -17,6 +17,11 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Avec ré
       <RMCTableauRequetesAssociees
         dataRMCRequete={DataRMCRequeteAvecResultat}
         dataTableauRMCRequete={DataTableauRequete}
+        setRangeRequete={jest.fn()}
+        setNouvelleRMCRequete={jest.fn()}
+        setValuesRMCRequete={jest.fn()}
+        setCriteresRechercheRequete={jest.fn()}
+        resetTableauRequete={true}
       />
     </Router>
   );

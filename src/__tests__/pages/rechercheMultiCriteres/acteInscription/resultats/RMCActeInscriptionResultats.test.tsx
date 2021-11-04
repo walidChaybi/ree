@@ -8,6 +8,12 @@ import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "../../../../../mock/data/RMCInscription";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_APPEL_INSCRIPTION,
+  NB_LIGNES_PAR_PAGE_ACTE,
+  NB_LIGNES_PAR_PAGE_INSCRIPTION
+} from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
 import { RMCActeInscriptionResultats } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
@@ -18,6 +24,10 @@ test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
       dataTableauRMCActe={DataTableauActe}
       dataRMCInscription={[]}
       dataTableauRMCInscription={{}}
+      nbLignesParPageActe={NB_LIGNES_PAR_PAGE_ACTE}
+      nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
+      nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+      nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
     />
   );
 
@@ -42,6 +52,10 @@ test("renders Fielset Recherche Multi Critères => Seulement des inscriptions", 
       dataTableauRMCActe={{}}
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
+      nbLignesParPageActe={NB_LIGNES_PAR_PAGE_ACTE}
+      nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
+      nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+      nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
     />
   );
 

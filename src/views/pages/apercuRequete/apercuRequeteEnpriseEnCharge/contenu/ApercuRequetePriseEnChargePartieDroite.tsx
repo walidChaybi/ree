@@ -21,7 +21,10 @@ import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { aplatirTableau } from "../../../../common/util/Utils";
 import { IAjouterAlerteFormValue } from "../../../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
-import { NB_LIGNES_PAR_APPEL } from "../../../../common/widget/tableau/TableUtils";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_APPEL_DEFAUT
+} from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { getLibelle } from "../../../../common/widget/Text";
 import { useRMCActeApiHook } from "../../../rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
 import {
@@ -68,20 +71,17 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   >(dataHistory?.dataTableauRMCAutoInscription);
 
   /* Etats RMC manuelle */
-  const [
-    nouvelleRMCActeInscription,
-    setNouvelleRMCActeInscription
-  ] = useState<boolean>(false);
+  const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<
+    boolean
+  >(false);
 
-  const [
-    valuesRMCActeInscription,
-    setValuesRMCActeInscription
-  ] = useState<IRMCActeInscription>({});
+  const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<
+    IRMCActeInscription
+  >({});
 
-  const [
-    criteresRechercheActe,
-    setCriteresRechercheActe
-  ] = useState<ICriteresRecherche>();
+  const [criteresRechercheActe, setCriteresRechercheActe] = useState<
+    ICriteresRecherche
+  >();
 
   const [
     criteresRechercheInscription,
@@ -158,11 +158,12 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   );
 
   const [paramsRMCAuto, setParamsRMCAuto] = useState<RMCAutoParams>();
+
   useEffect(() => {
     if (!dataHistory) {
       setParamsRMCAuto({
         requete: detailRequete,
-        range: `0-${NB_LIGNES_PAR_APPEL}`
+        range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
       });
     }
   }, [detailRequete, dataHistory]);
@@ -170,7 +171,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   /* Hooks RMC Auto */
   const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook(
     paramsRMCAuto?.requete,
-    paramsRMCAuto?.range
+    `0-${NB_LIGNES_PAR_APPEL_ACTE}`
   );
   const {
     dataRMCAutoInscription,

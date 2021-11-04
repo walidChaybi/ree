@@ -2,7 +2,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { NB_LIGNES_PAR_APPEL } from "../../../../../views/common/widget/tableau/v1/TableauRece";
+import { NB_LIGNES_PAR_APPEL_ACTE } from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
 import {
   ICriteresRecherche,
   useRMCActeArchiveApiHook
@@ -24,7 +24,7 @@ const criteres: ICriteresRecherche = {
       annee: ""
     }
   },
-  range: `0-${NB_LIGNES_PAR_APPEL}`
+  range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
 };
 
 const HookConsummerRMCActe: React.FC = () => {

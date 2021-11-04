@@ -3,7 +3,10 @@ import * as Yup from "yup";
 import { IRMCActeArchive } from "../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/TableUtils";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_PAGE_ACTE
+} from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
@@ -59,10 +62,9 @@ export const RMCArchivePage: React.FC = () => {
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [
-    criteresRechercheActe,
-    setCriteresRechercheActe
-  ] = useState<ICriteresRecherche>();
+  const [criteresRechercheActe, setCriteresRechercheActe] = useState<
+    ICriteresRecherche
+  >();
 
   const { dataRMCActe, dataTableauRMCActe } = useRMCActeArchiveApiHook(
     criteresRechercheActe
@@ -73,7 +75,7 @@ export const RMCArchivePage: React.FC = () => {
     setValuesRMC(values);
     setCriteresRechercheActe({
       valeurs: values,
-      range: `0-${NB_LIGNES_PAR_APPEL}`
+      range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
     });
     stockageDonnees.stockerCriteresRMCActeArchive(values);
     setNouvelleRecherche(false);
@@ -114,6 +116,8 @@ export const RMCArchivePage: React.FC = () => {
           dataTableauRMCActeArchive={dataTableauRMCActe}
           setRangeActeArchive={setRangeActeArchive}
           resetRMC={nouvelleRecherche}
+          nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
+          nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
         />
       )}
     </>

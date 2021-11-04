@@ -20,10 +20,7 @@ import { getLibelle } from "../../../../common/widget/Text";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { getMessageZeroInscription } from "../hook/RMCActeInscriptionUtils";
 import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
-import {
-  determinerColonnes,
-  NB_INSCRIPTION_PAR_PAGE
-} from "./RMCTableauInscriptionsParams";
+import { determinerColonnes } from "./RMCTableauInscriptionsParams";
 
 export interface RMCResultatInscriptionProps {
   typeRMC: TypeRMC;
@@ -37,6 +34,8 @@ export interface RMCResultatInscriptionProps {
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => void;
+  nbLignesParPage: number;
+  nbLignesParAppel: number;
 }
 
 export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
@@ -46,7 +45,9 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   dataTableauRMCInscription,
   setRangeInscription,
   resetTableauInscription,
-  onClickCheckboxCallBack
+  onClickCheckboxCallBack,
+  nbLignesParPage,
+  nbLignesParAppel
 }) => {
   // Gestion du tableau
   const [zeroInscription, setZeroInscription] = useState<JSX.Element>();
@@ -161,9 +162,10 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
         dataState={dataRMCInscription}
         paramsTableau={dataTableauRMCInscription}
         goToLink={goToLink}
-        nbLignesParPage={NB_INSCRIPTION_PAR_PAGE}
         resetTableau={resetTableauInscription}
         noRows={zeroInscription}
+        nbLignesParPage={nbLignesParPage}
+        nbLignesParAppel={nbLignesParAppel}
       />
 
       {typeRMC === "Auto" && (

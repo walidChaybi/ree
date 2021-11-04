@@ -9,6 +9,10 @@ import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { autorisePrendreEnChargeTableau } from "../../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
+import {
+  NB_LIGNES_PAR_APPEL_DEFAUT,
+  NB_LIGNES_PAR_PAGE_REQUETE
+} from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
 import { URL_RECHERCHE_REQUETE } from "../../../../router/ReceUrls";
 import {
@@ -25,8 +29,6 @@ export interface RMCResultatRequetesProps {
   resetTableauRequete: boolean;
 }
 
-const NB_REQUETE_PAR_PAGE = 10;
-
 export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   dataRMCRequete,
   dataTableauRMCRequete,
@@ -37,11 +39,13 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsMiseAJour, setParamsMiseAJour] =
-    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<
+    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] =
-    useState<INavigationApercuRMCAutoParams | undefined>();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+    INavigationApercuRMCAutoParams | undefined
+  >();
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuRMCAuto(paramsRMCAuto);
@@ -103,9 +107,10 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         dataState={dataRMCRequete}
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
-        nbLignesParPage={NB_REQUETE_PAR_PAGE}
         resetTableau={resetTableauRequete}
         noRows={zeroRequete}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
       />
     </>
   );

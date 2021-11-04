@@ -2,6 +2,10 @@ import React from "react";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_PAGE_ACTE
+} from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { getLibelle } from "../../../../common/widget/Text";
 import { RMCTableauActes } from "../../acteInscription/resultats/RMCTableauActes";
 import "../scss/RMCActeArchiveResultats.scss";
@@ -11,6 +15,8 @@ export interface RMCActeArchiveResultatsProps {
   dataTableauRMCActeArchive: IParamsTableau;
   setRangeActeArchive?: (range: string) => void;
   resetRMC?: boolean;
+  nbLignesParAppel: number;
+  nbLignesParPage: number;
 }
 
 export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = props => {
@@ -29,6 +35,8 @@ export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = p
               dataTableauRMCActe={props.dataTableauRMCActeArchive}
               setRangeActe={props.setRangeActeArchive}
               resetTableauActe={props.resetRMC}
+              nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
+              nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
             />
           ) : (
             <div className="AucunResultat">

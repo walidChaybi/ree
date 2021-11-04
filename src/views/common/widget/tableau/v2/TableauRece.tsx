@@ -11,8 +11,6 @@ import {
   getSortOrder,
   laPageDAvantEstEnDehors,
   laProchainePageEstEnDehors,
-  NB_LIGNES_PAR_APPEL,
-  NB_LIGNES_PAR_PAGE,
   SortOrder
 } from "../TableUtils";
 import { TableauBody } from "./TableauBody";
@@ -31,7 +29,8 @@ export interface TableauReceProps {
   onClickOnLine: (id: string, data: any[], idxGlobal: number) => void;
   goToLink: (value: string) => void;
   handleReload?: () => void;
-  nbLignesParPage?: number;
+  nbLignesParPage: number;
+  nbLignesParAppel: number;
   resetTableau?: boolean;
   noRows?: JSX.Element;
   enChargement?: boolean;
@@ -39,11 +38,32 @@ export interface TableauReceProps {
 
 export const TableauRece: React.FC<TableauReceProps> = props => {
   const paramsTableau = props.paramsTableau;
-  const [rowsPerPageState] = React.useState(
-    props.nbLignesParPage ? props.nbLignesParPage : NB_LIGNES_PAR_PAGE
-  );
   const [pageState, setPageState] = React.useState(0);
   const [multiplicateur, setMultiplicateur] = React.useState(1);
+
+  const processData = useCallback(
+    (data: any[], page: number) => {
+      const nbPages = props.nbLignesParAppel / props.nbLignesParPage;
+      return getPaginatedData(data, page, props.nbLignesParPage, nbPages);
+    },
+    [props.nbLignesParPage, props.nbLignesParAppel]
+  );
+
+  // Contenu réellement affiché par ex: 15 lignes (contrairement à props.dataState qui contient toutes les données récupérées du serveur par ex 105 lignes)
+  const [dataBody, setdataBody] = React.useState<any[]>(
+    processData(props.dataState, pageState)
+  );
+
+  useEffect(() => {
+    let page = pageState;
+    if (props.resetTableau) {
+      page = 0;
+      setMultiplicateur(1);
+    }
+    setPageState(page);
+    setdataBody(processData(props.dataState, page));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.dataState, pageState, props.resetTableau]);
 
   const handleColumnSort = (
     event: React.MouseEvent<unknown>,
@@ -68,7 +88,8 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
       laProchainePageEstEnDehors(
         newPage,
         pageState,
-        rowsPerPageState,
+        props.nbLignesParPage,
+        props.nbLignesParAppel,
         multiplicateur
       ) &&
       paramsTableau.nextDataLinkState
@@ -79,7 +100,8 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
       laPageDAvantEstEnDehors(
         pageState,
         newPage,
-        rowsPerPageState,
+        props.nbLignesParPage,
+        props.nbLignesParAppel,
         multiplicateur
       ) &&
       paramsTableau.previousDataLinkState
@@ -102,12 +124,12 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
         if (
           newPageState > 0 &&
           paramsTableau.nextDataLinkState === undefined &&
-          newPageState - 1 * rowsPerPageState >= props.dataState.length
+          newPageState - 1 * props.nbLignesParPage >= props.dataState.length
         ) {
           newPageState--;
         } else if (
-          newPageState * rowsPerPageState >=
-            props.dataState.length - rowsPerPageState &&
+          newPageState * props.nbLignesParPage >=
+            props.dataState.length - props.nbLignesParPage &&
           paramsTableau.nextDataLinkState !== undefined
         ) {
           newPageState--;
@@ -115,30 +137,11 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
         setPageState(newPageState);
       }
     },
-    [pageState, props, rowsPerPageState, paramsTableau]
+    [pageState, props, paramsTableau]
   );
 
-  const processData = useCallback(() => {
-    const nbLignesParPage = NB_LIGNES_PAR_APPEL;
-    return getPaginatedData(
-      props.dataState,
-      pageState,
-      rowsPerPageState,
-      nbLignesParPage / rowsPerPageState
-    );
-  }, [props.dataState, pageState, rowsPerPageState]);
-
-  const [dataBody, setdataBody] = React.useState<any[]>(processData());
-
-  useEffect(() => {
-    if (props.resetTableau) {
-      setPageState(0);
-    }
-    setdataBody(processData());
-  }, [props.dataState, processData, props.resetTableau]);
-
   function onClickOnLine(identifiant: string, idxOnePage: number) {
-    const idxDataState = pageState * rowsPerPageState + idxOnePage;
+    const idxDataState = pageState * props.nbLignesParPage + idxOnePage;
     props.onClickOnLine(identifiant, props.dataState, idxDataState);
   }
 
@@ -163,10 +166,10 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
         </Box>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[rowsPerPageState]}
+        rowsPerPageOptions={[props.nbLignesParPage]}
         component="div"
         count={paramsTableau.rowsNumberState || 0}
-        rowsPerPage={rowsPerPageState}
+        rowsPerPage={props.nbLignesParPage}
         labelRowsPerPage={getText("pagination.rowsPerPage", [
           getText("pagination.donneePaginee")
         ])}

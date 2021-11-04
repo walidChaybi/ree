@@ -5,6 +5,10 @@ import { Router } from "react-router-dom";
 import requetes from "../../../../mock/data/requetes.json";
 import { generateurRequetes } from "../../../../mock/script-generation-donnees/generateurRequetes";
 import { HeaderTableauRequete } from "../../../../model/requete/HeaderTableauRequete";
+import {
+  NB_LIGNES_PAR_APPEL_DEFAUT,
+  NB_LIGNES_PAR_PAGE_DEFAUT
+} from "../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
 import { TableauRece } from "../../../../views/common/widget/tableau/v2/TableauRece";
 import { TableauTypeColumn } from "../../../../views/common/widget/tableau/v2/TableauTypeColumn";
 import { URL_MES_REQUETES } from "../../../../views/router/ReceUrls";
@@ -53,6 +57,8 @@ test("TableauRece can be reload", () => {
         handleChangeSort={handleChangeSort}
         handleReload={handlerelaod}
         paramsTableau={paramsTableau}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -93,6 +99,8 @@ test("TableauRece can be reload with true", () => {
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
         handleReload={handlerelaod}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer2></HookConsummer2>
       </TableauRece>
@@ -135,6 +143,8 @@ test("TableauRece can be reload with true => go back", () => {
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
         handleReload={handlerelaod}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer2></HookConsummer2>
       </TableauRece>
@@ -182,6 +192,8 @@ test("TableauRece can change page", () => {
         paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -240,6 +252,8 @@ test("TableauRece can change page", () => {
         paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -282,6 +296,8 @@ test("TableauRece can't change page bakc and no error'", () => {
         paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -326,6 +342,8 @@ test("TableauRece can't change page next and no error'", () => {
         paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -370,6 +388,8 @@ test("TableauRece can sort", () => {
         paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>

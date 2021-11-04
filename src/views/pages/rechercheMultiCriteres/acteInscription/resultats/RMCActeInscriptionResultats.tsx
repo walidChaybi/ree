@@ -33,6 +33,10 @@ export interface RMCActeInscriptionResultatsProps {
     isChecked: boolean,
     data: IResultatRMCInscription
   ) => void;
+  nbLignesParPageActe: number;
+  nbLignesParAppelActe: number;
+  nbLignesParPageInscription: number;
+  nbLignesParAppelInscription: number;
 }
 
 export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = ({
@@ -48,7 +52,11 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
   setRangeInscription,
   resetRMC,
   onClickCheckboxTableauActes,
-  onClickCheckboxTableauInscriptions
+  onClickCheckboxTableauInscriptions,
+  nbLignesParPageActe,
+  nbLignesParAppelActe,
+  nbLignesParPageInscription,
+  nbLignesParAppelInscription
 }) => {
   return (
     <div className={`ResultatsRMC${typeRMC}`}>
@@ -67,6 +75,8 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
             setRangeActe={setRangeActe}
             resetTableauActe={resetRMC}
             onClickCheckboxCallBack={onClickCheckboxTableauActes}
+            nbLignesParPage={nbLignesParPageActe}
+            nbLignesParAppel={nbLignesParAppelActe}
           />
         </div>
         <div className="SubResultatsRMC">
@@ -85,6 +95,8 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
             setRangeInscription={setRangeInscription}
             resetTableauInscription={resetRMC}
             onClickCheckboxCallBack={onClickCheckboxTableauInscriptions}
+            nbLignesParPage={nbLignesParPageInscription}
+            nbLignesParAppel={nbLignesParAppelInscription}
           />
         </div>
       </Fieldset>

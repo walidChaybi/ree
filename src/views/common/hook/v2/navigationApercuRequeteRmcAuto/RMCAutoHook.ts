@@ -11,7 +11,10 @@ import {
 import { useRMCAutoInscriptionApiHook } from "../../../../pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoInscriptionApiHook";
 import { IUrlData } from "../../../../router/ReceUrls";
 import { IParamsTableau } from "../../../util/GestionDesLiensApi";
-import { NB_LIGNES_PAR_APPEL } from "../../../widget/tableau/TableUtils";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_APPEL_DEFAUT
+} from "../../../widget/tableau/v2/TableauPaginationConstantes";
 import { getLibelle } from "../../../widget/Text";
 import {
   IGenerationCertificatSituationParams,
@@ -39,23 +42,24 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
 
   const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook(
     params?.requete,
-    `0-${NB_LIGNES_PAR_APPEL}`
+    `0-${NB_LIGNES_PAR_APPEL_ACTE}`
   );
 
   const {
     dataRMCAutoInscription,
     dataTableauRMCAutoInscription
-  } = useRMCAutoInscriptionApiHook(params?.requete, `0-${NB_LIGNES_PAR_APPEL}`);
+  } = useRMCAutoInscriptionApiHook(
+    params?.requete,
+    `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+  );
 
-  const [
-    paramsCertificatSituation,
-    setParamsCertificatSituation
-  ] = useState<IGenerationCertificatSituationParams>();
+  const [paramsCertificatSituation, setParamsCertificatSituation] = useState<
+    IGenerationCertificatSituationParams
+  >();
 
-  const [
-    actionStatutRequete,
-    setActionStatutRequete
-  ] = useState<IActionStatutRequete>();
+  const [actionStatutRequete, setActionStatutRequete] = useState<
+    IActionStatutRequete
+  >();
 
   useEffect(() => {
     // si pasDeTraitementAuto=true alors pas de génération de certificat de situation automatiquement en fonction des résultats de la RMC auto

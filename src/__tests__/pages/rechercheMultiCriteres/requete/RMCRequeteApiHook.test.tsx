@@ -1,10 +1,10 @@
+import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, waitFor, act, screen } from "@testing-library/react";
 import request from "superagent";
-import { useRMCRequeteApiHook } from "../../../../views/pages/rechercheMultiCriteres/requete/hook/RMCRequeteApiHook";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { NB_LIGNES_PAR_APPEL } from "../../../../views/common/widget/tableau/v1/TableauRece";
 import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
+import { NB_LIGNES_PAR_APPEL } from "../../../../views/common/widget/tableau/v1/TableauRece";
+import { useRMCRequeteApiHook } from "../../../../views/pages/rechercheMultiCriteres/requete/hook/RMCRequeteApiHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 

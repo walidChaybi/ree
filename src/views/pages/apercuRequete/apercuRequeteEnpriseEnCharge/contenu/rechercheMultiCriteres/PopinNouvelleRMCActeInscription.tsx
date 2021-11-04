@@ -7,6 +7,10 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import React from "react";
 import { IRMCActeInscription } from "../../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_APPEL_DEFAUT
+} from "../../../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { ICriteresRecherche } from "../../../../rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
 import { RMCActeInscriptionForm } from "../../../../rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import "./scss/PopinNouvelleRMCActeInscription.scss";
@@ -61,6 +65,8 @@ export const PopinNouvelleRMCActeInscription: React.FC<PopinNouvelleRMCActeInscr
           setCriteresRechercheActe={setCriteresRechercheActe}
           setCriteresRechercheInscription={setCriteresRechercheInscription}
           closePopIn={handleClose}
+          nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
+          nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_DEFAUT}
         />
       </DialogContent>
     </Dialog>

@@ -5,7 +5,7 @@ import request from "superagent";
 import { IQueryParametersPourRequetesV2 } from "../../../../api/appels/requeteApi";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
-import { NB_LIGNES_PAR_APPEL } from "../../../../views/common/widget/tableau/TableUtils";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
 import { StatutsRequetesInformation } from "../../../../views/pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
 import { useRequeteInformationApi } from "../../../../views/pages/requeteInformation/espaceInformation/hook/DonneesRequeteInformationHook";
 
@@ -18,7 +18,7 @@ const queryParam: IQueryParametersPourRequetesV2 = {
   statuts: StatutsRequetesInformation,
   tri: "dateCreation",
   sens: "ASC",
-  range: `0-${NB_LIGNES_PAR_APPEL}`
+  range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
 };
 let container: Element | null;
 

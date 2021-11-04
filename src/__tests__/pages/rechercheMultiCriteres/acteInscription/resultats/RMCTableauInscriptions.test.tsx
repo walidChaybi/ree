@@ -14,6 +14,10 @@ import {
 } from "../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
+import {
+  NB_LIGNES_PAR_APPEL_INSCRIPTION,
+  NB_LIGNES_PAR_PAGE_INSCRIPTION
+} from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
 import { RMCTableauInscriptions } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
@@ -32,6 +36,8 @@ test("renders Resultat Inscription Recherche Multi Critères => Avec résultat",
       typeRMC="Classique"
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
     />
   );
 
@@ -45,6 +51,8 @@ test("Navigation dans les pages du tableau Resultat Inscription Recherche Multi 
       typeRMC="Classique"
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
     />
   );
 
@@ -65,6 +73,8 @@ test("Ouverture d'une inscription", async () => {
       typeRMC="Classique"
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
     />
   );
 
@@ -105,6 +115,8 @@ test("renders Resultat Inscription Recherche Multi Critères => Sans résultat",
       typeRMC="Classique"
       dataRMCInscription={[]}
       dataTableauRMCInscription={{}}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
     />
   );
 
@@ -117,6 +129,8 @@ test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résul
       typeRMC="Auto"
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
+      nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+      nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
     />
   );
 

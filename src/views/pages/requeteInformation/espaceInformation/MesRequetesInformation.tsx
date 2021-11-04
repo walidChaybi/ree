@@ -6,10 +6,11 @@ import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
+import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import {
-  NB_LIGNES_PAR_APPEL,
-  SortOrder
-} from "../../../common/widget/tableau/TableUtils";
+  NB_LIGNES_PAR_APPEL_DEFAUT,
+  NB_LIGNES_PAR_PAGE_DEFAUT
+} from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { TableauRece } from "../../../common/widget/tableau/v2/TableauRece";
 import { URL_MES_REQUETES_INFORMATION_APERCU_ID } from "../../../router/ReceUrls";
 import { goToLinkRequete } from "../../espaceDelivrance/v2/EspaceDelivranceUtilsV2";
@@ -25,14 +26,13 @@ export const MesRequetesInformationPage: React.FC = () => {
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [
-    linkParameters,
-    setLinkParameters
-  ] = React.useState<IQueryParametersPourRequetesV2>({
+  const [linkParameters, setLinkParameters] = React.useState<
+    IQueryParametersPourRequetesV2
+  >({
     statuts: StatutsRequetesInformation,
     tri: "dateCreation",
     sens: "ASC",
-    range: `0-${NB_LIGNES_PAR_APPEL}`
+    range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
   });
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteInformationApi(
@@ -52,7 +52,7 @@ export const MesRequetesInformationPage: React.FC = () => {
       statuts: StatutsRequetesInformation,
       tri,
       sens,
-      range: `0-${NB_LIGNES_PAR_APPEL}`
+      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
     };
 
     setLinkParameters(queryParameters);
@@ -97,6 +97,8 @@ export const MesRequetesInformationPage: React.FC = () => {
         handleChangeSort={handleChangeSort}
         noRows={zeroRequete}
         enChargement={enChargement}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
       ></TableauRece>
       <BoutonRetour />
     </>

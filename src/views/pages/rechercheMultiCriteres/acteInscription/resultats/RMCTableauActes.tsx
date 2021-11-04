@@ -12,7 +12,7 @@ import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauT
 import { getLibelle } from "../../../../common/widget/Text";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { getMessageZeroActe } from "../hook/RMCActeInscriptionUtils";
-import { determinerColonnes, NB_ACTE_PAR_PAGE } from "./RMCTableauActesParams";
+import { determinerColonnes } from "./RMCTableauActesParams";
 import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
 
 export interface RMCResultatActeProps {
@@ -29,6 +29,8 @@ export interface RMCResultatActeProps {
     isChecked: boolean,
     data: IResultatRMCActe
   ) => void;
+  nbLignesParPage: number;
+  nbLignesParAppel: number;
 }
 
 export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
@@ -40,7 +42,9 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   dataTableauRMCActe,
   setRangeActe,
   resetTableauActe,
-  onClickCheckboxCallBack
+  onClickCheckboxCallBack,
+  nbLignesParPage,
+  nbLignesParAppel
 }) => {
   // Gestion du tableau
   const [zeroActe, setZeroActe] = useState<JSX.Element>();
@@ -137,7 +141,8 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         dataState={dataRMCActe}
         paramsTableau={dataTableauRMCActe}
         goToLink={goToLink}
-        nbLignesParPage={NB_ACTE_PAR_PAGE}
+        nbLignesParPage={nbLignesParPage}
+        nbLignesParAppel={nbLignesParAppel}
         resetTableau={resetTableauActe}
         noRows={zeroActe}
       />

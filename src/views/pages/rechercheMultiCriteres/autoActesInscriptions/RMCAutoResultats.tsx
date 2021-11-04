@@ -4,6 +4,12 @@ import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "../../../common/util/GestionDesLiensApi";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_APPEL_INSCRIPTION,
+  NB_LIGNES_PAR_PAGE_ACTE,
+  NB_LIGNES_PAR_PAGE_INSCRIPTION
+} from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCActeInscriptionResultats";
 
 export interface RMCAutoResultatsProps {
@@ -65,6 +71,10 @@ export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = ({
             resetRMC={resetRMC}
             setRangeInscription={setRangeInscription}
             setRangeActe={setRangeActe}
+            nbLignesParPageActe={NB_LIGNES_PAR_PAGE_ACTE}
+            nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
+            nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
+            nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
           />
         )}
     </>
