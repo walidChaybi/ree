@@ -46,6 +46,7 @@ test("Attendu: specificationCourrier.getElementsJasper titulaire de la requete",
   expect(elementsJasper.optionsTexteLibre[3].option).toBe(
     "Option 999 (modifié)"
   );
+  expect(elementsJasper.natureActe).toBe("mariage");
 });
 
 test("Attendu: specificationCourrier.getElementsJasper titulaire de l'analyse marginale'", async () => {
@@ -61,4 +62,5 @@ test("Attendu: specificationCourrier.getElementsJasper titulaire de l'analyse ma
   expect(elementsJasper.nomTitulaire2).toBe("BAGOT");
   expect(elementsJasper.prenomsTitulaire2).toBe("Sébastien, Théo, Ulysse");
   expect(elementsJasper.texteLibre).toBe("Test Texte Libre courrier 17");
+  expect(elementsJasper.natureActe).toBe("mariage");
 });

@@ -17,6 +17,7 @@ import {
 import { SaisieCourrier } from "../../../../../pages/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import {
   formatPrenom,
+  getValeurOuVide,
   triListeObjetsSurPropriete
 } from "../../../../util/Utils";
 
@@ -34,6 +35,7 @@ export interface IElementsJasperCourrier {
   texteLibre: string;
   optionsTexteLibre: OptionsJasper[];
   referenceActe: string;
+  natureActe: string;
 }
 
 async function ajoutInfosTitulaire(
@@ -170,6 +172,9 @@ class SpecificationCourrier {
     const elementsJasper = {} as IElementsJasperCourrier;
 
     if (requete && saisieCourrier) {
+      elementsJasper.natureActe = getValeurOuVide(
+        requete.evenement?.natureActe.libelle
+      ).toLowerCase();
       ajoutInfosTitulaire(elementsJasper, requete, acte);
       ajoutOptions(elementsJasper, optionsChoisies);
       elementsJasper.texteLibre = saisieCourrier.texteLibre.texte;
