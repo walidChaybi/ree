@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { IQueryParametersPourRequetesV2 } from "../../../../api/appels/requeteApi";
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
+import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
@@ -20,20 +22,26 @@ import {
   StatutsRequetesInformation
 } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationHook";
+import { useUpdateStatutRequeteInformation } from "./hook/UpdateStatutRequeteInformation";
 
 export const MesRequetesInformationPage: React.FC = () => {
   const history = useHistory();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
+  const [idRequeteToUpdate, setIdRequeteToUpdate] = useState<string>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetesV2
-  >({
-    statuts: StatutsRequetesInformation,
-    tri: "dateCreation",
-    sens: "ASC",
-    range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-  });
+  const idRequeteMiseAJour = useUpdateStatutRequeteInformation(
+    idRequeteToUpdate,
+    StatutRequete.PRISE_EN_CHARGE
+  );
+
+  const [linkParameters, setLinkParameters] =
+    React.useState<IQueryParametersPourRequetesV2>({
+      statuts: StatutsRequetesInformation,
+      tri: "dateCreation",
+      sens: "ASC",
+      range: `0-${NB_LIGNES_PAR_APPEL}`
+    });
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
@@ -58,15 +66,32 @@ export const MesRequetesInformationPage: React.FC = () => {
     setLinkParameters(queryParameters);
   }, []);
 
+  const redirectionVersApercu = useCallback(
+    (idRequete: string) => {
+      history.push(
+        getUrlWithParam(URL_MES_REQUETES_INFORMATION_APERCU_ID, idRequete)
+      );
+    },
+    [history]
+  );
+
   function onClickOnLine(
     idRequete: string,
     data: IRequeteTableauDelivrance[],
     idx: number
   ) {
-    history.push(
-      getUrlWithParam(URL_MES_REQUETES_INFORMATION_APERCU_ID, idRequete)
-    );
+    if (data[idx].statut === StatutRequete.TRANSFEREE.libelle) {
+      setIdRequeteToUpdate(idRequete);
+    } else {
+      redirectionVersApercu(idRequete);
+    }
   }
+
+  useEffect(() => {
+    if (idRequeteMiseAJour) {
+      redirectionVersApercu(idRequeteMiseAJour);
+    }
+  }, [idRequeteMiseAJour, redirectionVersApercu]);
 
   useEffect(() => {
     if (dataState && dataState.length === 0) {

@@ -52,6 +52,14 @@ export const configRequetesInformation = [
       ) {
         return { data: "12345" };
       }
+
+      // Mise à jour statut requête Information
+      if (
+        match[1] ===
+        "/requetes/information/statut/0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62?statut=PRISE_EN_CHARGE"
+      ) {
+        return { data: "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62" };
+      }
     },
 
     /**

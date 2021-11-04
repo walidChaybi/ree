@@ -12,6 +12,10 @@ export class ObjetRequete extends EnumWithComplete {
     "MODIFICATION_ACTE",
     "Modification, mise à jour ou rectification d'un acte"
   );
+  public static readonly COMPLETION_REQUETE_EN_COURS = new ObjetRequete(
+    "COMPLETION_REQUETE_EN_COURS",
+    "Complétion de requête en cours"
+  );
   public static readonly TRANSCRIPTION = new ObjetRequete(
     "TRANSCRIPTION",
     "Transcription (transcription d'un acte de l'état civil étranger)"

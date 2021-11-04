@@ -9,7 +9,7 @@ export const ReponseMesRequetesInformation = [
     objet: "Objet de la requête",
     qualiteRequerant: "INSTITUTIONNEL",
     sousType: "INFORMATION",
-    statut: "A_TRAITER",
+    statut: "TRANSFEREE",
     titulaires: []
   },
   {

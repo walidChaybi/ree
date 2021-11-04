@@ -10,7 +10,7 @@ export const StatutsRequetesInformation = [
 export enum HeaderTableauRequeteInformation {
   Numero = "numero",
   SousType = "sousType",
-  Requerant = "nomCompletRequerant",
+  NomRequerant = "nomCompletRequerant",
   LibelleRequerant = "libelleRequerant",
   DateCreation = "dateCreation",
   Statut = "statut",
@@ -39,17 +39,6 @@ export const requeteInformationColumnHeaders = [
     title: getLibelle("Objet"),
     align: "center"
   }),
-
-  new TableauTypeColumn({
-    keys: [HeaderTableauRequeteInformation.Requerant],
-    title: getLibelle("Requérant"),
-    align: "center"
-  }),
-  new TableauTypeColumn({
-    keys: [HeaderTableauRequeteInformation.Titulaire],
-    title: getLibelle("Titulaire"),
-    align: "center"
-  }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.DateCreation],
     title: getLibelle("Date de création"),
@@ -58,6 +47,21 @@ export const requeteInformationColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Statut],
     title: getLibelle("Statut"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: ["typeRequerant"],
+    title: getLibelle("Type Requérant"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.NomRequerant],
+    title: getLibelle("Requérant"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Titulaire],
+    title: getLibelle("Titulaire"),
     align: "center"
   })
 ];

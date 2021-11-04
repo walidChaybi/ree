@@ -19,6 +19,7 @@ export const URL_REQUETES = "/requetes";
 export const URL_MES_REQUETES = "/requetes/mesrequetes";
 export const URL_MES_REQUETES_INFORMATION = "/requetes/information/mesrequetes";
 export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
+export const URL_INFORMATION_STATUT = "/requetes/information/statut";
 export const URL_REQUETES_COUNT = "/requetes/count";
 export const URL_DOCUMENTSELIVRES = "/documentsdelivres";
 export const URL_REQUETES_RMC = "/requetes/rmc";
@@ -496,5 +497,18 @@ export async function sauvegarderReponseReqInfo(
     method: HttpMethod.POST,
     uri: `${URL_SAUVEGARDER_REPONSE_REQINFO}/${idRequete}`,
     data: { corpsMail: corpsMailReponse, idReponse: `${idReponse}` }
+  });
+}
+
+export async function updateStatutRequeteInformation(
+  idRequete: string,
+  statutDemande: StatutRequeteV2
+): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_INFORMATION_STATUT}/${idRequete}`,
+    parameters: {
+      statut: statutDemande.nom
+    }
   });
 }

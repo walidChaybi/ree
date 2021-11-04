@@ -3,9 +3,10 @@ import {
   getValeurOuVide,
   valeurOuUndefined
 } from "../../../views/common/util/Utils";
+import { ObjetRequete } from "./enum/ObjetRequete";
+import { Qualite } from "./enum/Qualite";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { StatutRequete } from "./enum/StatutRequete";
-import { IRequerant } from "./IRequerant";
 import {
   ITitulaireRequeteTableau,
   mapTitulaires
@@ -18,8 +19,8 @@ export interface IRequeteTableauInformation {
   objet?: string;
   dateCreation?: string;
   statut?: string;
-  requerant?: IRequerant;
   nomCompletRequerant?: string;
+  typeRequerant?: string;
   titulaires?: ITitulaireRequeteTableau[];
   nomsTitulaires?: string;
 }
@@ -45,11 +46,13 @@ export function mappingUneRequeteTableauInformation(
     idRequete: valeurOuUndefined(requete?.id),
     numero: getValeurOuVide(requete?.numero),
     sousType: SousTypeInformation.getEnumFor(requete?.sousType).libelle,
-    objet: getValeurOuVide(requete.objet),
+    objet: ObjetRequete.getEnumFor(getValeurOuVide(requete.objet)).libelle,
     dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
-    requerant: requete?.requerant,
     nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),
+    typeRequerant: Qualite.getEnumFor(
+      getValeurOuVide(requete?.qualiteRequerant)
+    ).libelle,
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     nomsTitulaires: getNomsTitulaires(requete?.titulaires)
   } as IRequeteTableauInformation;
