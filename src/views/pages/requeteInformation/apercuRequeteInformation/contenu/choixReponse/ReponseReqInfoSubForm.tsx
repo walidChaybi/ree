@@ -15,6 +15,8 @@ export type ReponseReqInfoSubFormProps = FormikComponentProps &
 
 export const LIBELLE = "libelle";
 export const CORPS_MAIL = "corpsMail";
+const NB_LIGNE_CORPS_MAIL = 20;
+const NB_CARACTERES_CORPS_MAIL = 2500;
 
 // Valeurs par défaut des champs
 export const DefaultValuesReponseInfoSubForm = {
@@ -29,11 +31,10 @@ export interface IReponseInfoSubFormValue {
 
 export const ValidationSchemaReponseInfoSubForm = Yup.object({
   [LIBELLE]: Yup.string().required("Merci de choisir une réponse"),
-  [CORPS_MAIL]: Yup.string().required("Obligatoire")
+  [CORPS_MAIL]: Yup.string()
+    .required("Obligatoire")
+    .max(NB_CARACTERES_CORPS_MAIL, "Le nombre de caractères maximal est 2500")
 });
-
-const NB_LIGNE_CORPS_MAIL = 20;
-const NB_CARACTERES_CORPS_MAIL = "2500";
 
 const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({
   reponse,
@@ -61,7 +62,7 @@ const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({
         name={corpsMailWithNamespace}
         label={getLibelle("Mail de la réponse")}
         component={"textarea"}
-        maxLength={NB_CARACTERES_CORPS_MAIL}
+        maxLength={(NB_CARACTERES_CORPS_MAIL + 1).toString()}
         rows={NB_LIGNE_CORPS_MAIL}
       />
     </>

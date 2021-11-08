@@ -25,14 +25,18 @@ const superagentMock = require("superagent-mock")(
   configRequetesInformation
 );
 //global.URL.createObjectURL = jest.fn();
-const history = createMemoryHistory();
+let history: any;
 
 beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 
 beforeEach(async () => {
+  history = createMemoryHistory();
   history.push(URL_MES_REQUETES_INFORMATION);
+});
+
+test("renders ApercuReqInfoPage", async () => {
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_INFORMATION_APERCU_ID,
@@ -51,9 +55,7 @@ beforeEach(async () => {
       </>
     );
   });
-});
 
-test("renders ApercuReqInfoPage", async () => {
   const title = screen.getByText(/Aperçu requête d'information/i);
   const bandeau = screen.getByText(
     /Requête à valider, attribuée à Benoît TANGUY - Le : 20\/10\/2021/i
@@ -63,7 +65,7 @@ test("renders ApercuReqInfoPage", async () => {
 
   const choixReponse = screen.getByText(/Choix de la réponse/i);
   const boutonRepondre = screen.getByText(/Répondre/i);
-  const boutonSaisieLibre = screen.getByText(/Saisie libre/i);
+  const boutonSaisieLibre = screen.getByText(/Réponse libre/i);
 
   const formReponse = screen.getByText(/Votre réponse/i);
   const libelleReponse = screen.getByText(/Libellé de la réponse/i);
@@ -184,6 +186,25 @@ test("renders ApercuReqInfoPage", async () => {
 });
 
 test("bouton annuler", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+    )
+  );
+
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+            <ApercuReqInfoPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
   const boutonAnnuler = screen.getByText(/ANNULER/i);
 
   await waitFor(() => {
@@ -196,6 +217,76 @@ test("bouton annuler", async () => {
 
   await waitFor(() => {
     expect(history.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
+  });
+});
+
+test("bouton saisie libre", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+    )
+  );
+
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+            <ApercuReqInfoPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  act(() => {
+    fireEvent.change(screen.getByPlaceholderText("Mail de la réponse"), {
+      target: { text: "Salut les amies" }
+    });
+  });
+
+  const boutonSaisieLibre = screen.getByText(/Réponse libre/i);
+
+  await waitFor(() => {
+    expect(boutonSaisieLibre).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(boutonSaisieLibre);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByPlaceholderText("Mail de la réponse").textContent).toBe(
+      ""
+    );
+  });
+});
+
+test("complétion en cours", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10555"
+    )
+  );
+
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+            <ApercuReqInfoPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  screen.debug();
+
+  await waitFor(() => {
+    expect(screen.getByDisplayValue("Saisie libre agent")).toBeDefined();
   });
 });
 

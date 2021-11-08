@@ -16,7 +16,7 @@ import { SousTypeMiseAJour } from "./enum/SousTypeMiseAJour";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
-import { IRequerant } from "./IRequerant";
+import { IRequerant, Requerant } from "./IRequerant";
 import {
   ITitulaireRequeteTableau,
   mapTitulaires
@@ -79,8 +79,12 @@ export function mappingUneRequeteTableau(
     documentLibelle: DocumentDelivrance.getDocumentDelivrance(requete?.document)
       .libelle, // libellé du type de document demandé
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
-    requerant: requete?.requerant,
-    nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),
+    requerant: requete?.requerant
+      ? Requerant.mappingRequerant(requete?.requerant)
+      : null,
+    nomCompletRequerant:
+      getValeurOuVide(requete?.requerant?.nomFamille) +
+      getValeurOuVide(requete?.requerant?.prenom),
     attribueA: mapAttribueA(requete),
     dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
     dateDerniereMaj: getFormatDateFromTimestamp(requete?.dateDernierMAJ),
@@ -92,7 +96,8 @@ export function mappingUneRequeteTableau(
         : requete?.observations,
     idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
     idCorbeilleAgent: valeurOuUndefined(requete?.idCorbeilleAgent),
-    idEntiteRattachement: valeurOuUndefined(requete?.idEntiteRattachement)
+    idEntiteRattachement: valeurOuUndefined(requete?.idEntiteRattachement),
+    canal: TypeCanal.getEnumFor(requete.canal)
   } as IRequeteTableauDelivrance;
 }
 

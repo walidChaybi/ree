@@ -54,7 +54,6 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
         storeRece.utilisateurCourant?.idUtilisateur;
       setParamsRMCAuto({
         requete: params.requete,
-        dataRequetes: params.dataRequetes,
         urlCourante: params.urlCourante,
         pasDeTraitementAuto: params.pasDeTraitementAuto
       });

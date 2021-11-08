@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IOfficier } from "../../../../model/agent/IOfficier";
 import { IOngletProps } from "../../../../model/IOnglet";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
@@ -35,9 +36,8 @@ const getOnglets = (
   miseAJourCompteur: () => void,
   recuperationParamsRMCAuto: (
     idRequete: string,
-    dataRequetes: any[],
-    urlWithParam: string,
-    idx: number
+    requete: IRequeteTableauDelivrance,
+    urlWithParam: string
   ) => void
 ): IOngletProps[] => {
   return [
@@ -85,14 +85,11 @@ const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
 
   const recuperationParamsRMCAuto = (
     idRequete: string,
-    dataRequetes: any[],
-    urlWithParam: string,
-    idx: number
+    requete: IRequeteTableauDelivrance,
+    urlWithParam: string
   ) => {
-    const requete = dataRequetes[idx];
     setParamsRMCAuto({
       requete,
-      dataRequetes,
       urlCourante: urlWithParam
     });
   };

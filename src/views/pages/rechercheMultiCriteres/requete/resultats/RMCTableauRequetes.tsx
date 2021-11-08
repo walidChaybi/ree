@@ -39,13 +39,11 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
+  const [paramsMiseAJour, setParamsMiseAJour] =
+    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
-    INavigationApercuRMCAutoParams | undefined
-  >();
+  const [paramsRMCAuto, setParamsRMCAuto] =
+    useState<INavigationApercuRMCAutoParams | undefined>();
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuRMCAuto(paramsRMCAuto);
@@ -84,7 +82,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     } else {
       setParamsRMCAuto({
         requete: requeteSelect,
-        dataRequetes: data,
         urlCourante: URL_RECHERCHE_REQUETE
       });
     }

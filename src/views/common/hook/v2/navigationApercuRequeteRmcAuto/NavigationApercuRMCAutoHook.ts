@@ -8,7 +8,6 @@ import { IRMCAutoParams, useRMCAutoHook } from "./RMCAutoHook";
 
 export interface INavigationApercuRMCAutoParams {
   requete: IRequeteTableauDelivrance;
-  dataRequetes: any[];
   urlCourante: string;
   pasDeTraitementAuto?: boolean;
 }
@@ -17,9 +16,8 @@ export function useNavigationApercuRMCAuto(
   rmcAutoNavigationParams?: INavigationApercuRMCAutoParams
 ) {
   const history = useHistory();
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
-    IRMCAutoParams | undefined
-  >();
+  const [paramsRMCAuto, setParamsRMCAuto] =
+    useState<IRMCAutoParams | undefined>();
   const [urlDataToPush, setUrlDataToPush] = useState<IUrlData | undefined>();
 
   const rmcAutoUrlData: IUrlData | undefined = useRMCAutoHook(paramsRMCAuto);
@@ -61,7 +59,7 @@ export function useNavigationApercuRMCAuto(
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [urlDataToPush, rmcAutoNavigationParams?.dataRequetes]
+    [urlDataToPush]
   );
 }
 function estUrlApercuOuTraitementRequete(url: string) {

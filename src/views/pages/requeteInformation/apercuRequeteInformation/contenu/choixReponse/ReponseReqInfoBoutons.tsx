@@ -30,7 +30,7 @@ const ReponseReqInfoBoutons: React.FC<ReponseReqInfoBoutonsProps> = props => {
           {getLibelle("Annuler")}
         </button>
         <button
-          disabled={!props.formik.dirty}
+          disabled={!props.formik.isValid}
           type="button"
           id="boutonEnvoyer"
           onClick={() => {

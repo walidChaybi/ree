@@ -7,46 +7,33 @@ import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDe
 import { MotifDelivrance } from "../../../../model/requete/v2/enum/MotifDelivrance";
 import { ObjetRequete } from "../../../../model/requete/v2/enum/ObjetRequete";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
-import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { SousTypeInformation } from "../../../../model/requete/v2/enum/SousTypeInformation";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
-import { TypeInstitutionnel } from "../../../../model/requete/v2/enum/TypeInstitutionnel";
 import { TypeLienMandant } from "../../../../model/requete/v2/enum/TypeLienMandant";
-import { TypeLienRequerant } from "../../../../model/requete/v2/enum/TypeLienRequerant";
 import { TypeMandant } from "../../../../model/requete/v2/enum/TypeMandant";
-import { TypeMandataireReq } from "../../../../model/requete/v2/enum/TypeMandataireReq";
 import { TypeNatureActe } from "../../../../model/requete/v2/enum/TypeNatureActe";
 import { TypePieceJustificative } from "../../../../model/requete/v2/enum/TypePieceJustificative";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IAction } from "../../../../model/requete/v2/IActions";
-import { IAdresseRequerant } from "../../../../model/requete/v2/IAdresseRequerant";
-import { IAutreProfessionnel } from "../../../../model/requete/v2/IAutreProfessionnel";
 import { IEvenementReqDelivrance } from "../../../../model/requete/v2/IEvenementReqDelivrance";
-import { IInstitutionnel } from "../../../../model/requete/v2/IInstitutionnel";
-import { ILienRequerant } from "../../../../model/requete/v2/ILienRequerant";
 import { IMandant } from "../../../../model/requete/v2/IMandant";
-import { IMandataireHabilite } from "../../../../model/requete/v2/IMandataireHabilite";
 import { IObservation } from "../../../../model/requete/v2/IObservation";
-import { IParticulier } from "../../../../model/requete/v2/IParticulier";
 import { IPieceJustificativeV2 } from "../../../../model/requete/v2/IPieceJustificativeV2";
 import { IProvenanceRequete } from "../../../../model/requete/v2/IProvenanceRequete";
-import { IQualiteRequerant } from "../../../../model/requete/v2/IQualiteRequerant";
-import { IRequerant } from "../../../../model/requete/v2/IRequerant";
+import { Requerant } from "../../../../model/requete/v2/IRequerant";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IRequeteInformation } from "../../../../model/requete/v2/IRequeteInformation";
 import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
 import { ITitulaireRequete } from "../../../../model/requete/v2/ITitulaireRequete";
-import { IUtilisateurRece } from "../../../../model/requete/v2/IUtilisateurRece";
 import { logError } from "../../../common/util/LogManager";
 import { storeRece } from "../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] = useState<
-    TRequete | undefined
-  >();
+  const [detailRequeteState, setDetailRequeteState] =
+    useState<TRequete | undefined>();
 
   useEffect(() => {
     async function fetchDetailRequete() {
@@ -88,7 +75,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
     type: TypeRequete.getEnumFor(data.type),
     statutCourant: getStatutCourant(data.statut),
     titulaires: getTitulaires(data.titulaires),
-    requerant: getRequerant(data.requerant),
+    requerant: Requerant.mappingRequerant(data.requerant),
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
     idEntite: data?.corbeilleService?.idEntiteRattachement,
@@ -164,66 +151,6 @@ function getStatutCourant(statut: any): IStatutCourant {
   };
 }
 
-function getRequerant(requerant: any): IRequerant {
-  return {
-    id: requerant.id,
-    dateCreation: requerant.dateCreation,
-    nomFamille: requerant.nomFamille,
-    prenom: requerant.prenom,
-    courriel: requerant.courriel,
-    telephone: requerant.telephone,
-    adresse: requerant.adresse as IAdresseRequerant,
-    lienRequerant: requerant.lienRequerant
-      ? getLienRequerant(requerant.lienRequerant)
-      : undefined,
-    qualiteRequerant: getQualiteRequerant(requerant)
-  };
-}
-
-function getLienRequerant(lienRequerant: any): ILienRequerant {
-  return {
-    id: lienRequerant.id,
-    lien: TypeLienRequerant.getEnumFor(lienRequerant.typeLienRequerant),
-    natureLien: lienRequerant.nature
-  };
-}
-
-function getQualiteRequerant(requerant: any): IQualiteRequerant {
-  return {
-    qualite: Qualite.getEnumFor(requerant.qualite),
-    utilisateurRece: requerant.detailQualiteRece as IUtilisateurRece,
-    particulier: requerant.detailQualiteParticulier as IParticulier,
-    mandataireHabilite: getMandataireHabilite(
-      requerant.detailQualiteMandataireHabilite
-    ),
-    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
-    institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
-  };
-}
-
-function getMandataireHabilite(mandataire: any): IMandataireHabilite {
-  if (mandataire) {
-    return {
-      type: TypeMandataireReq.getEnumFor(mandataire.type),
-      raisonSociale: mandataire.raisonSociale,
-      nature: mandataire.nature,
-      crpcen: mandataire.crpcen
-    };
-  }
-  return {} as IMandataireHabilite;
-}
-
-function getInstitutionnel(institutionnel: any): IInstitutionnel {
-  if (institutionnel) {
-    return {
-      type: TypeInstitutionnel.getEnumFor(institutionnel.type),
-      nomInstitution: institutionnel.nomInstitution,
-      nature: institutionnel.nature
-    };
-  }
-  return {} as IInstitutionnel;
-}
-
 function getMandant(mandant: any): IMandant {
   return {
     id: mandant.id,
@@ -266,7 +193,7 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
     type: TypeRequete.getEnumFor(data.type),
     statutCourant: getStatutCourant(data.statut),
     titulaires: getTitulaires(data.titulaires),
-    requerant: getRequerant(data.requerant),
+    requerant: Requerant.mappingRequerant(data.requerant),
     idUtilisateur: data.corbeilleAgent?.idUtilisateur,
     idEntite: data?.corbeilleService?.idEntiteRattachement,
     observations: data.observations

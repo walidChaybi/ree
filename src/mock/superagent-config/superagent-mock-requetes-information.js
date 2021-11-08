@@ -1,4 +1,7 @@
-import { ReponseAppelDetailRequeteInformation } from "../data/DetailRequeteInformation";
+import {
+  ReponseAppelDetailRequeteCompletion,
+  ReponseAppelDetailRequeteInformation
+} from "../data/DetailRequeteInformation";
 import { ReponseMesRequetesInformation } from "../data/EspaceInformation";
 import { NOMENCLATURE_REPONSE } from "../data/NomenclatureReponse";
 
@@ -38,6 +41,9 @@ export const configRequetesInformation = [
       // Détail requête Information
       if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856") {
         return { data: ReponseAppelDetailRequeteInformation.data };
+      }
+      if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10555") {
+        return { data: ReponseAppelDetailRequeteCompletion.data };
       }
 
       // Détail requête Information

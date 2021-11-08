@@ -164,7 +164,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     if (generationCourrier) {
       setOperationEnCours(false);
       messageManager.showSuccessAndClose(
-        getLibelle("Le courrier a bien été enregistrée")
+        getLibelle("Le courrier a bien été enregistré")
       );
       history.push(
         getUrlWithParam(

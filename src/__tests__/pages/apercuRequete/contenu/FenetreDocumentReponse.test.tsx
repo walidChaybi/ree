@@ -14,6 +14,7 @@ globalAny.open = () => {
   return { ...window };
 };
 globalAny.close = jest.fn();
+globalAny.URL.createObjectURL = jest.fn();
 
 test("renders Fenetre Document réponse fonctionne correctement", async () => {
   const toggle = jest.fn();

@@ -32,7 +32,6 @@ const INFO_CS_RMC_AUTO_VIDE = getLibelle(
 );
 export interface IRMCAutoParams {
   requete: IRequeteTableauDelivrance;
-  dataRequetes: any[];
   urlCourante: string;
   pasDeTraitementAuto?: boolean;
 }
@@ -45,21 +44,17 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
     `0-${NB_LIGNES_PAR_APPEL_ACTE}`
   );
 
-  const {
-    dataRMCAutoInscription,
-    dataTableauRMCAutoInscription
-  } = useRMCAutoInscriptionApiHook(
-    params?.requete,
-    `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-  );
+  const { dataRMCAutoInscription, dataTableauRMCAutoInscription } =
+    useRMCAutoInscriptionApiHook(
+      params?.requete,
+      `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+    );
 
-  const [paramsCertificatSituation, setParamsCertificatSituation] = useState<
-    IGenerationCertificatSituationParams
-  >();
+  const [paramsCertificatSituation, setParamsCertificatSituation] =
+    useState<IGenerationCertificatSituationParams>();
 
-  const [actionStatutRequete, setActionStatutRequete] = useState<
-    IActionStatutRequete
-  >();
+  const [actionStatutRequete, setActionStatutRequete] =
+    useState<IActionStatutRequete>();
 
   useEffect(() => {
     // si pasDeTraitementAuto=true alors pas de génération de certificat de situation automatiquement en fonction des résultats de la RMC auto
@@ -75,9 +70,8 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
   }, [dataRMCAutoInscription, dataRMCAutoActe]);
 
   // Génération du certificat de situation
-  const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituationHook(
-    paramsCertificatSituation
-  );
+  const resultGenerationCertificatSituationRMCAutoVide =
+    useGenerationCertificatSituationHook(paramsCertificatSituation);
 
   // Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   // si pasDeTraitementAuto=true alors pas de génération de certificat de situation et donc pas de création d'action ni de mise à jour du statut de la requête
@@ -107,7 +101,6 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
       )
     ) {
       const data = {
-        dataRequetes: params?.dataRequetes,
         dataRMCAutoActe,
         dataTableauRMCAutoActe,
         dataRMCAutoInscription,
