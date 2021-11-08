@@ -40,7 +40,9 @@ export const configRequetes = [
         match[1] ===
           "/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105" ||
         match[1] ===
-          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105"
+          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105" ||
+        match[1] ===
+          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105"
       ) {
         return {
           data: mockRequetes.data.slice(0, 105),
@@ -98,7 +100,9 @@ export const configRequetes = [
           "/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=DESC" ||
         match[1] === "/requetes/requetesService?statut=A_SIGNER" ||
         match[1] ===
-          "/requetes/requetesService?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC"
+          "/requetes/requetesService?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC" ||
+        match[1] ===
+          "/requetes/requetesService?statuts=A_SIGNER&tri=dateStatut&sens=ASC"
       ) {
         return {
           data: mockRequetes.data.slice(0, 105),
@@ -116,7 +120,11 @@ export const configRequetes = [
         match[1] ===
           "requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105" ||
         match[1] ===
-          "/requetes/requetesService?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=idSagaDila&sens=ASC"
+          "/requetes/requetesService?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=idSagaDila&sens=ASC" ||
+        match[1] ===
+          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=1-105" ||
+        match[1] ===
+          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=dateStatut&sens=ASC&range=1-105"
       ) {
         return {
           data: mockRequetes.data.slice(105, 210),
@@ -132,6 +140,8 @@ export const configRequetes = [
           "/requetes/requetesService?statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
         match[1] ===
           "/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
+        match[1] ===
+          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105" ||
         match[1] === "/requetes/requetesService?statut=A_SIGNER"
       ) {
         return {
@@ -208,7 +218,10 @@ export const configRequetes = [
       }
 
       // UtilisateurAssigneRequeteHook
-      if (match[1] === "/reponses/1?nomOec=SecondNom&prenomOec=SecondPrenom") {
+      if (
+        match[1] === "/reponses/1?nomOec=SecondNom&prenomOec=SecondPrenom" ||
+        match[1] === "/reponses/undefined?nomOec=&prenomOec="
+      ) {
         return {};
       }
 
@@ -230,9 +243,20 @@ export const configRequetes = [
       //
       if (
         match[1] ===
-        "/requetes?statut=A_IMPRIMER&idRequete=1d189cd9-0df0-45dc-a4cf-0174eb62cbbc"
+          "/requetes?statut=A_IMPRIMER&idRequete=1d189cd9-0df0-45dc-a4cf-0174eb62cbbc" ||
+        match[1] === "/requetes?idRequete=id1&statut=A_IMPRIMER"
       ) {
         return { data: DONNEES_REQUETE };
+      }
+
+      //
+      if (
+        match[1] === "/requetes?statut=A_SIGNER&idRequete=test" ||
+        match[1] ===
+          "/requetes?idRequete=104b8563-c7f8-4748-9daa-f26558985894&statut=A_TRAITER_DEMAT" ||
+        match[1] === "/requetes?idRequete=id1&statut=A_TRAITER_DEMAT"
+      ) {
+        return { data: null };
       }
 
       const error = { msg: "url api requete V1 non mockée", url: match[1] };

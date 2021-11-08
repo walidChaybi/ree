@@ -447,13 +447,17 @@ export const configRequetesV2 = [
           match[1] ===
             "/requetes/action?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
           match[1] ===
+            "/requetes/action?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=Revue%20du%20traitement&statutRequete=PRISE_EN_CHARGE" ||
+          match[1] ===
             "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
           match[1] ===
             "/requetes/action?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER" ||
           match[1] ===
             `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
           match[1] ===
-            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE`) &&
+            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE` ||
+          match[1] ===
+            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT`) &&
         context.method === "post"
       ) {
         return { data: "123456789" };

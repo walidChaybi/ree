@@ -111,37 +111,6 @@ test("est à A_VALIDER", async () => {
   });
 });
 
-const requeteTestCOMEDEC = {
-  id: idRequeteRDCSC,
-  idEntite: "11",
-  dateCreation: 1577836800000,
-  type: TypeRequete.DELIVRANCE,
-  statutCourant: {
-    statut: StatutRequete.PRISE_EN_CHARGE,
-    dateEffet: 1577923200000
-  },
-  idUtilisateur: "idUtilisateurConnectedUser",
-  provenanceRequete: { provenance: Provenance.COMEDEC },
-  titulaires: [
-    {
-      id: "0",
-      position: 0,
-      nationalite: Nationalite.FRANCAISE,
-      nomNaissance: "Garcia",
-      prenoms: [
-        {
-          prenom: "Hugo",
-          numeroOrdre: 1
-        }
-      ],
-      jourNaissance: 31,
-      moisNaissance: 12,
-      anneeNaissance: 1981,
-      sexe: Sexe.MASCULIN.libelle
-    }
-  ]
-} as IRequeteDelivrance;
-
 afterAll(() => {
   superagentMock.unset();
 });

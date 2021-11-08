@@ -145,6 +145,7 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
     expect(elementsCoches).toBeDefined();
   });
 });
+
 test("redirection requete RDD", async () => {
   await act(async () => {
     render(
@@ -184,6 +185,7 @@ test("redirection requete RDD", async () => {
     "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/a4cefb71-8457-4f6b-937e-34b49335d884"
   );
 });
+
 test("redirection requete RDC", async () => {
   const history2 = createMemoryHistory();
   history2.push(
@@ -281,17 +283,17 @@ test("ignorer requete", async () => {
     fireEvent.click(doc2);
   });
 
-  await act(async () => {
-    fireEvent.click(screen.getByText("Réponse sans délivrance"));
-  });
+  const bontonIgnore = screen.getByText(/Ignorer+/);
 
   await act(async () => {
-    fireEvent.click(screen.getByText(/Ignorer+/));
+    fireEvent.click(bontonIgnore);
   });
 
   const select = screen.getByLabelText(MOTIF_IGNORE) as HTMLSelectElement;
 
   await act(async () => {
+    expect(select).toBeDefined();
+
     fireEvent.change(select, {
       target: {
         value: "Adresse incomplète"
@@ -300,13 +302,17 @@ test("ignorer requete", async () => {
   });
 
   const valider = screen.getByText("Valider");
-  expect(valider).toBeDefined();
-
   await waitFor(() => {
-    fireEvent.click(screen.getByText("Valider"));
+    expect(valider).toBeDefined();
   });
 
-  expect(history.location.pathname).toBe(URL_MES_REQUETES_V2);
+  await act(async () => {
+    fireEvent.click(valider);
+  });
+
+  await waitFor(() => {
+    expect(history.location.pathname).toBe(URL_MES_REQUETES_V2);
+  });
 });
 
 afterAll(() => {

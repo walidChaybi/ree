@@ -16,6 +16,7 @@ import { IProvenancePlanete } from "../../model/requete/v2/IProvenancePlanete";
 import { IProvenanceRece } from "../../model/requete/v2/IProvenanceRece";
 import { IRequeteDelivrance } from "../../model/requete/v2/IRequeteDelivrance";
 import { documentReponseCourrier117 } from "./DocumentReponse";
+import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
 
 const requeteDelivrance: IRequeteDelivrance = {
   actions: [],
@@ -48,7 +49,7 @@ const requeteDelivrance: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
+      typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0]
     }
   ],
   provenanceRequete: {
@@ -169,7 +170,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
+      typePieceJustificative: ("Carte" as unknown) as TypePieceJustificative
     }
   ],
   provenanceRequete: {

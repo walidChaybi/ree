@@ -1,24 +1,24 @@
 import request from "superagent";
 import {
-  getDocument,
-  getRequetes,
-  TypeAppelRequete,
-  getRequete,
   getCompteurRequetes,
+  getDocument,
+  getRequete,
+  getRequetes,
+  patchDocumentsDelivresRequetes,
   patchStatutRequete,
   patchUtilisateurAssigneRequete,
-  patchDocumentsDelivresRequetes
+  TypeAppelRequete
 } from "../../../api/appels/requeteApi";
-import { GroupementDocument } from "../../../model/requete/GroupementDocument";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
+import { GroupementDocument } from "../../../model/requete/GroupementDocument";
 import { StatutRequete } from "../../../model/requete/StatutRequete";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
-test("requeteapi api getDocumentASigner doc a signer", () => {
+test("requeteapi api DocumentDelivre doc a signer", () => {
   getDocument(
     "f9279c00-5d2b-11ea-bc55-0242ac130004",
-    GroupementDocument.DocumentAsigner
+    GroupementDocument.DocumentDelivre
   ).then((result: any) => {
     expect(result).toBeDefined();
   });
@@ -27,7 +27,7 @@ test("requeteapi api getDocumentASigner doc a signer", () => {
 test("requeteapi api getDocumentASigner piece justificative", () => {
   getDocument(
     "e496f1d1-18c3-48ca-ae87-e97582fbf188",
-    "piecesjustificatives"
+    GroupementDocument.PieceJustificative
   ).then((result: any) => {
     expect(result).toBeDefined();
   });
@@ -36,7 +36,7 @@ test("requeteapi api getDocumentASigner piece justificative", () => {
 test("requeteapi api getRequetes mes requetes", () => {
   getRequetes(
     TypeAppelRequete.MES_REQUETES,
-    [StatutRequete.ASigner],
+    "A_SIGNER",
     "idSagaDila",
     "ASC"
   ).then((result: any) => {
@@ -47,7 +47,7 @@ test("requeteapi api getRequetes mes requetes", () => {
 test("requeteapi api getRequetes requete service", () => {
   getRequetes(
     TypeAppelRequete.REQUETE_SERVICE,
-    [StatutRequete.ASigner],
+    "A_SIGNER",
     "dateStatut",
     "ASC"
   ).then((result: any) => {

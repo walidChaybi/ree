@@ -9,30 +9,29 @@ interface IListePiecesJustificatives {
   numRequete: string;
 }
 
-export const ListePiecesJustificatives: React.FC<IListePiecesJustificatives> =
-  props => {
-    return (
-      <div className={"SectionPanel"}>
-        <Fragment>
-          <div className={`SectionPanelArea`}>
-            <div className={`wrapper`}>
-              <label className="libelleContent">Pièces Justificatives</label>
-            </div>
-            <div className={`wrapper`}>
-              {props.pieces.map((content, index) => (
-                <span key={index}>
-                  <LienPieceJustificative
-                    nom={content.nom}
-                    type={content.typePieceJustificative.libelle}
-                    contenu={content.contenu}
-                    numRequete={props.numRequete}
-                    idPiece={content.id}
-                  ></LienPieceJustificative>
-                </span>
-              ))}
-            </div>
+export const ListePiecesJustificatives: React.FC<IListePiecesJustificatives> = props => {
+  return (
+    <div className={"SectionPanel"}>
+      <Fragment>
+        <div className={`SectionPanelArea`}>
+          <div className={`wrapper`}>
+            <label className="libelleContent">Pièces Justificatives</label>
           </div>
-        </Fragment>
-      </div>
-    );
-  };
+          <div className={`wrapper`}>
+            {props.pieces.map((content, index) => (
+              <span key={index}>
+                <LienPieceJustificative
+                  nom={content.nom}
+                  type={content.typePieceJustificative.libelle}
+                  contenu={content.contenu}
+                  numRequete={props.numRequete}
+                  idPiece={content.id}
+                ></LienPieceJustificative>
+              </span>
+            ))}
+          </div>
+        </div>
+      </Fragment>
+    </div>
+  );
+};

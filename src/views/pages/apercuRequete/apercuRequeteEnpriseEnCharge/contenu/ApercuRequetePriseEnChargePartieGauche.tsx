@@ -32,9 +32,10 @@ export const ApercuRequetePriseEnChargePartieGauche: React.FC<ApercuRequetePrise
   const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
 
-  const [criteresRechercheRequete, setCriteresRechercheRequete] = useState<
-    ICriteresRMCRequete
-  >();
+  const [
+    criteresRechercheRequete,
+    setCriteresRechercheRequete
+  ] = useState<ICriteresRMCRequete>();
 
   /* Hook d'appel de l'API RMC Auto requêtes */
   const {
@@ -94,9 +95,7 @@ export const ApercuRequetePriseEnChargePartieGauche: React.FC<ApercuRequetePrise
       />
       <SuiviActionsRequete actions={props.detailRequete?.actions} />
       <DocumentsReponses
-        documents={
-          (props.detailRequete as IRequeteDelivrance)?.documentsReponses
-        }
+        documents={props.detailRequete?.documentsReponses}
         setDocumentAffiche={props.openFenetre}
       />
     </div>

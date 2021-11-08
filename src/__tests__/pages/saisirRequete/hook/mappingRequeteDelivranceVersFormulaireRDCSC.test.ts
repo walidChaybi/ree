@@ -63,7 +63,7 @@ test("test du mapping Particulier", () => {
           mimeType: "",
           extension: undefined
         },
-        type: { value: "", str: undefined }
+        type: { value: "", str: "Carte professionnelle" }
       }
     ]
   });

@@ -1,9 +1,9 @@
+import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, waitFor, screen } from "@testing-library/react";
-import { logError } from "../../../views/common/util/LogManager";
 import { ToastContainer } from "react-toastify";
 import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
+import { logError } from "../../../views/common/util/LogManager";
 
 beforeAll(() => {
   const localStorageMock = (function () {
@@ -46,8 +46,8 @@ test("renders error msg", async () => {
   );
   logError({
     messageUtilisateur: "testmessageUtilisateur",
-    error: "testeerror",
-    errorInfo: "testerrorInfo"
+    error: "testeerror (console.error LogManager)",
+    errorInfo: "testerrorInfo (console.error LogManager)"
   });
   await waitFor(() => {
     expect(screen.getByText(/testmessageUtilisateur/)).toBeDefined();

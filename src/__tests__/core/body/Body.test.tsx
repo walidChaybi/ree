@@ -1,11 +1,11 @@
-import React from "react";
-import { Body } from "../../../views/core/body/Body";
-import { screen, render } from "@testing-library/react";
-import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
+import { render, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import { URL_ACCUEIL } from "../../../views/router/ReceUrls";
+import React from "react";
 import { Router } from "react-router-dom";
 import officier from "../../../mock/data/connectedUser.json";
+import { Body } from "../../../views/core/body/Body";
+import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
+import { URL_ACCUEIL } from "../../../views/router/ReceUrls";
 
 test("renders BoutonDeconnexion", () => {
   const history = createMemoryHistory();
@@ -88,7 +88,7 @@ test("renders Body erreurSysteme", () => {
             ...off
           },
           erreurState: {
-            status: "autre"
+            status: "Autre (console.error LogManager)"
           }
         }}
       >

@@ -88,7 +88,6 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
   } as FormAjouterAlerteBoutonsProps;
 
   const onSubmit = (res: IIgnorerFormValue) => {
-    onClosePopin();
     setOperationEnCours(true);
     setParam({
       idRequete: requete.id,
@@ -96,6 +95,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
         res[COMPLEMENT_IGNORE] ? " - " : ""
       }${res[COMPLEMENT_IGNORE]}`
     });
+    onClosePopin();
   };
 
   const motif = [
@@ -111,7 +111,8 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
       setOperationEnCours(false);
       history.push(getUrlPrecedente(history.location.pathname));
     }
-  }, [idAction, history]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idAction]);
 
   return (
     <>

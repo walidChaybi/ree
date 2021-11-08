@@ -1,31 +1,31 @@
+import { connect } from "formik";
 import React, { useCallback } from "react";
 import * as Yup from "yup";
+import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { TypeFamille } from "../../../../../model/etatcivil/enum/TypeFamille";
+import { Option, Options } from "../../../../common/util/Type";
 import {
-  ComponentFiltreProps,
-  withNamespace,
-  FormikComponentProps
-} from "../../../../common/widget/formulaire/utils/FormUtil";
+  enMajuscule,
+  premiereLettreEnMajusculeLeResteEnMinuscule
+} from "../../../../common/util/Utils";
+import {
+  ChampRechercheField,
+  ChampRechercheFieldProps
+} from "../../../../common/widget/formulaire/champRecherche/ChampRechercheField";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
+import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
 import {
   digitSeulement,
   traiteCarAutorises,
   traiteEspace
 } from "../../../../common/widget/formulaire/utils/ControlesUtil";
+import {
+  ComponentFiltreProps,
+  FormikComponentProps,
+  withNamespace
+} from "../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../common/widget/Text";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
-import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { connect } from "formik";
-import {
-  ChampRechercheField,
-  ChampRechercheFieldProps
-} from "../../../../common/widget/formulaire/champRecherche/ChampRechercheField";
 import { useRecherchePocopa } from "./hook/RecherchePocopaApiHook";
-import { Option, Options } from "../../../../common/util/Type";
-import { TypeFamille } from "../../../../../model/etatcivil/enum/TypeFamille";
-import {
-  enMajuscule,
-  premiereLettreEnMajusculeLeResteEnMinuscule
-} from "../../../../common/util/Utils";
 
 // Noms des champs
 export const NATURE_ACTE = "natureActe";
@@ -126,8 +126,8 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
 
     if (lastPocopaSelected && pocopas?.indexOf(lastPocopaSelected) === -1) {
       pocopasAsOptions.push({
-        value: lastPocopaSelected,
-        str: lastPocopaSelected
+        value: enMajuscule(lastPocopaSelected),
+        str: premiereLettreEnMajusculeLeResteEnMinuscule(lastPocopaSelected)
       });
     }
     return pocopasAsOptions;
