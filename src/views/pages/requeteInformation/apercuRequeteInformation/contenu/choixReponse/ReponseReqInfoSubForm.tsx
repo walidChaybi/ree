@@ -7,7 +7,7 @@ import {
   withNamespace
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../../common/widget/Text";
-import "../scss/ChoixReponseReqInfo.scss";
+import "../scss/ReponseReqInfo.scss";
 import { REPONSE, ReponseReqInfoProps } from "./ReponseReqInfoForm";
 
 export type ReponseReqInfoSubFormProps = FormikComponentProps &

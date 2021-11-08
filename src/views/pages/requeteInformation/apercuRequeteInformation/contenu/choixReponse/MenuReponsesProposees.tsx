@@ -5,30 +5,31 @@ import { IReponseRequeteInfo } from "../../../../../../model/requete/v2/IReponse
 import { IRequeteInformation } from "../../../../../../model/requete/v2/IRequeteInformation";
 import { getLibelle } from "../../../../../common/widget/Text";
 
-interface MenuReponseProps {
+interface MenuReponsesProposeesProps {
   onClick: (reponse: IReponseRequeteInfo) => void;
   listeReponse?: IReponseRequeteInfo[];
   requete: IRequeteInformation;
-  libelle?: string;
 }
 
-export const MenuReponseClassique: React.FC<MenuReponseProps> = props => {
-  const [menu, setMenu] = React.useState<null | HTMLElement>(null);
+export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = props => {
+  const [
+    menuReponsesProposees,
+    setMenuReponsesProposees
+  ] = React.useState<null | HTMLElement>(null);
   const [reponsesFiltees, setReponsesFiltees] = useState<IReponseRequeteInfo[]>(
     []
   );
-
   const handleClickBoutonReponse = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setMenu(e.currentTarget);
+    setMenuReponsesProposees(e.currentTarget);
   };
 
   const handleCloseMenu = () => {
-    setMenu(null);
+    setMenuReponsesProposees(null);
   };
 
   const clickMenuItem = (reponse: IReponseRequeteInfo) => {
     props.onClick(reponse);
-    setMenu(null);
+    handleCloseMenu();
   };
 
   useEffect(() => {
@@ -41,31 +42,33 @@ export const MenuReponseClassique: React.FC<MenuReponseProps> = props => {
         )
       );
     }
-  }, [props.listeReponse, props.requete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.listeReponse]);
 
   return (
     <>
       {props.listeReponse && (
-        <div className="MenuReponse">
+        <div>
           <button onClick={e => handleClickBoutonReponse(e)}>
-            {getLibelle("Répondre")}
+            {getLibelle("Réponses proposées")}
           </button>
 
           <Menu
             className="Menu"
-            anchorEl={menu}
+            anchorEl={menuReponsesProposees}
             keepMounted
-            open={Boolean(menu)}
+            open={Boolean(menuReponsesProposees)}
             onClose={handleCloseMenu}
             getContentAnchorEl={null}
             anchorOrigin={{
-              vertical: "top",
-              horizontal: "right"
+              vertical: "bottom",
+              horizontal: "left"
             }}
             transformOrigin={{
               vertical: "top",
               horizontal: "left"
             }}
+            MenuListProps={{ onMouseLeave: handleCloseMenu }}
           >
             {reponsesFiltees.map((reponse: IReponseRequeteInfo) => {
               return (

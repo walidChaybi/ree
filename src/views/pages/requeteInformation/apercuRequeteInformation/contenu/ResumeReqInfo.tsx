@@ -47,7 +47,9 @@ function getPanelResumeRequete(
 
   ajouterPanelAreasAuPanel(panel, detailRequete, getRequete, 1);
   ajouterPanelAreasAuPanel(panel, detailRequete, getRequerant, 1);
-  ajouterPanelAreasAuPanel(panel, detailRequete, getTitulaire, 1);
+  if (detailRequete.titulaires && detailRequete.titulaires.length > 0) {
+    ajouterPanelAreasAuPanel(panel, detailRequete, getTitulaire, 1);
+  }
   ajouterPanelAreasAuPanel(panel, detailRequete, getCommentaireReq, 1);
 
   return panel;
@@ -88,11 +90,20 @@ function getRequeteInfo(
     getLibelle(`Date de création`),
     Requete.getDateCreation(detailRequete)
   );
+
+  let requeteLiee: string | JSX.Element = "";
+
+  if (detailRequete.numeroRequeteLiee && detailRequete.idRequeteLiee) {
+    requeteLiee = (
+      <Link className="NumeroReqLiee">{detailRequete.numeroRequeteLiee}</Link>
+    );
+  } else if (detailRequete.numeroRequeteLiee) {
+    requeteLiee = detailRequete.numeroRequeteLiee;
+  }
+
   infosRequete.push({
     libelle: getLibelle(`N° de la requête liée`),
-    value: (
-      <Link className="NumeroReqLiee">{detailRequete.numeroRequeteLiee}</Link>
-    )
+    value: requeteLiee
   });
 
   return infosRequete;

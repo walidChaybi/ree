@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { FormikComponentProps } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../../common/widget/Text";
 import { receUrl } from "../../../../../router/ReceUrls";
-import "../scss/ChoixReponseReqInfo.scss";
+import "../scss/ReponseReqInfo.scss";
 
 export type ReponseReqInfoBoutonsProps = {
   setIsBrouillon: any;
@@ -27,7 +27,7 @@ const ReponseReqInfoBoutons: React.FC<ReponseReqInfoBoutonsProps> = props => {
             handleAnnuler();
           }}
         >
-          {getLibelle("Annuler")}
+          {getLibelle("Retour espace information")}
         </button>
         <button
           disabled={!props.formik.isValid}

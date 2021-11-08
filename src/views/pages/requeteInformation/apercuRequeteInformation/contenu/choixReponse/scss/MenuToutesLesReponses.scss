@@ -1,0 +1,19 @@
+@import "../../../../../../../scss/colors";
+
+.BoutonSousMenu {
+  padding-left: 0 !important;
+}
+
+.SousMenu {
+  max-width: 50rem;
+  display: flex;
+  flex-direction: column;
+  color: white !important;
+  background-color: $application-color !important;
+  border: 2px solid $application-color !important;
+  align-items: flex-start !important;
+  &:hover {
+    background-color: white !important;
+    color: $title-application-color !important;
+  }
+}

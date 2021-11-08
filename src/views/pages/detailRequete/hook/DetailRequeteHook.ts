@@ -209,6 +209,7 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
     reponse: data.reponse,
     provenanceRequete: Provenance.getEnumFor(data.provenance),
     numeroRequeteLiee: data.numeroRequeteLiee,
+    idRequeteLiee: data.idRequeteLiee,
     piecesComplementInformation: data.piecesComplementInformation,
     besoinUsager: data.besoinUsager
   };

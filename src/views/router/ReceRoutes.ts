@@ -630,7 +630,8 @@ export const routesRece: IRoute[] = [
     url: URL_RECHERCHE_REQUETE,
     component: RMCRequetePage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Recherche une requête")
+    libelle: getLibelle("Recherche requête"),
+    droits: [Droit.CONSULTER]
   },
   // Aperçu requête ... depuis le tableau résultats RMC Requêtes
   {

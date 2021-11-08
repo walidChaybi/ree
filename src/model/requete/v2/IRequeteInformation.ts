@@ -12,9 +12,10 @@ export interface IRequeteInformation extends IRequete {
   objet: ObjetRequete;
   complementObjet: ComplementObjetRequete;
   commentaire: string;
-  reponse: IReponseRequeteInfo;
+  reponse?: IReponseRequeteInfo;
   provenanceRequete: Provenance;
-  numeroRequeteLiee: string;
+  numeroRequeteLiee?: string;
+  idRequeteLiee?: string;
   piecesComplementInformation: IPieceComplementInformation;
   besoinUsager: BesoinUsager;
 }

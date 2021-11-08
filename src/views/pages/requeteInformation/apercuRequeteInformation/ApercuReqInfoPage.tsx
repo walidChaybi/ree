@@ -6,7 +6,7 @@ import { ProtectionApercu } from "../../../common/util/route/Protection/Protecti
 import { getLibelle } from "../../../common/widget/Text";
 import { BandeauRequete } from "../../apercuRequete/contenu/BandeauRequete";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
-import { ChoixReponseReqInfo } from "./contenu/ChoixReponseReqInfo";
+import { ReponseReqInfo } from "./contenu/ReponseReqInfo";
 import { ResumeReqInfo } from "./contenu/ResumeReqInfo";
 import "./scss/ApercuReqInfoPage.scss";
 
@@ -33,10 +33,10 @@ export const ApercuReqInfoPage: React.FC = () => {
           <BandeauRequete detailRequete={requete} />
           <div className="contenuRequeteInfo">
             <div className="side left">
-              <ResumeReqInfo requete={requete}></ResumeReqInfo>
+              <ResumeReqInfo requete={requete} />
             </div>
             <div className="side right">
-              <ChoixReponseReqInfo requete={requete}></ChoixReponseReqInfo>
+              <ReponseReqInfo requete={requete} />
             </div>
           </div>
         </ProtectionApercu>

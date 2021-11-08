@@ -1,0 +1,9 @@
+@import "../../../../../scss/colors";
+
+.EspaceInformationPage {
+  margin-top: 2rem;
+  .Titre {
+    text-align: start;
+    color: $title-application-color;
+  }
+}

@@ -12,16 +12,12 @@ export class ObjetRequete extends EnumWithComplete {
     "MODIFICATION_ACTE",
     "Modification, mise à jour ou rectification d'un acte"
   );
-  public static readonly COMPLETION_REQUETE_EN_COURS = new ObjetRequete(
-    "COMPLETION_REQUETE_EN_COURS",
-    "Complétion de requête en cours"
+  public static readonly TRANSCRIPTION_ACTE_EC_ETRANGER = new ObjetRequete(
+    "TRANSCRIPTION_ACTE_EC_ETRANGER",
+    "Transcription d'un acte de l'état civil étranger"
   );
-  public static readonly TRANSCRIPTION = new ObjetRequete(
-    "TRANSCRIPTION",
-    "Transcription (transcription d'un acte de l'état civil étranger)"
-  );
-  public static readonly NATIONALITE = new ObjetRequete(
-    "NATIONALITE",
+  public static readonly RECHERCHE_INFORMATION_NATIONALITE = new ObjetRequete(
+    "RECHERCHE_INFORMATION_NATIONALITE",
     "Recherche d'information sur la nationalité"
   );
   public static readonly DIVORCE = new ObjetRequete(
@@ -34,15 +30,27 @@ export class ObjetRequete extends EnumWithComplete {
   );
   public static readonly RC_RCA_PACS = new ObjetRequete(
     "RC_RCA_PACS",
-    "Répertoire civil, répertoire civil annexe et PACS"
+    "Répertoire civil, répertoire civil annexe et registre national des PACS des étrangers nés à l'étranger"
   );
-  public static readonly AUTRES_DEMARCHES = new ObjetRequete(
-    "AUTRES_DEMARCHES",
+  public static readonly REGISTRE_DISPERSION_CENDRE = new ObjetRequete(
+    "REGISTRE_DISPERSION_CENDRE",
+    "Registre de dispersion des cendres en pleine nature"
+  );
+  public static readonly AUTRES_DEMARCHES_ADMINISTRATIVES = new ObjetRequete(
+    "AUTRES_DEMARCHES_ADMINISTRATIVES",
     "Autres démarches administratives"
   );
-  public static readonly AUTRE_INFORMATION = new ObjetRequete(
-    "AUTRE_INFORMATION",
-    "Autre information"
+  public static readonly PROBLEME_TECHNIQUE = new ObjetRequete(
+    "PROBLEME_TECHNIQUE",
+    "Problème technique"
+  );
+  public static readonly ESPACE_ADMINISTRATIONS_NOTAIRES = new ObjetRequete(
+    "ESPACE_ADMINISTRATIONS_NOTAIRES",
+    "Espace administrations et notaires"
+  );
+  public static readonly COMPLETION_REQUETE_EN_COURS = new ObjetRequete(
+    "COMPLETION_REQUETE_EN_COURS",
+    "Complétion requête en cours"
   );
 
   public static getEnumFor(str: string) {
@@ -51,5 +59,11 @@ export class ObjetRequete extends EnumWithComplete {
 
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(ObjetRequete);
+  }
+
+  public static getAllEnumsAsOptionsSaufCompletion(): Options {
+    return EnumWithLibelle.getAllLibellesAsOptions(ObjetRequete).filter(
+      opt => opt.value !== ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom
+    );
   }
 }

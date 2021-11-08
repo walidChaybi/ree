@@ -24,7 +24,7 @@ const superagentMock = require("superagent-mock")(
   request,
   configRequetesInformation
 );
-//global.URL.createObjectURL = jest.fn();
+
 let history: any;
 
 beforeAll(() => {
@@ -62,16 +62,12 @@ test("renders ApercuReqInfoPage", async () => {
   );
 
   const resume = screen.getByText(/Résumé de la requête d'information/i);
-
   const choixReponse = screen.getByText(/Choix de la réponse/i);
-  const boutonRepondre = screen.getByText(/Répondre/i);
-  const boutonSaisieLibre = screen.getByText(/Réponse libre/i);
-
   const formReponse = screen.getByText(/Votre réponse/i);
   const libelleReponse = screen.getByText(/Libellé de la réponse/i);
   const mailReponse = screen.getByText(/Mail de la réponse/i);
 
-  const boutonAnnuler = screen.getByText(/Annuler/i);
+  const boutonRetour = screen.getByText(/Retour espace information/i);
   const boutonEnvoyer = screen.getByText(/Envoyer la réponse/i);
 
   await waitFor(() => {
@@ -79,13 +75,11 @@ test("renders ApercuReqInfoPage", async () => {
     expect(bandeau).toBeDefined();
     expect(resume).toBeDefined();
     expect(choixReponse).toBeDefined();
-    expect(boutonRepondre).toBeDefined();
-    expect(boutonSaisieLibre).toBeDefined();
     expect(formReponse).toBeDefined();
     expect(formReponse).toBeDefined();
     expect(libelleReponse).toBeDefined();
     expect(mailReponse).toBeDefined();
-    expect(boutonAnnuler).toBeDefined();
+    expect(boutonRetour).toBeDefined();
     expect(boutonEnvoyer).toBeDefined();
   });
 
@@ -93,7 +87,9 @@ test("renders ApercuReqInfoPage", async () => {
   const sousType = screen.getByText(/Sous-type/i);
   const valeurSousType = screen.getByText("Information");
   const objet = screen.getByText("Objet");
-  const valeurObjet = screen.getByText(/Divorce et\/ou séparation de corps/i);
+  const valeurObjet = screen.getAllByText(
+    /Divorce et\/ou séparation de corps/i
+  );
   const complementObjet = screen.getByText(/Complément d'objet/i);
   const valeurComplementObjet = screen.getByText(
     /Je souhaite mettre à jour mes actes de l'état civil/i
@@ -121,7 +117,7 @@ test("renders ApercuReqInfoPage", async () => {
     expect(sousType).toBeDefined();
     expect(valeurSousType).toBeDefined();
     expect(objet).toBeDefined();
-    expect(valeurObjet).toBeDefined();
+    expect(valeurObjet.length).toEqual(2);
     expect(complementObjet).toBeDefined();
     expect(valeurComplementObjet).toBeDefined();
     expect(dateCreation).toBeDefined();
@@ -142,14 +138,14 @@ test("renders ApercuReqInfoPage", async () => {
     expect(valeurCommentaire).toBeDefined();
   });
 
-  const boutonReponse = screen.getByText(/Répondre/i);
+  const boutonReponsesFiltrees = screen.getByText(/Réponses proposées/i);
 
   await waitFor(() => {
-    expect(boutonReponse).toBeDefined();
+    expect(boutonReponsesFiltrees).toBeDefined();
   });
 
   act(() => {
-    fireEvent.click(boutonReponse);
+    fireEvent.click(boutonReponsesFiltrees);
   });
 
   const boutonReponse1 = screen.getByText(NOMENCLATURE_REPONSE[0].libelle);
@@ -205,7 +201,7 @@ test("bouton annuler", async () => {
     );
   });
 
-  const boutonAnnuler = screen.getByText(/ANNULER/i);
+  const boutonAnnuler = screen.getByText(/Retour espace information/i);
 
   await waitFor(() => {
     expect(boutonAnnuler).toBeDefined();
@@ -283,10 +279,73 @@ test("complétion en cours", async () => {
     );
   });
 
-  screen.debug();
-
   await waitFor(() => {
     expect(screen.getByDisplayValue("Saisie libre agent")).toBeDefined();
+  });
+});
+
+test("renders ApercuReqInfoPage Double Menu", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+    )
+  );
+
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+            <ApercuReqInfoPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  const boutonReponses = screen.getByText(/Toutes les réponses disponibles/i);
+
+  await waitFor(() => {
+    expect(boutonReponses).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(boutonReponses);
+  });
+
+  const boutonSousMenu = screen.getByText(/Problème technique/i);
+
+  await waitFor(() => {
+    expect(boutonSousMenu).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.mouseOver(boutonSousMenu);
+  });
+
+  const boutonReponse1 = screen.getByText(NOMENCLATURE_REPONSE[2].libelle);
+  const boutonReponse2 = screen.getByText(NOMENCLATURE_REPONSE[3].libelle);
+
+  await waitFor(() => {
+    expect(boutonReponse1).toBeDefined();
+    expect(boutonReponse2).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(boutonReponse1);
+  });
+
+  const libelleReponseChoisie = screen.getByText(
+    NOMENCLATURE_REPONSE[2].libelle
+  );
+  const mailReponseChoisie = screen.getByText(
+    NOMENCLATURE_REPONSE[2].corpsMail
+  );
+
+  await waitFor(() => {
+    expect(libelleReponseChoisie).toBeDefined();
+    expect(mailReponseChoisie).toBeDefined();
   });
 });
 

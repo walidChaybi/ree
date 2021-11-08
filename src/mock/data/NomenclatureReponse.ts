@@ -14,6 +14,20 @@ export const NOMENCLATURE_REPONSE = [
       "Séparation de corps/Divorce enregistré(e) par un notaire français",
     corpsMail:
       "Corps Séparation de corps/Divorce enregistré(e) par un notaire français"
+  },
+  {
+    id: "7c713156-8c88-4d20-8e90-9aa63c903b01",
+    objet: "PROBLEME_TECHNIQUE",
+    complementObjet: "PROBLEME_TECHNIQUE",
+    libelle: "Problème technique accès Service Public",
+    corpsMail: "Corps Problème technique accès Service Public"
+  },
+  {
+    id: "03ff441a-40fc-498d-bd0c-dd7130edaf7a",
+    objet: "PROBLEME_TECHNIQUE",
+    complementObjet: "CODE_VERIFICATION_NON_VISIBLE",
+    libelle: "Pas d'impression du CTV",
+    corpsMail: "Corps Pas d'impression du CTV"
   }
 ];
 

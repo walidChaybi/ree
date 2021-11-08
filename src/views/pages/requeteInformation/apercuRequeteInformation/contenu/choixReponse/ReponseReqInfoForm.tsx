@@ -11,12 +11,11 @@ import {
   ISauvegarderReponseReqInfoParams,
   useSauvegarderReponsesReqInfoHook
 } from "../hook/SauvegarderReponseReqInfoHook";
-import "../scss/ChoixReponseReqInfo.scss";
+import "../scss/ReponseReqInfo.scss";
 import ReponseReqInfoBoutons, {
   ReponseReqInfoBoutonsProps
 } from "./ReponseReqInfoBoutons";
-import ReponseReqInfoForm, {
-  CORPS_MAIL,
+import ReponseReqInfoSubForm, {
   DefaultValuesReponseInfoSubForm,
   IReponseInfoSubFormValue,
   ReponseReqInfoSubFormProps,
@@ -45,19 +44,20 @@ const ValidationSchemaReponseInfoForm = Yup.object({
   [REPONSE]: ValidationSchemaReponseInfoSubForm
 });
 
-export const ReponseReqInfo: React.FC<ReponseReqInfoProps> = ({
+export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   reponse,
   requeteId
 }) => {
   const history = useHistory();
   const blocsForm: JSX.Element[] = [getReponseForm(reponse)];
-  const [reponseAEnvoyer, setReponseAEnvoyer] =
-    useState<ISauvegarderReponseReqInfoParams | undefined>();
+  const [reponseAEnvoyer, setReponseAEnvoyer] = useState<
+    ISauvegarderReponseReqInfoParams | undefined
+  >();
 
   const onSubmit = (reponseSaisie: IReponseInfoFormValue) => {
     setReponseAEnvoyer({
       idRequete: requeteId,
-      corpsMail: reponseSaisie[REPONSE][CORPS_MAIL],
+      corpsMail: reponseSaisie.reponse.corpsMail,
       idReponse: reponse?.id
     });
   };
@@ -92,5 +92,5 @@ export function getReponseForm(reponse?: IReponseRequeteInfo): JSX.Element {
   const reponseReqInfoFromProps = {
     reponse
   } as ReponseReqInfoSubFormProps;
-  return <ReponseReqInfoForm key={REPONSE} {...reponseReqInfoFromProps} />;
+  return <ReponseReqInfoSubForm key={REPONSE} {...reponseReqInfoFromProps} />;
 }

@@ -3,6 +3,7 @@
 .BoutonsReponse {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   margin: 0.5rem;
 }
 
@@ -25,4 +26,13 @@
 .Boutons {
   display: flex;
   justify-content: space-evenly;
+}
+
+.MessageInfo {
+  border: 1px solid $application-color;
+  border-radius: 0.25rem;
+  color: #0579be;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  padding: 0.1rem 0.25rem;
 }
