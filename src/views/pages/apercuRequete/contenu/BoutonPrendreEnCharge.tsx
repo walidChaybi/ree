@@ -30,7 +30,6 @@ export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> =
     const setActionEtUpdateStatut = () => {
       setParams({
         requete: mapRequeteRmcAuto(props.requete as IRequeteDelivrance),
-        dataRequetes: [],
         libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         urlCourante: getUrlWithParam(

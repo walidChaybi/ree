@@ -49,18 +49,16 @@ interface MesRequetesPageProps {
 export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
+  const [paramsMiseAJour, setParamsMiseAJour] =
+    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
 
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetesV2
-  >({
-    statuts: StatutsRequetesEspaceDelivrance,
-    tri: "dateStatut",
-    sens: "ASC",
-    range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-  });
+  const [linkParameters, setLinkParameters] =
+    React.useState<IQueryParametersPourRequetesV2>({
+      statuts: StatutsRequetesEspaceDelivrance,
+      tri: "dateStatut",
+      sens: "ASC",
+      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+    });
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteDelivranceApi(
     linkParameters,
@@ -111,7 +109,6 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
         libelleAction: "Prendre en charge",
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         requete: requeteSelect,
-        dataRequetes: data,
         urlCourante: URL_MES_REQUETES_V2
       });
     } else {

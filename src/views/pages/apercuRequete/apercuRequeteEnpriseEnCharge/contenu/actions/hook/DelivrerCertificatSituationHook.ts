@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { StatutRequete } from "../../../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -9,15 +8,10 @@ import {
 } from "../../../../../../common/hook/v2/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
 import { specificationPhraseDelivrer } from "../../../../../../common/hook/v2/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
 import { useGenerationInscriptionsHook } from "../../../../../../common/hook/v2/generation/generationInscriptionsHook/GenerationInscriptionsHook";
-import {
-  IActionStatutRequete,
-  useCreerActionMajStatutRequete
-} from "../../../../../../common/hook/v2/requete/CreerActionMajStatutRequete";
 import { useSupprimerAnciensDocumentsReponseHook } from "./../hook/SupprimerAnciensDocumentsReponseHook";
 
 export interface IResultDelivrerCertificatSituation {
   idDocumentReponse?: string;
-  idAction?: string;
   contenuDocumentReponse?: string;
 }
 
@@ -38,9 +32,6 @@ export function useDelivrerCertificatSituationHook(
 
   const [paramsCertificatSituation, setParamsCertificatSituation] =
     useState<IGenerationCertificatSituationParams>();
-
-  const [actionStatutRequete, setActionStatutRequete] =
-    useState<IActionStatutRequete>();
 
   // 0 - Suppression des eventuels documents générés au préalable
   const isOldDocumentsDeleted = useSupprimerAnciensDocumentsReponseHook(
@@ -71,49 +62,14 @@ export function useDelivrerCertificatSituationHook(
   const resultGenerationCertificatSituation =
     useGenerationCertificatSituationHook(paramsCertificatSituation);
 
-  // 3 - Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
-  useEffect(() => {
-    if (resultGenerationCertificatSituation) {
-      setActionStatutRequete({
-        libelleAction: StatutRequete.A_VALIDER.libelle,
-        statutRequete: StatutRequete.A_VALIDER,
-        requeteId: requete?.idRequete
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultGenerationCertificatSituation]);
-
-  // 4 - Mise à jour du status de la requête + création d'une action
-  const { idAction } = useCreerActionMajStatutRequete(actionStatutRequete);
-
   // 5 - une fois l'action créée, création du résultat
   useEffect(() => {
-    const uuidDocumentsReponse =
-      resultGenerationCertificatSituation?.idDocumentReponse;
-    const contenuComposition =
-      resultGenerationCertificatSituation?.contenuDocumentReponse;
-
-    if (
-      resultGenerationCertificatSituation &&
-      estNonVide(idAction, uuidDocumentsReponse, contenuComposition)
-    ) {
+    if (resultGenerationCertificatSituation) {
       setResultDelivrerCertificatSituation({
-        //@ts-ignore
-        idDocumentReponse: uuidDocumentsReponse[0],
-        idAction,
-        contenuDocumentReponse: contenuComposition
+        idDocumentReponse: resultGenerationCertificatSituation.idDocumentReponse
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idAction]);
+  }, [resultGenerationCertificatSituation]);
 
   return resultDelivrerCertificatSituation;
-}
-
-function estNonVide(
-  idAction: string | undefined,
-  uuidDocumentsReponse: string | undefined,
-  contenuComposition: string | undefined
-) {
-  return idAction && uuidDocumentsReponse && contenuComposition;
 }

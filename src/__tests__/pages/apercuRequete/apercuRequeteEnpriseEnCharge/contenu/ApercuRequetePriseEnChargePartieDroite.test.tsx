@@ -37,7 +37,6 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 const history = createMemoryHistory();
 
 const dataHistory: DataRMCAuto = {
-  dataRequetes: [],
   dataRMCAutoActe: DataRMCActeAvecResultat,
   dataTableauRMCAutoActe: DataTableauActe,
   dataRMCAutoInscription: DataRMCInscriptionAvecResultat,

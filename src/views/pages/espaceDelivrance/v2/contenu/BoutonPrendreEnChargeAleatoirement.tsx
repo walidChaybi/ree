@@ -20,19 +20,16 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
 
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [params, setParams] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
-  const requeteAleatoireResultat:
-    | IRequeteAleatoireResultat
-    | undefined = useGetRequeteAleatoire(prendreEnCharge);
+  const [params, setParams] =
+    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined =
+    useGetRequeteAleatoire(prendreEnCharge);
 
   useEffect(() => {
     if (requeteAleatoireResultat) {
       if (requeteAleatoireResultat.requete) {
         setParams({
           requete: requeteAleatoireResultat.requete,
-          dataRequetes: [],
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
           urlCourante: receUrl.getUrlCourante(history)

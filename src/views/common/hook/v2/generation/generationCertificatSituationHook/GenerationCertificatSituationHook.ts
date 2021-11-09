@@ -7,6 +7,7 @@ import {
 } from "../../../../../../model/composition/ICertificatSituationComposition";
 import { IDecret } from "../../../../../../model/etatcivil/commun/IDecret";
 import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "../../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "../../../../../../model/requete/v2/ITitulaireRequeteTableau";
@@ -14,7 +15,7 @@ import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/re
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { MimeType } from "../../../../../../ressources/MimeType";
 import { useCertificatSituationApiHook } from "../../composition/CompositionCertificatSituationHook";
-import { usePostDocumentsReponseApi } from "../../DocumentReponseHook";
+import { useStockerDocumentCreerActionMajStatutRequete } from "../../requete/StockerDocumentCreerActionMajStatutRequete";
 import { IResultGenerationUnDocument, RESULTAT_VIDE } from "../generationUtils";
 import { specificationDecret } from "./specificationTitreDecretPhrase/specificationDecret";
 import { specificationTitre } from "./specificationTitreDecretPhrase/specificationTitre";
@@ -41,8 +42,8 @@ export function useGenerationCertificatSituationHook(
   const [certificatSituationComposition, setCertificatSituationComposition] =
     useState<ICertificatSituationComposition>();
 
-  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
-    useState<IDocumentReponse[] | undefined>();
+  const [documentReponsePourStockage, setDocumentReponsePourStockage] =
+    useState<IDocumentReponse | undefined>();
 
   // 1 - Construction du Certificat de situation
   useEffect(() => {
@@ -84,39 +85,37 @@ export function useGenerationCertificatSituationHook(
   // 3 - Création du document réponse (après appel 'useCertificatSituationRmcAutoVideApi') pour stockage dans la BDD et Swift
   useEffect(() => {
     if (contenuComposition && params?.requete) {
-      setDocumentsReponsePourStockage([
-        {
-          contenu: contenuComposition,
-          nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
-          mimeType: MimeType.APPLI_PDF,
-          typeDocument: DocumentDelivrance.getKeyForCode(
-            "CERTIFICAT_SITUATION"
-          ), // UUID du type de document demandé (nomenclature)
-          nbPages: 1,
-          orientation: Orientation.PORTRAIT
-        } as IDocumentReponse
-      ]);
+      setDocumentReponsePourStockage({
+        contenu: contenuComposition,
+        nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
+        mimeType: MimeType.APPLI_PDF,
+        typeDocument: DocumentDelivrance.getKeyForCode("CERTIFICAT_SITUATION"), // UUID du type de document demandé (nomenclature)
+        nbPages: 1,
+        orientation: Orientation.PORTRAIT
+      } as IDocumentReponse);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contenuComposition]);
 
   // 4- Stockage du document réponse une fois celui-ci créé
-  const uuidDocumentsReponse = usePostDocumentsReponseApi(
-    params?.requete?.idRequete,
-    documentsReponsePourStockage
+  const uuidDocumentReponse = useStockerDocumentCreerActionMajStatutRequete(
+    StatutRequete.A_VALIDER.libelle,
+    StatutRequete.A_VALIDER,
+    documentReponsePourStockage,
+    params?.requete?.idRequete
   );
 
   // 5 - Une fois le document stocker, création du résultat
   useEffect(() => {
-    if (uuidDocumentsReponse && contenuComposition) {
+    if (uuidDocumentReponse && contenuComposition) {
       setResultGenerationCertificatSituation({
         //@ts-ignore
-        idDocumentReponse: uuidDocumentsReponse[0],
+        idDocumentReponse: uuidDocumentReponse,
         contenuDocumentReponse: contenuComposition
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uuidDocumentsReponse]);
+  }, [uuidDocumentReponse]);
 
   return resultGenerationCertificatSituation;
 }

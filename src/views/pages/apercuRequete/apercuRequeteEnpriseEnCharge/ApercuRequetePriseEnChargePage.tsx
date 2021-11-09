@@ -20,7 +20,6 @@ interface IdRequeteParams {
 }
 
 export interface DataRMCAuto {
-  dataRequetes: any[];
   dataRMCAutoActe: IResultatRMCActe[];
   dataTableauRMCAutoActe: IParamsTableau;
   dataRMCAutoInscription: IResultatRMCInscription[];

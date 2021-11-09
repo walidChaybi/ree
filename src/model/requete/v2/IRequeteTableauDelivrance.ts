@@ -82,9 +82,7 @@ export function mappingUneRequeteTableau(
     requerant: requete?.requerant
       ? Requerant.mappingRequerant(requete?.requerant)
       : null,
-    nomCompletRequerant:
-      getValeurOuVide(requete?.requerant?.nomFamille) +
-      getValeurOuVide(requete?.requerant?.prenom),
+    nomCompletRequerant: requete?.nomCompletRequerant,
     attribueA: mapAttribueA(requete),
     dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
     dateDerniereMaj: getFormatDateFromTimestamp(requete?.dateDernierMAJ),

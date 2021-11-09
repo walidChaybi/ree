@@ -53,7 +53,6 @@ const params = {
 
 const HookConsummer: React.FC = () => {
   const res = useGenerationCertificatSituationHook(params);
-
   return (
     <>
       <div data-testid="resulatIdDoc">

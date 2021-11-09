@@ -40,10 +40,10 @@ export const MenuReponseSansDelivranceCS: React.FC<IActionProps> = props => {
   const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
 
   const resultatReponseSansDelivranceCS = useReponseSansDelivranceCS(
+    props.requete.id,
     StatutRequete.A_VALIDER.libelle,
     StatutRequete.A_VALIDER,
-    reponseSansDelivranceCS,
-    props.requete.id
+    reponseSansDelivranceCS
   );
 
   useEffect(() => {

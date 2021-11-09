@@ -16,7 +16,6 @@ export interface CreationActionMiseAjourStatutEtRmcAutoHookParams {
   libelleAction: string;
   urlCourante: string;
   requete?: IRequeteTableauDelivrance;
-  dataRequetes?: any[];
   pasDeTraitementAuto?: boolean;
 }
 
@@ -46,7 +45,7 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
   );
 
   useEffect(() => {
-    if (idAction && params && params.requete && params.dataRequetes) {
+    if (idAction && params && params.requete) {
       // Mise à jour du statut de la requête après l'appel à "usePostCreationActionEtMiseAjourStatutApi"
       params.requete.statut = params?.statutRequete.libelle;
       // Mise à jour de l'id utilisateur

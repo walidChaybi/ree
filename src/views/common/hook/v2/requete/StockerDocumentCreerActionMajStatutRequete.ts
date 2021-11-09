@@ -1,48 +1,42 @@
 import { useEffect, useState } from "react";
+import { postSauvDocumentCreerActionMajStatutRequete } from "../../../../../api/appels/requeteApi";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../../model/requete/v2/IDocumentReponse";
-import { usePostDocumentsReponseApi } from "../DocumentReponseHook";
-import {
-  CreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "./ActionHook";
+import { logError } from "../../../util/LogManager";
 
 export function useStockerDocumentCreerActionMajStatutRequete(
   libelleAction: string,
   statutRequete: StatutRequete,
-  documentsReponsePourStockage?: IDocumentReponse[],
+  documentReponsePourStockage?: IDocumentReponse,
   requeteId?: string
 ) {
-  const [
-    creationActionEtMiseAjourStatutParams,
-    setCreationActionEtMiseAjourStatutParams
-  ] = useState<CreationActionEtMiseAjourStatutParams | undefined>();
-
-  // 3- Stockage du document réponse une fois celui-ci créé
-  const uuidDocumentsReponse = usePostDocumentsReponseApi(
-    requeteId,
-    documentsReponsePourStockage
-  );
-
+  const [uuidDocumentReponse, setUuidDocumentReponse] = useState<string>();
   // 4- Une fois le document stocké, création des paramètres pour la création de l'action et la mise à jour du statut de la requête
-  useEffect(
-    () => {
-      if (uuidDocumentsReponse) {
-        setCreationActionEtMiseAjourStatutParams({
-          requeteId,
-          libelleAction,
-          statutRequete
+  useEffect(() => {
+    if (
+      requeteId &&
+      libelleAction &&
+      statutRequete &&
+      documentReponsePourStockage
+    ) {
+      postSauvDocumentCreerActionMajStatutRequete(
+        requeteId,
+        libelleAction,
+        statutRequete,
+        documentReponsePourStockage
+      )
+        .then(result => {
+          setUuidDocumentReponse(result.body.data[0]);
+        })
+        .catch(error => {
+          logError({
+            messageUtilisateur:
+              "Impossible de stocker le document et de mettre à jour le statut",
+            error
+          });
         });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [uuidDocumentsReponse]
-  );
+    }
+  }, [documentReponsePourStockage, libelleAction, requeteId, statutRequete]);
 
-  // 5- Une fois le document stocké et les paramètres créés, mise à jour du status de la requête + création d'une action
-  const idAction = usePostCreationActionEtMiseAjourStatutApi(
-    creationActionEtMiseAjourStatutParams
-  );
-
-  return { idAction, uuidDocumentsReponse };
+  return uuidDocumentReponse;
 }

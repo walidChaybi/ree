@@ -49,7 +49,6 @@ history.push(
     "a4cefb71-8457-4f6b-937e-34b49335d884"
   ),
   {
-    dataRequetes: [],
     dataRMCAutoActe: DataRMCActeAvecResultat,
     dataTableauRMCAutoActe: { DataTableauActe },
     dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
@@ -194,7 +193,6 @@ test("redirection requete RDC", async () => {
       "a4cefb71-8457-4f6b-937e-34b49335d666"
     ),
     {
-      dataRequetes: [],
       dataRMCAutoActe: DataRMCActeAvecResultat,
       dataTableauRMCAutoActe: { DataTableauActe },
       dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
@@ -248,7 +246,6 @@ test("ignorer requete", async () => {
       "a4cefb71-8457-4f6b-937e-34b49335d666"
     ),
     {
-      dataRequetes: [],
       dataRMCAutoActe: DataRMCActeAvecResultat,
       dataTableauRMCAutoActe: { DataTableauActe },
       dataRMCAutoInscription: DataRMCInscriptionAvecResultat,

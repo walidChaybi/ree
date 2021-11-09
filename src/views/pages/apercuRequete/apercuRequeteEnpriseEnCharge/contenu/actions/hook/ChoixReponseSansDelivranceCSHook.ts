@@ -9,17 +9,15 @@ import { useCompositionReponseSansDelivranceCSApi } from "../../../../../../comm
 import { useStockerDocumentCreerActionMajStatutRequete } from "../../../../../../common/hook/v2/requete/StockerDocumentCreerActionMajStatutRequete";
 
 export function useReponseSansDelivranceCS(
+  requeteId: string,
   libelleAction: string,
   statutRequete: StatutRequete,
-  reponseSansDelivranceCS?: IReponseSansDelivranceCS,
-  requeteId?: string
+  reponseSansDelivranceCS?: IReponseSansDelivranceCS
 ) {
   const [resultat, setResultat] = useState<any>();
 
-  const [
-    documentsReponsePourStockage,
-    setDocumentsReponsePourStockage
-  ] = useState<IDocumentReponse[] | undefined>();
+  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
+    useState<IDocumentReponse | undefined>();
 
   // 1- Réponse négative demandée: appel api composition
   const contenuComposition = useCompositionReponseSansDelivranceCSApi(
@@ -30,26 +28,22 @@ export function useReponseSansDelivranceCS(
   // 2- Création du document réponse (après appel 'useCompositionReponseSansDelivranceCSMariageApi') pour stockage dans la BDD et Swift
   useEffect(() => {
     if (contenuComposition) {
-      setDocumentsReponsePourStockage([
-        {
-          contenu: contenuComposition,
-          nom: reponseSansDelivranceCS?.fichier,
-          mimeType: MimeType.APPLI_PDF,
-          typeDocument: DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
-          nbPages: 1,
-          orientation: Orientation.PORTRAIT
-        } as IDocumentReponse
-      ]);
+      setDocumentsReponsePourStockage({
+        contenu: contenuComposition,
+        nom: reponseSansDelivranceCS?.fichier,
+        mimeType: MimeType.APPLI_PDF,
+        typeDocument:
+          DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
+        nbPages: 1,
+        orientation: Orientation.PORTRAIT
+      } as IDocumentReponse);
     }
   }, [contenuComposition, reponseSansDelivranceCS]);
 
   // 3- Stockage du document réponse une fois celui-ci créé
   // 4- Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   // 5- Mise à jour du status de la requête + création d'une action
-  const {
-    idAction,
-    uuidDocumentsReponse
-  } = useStockerDocumentCreerActionMajStatutRequete(
+  const uuidDocumentReponse = useStockerDocumentCreerActionMajStatutRequete(
     libelleAction,
     statutRequete,
     documentsReponsePourStockage,
@@ -59,21 +53,15 @@ export function useReponseSansDelivranceCS(
   // 6- Une fois la requête mise à jour et l'action créé, changement de page
   useEffect(
     () => {
-      if (
-        idAction &&
-        requeteId &&
-        uuidDocumentsReponse &&
-        uuidDocumentsReponse.length === 1
-      ) {
+      if (requeteId && uuidDocumentReponse) {
         setResultat({
           requeteId,
-          idAction,
-          uuidDocumentsReponse
+          uuidDocumentReponse
         });
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [idAction]
+    [uuidDocumentReponse]
   );
 
   return resultat;

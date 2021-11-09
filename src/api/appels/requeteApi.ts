@@ -28,6 +28,7 @@ export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
 export const URL_COURRIER = "/courrier";
+export const URL_DOCUMENT = "/document";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PARAMETRE = "/parametres";
@@ -347,6 +348,23 @@ export async function postSauvCourrierCreerActionMajStatutRequete(
     uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_COURRIER}`,
     parameters: {
       idRequete,
+      libelleAction,
+      statutRequete: StatutRequeteV2.getKey(statutRequete)
+    },
+    data: requete
+  });
+}
+
+export async function postSauvDocumentCreerActionMajStatutRequete(
+  idRequete: string,
+  libelleAction: string,
+  statutRequete: StatutRequeteV2,
+  requete: Object
+) {
+  return apiV2.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_DOCUMENT}`,
+    parameters: {
       libelleAction,
       statutRequete: StatutRequeteV2.getKey(statutRequete)
     },

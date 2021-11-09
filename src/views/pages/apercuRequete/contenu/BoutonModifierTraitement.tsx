@@ -39,7 +39,6 @@ export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> =
         requete: mappingRequeteDelivranceToRequeteTableau(
           props.requete as IRequeteDelivrance
         ),
-        dataRequetes: [],
         pasDeTraitementAuto: true
       });
     };
