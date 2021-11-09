@@ -137,6 +137,7 @@ const NestedMenuItem = React.forwardRef<
   };
 
   const open = isSubMenuOpen && parentMenuOpen;
+
   const menuItemClasses = useMenuItemStyles({ open });
 
   // Root element must have a `tabIndex` attribute for keyboard navigation
@@ -185,7 +186,14 @@ const NestedMenuItem = React.forwardRef<
           setIsSubMenuOpen(false);
         }}
       >
-        <div ref={menuContainerRef} style={{ pointerEvents: "auto" }}>
+        <div
+          ref={menuContainerRef}
+          style={{ pointerEvents: "auto" }}
+          onClick={() => {
+            // Rajouter pour fermer le sous menu après le click
+            setIsSubMenuOpen(false);
+          }}
+        >
           {children}
         </div>
       </Menu>
