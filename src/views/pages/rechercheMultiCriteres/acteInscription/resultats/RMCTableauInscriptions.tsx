@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { officierALeDroitSurLePerimetre } from "../../../../../model/agent/IOfficier";
-import { Droit } from "../../../../../model/Droit";
 import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
 import {
   FicheUtil,
@@ -13,14 +11,24 @@ import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { getValeurOuVide } from "../../../../common/util/Utils";
+import {
+  getValeurOuVide,
+  supprimeElement
+} from "../../../../common/util/Utils";
 import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
 import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
 import { getLibelle } from "../../../../common/widget/Text";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
+import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
 import { getMessageZeroInscription } from "../hook/RMCActeInscriptionUtils";
 import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
 import { determinerColonnes } from "./RMCTableauInscriptionsParams";
+
+interface IFenetreFicheInscription {
+  idInscription: string;
+  datasFiches: IDataFicheProps[];
+  index: IIndex;
+}
 
 export interface RMCResultatInscriptionProps {
   typeRMC: TypeRMC;
@@ -36,6 +44,14 @@ export interface RMCResultatInscriptionProps {
   ) => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
+  // Données propre à une fiche Inscription pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesInscription?: (
+    ficheIdentifiant: string,
+    lien: string
+  ) => void;
+  idFicheInscription?: string;
+  dataRMCFicheInscription?: IResultatRMCInscription[];
+  dataTableauRMCFicheInscription?: IParamsTableau;
 }
 
 export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
@@ -47,7 +63,12 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   resetTableauInscription,
   onClickCheckboxCallBack,
   nbLignesParPage,
-  nbLignesParAppel
+  nbLignesParAppel,
+  // Données propre à une fiche Inscription pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesInscription,
+  idFicheInscription,
+  dataRMCFicheInscription,
+  dataTableauRMCFicheInscription
 }) => {
   // Gestion du tableau
   const [zeroInscription, setZeroInscription] = useState<JSX.Element>();
@@ -68,31 +89,82 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     [setRangeInscription]
   );
 
-  // Gestion de la Fenêtre
-  const [etatFenetres, setEtatFenetres] = useState<string[]>([]);
+  // Gestion des fenêtre fiche inscription
+  const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheInscription[]>(
+    []
+  );
+
+  // Plage de fiche courante dans le tableau de résultat (suite à une RMC Inscription)
+  const [datasFichesCourantes, setDatasFichesCourante] = useState<
+    IDataFicheProps[]
+  >();
 
   const closeFenetre = (idInscription: string, idx: number) => {
-    const tableau = [...etatFenetres];
-    if (tableau[idx] === idInscription) {
-      tableau[idx] = "";
-      setEtatFenetres(tableau);
-    }
+    const nouvelEtatFenetres = supprimeElement(
+      etatFenetres,
+      (etatFenetre: IFenetreFicheInscription) =>
+        etatFenetre.idInscription === idInscription
+    );
+    setEtatFenetres(nouvelEtatFenetres);
   };
 
-  const onClickOnLine = (idInscription: string, data: any, idx: number) => {
-    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, "MEAE")) {
-      const tableau = [...etatFenetres];
-      if (tableau[idx] !== idInscription) {
-        tableau[idx] = idInscription;
-        setEtatFenetres(tableau);
+  const onClickOnLine = (idInscription: string, data: any, index: number) => {
+    const etatFenetreTrouve = etatFenetres.find(
+      etatFenetre => etatFenetre.idInscription === idInscription
+    );
+    if (datasFichesCourantes) {
+      if (!etatFenetreTrouve) {
+        const nouvelEtatFenetre: IFenetreFicheInscription = {
+          index: { value: index },
+          idInscription,
+          datasFiches: datasFichesCourantes
+        };
+        setEtatFenetres([...etatFenetres, nouvelEtatFenetre]);
+      } else {
+        // Si l'utilisateur clique sur une fenêtre déjà ouverte alors il faut remettre à jour ces données pour la navigation et son index courant
+        // (cf. useEffect (*) dans FichePage.tsx)
+        etatFenetreTrouve.datasFiches = datasFichesCourantes;
+        etatFenetreTrouve.index = { value: index };
+        setEtatFenetres([...etatFenetres]);
       }
     }
   };
 
-  const datasFiches = dataRMCInscription.map(data => ({
-    identifiant: getValeurOuVide(data.idInscription),
-    categorie: getCategorieFiche(data.idInscription, dataRMCInscription)
-  }));
+  useEffect(() => {
+    if (dataRMCFicheInscription) {
+      const etatFenetreTrouve = etatFenetres.find(
+        etatFenetre => etatFenetre.idInscription === idFicheInscription
+      );
+      if (etatFenetreTrouve) {
+        const datasFiches = dataRMCFicheInscription.map(data => ({
+          identifiant: getValeurOuVide(data.idInscription),
+          categorie: getCategorieFiche(
+            data.idInscription,
+            dataRMCFicheInscription
+          ),
+          lienSuivant: dataTableauRMCFicheInscription?.nextDataLinkState,
+          lienPrecedent: dataTableauRMCFicheInscription?.previousDataLinkState
+        }));
+        etatFenetreTrouve.datasFiches = datasFiches;
+        setEtatFenetres([...etatFenetres]);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    idFicheInscription,
+    dataRMCFicheInscription,
+    dataTableauRMCFicheInscription
+  ]);
+
+  useEffect(() => {
+    const datasFiches = dataRMCInscription.map(data => ({
+      identifiant: data.idInscription,
+      categorie: getCategorieFiche(data.idInscription, dataRMCInscription),
+      lienSuivant: dataTableauRMCInscription?.nextDataLinkState,
+      lienPrecedent: dataTableauRMCInscription?.previousDataLinkState
+    }));
+    setDatasFichesCourante(datasFiches);
+  }, [dataRMCInscription, dataTableauRMCInscription]);
 
   // Gestion du clic sur une colonne de type checkbox.
   const [selected, setSelected] = useState<Map<number, string>>(new Map([]));
@@ -176,29 +248,50 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
 
       {etatFenetres && etatFenetres.length > 0 && (
         <>
-          {etatFenetres.map((idInscription: string, index: number) => {
-            return (
-              idInscription &&
-              idInscription !== "" && (
-                <FenetreFiche
-                  key={`fiche${idInscription}${index}`}
-                  identifiant={idInscription}
-                  categorie={getCategorieFiche(
-                    idInscription,
-                    dataRMCInscription
-                  )}
-                  datasFiches={datasFiches}
-                  index={index}
-                  onClose={closeFenetre}
-                />
-              )
-            );
-          })}
+          {etatFenetres.map(
+            (fenetreFicheInscription: IFenetreFicheInscription) => {
+              return (
+                fenetreFicheInscription && (
+                  <FenetreFiche
+                    key={`fiche${fenetreFicheInscription.idInscription}${fenetreFicheInscription.index}`}
+                    identifiant={fenetreFicheInscription.idInscription}
+                    categorie={getCategorieFicheAPartirDatasFiches(
+                      fenetreFicheInscription.idInscription,
+                      fenetreFicheInscription.datasFiches
+                    )}
+                    onClose={closeFenetre}
+                    datasFiches={fenetreFicheInscription.datasFiches}
+                    index={fenetreFicheInscription.index}
+                    nbLignesTotales={
+                      dataTableauRMCInscription.rowsNumberState || 0
+                    }
+                    getLignesSuivantesOuPrecedentes={
+                      getLignesSuivantesOuPrecedentesInscription
+                    }
+                    nbLignesParAppel={nbLignesParAppel}
+                  />
+                )
+              );
+            }
+          )}
         </>
       )}
     </>
   );
 };
+
+function getCategorieFicheAPartirDatasFiches(
+  id: string,
+  datas: IDataFicheProps[]
+): TypeFiche {
+  let categorie = "";
+  datas.forEach(data => {
+    if (data.categorie && data.identifiant === id) {
+      categorie = data.categorie;
+    }
+  });
+  return FicheUtil.getTypeFicheFromString(categorie);
+}
 
 function getCategorieFiche(
   id: string,

@@ -1,32 +1,39 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresActes } from "../../../../../api/appels/etatcivilApi";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import {
-  getParamsTableau,
-  IParamsTableau
-} from "../../../../common/util/GestionDesLiensApi";
+import { getParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
+import {
+  IRMCActeApiHookResultat,
+  RESULTAT_NON_DEFINIT
+} from "../../common/hook/RMCActeEtActeArchiveHookUtil";
 import { mappingActes } from "../../common/mapping/RMCMappingUtil";
 import {
+  ICriteresRechercheActeInscription,
   mappingCriteres,
   rechercherActeAutorise
 } from "./RMCActeInscriptionUtils";
-import { ICriteresRecherche } from "./RMCInscriptionApiHook";
 
-export function useRMCActeApiHook(criteres?: ICriteresRecherche) {
-  const [dataRMCActe, setDataRMCActe] = useState<IResultatRMCActe[]>();
-  const [dataTableauRMCActe, setDataTableauRMCActe] = useState<
-    IParamsTableau
-  >();
+export function useRMCActeApiHook(
+  criteres?: ICriteresRechercheActeInscription
+): IRMCActeApiHookResultat {
+  const [resultat, setResultat] = useState<IRMCActeApiHookResultat>(
+    RESULTAT_NON_DEFINIT
+  );
+
   useEffect(() => {
-    if (criteres != null && criteres.valeurs != null) {
+    if (criteres && criteres.valeurs) {
       const criteresRequest = mappingCriteres(criteres.valeurs);
 
       if (rechercherActeAutorise(criteresRequest)) {
         rechercheMultiCriteresActes(criteresRequest, criteres.range)
           .then((result: any) => {
-            setDataRMCActe(mappingActes(result.body.data.registres));
-            setDataTableauRMCActe(getParamsTableau(result));
+            setResultat({
+              dataRMCActe: mappingActes(result.body.data.registres),
+              dataTableauRMCActe: getParamsTableau(result),
+              // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
+              //  de la fiche acte pour sa pagination/navigation
+              ficheIdentifiant: criteres.ficheIdentifiant
+            });
           })
           .catch(error => {
             logError({
@@ -36,14 +43,13 @@ export function useRMCActeApiHook(criteres?: ICriteresRecherche) {
             });
           });
       } else {
-        setDataRMCActe([]);
-        setDataTableauRMCActe({});
+        setResultat({
+          dataRMCActe: [],
+          dataTableauRMCActe: {}
+        });
       }
     }
   }, [criteres]);
 
-  return {
-    dataRMCActe,
-    dataTableauRMCActe
-  };
+  return resultat;
 }

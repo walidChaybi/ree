@@ -1,0 +1,10 @@
+import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
+
+export interface IRMCActeApiHookResultat {
+  dataRMCActe?: IResultatRMCActe[];
+  dataTableauRMCActe?: IParamsTableau;
+  ficheIdentifiant?: string;
+}
+
+export const RESULTAT_NON_DEFINIT: IRMCActeApiHookResultat = {};

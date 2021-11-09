@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresInscriptions } from "../../../../../api/appels/etatcivilApi";
-import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   getParamsTableau,
@@ -8,24 +7,26 @@ import {
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
 import {
+  ICriteresRechercheActeInscription,
   mappingCriteres,
   mappingInscriptions,
   rechercherRepertoireAutorise
 } from "./RMCActeInscriptionUtils";
 
-export interface ICriteresRecherche {
-  valeurs: IRMCActeInscription;
-  range?: string;
+export interface IRMCInscriptionApiHookResultat {
+  dataRMCInscription?: IResultatRMCInscription[];
+  dataTableauRMCInscription?: IParamsTableau;
+  ficheIdentifiant?: string;
 }
 
-export function useRMCInscriptionApiHook(criteres?: ICriteresRecherche) {
-  const [dataRMCInscription, setDataRMCInscription] = useState<
-    IResultatRMCInscription[]
-  >();
-  const [
-    dataTableauRMCInscription,
-    setDataTableauRMCInscription
-  ] = useState<IParamsTableau>();
+const RESULTAT_NON_DEFINIT: IRMCInscriptionApiHookResultat = {};
+
+export function useRMCInscriptionApiHook(
+  criteres?: ICriteresRechercheActeInscription
+): IRMCInscriptionApiHookResultat {
+  const [resultat, setResultat] = useState<IRMCInscriptionApiHookResultat>(
+    RESULTAT_NON_DEFINIT
+  );
 
   useEffect(() => {
     async function fetchInscriptions() {
@@ -40,11 +41,18 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRecherche) {
             const inscriptions = mappingInscriptions(
               result?.body?.data?.repertoiresCiviles
             );
-            setDataRMCInscription(inscriptions);
-            setDataTableauRMCInscription(getParamsTableau(result));
+            setResultat({
+              dataRMCInscription: inscriptions,
+              dataTableauRMCInscription: getParamsTableau(result),
+              // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
+              //  de la fiche Inscription pour sa pagination/navigation
+              ficheIdentifiant: criteres.ficheIdentifiant
+            });
           } else {
-            setDataRMCInscription([]);
-            setDataTableauRMCInscription({});
+            setResultat({
+              dataRMCInscription: [],
+              dataTableauRMCInscription: {}
+            });
           }
         }
       } catch (error) {
@@ -58,8 +66,5 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRecherche) {
     fetchInscriptions();
   }, [criteres]);
 
-  return {
-    dataRMCInscription,
-    dataTableauRMCInscription
-  };
+  return resultat;
 }

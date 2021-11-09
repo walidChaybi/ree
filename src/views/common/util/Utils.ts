@@ -271,3 +271,17 @@ export function compactObject(object: any): any {
 export function tousNonVides(...args: any[]): boolean {
   return args.length > 0 && args.every(elem => elem);
 }
+
+export function supprimeElement(tableau: any[], fct: any) {
+  let nouveauTableau;
+  const indexASupprimer = tableau.findIndex(element => fct(element));
+  if (indexASupprimer !== -1) {
+    nouveauTableau = [
+      ...tableau.slice(0, indexASupprimer),
+      ...tableau.slice(indexASupprimer + 1)
+    ];
+  } else {
+    nouveauTableau = [...tableau];
+  }
+  return nouveauTableau;
+}

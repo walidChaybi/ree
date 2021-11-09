@@ -20,7 +20,7 @@ import TitulaireFiltre, {
   TitulaireFiltreProps,
   TitulaireValidationSchema
 } from "../filtres/titulaire/TitulaireFiltre";
-import { ICriteresRecherche } from "./hook/RMCInscriptionApiHook";
+import { ICriteresRechercheActeInscription } from "./hook/RMCActeInscriptionUtils";
 import "./scss/RMCActeInscriptionPage.scss";
 
 // Nom des filtres
@@ -50,10 +50,10 @@ interface RMCActeInscriptionFormProps {
   >;
   setNouvelleRMCActeInscription: React.Dispatch<React.SetStateAction<boolean>>;
   setCriteresRechercheActe: React.Dispatch<
-    React.SetStateAction<ICriteresRecherche | undefined>
+    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
   >;
   setCriteresRechercheInscription: React.Dispatch<
-    React.SetStateAction<ICriteresRecherche | undefined>
+    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
   >;
   closePopIn?: () => void;
   nbLignesParAppelActe: number;

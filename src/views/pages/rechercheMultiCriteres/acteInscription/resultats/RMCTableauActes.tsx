@@ -6,15 +6,24 @@ import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { getValeurOuVide } from "../../../../common/util/Utils";
+import {
+  getValeurOuVide,
+  supprimeElement
+} from "../../../../common/util/Utils";
 import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
 import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
 import { getLibelle } from "../../../../common/widget/Text";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
+import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
 import { getMessageZeroActe } from "../hook/RMCActeInscriptionUtils";
 import { determinerColonnes } from "./RMCTableauActesParams";
 import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
 
+interface IFenetreFicheActe {
+  idActe: string;
+  datasFiches: IDataFicheProps[];
+  index: IIndex;
+}
 export interface RMCResultatActeProps {
   typeRMC: TypeRMC;
   dataRequete?: TRequete;
@@ -31,6 +40,14 @@ export interface RMCResultatActeProps {
   ) => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
+  // Données propre à une fiche acte pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesActe?: (
+    ficheIdentifiant: string,
+    lien: string
+  ) => void;
+  idFicheActe?: string;
+  dataRMCFicheActe?: IResultatRMCActe[];
+  dataTableauRMCFicheActe?: IParamsTableau;
 }
 
 export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
@@ -44,7 +61,12 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   resetTableauActe,
   onClickCheckboxCallBack,
   nbLignesParPage,
-  nbLignesParAppel
+  nbLignesParAppel,
+  // Données propre à une fiche acte pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesActe,
+  idFicheActe,
+  dataRMCFicheActe,
+  dataTableauRMCFicheActe
 }) => {
   // Gestion du tableau
   const [zeroActe, setZeroActe] = useState<JSX.Element>();
@@ -65,29 +87,72 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     [setRangeActe]
   );
 
-  // Gestion de la Fenêtre
-  const [etatFenetres, setEtatFenetres] = useState<string[]>([]);
+  // Gestion des fenêtres fiche acte
+  const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheActe[]>([]);
+
+  // Plage de fiche courante dans le tableau de résultat (suite à une RMC Acte)
+  const [datasFichesCourantes, setDatasFichesCourante] = useState<
+    IDataFicheProps[]
+  >();
 
   const closeFenetre = (idActe: string, idx: number) => {
-    const tableau = [...etatFenetres];
-    if (tableau[idx] === idActe) {
-      tableau[idx] = "";
-      setEtatFenetres(tableau);
+    const nouvelEtatFenetres = supprimeElement(
+      etatFenetres,
+      (etatFenetre: IFenetreFicheActe) => etatFenetre.idActe === idActe
+    );
+    setEtatFenetres(nouvelEtatFenetres);
+  };
+
+  const onClickOnLine = (idActe: string, data: any, index: number) => {
+    const etatFenetreTrouve = etatFenetres.find(
+      etatFenetre => etatFenetre.idActe === idActe
+    );
+    if (datasFichesCourantes) {
+      if (!etatFenetreTrouve) {
+        const nouvelEtatFenetre: IFenetreFicheActe = {
+          index: { value: index },
+          idActe,
+          datasFiches: datasFichesCourantes
+        };
+        setEtatFenetres([...etatFenetres, nouvelEtatFenetre]);
+      } else {
+        // Si l'utilisateur clique sur une fenêtre déjà ouverte alors il faut remettre à jour ces données pour la navigation et son index courant
+        // (cf. useEffect (*) dans FichePage.tsx)
+        etatFenetreTrouve.datasFiches = datasFichesCourantes;
+        etatFenetreTrouve.index = { value: index };
+        setEtatFenetres([...etatFenetres]);
+      }
     }
   };
 
-  const onClickOnLine = (idActe: string, data: any, idx: number) => {
-    const tableau = [...etatFenetres];
-    if (tableau[idx] !== idActe) {
-      tableau[idx] = idActe;
-      setEtatFenetres(tableau);
+  useEffect(() => {
+    if (dataRMCFicheActe) {
+      const etatFenetreTrouve = etatFenetres.find(
+        etatFenetre => etatFenetre.idActe === idFicheActe
+      );
+      if (etatFenetreTrouve) {
+        const datasFiches = dataRMCFicheActe.map(data => ({
+          identifiant: getValeurOuVide(data.idActe),
+          categorie: TypeFiche.ACTE,
+          lienSuivant: dataTableauRMCFicheActe?.nextDataLinkState,
+          lienPrecedent: dataTableauRMCFicheActe?.previousDataLinkState
+        }));
+        etatFenetreTrouve.datasFiches = datasFiches;
+        setEtatFenetres([...etatFenetres]);
+      }
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idFicheActe, dataRMCFicheActe, dataTableauRMCFicheActe]);
 
-  const datasFiches = dataRMCActe.map(data => ({
-    identifiant: getValeurOuVide(data.idActe),
-    categorie: TypeFiche.ACTE
-  }));
+  useEffect(() => {
+    const datasFiches = dataRMCActe.map(data => ({
+      identifiant: data.idActe,
+      categorie: TypeFiche.ACTE,
+      lienSuivant: dataTableauRMCActe?.nextDataLinkState,
+      lienPrecedent: dataTableauRMCActe?.previousDataLinkState
+    }));
+    setDatasFichesCourante(datasFiches);
+  }, [dataRMCActe, dataTableauRMCActe]);
 
   // Gestion du clic sur une colonne de type checkbox
   const [selected, setSelected] = useState<Map<number, string>>(new Map([]));
@@ -154,22 +219,26 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
 
       {etatFenetres && etatFenetres.length > 0 && (
         <>
-          {etatFenetres.map((idActe: string, index: number) => {
+          {etatFenetres.map((fenetreFicheActe: IFenetreFicheActe) => {
             return (
-              idActe &&
-              idActe !== "" && (
+              fenetreFicheActe && (
                 <FenetreFiche
-                  key={`fiche${idActe}${index}`}
-                  identifiant={idActe}
+                  key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index}`}
+                  identifiant={fenetreFicheActe.idActe}
                   categorie={TypeFiche.ACTE}
-                  datasFiches={datasFiches}
-                  index={index}
+                  datasFiches={fenetreFicheActe.datasFiches}
                   onClose={closeFenetre}
                   provenanceRequete={
                     (dataRequete as IRequeteDelivrance)?.provenanceRequete
                       ?.provenance?.libelle
                   }
                   ajoutAlertePossible={ajoutAlertePossible}
+                  index={fenetreFicheActe.index}
+                  nbLignesTotales={dataTableauRMCActe.rowsNumberState || 0}
+                  getLignesSuivantesOuPrecedentes={
+                    getLignesSuivantesOuPrecedentesActe
+                  }
+                  nbLignesParAppel={nbLignesParAppel}
                 />
               )
             );

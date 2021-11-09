@@ -33,6 +33,22 @@ export interface RMCAutoResultatsProps {
   resetRMC?: boolean;
   setRangeActe?: (range: string) => void;
   setRangeInscription?: (range: string) => void;
+  // Données propre à une fiche Acte pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesActe?: (
+    ficheIdentifiant: string,
+    lien: string
+  ) => void;
+  idFicheActe?: string;
+  dataRMCFicheActe?: IResultatRMCActe[];
+  dataTableauRMCFicheActe?: IParamsTableau;
+  // Données propre à une fiche Inscription pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesInscription?: (
+    ficheIdentifiant: string,
+    lien: string
+  ) => void;
+  idFicheInscription?: string;
+  dataRMCFicheInscription?: IResultatRMCInscription[];
+  dataTableauRMCFicheInscription?: IParamsTableau;
 }
 
 export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = ({
@@ -47,7 +63,17 @@ export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = ({
   onClickCheckboxTableauInscriptions,
   resetRMC,
   setRangeInscription,
-  setRangeActe
+  setRangeActe,
+  // Données propre à une fiche Acte pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesActe,
+  idFicheActe,
+  dataRMCFicheActe,
+  dataTableauRMCFicheActe,
+  // Données propre à une fiche Inscription pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesInscription,
+  idFicheInscription,
+  dataRMCFicheInscription,
+  dataTableauRMCFicheInscription
 }) => {
   return (
     <>
@@ -75,6 +101,18 @@ export const RMCAutoResultats: React.FC<RMCAutoResultatsProps> = ({
             nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
             nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
             nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
+            getLignesSuivantesOuPrecedentesActe={
+              getLignesSuivantesOuPrecedentesActe
+            }
+            idFicheActe={idFicheActe}
+            dataRMCFicheActe={dataRMCFicheActe}
+            dataTableauRMCFicheActe={dataTableauRMCFicheActe}
+            getLignesSuivantesOuPrecedentesInscription={
+              getLignesSuivantesOuPrecedentesInscription
+            }
+            idFicheInscription={idFicheInscription}
+            dataRMCFicheInscription={dataRMCFicheInscription}
+            dataTableauRMCFicheInscription={dataTableauRMCFicheInscription}
           />
         )}
     </>

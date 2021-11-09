@@ -23,6 +23,13 @@ import {
 } from "../../../../common/util/Utils";
 import { getCriteresTitulaire } from "../../common/mapping/RMCMappingUtil";
 
+export interface ICriteresRechercheActeInscription {
+  valeurs: IRMCActeInscription;
+  range?: string;
+  // Ajout de l'identifiant de la fiche qui a demandé la rmc (lors d'une navigation qui nécessite le rappel de la rmc pour obtenir les actes suivants ou précédents)
+  ficheIdentifiant?: string;
+}
+
 /** Critères de recherche: mapping avant appel d'api */
 export function mappingCriteres(
   criteres: IRMCActeInscription

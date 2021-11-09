@@ -4,7 +4,7 @@ export const DataTableauActe = {
   previousDataLinkState: "previousDataLinkState",
   nextDataLinkState:
     "http://localhost:8089/rece-etatcivil-api/v1/acte/rmc?range=1-105",
-  rowsNumberState: 2,
+  rowsNumberState: 5,
   minRangeState: 0,
   maxRangeState: 105
 };

@@ -4,7 +4,7 @@ import {
   FenetreExterne,
   FenetreExterneUtil
 } from "../../common/util/FenetreExterne";
-import { FichePage, IDataFicheProps } from "./FichePage";
+import { FichePage, IDataFicheProps, IIndex } from "./FichePage";
 import "./scss/LienFiche.scss";
 
 interface IFenetreFicheProps {
@@ -12,9 +12,15 @@ interface IFenetreFicheProps {
   categorie: TypeFiche;
   onClose: (id: string, index: number) => void;
   datasFiches: IDataFicheProps[];
-  index: number;
+  index: IIndex;
   provenanceRequete?: string;
   ajoutAlertePossible?: boolean;
+  nbLignesTotales: number;
+  nbLignesParAppel: number;
+  getLignesSuivantesOuPrecedentes?: (
+    ficheIdentifiant: string,
+    lien: string
+  ) => void;
 }
 
 export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
@@ -24,13 +30,15 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
   datasFiches,
   index,
   provenanceRequete = "",
-  ajoutAlertePossible = false
+  ajoutAlertePossible = false,
+  nbLignesTotales,
+  nbLignesParAppel,
+  getLignesSuivantesOuPrecedentes
 }) => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(true);
-  const [
-    fenetreExterneUtil,
-    setFenetreExterneUtil
-  ] = useState<FenetreExterneUtil>();
+  const [fenetreExterneUtil, setFenetreExterneUtil] = useState<
+    FenetreExterneUtil
+  >();
 
   const closeFenetre = (id: string, idx: number) => {
     setFenetreOuverteState(!fenetreOuverteState);
@@ -42,18 +50,20 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
       {fenetreOuverteState && (
         <FenetreExterne
           onCloseHandler={() => {
-            closeFenetre(identifiant, index);
+            closeFenetre(identifiant, index.value);
           }}
           setFenetreExterneUtil={setFenetreExterneUtil}
         >
           <FichePage
             datasFiches={datasFiches}
             dataFicheIdentifiant={identifiant}
-            dataFicheCategorie={categorie}
             fenetreExterneUtil={fenetreExterneUtil}
             index={index}
             provenanceRequete={provenanceRequete}
             ajoutAlertePossible={ajoutAlertePossible}
+            nbLignesTotales={nbLignesTotales}
+            nbLignesParAppel={nbLignesParAppel}
+            getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentes}
           />
         </FenetreExterne>
       )}

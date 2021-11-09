@@ -1,33 +1,41 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresActes } from "../../../../../api/appels/etatcivilApi";
 import { IRMCActeArchive } from "../../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import {
-  getParamsTableau,
-  IParamsTableau
-} from "../../../../common/util/GestionDesLiensApi";
+import { getParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
+import {
+  IRMCActeApiHookResultat,
+  RESULTAT_NON_DEFINIT
+} from "../../common/hook/RMCActeEtActeArchiveHookUtil";
 import { mappingActes } from "../../common/mapping/RMCMappingUtil";
 import { mappingCriteres } from "./RMCActeArchiveUtils";
 
-export interface ICriteresRecherche {
+export interface ICriteresRechercheActeArchive {
   valeurs: IRMCActeArchive;
   range?: string;
+  // Ajout de l'identifiant de la fiche qui a demandé la rmc (lors d'une navigation qui nécessite le rappel de la rmc pour obtenir les actes suivants ou précédents)
+  ficheIdentifiant?: string;
 }
 
-export function useRMCActeArchiveApiHook(criteres?: ICriteresRecherche) {
-  const [dataRMCActe, setDataRMCActe] = useState<IResultatRMCActe[]>();
-  const [dataTableauRMCActe, setDataTableauRMCActe] = useState<
-    IParamsTableau
-  >();
+export function useRMCActeArchiveApiHook(
+  criteres?: ICriteresRechercheActeArchive
+) {
+  const [resultat, setResultat] = useState<IRMCActeApiHookResultat>(
+    RESULTAT_NON_DEFINIT
+  );
   useEffect(() => {
-    if (criteres != null && criteres.valeurs != null) {
+    if (criteres && criteres.valeurs) {
       const criteresRequest = mappingCriteres(criteres.valeurs);
 
       rechercheMultiCriteresActes(criteresRequest, criteres.range)
         .then((result: any) => {
-          setDataRMCActe(mappingActes(result.body.data.registres));
-          setDataTableauRMCActe(getParamsTableau(result));
+          setResultat({
+            dataRMCActe: mappingActes(result.body.data.registres),
+            dataTableauRMCActe: getParamsTableau(result),
+            // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
+            //  (datasFiches) de la fiche acte pour sa pagination/navigation
+            ficheIdentifiant: criteres.ficheIdentifiant
+          });
         })
         .catch(error => {
           logError({
@@ -39,8 +47,5 @@ export function useRMCActeArchiveApiHook(criteres?: ICriteresRecherche) {
     }
   }, [criteres]);
 
-  return {
-    dataRMCActe,
-    dataTableauRMCActe
-  };
+  return resultat;
 }

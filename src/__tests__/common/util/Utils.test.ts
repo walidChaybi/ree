@@ -18,6 +18,7 @@ import {
   normaliserNomOec,
   numberToString,
   premiereLettreEnMajusculeLeResteEnMinuscule,
+  supprimeElement,
   supprimerNullEtUndefinedDuTableau,
   tousNonVides,
   triListeObjetsSurPropriete,
@@ -245,4 +246,21 @@ test("Attendu: tousNonVides fonctionne correctement", () => {
   expect(tousNonVides("a", "b", undefined)).toBeFalsy();
   expect(tousNonVides("a", "b", "")).toBeFalsy();
   expect(tousNonVides("a", "b", "c")).toBeTruthy();
+});
+
+test("Attendu: supprimeElement fonctionne correctement", () => {
+  const tableau = [{ a: 1 }, { a: 2 }, { a: 3 }];
+  expect(supprimeElement(tableau, (elt: any) => elt.a === 2)).toEqual([
+    { a: 1 },
+    { a: 3 }
+  ]);
+  expect(supprimeElement(tableau, (elt: any) => elt.a === 1)).toEqual([
+    { a: 2 },
+    { a: 3 }
+  ]);
+  expect(supprimeElement(tableau, (elt: any) => elt.a === 3)).toEqual([
+    { a: 1 },
+    { a: 2 }
+  ]);
+  expect(supprimeElement(tableau, (elt: any) => elt.a === 4)).toEqual(tableau);
 });

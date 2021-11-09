@@ -37,6 +37,22 @@ export interface RMCActeInscriptionResultatsProps {
   nbLignesParAppelActe: number;
   nbLignesParPageInscription: number;
   nbLignesParAppelInscription: number;
+  // Données propre à une fiche Acte pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesActe?: (
+    ficheIdentifiant: string,
+    lien: string
+  ) => void;
+  idFicheActe?: string;
+  dataRMCFicheActe?: IResultatRMCActe[];
+  dataTableauRMCFicheActe?: IParamsTableau;
+  // Données propre à une fiche Inscription pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesInscription?: (
+    ficheIdentifiant: string,
+    lien: string
+  ) => void;
+  idFicheInscription?: string;
+  dataRMCFicheInscription?: IResultatRMCInscription[];
+  dataTableauRMCFicheInscription?: IParamsTableau;
 }
 
 export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = ({
@@ -56,7 +72,17 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
   nbLignesParPageActe,
   nbLignesParAppelActe,
   nbLignesParPageInscription,
-  nbLignesParAppelInscription
+  nbLignesParAppelInscription,
+  // Données propre à une fiche Acte pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesActe,
+  idFicheActe,
+  dataRMCFicheActe,
+  dataTableauRMCFicheActe,
+  // Données propre à une fiche Inscription pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesInscription,
+  idFicheInscription,
+  dataRMCFicheInscription,
+  dataTableauRMCFicheInscription
 }) => {
   return (
     <div className={`ResultatsRMC${typeRMC}`}>
@@ -77,6 +103,12 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
             onClickCheckboxCallBack={onClickCheckboxTableauActes}
             nbLignesParPage={nbLignesParPageActe}
             nbLignesParAppel={nbLignesParAppelActe}
+            getLignesSuivantesOuPrecedentesActe={
+              getLignesSuivantesOuPrecedentesActe
+            }
+            idFicheActe={idFicheActe}
+            dataRMCFicheActe={dataRMCFicheActe}
+            dataTableauRMCFicheActe={dataTableauRMCFicheActe}
           />
         </div>
         <div className="SubResultatsRMC">
@@ -97,6 +129,12 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
             onClickCheckboxCallBack={onClickCheckboxTableauInscriptions}
             nbLignesParPage={nbLignesParPageInscription}
             nbLignesParAppel={nbLignesParAppelInscription}
+            getLignesSuivantesOuPrecedentesInscription={
+              getLignesSuivantesOuPrecedentesInscription
+            }
+            idFicheInscription={idFicheInscription}
+            dataRMCFicheInscription={dataRMCFicheInscription}
+            dataTableauRMCFicheInscription={dataTableauRMCFicheInscription}
           />
         </div>
       </Fieldset>

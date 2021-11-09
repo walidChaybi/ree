@@ -17,6 +17,14 @@ export interface RMCActeArchiveResultatsProps {
   resetRMC?: boolean;
   nbLignesParAppel: number;
   nbLignesParPage: number;
+  // Données propre à une fiche Acte pour sa pagination/navigation
+  getLignesSuivantesOuPrecedentesActe?: (
+    ficheIdentifiant: string,
+    lien: string
+  ) => void;
+  idFicheActe?: string;
+  dataRMCFicheActe?: IResultatRMCActe[];
+  dataTableauRMCFicheActe?: IParamsTableau;
 }
 
 export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = props => {
@@ -37,6 +45,12 @@ export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = p
               resetTableauActe={props.resetRMC}
               nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
               nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
+              getLignesSuivantesOuPrecedentesActe={
+                props.getLignesSuivantesOuPrecedentesActe
+              }
+              idFicheActe={props.idFicheActe}
+              dataRMCFicheActe={props.dataRMCFicheActe}
+              dataTableauRMCFicheActe={props.dataTableauRMCFicheActe}
             />
           ) : (
             <div className="AucunResultat">

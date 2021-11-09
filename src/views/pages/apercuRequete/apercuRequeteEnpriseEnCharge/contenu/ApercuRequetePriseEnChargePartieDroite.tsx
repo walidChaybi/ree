@@ -27,10 +27,9 @@ import {
 } from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { getLibelle } from "../../../../common/widget/Text";
 import { useRMCActeApiHook } from "../../../rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
-import {
-  ICriteresRecherche,
-  useRMCInscriptionApiHook
-} from "../../../rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
+import { ICriteresRechercheActeInscription } from "../../../rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
+import { useRMCInscriptionApiHook } from "../../../rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
+import { goToLinkRMC } from "../../../rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
 import { useRMCAutoActeApiHook } from "../../../rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActeApiHook";
 import { useRMCAutoInscriptionApiHook } from "../../../rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoInscriptionApiHook";
 import { RMCAutoResultats } from "../../../rechercheMultiCriteres/autoActesInscriptions/RMCAutoResultats";
@@ -80,13 +79,13 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   >({});
 
   const [criteresRechercheActe, setCriteresRechercheActe] = useState<
-    ICriteresRecherche
+    ICriteresRechercheActeInscription
   >();
 
   const [
     criteresRechercheInscription,
     setCriteresRechercheInscription
-  ] = useState<ICriteresRecherche>();
+  ] = useState<ICriteresRechercheActeInscription>();
 
   /* Etat actes sélectionnés */
   const [actes, setActes] = useState<Map<number, IResultatRMCActe>>(
@@ -105,6 +104,17 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
 
   /* Etat alertes associées aux actes sélectionnés */
   const [alertes, setAlertes] = useState<Map<string, IAlerte[]>>(new Map([]));
+
+  // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
+  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] = useState<
+    ICriteresRechercheActeInscription
+  >();
+
+  // Critères de recherche pour alimenter les données des fiches Inscription en effet leur pagination/navigation est indépendante du tableau de résultats
+  const [
+    criteresRechercheFicheInscription,
+    setCriteresRechercheFicheInscription
+  ] = useState<ICriteresRechercheActeInscription>();
 
   /* Etat paramètres d'appel de l'API de récupération des alertes */
   const [
@@ -243,6 +253,42 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
     }
   };
 
+  /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
+  const resultatRMCFicheActe = useRMCActeApiHook(criteresRechercheFicheActe);
+
+  /** Récupération des résultats rmc pour une fiche Inscription lors d'une navigation */
+  const resultatRMCFicheInscription = useRMCInscriptionApiHook(
+    criteresRechercheFicheInscription
+  );
+
+  const getLignesSuivantesOuPrecedentesActe = useCallback(
+    (ficheIdentifiant: string, lien: string) => {
+      const range = goToLinkRMC(lien);
+      if (valuesRMCActeInscription && range) {
+        setCriteresRechercheFicheActe({
+          valeurs: valuesRMCActeInscription,
+          range,
+          ficheIdentifiant
+        });
+      }
+    },
+    [valuesRMCActeInscription]
+  );
+
+  const getLignesSuivantesOuPrecedentesInscription = useCallback(
+    (ficheIdentifiant: string, lien: string) => {
+      const range = goToLinkRMC(lien);
+      if (valuesRMCActeInscription && range) {
+        setCriteresRechercheFicheInscription({
+          valeurs: valuesRMCActeInscription,
+          range,
+          ficheIdentifiant
+        });
+      }
+    },
+    [valuesRMCActeInscription]
+  );
+
   /* Hook d'appel de l'API de récupération des alertes associées à un acte */
   const resultatGetAlertesActe = useGetAlertesActeApiHook(
     alertesActeApiHookParameters
@@ -359,6 +405,22 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
             resetRMC={nouvelleRMCActeInscription}
             setRangeInscription={setRangeInscription}
             setRangeActe={setRangeActe}
+            getLignesSuivantesOuPrecedentesActe={
+              getLignesSuivantesOuPrecedentesActe
+            }
+            idFicheActe={resultatRMCFicheActe?.ficheIdentifiant}
+            dataRMCFicheActe={resultatRMCFicheActe?.dataRMCActe}
+            dataTableauRMCFicheActe={resultatRMCFicheActe?.dataTableauRMCActe}
+            getLignesSuivantesOuPrecedentesInscription={
+              getLignesSuivantesOuPrecedentesInscription
+            }
+            idFicheInscription={resultatRMCFicheInscription?.ficheIdentifiant}
+            dataRMCFicheInscription={
+              resultatRMCFicheInscription?.dataRMCInscription
+            }
+            dataTableauRMCFicheInscription={
+              resultatRMCFicheInscription?.dataTableauRMCInscription
+            }
           />
         )}
       <BoutonNouvelleRMCActeInscription

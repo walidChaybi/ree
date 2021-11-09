@@ -11,7 +11,7 @@ import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_APPEL_DEFAUT
 } from "../../../../../common/widget/tableau/v2/TableauPaginationConstantes";
-import { ICriteresRecherche } from "../../../../rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
+import { ICriteresRechercheActeInscription } from "../../../../rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
 import { RMCActeInscriptionForm } from "../../../../rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import "./scss/PopinNouvelleRMCActeInscription.scss";
 
@@ -23,10 +23,10 @@ interface PopinNouvelleRMCActeInscriptionProps {
   >;
   setNouvelleRMCActeInscription: React.Dispatch<React.SetStateAction<boolean>>;
   setCriteresRechercheActe: React.Dispatch<
-    React.SetStateAction<ICriteresRecherche | undefined>
+    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
   >;
   setCriteresRechercheInscription: React.Dispatch<
-    React.SetStateAction<ICriteresRecherche | undefined>
+    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
   >;
 }
 

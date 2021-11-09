@@ -21,8 +21,15 @@ test("renders Lien fiche fonctionne correctement", async () => {
       identifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
       categorie={TypeFiche.RC}
       onClose={onClose}
-      datasFiches={[]}
-      index={0}
+      datasFiches={[
+        {
+          identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
+          categorie: TypeFiche.RC
+        }
+      ]}
+      index={{ value: 0 }}
+      nbLignesTotales={1}
+      nbLignesParAppel={1}
     />
   );
   await waitFor(() => {

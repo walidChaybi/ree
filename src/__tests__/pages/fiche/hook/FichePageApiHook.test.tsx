@@ -1,18 +1,18 @@
+import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { useFichePageApiHook } from "../../../../views/pages/fiche/hook/FichePageApiHook";
-import { render, waitFor } from "@testing-library/react";
 import { TypeFiche } from "../../../../model/etatcivil/enum/TypeFiche";
+import { useFichePageApiHook } from "../../../../views/pages/fiche/hook/FichePageApiHook";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const HookConsummerRc: React.FC = () => {
   const { dataFicheState } = useFichePageApiHook(
+    false,
     TypeFiche.RC,
-    "7566e16c-2b0e-11eb-adc1-0242ac120002",
-    0
+    "7566e16c-2b0e-11eb-adc1-0242ac120002"
   );
 
   return (
@@ -26,9 +26,9 @@ const HookConsummerRc: React.FC = () => {
 
 const HookConsummerRca: React.FC = () => {
   const { dataFicheState } = useFichePageApiHook(
+    false,
     TypeFiche.RCA,
-    "135e4dfe-9757-4d5d-8715-359c6e73289b",
-    0
+    "135e4dfe-9757-4d5d-8715-359c6e73289b"
   );
 
   return (
@@ -42,9 +42,9 @@ const HookConsummerRca: React.FC = () => {
 
 const HookConsummerPacs: React.FC = () => {
   const { dataFicheState } = useFichePageApiHook(
+    false,
     TypeFiche.PACS,
-    "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
-    0
+    "89c9d030-26c3-41d3-bdde-8b4dcc0420e0"
   );
 
   return (
@@ -58,9 +58,9 @@ const HookConsummerPacs: React.FC = () => {
 
 const HookConsummerActe: React.FC = () => {
   const { dataFicheState } = useFichePageApiHook(
+    false,
     TypeFiche.ACTE,
-    "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
-    0
+    "b41079a5-9e8d-478c-b04c-c4c2ac67134f"
   );
 
   return (

@@ -40,10 +40,15 @@ export interface IFiche {
   visuAlertes: boolean;
 }
 
-export function setFiche(dataFiche: IDataFicheProps, data: any): IFiche {
+export function setFiche(dataFiche?: IDataFicheProps, data?: any): IFiche {
   const fiche = {} as IFiche;
 
-  if (dataFiche.categorie && data && dataFiche.identifiant === data.id) {
+  if (
+    dataFiche &&
+    dataFiche.categorie &&
+    data &&
+    dataFiche.identifiant === data.id
+  ) {
     fiche.bandeauFiche = setDataBandeau(dataFiche, data);
 
     switch (dataFiche.categorie) {

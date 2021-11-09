@@ -5,7 +5,7 @@ import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { IRMCActeInscription } from "../../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { getLibelle } from "../../../../../common/widget/Text";
-import { ICriteresRecherche } from "../../../../rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
+import { ICriteresRechercheActeInscription } from "../../../../rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
 import { PopinNouvelleRMCActeInscription } from "./PopinNouvelleRMCActeInscription";
 import "./scss/BoutonNouvelleRMCActeInscription.scss";
 
@@ -16,10 +16,10 @@ interface BoutonNouvelleRMCActeInscriptionProps
   >;
   setNouvelleRMCActeInscription: React.Dispatch<React.SetStateAction<boolean>>;
   setCriteresRechercheActe: React.Dispatch<
-    React.SetStateAction<ICriteresRecherche | undefined>
+    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
   >;
   setCriteresRechercheInscription: React.Dispatch<
-    React.SetStateAction<ICriteresRecherche | undefined>
+    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
   >;
 }
 

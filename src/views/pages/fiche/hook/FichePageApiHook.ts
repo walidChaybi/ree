@@ -13,16 +13,15 @@ export interface IDataFicheApi {
 }
 
 export function useFichePageApiHook(
-  typeFiche: TypeFiche,
-  identifiant: string,
-  indexCourant: number,
-  actualisationInfosFiche: boolean
+  actualisationInfosFiche: boolean,
+  typeFiche?: TypeFiche,
+  identifiant?: string
 ) {
   const [dataFicheState, setDataFicheState] = useState<IDataFicheApi>(
     {} as IDataFicheApi
   );
   useEffect(() => {
-    if ((identifiant != null && typeFiche != null) || actualisationInfosFiche) {
+    if (identifiant != null && typeFiche != null) {
       getInformationsFiche(typeFiche, identifiant)
         .then((result: any) => {
           const dataFiche = {} as IDataFicheApi;
@@ -54,7 +53,7 @@ export function useFichePageApiHook(
           });
         });
     }
-  }, [typeFiche, identifiant, indexCourant, actualisationInfosFiche]);
+  }, [typeFiche, identifiant, actualisationInfosFiche]);
 
   return {
     dataFicheState

@@ -8,7 +8,6 @@ import { getMessageZeroRequete } from "../../../common/util/tableauRequete/Table
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
-import { NB_LIGNES_PAR_APPEL } from "../../../common/widget/tableau/v1/TableauRece";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
@@ -35,13 +34,14 @@ export const MesRequetesInformationPage: React.FC = () => {
     StatutRequete.PRISE_EN_CHARGE
   );
 
-  const [linkParameters, setLinkParameters] =
-    React.useState<IQueryParametersPourRequetesV2>({
-      statuts: StatutsRequetesInformation,
-      tri: "dateCreation",
-      sens: "ASC",
-      range: `0-${NB_LIGNES_PAR_APPEL}`
-    });
+  const [linkParameters, setLinkParameters] = React.useState<
+    IQueryParametersPourRequetesV2
+  >({
+    statuts: StatutsRequetesInformation,
+    tri: "dateCreation",
+    sens: "ASC",
+    range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+  });
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,

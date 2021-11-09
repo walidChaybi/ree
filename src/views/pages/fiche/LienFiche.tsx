@@ -19,10 +19,9 @@ interface IDataLienFicheProps {
 
 export const LienFiche: React.FC<IDataLienFicheProps> = props => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(false);
-  const [
-    fenetreExterneUtil,
-    setFenetreExterneUtil
-  ] = useState<FenetreExterneUtil>();
+  const [fenetreExterneUtil, setFenetreExterneUtil] = useState<
+    FenetreExterneUtil
+  >();
 
   const onClick = () => {
     toggleFenetre();
@@ -53,7 +52,6 @@ export const LienFiche: React.FC<IDataLienFicheProps> = props => {
         >
           <FichePage
             dataFicheIdentifiant={props.identifiant}
-            dataFicheCategorie={props.categorie}
             datasFiches={[
               {
                 identifiant: props.identifiant,
@@ -61,7 +59,9 @@ export const LienFiche: React.FC<IDataLienFicheProps> = props => {
               }
             ]}
             fenetreExterneUtil={fenetreExterneUtil}
-            index={0}
+            index={{ value: 0 }}
+            nbLignesTotales={1}
+            nbLignesParAppel={1}
           />
         </FenetreExterne>
       )}
