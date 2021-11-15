@@ -6,7 +6,7 @@ import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaire
 import { droitsSaufConsulterArchives } from "../common/util/habilitation/habilitationsDescription";
 import { IRoute } from "../common/util/route/IRoute";
 import { getLibelle } from "../common/widget/Text";
-import { LoginPage } from "../core/login/LoginPage";
+import { PageMessage } from "../core/login/PageMessage";
 import { AccueilPage } from "../pages/accueil/AccueilPage";
 import { ApercuCourrier } from "../pages/apercuRequete/apercuCourrier/ApercuCourrier";
 import { ApercuRequetePageV2 } from "../pages/apercuRequete/apercuRequete/ApercuRequetePageV2";
@@ -128,7 +128,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_DECONNEXION,
-    component: LoginPage,
+    component: PageMessage,
     props: { messageLogin: "pages.login.deconnexion" },
     libelle: getLibelle("Déconnexion")
   },

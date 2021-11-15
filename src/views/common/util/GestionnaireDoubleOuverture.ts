@@ -1,54 +1,33 @@
-import parametres from "../../../ressources/parametres.json";
-import { Crypto } from "./crypto/Crypto";
-const pass = parametres.pass;
+import { v4 as uuidv4 } from "uuid";
 
 export class GestionnaireDoubleOuverture {
-  static verifSiAppliDejaOuverte() {
-    const nAppli = localStorage.getItem("nAppliOuverte");
-    if (nAppli && parseInt(Crypto.decrypte(nAppli, pass)) > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  private readonly uuidAppli = uuidv4();
+  private readonly DELAIS = 1000;
 
-  static verifSiAppliNonDejaOuverte() {
-    const nAppli = localStorage.getItem("nAppliOuverte");
-    if (!nAppli || (nAppli && Crypto.decrypte(nAppli, pass) === "0")) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  init = () => {
+    localStorage.setItem("uuidAppli", this.uuidAppli);
+  };
 
-  static incrementeNAppliOuverte() {
-    const nAppliCypher = localStorage.getItem("nAppliOuverte");
-    const nAppli = nAppliCypher
-      ? parseInt(Crypto.decrypte(nAppliCypher, pass))
-      : 0;
-    localStorage.setItem(
-      "nAppliOuverte",
-      Crypto.encrypte((nAppli + 1).toString(), pass)
+  ecouteNouvelleAppli = () => {
+    return localStorage.getItem("uuidAppli") !== this.uuidAppli;
+  };
+
+  lancerVerification = (fctActionSiAppliDejaOuverte: () => void) => {
+    const interval: NodeJS.Timeout = setInterval(
+      () => this.actionSiAppliOuverte(fctActionSiAppliDejaOuverte, interval),
+      this.DELAIS
     );
-  }
+  };
 
-  static decroitNAppliOnUnload() {
-    window.addEventListener("beforeunload", this.decroitNAppliOuverte);
-  }
-
-  static decroitNAppliOuverte() {
-    const nAppliCypher = localStorage.getItem("nAppliOuverte");
-    if (nAppliCypher) {
-      const nAppli = parseInt(Crypto.decrypte(nAppliCypher, pass));
-      localStorage.setItem(
-        "nAppliOuverte",
-        Crypto.encrypte(nAppli > 0 ? (nAppli - 1).toString() : "0", pass)
-      );
-      window.removeEventListener("beforeunload", this.decroitNAppliOuverte);
+  actionSiAppliOuverte = (
+    fctActionSiAppliDejaOuverte: () => void,
+    interval: NodeJS.Timeout
+  ) => {
+    if (this.ecouteNouvelleAppli()) {
+      fctActionSiAppliDejaOuverte();
+      clearInterval(interval);
     }
-  }
-
-  static resetNAppli() {
-    localStorage.setItem("nAppliOuverte", Crypto.encrypte("0", pass));
-  }
+  };
 }
+
+export const gestionnaireDoubleOuverture = new GestionnaireDoubleOuverture();

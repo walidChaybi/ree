@@ -1,15 +1,15 @@
 import React from "react";
 import { Text } from "../../common/widget/Text";
 
-interface LoginProps {
-  messageLogin: string;
+interface MessageProps {
+  message: string;
 }
 
-export const LoginPage: React.FC<LoginProps> = ({ messageLogin }) => {
+export const PageMessage: React.FC<MessageProps> = ({ message }) => {
   return (
     <>
       <div className="PageLogin">
-        <Text messageId={messageLogin} />
+        <Text messageId={message} />
       </div>
     </>
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getLogin } from "../../../api/appels/agentApi";
 import { IOfficier } from "../../../model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "../../../model/agent/IUtilisateur";
-import { GestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
+import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { formatNom, formatPrenom } from "../../common/util/Utils";
 
 export interface ILoginApi {
@@ -15,23 +15,18 @@ export function useLoginApi() {
   const [erreurState, setErreurState] = useState<any>(undefined);
 
   useEffect(() => {
-    GestionnaireDoubleOuverture.decroitNAppliOnUnload();
-    if (GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()) {
-      getLogin()
-        .then(result => {
-          const officier = mappingOfficier(result.headers, result.body.data);
-          officier.habilitations = mapHabilitationsUtilisateur(
-            result.body.data.habilitations
-          );
-          setOfficierDataState(officier);
-          GestionnaireDoubleOuverture.incrementeNAppliOuverte();
-        })
-        .catch(error => {
-          setErreurState(error);
-        });
-    } else {
-      setErreurState({});
-    }
+    getLogin()
+      .then(result => {
+        const officier = mappingOfficier(result.headers, result.body.data);
+        officier.habilitations = mapHabilitationsUtilisateur(
+          result.body.data.habilitations
+        );
+        setOfficierDataState(officier);
+        gestionnaireDoubleOuverture.init();
+      })
+      .catch(error => {
+        setErreurState(error);
+      });
   }, []);
 
   return {

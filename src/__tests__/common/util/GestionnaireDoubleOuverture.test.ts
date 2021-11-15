@@ -1,39 +1,29 @@
+import { act, waitFor } from "@testing-library/react";
 import { localStorageMock } from "../../../mock/localStorageMock";
-import { GestionnaireDoubleOuverture } from "../../../views/common/util/GestionnaireDoubleOuverture";
+import {
+  GestionnaireDoubleOuverture,
+  gestionnaireDoubleOuverture
+} from "../../../views/common/util/GestionnaireDoubleOuverture";
+
+const mockFunction = jest.fn();
 
 beforeAll(() => {
   Object.defineProperty(window, "localStorage", { value: localStorageMock });
+  gestionnaireDoubleOuverture.init();
+  gestionnaireDoubleOuverture.lancerVerification(jest.fn());
 });
 
-test("checkSiAppliNonDejaOuverte", () => {
-  expect(GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()).toBeTruthy();
+test("check si l'uuid est initialisé", () => {
+  expect(gestionnaireDoubleOuverture.ecouteNouvelleAppli()).toBeFalsy();
 });
 
-test("test incremente", () => {
-  GestionnaireDoubleOuverture.incrementeNAppliOuverte();
-  expect(GestionnaireDoubleOuverture.verifSiAppliDejaOuverte()).toBeTruthy();
-});
-
-test("test decrease", () => {
-  GestionnaireDoubleOuverture.incrementeNAppliOuverte();
-  GestionnaireDoubleOuverture.decroitNAppliOuverte();
-  GestionnaireDoubleOuverture.decroitNAppliOuverte();
-  expect(GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()).toBeTruthy();
-});
-
-test("test resetNAppli", () => {
-  GestionnaireDoubleOuverture.incrementeNAppliOuverte();
-  GestionnaireDoubleOuverture.incrementeNAppliOuverte();
-  GestionnaireDoubleOuverture.incrementeNAppliOuverte();
-  GestionnaireDoubleOuverture.resetNAppli();
-  expect(GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()).toBeTruthy();
-});
-
-test("test delete nAppli", () => {
-  localStorageMock.removeItem("nAppliOuverte");
-  expect(GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()).toBeTruthy();
-});
-test("test resetNAppli", () => {
-  localStorageMock.clear();
-  expect(GestionnaireDoubleOuverture.verifSiAppliNonDejaOuverte()).toBeTruthy();
+test("check si la nouvelle appli est détecté", async () => {
+  const nouvelleAppli = new GestionnaireDoubleOuverture();
+  await act(async () => {
+    nouvelleAppli.init();
+  });
+  gestionnaireDoubleOuverture.actionSiAppliOuverte(mockFunction, 0);
+  await waitFor(() => {
+    expect(mockFunction).toHaveBeenCalled();
+  });
 });

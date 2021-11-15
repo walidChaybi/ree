@@ -60,7 +60,7 @@
     "superagent": "^6.1.0",
     "ts-pnp": "1.1.5",
     "url-loader": "2.3.0",
-    "uuid": "8.3.2",
+    "uuid": "^8.3.2",
     "webpack-auto-inject-version": "1.2.2",
     "yup": "0.32.8"
   },

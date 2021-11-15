@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { GestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
+import React, { useEffect, useState } from "react";
+import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { logError } from "../../common/util/LogManager";
 import { storeRece } from "../../common/util/storeRece";
 import { FilAriane } from "../../common/widget/filAriane/FilAriane";
@@ -10,12 +10,19 @@ import {
   OfficierContext,
   OfficierContextProps
 } from "../contexts/OfficierContext";
-import { LoginPage } from "../login/LoginPage";
+import { PageMessage } from "../login/PageMessage";
 
 export const RetourContext = React.createContext(URL_ACCUEIL);
 export const Body: React.FC = () => {
   const [retourState, setRetourState] = useState<string>(URL_ACCUEIL);
+  const [appliDejaOuverte, setAppliDejaOuverte] = useState<boolean>(false);
   storeRece.retourUrl = retourState;
+
+  useEffect(() => {
+    gestionnaireDoubleOuverture.lancerVerification(() => {
+      setAppliDejaOuverte(true);
+    });
+  }, []);
 
   return (
     <>
@@ -23,15 +30,19 @@ export const Body: React.FC = () => {
         <OfficierContext.Consumer>
           {officier =>
             officier?.officierDataState?.idSSO !== undefined ? (
-              <RetourContext.Provider value={retourState}>
-                <FilAriane
-                  setRetourState={setRetourState}
-                  routes={routesRece}
-                />
-                <RouterComponent />
-              </RetourContext.Provider>
+              appliDejaOuverte ? (
+                <PageMessage message="pages.login.appliOuverte" />
+              ) : (
+                <RetourContext.Provider value={retourState}>
+                  <FilAriane
+                    setRetourState={setRetourState}
+                    routes={routesRece}
+                  />
+                  <RouterComponent />
+                </RetourContext.Provider>
+              )
             ) : (
-              <LoginPage messageLogin={getMessageLogin(officier)} />
+              <PageMessage message={getMessageLogin(officier)} />
             )
           }
         </OfficierContext.Consumer>
@@ -48,8 +59,6 @@ function getMessageLogin(officier: OfficierContextProps) {
     officier.erreurState.status === codeErreurForbidden
   ) {
     return "pages.login.erreurAuthentifacition";
-  } else if (GestionnaireDoubleOuverture.verifSiAppliDejaOuverte()) {
-    return "pages.login.appliOuverte";
   } else if (officier !== undefined && officier.erreurState !== undefined) {
     logError({
       messageUtilisateur:
