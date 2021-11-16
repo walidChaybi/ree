@@ -31,6 +31,7 @@ export function getFicheTitle(
 
 export interface IAccordionReceSection {
   panels: SectionPanelProps[];
+  panelParDefaut?: number;
 }
 
 export interface IFiche {

@@ -26,6 +26,7 @@ export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
     acte?.personnes,
     paramsAffichage
   );
+
   return {
     panels: [
       {
@@ -44,7 +45,8 @@ export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
         title: "Vue de l'acte"
       },
       ...fichesPersonne
-    ]
+    ],
+    panelParDefaut: paramsAffichage.visuActe === "disabled" ? 0 : 1
   };
 }
 

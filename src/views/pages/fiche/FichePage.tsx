@@ -59,9 +59,10 @@ export const FichePage: React.FC<FichePageProps> = ({
   nbLignesParAppel,
   getLignesSuivantesOuPrecedentes
 }) => {
-  const [actualisationInfosFiche, setActualisationInfosFiche] = useState<
-    boolean
-  >(false);
+  const [
+    actualisationInfosFiche,
+    setActualisationInfosFiche
+  ] = useState<boolean>(false);
   const [dataFicheCourante, setDataFicheCourante] = useState<
     IDataFicheProps | undefined
   >(datasFiches[getIndexLocal(index.value, nbLignesParAppel)]);
@@ -280,7 +281,11 @@ export const FichePage: React.FC<FichePageProps> = ({
               key={`accordion-rece-${idx}`}
               panel={panel}
               index={idx}
-              expanded={idx === 0}
+              expanded={
+                panelsFiche.panelParDefaut
+                  ? idx === panelsFiche.panelParDefaut
+                  : idx === 0
+              }
               titre={panel?.title}
               disabled={panel?.panelAreas.every(
                 (pa: SectionPanelAreaProps) => !pa.value && !pa.parts
