@@ -4,6 +4,7 @@ import request from "superagent";
 import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
+import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
@@ -82,7 +83,8 @@ const requete3: IRequeteTableauDelivrance = {
   statut: StatutRequete.BROUILLON.libelle,
   idUtilisateur: "idUtilisateurConnectedUser",
   provenance: Provenance.COURRIER.libelle,
-  idEntiteRattachement: "1"
+  idEntiteRattachement: "1",
+  sousType: SousTypeDelivrance.RDCSC.libelleCourt
 };
 
 const HookConsummerNavigation3: React.FC = () => {

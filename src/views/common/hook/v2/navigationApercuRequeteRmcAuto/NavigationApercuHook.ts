@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { PATH_APERCU_REQ_TRAITEMENT } from "../../../../router/ReceUrls";
@@ -18,8 +19,9 @@ export function useNavigationApercu(
   urlWithParam?: string,
   requete?: IRequeteTableauDelivrance
 ): INavigationApercu | undefined {
-  const [redirection, setRedirection] =
-    useState<INavigationApercu | undefined>();
+  const [redirection, setRedirection] = useState<
+    INavigationApercu | undefined
+  >();
 
   useEffect(() => {
     if (requete && urlWithParam) {
@@ -85,13 +87,7 @@ const redirectionEnFonctionMaRequete = (
         });
         break;
       case StatutRequete.BROUILLON.libelle:
-        // US 316  et au statut "Brouillon", redirection vers "Saisir une requête"
-        setRedirection({
-          url: getUrlWithParam(
-            `${urlWithParam}/saisircertificatsituation/:idRequete`,
-            requete.idRequete
-          )
-        });
+        redirectionBrouillon(requete, setRedirection, urlWithParam);
         break;
       default:
         setRedirection({
@@ -118,6 +114,26 @@ function redirectionATraiterTransferee(
     setRedirection({
       url: getUrlWithParam(
         `${urlWithParam}/apercurequete/:idRequete`,
+        requete.idRequete
+      )
+    });
+  }
+}
+
+function redirectionBrouillon(
+  requete: IRequeteTableauDelivrance,
+  setRedirection: (
+    value: React.SetStateAction<INavigationApercu | undefined>
+  ) => void,
+  urlWithParam: string
+) {
+  if (
+    requete.sousType &&
+    requete.sousType === SousTypeDelivrance.RDCSC.libelleCourt
+  ) {
+    setRedirection({
+      url: getUrlWithParam(
+        `${urlWithParam}/saisircertificatsituation/:idRequete`,
         requete.idRequete
       )
     });
