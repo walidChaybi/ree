@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { compositionApi } from "../../../../../api/appels/compositionApi";
+import { IDonneesComposition } from "../../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
 import { IContenuReponseSansDelivranceCS } from "../../../../../model/composition/IReponseSansDelivranceCS";
 import { logError } from "../../../util/LogManager";
 import { getLibelle } from "../../../widget/Text";
@@ -8,7 +9,10 @@ export function useCompositionReponseSansDelivranceCSApi(
   document?: string,
   reponseSansDelivranceCS?: IContenuReponseSansDelivranceCS
 ) {
-  const [contenuComposition, setContenuComposition] = useState<string>();
+  const [
+    donneesComposition,
+    setDonneesComposition
+  ] = useState<IDonneesComposition>();
 
   useEffect(() => {
     if (reponseSansDelivranceCS && document) {
@@ -18,7 +22,7 @@ export function useCompositionReponseSansDelivranceCSApi(
           reponseSansDelivranceCS
         )
         .then(result => {
-          setContenuComposition(result.body.data);
+          setDonneesComposition(result.body.data);
         })
         .catch(error => {
           logError({
@@ -31,5 +35,5 @@ export function useCompositionReponseSansDelivranceCSApi(
     }
   }, [reponseSansDelivranceCS, document]);
 
-  return contenuComposition;
+  return donneesComposition;
 }

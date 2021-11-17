@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { compositionApi } from "../../../../../api/appels/compositionApi";
+import { IDonneesComposition } from "../../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
 import { TypeCertificatComposition } from "../../../../../model/composition/type/TypeCertificatCompoistion";
 import { TypePacsRcRca } from "../../../../../model/etatcivil/enum/TypePacsRcRca";
 import { logError } from "../../../util/LogManager";
@@ -9,7 +10,10 @@ export function useCertificatPacsRcRcaApiHook(
   typeCertificat: TypePacsRcRca,
   certificatComposition?: TypeCertificatComposition
 ) {
-  const [contenuComposition, setContenuComposition] = useState<string>();
+  const [
+    donneesComposition,
+    setDonneesComposition
+  ] = useState<IDonneesComposition>();
 
   useEffect(() => {
     if (certificatComposition) {
@@ -19,7 +23,7 @@ export function useCertificatPacsRcRcaApiHook(
           typeCertificat
         )
         .then(result => {
-          setContenuComposition(result.body.data);
+          setDonneesComposition(result.body.data);
         })
         .catch(error => {
           logError({
@@ -32,5 +36,5 @@ export function useCertificatPacsRcRcaApiHook(
     }
   }, [certificatComposition, typeCertificat]);
 
-  return contenuComposition;
+  return donneesComposition;
 }

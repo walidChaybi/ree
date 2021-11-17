@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { compositionApi } from "../../../../../api/appels/compositionApi";
+import { IDonneesComposition } from "../../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
 import { ICertificatSituationComposition } from "../../../../../model/composition/ICertificatSituationComposition";
 import { logError } from "../../../util/LogManager";
 import { getLibelle } from "../../../widget/Text";
@@ -7,8 +8,8 @@ import { getLibelle } from "../../../widget/Text";
 export function useCertificatSituationApiHook(
   certificatSituationComposition?: ICertificatSituationComposition
 ) {
-  const [contenuComposition, setContenuComposition] = useState<
-    string | undefined
+  const [donneesComposition, setDonneesComposition] = useState<
+    IDonneesComposition | undefined
   >();
 
   useEffect(() => {
@@ -16,7 +17,7 @@ export function useCertificatSituationApiHook(
       compositionApi
         .getCompositionCertificatSituation(certificatSituationComposition)
         .then(result => {
-          setContenuComposition(result.body.data);
+          setDonneesComposition(result.body.data);
         })
         .catch(error => {
           logError({
@@ -29,5 +30,5 @@ export function useCertificatSituationApiHook(
     }
   }, [certificatSituationComposition]);
 
-  return contenuComposition;
+  return donneesComposition;
 }

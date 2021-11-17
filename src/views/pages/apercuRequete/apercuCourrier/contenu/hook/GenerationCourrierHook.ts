@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { IDonneesComposition } from "../../../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
 import { Orientation } from "../../../../../../model/composition/enum/Orientation";
 import {
   CourrierComposition,
@@ -62,8 +63,10 @@ export interface IGenerationCourrierParams {
 }
 
 export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
-  const [resultatGenerationCourrier, setResultatGenerationCourrier] =
-    useState<IResultGenerationUnDocument>();
+  const [
+    resultatGenerationCourrier,
+    setResultatGenerationCourrier
+  ] = useState<IResultGenerationUnDocument>();
 
   const [courrierParams, setCourrierParams] = useState<ICourrierParams>();
 
@@ -73,8 +76,10 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   const [acte, setActe] = useState<IFicheActe>();
 
-  const [requeteDelivrancePourSauvegarde, setRequeteDelivrancePourSauvegarde] =
-    useState<ISauvegardeCourrier | undefined>();
+  const [
+    requeteDelivrancePourSauvegarde,
+    setRequeteDelivrancePourSauvegarde
+  ] = useState<ISauvegardeCourrier | undefined>();
 
   useEffect(() => {
     if (
@@ -97,16 +102,15 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   useEffect(() => {
     if (presenceDeLaRequeteDuDocEtSaisieCourrier(params)) {
       if (presenceDesElementsPourLaGeneration(params, courrier, acte)) {
-        const elements: IElementsJasperCourrier =
-          specificationCourrier.getElementsJasper(
-            // @ts-ignore presenceDesElementsPourLaGeneration
-            params.saisieCourrier,
-            // @ts-ignore presenceDesElementsPourLaGeneration
-            params.requete,
-            // @ts-ignore presenceDesElementsPourLaGeneration
-            params.optionsChoisies,
-            acte
-          );
+        const elements: IElementsJasperCourrier = specificationCourrier.getElementsJasper(
+          // @ts-ignore presenceDesElementsPourLaGeneration
+          params.saisieCourrier,
+          // @ts-ignore presenceDesElementsPourLaGeneration
+          params.requete,
+          // @ts-ignore presenceDesElementsPourLaGeneration
+          params.optionsChoisies,
+          acte
+        );
         construitCourrier(
           elements,
           // @ts-ignore presenceDesElementsPourLaGeneration
@@ -125,41 +129,41 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   // 2 - Création du courrier: appel api composition
   // récupération du document en base64
-  const contenuComposition: string | undefined =
-    useCourrierApiHook(courrierParams);
+  const donneesComposition:
+    | IDonneesComposition
+    | undefined = useCourrierApiHook(courrierParams);
 
   // 3 - Création du document réponse pour stockage dans la BDD et Swift
   useEffect(() => {
-    if (contenuComposition && courrier) {
+    if (donneesComposition && courrier) {
       setRequeteDelivrancePourSauvegarde(
         mapCourrierPourSauvergarde(
           params?.saisieCourrier,
-          contenuComposition,
+          donneesComposition,
           params?.optionsChoisies,
           courrier
         )
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contenuComposition]);
+  }, [donneesComposition]);
 
   // 4- Stockage du document réponse une fois celui-ci créé
   // 5- Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   // 6- Mise à jour du status de la requête + création d'une action
-  const uuidDocumentsReponse =
-    useSauvegarderCourrierCreerActionMajStatutRequete(
-      getStatutEnTraitement(params?.requete?.choixDelivrance).libelle,
-      getStatutEnTraitement(params?.requete?.choixDelivrance),
-      requeteDelivrancePourSauvegarde,
-      params?.requete?.id
-    );
+  const uuidDocumentsReponse = useSauvegarderCourrierCreerActionMajStatutRequete(
+    getStatutEnTraitement(params?.requete?.choixDelivrance).libelle,
+    getStatutEnTraitement(params?.requete?.choixDelivrance),
+    requeteDelivrancePourSauvegarde,
+    params?.requete?.id
+  );
 
   // 6- Une fois la requête mise à jour et l'action créé, changement de page
   useEffect(() => {
-    if (uuidDocumentsReponse && contenuComposition) {
+    if (uuidDocumentsReponse && donneesComposition) {
       setResultatGenerationCourrier({
         idDocumentReponse: uuidDocumentsReponse[0],
-        contenuDocumentReponse: contenuComposition
+        contenuDocumentReponse: donneesComposition.contenu
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -225,7 +229,7 @@ function creerCourrierComposition(
 
 function mapCourrierPourSauvergarde(
   saisieCourrier: SaisieCourrier | undefined,
-  contenuComposition: string,
+  donneesComposition: IDonneesComposition,
   optionsChoisies: OptionsCourrier | undefined,
   courrier: any
 ): ISauvegardeCourrier {
@@ -236,11 +240,11 @@ function mapCourrierPourSauvergarde(
       getValeurOuVide(saisieCourrier?.[REQUETE][NB_EXEMPLAIRE])
     ),
     documentReponse: {
-      contenu: contenuComposition,
+      contenu: donneesComposition.contenu,
       nom: courrier.libelle,
       mimeType: MimeType.APPLI_PDF,
       typeDocument: DocumentDelivrance.getUuidFromDocument(courrier), // UUID du courrier (nomenclature)
-      nbPages: 1,
+      nbPages: donneesComposition.nbPages,
       orientation: Orientation.PORTRAIT,
       optionsCourrier: optionsChoisies?.map(el => {
         return {
@@ -276,7 +280,8 @@ function requeteAvecAdresseSaisie(
   requete: IRequeteDelivrance,
   saisieCourrier: SaisieCourrier
 ) {
-  requete.requerant.adresse =
-    mappingAdresseSaisieToAdresseRequerant(saisieCourrier);
+  requete.requerant.adresse = mappingAdresseSaisieToAdresseRequerant(
+    saisieCourrier
+  );
   return requete;
 }

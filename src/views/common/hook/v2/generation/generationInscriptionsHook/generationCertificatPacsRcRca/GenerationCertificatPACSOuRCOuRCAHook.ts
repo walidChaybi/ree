@@ -28,20 +28,27 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   requete?: IRequeteTableauDelivrance,
   listePacsRcRca?: IResultatRMCInscription[]
 ): IResultGenerationPlusieursDocument | undefined {
-  const [certificatComposition, setCertificatComposition] =
-    useState<TypeCertificatComposition>();
-  const [listePacsRcRcaATraiter, setListePacsRcRcaATraiter] =
-    useState<IResultatRMCInscription[]>();
-  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
-    useState<IDocumentReponse[]>(); // Ne contiendra qu'un seul IDocumentReponse (on stock les doc un par un)
+  const [
+    certificatComposition,
+    setCertificatComposition
+  ] = useState<TypeCertificatComposition>();
+  const [listePacsRcRcaATraiter, setListePacsRcRcaATraiter] = useState<
+    IResultatRMCInscription[]
+  >();
+  const [
+    documentsReponsePourStockage,
+    setDocumentsReponsePourStockage
+  ] = useState<IDocumentReponse[]>(); // Ne contiendra qu'un seul IDocumentReponse (on stock les doc un par un)
 
   const [uuidDocumentsGeneres, setUuidDocumentsGeneres] = useState<string[]>(
     []
   );
 
   // Résultat du hook
-  const [resultGenerationCertificat, setResultGenerationCertificat] =
-    useState<IResultGenerationPlusieursDocument>();
+  const [
+    resultGenerationCertificat,
+    setResultGenerationCertificat
+  ] = useState<IResultGenerationPlusieursDocument>();
 
   // 0- récupération du pacs, rc ou rca à traiter
   const { pacsRcRcaCourant } = useGestionPacsRcRcaCourant(
@@ -81,27 +88,27 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
 
   // 2- Création du certificat de situation: appel api composition
   //    (récupération du document en base64)
-  const contenuComposition = useCertificatPacsRcRcaApiHook(
+  const compositionData = useCertificatPacsRcRcaApiHook(
     typeCertificat,
     certificatComposition
   );
 
   // 3- Création de l'objet paramètre pour l'api de stockage du document
   useEffect(() => {
-    if (contenuComposition) {
+    if (compositionData) {
       setDocumentsReponsePourStockage([
         {
-          contenu: contenuComposition,
+          contenu: compositionData.contenu,
           nom: getNomDocument(typeCertificat),
           mimeType: MimeType.APPLI_PDF,
           typeDocument: getTypeDocument(typeCertificat),
-          nbPages: 1,
+          nbPages: compositionData.nbPages,
           orientation: Orientation.PORTRAIT
         } as IDocumentReponse
       ]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contenuComposition]);
+  }, [compositionData]);
 
   // 4- Stockage du document réponse une fois créé (le résultat est un tableau d'uuid qui ne doit contenir qu'un seul élément)
   const uuidDocumentsReponseStockes = usePostDocumentsReponseApi(

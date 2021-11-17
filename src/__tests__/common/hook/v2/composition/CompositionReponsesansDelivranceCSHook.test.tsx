@@ -20,7 +20,7 @@ const HookConsumerMariage: React.FC = () => {
     reponseSansDelivranceCSMariage
   );
 
-  return <div>{doc}</div>;
+  return <div>{doc?.contenu}</div>;
 };
 
 test("Attendu: useCompositionReponseSansDelivranceCSApi avec mariage fonctionne correctement", async () => {
@@ -38,7 +38,7 @@ const HookConsumerDemandeIncomplete: React.FC = () => {
     reponseSansDelivranceCSDemandeIncomplete
   );
 
-  return <div>{doc}</div>;
+  return <div>{doc?.contenu}</div>;
 };
 
 test("Attendu: useCompositionReponseSansDelivranceCSApi avec demande incomplete fonctionne correctement", async () => {
@@ -56,7 +56,7 @@ const HookConsumerFrancais: React.FC = () => {
     reponseSansDelivranceCSFrancais
   );
 
-  return <div>{doc}</div>;
+  return <div>{doc?.contenu}</div>;
 };
 
 test("Attendu: useCompositionReponseSansDelivranceCSApi avec francais fonctionne correctement", async () => {

@@ -16,29 +16,30 @@ export function useReponseSansDelivranceCS(
 ) {
   const [resultat, setResultat] = useState<any>();
 
-  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
-    useState<IDocumentReponse | undefined>();
+  const [
+    documentsReponsePourStockage,
+    setDocumentsReponsePourStockage
+  ] = useState<IDocumentReponse | undefined>();
 
   // 1- Réponse négative demandée: appel api composition
-  const contenuComposition = useCompositionReponseSansDelivranceCSApi(
+  const compositionData = useCompositionReponseSansDelivranceCSApi(
     reponseSansDelivranceCS?.fichier,
     reponseSansDelivranceCS?.contenu
   );
 
   // 2- Création du document réponse (après appel 'useCompositionReponseSansDelivranceCSMariageApi') pour stockage dans la BDD et Swift
   useEffect(() => {
-    if (contenuComposition) {
+    if (compositionData) {
       setDocumentsReponsePourStockage({
-        contenu: contenuComposition,
+        contenu: compositionData.contenu,
         nom: reponseSansDelivranceCS?.fichier,
         mimeType: MimeType.APPLI_PDF,
-        typeDocument:
-          DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
-        nbPages: 1,
+        typeDocument: DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
+        nbPages: compositionData.nbPages,
         orientation: Orientation.PORTRAIT
       } as IDocumentReponse);
     }
-  }, [contenuComposition, reponseSansDelivranceCS]);
+  }, [compositionData, reponseSansDelivranceCS]);
 
   // 3- Stockage du document réponse une fois celui-ci créé
   // 4- Création des paramètres pour la création de l'action et la mise à jour du statut de la requête

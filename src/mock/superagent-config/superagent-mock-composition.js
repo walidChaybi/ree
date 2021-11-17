@@ -28,7 +28,7 @@ export const configComposition = [
         match[1] === "/composition/CAD_EC_116/1"
       ) {
         // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-        return { data: imagePngVideBase64 };
+        return { data: { contenu: imagePngVideBase64, nbPages: 2 } };
       }
 
       const error = { msg: "url api composition non mockée", url: match[1] };

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { compositionApi } from "../../../../../api/appels/compositionApi";
+import { IDonneesComposition } from "../../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
 import { ICourrierComposition } from "../../../../../model/composition/ICourrierComposition";
 import { logError } from "../../../util/LogManager";
 import { getLibelle } from "../../../widget/Text";
@@ -10,8 +11,9 @@ export interface ICourrierParams {
 }
 
 export function useCourrierApiHook(courrierParams?: ICourrierParams) {
-  const [contenuComposition, setContenuComposition] =
-    useState<string | undefined>();
+  const [donneesComposition, setDonneesComposition] = useState<
+    IDonneesComposition | undefined
+  >();
 
   useEffect(() => {
     if (courrierParams?.codeCourrier && courrierParams.courrierComposition) {
@@ -21,7 +23,7 @@ export function useCourrierApiHook(courrierParams?: ICourrierParams) {
           courrierParams.courrierComposition
         )
         .then(result => {
-          setContenuComposition(result.body.data);
+          setDonneesComposition(result.body.data);
         })
         .catch(error => {
           logError({
@@ -32,5 +34,5 @@ export function useCourrierApiHook(courrierParams?: ICourrierParams) {
     }
   }, [courrierParams]);
 
-  return contenuComposition;
+  return donneesComposition;
 }

@@ -10,7 +10,7 @@ const superagentMock = require("superagent-mock")(request, configComposition);
 const HookConsumer: React.FC = () => {
   const doc = useCertificatSituationApiHook(certificatSituation);
 
-  return <div>{doc}</div>;
+  return <div>{doc?.contenu}</div>;
 };
 
 test("Attendu: useCertificatSituationApiHook fonctionne correctement", async () => {
