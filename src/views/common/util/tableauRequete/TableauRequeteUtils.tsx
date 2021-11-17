@@ -97,7 +97,11 @@ export function getCellTitulaires(data: any): JSX.Element {
   return (
     <div title={titleTitulaires}>
       {celluleTitulaires.map((titulaire: string, index: number) => {
-        return <div key={titulaire.trim()}>{titulaire}</div>;
+        return (
+          <div key={`${titulaire}${index}`.replace(/\s+/g, "")}>
+            {titulaire}
+          </div>
+        );
       })}
     </div>
   );
@@ -105,8 +109,8 @@ export function getCellTitulaires(data: any): JSX.Element {
 
 export function getCellDatesNaissancesTitulaires(data: any): JSX.Element {
   const titulaires = data.titulaires;
-  let titleTitulaires = "";
-  const celluleTitulaires: string[] = [];
+  let titleDatesNaissances = "";
+  const celluleDatesNaissances: string[] = [];
 
   if (titulaires != null && titulaires.length >= 1) {
     titulaires.forEach((t: ITitulaireRequeteTableau) => {
@@ -116,15 +120,15 @@ export function getCellDatesNaissancesTitulaires(data: any): JSX.Element {
         annee: numberToString(t.anneeNaissance)
       });
 
-      celluleTitulaires.push(date);
-      titleTitulaires += `${date}\n`;
+      celluleDatesNaissances.push(date);
+      titleDatesNaissances += `${date}\n`;
     });
   }
 
   return (
-    <div title={titleTitulaires}>
-      {celluleTitulaires.map((titulaire: string, index: number) => {
-        return <div key={titulaire.trim()}>{titulaire}</div>;
+    <div title={titleDatesNaissances}>
+      {celluleDatesNaissances.map((date: string, index: number) => {
+        return <div key={`${date}${index}`}>{date}</div>;
       })}
     </div>
   );

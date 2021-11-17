@@ -75,7 +75,7 @@ export const CertificatPACSComposition = {
       certificatPACS,
       fichePacs
     );
-    if (fichePacs.modifications) {
+    if (fichePacs.modifications && fichePacs.modifications.length > 0) {
       ParagrapheComposition.ajoutParagrapheModificationPACS(
         certificatPACS,
         fichePacs.autorite,
