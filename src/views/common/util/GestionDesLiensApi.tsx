@@ -59,7 +59,6 @@ function getRange(result: any, nb: number) {
 
 export function getParamsTableau(result: any): IParamsTableau {
   const { nextLink, prevLink } = parseLink(result.headers["link"]);
-
   return {
     previousDataLinkState: prevLink,
     nextDataLinkState: nextLink,

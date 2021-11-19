@@ -39,14 +39,18 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
     `0-${NB_LIGNES_PAR_APPEL_ACTE}`
   );
 
-  const { dataRMCAutoInscription, dataTableauRMCAutoInscription } =
-    useRMCAutoInscriptionApiHook(
-      params?.requete,
-      `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-    );
+  const {
+    dataRMCAutoInscription,
+    dataTableauRMCAutoInscription
+  } = useRMCAutoInscriptionApiHook(
+    params?.requete,
+    `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+  );
 
-  const [paramsCertificatSituation, setParamsCertificatSituation] =
-    useState<IGenerationCertificatSituationParams>();
+  const [
+    paramsCertificatSituation,
+    setParamsCertificatSituation
+  ] = useState<IGenerationCertificatSituationParams>();
 
   useEffect(() => {
     // si pasDeTraitementAuto=true alors pas de génération de certificat de situation automatiquement en fonction des résultats de la RMC auto
@@ -62,8 +66,9 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
   }, [dataRMCAutoInscription, dataRMCAutoActe]);
 
   // Génération du certificat de situation
-  const resultGenerationCertificatSituationRMCAutoVide =
-    useGenerationCertificatSituationHook(paramsCertificatSituation);
+  const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituationHook(
+    paramsCertificatSituation
+  );
 
   useEffect(() => {
     if (
@@ -100,9 +105,7 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
             //@ts-ignore
             params.requete,
             //@ts-ignore
-            params.urlCourante,
-            [dataRMCAutoActe, dataTableauRMCAutoActe],
-            [dataRMCAutoInscription, dataTableauRMCAutoInscription]
+            params.urlCourante
           ),
           data
         });

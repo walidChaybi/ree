@@ -6,6 +6,7 @@ import { ProtectionApercu } from "../../../common/util/route/Protection/Protecti
 import { getLibelle } from "../../../common/widget/Text";
 import { BandeauRequete } from "../../apercuRequete/contenu/BandeauRequete";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
+import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
 import { ReponseReqInfo } from "./contenu/ReponseReqInfo";
 import { ResumeReqInfo } from "./contenu/ResumeReqInfo";
 import "./scss/ApercuReqInfoPage.scss";
@@ -36,6 +37,7 @@ export const ApercuReqInfoPage: React.FC = () => {
               <ResumeReqInfo requete={requete} />
             </div>
             <div className="side right">
+              <RMCAuto requete={detailRequeteState} />
               <ReponseReqInfo requete={requete} />
             </div>
           </div>

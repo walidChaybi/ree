@@ -8,6 +8,7 @@ import {
 import React from "react";
 import request from "superagent";
 import { userDroitConsulterPerimetreMEAE } from "../../../../../mock/data/connectedUserAvecDroit";
+import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
@@ -127,6 +128,7 @@ test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résul
   render(
     <RMCTableauInscriptions
       typeRMC="Auto"
+      dataRequete={requeteDelivrance}
       dataRMCInscription={DataRMCInscriptionAvecResultat}
       dataTableauRMCInscription={DataTableauInscription}
       nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}

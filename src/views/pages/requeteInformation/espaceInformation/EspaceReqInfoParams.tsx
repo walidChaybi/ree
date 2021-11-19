@@ -1,4 +1,5 @@
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
+import { getCellTitulaires } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "../../../common/widget/tableau/v2/TableauTypeColumn";
 import { getLibelle } from "../../../common/widget/Text";
 
@@ -62,6 +63,8 @@ export const requeteInformationColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Titulaire],
     title: getLibelle("Titulaire"),
-    align: "center"
+    align: "center",
+    dataIsArray: true,
+    getElement: getCellTitulaires
   })
 ];

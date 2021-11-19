@@ -216,9 +216,11 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     const colonnes = determinerColonnes(
       typeRMC,
       isCheckboxDisabled,
-      onClickCheckbox
+      onClickCheckbox,
+      dataRequete?.type
     );
     setColumnHeaders(colonnes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typeRMC, isCheckboxDisabled, onClickCheckbox]);
 
   useEffect(() => {
@@ -240,7 +242,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
         nbLignesParAppel={nbLignesParAppel}
       />
 
-      {typeRMC === "Auto" && (
+      {typeRMC === "Auto" && dataRequete?.type === TypeRequete.DELIVRANCE && (
         <div className="ElementsCoches">
           {getLibelle(`${selected.size} élément(s) coché(s)`)}
         </div>

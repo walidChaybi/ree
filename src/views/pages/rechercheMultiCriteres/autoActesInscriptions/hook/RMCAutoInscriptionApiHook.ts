@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoInscription } from "../../../../../api/appels/etatcivilApi";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
@@ -12,14 +12,17 @@ import { mappingInscriptions } from "../../acteInscription/hook/RMCActeInscripti
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoInscriptionApiHook(
-  requete?: IRequeteTableauDelivrance | IRequeteDelivrance,
+  requete?: IRequeteTableauDelivrance | TRequete,
   range?: string
 ) {
-  const [dataRMCAutoInscription, setDataRMCAutoInscription] =
-    useState<IResultatRMCInscription[]>();
+  const [dataRMCAutoInscription, setDataRMCAutoInscription] = useState<
+    IResultatRMCInscription[]
+  >();
 
-  const [dataTableauRMCAutoInscription, setDataTableauRMCAutoInscription] =
-    useState<IParamsTableau>();
+  const [
+    dataTableauRMCAutoInscription,
+    setDataTableauRMCAutoInscription
+  ] = useState<IParamsTableau>();
 
   useEffect(() => {
     if (requete) {

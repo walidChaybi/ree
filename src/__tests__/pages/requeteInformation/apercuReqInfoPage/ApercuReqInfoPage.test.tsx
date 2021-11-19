@@ -11,6 +11,10 @@ import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "../../../../mock/data/NomenclatureReponse";
+import {
+  configEtatcivil,
+  NORESULT
+} from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
@@ -20,10 +24,10 @@ import {
   URL_MES_REQUETES_INFORMATION_APERCU_ID
 } from "../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(
-  request,
-  configRequetesInformation
-);
+const superagentMock = require("superagent-mock")(request, [
+  configRequetesInformation[0],
+  configEtatcivil[0]
+]);
 
 let history: any;
 
@@ -346,6 +350,73 @@ test("renders ApercuReqInfoPage Double Menu", async () => {
   await waitFor(() => {
     expect(libelleReponseChoisie).toBeDefined();
     expect(mailReponseChoisie).toBeDefined();
+  });
+});
+
+test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+    )
+  );
+
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+            <ApercuReqInfoPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  const linkElement = screen.getByText("Nouvelle recherche multi-critères");
+  await waitFor(() => {
+    expect(linkElement).toBeDefined();
+  });
+  await act(async () => {
+    fireEvent.click(linkElement);
+  });
+
+  const dialog = screen.getByRole("dialog");
+  const nomTitulaire = screen.getByLabelText(
+    "titulaire.nom"
+  ) as HTMLInputElement;
+  const boutonRechercher = screen.getByText("Rechercher") as HTMLButtonElement;
+
+  await waitFor(() => {
+    expect(dialog).toBeDefined();
+    expect(nomTitulaire).toBeDefined();
+    expect(boutonRechercher).toBeDefined();
+    expect(boutonRechercher.disabled).toBeTruthy();
+  });
+
+  await act(async () => {
+    fireEvent.change(nomTitulaire, {
+      target: { value: NORESULT }
+    });
+  });
+
+  await waitFor(() => {
+    expect(nomTitulaire.value).toEqual(NORESULT);
+  });
+
+  await act(async () => {
+    expect(boutonRechercher.disabled).toBeFalsy();
+    fireEvent.click(boutonRechercher);
+  });
+
+  await waitFor(() => {
+    expect(dialog).not.toBeInTheDocument();
+    const resultatRMCActe = screen.getByText("Aucun acte n'a été trouvé");
+    const resultatRMCInscription = screen.getByText(
+      "Aucune inscription n'a été trouvée"
+    );
+    expect(resultatRMCActe).toBeDefined();
+    expect(resultatRMCInscription).toBeDefined();
   });
 });
 

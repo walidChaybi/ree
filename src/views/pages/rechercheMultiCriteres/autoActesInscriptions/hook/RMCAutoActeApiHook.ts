@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoActes } from "../../../../../api/appels/etatcivilApi";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import {
@@ -12,7 +12,7 @@ import { mappingActes } from "../../common/mapping/RMCMappingUtil";
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
 export function useRMCAutoActeApiHook(
-  requete?: IRequeteTableauDelivrance | IRequeteDelivrance,
+  requete?: IRequeteTableauDelivrance | TRequete,
   range?: string
 ) {
   const [dataRMCAutoActe, setDataRMCAutoActe] = useState<IResultatRMCActe[]>();

@@ -3,31 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useCallback, useState } from "react";
 import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
-import { IRMCActeInscription } from "../../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { getLibelle } from "../../../../../common/widget/Text";
-import { ICriteresRechercheActeInscription } from "../../../../rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
+import { getLibelle } from "../../../common/widget/Text";
 import { PopinNouvelleRMCActeInscription } from "./PopinNouvelleRMCActeInscription";
 import "./scss/BoutonNouvelleRMCActeInscription.scss";
 
 interface BoutonNouvelleRMCActeInscriptionProps
   extends DialogDisclosureHTMLProps {
-  setValuesRMCActeInscription: React.Dispatch<
-    React.SetStateAction<IRMCActeInscription>
-  >;
-  setNouvelleRMCActeInscription: React.Dispatch<React.SetStateAction<boolean>>;
-  setCriteresRechercheActe: React.Dispatch<
-    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
-  >;
-  setCriteresRechercheInscription: React.Dispatch<
-    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
-  >;
+  nouvelleRMCActeInscription: (values: any) => void;
 }
 
 export const BoutonNouvelleRMCActeInscription: React.FC<BoutonNouvelleRMCActeInscriptionProps> = ({
-  setValuesRMCActeInscription,
-  setNouvelleRMCActeInscription,
-  setCriteresRechercheActe,
-  setCriteresRechercheInscription
+  nouvelleRMCActeInscription
 }) => {
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
   const closePopin = useCallback(
@@ -53,10 +39,7 @@ export const BoutonNouvelleRMCActeInscription: React.FC<BoutonNouvelleRMCActeIns
       <PopinNouvelleRMCActeInscription
         open={showWaitState}
         onClose={closePopin}
-        setValuesRMCActeInscription={setValuesRMCActeInscription}
-        setNouvelleRMCActeInscription={setNouvelleRMCActeInscription}
-        setCriteresRechercheActe={setCriteresRechercheActe}
-        setCriteresRechercheInscription={setCriteresRechercheInscription}
+        nouvelleRMCActeInscription={nouvelleRMCActeInscription}
       />
     </>
   );

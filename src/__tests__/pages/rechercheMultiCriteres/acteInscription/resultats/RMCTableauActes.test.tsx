@@ -7,6 +7,7 @@ import {
 } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
+import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 import {
   DataRMCActeAvecResultat,
   DataTableauActe
@@ -177,6 +178,7 @@ test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat", a
   render(
     <RMCTableauActes
       typeRMC="Auto"
+      dataRequete={requeteDelivrance}
       dataRMCActe={DataRMCActeAvecResultat}
       dataTableauRMCActe={DataTableauActe}
       nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../model/agent/IOfficier";
 import { IAlerte } from "../../../../../model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
-import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
@@ -17,26 +16,14 @@ import {
   GetAlertesActeApiHookParameters,
   useGetAlertesActeApiHook
 } from "../../../../common/hook/v2/alertes/GetAlertesActeApiHook";
-import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { aplatirTableau } from "../../../../common/util/Utils";
 import { IAjouterAlerteFormValue } from "../../../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
-import {
-  NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_APPEL_DEFAUT
-} from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { getLibelle } from "../../../../common/widget/Text";
-import { useRMCActeApiHook } from "../../../rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
-import { ICriteresRechercheActeInscription } from "../../../rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
-import { useRMCInscriptionApiHook } from "../../../rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
-import { goToLinkRMC } from "../../../rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
-import { useRMCAutoActeApiHook } from "../../../rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActeApiHook";
-import { useRMCAutoInscriptionApiHook } from "../../../rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoInscriptionApiHook";
-import { RMCAutoResultats } from "../../../rechercheMultiCriteres/autoActesInscriptions/RMCAutoResultats";
+import { RMCAuto } from "../../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
 import { DataRMCAuto } from "../ApercuRequetePriseEnChargePage";
 import { ChoixAction } from "./actions/ChoixAction";
 import { AlertesActes } from "./alertesActes/AlertesActes";
-import { BoutonNouvelleRMCActeInscription } from "./rechercheMultiCriteres/BoutonNouvelleRMCActeInscription";
 
 interface RMCAutoParams {
   requete: IRequeteDelivrance;
@@ -52,41 +39,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   detailRequete,
   dataHistory
 }) => {
-  /* Etats RMC Auto */
-  const [rmcAutoActe, setRmcAutoActe] = useState<
-    IResultatRMCActe[] | undefined
-  >(dataHistory?.dataRMCAutoActe);
-
-  const [tableauRMCAutoActe, setTableauRMCAutoActe] = useState<
-    IParamsTableau | undefined
-  >(dataHistory?.dataTableauRMCAutoActe);
-
-  const [rmcAutoInscription, setRmcAutoInscription] = useState<
-    IResultatRMCInscription[] | undefined
-  >(dataHistory?.dataRMCAutoInscription);
-
-  const [tableauRMCAutoInscription, setTableauRMCAutoInscription] = useState<
-    IParamsTableau | undefined
-  >(dataHistory?.dataTableauRMCAutoInscription);
-
-  /* Etats RMC manuelle */
-  const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<
-    boolean
-  >(false);
-
-  const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<
-    IRMCActeInscription
-  >({});
-
-  const [criteresRechercheActe, setCriteresRechercheActe] = useState<
-    ICriteresRechercheActeInscription
-  >();
-
-  const [
-    criteresRechercheInscription,
-    setCriteresRechercheInscription
-  ] = useState<ICriteresRechercheActeInscription>();
-
   /* Etat actes sélectionnés */
   const [actes, setActes] = useState<Map<number, IResultatRMCActe>>(
     new Map([])
@@ -104,17 +56,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
 
   /* Etat alertes associées aux actes sélectionnés */
   const [alertes, setAlertes] = useState<Map<string, IAlerte[]>>(new Map([]));
-
-  // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] = useState<
-    ICriteresRechercheActeInscription
-  >();
-
-  // Critères de recherche pour alimenter les données des fiches Inscription en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [
-    criteresRechercheFicheInscription,
-    setCriteresRechercheFicheInscription
-  ] = useState<ICriteresRechercheActeInscription>();
 
   /* Etat paramètres d'appel de l'API de récupération des alertes */
   const [
@@ -167,127 +108,12 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
     [inscriptions]
   );
 
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<RMCAutoParams>();
-
-  useEffect(() => {
-    if (!dataHistory) {
-      setParamsRMCAuto({
-        requete: detailRequete,
-        range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-      });
-    }
-  }, [detailRequete, dataHistory]);
-
-  /* Hooks RMC Auto */
-  const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook(
-    paramsRMCAuto?.requete,
-    `0-${NB_LIGNES_PAR_APPEL_ACTE}`
-  );
-  const {
-    dataRMCAutoInscription,
-    dataTableauRMCAutoInscription
-  } = useRMCAutoInscriptionApiHook(
-    paramsRMCAuto?.requete,
-    paramsRMCAuto?.range
-  );
-
-  /* Hooks RMC manuelle */
-  const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(
-    criteresRechercheActe
-  );
-  const {
-    dataRMCInscription,
-    dataTableauRMCInscription
-  } = useRMCInscriptionApiHook(criteresRechercheInscription);
-
-  /* Actualisation des résultats de la RMC */
-  useEffect(() => {
+  /* Remise à zéro des résultats de la RMC */
+  const resetActeInscription = useCallback(() => {
     setActes(new Map([]));
     setInscriptions(new Map([]));
-  }, [nouvelleRMCActeInscription]);
-
-  useEffect(() => {
-    if (dataRMCAutoActe && dataTableauRMCAutoActe) {
-      setRmcAutoActe(dataRMCAutoActe);
-      setTableauRMCAutoActe(dataTableauRMCAutoActe);
-    }
-  }, [dataRMCAutoActe, dataTableauRMCAutoActe]);
-
-  useEffect(() => {
-    if (dataRMCAutoInscription && dataTableauRMCAutoInscription) {
-      setRmcAutoInscription(dataRMCAutoInscription);
-      setTableauRMCAutoInscription(dataTableauRMCAutoInscription);
-    }
-  }, [dataRMCAutoInscription, dataTableauRMCAutoInscription]);
-
-  useEffect(() => {
-    if (dataRMCActe && dataTableauRMCActe) {
-      setRmcAutoActe(dataRMCActe);
-      setTableauRMCAutoActe(dataTableauRMCActe);
-    }
-  }, [dataRMCActe, dataTableauRMCActe]);
-
-  useEffect(() => {
-    if (dataRMCInscription && dataTableauRMCInscription) {
-      setRmcAutoInscription(dataRMCInscription);
-      setTableauRMCAutoInscription(dataTableauRMCInscription);
-    }
-  }, [dataRMCInscription, dataTableauRMCInscription]);
-
-  /* Gestion de la pagination pour la RMC */
-  const setRangeInscription = (rangeInscription: string) => {
-    if (valuesRMCActeInscription && rangeInscription !== "") {
-      setCriteresRechercheInscription({
-        valeurs: valuesRMCActeInscription,
-        range: rangeInscription
-      });
-    }
-  };
-
-  const setRangeActe = (rangeActe: string) => {
-    if (valuesRMCActeInscription && rangeActe !== "") {
-      setCriteresRechercheActe({
-        valeurs: valuesRMCActeInscription,
-        range: rangeActe
-      });
-    }
-  };
-
-  /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
-  const resultatRMCFicheActe = useRMCActeApiHook(criteresRechercheFicheActe);
-
-  /** Récupération des résultats rmc pour une fiche Inscription lors d'une navigation */
-  const resultatRMCFicheInscription = useRMCInscriptionApiHook(
-    criteresRechercheFicheInscription
-  );
-
-  const getLignesSuivantesOuPrecedentesActe = useCallback(
-    (ficheIdentifiant: string, lien: string) => {
-      const range = goToLinkRMC(lien);
-      if (valuesRMCActeInscription && range) {
-        setCriteresRechercheFicheActe({
-          valeurs: valuesRMCActeInscription,
-          range,
-          ficheIdentifiant
-        });
-      }
-    },
-    [valuesRMCActeInscription]
-  );
-
-  const getLignesSuivantesOuPrecedentesInscription = useCallback(
-    (ficheIdentifiant: string, lien: string) => {
-      const range = goToLinkRMC(lien);
-      if (valuesRMCActeInscription && range) {
-        setCriteresRechercheFicheInscription({
-          valeurs: valuesRMCActeInscription,
-          range,
-          ficheIdentifiant
-        });
-      }
-    },
-    [valuesRMCActeInscription]
-  );
+    setAlertes(new Map([]));
+  }, []);
 
   /* Hook d'appel de l'API de récupération des alertes associées à un acte */
   const resultatGetAlertesActe = useGetAlertesActeApiHook(
@@ -316,8 +142,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
     if (detailRequete) {
       setAjoutAlertePossible(
         provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-          (detailRequete as IRequeteDelivrance)?.provenanceRequete?.provenance
-            ?.libelle
+          detailRequete?.provenanceRequete?.provenance?.libelle
         )
       );
     }
@@ -330,8 +155,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
         idActe,
         idTypeAlerte: value?.idTypeAlerte,
         complementDescription: value?.complementDescription,
-        provenanceRequete: (detailRequete as IRequeteDelivrance)
-          ?.provenanceRequete?.provenance?.libelle
+        provenanceRequete: detailRequete?.provenanceRequete?.provenance?.libelle
       });
     },
     [detailRequete]
@@ -357,8 +181,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
       setDeleteAlerteActeApiHookParameters({
         idAlerteActe,
         idActe,
-        provenanceRequete: (detailRequete as IRequeteDelivrance)
-          ?.provenanceRequete?.provenance?.libelle
+        provenanceRequete: detailRequete?.provenanceRequete?.provenance?.libelle
       });
     },
     [detailRequete]
@@ -388,46 +211,14 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
 
   return (
     <div className="side right">
-      {rmcAutoActe &&
-        tableauRMCAutoActe &&
-        rmcAutoInscription &&
-        tableauRMCAutoInscription && (
-          <RMCAutoResultats
-            dataAlertes={aplatirTableau(Array.from(alertes.values()))}
-            ajoutAlertePossible={ajoutAlertePossible}
-            dataRequete={detailRequete}
-            dataRMCAutoActe={rmcAutoActe}
-            dataTableauRMCAutoActe={tableauRMCAutoActe}
-            dataRMCAutoInscription={rmcAutoInscription}
-            dataTableauRMCAutoInscription={tableauRMCAutoInscription}
-            onClickCheckboxTableauActes={onClickCheckboxActe}
-            onClickCheckboxTableauInscriptions={onClickCheckboxInscription}
-            resetRMC={nouvelleRMCActeInscription}
-            setRangeInscription={setRangeInscription}
-            setRangeActe={setRangeActe}
-            getLignesSuivantesOuPrecedentesActe={
-              getLignesSuivantesOuPrecedentesActe
-            }
-            idFicheActe={resultatRMCFicheActe?.ficheIdentifiant}
-            dataRMCFicheActe={resultatRMCFicheActe?.dataRMCActe}
-            dataTableauRMCFicheActe={resultatRMCFicheActe?.dataTableauRMCActe}
-            getLignesSuivantesOuPrecedentesInscription={
-              getLignesSuivantesOuPrecedentesInscription
-            }
-            idFicheInscription={resultatRMCFicheInscription?.ficheIdentifiant}
-            dataRMCFicheInscription={
-              resultatRMCFicheInscription?.dataRMCInscription
-            }
-            dataTableauRMCFicheInscription={
-              resultatRMCFicheInscription?.dataTableauRMCInscription
-            }
-          />
-        )}
-      <BoutonNouvelleRMCActeInscription
-        setValuesRMCActeInscription={setValuesRMCActeInscription}
-        setNouvelleRMCActeInscription={setNouvelleRMCActeInscription}
-        setCriteresRechercheActe={setCriteresRechercheActe}
-        setCriteresRechercheInscription={setCriteresRechercheInscription}
+      <RMCAuto
+        requete={detailRequete}
+        dataHistory={dataHistory}
+        dataAlertes={aplatirTableau(Array.from(alertes.values()))}
+        ajoutAlertePossible={ajoutAlertePossible}
+        onClickCheckboxTableauActes={onClickCheckboxActe}
+        onClickCheckboxTableauInscriptions={onClickCheckboxInscription}
+        reset={resetActeInscription}
       />
       <AlertesActes
         alertes={alertes}

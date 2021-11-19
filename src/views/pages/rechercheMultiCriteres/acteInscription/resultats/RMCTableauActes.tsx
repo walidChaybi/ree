@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { DESCRIPTION_SAGA } from "../../../../../model/etatcivil/enum/TypeAlerte";
 import { TypeFiche } from "../../../../../model/etatcivil/enum/TypeFiche";
 import { IAlerte } from "../../../../../model/etatcivil/fiche/IAlerte";
+import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -189,8 +190,14 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   );
 
   useEffect(() => {
-    const colonnes = determinerColonnes(typeRMC, hasWarning, onClickCheckbox);
+    const colonnes = determinerColonnes(
+      typeRMC,
+      hasWarning,
+      onClickCheckbox,
+      dataRequete?.type
+    );
     setColumnHeaders(colonnes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typeRMC, hasWarning, onClickCheckbox]);
 
   useEffect(() => {
@@ -211,7 +218,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         resetTableau={resetTableauActe}
         noRows={zeroActe}
       />
-      {typeRMC === "Auto" && (
+      {typeRMC === "Auto" && dataRequete?.type === TypeRequete.DELIVRANCE && (
         <div className="ElementsCoches">
           {getLibelle(`${selected.size} élément(s) coché(s)`)}
         </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import * as Yup from "yup";
-import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { MIN_YEAR } from "../../../common/util/DateUtils";
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
@@ -20,7 +19,6 @@ import TitulaireFiltre, {
   TitulaireFiltreProps,
   TitulaireValidationSchema
 } from "../filtres/titulaire/TitulaireFiltre";
-import { ICriteresRechercheActeInscription } from "./hook/RMCActeInscriptionUtils";
 import "./scss/RMCActeInscriptionPage.scss";
 
 // Nom des filtres
@@ -45,29 +43,13 @@ export const ValidationSchemaRMCActeInscription = Yup.object({
 export const titreForm = "Critères de recherche d'un acte ou d'une inscription";
 
 interface RMCActeInscriptionFormProps {
-  setValuesRMCActeInscription: React.Dispatch<
-    React.SetStateAction<IRMCActeInscription>
-  >;
-  setNouvelleRMCActeInscription: React.Dispatch<React.SetStateAction<boolean>>;
-  setCriteresRechercheActe: React.Dispatch<
-    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
-  >;
-  setCriteresRechercheInscription: React.Dispatch<
-    React.SetStateAction<ICriteresRechercheActeInscription | undefined>
-  >;
+  onSubmit: (values: any) => void;
   closePopIn?: () => void;
-  nbLignesParAppelActe: number;
-  nbLignesParAppelInscription: number;
 }
 
 export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
-  setValuesRMCActeInscription,
-  setNouvelleRMCActeInscription,
-  setCriteresRechercheActe,
-  setCriteresRechercheInscription,
-  closePopIn,
-  nbLignesParAppelActe,
-  nbLignesParAppelInscription
+  onSubmit,
+  closePopIn
 }) => {
   const blocsForm: JSX.Element[] = [
     getFormTitulaire(),
@@ -76,18 +58,7 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = ({
   ];
 
   const onSubmitRMCActeInscription = (values: any) => {
-    setNouvelleRMCActeInscription(true);
-    setValuesRMCActeInscription(values);
-    setCriteresRechercheActe({
-      valeurs: values,
-      range: `0-${nbLignesParAppelActe}`
-    });
-    setCriteresRechercheInscription({
-      valeurs: values,
-      range: `0-${nbLignesParAppelInscription}`
-    });
-    stockageDonnees.stockerCriteresRMCActeInspt(values);
-    setNouvelleRMCActeInscription(false);
+    onSubmit(values);
   };
 
   const rappelCriteres = () => {

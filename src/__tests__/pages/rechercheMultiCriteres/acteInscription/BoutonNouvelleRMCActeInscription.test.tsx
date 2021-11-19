@@ -6,7 +6,7 @@ import {
   waitFor
 } from "@testing-library/react";
 import React from "react";
-import { BoutonNouvelleRMCActeInscription } from "../../../../../views/pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/rechercheMultiCriteres/BoutonNouvelleRMCActeInscription";
+import { BoutonNouvelleRMCActeInscription } from "../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/BoutonNouvelleRMCActeInscription";
 
 test("renders titre bouton ajouter RMC", async () => {
   await act(async () => {

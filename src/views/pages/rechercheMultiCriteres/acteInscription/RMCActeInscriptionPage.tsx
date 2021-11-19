@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import { AutoScroll } from "../../../common/widget/autoScroll/autoScroll";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
@@ -16,17 +17,20 @@ import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";
 import "./scss/RMCActeInscriptionPage.scss";
 
 export const RMCActeInscriptionPage: React.FC = () => {
-  const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<
-    IRMCActeInscription
-  >({});
+  const [
+    valuesRMCActeInscription,
+    setValuesRMCActeInscription
+  ] = useState<IRMCActeInscription>({});
 
-  const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<
-    boolean
-  >(false);
+  const [
+    nouvelleRMCActeInscription,
+    setNouvelleRMCActeInscription
+  ] = useState<boolean>(false);
 
-  const [criteresRechercheActe, setCriteresRechercheActe] = useState<
-    ICriteresRechercheActeInscription
-  >();
+  const [
+    criteresRechercheActe,
+    setCriteresRechercheActe
+  ] = useState<ICriteresRechercheActeInscription>();
 
   const [
     criteresRechercheInscription,
@@ -34,9 +38,10 @@ export const RMCActeInscriptionPage: React.FC = () => {
   ] = useState<ICriteresRechercheActeInscription>();
 
   // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] = useState<
-    ICriteresRechercheActeInscription
-  >();
+  const [
+    criteresRechercheFicheActe,
+    setCriteresRechercheFicheActe
+  ] = useState<ICriteresRechercheActeInscription>();
 
   // Critères de recherche pour alimenter les données des fiches Inscription en effet leur pagination/navigation est indépendante du tableau de résultats
   const [
@@ -110,17 +115,25 @@ export const RMCActeInscriptionPage: React.FC = () => {
     [valuesRMCActeInscription]
   );
 
+  const onSubmitRMCActeInscription = useCallback((values: any) => {
+    setNouvelleRMCActeInscription(true);
+    setValuesRMCActeInscription(values);
+    setCriteresRechercheActe({
+      valeurs: values,
+      range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
+    });
+    setCriteresRechercheInscription({
+      valeurs: values,
+      range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`
+    });
+    stockageDonnees.stockerCriteresRMCActeInspt(values);
+    setNouvelleRMCActeInscription(false);
+  }, []);
+
   const RMCActeInscriptionRef = useRef();
   return (
     <>
-      <RMCActeInscriptionForm
-        setValuesRMCActeInscription={setValuesRMCActeInscription}
-        setNouvelleRMCActeInscription={setNouvelleRMCActeInscription}
-        setCriteresRechercheActe={setCriteresRechercheActe}
-        setCriteresRechercheInscription={setCriteresRechercheInscription}
-        nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
-        nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-      />
+      <RMCActeInscriptionForm onSubmit={onSubmitRMCActeInscription} />
       <AutoScroll
         autoScroll={nouvelleRMCActeInscription}
         baliseRef={RMCActeInscriptionRef}

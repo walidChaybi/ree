@@ -47,7 +47,8 @@ test("renders Page requete information et clique sur une A_TRAITER", async () =>
   await waitFor(() => {
     expect(screen.getByText("EVIPG4")).toBeDefined();
     expect(screen.getByText("EVIPG5")).toBeDefined();
-    expect(screen.getByText("nom1 p1 nom2 p1")).toBeDefined();
+    expect(screen.getByText("NOM1 p1")).toBeDefined();
+    expect(screen.getByText("NOM2 p1")).toBeDefined();
   });
 
   act(() => {

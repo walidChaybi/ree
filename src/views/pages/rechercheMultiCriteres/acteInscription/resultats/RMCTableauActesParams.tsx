@@ -1,4 +1,5 @@
 import React from "react";
+import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
 import { HeaderTableauRMCActe } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
@@ -26,9 +27,11 @@ export function determinerColonnes(
     index: number,
     isChecked: boolean,
     data: IResultatRMCActe
-  ) => void
+  ) => void,
+  typeRequete?: TypeRequete
 ) {
-  if (typeRMC === "Auto") {
+  // Les checkbox s'affichent que pour la RMC Auto d'une requête de délivrance
+  if (typeRMC === "Auto" && typeRequete === TypeRequete.DELIVRANCE) {
     return [
       ...columnsTableauRmc,
       new TableauTypeColumn({

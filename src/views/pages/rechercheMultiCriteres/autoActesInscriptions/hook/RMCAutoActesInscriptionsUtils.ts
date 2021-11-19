@@ -1,5 +1,5 @@
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
 import { ITitulaireRequete } from "../../../../../model/requete/v2/ITitulaireRequete";
 import { ITitulaireRequeteTableau } from "../../../../../model/requete/v2/ITitulaireRequeteTableau";
@@ -29,9 +29,7 @@ export interface ICriteresRMCAuto {
 
 export function redirectionRMCAuto(
   requete: IRequeteTableauDelivrance,
-  urlCourante: string,
-  dataRMCAutoActe: any[],
-  dataRMCAutoInscription: any[]
+  urlCourante: string
 ) {
   let url = "";
 
@@ -101,7 +99,7 @@ export function redirectionRMCAutoApercuTraitement(
 }
 
 export function determinerCriteresRMCAuto(
-  requete: IRequeteDelivrance | IRequeteTableauDelivrance
+  requete: TRequete | IRequeteTableauDelivrance
 ): ICriteresRMCAuto {
   const criteresRMCAuto = {} as ICriteresRMCAuto;
   criteresRMCAuto.criteres = criteresRMCAutoMapper(requete?.titulaires);
