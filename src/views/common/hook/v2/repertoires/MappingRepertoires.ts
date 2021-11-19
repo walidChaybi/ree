@@ -114,6 +114,7 @@ function mapPersonnes(personnes: any, numero: any): IPersonne[] {
       autresNoms: mapAutresNoms(personne.autresNoms),
       lieuNaissance: mapLieuPersonne(personne.naissance),
       dateNaissance: mapDatePersonne(personne.naissance),
+      nationalite: Nationalite.getEnumFor(personne.nationalite),
       lieuDeces: personne.deces && mapLieuPersonne(personne.deces),
       dateDeces: personne.deces && mapDatePersonne(personne.deces),
       sexe: personne.sexe && Sexe.getEnumFor(personne.sexe),

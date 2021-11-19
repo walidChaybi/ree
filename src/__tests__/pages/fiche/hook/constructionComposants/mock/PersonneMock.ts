@@ -1,28 +1,20 @@
 import { IPersonne } from "../../../../../../model/etatcivil/commun/IPersonne";
 import { AutresNoms } from "../../../../../../model/etatcivil/enum/AutresNoms";
+import { Nationalite } from "../../../../../../model/etatcivil/enum/Nationalite";
 import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 
 export const personneMock: IPersonne = {
-  id: "e7114c57-d00d-48ad-bbee-af2b01e2da63",
   nom: "Faulkner",
   sexe: Sexe.MASCULIN,
-  nationalite: "FRANCAISE",
+  nationalite: Nationalite.FRANCAISE,
   lieuNaissance: {
-    jour: 26,
-    mois: 2,
-    annee: 1980,
-    voie: "",
     ville: "marseille",
     arrondissement: "2",
     region: "Provence-Aples-côte d'azur",
     pays: "France"
   },
   lieuDeces: {
-    jour: null,
-    mois: 7,
-    annee: 2020,
-    voie: "",
     ville: "londres",
     arrondissement: "",
     region: "Angleterre",
@@ -41,14 +33,14 @@ export const personneMock: IPersonne = {
   prenoms: ["Elie_madelaine-henriette", "Maëlla", "Marie-Charlotte"],
   autresPrenoms: ["Solomon"],
   parents: [
-    { id: null, typeLienParente: "DIRECT", nom: "Paul", prenoms: ["Justice"] },
-    { id: null, typeLienParente: "DIRECT", nom: "Barton", prenoms: ["Buck"] },
-    { id: null, typeLienParente: "DIRECT", nom: "Janine", prenoms: ["Alyce"] }
+    { nom: "Paul", prenoms: ["Justice"] },
+    { nom: "Barton", prenoms: ["Buck"] },
+    { nom: "Janine", prenoms: ["Alyce"] }
   ],
   enfants: [
-    { id: null, typeLienParente: "DIRECT", nom: "Paul", prenoms: ["Justice"] },
-    { id: null, typeLienParente: "DIRECT", nom: "Barton", prenoms: ["Buck"] },
-    { id: null, typeLienParente: "DIRECT", nom: "Janine", prenoms: ["Alyce"] }
+    { nom: "Paul", prenoms: ["Justice"] },
+    { nom: "Barton", prenoms: ["Buck"] },
+    { nom: "Janine", prenoms: ["Alyce"] }
   ],
   rcs: [
     { id: "85df1d10-71b7-4336-9463-bb1c5760d1a0", numero: "3" },

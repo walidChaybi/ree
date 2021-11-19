@@ -16,17 +16,17 @@ test("render composant SectionPart", async () => {
   );
   expect(Personne.getDateNaissance(personneMock)).toBe("26/02/1980");
   expect(Personne.getDateDeces(personneMock)).toBe("07/2020");
-  expect(Personne.getNationalite(personneMock)).toBe("Francaise");
+  expect(Personne.getNationalite(personneMock)).toBe("Française");
   expect(Personne.getSexe(personneMock)).toBe("Masculin");
   expect(Personne.getParents(personneMock)).toStrictEqual([
-    { id: null, typeLienParente: "DIRECT", nom: "Paul", prenoms: ["Justice"] },
-    { id: null, typeLienParente: "DIRECT", nom: "Barton", prenoms: ["Buck"] },
-    { id: null, typeLienParente: "DIRECT", nom: "Janine", prenoms: ["Alyce"] }
+    { nom: "Paul", prenoms: ["Justice"] },
+    { nom: "Barton", prenoms: ["Buck"] },
+    { nom: "Janine", prenoms: ["Alyce"] }
   ]);
   expect(Personne.getEnfants(personneMock)).toStrictEqual([
-    { id: null, nom: "Paul", prenoms: ["Justice"], typeLienParente: "DIRECT" },
-    { id: null, nom: "Barton", prenoms: ["Buck"], typeLienParente: "DIRECT" },
-    { id: null, nom: "Janine", prenoms: ["Alyce"], typeLienParente: "DIRECT" }
+    { nom: "Paul", prenoms: ["Justice"] },
+    { nom: "Barton", prenoms: ["Buck"] },
+    { nom: "Janine", prenoms: ["Alyce"] }
   ]);
   expect(Personne.getActes(personneMock)).toStrictEqual([
     {

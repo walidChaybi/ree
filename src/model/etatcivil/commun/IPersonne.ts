@@ -1,20 +1,21 @@
 import {
+  getDateStringFromDateCompose,
+  IDateCompose
+} from "../../../views/common/util/DateUtils";
+import {
   formatNom,
   formatPrenom,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../views/common/util/Utils";
 import { LieuxUtils } from "../../LieuxUtils";
-import {
-  IDateCompose,
-  getDateStringFromDateCompose
-} from "../../../views/common/util/DateUtils";
-import { Sexe } from "../enum/Sexe";
 import { AutresNoms } from "../enum/AutresNoms";
-import { ILieuEvenement } from "./ILieuEvenement";
+import { Nationalite } from "../enum/Nationalite";
+import { Sexe } from "../enum/Sexe";
+import { IAutresNoms } from "./IAutresNoms";
+import { IFamille } from "./IFamille";
 import { IFicheLien } from "./IFicheLien";
 import { IFicheLienActes } from "./IFicheLienActes";
-import { IFamille } from "./IFamille";
-import { IAutresNoms } from "./IAutresNoms";
+import { ILieuEvenement } from "./ILieuEvenement";
 
 export interface IPersonne {
   nom: string;
@@ -23,7 +24,7 @@ export interface IPersonne {
   autresPrenoms: string[];
   lieuNaissance: ILieuEvenement;
   dateNaissance: IDateCompose;
-  nationalite: string;
+  nationalite: Nationalite;
   dateDeces?: IDateCompose;
   lieuDeces?: ILieuEvenement;
   sexe: Sexe;
@@ -103,7 +104,9 @@ export const Personne = {
 
   getNationalite(personne: IPersonne): string {
     return personne.nationalite
-      ? premiereLettreEnMajusculeLeResteEnMinuscule(personne.nationalite)
+      ? premiereLettreEnMajusculeLeResteEnMinuscule(
+          personne.nationalite.libelle
+        )
       : "";
   },
 

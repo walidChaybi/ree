@@ -6,7 +6,7 @@ import { Options } from "../../../views/common/util/Type";
 
 export class Nationalite extends EnumWithComplete {
   public static readonly FRANCAISE = new Nationalite("FRANCAISE", "Française");
-  public static readonly ETRANGERE = new Nationalite("ETRANGERE", "Etrangère");
+  public static readonly ETRANGERE = new Nationalite("ETRANGERE", "Étrangère");
   public static readonly INCONNUE = new Nationalite(
     "INCONNUE",
     "Non renseignée"
