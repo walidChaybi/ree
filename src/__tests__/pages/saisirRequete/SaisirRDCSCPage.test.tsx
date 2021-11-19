@@ -85,10 +85,6 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
     });
   });
 
-  // await waitFor(() => {
-  //   expect(screen.getByText("Certificat de situation au PACS"));
-  // });
-
   const submit = screen.getByText(/Enregistrer et valider/i);
 
   await act(async () => {

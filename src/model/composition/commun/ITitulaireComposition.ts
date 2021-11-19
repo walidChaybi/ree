@@ -3,8 +3,8 @@ import {
   getMoisEnLettre
 } from "../../../views/common/util/DateUtils";
 import {
-  getValeurOuVide,
-  jointAvecEspace
+  formatPrenoms,
+  getValeurOuVide
 } from "../../../views/common/util/Utils";
 import { ITitulaireRequeteTableau } from "../../requete/v2/ITitulaireRequeteTableau";
 
@@ -26,7 +26,7 @@ export const TitulaireComposition = {
   ) {
     if (titulaire) {
       obj.nom = getValeurOuVide(titulaire.nom);
-      obj.prenoms = getValeurOuVide(jointAvecEspace(titulaire.prenoms));
+      obj.prenoms = getValeurOuVide(formatPrenoms(titulaire.prenoms));
       obj.sexe = titulaire.sexe.libelle;
 
       obj.jour_naissance = getJourOu1er(titulaire.jourNaissance);

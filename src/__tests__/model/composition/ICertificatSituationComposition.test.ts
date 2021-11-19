@@ -47,7 +47,7 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
   } as IRequerant;
   const titulaire = {
     nom: "nom",
-    prenoms: ["p1", "p2"],
+    prenoms: ["pre1", "pre2"],
     jourNaissance: 1,
     moisNaissance: 2,
     anneeNaissance: 2000,
@@ -62,15 +62,14 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     requerant: requerant
   } as IRequeteTableauDelivrance;
 
-  const resultat =
-    await CertificatSituationComposition.creerCertificatSituation(
-      titre,
-      decrets,
-      phrase,
-      requete,
-      phrasesPiecesJointes,
-      titulaire
-    );
+  const resultat = await CertificatSituationComposition.creerCertificatSituation(
+    titre,
+    decrets,
+    phrase,
+    requete,
+    phrasesPiecesJointes,
+    titulaire
+  );
   await waitFor(() => {
     expect(resultat).toEqual(attendu);
   });

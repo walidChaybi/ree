@@ -48,7 +48,7 @@ test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correcteme
   } as IRequerant;
   const titulaire = {
     nom: "nom",
-    prenoms: ["p1", "p2"],
+    prenoms: ["pre1", "pre2"],
     jourNaissance: 1,
     moisNaissance: 2,
     anneeNaissance: 2000,
