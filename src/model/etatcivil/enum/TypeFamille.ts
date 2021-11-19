@@ -5,7 +5,7 @@ import { Options } from "../../../views/common/util/Type";
 
 export class TypeFamille extends EnumWithLibelle {
   public static readonly ACQ = new TypeFamille(
-    "Acquisition de nationalité française"
+    "Acquisition de la nationalité française"
   );
   public static readonly CSL = new TypeFamille("Acte consulaire");
   public static readonly DEP = new TypeFamille(
@@ -26,7 +26,7 @@ export class TypeFamille extends EnumWithLibelle {
   );
   public static readonly JUG = new TypeFamille("Transcription judiciaire");
   public static readonly MAR = new TypeFamille(
-    "Actes dressés en mer ou aux armées"
+    "Acte dressé en mer ou aux armées"
   );
   public static readonly CPN = new TypeFamille("Changement de nom ou prénoms");
   public static readonly AFF = new TypeFamille("Dossier d'affaire");
