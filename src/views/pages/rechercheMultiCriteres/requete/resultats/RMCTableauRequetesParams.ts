@@ -9,6 +9,7 @@ import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauT
 export enum HeaderTableauRequete {
   Observations = "observations",
   Numero = "numero",
+  NumeroTeledossier = "numeroTeledossier",
   IdSagaDila = "idSagaDila",
   Type = "type",
   SousType = "sousType",
@@ -36,6 +37,12 @@ export const columnsTableauRequete = [
     title: "N°",
     align: "center",
     style: { width: "100px" }
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.NumeroTeledossier],
+    title: "N° télédossier",
+    align: "center",
+    style: { width: "150px" }
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Type],

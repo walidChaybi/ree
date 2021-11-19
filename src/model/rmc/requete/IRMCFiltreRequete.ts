@@ -6,4 +6,5 @@ export interface IRMCFiltreRequete {
   typeRequete?: string;
   sousTypeRequete?: SousTypeRequete;
   statutRequete?: StatutRequete;
+  numeroTeledossier?: string;
 }

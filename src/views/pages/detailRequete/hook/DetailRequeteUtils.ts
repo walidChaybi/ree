@@ -429,7 +429,13 @@ function getRequeteDelivranceInfo(
   requete: IRequeteDelivrance
 ): SectionContentProps[] {
   const infosRequete = [] as SectionContentProps[];
-
+  ajouterContentPartAuPartUneValeur(
+    infosRequete,
+    getLibelle("N° télédossier"),
+    requete.provenanceRequete.provenanceServicePublic
+      ? requete.provenanceRequete.provenanceServicePublic.referenceDila
+      : ""
+  );
   ajouterContentPartAuPartUneValeur(
     infosRequete,
     getLibelle("Sous-type"),

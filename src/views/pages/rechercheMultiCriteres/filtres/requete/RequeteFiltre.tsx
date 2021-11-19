@@ -24,6 +24,7 @@ import { getLibelle } from "../../../../common/widget/Text";
 
 // Noms des champs
 export const NUMERO_REQUETE = "numeroRequete";
+export const NUMERO_TELEDOSSIER = "numeroTeledossier";
 export const TYPE_REQUETE = "typeRequete";
 export const SOUS_TYPE_REQUETE = "sousTypeRequete";
 export const STATUT_REQUETE = "statutRequete";
@@ -31,6 +32,7 @@ export const STATUT_REQUETE = "statutRequete";
 // Valeurs par défaut des champs
 export const RequeteDefaultValues = {
   [NUMERO_REQUETE]: "",
+  [NUMERO_TELEDOSSIER]: "",
   [TYPE_REQUETE]: "",
   [SOUS_TYPE_REQUETE]: "",
   [STATUT_REQUETE]: ""
@@ -42,6 +44,7 @@ export const RequeteValidationSchema = Yup.object({
     CarateresAlphanumerique,
     CARACTERES_ALPHANUMERIQUE
   ),
+  [NUMERO_TELEDOSSIER]: Yup.string(),
   [TYPE_REQUETE]: Yup.string(),
   [SOUS_TYPE_REQUETE]: Yup.string(),
   [STATUT_REQUETE]: Yup.string()
@@ -53,6 +56,10 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
   const numeroRequeteWithNamespace = withNamespace(
     props.nomFiltre,
     NUMERO_REQUETE
+  );
+  const numeroTeledossierWithNamespace = withNamespace(
+    props.nomFiltre,
+    NUMERO_TELEDOSSIER
   );
   const typeRequeteWithNamespace = withNamespace(props.nomFiltre, TYPE_REQUETE);
   const sousTypeRequeteWithNamespace = withNamespace(
@@ -116,6 +123,11 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
           <InputField
             name={numeroRequeteWithNamespace}
             label={getLibelle("N° Requête")}
+            onBlur={onBlurNumero}
+          />
+          <InputField
+            name={numeroTeledossierWithNamespace}
+            label={getLibelle("N° Télédossier")}
             onBlur={onBlurNumero}
           />
           <SelectField

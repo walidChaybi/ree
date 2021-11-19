@@ -17,6 +17,7 @@ export function mappingCriteresRequete(
     typeRequete: valeurOuUndefined(criteres.requete?.typeRequete),
     sousTypeRequete: valeurOuUndefined(criteres.requete?.sousTypeRequete),
     statutRequete: valeurOuUndefined(criteres.requete?.statutRequete),
+    numeroTeledossier: valeurOuUndefined(criteres.requete?.numeroTeledossier),
 
     // Filtre Titulaire
     nomTitulaire: valeurOuUndefined(criteres.titulaire?.nom),

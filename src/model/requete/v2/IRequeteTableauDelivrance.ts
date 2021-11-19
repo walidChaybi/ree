@@ -25,6 +25,7 @@ import {
 export interface IRequeteTableauDelivrance {
   idRequete: string;
   numero?: string;
+  numeroTeledossier?: string;
   idSagaDila?: string;
   type?: string;
   sousType?: string;
@@ -68,6 +69,7 @@ export function mappingUneRequeteTableau(
   return {
     idRequete: valeurOuUndefined(requete?.id),
     numero: getValeurOuVide(requete?.numero),
+    numeroTeledossier: getValeurOuVide(requete?.numeroTeledossier),
     idSagaDila: getValeurOuVide(requete?.idSagaDila),
     type: TypeRequete.getEnumFor(requete?.type)?.libelle,
     sousType: getSousType(requete?.type, requete?.sousType),

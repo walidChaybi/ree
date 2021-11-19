@@ -240,7 +240,7 @@ function getRequeteDelivranceSousType(
         parts: [
           {
             partContent: {
-              contents: getRequeteSousType(requete)
+              contents: getRequeteNumeroTeledossierEtSousType(requete)
             }
           }
         ]
@@ -297,11 +297,18 @@ function getRequeteAutreInfos(requete: IRequeteDelivrance): SectionPanelProps {
   };
 }
 
-function getRequeteSousType(
+function getRequeteNumeroTeledossierEtSousType(
   requete: IRequeteDelivrance
 ): SectionContentProps[] {
   const infosRequete = [] as SectionContentProps[];
 
+  ajouterContentPartAuPartUneValeurVide(
+    infosRequete,
+    getLibelle("N° télédossier"),
+    requete.provenanceRequete.provenanceServicePublic
+      ? requete.provenanceRequete.provenanceServicePublic.referenceDila
+      : ""
+  );
   ajouterContentPartAuPartUneValeur(
     infosRequete,
     getLibelle("Sous-type"),
