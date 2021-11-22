@@ -22,6 +22,6 @@ export class InscriptionRcUtil {
   public static getLibelle(inscriptionRc?: TypeInscriptionRc): string {
     return inscriptionRc && this.libelles[inscriptionRc]
       ? this.libelles[inscriptionRc]
-      : "Autre";
+      : "";
   }
 }

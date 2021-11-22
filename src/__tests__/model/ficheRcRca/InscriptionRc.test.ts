@@ -8,5 +8,5 @@ test("TypeNature model", () => {
     "Caducité"
   );
 
-  expect(InscriptionRcUtil.getLibelle()).toBe("Autre");
+  expect(InscriptionRcUtil.getLibelle()).toBe("");
 });
