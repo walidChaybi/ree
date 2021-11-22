@@ -84,7 +84,7 @@ export const TitulaireRequete = {
       ? premiereLettreEnMajusculeLeResteEnMinuscule(titulaire.paysNaissance)
       : "";
   },
-  getLieuNissance(titulaire?: ITitulaireRequete): string {
+  getLieuNaissance(titulaire?: ITitulaireRequete): string {
     let lieuNissance = "";
 
     if (titulaire && titulaire.villeNaissance) {

@@ -1,7 +1,10 @@
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { TRequete } from "../../../../../model/requete/v2/IRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
-import { ITitulaireRequete } from "../../../../../model/requete/v2/ITitulaireRequete";
+import {
+  ITitulaireRequete,
+  TitulaireRequete
+} from "../../../../../model/requete/v2/ITitulaireRequete";
 import { ITitulaireRequeteTableau } from "../../../../../model/requete/v2/ITitulaireRequeteTableau";
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import {
@@ -130,7 +133,7 @@ function getNomTitulaire(
   let nomTitulaire;
   /* titulaire de type ITitulaireRequete */
   if ("id" in titulaire) {
-    nomTitulaire = valeurOuUndefined(titulaire?.nomNaissance);
+    nomTitulaire = TitulaireRequete.getLieuNaissance(titulaire);
   } else {
     /* titulaire de type ITitulaireRequeteTableau*/
     nomTitulaire = valeurOuUndefined(titulaire?.nom);
@@ -144,7 +147,7 @@ function getPrenomTitulaire(
   let prenomTitulaire;
   /* titulaire de type ITitulaireRequete */
   if ("id" in titulaire) {
-    prenomTitulaire = valeurOuUndefined(titulaire?.prenoms?.[0]?.prenom);
+    prenomTitulaire = TitulaireRequete.getPrenom1(titulaire);
   } else {
     /* titulaire de type ITitulaireRequeteTableau*/
     prenomTitulaire = valeurOuUndefined(titulaire?.prenoms?.[0]);

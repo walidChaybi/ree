@@ -184,7 +184,7 @@ function getTitulaireInfo(
     ajouterContentPartAuPartUneValeur(
       infosTitulaire,
       getLibelle(`Lieu de naissance du titulaire`),
-      TitulaireRequete.getLieuNissance(titulaire)
+      TitulaireRequete.getLieuNaissance(titulaire)
     );
   }
 
