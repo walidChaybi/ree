@@ -75,7 +75,7 @@ function getPanelAreasActeImage(
 }
 
 export interface IParamsAffichage {
-  visuAlertes: boolean;
+  visuBoutonAlertes: boolean;
   visuActe: "classique" | "filigrane" | "disabled";
   personnes: "visible" | "disabled" | "none";
 }
@@ -85,7 +85,7 @@ export function getParamsAffichageFicheActe(
   typeVisibiliteArchiviste: TypeVisibiliteArchiviste
 ): IParamsAffichage {
   const params: IParamsAffichage = {
-    visuAlertes: true,
+    visuBoutonAlertes: false,
     visuActe: "disabled",
     personnes: "disabled"
   };
@@ -98,7 +98,7 @@ export function getParamsAffichageFicheActe(
     officierALeDroitSurLePerimetre(Droit.CONSULTER, PERIMETRE_MEAE) ||
     officierAutoriserSurLeTypeRegistre(idTypeRegistre)
   ) {
-    params.visuAlertes = true;
+    params.visuBoutonAlertes = true;
     params.visuActe = "classique";
     params.personnes = "visible";
   }
@@ -108,7 +108,7 @@ export function getParamsAffichageFicheActe(
     typeVisibiliteArchiviste !== TypeVisibiliteArchiviste.NON &&
     officierHabiliterPourLeDroit(Droit.CONSULTER_ARCHIVES)
   ) {
-    params.visuAlertes = false;
+    params.visuBoutonAlertes = false;
     params.visuActe = "filigrane";
     params.personnes = "none";
   }
@@ -116,7 +116,7 @@ export function getParamsAffichageFicheActe(
   // S'il a un droit CONSULTER mais pas sur le périmètre de l'acte
   // ou Si le type de registre n'est présent dans le périmètre de l'acte
   else if (!officierAutoriserSurLeTypeRegistre(idTypeRegistre)) {
-    params.visuAlertes = false;
+    params.visuBoutonAlertes = false;
     params.visuActe = "disabled";
     params.personnes = "disabled";
   }

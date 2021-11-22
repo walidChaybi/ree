@@ -95,7 +95,7 @@ export const FichePage: React.FC<FichePageProps> = ({
     dataFicheCourante?.identifiant
   );
 
-  const { bandeauFiche, panelsFiche, alertes, visuAlertes } = setFiche(
+  const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(
     dataFicheCourante,
     dataFicheState.data
   );
@@ -268,12 +268,13 @@ export const FichePage: React.FC<FichePageProps> = ({
             max={nbLignesTotales}
             setIndex={setIndexFiche}
           />
-          {visuAlertes === true && (
+          {dataFicheCourante.categorie === TypeFiche.ACTE && (
             <BandeauAlertesActe
               alertes={alertes}
               ajoutAlertePossible={ajoutAlertePossible}
               ajouterAlerteCallBack={ajouterAlerteCallBack}
               supprimerAlerteCallBack={supprimerAlerteCallBack}
+              afficherBouton={visuBoutonAlertes}
             />
           )}
           {panelsFiche?.panels?.map((panel: SectionPanelProps, idx: number) => (

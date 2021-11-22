@@ -48,7 +48,7 @@ test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmèt
 //////////////////////////////////////////
 /**
  * Pour rappel (cf. FicheActeUtils.ts)
- * visuAlertes: boolean;
+ * visuBoutonAlertes: boolean;
  * visuActe: "classique" | "filigrane" | "disabled";
  * personnes: "visible" | "disabled" | "none";
  *
@@ -59,39 +59,39 @@ test("ficheUtils acte avec utilisateur qui a le droit CONSULTER sur le périmèt
  * Type d'actes possibles \ | Acte            | Acte            | Acte Archive    | Acte Archive    |
  * Type de droits possibles | Périmètre TUNIS | Périmètre SEOUL | Périmètre TUNIS | Périmètre SEOUL |
  * ==================================================================================================
- * CONS + Périmètre MEAE    | alerte:    TRUE | alerte:     TRUE| alerte:    TRUE | alerte:    TRUE |
+ * CONS + Périmètre MEAE    | bouton:    TRUE | bouton:     TRUE| bouton:    FALSE| bouton:    FALSE|
  *                          | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
  *                          | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
  * --------------------------------------------------------------------------------------------------
- * CONS + Périmètre TUNIS   | alerte:    TRUE | alerte:    FALSE| alerte:    TRUE | alerte:    FALSE|
+ * CONS + Périmètre TUNIS   | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
  *                          | visuActe:  CLASS| visuActe:  DISAB| visuActe:  CLASS| visuActe:  DISAB|
  *                          | personnes: VISIB| personnes: DISAB| personnes: VISIB| personnes: DISAB|
  * --------------------------------------------------------------------------------------------------
- * CONS + Périmètre SEOUL   | alerte:    FALSE| alerte:    TRUE | alerte:    FALSE| alerte:    TRUE |
+ * CONS + Périmètre SEOUL   | bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
  *                          | visuActe:  DISAB| visuActe:  CLASS| visuActe:  DISAB| visuActe:  CLASS|
  *                          | personnes: DISAB| personnes: VISIB| personnes: DISAB| personnes: VISIB|
  * --------------------------------------------------------------------------------------------------
- * CONS + Périmè TUNIS+SEOUL| alerte:     TRUE| alerte:    TRUE | alerte:    TRUE | alerte:    TRUE |
+ * CONS + Périmè TUNIS+SEOUL| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
  *                          | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
  *                          | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
  * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| alerte:    FALSE| alerte:    FALSE| alerte:    FALSE| alerte:    FALSE|
+ * CONS ARCH (+ Périmè MEAE)| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
  *                          | visuActe!: DISAB| visuActe!: DISAB| visuActe:  FILIG| visuActe:  FILIG|
  *                          | personnes!:DISAB| personnes!:DISAB| personnes: NONE | personnes: NONE |
  * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| alerte:    TRUE | alerte:    FALSE| alerte:    TRUE | alerte:    FALSE|
+ * CONS ARCH (+ Périmè MEAE)| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
  * CONS + Périmètre TUNIS   | visuActe:  CLASS| visuActe:  DISAB| visuActe:  CLASS| visuActe:  FILIG|
  *                          | personnes: VISIB| personnes: DISAB| personnes: VISIB| personnes: NONE |
  * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| alerte:    FALSE| alerte:    TRUE | alerte:    FALSE| alerte:    TRUE |
+ * CONS ARCH (+ Périmè MEAE)| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
  * CONS + Périmètre SEOUL   | visuActe:  DISAB| visuActe:  CLASS| visuActe:  FILIG| visuActe:  CLASS|
  *                          | personnes: DISAB| personnes: VISIB| personnes: NONE | personnes: VISIB|
  * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| alerte:    TRUE | alerte:     TRUE| alerte:    TRUE | alerte:    TRUE |
+ * CONS ARCH (+ Périmè MEAE)| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE| bouton:    FALSE|
  * CONS + Périmè TUNIS+SEOUL| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
  *                          | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
  * --------------------------------------------------------------------------------------------------
- * CONS ARCH (+ Périmè MEAE)| alerte:    TRUE | alerte:     TRUE| alerte:    TRUE | alerte:    TRUE |
+ * CONS ARCH (+ Périmè MEAE)| bouton:    TRUE | bouton:    TRUE | bouton:    FALSE| bouton:    FALSE|
  * CONS + Périmètre MEAE    | visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS| visuActe:  CLASS|
  *                          | personnes: VISIB| personnes: VISIB| personnes: VISIB| personnes: VISIB|
  * --------------------------------------------------------------------------------------------------*/
@@ -186,19 +186,19 @@ const ActeArchiveSEOUL: IFicheActe = {
 const tousLesAcces = {
   visuActe: "classique",
   personnes: "visible",
-  visuAlertes: true
+  visuBoutonAlertes: true
 } as IParamsAffichage;
 
 const pasLeBonPerimetre = {
   visuActe: "disabled",
   personnes: "disabled",
-  visuAlertes: false
+  visuBoutonAlertes: false
 } as IParamsAffichage;
 
 const restraintArchive = {
   visuActe: "filigrane",
   personnes: "none",
-  visuAlertes: false
+  visuBoutonAlertes: false
 } as IParamsAffichage;
 
 // UTILS

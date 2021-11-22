@@ -9,6 +9,7 @@ test("render texte du bouton d'ajout d'alerte", () => {
       ajoutAlertePossible={false}
       ajouterAlerteCallBack={jest.fn()}
       supprimerAlerteCallBack={jest.fn()}
+      afficherBouton={true}
     />
   );
   const boutonElement = screen.getByText("Ajouter une alerte");

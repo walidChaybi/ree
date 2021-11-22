@@ -10,20 +10,24 @@ export interface BandeauAlertesActeProps {
   ajoutAlertePossible: boolean;
   ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void;
   supprimerAlerteCallBack: (idAlerteActe: string, idActe: string) => void;
+  afficherBouton?: boolean;
 }
 
 export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
   alertes,
   ajoutAlertePossible,
   ajouterAlerteCallBack,
-  supprimerAlerteCallBack
+  supprimerAlerteCallBack,
+  afficherBouton
 }) => {
   return (
     <div className="BandeauAlertesActe">
-      <BoutonAjouterAlerte
-        ajoutAlertePossible={ajoutAlertePossible}
-        ajouterAlerteCallBack={ajouterAlerteCallBack}
-      />
+      {afficherBouton && (
+        <BoutonAjouterAlerte
+          ajoutAlertePossible={ajoutAlertePossible}
+          ajouterAlerteCallBack={ajouterAlerteCallBack}
+        />
+      )}
       {alertes?.length > 0 && (
         <ListeAlertes
           ajoutAlertePossible={ajoutAlertePossible}

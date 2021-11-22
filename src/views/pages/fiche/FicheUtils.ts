@@ -38,7 +38,7 @@ export interface IFiche {
   bandeauFiche: IBandeauFiche;
   panelsFiche: IAccordionReceSection;
   alertes: IAlerte[];
-  visuAlertes: boolean;
+  visuBoutonAlertes: boolean;
 }
 
 export function setFiche(dataFiche?: IDataFicheProps, data?: any): IFiche {
@@ -69,10 +69,10 @@ export function setFiche(dataFiche?: IDataFicheProps, data?: any): IFiche {
         const ficheActe = data as IFicheActe;
         fiche.panelsFiche = getPanelsActe(ficheActe);
         fiche.alertes = mapAlertesActe(data?.alerteActes);
-        fiche.visuAlertes = getParamsAffichageFicheActe(
+        fiche.visuBoutonAlertes = getParamsAffichageFicheActe(
           ficheActe.registre.type.id,
           ficheActe.visibiliteArchiviste
-        ).visuAlertes;
+        ).visuBoutonAlertes;
         break;
 
       default:
