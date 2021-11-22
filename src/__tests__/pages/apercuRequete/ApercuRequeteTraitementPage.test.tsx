@@ -58,7 +58,7 @@ test("renders ApercuRequeteTraitementPage", async () => {
   const bandeau = screen.getByText(
     "Requête à signer le 14/07/2020 par Ashley YOUNG"
   );
-  const actions = screen.getByText(/Suivi des actions/i);
+  const actions = screen.getByText(/Suivi requête/i);
 
   const listeAction1 = screen.getByText(
     /Saisie de la requête - 10\/03\/2020 - APP/i

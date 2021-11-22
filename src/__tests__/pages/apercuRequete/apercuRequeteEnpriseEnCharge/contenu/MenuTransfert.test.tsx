@@ -58,7 +58,7 @@ test("renders du bloc Menu Reponse Negative", async () => {
 
   await waitFor(() => {
     choixService = screen.getByText(/À un service+/);
-    choixOEC = screen.getByText(/À un Officier d'État Civil+/);
+    choixOEC = screen.getByText(/À un officier d'état civil+/);
     choixAbandon = screen.getByText(/Abandon traitement+/);
     expect(choixService).toBeDefined();
     expect(choixOEC).toBeDefined();
@@ -102,12 +102,12 @@ test("check popin agent", async () => {
   });
 
   await waitFor(() => {
-    choixService = screen.getByText(/À un Officier d'État Civil+/);
+    choixService = screen.getByText(/À un officier d'état civil+/);
     fireEvent.click(choixService);
   });
 
   const valider = screen.getByText(/Valider+/) as HTMLButtonElement;
-  const title = screen.getByText("Transfert à un Officier d'État Civil");
+  const title = screen.getByText("Transfert à un officier d'état civil");
   expect(valider).toBeDefined();
   expect(valider.disabled).toBeTruthy();
   expect(title).toBeDefined();
@@ -215,7 +215,7 @@ test("check autocomplete agent", async () => {
   });
 
   act(() => {
-    const choixService = screen.getByText(/À un Officier d'État Civil+/);
+    const choixService = screen.getByText(/À un officier d'état civil+/);
     fireEvent.click(choixService);
   });
 

@@ -86,12 +86,12 @@ export const columnsTableauRequete = [
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.DateCreation],
-    title: "Date création",
+    title: "Date requête",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.DateDerniereMaj],
-    title: "Date dernière mise à jour",
+    title: "Date dernière action",
     align: "center"
   }),
   new TableauTypeColumn({

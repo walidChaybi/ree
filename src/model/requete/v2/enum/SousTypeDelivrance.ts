@@ -38,13 +38,13 @@ export class SousTypeDelivrance extends EnumWithComplete {
   );
   public static readonly RDDP = new SousTypeDelivrance(
     "RDDP",
-    "Requête de Délivrance Démat PLANETE",
-    "Délivrance"
+    "Requête de Délivrance Démat Planète",
+    "Délivrance Planète"
   );
   public static readonly RDDCO = new SousTypeDelivrance(
     "RDDCO",
-    "Requête de Délivrance Démat COMEDEC",
-    "Délivrance"
+    "Requête de Délivrance Démat Comedec",
+    "Délivrance Comedec"
   );
   public static readonly RDLFC = new SousTypeDelivrance(
     "RDLFC",
@@ -62,5 +62,9 @@ export class SousTypeDelivrance extends EnumWithComplete {
 
   public static getAllNomsAsOptions(): Options {
     return EnumWithComplete.getAllNomsAsOptions(SousTypeDelivrance);
+  }
+
+  public static getAllLibellesCourtAsOptions(): Options {
+    return EnumWithComplete.getAllLibellesCourtAsOptions(SousTypeDelivrance);
   }
 }

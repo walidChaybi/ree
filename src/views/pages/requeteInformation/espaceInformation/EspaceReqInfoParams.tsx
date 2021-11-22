@@ -42,7 +42,7 @@ export const requeteInformationColumnHeaders = [
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.DateCreation],
-    title: getLibelle("Date de création"),
+    title: getLibelle("Date requête"),
     align: "center"
   }),
   new TableauTypeColumn({

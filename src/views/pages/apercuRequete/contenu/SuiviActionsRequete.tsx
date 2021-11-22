@@ -12,11 +12,7 @@ interface SuiviActionsRequeteProps {
 export const SuiviActionsRequete: React.FC<SuiviActionsRequeteProps> = props => {
   return (
     <div className="suivis-requete">
-      <AccordionRece
-        titre={"Suivi des actions"}
-        disabled={false}
-        expanded={true}
-      >
+      <AccordionRece titre={"Suivi requête"} disabled={false} expanded={true}>
         <List>
           {props.actions
             ?.sort((a, b) => (a.numeroOrdre > b.numeroOrdre ? -1 : 1))

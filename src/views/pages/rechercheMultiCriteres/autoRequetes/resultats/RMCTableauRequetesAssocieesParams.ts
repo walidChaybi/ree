@@ -23,7 +23,7 @@ export const columnsTableauRequeteAssociees = [
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequetesAssociees.DateCreation],
-    title: "Date création",
+    title: "Date requête",
     align: "center"
   }),
   new TableauTypeColumn({

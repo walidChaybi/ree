@@ -90,7 +90,7 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
         onClick={e => handleClickBoutonSaisir(e)}
         disabled={props.disabled}
       >
-        {getLibelle("Saisir une requête")}
+        {getLibelle("Saisir requête courrier")}
       </button>
 
       <Menu

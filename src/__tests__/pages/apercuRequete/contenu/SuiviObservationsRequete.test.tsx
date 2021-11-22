@@ -8,12 +8,12 @@ test("renders suivi des actions requete", async () => {
   render(
     <SuiviObservationsRequete observations={DONNEES_REQUETE.observations} />
   );
-  const titre = screen.getByText(/Suivi/i);
+  const titre = screen.getByText(/Observations requête/i);
   let elem1: HTMLElement;
   let elem2: HTMLElement;
 
   await waitFor(() => {
-    expect(titre.textContent).toBe("Suivi des observations");
+    expect(titre.textContent).toBeDefined();
     elem1 = screen.getByText(/LOS/i);
     expect(elem1).toBeDefined();
     expect(elem1.innerHTML).toBe(

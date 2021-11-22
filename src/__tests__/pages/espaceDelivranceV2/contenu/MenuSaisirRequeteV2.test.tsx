@@ -32,7 +32,7 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance"
     );
   });
 
-  const boutonMenu = screen.getByText(/Saisir une requête/i);
+  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
   // Open menu
   await act(async () => {
@@ -69,7 +69,7 @@ test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Délivrance"
     );
   });
 
-  const boutonMenu = screen.getByText(/Saisir une requête/i);
+  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
   // Open menu
   await act(async () => {
@@ -106,7 +106,7 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Délivrance", 
     );
   });
 
-  const boutonMenu = screen.getByText(/Saisir une requête/i);
+  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
   // Open menu
   await act(async () => {
@@ -141,7 +141,7 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Délivrance"
     );
   });
 
-  const boutonMenu = screen.getByText(/Saisir une requête/i);
+  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
   // Open menu
   await act(async () => {
@@ -178,7 +178,7 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", as
     );
   });
 
-  const boutonMenu = screen.getByText(/Saisir une requête/i);
+  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
   // Open menu
   await act(async () => {
@@ -217,7 +217,7 @@ test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Service", as
     );
   });
 
-  const boutonMenu = screen.getByText(/Saisir une requête/i);
+  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
   // Open menu
   await act(async () => {
@@ -256,7 +256,7 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Service", asyn
     );
   });
 
-  const boutonMenu = screen.getByText(/Saisir une requête/i);
+  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
   // Open menu
   await act(async () => {
@@ -291,7 +291,7 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Service", as
     );
   });
 
-  const boutonMenu = screen.getByText(/Saisir une requête/i);
+  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
   // Open menu
   await act(async () => {

@@ -32,6 +32,19 @@ export class EnumWithComplete extends EnumWithLibelle {
     return options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
   }
 
+  public static getAllLibellesCourtAsOptions(clazz: any): Options {
+    const options: Options = [];
+    for (const key in clazz) {
+      if (clazz.hasOwnProperty(key)) {
+        options.push({
+          value: key,
+          str: clazz[key]._libelleCourt
+        });
+      }
+    }
+    return options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
+  }
+
   public static getKeyForNom(clazz: any, nom: string) {
     let keyResult = "";
     for (const key in clazz) {

@@ -51,7 +51,7 @@ test("renders Page requete with all elements", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé de la requête")).toBeDefined();
+    expect(screen.getByText("Résumé requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
       screen.getByText("Requête de Délivrance Extrait/Copie Dématérialisée")
@@ -104,7 +104,7 @@ test("renders Page requete with 1 titulaire", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé de la requête")).toBeDefined();
+    expect(screen.getByText("Résumé requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
       screen.getByText("Requête de Délivrance Extrait/Copie Dématérialisée")
@@ -154,7 +154,7 @@ test("renders Page requete without titulaire", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé de la requête")).toBeDefined();
+    expect(screen.getByText("Résumé requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
       screen.getByText("Requête de Délivrance Extrait/Copie Dématérialisée")
@@ -204,7 +204,7 @@ test("renders Page requete type creation", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé de la requête")).toBeDefined();
+    expect(screen.getByText("Résumé requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(screen.getByText("Canal")).toBeDefined();
     expect(screen.getByText("Nom requérant")).toBeDefined();

@@ -73,7 +73,7 @@ test("test des prioritées des requêtes", () => {
               }),
               new TableauTypeColumn({
                 keys: ["dateCreation"],
-                title: "Date Création"
+                title: "Date requête"
               }),
               new TableauTypeColumn({
                 keys: ["dateStatut"],

@@ -69,7 +69,7 @@ export const MenuReponseSansDelivrance: React.FC<IActionProps> = props => {
     },
     {
       value: INDEX_IGNORER_REQUETE,
-      label: getLibelle("Ignorer la requête (fin du traitement)"),
+      label: getLibelle("Ignorer la requête"),
       sousTypes: [
         SousTypeDelivrance.RDC,
         SousTypeDelivrance.RDAPC,

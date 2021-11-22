@@ -26,5 +26,7 @@ test("renders Fielset Recherche Requêtes associées aux titulaires", () => {
     </Router>
   );
 
-  expect(screen.getByText("Requêtes associées aux titulaires")).toBeDefined();
+  expect(
+    screen.getByText("Autres requêtes associées au titulaire")
+  ).toBeDefined();
 });

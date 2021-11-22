@@ -111,7 +111,7 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
   } as DateComposeFormProps;
 
   const dateFinComposeFormProps = {
-    labelDate: getLibelle("A "),
+    labelDate: getLibelle("À "),
     nomDate: withNamespace(props.nomFiltre, DATE_FIN),
     showDatePicker: true,
     anneeMin: props.anneeMin

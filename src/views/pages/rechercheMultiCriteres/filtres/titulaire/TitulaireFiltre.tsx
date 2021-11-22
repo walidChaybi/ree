@@ -1,31 +1,31 @@
-import React from "react";
+import { faArrowsAltH } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "formik";
+import React from "react";
 import * as Yup from "yup";
-import "../scss/FiltreRMC.scss";
+import {
+  AsterisqueRecherche,
+  CarateresAutoriseRecherche
+} from "../../../../../ressources/Regex";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
+  DateComposeFormProps,
   DateDefaultValues,
-  DateValidationSchema,
-  DateComposeFormProps
+  DateValidationSchema
 } from "../../../../common/widget/formulaire/DateComposeForm";
 import {
-  CARATERES_AUTORISES_MESSAGE,
-  ASTERISQUE_MESSAGE
+  ASTERISQUE_MESSAGE,
+  CARATERES_AUTORISES_MESSAGE
 } from "../../../../common/widget/formulaire/FormulaireMessages";
-import {
-  CarateresAutoriseRecherche,
-  AsterisqueRecherche
-} from "../../../../../ressources/Regex";
+import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
   withNamespace
 } from "../../../../common/widget/formulaire/utils/FormUtil";
-import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
-import { faArrowsAltH } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { getLibelle } from "../../../../common/widget/Text";
+import "../scss/FiltreRMC.scss";
 
 // Noms des champs
 export const NOM = "nom";
@@ -105,6 +105,12 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
             onBlur={onBlurChamp}
           />
 
+          <InputField
+            name={withNamespace(props.nomFiltre, PRENOM)}
+            label={getLibelle("Prénom")}
+            onBlur={onBlurChamp}
+          />
+
           <button
             className="BtnNomPrenom"
             type="button"
@@ -112,12 +118,6 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
           >
             Nom <FontAwesomeIcon icon={faArrowsAltH} /> Prénom
           </button>
-
-          <InputField
-            name={withNamespace(props.nomFiltre, PRENOM)}
-            label={getLibelle("Prénom")}
-            onBlur={onBlurChamp}
-          />
 
           <DateComposeForm {...dateDebutComposeFormProps} />
 

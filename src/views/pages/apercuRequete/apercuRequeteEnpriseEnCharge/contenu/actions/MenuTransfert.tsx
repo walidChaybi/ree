@@ -95,7 +95,7 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
     },
     {
       value: INDEX_ACTION_TRANSFERT_OFFICIER,
-      label: getLibelle("À un Officier d'État Civil"),
+      label: getLibelle("À un officier d'état civil"),
       ref: refReponseTransfertOptions1
     },
     {
@@ -156,7 +156,7 @@ export const MenuTransfert: React.FC<IActionProps> = props => {
         options={listeUtilisateursToOptions(
           props.requete as IRequeteDelivrance
         )}
-        titre="Transfert à un Officier d'État Civil"
+        titre="Transfert à un officier d'état civil"
       ></TransfertPopin>
     </>
   );

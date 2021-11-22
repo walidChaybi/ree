@@ -74,12 +74,12 @@ export const requerantColumnHeaders = [
 export const dateStatutColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.DateCreation],
-    title: getLibelle("Date de création"),
+    title: getLibelle("Date requête"),
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.DateDerniereMaj],
-    title: getLibelle("Date dernière mise à jour"),
+    title: getLibelle("Date dernière action"),
     align: "center"
   }),
   new TableauTypeColumn({

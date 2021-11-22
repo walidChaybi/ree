@@ -26,7 +26,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
   return (
     <div className="AlertesActes">
       <AccordionRece
-        titre={getLibelle("Alertes")}
+        titre={getLibelle("Alertes et informations")}
         disabled={false}
         expanded={alertes.size > 0}
       >

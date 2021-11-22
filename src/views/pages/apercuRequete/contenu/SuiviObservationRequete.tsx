@@ -15,7 +15,7 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
   return (
     <div className="suivis-requete">
       <AccordionRece
-        titre={"Suivi des observations"}
+        titre={"Observations requête"}
         disabled={false}
         expanded={true}
       >
