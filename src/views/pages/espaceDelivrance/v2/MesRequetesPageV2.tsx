@@ -23,7 +23,6 @@ import {
 } from "../../apercuRequete/commun/hook/CreationActionMiseAjourStatutEtRmcAutoHook";
 import {
   dateStatutColumnHeaders,
-  requerantColumnHeaders,
   requeteColumnHeaders,
   StatutsRequetesEspaceDelivrance
 } from "./EspaceDelivranceParamsV2";
@@ -33,7 +32,6 @@ import "./scss/RequeteTableauV2.scss";
 
 const columnsMesRequestes = [
   ...requeteColumnHeaders,
-  ...requerantColumnHeaders,
   ...dateStatutColumnHeaders
 ];
 

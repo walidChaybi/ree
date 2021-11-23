@@ -25,7 +25,6 @@ import {
 import {
   dateStatutColumnHeaders,
   HeaderTableauRequete,
-  requerantColumnHeaders,
   requeteColumnHeaders,
   StatutsRequetesEspaceDelivrance
 } from "./EspaceDelivranceParamsV2";
@@ -57,12 +56,6 @@ import "./scss/RequeteTableauV2.scss";
 
 const columnsRequestesService = [
   ...requeteColumnHeaders,
-  new TableauTypeColumn({
-    keys: [HeaderTableauRequete.Document],
-    title: getLibelle("Document"),
-    align: "center"
-  }),
-  ...requerantColumnHeaders,
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.AttribueA],
     title: getLibelle("Attribué à"),

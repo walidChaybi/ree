@@ -1,5 +1,8 @@
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { getIconPrioriteRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
+import {
+  getCellTitulaires,
+  getIconPrioriteRequete
+} from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "../../../common/widget/tableau/v2/TableauTypeColumn";
 import { getLibelle } from "../../../common/widget/Text";
 
@@ -20,7 +23,7 @@ export enum HeaderTableauRequete {
   Canal = "canal",
   NatureActe = "nature",
   Document = "documentLibelle",
-  Requerant = "nomCompletRequerant",
+  Titulaires = "titulaires",
   AttribueA = "attribueA",
   LibelleRequerant = "libelleRequerant",
   DateCreation = "dateCreation",
@@ -60,14 +63,19 @@ export const requeteColumnHeaders = [
     keys: [HeaderTableauRequete.NatureActe],
     title: getLibelle("Nature d'acte"),
     align: "center"
-  })
-];
-
-export const requerantColumnHeaders = [
+  }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRequete.Requerant],
-    title: getLibelle("Requérant"),
+    keys: [HeaderTableauRequete.Document],
+    title: getLibelle("Document"),
     align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.Titulaires],
+    title: "Titulaire(s)",
+    align: "center",
+    dataIsArray: true,
+    getElement: getCellTitulaires,
+    style: { width: "150px" }
   })
 ];
 
