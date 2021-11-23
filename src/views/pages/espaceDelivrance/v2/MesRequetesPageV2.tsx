@@ -12,8 +12,8 @@ import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import {
-  NB_LIGNES_PAR_APPEL_DEFAUT,
-  NB_LIGNES_PAR_PAGE_DEFAUT
+  NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE,
+  NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE
 } from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { TableauRece } from "../../../common/widget/tableau/v2/TableauRece";
 import { URL_MES_REQUETES_V2 } from "../../../router/ReceUrls";
@@ -47,16 +47,19 @@ interface MesRequetesPageProps {
 export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [paramsMiseAJour, setParamsMiseAJour] =
-    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<
+    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
 
-  const [linkParameters, setLinkParameters] =
-    React.useState<IQueryParametersPourRequetesV2>({
-      statuts: StatutsRequetesEspaceDelivrance,
-      tri: "dateStatut",
-      sens: "ASC",
-      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-    });
+  const [
+    linkParameters,
+    setLinkParameters
+  ] = React.useState<IQueryParametersPourRequetesV2>({
+    statuts: StatutsRequetesEspaceDelivrance,
+    tri: "dateStatut",
+    sens: "ASC",
+    range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+  });
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteDelivranceApi(
     linkParameters,
@@ -78,7 +81,7 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
       statuts: StatutsRequetesEspaceDelivrance,
       tri,
       sens,
-      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+      range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
     };
 
     setLinkParameters(queryParameters);
@@ -144,8 +147,8 @@ export const MesRequetesPageV2: React.FC<MesRequetesPageProps> = props => {
         handleReload={handleReload}
         noRows={zeroRequete}
         enChargement={enChargement}
-        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
-        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
       >
         <BoutonSignature libelle={"pages.delivrance.action.signature"} />
       </TableauRece>

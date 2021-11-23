@@ -2,6 +2,10 @@
 export const NB_LIGNES_PAR_APPEL_DEFAUT = 105;
 export const NB_LIGNES_PAR_PAGE_DEFAUT = 15;
 
+// Espace délivrance
+export const NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE = 100;
+export const NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE = 25;
+
 // Actes
 export const NB_LIGNES_PAR_APPEL_ACTE = 100;
 export const NB_LIGNES_PAR_PAGE_ACTE = 10;

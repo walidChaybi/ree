@@ -36,10 +36,22 @@ test("renders Page requete interactions works, no errors returned", async () => 
   await waitFor(() => {
     const numero = screen.getByText("9021");
     expect(numero).toBeDefined();
+  });
+
+  act(() => {
     // Clic sur une ligne
-    fireEvent.click(numero);
+    fireEvent.click(screen.getByText("9021"));
+  });
+  await waitFor(() => {
+    expect(screen.getByText("9021")).toBeDefined();
+  });
+
+  act(() => {
     // Clic sur un titre de colonne
     fireEvent.click(titreNumero);
+  });
+  await waitFor(() => {
+    expect(screen.getByText("9021")).toBeDefined();
   });
 });
 
