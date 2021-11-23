@@ -8,8 +8,10 @@ test("test du mapping Particulier", () => {
   expect(res).toStrictEqual({
     document: "",
     interesse: {
-      nomFamille: "Prodesk",
-      nomUsage: "",
+      noms: {
+        nomNaissance: "Prodesk",
+        nomUsage: ""
+      },
       prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
       sexe: "FEMININ",
       naissance: {
@@ -39,7 +41,7 @@ test("test du mapping Particulier", () => {
         nom: "",
         prenom: ""
       },
-      particulier: { nomFamille: "RUIZ", nomUsage: "", prenom: "Paul" }
+      particulier: { nomNaissance: "RUIZ", nomUsage: "", prenom: "Paul" }
     },
     adresse: {
       voie: "61 avenue Foch",
@@ -76,8 +78,10 @@ test("test du mapping Institutionnel", () => {
   expect(res).toStrictEqual({
     document: "",
     interesse: {
-      nomFamille: "Prodesk",
-      nomUsage: "",
+      noms: {
+        nomNaissance: "Prodesk",
+        nomUsage: ""
+      },
       prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
       sexe: "FEMININ",
       naissance: {
@@ -107,7 +111,7 @@ test("test du mapping Institutionnel", () => {
         nom: "Ruiz",
         prenom: "Paul"
       },
-      particulier: { nomFamille: "", nomUsage: "", prenom: "" }
+      particulier: { nomNaissance: "", nomUsage: "", prenom: "" }
     },
     adresse: {
       voie: "61 avenue Foch",

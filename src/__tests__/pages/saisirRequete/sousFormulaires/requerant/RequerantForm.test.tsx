@@ -136,7 +136,7 @@ test("retour du formulaire Requerant", async () => {
 
   await waitFor(() => {
     fireEvent.blur(typeRequerantParticulierPrenom);
-    expect(typeRequerantParticulierPrenom.value).toEqual("Mockprenom");
+    expect(typeRequerantParticulierPrenom.value).toEqual("MockPrenom");
   });
 
   const submit = screen.getByText(/Submit/i);
@@ -148,7 +148,7 @@ test("retour du formulaire Requerant", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"requerant":{"typeRequerant":"PARTICULIER","mandataire":{"type":"","nature":"","raisonSociale":"","nom":"","prenom":""},"institutionnel":{"type":"","nature":"","nomInstitution":"","nom":"","prenom":""},"particulier":{"nomFamille":"","nomUsage":"","prenom":"Mockprenom"},"autreProfessionnel":{"nature":"","raisonSociale":"","nom":"","prenom":""}}}'
+      '{"requerant":{"typeRequerant":"PARTICULIER","mandataire":{"type":"","nature":"","raisonSociale":"","nom":"","prenom":""},"institutionnel":{"type":"","nature":"","nomInstitution":"","nom":"","prenom":""},"particulier":{"nomNaissance":"","nomUsage":"","prenom":"MockPrenom"},"autreProfessionnel":{"nature":"","raisonSociale":"","nom":"","prenom":""}}}'
     );
   });
 });

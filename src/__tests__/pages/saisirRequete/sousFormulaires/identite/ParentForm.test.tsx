@@ -49,7 +49,7 @@ test("render composant Parent Formulaire", async () => {
   });
 
   const inputNom = screen.getByLabelText(
-    "parent1.nomFamille"
+    "parent1.nomNaissance"
   ) as HTMLInputElement;
 
   act(() => {
@@ -74,7 +74,7 @@ test("render composant Parent Formulaire", async () => {
   await waitFor(() => {
     expect(titreParent1).toBeDefined();
     expect(result.innerHTML).toBe(
-      '{"parent1":{"nomFamille":"MOCKNOM","prenoms":{"prenom1":"","prenom2":"","prenom3":""}}}'
+      '{"parent1":{"nomNaissance":"MOCKNOM","prenoms":{"prenom1":"","prenom2":"","prenom3":""}}}'
     );
   });
 });

@@ -7,8 +7,8 @@ import {
   NATIONALITE,
   NATURE,
   NOM,
-  NOM_FAMILLE,
   NOM_INSTITUTION,
+  NOM_NAISSANCE,
   NOM_USAGE,
   PAYS_EVENEMENT,
   PRENOM,
@@ -39,13 +39,13 @@ export const institutionnelVide = {
 };
 
 export const particulierVide = {
-  [NOM_FAMILLE]: "",
+  [NOM_NAISSANCE]: "",
   [NOM_USAGE]: "",
   [PRENOM]: ""
 };
 
 export const interesseVide = {
-  [NOM_FAMILLE]: "",
+  [NOM_NAISSANCE]: "",
   [NOM_USAGE]: "",
   [PRENOMS]: {
     [PRENOM_1]: "",

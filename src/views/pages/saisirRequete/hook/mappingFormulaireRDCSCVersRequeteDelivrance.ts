@@ -17,7 +17,7 @@ import { getPiecesJustificatives, getPrenoms } from "./mappingCommun";
 export function mappingFormulaireRDCSCVersRequeteDelivrance(
   requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC
 ): IRequeteDelivrance {
-  const requete = {
+  const requete = ({
     type: TypeRequete.DELIVRANCE.nom,
     sousType: SousTypeDelivrance.RDCSC.nom,
     canal: TypeCanal.COURRIER.nom,
@@ -28,7 +28,7 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
     piecesJustificatives: getPiecesJustificatives(
       requeteRDCSC.saisie.piecesJointes
     )
-  } as any as IRequeteDelivrance;
+  } as any) as IRequeteDelivrance;
   return supprimeProprietesVides(requete);
 }
 
@@ -36,8 +36,10 @@ function getInteresseRequete(interesse: Identite) {
   return interesse
     ? {
         position: 1,
-        nomNaissance: interesse.nomFamille ? interesse.nomFamille : SNP,
-        nomUsage: interesse.nomUsage,
+        nomNaissance: interesse.noms?.nomNaissance
+          ? interesse.noms.nomNaissance
+          : SNP,
+        nomUsage: interesse.noms?.nomUsage,
         prenoms: getPrenoms(interesse.prenoms),
         jourNaissance: parseInt(interesse.naissance.dateEvenement.jour, 10),
         moisNaissance: parseInt(interesse.naissance.dateEvenement.mois, 10),
@@ -104,8 +106,8 @@ function getInstitutionnel(saisie: SaisieRequeteRDCSC) {
 function getParticulier(saisie: SaisieRequeteRDCSC) {
   const requerant = saisie.requerant;
   return {
-    nomFamille: requerant.particulier.nomFamille
-      ? requerant.particulier.nomFamille
+    nomFamille: requerant.particulier.nomNaissance
+      ? requerant.particulier.nomNaissance
       : SNP,
     prenom: getValeurOuVide(requerant.particulier.prenom),
     courriel: saisie.adresse.adresseCourriel,
@@ -120,7 +122,7 @@ function getParticulier(saisie: SaisieRequeteRDCSC) {
 
 function getInteresse(saisie: SaisieRequeteRDCSC) {
   return {
-    nomFamille: saisie.interesse.nomFamille,
+    nomFamille: saisie.interesse.noms?.nomNaissance,
     prenom: saisie.interesse.prenoms.prenom1,
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,

@@ -37,7 +37,7 @@ import "./scss/RequeteForm.scss";
 
 // Valeurs par défaut des champs
 export const RequeteFormDefaultValues = {
-  [NATURE_ACTE]: "",
+  [NATURE_ACTE]: "NAISSANCE",
   [DOCUMENT_DEMANDE]: "",
   [NB_EXEMPLAIRE]: "1",
   [MOTIF]: "",
@@ -83,8 +83,9 @@ const RequeteForm: React.FC<SubFormProps> = props => {
     DocumentDelivrance.getCodesAsOptions(CodesExtraitCopie)
   );
 
-  const [complementMotifInactif, setComplementMotifInactif] =
-    useState<boolean>(true);
+  const [complementMotifInactif, setComplementMotifInactif] = useState<boolean>(
+    true
+  );
 
   const onChangeTypeNatureActe = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (props.onChange) {

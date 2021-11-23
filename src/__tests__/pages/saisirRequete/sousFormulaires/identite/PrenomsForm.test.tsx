@@ -12,7 +12,7 @@ import { PRENOMS } from "../../../../../views/pages/saisirRequete/modelForm/ISai
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
-} from "../../../../../views/pages/saisirRequete/sousFormulaires/identite/prenoms/PrenomsForm";
+} from "../../../../../views/pages/saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
 
 const HookPrenomsForm: React.FC = () => {
   const [result, setResult] = useState("");
@@ -54,7 +54,7 @@ test("render composant Prenoms Formulaire", async () => {
   act(() => {
     fireEvent.change(inputPrenom1, {
       target: {
-        value: "mockprenom1"
+        value: "mockPrenom1"
       }
     });
   });
@@ -69,7 +69,7 @@ test("render composant Prenoms Formulaire", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"prenoms":{"prenom1":"Mockprenom1","prenom2":"","prenom3":""}}'
+      '{"prenoms":{"prenom1":"MockPrenom1","prenom2":"","prenom3":""}}'
     );
   });
 });
@@ -86,7 +86,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
   act(() => {
     fireEvent.change(inputPrenom1, {
       target: {
-        value: "mockprenom1"
+        value: "mockPrenom1"
       }
     });
   });
@@ -137,7 +137,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"prenoms":{"prenom1":"Mockprenom1","prenom2":"Mockprenom2","prenom3":"Mockprenom3"}}'
+      '{"prenoms":{"prenom1":"MockPrenom1","prenom2":"Mockprenom2","prenom3":"Mockprenom3"}}'
     );
   });
 
@@ -152,7 +152,7 @@ test("render composant Prenoms Formulaire Ajouter et Supprimer prénom", async (
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"prenoms":{"prenom1":"Mockprenom1","prenom2":"Mockprenom2","prenom3":""}}'
+      '{"prenoms":{"prenom1":"MockPrenom1","prenom2":"Mockprenom2","prenom3":""}}'
     );
   });
 });

@@ -126,6 +126,28 @@ const AdresseForm: React.FC<SubFormProps> = props => {
       <SousFormulaire titre={props.titre}>
         <div className="AdresseForm">
           <InputField
+            name={destinataireWithNamespace}
+            label={getLibelle("Complément d’identification du destinataire")}
+            placeholder={getLibelle(
+              "Appartement, boite aux lettres, escalier, chez…"
+            )}
+            maxLength={NB_CARACT_ADRESSE}
+            onBlur={e =>
+              sortieChampEnMajuscule(e, props.formik, destinataireWithNamespace)
+            }
+          />
+          <InputField
+            name={pointGeoWithNamespace}
+            label={getLibelle(
+              "Complément d’identification du point géographique"
+            )}
+            placeholder={getLibelle("Entrée, bâtiment, immeuble, résidence…")}
+            maxLength={NB_CARACT_ADRESSE}
+            onBlur={e =>
+              sortieChampEnMajuscule(e, props.formik, pointGeoWithNamespace)
+            }
+          />
+          <InputField
             name={voieWithNamespace}
             label={getLibelle("Numéro, type et nom de la voie")}
             placeholder={getLibelle("Numéro, type et nom de la voie")}
@@ -145,28 +167,6 @@ const AdresseForm: React.FC<SubFormProps> = props => {
             maxLength={NB_CARACT_ADRESSE}
             onBlur={e =>
               sortieChampEnMajuscule(e, props.formik, lieuDitWithNamespace)
-            }
-          />
-          <InputField
-            name={destinataireWithNamespace}
-            label={getLibelle("Complément d’identification du destinataire")}
-            placeholder={getLibelle(
-              "Appartement, boite aux lettres, étage, couloir, escalier, chez…"
-            )}
-            maxLength={NB_CARACT_ADRESSE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, destinataireWithNamespace)
-            }
-          />
-          <InputField
-            name={pointGeoWithNamespace}
-            label={getLibelle(
-              "Complément d’identification du point géographique"
-            )}
-            placeholder={getLibelle("Entrée, bâtiment, immeuble, résidence…")}
-            maxLength={NB_CARACT_ADRESSE}
-            onBlur={e =>
-              sortieChampEnMajuscule(e, props.formik, pointGeoWithNamespace)
             }
           />
           <div className="CodePostal">

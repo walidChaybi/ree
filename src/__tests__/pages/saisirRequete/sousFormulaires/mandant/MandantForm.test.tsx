@@ -133,7 +133,7 @@ test("retour du formulaire Mandant", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"mandant":{"typeMandant":"PERSONNE_MORALE","raisonSociale":"mockRaisonSociale","nom":"MOCKNOM","prenom":"Mockprenom"}}'
+      '{"mandant":{"typeMandant":"PERSONNE_MORALE","raisonSociale":"mockRaisonSociale","nom":"MOCKNOM","prenom":"MockPrenom"}}'
     );
   });
 });

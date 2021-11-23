@@ -95,7 +95,7 @@ test("render composant AutreProfessionnel Formulaire", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"autreProfessionnel":{"nature":"mockNature","raisonSociale":"mockRaisonSociale","nom":"MOCKNOM","prenom":"Mockprenom"}}'
+      '{"autreProfessionnel":{"nature":"mockNature","raisonSociale":"mockRaisonSociale","nom":"MOCKNOM","prenom":"MockPrenom"}}'
     );
   });
 });

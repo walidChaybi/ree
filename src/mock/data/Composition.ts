@@ -84,7 +84,7 @@ export const reponseSansDelivranceCSMariage: IReponseSansDelivranceCSMariageComp
   objet_courrier: undefined,
   document_demande: "Certificat de situation au rca",
   nom_titulaire1: "GREENWALD",
-  prenoms_titulaire1: "Paulita Zaria",
+  prenoms_titulaire1: "Paulita, Zaria",
   nom_titulaire2: "DUPE",
   prenoms_titulaire2: "Laurent"
 };

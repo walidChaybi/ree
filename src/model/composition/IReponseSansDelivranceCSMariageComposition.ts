@@ -1,3 +1,4 @@
+import { formatPrenoms } from "../../views/common/util/Utils";
 import { IFicheActe } from "../etatcivil/acte/IFicheActe";
 import { TitulaireActe } from "../etatcivil/acte/ITitulaireActe";
 import { IRequeteDelivrance } from "../requete/v2/IRequeteDelivrance";
@@ -51,14 +52,14 @@ export const ReponseSansDelivranceCSMariageComposition = {
       reponseSansDelivranceCS.nom_titulaire1 = TitulaireActe.getNom(
         infoActe.titulaires[0]
       );
-      reponseSansDelivranceCS.prenoms_titulaire1 = TitulaireActe.getPrenoms(
-        infoActe.titulaires[0]
+      reponseSansDelivranceCS.prenoms_titulaire1 = formatPrenoms(
+        infoActe.titulaires[0].prenoms
       );
       reponseSansDelivranceCS.nom_titulaire2 = TitulaireActe.getNom(
         infoActe.titulaires[1]
       );
-      reponseSansDelivranceCS.prenoms_titulaire2 = TitulaireActe.getPrenoms(
-        infoActe.titulaires[1]
+      reponseSansDelivranceCS.prenoms_titulaire2 = formatPrenoms(
+        infoActe.titulaires[1].prenoms
       );
     }
 

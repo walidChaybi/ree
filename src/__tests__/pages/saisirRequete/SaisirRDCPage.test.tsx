@@ -124,7 +124,7 @@ test("test onChangeRequerant", async () => {
   });
   await waitFor(() => {
     expect(
-      screen.getByLabelText("requerant.particulier.nomFamille")
+      screen.getByLabelText("requerant.particulier.nomNaissance")
     ).toBeDefined();
   });
   // Autre Professionnel
@@ -213,12 +213,13 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
 
   // Champs Filiation
   const inputNomParent1 = screen.getByLabelText(
-    "titulaire1.parent1.nomFamille"
+    "titulaire1.parent1.nomNaissance"
   ) as HTMLInputElement;
   const inputNomParent2 = screen.getByLabelText(
-    "titulaire1.parent2.nomFamille"
+    "titulaire1.parent2.nomNaissance"
   ) as HTMLInputElement;
-  act(() => {
+
+  await act(async () => {
     fireEvent.change(inputNomParent1, {
       target: {
         value: "mockNom1"

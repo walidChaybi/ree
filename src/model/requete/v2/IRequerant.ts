@@ -168,8 +168,7 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     mandataireHabilite: getMandataireHabilite(
       requerant.detailQualiteMandataireHabilite
     ),
-    autreProfessionnel:
-      requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }
@@ -243,8 +242,8 @@ function getRequerantInstitutionnel(requeteSaisie: any): IRequerant {
 function getRequerantParticulier(requeteSaisie: any): IRequerant {
   const requerantSaisi = requeteSaisie.requerant;
   return {
-    nomFamille: requerantSaisi.particulier.nomFamille
-      ? requerantSaisi.particulier.nomFamille
+    nomFamille: requerantSaisi.particulier.nomNaissance
+      ? requerantSaisi.particulier.nomNaissance
       : SNP,
     prenom: getValeurOuVide(requerantSaisi.particulier.prenom),
     courriel: requeteSaisie.adresse.adresseCourriel,

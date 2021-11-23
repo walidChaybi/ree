@@ -32,8 +32,9 @@ import {
   NATIONALITE,
   NATURE,
   NOM,
-  NOM_FAMILLE,
+  NOMS,
   NOM_INSTITUTION,
+  NOM_NAISSANCE,
   NOM_USAGE,
   NUMERO_TELEPHONE,
   PARTICULIER,
@@ -79,8 +80,10 @@ const saisieInteresse = (requete: IRequeteDelivrance) => {
   if (requete.titulaires && requete.titulaires[0]) {
     const titulaire = requete.titulaires[0];
     return {
-      [NOM_FAMILLE]: getValeurOuVide(titulaire.nomNaissance),
-      [NOM_USAGE]: getValeurOuVide(titulaire.nomUsage),
+      [NOMS]: {
+        [NOM_NAISSANCE]: getValeurOuVide(titulaire.nomNaissance),
+        [NOM_USAGE]: getValeurOuVide(titulaire.nomUsage)
+      },
       [PRENOMS]: {
         [PRENOM_1]: TitulaireRequete.getPrenom1(titulaire),
         [PRENOM_2]: TitulaireRequete.getPrenom2(titulaire),
@@ -152,7 +155,7 @@ const saisieRequerant = (requete: IRequeteDelivrance) => {
           [MANDATAIRE]: mandataireVide,
           [INSTITUTI0NNEL]: institutionnelVide,
           [PARTICULIER]: {
-            [NOM_FAMILLE]: getValeurOuVide(requete.requerant.nomFamille),
+            [NOM_NAISSANCE]: getValeurOuVide(requete.requerant.nomFamille),
             [NOM_USAGE]: getValeurOuVide(
               requete.requerant.qualiteRequerant.particulier?.nomUsage
             ),

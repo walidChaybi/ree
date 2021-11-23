@@ -192,14 +192,14 @@ const RequerantForm: React.FC<SubFormProps> = props => {
               onChangeRequerant(e);
             }}
           />
+          {requerantSousForm === "PARTICULIER" && (
+            <ParticulierForm {...particulierFromProps} />
+          )}
           {requerantSousForm === "MANDATAIRE" && (
             <MandataireForm {...mandataireFromProps} />
           )}
           {requerantSousForm === "INSTITUTIONNEL" && (
             <InstitutionnelForm {...institutionnelFromProps} />
-          )}
-          {requerantSousForm === "PARTICULIER" && (
-            <ParticulierForm {...particulierFromProps} />
           )}
           {requerantSousForm === "AUTRE_PROFESSIONNEL" && (
             <AutreProfessionnelForm {...autreProfessionnelFromProps} />

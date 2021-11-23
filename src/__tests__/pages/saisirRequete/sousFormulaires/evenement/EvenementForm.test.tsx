@@ -84,7 +84,7 @@ test("render composant Evenement Formulaire", async () => {
     expect(libelleDateLieu).toBeDefined();
     expect(libellePays).toBeDefined();
     expect(result.innerHTML).toBe(
-      '{"evenement":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"Mockville","paysEvenement":"Mockpays"}}'
+      '{"evenement":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"MockVille","paysEvenement":"MockPays"}}'
     );
   });
 });

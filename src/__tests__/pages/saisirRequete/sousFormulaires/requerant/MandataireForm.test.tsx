@@ -96,7 +96,7 @@ test("render composant Mandataire Formulaire", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"mandataire":{"type":"AVOCAT","nature":"","raisonSociale":"mockRaisonSociale","nom":"MOCKNOM","prenom":"Mockprenom"}}'
+      '{"mandataire":{"type":"AVOCAT","nature":"","raisonSociale":"mockRaisonSociale","nom":"MOCKNOM","prenom":"MockPrenom"}}'
     );
   });
 });

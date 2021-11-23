@@ -1,12 +1,13 @@
 // Nom des sous-formulaires
 
 // Commun
-export const NOM_FAMILLE = "nomFamille";
+export const NOM_NAISSANCE = "nomNaissance";
 export const NOM_USAGE = "nomUsage";
 export const NOM = "nom";
 export const PRENOM = "prenom";
 
 // Noms des champs IdentiteForm
+export const NOMS = "noms";
 export const PRENOMS = "prenoms";
 export const SEXE = "sexe";
 export const NAISSANCE = "naissance";
@@ -99,20 +100,19 @@ export interface Institutionnel {
 }
 
 export interface Particulier {
-  [NOM_FAMILLE]: string;
+  [NOM_NAISSANCE]: string;
   [NOM_USAGE]: string;
   [PRENOM]: string;
 }
 
 export interface Identite {
-  [NOM_FAMILLE]: string;
-  [NOM_USAGE]: string;
+  [NOMS]: Noms;
   [PRENOMS]: Prenoms;
   [SEXE]: string;
   [NAISSANCE]: Evenement;
   [NATIONALITE]: string;
-  [PARENT1]: Identite;
-  [PARENT2]: Identite;
+  [PARENT1]: Parent;
+  [PARENT2]: Parent;
 }
 
 export interface Adresse {
@@ -125,6 +125,11 @@ export interface Adresse {
   [PAYS]: string;
   [ADRESSE_COURRIEL]: string;
   [NUMERO_TELEPHONE]: string;
+}
+
+export interface Noms {
+  [NOM_NAISSANCE]: string;
+  [NOM_USAGE]: string;
 }
 
 export interface Prenoms {
@@ -163,4 +168,9 @@ export interface Mandant {
 export interface LienTitulaire {
   [LIEN]: string;
   [NATURE_LIEN]: string;
+}
+
+export interface Parent {
+  [NOM_NAISSANCE]: string;
+  [PRENOMS]: Prenoms;
 }

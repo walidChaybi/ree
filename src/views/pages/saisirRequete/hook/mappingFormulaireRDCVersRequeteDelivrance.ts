@@ -11,17 +11,13 @@ import {
   CreationRequeteRDC,
   SaisieRequeteRDC
 } from "../modelForm/ISaisirRDCPageModel";
-import {
-  Adresse,
-  Identite,
-  LienTitulaire
-} from "../modelForm/ISaisirRequetePageModel";
+import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
 import { getPrenoms } from "./mappingCommun";
 
 export function mappingFormulaireRDCVersRequeteDelivrance(
   requeteRDC: CreationRequeteRDC
 ): IRequeteDelivrance {
-  const requete = {
+  const requete = ({
     type: TypeRequete.DELIVRANCE.nom,
     sousType: SousTypeDelivrance.RDC.nom,
     canal: TypeCanal.COURRIER.nom,
@@ -34,7 +30,7 @@ export function mappingFormulaireRDCVersRequeteDelivrance(
     titulaires: getTitulairesRequete(requeteRDC.saisie),
     requerant: getRequerant(requeteRDC.saisie),
     lienRequerant: getLienRequerant(requeteRDC.saisie)
-  } as any as IRequeteDelivrance;
+  } as any) as IRequeteDelivrance;
 
   return supprimeProprietesVides(requete);
 }
@@ -83,8 +79,10 @@ function getTitulairesRequete(saisie: SaisieRequeteRDC) {
 function getTitulaire(titulaire: Identite, position: number) {
   return {
     position,
-    nomNaissance: titulaire.nomFamille ? titulaire.nomFamille : SNP,
-    nomUsage: titulaire.nomUsage,
+    nomNaissance: titulaire.noms?.nomNaissance
+      ? titulaire.noms.nomNaissance
+      : SNP,
+    nomUsage: titulaire.noms?.nomUsage,
     prenoms: getPrenoms(titulaire.prenoms),
     jourNaissance: titulaire.naissance.dateEvenement.jour,
     moisNaissance: titulaire.naissance.dateEvenement.mois,
@@ -102,15 +100,15 @@ function getFiliation(titulaire: Identite) {
     const parents = [];
     parents.push({
       position: 1,
-      nomNaissance: titulaire.parent1.nomFamille
-        ? titulaire.parent1.nomFamille
+      nomNaissance: titulaire.parent1.nomNaissance
+        ? titulaire.parent1.nomNaissance
         : SNP,
       prenoms: getPrenoms(titulaire.parent1.prenoms)
     });
     parents.push({
       position: 2,
-      nomNaissance: titulaire.parent2.nomFamille
-        ? titulaire.parent2.nomFamille
+      nomNaissance: titulaire.parent2.nomNaissance
+        ? titulaire.parent2.nomNaissance
         : SNP,
       prenoms: getPrenoms(titulaire.parent2.prenoms)
     });
@@ -135,17 +133,9 @@ function getMandant(saisie: SaisieRequeteRDC) {
 
 function getRequerant(saisie: SaisieRequeteRDC) {
   if (saisie.requerant.typeRequerant === "TITULAIRE1") {
-    return getRequerantTitulaire(
-      saisie.titulaire1,
-      saisie.adresse,
-      saisie.lienTitulaire
-    );
+    return getRequerantTitulaire(saisie.titulaire1, saisie.adresse);
   } else if (saisie.requerant.typeRequerant === "TITULAIRE2") {
-    return getRequerantTitulaire(
-      saisie.titulaire2,
-      saisie.adresse,
-      saisie.lienTitulaire
-    );
+    return getRequerantTitulaire(saisie.titulaire2, saisie.adresse);
   } else if (saisie.requerant.typeRequerant === "MANDATAIRE") {
     return getMandataire(saisie);
   } else if (saisie.requerant.typeRequerant === "INSTITUTIONNEL") {
@@ -198,8 +188,8 @@ function getInstitutionnel(saisie: SaisieRequeteRDC) {
 function getParticulier(saisie: SaisieRequeteRDC) {
   const requerant = saisie.requerant;
   return {
-    nomFamille: requerant.particulier.nomFamille
-      ? requerant.particulier.nomFamille
+    nomFamille: requerant.particulier.nomNaissance
+      ? requerant.particulier.nomNaissance
       : SNP,
     prenom: getValeurOuVide(requerant.particulier.prenom),
     courriel: saisie.adresse.adresseCourriel,
@@ -212,13 +202,9 @@ function getParticulier(saisie: SaisieRequeteRDC) {
   };
 }
 
-function getRequerantTitulaire(
-  titulaire: Identite,
-  adresse: Adresse,
-  lienTitulaire: LienTitulaire
-) {
+function getRequerantTitulaire(titulaire: Identite, adresse: Adresse) {
   return {
-    nomFamille: titulaire.nomFamille,
+    nomFamille: titulaire.noms?.nomNaissance,
     prenom: titulaire.prenoms.prenom1,
     courriel: adresse.adresseCourriel,
     telephone: adresse.numeroTelephone,

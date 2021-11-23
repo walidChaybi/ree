@@ -46,8 +46,8 @@ test("render composant Particulier Formulaire", async () => {
   await act(async () => {
     render(<HookParticulierForm />);
   });
-  const inputNomFamille = screen.getByLabelText(
-    "particulier.nomFamille"
+  const inputNomNaissance = screen.getByLabelText(
+    "particulier.nomNaissance"
   ) as HTMLInputElement;
   const inputNomUsage = screen.getByLabelText(
     "particulier.nomUsage"
@@ -57,9 +57,9 @@ test("render composant Particulier Formulaire", async () => {
   ) as HTMLInputElement;
 
   act(() => {
-    fireEvent.change(inputNomFamille, {
+    fireEvent.change(inputNomNaissance, {
       target: {
-        value: "mockNomFamille"
+        value: "mockNomNaissance"
       }
     });
     fireEvent.change(inputNomUsage, {
@@ -76,7 +76,7 @@ test("render composant Particulier Formulaire", async () => {
 
   const submit = screen.getByText(/Submit/i);
   await act(async () => {
-    fireEvent.blur(inputNomFamille);
+    fireEvent.blur(inputNomNaissance);
     fireEvent.blur(inputNomUsage);
     fireEvent.blur(inputPrenom);
     fireEvent.click(submit);
@@ -86,7 +86,7 @@ test("render composant Particulier Formulaire", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"particulier":{"nomFamille":"MOCKNOMFAMILLE","nomUsage":"MOCKNOMUSAGE","prenom":"Mockprenom"}}'
+      '{"particulier":{"nomNaissance":"MOCKNOMNAISSANCE","nomUsage":"MOCKNOMUSAGE","prenom":"MockPrenom"}}'
     );
   });
 });

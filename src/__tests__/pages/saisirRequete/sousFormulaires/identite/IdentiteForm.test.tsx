@@ -48,11 +48,8 @@ test("render composant Identite Formulaire", async () => {
     render(<HookIdentiteForm />);
   });
 
-  const inputNomFamille = screen.getByLabelText(
-    "interesse.nomFamille"
-  ) as HTMLInputElement;
-  const inputNomUsage = screen.getByLabelText(
-    "interesse.nomUsage"
+  const inputNomNaissance = screen.getByLabelText(
+    "interesse.noms.nomNaissance"
   ) as HTMLInputElement;
   const radioMasculin = screen.getByLabelText(
     "interesse.sexe.masculin"
@@ -62,23 +59,36 @@ test("render composant Identite Formulaire", async () => {
   ) as HTMLInputElement;
 
   act(() => {
-    fireEvent.change(inputNomFamille, {
+    fireEvent.change(inputNomNaissance, {
       target: {
-        value: "mockNomFamille"
+        value: "mockNomNaissance"
       }
     });
+
+    fireEvent.click(radioMasculin);
+    fireEvent.click(radioFrancaise);
+  });
+
+  const ajouterNomUsage = screen.getByText(/ajouter un nom d'usage/i);
+  await act(async () => {
+    fireEvent.click(ajouterNomUsage);
+  });
+
+  const inputNomUsage = screen.getByLabelText(
+    "interesse.noms.nomUsage"
+  ) as HTMLInputElement;
+
+  await act(async () => {
     fireEvent.change(inputNomUsage, {
       target: {
         value: "mockNomUsage"
       }
     });
-    fireEvent.click(radioMasculin);
-    fireEvent.click(radioFrancaise);
   });
 
   const submit = screen.getByText(/Submit/i);
   await act(async () => {
-    fireEvent.blur(inputNomFamille);
+    fireEvent.blur(inputNomNaissance);
     fireEvent.blur(inputNomUsage);
     fireEvent.click(submit);
   });
@@ -89,7 +99,7 @@ test("render composant Identite Formulaire", async () => {
   await waitFor(() => {
     expect(ajouterFiliation).toBeDefined();
     expect(result.innerHTML).toBe(
-      '{"interesse":{"nomFamille":"MOCKNOMFAMILLE","nomUsage":"MOCKNOMUSAGE","prenoms":{"prenom1":"","prenom2":"","prenom3":""},"sexe":"MASCULIN","naissance":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"","paysEvenement":""},"nationalite":"FRANCAISE"}}'
+      '{"interesse":{"noms":{"nomNaissance":"MOCKNOMNAISSANCE","nomUsage":"MOCKNOMUSAGE"},"prenoms":{"prenom1":"","prenom2":"","prenom3":""},"sexe":"MASCULIN","naissance":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"","paysEvenement":""},"nationalite":"FRANCAISE"}}'
     );
   });
 

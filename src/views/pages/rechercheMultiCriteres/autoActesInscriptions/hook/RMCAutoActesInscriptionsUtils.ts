@@ -116,7 +116,7 @@ function getNomTitulaire(
   let nomTitulaire;
   /* titulaire de type ITitulaireRequete */
   if ("id" in titulaire) {
-    nomTitulaire = TitulaireRequete.getLieuNaissance(titulaire);
+    nomTitulaire = TitulaireRequete.getNom(titulaire);
   } else {
     /* titulaire de type ITitulaireRequeteTableau*/
     nomTitulaire = valeurOuUndefined(titulaire?.nom);

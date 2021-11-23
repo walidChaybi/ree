@@ -12,6 +12,10 @@ export class TypeNatureActe extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(TypeNatureActe);
+    return EnumWithLibelle.getAllLibellesAsOptions(
+      TypeNatureActe,
+      false,
+      false
+    );
   }
 }

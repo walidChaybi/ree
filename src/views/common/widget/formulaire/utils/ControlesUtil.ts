@@ -1,10 +1,10 @@
+import { FormikProps, FormikValues } from "formik";
 import {
   enMajuscule,
-  premiereLettreEnMajusculeLeResteEnMinuscule,
+  premiereLettreEnMajuscule,
   rempliAGaucheAvecZero,
   supprimerEspacesInutiles
 } from "../../../util/Utils";
-import { FormikProps, FormikValues } from "formik";
 
 export const NB_MAX_JOUR = 31;
 export const NB_MAX_MOIS = 12;
@@ -85,7 +85,7 @@ export function sortieChampPremiereLettreEnMajuscule(
   formik: FormikProps<FormikValues>,
   nomChamp: string
 ) {
-  e.target.value = premiereLettreEnMajusculeLeResteEnMinuscule(
+  e.target.value = premiereLettreEnMajuscule(
     supprimerEspacesInutiles(e.target.value)
   );
   formik.setFieldValue(nomChamp, e.target.value);
