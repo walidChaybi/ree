@@ -497,10 +497,13 @@ export function rechercheMultiCriteresAutoRequetes(
   });
 }
 
-export function getRequeteAleatoire() {
+export function getRequeteAleatoire(type: string) {
   return apiV2.fetch({
     method: HttpMethod.GET,
-    uri: URL_REQUETE_ALEATOIRE
+    uri: URL_REQUETE_ALEATOIRE,
+    parameters: {
+      type
+    }
   });
 }
 

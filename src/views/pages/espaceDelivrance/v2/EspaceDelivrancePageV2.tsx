@@ -79,8 +79,9 @@ const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
   const selectedTabState = selectedTab || 0;
 
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] =
-    useState<INavigationApercuRMCAutoParams | undefined>();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+    INavigationApercuRMCAutoParams | undefined
+  >();
   useNavigationApercuRMCAuto(paramsRMCAuto);
 
   const recuperationParamsRMCAuto = (

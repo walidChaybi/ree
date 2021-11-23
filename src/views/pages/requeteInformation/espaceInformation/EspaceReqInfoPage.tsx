@@ -1,6 +1,7 @@
 import React from "react";
 import { getLibelle } from "../../../common/widget/Text";
 import { OfficierContext } from "../../../core/contexts/OfficierContext";
+import { BoutonPrendreEnChargeAleatoirementRequeteInformation } from "./BoutonPrendreEnChargeAleatoirementRequeteInformation";
 import { MesRequetesInformationPage } from "./MesRequetesInformation";
 import "./scss/EspaceInformationPage.scss";
 
@@ -17,6 +18,9 @@ const EspaceInformationPage: React.FC = () => {
                   <h2 className="Titre">
                     {getLibelle("Espace requêtes d'information")}
                   </h2>
+                  <div className="BoutonPrendreEnChargeAleatoirementRequeteInformation">
+                    <BoutonPrendreEnChargeAleatoirementRequeteInformation />
+                  </div>
                   <MesRequetesInformationPage />
                 </div>
               )}

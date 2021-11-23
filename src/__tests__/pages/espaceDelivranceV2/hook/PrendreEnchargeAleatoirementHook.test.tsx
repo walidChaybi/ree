@@ -4,24 +4,39 @@ import request from "superagent";
 import { HTTP_NOT_FOUND } from "../../../../api/ApiManager";
 import { ReponseAppelMesRequetes } from "../../../../mock/data/EspaceDelivrance";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import {
   gereErreur,
   useGetRequeteAleatoire
-} from "../../../../views/pages/espaceDelivrance/v2/hook/PrendreEnChargeAleatoirementHook";
+} from "../../../../views/common/hook/v2/requete/PrendreEnChargeAleatoirementHook";
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-const HookConsumerUseGetRequeteAleatoire: React.FC = () => {
-  const res = useGetRequeteAleatoire(true);
+const HookConsumerUseGetRequeteDelivranceAleatoire: React.FC = () => {
+  const res = useGetRequeteAleatoire(TypeRequete.DELIVRANCE, true);
 
-  return <div>{res?.requete?.idRequete}</div>;
+  return <div>{res?.requeteDelivrance?.idRequete}</div>;
 };
 
-test("Attendu: PrendreEnChargeAleatoirementHook fonctionne correctement", async () => {
-  render(<HookConsumerUseGetRequeteAleatoire />);
+test("Attendu: PrendreEnChargeAleatoirementHook fonctionne correctement dans l'espace délivrance", async () => {
+  render(<HookConsumerUseGetRequeteDelivranceAleatoire />);
 
   await waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-    expect(screen.getByText(ReponseAppelMesRequetes[0].id)).toBeInTheDocument();
+    expect(screen.getByText(ReponseAppelMesRequetes[1].id)).toBeInTheDocument();
+  });
+});
+
+const HookConsumerUseGetRequeteInformationAleatoire: React.FC = () => {
+  const res = useGetRequeteAleatoire(TypeRequete.INFORMATION, true);
+
+  return <div>{res?.requeteInformation?.idRequete}</div>;
+};
+
+test("Attendu: PrendreEnChargeAleatoirementHook fonctionne correctement dans l'espace information", async () => {
+  render(<HookConsumerUseGetRequeteInformationAleatoire />);
+
+  await waitFor(() => {
+    expect(screen.getByText(ReponseAppelMesRequetes[2].id)).toBeInTheDocument();
   });
 });
 

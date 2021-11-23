@@ -18,7 +18,7 @@ const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0]
 ]);
 
-test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement", async () => {
+test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace Délivrance", async () => {
   const history = createMemoryHistory();
   history.push(URL_MES_REQUETES_V2);
   render(
@@ -39,7 +39,7 @@ test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement", asyn
     expect(history.location.pathname).toBe(
       getUrlWithParam(
         URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        ReponseAppelMesRequetes[0].id
+        ReponseAppelMesRequetes[1].id
       )
     );
   });

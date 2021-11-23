@@ -32,7 +32,8 @@ export type NomComposant =
   | "BoutonAccueilTableau"
   | "MenuSaisirRequete"
   | "TabPanelMesRequetes"
-  | "BoutonPrendreEnChargeAleatoirement";
+  | "BoutonPrendreEnChargeAleatoirement"
+  | "BoutonPrendreEnChargeAleatoirementRequeteInformation";
 
 export type NomComposantOuFonction = NomComposant | NomFonction;
 

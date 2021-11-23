@@ -34,9 +34,10 @@ export const MesRequetesInformationPage: React.FC = () => {
     StatutRequete.PRISE_EN_CHARGE
   );
 
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetesV2
-  >({
+  const [
+    linkParameters,
+    setLinkParameters
+  ] = React.useState<IQueryParametersPourRequetesV2>({
     statuts: StatutsRequetesInformation,
     tri: "dateCreation",
     sens: "ASC",

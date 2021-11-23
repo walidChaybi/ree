@@ -407,9 +407,14 @@ export const configRequetesV2 = [
       }
 
       // Prise en charge aléatoire
-      if (match[1] === "/requetes/requetealeatoire") {
+      if (match[1] === "/requetes/requetealeatoire?type=DELIVRANCE") {
         return {
-          data: ReponseAppelMesRequetes[0]
+          data: ReponseAppelMesRequetes[1]
+        };
+      }
+      if (match[1] === "/requetes/requetealeatoire?type=INFORMATION") {
+        return {
+          data: ReponseAppelMesRequetes[2]
         };
       }
 

@@ -23,6 +23,7 @@ export interface IRequeteTableauInformation {
   typeRequerant?: string;
   titulaires?: ITitulaireRequeteTableau[];
   nomsTitulaires?: string;
+  idUtilisateur?: string;
 }
 
 //////////////////////////////////////////
@@ -54,7 +55,8 @@ export function mappingUneRequeteTableauInformation(
       getValeurOuVide(requete?.qualiteRequerant)
     ).libelle,
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
-    nomsTitulaires: getNomsTitulaires(requete?.titulaires)
+    nomsTitulaires: getNomsTitulaires(requete?.titulaires),
+    idUtilisateur: valeurOuUndefined(requete?.idUtilisateur)
   } as IRequeteTableauInformation;
 }
 
