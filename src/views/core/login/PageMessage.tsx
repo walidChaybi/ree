@@ -1,4 +1,5 @@
 import React from "react";
+import { getValeurOuVide } from "../../common/util/Utils";
 import { Text } from "../../common/widget/Text";
 
 interface MessageProps {
@@ -9,7 +10,7 @@ export const PageMessage: React.FC<MessageProps> = ({ message }) => {
   return (
     <>
       <div className="PageLogin">
-        <Text messageId={message} />
+        <Text messageId={getValeurOuVide(message)} />
       </div>
     </>
   );

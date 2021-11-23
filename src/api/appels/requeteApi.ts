@@ -30,6 +30,7 @@ export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
 export const URL_COURRIER = "/courrier";
 export const URL_DOCUMENT = "/document";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
+export const URL_PIECE_COMPLEMENT_INFORMATION = "/piececomplementinformation";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/requetes/action";
@@ -390,6 +391,17 @@ export function postDocumentReponseApi(
       idRequete,
       documentsReponse
     }
+  });
+}
+
+export function postPieceComplementInformationApi(
+  idRequete: string,
+  pieceComplementInformation: any
+) {
+  return apiV2.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_REQUETES}/${idRequete}${URL_PIECE_COMPLEMENT_INFORMATION}`,
+    data: pieceComplementInformation
   });
 }
 

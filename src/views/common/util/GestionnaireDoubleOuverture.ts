@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 export class GestionnaireDoubleOuverture {
   private readonly uuidAppli = uuidv4();
   private readonly DELAIS = 1000;
+  private interval: any = 0;
 
   init = () => {
     localStorage.setItem("uuidAppli", this.uuidAppli);
@@ -13,21 +14,27 @@ export class GestionnaireDoubleOuverture {
   };
 
   lancerVerification = (fctActionSiAppliDejaOuverte: () => void) => {
-    const interval: NodeJS.Timeout = setInterval(
-      () => this.actionSiAppliOuverte(fctActionSiAppliDejaOuverte, interval),
+    this.interval = setInterval(
+      () => this.actionSiAppliOuverte(fctActionSiAppliDejaOuverte),
       this.DELAIS
     );
   };
 
-  actionSiAppliOuverte = (
-    fctActionSiAppliDejaOuverte: () => void,
-    interval: NodeJS.Timeout
-  ) => {
+  actionSiAppliOuverte = (fctActionSiAppliDejaOuverte: () => void) => {
     if (this.ecouteNouvelleAppli()) {
       fctActionSiAppliDejaOuverte();
-      clearInterval(interval);
+      this.arreterVerification();
     }
   };
+
+  arreterVerification() {
+    clearInterval(this.interval);
+    this.interval = false;
+  }
+
+  checkMinuteurEstArrete() {
+    return this.interval === false;
+  }
 }
 
 export const gestionnaireDoubleOuverture = new GestionnaireDoubleOuverture();

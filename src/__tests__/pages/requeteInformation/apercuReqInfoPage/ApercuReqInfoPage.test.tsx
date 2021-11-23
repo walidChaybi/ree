@@ -180,6 +180,8 @@ test("renders ApercuReqInfoPage", async () => {
     fireEvent.click(boutonEnvoyer);
   });
 
+  screen.debug();
+
   await waitFor(() => {
     expect(history.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
   });

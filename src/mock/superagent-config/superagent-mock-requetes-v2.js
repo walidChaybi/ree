@@ -56,8 +56,7 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -70,8 +69,7 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -84,8 +82,7 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -99,8 +96,7 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -113,8 +109,7 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -127,8 +122,7 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -176,8 +170,7 @@ export const configRequetesV2 = [
           return {
             headers: {
               "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
-              link:
-                '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
+              link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCRequete.data
           };
@@ -226,6 +219,44 @@ export const configRequetesV2 = [
           "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
+      }
+
+      // Post de Piece complement information
+      if (match[1] === "/requetes/12345/piececomplementinformation") {
+        return { data: "123456" };
+      }
+
+      // Creation Requete Delivrance
+      // Certificat de Situation Courrier
+      if (match[1] === "/requetes/delivrance?refus=false&brouillon=false") {
+        return {
+          data: {
+            id: "1072bc37-f889-4365-8f75-912166b767dd",
+            numeroFonctionnel: "U2UN5W",
+            idSagaDila: null,
+            dateCreation: 18 / 10 / 2020,
+            canal: "COURRIER",
+            type: "DELIVRANCE",
+            statut: "A_TRAITER",
+            titulaires: [],
+            requerant: [],
+            mandant: null,
+            idUtilisateur: "id",
+            idEntite: "id",
+            actions: [],
+            observations: [],
+            piecesJustificatives: [],
+            sousType: "RDCSC",
+            documentDemande: [],
+            nbExemplaireImpression: 1,
+            provenanceRequete: "COURRIER",
+            evenement: [],
+            motif: "Certificat de nationalité française",
+            complementMotif: null,
+            choixDelivrance: null,
+            documentsReponses: []
+          }
+        };
       }
 
       // Creation Requete Delivrance
@@ -289,8 +320,7 @@ export const configRequetesV2 = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
         };

@@ -11,6 +11,7 @@ import {
 } from "../../../api/appels/requeteApi";
 import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
+import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { logError } from "../../common/util/LogManager";
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../common/util/Utils";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
@@ -50,6 +51,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   };
 
   function deconnexion() {
+    gestionnaireDoubleOuverture.arreterVerification();
     history.push(URL_DECONNEXION);
     history.go(0);
   }

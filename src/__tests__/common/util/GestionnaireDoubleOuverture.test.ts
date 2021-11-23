@@ -22,8 +22,13 @@ test("check si la nouvelle appli est détecté", async () => {
   await act(async () => {
     nouvelleAppli.init();
   });
-  gestionnaireDoubleOuverture.actionSiAppliOuverte(mockFunction, 0);
+  gestionnaireDoubleOuverture.actionSiAppliOuverte(mockFunction);
   await waitFor(() => {
     expect(mockFunction).toHaveBeenCalled();
   });
+});
+
+test("arreter le minuteur", () => {
+  gestionnaireDoubleOuverture.arreterVerification();
+  expect(gestionnaireDoubleOuverture.checkMinuteurEstArrete()).toBeTruthy();
 });

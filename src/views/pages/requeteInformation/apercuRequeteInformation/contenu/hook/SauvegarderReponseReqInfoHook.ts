@@ -11,7 +11,8 @@ export interface ISauvegarderReponseReqInfoParams {
 export function useSauvegarderReponsesReqInfoHook(
   params: ISauvegarderReponseReqInfoParams | undefined
 ) {
-  const [idReponse, setIdReponse] = useState<string | undefined>();
+  const [idReponseChoisie, setIdReponseChoisie] =
+    useState<string | undefined>();
 
   useEffect(() => {
     if (params) {
@@ -21,7 +22,7 @@ export function useSauvegarderReponsesReqInfoHook(
         params.idReponse
       )
         .then(result => {
-          setIdReponse(result.body.data);
+          setIdReponseChoisie(result.body.data);
         })
         .catch(error => {
           logError({
@@ -31,5 +32,5 @@ export function useSauvegarderReponsesReqInfoHook(
         });
     }
   }, [params]);
-  return idReponse;
+  return idReponseChoisie;
 }

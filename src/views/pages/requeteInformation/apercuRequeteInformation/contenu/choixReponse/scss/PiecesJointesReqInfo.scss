@@ -1,0 +1,14 @@
+.PiecesJointesReqInfo {
+  margin-bottom: 2rem;
+
+  .PiecesJointes {
+    display: flex;
+
+    .BoutonPiecesJointes {
+      width: 30%;
+    }
+    .BlocPiecesJointes {
+      width: 70%;
+    }
+  }
+}

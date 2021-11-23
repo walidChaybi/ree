@@ -4,7 +4,6 @@ import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDe
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
-import { IPieceJustificative } from "../../../common/types/RequeteType";
 import { supprimeProprietesVides } from "../../../common/util/supprimeProprietesVides";
 import { getValeurOuVide, SNP } from "../../../common/util/Utils";
 import {
@@ -13,12 +12,12 @@ import {
   UpdateRequeteRDCSC
 } from "../modelForm/ISaisirRDCSCPageModel";
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
-import { getPrenoms } from "./mappingCommun";
+import { getPiecesJustificatives, getPrenoms } from "./mappingCommun";
 
 export function mappingFormulaireRDCSCVersRequeteDelivrance(
   requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC
 ): IRequeteDelivrance {
-  const requete = ({
+  const requete = {
     type: TypeRequete.DELIVRANCE.nom,
     sousType: SousTypeDelivrance.RDCSC.nom,
     canal: TypeCanal.COURRIER.nom,
@@ -29,7 +28,7 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
     piecesJustificatives: getPiecesJustificatives(
       requeteRDCSC.saisie.piecesJointes
     )
-  } as any) as IRequeteDelivrance;
+  } as any as IRequeteDelivrance;
   return supprimeProprietesVides(requete);
 }
 
@@ -142,24 +141,4 @@ export function getAdresse(adresse: Adresse) {
         pays: adresse.pays
       }
     : {};
-}
-
-function getPiecesJustificatives(
-  nouvellesPiecesJointes: any
-): IPieceJustificative[] {
-  return nouvellesPiecesJointes
-    ? nouvellesPiecesJointes.map(
-        (pj: any) =>
-          (({
-            nom: pj.base64File.fileName,
-            typePieceJustificative: pj.type?.value,
-            contenu: pj.base64File.base64String,
-            mimeType: pj.base64File.mimeType,
-            taille: pj.base64File.taille,
-            extension: pj.base64File.extension,
-            referenceSwift: getValeurOuVide(pj.base64File.identifiantSwift),
-            conteneurSwift: getValeurOuVide(pj.base64File.conteneurSwift)
-          } as any) as IPieceJustificative)
-      )
-    : [];
 }
