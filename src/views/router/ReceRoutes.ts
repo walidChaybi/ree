@@ -616,7 +616,7 @@ export const routesRece: IRoute[] = [
     url: URL_RECHERCHE_ACTE_INSCRIPTION,
     component: RMCActeInscriptionPage,
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle("Recherche acte ou inscription"),
+    libelle: getLibelle("Recherche acte et inscription"),
     droits: [Droit.CONSULTER]
   },
   {

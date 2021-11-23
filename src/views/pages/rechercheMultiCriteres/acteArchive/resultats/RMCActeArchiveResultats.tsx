@@ -33,7 +33,9 @@ export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = p
       <Fieldset titre={getLibelle("Résultats de la recherche multi-critères")}>
         <div className="SubResultatsRMC">
           <div className="SousTitre">
-            <span>{getLibelle("Recherche dans les registres")}</span>
+            <span>
+              {getLibelle("Recherche dans les registres d'état civil")}
+            </span>
           </div>
           {props.dataRMCActeArchive.length > 0 ? (
             <RMCTableauActes

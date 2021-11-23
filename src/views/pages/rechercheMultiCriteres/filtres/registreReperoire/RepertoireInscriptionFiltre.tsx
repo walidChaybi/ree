@@ -9,6 +9,7 @@ import {
   NumeroInscription
 } from "../../../../../ressources/Regex";
 import { Options } from "../../../../common/util/Type";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
 import {
@@ -116,34 +117,36 @@ const RepertoireInscriptionFiltre: React.FC<RepertoireInscriptionFiltreProps> = 
   }, [props.formik.dirty, props.formik.values, props.nomFiltre]);
 
   return (
-    <>
-      <InputField
-        name={numeroInscriptionWithNamespace}
-        label={getLibelle("N° de l'inscription")}
-        onInput={formatNumber}
-        disabled={props.filtreInactif}
-        onBlur={onBlurNumero}
-      />
-      <SelectField
-        name={typeRepertoireWithNamespace}
-        label={getLibelle("Type de répertoire")}
-        options={TypeRepertoire.getAllEnumsAsOptions().filter(el => {
-          return props.filtreTypeRepertoire
-            ? el.value === props.filtreTypeRepertoire.libelle
-            : true;
-        })}
-        onChange={e => {
-          onChangeTypeRepertoire(e);
-        }}
-        disabled={props.filtreInactif}
-      />
-      <SelectField
-        name={natureInscriptionWithNamespace}
-        label={getLibelle("Nature de l'inscription")}
-        options={natureOptions}
-        disabled={natureInactif || props.filtreInactif}
-      />
-    </>
+    <Fieldset titre={getLibelle("Filtre répertoire")}>
+      <div className="FormFiltre">
+        <SelectField
+          name={typeRepertoireWithNamespace}
+          label={getLibelle("Type de répertoire")}
+          options={TypeRepertoire.getAllEnumsAsOptions().filter(el => {
+            return props.filtreTypeRepertoire
+              ? el.value === props.filtreTypeRepertoire.libelle
+              : true;
+          })}
+          onChange={e => {
+            onChangeTypeRepertoire(e);
+          }}
+          disabled={props.filtreInactif}
+        />
+        <InputField
+          name={numeroInscriptionWithNamespace}
+          label={getLibelle("N° de l'inscription")}
+          onInput={formatNumber}
+          disabled={props.filtreInactif}
+          onBlur={onBlurNumero}
+        />
+        <SelectField
+          name={natureInscriptionWithNamespace}
+          label={getLibelle("Nature de l'inscription")}
+          options={natureOptions}
+          disabled={natureInactif || props.filtreInactif}
+        />
+      </div>
+    </Fieldset>
   );
 };
 

@@ -35,11 +35,13 @@ test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
     ?.firstElementChild?.innerHTML;
 
   expect(titre).toEqual("Résultats de la recherche multi-critères");
-  expect(screen.getByText(/Recherche dans les registres/i)).toBeDefined();
+  expect(
+    screen.getByText(/Recherche dans les registres d'état civil/i)
+  ).toBeDefined();
 
   expect(
     screen.getByText(
-      /Recherche dans les repertoires de greffe et registre des PACS étrangers/i
+      /Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger/i
     )
   ).toBeDefined();
 });
@@ -63,11 +65,13 @@ test("renders Fielset Recherche Multi Critères => Seulement des inscriptions", 
     ?.firstElementChild?.innerHTML;
   expect(titre).toEqual("Résultats de la recherche multi-critères");
 
-  expect(screen.getByText(/Recherche dans les registres/i)).toBeDefined();
+  expect(
+    screen.getByText(/Recherche dans les registres d'état civil/i)
+  ).toBeDefined();
 
   expect(
     screen.getByText(
-      /Recherche dans les repertoires de greffe et registre des PACS étrangers/i
+      /Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger/i
     )
   ).toBeDefined();
 });

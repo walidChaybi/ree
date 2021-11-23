@@ -40,7 +40,7 @@ export const ValidationSchemaRMCActeInscription = Yup.object({
   [REGISTRE_REPERTOIRE]: RegistreRepertoireValidationSchema
 });
 
-export const titreForm = "Critères de recherche d'un acte ou d'une inscription";
+export const titreForm = "Critères de recherche d'un acte et d'une inscription";
 
 interface RMCActeInscriptionFormProps {
   onSubmit: (values: any) => void;

@@ -1,23 +1,24 @@
-import React from "react";
 import { connect } from "formik";
+import React from "react";
 import * as Yup from "yup";
-import "../scss/FiltreRMC.scss";
+import { CarateresAutoriseRecherche } from "../../../../../ressources/Regex";
+import { MIN_YEAR } from "../../../../common/util/DateUtils";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues,
   DateValidationSchema
 } from "../../../../common/widget/formulaire/DateComposeForm";
-import {
-  withNamespace,
-  FormikComponentProps,
-  ComponentFiltreProps
-} from "../../../../common/widget/formulaire/utils/FormUtil";
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../common/widget/formulaire/FormulaireMessages";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
-import { CarateresAutoriseRecherche } from "../../../../../ressources/Regex";
+import {
+  ComponentFiltreProps,
+  FormikComponentProps,
+  withNamespace
+} from "../../../../common/widget/formulaire/utils/FormUtil";
 import { getLibelle } from "../../../../common/widget/Text";
-import { MIN_YEAR } from "../../../../common/util/DateUtils";
+import "../scss/FiltreRMC.scss";
 
 // Noms des champs
 export const DATE_EVENEMENT = "dateEvenement";
@@ -63,16 +64,18 @@ const EvenementFiltre: React.FC<EvenementFiltreProps> = props => {
   }
 
   return (
-    <>
-      <DateComposeForm {...dateEvenementComposeFormProps} />
-      <InputField
-        disabled={props.filtreInactif}
-        title="Le pays de l'évènement ne concerne que les actes ou les PACS"
-        name={paysEvenementWithNamespace}
-        label={getLibelle("Pays de l'évènement")}
-        onBlur={onBlurChamp}
-      />
-    </>
+    <Fieldset titre={getLibelle("Filtre évènement")}>
+      <div className="FormFiltre">
+        <DateComposeForm {...dateEvenementComposeFormProps} />
+        <InputField
+          disabled={props.filtreInactif}
+          title="Le pays de l'évènement ne concerne que les actes ou les PACS"
+          name={paysEvenementWithNamespace}
+          label={getLibelle("Pays de l'évènement")}
+          onBlur={onBlurChamp}
+        />
+      </div>
+    </Fieldset>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   enMajuscule,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../../common/util/Utils";
+import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import {
   ChampRechercheField,
   ChampRechercheFieldProps
@@ -141,40 +142,42 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
   };
 
   return (
-    <>
-      <SelectField
-        name={natureActeWithNamespace}
-        label={getLibelle("Nature de l'acte")}
-        options={NatureActe.getAllEnumsAsOptions()}
-        disabled={props.filtreInactif}
-      />
-      <SelectField
-        name={familleRegistreWithNamespace}
-        label={getLibelle("Famille de registre")}
-        options={TypeFamille.getAllEnumsAsOptions()}
-        disabled={props.filtreInactif}
-        onChange={onFamilleRegistreChange}
-      />
+    <Fieldset titre={getLibelle("Filtre registre")}>
+      <div className="FormFiltre">
+        <SelectField
+          name={natureActeWithNamespace}
+          label={getLibelle("Nature de l'acte")}
+          options={NatureActe.getAllEnumsAsOptions()}
+          disabled={props.filtreInactif}
+        />
+        <SelectField
+          name={familleRegistreWithNamespace}
+          label={getLibelle("Famille de registre")}
+          options={TypeFamille.getAllEnumsAsOptions()}
+          disabled={props.filtreInactif}
+          onChange={onFamilleRegistreChange}
+        />
 
-      <ChampRechercheField
-        {...({
-          name: pocopaWithNamespace,
-          label: "Poste/Commune/Pays",
-          onChange: onChampRechercheChange,
-          onInput: onChampRechercheInput,
-          options: getPocopasAsOptions(),
-          disabled: props.filtreInactif
-        } as ChampRechercheFieldProps)}
-      />
+        <ChampRechercheField
+          {...({
+            name: pocopaWithNamespace,
+            label: "Poste Commune Pays",
+            onChange: onChampRechercheChange,
+            onInput: onChampRechercheInput,
+            options: getPocopasAsOptions(),
+            disabled: props.filtreInactif
+          } as ChampRechercheFieldProps)}
+        />
 
-      <InputField
-        name={numeroActeWithNamespace}
-        label={getLibelle("N° de l'acte")}
-        disabled={props.filtreInactif}
-        onBlur={onBlurNumero}
-        onInput={numeroChange}
-      />
-    </>
+        <InputField
+          name={numeroActeWithNamespace}
+          label={getLibelle("N° de l'acte")}
+          disabled={props.filtreInactif}
+          onBlur={onBlurNumero}
+          onInput={numeroChange}
+        />
+      </div>
+    </Fieldset>
   );
 };
 

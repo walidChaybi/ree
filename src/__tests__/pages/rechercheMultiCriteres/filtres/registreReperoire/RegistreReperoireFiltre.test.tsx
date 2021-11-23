@@ -40,9 +40,11 @@ test("renders filtre Registre et Repertoire", async () => {
     render(<HookRegistreRepertoireFiltre />);
   });
   await waitFor(() => {
-    expect(
-      screen.getAllByText(getLibelle("Filtre registre et répertoire"))
-    ).toHaveLength(1);
+    expect(screen.getAllByText(getLibelle("Filtre registre"))).toHaveLength(1);
+    expect(screen.getAllByText(getLibelle("Filtre répertoire"))).toHaveLength(
+      1
+    );
+    expect(screen.getAllByText(getLibelle("Filtre évènement"))).toHaveLength(1);
   });
 
   // Test du grisé/dégrisé des registres et répertoires

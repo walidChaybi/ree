@@ -184,7 +184,7 @@
         "creation": "Espace création",
         "communication": "Communication avec les usagers",
         "rechercherequete": "Rechercher une requête",
-        "rechercheacteinscription": "Rechercher un acte ou une inscription",
+        "rechercheacteinscription": "Rechercher un acte et une inscription",
         "rechercheacte": "Rechercher un acte",
         "tableau": "Tableau de bord"
       },
@@ -195,7 +195,7 @@
         "creation": "Bouton pour accèder à l'espace création",
         "communication": "Bouton pour accèder à la communication avec les usagers",
         "requete": "Bouton pour accèder à la recherche d'une requête",
-        "rechercheacteinscription": "Bouton pour accèder à la recherche d'un acte ou d'une inscription",
+        "rechercheacteinscription": "Bouton pour accèder à la recherche d'un acte et d'une inscription",
         "rechercheacte": "Bouton pour accèder à la recherche d'un acte",
         "tableau": "Bouton pour accèder au tableau de bord"
       }

@@ -18,5 +18,7 @@ test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
     ?.firstElementChild?.innerHTML;
   expect(titre).toEqual("Résultats de la recherche multi-critères");
 
-  expect(screen.getByText(/Recherche dans les registres/i)).toBeDefined();
+  expect(
+    screen.getByText(/Recherche dans les registres d'état civil/i)
+  ).toBeDefined();
 });

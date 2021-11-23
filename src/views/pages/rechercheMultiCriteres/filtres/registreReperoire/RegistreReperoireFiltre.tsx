@@ -1,30 +1,28 @@
+import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoire";
+import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import {
   ComponentFiltreProps,
-  withNamespace,
-  FormikComponentProps
+  FormikComponentProps,
+  withNamespace
 } from "../../../../common/widget/formulaire/utils/FormUtil";
-import RegistreActeFiltre, {
-  RegistreActeDefaultValues,
-  RegistreActeValidationSchema,
-  RegistreActeFiltreProps
-} from "./RegistreActeFiltre";
-import { getLibelle } from "../../../../common/widget/Text";
-import RepertoireInscriptionFiltre, {
-  RepertoireInscriptionDefaultValues,
-  RepertoireInscriptionValidationSchema,
-  RepertoireInscriptionFiltreProps
-} from "./RepertoireInscriptionFiltre";
 import EvenementFiltre, {
-  EvenementFiltreProps,
   EvenementDefaultValues,
+  EvenementFiltreProps,
   EvenementValidationSchema
 } from "./EvenementFiltre";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { connect } from "formik";
-import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { TypeRepertoire } from "../../../../../model/etatcivil/enum/TypeRepertoire";
+import RegistreActeFiltre, {
+  RegistreActeDefaultValues,
+  RegistreActeFiltreProps,
+  RegistreActeValidationSchema
+} from "./RegistreActeFiltre";
+import RepertoireInscriptionFiltre, {
+  RepertoireInscriptionDefaultValues,
+  RepertoireInscriptionFiltreProps,
+  RepertoireInscriptionValidationSchema
+} from "./RepertoireInscriptionFiltre";
 
 // Noms des champs
 export const REGISTRE = "registre";
@@ -97,26 +95,18 @@ const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props 
 
   return (
     <div className={props.nomFiltre}>
-      <Fieldset titre={getLibelle("Filtre registre et répertoire")}>
-        <div className="FormFiltre">
-          <RegistreActeFiltre
-            filtreInactif={filtreActeInactif}
-            {...registreActeFiltreProps}
-          />
-        </div>
-        <div className="FormFiltre">
-          <RepertoireInscriptionFiltre
-            filtreInactif={filtreInscriptionInactif}
-            {...registreRepertoireFiltreProps}
-          />
-        </div>
-        <div className="FormFiltre">
-          <EvenementFiltre
-            filtreInactif={filteEvenementInactif}
-            {...evenementFiltreProps}
-          />
-        </div>
-      </Fieldset>
+      <RegistreActeFiltre
+        filtreInactif={filtreActeInactif}
+        {...registreActeFiltreProps}
+      />
+      <RepertoireInscriptionFiltre
+        filtreInactif={filtreInscriptionInactif}
+        {...registreRepertoireFiltreProps}
+      />
+      <EvenementFiltre
+        filtreInactif={filteEvenementInactif}
+        {...evenementFiltreProps}
+      />
     </div>
   );
 };

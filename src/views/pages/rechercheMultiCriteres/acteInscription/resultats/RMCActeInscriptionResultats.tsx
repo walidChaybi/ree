@@ -89,7 +89,9 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
       <Fieldset titre={getLibelle("Résultats de la recherche multi-critères")}>
         <div className="SubResultatsRMC">
           <div className="SousTitre">
-            <span>{getLibelle("Recherche dans les registres")}</span>
+            <span>
+              {getLibelle("Recherche dans les registres d'état civil")}
+            </span>
           </div>
           <RMCTableauActes
             typeRMC={typeRMC}
@@ -115,7 +117,7 @@ export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsPr
           <div className="SousTitre">
             <span>
               {getLibelle(
-                "Recherche dans les repertoires de greffe et registre des PACS étrangers"
+                "Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger"
               )}
             </span>
           </div>
