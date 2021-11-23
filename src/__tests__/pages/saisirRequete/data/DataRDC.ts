@@ -1,13 +1,14 @@
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { CreationRequeteRDC } from "../../../../views/pages/saisirRequete/modelForm/ISaisirRDCPageModel";
 
 export const RequeteRDCTitulaire = {
-  brouillon: false,
+  futurStatut: StatutRequete.PRISE_EN_CHARGE,
   refus: false,
   saisie: {
     requete: {
       natureActe: "DECES",
       documentDemande: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
-      nbExemplaire: "1",
+      nbExemplaire: 1,
       motif: "DECLARATION_ACQUISITION_DE_NATIONALITE_FRANCAISE",
       complementMotif: ""
     },
@@ -139,13 +140,13 @@ export const RequeteRDCTitulaire = {
 } as CreationRequeteRDC;
 
 export const RequeteRDCMandataire = {
-  brouillon: false,
+  futurStatut: StatutRequete.PRISE_EN_CHARGE,
   refus: false,
   saisie: {
     requete: {
       natureActe: "DECES",
       documentDemande: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
-      nbExemplaire: "1",
+      nbExemplaire: 1,
       motif: "DECLARATION_ACQUISITION_DE_NATIONALITE_FRANCAISE",
       complementMotif: ""
     },
@@ -277,13 +278,13 @@ export const RequeteRDCMandataire = {
 } as CreationRequeteRDC;
 
 export const RequeteRDCInstitutionnel = {
-  brouillon: false,
-  refus: false,
+  futurStatut: StatutRequete.A_TRAITER,
+  refus: true,
   saisie: {
     requete: {
       natureActe: "DECES",
       documentDemande: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
-      nbExemplaire: "1",
+      nbExemplaire: 1,
       motif: "DECLARATION_ACQUISITION_DE_NATIONALITE_FRANCAISE",
       complementMotif: ""
     },
@@ -403,13 +404,13 @@ export const RequeteRDCInstitutionnel = {
 } as CreationRequeteRDC;
 
 export const RequeteRDCParticulier = {
-  brouillon: false,
+  futurStatut: StatutRequete.BROUILLON,
   refus: false,
   saisie: {
     requete: {
       natureActe: "DECES",
       documentDemande: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
-      nbExemplaire: "1",
+      nbExemplaire: 1,
       motif: "DECLARATION_ACQUISITION_DE_NATIONALITE_FRANCAISE",
       complementMotif: ""
     },
@@ -527,13 +528,13 @@ export const RequeteRDCParticulier = {
 } as CreationRequeteRDC;
 
 export const RequeteRDCAutreProfessionnnel = {
-  brouillon: false,
+  futurStatut: StatutRequete.PRISE_EN_CHARGE,
   refus: false,
   saisie: {
     requete: {
       natureActe: "DECES",
       documentDemande: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
-      nbExemplaire: "1",
+      nbExemplaire: 1,
       motif: "DECLARATION_ACQUISITION_DE_NATIONALITE_FRANCAISE",
       complementMotif: ""
     },

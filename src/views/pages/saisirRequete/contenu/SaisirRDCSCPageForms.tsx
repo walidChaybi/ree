@@ -84,21 +84,21 @@ export function getPiecesJointesForm(): JSX.Element {
 }
 
 export function getBoutonsPopin(
-  enregistrerValider: (refus: boolean) => void,
+  prendreEnCharge: (refus: boolean) => void,
   setDonneesNaissanceIncomplete: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   return [
     {
       label: getLibelle("oui"),
       action: () => {
-        enregistrerValider(true);
+        prendreEnCharge(true);
         setDonneesNaissanceIncomplete(false);
       }
     },
     {
       label: getLibelle("non"),
       action: () => {
-        enregistrerValider(false);
+        prendreEnCharge(false);
         setDonneesNaissanceIncomplete(false);
       }
     },

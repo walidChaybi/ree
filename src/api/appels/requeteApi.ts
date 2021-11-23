@@ -286,12 +286,12 @@ export function getCompteurRequetesV2(): Promise<any> {
 
 export async function creationRequeteDelivrance({
   requete,
-  refus = false,
-  brouillon = false
+  futurStatut,
+  refus = false
 }: {
   requete: IRequeteDelivrance;
+  futurStatut: StatutRequeteV2;
   refus?: boolean;
-  brouillon?: boolean;
 }): Promise<any> {
   return apiV2.fetch({
     method: HttpMethod.POST,
@@ -299,7 +299,7 @@ export async function creationRequeteDelivrance({
     data: requete,
     parameters: {
       refus,
-      brouillon
+      futurStatut: StatutRequeteV2.getKey(futurStatut)
     }
   });
 }
@@ -307,13 +307,13 @@ export async function creationRequeteDelivrance({
 export async function updateRequeteDelivrance({
   idRequete,
   requete,
-  refus = false,
-  brouillon = false
+  futurStatut,
+  refus = false
 }: {
   idRequete: string;
   requete: IRequeteDelivrance;
+  futurStatut: StatutRequeteV2;
   refus?: boolean;
-  brouillon?: boolean;
 }): Promise<any> {
   return apiV2.fetch({
     method: HttpMethod.PATCH,
@@ -321,7 +321,7 @@ export async function updateRequeteDelivrance({
     data: requete,
     parameters: {
       refus,
-      brouillon
+      futurStatut: StatutRequeteV2.getKey(futurStatut)
     }
   });
 }

@@ -6,11 +6,7 @@ import { getLibelle } from "../../../../../common/widget/Text";
 import { receUrl } from "../../../../../router/ReceUrls";
 import "../scss/ReponseReqInfo.scss";
 
-export type ReponseReqInfoBoutonsProps = {
-  setIsBrouillon: any;
-} & FormikComponentProps;
-
-const ReponseReqInfoBoutons: React.FC<ReponseReqInfoBoutonsProps> = props => {
+const ReponseReqInfoBoutons: React.FC<FormikComponentProps> = props => {
   const history = useHistory();
 
   const handleAnnuler = () => {

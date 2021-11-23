@@ -1,3 +1,4 @@
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { PieceJointe } from "../../../common/util/FileUtils";
 import { Adresse, Identite, Requerant } from "./ISaisirRequetePageModel";
 
@@ -12,14 +13,14 @@ export interface CreationRequeteRDCSC {
   id?: string;
   saisie: SaisieRequeteRDCSC;
   refus?: boolean;
-  brouillon?: boolean;
+  futurStatut: StatutRequete;
 }
 
 export interface UpdateRequeteRDCSC {
   idRequete: string;
   saisie: SaisieRequeteRDCSC;
   refus?: boolean;
-  brouillon?: boolean;
+  futurStatut: StatutRequete;
 }
 export interface SaisieRequeteRDCSC {
   [DOCUMENT]: string;

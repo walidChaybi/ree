@@ -12,9 +12,7 @@ import {
   useSauvegarderReponsesReqInfoHook
 } from "../hook/SauvegarderReponseReqInfoHook";
 import "../scss/ReponseReqInfo.scss";
-import ReponseReqInfoBoutons, {
-  ReponseReqInfoBoutonsProps
-} from "./ReponseReqInfoBoutons";
+import ReponseReqInfoBoutons from "./ReponseReqInfoBoutons";
 import ReponseReqInfoSubForm, {
   DefaultValuesReponseInfoSubForm,
   IReponseInfoSubFormValue,
@@ -70,7 +68,7 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
     }
   }, [idReponse, history]);
 
-  const boutonsProps = {} as ReponseReqInfoBoutonsProps;
+  const boutonsProps = {} as FormikComponentProps;
 
   return (
     <div className="ReponseReqInfo">

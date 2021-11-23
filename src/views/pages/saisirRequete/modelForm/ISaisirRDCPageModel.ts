@@ -1,3 +1,4 @@
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import {
   Adresse,
   Evenement,
@@ -21,7 +22,7 @@ export const ADRESSE = "adresse";
 export interface CreationRequeteRDC {
   saisie: SaisieRequeteRDC;
   refus?: boolean;
-  brouillon?: boolean;
+  futurStatut: StatutRequete;
 }
 
 export interface SaisieRequeteRDC {

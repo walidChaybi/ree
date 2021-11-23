@@ -5,34 +5,7 @@ import {
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import messageManager from "../../../common/util/messageManager";
-import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { getLibelle } from "../../../common/widget/Text";
-import {
-  URL_MES_REQUETES_SAISIR_RDCSC,
-  URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
-  URL_REQUETES_SERVICE_SAISIR_RDCSC,
-  URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE
-} from "../../../router/ReceUrls";
-
-export function getRedirectionVersApercuRequete(
-  pathname: string,
-  idRequeteSauvegardee: string
-) {
-  let url = "";
-  if (pathname.startsWith(URL_MES_REQUETES_SAISIR_RDCSC)) {
-    url = getUrlWithParam(
-      URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
-      idRequeteSauvegardee
-    );
-  }
-  if (pathname.startsWith(URL_REQUETES_SERVICE_SAISIR_RDCSC)) {
-    url = getUrlWithParam(
-      URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE,
-      idRequeteSauvegardee
-    );
-  }
-  return url;
-}
 
 export function createReponseSansDelivranceCS(requete?: IRequeteDelivrance) {
   let reponseSansDelivranceCS = {} as IReponseSansDelivranceCSDemandeIncompleteComposition;

@@ -47,7 +47,7 @@ test("renders formulaire de saisie d'une Requête de Délivrance Certificat de S
   });
 });
 
-test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
+test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
   render(
     <Router history={history}>
       <SaisirRDCSCPage />
@@ -85,7 +85,7 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
     });
   });
 
-  const submit = screen.getByText(/Enregistrer et valider/i);
+  const submit = screen.getByText(/Prendre en charge/i);
 
   await act(async () => {
     fireEvent.change(inputDocumentDemande, {
@@ -116,7 +116,7 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
   });
 });
 
-test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in OUI", async () => {
+test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in OUI", async () => {
   render(
     <Router history={history}>
       <SaisirRDCSCPage />
@@ -141,7 +141,7 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
     expect(screen.getByText("Certificat de situation au PACS"));
   });
 
-  const submit = screen.getByText(/Enregistrer et valider/i);
+  const submit = screen.getByText(/Prendre en charge/i);
 
   await act(async () => {
     fireEvent.change(inputDocumentDemande, {
@@ -169,7 +169,7 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
   });
 });
 
-test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in NON", async () => {
+test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier => sans éléments de naissance & pop-in NON", async () => {
   render(
     <Router history={history}>
       <SaisirRDCSCPage />
@@ -195,7 +195,7 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
     expect(screen.getByText("Certificat de situation au PACS"));
   });
 
-  const submit = screen.getByText(/Enregistrer et valider/i);
+  const submit = screen.getByText(/Prendre en charge/i);
 
   await act(async () => {
     fireEvent.change(inputDocumentDemande, {
@@ -231,7 +231,7 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
   });
 });
 
-test("test du Enregistrer du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
+test("test du Sauvegarder du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
   render(
     <Router history={history}>
       <SaisirRDCSCPage />
@@ -272,7 +272,7 @@ test("test du Enregistrer du formulaire de saisie d'une Requête de Délivrance 
     expect(screen.getByText("Certificat de situation au PACS"));
   });
 
-  const submit = screen.getByText("Enregistrer");
+  const submit = screen.getByText("Sauvegarder");
 
   await act(async () => {
     fireEvent.change(inputDocumentDemande, {

@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { updateRequeteDelivrance } from "../../../../api/appels/requeteApi";
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { logError } from "../../../common/util/LogManager";
+import { mappingRequeteDelivrance } from "../../detailRequete/hook/DetailRequeteHook";
 import { UpdateRequeteRDCSC } from "../modelForm/ISaisirRDCSCPageModel";
 import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
 
 export interface IUpdateRequeteDelivranceRDCSCResultat {
   requete: IRequeteDelivrance;
-  brouillon?: boolean;
+  futurStatut: StatutRequete;
   refus?: boolean;
 }
 
@@ -20,17 +22,16 @@ export function useUpdateRequeteDelivranceRDCSC(
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
       const requete = mappingFormulaireRDCSCVersRequeteDelivrance(requeteRDCSC);
-
       updateRequeteDelivrance({
         idRequete: requeteRDCSC.idRequete,
         requete,
-        refus: requeteRDCSC.refus,
-        brouillon: requeteRDCSC.brouillon
+        futurStatut: requeteRDCSC.futurStatut,
+        refus: requeteRDCSC.refus
       })
         .then((result: any) => {
           setResultat({
-            requete: result.body.data,
-            brouillon: requeteRDCSC.brouillon,
+            requete: mappingRequeteDelivrance(result.body.data),
+            futurStatut: requeteRDCSC.futurStatut,
             refus: requeteRDCSC.refus
           });
         })

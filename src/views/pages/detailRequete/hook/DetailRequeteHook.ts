@@ -32,8 +32,9 @@ import { logError } from "../../../common/util/LogManager";
 import { storeRece } from "../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] =
-    useState<TRequete | undefined>();
+  const [detailRequeteState, setDetailRequeteState] = useState<
+    TRequete | undefined
+  >();
 
   useEffect(() => {
     async function fetchDetailRequete() {
@@ -100,12 +101,14 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
   };
 }
 
-function mapPiecesJustificatives(data: any): IPieceJustificativeV2[] {
-  const piecesJustificatives: IPieceJustificativeV2[] = data;
-  piecesJustificatives.forEach((pj: any) => {
-    pj.typePieceJustificative = TypePieceJustificative?.getEnumFor(
+function mapPiecesJustificatives(pieces?: any): IPieceJustificativeV2[] {
+  const piecesJustificatives: IPieceJustificativeV2[] = [];
+  pieces?.forEach((pj: any) => {
+    const piece = pj as IPieceJustificativeV2;
+    piece.typePieceJustificative = TypePieceJustificative?.getEnumFor(
       pj.typePieceJustificative
     ); // pj.typePieceJustificative est un UUID car il vient du back
+    piecesJustificatives.push(piece);
   });
 
   return piecesJustificatives;

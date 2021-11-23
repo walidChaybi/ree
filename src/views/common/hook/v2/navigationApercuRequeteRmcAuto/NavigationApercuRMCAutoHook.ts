@@ -16,8 +16,9 @@ export function useNavigationApercuRMCAuto(
   rmcAutoNavigationParams?: INavigationApercuRMCAutoParams
 ) {
   const history = useHistory();
-  const [paramsRMCAuto, setParamsRMCAuto] =
-    useState<IRMCAutoParams | undefined>();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+    IRMCAutoParams | undefined
+  >();
   const [urlDataToPush, setUrlDataToPush] = useState<IUrlData | undefined>();
 
   const rmcAutoUrlData: IUrlData | undefined = useRMCAutoHook(paramsRMCAuto);
@@ -47,8 +48,10 @@ export function useNavigationApercuRMCAuto(
     () => {
       if (tousNonVides(urlDataToPush, rmcAutoNavigationParams)) {
         if (
-          // @ts-ignore (forcément valué)
-          estUrlApercuOuTraitementRequete(rmcAutoNavigationParams?.urlCourante)
+          estUrlSaisirOuApercuOuTraitementRequete(
+            // @ts-ignore (forcément valué)
+            rmcAutoNavigationParams?.urlCourante
+          )
         ) {
           // @ts-ignore (forcément valué)
           receUrl.replaceUrl(history, urlDataToPush.url, urlDataToPush.data);
@@ -62,9 +65,10 @@ export function useNavigationApercuRMCAuto(
     [urlDataToPush]
   );
 }
-function estUrlApercuOuTraitementRequete(url: string) {
+function estUrlSaisirOuApercuOuTraitementRequete(url: string) {
   return (
     receUrl.estUrlApercuRequete(url) ||
-    receUrl.estUrlApercuTraitementRequete(url)
+    receUrl.estUrlApercuTraitementRequete(url) ||
+    receUrl.estUrlSaisirCourrier(url)
   );
 }

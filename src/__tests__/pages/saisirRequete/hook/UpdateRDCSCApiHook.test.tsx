@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { useUpdateRequeteDelivranceRDCSC } from "../../../../views/pages/saisirRequete/hook/UpdateRDCSCApiHook";
 import { UpdateRequeteRDCSC } from "../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import {
@@ -36,57 +37,61 @@ const saisieParticulier = {
 const HookConsummerInteresse: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieInteresse);
   return (
-    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>
   );
 };
 
 test("Maj requête délivrance hook intéressé", async () => {
   render(<HookConsummerInteresse />);
-  await waitForResultat(false, false);
+  await waitForResultat(StatutRequete.PRISE_EN_CHARGE, false);
 });
 
 const HookConsummerMandataire: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieMandataire);
   return (
-    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>
   );
 };
 
 test("Maj requête délivrance hook mandataire", async () => {
   render(<HookConsummerMandataire />);
-  await waitForResultat(false, true);
+  await waitForResultat(StatutRequete.PRISE_EN_CHARGE, false);
 });
 
 const HookConsummerInstitutionnel: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieInstitution);
   return (
-    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>
   );
 };
 
 test("Maj requête délivrance hook institution", async () => {
   render(<HookConsummerInstitutionnel />);
-  await waitForResultat(true, false);
+  await waitForResultat(StatutRequete.A_TRAITER, true);
 });
 
 const HookConsummerParticulier: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieParticulier);
   return (
-    <>{`${resultat?.requete.id},${resultat?.brouillon},${resultat?.refus}`}</>
+    <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>
   );
 };
 
 test("Maj requête délivrance hook particuler", async () => {
   render(<HookConsummerParticulier />);
-  await waitForResultat(false, false);
+  await waitForResultat(StatutRequete.BROUILLON, false);
 });
 
-async function waitForResultat(brouillon: boolean, refus: boolean) {
+async function waitForResultat(futurStatut: StatutRequete, refus: boolean) {
   await waitFor(() => {
     expect(
       screen.getByText(
-        `1072bc37-f889-4365-8f75-912166b767dd,${brouillon},${refus}`
+        `1072bc37-f889-4365-8f75-912166b767dd,${futurStatut.libelle},${refus}`
       )
-    ).toBeInTheDocument();
+    ).toBeDefined();
   });
 }
+
+afterAll(() => {
+  superagentMock.unset();
+});

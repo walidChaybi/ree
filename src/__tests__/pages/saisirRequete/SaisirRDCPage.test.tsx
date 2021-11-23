@@ -141,7 +141,7 @@ test("test onChangeRequerant", async () => {
   });
 });
 
-test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Extrait Copie DECES", async () => {
+test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Extrait Copie DECES", async () => {
   render(
     <Router history={history}>
       <SaisirRDCPage />
@@ -269,7 +269,7 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
     );
   });
 
-  const submit = screen.getByText(/Enregistrer et valider/i);
+  const submit = screen.getByText(/Prendre en charge/i);
 
   await act(async () => {
     fireEvent.click(submit);
@@ -284,7 +284,7 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
   });
 });
 
-test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de Délivrance Extrait Copie NAISSANCE", async () => {
+test("test du Prendre en charge du formulaire de saisie d'une Requête de Délivrance Extrait Copie NAISSANCE", async () => {
   render(
     <Router history={history}>
       <SaisirRDCPage />
@@ -388,7 +388,7 @@ test("test du Enregistrer et Valider du formulaire de saisie d'une Requête de D
     );
   });
 
-  const submit = screen.getByText(/Enregistrer et valider/i);
+  const submit = screen.getByText(/Prendre en charge/i);
 
   await act(async () => {
     fireEvent.click(submit);

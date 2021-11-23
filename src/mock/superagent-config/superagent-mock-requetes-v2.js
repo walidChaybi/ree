@@ -22,6 +22,7 @@ import {
 } from "../data/nomenclatures";
 import { idRequeteRDCSC } from "../data/RequeteV2";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
+import { CreationRDCSC, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
 
 export const NORESULT = "NORESULT";
 
@@ -229,130 +230,32 @@ export const configRequetesV2 = [
 
       // Creation Requete Delivrance
       // Certificat de Situation Courrier
-      if (match[1] === "/requetes/delivrance?refus=false&brouillon=false") {
+      if (
+        match[1] ===
+          "/requetes/delivrance?refus=false&futurStatut=PRISE_EN_CHARGE" ||
+        match[1] === "/requetes/delivrance?refus=true&futurStatut=A_TRAITER" ||
+        match[1] === "/requetes/delivrance?refus=false&futurStatut=BROUILLON"
+      ) {
         return {
-          data: {
-            id: "1072bc37-f889-4365-8f75-912166b767dd",
-            numeroFonctionnel: "U2UN5W",
-            idSagaDila: null,
-            dateCreation: 18 / 10 / 2020,
-            canal: "COURRIER",
-            type: "DELIVRANCE",
-            statut: "A_TRAITER",
-            titulaires: [],
-            requerant: [],
-            mandant: null,
-            idUtilisateur: "id",
-            idEntite: "id",
-            actions: [],
-            observations: [],
-            piecesJustificatives: [],
-            sousType: "RDCSC",
-            documentDemande: [],
-            nbExemplaireImpression: 1,
-            provenanceRequete: "COURRIER",
-            evenement: [],
-            motif: "Certificat de nationalité française",
-            complementMotif: null,
-            choixDelivrance: null,
-            documentsReponses: []
-          }
+          data: CreationRDCSC
         };
       }
 
-      if (match[1] === "/requetes/delivrance?refus=true&brouillon=false") {
-        return {
-          data: {
-            id: "1072bc37-f889-4365-8f75-912166b767dd",
-            numeroFonctionnel: "U2UN5W",
-            idSagaDila: null,
-            dateCreation: 18 / 10 / 2020,
-            canal: "COURRIER",
-            type: "DELIVRANCE",
-            statut: "A_TRAITER",
-            titulaires: [],
-            requerant: [],
-            mandant: null,
-            idUtilisateur: "id",
-            idEntite: "id",
-            actions: [],
-            observations: [],
-            piecesJustificatives: [],
-            sousType: "RDCSC",
-            documentDemande: [],
-            nbExemplaireImpression: 1,
-            provenanceRequete: "COURRIER",
-            evenement: [],
-            motif: "Certificat de nationalité française",
-            complementMotif: null,
-            choixDelivrance: null,
-            documentsReponses: []
-          }
-        };
-      }
-
-      if (match[1] === "/requetes/delivrance?refus=false&brouillon=true") {
-        return {
-          data: {
-            id: "1072bc37-f889-4365-8f75-912166b767dd",
-            numeroFonctionnel: "U2UN5W",
-            idSagaDila: null,
-            dateCreation: 18 / 10 / 2020,
-            canal: "COURRIER",
-            type: "DELIVRANCE",
-            statut: "A_TRAITER",
-            titulaires: [],
-            requerant: [],
-            mandant: null,
-            idUtilisateur: "id",
-            idEntite: "id",
-            actions: [],
-            observations: [],
-            piecesJustificatives: [],
-            sousType: "RDCSC",
-            documentDemande: [],
-            nbExemplaireImpression: 1,
-            provenanceRequete: "COURRIER",
-            evenement: [],
-            motif: "Certificat de nationalité française",
-            complementMotif: null,
-            choixDelivrance: null,
-            documentsReponses: []
-          }
-        };
-      }
       // Update Requete Delivrance
       // Certificat de Situation Courrier
       if (
         match[1] ===
-        "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&brouillon=false"
-      ) {
-        return {
-          data: {
-            id: "1072bc37-f889-4365-8f75-912166b767dd"
-          }
-        };
-      }
-      if (
+          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&futurStatut=PRISE_EN_CHARGE" ||
         match[1] ===
-        "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=true&brouillon=false"
-      ) {
-        return {
-          data: {
-            id: "1072bc37-f889-4365-8f75-912166b767dd"
-          }
-        };
-      }
-      if (
+          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=true&futurStatut=A_TRAITER" ||
         match[1] ===
-        "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&brouillon=true"
+          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&futurStatut=BROUILLON"
       ) {
         return {
-          data: {
-            id: "1072bc37-f889-4365-8f75-912166b767dd"
-          }
+          data: UpdateRDCSC
         };
       }
+
       // Update choix delivrance
       if (
         match[1] ===

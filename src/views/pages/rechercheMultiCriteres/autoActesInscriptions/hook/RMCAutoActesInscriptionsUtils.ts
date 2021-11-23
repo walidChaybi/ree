@@ -14,15 +14,10 @@ import {
 import { valeurOuUndefined } from "../../../../common/util/Utils";
 import {
   PATH_APERCU_REQ_PRISE,
+  PATH_APERCU_REQ_TRAITEMENT,
   receUrl,
-  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_V2,
   URL_RECHERCHE_REQUETE,
-  URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE_V2
 } from "../../../../router/ReceUrls";
 
@@ -35,20 +30,14 @@ export function redirectionRMCAuto(
   urlCourante: string
 ) {
   let url = "";
-
-  if (urlCourante === URL_REQUETES_SERVICE_V2) {
+  if (estUrlEspaceDelivranceOuRMCRequete(urlCourante)) {
     url = getUrlWithParam(
-      URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      `${urlCourante}/${PATH_APERCU_REQ_PRISE}/:idRequete`,
       requete.idRequete
     );
-  } else if (urlCourante === URL_RECHERCHE_REQUETE) {
+  } else if (receUrl.estUrlSaisirCourrier(urlCourante)) {
     url = getUrlWithParam(
-      URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      requete.idRequete
-    );
-  } else if (urlCourante === URL_MES_REQUETES_V2) {
-    url = getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      `${getUrlPrecedente(urlCourante)}/${PATH_APERCU_REQ_PRISE}/:idRequete`,
       requete.idRequete
     );
   } else if (receUrl.estUrlApercuRequete(urlCourante)) {
@@ -80,23 +69,17 @@ export function redirectionRMCAutoApercuTraitement(
   urlCourante: string
 ) {
   let url = "";
-  if (urlCourante === URL_MES_REQUETES_V2) {
+
+  if (estUrlEspaceDelivranceOuRMCRequete(urlCourante)) {
     url = getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
+      `${urlCourante}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
       idRequete
     );
-  } else if (urlCourante === URL_REQUETES_SERVICE_V2) {
-    url = getUrlWithParam(
-      URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
-      idRequete
-    );
-  } else if (urlCourante === URL_RECHERCHE_REQUETE) {
-    url = getUrlWithParam(
-      URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
-      idRequete
-    );
-  } else if (receUrl.estUrlApercuRequete(urlCourante)) {
-    url = receUrl.getUrlApercuTraitementAPartirDe(urlCourante);
+  } else if (
+    receUrl.estUrlApercuRequete(urlCourante) ||
+    receUrl.estUrlSaisirCourrier(urlCourante)
+  ) {
+    url = receUrl.getUrlApercuTraitementAPartirDe(urlCourante, idRequete);
   }
   return url;
 }
@@ -153,4 +136,12 @@ function getPrenomTitulaire(
     prenomTitulaire = valeurOuUndefined(titulaire?.prenoms?.[0]);
   }
   return prenomTitulaire;
+}
+
+function estUrlEspaceDelivranceOuRMCRequete(url: string) {
+  return (
+    url === URL_REQUETES_SERVICE_V2 ||
+    url === URL_RECHERCHE_REQUETE ||
+    url === URL_MES_REQUETES_V2
+  );
 }

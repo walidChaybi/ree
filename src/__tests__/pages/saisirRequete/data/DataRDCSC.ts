@@ -1,7 +1,8 @@
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { CreationRequeteRDCSC } from "../../../../views/pages/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 
 export const RequeteRDCSCInteresse = {
-  brouillon: false,
+  futurStatut: StatutRequete.PRISE_EN_CHARGE,
   refus: false,
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
@@ -73,8 +74,8 @@ export const RequeteRDCSCInteresse = {
 } as CreationRequeteRDCSC;
 
 export const RequeteRDCSCMandataire = {
-  brouillon: false,
-  refus: true,
+  futurStatut: StatutRequete.PRISE_EN_CHARGE,
+  refus: false,
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
     interesse: {
@@ -145,8 +146,8 @@ export const RequeteRDCSCMandataire = {
 } as CreationRequeteRDCSC;
 
 export const RequeteRDCSCInstitutionnel = {
-  brouillon: true,
-  refus: false,
+  futurStatut: StatutRequete.A_TRAITER,
+  refus: true,
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
     interesse: {
@@ -217,7 +218,7 @@ export const RequeteRDCSCInstitutionnel = {
 } as CreationRequeteRDCSC;
 
 export const RequeteRDCSCParticulier = {
-  brouillon: false,
+  futurStatut: StatutRequete.BROUILLON,
   refus: false,
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",

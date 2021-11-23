@@ -128,14 +128,14 @@ export function getAdresseForm(): JSX.Element {
 }
 
 export function getBoutonsPopin(
-  enregistrerValider: () => void,
+  prendreEnCharge: () => void,
   setDonneesIncompletes: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   return [
     {
       label: getLibelle("oui"),
       action: () => {
-        enregistrerValider();
+        prendreEnCharge();
         setDonneesIncompletes(false);
       }
     },

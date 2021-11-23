@@ -17,6 +17,9 @@ export const PATH_APERCU_REQ_TRAITEMENT = "apercurequetetraitement";
 export const PATH_APERCU_COURRIER = "apercucourrier";
 export const PATH_DETAIL_REQ = "detailrequete";
 export const PATH_SAISIR_RDCSC = "saisircertificatsituation";
+export const PATH_SAISIR_RDAPC = "saisirattestationpacs";
+export const PATH_SAISIR_RDC = "saisirextraitcopie";
+export const PATH_SAISIR_RDLFC = "saisirlivretfamille";
 
 ///////////// URLs    //////////////
 export const GO_BACK = "goBack";
@@ -56,10 +59,10 @@ export const URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2 = `${URL_MES_
 export const URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2 = `${URL_MES_REQUETES_V2}/${PATH_APERCU_REQ_TRAITEMENT}/${PATH_DETAIL_REQ}/:idRequete`;
 
 // Saisie requête ... depuis Mes Requêtes de DELIVRANCE
-export const URL_MES_REQUETES_SAISIR_RDCSC = `${URL_MES_REQUETES_V2}/saisircertificatsituation`;
-export const URL_MES_REQUETES_SAISIR_RDAPC = `${URL_MES_REQUETES_V2}/saisirattestationpacs`;
-export const URL_MES_REQUETES_SAISIR_RDC = `${URL_MES_REQUETES_V2}/saisirextraitcopie`;
-export const URL_MES_REQUETES_SAISIR_RDLFC = `${URL_MES_REQUETES_V2}/saisirlivretfamille`;
+export const URL_MES_REQUETES_SAISIR_RDCSC = `${URL_MES_REQUETES_V2}/${PATH_SAISIR_RDCSC}`;
+export const URL_MES_REQUETES_SAISIR_RDAPC = `${URL_MES_REQUETES_V2}/${PATH_SAISIR_RDAPC}`;
+export const URL_MES_REQUETES_SAISIR_RDC = `${URL_MES_REQUETES_V2}/${PATH_SAISIR_RDC}`;
+export const URL_MES_REQUETES_SAISIR_RDLFC = `${URL_MES_REQUETES_V2}/${PATH_SAISIR_RDLFC}`;
 
 // Aperçu requête ... après saisie de requête RDCSC depuis Mes Requêtes de DELIVRANCE
 export const URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE = `${URL_MES_REQUETES_SAISIR_RDCSC}/${PATH_APERCU_REQ}/:idRequete`;
@@ -190,8 +193,17 @@ function estUrlApercuTraitementRequete(url: string) {
   return url.indexOf(`/${PATH_APERCU_REQ_TRAITEMENT}/`) > 0;
 }
 
-function getUrlApercuTraitementAPartirDe(url: string) {
-  const id = getUrlParamId(url);
+function estUrlSaisirCourrier(url: string) {
+  return (
+    url.indexOf(`/${PATH_SAISIR_RDCSC}`) > 0 ||
+    url.indexOf(`/${PATH_SAISIR_RDAPC}`) > 0 ||
+    url.indexOf(`/${PATH_SAISIR_RDC}`) > 0 ||
+    url.indexOf(`/${PATH_SAISIR_RDLFC}`) > 0
+  );
+}
+
+function getUrlApercuTraitementAPartirDe(url: string, idRequete?: string) {
+  const id = idRequete || getUrlParamId(url);
   return `${getUrlPrecedente(
     url
   )}${URL_SEPARATEUR}${PATH_APERCU_REQ_TRAITEMENT}${URL_SEPARATEUR}${id}`;
@@ -215,6 +227,7 @@ export const receUrl = {
   estUrlApercuRequete,
   estUrlApercuTraitementRequete,
   getUrlApercuTraitementAPartirDe,
+  estUrlSaisirCourrier,
   replaceUrl,
   goBack,
   getUrlCourante

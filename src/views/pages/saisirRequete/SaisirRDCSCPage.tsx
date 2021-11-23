@@ -7,6 +7,10 @@ import { DocumentDelivrance } from "../../../model/requete/v2/enum/DocumentDeliv
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../model/requete/v2/IRequeteDelivrance";
+import {
+  INavigationApercuRMCAutoParams,
+  useNavigationApercuRMCAuto
+} from "../../common/hook/v2/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
 import messageManager from "../../common/util/messageManager";
 import { ProtectionApercu } from "../../common/util/route/Protection/ProtectionApercu";
 import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
@@ -19,18 +23,18 @@ import { DOCUMENT_OBLIGATOIRE } from "../../common/widget/formulaire/FormulaireM
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
 import { getLibelle } from "../../common/widget/Text";
 import { useReponseSansDelivranceCS } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/hook/ChoixReponseSansDelivranceCSHook";
+import { mappingRequeteDelivranceToRequeteTableau } from "../apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";
 import {
   createReponseSansDelivranceCS,
-  getMessagesPopin,
-  getRedirectionVersApercuRequete
+  getMessagesPopin
 } from "./contenu/SaisirRDCSCPageFonctions";
 import { getBlocsForm, getBoutonsPopin } from "./contenu/SaisirRDCSCPageForms";
+import { useCreationRequeteDelivranceRDCSC } from "./hook/CreerRDCSCApiHook";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "./hook/mappingRequeteDelivranceVersFormulaireRDCSC";
-import { useCreationRequeteDelivranceRDCSC } from "./hook/SaisirRDCSCApiHook";
 import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
 import {
   ADRESSE,
@@ -96,37 +100,51 @@ export const SaisirRDCSCPage: React.FC = () => {
     }
   }, [detailRequeteState]);
 
-  const documentDemandeOptions =
-    DocumentDelivrance.getAllCertificatSituationDemandeAsOptions();
+  const documentDemandeOptions = DocumentDelivrance.getAllCertificatSituationDemandeAsOptions();
 
-  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] =
-    useState<IReponseSansDelivranceCS | undefined>();
+  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<
+    IReponseSansDelivranceCS | undefined
+  >();
 
-  /** Enregistrer la requête */
+  /** Sauvegarder la requête */
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [donneesNaissanceIncomplete, setDonneesNaissanceIncomplete] =
-    React.useState<boolean>(false);
-  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] =
-    useState<SaisieRequeteRDCSC>();
-  const [creationRequeteRDCSC, setCreationRequeteRDCSC] =
-    useState<CreationRequeteRDCSC>();
-  const [updateRequeteRDCSC, setUpdateRequeteRDCSC] =
-    useState<UpdateRequeteRDCSC>();
+
+  const [
+    donneesNaissanceIncomplete,
+    setDonneesNaissanceIncomplete
+  ] = React.useState<boolean>(false);
+  const [
+    saisieRequeteRDCSC,
+    setSaisieRequeteRDCSC
+  ] = useState<SaisieRequeteRDCSC>();
+  const [
+    creationRequeteRDCSC,
+    setCreationRequeteRDCSC
+  ] = useState<CreationRequeteRDCSC>();
+  const [
+    updateRequeteRDCSC,
+    setUpdateRequeteRDCSC
+  ] = useState<UpdateRequeteRDCSC>();
+
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+    INavigationApercuRMCAutoParams | undefined
+  >();
+  useNavigationApercuRMCAuto(paramsRMCAuto);
 
   const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 
   const redirectionPage = useCallback(
     async (
       requeteSauvegardee: IRequeteDelivrance,
-      brouillon = false,
+      futurStatut: StatutRequete,
       refus = false
     ) => {
       // Si l'appel c'est terminé sans erreur
       if (requeteSauvegardee) {
         setIdRequete(requeteSauvegardee.id);
         // Redirection si l'enregistrement n'est pas un brouillon
-        if (!brouillon) {
+        if (futurStatut !== StatutRequete.BROUILLON) {
           if (refus) {
             const reponse = createReponseSansDelivranceCS(requeteSauvegardee);
             setReponseSansDelivranceCS({
@@ -137,10 +155,12 @@ export const SaisirRDCSCPage: React.FC = () => {
             messageManager.showSuccessAndClose(
               getLibelle("La requête a bien été enregistrée")
             );
-            const pathname = history.location.pathname;
-            history.push(
-              getRedirectionVersApercuRequete(pathname, requeteSauvegardee.id)
-            );
+            setParamsRMCAuto({
+              requete: mappingRequeteDelivranceToRequeteTableau(
+                requeteSauvegardee
+              ),
+              urlCourante: history.location.pathname
+            });
           }
         }
       }
@@ -149,28 +169,30 @@ export const SaisirRDCSCPage: React.FC = () => {
     [history]
   );
 
-  const creationRequeteDelivranceRDCSCResultat =
-    useCreationRequeteDelivranceRDCSC(creationRequeteRDCSC);
-  const UpdateRequeteDelivranceRDCSCResultat =
-    useUpdateRequeteDelivranceRDCSC(updateRequeteRDCSC);
+  const creationRequeteDelivranceRDCSCResultat = useCreationRequeteDelivranceRDCSC(
+    creationRequeteRDCSC
+  );
+  const updateRequeteDelivranceRDCSCResultat = useUpdateRequeteDelivranceRDCSC(
+    updateRequeteRDCSC
+  );
   useEffect(() => {
     if (creationRequeteDelivranceRDCSCResultat) {
       redirectionPage(
         creationRequeteDelivranceRDCSCResultat.requete,
-        creationRequeteDelivranceRDCSCResultat.brouillon,
+        creationRequeteDelivranceRDCSCResultat.futurStatut,
         creationRequeteDelivranceRDCSCResultat.refus
       );
     }
   }, [creationRequeteDelivranceRDCSCResultat, redirectionPage]);
   useEffect(() => {
-    if (UpdateRequeteDelivranceRDCSCResultat) {
+    if (updateRequeteDelivranceRDCSCResultat) {
       redirectionPage(
-        UpdateRequeteDelivranceRDCSCResultat.requete,
-        UpdateRequeteDelivranceRDCSCResultat.brouillon,
-        UpdateRequeteDelivranceRDCSCResultat.refus
+        updateRequeteDelivranceRDCSCResultat.requete,
+        updateRequeteDelivranceRDCSCResultat.futurStatut,
+        updateRequeteDelivranceRDCSCResultat.refus
       );
     }
-  }, [UpdateRequeteDelivranceRDCSCResultat, redirectionPage]);
+  }, [updateRequeteDelivranceRDCSCResultat, redirectionPage]);
 
   const resultatReponseSansDelivranceCS = useReponseSansDelivranceCS(
     idRequete,
@@ -206,13 +228,17 @@ export const SaisirRDCSCPage: React.FC = () => {
           idRequete,
           saisie: values,
           refus: false,
-          brouillon: isBrouillon
+          futurStatut: isBrouillon
+            ? StatutRequete.BROUILLON
+            : StatutRequete.PRISE_EN_CHARGE
         });
       } else {
         setCreationRequeteRDCSC({
           saisie: values,
           refus: false,
-          brouillon: isBrouillon
+          futurStatut: isBrouillon
+            ? StatutRequete.BROUILLON
+            : StatutRequete.PRISE_EN_CHARGE
         });
       }
     } else {
@@ -221,7 +247,7 @@ export const SaisirRDCSCPage: React.FC = () => {
     }
   };
 
-  const enregistrerValider = (refus: boolean) => {
+  const validerRefus = (refus: boolean) => {
     if (saisieRequeteRDCSC) {
       setOperationEnCours(true);
       if (idRequete) {
@@ -229,10 +255,18 @@ export const SaisirRDCSCPage: React.FC = () => {
           idRequete,
           saisie: saisieRequeteRDCSC,
           refus,
-          brouillon: isBrouillon
+          futurStatut: refus
+            ? StatutRequete.A_TRAITER
+            : StatutRequete.PRISE_EN_CHARGE
         });
       } else {
-        setCreationRequeteRDCSC({ saisie: saisieRequeteRDCSC, refus });
+        setCreationRequeteRDCSC({
+          saisie: saisieRequeteRDCSC,
+          refus,
+          futurStatut: refus
+            ? StatutRequete.A_TRAITER
+            : StatutRequete.PRISE_EN_CHARGE
+        });
       }
     }
   };
@@ -261,10 +295,7 @@ export const SaisirRDCSCPage: React.FC = () => {
       <ConfirmationPopin
         isOpen={donneesNaissanceIncomplete}
         messages={getMessagesPopin()}
-        boutons={getBoutonsPopin(
-          enregistrerValider,
-          setDonneesNaissanceIncomplete
-        )}
+        boutons={getBoutonsPopin(validerRefus, setDonneesNaissanceIncomplete)}
       />
     </ProtectionApercu>
   );

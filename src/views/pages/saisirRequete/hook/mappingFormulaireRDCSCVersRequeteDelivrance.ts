@@ -9,13 +9,14 @@ import { supprimeProprietesVides } from "../../../common/util/supprimeProprietes
 import { getValeurOuVide, SNP } from "../../../common/util/Utils";
 import {
   CreationRequeteRDCSC,
-  SaisieRequeteRDCSC
+  SaisieRequeteRDCSC,
+  UpdateRequeteRDCSC
 } from "../modelForm/ISaisirRDCSCPageModel";
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
 import { getPrenoms } from "./mappingCommun";
 
 export function mappingFormulaireRDCSCVersRequeteDelivrance(
-  requeteRDCSC: CreationRequeteRDCSC
+  requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC
 ): IRequeteDelivrance {
   const requete = ({
     type: TypeRequete.DELIVRANCE.nom,
@@ -29,7 +30,6 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
       requeteRDCSC.saisie.piecesJointes
     )
   } as any) as IRequeteDelivrance;
-
   return supprimeProprietesVides(requete);
 }
 

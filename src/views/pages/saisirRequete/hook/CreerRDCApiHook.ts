@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import { creationRequeteDelivrance } from "../../../../api/appels/requeteApi";
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
+import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { logError } from "../../../common/util/LogManager";
+import { mappingRequeteDelivrance } from "../../detailRequete/hook/DetailRequeteHook";
 import { CreationRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
 import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
 
 export interface ICreationRequeteDelivranceRDCResultat {
-  idRequete: string;
-  brouillon?: boolean;
-  refus?: boolean;
-}
-
-export interface ICreationRequeteDelivranceRDCResultat {
-  idRequete: string;
-  brouillon?: boolean;
+  requete: IRequeteDelivrance;
+  futurStatut: StatutRequete;
   refus?: boolean;
 }
 
@@ -28,13 +25,13 @@ export function useCreationRequeteDelivranceRDC(
 
       creationRequeteDelivrance({
         requete,
-        refus: requeteRDC.refus,
-        brouillon: requeteRDC.brouillon
+        futurStatut: requeteRDC.futurStatut,
+        refus: requeteRDC.refus
       })
         .then((result: any) => {
           setResultat({
-            idRequete: result.body.data.id,
-            brouillon: requeteRDC.brouillon,
+            requete: mappingRequeteDelivrance(result.body.data),
+            futurStatut: requeteRDC.futurStatut,
             refus: requeteRDC.refus
           });
         })
