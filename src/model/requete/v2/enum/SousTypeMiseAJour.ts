@@ -46,4 +46,8 @@ export class SousTypeMiseAJour extends EnumWithComplete {
   public static getAllNomsAsOptions(): Options {
     return EnumWithComplete.getAllNomsAsOptions(SousTypeMiseAJour);
   }
+
+  public static getAllLibellesCourtAsOptions(): Options {
+    return EnumWithComplete.getAllLibellesCourtAsOptions(SousTypeMiseAJour);
+  }
 }

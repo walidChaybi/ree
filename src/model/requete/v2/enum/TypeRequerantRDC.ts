@@ -13,12 +13,12 @@ export const UN_TITULAIRE = [
 export class TypeRequerantRDC extends EnumWithLibelle {
   public static readonly TITULAIRE1 = new TypeRequerantRDC("Titulaire 1");
   public static readonly TITULAIRE2 = new TypeRequerantRDC("Titulaire 2");
+  public static readonly PARTICULIER = new TypeRequerantRDC(
+    "Particulier (autre que titulaire)"
+  );
   public static readonly MANDATAIRE = new TypeRequerantRDC("Mandataire");
   public static readonly INSTITUTIONNEL = new TypeRequerantRDC(
     "Institutionnel"
-  );
-  public static readonly PARTICULIER = new TypeRequerantRDC(
-    "Particulier (autre que titulaire)"
   );
   public static readonly AUTRE_PROFESSIONNEL = new TypeRequerantRDC(
     "Autre professionnel"

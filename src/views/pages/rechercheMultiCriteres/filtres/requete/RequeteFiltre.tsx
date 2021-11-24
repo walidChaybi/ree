@@ -85,9 +85,13 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
         SousTypeDelivrance.getAllLibellesCourtAsOptions()
       );
     } else if (type === "CREATION") {
-      setSousTypeRequeteOptions(SousTypeCreation.getAllNomsAsOptions());
+      setSousTypeRequeteOptions(
+        SousTypeCreation.getAllLibellesCourtAsOptions()
+      );
     } else if (type === "MISE_A_JOUR") {
-      setSousTypeRequeteOptions(SousTypeMiseAJour.getAllNomsAsOptions());
+      setSousTypeRequeteOptions(
+        SousTypeMiseAJour.getAllLibellesCourtAsOptions()
+      );
     } else if (type === "INFORMATION") {
       setSousTypeRequeteOptions(SousTypeInformation.getAllEnumsAsOptions());
     } else {

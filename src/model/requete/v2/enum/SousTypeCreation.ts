@@ -7,48 +7,47 @@ export class SousTypeCreation extends EnumWithComplete {
   public static readonly RCEDXR = new SousTypeCreation(
     "RCEDXR",
     "Requête de Création Etablissement par déclaration (DX) RIE",
-    "Création Etab DX RIE"
+    "Acte Etab DX RIE"
   );
   public static readonly RCEDXC = new SousTypeCreation(
     "RCEDXC",
     "Requête de Création Etablissement par déclaration (DX) Courrier",
-    "Création Etab DX (c)"
+    "Acte Etab DX (c)"
   );
   public static readonly RCEYC = new SousTypeCreation(
     "RCEYC",
     "Requête de Création Etablissement pour régularisation (Y) Courrier",
-    "Création Etab Y (c)"
+    "Acte Etab Y (c)"
   );
   public static readonly RCEADMC = new SousTypeCreation(
     "RCEADMC",
     "Requête de Création Etablissement suite Acte Dressé en Mer Courrier",
-    "Création Dressé en Mer (c)"
+    "Acte Dressé en Mer (c)"
   );
   public static readonly RCEXR = new SousTypeCreation(
     "RCEXR",
     "Requête de Création Etablissement par décret (X) RIE",
-    "Création Etab X RIE"
+    "Acte Etab X RIE"
   );
-  // public static readonly ETABLISSEMENT = new SousTypeCreation("ETABLISSEMENT");
   public static readonly RCETJC = new SousTypeCreation(
     "RCETJC",
     "Requête de Création Etablissement suite Transciption Judiciaire Courrier",
-    "Création Etab Trans Judic (c)"
+    "Acte Etab Trans Judic (c)"
   );
   public static readonly RCTC = new SousTypeCreation(
     "RCTC",
     "Requête de Création suite Transcription Courrier",
-    "Création Transcrit (c)"
+    "Acte Transcrit (c)"
   );
   public static readonly RCADR = new SousTypeCreation(
     "RCADR",
     "Requête de Création suite Acte Dressé RECE",
-    "Création Dressé RECE"
+    "Acte Dressé RECE"
   );
   public static readonly RCTD = new SousTypeCreation(
     "RCTD",
     "Requête de Création suite Transcription Démat",
-    "Création Transcrit (d)"
+    "Acte Transcrit (d)"
   );
 
   public static getEnumFor(str: string) {
@@ -61,5 +60,9 @@ export class SousTypeCreation extends EnumWithComplete {
 
   public static getAllNomsAsOptions(): Options {
     return EnumWithComplete.getAllNomsAsOptions(SousTypeCreation);
+  }
+
+  public static getAllLibellesCourtAsOptions(): Options {
+    return EnumWithComplete.getAllLibellesCourtAsOptions(SousTypeCreation);
   }
 }
