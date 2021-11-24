@@ -5,14 +5,14 @@ import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { URL_MES_REQUETES_INFORMATION } from "../../../api/appels/requeteApi";
-import { ReponseAppelMesRequetes } from "../../../mock/data/EspaceDelivrance";
+import { ReponseMesRequetesInformation } from "../../../mock/data/EspaceInformation";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetesV2 } from "../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { configRequetesInformation } from "../../../mock/superagent-config/superagent-mock-requetes-information";
 import { getUrlWithParam } from "../../../views/common/util/route/routeUtil";
 import BoutonPrendreEnChargeAleatoirementRequeteInformation from "../../../views/pages/requeteInformation/espaceInformation/BoutonPrendreEnChargeAleatoirementRequeteInformation";
 import { URL_MES_REQUETES_INFORMATION_APERCU_ID } from "../../../views/router/ReceUrls";
 const superagentMock = require("superagent-mock")(request, [
-  configRequetesV2[0],
+  configRequetesInformation[0],
   configEtatcivil[0]
 ]);
 
@@ -37,7 +37,7 @@ test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l
     expect(history.location.pathname).toBe(
       getUrlWithParam(
         URL_MES_REQUETES_INFORMATION_APERCU_ID,
-        ReponseAppelMesRequetes[2].id
+        ReponseMesRequetesInformation[1].id
       )
     );
   });

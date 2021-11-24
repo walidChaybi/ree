@@ -33,7 +33,8 @@ export const configRequetesInformation = [
           data: ReponseMesRequetesInformation,
           headers: {
             "content-range": "0-15/" + ReponseMesRequetesInformation.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=numero&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=numero&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -65,6 +66,22 @@ export const configRequetesInformation = [
         "/requetes/information/statut/0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62?statut=PRISE_EN_CHARGE"
       ) {
         return { data: "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62" };
+      }
+
+      // Prise en charge aléatoire
+      if (match[1] === "/requetes/requetealeatoire?type=INFORMATION") {
+        return {
+          data: ReponseMesRequetesInformation[1]
+        };
+      }
+
+      // Création d'une action et maj statut de la requête
+      if (
+        match[1] ===
+          "/requetes/action?idRequete=0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
       }
     },
 

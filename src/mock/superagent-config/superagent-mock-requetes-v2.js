@@ -56,7 +56,8 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -69,7 +70,8 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -82,7 +84,8 @@ export const configRequetesV2 = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-15/" + ReponseAppelMesRequetes.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -96,7 +99,8 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -109,7 +113,8 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -122,7 +127,8 @@ export const configRequetesV2 = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-15/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -170,7 +176,8 @@ export const configRequetesV2 = [
           return {
             headers: {
               "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
-              link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
+              link:
+                '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCRequete.data
           };
@@ -320,7 +327,8 @@ export const configRequetesV2 = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
         };
@@ -400,7 +408,9 @@ export const configRequetesV2 = [
           match[1] ===
             `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE` ||
           match[1] ===
-            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT`) &&
+            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT` ||
+          match[1] ===
+            "/requetes/action?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE") &&
         context.method === "post"
       ) {
         return { data: "123456789" };
