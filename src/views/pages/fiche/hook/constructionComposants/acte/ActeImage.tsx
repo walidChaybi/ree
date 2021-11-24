@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { LinearProgress } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import {
   getImagesActe,
   getTexteActe
@@ -27,16 +27,20 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
       }
       imagesActe
         .then((pdf: any) => {
-          const documentObjectURL = URL.createObjectURL(
-            new Blob([pdf.body], { type: "application/pdf" })
-          );
-          setUrl(documentObjectURL);
+          if (pdf.body.size === 0) {
+            setError("La visualisation de l'acte n'est pas disponible");
+          } else {
+            const documentObjectURL = URL.createObjectURL(
+              new Blob([pdf.body], { type: "application/pdf" })
+            );
+            setUrl(documentObjectURL);
+          }
         })
         .catch((err: any) => {
           logError({
             error: err
           });
-          setError(err);
+          setError("Une erreur s'est produite");
         });
     }
   }, [id, isImage]);
@@ -58,7 +62,7 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
       {url ? (
         <iframe title="Visionneuse PDF" src={url}></iframe>
       ) : error ? (
-        <span>Une erreur s'est produite</span>
+        <span>{error}</span>
       ) : (
         <LinearProgress className="ProgressBar" />
       )}
