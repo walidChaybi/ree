@@ -3,6 +3,7 @@
 import { getFormatDateFromTimestamp } from "../../../views/common/util/DateUtils";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
+import { IAction } from "./IActions";
 import { IObservation } from "./IObservation";
 import { IRequerant } from "./IRequerant";
 import { IRequeteCreation } from "./IRequeteCreation";
@@ -30,6 +31,7 @@ export interface IRequete {
   idUtilisateur: string;
   idEntite: string;
   observations?: IObservation[];
+  actions?: IAction[];
 }
 
 export const Requete = {

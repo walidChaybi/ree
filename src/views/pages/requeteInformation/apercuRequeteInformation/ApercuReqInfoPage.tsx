@@ -5,6 +5,8 @@ import { IUuidRequeteParams } from "../../../../model/requete/v2/IUuidRequetePar
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { getLibelle } from "../../../common/widget/Text";
 import { BandeauRequete } from "../../apercuRequete/contenu/BandeauRequete";
+import { SuiviActionsRequete } from "../../apercuRequete/contenu/SuiviActionsRequete";
+import { SuiviObservationsRequete } from "../../apercuRequete/contenu/SuiviObservationRequete";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
 import { ReponseReqInfo } from "./contenu/ReponseReqInfo";
@@ -35,6 +37,14 @@ export const ApercuReqInfoPage: React.FC = () => {
           <div className="contenuRequeteInfo">
             <div className="side left">
               <ResumeReqInfo requete={requete} />
+              {requete.observations && requete.observations.length > 0 && (
+                <SuiviObservationsRequete
+                  observations={requete.observations}
+                ></SuiviObservationsRequete>
+              )}
+              <SuiviActionsRequete
+                actions={requete.actions}
+              ></SuiviActionsRequete>
             </div>
             <div className="side right">
               <RMCAuto requete={detailRequeteState} />

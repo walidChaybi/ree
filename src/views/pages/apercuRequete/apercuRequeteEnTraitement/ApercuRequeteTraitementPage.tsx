@@ -58,7 +58,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
               <SuiviActionsRequete
                 actions={requete?.actions}
               ></SuiviActionsRequete>
-              <SuiviObservationsRequete observations={requete?.observations} />
+              <SuiviObservationsRequete observations={requete.observations} />
               <DocumentsReponses
                 documents={requete.documentsReponses}
                 setDocumentAffiche={setDocumentAffiche}

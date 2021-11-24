@@ -47,7 +47,7 @@ export const ApercuCourrier: React.FC = () => {
                 actions={requete.actions}
               ></SuiviActionsRequete>
               <SuiviObservationsRequete
-                observations={requete?.observations}
+                observations={requete.observations}
               ></SuiviObservationsRequete>
               <DocumentsReponses documents={requete.documentsReponses} />
             </div>

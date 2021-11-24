@@ -91,7 +91,7 @@ export const ApercuRequetePriseEnChargePartieGauche: React.FC<ApercuRequetePrise
         />
       )}
       <SuiviObservationsRequete
-        observations={props.detailRequete?.observations}
+        observations={props.detailRequete.observations}
       />
       <SuiviActionsRequete actions={props.detailRequete?.actions} />
       <DocumentsReponses

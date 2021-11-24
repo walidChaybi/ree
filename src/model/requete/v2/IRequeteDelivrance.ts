@@ -2,7 +2,6 @@ import { ChoixDelivrance } from "./enum/ChoixDelivrance";
 import { DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { MotifDelivrance } from "./enum/MotifDelivrance";
 import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
-import { IAction } from "./IActions";
 import { DocumentReponse, IDocumentReponse } from "./IDocumentReponse";
 import { IEvenementReqDelivrance } from "./IEvenementReqDelivrance";
 import { IMandant } from "./IMandant";
@@ -21,7 +20,6 @@ export interface IRequeteDelivrance extends IRequete {
   documentsReponses: IDocumentReponse[];
   choixDelivrance?: ChoixDelivrance;
   piecesJustificatives: IPieceJustificativeV2[];
-  actions?: IAction[];
   idSagaDila?: number;
   mandant?: IMandant;
 }

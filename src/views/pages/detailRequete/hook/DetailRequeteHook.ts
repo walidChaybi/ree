@@ -203,6 +203,7 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
       ? getObservations(data.observations)
       : undefined,
     canal: TypeCanal.getEnumFor(data.canal),
+    actions: getActions(data?.actions),
 
     //Partie Requête Delivrance
     sousType: SousTypeInformation.getEnumFor(data.sousType),
