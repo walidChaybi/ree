@@ -19,9 +19,8 @@ interface IDataLienFicheProps {
 
 export const LienFiche: React.FC<IDataLienFicheProps> = props => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(false);
-  const [fenetreExterneUtil, setFenetreExterneUtil] = useState<
-    FenetreExterneUtil
-  >();
+  const [fenetreExterneUtil, setFenetreExterneUtil] =
+    useState<FenetreExterneUtil>();
 
   const onClick = () => {
     toggleFenetre();

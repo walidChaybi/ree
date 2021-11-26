@@ -98,7 +98,7 @@ export function getPanelsPacs(pacs: IFichePacs): IAccordionReceSection {
     panels: [
       {
         panelAreas,
-        title: "Vue du PACS"
+        title: "Visualisation du PACS"
       },
       ...fichesPersonne
     ]

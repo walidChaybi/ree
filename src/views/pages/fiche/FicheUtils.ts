@@ -3,7 +3,7 @@ import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { IAlerte } from "../../../model/etatcivil/fiche/IAlerte";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import { mapAlertesActe } from "../../common/hook/v2/alertes/MappingAlertesActe";
-import { formatNom, jointAvec } from "../../common/util/Utils";
+import { jointAvec } from "../../common/util/Utils";
 import { SectionPanelProps } from "../../common/widget/section/SectionPanel";
 import { setDataBandeau } from "./contenu/BandeauFicheUtils";
 import { SimplePersonne } from "./contenu/fournisseurDonneesBandeau/IFournisseurDonneesBandeau";
@@ -23,7 +23,7 @@ export function getFicheTitle(
   personnes: SimplePersonne[]
 ) {
   const noms = jointAvec(
-    personnes.map(p => `${formatNom(p.nom)}`),
+    personnes.map(p => `${p.nom} ${p.prenom}`),
     " et "
   );
   return `${categorie.toLocaleUpperCase()} - ${noms} - N° ${annee} - ${numero}`;

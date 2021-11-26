@@ -59,13 +59,13 @@ test("Decision utils get decision : decision de type Juridiction, ", async () =>
   expect(idxNationalite).toBeLessThan(idxSexe);
 
   const idxLieuDeces = parts[0].partContent?.contents.findIndex(
-    (content: any) => content.libelle === "Lieu décès (si connu)"
+    (content: any) => content.libelle === "Lieu décès"
   );
   expect(idxLieuDeces).toBeGreaterThan(-1);
   expect(idxSexe).toBeLessThan(idxLieuDeces);
 
   const idxDateDeces = parts[0].partContent?.contents.findIndex(
-    (content: any) => content.libelle === "Date décès (si connu)"
+    (content: any) => content.libelle === "Date décès"
   );
   expect(idxDateDeces).toBeGreaterThan(-1);
   expect(idxLieuDeces).toBeLessThan(idxDateDeces);

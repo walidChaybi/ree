@@ -5,5 +5,5 @@ test("ficheUtils rca works", async () => {
   const panels = getPanelsRca({ ...mockRCA.data, personnes: [] });
   expect(panels.panels).toHaveLength(1);
   expect(panels.panels[0].panelAreas).toHaveLength(5);
-  expect(panels.panels[0].title).toBe("Vue du RCA");
+  expect(panels.panels[0].title).toBe("Visualisation du RCA");
 });

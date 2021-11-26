@@ -8,9 +8,9 @@ import {
 } from "../../../../../../model/etatcivil/commun/IPersonne";
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import {
-  enMajuscule,
   formatDe,
-  premiereLettreEnMajusculeLeResteEnMinuscule
+  remplaceSNP,
+  remplaceSPC
 } from "../../../../../common/util/Utils";
 import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
@@ -167,7 +167,7 @@ function getLieuNaissance(lieuNaissance: string): SectionContentProps {
 
 function getLieuDeces(lieuDeces: string): SectionContentProps {
   return {
-    libelle: getLibelle("Lieu décès (si connu)"),
+    libelle: getLibelle("Lieu décès"),
     value: lieuDeces
   };
 }
@@ -181,7 +181,7 @@ function getDateNaissance(dateNaissance: string): SectionContentProps {
 
 function getDateDeces(dateDeces: string): SectionContentProps {
   return {
-    libelle: getLibelle("Date décès (si connu)"),
+    libelle: getLibelle("Date décès"),
     value: dateDeces
   };
 }
@@ -210,11 +210,11 @@ function getParentsPersonne(parents: IFamille[]): SectionContentProps[] {
       result = result.concat([
         {
           libelle: getLibelle(`Nom parent ${index + 1}`),
-          value: enMajuscule(parent.nom)
+          value: parent.nom
         },
         {
           libelle: getLibelle(`Prénom parent ${index + 1}`),
-          value: premiereLettreEnMajusculeLeResteEnMinuscule(parent.prenoms[0])
+          value: remplaceSPC(parent.prenoms[0])
         }
       ]);
     } else if (
@@ -224,9 +224,7 @@ function getParentsPersonne(parents: IFamille[]): SectionContentProps[] {
       result = result.concat([
         {
           libelle: getLibelle(`Prénom et nom (parent adoptif ${index - 1})`),
-          value: `${premiereLettreEnMajusculeLeResteEnMinuscule(
-            parent.prenoms[0]
-          )} ${enMajuscule(parent.nom)}`
+          value: `${remplaceSPC(parent.prenoms[0])} ${remplaceSNP(parent.nom)}`
         }
       ]);
     }
@@ -237,14 +235,13 @@ function getParentsPersonne(parents: IFamille[]): SectionContentProps[] {
 function getEnfantsPersonne(enfants: IFamille[]): SectionContentProps {
   const enfantsHtml = enfants?.map(enfant => {
     return (
-      <p key={`enfant-${enfant.nom}-${enfant.prenoms}`}>{`${enMajuscule(
+      <p key={`enfant-${enfant.nom}-${enfant.prenoms}`}>{`${remplaceSNP(
         enfant.nom
-      )} ${premiereLettreEnMajusculeLeResteEnMinuscule(enfant.prenoms[0])}`}</p>
+      )} ${remplaceSPC(enfant.prenoms[0])}`}</p>
     );
   });
 
   return {
-    libelle: getLibelle("Liste enfants"),
     value: enfantsHtml,
     className: "contentDownside"
   };
@@ -269,15 +266,18 @@ function getActesPersonne(actes: IFicheLienActes[]): SectionContentProps {
 }
 
 function getRcsPersonne(rcs: IFicheLien[]): SectionContentProps {
-  const liensRcs = rcs?.map(rc => (
-    <div key={`rc-${rc.numero}`}>
-      <LienFiche
-        categorie={TypeFiche.RC}
-        numero={`Inscription RC N°${rc.numero}`}
-        identifiant={rc.id}
-      />
-    </div>
-  ));
+  const liensRcs = rcs?.map(rc => {
+    const statut = ` (${rc.statut?.toLowerCase()})`;
+    return (
+      <div key={`rc-${rc.numero}`}>
+        <LienFiche
+          categorie={TypeFiche.RC}
+          numero={`Inscription RC N°${rc.numero}${rc.statut ? statut : ""}`}
+          identifiant={rc.id}
+        />
+      </div>
+    );
+  });
   return {
     libelle: "",
     value: liensRcs
@@ -285,15 +285,18 @@ function getRcsPersonne(rcs: IFicheLien[]): SectionContentProps {
 }
 
 function getRcasPersonne(rcas: IFicheLien[]): SectionContentProps {
-  const liensRcas = rcas?.map(rca => (
-    <div key={`rca-${rca.numero}`}>
-      <LienFiche
-        categorie={TypeFiche.RCA}
-        numero={`Inscription RCA N°${rca.numero}`}
-        identifiant={rca.id}
-      />
-    </div>
-  ));
+  const liensRcas = rcas?.map(rca => {
+    const statut = ` (${rca.statut?.toLowerCase()})`;
+    return (
+      <div key={`rca-${rca.numero}`}>
+        <LienFiche
+          categorie={TypeFiche.RCA}
+          numero={`Inscription RCA N°${rca.numero}${rca.statut ? statut : ""}`}
+          identifiant={rca.id}
+        />
+      </div>
+    );
+  });
   return {
     libelle: "",
     value: liensRcas
@@ -301,15 +304,20 @@ function getRcasPersonne(rcas: IFicheLien[]): SectionContentProps {
 }
 
 function getPacssPersonne(pacss: IFicheLien[]): SectionContentProps {
-  const liensPacss = pacss?.map(pacs => (
-    <div key={`pacs-${pacs.numero}`}>
-      <LienFiche
-        categorie={TypeFiche.PACS}
-        numero={`Inscription PACS N°${pacs.numero}`}
-        identifiant={pacs.id}
-      />
-    </div>
-  ));
+  const liensPacss = pacss?.map(pacs => {
+    const statut = ` (${pacs.statut?.toLowerCase()})`;
+    return (
+      <div key={`pacs-${pacs.numero}`}>
+        <LienFiche
+          categorie={TypeFiche.PACS}
+          numero={`Inscription PACS N°${pacs.numero}${
+            pacs.statut ? statut : ""
+          }`}
+          identifiant={pacs.id}
+        />
+      </div>
+    );
+  });
   return {
     libelle: "",
     value: liensPacss

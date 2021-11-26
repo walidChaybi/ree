@@ -31,7 +31,7 @@ export function getPanelsRc(rc: IFicheRcRca): IAccordionReceSection {
             title: getLibelle("Historique des statuts de la fiche")
           }
         ],
-        title: getLibelle("Vue du RC")
+        title: getLibelle("Visualisation du RC")
       },
       ...fichesPersonne
     ]

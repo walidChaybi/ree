@@ -4,7 +4,11 @@ import {
   ITitulaireActe,
   TitulaireActe
 } from "../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
+import {
+  remplaceSNP,
+  remplaceSPC,
+  triListeObjetsSurPropriete
+} from "../../../../../common/util/Utils";
 import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
@@ -30,11 +34,11 @@ function getTitulairesInfo(
   return [
     {
       libelle: `Nom Titulaire ${index}`,
-      value: <span>{TitulaireActe.getNom(titulaire)}</span>
+      value: <span>{remplaceSNP(TitulaireActe.getNom(titulaire))}</span>
     },
     {
       libelle: `Prénom 1`,
-      value: <span>{TitulaireActe.getPrenom1(titulaire)}</span>
+      value: <span>{remplaceSPC(TitulaireActe.getPrenom1(titulaire))}</span>
     },
     {
       libelle: `Prénom 2`,

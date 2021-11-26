@@ -36,7 +36,7 @@ test("renders Lien fiche fonctionne correctement", async () => {
     const numeroRc = screen.getByText("RC N° 2018 - 56533");
     expect(numeroRc).toBeDefined();
 
-    const vueRc = screen.getByText("Vue du RC");
+    const vueRc = screen.getByText("Visualisation du RC");
     expect(vueRc).toBeDefined();
   });
 

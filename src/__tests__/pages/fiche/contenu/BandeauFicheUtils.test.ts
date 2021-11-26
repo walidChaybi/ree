@@ -15,7 +15,9 @@ test("bandeauFicheUtils setDataBandeau works RC / RCA", async () => {
 
   const bandeauFiche = setDataBandeau(dataFiche, data);
 
-  expect(bandeauFiche.titreFenetre).toBe("RC - NOM1 et NOM2 - N° 2018 - 56533");
+  expect(bandeauFiche.titreFenetre).toBe(
+    "RC - NOM1 Prenom11 et NOM2 Prenom21 - N° 2018 - 56533"
+  );
   expect(bandeauFiche.statutsFiche).toEqual([
     { statut: "Actif" },
     { statut: "Inactif" }
@@ -38,7 +40,7 @@ test("bandeauFicheUtils setDataBandeau works PACS", async () => {
   const bandeauFiche = setDataBandeau(dataFiche, data);
 
   expect(bandeauFiche.titreFenetre).toBe(
-    "PACS - NOM1 et NOM2 - N° 2019 - 29369"
+    "PACS - NOM1 Prenom11 et NOM2 Prenom21 - N° 2019 - 29369"
   );
   expect(bandeauFiche.statutsFiche).toEqual([
     { statut: "Actif" },
@@ -59,7 +61,7 @@ test("bandeauFicheUtils setDataBandeau works Acte", async () => {
   const bandeauFiche = setDataBandeau(dataFiche, data);
 
   expect(bandeauFiche.titreFenetre).toBe(
-    "ABSENCE - GREENWALD et DUPE - N° 1921 - 410"
+    "ABSENCE - GREENWALD Paulita et DUPE Laurent - N° 1921 - 410"
   );
   expect(bandeauFiche.personnes[0].prenom).toBe("Paulita");
   expect(bandeauFiche.registre).toBe("CSL.DX.1922.NA.T.410.681");

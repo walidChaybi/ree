@@ -61,16 +61,10 @@ test("Ouverture d'un acte", async () => {
     fireEvent.click(ligne);
   });
 
-  const titreBandeau = "ACTE D'ABSENCE N° 1921 - 410";
+  const titreBandeau = "CSL.DX.1922.NA.T.410.681";
   const titreAccordeaon = "Résumé de l'acte";
 
-  await waitFor(() => {
-    const numero = screen.getByText(titreBandeau);
-    expect(numero).toBeDefined();
-
-    const vue = screen.getByText(titreAccordeaon);
-    expect(vue).toBeDefined();
-  });
+  await verifieFiche(titreBandeau);
 
   act(() => {
     const event = new CustomEvent("beforeunload");
@@ -103,7 +97,7 @@ test("Ouverture d'un acte et navigation via bouton Suivant", async () => {
     fireEvent.click(ligne);
   });
 
-  const titreBandeau = "ACTE D'ABSENCE N° 1921 - 411";
+  const titreBandeau = "CSL.DX.NA.T.411.681";
 
   await verifieFiche(titreBandeau);
 
@@ -113,7 +107,7 @@ test("Ouverture d'un acte et navigation via bouton Suivant", async () => {
     fireEvent.click(suivant);
   });
 
-  const titreBandeau2 = "ACTE D'ABSENCE N° 1922 - 412";
+  const titreBandeau2 = "CSL.DX.NA.T.412.681";
 
   await verifieFiche(titreBandeau2);
 });
@@ -135,7 +129,7 @@ test("Ouverture d'un acte et navigation via bouton Précédent", async () => {
     fireEvent.click(ligne);
   });
 
-  const titreBandeau = "ACTE D'ABSENCE N° 1922 - 414";
+  const titreBandeau = "CSL.DX.NA.T.414.681";
 
   await verifieFiche(titreBandeau);
 
@@ -145,15 +139,14 @@ test("Ouverture d'un acte et navigation via bouton Précédent", async () => {
     fireEvent.click(precedent);
   });
 
-  const titreBandeau2 = "ACTE D'ABSENCE N° 1921 - 413";
+  const titreBandeau2 = "CSL.DX.NA.T.413.681";
 
   await verifieFiche(titreBandeau2);
 });
 
 async function verifieFiche(titreBandeau: string) {
   await waitFor(() => {
-    const numero = screen.getByText(titreBandeau);
-    expect(numero).toBeDefined();
+    expect(screen.getByTestId("titreBandeau").innerHTML).toBe(titreBandeau);
 
     const vue = screen.getByText("Résumé de l'acte");
     expect(vue).toBeDefined();

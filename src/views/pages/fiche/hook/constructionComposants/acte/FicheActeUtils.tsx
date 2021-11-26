@@ -42,7 +42,7 @@ export function getPanelsActe(acte: IFicheActe): IAccordionReceSection {
       },
       {
         panelAreas: getPanelAreasActeImage(acte, paramsAffichage),
-        title: "Vue de l'acte"
+        title: "Visualisation de l'acte"
       },
       ...fichesPersonne
     ],

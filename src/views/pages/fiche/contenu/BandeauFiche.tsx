@@ -1,9 +1,8 @@
-import React from "react";
-import "./scss/Bandeau.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
-import { jointAvec } from "../../../common/util/Utils";
+import "./scss/Bandeau.scss";
 
 export interface BandeauFicheProps {
   dataBandeau: IBandeauFiche;
@@ -12,14 +11,6 @@ export interface BandeauFicheProps {
 
 export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
   const data = props.dataBandeau;
-
-  function getPrenomNom() {
-    const nomsPrenoms = data.personnes.map(
-      personne => `${personne.prenom} ${personne.nom}`
-    );
-
-    return jointAvec(nomsPrenoms, " et ");
-  }
 
   function getAlertes() {
     const alertes = data.alertes;
@@ -36,12 +27,8 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
     <>
       {data && (
         <div className="Bandeau">
-          {data.registre != null && (
-            <div className="InfoImportante">{`Registre : ${data.registre}`}</div>
-          )}
           {props.elementNumeroLigne}
           <div className="LignePrenomNom">
-            <div className="InfoImportante">{getPrenomNom()}</div>
             <div className="alertes">
               {data.alertes != null && data.alertes?.length >= 1 && (
                 <div title={getAlertes()}>

@@ -1,11 +1,11 @@
-import React from "react";
 import { render } from "@testing-library/react";
-import { BandeauFiche } from "../../../../views/pages/fiche/contenu/BandeauFiche";
-import DATA_FICHE from "../data/ficheRC";
-import { bandeauActe } from "../data/ficheActe";
-import { BandeauFicheRcRcaPacsNumero } from "../../../../views/pages/fiche/contenu/BandeauFicheRcRcaPacsNumero";
+import React from "react";
 import { IBandeauFiche } from "../../../../model/etatcivil/fiche/IBandeauFiche";
+import { BandeauFiche } from "../../../../views/pages/fiche/contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "../../../../views/pages/fiche/contenu/BandeauFicheActeNumero";
+import { BandeauFicheRcRcaPacsNumero } from "../../../../views/pages/fiche/contenu/BandeauFicheRcRcaPacsNumero";
+import { bandeauActe } from "../data/ficheActe";
+import DATA_FICHE from "../data/ficheRC";
 
 test("renders du bandeau d'une fiche RC", () => {
   function getElementNumeroLigne() {
@@ -42,5 +42,5 @@ test("renders du bandeau d'une fiche Acte", () => {
     ></BandeauFiche>
   );
 
-  expect(component.getByText("Registre : ACQ.DX.2020.123456..01133"));
+  expect(component.getByText("CSL.DX.NA.T.414.681"));
 });

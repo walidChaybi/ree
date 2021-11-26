@@ -5,6 +5,7 @@ import {
   getTexteActe
 } from "../../../../../../api/appels/etatcivilApi";
 import { logError } from "../../../../../common/util/LogManager";
+import { getLibelle } from "../../../../../common/widget/Text";
 import "./scss/ActeImage.scss";
 
 export interface ActeImageProps {
@@ -28,7 +29,9 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
       imagesActe
         .then((pdf: any) => {
           if (pdf.body.size === 0) {
-            setError("La visualisation de l'acte n'est pas disponible");
+            setError(
+              getLibelle("La visualisation de l'acte n'est pas disponible")
+            );
           } else {
             const documentObjectURL = URL.createObjectURL(
               new Blob([pdf.body], { type: "application/pdf" })
@@ -40,7 +43,7 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
           logError({
             error: err
           });
-          setError("Une erreur s'est produite");
+          setError(getLibelle("Une erreur s'est produite"));
         });
     }
   }, [id, isImage]);

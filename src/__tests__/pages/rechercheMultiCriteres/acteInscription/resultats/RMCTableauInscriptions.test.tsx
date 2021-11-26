@@ -86,7 +86,7 @@ test("Ouverture d'une inscription", async () => {
   });
 
   const titreBandeau = "PACS N° 2018 - 123456";
-  const titreAccordeaon = "Vue du PACS";
+  const titreAccordeaon = "Visualisation du PACS";
 
   await waitFor(() => {
     const numero = screen.getByText(titreBandeau);

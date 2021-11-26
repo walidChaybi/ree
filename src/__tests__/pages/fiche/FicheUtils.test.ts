@@ -7,15 +7,15 @@ import { getFicheTitle, setFiche } from "../../../views/pages/fiche/FicheUtils";
 
 test("ficheUtils getFicheTitle works", async () => {
   const title = getFicheTitle("categorie", "2020", "numero", [
-    { nom: "nom1", prenom: " " },
-    { nom: "nom2", prenom: " " }
+    { nom: "nom1", prenom: "" },
+    { nom: "nom2", prenom: "" }
   ]);
-  expect(title).toBe("CATEGORIE - NOM1 et NOM2 - N° 2020 - numero");
+  expect(title).toBe("CATEGORIE - nom1 et nom2 - N° 2020 - numero");
 
   const title2 = getFicheTitle("categorie", "2020", "numero", [
-    { nom: "nom1", prenom: undefined! }
+    { nom: "nom1", prenom: "prenom" }
   ]);
-  expect(title2).toBe("CATEGORIE - NOM1 - N° 2020 - numero");
+  expect(title2).toBe("CATEGORIE - nom1 prenom - N° 2020 - numero");
 });
 
 test("ficheUtils setFiche PACS works", () => {
@@ -27,7 +27,7 @@ test("ficheUtils setFiche PACS works", () => {
   const fiche = setFiche(dataFiche, pacsModificationNotaireMap);
 
   expect(fiche.bandeauFiche.titreFenetre).toBe(
-    "PACS - DUREL et DUPE - N° 2018 - 123456"
+    "PACS - DUREL Marie Charlotte et DUPE Louis-Philippe - N° 2018 - 123456"
   );
   expect(fiche.bandeauFiche.statutsFiche).toStrictEqual([
     {
@@ -59,7 +59,7 @@ test("ficheUtils setFiche RCA works", () => {
     alertes: [{ alerte: "ouhou", dateCreation: 1 }],
     interesses: [],
     statutsFiche: [],
-    nature: ("hi" as unknown) as NatureRca,
+    nature: "hi" as unknown as NatureRca,
     mandataires: [],
     inscriptionsImpactees: [],
     inscriptionsLiees: [],

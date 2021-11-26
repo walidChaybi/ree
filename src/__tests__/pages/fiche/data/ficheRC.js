@@ -21,6 +21,7 @@ export default {
     dateDerniereDelivrance: "22/10/2014",
     titreFenetre: "",
     identifiant: "123",
-    statutsFiche: []
+    statutsFiche: [],
+    registre: "CSL.DX.NA.T.414.681"
   }
 };
