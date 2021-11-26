@@ -21,6 +21,7 @@ export interface IDocumentReponse {
   idPacs?: string;
   avecCtv?: boolean;
   nbExemplaireImpression?: number;
+  conteneurSwift: string;
 }
 
 export const DocumentReponse = {
@@ -30,9 +31,17 @@ export const DocumentReponse = {
     return documentsReponse.filter(d =>
       DocumentDelivrance.estDocumentDelivrance(d.typeDocument)
     );
-  }
-};
+  },
 
-export const estExtraitCopie = (document: IDocumentReponse) => {
-  return DocumentDelivrance.estExtraitCopie(document.nom);
+  estExtraitCopie(document: IDocumentReponse) {
+    return DocumentDelivrance.estExtraitCopie(document.nom);
+  },
+
+  triDocumentsDelivrance(documents: IDocumentReponse[]): IDocumentReponse[] {
+    return documents.sort(
+      (doc1, doc2) =>
+        DocumentDelivrance.getNumeroOrdre(doc1.typeDocument) -
+        DocumentDelivrance.getNumeroOrdre(doc2.typeDocument)
+    );
+  }
 };

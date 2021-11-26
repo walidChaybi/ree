@@ -15,7 +15,6 @@ import {
   joint,
   jointAvec,
   jointPrenoms,
-  normaliserNomOec,
   numberToString,
   premiereLettreEnMajusculeLeResteEnMinuscule,
   supprimeElement,
@@ -24,29 +23,6 @@ import {
   triListeObjetsSurPropriete,
   valeurOuUndefined
 } from "../../../views/common/util/Utils";
-
-test("Utils normaliserNomOec ", async () => {
-  const normalize = normaliserNomOec("NFD");
-  expect(normalize).toBe("nfd");
-
-  const charNotAuthorized = normaliserNomOec("\u0300o ͯo");
-  expect(charNotAuthorized).toBe("o o");
-
-  const spaces = normaliserNomOec("a  a");
-  expect(spaces).toBe("a a");
-
-  const tiret = normaliserNomOec("a - a");
-  expect(tiret).toBe("a-a");
-
-  const apostrophe = normaliserNomOec("a 'a' ");
-  expect(apostrophe).toBe("a'a'");
-
-  const caractereColles = normaliserNomOec("æÆœŒ");
-  expect(caractereColles).toBe("aeaeoeoe");
-
-  const lowercase = normaliserNomOec(" AGHÉÀ ");
-  expect(lowercase).toBe("aghea");
-});
 
 test("Attendu: premiereLettreEnMajusculeLeResteEnMinuscule fonctionne correctement", () => {
   expect(premiereLettreEnMajusculeLeResteEnMinuscule("NAISSANCE")).toBe(

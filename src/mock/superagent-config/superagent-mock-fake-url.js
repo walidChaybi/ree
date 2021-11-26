@@ -32,7 +32,7 @@ export const configFakeUrl = [
         msg: "url api fake requete v1 non mockée",
         url: match[1]
       };
-      console.log("Erreur mock api: ", error);
+      console.log("Erreur mock api (fake url): ", error);
       return {
         data: error
       };

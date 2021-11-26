@@ -12,7 +12,7 @@ import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { storeRece } from "../../../../views/common/util/storeRece";
-import { BoutonSignerValider } from "../../../../views/pages/apercuRequete/contenu/BoutonSignerValider";
+import { BoutonValiderTerminer } from "../../../../views/pages/apercuRequete/contenu/BoutonValiderTerminer";
 import { URL_MES_REQUETES_APERCU_REQUETE } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
@@ -54,7 +54,9 @@ test("est à A_VALIDER et provient de COURRIER", async () => {
 
   const { getByText } = render(
     <Router history={history}>
-      <BoutonSignerValider requete={requeteTestCOURRIER}></BoutonSignerValider>
+      <BoutonValiderTerminer
+        requete={requeteTestCOURRIER}
+      ></BoutonValiderTerminer>
     </Router>
   );
 

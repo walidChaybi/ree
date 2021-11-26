@@ -4,7 +4,6 @@ import {
   getDocument,
   getRequete,
   getRequetes,
-  patchDocumentsDelivresRequetes,
   patchStatutRequete,
   patchUtilisateurAssigneRequete,
   TypeAppelRequete
@@ -73,14 +72,6 @@ test("requeteapi api patchStatutRequete", () => {
       expect(result).toBeDefined();
     }
   );
-});
-
-test("requeteapi api patchDocumentsDelivresRequetes", () => {
-  patchDocumentsDelivresRequetes([
-    { contenu: "", nom: "", conteneurSwift: "" }
-  ]).then((result: any) => {
-    expect(result).toBeDefined();
-  });
 });
 
 test("requeteapi api patchUtilisateurAssigneRequete", () => {

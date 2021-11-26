@@ -7,14 +7,20 @@ import {
 import React from "react";
 import request from "superagent";
 import { configParamsBaseRequete } from "../../../../mock/superagent-config/superagent-mock-params";
-import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { PopinSignature } from "../../../../views/common/widget/signature/PopinSignature";
 
 const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
+  configRequetesV2[0],
   configParamsBaseRequete[0]
 ]);
+
+beforeAll(() => {
+  DocumentDelivrance.init();
+});
 
 test("renders PopinSignature, signature event is received and success displayed", async () => {
   const { getByText } = render(
@@ -24,15 +30,16 @@ test("renders PopinSignature, signature event is received and success displayed"
           documentsToSign: [
             {
               infos: [],
-              idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130004",
+              id: "f9279c00-5d2b-11ea-bc55-0242ac130004",
               mimeType: "application/pdf",
               nomDocument: "Naissance copie",
               conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
               idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-              numeroRequete: 1
+              numeroRequete: "1"
             }
           ],
-          documentsToSave: []
+          documentsToSave: [],
+          sousTypeRequete: SousTypeDelivrance.RDD
         }
       }}
       open={true}
@@ -44,6 +51,7 @@ test("renders PopinSignature, signature event is received and success displayed"
 
   fireEvent(
     window,
+    // @ts-ignore
     createEvent(
       "signWebextResponse",
       window,
@@ -73,15 +81,16 @@ test("renders PopinSignature, signature event is received and error displayed", 
           documentsToSign: [
             {
               infos: [],
-              idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130004",
+              id: "f9279c00-5d2b-11ea-bc55-0242ac130004",
               mimeType: "application/pdf",
               nomDocument: "Naissance copie",
               conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
               idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-              numeroRequete: 1
+              numeroRequete: "1"
             }
           ],
-          documentsToSave: []
+          documentsToSave: [],
+          sousTypeRequete: SousTypeDelivrance.RDD
         }
       }}
       open={true}
@@ -93,6 +102,7 @@ test("renders PopinSignature, signature event is received and error displayed", 
 
   fireEvent(
     window,
+    // @ts-ignore
     createEvent(
       "signWebextResponse",
       window,
@@ -126,15 +136,16 @@ test("renders PopinSignature, code erroné", async () => {
           documentsToSign: [
             {
               infos: [],
-              idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130004",
+              id: "f9279c00-5d2b-11ea-bc55-0242ac130004",
               mimeType: "application/pdf",
               nomDocument: "Naissance copie",
               conteneurSwift: "b9bc2637eb612d9e0cd5d7bfb1a94207",
               idRequete: "104b8563-c7f8-4748-9daa-f26558985894",
-              numeroRequete: 1
+              numeroRequete: "1"
             }
           ],
-          documentsToSave: []
+          documentsToSave: [],
+          sousTypeRequete: SousTypeDelivrance.RDD
         }
       }}
       open={true}
@@ -146,6 +157,7 @@ test("renders PopinSignature, code erroné", async () => {
 
   fireEvent(
     window,
+    // @ts-ignore
     createEvent(
       "signWebextResponse",
       window,

@@ -13,11 +13,11 @@ import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOpe
 import { getLibelle } from "../../../common/widget/Text";
 import { receUrl } from "../../../router/ReceUrls";
 import "./scss/BoutonPrendreEnCharge.scss";
-interface BoutonSignerValiderProps {
+interface BoutonValiderTerminerProps {
   requete: IRequeteDelivrance;
 }
 
-export const BoutonSignerValider: React.FC<BoutonSignerValiderProps> = props => {
+export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = props => {
   const requeteDelivrance = props.requete;
   const history = useHistory();
   const [estDisabled, setEstDisabled] = useState(true);
@@ -75,7 +75,6 @@ export const BoutonSignerValider: React.FC<BoutonSignerValiderProps> = props => 
     <>
       <BoutonOperationEnCours
         onClick={setActionEtUpdateStatut}
-        class="BoutonPriseEnCharge"
         estDesactive={estDisabled}
       >
         {getLibelle("Valider et terminer")}

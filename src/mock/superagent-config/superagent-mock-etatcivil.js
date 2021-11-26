@@ -367,7 +367,7 @@ export const configEtatcivil = [
       }
 
       const error = { msg: "url api etat civil non mockée", url: match[1] };
-      console.log("Erreur mock api: ", error);
+      console.log("Erreur mock api etat civil: ", error);
       return {
         data: error
       };

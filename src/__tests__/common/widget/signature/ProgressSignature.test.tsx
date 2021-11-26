@@ -16,7 +16,7 @@ test("renders progresse bar", () => {
           documentsToSign: [
             {
               infos: [],
-              idDocumentDelivre: "",
+              id: "",
               mimeType: "",
               nomDocument: "",
               conteneurSwift: "",
@@ -45,7 +45,7 @@ test("renders progress bar, close function is called automatically", () => {
           documentsToSign: [
             {
               infos: [],
-              idDocumentDelivre: "",
+              id: "",
               mimeType: "",
               nomDocument: "",
               conteneurSwift: "",
@@ -76,7 +76,7 @@ test("renders progress bar, close function is called when click on button", () =
           documentsToSign: [
             {
               infos: [],
-              idDocumentDelivre: "",
+              id: "",
               mimeType: "",
               nomDocument: "",
               conteneurSwift: "",
@@ -109,7 +109,7 @@ test("renders progress bar, close function can't be called", () => {
           documentsToSign: [
             {
               infos: [],
-              idDocumentDelivre: "",
+              id: "",
               mimeType: "",
               nomDocument: "",
               conteneurSwift: "",
@@ -123,7 +123,7 @@ test("renders progress bar, close function can't be called", () => {
           documentsToSign: [
             {
               infos: [],
-              idDocumentDelivre: "",
+              id: "",
               mimeType: "",
               nomDocument: "",
               conteneurSwift: "",

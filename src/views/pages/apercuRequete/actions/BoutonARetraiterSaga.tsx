@@ -2,20 +2,17 @@
 /*
  * fichier non testé car composant à supprimer dans étape 2
  */
-import React, { useCallback } from "react";
-import { Text, MessageId } from "../../../common/widget/Text";
-import { Button } from "reakit/Button";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-
-import { StatutRequete } from "../../../../model/requete/StatutRequete";
+import { Button } from "reakit/Button";
 import {
-  IQueryParameterUpdateStatutRequete,
-  useUpdateStatutRequeteApi
-} from "../../../common/hook/UpdateStatutRequeteHook";
-import {
-  URL_MES_REQUETES,
-  URL_REQUETES_SERVICE
-} from "../../../router/ReceUrls";
+  CreationActionEtMiseAjourStatutParams,
+  usePostCreationActionEtMiseAjourStatutApi
+} from "../../../common/hook/v2/requete/ActionHook";
+import { MigratorV1V2 } from "../../../common/util/migration/MigratorV1V2";
+import { MessageId, Text } from "../../../common/widget/Text";
+import { receUrl } from "../../../router/ReceUrls";
+import "./scss/BoutonARetraiterSaga.scss";
 
 interface BoutonARetraiterSagaProps {
   messageId?: MessageId;
@@ -28,31 +25,34 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
 }) => {
   const history = useHistory();
   const [
-    updateStatutRequeteQueryParamState,
-    setUpdateStatutRequeteQueryParamState
-  ] = React.useState<IQueryParameterUpdateStatutRequete>();
+    creationActionEtMiseAjourStatutParams,
+    setCreationActionEtMiseAjourStatutParams
+  ] = useState<CreationActionEtMiseAjourStatutParams>();
+
+  const idActionCreee = usePostCreationActionEtMiseAjourStatutApi(
+    creationActionEtMiseAjourStatutParams
+  );
+
+  useEffect(() => {
+    if (idActionCreee) {
+      receUrl.goBack(history);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idActionCreee]);
 
   const handleClickARetraiterSaga = () => {
-    setUpdateStatutRequeteQueryParamState({
-      statut: StatutRequete.ARetraiter,
-      idRequete
+    setCreationActionEtMiseAjourStatutParams({
+      requeteId: idRequete,
+      statutRequete: MigratorV1V2.getStatutARetraiter(),
+      libelleAction: "A retraiter dans Saga"
     });
   };
 
-  const goToListe = useCallback(() => {
-    const pathname = history.location.pathname;
-    if (pathname.startsWith(URL_MES_REQUETES)) {
-      history.push(URL_MES_REQUETES);
-    }
-    if (pathname.startsWith(URL_REQUETES_SERVICE)) {
-      history.push(URL_REQUETES_SERVICE);
-    }
-  }, [history]);
-
-  useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState, goToListe);
-
   return (
-    <Button onClick={handleClickARetraiterSaga}>
+    <Button
+      className="boutonARetraiterSaga"
+      onClick={handleClickARetraiterSaga}
+    >
       <Text messageId={messageId} />
     </Button>
   );

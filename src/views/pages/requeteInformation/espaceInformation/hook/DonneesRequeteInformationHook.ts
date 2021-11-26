@@ -3,8 +3,10 @@ import {
   getMesRequetesInformation,
   IQueryParametersPourRequetesV2
 } from "../../../../../api/appels/requeteApi";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
-import { mappingRequetesTableauInformation } from "../../../../../model/requete/v2/IRequeteTableauInformation";
+import {
+  IRequeteTableauInformation,
+  mappingRequetesTableauInformation
+} from "../../../../../model/requete/v2/IRequeteTableauInformation";
 import {
   getParamsTableau,
   IParamsTableau
@@ -15,7 +17,7 @@ export function useRequeteInformationApi(
   queryParameters: IQueryParametersPourRequetesV2,
   setEnChargement: (enChargement: boolean) => void
 ) {
-  const [dataState, setDataState] = useState<IRequeteTableauDelivrance[]>([]);
+  const [dataState, setDataState] = useState<IRequeteTableauInformation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
 
   useEffect(() => {

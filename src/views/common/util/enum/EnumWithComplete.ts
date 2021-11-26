@@ -64,4 +64,16 @@ export class EnumWithComplete extends EnumWithLibelle {
     }
     return keyResult;
   }
+
+  public static getEnumFromLibelleCourt(clazz: any, libelleCourt: string) {
+    for (const key in clazz) {
+      if (
+        clazz.hasOwnProperty(key) &&
+        clazz[key]._libelleCourt === libelleCourt
+      ) {
+        return clazz[key];
+      }
+    }
+    return undefined;
+  }
 }

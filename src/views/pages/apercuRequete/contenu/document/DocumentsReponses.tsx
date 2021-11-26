@@ -8,9 +8,12 @@ import {
 import Image from "@material-ui/icons/Image";
 import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
 import React from "react";
-import { IDocumentReponse } from "../../../../../model/requete/v2/IDocumentReponse";
+import {
+  DocumentReponse,
+  IDocumentReponse
+} from "../../../../../model/requete/v2/IDocumentReponse";
 import { AccordionRece } from "../../../../common/widget/accordion/AccordionRece";
-import { getLibelle } from "../../../../common/widget/Text";
+import { getText } from "../../../../common/widget/Text";
 import "./scss/DocumentsReponses.scss";
 
 export interface InfoDocumentAffiche {
@@ -34,7 +37,7 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
         expanded={true}
       >
         <List>
-          {documents.map(el => (
+          {DocumentReponse.triDocumentsDelivrance(documents).map(el => (
             <ListItem
               key={el.id}
               onClick={() => {
@@ -47,13 +50,13 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
               <ListItemAvatar>
                 {el.mimeType === "application/pdf" ? (
                   <Avatar
-                    title={getLibelle("pages.requete.consultation.icon.pdf")}
+                    title={getText("pages.requete.consultation.icon.pdf")}
                   >
                     <PictureAsPdf />
                   </Avatar>
                 ) : (
                   <Avatar
-                    title={getLibelle("pages.requete.consultation.icon.png")}
+                    title={getText("pages.requete.consultation.icon.png")}
                   >
                     <Image />
                   </Avatar>

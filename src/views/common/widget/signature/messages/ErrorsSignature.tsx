@@ -1,15 +1,15 @@
+import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
 import React, { useCallback } from "react";
-import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
-import "./scss/ErrorsSignature.scss";
-import { getText } from "../../Text";
 import { logError } from "../../../util/LogManager";
+import { getText } from "../../Text";
+import "./scss/ErrorsSignature.scss";
 
 interface ErrorsSignatureProps {
   errors: SignatureErrors;
 }
 
 export interface SignatureErrors {
-  numeroRequete: number;
+  numeroRequete: string;
   erreurs: TypeErreur[];
 }
 

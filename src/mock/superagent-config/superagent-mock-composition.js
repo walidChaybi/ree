@@ -32,7 +32,7 @@ export const configComposition = [
       }
 
       const error = { msg: "url api composition non mockée", url: match[1] };
-      console.log("Erreur mock api: ", error);
+      console.log("Erreur mock api composition: ", error);
       return {
         data: error
       };

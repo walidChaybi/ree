@@ -21,7 +21,8 @@ export const documentReponseCARN_CSPAC_01: IDocumentReponse = {
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
-  orientation: Orientation.PORTRAIT
+  orientation: Orientation.PORTRAIT,
+  conteneurSwift: "conteneurSwift"
 };
 
 export const documentReponseCertificatRCA: IDocumentReponse = {
@@ -32,7 +33,8 @@ export const documentReponseCertificatRCA: IDocumentReponse = {
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
-  orientation: Orientation.PORTRAIT
+  orientation: Orientation.PORTRAIT,
+  conteneurSwift: "conteneurSwift"
 };
 
 export const documentReponseCourrier117: IDocumentReponse = {
@@ -56,7 +58,8 @@ export const documentReponseCourrier117: IDocumentReponse = {
       texte: "- le lieu de l'événement (ville et/ou pays)",
       idDocumentReponse: "c4f4c8fb-562c-4b14-96aa-4386814c05d8"
     }
-  ]
+  ],
+  conteneurSwift: "conteneurSwift"
 };
 
 export const documentReponseCopieIntegrale: IDocumentReponse = {
@@ -67,7 +70,8 @@ export const documentReponseCopieIntegrale: IDocumentReponse = {
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
-  orientation: Orientation.PORTRAIT
+  orientation: Orientation.PORTRAIT,
+  conteneurSwift: "conteneurSwift"
 };
 
 export const documentReponseCopieNonSigne: IDocumentReponse = {
@@ -78,5 +82,6 @@ export const documentReponseCopieNonSigne: IDocumentReponse = {
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
-  orientation: Orientation.PORTRAIT
+  orientation: Orientation.PORTRAIT,
+  conteneurSwift: "conteneurSwift"
 };

@@ -1,36 +1,30 @@
 import moment from "moment";
-import { useState, useEffect, useCallback } from "react";
-import { StatutRequete } from "../../../../../model/requete/StatutRequete";
-import { SignatureErrors } from "../messages/ErrorsSignature";
-import { GroupementDocument } from "../../../../../model/requete/GroupementDocument";
+import { useCallback, useEffect, useState } from "react";
+import {
+  getDocumentReponseById,
+  IMiseAJourDocumentParams
+} from "../../../../../api/appels/requeteApi";
 import {
   ModeSignature,
   ModeSignatureUtil
 } from "../../../../../model/requete/ModeSignature";
-import { SuccessSignatureType } from "../messages/SuccessSignature";
+import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { IDocumentReponse } from "../../../../../model/requete/v2/IDocumentReponse";
+import parametres from "../../../../../ressources/parametres.json";
+import { usePatchDocumentsReponseApi } from "../../../hook/v2/DocumentReponseHook";
+import {
+  CreationActionEtMiseAjourStatutParams,
+  usePostCreationActionEtMiseAjourStatutApi
+} from "../../../hook/v2/requete/ActionHook";
 import { FormatDate } from "../../../util/DateUtils";
-import { SousTypeRequete } from "../../../../../model/requete/SousTypeRequete";
 import messageManager from "../../../util/messageManager";
-import { getText } from "../../Text";
-import { TypeDocument } from "../../../../../model/requete/TypeDocument";
-import {
-  IQueryParameterUpdateStatutRequete,
-  useUpdateStatutRequeteApi
-} from "../../../hook/UpdateStatutRequeteHook";
-import { requestDocumentApi } from "../../../hook/DocumentRequeteHook";
-import { useUpdateDocumentApi } from "./UpdateDocumentHook";
-import {
-  IRequestDocumentApiResult,
-  IQueryParameterUpdateDocument
-} from "../../../../../api/appels/requeteApi";
 import { gestionnaireSignatureFlag } from "../../../util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "../../../util/timer/GestionnaireTimer";
-import parametres from "../../../../../ressources/parametres.json";
-
-export interface IQueryParametersPourRequete {
-  statut?: StatutRequete;
-  idRequete: string;
-}
+import { getText } from "../../Text";
+import { SignatureErrors } from "../messages/ErrorsSignature";
+import { SuccessSignatureType } from "../messages/SuccessSignature";
 
 export interface DocumentsByRequete {
   [idRequete: string]: DocumentsATraiter;
@@ -43,12 +37,12 @@ export interface SignatureReturn {
 
 interface DocumentToSign {
   infos: InfosSignature[];
-  idDocumentDelivre: string;
+  id: string;
   mimeType: string;
   nomDocument: string;
   conteneurSwift: string;
   idRequete: string;
-  numeroRequete: number;
+  numeroRequete: string;
 }
 
 interface InfosSignature {
@@ -59,16 +53,16 @@ interface InfosSignature {
 export interface DocumentsATraiter {
   documentsToSign: DocumentToSign[];
   documentsToSave: DocumentToSave[];
-  sousTypeRequete: SousTypeRequete;
+  sousTypeRequete: SousTypeDelivrance;
 }
 
 interface DocumentToSave {
-  idDocument: string;
+  id: string;
   contenu: string;
   mimeType: string;
   nomDocument: string;
   conteneurSwift: string;
-  numeroRequete: number;
+  numeroRequete: string;
 }
 
 const DIRECTION_TO_CALL_APP = "to-call-app";
@@ -103,23 +97,25 @@ export function useSignatureDocumentHook(
   >([]);
   const [errorsSignature, setErrorsSignature] = useState<SignatureErrors>();
 
-  const [
-    updateDocumentQueryParamState,
-    setUpdateDocumentQueryParamState
-  ] = useState<IQueryParameterUpdateDocument[]>([]);
+  const [miseAJourDocumentParams, setMiseAJourDocumentParams] = useState<
+    IMiseAJourDocumentParams[]
+  >([]);
 
   const [
-    updateStatutRequeteQueryParamState,
-    setUpdateStatutRequeteQueryParamState
-  ] = useState<IQueryParameterUpdateStatutRequete>();
+    creationActionEtMiseAjourStatutParams,
+    setCreationActionEtMiseAjourStatutParams
+  ] = useState<CreationActionEtMiseAjourStatutParams>();
 
-  const callBackMajStatusRequete = useCallback(() => {
-    setUpdateDocumentQueryParamState([]);
+  const majStatusRequete = useCallback(() => {
+    setMiseAJourDocumentParams([]);
 
     const currentRequeteProcessing = documentsToSignWating[idRequetesToSign[0]];
-    setUpdateStatutRequeteQueryParamState({
-      idRequete: idRequetesToSign[0],
-      statut: getNewStatusRequete(currentRequeteProcessing.sousTypeRequete)
+    setCreationActionEtMiseAjourStatutParams({
+      requeteId: idRequetesToSign[0],
+      statutRequete: getNewStatusRequete(
+        currentRequeteProcessing.sousTypeRequete
+      ),
+      libelleAction: "Signée"
     });
 
     const newSuccesses: SuccessSignatureType[] = [
@@ -143,40 +139,45 @@ export function useSignatureDocumentHook(
     setSuccessSignature(newSuccesses);
   }, [documentsToSignWating, idRequetesToSign, successSignature]);
 
-  const { errorUpdateDocument } = useUpdateDocumentApi(
-    updateDocumentQueryParamState,
-    callBackMajStatusRequete
+  const resultatPatchDocumentReponse = usePatchDocumentsReponseApi(
+    miseAJourDocumentParams
   );
 
   useEffect(() => {
-    if (errorUpdateDocument != null) {
-      setErrorsSignature({
-        erreurs: [
-          {
-            code: "UPDATE_DOC",
-            libelle: "",
-            detail: ""
-          }
-        ],
-        numeroRequete:
-          documentsByRequete[idRequetesToSign[0]].documentsToSave[0]
-            .numeroRequete
-      });
+    if (resultatPatchDocumentReponse) {
+      if (resultatPatchDocumentReponse.erreur) {
+        setErrorsSignature({
+          erreurs: [
+            {
+              code: "UPDATE_DOC",
+              libelle: "",
+              detail: ""
+            }
+          ],
+          numeroRequete:
+            documentsByRequete[idRequetesToSign[0]].documentsToSave[0]
+              ?.numeroRequete
+        });
+      } else {
+        majStatusRequete();
+      }
     }
     // Attention ne pas dépendre de "documentsByRequete" ni de "idRequetesToSign" car si une erreur ce produit (plantage API maj)
     //   alors "documentsByRequete" et "idRequetesToSign" sont remis à jour donc on repasse dans ce code
     //   alors que updateDocumentQueryParamState et errorUpdateDocument n'ont pas bougés et documentsByRequete[idRequetesToSign[0]].documentsToSave = [].
     //   => ceci provoque un plantage car documentsByRequete[idRequetesToSign[0]].documentsToSave[0] = undefined
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorUpdateDocument]);
+  }, [resultatPatchDocumentReponse]);
 
-  useUpdateStatutRequeteApi(updateStatutRequeteQueryParamState);
+  usePostCreationActionEtMiseAjourStatutApi(
+    creationActionEtMiseAjourStatutParams
+  );
 
   useEffect(() => {
-    setUpdateDocumentQueryParamState(
+    setMiseAJourDocumentParams(
       documentsToSave.map(document => {
         return {
-          idDocumentDelivre: document.idDocument,
+          id: document.id,
           contenu: document.contenu,
           conteneurSwift: document.conteneurSwift,
           nom: document.nomDocument
@@ -185,6 +186,7 @@ export function useSignatureDocumentHook(
     );
   }, [documentsToSave]);
 
+  // Etape 1
   useEffect(() => {
     setDocumentsToSignWating(documentsByRequete);
     setIdRequetesToSign(Object.keys(documentsByRequete));
@@ -192,18 +194,12 @@ export function useSignatureDocumentHook(
     setErrorsSignature(undefined);
   }, [documentsByRequete]);
 
-  const processResultWebExtension = (
-    currentRequeteProcessing: DocumentsATraiter
-  ) => {
-    if (currentRequeteProcessing.documentsToSign.length === 0) {
-      setDocumentsToSave(currentRequeteProcessing.documentsToSave);
-    }
-  };
   /**
    * @description Handler concernant les communications avec la webextension
    *
    * @event l'événement de retour de la webext
    */
+  // Etape 3
   const handleBackFromWebExtension = useCallback(
     (event: Event): void => {
       const customEvent = event as CustomEvent;
@@ -211,8 +207,8 @@ export function useSignatureDocumentHook(
 
       gestionnaireTimer.annuleTimer(TIMER_SIGNATURE);
 
-      if (result.direction && result.direction === DIRECTION_TO_CALL_APP) {
-        if (result.erreurs !== undefined && result.erreurs.length > 0) {
+      if (laDirectionEstVersLAppliRece(result)) {
+        if (desErreursOntEteRecues(result)) {
           setErrorsSignature({
             numeroRequete:
               documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
@@ -229,21 +225,25 @@ export function useSignatureDocumentHook(
 
           const currentRequeteProcessing =
             documentsToSignWating[idRequetesToSign[0]];
-          processResultWebExtension(currentRequeteProcessing);
+          processResultWebExtension(
+            currentRequeteProcessing,
+            setDocumentsToSave
+          );
         }
       }
     },
     [documentsToSignWating, idRequetesToSign]
   );
 
+  // Etape 2
   useEffect(() => {
     getDocumentAndSendToSignature(
       idRequetesToSign,
       documentsToSignWating,
       setErrorsSignature,
       setDocumentsToSignWating,
-      processResultWebExtension,
       handleBackFromWebExtension,
+      setDocumentsToSave,
       pinCode
     );
   }, [
@@ -275,6 +275,8 @@ export function useSignatureDocumentHook(
   };
 }
 
+// ========================================== Fonctions ====================================================
+
 function changeDocumentToSign(
   documentsToSignWating: DocumentsByRequete,
   idRequetesToSign: string[],
@@ -288,7 +290,7 @@ function changeDocumentToSign(
     documentsToSignWating[idRequetesToSign[0]].documentsToSave = [
       ...documentsToSignWating[idRequetesToSign[0]].documentsToSave,
       {
-        idDocument: doc.idDocumentDelivre,
+        id: doc.id,
         contenu: contenuDocument,
         mimeType: doc.mimeType,
         nomDocument: doc.nomDocument,
@@ -305,8 +307,9 @@ function changeDocumentToSign(
   }
 }
 
+// Etape 2.2
 function sendDocumentToSignature(
-  result: IRequestDocumentApiResult,
+  result: IDocumentReponse,
   pinCode: string,
   documentsToSignWating: DocumentsByRequete,
   idRequetesToSign: string[],
@@ -315,7 +318,7 @@ function sendDocumentToSignature(
   const detail = {
     function: "SIGN",
     direction: "to-webextension",
-    document: result.documentDelivre.contenu,
+    document: result.contenu,
     pin: pinCode,
     mode: ModeSignatureUtil.isValid(
       gestionnaireSignatureFlag.getSignatureMode()
@@ -336,45 +339,37 @@ function sendDocumentToSignature(
   window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
 }
 
+// Etape 2.1
 function getDocumentAndSendToSignature(
   idRequetesToSign: string[],
   documentsToSignWating: DocumentsByRequete,
   setErrorsSignature: (errors: SignatureErrors) => void,
   setDocumentsToSignWating: (documentByRequete: DocumentsByRequete) => void,
-  processResultWebExtension: (
-    currentRequeteProcessing: DocumentsATraiter
-  ) => void,
   handleBackFromWebExtension: any,
+  setDocumentsToSave: React.Dispatch<React.SetStateAction<DocumentToSave[]>>,
   pinCode?: string
 ) {
   if (idRequetesToSign.length > 0 && pinCode !== undefined) {
-    requestDocumentApi(
-      documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
-        .idDocumentDelivre,
-      GroupementDocument.DocumentDelivre,
-      documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].mimeType
+    getDocumentReponseById(
+      documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].id
     )
-      .then(result => {
-        if (!result.documentDelivre.contenu) {
+      .then((resultApi: any) => {
+        const result: IDocumentReponse = resultApi.body.data;
+        if (!result.contenu) {
           setErrorsSignature({
             numeroRequete:
               documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
                 .numeroRequete,
             erreurs: [{ code: "FONC_4", libelle: "", detail: "" }]
           });
-        } else if (
-          result.documentDelivre.contenu.length >
-          MAX_LEN_DOCUMENT_TO_SIGN_IN_BYTES
-        ) {
+        } else if (result.contenu.length > MAX_LEN_DOCUMENT_TO_SIGN_IN_BYTES) {
           setErrorsSignature({
             numeroRequete:
               documentsToSignWating[idRequetesToSign[0]].documentsToSign[0]
                 .numeroRequete,
             erreurs: [{ code: "FONC_10", libelle: "", detail: "" }]
           });
-        } else if (
-          isAllowedTypeDocumentToBeSigned(result.documentDelivre.typeDocument)
-        ) {
+        } else if (estUnDocumentASigner(result.typeDocument)) {
           sendDocumentToSignature(
             result,
             pinCode,
@@ -386,14 +381,17 @@ function getDocumentAndSendToSignature(
           changeDocumentToSign(
             documentsToSignWating,
             idRequetesToSign,
-            result.documentDelivre.contenu,
+            result.contenu,
             setDocumentsToSignWating
           );
 
           const currentRequeteProcessing =
             documentsToSignWating[idRequetesToSign[0]];
 
-          processResultWebExtension(currentRequeteProcessing);
+          processResultWebExtension(
+            currentRequeteProcessing,
+            setDocumentsToSave
+          );
         }
       })
       .catch(error => {
@@ -407,23 +405,20 @@ function getDocumentAndSendToSignature(
   }
 }
 
-function isAllowedTypeDocumentToBeSigned(typeDocument: string): boolean {
-  return (
-    [
-      TypeDocument.ExtraitAvecFiliation,
-      TypeDocument.ExtraitSansFiliation,
-      TypeDocument.ExtraitPlurilingue,
-      TypeDocument.CopieIntegrale
-    ].find(type => type === typeDocument) !== undefined
-  );
+function estUnDocumentASigner(uuidTypeDocument: string): boolean {
+  const documentDelivrance = DocumentDelivrance.getEnumFor(uuidTypeDocument);
+  return DocumentDelivrance.estExtraitCopieAsigner(documentDelivrance.code);
 }
 
-function getNewStatusRequete(sousTypeRequete: SousTypeRequete) {
-  if (sousTypeRequete === SousTypeRequete.RequeteDelivranceCourrier) {
-    return StatutRequete.AImprimer;
+function getNewStatusRequete(sousTypeRequete: SousTypeDelivrance) {
+  if (sousTypeRequete === SousTypeDelivrance.RDC) {
+    // TODO tester Canal courrier plutôt ?
+    return StatutRequete.TRAITE_A_IMPRIMER;
   } else {
-    return StatutRequete.ATraiterDemat;
+    // TODO tester Canal internet plutôt ?
+    return StatutRequete.TRAITE_A_DELIVRER_DEMAT;
   }
+  // TODO cas du canal RECE => TRAITE_REPONDU
 }
 
 function getErrorsMock(): string[] {
@@ -438,4 +433,21 @@ function getErrorsMock(): string[] {
   }
 
   return erreurs;
+}
+
+function laDirectionEstVersLAppliRece(result: any) {
+  return result.direction && result.direction === DIRECTION_TO_CALL_APP;
+}
+
+function desErreursOntEteRecues(result: any) {
+  return result.erreurs !== undefined && result.erreurs.length > 0;
+}
+
+function processResultWebExtension(
+  currentRequeteProcessing: DocumentsATraiter,
+  setDocumentsToSave: React.Dispatch<React.SetStateAction<DocumentToSave[]>>
+) {
+  if (currentRequeteProcessing.documentsToSign.length === 0) {
+    setDocumentsToSave(currentRequeteProcessing.documentsToSave);
+  }
 }

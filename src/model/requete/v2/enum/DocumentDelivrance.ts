@@ -43,23 +43,36 @@ export const EXTRAIT_AVEC_FILIATION = "EXTRAIT_AVEC_FILIATION";
 export const EXTRAIT_PLURILINGUE = "EXTRAIT_PLURILINGUE";
 export const EXTRAIT_SANS_FILIATION = "EXTRAIT_SANS_FILIATION";
 
-export const CodesExtraitCopie = [
+const CodesExtraitCopieASigner = [
   COPIE_INTEGRALE,
-  COPIE_NON_SIGNEE,
   EXTRAIT_AVEC_FILIATION,
   EXTRAIT_PLURILINGUE,
   EXTRAIT_SANS_FILIATION
 ];
 
-/**
- * Attention:
- *  _nom = code
- *  _libelle_court = catégorie
- *  _libelle = libellé :)
- *
- *  FIXME développer un "EnumNomenclature(code, categorie, libelle)"" pour plus de cohérence
- *
- */
+export const CodesExtraitCopie = [
+  ...CodesExtraitCopieASigner,
+  COPIE_NON_SIGNEE
+];
+
+const ORDRE_MAX = 999;
+
+const COURRIER = "Courrier";
+const ORDRE_DOCUMENTS_DELIVRANCE = {
+  "Copie intégrale": 10,
+  "Extrait avec filiation": 20,
+  "Extrait avec filiation plurilingue": 30,
+  "Extrait sans filiation": 40,
+  "Copie non signée": 50,
+  "Certificat de situation délivré": 60,
+  CERTIFICAT_INSCRIPTION_RC: 70,
+  CERTIFICAT_INSCRIPTION_RCA: 80,
+  ATTESTATION_PACS: 100,
+  "Certificat d'inscription": 110,
+  Attestation: 120,
+  COURRIER: 130
+};
+
 export class DocumentDelivrance extends EnumNomemclature {
   constructor(
     code: string,
@@ -131,7 +144,7 @@ export class DocumentDelivrance extends EnumNomemclature {
     return EnumWithLibelle.contientEnums(DocumentDelivrance);
   }
 
-  public static getEnumFor(str: string) {
+  public static getEnumFor(str: string): DocumentDelivrance {
     return EnumWithLibelle.getEnumFor(str, DocumentDelivrance);
   }
 
@@ -215,6 +228,10 @@ export class DocumentDelivrance extends EnumNomemclature {
     return CodesExtraitCopie.includes(code);
   }
 
+  public static estExtraitCopieAsigner(code: string): boolean {
+    return CodesExtraitCopieASigner.includes(code);
+  }
+
   public static getCodesAsOptions(codes: string[]) {
     const res = [];
     for (const document of codes) {
@@ -240,7 +257,7 @@ export class DocumentDelivrance extends EnumNomemclature {
   public static estCourrierDelivranceEC(typeDocumentUUID: string): boolean {
     const doc = DocumentDelivrance.getEnumFor(typeDocumentUUID);
     return (
-      doc.categorieDocumentDelivrance &&
+      doc.categorieDocumentDelivrance != null &&
       doc.categorieDocumentDelivrance.startsWith("Courrier") &&
       doc.categorieDocumentDelivrance.includes("délivrance E/C")
     );
@@ -252,6 +269,39 @@ export class DocumentDelivrance extends EnumNomemclature {
       opt =>
         DocumentDelivrance.getEnumFor(opt.value).categorieDocumentDelivrance ===
         "Certificat de situation demandé"
+    );
+  }
+
+  public static getNumeroOrdre(uuidTypeDocument: string) {
+    let ordre;
+    const documentDelivrance = DocumentDelivrance.getEnumFor(uuidTypeDocument);
+
+    if (DocumentDelivrance.estCourrierDAccompagnement(documentDelivrance)) {
+      //@ts-ignore
+      ordre = ORDRE_DOCUMENTS_DELIVRANCE[COURRIER];
+    } else {
+      // Recherche spécifique par code
+      //@ts-ignore
+      ordre = ORDRE_DOCUMENTS_DELIVRANCE[documentDelivrance.code];
+      if (!ordre) {
+        // Puis recherche plus générale par categorieDocumentDelivrance
+        ordre =
+          //@ts-ignore{
+          ORDRE_DOCUMENTS_DELIVRANCE[
+            documentDelivrance.categorieDocumentDelivrance
+          ];
+      }
+    }
+
+    return ordre ? ordre : ORDRE_MAX;
+  }
+
+  public static estCourrierDAccompagnement(
+    documentDelivrance: DocumentDelivrance
+  ) {
+    return (
+      documentDelivrance.categorieDocumentDelivrance &&
+      documentDelivrance.categorieDocumentDelivrance.startsWith(COURRIER)
     );
   }
 }

@@ -11,6 +11,7 @@ import {
   receUrl
 } from "../../../../router/ReceUrls";
 import { getLibelle } from "../../../widget/Text";
+import { MigratorV1V2 } from "../../migration/MigratorV1V2";
 import { Protection } from "./Protection";
 
 interface ProtectionApercuProps {
@@ -83,6 +84,11 @@ function checkURLDelivrance(history: any, statut?: StatutRequete) {
         receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
         receUrl.getUrlCourante(history).includes(PATH_APERCU_COURRIER)
       );
+    case MigratorV1V2.getStatutTraiteADelivrerDemat():
+    case MigratorV1V2.getStatutTraiteAImprimer():
+      return receUrl
+        .getUrlCourante(history)
+        .includes(PATH_APERCU_REQ_TRAITEMENT);
     default:
       return false;
   }

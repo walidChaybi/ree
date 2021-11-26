@@ -181,7 +181,8 @@ export const RequeteRDDCourrier17 = {
       nbPages: 1,
       orientation: "Portrait",
       texteLibreCourrier: undefined,
-      optionsCourrier: []
+      optionsCourrier: [],
+      conteneurSwift: "conteneurSwift"
     }
   ]
 } as IRequeteDelivrance;

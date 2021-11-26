@@ -8,6 +8,7 @@ import {
 import {
   documentReponseCARN_CSPAC_01,
   documentReponseCertificatRCA,
+  documentReponseCopieIntegrale,
   idDocumentsReponse
 } from "../data/DocumentReponse";
 import {
@@ -50,7 +51,9 @@ export const configRequetesV2 = [
       // Mes requetes (espace délivrance)
       if (
         match[1] ===
-        "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100"
+          "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100" ||
+        match[1] ===
+          "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelMesRequetes,
@@ -64,7 +67,9 @@ export const configRequetesV2 = [
 
       if (
         match[1] ===
-        "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100"
+          "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100" ||
+        match[1] ===
+          "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_A_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelMesRequetes,
@@ -78,7 +83,9 @@ export const configRequetesV2 = [
 
       if (
         match[1] ===
-        "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100"
+          "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100" ||
+        match[1] ===
+          "/requetes/mesrequetes?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_A_IMPRIMER&tri=numero&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelMesRequetes,
@@ -93,7 +100,9 @@ export const configRequetesV2 = [
       // Requetes de mon service (espace délivrance)
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100"
+          "/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100" ||
+        match[1] ===
+          "/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_A_IMPRIMER&tri=dateStatut&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelRequetesService,
@@ -121,7 +130,9 @@ export const configRequetesV2 = [
 
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100"
+          "/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100" ||
+        match[1] ===
+          "/requetes/requetesService?statuts=BROUILLON%2CA_TRAITER%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_A_IMPRIMER&tri=numero&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelRequetesService,
@@ -348,9 +359,20 @@ export const configRequetesV2 = [
         return { data: documentReponseCertificatRCA };
       }
 
+      if (
+        match[1] === "/documentsreponses/f9279c00-5d2b-11ea-bc55-0242ac130004"
+      ) {
+        return { data: documentReponseCopieIntegrale };
+      }
+
       // Stockage d'un document (POST)
       if (match[1] === "/documentsreponses" && context.method === "post") {
         return { data: idDocumentsReponse };
+      }
+
+      // Maj d'un document (PATCH)
+      if (match[1] === "/documentsreponses" && context.method === "patch") {
+        return { data: "idRequete" };
       }
 
       // Supression des documents reponses (DELETE)
@@ -410,7 +432,16 @@ export const configRequetesV2 = [
           match[1] ===
             `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT` ||
           match[1] ===
-            "/requetes/action?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE") &&
+            "/requetes/action?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+          match[1] ===
+            "/requetes/action?idRequete=id1&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+          match[1] ===
+            "/requetes/action?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+          // Passage du statut la requête de "A_SIGNE" à "TRAITE_A_IMPRIMER"
+          match[1] ===
+            "/requetes/action?idRequete=id1&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_IMPRIMER" ||
+          match[1] ===
+            "/requetes/action?idRequete=id2&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_IMPRIMER") &&
         context.method === "post"
       ) {
         return { data: "123456789" };
@@ -436,8 +467,12 @@ export const configRequetesV2 = [
         return true;
       }
 
-      const error = { msg: "url api requete non mockée", url: match[1] };
-      console.log("Erreur mock api: ", error);
+      const error = {
+        msg: "url api requete non mockée",
+        url: match[1],
+        method: context.method
+      };
+      console.log("Erreur mock api requete v2: ", error);
       return {
         data: error
       };

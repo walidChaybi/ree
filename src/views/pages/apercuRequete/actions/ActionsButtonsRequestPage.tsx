@@ -4,9 +4,7 @@ import { IDataTable } from "../../../../model/requete/IDataTable";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { BarreNavigationSuivPrec } from "../../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
-import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
 import { BoutonARetraiterSaga } from "./BoutonARetraiterSaga";
-import "./scss/ActionButtonsRequestPage.scss";
 
 export interface ActionsProps {
   indexRequete: number;
@@ -27,7 +25,6 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
   reloadData,
   connectedUser
 }) => {
-  const estRequeteASigner = estASigner(requetes, indexRequete);
   const estRequeteATraiter = estATraiter(requetes, indexRequete);
   return (
     <BarreNavigationSuivPrec
@@ -38,28 +35,9 @@ export const ActionsButtonsRequestPage: React.FC<ActionsProps> = ({
       <div>
         <BoutonRetour messageId={"boutons.retourMesRequetes"} />
       </div>
-      <div>
-        {estRequeteASigner && (
-          <BoutonSignature
-            libelle={"pages.delivrance.apercu.signatureElectronique"}
-            requetes={[requetes[indexRequete]]}
-            reloadData={reloadData}
-            uniqueSignature={true}
-            connectedUser={connectedUser}
-          />
-        )}
-      </div>
-      {!estRequeteATraiter && (
-        <div className="boutonARetraiterSaga">
-          <BoutonARetraiterSaga idRequete={idRequete} />
-        </div>
-      )}
+      {!estRequeteATraiter && <BoutonARetraiterSaga idRequete={idRequete} />}
     </BarreNavigationSuivPrec>
   );
-};
-
-const estASigner = (requetes: IDataTable[], indexRequete: number): boolean => {
-  return estRequeteStatut(requetes, indexRequete, StatutRequete.ASigner);
 };
 
 const estATraiter = (requetes: IDataTable[], indexRequete: number): boolean => {

@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { getRequete } from "../../../../api/appels/requeteApi";
 import { IDataTable } from "../../../../model/requete/IDataTable";
+import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { logError } from "../../../common/util/LogManager";
-import { IQueryParametersPourRequete } from "../../../common/widget/signature/hook/SignatureDocumentHook";
 import { reponseRequeteMapperUnitaire } from "../../espaceDelivrance/v1/hook/DonneesRequeteHook";
 import { RequestsInformations } from "../ApercuRequetePage";
+
+export interface IQueryParametersPourRequete {
+  statut?: StatutRequete;
+  idRequete: string;
+}
 
 export function useRequeteDataApi(
   queryParameters: IQueryParametersPourRequete,

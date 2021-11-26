@@ -793,50 +793,6 @@
           ]
         }
       }
-    },
-    {
-      "description": "Interaction documents délivrés",
-      "providerState": "Récupération d'un document par son ID",
-      "request": {
-        "method": "GET",
-        "path": "/rece-requete-api/v1/documentsdelivres/6aff8596-62e1-4cdd-9038-88715aa811f8",
-        "headers": {
-          "id_sso": "03901913"
-        }
-      },
-      "response": {
-        "status": 200,
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "body": {
-          "hasTechnicalError": false,
-          "hasBusinessError": false,
-          "status": 200,
-          "url": "/rece-requete-api/v1/documentsdelivres/6aff8596-62e1-4cdd-9038-88715aa811f8",
-          "data": {
-            "idDocumentDelivre": "c456bb58-04f5-40dd-8c33-599306cafb7d",
-            "typeDocument": "EXTRAIT_SANS_FILIATION",
-            "nom": "1_c4565512-1193-4f7d-88fd-042f75ca8364.pdf",
-            "mimeType": "application/pdf",
-            "taille": 207836,
-            "contenu": null,
-            "conteneurSwift": "documents-delivres-2020-6",
-            "reponse": null,
-            "avecCtv": true,
-            "nbPages": 2,
-            "orientation": "P"
-          },
-          "errors": [
-
-          ]
-        },
-        "matchingRules": {
-          "$.body.data": {
-            "match": "type"
-          }
-        }
-      }
     }
   ],
   "metadata": {

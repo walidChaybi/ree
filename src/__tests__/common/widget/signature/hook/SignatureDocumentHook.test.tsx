@@ -1,57 +1,59 @@
-import React from "react";
-
-import request from "superagent";
-import { useSignatureDocumentHook } from "../../../../../views/common/widget/signature/hook/SignatureDocumentHook";
-import { SousTypeRequete } from "../../../../../model/requete/SousTypeRequete";
-import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import {
-  act,
+  createEvent,
+  fireEvent,
   render,
   screen,
-  waitFor,
-  createEvent,
-  fireEvent
+  waitFor
 } from "@testing-library/react";
+import React from "react";
+import request from "superagent";
+import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import {
+  DocumentsByRequete,
+  useSignatureDocumentHook
+} from "../../../../../views/common/widget/signature/hook/SignatureDocumentHook";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-let container: Element | null;
-
-const toto = {
+const documentsByRequete: DocumentsByRequete = {
   id1: {
     documentsToSign: [
       {
         infos: [],
-        idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130004",
+        id: "f9279c00-5d2b-11ea-bc55-0242ac130004",
         mimeType: "",
         nomDocument: "nom",
         conteneurSwift: "",
         idRequete: "id1",
-        numeroRequete: 123
+        numeroRequete: "123"
       }
     ],
     documentsToSave: [],
-    sousTypeRequete: SousTypeRequete.RequeteDelivranceCourrier
+    sousTypeRequete: SousTypeDelivrance.RDC
   },
   id2: {
     documentsToSign: [
       {
         infos: [],
-        idDocumentDelivre: "f9279c00-5d2b-11ea-bc55-0242ac130004",
+        id: "f9279c00-5d2b-11ea-bc55-0242ac130004",
         mimeType: "",
         nomDocument: "nom",
         conteneurSwift: "",
         idRequete: "id2",
-        numeroRequete: 123
+        numeroRequete: "123"
       }
     ],
     documentsToSave: [],
-    sousTypeRequete: SousTypeRequete.RequeteDelivranceCourrier
+    sousTypeRequete: SousTypeDelivrance.RDC
   }
 };
 
 const HookConsummer: React.FC = () => {
-  const { idRequetesToSign = [] } = useSignatureDocumentHook(toto, "1324");
+  const { idRequetesToSign = [] } = useSignatureDocumentHook(
+    documentsByRequete,
+    "1324"
+  );
   return (
     <>
       {idRequetesToSign.map(id => {
@@ -61,35 +63,26 @@ const HookConsummer: React.FC = () => {
   );
 };
 
-afterEach(() => {
-  if (container instanceof Element) {
-    document.body.removeChild<Element>(container);
-  }
-  container = null;
-});
-
 test("Signature document hook", async () => {
-  await act(async () => {
-    render(<HookConsummer />);
-  });
+  render(<HookConsummer />);
 
-  act(() => {
-    fireEvent(
+  fireEvent(
+    window,
+    //@ts-ignore
+    createEvent(
+      "signWebextResponse",
       window,
-      createEvent(
-        "signWebextResponse",
-        window,
-        {
-          detail: {
-            direction: "to-call-app",
-            erreurs: []
-          }
-        },
-        { EventType: "CustomEvent" }
-      )
-    );
-  });
-  waitFor(() => {
+      {
+        detail: {
+          direction: "to-call-app",
+          erreurs: []
+        }
+      },
+      { EventType: "CustomEvent" }
+    )
+  );
+
+  await waitFor(() => {
     expect(screen.getAllByText("length1")).toBeDefined();
   });
 });

@@ -83,6 +83,11 @@ export const configRequetesInformation = [
       ) {
         return { data: "123456789" };
       }
+      const error = { msg: "url params non mockée", url: match[1] };
+      console.log("Erreur mock api requ info: ", error);
+      return {
+        data: error
+      };
     },
 
     /**

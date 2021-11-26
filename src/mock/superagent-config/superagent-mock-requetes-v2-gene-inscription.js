@@ -28,7 +28,7 @@ export const configRequetesV2GeneInscription = [
       }
 
       const error = { msg: "url api requete non mockée", url: match[1] };
-      console.log("Erreur mock api: ", error);
+      console.log("Erreur mock api gene inscription: ", error);
       return {
         data: error
       };

@@ -1,17 +1,16 @@
 /* istanbul ignore file */
 
+import { Interaction, InteractionObject, Pact } from "@pact-foundation/pact";
+import { like } from "@pact-foundation/pact/dsl/matchers";
 import path from "path";
-import {Interaction, InteractionObject, Pact} from "@pact-foundation/pact";
-import {StatutRequete} from "../../model/requete/StatutRequete";
-import {ApiPact} from "./ApiPact";
-import {documentDelivre, requetesPact} from "./requetes.pact";
 import {
-  URL_DOCUMENTSELIVRES,
   URL_REQUETES,
   URL_REQUETES_COUNT,
   URL_REQUETES_SERVICE
 } from "../../api/appels/requeteApi";
-import {like} from "@pact-foundation/pact/dsl/matchers";
+import { StatutRequete } from "../../model/requete/StatutRequete";
+import { ApiPact } from "./ApiPact";
+import { requetesPact } from "./requetes.pact";
 
 const provider = new Pact({
   consumer: "ReceUiMesRequetes",
@@ -34,7 +33,6 @@ describe("Requete API Pact test", () => {
   afterAll(async () => {
     return provider.finalize();
   });
-
 
   const queryParameters = {
     statuts: [StatutRequete.ASigner],
@@ -69,7 +67,7 @@ describe("Requete API Pact test", () => {
           path: uri,
           query: queryCountParameters,
           headers: {
-            "id_sso": "03901913"
+            id_sso: "03901913"
           }
         },
         willRespondWith: {
@@ -84,19 +82,18 @@ describe("Requete API Pact test", () => {
       await provider.addInteraction(interaction);
 
       const result = await new ApiPact(provider)
-          .get(uri)
-          .setHeaderIdSso("03901913")
-          .queryParameters(queryCountParameters)
-          .execute()
-          .then(res => {
-            return res;
-          });
+        .get(uri)
+        .setHeaderIdSso("03901913")
+        .queryParameters(queryCountParameters)
+        .execute()
+        .then(res => {
+          return res;
+        });
 
       expect(result.body).not.toBeNull();
       expect(result.body.data).not.toBeNull();
     });
   });
-
 
   describe("Récupération des requêtes pour un oec connecté", () => {
     const uri = "/rece-requete-api/v1" + URL_REQUETES;
@@ -131,14 +128,15 @@ describe("Requete API Pact test", () => {
       // set up Pact interactions
 
       const interaction: InteractionObject | Interaction = {
-        state: "L'OEC dispose de requêtes au statut à signer sur plusieurs pages",
+        state:
+          "L'OEC dispose de requêtes au statut à signer sur plusieurs pages",
         uponReceiving: "Récupération des requêtes pour un oec connecté",
         withRequest: {
           method: "GET",
           path: uri,
           query: queryParameters,
           headers: {
-            "id_sso": "03901913"
+            id_sso: "03901913"
           }
         },
         willRespondWith: {
@@ -153,8 +151,8 @@ describe("Requete API Pact test", () => {
       await provider.addInteraction(interaction);
 
       const result = await new ApiPact(provider)
-          .get(uri)
-          .setHeaderIdSso("03901913")
+        .get(uri)
+        .setHeaderIdSso("03901913")
         .queryParameters(queryParameters)
         .execute()
         .then(res => {
@@ -165,7 +163,7 @@ describe("Requete API Pact test", () => {
       expect(result.body.data).not.toBeNull();
       expect(result.body.data.length).toBe(1);
       expect(result.body.data[0].idRequete).toBe(
-          expectedPartialResult.data.contents.idRequete
+        expectedPartialResult.data.contents.idRequete
       );
     });
 
@@ -173,14 +171,15 @@ describe("Requete API Pact test", () => {
       // set up Pact interactions
 
       const interaction: InteractionObject | Interaction = {
-        state: "L'OEC dispose de requêtes au statut à signer sur une seule page",
+        state:
+          "L'OEC dispose de requêtes au statut à signer sur une seule page",
         uponReceiving: "Récupération des requêtes pour un oec connecté",
         withRequest: {
           method: "GET",
           path: uri,
           query: queryParameters,
           headers: {
-            "id_sso": "03901913"
+            id_sso: "03901913"
           }
         },
         willRespondWith: {
@@ -195,19 +194,19 @@ describe("Requete API Pact test", () => {
       await provider.addInteraction(interaction);
 
       const result = await new ApiPact(provider)
-          .get(uri)
-          .setHeaderIdSso("03901913")
-          .queryParameters(queryParameters)
-          .execute()
-          .then(res => {
-            return res;
-          });
+        .get(uri)
+        .setHeaderIdSso("03901913")
+        .queryParameters(queryParameters)
+        .execute()
+        .then(res => {
+          return res;
+        });
 
       expect(result.body).not.toBeNull();
       expect(result.body.data).not.toBeNull();
       expect(result.body.data.length).toBe(1);
       expect(result.body.data[0].idRequete).toBe(
-          expectedFullResult.data.contents.idRequete
+        expectedFullResult.data.contents.idRequete
       );
     });
 
@@ -222,7 +221,7 @@ describe("Requete API Pact test", () => {
           path: uri,
           query: queryParameters,
           headers: {
-            "id_sso": "03901913"
+            id_sso: "03901913"
           }
         },
         willRespondWith: {
@@ -237,13 +236,13 @@ describe("Requete API Pact test", () => {
       await provider.addInteraction(interaction);
 
       const result = await new ApiPact(provider)
-          .get(uri)
-          .setHeaderIdSso("03901913")
-          .queryParameters(queryParameters)
-          .execute()
-          .then(res => {
-            return res;
-          });
+        .get(uri)
+        .setHeaderIdSso("03901913")
+        .queryParameters(queryParameters)
+        .execute()
+        .then(res => {
+          return res;
+        });
 
       expect(result.body).not.toBeNull();
       expect(result.body.data).not.toBeNull();
@@ -273,13 +272,13 @@ describe("Requete API Pact test", () => {
       await provider.addInteraction(interaction);
 
       const result = await new ApiPact(provider)
-          .get(uri)
-          .setHeaderIdSso("03901913")
-          .queryParameters(queryParameters)
-          .execute()
-          .then(res => {
-            return res;
-          });
+        .get(uri)
+        .setHeaderIdSso("03901913")
+        .queryParameters(queryParameters)
+        .execute()
+        .then(res => {
+          return res;
+        });
 
       expect(result.body).not.toBeNull();
       expect(result.body.data).not.toBeNull();
@@ -316,19 +315,19 @@ describe("Requete API Pact test", () => {
       errors: []
     };
 
-
     test("Le service dispose de requêtes au statut à signer sur plusieurs pages", async () => {
       // set up Pact interactions
 
       const interaction: InteractionObject | Interaction = {
-        state: "Le service dispose de requêtes au statut à signer sur plusieurs pages",
+        state:
+          "Le service dispose de requêtes au statut à signer sur plusieurs pages",
         uponReceiving: "Récupération des requêtes affectées au service",
         withRequest: {
           method: "GET",
           path: uri,
           query: queryParameters,
           headers: {
-            "id_sso": "03901913"
+            id_sso: "03901913"
           }
         },
         willRespondWith: {
@@ -343,19 +342,19 @@ describe("Requete API Pact test", () => {
       await provider.addInteraction(interaction);
 
       const result = await new ApiPact(provider)
-          .get(uri)
-          .setHeaderIdSso("03901913")
-          .queryParameters(queryParameters)
-          .execute()
-          .then(res => {
-            return res;
-          });
+        .get(uri)
+        .setHeaderIdSso("03901913")
+        .queryParameters(queryParameters)
+        .execute()
+        .then(res => {
+          return res;
+        });
 
       expect(result.body).not.toBeNull();
       expect(result.body.data).not.toBeNull();
       expect(result.body.data.length).toBe(1);
       expect(result.body.data[0].idRequete).toBe(
-          expectedPartialResult.data.contents.idRequete
+        expectedPartialResult.data.contents.idRequete
       );
     });
 
@@ -363,14 +362,15 @@ describe("Requete API Pact test", () => {
       // set up Pact interactions
 
       const interaction: InteractionObject | Interaction = {
-        state: "Le service dispose de requêtes au statut à signer sur une seule page",
+        state:
+          "Le service dispose de requêtes au statut à signer sur une seule page",
         uponReceiving: "Récupération des requêtes affectées au service",
         withRequest: {
           method: "GET",
           path: uri,
           query: queryParameters,
           headers: {
-            "id_sso": "03901913"
+            id_sso: "03901913"
           }
         },
         willRespondWith: {
@@ -385,19 +385,19 @@ describe("Requete API Pact test", () => {
       await provider.addInteraction(interaction);
 
       const result = await new ApiPact(provider)
-          .get(uri)
-          .setHeaderIdSso("03901913")
-          .queryParameters(queryParameters)
-          .execute()
-          .then(res => {
-            return res;
-          });
+        .get(uri)
+        .setHeaderIdSso("03901913")
+        .queryParameters(queryParameters)
+        .execute()
+        .then(res => {
+          return res;
+        });
 
       expect(result.body).not.toBeNull();
       expect(result.body.data).not.toBeNull();
       expect(result.body.data.length).toBe(1);
       expect(result.body.data[0].idRequete).toBe(
-          expectedFullResult.data.contents.idRequete
+        expectedFullResult.data.contents.idRequete
       );
     });
 
@@ -412,7 +412,7 @@ describe("Requete API Pact test", () => {
           path: uri,
           query: queryParameters,
           headers: {
-            "id_sso": "03901913"
+            id_sso: "03901913"
           }
         },
         willRespondWith: {
@@ -427,68 +427,17 @@ describe("Requete API Pact test", () => {
       await provider.addInteraction(interaction);
 
       const result = await new ApiPact(provider)
-          .get(uri)
-          .setHeaderIdSso("03901913")
-          .queryParameters(queryParameters)
-          .execute()
-          .then(res => {
-            return res;
-          });
+        .get(uri)
+        .setHeaderIdSso("03901913")
+        .queryParameters(queryParameters)
+        .execute()
+        .then(res => {
+          return res;
+        });
 
       expect(result.body).not.toBeNull();
       expect(result.body.data).not.toBeNull();
       expect(result.body.data.length).toBe(0);
-    });
-
-  });
-
-
-  describe("Interaction documents délivrés", () => {
-    const uri = "/rece-requete-api/v1" + URL_DOCUMENTSELIVRES + "/6aff8596-62e1-4cdd-9038-88715aa811f8";
-
-    const expectedResult = {
-      hasTechnicalError: false,
-      hasBusinessError: false,
-      status: 200,
-      url: uri,
-      data: documentDelivre,
-      errors: []
-    };
-
-    test("Récupération d'un document par son ID", async () => {
-      // set up Pact interactions
-
-      const interaction: InteractionObject | Interaction = {
-        state: "Récupération d'un document par son ID",
-        uponReceiving: "Interaction documents délivrés",
-        withRequest: {
-          method: "GET",
-          path: uri,
-          headers: {
-            "id_sso": "03901913"
-          }
-        },
-        willRespondWith: {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: expectedResult
-        }
-      };
-
-      await provider.addInteraction(interaction);
-
-      const result = await new ApiPact(provider)
-          .get(uri)
-          .setHeaderIdSso("03901913")
-          .execute()
-          .then(res => {
-            return res;
-          });
-
-      expect(result.body).not.toBeNull();
-      expect(result.body.data).not.toBeNull();
     });
   });
 });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { IOfficier } from "../../../../model/agent/IOfficier";
 import { IOngletProps } from "../../../../model/IOnglet";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
@@ -84,16 +84,19 @@ const EspaceDelivrancePageV2: React.FC<LocalProps> = ({ selectedTab }) => {
   >();
   useNavigationApercuRMCAuto(paramsRMCAuto);
 
-  const recuperationParamsRMCAuto = (
-    idRequete: string,
-    requete: IRequeteTableauDelivrance,
-    urlWithParam: string
-  ) => {
-    setParamsRMCAuto({
-      requete,
-      urlCourante: urlWithParam
-    });
-  };
+  const recuperationParamsRMCAuto = useCallback(
+    (
+      idRequete: string,
+      requete: IRequeteTableauDelivrance,
+      urlWithParam: string
+    ) => {
+      setParamsRMCAuto({
+        requete,
+        urlCourante: urlWithParam
+      });
+    },
+    []
+  );
 
   return (
     <>

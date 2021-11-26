@@ -14,6 +14,7 @@ import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-
 import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
+import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
@@ -31,6 +32,7 @@ const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
   idEntite: "11",
   type: TypeRequete.DELIVRANCE,
+  sousType: SousTypeDelivrance.RDC,
   dateCreation: 1577836800000,
   statutCourant: {
     statut: StatutRequete.A_TRAITER,
@@ -89,6 +91,7 @@ const requeteTestCOMEDEC = {
   idEntite: "11",
   dateCreation: 1577836800000,
   type: TypeRequete.DELIVRANCE,
+  sousType: SousTypeDelivrance.RDC,
   statutCourant: {
     statut: StatutRequete.A_TRAITER,
     dateEffet: 1577923200000

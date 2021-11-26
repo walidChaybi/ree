@@ -56,6 +56,10 @@ export class SousTypeDelivrance extends EnumWithComplete {
     return EnumWithLibelle.getEnumFor(str, SousTypeDelivrance);
   }
 
+  public static getEnumFromLibelleCourt(str: string) {
+    return EnumWithComplete.getEnumFromLibelleCourt(SousTypeDelivrance, str);
+  }
+
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(SousTypeDelivrance);
   }

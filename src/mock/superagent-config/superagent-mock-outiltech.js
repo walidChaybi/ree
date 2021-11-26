@@ -21,7 +21,7 @@ export const configOutiltech = [
       }
 
       const error = { msg: "url api outiltech non mockée", url: match[1] };
-      console.log("Erreur mock api: ", error);
+      console.log("Erreur mock api outil tech: ", error);
       return {
         data: error
       };

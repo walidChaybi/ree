@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import {
   getDocumentReponseById,
+  IMiseAJourDocumentParams,
+  patchDocumentsReponses,
   postDocumentReponseApi
 } from "../../../../api/appels/requeteApi";
 import { IDocumentReponse } from "../../../../model/requete/v2/IDocumentReponse";
@@ -60,4 +62,32 @@ export function usePostDocumentsReponseApi(
   }, [idRequete, documentsReponse]);
 
   return uuidPostDocuments;
+}
+
+export interface IResultatPatchDocumentReponse {
+  idRequete?: string;
+  erreur?: any;
+}
+
+export function usePatchDocumentsReponseApi(
+  miseAJourDocumentParams?: IMiseAJourDocumentParams[]
+) {
+  const [
+    resultatPatchDocumentReponse,
+    setResultatPatchDocumentReponse
+  ] = useState<IResultatPatchDocumentReponse>();
+
+  useEffect(() => {
+    if (miseAJourDocumentParams && miseAJourDocumentParams.length > 0) {
+      patchDocumentsReponses(miseAJourDocumentParams)
+        .then(result => {
+          setResultatPatchDocumentReponse({ idRequete: result.body.data });
+        })
+        .catch(error => {
+          setResultatPatchDocumentReponse({ erreur: error });
+        });
+    }
+  }, [miseAJourDocumentParams]);
+
+  return resultatPatchDocumentReponse;
 }

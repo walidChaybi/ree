@@ -2,9 +2,13 @@ import React, { useCallback, useState } from "react";
 import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { IOfficier } from "../../../../model/agent/IOfficier";
-import { IDataTable } from "../../../../model/requete/IDataTable";
-import { StatutRequete } from "../../../../model/requete/StatutRequete";
-import { normaliserNomOec } from "../../util/Utils";
+import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
+import {
+  IDocumentReponseTableau,
+  IRequeteTableauDelivrance
+} from "../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { getValeurOuVide } from "../../util/Utils";
 import { PopinSignature } from "../signature/PopinSignature";
 import { getText } from "../Text";
 import {
@@ -19,7 +23,7 @@ interface BoutonSignatureProps extends DialogDisclosureHTMLProps {
 }
 
 export interface TableauDataToUse {
-  requetes?: IDataTable[];
+  requetes?: IRequeteTableauDelivrance[];
   reloadData?: (allRequestSigned: boolean) => void;
 }
 
@@ -33,8 +37,9 @@ export const BoutonSignature: React.FC<
   connectedUser
 }) => {
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
-  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] =
-    useState<DocumentsByRequete>({});
+  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<
+    DocumentsByRequete
+  >({});
   const closePopin = useCallback(
     (showPopin: boolean, canReload: boolean) => {
       if (showWaitState && showPopin === false) {
@@ -61,29 +66,33 @@ export const BoutonSignature: React.FC<
     const newDocumentsByRequeteToSign: DocumentsByRequete = {};
     requetes.forEach(requete => {
       if (
-        requete.reponse !== undefined &&
-        requete.statut === StatutRequete.ASigner &&
-        requete.reponse.documentsDelivres.length > 0
+        requete.documentsReponses &&
+        requete.documentsReponses.length > 0 &&
+        requete.statut === StatutRequete.A_SIGNER.libelle
       ) {
         const documentsATraiter: DocumentsATraiter = {
           documentsToSign: [],
           documentsToSave: [],
-          sousTypeRequete: requete.sousTypeRequete
+          sousTypeRequete: SousTypeDelivrance.getEnumFromLibelleCourt(
+            requete.sousType
+          )
         };
 
-        requete.reponse.documentsDelivres.forEach((document: any) => {
-          if (document.avecCtv === true) {
-            documentsATraiter.documentsToSign.push({
-              idDocumentDelivre: document.idDocumentDelivre,
-              mimeType: document.mimeType,
-              infos: [{ cle: "idRequete", valeur: document.idDocumentDelivre }],
-              nomDocument: document.nom,
-              conteneurSwift: document.conteneurSwift,
-              idRequete: requete.idRequete,
-              numeroRequete: requete.idSagaDila
-            });
+        requete.documentsReponses.forEach(
+          (document: IDocumentReponseTableau) => {
+            if (document.avecCtv === true) {
+              documentsATraiter.documentsToSign.push({
+                id: document.id,
+                mimeType: document.mimeType,
+                infos: [{ cle: "idRequete", valeur: document.id }],
+                nomDocument: document.nom,
+                conteneurSwift: document.conteneurSwift,
+                idRequete: requete.idRequete,
+                numeroRequete: getValeurOuVide(requete.numero)
+              });
+            }
           }
-        });
+        );
         if (documentsATraiter.documentsToSign.length > 0) {
           newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;
         }
@@ -112,17 +121,18 @@ export const BoutonSignature: React.FC<
 };
 
 const signaturePossible = (
-  requetes: IDataTable[],
+  requetes: IRequeteTableauDelivrance[],
   uniqueSignature = false,
   connectedUser?: IOfficier
 ): boolean => {
   if (uniqueSignature === true) {
+    const requete = requetes[0];
     return (
+      requete.statut === StatutRequete.A_SIGNER.libelle &&
       connectedUser !== undefined &&
-      normaliserNomOec(requetes[0].nomOec) ===
-        normaliserNomOec(`${connectedUser.prenom} ${connectedUser.nom}`)
+      connectedUser.idUtilisateur === requete.idUtilisateur
     );
   } else {
-    return requetes.some(req => req.statut === StatutRequete.ASigner);
+    return requetes.some(req => req.statut === StatutRequete.A_SIGNER.libelle);
   }
 };

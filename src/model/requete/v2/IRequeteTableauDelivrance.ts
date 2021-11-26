@@ -28,7 +28,7 @@ export interface IRequeteTableauDelivrance {
   numeroTeledossier?: string;
   idSagaDila?: string;
   type?: string;
-  sousType?: string;
+  sousType: string;
   provenance?: string;
   nature?: string;
   document?: string; // id du type de document demandé
@@ -47,6 +47,17 @@ export interface IRequeteTableauDelivrance {
   nomUtilisateurAttribueA?: string;
   idEntiteRattachement?: string;
   canal?: TypeCanal;
+  documentsReponses?: IDocumentReponseTableau[];
+}
+
+export interface IDocumentReponseTableau {
+  id: string;
+  nom: string;
+  typeDocument: string; // UUID nomenclature
+  taille: number;
+  avecCtv: boolean;
+  conteneurSwift: string;
+  mimeType: string;
 }
 
 //////////////////////////////////////////
@@ -83,7 +94,7 @@ export function mappingUneRequeteTableau(
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     requerant: requete?.requerant
       ? Requerant.mappingRequerant(requete?.requerant)
-      : null,
+      : undefined,
     nomCompletRequerant: requete?.nomCompletRequerant,
     attribueA: mapAttribueA(requete),
     dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
@@ -97,8 +108,9 @@ export function mappingUneRequeteTableau(
     idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
     idCorbeilleAgent: valeurOuUndefined(requete?.idCorbeilleAgent),
     idEntiteRattachement: valeurOuUndefined(requete?.idEntiteRattachement),
-    canal: TypeCanal.getEnumFor(requete.canal)
-  } as IRequeteTableauDelivrance;
+    canal: TypeCanal.getEnumFor(requete.canal),
+    documentsReponses: requete.documentsReponses
+  };
 }
 
 function getSousType(type: string, sousType: string) {

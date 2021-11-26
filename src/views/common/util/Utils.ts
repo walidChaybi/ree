@@ -33,23 +33,6 @@ export function triListeObjetsSurPropriete(objets: any[], propriete: string) {
     : [];
 }
 
-export function normaliserNomOec(nom: string) {
-  let result = nom;
-  result = result.normalize("NFD");
-  result = result.replace(/[\u0300-\u036F]/g, "");
-  result = result.replace(/\s\s/g, " ");
-  result = result.replace(/ -/g, "-");
-  result = result.replace(/- /g, "-");
-  result = result.replace(/\s'/g, "'");
-  result = result.replace(/'\s/g, "'");
-  result = result.replace("æ", "ae");
-  result = result.replace("Æ", "ae");
-  result = result.replace("œ", "oe");
-  result = result.replace("Œ", "oe");
-  result = result.toLowerCase().trim();
-  return result;
-}
-
 export function formatMajusculesMinusculesMotCompose(str?: string) {
   let res = "";
   if (str) {

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { IUuidRequeteParams } from "../../../../model/requete/v2/IUuidRequeteParams";
 import { useGetDocumentReponseApi } from "../../../common/hook/v2/DocumentReponseHook";
+import { MigratorV1V2 } from "../../../common/util/migration/MigratorV1V2";
 import { getIdDocumentReponseAAfficher } from "../../../common/util/RequetesUtils";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { VisionneuseDocument } from "../../../common/widget/document/VisionneuseDocument";
@@ -68,7 +69,11 @@ export const ApercuRequetePageV2: React.FC = () => {
                 contenu={contenuDocument ? contenuDocument.contenu : ""}
                 typeMime={contenuDocument?.mimeType}
               />
-              <BoutonPrendreEnCharge requete={requete}></BoutonPrendreEnCharge>
+              {!MigratorV1V2.estRDDouRDC(requete) && (
+                <BoutonPrendreEnCharge
+                  requete={requete}
+                ></BoutonPrendreEnCharge>
+              )}
             </div>
           </div>
         </ProtectionApercu>

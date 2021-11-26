@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
-import { PATH_APERCU_REQ_TRAITEMENT } from "../../../../router/ReceUrls";
+import {
+  PATH_APERCU_REQ,
+  PATH_APERCU_REQ_TRAITEMENT
+} from "../../../../router/ReceUrls";
+import { MigratorV1V2 } from "../../../util/migration/MigratorV1V2";
 import {
   autorisePrendreEnChargeTableau,
   typeEstDelivrance
@@ -45,12 +49,7 @@ export function useNavigationApercu(
         setRedirection({ isRmcAuto: true });
       } else {
         // Si la requête N'EST PAS dans sa corbeille agent-> redirection vers "Aperçu de requête"
-        setRedirection({
-          url: getUrlWithParam(
-            `${urlWithParam}/apercurequete/:idRequete`,
-            requete.idRequete
-          )
-        });
+        redirectionApercuRequete(setRedirection, urlWithParam, requete);
       }
     }
   }, [urlWithParam, requete]);
@@ -65,7 +64,7 @@ const redirectionEnFonctionMaRequete = (
   ) => void,
   urlWithParam: string
 ) => {
-  if (requete.statut && requete.type && typeEstDelivrance(requete.type)) {
+  if (estUneRequeteDeDelivranceAvecUnStatut(requete)) {
     switch (requete.statut) {
       case StatutRequete.TRANSFEREE.libelle:
       case StatutRequete.A_TRAITER.libelle:
@@ -78,28 +77,56 @@ const redirectionEnFonctionMaRequete = (
         break;
       case StatutRequete.A_SIGNER.libelle:
       case StatutRequete.A_VALIDER.libelle:
+      case MigratorV1V2.getStatutTraiteADelivrerDematLibelle():
+      case MigratorV1V2.getStatutTraiteAImprimerLibelle():
         // US 207 et au statut "A signer" ou "A valider", redirection vers "Aperçu du traitement"
-        setRedirection({
-          url: getUrlWithParam(
-            `${urlWithParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
-            requete.idRequete
-          )
-        });
+        redirectionApercuTraitement(setRedirection, urlWithParam, requete);
         break;
       case StatutRequete.BROUILLON.libelle:
         redirectionBrouillon(requete, setRedirection, urlWithParam);
         break;
       default:
-        setRedirection({
-          url: getUrlWithParam(
-            `${urlWithParam}/apercurequete/:idRequete`,
-            requete.idRequete
-          )
-        });
+        redirectionApercuRequete(setRedirection, urlWithParam, requete);
         break;
     }
   }
 };
+
+function estUneRequeteDeDelivranceAvecUnStatut(
+  requete: IRequeteTableauDelivrance
+) {
+  return requete.statut && requete.type && typeEstDelivrance(requete.type);
+}
+
+function redirectionApercuTraitement(
+  setRedirection: (
+    value: React.SetStateAction<INavigationApercu | undefined>
+  ) => void,
+  urlWithParam: string,
+  requete: IRequeteTableauDelivrance
+) {
+  setRedirection({
+    url: getUrlWithParam(
+      `${urlWithParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
+      requete.idRequete
+    )
+  });
+}
+
+function redirectionApercuRequete(
+  setRedirection: (
+    value: React.SetStateAction<INavigationApercu | undefined>
+  ) => void,
+  urlWithParam: string,
+  requete: IRequeteTableauDelivrance
+) {
+  setRedirection({
+    url: getUrlWithParam(
+      `${urlWithParam}/${PATH_APERCU_REQ}/:idRequete`,
+      requete.idRequete
+    )
+  });
+}
 
 function redirectionATraiterTransferee(
   requete: IRequeteTableauDelivrance,
@@ -111,12 +138,7 @@ function redirectionATraiterTransferee(
   if (autorisePrendreEnChargeTableau(requete)) {
     setRedirection({ isRmcAuto: true });
   } else {
-    setRedirection({
-      url: getUrlWithParam(
-        `${urlWithParam}/apercurequete/:idRequete`,
-        requete.idRequete
-      )
-    });
+    redirectionApercuRequete(setRedirection, urlWithParam, requete);
   }
 }
 

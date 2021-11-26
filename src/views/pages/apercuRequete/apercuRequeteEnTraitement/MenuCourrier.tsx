@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../model/requete/v2/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { IActionOption } from "../../../../model/requete/v2/IActionOption";
-import { estExtraitCopie } from "../../../../model/requete/v2/IDocumentReponse";
+import { DocumentReponse } from "../../../../model/requete/v2/IDocumentReponse";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { getUrlWithoutIdParam } from "../../../common/util/route/routeUtil";
@@ -55,8 +55,9 @@ export const MenuCourrier: React.FC<IMenuCourrierProps> = props => {
         ref: refAction0
       });
       if (
-        requete.documentsReponses.filter(res => estExtraitCopie(res)).length >=
-        NB_DOCUMENTS_GENERES_2
+        requete.documentsReponses.filter(res =>
+          DocumentReponse.estExtraitCopie(res)
+        ).length >= NB_DOCUMENTS_GENERES_2
       ) {
         temp.push({
           label: getLibelle("Afficher E/C complémentaire"),

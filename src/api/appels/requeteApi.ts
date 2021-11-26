@@ -21,7 +21,6 @@ export const URL_MES_REQUETES_INFORMATION = "/requetes/information/mesrequetes";
 export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_INFORMATION_STATUT = "/requetes/information/statut";
 export const URL_REQUETES_COUNT = "/requetes/count";
-export const URL_DOCUMENTSELIVRES = "/documentsdelivres";
 export const URL_REQUETES_RMC = "/requetes/rmc";
 export const URL_REQUETES_RMC_AUTO = "/requetes/rmcauto";
 export const URL_NOMENCLATURE = "/nomenclature";
@@ -67,10 +66,11 @@ export interface IQueryParametersPourRequetesV2 {
   range?: string;
 }
 
-export interface IQueryParameterUpdateDocument {
+export interface IMiseAJourDocumentParams {
   contenu: string;
   nom: string;
   conteneurSwift: string;
+  id: string;
 }
 
 export interface IQueryParametersAssigneRequetes {
@@ -146,17 +146,6 @@ export function patchStatutRequete(
     method: HttpMethod.PATCH,
     uri: URL_REQUETES,
     parameters: { ...queryParameters },
-    headers: []
-  });
-}
-
-export function patchDocumentsDelivresRequetes(
-  queryParameters: IQueryParameterUpdateDocument[]
-): Promise<any> {
-  return api.fetch({
-    method: HttpMethod.PATCH,
-    uri: URL_DOCUMENTSELIVRES,
-    data: queryParameters,
     headers: []
   });
 }
@@ -543,5 +532,16 @@ export async function updateStatutRequeteInformation(
     parameters: {
       statut: statutDemande.nom
     }
+  });
+}
+
+export function patchDocumentsReponses(
+  miseAJourDocumentParams: IMiseAJourDocumentParams[]
+): Promise<any> {
+  return apiV2.fetch({
+    method: HttpMethod.PATCH,
+    uri: URL_DOCUMENT_REPONSE,
+    data: miseAJourDocumentParams,
+    headers: []
   });
 }

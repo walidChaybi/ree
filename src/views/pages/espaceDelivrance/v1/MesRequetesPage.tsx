@@ -5,7 +5,6 @@ import {
 } from "../../../../api/appels/requeteApi";
 import { StatutRequete } from "../../../../model/requete/StatutRequete";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
-import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL,
@@ -105,9 +104,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         goToLink={goToLink}
         handleChangeSort={handleChangeSort}
         handleReload={handleReload}
-      >
-        <BoutonSignature libelle={"pages.delivrance.action.signature"} />
-      </TableauRece>
+      ></TableauRece>
       <BoutonRetour />
     </>
   );

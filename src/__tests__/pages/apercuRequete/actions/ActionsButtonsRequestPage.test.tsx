@@ -1,8 +1,8 @@
-import React from "react";
 import { render } from "@testing-library/react";
-import { ActionsButtonsRequestPage } from "../../../../views/pages/apercuRequete/actions/ActionsButtonsRequestPage";
+import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import requete from "../../../../mock/data/requete.js";
+import { ActionsButtonsRequestPage } from "../../../../views/pages/apercuRequete/actions/ActionsButtonsRequestPage";
 
 test("renders boutons d'actions d'une requête", () => {
   const { getAllByRole, getByText } = render(
@@ -31,9 +31,9 @@ test("renders boutons d'actions d'une requête", () => {
       />
     </Router>
   );
-  expect(getAllByRole("button").length).toBe(5);
+  expect(getAllByRole("button").length).toBe(4);
   expect(getByText("Retour à mes requêtes")).not.toBeNull();
-  expect(getByText("Signer et terminer")).not.toBeNull();
+  // MIG V1=>V2 le composant sera supprimé en étape 2: expect(getByText("Signer et terminer")).not.toBeNull();
 });
 
 test("renders boutons d'actions d'une requête avec le bouton de signature disabled", () => {
@@ -63,10 +63,10 @@ test("renders boutons d'actions d'une requête avec le bouton de signature disab
       />
     </Router>
   );
-  expect(getAllByRole("button").length).toBe(5);
-  expect(getByText(/Signer et terminer/).closest("button")).toHaveAttribute(
-    "disabled"
-  );
+  expect(getAllByRole("button").length).toBe(4);
+  // MIG V1=>V2 le composant sera supprimé en étape 2expect(getByText(/Signer et terminer/).closest("button")).toHaveAttribute(
+  //   "disabled"
+  // );
 });
 
 test("renders boutons d'actions d'une requête sauf le bouton de signature", () => {

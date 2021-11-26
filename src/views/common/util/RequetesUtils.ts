@@ -18,6 +18,7 @@ import {
 import { IRequeteTableauDelivrance } from "../../../model/requete/v2/IRequeteTableauDelivrance";
 import { getText } from "../../common/widget/Text";
 import { FormatDate } from "./DateUtils";
+import { MigratorV1V2 } from "./migration/MigratorV1V2";
 
 export const indexParamsReq = {
   Statut: 0,
@@ -92,6 +93,10 @@ export const autorisePrendreEnChargeDelivrance = (
 export const autorisePrendreEnChargeTableau = (
   requete: IRequeteTableauDelivrance
 ) =>
+  !MigratorV1V2.estSousTypeRDDouRDC(requete.sousType) &&
+  autorisePrendreEnChargeTableau2(requete);
+
+const autorisePrendreEnChargeTableau2 = (requete: IRequeteTableauDelivrance) =>
   typeEstDelivrance(requete.type ? requete.type : "") &&
   statutEstATraiterOuTransferee(requete.statut ? requete.statut : "") &&
   mAppartient(requete.idUtilisateur ? requete.idUtilisateur : "") &&
@@ -120,8 +125,9 @@ export function getIdDocumentReponseAAfficher(
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const requeteDelivrance = requete;
 
-    const documentsDeDelivrance =
-      RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
+    const documentsDeDelivrance = RequeteDelivrance.getDocumentsDeDelivrance(
+      requeteDelivrance
+    );
     if (documentsDeDelivrance.length > 0) {
       idDocumentAAfficher = documentsDeDelivrance[0].id;
     } else if (requeteDelivrance.documentsReponses.length > 0) {
