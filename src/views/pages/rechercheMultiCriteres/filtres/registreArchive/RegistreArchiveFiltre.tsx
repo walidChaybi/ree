@@ -1,23 +1,21 @@
+import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
 import {
   ComponentFiltreProps,
-  withNamespace,
-  FormikComponentProps
+  FormikComponentProps,
+  withNamespace
 } from "../../../../common/widget/formulaire/utils/FormUtil";
-import RegistreActeFiltre, {
-  RegistreActeDefaultValues,
-  RegistreActeValidationSchema,
-  RegistreActeFiltreProps
-} from "../registreReperoire/RegistreActeFiltre";
-import { getLibelle } from "../../../../common/widget/Text";
 import EvenementFiltre, {
-  EvenementFiltreProps,
   EvenementDefaultValues,
+  EvenementFiltreProps,
   EvenementValidationSchema
 } from "../registreReperoire/EvenementFiltre";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { connect } from "formik";
+import RegistreActeFiltre, {
+  RegistreActeDefaultValues,
+  RegistreActeFiltreProps,
+  RegistreActeValidationSchema
+} from "../registreReperoire/RegistreActeFiltre";
 
 // Noms des champs
 export const REGISTRE = "registre";
@@ -49,17 +47,8 @@ const RegistreArchiveFiltre: React.FC<RegistreArchiveFiltreProps> = props => {
 
   return (
     <div className={props.nomFiltre}>
-      <Fieldset titre={getLibelle("Filtre registre")}>
-        <div className="FormFiltre">
-          <RegistreActeFiltre
-            filtreInactif={false}
-            {...registreActeFiltreProps}
-          />
-        </div>
-        <div className="FormFiltre">
-          <EvenementFiltre filtreInactif={false} {...evenementFiltreProps} />
-        </div>
-      </Fieldset>
+      <RegistreActeFiltre filtreInactif={false} {...registreActeFiltreProps} />
+      <EvenementFiltre filtreInactif={false} {...evenementFiltreProps} />
     </div>
   );
 };
