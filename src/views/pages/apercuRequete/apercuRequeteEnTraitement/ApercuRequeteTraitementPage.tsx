@@ -68,6 +68,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
         <ProtectionApercu
           statut={requete.statutCourant.statut}
           type={requete.type}
+          sousType={requete.sousType}
         >
           <BandeauRequete detailRequete={requete} />
           <div className="contenu-requete">

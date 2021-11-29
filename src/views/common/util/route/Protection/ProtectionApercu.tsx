@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { SousTypeRequete } from "../../../../../model/requete/v2/enum/SousTypeRequete";
 import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
 import {
@@ -17,12 +18,14 @@ import { Protection } from "./Protection";
 interface ProtectionApercuProps {
   statut?: StatutRequete;
   type?: TypeRequete;
+  sousType?: SousTypeRequete;
 }
 
 export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
   children,
   statut,
-  type
+  type,
+  sousType
 }) => {
   const history = useHistory();
   const [estBonStatut, setEstBonStatut] = useState<boolean>(true);
@@ -35,9 +38,9 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     ) {
       setEstBonStatut(true);
     } else {
-      setEstBonStatut(checkURL(history, statut, type));
+      setEstBonStatut(checkURL(history, statut, type, sousType));
     }
-  }, [statut, type, history]);
+  }, [statut, type, sousType, history]);
 
   return (
     <Protection
@@ -54,11 +57,12 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
 export function checkURL(
   history: any,
   statut?: StatutRequete,
-  type?: TypeRequete
+  type?: TypeRequete,
+  sousType?: SousTypeRequete
 ) {
   switch (type) {
     case TypeRequete.DELIVRANCE:
-      return checkURLDelivrance(history, statut);
+      return checkURLDelivrance(history, statut, sousType);
     case TypeRequete.INFORMATION:
       return checkURLInformation(history, statut);
     default:
@@ -66,7 +70,11 @@ export function checkURL(
   }
 }
 
-function checkURLDelivrance(history: any, statut?: StatutRequete) {
+function checkURLDelivrance(
+  history: any,
+  statut?: StatutRequete,
+  sousType?: SousTypeRequete
+) {
   switch (statut) {
     case StatutRequete.BROUILLON:
       return receUrl.getUrlCourante(history).includes(PATH_SAISIR_RDCSC);
@@ -84,12 +92,16 @@ function checkURLDelivrance(history: any, statut?: StatutRequete) {
         receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
         receUrl.getUrlCourante(history).includes(PATH_APERCU_COURRIER)
       );
-    case MigratorV1V2.getStatutTraiteADelivrerDemat():
-    case MigratorV1V2.getStatutTraiteAImprimer():
-      return receUrl
-        .getUrlCourante(history)
-        .includes(PATH_APERCU_REQ_TRAITEMENT);
     default:
+      if (
+        sousType &&
+        MigratorV1V2.estARetraiterSagaStatutSousType(statut, sousType)
+      ) {
+        return receUrl
+          .getUrlCourante(history)
+          .includes(PATH_APERCU_REQ_TRAITEMENT);
+      }
+
       return false;
   }
 }

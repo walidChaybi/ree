@@ -1,9 +1,11 @@
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { SousTypeRequete } from "../../../../model/requete/v2/enum/SousTypeRequete";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
 
 const A_RETRAITER = "A_RETRAITER";
 export class MigratorV1V2 {
@@ -12,14 +14,6 @@ export class MigratorV1V2 {
   //    commentaire "Mise en service étape 2 R1,R2,R7 (conservation fonctionnement Etape1)")
   //  - StatutRequete.TRAITE_A_DELIVRER_DEMAT (pour RDC/RDD)
   //  - StatutRequete.TRAITE_A_IMPRIMER (uniquement pour les RDC)
-
-  public static getStatutTraiteADelivrerDemat(): StatutRequete {
-    return StatutRequete.TRAITE_A_DELIVRER_DEMAT;
-  }
-
-  public static getStatutTraiteAImprimer(): StatutRequete {
-    return StatutRequete.TRAITE_A_IMPRIMER;
-  }
 
   public static getStatutARetraiter(): StatutRequete {
     // @ts-ignore
@@ -34,25 +28,44 @@ export class MigratorV1V2 {
     return StatutRequete[A_RETRAITER];
   }
 
-  public static getStatutTraiteADelivrerDematLibelle(): string {
-    return StatutRequete.TRAITE_A_DELIVRER_DEMAT.libelle;
-  }
-
-  public static getStatutTraiteAImprimerLibelle(): string {
-    return StatutRequete.TRAITE_A_IMPRIMER.libelle;
-  }
-
   public static estARetraiterSaga(requete: IRequeteDelivrance) {
     // Il n'y a que les TRAITE_A_IMPRIMER et de sous type RDC qui peuvent être retraitées dans SAGA
     //  (les RDD TRAITE_A_IMPRIMER ont déjà fait l'objet d'une délivrance et ne doivent pas être retraitées)
     // Normalement on ne peut pas voir les requête RDD TRAITE_A_IMPRIMER
     return (
-      (MigratorV1V2.estRDDouRDC(requete) &&
+      (MigratorV1V2.estRDD(requete) &&
         requete.statutCourant.statut ===
           StatutRequete.TRAITE_A_DELIVRER_DEMAT) ||
       (MigratorV1V2.estRDC(requete) &&
         requete.statutCourant.statut === StatutRequete.TRAITE_A_IMPRIMER)
     );
+  }
+
+  public static estARetraiterSagaRequeteTableau(
+    requete: IRequeteTableauDelivrance
+  ) {
+    const requeteDelivrance = {
+      sousType: SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType),
+      statutCourant: {
+        statut: requete.statut
+          ? StatutRequete.getEnumFromLibelle(requete.statut)
+          : undefined
+      }
+    } as IRequeteDelivrance;
+    return MigratorV1V2.estARetraiterSaga(requeteDelivrance);
+  }
+
+  public static estARetraiterSagaStatutSousType(
+    statut?: StatutRequete,
+    sousType?: SousTypeRequete
+  ) {
+    const requeteDelivrance = {
+      sousType,
+      statutCourant: {
+        statut
+      }
+    } as IRequeteDelivrance;
+    return MigratorV1V2.estARetraiterSaga(requeteDelivrance);
   }
 
   public static estASigner(requete: IRequeteDelivrance) {
@@ -61,6 +74,10 @@ export class MigratorV1V2 {
 
   private static estRDC(requete: IRequeteDelivrance) {
     return requete.sousType === SousTypeDelivrance.RDC;
+  }
+
+  private static estRDD(requete: IRequeteDelivrance) {
+    return requete.sousType === SousTypeDelivrance.RDD;
   }
 
   public static estRDDouRDC(requete: IRequeteDelivrance) {

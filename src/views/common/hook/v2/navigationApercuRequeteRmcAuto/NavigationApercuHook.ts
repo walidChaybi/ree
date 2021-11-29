@@ -77,8 +77,6 @@ const redirectionEnFonctionMaRequete = (
         break;
       case StatutRequete.A_SIGNER.libelle:
       case StatutRequete.A_VALIDER.libelle:
-      case MigratorV1V2.getStatutTraiteADelivrerDematLibelle():
-      case MigratorV1V2.getStatutTraiteAImprimerLibelle():
         // US 207 et au statut "A signer" ou "A valider", redirection vers "Aperçu du traitement"
         redirectionApercuTraitement(setRedirection, urlWithParam, requete);
         break;
@@ -86,7 +84,11 @@ const redirectionEnFonctionMaRequete = (
         redirectionBrouillon(requete, setRedirection, urlWithParam);
         break;
       default:
-        redirectionApercuRequete(setRedirection, urlWithParam, requete);
+        if (MigratorV1V2.estARetraiterSagaRequeteTableau(requete)) {
+          redirectionApercuTraitement(setRedirection, urlWithParam, requete);
+        } else {
+          redirectionApercuRequete(setRedirection, urlWithParam, requete);
+        }
         break;
     }
   }
