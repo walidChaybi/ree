@@ -3,7 +3,7 @@ import { getValeurOuVide } from "../../common/util/Utils";
 import { Text } from "../../common/widget/Text";
 
 interface MessageProps {
-  message: string;
+  message?: string;
 }
 
 export const PageMessage: React.FC<MessageProps> = ({ message }) => {

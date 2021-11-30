@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../../model/requete/v2/enum/ChoixDelivrance";
+import { NatureActeRequete } from "../../../../../../model/requete/v2/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "../../../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
-import { TypeNatureActe } from "../../../../../../model/requete/v2/enum/TypeNatureActe";
 import { IActionOption } from "../../../../../../model/requete/v2/IActionOption";
 import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -42,21 +42,16 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
-  const [inscriptions, setInscriptions] = useState<
-    IResultatRMCInscription[] | undefined
-  >();
+  const [inscriptions, setInscriptions] =
+    useState<IResultatRMCInscription[] | undefined>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [
-    paramUpdateChoixDelivrance,
-    setParamUpdateChoixDelivrance
-  ] = useState<UpdateChoixDelivranceProps>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
+    useState<UpdateChoixDelivranceProps>();
 
-  const [
-    actionStatutRequete,
-    setActionStatutRequete
-  ] = useState<IActionStatutRequete>();
+  const [actionStatutRequete, setActionStatutRequete] =
+    useState<IActionStatutRequete>();
 
   useEffect(() => {
     setInscriptions(
@@ -110,9 +105,8 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
     resetDoubleSubmit
   );
 
-  const delivrerOptions: IActionOption[] = getOptionsMenuDelivrer(
-    refDelivrerOptions0
-  );
+  const delivrerOptions: IActionOption[] =
+    getOptionsMenuDelivrer(refDelivrerOptions0);
 
   const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = (
     indexMenu: number,
@@ -129,7 +123,7 @@ export const MenuDelivrer: React.FC<IActionProps> = props => {
       if (unActeEtUnSeulSelectionne(listeActes, listeInscriptions)) {
         if (
           estChoixExtraitAvecOuSansFiliation(indexMenu) &&
-          listeActes?.[0]?.nature === TypeNatureActe.DECES.libelle
+          listeActes?.[0]?.nature === NatureActeRequete.DECES.libelle
         ) {
           message = [
             getLibelle(

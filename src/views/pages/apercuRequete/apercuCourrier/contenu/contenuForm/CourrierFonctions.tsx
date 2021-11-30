@@ -16,8 +16,8 @@ import {
   REFUS_DELIVRANCE_MARIAGE
 } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../../../model/requete/v2/enum/MotifDelivrance";
+import { NatureActeRequete } from "../../../../../../model/requete/v2/enum/NatureActeRequete";
 import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
-import { TypeNatureActe } from "../../../../../../model/requete/v2/enum/TypeNatureActe";
 import { IDocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
 import { OptionsCourrier } from "../../../../../../model/requete/v2/IOptionCourrier";
 import { Requerant } from "../../../../../../model/requete/v2/IRequerant";
@@ -168,12 +168,12 @@ export function getDocumentReponseAModifier(
 
 function majOptionsPourActeNaissaneOuDecesDemande(
   typesCourrier: Options,
-  typeNatureActe?: TypeNatureActe
+  natureActeRequete?: NatureActeRequete
 ) {
   if (
-    typeNatureActe &&
-    typeNatureActe !== TypeNatureActe.NAISSANCE &&
-    typeNatureActe !== TypeNatureActe.DECES
+    natureActeRequete &&
+    natureActeRequete !== NatureActeRequete.NAISSANCE &&
+    natureActeRequete !== NatureActeRequete.DECES
   ) {
     typesCourrier.push(
       DocumentDelivrance.getOptionFromCode(REFUS_DELIVRANCE_MARIAGE) // ???

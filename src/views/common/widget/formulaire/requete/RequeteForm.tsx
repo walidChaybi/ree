@@ -8,7 +8,7 @@ import {
   EXTRAIT_PLURILINGUE
 } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../../model/requete/v2/enum/MotifDelivrance";
-import { TypeNatureActe } from "../../../../../model/requete/v2/enum/TypeNatureActe";
+import { NatureActeRequete } from "../../../../../model/requete/v2/enum/NatureActeRequete";
 import {
   COMPLEMENT_MOTIF,
   DOCUMENT_DEMANDE,
@@ -83,11 +83,12 @@ const RequeteForm: React.FC<SubFormProps> = props => {
     DocumentDelivrance.getCodesAsOptions(CodesExtraitCopie)
   );
 
-  const [complementMotifInactif, setComplementMotifInactif] = useState<boolean>(
-    true
-  );
+  const [complementMotifInactif, setComplementMotifInactif] =
+    useState<boolean>(true);
 
-  const onChangeTypeNatureActe = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeNatureActeRequete = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (props.onChange) {
       props.onChange(e.target.value);
     }
@@ -126,9 +127,9 @@ const RequeteForm: React.FC<SubFormProps> = props => {
               <SelectField
                 name={withNamespace(props.nom, NATURE_ACTE)}
                 label={getLibelle("Nature d'acte concerné")}
-                options={TypeNatureActe.getAllEnumsAsOptions()}
+                options={NatureActeRequete.getAllEnumsAsOptions()}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onChangeTypeNatureActe(e);
+                  onChangeNatureActeRequete(e);
                 }}
               />
               <SelectField

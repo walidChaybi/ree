@@ -4,11 +4,11 @@ import {
   numberToString,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../views/common/util/Utils";
-import { TypeNatureActe } from "./enum/TypeNatureActe";
+import { NatureActeRequete } from "./enum/NatureActeRequete";
 
 export interface IEvenementReqDelivrance {
   id: string;
-  natureActe: TypeNatureActe;
+  natureActe: NatureActeRequete;
   jour?: number;
   mois?: number;
   annee?: number;

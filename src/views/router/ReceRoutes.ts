@@ -129,7 +129,7 @@ export const routesRece: IRoute[] = [
   {
     url: URL_DECONNEXION,
     component: PageMessage,
-    props: { messageLogin: "pages.login.deconnexion" },
+    props: { message: "pages.login.deconnexion" },
     libelle: getLibelle("Déconnexion")
   },
   /************* VERSION 1 ************/

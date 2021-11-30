@@ -1,4 +1,4 @@
-import { TypeNatureActe } from "../../../../model/requete/v2/enum/TypeNatureActe";
+import { NatureActeRequete } from "../../../../model/requete/v2/enum/NatureActeRequete";
 import { getLibelle } from "../../../common/widget/Text";
 import { SaisieRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
 
@@ -16,8 +16,8 @@ export function verifierDonneesObligatoires(values: SaisieRequeteRDC) {
   const motif = values.requete.motif;
 
   if (
-    TypeNatureActe.NAISSANCE ===
-    TypeNatureActe.getEnumFor(values.requete.natureActe)
+    NatureActeRequete.NAISSANCE ===
+    NatureActeRequete.getEnumFor(values.requete.natureActe)
   ) {
     const titulaire1 = values.titulaire1;
     return (

@@ -1,8 +1,8 @@
+import { NatureActeRequete } from "../../../../model/requete/v2/enum/NatureActeRequete";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
-import { TypeNatureActe } from "../../../../model/requete/v2/enum/TypeNatureActe";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
 import { supprimeProprietesVides } from "../../../common/util/supprimeProprietesVides";
@@ -17,7 +17,7 @@ import { getPrenoms } from "./mappingCommun";
 export function mappingFormulaireRDCVersRequeteDelivrance(
   requeteRDC: CreationRequeteRDC
 ): IRequeteDelivrance {
-  const requete = ({
+  const requete = {
     type: TypeRequete.DELIVRANCE.nom,
     sousType: SousTypeDelivrance.RDC.nom,
     canal: TypeCanal.COURRIER.nom,
@@ -30,7 +30,7 @@ export function mappingFormulaireRDCVersRequeteDelivrance(
     titulaires: getTitulairesRequete(requeteRDC.saisie),
     requerant: getRequerant(requeteRDC.saisie),
     lienRequerant: getLienRequerant(requeteRDC.saisie)
-  } as any) as IRequeteDelivrance;
+  } as any as IRequeteDelivrance;
 
   return supprimeProprietesVides(requete);
 }
@@ -38,8 +38,8 @@ export function mappingFormulaireRDCVersRequeteDelivrance(
 function getEvenement(saisie: SaisieRequeteRDC) {
   // Si Acte de type NAISSANCE alors l'événement de la requête utilise les infos du titulaire 1
   if (
-    TypeNatureActe.NAISSANCE ===
-    TypeNatureActe.getEnumFor(saisie.requete.natureActe)
+    NatureActeRequete.NAISSANCE ===
+    NatureActeRequete.getEnumFor(saisie.requete.natureActe)
   ) {
     const titulaire1 = saisie.titulaire1;
     return {
@@ -67,10 +67,10 @@ function getTitulairesRequete(saisie: SaisieRequeteRDC) {
   const newTitulaires = [];
   const titulaire1 = saisie.titulaire1;
   const titulaire2 = saisie.titulaire2;
-  const natureActe = TypeNatureActe.getEnumFor(saisie.requete.natureActe);
+  const natureActe = NatureActeRequete.getEnumFor(saisie.requete.natureActe);
 
   newTitulaires.push(getTitulaire(titulaire1, 1));
-  if (TypeNatureActe.MARIAGE === natureActe) {
+  if (NatureActeRequete.MARIAGE === natureActe) {
     newTitulaires.push(getTitulaire(titulaire2, DEUX));
   }
   return newTitulaires;

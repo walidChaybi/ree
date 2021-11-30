@@ -1,5 +1,5 @@
 import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { TypeNatureActe } from "../../../../../../../model/requete/v2/enum/TypeNatureActe";
+import { NatureActeRequete } from "../../../../../../../model/requete/v2/enum/NatureActeRequete";
 import {
   OptionCourrier,
   OptionsCourrier
@@ -153,7 +153,7 @@ function mappingOptionCourrierDocumentReponse(
 export function recupererLesOptionsDisponiblesPourLeCourrier(
   options: OptionsCourrier,
   documentDelivranceChoisi: DocumentDelivrance,
-  nature?: TypeNatureActe
+  nature?: NatureActeRequete
 ): OptionsCourrier {
   const idDocumentDelivrance = DocumentDelivrance.getKeyForCode(
     documentDelivranceChoisi.code
@@ -171,16 +171,16 @@ export function recupererLesOptionsDisponiblesPourLeCourrier(
 
 function filtreSurNatureActe(
   options: OptionsCourrier,
-  nature: TypeNatureActe
+  nature: NatureActeRequete
 ): OptionsCourrier {
   switch (nature) {
-    case TypeNatureActe.NAISSANCE:
+    case NatureActeRequete.NAISSANCE:
       return options.filter((opt: OptionCourrier) => opt.acteNaissance);
 
-    case TypeNatureActe.DECES:
+    case NatureActeRequete.DECES:
       return options.filter((opt: OptionCourrier) => opt.acteDeces);
 
-    case TypeNatureActe.MARIAGE:
+    case NatureActeRequete.MARIAGE:
       return options.filter((opt: OptionCourrier) => opt.acteDeces);
     default:
       return options;

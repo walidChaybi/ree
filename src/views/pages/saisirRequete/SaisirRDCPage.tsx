@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
+import { NatureActeRequete } from "../../../model/requete/v2/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { TypeLienMandant } from "../../../model/requete/v2/enum/TypeLienMandant";
@@ -8,7 +9,6 @@ import {
   TypeLienRequerant,
   TYPE_LIEN_REQUERANT_POUR_TITULAIRE
 } from "../../../model/requete/v2/enum/TypeLienRequerant";
-import { TypeNatureActe } from "../../../model/requete/v2/enum/TypeNatureActe";
 import {
   TypeRequerantRDC,
   UN_TITULAIRE
@@ -118,9 +118,8 @@ export const SaisirRDCPage: React.FC = () => {
   const [evenementVisible, setEvenementVisible] = useState<boolean>(false);
   const [titulaire2Visible, setTitulaire2Visible] = useState<boolean>(false);
   const [mandantVisible, setMandantVisible] = useState<boolean>(false);
-  const [lienTitulaireVisible, setLienTitulaireVisible] = useState<boolean>(
-    true
-  );
+  const [lienTitulaireVisible, setLienTitulaireVisible] =
+    useState<boolean>(true);
 
   const [optionsRequerant, setOptionsRequerant] = useState<Options>(
     TypeRequerantRDC.getListEnumsAsOptions(UN_TITULAIRE)
@@ -130,30 +129,26 @@ export const SaisirRDCPage: React.FC = () => {
     TypeLienRequerant.getListEnumsAsOptions(TYPE_LIEN_REQUERANT_POUR_TITULAIRE)
   );
 
-  const [donneesIncompletes, setDonneesIncompletes] = React.useState<boolean>(
-    false
-  );
+  const [donneesIncompletes, setDonneesIncompletes] =
+    React.useState<boolean>(false);
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [saisieRequeteRDC, setSaisieRequeteRDC] = useState<SaisieRequeteRDC>();
-  const [
-    creationRequeteRDC,
-    setCreationRequeteRDC
-  ] = useState<CreationRequeteRDC>();
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
-    INavigationApercuRMCAutoParams | undefined
-  >();
+  const [creationRequeteRDC, setCreationRequeteRDC] =
+    useState<CreationRequeteRDC>();
+  const [paramsRMCAuto, setParamsRMCAuto] =
+    useState<INavigationApercuRMCAutoParams | undefined>();
   useNavigationApercuRMCAuto(paramsRMCAuto);
 
   const onChangeNature = (nature: string) => {
     setEvenementVisible(
-      TypeNatureActe.getEnumFor(nature) !== TypeNatureActe.NAISSANCE
+      NatureActeRequete.getEnumFor(nature) !== NatureActeRequete.NAISSANCE
     );
     setTitulaire2Visible(
-      TypeNatureActe.getEnumFor(nature) === TypeNatureActe.MARIAGE
+      NatureActeRequete.getEnumFor(nature) === NatureActeRequete.MARIAGE
     );
 
-    if (TypeNatureActe.getEnumFor(nature) === TypeNatureActe.MARIAGE) {
+    if (NatureActeRequete.getEnumFor(nature) === NatureActeRequete.MARIAGE) {
       setOptionsRequerant(TypeRequerantRDC.getAllEnumsAsOptions());
     } else {
       setOptionsRequerant(TypeRequerantRDC.getListEnumsAsOptions(UN_TITULAIRE));
@@ -207,9 +202,8 @@ export const SaisirRDCPage: React.FC = () => {
     getAdresseForm()
   ];
 
-  const creationRequeteDelivranceRDCResultat = useCreationRequeteDelivranceRDC(
-    creationRequeteRDC
-  );
+  const creationRequeteDelivranceRDCResultat =
+    useCreationRequeteDelivranceRDC(creationRequeteRDC);
 
   const redirectionPage = useCallback(
     async (requeteSauvegardee: IRequeteDelivrance) => {

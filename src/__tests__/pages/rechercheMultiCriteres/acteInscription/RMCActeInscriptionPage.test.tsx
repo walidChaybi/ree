@@ -215,7 +215,7 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
   const suivant = screen.getByTitle("Suivant");
   await act(async () => {
     fireEvent.click(suivant);
-  }); /*
+  });
 
   // Attente de l'ouverture de la fiche (changement de "plage")
   await waitFor(() => {
@@ -235,7 +235,7 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
   await waitFor(() => {
     expect(screen.getByText("PACS N° 2001 - 1234506")).toBeInTheDocument();
     expect(screen.getByText("Statut de la fiche : Actif")).toBeInTheDocument();
-  });*/
+  });
 });
 
 test("La pagination (avec changement de plage) entre les fiches acte s'effectue correctement", async () => {

@@ -28,6 +28,8 @@ interface BoutonDeconnexionProps {
   onClick?: (event: React.MouseEvent) => void;
 }
 
+const codeErreurForbidden = 403;
+
 export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   onClick
 }) => {
@@ -111,48 +113,54 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
         boutons={boutonsPopin}
       />
       <OfficierContext.Consumer>
-        {officier => (
-          <div id="simple-menu" className="UtilisateurBouton">
-            {officier !== undefined &&
-              officier.officierDataState !== undefined && (
-                <>
-                  <Button
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={event => handleClickBoutonOfficer(event)}
-                  >
-                    {`${officier.officierDataState.prenom} ${
-                      officier.officierDataState.nom
-                    }${getFonction(
-                      officier.officierDataState.fonctionAgent?.libelleFonction
-                    )}`}
-                  </Button>
+        {officier => {
+          return (
+            <div id="simple-menu" className="UtilisateurBouton">
+              {officier !== undefined &&
+                (officier.officierDataState !== undefined ||
+                  officier.erreurState?.status === codeErreurForbidden) && (
+                  <>
+                    <Button
+                      aria-controls="simple-menu"
+                      aria-haspopup="true"
+                      onClick={event => handleClickBoutonOfficer(event)}
+                    >
+                      {officier.officierDataState !== undefined
+                        ? `${officier.officierDataState.prenom} ${
+                            officier.officierDataState.nom
+                          }${getFonction(
+                            officier.officierDataState.fonctionAgent
+                              ?.libelleFonction
+                          )}`
+                        : "Déconnexion"}
+                    </Button>
 
-                  <Menu
-                    className="Menu"
-                    anchorEl={menu}
-                    keepMounted
-                    open={Boolean(menu)}
-                    onClose={handleCloseMenu}
-                    getContentAnchorEl={null}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "center"
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "center"
-                    }}
-                  >
-                    <MenuItem onClick={handleClickDeconnexion}>
-                      <FontAwesomeIcon icon={faTimes} />
-                      {getText("boutons.deconnexion")}
-                    </MenuItem>
-                  </Menu>
-                </>
-              )}
-          </div>
-        )}
+                    <Menu
+                      className="Menu"
+                      anchorEl={menu}
+                      keepMounted
+                      open={Boolean(menu)}
+                      onClose={handleCloseMenu}
+                      getContentAnchorEl={null}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center"
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "center"
+                      }}
+                    >
+                      <MenuItem onClick={handleClickDeconnexion}>
+                        <FontAwesomeIcon icon={faTimes} />
+                        {getText("boutons.deconnexion")}
+                      </MenuItem>
+                    </Menu>
+                  </>
+                )}
+            </div>
+          );
+        }}
       </OfficierContext.Consumer>
     </>
   );

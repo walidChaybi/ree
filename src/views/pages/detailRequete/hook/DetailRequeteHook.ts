@@ -5,6 +5,7 @@ import { ChoixDelivrance } from "../../../../model/requete/v2/enum/ChoixDelivran
 import { ComplementObjetRequete } from "../../../../model/requete/v2/enum/ComplementObjetRequete";
 import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../model/requete/v2/enum/MotifDelivrance";
+import { NatureActeRequete } from "../../../../model/requete/v2/enum/NatureActeRequete";
 import { ObjetRequete } from "../../../../model/requete/v2/enum/ObjetRequete";
 import { Provenance } from "../../../../model/requete/v2/enum/Provenance";
 import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
@@ -13,7 +14,6 @@ import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeCanal } from "../../../../model/requete/v2/enum/TypeCanal";
 import { TypeLienMandant } from "../../../../model/requete/v2/enum/TypeLienMandant";
 import { TypeMandant } from "../../../../model/requete/v2/enum/TypeMandant";
-import { TypeNatureActe } from "../../../../model/requete/v2/enum/TypeNatureActe";
 import { TypePieceJustificative } from "../../../../model/requete/v2/enum/TypePieceJustificative";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IAction } from "../../../../model/requete/v2/IActions";
@@ -32,9 +32,8 @@ import { logError } from "../../../common/util/LogManager";
 import { storeRece } from "../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] = useState<
-    TRequete | undefined
-  >();
+  const [detailRequeteState, setDetailRequeteState] =
+    useState<TRequete | undefined>();
 
   useEffect(() => {
     async function fetchDetailRequete() {
@@ -178,7 +177,7 @@ function getProvenance(data: any): IProvenanceRequete {
 function getEvenement(evenement: any): IEvenementReqDelivrance {
   return {
     id: evenement.id,
-    natureActe: TypeNatureActe.getEnumFor(evenement.natureActe),
+    natureActe: NatureActeRequete.getEnumFor(evenement.natureActe),
     jour: evenement.jour,
     mois: evenement.mois,
     annee: evenement.annee,
