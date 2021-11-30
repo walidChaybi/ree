@@ -94,16 +94,15 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
               />
               <BoutonRetour message={getLibelle("<< Retour")} />
               <div className="BoutonsAction">
-                {!MigratorV1V2.estASigner(requete) &&
-                  !MigratorV1V2.estARetraiterSaga(requete) && (
-                    <>
-                      <BoutonModifierTraitement
-                        requete={requete}
-                        dataHistory={dataHistory}
-                      />
-                      <BoutonValiderTerminer requete={requete} />
-                    </>
-                  )}
+                {!MigratorV1V2.estRDDouRDC(requete) && (
+                  <>
+                    <BoutonModifierTraitement
+                      requete={requete}
+                      dataHistory={dataHistory}
+                    />
+                    <BoutonValiderTerminer requete={requete} />
+                  </>
+                )}
 
                 {RequeteDelivrance.estASigner(requete) && (
                   <BoutonSignature
@@ -117,9 +116,10 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
                   />
                 )}
 
-                {MigratorV1V2.estARetraiterSaga(requete) && (
-                  <BoutonARetraiterSaga idRequete={idRequete} />
-                )}
+                {MigratorV1V2.estARetraiterSaga(requete) &&
+                  !MigratorV1V2.possedeDocumentSigne(requete) && (
+                    <BoutonARetraiterSaga idRequete={idRequete} />
+                  )}
               </div>
             </div>
           </div>

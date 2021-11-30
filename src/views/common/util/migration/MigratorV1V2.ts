@@ -12,7 +12,7 @@ export class MigratorV1V2 {
   // cf. StatutsRequetesEspaceDelivrance
   // Certains statut supplémentaires sont remontés par le back (cf. RequeteRepositoryV2.java: getMesRequetes, getRequetesService,
   //    commentaire "Mise en service étape 2 R1,R2,R7 (conservation fonctionnement Etape1)")
-  //  - StatutRequete.TRAITE_A_DELIVRER_DEMAT (pour RDC/RDD)
+  //  - StatutRequete.TRAITE_A_DELIVRER_DEMAT pour RDD qui ne sont pas à signer
   //  - StatutRequete.TRAITE_A_IMPRIMER (uniquement pour les RDC)
 
   public static getStatutARetraiter(): StatutRequete {
@@ -38,6 +38,15 @@ export class MigratorV1V2 {
           StatutRequete.TRAITE_A_DELIVRER_DEMAT) ||
       (MigratorV1V2.estRDC(requete) &&
         requete.statutCourant.statut === StatutRequete.TRAITE_A_IMPRIMER)
+    );
+  }
+
+  public static possedeDocumentSigne(requete: IRequeteDelivrance) {
+    // Les RDD signées au statut TRAITE_A_DELIVRER_DEMAT ne doivent pas pouvoir être retraitées dans SAGA
+    return requete.documentsReponses.find(
+      doc =>
+        doc.documentASignerElec &&
+        doc.documentASignerElec.dateSignatureElectronique
     );
   }
 

@@ -22,6 +22,9 @@ export interface IDocumentReponse {
   avecCtv?: boolean;
   nbExemplaireImpression?: number;
   conteneurSwift: string;
+  documentASignerElec?: {
+    dateSignatureElectronique?: number;
+  };
 }
 
 export const DocumentReponse = {
