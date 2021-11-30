@@ -7,9 +7,11 @@ import {
 } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
+import { userDroitConsulterPerimetreMEAE } from "../../../../mock/data/connectedUserAvecDroit";
 import { idFicheActe1 } from "../../../../mock/data/ficheActe";
 import { idFichePacs } from "../../../../mock/data/fichePacs";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { storeRece } from "../../../../views/common/util/storeRece";
 import * as TableauPaginationConstantes from "../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
 import { titreForm } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import { RMCActeInscriptionPage } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
@@ -131,17 +133,13 @@ const NB_LIGNES_PAR_PAGE_ACTE_SAUVEGARDE =
 
 afterEach(() => {
   // @ts-ignore
-  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_INSCRIPTION =
-    NB_LIGNES_PAR_APPEL_INSCRIPTION_SAUVEGARDE;
+  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_INSCRIPTION = NB_LIGNES_PAR_APPEL_INSCRIPTION_SAUVEGARDE;
   // @ts-ignore
-  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_INSCRIPTION =
-    NB_LIGNES_PAR_PAGE_INSCRIPTION_SAUVEGARDE;
+  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_INSCRIPTION = NB_LIGNES_PAR_PAGE_INSCRIPTION_SAUVEGARDE;
   // @ts-ignore
-  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_ACTE =
-    NB_LIGNES_PAR_APPEL_ACTE_SAUVEGARDE;
+  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_ACTE = NB_LIGNES_PAR_APPEL_ACTE_SAUVEGARDE;
   // @ts-ignore
-  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE =
-    NB_LIGNES_PAR_PAGE_ACTE_SAUVEGARDE;
+  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE = NB_LIGNES_PAR_PAGE_ACTE_SAUVEGARDE;
 });
 
 test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'effectue correctement", async () => {
@@ -154,6 +152,8 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
   TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_ACTE = 4;
   // @ts-ignore
   TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE = 2;
+
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
   await act(async () => {
     render(<RMCActeInscriptionPage />);
@@ -248,6 +248,8 @@ test("La pagination (avec changement de plage) entre les fiches acte s'effectue 
   TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_ACTE = 4;
   // @ts-ignore
   TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE = 2;
+
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
 
   await act(async () => {
     render(<RMCActeInscriptionPage />);

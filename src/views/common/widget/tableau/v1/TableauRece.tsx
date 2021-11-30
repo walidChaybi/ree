@@ -180,7 +180,7 @@ export const TableauRece: React.FC<TableauHeaderProps> = props => {
   }
 
   return (
-    <>
+    <div className="TableauRece">
       <TableContainer component={Paper}>
         <Box as={Table} role="presentation" size="small">
           <TableauHeader
@@ -223,7 +223,7 @@ export const TableauRece: React.FC<TableauHeaderProps> = props => {
             });
           })}
       </div>
-    </>
+    </div>
   );
 };
 

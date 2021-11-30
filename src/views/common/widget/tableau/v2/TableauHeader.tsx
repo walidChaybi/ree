@@ -1,8 +1,8 @@
-import React from "react";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { TableauHeaderCell } from "./TableauHeaderCell";
+import React from "react";
 import { SortOrder } from "./../TableUtils";
+import { TableauHeaderCell } from "./TableauHeaderCell";
 import { TableauTypeColumn } from "./TableauTypeColumn";
 
 export interface TableauReceProps {
@@ -14,8 +14,9 @@ export interface TableauReceProps {
 
 export const TableauHeader: React.FC<TableauReceProps> = props => {
   const { order, orderBy, onRequestSort } = props;
-  const createSortHandler = (property: string) => (
-    event: React.MouseEvent<unknown>
+  const createSortHandler = (
+    event: React.MouseEvent<unknown>,
+    property: string
   ) => {
     if (onRequestSort) {
       onRequestSort(event, property);

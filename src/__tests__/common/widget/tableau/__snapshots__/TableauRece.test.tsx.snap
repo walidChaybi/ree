@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders composant TableauRece 1`] = `
-Array [
+<div
+  className="TableauRece"
+>
   <div
     className="MuiPaper-root MuiTableContainer-root MuiPaper-elevation1 MuiPaper-rounded"
   >
@@ -90,7 +92,7 @@ Array [
         </tr>
       </tbody>
     </table>
-  </div>,
+  </div>
   <div
     className="MuiTablePagination-root"
   >
@@ -180,9 +182,9 @@ Array [
         </button>
       </div>
     </div>
-  </div>,
+  </div>
   <div
     className="RequetesToolbarSignature"
-  />,
-]
+  />
+</div>
 `;

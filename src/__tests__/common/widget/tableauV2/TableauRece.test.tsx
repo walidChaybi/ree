@@ -28,6 +28,14 @@ const paramsTableau = {
   maxRangeState: undefined
 };
 
+const columnsTableau = [
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.IdSagaDila],
+    title: "N°",
+    sortable: true
+  })
+];
+
 test("TableauRece can be reload", () => {
   const history = createMemoryHistory();
   history.push(URL_MES_REQUETES);
@@ -36,13 +44,6 @@ test("TableauRece can be reload", () => {
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
   const handlerelaod = jest.fn();
-
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "N°"
-    })
-  ];
 
   render(
     <Router history={history}>
@@ -79,13 +80,6 @@ test("TableauRece can be reload with true", () => {
   const handleClickGoToLink = jest.fn();
   const handlerelaod = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "N°"
-    })
-  ];
-
   render(
     <Router history={history}>
       <TableauRece
@@ -120,13 +114,6 @@ test("TableauRece can be reload with true => go back", () => {
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
   const handlerelaod = jest.fn();
-
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "N°"
-    })
-  ];
 
   paramsTableau.rowsNumberState = 200;
 
@@ -168,13 +155,6 @@ test("TableauRece can change page", () => {
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
-
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "N°"
-    })
-  ];
 
   paramsTableau.rowsNumberState = 200;
   paramsTableau.nextDataLinkState = "next";
@@ -229,13 +209,6 @@ test("TableauRece can change page", () => {
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "N°"
-    })
-  ];
-
   paramsTableau.rowsNumberState = 200;
   paramsTableau.nextDataLinkState = "next";
   paramsTableau.previousDataLinkState = "previous";
@@ -272,13 +245,6 @@ test("TableauRece can't change page bakc and no error'", () => {
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
-
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "N°"
-    })
-  ];
 
   paramsTableau.rowsNumberState = 10;
   paramsTableau.nextDataLinkState = "next";
@@ -319,13 +285,6 @@ test("TableauRece can't change page next and no error'", () => {
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "N°"
-    })
-  ];
-
   paramsTableau.rowsNumberState = 10;
   paramsTableau.nextDataLinkState = "next";
   paramsTableau.previousDataLinkState = "previous";
@@ -364,13 +323,6 @@ test("TableauRece can sort", () => {
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
-
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "N°"
-    })
-  ];
 
   paramsTableau.rowsNumberState = 10;
   paramsTableau.nextDataLinkState = "next";

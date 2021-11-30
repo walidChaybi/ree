@@ -16,7 +16,8 @@ const columnsTableauRmc = [
   new TableauTypeColumn({
     keys: [HeaderTableauRMCActe.Registre],
     title: "Registre",
-    className: "ColOverflow"
+    className: "ColOverflow",
+    style: { width: "200px" }
   })
 ];
 
@@ -37,7 +38,8 @@ export function determinerColonnes(
       new TableauTypeColumn({
         keys: [HeaderTableauRMCActe.Checkbox],
         title: "",
-        getElement: getCheckBoxElement.bind(null, hasWarning, onClickCheckbox)
+        getElement: getCheckBoxElement.bind(null, hasWarning, onClickCheckbox),
+        style: { width: "50px" }
       })
     ];
   }

@@ -14,6 +14,7 @@ export interface ITableauTypeColumnParam {
   ) => JSX.Element;
   className?: string;
   dataIsArray?: boolean;
+  sortable?: boolean;
 }
 
 export class TableauTypeColumn {
@@ -29,6 +30,7 @@ export class TableauTypeColumn {
   ) => JSX.Element;
   public className?: string;
   public dataIsArray?: boolean;
+  public sortable?: boolean;
 
   constructor(params: ITableauTypeColumnParam) {
     this.keys = params.keys;
@@ -38,6 +40,7 @@ export class TableauTypeColumn {
     this.getElement = params.getElement;
     this.className = params.className;
     this.dataIsArray = params.dataIsArray;
+    this.sortable = params.sortable;
   }
 
   public getValueAtKey(object: any): any {

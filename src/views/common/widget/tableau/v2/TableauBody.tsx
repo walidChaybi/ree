@@ -3,8 +3,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 import { OperationLocaleEnCours } from "../../attente/OperationLocaleEnCours";
-import "./scss/Tableau.scss";
-import "./scss/TableauBody.scss";
+import "./scss/TableauBodyV2.scss";
+import "./scss/TableauV2.scss";
 import { TableauBodyCell } from "./TableauBodyCell";
 import { TableauTypeColumn } from "./TableauTypeColumn";
 

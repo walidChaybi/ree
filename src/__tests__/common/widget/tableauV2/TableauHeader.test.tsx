@@ -17,7 +17,8 @@ test("renders click sur header tableau des requêtes de l'application", () => {
         columnHeaders={[
           new TableauTypeColumn({
             keys: ["idSagaDila"],
-            title: "N°"
+            title: "N°",
+            sortable: true
           }),
           new TableauTypeColumn({
             keys: ["sousTypeRequete"],

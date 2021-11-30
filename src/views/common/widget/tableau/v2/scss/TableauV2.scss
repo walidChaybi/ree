@@ -1,7 +1,7 @@
 @import "../../../../../../scss/colors";
 // FIXME à encapsuler dans une classe mère
 
-.TableauRece {
+.TableauReceV2 {
   tbody {
     tr {
       cursor: pointer;
@@ -23,6 +23,9 @@
   .TableauFontHeader {
     font-family: "NotoSansUI-Bold", sans-serif !important;
     color: $application-color !important;
+  }
+
+  .ColonneTriable {
     text-decoration: underline !important;
   }
 

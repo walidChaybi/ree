@@ -78,21 +78,18 @@ export const CertificatPACSComposition = {
     if (fichePacs.modifications && fichePacs.modifications.length > 0) {
       ParagrapheComposition.ajoutParagrapheModificationPACS(
         certificatPACS,
-        fichePacs.autorite,
         fichePacs.modifications
       );
     }
     if (fichePacs.dissolution) {
       ParagrapheComposition.ajoutParagrapheDissolutionPACS(
         certificatPACS,
-        fichePacs.autorite,
         fichePacs.dissolution
       );
     }
     if (fichePacs.annulation) {
       ParagrapheComposition.ajoutParagrapheAnnulationPACS(
         certificatPACS,
-        fichePacs.autorite,
         fichePacs.annulation
       );
     }

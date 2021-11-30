@@ -2,7 +2,7 @@ import TableCell from "@material-ui/core/TableCell";
 import React from "react";
 import "../../../../../scss/_library.scss";
 import { getValeurOuVide } from "../../../util/Utils";
-import "./scss/Tableau.scss";
+import "./scss/TableauV2.scss";
 import { TableauTypeColumn } from "./TableauTypeColumn";
 
 interface TableauBodyCellProps {

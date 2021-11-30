@@ -1,23 +1,6 @@
 @import "../../../../../../scss/colors";
-.TableauRece {
-  .PrioriteBasse {
-    color: green;
-  }
 
-  .PrioriteMoyenne {
-    color: orange;
-  }
-
-  .PrioriteHaute {
-    color: red;
-  }
-
-  .PrioriteBasse,
-  .PrioriteMoyenne,
-  .PrioriteHaute {
-    font-size: 1rem !important;
-  }
-
+.TableauReceV2 {
   .MuiTableBody-root {
     tr {
       &.MuiTableRow-root {
@@ -33,7 +16,7 @@
       border: 2px $border;
       border-style: solid;
       .MuiTableCell-root {
-        padding: 0.4rem;
+        padding: 0.5rem 0;
       }
     }
   }

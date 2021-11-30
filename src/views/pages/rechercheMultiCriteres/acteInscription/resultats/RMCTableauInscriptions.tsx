@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { officierALeDroitSurLePerimetre } from "../../../../../model/agent/IOfficier";
+import { Droit } from "../../../../../model/Droit";
 import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
 import {
   FicheUtil,
@@ -109,23 +111,25 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   };
 
   const onClickOnLine = (idInscription: string, data: any, index: number) => {
-    const etatFenetreTrouve = etatFenetres.find(
-      etatFenetre => etatFenetre.idInscription === idInscription
-    );
-    if (datasFichesCourantes) {
-      if (!etatFenetreTrouve) {
-        const nouvelEtatFenetre: IFenetreFicheInscription = {
-          index: { value: index },
-          idInscription,
-          datasFiches: datasFichesCourantes
-        };
-        setEtatFenetres([...etatFenetres, nouvelEtatFenetre]);
-      } else {
-        // Si l'utilisateur clique sur une fenêtre déjà ouverte alors il faut remettre à jour ces données pour la navigation et son index courant
-        // (cf. useEffect (*) dans FichePage.tsx)
-        etatFenetreTrouve.datasFiches = datasFichesCourantes;
-        etatFenetreTrouve.index = { value: index };
-        setEtatFenetres([...etatFenetres]);
+    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, "MEAE")) {
+      const etatFenetreTrouve = etatFenetres.find(
+        etatFenetre => etatFenetre.idInscription === idInscription
+      );
+      if (datasFichesCourantes) {
+        if (!etatFenetreTrouve) {
+          const nouvelEtatFenetre: IFenetreFicheInscription = {
+            index: { value: index },
+            idInscription,
+            datasFiches: datasFichesCourantes
+          };
+          setEtatFenetres([...etatFenetres, nouvelEtatFenetre]);
+        } else {
+          // Si l'utilisateur clique sur une fenêtre déjà ouverte alors il faut remettre à jour ces données pour la navigation et son index courant
+          // (cf. useEffect (*) dans FichePage.tsx)
+          etatFenetreTrouve.datasFiches = datasFichesCourantes;
+          etatFenetreTrouve.index = { value: index };
+          setEtatFenetres([...etatFenetres]);
+        }
       }
     }
   };

@@ -11,7 +11,7 @@ interface TableauHeaderCellProps {
   order?: SortOrder;
   orderBy?: string;
   column: TableauTypeColumn;
-  sortHandler: (property: string) => (event: React.MouseEvent<unknown>) => void;
+  sortHandler: (event: React.MouseEvent<unknown>, property: string) => void;
 }
 
 export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
@@ -23,7 +23,8 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
   const styles = classNames({
     OrderedHeaderCell: orderBy === column.keys[0],
     TableauFontHeader: true,
-    CursorHeader: !(orderBy && sortHandler)
+    CursorHeader: !(orderBy && sortHandler) || !column.sortable,
+    ColonneTriable: column.sortable
   });
 
   let orderTableCell: SortDirection = false;
@@ -37,6 +38,12 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
     orderTableLabel = "desc";
   }
 
+  const onClickCell = (event: React.MouseEvent<unknown>, columnKey: string) => {
+    if (column.sortable) {
+      sortHandler(event, columnKey);
+    }
+  };
+
   return (
     <TableCell
       align={column?.align ? column?.align : "left"}
@@ -49,7 +56,7 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = ({
         className={styles}
         active={orderBy === column.keys[0]}
         direction={orderBy === column.keys[0] ? orderTableLabel : "asc"}
-        onClick={sortHandler(column.keys[0])}
+        onClick={e => onClickCell(e, column.keys[0])}
         hideSortIcon={orderBy !== column.keys[0]}
       >
         {getLibelle(column.title)}

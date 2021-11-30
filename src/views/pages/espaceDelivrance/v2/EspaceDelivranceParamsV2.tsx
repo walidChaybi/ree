@@ -41,7 +41,8 @@ export const requeteColumnHeaders = [
     keys: [HeaderTableauRequete.Numero],
     title: getLibelle("N°"),
     align: "center",
-    style
+    style,
+    sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.NumeroTeledossier],
@@ -83,22 +84,26 @@ export const dateStatutColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.DateCreation],
     title: getLibelle("Date requête"),
-    align: "center"
+    align: "center",
+    sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.DateDerniereMaj],
     title: getLibelle("Date dernière action"),
-    align: "center"
+    align: "center",
+    sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Statut],
     title: getLibelle("Statut"),
-    align: "center"
+    align: "center",
+    sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.PrioriteRequete],
     title: getLibelle("Priorité"),
     getElement: getIconPrioriteRequete,
-    align: "center"
+    align: "center",
+    sortable: true
   })
 ];

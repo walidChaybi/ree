@@ -18,7 +18,8 @@ const columnsTableauRmc = [
     keys: [HeaderTableauRMCInscription.NumeroRef],
     title: "N° Réf.",
     getElement: getCellNumeroRef,
-    align: "left"
+    align: "left",
+    style: { width: "150px" }
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRMCInscription.Type],
@@ -26,7 +27,8 @@ const columnsTableauRmc = [
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRMCInscription.Statut],
-    title: "Statut fiche"
+    title: "Statut fiche",
+    style: { width: "50px" }
   })
 ];
 
@@ -49,7 +51,8 @@ export function determinerColonnes(
       new TableauTypeColumn({
         keys: [HeaderTableauRMCInscription.Checkbox],
         title: "",
-        getElement: getCheckBoxElement.bind(null, isDisabled, onClickCheckbox)
+        getElement: getCheckBoxElement.bind(null, isDisabled, onClickCheckbox),
+        style: { width: "50px" }
       })
     ];
   }
