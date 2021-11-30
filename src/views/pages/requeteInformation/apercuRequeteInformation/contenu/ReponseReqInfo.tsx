@@ -4,6 +4,7 @@ import { ComplementObjetRequete } from "../../../../../model/requete/v2/enum/Com
 import { ObjetRequete } from "../../../../../model/requete/v2/enum/ObjetRequete";
 import { SousTypeInformation } from "../../../../../model/requete/v2/enum/SousTypeInformation";
 import { IReponseRequeteInfo } from "../../../../../model/requete/v2/IReponseRequeteInfo";
+import { MenuTransfert } from "../../../../common/composant/menuTransfert/MenuTransfert";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { getLibelle } from "../../../../common/widget/Text";
 import { BoutonReponseLibre } from "./choixReponse/BoutonReponseLibre";
@@ -51,36 +52,33 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
 
   return (
     <>
-      {requete.besoinUsager !== BesoinUsager.COMPLETER_DEMANDE &&
-      requete.sousType !== SousTypeInformation.COMPLETION_REQUETE_EN_COURS ? (
-        <Fieldset titre={getLibelle("Choix de la réponse")}>
-          <div>
-            <div className="BoutonsReponse">
-              <MenuReponsesProposees
-                listeReponse={reponsesReqInfo}
-                requete={requete}
-                onClick={onClick}
-              />
-              <MenuToutesLesReponses
-                listeReponse={reponsesReqInfo}
-                onClick={onClick}
-              />
-              <BoutonReponseLibre
-                onClick={onClick}
-                reponse={SAISIE_LIBRE_REPONSE}
-              ></BoutonReponseLibre>
-            </div>
-            <ReponseReqInfoForm
-              reponse={reponseChoisie}
-              requeteId={requete.id}
-            />
+      <Fieldset titre={getLibelle("Choix de la réponse")}>
+        <div>
+          <div className="BoutonsReponse">
+            {requete.besoinUsager !== BesoinUsager.COMPLETER_DEMANDE &&
+              requete.sousType !==
+                SousTypeInformation.COMPLETION_REQUETE_EN_COURS && (
+                <>
+                  <MenuReponsesProposees
+                    listeReponse={reponsesReqInfo}
+                    requete={requete}
+                    onClick={onClick}
+                  />
+                  <MenuToutesLesReponses
+                    listeReponse={reponsesReqInfo}
+                    onClick={onClick}
+                  />
+                  <BoutonReponseLibre
+                    onClick={onClick}
+                    reponse={SAISIE_LIBRE_REPONSE}
+                  ></BoutonReponseLibre>
+                </>
+              )}
+            <MenuTransfert requete={requete} menuFermer={true} />
           </div>
-        </Fieldset>
-      ) : (
-        <>
           <ReponseReqInfoForm reponse={reponseChoisie} requeteId={requete.id} />
-        </>
-      )}
+        </div>
+      </Fieldset>
     </>
   );
 };

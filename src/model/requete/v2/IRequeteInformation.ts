@@ -16,6 +16,6 @@ export interface IRequeteInformation extends IRequete {
   provenanceRequete: Provenance;
   numeroRequeteLiee?: string;
   idRequeteLiee?: string;
-  piecesComplementInformation: IPieceComplementInformation;
+  piecesComplementInformation?: IPieceComplementInformation;
   besoinUsager: BesoinUsager;
 }

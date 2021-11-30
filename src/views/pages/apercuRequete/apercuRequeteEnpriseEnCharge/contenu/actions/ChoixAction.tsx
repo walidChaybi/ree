@@ -4,6 +4,7 @@ import { TRequete } from "../../../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { MenuTransfert } from "../../../../../common/composant/menuTransfert/MenuTransfert";
 import {
   soustypeRDCSDouRDCSC,
   soustypeRDDouRDC
@@ -16,7 +17,6 @@ import { MenuDelivrer } from "./MenuDelivrer";
 import { MenuDelivrerCS } from "./MenuDelivrerCS";
 import { MenuReponseSansDelivrance } from "./MenuReponseSansDelivrance";
 import { MenuReponseSansDelivranceCS } from "./MenuReponseSansDelivranceCS";
-import { MenuTransfert } from "./MenuTransfert";
 import "./scss/ChoixAction.scss";
 
 export interface IActionProps {
@@ -24,6 +24,7 @@ export interface IActionProps {
   actes?: IResultatRMCActe[];
   inscriptions?: IResultatRMCInscription[];
   dataHistory?: any;
+  menuFermer?: boolean;
 }
 
 export const ChoixAction: React.FC<IActionProps> = props => {

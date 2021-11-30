@@ -61,15 +61,20 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
 }) => {
   const history = useHistory();
   const blocsForm: JSX.Element[] = getReponseForm(reponse);
-  const [reponseAEnvoyer, setReponseAEnvoyer] =
-    useState<ISauvegarderReponseReqInfoParams | undefined>();
-  const [reponseSaisie, setReponseSaisie] =
-    useState<ISauvegarderReponseReqInfoParams | undefined>();
-  const [piecesAEnvoyer, setPiecesAEnvoyer] =
-    useState<PieceJointe[] | undefined>();
+  const [reponseAEnvoyer, setReponseAEnvoyer] = useState<
+    ISauvegarderReponseReqInfoParams | undefined
+  >();
+  const [reponseSaisie, setReponseSaisie] = useState<
+    ISauvegarderReponseReqInfoParams | undefined
+  >();
+  const [piecesAEnvoyer, setPiecesAEnvoyer] = useState<
+    PieceJointe[] | undefined
+  >();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] =
-    useState<boolean>(false);
+  const [
+    ajoutPieceJointeTermine,
+    setAjoutPieceJointeTermine
+  ] = useState<boolean>(false);
 
   const onSubmit = (reponseForm: IReponseInfoFormValue) => {
     setOperationEnCours(true);

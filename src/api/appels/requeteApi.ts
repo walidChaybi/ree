@@ -17,7 +17,7 @@ import { ApiManager, HttpMethod } from "../ApiManager";
 export const URL_REQUETES_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES = "/requetes";
 export const URL_MES_REQUETES = "/requetes/mesrequetes";
-export const URL_MES_REQUETES_INFORMATION = "/requetes/information/mesrequetes";
+export const URL_MES_REQUETES_INFO = "/requetes/information/mesrequetes";
 export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_INFORMATION_STATUT = "/requetes/information/statut";
 export const URL_REQUETES_COUNT = "/requetes/count";
@@ -209,7 +209,7 @@ export function getMesRequetesInformation(
 ): Promise<any> {
   return apiV2.fetch({
     method: HttpMethod.GET,
-    uri: URL_MES_REQUETES_INFORMATION,
+    uri: URL_MES_REQUETES_INFO,
     parameters: {
       statuts: listeStatuts,
       tri:
