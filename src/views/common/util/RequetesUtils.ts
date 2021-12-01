@@ -11,6 +11,7 @@ import { SousTypeRequete } from "../../../model/requete/v2/enum/SousTypeRequete"
 import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../model/requete/v2/enum/TypeRequete";
 import { IActionOption } from "../../../model/requete/v2/IActionOption";
+import { DocumentReponse } from "../../../model/requete/v2/IDocumentReponse";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
@@ -129,9 +130,14 @@ export function getIdDocumentReponseAAfficher(
       requeteDelivrance
     );
     if (documentsDeDelivrance.length > 0) {
-      idDocumentAAfficher = documentsDeDelivrance[0].id;
+      idDocumentAAfficher = DocumentReponse.triDocumentsDelivrance(
+        documentsDeDelivrance
+      )[0].id;
     } else if (requeteDelivrance.documentsReponses.length > 0) {
-      idDocumentAAfficher = requeteDelivrance.documentsReponses[0].id;
+      // Il y a peu de chance de passer dans ce code car touts les documents réponse sont des documents de délivrance (du point de vue Catégorie)
+      idDocumentAAfficher = DocumentReponse.triDocumentsDelivrance(
+        requeteDelivrance.documentsReponses
+      )[0].id;
     }
   }
   return idDocumentAAfficher;
