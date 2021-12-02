@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IRequeteInformation } from "../../../../model/requete/v2/IRequeteInformation";
 import { IUuidRequeteParams } from "../../../../model/requete/v2/IUuidRequeteParams";
+import { BandeauRequete } from "../../../common/composant/bandeauApercuRequete/BandeauApercuRequete";
+import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
+import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { getLibelle } from "../../../common/widget/Text";
-import { BandeauRequete } from "../../apercuRequete/contenu/BandeauRequete";
-import { SuiviActionsRequete } from "../../apercuRequete/contenu/SuiviActionsRequete";
-import { SuiviObservationsRequete } from "../../apercuRequete/contenu/SuiviObservationRequete";
-import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
+import { useDetailRequeteApiHook } from "../../requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { ReponseReqInfo } from "./contenu/ReponseReqInfo";
 import { ResumeReqInfo } from "./contenu/ResumeReqInfo";
 import "./scss/ApercuReqInfoPage.scss";
@@ -33,7 +33,7 @@ export const ApercuReqInfoPage: React.FC = () => {
           statut={requete.statutCourant.statut}
           type={requete.type}
         >
-          <BandeauRequete detailRequete={requete} />
+          <BandeauRequete requete={requete} />
           <div className="contenuRequeteInfo">
             <div className="side left">
               <ResumeReqInfo requete={requete} />

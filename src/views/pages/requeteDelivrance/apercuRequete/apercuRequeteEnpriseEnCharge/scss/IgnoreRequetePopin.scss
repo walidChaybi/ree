@@ -1,0 +1,18 @@
+@import "./../../../../../../scss/colors";
+
+.IgnoreRequetePopin {
+  margin: 1em;
+
+  .Fieldset {
+    background-color: unset;
+    border-style: none;
+
+    .Titre {
+      display: none;
+    }
+
+    .FormAjouterAlerteBoutons {
+      float: right;
+    }
+  }
+}

@@ -26,6 +26,8 @@ export function useGetDocumentReponseApi(
             error
           });
         }
+      } else {
+        setDocumentReponse({ id: "", contenu: "" } as IDocumentReponse);
       }
     }
     fetchData();

@@ -1,0 +1,100 @@
+@import "../../../../../../../../../scss/colors";
+
+.OptionsCourrierForm {
+  display: grid;
+  grid-template-columns: 20% 40% 40%;
+
+  label {
+    align-self: center;
+    color: $title-application-color;
+  }
+
+  p {
+    text-align: start;
+    font-size: 0.85rem;
+  }
+
+  .TableauOptions {
+    max-height: 10.55rem;
+    overflow: auto;
+  }
+
+  .TableauOptions:nth-child(2) {
+    margin-right: 2rem;
+  }
+
+  .TableauOptions:last-child {
+    margin-left: 2rem;
+  }
+
+  .TableauSimple {
+    height: max-content;
+
+    .BoutonOption {
+      width: 2rem;
+      text-align: center;
+    }
+
+    tbody {
+      tr {
+        cursor: pointer;
+      }
+      tr:hover {
+        background-color: $application-contener;
+      }
+    }
+
+    .optionSelectionner {
+      background-color: $application-contener;
+    }
+  }
+}
+
+.TitreContenuOption {
+  color: $title-application-color;
+  font-weight: bold;
+  border-bottom: 1px solid;
+  margin: 2rem 0 1.5rem 0;
+}
+
+.LibelleOptionForm,
+.ContenuOptionForm {
+  grid-template-columns: 85% 15%;
+  display: grid;
+  .BlockInput {
+    grid-template-columns: 23.5% 71%;
+    label {
+      align-self: flex-start;
+    }
+  }
+  .BlockErreur {
+    margin-left: 20%;
+  }
+}
+
+.LibelleOptionForm {
+  .OptionPuce {
+    margin: 0.8rem 0.5rem;
+  }
+}
+
+.ContenuOptionForm {
+  textarea {
+    &:disabled {
+      background-color: white;
+    }
+  }
+  .BordureRouge {
+    border-color: $code-couleur-alertes-rouge;
+  }
+  .BordureVerte {
+    border-color: $code-couleur-alertes-vert;
+  }
+  button {
+    max-height: 2.1rem;
+  }
+}
+
+.PasOptions {
+  color: $title-application-color;
+}

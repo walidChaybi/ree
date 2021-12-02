@@ -13,7 +13,7 @@ import {
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
-import { DataRMCAuto } from "../../apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
+import { DataRMCAuto } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { useRMCActeApiHook } from "../acteInscription/hook/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "../acteInscription/hook/RMCActeInscriptionUtils";
 import { useRMCInscriptionApiHook } from "../acteInscription/hook/RMCInscriptionApiHook";

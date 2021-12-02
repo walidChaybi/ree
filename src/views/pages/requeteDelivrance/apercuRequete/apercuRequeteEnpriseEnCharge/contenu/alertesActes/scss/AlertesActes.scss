@@ -1,0 +1,43 @@
+@import "../../../../../../../../scss/colors";
+
+.AlertesActes {
+  margin-top: 0.5em;
+  border: 1px solid;
+  border-color: $border;
+  border-radius: 0.25rem;
+  text-align: justify;
+  font-family: "NotoSansUI-Regular", sans-serif !important;
+  font-size: 14px;
+  font-weight: 400;
+
+  .Liste {
+    height: 8em;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .Alertes {
+      display: flex;
+      padding: 0.5rem;
+
+      .BoutonAjouterAlerte {
+        order: 2;
+        margin-left: auto;
+
+        .IconeBoutonAjoutAlerte {
+          font-size: 2em;
+          color: $alertes;
+          cursor: pointer;
+
+          &.Disabled {
+            color: $disabled-button;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+
+    .SeparateurAlertes {
+      border-top: 1px solid $border;
+    }
+  }
+}

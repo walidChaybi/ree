@@ -12,7 +12,6 @@ import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import { IActionOption } from "../../../../model/requete/v2/IActionOption";
 import { TRequete } from "../../../../model/requete/v2/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
-import { IActionProps } from "../../../pages/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 import {
   receUrl,
   URL_MES_REQUETES_APERCU_REQUETE,
@@ -35,7 +34,12 @@ const INDEX_ACTION_TRANSFERT_SERVICE = 0;
 const INDEX_ACTION_TRANSFERT_OFFICIER = 1;
 const INDEX_ACTION_TRANSFERT_ABANDON = 2;
 
-export const MenuTransfert: React.FC<IActionProps> = props => {
+export interface IMenuTransfertProps {
+  requete: TRequete;
+  menuFermer?: boolean;
+}
+
+export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   const history = useHistory();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const refReponseTransfertOptions0 = useRef(null);

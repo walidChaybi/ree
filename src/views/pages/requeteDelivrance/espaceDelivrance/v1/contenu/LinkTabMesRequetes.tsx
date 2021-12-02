@@ -1,0 +1,28 @@
+import Tab from "@material-ui/core/Tab";
+import React from "react";
+import WithHabilitation from "../../../../../common/util/habilitation/WithHabilitation";
+import "../scss/EspaceDelivrancePage.scss";
+
+interface LinkTabProps {
+  label?: string;
+  href?: string;
+  disabled?: boolean;
+}
+
+export function LinkTabMesRequetes(props: LinkTabProps) {
+  return (
+    <Tab
+      component="a"
+      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.preventDefault();
+      }}
+      {...props}
+      className={props.disabled ? "tab-disabled" : ""}
+    />
+  );
+}
+
+export const LinkTabMesRequetesDeServiceWithHabilitation = WithHabilitation(
+  LinkTabMesRequetes,
+  "LinkTabMesRequetes"
+);

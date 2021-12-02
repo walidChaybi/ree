@@ -1,0 +1,134 @@
+import {
+  Avatar,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText
+} from "@material-ui/core";
+import Image from "@material-ui/icons/Image";
+import PictureAsPdf from "@material-ui/icons/PictureAsPdf";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  DocumentReponse,
+  IDocumentReponse
+} from "../../../../../../../model/requete/v2/IDocumentReponse";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
+import { useGetDocumentReponseApi } from "../../../../../../common/hook/v2/DocumentReponseHook";
+import { getIdDocumentReponseAAfficher } from "../../../../../../common/util/RequetesUtils";
+import { getValeurOuVide } from "../../../../../../common/util/Utils";
+import { AccordionRece } from "../../../../../../common/widget/accordion/AccordionRece";
+import { getText } from "../../../../../../common/widget/Text";
+import { FenetreDocumentReponse } from "./FenetreDocumentReponse";
+import "./scss/DocumentsReponses.scss";
+
+export interface InfoDocumentAffiche {
+  id: string;
+  nom?: string;
+}
+interface IDocumentsReponsesProps {
+  requete: IRequeteDelivrance;
+  onClickDocumentAffiche?: (docReponse: IDocumentReponse) => void;
+}
+
+export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
+  requete,
+  onClickDocumentAffiche
+}) => {
+  /* Gestion fenêtre externe si pas de visinneuse */
+  const [documentAffiche, setDocumentAffiche] = useState<InfoDocumentAffiche>();
+  const contenuPiece = useGetDocumentReponseApi(documentAffiche?.id);
+
+  const [isFenetreOuverte, setIsFenetreOuverte] = useState<boolean>(false);
+
+  const toggleFenetre = useCallback(() => {
+    setIsFenetreOuverte(!isFenetreOuverte);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setIsFenetreOuverte]);
+
+  function onClick(infoDoc: InfoDocumentAffiche) {
+    setDocumentAffiche(infoDoc);
+  }
+
+  // Gestion de l'affiche du document
+  useEffect(() => {
+    if (contenuPiece) {
+      // Si visionneuse présent sur la page parent
+      if (onClickDocumentAffiche) {
+        onClickDocumentAffiche(contenuPiece);
+      } else if (contenuPiece.id !== "") {
+        // Sinon ouverture d'une visionneuse dans une fenêtre externe
+        toggleFenetre();
+      }
+    }
+  }, [contenuPiece, onClickDocumentAffiche, toggleFenetre]);
+
+  // Gestion du document à afficher par défaut
+  useEffect(() => {
+    // Si visionneuse présent sur la page parent (onClickDocumentAffiche présent)
+    if (requete && onClickDocumentAffiche) {
+      const idDoc = getIdDocumentReponseAAfficher(requete);
+
+      // S'il y a des documents réponses dans la requête on affiche le premier document de la liste
+      if (idDoc !== "") {
+        setDocumentAffiche({
+          id: idDoc
+        });
+      } else {
+        // s'il n'y pas de documents réponses alors on retourne un document vide pour afficher le message "Aucun document à afficher"
+        setDocumentAffiche({
+          id: "",
+          nom: ""
+        });
+      }
+    }
+  }, [requete, onClickDocumentAffiche]);
+
+  return (
+    <div className="documents-reponses">
+      <AccordionRece
+        titre={"Documents à délivrer"}
+        disabled={false}
+        expanded={true}
+      >
+        <List>
+          {DocumentReponse.triDocumentsDelivrance(
+            requete.documentsReponses
+          ).map(el => (
+            <ListItem
+              key={el.id}
+              onClick={() => {
+                onClick({ id: el.id, nom: el.nom });
+              }}
+              className="documentReponse"
+            >
+              <ListItemAvatar>
+                {el.mimeType === "application/pdf" ? (
+                  <Avatar
+                    title={getText("pages.requete.consultation.icon.pdf")}
+                  >
+                    <PictureAsPdf />
+                  </Avatar>
+                ) : (
+                  <Avatar
+                    title={getText("pages.requete.consultation.icon.png")}
+                  >
+                    <Image />
+                  </Avatar>
+                )}
+              </ListItemAvatar>
+              <ListItemText className="InformationDocument" primary={el.nom} />
+            </ListItem>
+          ))}
+        </List>
+      </AccordionRece>
+      {isFenetreOuverte === true && contenuPiece && (
+        <FenetreDocumentReponse
+          toggleFenetre={toggleFenetre}
+          numRequete={requete.numero}
+          contenuPiece={contenuPiece}
+          nom={getValeurOuVide(documentAffiche?.nom)}
+        />
+      )}
+    </div>
+  );
+};

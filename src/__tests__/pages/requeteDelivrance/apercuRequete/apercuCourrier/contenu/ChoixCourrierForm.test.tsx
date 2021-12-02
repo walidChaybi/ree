@@ -1,0 +1,89 @@
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import { Form, Formik, FormikProps, FormikValues } from "formik";
+import React from "react";
+import request from "superagent";
+import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
+import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
+import {
+  getDefaultValuesCourrier,
+  getTypesCourrier
+} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
+import ChoixCourrierForm, {
+  ChoixCourrierSubFormProps,
+  ValidationSchemaChoixCourrier
+} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
+import { CHOIX_COURRIER } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
+
+beforeAll(() => {
+  DocumentDelivrance.init();
+});
+
+const HookChoixCourrierForm: React.FC = () => {
+  const typesCourrier = getTypesCourrier(requeteDelivrance);
+
+  const choixCourrierFormProps = {
+    nom: CHOIX_COURRIER,
+    requete: requeteDelivrance,
+    formik: {} as FormikProps<FormikValues>,
+    typesCourrier,
+    onChange: jest.fn(),
+    options: []
+  } as ChoixCourrierSubFormProps;
+
+  return (
+    <Formik
+      initialValues={getDefaultValuesCourrier(requeteDelivrance)}
+      validationSchema={ValidationSchemaChoixCourrier}
+      onSubmit={jest.fn()}
+    >
+      <Form>
+        <ChoixCourrierForm {...choixCourrierFormProps} />
+      </Form>
+    </Formik>
+  );
+};
+
+test("renders ChoixCourrierForm", async () => {
+  act(() => {
+    render(<HookChoixCourrierForm />);
+  });
+
+  const inputDelivrance = screen.getByLabelText(
+    "choixCourrier.delivrance"
+  ) as HTMLInputElement;
+  const inputCourrier = screen.getByLabelText(
+    "choixCourrier.courrier"
+  ) as HTMLInputElement;
+
+  await waitFor(() => {
+    expect(inputDelivrance.value).toBe(
+      "Réponse sans délivrance E/C - Requête incomplète"
+    );
+    expect(inputCourrier.value).toBe("b36f9a2c-64fa-42bb-a3f6-adca6fec28f2"); //"Informations diverses manquantes (117)"
+  });
+
+  await act(async () => {
+    fireEvent.change(inputCourrier, {
+      target: {
+        value: "0296fc7a-fb81-4eb7-a72f-94286b8d8301" // "Mandat généalogiste manquant (18)"
+      }
+    });
+  });
+
+  await waitFor(() => {
+    expect(inputCourrier.value).toBe("0296fc7a-fb81-4eb7-a72f-94286b8d8301");
+  });
+});
+
+afterAll(() => {
+  superagentMock.unset();
+});

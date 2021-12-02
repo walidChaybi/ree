@@ -1,0 +1,41 @@
+@import "../../../../../../scss/colors";
+
+.ApercuRequeteTraitement {
+  .MessageInfo {
+    border: 1px solid $application-color;
+    border-radius: 0.25rem;
+    color: #0579be;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    padding: 0.1rem 0.25rem;
+  }
+
+  .VisionneuseDocument {
+    .Titre {
+      position: relative;
+      span {
+        padding: 0.3rem;
+      }
+      .MenuCourrier {
+        top: 0px;
+        right: 0px;
+        position: absolute;
+        width: 14.5rem;
+        height: 100%;
+        button {
+          margin: 0;
+          height: 100%;
+        }
+        .icon-menu {
+          top: auto;
+          right: 15px;
+        }
+      }
+    }
+  }
+
+  .BoutonsAction {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

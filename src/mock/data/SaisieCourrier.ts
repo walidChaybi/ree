@@ -11,11 +11,11 @@ import { TypeCanal } from "../../model/requete/v2/enum/TypeCanal";
 import { TypeRequete } from "../../model/requete/v2/enum/TypeRequete";
 import { OptionsCourrier } from "../../model/requete/v2/IOptionCourrier";
 import { IRequeteDelivrance } from "../../model/requete/v2/IRequeteDelivrance";
-import { SaisieCourrier } from "../../views/pages/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+import { SaisieCourrier } from "../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import {
   Adresse,
   Requete
-} from "../../views/pages/saisirRequete/modelForm/ISaisirRequetePageModel";
+} from "../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 
 export const SaisieCourrier17 = {
   choixCourrier: {

@@ -14,14 +14,14 @@ import {
 } from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { TableauRece } from "../../../common/widget/tableau/v2/TableauRece";
 import { URL_MES_REQUETES_INFORMATION_APERCU_ID } from "../../../router/ReceUrls";
-import { goToLinkRequete } from "../../espaceDelivrance/v2/EspaceDelivranceUtilsV2";
-import "../../espaceDelivrance/v2/scss/RequeteTableauV2.scss";
+import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/v2/EspaceDelivranceUtilsV2";
 import {
   requeteInformationColumnHeaders,
   StatutsRequetesInformation
 } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationHook";
 import { useUpdateStatutRequeteInformation } from "./hook/UpdateStatutRequeteInformation";
+import "./scss/RequeteTableau.scss";
 
 export const MesRequetesInformationPage: React.FC = () => {
   const history = useHistory();

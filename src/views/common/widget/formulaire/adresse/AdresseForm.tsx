@@ -15,7 +15,7 @@ import {
   NUMERO_TELEPHONE,
   PAYS,
   VOIE
-} from "../../../../pages/saisirRequete/modelForm/ISaisirRequetePageModel";
+} from "../../../../pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import { getLibelle } from "../../Text";
 import { InputField } from "../champsSaisie/InputField";
 import {

@@ -1,0 +1,22 @@
+@import "../../../../../../../scss/colors";
+
+.DateLieu {
+  display: grid;
+  grid-template-columns: 37.5% 62.5%;
+  .DateEvenement {
+    .DateComposeForm {
+      grid-template-columns: 53% 10% 9px 10% 9px 14% 2%;
+    }
+    .BlockErreur {
+      margin-left: 53%;
+    }
+  }
+  .InputField {
+    .BlockInput {
+      grid-template-columns: 5% 39%;
+    }
+    .BlockErreur {
+      margin-left: 5%;
+    }
+  }
+}

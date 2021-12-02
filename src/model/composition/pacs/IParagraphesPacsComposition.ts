@@ -89,20 +89,19 @@ export const ParagrapheComposition = {
     }
   },
 
-  getLibelleJuridiction(typeJuridiction?: string): string {
-    switch (typeJuridiction as TypeJuridiction) {
-      case TypeJuridiction.COURS_APPEL:
-        return "par arrêt de la cour d'appel de";
-      default:
-        return "par jugement du tribunal judiciaire de";
+  getLibelleJuridiction(typeJuridiction?: TypeJuridiction): string {
+    if (typeJuridiction === TypeJuridiction.COURS_APPEL) {
+      return "par arrêt de la cour d'appel de";
+    } else {
+      return "par jugement du tribunal judiciaire de";
     }
   },
 
-  getAutoriteEtLocalisation(autorite: IAutorite, annulation?: boolean) {
+  getAutoriteEtLocalisation(autorite: IAutorite, annulation = false) {
     let autoriteTexte = "";
     if (annulation) {
       autoriteTexte = ParagrapheComposition.getLibelleJuridiction(
-        autorite?.typeJuridiction
+        autorite?.typeJuridiction as TypeJuridiction
       );
     } else {
       autoriteTexte = ParagrapheComposition.getAutorite(autorite);

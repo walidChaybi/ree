@@ -8,22 +8,22 @@ import { IRoute } from "../common/util/route/IRoute";
 import { getLibelle } from "../common/widget/Text";
 import { PageMessage } from "../core/login/PageMessage";
 import { AccueilPage } from "../pages/accueil/AccueilPage";
-import { ApercuCourrier } from "../pages/apercuRequete/apercuCourrier/ApercuCourrier";
-import { ApercuRequetePageV2 } from "../pages/apercuRequete/apercuRequete/ApercuRequetePageV2";
-import { ApercuRequetePriseEnChargePage } from "../pages/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
-import { ApercuRequeteTraitementPage } from "../pages/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
-import { ApercuRequetePage } from "../pages/apercuRequete/ApercuRequetePage";
-import { DetailRequetePage } from "../pages/detailRequete/DetailRequetePage";
-import EspaceDelivrancePage from "../pages/espaceDelivrance/v1/EspaceDelivrancePage";
-import EspaceDelivrancePageV2 from "../pages/espaceDelivrance/v2/EspaceDelivrancePageV2";
 import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
+import { ApercuCourrier } from "../pages/requeteDelivrance/apercuRequete/apercuCourrier/ApercuCourrier";
+import { ApercuRequetePageV2 } from "../pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePageV2";
+import { ApercuRequetePriseEnChargePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
+import { ApercuRequeteTraitementPage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
+import { ApercuRequetePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteV1/ApercuRequetePage";
+import { DetailRequetePage } from "../pages/requeteDelivrance/detailRequete/DetailRequetePage";
+import EspaceDelivrancePage from "../pages/requeteDelivrance/espaceDelivrance/v1/EspaceDelivrancePage";
+import EspaceDelivrancePageV2 from "../pages/requeteDelivrance/espaceDelivrance/v2/EspaceDelivrancePageV2";
+import { SaisirRDAPCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDAPCPage";
+import { SaisirRDCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
+import { SaisirRDCSCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { ApercuReqInfoPage } from "../pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "../pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
-import { SaisirRDAPCPage } from "../pages/saisirRequete/SaisirRDAPCPage";
-import { SaisirRDCPage } from "../pages/saisirRequete/SaisirRDCPage";
-import { SaisirRDCSCPage } from "../pages/saisirRequete/SaisirRDCSCPage";
 import {
   URL_ACCUEIL,
   URL_CONTEXT_APP,

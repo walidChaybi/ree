@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { postPieceComplementInformationApi } from "../../../../api/appels/requeteApi";
-import { getPieceComplementInformation } from "../../../pages/saisirRequete/hook/mappingCommun";
+import { getPieceComplementInformation } from "../../../pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import { PieceJointe } from "../../util/FileUtils";
 import { logError } from "../../util/LogManager";
 
@@ -15,10 +15,13 @@ export function usePostPiecesJointesApi(
   piecesJointes?: PieceJointe[]
 ): [boolean, string[]] {
   const [uuiDocuments, setUuidDocuments] = useState<string[]>([]);
-  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] =
-    useState<boolean>(false);
-  const [piecesJointesAEnvoyer, setPiecesJointesAEnvoyer] =
-    useState<PieceJointe[]>();
+  const [
+    ajoutPieceJointeTermine,
+    setAjoutPieceJointeTermine
+  ] = useState<boolean>(false);
+  const [piecesJointesAEnvoyer, setPiecesJointesAEnvoyer] = useState<
+    PieceJointe[]
+  >();
 
   useEffect(() => {
     if (idRequete && piecesJointes && piecesJointes.length > 0) {

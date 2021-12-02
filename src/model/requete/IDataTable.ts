@@ -6,7 +6,7 @@ import {
 import {
   IReponseApi,
   IRequerantApi
-} from "../../views/pages/espaceDelivrance/v1//hook/DonneesRequeteHook";
+} from "../../views/pages/requeteDelivrance/espaceDelivrance/v1/hook/DonneesRequeteHook";
 import { Canal } from "../Canal";
 import { NatureActe } from "../etatcivil/enum/NatureActe";
 import { CanalProvenance } from "./CanalProvenance";

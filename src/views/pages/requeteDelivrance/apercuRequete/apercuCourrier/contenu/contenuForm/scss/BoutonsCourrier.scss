@@ -1,0 +1,9 @@
+@import "../../../../../../../../scss/colors";
+
+.BoutonsCourrier {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 20px;
+  text-align: center;
+  background-color: $border;
+}

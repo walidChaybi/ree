@@ -5,7 +5,7 @@ import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
 import { TypeInstitutionnel } from "../../../../model/requete/v2/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "../../../../model/requete/v2/enum/TypeMandataireReq";
 import { IRequerant, Requerant } from "../../../../model/requete/v2/IRequerant";
-import { mappingRequeteDelivranceVersFormulaireRDCSC } from "../../../../views/pages/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
+import { mappingRequeteDelivranceVersFormulaireRDCSC } from "../../../../views/pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
 test("Attendu: Requerant.setRequerant particulier", async () => {

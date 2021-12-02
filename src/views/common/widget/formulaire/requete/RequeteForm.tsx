@@ -15,7 +15,7 @@ import {
   MOTIF,
   NATURE_ACTE,
   NB_EXEMPLAIRE
-} from "../../../../pages/saisirRequete/modelForm/ISaisirRequetePageModel";
+} from "../../../../pages/requeteDelivrance//saisirRequete/modelForm/ISaisirRequetePageModel";
 import { Options } from "../../../util/Type";
 import { getLibelle } from "../../Text";
 import { InputField } from "../champsSaisie/InputField";
@@ -83,8 +83,9 @@ const RequeteForm: React.FC<SubFormProps> = props => {
     DocumentDelivrance.getCodesAsOptions(CodesExtraitCopie)
   );
 
-  const [complementMotifInactif, setComplementMotifInactif] =
-    useState<boolean>(true);
+  const [complementMotifInactif, setComplementMotifInactif] = useState<boolean>(
+    true
+  );
 
   const onChangeNatureActeRequete = (
     e: React.ChangeEvent<HTMLInputElement>

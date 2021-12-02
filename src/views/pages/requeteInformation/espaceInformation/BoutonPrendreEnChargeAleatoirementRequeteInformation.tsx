@@ -3,6 +3,10 @@ import { useHistory } from "react-router-dom";
 import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
 import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
 import {
+  CreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "../../../common/hook/v2/requete/CreationActionMiseAjourStatutHook";
+import {
   IRequeteAleatoireResultat,
   useGetRequeteAleatoire
 } from "../../../common/hook/v2/requete/PrendreEnChargeAleatoirementHook";
@@ -15,10 +19,6 @@ import {
   receUrl,
   URL_MES_REQUETES_INFORMATION_APERCU_ID
 } from "../../../router/ReceUrls";
-import {
-  CreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "../../apercuRequete/commun/hook/CreationActionMiseAjourStatutHook";
 
 export const BoutonPrendreEnChargeAleatoirementRequeteInformation: React.FC = (
   props: any

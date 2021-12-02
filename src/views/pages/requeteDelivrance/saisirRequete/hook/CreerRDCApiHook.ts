@@ -1,0 +1,48 @@
+import { useEffect, useState } from "react";
+import { creationRequeteDelivrance } from "../../../../../api/appels/requeteApi";
+import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { logError } from "../../../../common/util/LogManager";
+import { mappingRequeteDelivrance } from "../../detailRequete/hook/DetailRequeteHook";
+import { CreationRequeteRDC } from "../modelForm/ISaisirRDCPageModel";
+import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
+
+export interface ICreationRequeteDelivranceRDCResultat {
+  requete: IRequeteDelivrance;
+  futurStatut: StatutRequete;
+  refus?: boolean;
+}
+
+export function useCreationRequeteDelivranceRDC(
+  requeteRDC?: CreationRequeteRDC
+): ICreationRequeteDelivranceRDCResultat | undefined {
+  const [resultat, setResultat] = useState<
+    ICreationRequeteDelivranceRDCResultat | undefined
+  >();
+  useEffect(() => {
+    if (requeteRDC?.saisie) {
+      const requete = mappingFormulaireRDCVersRequeteDelivrance(requeteRDC);
+
+      creationRequeteDelivrance({
+        requete,
+        futurStatut: requeteRDC.futurStatut,
+        refus: requeteRDC.refus
+      })
+        .then((result: any) => {
+          setResultat({
+            requete: mappingRequeteDelivrance(result.body.data),
+            futurStatut: requeteRDC.futurStatut,
+            refus: requeteRDC.refus
+          });
+        })
+        .catch((error: any) => {
+          logError({
+            messageUtilisateur:
+              "Une erreur est survenu lors de la création de la requête",
+            error
+          });
+        });
+    }
+  }, [requeteRDC]);
+  return resultat;
+}

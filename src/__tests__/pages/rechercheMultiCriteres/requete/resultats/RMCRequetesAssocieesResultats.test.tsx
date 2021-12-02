@@ -1,32 +1,45 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
-import { Router } from "react-router-dom";
-import {
-  DataRMCRequeteAvecResultat,
-  DataTableauRequete
-} from "../../../../../mock/data/RMCRequete";
+import { Route, Router } from "react-router-dom";
+import request from "superagent";
+import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
+import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { RMCRequetesAssocieesResultats } from "../../../../../views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
+import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../views/router/ReceUrls";
 
-test("renders Fielset Recherche Requêtes associées aux titulaires", () => {
-  const history = createMemoryHistory();
-  history.push("");
+const superagentMock = require("superagent-mock")(request, configRequetesV2);
 
-  render(
-    <Router history={history}>
-      <RMCRequetesAssocieesResultats
-        dataRMCRequete={DataRMCRequeteAvecResultat}
-        dataTableauRMCRequete={DataTableauRequete}
-        setRangeRequete={jest.fn()}
-        setNouvelleRMCRequete={jest.fn()}
-        setValuesRMCRequete={jest.fn()}
-        setCriteresRechercheRequete={jest.fn()}
-        resetRMC={true}
-      />
-    </Router>
-  );
+test("renders Fielset Recherche Requêtes associées aux titulaires", async () => {
+  await act(async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        requeteDelivrance.id
+      )
+    );
 
-  expect(
-    screen.getByText("Autres requêtes associées au titulaire")
-  ).toBeDefined();
+    render(
+      <Router history={history}>
+        <Route
+          exact={true}
+          path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
+        >
+          <RMCRequetesAssocieesResultats requete={requeteDelivrance} />
+        </Route>
+      </Router>
+    );
+  });
+
+  await waitFor(() => {
+    expect(
+      screen.getByText("Autres requêtes associées au titulaire")
+    ).toBeDefined();
+  });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

@@ -5,6 +5,10 @@ import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
 } from "../../../../common/hook/v2/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
+import {
+  CreationActionMiseAjourStatutEtRmcAutoHookParams,
+  useCreationActionMiseAjourStatutEtRmcAuto
+} from "../../../../common/hook/v2/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { autorisePrendreEnChargeTableau } from "../../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
@@ -15,10 +19,6 @@ import {
 } from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
 import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
 import { URL_RECHERCHE_REQUETE } from "../../../../router/ReceUrls";
-import {
-  CreationActionMiseAjourStatutEtRmcAutoHookParams,
-  useCreationActionMiseAjourStatutEtRmcAuto
-} from "../../../apercuRequete/commun/hook/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
@@ -39,11 +39,13 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsMiseAJour, setParamsMiseAJour] =
-    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<
+    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] =
-    useState<INavigationApercuRMCAutoParams | undefined>();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+    INavigationApercuRMCAutoParams | undefined
+  >();
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuRMCAuto(paramsRMCAuto);

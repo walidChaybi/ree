@@ -14,7 +14,7 @@ import {
   ITitulaireRequete,
   TitulaireRequete
 } from "../../../../../../model/requete/v2/ITitulaireRequete";
-import { SaisieCourrier } from "../../../../../pages/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+import { SaisieCourrier } from "../../../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import {
   formatPrenom,
   getValeurOuVide,

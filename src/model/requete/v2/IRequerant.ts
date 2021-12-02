@@ -5,7 +5,7 @@ import {
   getValeurOuVide,
   SNP
 } from "../../../views/common/util/Utils";
-import { getAdresse } from "../../../views/pages/saisirRequete/hook/mappingFormulaireRDCSCVersRequeteDelivrance";
+import { getAdresse } from "../../../views/pages/requeteDelivrance/saisirRequete/hook/mappingFormulaireRDCSCVersRequeteDelivrance";
 import { Qualite } from "./enum/Qualite";
 import { TypeInstitutionnel } from "./enum/TypeInstitutionnel";
 import { TypeLienRequerant } from "./enum/TypeLienRequerant";

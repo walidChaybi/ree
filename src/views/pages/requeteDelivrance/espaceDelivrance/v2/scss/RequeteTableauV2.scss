@@ -1,0 +1,20 @@
+@import "../../../../../../scss/colors";
+
+.ToolbarBottom {
+  text-align: right;
+  padding-right: 0.5rem;
+}
+
+.SelectOfficierEtatCivil {
+  display: flex;
+  text-align: justify;
+  button {
+    padding: 5px;
+    min-width: auto;
+    color: $button-application-color;
+  }
+  .AttributionOEC {
+    margin-right: 0.5em;
+    width: 75%;
+  }
+}
