@@ -104,7 +104,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
                   </>
                 )}
 
-                {RequeteDelivrance.estASigner(requete) && (
+                {RequeteDelivrance.estAuStatutASigner(requete) && (
                   <BoutonSignature
                     libelle={"pages.delivrance.apercu.signatureElectronique"}
                     requetes={[

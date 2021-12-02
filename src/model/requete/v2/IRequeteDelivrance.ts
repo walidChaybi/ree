@@ -33,7 +33,8 @@ export const RequeteDelivrance = {
   estAuStatut(requete: IRequeteDelivrance, statut: StatutRequete): boolean {
     return requete.statutCourant.statut === statut;
   },
-  estASigner(requete: IRequeteDelivrance) {
+
+  estAuStatutASigner(requete: IRequeteDelivrance) {
     return this.estAuStatut(requete, StatutRequete.A_SIGNER);
   }
 };

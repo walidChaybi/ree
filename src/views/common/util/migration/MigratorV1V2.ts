@@ -34,8 +34,7 @@ export class MigratorV1V2 {
     // Normalement on ne peut pas voir les requête RDD TRAITE_A_IMPRIMER
     return (
       (MigratorV1V2.estRDD(requete) &&
-        requete.statutCourant.statut ===
-          StatutRequete.TRAITE_A_DELIVRER_DEMAT) ||
+        MigratorV1V2.estAuStatutTraiteADelivrerDematOuASigner(requete)) ||
       (MigratorV1V2.estRDC(requete) &&
         requete.statutCourant.statut === StatutRequete.TRAITE_A_IMPRIMER)
     );
@@ -77,8 +76,17 @@ export class MigratorV1V2 {
     return MigratorV1V2.estARetraiterSaga(requeteDelivrance);
   }
 
-  public static estASigner(requete: IRequeteDelivrance) {
-    return RequeteDelivrance.estASigner(requete);
+  public static estAuStatutASigner(requete: IRequeteDelivrance) {
+    return RequeteDelivrance.estAuStatutASigner(requete);
+  }
+
+  public static estAuStatutTraiteADelivrerDematOuASigner(
+    requete: IRequeteDelivrance
+  ) {
+    return (
+      requete.statutCourant.statut === StatutRequete.TRAITE_A_DELIVRER_DEMAT ||
+      requete.statutCourant.statut === StatutRequete.A_SIGNER
+    );
   }
 
   private static estRDC(requete: IRequeteDelivrance) {
