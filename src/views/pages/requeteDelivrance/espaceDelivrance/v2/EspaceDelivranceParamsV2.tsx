@@ -7,13 +7,13 @@ import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauT
 import { getLibelle } from "../../../../common/widget/Text";
 
 export const StatutsRequetesEspaceDelivrance = [
-  StatutRequete.BROUILLON.nom,
-  StatutRequete.A_TRAITER.nom,
-  StatutRequete.PRISE_EN_CHARGE.nom,
-  StatutRequete.TRANSFEREE.nom,
-  StatutRequete.A_SIGNER.nom,
-  StatutRequete.A_VALIDER.nom
-];
+         StatutRequete.BROUILLON.nom,
+         StatutRequete.PRISE_EN_CHARGE.nom,
+         StatutRequete.TRANSFEREE.nom,
+         StatutRequete.A_SIGNER.nom,
+         StatutRequete.A_VALIDER.nom
+         // A_TRAITER est ramené par le back (en effet en ETAPE2 R1,2,7, il ne faut pas ramener les RDD A_TRAITER)
+       ];
 
 export enum HeaderTableauRequete {
   Numero = "numero",
