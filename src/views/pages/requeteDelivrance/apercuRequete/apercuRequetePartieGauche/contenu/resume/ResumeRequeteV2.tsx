@@ -1,8 +1,8 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
-import { getUrlWithoutIdParam } from "../../../../../../common/util/route/routeUtil";
+import { FenetreExterne } from "../../../../../../common/util/FenetreExterne";
 import { SectionPanel } from "../../../../../../common/widget/section/SectionPanel";
+import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
 import { ListePiecesJustificatives } from "./contenu/piecesJustificatives/ListePiecesJustificatives";
 import { getPanelsResumeRequete } from "./ResumeRequeteUtils";
 
@@ -16,41 +16,57 @@ const ZERO = 0;
 const UN = 1;
 const DEUX = 2;
 const TROIS = 3;
+const ratioWidth = 0.4;
+const ratioHeight = 0.4;
 export const ResumeRequeteV2: React.FC<ResumeRequeteV2Props> = props => {
+  const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
+
   const panels = getPanelsResumeRequete(props.requete);
-  const history = useHistory();
 
   const onClickNumero = () => {
-    const newUrl = `${getUrlWithoutIdParam(
-      history.location.pathname
-    )}/detailrequete/${props.requete.id}`;
-    history.push(newUrl);
+    setFenetreExterne(true);
+  };
+
+  const onClose = () => {
+    setFenetreExterne(false);
   };
 
   return (
-    <div className="ResumeRequeteV2 Fieldset">
-      <div className="ResumeRequeteTitle">
-        <span>
-          {`Résumé requête `}
-          <span className="LinkNumeroRequete" onClick={onClickNumero}>
-            {props.requete.numero}
+    <>
+      <div className="ResumeRequeteV2 Fieldset">
+        <div className="ResumeRequeteTitle">
+          <span>
+            {`Résumé requête `}
+            <span className="LinkNumeroRequete" onClick={onClickNumero}>
+              {props.requete.numero}
+            </span>
           </span>
-        </span>
+        </div>
+        {panels.length > 1 && (
+          <>
+            <SectionPanel {...panels[ZERO]} />
+            <SectionPanel {...panels[UN]} />
+            <SectionPanel {...panels[DEUX]} />
+            <hr className={"SectionPanelAreaSeparation"} />
+            <SectionPanel {...panels[TROIS]} />
+            <hr className={"SectionPanelAreaSeparation"} />
+            <ListePiecesJustificatives
+              pieces={props.requete.piecesJustificatives}
+              numRequete={props.requete.numero}
+            />
+          </>
+        )}
       </div>
-      {panels.length > 1 && (
-        <>
-          <SectionPanel {...panels[ZERO]} />
-          <SectionPanel {...panels[UN]} />
-          <SectionPanel {...panels[DEUX]} />
-          <hr className={"SectionPanelAreaSeparation"} />
-          <SectionPanel {...panels[TROIS]} />
-          <hr className={"SectionPanelAreaSeparation"} />
-          <ListePiecesJustificatives
-            pieces={props.requete.piecesJustificatives}
-            numRequete={props.requete.numero}
-          />
-        </>
+      {fenetreExterne && (
+        <FenetreExterne
+          titre={`Detail requête : N°${props.requete.numero}`}
+          onCloseHandler={onClose}
+          ratioWidth={ratioWidth}
+          ratioHeight={ratioHeight}
+        >
+          <DetailRequetePage />
+        </FenetreExterne>
       )}
-    </div>
+    </>
   );
 };

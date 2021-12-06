@@ -16,7 +16,6 @@ import { ApercuRequetePageV2 } from "../pages/requeteDelivrance/apercuRequete/ap
 import { ApercuRequetePriseEnChargePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { ApercuRequetePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteV1/ApercuRequetePage";
-import { DetailRequetePage } from "../pages/requeteDelivrance/detailRequete/DetailRequetePage";
 import EspaceDelivrancePage from "../pages/requeteDelivrance/espaceDelivrance/v1/EspaceDelivrancePage";
 import EspaceDelivrancePageV2 from "../pages/requeteDelivrance/espaceDelivrance/v2/EspaceDelivrancePageV2";
 import { SaisirRDAPCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDAPCPage";
@@ -34,12 +33,6 @@ import {
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_APERCU_TRAITEMENT_COURRIER,
-  URL_MES_REQUETES_DETAIL_REQUETE_ID,
-  URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
-  URL_MES_REQUETES_DETAIL_REQUETE_PRISE_COURRIER,
-  URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
-  URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_COURRIER,
-  URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2,
   URL_MES_REQUETES_EXTRAIT_COPIE_COURRIER,
   URL_MES_REQUETES_ID,
   URL_MES_REQUETES_INFORMATION,
@@ -50,16 +43,10 @@ import {
   URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE,
   URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_SAISIR_RDCSC_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_MES_REQUETES_SAISIR_RDCSC_DETAIL_REQUETE,
-  URL_MES_REQUETES_SAISIR_RDCSC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_SAISIR_RDCSC_DETAIL_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_SAISIR_RDCSC_ID,
   URL_MES_REQUETES_SAISIR_RDC_APERCU_REQUETE,
   URL_MES_REQUETES_SAISIR_RDC_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_SAISIR_RDC_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE,
-  URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_V2,
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
@@ -69,23 +56,12 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE_APERCU_TRAITEMENT_COURRIER,
-  URL_RECHERCHE_REQUETE_DETAIL_REQUETE_ID,
-  URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_COURRIER,
-  URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_RECHERCHE_REQUETE_DETAIL_REQUETE_TRAITEMENT_ID,
-  URL_RECHERCHE_REQUETE_DETAIL_TRAITEMENT_COURRIER,
   URL_REQUETES_SERVICE,
   URL_REQUETES_SERVICE_APERCU_PRISE_EN_CHARGE_COURRIER,
   URL_REQUETES_SERVICE_APERCU_REQUETE,
   URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE_APERCU_TRAITEMENT_COURRIER,
-  URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
-  URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
-  URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_COURRIER,
-  URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
-  URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_COURRIER,
-  URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_ID_V2,
   URL_REQUETES_SERVICE_EXTRAIT_COPIE_COURRIER,
   URL_REQUETES_SERVICE_ID,
   URL_REQUETES_SERVICE_SAISIR_RDAPC,
@@ -94,16 +70,10 @@ import {
   URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE,
   URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_SAISIR_RDCSC_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE,
-  URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE_SAISIR_RDCSC_ID,
   URL_REQUETES_SERVICE_SAISIR_RDC_APERCU_REQUETE,
   URL_REQUETES_SERVICE_SAISIR_RDC_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_SERVICE_SAISIR_RDC_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE,
-  URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_SERVICE_V2,
   URL_SAISIR_RDCSC_RMC
 } from "./ReceUrls";
@@ -111,7 +81,6 @@ import {
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête V2";
 const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
-const LIBELLE_DETAIL_REQUETE = "Détail de la requête";
 const LIBELLE_CREATION = "Création d'un courrier";
 const LIBELLE_MODIFICATION = "Modification d'un courrier";
 
@@ -161,19 +130,6 @@ export const routesRece: IRoute[] = [
     droits: [Droit.ATTRIBUER],
     libelle: getLibelle("Aperçu de requête")
   },
-  // Détail de la requête d'une requete d'un des tableau de l'espace délivrance
-  {
-    url: URL_MES_REQUETES_DETAIL_REQUETE_ID,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_ID,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
   /************* VERSION 2 ************/
   ////////////////////////////////////////////
   ///// MES REQUETES DE DELIVRANCE (MRD) /////
@@ -206,28 +162,6 @@ export const routesRece: IRoute[] = [
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
-  },
-  // Détail d'une requête dans une page Aperçu requête ... après Mes Requêtes de DELIVRANCE
-  {
-    url: URL_MES_REQUETES_DETAIL_REQUETE_ID_V2,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_MES_REQUETES_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_ID_V2,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   // Saisie requête ... depuis Mes Requêtes de DELIVRANCE
   {
@@ -275,28 +209,6 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
   },
-  // Détail d'une requête dans une page Aperçu requête ... après saisie de requête RDCSC depuis Mes Requêtes de DELIVRANCE
-  {
-    url: URL_MES_REQUETES_SAISIR_RDCSC_DETAIL_REQUETE,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_MES_REQUETES_SAISIR_RDCSC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_MES_REQUETES_SAISIR_RDCSC_DETAIL_REQUETE_TRAITEMENT_ID,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
   {
     url: URL_MES_REQUETES_SAISIR_RDCSC_ID,
     component: SaisirRDCSCPage,
@@ -327,28 +239,6 @@ export const routesRece: IRoute[] = [
     droits: [Droit.SAISIR_REQUETE],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
-  },
-  // Détail d'une requête dans une page Aperçu requête ... après saisie de requête RDC depuis Mes Requêtes de DELIVRANCE
-  {
-    url: URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_MES_REQUETES_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
@@ -385,20 +275,6 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_MODIFICATION)
   },
-  {
-    url: URL_MES_REQUETES_DETAIL_REQUETE_PRISE_COURRIER,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_MES_REQUETES_DETAIL_REQUETE_TRAITEMENT_COURRIER,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
   /////////////////////////////////////////
   ///// REQUETES DE MON SERVICE (RMS) /////
   /////////////////////////////////////////
@@ -430,28 +306,6 @@ export const routesRece: IRoute[] = [
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
-  },
-  // Détail d'une requête dans une page Aperçu requête ... après Mes Requêtes de SERVICE
-  {
-    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_ID_V2,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID_V2,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_ID_V2,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   // Saisie requête ... depuis Mes Requêtes de SERVICE
   {
@@ -499,42 +353,6 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
   },
-  // Détail d'une requête dans une page Aperçu requête ... après saisie de requête RDCSC depuis Mes Requêtes de SERVICE
-  {
-    url: URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_REQUETES_SERVICE_SAISIR_RDCSC_DETAIL_REQUETE_TRAITEMENT_ID,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_PRISE_COURRIER,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_REQUETES_SERVICE_DETAIL_REQUETE_TRAITEMENT_COURRIER,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
   {
     url: URL_REQUETES_SERVICE_SAISIR_RDCSC_ID,
     component: SaisirRDCSCPage,
@@ -565,28 +383,6 @@ export const routesRece: IRoute[] = [
     droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
-  },
-  // Détail d'une requête dans une page Aperçu requête ... après saisie de requête RDC depuis Mes Requêtes de SERVICE
-  {
-    url: URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_REQUETES_SERVICE_SAISIR_RDC_DETAIL_REQUETE_TRAITEMENT_ID,
-    component: DetailRequetePage,
-    droits: [Droit.ATTRIBUER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_REQUETES_SERVICE_APERCU_PRISE_EN_CHARGE_COURRIER,
@@ -653,42 +449,6 @@ export const routesRece: IRoute[] = [
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
-  },
-  //  Détail d'une requête depuis une page Aperçu requête ... après RMC Requêtes
-  {
-    url: URL_RECHERCHE_REQUETE_DETAIL_REQUETE_ID,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_EN_CHARGE_ID,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_RECHERCHE_REQUETE_DETAIL_REQUETE_PRISE_COURRIER,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_RECHERCHE_REQUETE_DETAIL_TRAITEMENT_COURRIER,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
-  },
-  {
-    url: URL_RECHERCHE_REQUETE_DETAIL_REQUETE_TRAITEMENT_ID,
-    component: DetailRequetePage,
-    droits: droitsSaufConsulterArchives,
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2),
-    libelle: getLibelle(LIBELLE_DETAIL_REQUETE)
   },
   {
     url: URL_SAISIR_RDCSC_RMC,

@@ -18,6 +18,7 @@ import { mappingRequeteDelivrance } from "../../../../../../../views/pages/reque
 import { URL_MES_REQUETES_ID } from "../../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetesV2);
+window.URL.createObjectURL = jest.fn();
 
 beforeAll(() => {
   TypePieceJustificative.init();
