@@ -16,8 +16,8 @@ const ZERO = 0;
 const UN = 1;
 const DEUX = 2;
 const TROIS = 3;
-const ratioWidth = 0.4;
-const ratioHeight = 0.4;
+const width = 1100;
+const height = 600;
 
 export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
   const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
@@ -61,8 +61,8 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
         <FenetreExterne
           titre={`Detail requête : N°${props.requete.numero}`}
           onCloseHandler={onClose}
-          ratioWidth={ratioWidth}
-          ratioHeight={ratioHeight}
+          height={height}
+          width={width}
         >
           <DetailRequetePage />
         </FenetreExterne>

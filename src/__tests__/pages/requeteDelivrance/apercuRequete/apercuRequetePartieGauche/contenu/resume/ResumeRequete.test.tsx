@@ -18,8 +18,8 @@ import { mappingRequeteDelivrance } from "../../../../../../../views/pages/reque
 import { URL_MES_REQUETES_APERCU_REQUETE_ID } from "../../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
-const globalAny: any = global;
 
+const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
 globalAny.open = () => {
   return { ...window };
