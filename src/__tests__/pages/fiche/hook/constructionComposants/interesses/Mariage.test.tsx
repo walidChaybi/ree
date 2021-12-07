@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react";
-import { mount } from "enzyme";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
@@ -10,20 +9,6 @@ const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configParamsBaseRequete[0]
 ]);
-
-test("renders mariage field render correcty", () => {
-  const component = mount(
-    <Mariage
-      villeMariage={"villeMariage"}
-      arrondissementMariage={"arrondissementMariage"}
-      regionMariage={"regionMariage"}
-      paysMariage={"paysMariage"}
-      dateMariage={{ annee: "2020", mois: "12", jour: "24" }}
-      aletranger={true}
-    />
-  );
-  expect(component).toMatchSnapshot();
-});
 
 test("renders mariage : non marié à l'étranger mais avec un pays qui n'est pas la France", () => {
   const { getByText } = render(

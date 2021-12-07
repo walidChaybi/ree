@@ -2,15 +2,15 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { NB_LIGNES_PAR_APPEL_ACTE } from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_ACTE } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import {
-  ICriteresRecherche,
+  ICriteresRechercheActeArchive,
   useRMCActeArchiveApiHook
 } from "../../../../../views/pages/rechercheMultiCriteres/acteArchive/hook/RMCActeArchiveApiHook";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
-const criteres: ICriteresRecherche = {
+const criteres: ICriteresRechercheActeArchive = {
   valeurs: {
     titulaire: {
       nom: "Nom",

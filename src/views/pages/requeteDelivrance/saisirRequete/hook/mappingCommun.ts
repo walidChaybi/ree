@@ -1,4 +1,4 @@
-import { IPrenomOrdonnes } from "../../../../../model/requete/v2/IPrenomOrdonnes";
+import { IPrenomOrdonnes } from "../../../../../model/requete/IPrenomOrdonnes";
 import { IPieceJustificative } from "../../../../common/types/RequeteType";
 import { getValeurOuVide } from "../../../../common/util/Utils";
 

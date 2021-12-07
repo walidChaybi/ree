@@ -1,8 +1,8 @@
 import {
   IElementsJasperCourrier,
   OptionsJasper
-} from "../../views/common/hook/v2/generation/generationCourrierHook/specificationCourrier";
-import { IRequeteDelivrance } from "../requete/v2/IRequeteDelivrance";
+} from "../../views/common/hook/generation/generationCourrierHook/specificationCourrier";
+import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
 import {
   CommunComposition,
   ICommunComposition

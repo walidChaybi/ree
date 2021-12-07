@@ -4,11 +4,11 @@ import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import {
   AddAlerteActeApiHookParameters,
   useAddAlerteActeApiHook
-} from "../../common/hook/v2/alertes/AddAlerteActeHookApi";
+} from "../../common/hook/alertes/AddAlerteActeHookApi";
 import {
   DeleteAlerteActeApiHookParameters,
   useDeleteAlerteActeApiHook
-} from "../../common/hook/v2/alertes/DeleteAlerteActeHookApi";
+} from "../../common/hook/alertes/DeleteAlerteActeHookApi";
 import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
 import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
 import { IAjouterAlerteFormValue } from "../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";

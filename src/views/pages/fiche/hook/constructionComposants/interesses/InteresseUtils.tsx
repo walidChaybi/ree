@@ -4,10 +4,12 @@ import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca
 import { IInteresse } from "../../../../../../model/etatcivil/rcrca/IInteresse";
 import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
-import { triListeObjetsSurPropriete } from "../../../../../common/util/Utils";
+import {
+  getLibelle,
+  triListeObjetsSurPropriete
+} from "../../../../../common/util/Utils";
 import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
-import { getLibelle, getText } from "../../../../../common/widget/Text";
 import { Mariage } from "./Mariage";
 
 export function getInteresse(rcrca: IFicheRcRca): SectionPartProps[] {
@@ -22,7 +24,7 @@ export function getInteresse(rcrca: IFicheRcRca): SectionPartProps[] {
         contents: FicheUtil.isFicheRca(rcrca.categorie)
           ? getInteresseInfoRca(interesse)
           : getInteresseInfo(interesse),
-        title: getText("vue-rc-interesse", [interesse.numeroOrdreSaisi])
+        title: getLibelle(`Intéressé ${interesse.numeroOrdreSaisi}`)
       }
     };
   });

@@ -1,16 +1,38 @@
+import {
+  ReponseAppelDetailRequeteDelivrance,
+  ReponseAppelDetailRequeteDelivranceASigner,
+  ReponseAppelDetailRequeteDelivranceBrouillon,
+  ReponseAppelDetailRequeteDelivrancePriseEnCharge,
+  ReponseAppelDetailRequeteDelivranceRDC
+} from "../data/DetailRequeteDelivrance";
+import {
+  documentReponseCARN_CSPAC_01,
+  documentReponseCertificatRCA,
+  documentReponseCopieIntegrale,
+  idDocumentsReponse
+} from "../data/DocumentReponse";
+import {
+  ReponseAppelMesRequetes,
+  ReponseAppelRequetesService
+} from "../data/EspaceDelivrance";
+import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
 import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
-import DONNEES_REQUETE from "../data/requete";
+import {
+  ReponseAppelNomenclatureDocummentDelivrance,
+  ReponseAppelNomenclatureTypePiecesJustificative
+} from "../data/nomenclatures";
+import { idRequeteRDCSC } from "../data/requeteDelivrance";
+import { ReponseAppelRMCRequete } from "../data/RMCRequete";
+import { CreationRDCSC, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
 
-const mockPdf = require("../data/pdf-base64.json");
-const mockPng = require("../data/png-base64.json");
-const mockRequetes = require("../script-generation-donnees/generateurRequetes.ts").generateurRequetes();
+export const NORESULT = "NORESULT";
 
 export const configRequetes = [
   {
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost/rece/rece-requete-api/v1(.*)",
+    pattern: "http://localhost/rece/rece-requete-api/v2(.*)",
 
     /**
      * returns the data
@@ -21,246 +43,426 @@ export const configRequetes = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
-      // Récupération des des requetes
-      if (match[1] === "/requetes/104b8563-c7f8-4748-9daa-f26558985894") {
-        return { data: mockRequetes.data[0] };
-      }
-      if (match[1] === "/requetes/104b8564-c7f9-4749-9dab-f26558985895") {
-        return { data: mockRequetes.data[1] };
-      }
-      if (match[1] === "/requetes/104b8563-c7f8-4748-9daa-f26558985896") {
-        return { data: mockRequetes.data[2] };
-      }
-      if (
-        match[1] === "/requetes?statuts=A_SIGNER&tri=idSagaDila&sens=ASC" ||
-        match[1] === "/requetes?statuts=A_SIGNER&tri=idSagaDila&sens=DESC" ||
-        match[1] ===
-          "/requetes?statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105" ||
-        match[1] === "/requetes?statuts=A_SIGNER&tri=dateStatut&sens=ASC" ||
-        match[1] ===
-          "/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105" ||
-        match[1] ===
-          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=dateStatut&sens=ASC&range=0-105" ||
-        match[1] ===
-          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105"
-      ) {
-        return {
-          data: mockRequetes.data.slice(0, 105),
-          headers: {
-            "content-range": "0-15/" + mockRequetes.data.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v1/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"'
-          }
-        };
-      }
-      if (
-        match[1] ===
-        "/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105"
-      ) {
-        return {
-          data: mockRequetes.data.slice(0, 105),
-          headers: {
-            "content-range": "0-15/" + mockRequetes.data.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v1/requetes?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105>;rel="next"'
-          }
-        };
-      }
-      if (
-        match[1] ===
-        "/requetes?statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105"
-      ) {
-        return {
-          data: mockRequetes.data.slice(105, 210),
-          headers: {
-            "content-range": "106-15/" + mockRequetes.data.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v1/requetes?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next",<http://localhost:80/rece/rece-requete-api/v1/requetes?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"'
-          }
-        };
-      }
-      if (
-        match[1] ===
-        "/requetes?statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105"
-      ) {
-        return {
-          data: mockRequetes.data.slice(210, 315),
-          headers: {
-            "content-range": "211-15/" + mockRequetes.data.length,
-            link:
-              ',<http://localhost:80/rece/rece-requete-api/v1/requetes?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"'
-          }
-        };
-      }
-
-      if (
-        match[1] ===
-          "/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC" ||
-        match[1] ===
-          "/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=DESC" ||
-        match[1] === "/requetes/requetesService?statut=A_SIGNER" ||
-        match[1] ===
-          "/requetes/requetesService?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=dateStatut&sens=ASC" ||
-        match[1] ===
-          "/requetes/requetesService?statuts=A_SIGNER&tri=dateStatut&sens=ASC"
-      ) {
-        return {
-          data: mockRequetes.data.slice(0, 105),
-          headers: {
-            "content-range": "0-15/" + mockRequetes.data.length,
-            link:
-              '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="next"'
-          }
-        };
-      }
-      if (
-        match[1] ===
-          "/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105" ||
-        match[1] === "/requetes/requetesService?statut=A_SIGNER" ||
-        match[1] ===
-          "requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105" ||
-        match[1] ===
-          "/requetes/requetesService?statuts=A_SIGNER%2CA_TRAITER_DEMAT%2CA_IMPRIMER&tri=idSagaDila&sens=ASC" ||
-        match[1] ===
-          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=1-105" ||
-        match[1] ===
-          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=dateStatut&sens=ASC&range=1-105"
-      ) {
-        return {
-          data: mockRequetes.data.slice(105, 210),
-          headers: {
-            "content-range": "106-15/" + mockRequetes.data.length,
-            link:
-              '<http://localhost:80/rece-requete-api/v1/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105>;rel="next",<http://localhost:80/rece-requete-api/v1/requetes/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=0-105>;rel="prev"'
-          }
-        };
-      }
-      if (
-        match[1] ===
-          "/requetes/requetesService?statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
-        match[1] ===
-          "/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=2-105" ||
-        match[1] ===
-          "/requetes?statuts=A_SIGNER%252CA_TRAITER_DEMAT%252CA_IMPRIMER&tri=idSagaDila&sens=ASC&range=0-105" ||
-        match[1] === "/requetes/requetesService?statut=A_SIGNER"
-      ) {
-        return {
-          data: mockRequetes.data.slice(210, 315),
-          headers: {
-            "content-range": "211-15/" + mockRequetes.data.length,
-            link: [
-              ',<http://localhost:80/rece-requete-api/v1/requetes/requetesService?statut=A_SIGNER&tri=dateStatut&sens=ASC&range=1-105>;rel="prev"'
-            ]
-          }
-        };
-      }
-      if (match[1] === "/requetes/1?statut=A_SIGNER") {
-        return undefined;
-      }
-
-      if (match[1] === "/requetes/req1?statut=A_SIGNER") {
-        return { data: DONNEES_REQUETE };
-      }
-
-      if (match[1] === "/requetes/req2?statut=A_SIGNER") {
-        return { status: 404 };
-      }
-
-      if (match[1] === "/requetes/count?statuts=A_SIGNER") {
-        return { data: 20 };
-      }
-
-      //Récupération de pièces justufucatives
-      if (
-        match[1] ===
-        "/piecesjustificatives/e496f1d1-18c3-48ca-ae87-e97582fbf188"
-      ) {
-        return { data: mockPng.data };
-      }
-
-      if (match[1] === "/documentsdelivres") {
-        return {};
-      }
-
-      if (
-        match[1] ===
-          "/piecesjustificatives/a70237ca-83e5-4f6f-ac86-ec15086c5e3e" ||
-        match[1] ===
-          "/documentsdelivres/f9279c00-5d2b-11ea-bc55-0242ac130004" ||
-        match[1] ===
-          "/documentsdelivres/a70237ca-83e5-4f6f-ac86-ec15086c5e3e" ||
-        match[1] ===
-          "/documentsdelivres/24557a3c-60e3-432e-82fb-0ac8f160590a" ||
-        match[1] ===
-          "/documentsdelivres/f9279c00-5d2b-11ea-bc55-0242ac130003" ||
-        match[1] ===
-          "/documentsdelivres/g9279c00-5d2b-11ea-bc55-0242ac130003" ||
-        match[1] ===
-          "/documentsdelivres/f9279c00-5d2b-11ea-bc55-0242ac139998" ||
-        match[1] ===
-          "/documentsdelivres/g9279c00-5d2b-11ea-bc55-0242ac139999" ||
-        match[1] === "/documentsdelivres/24557a3c-60e3-432e-82fb-0ac8f1609997"
-      ) {
-        let documentDelivre = {
-          nom: "nomMock",
-          conteneurSwift: "conteneurSwiftMock",
-          contenu: mockPdf.data,
-          typeDocument: "EXTRAIT_PLURILINGUE"
-        };
-        return { data: documentDelivre };
-      }
-
-      if (
-        match[1] ===
-        "/documentsdelivres/f9279c00-5d2b-11ea-bc55-0242ac130003fakedoc"
-      ) {
-        return { data: null };
-      }
-
-      // UtilisateurAssigneRequeteHook
-      if (
-        match[1] === "/reponses/1?nomOec=SecondNom&prenomOec=SecondPrenom" ||
-        match[1] === "/reponses/undefined?nomOec=&prenomOec="
-      ) {
-        return {};
-      }
-
-      // Modification des requetes
-      if (match[1] === "/requetes" && context.method === "post") {
-        return this.post;
-      }
-
-      // Utilisé dans UtilisateurAssigneRequeteHook.test
-      if (match[1] === "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc") {
-        return this.patch;
-      }
-
       // Récupération des paramètres de la base requête
       if (match[1] === "/parametres" && context.method === "post") {
         return { data: parametresBaseRequete };
       }
 
-      //
+      // Mes requetes (espace délivrance)
       if (
         match[1] ===
-          "/requetes?statut=A_IMPRIMER&idRequete=1d189cd9-0df0-45dc-a4cf-0174eb62cbbc" ||
-        match[1] === "/requetes?idRequete=id1&statut=A_IMPRIMER"
+        "/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100"
       ) {
-        return { data: DONNEES_REQUETE };
+        return {
+          data: ReponseAppelMesRequetes,
+          headers: {
+            "content-range": "0-100/" + ReponseAppelMesRequetes.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
+          }
+        };
       }
 
-      //
       if (
-        match[1] === "/requetes?statut=A_SIGNER&idRequete=test" ||
         match[1] ===
-          "/requetes?idRequete=104b8563-c7f8-4748-9daa-f26558985894&statut=A_TRAITER_DEMAT" ||
-        match[1] === "/requetes?idRequete=id1&statut=A_TRAITER_DEMAT"
+        "/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100"
       ) {
-        return { data: null };
+        return {
+          data: ReponseAppelMesRequetes,
+          headers: {
+            "content-range": "0-100/" + ReponseAppelMesRequetes.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
+          }
+        };
       }
 
-      const error = { msg: "url api requete V1 non mockée", url: match[1] };
-      console.log("Erreur mock api requete v1: ", error);
+      if (
+        match[1] ===
+        "/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100"
+      ) {
+        return {
+          data: ReponseAppelMesRequetes,
+          headers: {
+            "content-range": "0-100/" + ReponseAppelMesRequetes.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+          }
+        };
+      }
+
+      // Requetes de mon service (espace délivrance)
+      if (
+        match[1] ===
+        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100"
+      ) {
+        return {
+          data: ReponseAppelRequetesService,
+          headers: {
+            "content-range": "0-100/" + ReponseAppelRequetesService.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
+          }
+        };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100"
+      ) {
+        return {
+          data: ReponseAppelRequetesService,
+          headers: {
+            "content-range": "0-100/" + ReponseAppelRequetesService.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
+          }
+        };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100"
+      ) {
+        return {
+          data: ReponseAppelRequetesService,
+          headers: {
+            "content-range": "0-100/" + ReponseAppelRequetesService.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+          }
+        };
+      }
+
+      // Stockage Document Maj Statut
+      if (
+        match[1] ===
+          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/document?libelleAction=A%20valider&statutRequete=A_VALIDER" ||
+        match[1] ===
+          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd/document?libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER"
+      ) {
+        return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
+      }
+
+      // Nomenclatures requetes
+      if (match[1] === "/nomenclature/DOCUMENT_DELIVRANCE") {
+        return { data: ReponseAppelNomenclatureDocummentDelivrance.data };
+      }
+
+      if (match[1] === "/nomenclature/TYPE_PIECE_JUSTIFICATIVE") {
+        return { data: ReponseAppelNomenclatureTypePiecesJustificative.data };
+      }
+
+      if (match[1] === "/nomenclature/optioncourrier") {
+        return { data: NOMENCLATURE_OPTION_COURRIER };
+      }
+
+      // RMC Requete
+      if (
+        match[1] === "/requetes/rmc?range=0-100" ||
+        match[1] === "/requetes/rmc?range=0-105"
+      ) {
+        // RMC Manuelle suite RMC Auto (vue ApercuRequetePriseEnChargePartieGauche)
+        if (params?.nomTitulaire === NORESULT) {
+          return {
+            headers: {
+              "content-range": "0-100/0",
+              link: ""
+            },
+            data: { resultatsRecherche: [] }
+          };
+        }
+        // RMC Manuelle (vue RMCRequetePage)
+        else {
+          return {
+            headers: {
+              "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
+              link:
+                '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
+            },
+            data: ReponseAppelRMCRequete.data
+          };
+        }
+      }
+
+      // Détail requête Délivrance
+      if (
+        match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d404" ||
+        match[1] === "/requetes/1072bc37-f889-4365-8f75-912166b767dd"
+      ) {
+        return { data: ReponseAppelDetailRequeteDelivrance.data };
+      }
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d494") {
+        return { data: ReponseAppelDetailRequeteDelivranceASigner.data };
+      }
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d884") {
+        return { data: ReponseAppelDetailRequeteDelivrancePriseEnCharge.data };
+      }
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d405") {
+        return { data: ReponseAppelDetailRequeteDelivranceBrouillon.data };
+      }
+      if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d666") {
+        return { data: ReponseAppelDetailRequeteDelivranceRDC.data };
+      }
+
+      // Compteurs requêtes A_SIGNER
+      if (match[1] === "/requetes/count?statuts=A_SIGNER") {
+        return { data: 20 };
+      }
+
+      // Utilisé dans UtilisateurAssigneRequeteHook.test
+      if (match[1] === "/reponses/1d189cd9-0df0-45dc-a4cf-0174eb62cbbc") {
+        return {};
+      }
+
+      if (match[1] === "/reponses/1?nomOec=SecondNom&prenomOec=SecondPrenom") {
+        return {};
+      }
+
+      // Sauvegarde courrier Accompagnement
+      if (
+        match[1] ===
+          "/requetes/delivrance/85b32284-d3dd-4502-bfbd-5634ba52ba22/courrier?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=A%20valider&statutRequete=A_VALIDER" ||
+        match[1] ===
+          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER"
+      ) {
+        return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
+      }
+
+      // Post de Piece complement information
+      if (match[1] === "/requetes/12345/piececomplementinformation") {
+        return { data: "123456" };
+      }
+
+      // Creation Requete Delivrance
+      // Certificat de Situation Courrier
+      if (match[1] === "/requetes/delivrance?refus=false&brouillon=false") {
+        return {
+          data: {
+            id: "1072bc37-f889-4365-8f75-912166b767dd",
+            numeroFonctionnel: "U2UN5W",
+            idSagaDila: null,
+            dateCreation: 18 / 10 / 2020,
+            canal: "COURRIER",
+            type: "DELIVRANCE",
+            statut: "A_TRAITER",
+            titulaires: [],
+            requerant: [],
+            mandant: null,
+            idUtilisateur: "id",
+            idEntite: "id",
+            actions: [],
+            observations: [],
+            piecesJustificatives: [],
+            sousType: "RDCSC",
+            documentDemande: [],
+            nbExemplaireImpression: 1,
+            provenanceRequete: "COURRIER",
+            evenement: [],
+            motif: "Certificat de nationalité française",
+            complementMotif: null,
+            choixDelivrance: null,
+            documentsReponses: []
+          }
+        };
+      }
+
+      // Creation Requete Delivrance
+      // Certificat de Situation Courrier
+      if (
+        match[1] ===
+          "/requetes/delivrance?refus=false&futurStatut=PRISE_EN_CHARGE" ||
+        match[1] === "/requetes/delivrance?refus=true&futurStatut=A_TRAITER" ||
+        match[1] === "/requetes/delivrance?refus=false&futurStatut=BROUILLON"
+      ) {
+        return {
+          data: CreationRDCSC
+        };
+      }
+
+      // Update Requete Delivrance
+      // Certificat de Situation Courrier
+      if (
+        match[1] ===
+          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&futurStatut=PRISE_EN_CHARGE" ||
+        match[1] ===
+          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=true&futurStatut=A_TRAITER" ||
+        match[1] ===
+          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd?refus=false&futurStatut=BROUILLON"
+      ) {
+        return {
+          data: UpdateRDCSC
+        };
+      }
+
+      // Update choix delivrance
+      if (
+        match[1] ===
+          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_REQUETE_INCOMPLETE" ||
+        match[1] ===
+          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC" ||
+        match[1] ===
+          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_DIVERS"
+      ) {
+        return { data: "d19650ed-012b-41ec-b7be-9e6ea9101eaa" };
+      }
+      if (
+        match[1] ===
+          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/choixdelivrance?choixDelivrance=DELIVRER_EC_COPIE_INTEGRALE" ||
+        match[1] ===
+          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d884/choixdelivrance?choixDelivrance=DELIVRER_EC_COPIE_INTEGRALE"
+      ) {
+        return { data: "a4cefb71-8457-4f6b-937e-34b49335d666" };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance"
+      ) {
+        return { data: "d19650ed-012b-41ec-b7be-9e6ea9101eaa" };
+      }
+
+      // RMC Auto Requete
+      if (match[1] === "/requetes/rmcauto?range=0-105") {
+        return {
+          headers: {
+            "content-range":
+              "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+          },
+          data: ReponseAppelRMCRequete.data
+        };
+      }
+
+      // Récupération d'un document par son id
+      if (match[1] === "/piecesjustificatives/" + idDocumentsReponse[0]) {
+        return { data: documentReponseCARN_CSPAC_01 };
+      }
+
+      // Récupération d'un document par son id
+      if (match[1] === "/documentsreponses/" + idDocumentsReponse[0]) {
+        return { data: documentReponseCARN_CSPAC_01 };
+      }
+      // Récupération d'un document par son id
+      if (match[1] === "/documentsreponses/" + idDocumentsReponse[1]) {
+        return { data: documentReponseCertificatRCA };
+      }
+
+      if (
+        match[1] === "/documentsreponses/f9279c00-5d2b-11ea-bc55-0242ac130004"
+      ) {
+        return { data: documentReponseCopieIntegrale };
+      }
+
+      // Stockage d'un document (POST)
+      if (match[1] === "/documentsreponses" && context.method === "post") {
+        return { data: idDocumentsReponse };
+      }
+
+      // Maj d'un document (PATCH)
+      if (match[1] === "/documentsreponses" && context.method === "patch") {
+        return { data: "idRequete" };
+      }
+
+      // Supression des documents reponses (DELETE)
+      if (
+        match[1] === "/documentsreponses/" + idRequeteRDCSC &&
+        context.method === "delete"
+      ) {
+        return { data: {} };
+      }
+
+      // Transfert requête
+      if (
+        (match[1] === "/requetes/action/transfert" ||
+          match[1] ===
+            "/requetes/action/transfert?idRequete=12345&idEntite=12345&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=libelleAction") &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
+      }
+
+      // Ignorer requête
+      if (
+        (match[1] ===
+          "/requetes/action/ignorer?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&texteObservation=Adresse%20incompl%C3%A8te" ||
+          match[1] ===
+            "/requetes/action/ignorer?idRequete=12345&texteObservation=libelleAction") &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
+      }
+      if (
+        match[1] ===
+          "/requetes/action/ignorer?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&texteObservation=Adresse%20incompl%C3%A8te" &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
+      }
+
+      // Création d'une action et maj statut de la requête
+      if (
+        (match[1] ===
+          "/requetes/action?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=A%20valider&statutRequete=A_VALIDER" ||
+          match[1] ===
+            "/requetes/action?idRequete=12345&libelleAction=libelleAction&statutRequete=A_VALIDER" ||
+          match[1] ===
+            "/requetes/action?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+          match[1] ===
+            "/requetes/action?idRequete=d19650ed-012b-41ec-b7be-9e6ea9101eaa&libelleAction=Revue%20du%20traitement&statutRequete=PRISE_EN_CHARGE" ||
+          match[1] ===
+            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
+          match[1] ===
+            "/requetes/action?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER" ||
+          match[1] ===
+            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=A%20valider&statutRequete=A_VALIDER` ||
+          match[1] ===
+            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE` ||
+          match[1] ===
+            `/requetes/action?idRequete=${idRequeteRDCSC}&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT` ||
+          match[1] ===
+            "/requetes/action?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+          match[1] ===
+            "/requetes/action?idRequete=id1&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+          match[1] ===
+            "/requetes/action?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+          // Passage du statut la requête de "A_SIGNE" à "TRAITE_A_IMPRIMER"
+          match[1] ===
+            "/requetes/action?idRequete=id1&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_IMPRIMER" ||
+          match[1] ===
+            "/requetes/action?idRequete=id2&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_IMPRIMER") &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
+      }
+
+      // Prise en charge aléatoire
+      if (match[1] === "/requetes/requetealeatoire?type=DELIVRANCE") {
+        return {
+          data: ReponseAppelMesRequetes[1]
+        };
+      }
+      if (match[1] === "/requetes/requetealeatoire?type=INFORMATION") {
+        return {
+          data: ReponseAppelMesRequetes[2]
+        };
+      }
+
+      // Prise en charge requete
+      if (
+        match[1] ===
+        "/requetes/action?idRequete=0&libelleAction=Prendre%20en%20charge&statutRequete=PRISE_EN_CHARGE"
+      ) {
+        return true;
+      }
+
+      const error = {
+        msg: "url api requete non mockée",
+        url: match[1],
+        method: context.method
+      };
+      console.log("Erreur mock api requete v2: ", error);
       return {
         data: error
       };
@@ -287,8 +489,8 @@ export const configRequetes = [
      */
     post: function (match, data) {
       return {
-        status: 201,
-        body: data
+        body: data,
+        header: data.headers
       };
     },
 
@@ -300,7 +502,15 @@ export const configRequetes = [
      */
     patch: function (match, data) {
       return {
-        status: 201
+        body: data,
+        header: data.headers
+      };
+    },
+
+    delete: function (match, data) {
+      return {
+        body: data,
+        header: data.headers
       };
     }
   }

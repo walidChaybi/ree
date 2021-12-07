@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../../../model/requete/IRequeteTableauDelivrance";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
-} from "../../../../../common/hook/v2/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+} from "../../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { autorisePrendreEnChargeDelivrance } from "../../../../../common/util/RequetesUtils";
 import { getUrlWithParam } from "../../../../../common/util/route/routeUtil";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../../../common/widget/attente/BoutonOperationEnCours";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import "./scss/BoutonPrendreEnCharge.scss";
 

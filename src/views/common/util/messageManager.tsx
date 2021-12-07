@@ -1,9 +1,9 @@
+import { Alert, AlertTitle } from "@material-ui/lab";
 import * as React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getLibelle } from "./../util/Utils";
 import "./scss/Message.scss";
-import { Alert, AlertTitle } from "@material-ui/lab";
-import { getText } from "./../widget/Text";
 
 const DURATION_BEFORE_CLOSE = 3000;
 const DURATION_BEFORE_CLOSE_ERROR = 5000;
@@ -21,10 +21,10 @@ const toString = (messages: string[]) => {
     .replace(/,/g, "");
 };
 
-const infoTitle = getText("messageManager.info");
-const successTitle = getText("messageManager.success");
-const warnTitle = getText("messageManager.warning");
-const errorTitle = getText("messageManager.error");
+const infoTitle = getLibelle("Information");
+const successTitle = getLibelle("Succès");
+const warnTitle = getLibelle("Attention");
+const errorTitle = getLibelle("Erreur");
 
 const messageManager = {
   showErrorAndClose: (errorMessage: string, autoClose?: number) => {

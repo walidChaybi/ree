@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { getOptionsCourriers } from "../../../../../../../api/appels/requeteApi";
-import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { OptionsCourrier } from "../../../../../../../model/requete/v2/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
+import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { logError } from "../../../../../../common/util/LogManager";
 import { recupererLesOptionsDisponiblesPourLeCourrier } from "../contenuForm/sousFormulaires/GestionOptionsCourrier";
 

@@ -1,13 +1,13 @@
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import {
-  FenetreDocumentReponse,
-  onClose
+    FenetreDocumentReponse,
+    onClose
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/document/FenetreDocumentReponse";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const globalAny: any = global;
 globalAny.open = () => {

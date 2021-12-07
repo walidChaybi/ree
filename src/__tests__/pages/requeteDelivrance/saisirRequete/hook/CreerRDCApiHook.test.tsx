@@ -1,18 +1,18 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { useCreationRequeteDelivranceRDC } from "../../../../../views/pages/requeteDelivrance/saisirRequete/hook/CreerRDCApiHook";
 import {
-  RequeteRDCAutreProfessionnnel,
-  RequeteRDCInstitutionnel,
-  RequeteRDCMandataire,
-  RequeteRDCParticulier,
-  RequeteRDCTitulaire
+    RequeteRDCAutreProfessionnnel,
+    RequeteRDCInstitutionnel,
+    RequeteRDCMandataire,
+    RequeteRDCParticulier,
+    RequeteRDCTitulaire
 } from "../data/DataRDC";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsummerTitulaire: React.FC = () => {
   const resultat = useCreationRequeteDelivranceRDC(RequeteRDCTitulaire);

@@ -1,19 +1,19 @@
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { DocumentDelivrance } from "../../../../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { DocumentDelivrance } from "../../../../../../../../model/requete/enum/DocumentDelivrance";
 import {
   OptionCourrier,
   OptionsCourrier
-} from "../../../../../../../../model/requete/v2/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../../../model/requete/v2/IRequeteDelivrance";
+} from "../../../../../../../../model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "../../../../../../../../model/requete/IRequeteDelivrance";
+import { getLibelle } from "../../../../../../../common/util/Utils";
 import { InputField } from "../../../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SousFormulaire } from "../../../../../../../common/widget/formulaire/SousFormulaire";
 import {
   SubFormProps,
   withNamespace
 } from "../../../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../../../common/widget/Text";
 import { useOptionsCourriersApiHook } from "../../hook/OptionsCourriersHook";
 import { CONTENU, LIBELLE_OPTION } from "../../modelForm/ISaisiePageModel";
 import {

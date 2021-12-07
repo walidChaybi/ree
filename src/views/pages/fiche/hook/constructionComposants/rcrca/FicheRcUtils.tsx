@@ -1,6 +1,6 @@
 import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getInscriptionRepertoireCivil } from "../inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
 import { getInteresse } from "../interesses/InteresseUtils";

@@ -5,7 +5,7 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import React from "react";
-import { getText } from "../../../common/widget/Text";
+import { getLibelle } from "../../../common/util/Utils";
 import { storeRece } from "../../util/storeRece";
 import { FormPinCode } from "./FormPinCode";
 import {
@@ -53,7 +53,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = ({
         className="PopinSignature"
       >
         <DialogTitle id="alert-dialog-title">
-          {getText("signature.titrePopIn")}
+          {getLibelle("Signature des documents")}
         </DialogTitle>
         <DialogContent>
           <SuccessSignature successes={successSignature} />

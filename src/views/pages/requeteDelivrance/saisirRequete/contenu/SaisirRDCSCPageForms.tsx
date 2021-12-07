@@ -1,12 +1,12 @@
 import React from "react";
-import { TypeRequerant } from "../../../../../model/requete/v2/enum/TypeRequerant";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
+import { TypeRequerant } from "../../../../../model/requete/enum/TypeRequerant";
+import { TRequete } from "../../../../../model/requete/IRequete";
 import { Options } from "../../../../common/util/Type";
+import { getLibelle } from "../../../../common/util/Utils";
 import AdresseForm from "../../../../common/widget/formulaire/adresse/AdresseForm";
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
 import PiecesJointesForm from "../../../../common/widget/formulaire/piecesJointes/PiecesJointesForm";
 import { SubFormProps } from "../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../common/widget/Text";
 import {
   ADRESSE,
   DOCUMENT,

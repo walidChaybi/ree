@@ -6,13 +6,13 @@ import request from "superagent";
 import {
   idRequeteRDC,
   requeteRDC
-} from "../../../../../../mock/data/RequeteV2";
-import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+} from "../../../../../../mock/data/requeteDelivrance";
+import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
 import { MenuAutre } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuAutre";
 import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const history = createMemoryHistory();
 

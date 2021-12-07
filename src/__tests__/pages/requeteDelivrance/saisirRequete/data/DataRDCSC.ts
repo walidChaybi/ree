@@ -1,4 +1,4 @@
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { CreationRequeteRDCSC } from "../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 
 export const RequeteRDCSCInteresse = {
@@ -7,8 +7,10 @@ export const RequeteRDCSCInteresse = {
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
     interesse: {
-      nomFamille: "",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -43,7 +45,7 @@ export const RequeteRDCSCInteresse = {
         prenom: ""
       },
       particulier: {
-        nomFamille: "",
+        nomNaissance: "",
         nomUsage: "",
         prenom: ""
       }
@@ -79,8 +81,10 @@ export const RequeteRDCSCMandataire = {
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
     interesse: {
-      nomFamille: "",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -115,7 +119,7 @@ export const RequeteRDCSCMandataire = {
         prenom: ""
       },
       particulier: {
-        nomFamille: "",
+        nomNaissance: "",
         nomUsage: "",
         prenom: ""
       }
@@ -151,8 +155,10 @@ export const RequeteRDCSCInstitutionnel = {
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
     interesse: {
-      nomFamille: "",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -187,7 +193,7 @@ export const RequeteRDCSCInstitutionnel = {
         prenom: ""
       },
       particulier: {
-        nomFamille: "",
+        nomNaissance: "",
         nomUsage: "",
         prenom: ""
       }
@@ -223,8 +229,10 @@ export const RequeteRDCSCParticulier = {
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
     interesse: {
-      nomFamille: "",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -259,7 +267,7 @@ export const RequeteRDCSCParticulier = {
         prenom: ""
       },
       particulier: {
-        nomFamille: "",
+        nomNaissance: "",
         nomUsage: "",
         prenom: ""
       }

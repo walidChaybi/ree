@@ -1,4 +1,4 @@
-import { TypeRequete } from "../../requete/v2/enum/TypeRequete";
+import { TypeRequete } from "../../requete/enum/TypeRequete";
 
 export interface IRMCRequestRequete {
   // Filtre Requete

@@ -1,4 +1,4 @@
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { CreationRequeteRDC } from "../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
 
 export const RequeteRDCTitulaire = {
@@ -22,8 +22,11 @@ export const RequeteRDCTitulaire = {
       paysEvenement: "France"
     },
     titulaire1: {
-      nomFamille: "NOM",
-      nomUsage: "",
+      noms:{
+
+        nomNaissance: "NOM",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -41,7 +44,7 @@ export const RequeteRDCTitulaire = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "Prenom1",
           prenom2: "Prenom2",
@@ -49,7 +52,7 @@ export const RequeteRDCTitulaire = {
         }
       },
       parent2: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -58,8 +61,10 @@ export const RequeteRDCTitulaire = {
       }
     },
     titulaire2: {
-      nomFamille: "",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -77,7 +82,7 @@ export const RequeteRDCTitulaire = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -85,7 +90,7 @@ export const RequeteRDCTitulaire = {
         }
       },
       parent2: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -110,7 +115,7 @@ export const RequeteRDCTitulaire = {
         prenom: ""
       },
       particulier: {
-        nomFamille: "",
+        nomNaissance: "",
         nomUsage: "",
         prenom: ""
       }
@@ -160,8 +165,10 @@ export const RequeteRDCMandataire = {
       paysEvenement: "France"
     },
     titulaire1: {
-      nomFamille: "NOM",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "NOM",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -179,7 +186,7 @@ export const RequeteRDCMandataire = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "Prenom1",
           prenom2: "Prenom2",
@@ -187,7 +194,7 @@ export const RequeteRDCMandataire = {
         }
       },
       parent2: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -196,8 +203,10 @@ export const RequeteRDCMandataire = {
       }
     },
     titulaire2: {
-      nomFamille: "",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -215,7 +224,7 @@ export const RequeteRDCMandataire = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -223,7 +232,7 @@ export const RequeteRDCMandataire = {
         }
       },
       parent2: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -248,7 +257,7 @@ export const RequeteRDCMandataire = {
         prenom: ""
       },
       particulier: {
-        nomFamille: "",
+        nomNaissance: "",
         nomUsage: "",
         prenom: ""
       }
@@ -298,8 +307,10 @@ export const RequeteRDCInstitutionnel = {
       paysEvenement: "France"
     },
     titulaire1: {
-      nomFamille: "NOM",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "NOM",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -317,7 +328,7 @@ export const RequeteRDCInstitutionnel = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "Prenom1",
           prenom2: "Prenom2",
@@ -325,7 +336,7 @@ export const RequeteRDCInstitutionnel = {
         }
       },
       parent2: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -334,8 +345,10 @@ export const RequeteRDCInstitutionnel = {
       }
     },
     titulaire2: {
-      nomFamille: "",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -353,7 +366,7 @@ export const RequeteRDCInstitutionnel = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -361,7 +374,7 @@ export const RequeteRDCInstitutionnel = {
         }
       },
       parent2: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -424,8 +437,10 @@ export const RequeteRDCParticulier = {
       paysEvenement: "France"
     },
     titulaire1: {
-      nomFamille: "NOM",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "NOM",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -443,7 +458,7 @@ export const RequeteRDCParticulier = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "Prenom1",
           prenom2: "Prenom2",
@@ -451,7 +466,7 @@ export const RequeteRDCParticulier = {
         }
       },
       parent2: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -460,8 +475,10 @@ export const RequeteRDCParticulier = {
       }
     },
     titulaire2: {
-      nomFamille: "",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -479,7 +496,7 @@ export const RequeteRDCParticulier = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -487,7 +504,7 @@ export const RequeteRDCParticulier = {
         }
       },
       parent2: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -498,7 +515,7 @@ export const RequeteRDCParticulier = {
     requerant: {
       typeRequerant: "PARTICULIER",
       particulier: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         nomUsage: "NOM USAGE",
         prenom: "Prenom"
       }
@@ -548,8 +565,10 @@ export const RequeteRDCAutreProfessionnnel = {
       paysEvenement: "France"
     },
     titulaire1: {
-      nomFamille: "NOM",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "NOM",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -567,7 +586,7 @@ export const RequeteRDCAutreProfessionnnel = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "Prenom1",
           prenom2: "Prenom2",
@@ -575,7 +594,7 @@ export const RequeteRDCAutreProfessionnnel = {
         }
       },
       parent2: {
-        nomFamille: "NOM",
+        nomNaissance: "NOM",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -584,8 +603,10 @@ export const RequeteRDCAutreProfessionnnel = {
       }
     },
     titulaire2: {
-      nomFamille: "",
-      nomUsage: "",
+      noms:{
+        nomNaissance: "",
+        nomUsage: "",
+      },
       prenoms: {
         prenom1: "",
         prenom2: "",
@@ -603,7 +624,7 @@ export const RequeteRDCAutreProfessionnnel = {
       },
       nationalite: "INCONNUE",
       parent1: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",
@@ -611,7 +632,7 @@ export const RequeteRDCAutreProfessionnnel = {
         }
       },
       parent2: {
-        nomFamille: "",
+        nomNaissance: "",
         prenoms: {
           prenom1: "",
           prenom2: "",

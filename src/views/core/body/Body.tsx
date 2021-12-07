@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { logError } from "../../common/util/LogManager";
 import { storeRece } from "../../common/util/storeRece";
+import { getLibelle } from "../../common/util/Utils";
 import { FilAriane } from "../../common/widget/filAriane/FilAriane";
 import { routesRece } from "../../router/ReceRoutes";
 import { URL_ACCUEIL } from "../../router/ReceUrls";
@@ -31,7 +32,11 @@ export const Body: React.FC = () => {
           {officier =>
             officier?.officierDataState?.idSSO !== undefined ? (
               appliDejaOuverte ? (
-                <PageMessage message="pages.login.appliOuverte" />
+                <PageMessage
+                  message={getLibelle(
+                    "L'application est déjà ouverte sur cet ordinateur"
+                  )}
+                />
               ) : (
                 <RetourContext.Provider value={retourState}>
                   <FilAriane
@@ -58,15 +63,17 @@ function getMessageLogin(officier: OfficierContextProps) {
     officier.erreurState !== undefined &&
     officier.erreurState.status === codeErreurForbidden
   ) {
-    return "pages.login.erreurAuthentifacition";
+    return getLibelle(
+      "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BAG."
+    );
   } else if (officier !== undefined && officier.erreurState !== undefined) {
     logError({
       messageUtilisateur:
         "Impossible de récupérer les informations utilisateur via le service de login",
       error: officier.erreurState
     });
-    return "pages.login.erreurSysteme";
+    return getLibelle("Erreur Système");
   } else {
-    return "pages.login.connexion";
+    return getLibelle("Connexion en cours ...");
   }
 }

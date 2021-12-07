@@ -16,7 +16,7 @@ import {
   PAYS,
   VOIE
 } from "../../../../pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
-import { getLibelle } from "../../Text";
+import { getLibelle } from "../../../util/Utils";
 import { InputField } from "../champsSaisie/InputField";
 import {
   ADRESSE_MAIL_NON_CONFORME,

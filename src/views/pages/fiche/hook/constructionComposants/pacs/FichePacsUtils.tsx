@@ -17,12 +17,12 @@ import {
   Modification
 } from "../../../../../../model/etatcivil/pacs/IModification";
 import { getDateString } from "../../../../../common/util/DateUtils";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { AjoutePartAuPanelAreas } from "../../../../../common/widget/section/SectionUtils";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { IAccordionReceSection } from "../../../FicheUtils";
 import { getFichesPersonne } from "../personne/FichePersonne";
 import { getStatuts } from "../statut/StatutUtils";

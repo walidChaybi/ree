@@ -1,6 +1,7 @@
 import { connect } from "formik";
 import React, { useState } from "react";
-import { TypeInstitutionnel } from "../../../../../../../model/requete/v2/enum/TypeInstitutionnel";
+import { TypeInstitutionnel } from "../../../../../../../model/requete/enum/TypeInstitutionnel";
+import { getLibelle } from "../../../../../../common/util/Utils";
 import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import {
@@ -12,7 +13,6 @@ import {
   SubFormProps,
   withNamespace
 } from "../../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import {
   NATURE,
   NOM,

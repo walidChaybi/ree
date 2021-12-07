@@ -11,7 +11,7 @@ import {
   urlWithParamPatern,
   URL_SEPARATEUR
 } from "../../util/route/routeUtil";
-import { getLibelle } from "../Text";
+import { getLibelle } from "../../util/Utils";
 import { Categorie } from "./Categorie";
 
 // Gère l'empilement des urls visités par l'utilisateur

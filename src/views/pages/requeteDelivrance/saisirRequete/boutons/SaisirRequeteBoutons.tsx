@@ -2,8 +2,8 @@ import { connect } from "formik";
 import React from "react";
 import { officierHabiliterPourLeDroit } from "../../../../../model/agent/IOfficier";
 import { Droit } from "../../../../../model/Droit";
+import { getLibelle } from "../../../../common/util/Utils";
 import { FormikComponentProps } from "../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../common/widget/Text";
 import "./scss/SaisirRequeteBoutons.scss";
 
 export type SaisirRequeteBoutonsProps = {

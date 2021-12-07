@@ -1,6 +1,6 @@
 import { MimeType } from "file-type/core";
 import React from "react";
-import { IDocumentReponse } from "../../../../../../../model/requete/v2/IDocumentReponse";
+import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import { FenetreExterne } from "../../../../../../common/util/FenetreExterne";
 import { VisionneuseDocument } from "../../../../../../common/widget/document/VisionneuseDocument";
 

@@ -1,83 +1,58 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { mount } from "enzyme";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 import request from "superagent";
-import DONNEES_REQUETE from "../../../../mock/data/requete";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
-import { RequetesServicePage } from "../../../../views/pages/requeteDelivrance/espaceDelivrance/v1/RequetesServicePage";
+import { RequetesServicePage } from "../../../../views/pages/requeteDelivrance/espaceDelivrance/RequetesServicePage";
+import { URL_REQUETES_SERVICE } from "../../../../views/router/ReceUrls";
+
 const superagentMock = require("superagent-mock")(request, configRequetes);
-
-let container: Element | null;
-
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
-});
-
 const history = createMemoryHistory();
-history.push("mesrequetes/req2", {
-  data: [
-    { ...DONNEES_REQUETE, idRequete: "req1" },
-    { ...DONNEES_REQUETE, idRequete: "req2" },
-    { ...DONNEES_REQUETE, idRequete: "req3" }
-  ]
-});
+history.push(URL_REQUETES_SERVICE);
+const setParamsRMCAuto = jest.fn();
 
-test("renders Page requete with all elements", () => {
-  waitFor(() => {
-    const component = mount(
-      <>
-        <Router history={history}>
-          <RequetesServicePage
-            match={{
-              isExact: true,
-              path: "",
-              url: "",
-              params: { idRequete: "req2" }
-            }}
-            history={history}
-            location={history.location}
-          />
-        </Router>
-      </>
-    );
+test("renders Page requete interactions works, no errors returned", async () => {
+  render(
+    <Router history={history}>
+      <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
+    </Router>
+  );
 
-    expect(component).toMatchSnapshot();
-  });
-});
-
-test("renders Page requete interactions works, no errors returned", () => {
-  act(() => {
-    render(
-      <Router history={history}>
-        <RequetesServicePage
-          match={{
-            isExact: true,
-            path: "",
-            url: "",
-            params: { idRequete: "req2" }
-          }}
-          history={history}
-          location={history.location}
-        />
-      </Router>
-    );
-  });
-
+  const titreNumero = screen.getByText("N°");
   const pageSuivante = screen.getByTitle("Page suivante");
-  waitFor(() => {
+
+  await waitFor(() => {
+    const numero = screen.getByText("1234");
+    expect(titreNumero).toBeDefined();
+    expect(numero).toBeDefined();
+  });
+
+  act(() => {
     fireEvent.click(pageSuivante);
   });
 
-  screen.getByText("N°").click();
+  await waitFor(() => {
+    const numero = screen.getByText("9021");
+    expect(numero).toBeDefined();
+  });
+
+  act(() => {
+    // Clic sur une ligne
+    fireEvent.click(screen.getByText("9021"));
+  });
+  await waitFor(() => {
+    expect(screen.getByText("9021")).toBeDefined();
+  });
+
+  act(() => {
+    // Clic sur un titre de colonne
+    fireEvent.click(titreNumero);
+  });
+  await waitFor(() => {
+    expect(screen.getByText("9021")).toBeDefined();
+  });
 });
 
 afterAll(() => {

@@ -2,7 +2,8 @@ import React from "react";
 import {
   OptionCourrier,
   OptionsCourrier
-} from "../../../../../../../../model/requete/v2/IOptionCourrier";
+} from "../../../../../../../../model/requete/IOptionCourrier";
+import { getLibelle } from "../../../../../../../common/util/Utils";
 import { IconeDanger } from "../../../../../../../common/widget/icones/IconeDanger";
 import { IconeMoins } from "../../../../../../../common/widget/icones/IconeMoins";
 import { IconePlus } from "../../../../../../../common/widget/icones/IconePlus";
@@ -12,7 +13,6 @@ import {
   TableauSimple,
   TableauSimpleProps
 } from "../../../../../../../common/widget/tableau/TableauSimple/TableauSimple";
-import { getLibelle } from "../../../../../../../common/widget/Text";
 import "./scss/OptionsCourrierForm.scss";
 
 /** Construction du tableau des Options Disponibles */

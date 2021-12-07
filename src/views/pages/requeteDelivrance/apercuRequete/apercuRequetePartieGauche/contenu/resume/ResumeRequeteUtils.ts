@@ -1,21 +1,22 @@
-import { Qualite } from "../../../../../../../model/requete/v2/enum/Qualite";
-import { TypeLienMandant } from "../../../../../../../model/requete/v2/enum/TypeLienMandant";
-import { TypeLienRequerant } from "../../../../../../../model/requete/v2/enum/TypeLienRequerant";
-import { TypeRequete } from "../../../../../../../model/requete/v2/enum/TypeRequete";
-import { EvenementReqDelivrance } from "../../../../../../../model/requete/v2/IEvenementReqDelivrance";
+import { Qualite } from "../../../../../../../model/requete/enum/Qualite";
+import { TypeLienMandant } from "../../../../../../../model/requete/enum/TypeLienMandant";
+import { TypeLienRequerant } from "../../../../../../../model/requete/enum/TypeLienRequerant";
+import { TypeRequete } from "../../../../../../../model/requete/enum/TypeRequete";
+import { EvenementReqDelivrance } from "../../../../../../../model/requete/IEvenementReqDelivrance";
 import {
   IRequerant,
   Requerant
-} from "../../../../../../../model/requete/v2/IRequerant";
-import { IRequete } from "../../../../../../../model/requete/v2/IRequete";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
+} from "../../../../../../../model/requete/IRequerant";
+import { IRequete } from "../../../../../../../model/requete/IRequete";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import {
   ITitulaireRequete,
   TitulaireRequete
-} from "../../../../../../../model/requete/v2/ITitulaireRequete";
+} from "../../../../../../../model/requete/ITitulaireRequete";
 import {
   DEUX,
   formatPrenom,
+  getLibelle,
   triListeObjetsSurPropriete,
   TROIS
 } from "../../../../../../common/util/Utils";
@@ -27,8 +28,7 @@ import {
   ajouterContentPartAuPartUneValeurVide,
   ajouterPanelAreasAuPanel
 } from "../../../../../../common/widget/section/SectionUtils";
-import { getLibelle } from "../../../../../../common/widget/Text";
-import "./scss/ResumeRequeteV2.scss";
+import "./scss/ResumeRequete.scss";
 
 export function getPanelsResumeRequete(requete?: IRequeteDelivrance) {
   const panels: SectionPanelProps[] = [];

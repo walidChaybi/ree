@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { BesoinUsager } from "../../../../../model/requete/v2/enum/BesoinUsager";
-import { ComplementObjetRequete } from "../../../../../model/requete/v2/enum/ComplementObjetRequete";
-import { ObjetRequete } from "../../../../../model/requete/v2/enum/ObjetRequete";
-import { SousTypeInformation } from "../../../../../model/requete/v2/enum/SousTypeInformation";
-import { IReponseRequeteInfo } from "../../../../../model/requete/v2/IReponseRequeteInfo";
+import { BesoinUsager } from "../../../../../model/requete/enum/BesoinUsager";
+import { ComplementObjetRequete } from "../../../../../model/requete/enum/ComplementObjetRequete";
+import { ObjetRequete } from "../../../../../model/requete/enum/ObjetRequete";
+import { SousTypeInformation } from "../../../../../model/requete/enum/SousTypeInformation";
+import { IReponseRequeteInfo } from "../../../../../model/requete/IReponseRequeteInfo";
 import { MenuTransfert } from "../../../../common/composant/menuTransfert/MenuTransfert";
+import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { getLibelle } from "../../../../common/widget/Text";
 import { BoutonReponseLibre } from "./choixReponse/BoutonReponseLibre";
 import { MenuReponsesProposees } from "./choixReponse/MenuReponsesProposees";
 import { MenuToutesLesReponses } from "./choixReponse/MenuToutesLesReponses";

@@ -8,7 +8,7 @@ import { Droit } from "../../model/Droit";
 import messageManager from "../common/util/messageManager";
 import { IRoute } from "../common/util/route/IRoute";
 import { storeRece } from "../common/util/storeRece";
-import { getLibelle } from "../common/widget/Text";
+import { getLibelle } from "../common/util/Utils";
 import { routesRece } from "./ReceRoutes";
 import { URL_ACCUEIL } from "./ReceUrls";
 

@@ -1,41 +1,24 @@
-import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
-import * as renderer from "react-test-renderer";
-import { BrowserRouter as Router } from "react-router-dom";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { fireEvent, render, screen } from "@testing-library/react";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { BoutonAccueil } from "../../../views/pages/accueil/BoutonAccueil";
-
-test("renders bouton d'accueil", () => {
-  const component = renderer.create(
-    <>
-      <Router>
-        <BoutonAccueil
-          messageId="Bouton Menu"
-          pageUrl="pagesuivante"
-          titleId="Title Bouton Menu"
-          badge={3}
-        ></BoutonAccueil>
-      </Router>
-    </>
-  );
-  expect(component.toJSON()).toMatchSnapshot();
-});
 
 test("renders texte du bouton d'accueil", () => {
   render(
     <>
       <Router>
         <BoutonAccueil
-          messageId="Bouton Menu"
+          libelle="Bouton Menu"
           pageUrl="pagesuivante"
-          titleId="Title Bouton Menu"
+          title="Title Bouton Menu"
         ></BoutonAccueil>
       </Router>
     </>
   );
 
   const boutonElement = screen.getByText(/Bouton Menu/i);
-  expect(boutonElement).toBeInTheDocument();
+  expect(boutonElement).toBeDefined();
 });
 
 test("renders présence de l'icône du bouton d'accueil", () => {
@@ -43,16 +26,16 @@ test("renders présence de l'icône du bouton d'accueil", () => {
     <>
       <Router>
         <BoutonAccueil
-          messageId="Bouton Menu"
+          libelle="Bouton Menu"
           pageUrl="pagesuivante"
-          titleId="Title Bouton Menu"
+          title="Title Bouton Menu"
           iconFA={faCoffee}
         ></BoutonAccueil>
       </Router>
     </>
   );
   const iconElement = screen.getByTestId("IconAccueil");
-  expect(iconElement).toBeInTheDocument();
+  expect(iconElement).toBeDefined();
 });
 
 test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
@@ -61,9 +44,9 @@ test("renders click sur le bouton d'accueil Activé/Désactivé", () => {
     <>
       <Router>
         <BoutonAccueil
-          messageId="Bouton Menu"
+          libelle="Bouton Menu"
           pageUrl="pagesuivante"
-          titleId="Title Bouton Menu"
+          title="Title Bouton Menu"
           onClickHandler={handleClickButton}
         ></BoutonAccueil>
       </Router>

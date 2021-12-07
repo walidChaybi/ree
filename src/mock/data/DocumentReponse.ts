@@ -1,5 +1,5 @@
 import { Orientation } from "../../model/composition/enum/Orientation";
-import { IDocumentReponse } from "../../model/requete/v2/IDocumentReponse";
+import { IDocumentReponse } from "../../model/requete/IDocumentReponse";
 import { imagePngVideBase64 } from "./ImagePng";
 
 export const idDocumentsReponse = [

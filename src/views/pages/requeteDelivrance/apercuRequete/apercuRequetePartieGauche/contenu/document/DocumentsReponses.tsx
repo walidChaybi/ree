@@ -11,13 +11,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
   DocumentReponse,
   IDocumentReponse
-} from "../../../../../../../model/requete/v2/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
-import { useGetDocumentReponseApi } from "../../../../../../common/hook/v2/DocumentReponseHook";
+} from "../../../../../../../model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
+import { useGetDocumentReponseApi } from "../../../../../../common/hook/DocumentReponseHook";
 import { getIdDocumentReponseAAfficher } from "../../../../../../common/util/RequetesUtils";
-import { getValeurOuVide } from "../../../../../../common/util/Utils";
+import {
+  getLibelle,
+  getValeurOuVide
+} from "../../../../../../common/util/Utils";
 import { AccordionRece } from "../../../../../../common/widget/accordion/AccordionRece";
-import { getText } from "../../../../../../common/widget/Text";
 import { FenetreDocumentReponse } from "./FenetreDocumentReponse";
 import "./scss/DocumentsReponses.scss";
 
@@ -103,15 +105,11 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
             >
               <ListItemAvatar>
                 {el.mimeType === "application/pdf" ? (
-                  <Avatar
-                    title={getText("pages.requete.consultation.icon.pdf")}
-                  >
+                  <Avatar title={getLibelle("Fichier au format PDF")}>
                     <PictureAsPdf />
                   </Avatar>
                 ) : (
-                  <Avatar
-                    title={getText("pages.requete.consultation.icon.png")}
-                  >
+                  <Avatar title={getLibelle("Image au format PNG")}>
                     <Image />
                   </Avatar>
                 )}

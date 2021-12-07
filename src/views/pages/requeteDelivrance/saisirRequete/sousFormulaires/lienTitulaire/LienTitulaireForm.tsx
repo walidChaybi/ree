@@ -1,6 +1,7 @@
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { SousFormulaire } from "../../../../../common/widget/formulaire/SousFormulaire";
@@ -9,7 +10,6 @@ import {
   SubFormProps,
   withNamespace
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { LIEN, NATURE_LIEN } from "../../modelForm/ISaisirRequetePageModel";
 import "./scss/LienTitulaireForm.scss";
 

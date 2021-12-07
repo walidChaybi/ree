@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { TypeLienRequerant } from "../../../../../../model/requete/v2/enum/TypeLienRequerant";
+import { TypeLienRequerant } from "../../../../../../model/requete/enum/TypeLienRequerant";
 import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { LIEN_TITULAIRE } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
 import LienTitulaireForm, {

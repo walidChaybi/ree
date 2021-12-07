@@ -1,6 +1,6 @@
 import { List } from "@material-ui/core";
 import React from "react";
-import { IAction } from "../../../../model/requete/v2/IActions";
+import { IAction } from "../../../../model/requete/IActions";
 import { AccordionRece } from "../../widget/accordion/AccordionRece";
 import { ActionRequete } from "./ActionRequete";
 import "./scss/Suivis.scss";

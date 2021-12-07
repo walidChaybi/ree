@@ -12,7 +12,7 @@ import { idFicheActe1 } from "../../../../mock/data/ficheActe";
 import { idFichePacs } from "../../../../mock/data/fichePacs";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { storeRece } from "../../../../views/common/util/storeRece";
-import * as TableauPaginationConstantes from "../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
+import * as TableauPaginationConstantes from "../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { titreForm } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import { RMCActeInscriptionPage } from "../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 

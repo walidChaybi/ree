@@ -22,8 +22,8 @@ import {
   MIN_LENGTH_ANNEE,
   MIN_YEAR
 } from "../../util/DateUtils";
+import { getLibelle } from "../../util/Utils";
 import { IconeCroix } from "../icones/IconeCroix";
-import { getLibelle } from "../Text";
 import ReceDatePicker from "./datePicker/ReceDatePicker";
 import "./scss/DateComposeForm.scss";
 import {

@@ -12,12 +12,12 @@ import {
   ReponseSansDelivranceCSMariageComposition
 } from "../../../../../../../model/composition/IReponseSansDelivranceCSMariageComposition";
 import { NatureActe } from "../../../../../../../model/etatcivil/enum/NatureActe";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { TypeRequete } from "../../../../../../../model/requete/v2/enum/TypeRequete";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
+import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
+import { TypeRequete } from "../../../../../../../model/requete/enum/TypeRequete";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { mapActe } from "../../../../../../common/hook/v2/repertoires/MappingRepertoires";
+import { mapActe } from "../../../../../../common/hook/repertoires/MappingRepertoires";
 import messageManager from "../../../../../../common/util/messageManager";
 
 const ERREUR_PAS_DE_REQUERENT =

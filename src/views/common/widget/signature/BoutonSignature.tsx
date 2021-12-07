@@ -2,15 +2,14 @@ import React, { useCallback, useState } from "react";
 import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { IOfficier } from "../../../../model/agent/IOfficier";
-import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import {
   IDocumentReponseTableau,
   IRequeteTableauDelivrance
-} from "../../../../model/requete/v2/IRequeteTableauDelivrance";
+} from "../../../../model/requete/IRequeteTableauDelivrance";
 import { getValeurOuVide } from "../../util/Utils";
 import { PopinSignature } from "../signature/PopinSignature";
-import { getText } from "../Text";
 import {
   DocumentsATraiter,
   DocumentsByRequete
@@ -37,9 +36,10 @@ export const BoutonSignature: React.FC<
   connectedUser
 }) => {
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
-  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] = useState<
-    DocumentsByRequete
-  >({});
+  const [
+    documentsByRequeteToSign,
+    setDocumentsByRequeteToSign
+  ] = useState<DocumentsByRequete>({});
   const closePopin = useCallback(
     (showPopin: boolean, canReload: boolean) => {
       if (showWaitState && showPopin === false) {
@@ -108,7 +108,7 @@ export const BoutonSignature: React.FC<
         disabled={!signaturePossible(requetes, uniqueSignature, connectedUser)}
         onClick={handleClickSignature}
       >
-        {getText(libelle)}
+        {libelle}
       </Button>
 
       <PopinSignature

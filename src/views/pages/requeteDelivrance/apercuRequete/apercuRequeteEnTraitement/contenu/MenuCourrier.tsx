@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ChoixDelivrance } from "../../../../../../model/requete/v2/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { IActionOption } from "../../../../../../model/requete/v2/IActionOption";
-import { DocumentReponse } from "../../../../../../model/requete/v2/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
+import { IActionOption } from "../../../../../../model/requete/IActionOption";
+import { DocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { getUrlWithoutIdParam } from "../../../../../common/util/route/routeUtil";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { MenuAction } from "../../../../../common/widget/menu/MenuAction";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { PATH_APERCU_COURRIER } from "../../../../../router/ReceUrls";
 
 const INDEX_MODIFIER_COURRIER = 0;
@@ -77,7 +77,7 @@ export const MenuCourrier: React.FC<IMenuCourrierProps> = props => {
           )}/${PATH_APERCU_COURRIER}/${props.requete.id}`
         );
         break;
-      // TODO
+      // TODO US pas encore réalisées
       case INDEX_AFFICHER_EC:
       case INDEX_AFFICHER_EC_COMPLEMENTAIRE:
       case INDEX_OUVRIR_ACTE:

@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { TypeMandant } from "../../../../../../model/requete/v2/enum/TypeMandant";
+import { TypeMandant } from "../../../../../../model/requete/enum/TypeMandant";
 import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { MANDANT } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
 import MandantForm, {

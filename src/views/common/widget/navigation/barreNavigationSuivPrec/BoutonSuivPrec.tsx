@@ -1,11 +1,11 @@
-import React from "react";
-import { getLibelle } from "../../Text";
-import { Button } from "reakit/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronCircleLeft,
   faChevronCircleRight
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
+import { Button } from "reakit/Button";
+import { getLibelle } from "../../../util/Utils";
 import "./scss/BoutonSuivPrec.scss";
 
 export interface BoutonSuivPrecProps {

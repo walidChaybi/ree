@@ -1,41 +1,11 @@
 import { fireEvent, render } from "@testing-library/react";
-import { mount } from "enzyme";
 import React from "react";
 import { ProgressSignature } from "../../../../views/common/widget/signature/ProgressSignature";
-
-test("renders progresse bar", () => {
-  const component = mount(
-    <ProgressSignature
-      errors={false}
-      idsRequetesToSign={["idRequeteRDCSC"]}
-      onClose={() => {
-        return;
-      }}
-      documentsByRequete={{
-        idRequeteRDCSC: {
-          documentsToSign: [
-            {
-              infos: [],
-              id: "",
-              mimeType: "",
-              nomDocument: "",
-              conteneurSwift: "",
-              idRequete: "",
-              numeroRequete: 1
-            }
-          ],
-          documentsToSave: []
-        }
-      }}
-    />
-  );
-  expect(component).toMatchSnapshot();
-});
 
 test("renders progress bar, close function is called automatically", () => {
   const handleClickButton = jest.fn();
 
-  const { getByText } = render(
+  render(
     <ProgressSignature
       errors={false}
       idsRequetesToSign={[]}

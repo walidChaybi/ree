@@ -1,19 +1,19 @@
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { Form, Formik } from "formik";
 import React from "react";
 import request from "superagent";
-import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import PiecesJointesForm from "../../../../../views/common/widget/formulaire/piecesJointes/PiecesJointesForm";
 import { SubFormProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { inputPngFiles } from "../../../../testsUtil";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("Attendu (composant PiecesJointesForm):  Une une pièce jointe est ajoutée à l'écran puis supprimée", async () => {
   const PIECES_JOINTES = "piecesJointes";

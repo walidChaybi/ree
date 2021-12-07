@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getReponsesReqInfo } from "../../../../../../api/appels/requeteApi";
-import { IReponseRequeteInfo } from "../../../../../../model/requete/v2/IReponseRequeteInfo";
+import { IReponseRequeteInfo } from "../../../../../../model/requete/IReponseRequeteInfo";
 import { logError } from "../../../../../common/util/LogManager";
 
 export function useReponsesReqInfoApiHook() {

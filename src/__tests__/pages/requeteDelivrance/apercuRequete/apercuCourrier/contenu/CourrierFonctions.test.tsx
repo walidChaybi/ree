@@ -1,25 +1,27 @@
 import request from "superagent";
 import requeteDelivrance, {
-  requeteDelivranceInstitutionnel
+    requeteDelivranceInstitutionnel
 } from "../../../../../../mock/data/requeteDelivrance";
-import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { ChoixDelivrance } from "../../../../../../model/requete/v2/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
+import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
+import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
+import { OptionCourrier } from "../../../../../../model/requete/IOptionCourrier";
 import {
-  controleFormulaire,
-  getDefaultValuesCourrier,
-  getStatutEnTraitement,
-  getTypesCourrier
+    controleFormulaire,
+    getDefaultValuesCourrier,
+    getStatutEnTraitement,
+    getTypesCourrier
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import {
-  CHOIX_COURRIER,
-  COURRIER,
-  TEXTE,
-  TEXTE_LIBRE
+    CHOIX_COURRIER,
+    COURRIER,
+    SaisieCourrier,
+    TEXTE,
+    TEXTE_LIBRE
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeAll(() => {
   DocumentDelivrance.init();
@@ -153,8 +155,8 @@ test("controle formulaire", () => {
     controleFormulaire(
       {
         [CHOIX_COURRIER]: { [COURRIER]: "062526c5-e5a7-48d1-bc22-11938347f0bc" }
-      },
-      [{ ordreEdition: 20 }],
+      } as SaisieCourrier,
+      [{ ordreEdition: 20 } as OptionCourrier],
       jest.fn()
     )
   ).toBeTruthy();
@@ -163,7 +165,7 @@ test("controle formulaire", () => {
     controleFormulaire(
       {
         [CHOIX_COURRIER]: { [COURRIER]: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2" }
-      },
+      } as SaisieCourrier,
       [],
       jest.fn()
     )
@@ -176,8 +178,8 @@ test("controle formulaire", () => {
           [COURRIER]: "fce55a9f-4f4b-4996-a60b-59332bc10565"
         },
         [TEXTE_LIBRE]: { [TEXTE]: "je suis gentil" }
-      },
-      [{ ordreEdition: 20 }],
+      } as SaisieCourrier,
+      [{ ordreEdition: 20 } as OptionCourrier],
       jest.fn()
     )
   ).toBeTruthy();
@@ -185,7 +187,7 @@ test("controle formulaire", () => {
     controleFormulaire(
       {
         [CHOIX_COURRIER]: { [COURRIER]: "0296fc7a-fb81-4eb7-a72f-94286b8d8301" }
-      },
+      } as SaisieCourrier,
       [],
       jest.fn()
     )

@@ -1,7 +1,8 @@
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { TypeMandant } from "../../../../../../model/requete/v2/enum/TypeMandant";
+import { TypeMandant } from "../../../../../../model/requete/enum/TypeMandant";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "../../../../../common/widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "../../../../../common/widget/formulaire/SousFormulaire";
@@ -14,7 +15,6 @@ import {
   SubFormProps,
   withNamespace
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../common/widget/Text";
 import {
   NOM,
   PRENOM,

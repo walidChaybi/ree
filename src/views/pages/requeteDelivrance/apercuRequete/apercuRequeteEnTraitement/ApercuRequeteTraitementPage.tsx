@@ -1,19 +1,19 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IDocumentReponse } from "../../../../../model/requete/v2/IDocumentReponse";
+import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
-} from "../../../../../model/requete/v2/IRequeteDelivrance";
+} from "../../../../../model/requete/IRequeteDelivrance";
 import { MigratorV1V2 } from "../../../../common/util/migration/MigratorV1V2";
 import { storeRece } from "../../../../common/util/storeRece";
+import { getLibelle } from "../../../../common/util/Utils";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
 import { BoutonSignature } from "../../../../common/widget/signature/BoutonSignature";
-import { getLibelle } from "../../../../common/widget/Text";
 import { receUrl } from "../../../../router/ReceUrls";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
-import { BoutonARetraiterSaga } from "../contenuV1V2/BoutonARetraiterSaga";
 import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
+import { BoutonARetraiterSaga } from "./contenu/BoutonARetraiterSaga";
 import { BoutonModifierTraitement } from "./contenu/BoutonModifierTraitement";
 import { BoutonValiderTerminer } from "./contenu/BoutonValiderTerminer";
 import { VisionneuseApercuTraitement } from "./contenu/VisionneuseApercuTraitement";
@@ -66,21 +66,21 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
             contenu={documentAffiche?.contenu}
             typeMime={documentAffiche?.mimeType}
           />
-          <BoutonRetour message={getLibelle("<< Retour")} />
+          <BoutonRetour />
           <div className="BoutonsAction">
-              {!MigratorV1V2.estRDDouRDC(requete) && (
-                <>
-                  <BoutonModifierTraitement
-                    requete={requete}
-                    dataHistory={dataHistory}
-                  />
-                  <BoutonValiderTerminer requete={requete} />
-                </>
-              )}
+            {!MigratorV1V2.estRDDouRDC(requete) && (
+              <>
+                <BoutonModifierTraitement
+                  requete={requete}
+                  dataHistory={dataHistory}
+                />
+                <BoutonValiderTerminer requete={requete} />
+              </>
+            )}
 
             {RequeteDelivrance.estAuStatutASigner(requete) && (
               <BoutonSignature
-                libelle={"pages.delivrance.apercu.signatureElectronique"}
+                libelle={getLibelle("Signer et terminer")}
                 requetes={[mappingRequeteDelivranceToRequeteTableau(requete)]}
                 reloadData={actionApresSignature}
                 uniqueSignature={true}

@@ -1,14 +1,14 @@
 import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
-import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { IDocumentReponse } from "../../../../../model/requete/v2/IDocumentReponse";
-import { IPrenomOrdonnes } from "../../../../../model/requete/v2/IPrenomOrdonnes";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
+import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
+import { IPrenomOrdonnes } from "../../../../../model/requete/IPrenomOrdonnes";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import {
   IDocumentReponseTableau,
   IRequeteTableauDelivrance
-} from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
-import { ITitulaireRequete } from "../../../../../model/requete/v2/ITitulaireRequete";
-import { ITitulaireRequeteTableau } from "../../../../../model/requete/v2/ITitulaireRequeteTableau";
+} from "../../../../../model/requete/IRequeteTableauDelivrance";
+import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
+import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
 import { getValeurOuVide } from "../../../../common/util/Utils";
 
 export function mappingRequeteDelivranceToRequeteTableau(

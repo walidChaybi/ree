@@ -1,11 +1,11 @@
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
+import { TRequete } from "../../../../../model/requete/IRequete";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import {
   ITitulaireRequete,
   TitulaireRequete
-} from "../../../../../model/requete/v2/ITitulaireRequete";
-import { ITitulaireRequeteTableau } from "../../../../../model/requete/v2/ITitulaireRequeteTableau";
+} from "../../../../../model/requete/ITitulaireRequete";
+import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
 import { IRMCRequestActesInscriptions } from "../../../../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import {
   getUrlPrecedente,
@@ -16,9 +16,9 @@ import {
   PATH_APERCU_REQ_PRISE,
   PATH_APERCU_REQ_TRAITEMENT,
   receUrl,
-  URL_MES_REQUETES_V2,
+  URL_MES_REQUETES,
   URL_RECHERCHE_REQUETE,
-  URL_REQUETES_SERVICE_V2
+  URL_REQUETES_SERVICE
 } from "../../../../router/ReceUrls";
 
 export interface ICriteresRMCAuto {
@@ -140,8 +140,8 @@ function getPrenomTitulaire(
 
 function estUrlEspaceDelivranceOuRMCRequete(url: string) {
   return (
-    url === URL_REQUETES_SERVICE_V2 ||
+    url === URL_REQUETES_SERVICE ||
     url === URL_RECHERCHE_REQUETE ||
-    url === URL_MES_REQUETES_V2
+    url === URL_MES_REQUETES
   );
 }

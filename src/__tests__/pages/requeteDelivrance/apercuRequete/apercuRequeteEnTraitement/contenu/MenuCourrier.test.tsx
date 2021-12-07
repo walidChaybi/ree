@@ -7,7 +7,7 @@ import {
   documentReponseCopieNonSigne
 } from "../../../../../../mock/data/DocumentReponse";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
-import { ChoixDelivrance } from "../../../../../../model/requete/v2/enum/ChoixDelivrance";
+import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
 import { MenuCourrier } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/MenuCourrier";
 import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../../views/router/ReceUrls";

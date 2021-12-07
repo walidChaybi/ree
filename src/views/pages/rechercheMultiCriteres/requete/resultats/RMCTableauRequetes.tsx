@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../../../../common/hook/v2/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
+} from "../../../../common/hook/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
-} from "../../../../common/hook/v2/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+} from "../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { autorisePrendreEnChargeTableau } from "../../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
@@ -16,8 +16,8 @@ import { OperationEnCours } from "../../../../common/widget/attente/OperationEnC
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_REQUETE
-} from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
-import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
+} from "../../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
+import { TableauRece } from "../../../../common/widget/tableau/TableauRece/TableauRece";
 import { URL_RECHERCHE_REQUETE } from "../../../../router/ReceUrls";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";

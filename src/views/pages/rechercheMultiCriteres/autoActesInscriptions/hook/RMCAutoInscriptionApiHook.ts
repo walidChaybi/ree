@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoInscription } from "../../../../../api/appels/etatcivilApi";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { TRequete } from "../../../../../model/requete/IRequete";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   getParamsTableau,

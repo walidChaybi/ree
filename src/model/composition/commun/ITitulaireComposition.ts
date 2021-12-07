@@ -6,7 +6,7 @@ import {
   formatPrenoms,
   getValeurOuVide
 } from "../../../views/common/util/Utils";
-import { ITitulaireRequeteTableau } from "../../requete/v2/ITitulaireRequeteTableau";
+import { ITitulaireRequeteTableau } from "../../requete/ITitulaireRequeteTableau";
 
 export interface ITitulaireComposition {
   prenoms: string;

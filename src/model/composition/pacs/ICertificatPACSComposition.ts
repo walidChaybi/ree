@@ -1,8 +1,8 @@
 import { getValeurOuVide } from "../../../views/common/util/Utils";
 import { Decret, IDecret } from "../../etatcivil/commun/IDecret";
 import { IFichePacs } from "../../etatcivil/pacs/IFichePacs";
-import { TypeCanal } from "../../requete/v2/enum/TypeCanal";
-import { IRequerant } from "../../requete/v2/IRequerant";
+import { TypeCanal } from "../../requete/enum/TypeCanal";
+import { IRequerant } from "../../requete/IRequerant";
 import {
   CommunComposition,
   ICommunComposition

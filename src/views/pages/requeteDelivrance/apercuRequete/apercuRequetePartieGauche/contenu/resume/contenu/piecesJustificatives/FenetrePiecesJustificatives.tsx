@@ -1,6 +1,6 @@
 import { MimeType } from "file-type/core";
 import React from "react";
-import { useGetPieceJustificativeApi } from "../../../../../../../../common/hook/v2/PieceJustificativeHook";
+import { useGetPieceJustificativeApi } from "../../../../../../../../common/hook/PieceJustificativeHook";
 import { FenetreExterne } from "../../../../../../../../common/util/FenetreExterne";
 import { VisionneuseDocument } from "../../../../../../../../common/widget/document/VisionneuseDocument";
 

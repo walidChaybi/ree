@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { IAlerte } from "../../../../model/etatcivil/fiche/IAlerte";
-import { TRequete } from "../../../../model/requete/v2/IRequete";
+import { TRequete } from "../../../../model/requete/IRequete";
 import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -12,7 +12,7 @@ import {
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
+} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { DataRMCAuto } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { useRMCActeApiHook } from "../acteInscription/hook/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "../acteInscription/hook/RMCActeInscriptionUtils";

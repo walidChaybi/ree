@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { updateStatutRequeteInformation } from "../../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { logError } from "../../../../common/util/LogManager";
 
 export function useUpdateStatutRequeteInformation(

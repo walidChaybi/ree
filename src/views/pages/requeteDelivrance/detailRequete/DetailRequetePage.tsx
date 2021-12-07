@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
-import { IUuidRequeteParams } from "../../../../model/requete/v2/IUuidRequeteParams";
+import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
+import { IUuidRequeteParams } from "../../../../model/requete/IUuidRequeteParams";
+import { getLibelle } from "../../../common/util/Utils";
 import { Fieldset } from "../../../common/widget/fieldset/Fieldset";
 import { SectionPanel } from "../../../common/widget/section/SectionPanel";
-import { getLibelle } from "../../../common/widget/Text";
 import { useDetailRequeteApiHook } from "./hook/DetailRequeteHook";
 import { getPanelsDetailRequete } from "./hook/DetailRequeteUtils";
 import "./scss/DetailRequetePage.scss";

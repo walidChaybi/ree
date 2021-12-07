@@ -1,22 +1,22 @@
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
-import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { getLastPathElem } from "../../../../views/common/util/route/routeUtil";
 import { SaisirRDCPage } from "../../../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import { URL_MES_REQUETES_SAISIR_RDC } from "../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const history = createMemoryHistory();
 history.push(URL_MES_REQUETES_SAISIR_RDC);

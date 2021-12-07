@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Nationalite } from "../../../../../../model/etatcivil/enum/Nationalite";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { RadioField } from "../../../../../common/widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "../../../../../common/widget/formulaire/SousFormulaire";
 import {
   SubFormProps,
   withNamespace
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../common/widget/Text";
 import {
   NAISSANCE,
   NATIONALITE,

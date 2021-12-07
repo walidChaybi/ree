@@ -1,7 +1,7 @@
 import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
 import { IRMCRequestActesInscriptions } from "../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
-import { AddAlerteActeApiHookParameters } from "../../views/common/hook/v2/alertes/AddAlerteActeHookApi";
-import { DeleteAlerteActeApiHookParameters } from "../../views/common/hook/v2/alertes/DeleteAlerteActeHookApi";
+import { AddAlerteActeApiHookParameters } from "../../views/common/hook/alertes/AddAlerteActeHookApi";
+import { DeleteAlerteActeApiHookParameters } from "../../views/common/hook/alertes/DeleteAlerteActeHookApi";
 import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 

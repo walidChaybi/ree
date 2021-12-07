@@ -1,11 +1,11 @@
 import { FileExtension, MimeType } from "file-type";
-import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { Qualite } from "../../../../../model/requete/v2/enum/Qualite";
-import { TypeInstitutionnel } from "../../../../../model/requete/v2/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "../../../../../model/requete/v2/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "../../../../../model/requete/v2/enum/TypePieceJustificative";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
-import { TitulaireRequete } from "../../../../../model/requete/v2/ITitulaireRequete";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
+import { Qualite } from "../../../../../model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "../../../../../model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "../../../../../model/requete/enum/TypeMandataireReq";
+import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { TitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
 import { getValeurOuVide } from "../../../../common/util/Utils";
 import {
   ADRESSE,

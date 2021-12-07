@@ -1,27 +1,27 @@
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
 import request from "superagent";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
-import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
+import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
 import {
-  getDefaultValuesCourrier,
-  getTypesCourrier
+    getDefaultValuesCourrier,
+    getTypesCourrier
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import ChoixCourrierForm, {
-  ChoixCourrierSubFormProps,
-  ValidationSchemaChoixCourrier
+    ChoixCourrierSubFormProps,
+    ValidationSchemaChoixCourrier
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
 import { CHOIX_COURRIER } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeAll(() => {
   DocumentDelivrance.init();

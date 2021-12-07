@@ -1,6 +1,6 @@
 import React from "react";
-import { IReponseRequeteInfo } from "../../../../../../model/requete/v2/IReponseRequeteInfo";
-import { getLibelle } from "../../../../../common/widget/Text";
+import { IReponseRequeteInfo } from "../../../../../../model/requete/IReponseRequeteInfo";
+import { getLibelle } from "../../../../../common/util/Utils";
 
 interface BoutonReponseLibreProps {
   onClick: (reponse: IReponseRequeteInfo) => void;

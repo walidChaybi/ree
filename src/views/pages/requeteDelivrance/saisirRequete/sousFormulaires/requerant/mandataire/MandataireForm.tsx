@@ -1,6 +1,7 @@
 import { connect } from "formik";
 import React, { useState } from "react";
-import { TypeMandataireReq } from "../../../../../../../model/requete/v2/enum/TypeMandataireReq";
+import { TypeMandataireReq } from "../../../../../../../model/requete/enum/TypeMandataireReq";
+import { getLibelle } from "../../../../../../common/util/Utils";
 import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import {
@@ -8,7 +9,6 @@ import {
   SubFormProps,
   withNamespace
 } from "../../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import {
   NATURE,
   NOM,

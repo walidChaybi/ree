@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import * as React from "react";
-import { logError } from "./LogManager";
 import { URL_ACCUEIL } from "../../router/ReceUrls";
-import { getLibelle } from "../widget/Text";
+import { getLibelle } from "../util/Utils";
+import { logError } from "./LogManager";
 
 interface LocalProps {
   remoteLog: boolean;

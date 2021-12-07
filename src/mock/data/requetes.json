@@ -7,6 +7,7 @@
     {
       "idRequete": "104b8563-c7f8-4748-9daa-f26558985894",
       "idSagaDila": 11982,
+      "numero": "11982",
       "dateCreation": 1583225141.221132,
       "dateDerniereMaj": 1583225141.221132,
       "provenance": "DILA",
@@ -129,6 +130,7 @@
     {
       "idRequete": "104b8564-c7f9-4749-9dab-f26558985895",
       "idSagaDila": 11985,
+      "numero": "11985",
       "idRequeteInitiale": 11981,
       "dateCreation": 1583225141.221132,
       "dateDerniereMaj": 1583225141.221132,
@@ -243,6 +245,7 @@
     {
       "idRequete": "104b8563-c7f8-4748-9daa-f26558985896",
       "idSagaDila": 11991,
+      "numero": "11991",
       "dateCreation": 1583225141.221132,
       "dateDerniereMaj": 1583225141.221132,
       "provenance": "DILA",

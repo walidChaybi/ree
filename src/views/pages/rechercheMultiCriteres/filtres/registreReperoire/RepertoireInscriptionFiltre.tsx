@@ -9,6 +9,7 @@ import {
   NumeroInscription
 } from "../../../../../ressources/Regex";
 import { Options } from "../../../../common/util/Type";
+import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
@@ -22,7 +23,6 @@ import {
   FormikComponentProps,
   withNamespace
 } from "../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../common/widget/Text";
 
 // Noms des champs
 export const NUMERO_INSCRIPTION = "numeroInscription";

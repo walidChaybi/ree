@@ -4,8 +4,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { IOngletProps } from "../../../../model/IOnglet";
 import WithHabilitation from "../../util/habilitation/WithHabilitation";
-import { getLibelle } from "../Text";
-import { LinkTab } from "./LinkTabV2";
+import { getLibelle } from "../../util/Utils";
+import { LinkTab } from "./LinkTab";
 import { TabPanel } from "./TabPanel";
 
 const TabPanelMesRequetesWithHabilitation = WithHabilitation(
@@ -60,7 +60,7 @@ export const BoiteAOnglet: React.FC<IBoiteAOngletsProps> = props => {
             switch (onglet.enTete.nomHabilitation) {
               case "LinkTabMesRequetes":
                 // On est obligé de créer le composant LinkPanel_XXX_WithHabilitation à l'avance
-                // car s'il est créé dynamiquement le composant parent (RequeteServicePageV2)
+                // car s'il est créé dynamiquement le composant parent (RequetesServicePage)
                 // est démonté et remonté intempestivement plusieurs fois
                 return (
                   <LinkTabMesRequeteWithHabilitation
@@ -90,7 +90,7 @@ export const BoiteAOnglet: React.FC<IBoiteAOngletsProps> = props => {
         switch (onglet.corps.nomHabilitation) {
           case "TabPanelMesRequetes":
             // On est obligé de créer le composant TabPanel_XXX_WithHabilitation à l'avance
-            // car s'il est créé dynamiquement le composant parent (RequeteServicePageV2)
+            // car s'il est créé dynamiquement le composant parent (RequetesServicePage)
             // est démonté et remonté intempestivement plusieurs fois
             return (
               <TabPanelMesRequetesWithHabilitation

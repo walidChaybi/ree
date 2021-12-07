@@ -71,30 +71,30 @@ test("Clic sur une Requête du tableau avec un idUtilisateur", async () => {
   });
 });
 
-//     // TODO A remplacer quand l'US 221 sera réalisée
-// test("Clic sur une Requête du tableau sans un idUtilisateur", async () => {
-//   const { getByTestId } = render(
-//     <Router history={history}>
-//       <RMCTableauRequetes
-//         dataRMCRequete={DataRMCRequeteAvecResultat}
-//         dataTableauRMCRequete={DataTableauRequete}
-//       />
-//     </Router>
-//   );
+test("Clic sur une Requête du tableau sans un idUtilisateur", async () => {
+  const { getByTestId } = render(
+    <Router history={history}>
+      <RMCTableauRequetes
+        dataRMCRequete={DataRMCRequeteAvecResultat}
+        dataTableauRMCRequete={DataTableauRequete}
+        setRangeRequete={jest.fn()}
+        resetTableauRequete={true}
+      />
+    </Router>
+  );
 
-//   const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf8");
+  const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf8");
 
-//   act(() => {
-//     fireEvent.click(ligne);
-//   });
+  act(() => {
+    fireEvent.click(ligne);
+  });
 
-//   await waitFor(() => {
-//     expect(history.location.pathname).toEqual("rece/rece-ui/rechercherequete");
-//     // expect(getLastPathElem(history.location.pathname)).toEqual(
-//     //   "4578e56c-421c-4e6a-b587-a238a665daf8"
-//     // );
-//   });
-// });
+  await waitFor(() => {
+    expect(history.location.pathname).toEqual(
+      "/rece/rece-ui/rechercherequete/apercurequete/4578e56c-421c-4e6a-b587-a238a665daf8"
+    );
+  });
+});
 
 test("renders Resultat Requetes Recherche Multi Critères => Sans résultat", () => {
   const { getByText } = render(
@@ -201,4 +201,8 @@ test("Changement de page", async () => {
   });
 
   expect(getByTestId("54ddf213-d9b7-4747-8e92-68c220f66de3")).toBeDefined();
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

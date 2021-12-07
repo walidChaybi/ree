@@ -1,13 +1,13 @@
-import { BesoinUsager } from "../../model/requete/v2/enum/BesoinUsager";
-import { ComplementObjetRequete } from "../../model/requete/v2/enum/ComplementObjetRequete";
-import { ObjetRequete } from "../../model/requete/v2/enum/ObjetRequete";
-import { Provenance } from "../../model/requete/v2/enum/Provenance";
-import { Qualite } from "../../model/requete/v2/enum/Qualite";
-import { SousTypeInformation } from "../../model/requete/v2/enum/SousTypeInformation";
-import { StatutRequete } from "../../model/requete/v2/enum/StatutRequete";
-import { TypeCanal } from "../../model/requete/v2/enum/TypeCanal";
-import { TypeRequete } from "../../model/requete/v2/enum/TypeRequete";
-import { IRequeteInformation } from "../../model/requete/v2/IRequeteInformation";
+import { BesoinUsager } from "../../model/requete/enum/BesoinUsager";
+import { ComplementObjetRequete } from "../../model/requete/enum/ComplementObjetRequete";
+import { ObjetRequete } from "../../model/requete/enum/ObjetRequete";
+import { Provenance } from "../../model/requete/enum/Provenance";
+import { Qualite } from "../../model/requete/enum/Qualite";
+import { SousTypeInformation } from "../../model/requete/enum/SousTypeInformation";
+import { StatutRequete } from "../../model/requete/enum/StatutRequete";
+import { TypeCanal } from "../../model/requete/enum/TypeCanal";
+import { TypeRequete } from "../../model/requete/enum/TypeRequete";
+import { IRequeteInformation } from "../../model/requete/IRequeteInformation";
 
 export const requeteInformation: IRequeteInformation = {
   id: "bbd05aed-8ea9-45ba-a7d7-b8d55ad1085c",

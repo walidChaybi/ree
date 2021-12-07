@@ -1,6 +1,6 @@
 import { storeRece } from "../../views/common/util/storeRece";
 import { Droit } from "../Droit";
-import { Provenance } from "../requete/v2/enum/Provenance";
+import { Provenance } from "../requete/enum/Provenance";
 import { IEntite } from "./IEntiteRattachement";
 import { IUtilisateur, utilisateurADroit } from "./IUtilisateur";
 

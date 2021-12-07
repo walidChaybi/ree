@@ -1,21 +1,6 @@
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
 import { FormPinCode } from "../../../../views/common/widget/signature/FormPinCode";
-import { mount } from "enzyme";
-import { render, fireEvent, waitFor } from "@testing-library/react";
-
-test("renders form popin", () => {
-  const component = mount(
-    <FormPinCode
-      onClose={() => {
-        return;
-      }}
-      setPinCode={() => {
-        return;
-      }}
-    />
-  );
-  expect(component).toMatchSnapshot();
-});
 
 test("renders form popin, setPinCode function called on validation", async () => {
   const handleClickButton = jest.fn();

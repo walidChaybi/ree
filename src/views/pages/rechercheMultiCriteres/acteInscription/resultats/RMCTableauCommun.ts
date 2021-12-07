@@ -1,5 +1,5 @@
 import { HeaderTableauRMC } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
-import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
+import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
 
 export type TypeRMC = "Classique" | "Auto";
 

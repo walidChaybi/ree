@@ -4,12 +4,12 @@ import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
-import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { RMCRequetesAssocieesResultats } from "../../../../../views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("renders Fielset Recherche Requêtes associées aux titulaires", async () => {
   await act(async () => {

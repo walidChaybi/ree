@@ -1,10 +1,10 @@
 import {
-  descendingDateComparator,
   descendingComparator,
-  stableSort,
+  descendingDateComparator,
   getComparator,
+  getPaginatedData,
   processDataStorting,
-  getPaginatedData
+  stableSort
 } from "../../../../views/common/widget/tableau/TableUtils";
 
 interface IData {

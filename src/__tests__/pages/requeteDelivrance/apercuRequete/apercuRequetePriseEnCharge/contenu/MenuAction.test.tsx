@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { SousTypeDelivrance } from "../../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { IActionOption } from "../../../../../../model/requete/v2/IActionOption";
+import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
+import { IActionOption } from "../../../../../../model/requete/IActionOption";
 import { MenuAction } from "../../../../../../views/common/widget/menu/MenuAction";
 
 test("renders d'un menu choix des actions", () => {

@@ -2,10 +2,10 @@ import {
   IReponseSansDelivranceCSDemandeIncompleteComposition,
   ReponseSansDelivranceCSDemandeIncompleteComposition
 } from "../../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
-import { TypeCanal } from "../../../../../model/requete/v2/enum/TypeCanal";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { TypeCanal } from "../../../../../model/requete/enum/TypeCanal";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import messageManager from "../../../../common/util/messageManager";
-import { getLibelle } from "../../../../common/widget/Text";
+import { getLibelle } from "../../../../common/util/Utils";
 
 export function createReponseSansDelivranceCS(requete?: IRequeteDelivrance) {
   let reponseSansDelivranceCS = {} as IReponseSansDelivranceCSDemandeIncompleteComposition;

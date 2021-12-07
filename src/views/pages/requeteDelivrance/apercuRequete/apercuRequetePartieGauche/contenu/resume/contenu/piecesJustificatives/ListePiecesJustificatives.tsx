@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
-import { IPieceJustificativeV2 } from "../../../../../../../../../model/requete/v2/IPieceJustificativeV2";
+import { IPieceJustificative } from "../../../../../../../../../model/requete/IPieceJustificative";
 import "../../../../../../../../common/widget/section/scss/SectionPanel.scss";
 import "../../../../../../../../common/widget/section/scss/SectionPanelArea.scss";
 import { LienPieceJustificative } from "./LienPieceJustificative";
 
 interface IListePiecesJustificatives {
-  pieces: IPieceJustificativeV2[];
+  pieces: IPieceJustificative[];
   numRequete: string;
 }
 

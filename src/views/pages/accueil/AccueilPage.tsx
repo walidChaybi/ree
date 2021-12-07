@@ -8,20 +8,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import logoRece from "../../../img/logo-rece.svg";
-import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
-import { getLibelle, getText, Text } from "../../common/widget/Text";
+import { IOfficier } from "../../../model/agent/IOfficier";
+import { getLibelle } from "../../common/util/Utils";
 import {
   OfficierContext,
   OfficierContextProps
 } from "../../core/contexts/OfficierContext";
-import { Title } from "../../core/title/Title";
 import "../accueil/scss/AccueilPage.scss";
 import {
   BoutonAccueilCommunication,
   BoutonAccueilEspaceCreation,
   BoutonAccueilEspaceDelivrance,
-  BoutonAccueilEspaceDelivranceV2,
   BoutonAccueilEspaceMiseAjour,
   BoutonAccueilRechercheActe,
   BoutonAccueilRechercheActeOuInscription,
@@ -30,96 +27,86 @@ import {
 } from "./BoutonAccueil";
 
 export const AccueilPage: React.FC = () => {
-  const etape2Active = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
-
   return (
     <div className="AccueilPage">
-      <Title titleId={"pages.accueil.titre"} />
+      <title>{getLibelle("Accueil")}</title>
 
-      <img src={logoRece} alt={getText("altLogoRece")} />
+      <img src={logoRece} alt={getLibelle("Logo RECE")} />
       <OfficierContext.Consumer>
         {officier => (
           <>
             <div className="Titre">
-              <Text
-                messageId={"pages.accueil.bienvenue"}
-                values={
-                  officier?.officierDataState !== undefined
-                    ? [
-                        officier.officierDataState.prenom,
-                        officier.officierDataState.nom,
-                        officier.officierDataState.trigramme
-                      ]
-                    : []
-                }
-              />
+              {getBienvenueOfficier(officier?.officierDataState)}
             </div>
             <div className="Affectation">{getAffectation(officier)}</div>
           </>
         )}
       </OfficierContext.Consumer>
       <div className="MenuAccueil">
-        {etape2Active ? (
-          <BoutonAccueilEspaceDelivranceV2
-            messageId="pages.accueil.boutons.delivranceV2"
-            pageUrl="mesrequetesv2"
-            iconFA={faGavel}
-            titleId="pages.accueil.titles.delivranceV2"
-          ></BoutonAccueilEspaceDelivranceV2>
-        ) : (
-          <BoutonAccueilEspaceDelivrance
-            messageId="pages.accueil.boutons.delivrance"
-            pageUrl="mesrequetes"
-            iconFA={faGavel}
-            titleId="pages.accueil.titles.delivrance"
-          ></BoutonAccueilEspaceDelivrance>
-        )}
+        <BoutonAccueilEspaceDelivrance
+          libelle={getLibelle("Espace délivrance")}
+          pageUrl="mesrequetes"
+          iconFA={faGavel}
+          title={getLibelle("Bouton pour accèder à l'espace délivrance")}
+        ></BoutonAccueilEspaceDelivrance>
         <BoutonAccueilEspaceMiseAjour
-          messageId="pages.accueil.boutons.miseAJour"
+          libelle={getLibelle("Espace mise à jour")}
           pageUrl="miseAJour"
           iconFA={faSync}
-          titleId="pages.accueil.titles.miseAJour"
+          title={getLibelle("Bouton pour accèder à l'espace mise à jour")}
         ></BoutonAccueilEspaceMiseAjour>
         <BoutonAccueilEspaceCreation
-          messageId="pages.accueil.boutons.creation"
+          libelle={getLibelle("Espace création")}
           pageUrl="creation"
           iconFA={faPlusCircle}
-          titleId="pages.accueil.titles.creation"
+          title={getLibelle("Bouton pour accèder à l'espace création")}
         ></BoutonAccueilEspaceCreation>
         <BoutonAccueilCommunication
-          messageId="pages.accueil.boutons.communication"
+          libelle={getLibelle("Communication avec les usagers")}
           pageUrl="mesrequetesinformation"
           iconFA={faEnvelope}
-          titleId="pages.accueil.titles.communication"
+          title={getLibelle(
+            "Bouton pour accèder à la communication avec les usagers"
+          )}
         ></BoutonAccueilCommunication>
         <BoutonAccueilRechercheRequete
-          messageId="pages.accueil.boutons.rechercherequete"
+          libelle={getLibelle("Rechercher une requête")}
           pageUrl="rechercherequete"
           iconFA={faSearch}
-          titleId="pages.accueil.titles.requete"
+          title={getLibelle("Bouton pour accèder à la recherche d'une requête")}
         ></BoutonAccueilRechercheRequete>
         <BoutonAccueilRechercheActeOuInscription
-          messageId="pages.accueil.boutons.rechercheacteinscription"
+          libelle={getLibelle("Rechercher un acte et une inscription")}
           pageUrl="rechercheacteinscription"
           iconFA={faSearch}
-          titleId="pages.accueil.titles.rechercheacteinscription"
+          title={getLibelle(
+            "Bouton pour accèder à la recherche d'un acte et d'une inscription"
+          )}
         ></BoutonAccueilRechercheActeOuInscription>
         <BoutonAccueilRechercheActe
-          messageId="pages.accueil.boutons.rechercheacte"
+          libelle={getLibelle("Rechercher un acte")}
           pageUrl="rechercheacte"
           iconFA={faSearch}
-          titleId="pages.accueil.titles.rechercheacte"
+          title={getLibelle("Bouton pour accèder à la recherche d'un acte")}
         ></BoutonAccueilRechercheActe>
         <BoutonAccueilTableau
-          messageId="pages.accueil.boutons.tableau"
+          libelle={getLibelle("Tableau de bord")}
           pageUrl="tableau"
           iconFA={faChartBar}
-          titleId="pages.accueil.titles.tableau"
+          title={getLibelle("Bouton pour accèder au tableau de bord")}
         ></BoutonAccueilTableau>
       </div>
     </div>
   );
 };
+
+function getBienvenueOfficier(officier?: IOfficier): string {
+  let msgBienvenue = "Bienvenue";
+  if (officier) {
+    msgBienvenue = `${msgBienvenue} ${officier.prenom} ${officier.nom} - ${officier.trigramme}`;
+  }
+  return getLibelle(msgBienvenue);
+}
 
 function getAffectation(officier?: OfficierContextProps): string {
   const hierarchie = getHierarchie(officier);

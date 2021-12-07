@@ -2,11 +2,11 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { imagePngVideBase64 } from "../../../../../../../mock/data/ImagePng";
-import { configRequetesV2 } from "../../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { TypePieceJustificative } from "../../../../../../../model/requete/v2/enum/TypePieceJustificative";
+import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
+import { TypePieceJustificative } from "../../../../../../../model/requete/enum/TypePieceJustificative";
 import { LienPieceJustificative } from "../../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/contenu/piecesJustificatives/LienPieceJustificative";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 beforeAll(() => {
   TypePieceJustificative.init();

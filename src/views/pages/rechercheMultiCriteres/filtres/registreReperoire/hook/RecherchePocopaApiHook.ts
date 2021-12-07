@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import { valeurOuUndefined } from "../../../../../common/util/Utils";
-import { getLibelle } from "../../../../../common/widget/Text";
-import messageManager from "../../../../../common/util/messageManager";
+import { useEffect, useState } from "react";
 import { getPocopas } from "../../../../../../api/appels/etatcivilApi";
+import messageManager from "../../../../../common/util/messageManager";
+import {
+  getLibelle,
+  valeurOuUndefined
+} from "../../../../../common/util/Utils";
 
 export function useRecherchePocopa(
   debutPocopa: string,

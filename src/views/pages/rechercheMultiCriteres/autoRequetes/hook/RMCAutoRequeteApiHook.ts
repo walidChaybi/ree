@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoRequetes } from "../../../../../api/appels/requeteApi";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
+import { TRequete } from "../../../../../model/requete/IRequete";
 import {
   IRequeteTableauDelivrance,
   mappingRequetesTableau
-} from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
+} from "../../../../../model/requete/IRequeteTableauDelivrance";
 import {
   getParamsTableau,
   IParamsTableau

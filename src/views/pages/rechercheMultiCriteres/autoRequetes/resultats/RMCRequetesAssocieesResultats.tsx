@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
+import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
-import { getLibelle } from "../../../../common/widget/Text";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useRMCRequeteApiHook } from "../../requete/hook/RMCRequeteApiHook";
 import { useRMCAutoRequeteApiHook } from "../hook/RMCAutoRequeteApiHook";
 import "../scss/RMCRequetesAssocieesResultats.scss";

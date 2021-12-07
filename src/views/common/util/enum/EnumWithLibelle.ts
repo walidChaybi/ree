@@ -1,5 +1,8 @@
+import {
+  changeLaPlaceDunElement,
+  premiereLettreEnMajuscule
+} from "../../util/Utils";
 import { Options } from "../Type";
-import { changeLaPlaceDunElement, premiereLettreEnMajuscule } from "../Utils";
 
 const AUTRE = "autre";
 /* istanbul ignore file */

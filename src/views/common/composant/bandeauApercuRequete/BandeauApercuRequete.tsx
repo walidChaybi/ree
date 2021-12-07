@@ -1,14 +1,14 @@
 import classNames from "classnames";
 import React from "react";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { TRequete } from "../../../../model/requete/v2/IRequete";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { TRequete } from "../../../../model/requete/IRequete";
 import { getFormatDateFromTimestamp } from "../../util/DateUtils";
 import { storeRece } from "../../util/storeRece";
 import {
   formatNom,
+  getLibelle,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../util/Utils";
-import { getLibelle } from "../../widget/Text";
 import "./scss/BandeauApercuRequete.scss";
 
 interface BandeauRequeteProps {
@@ -52,8 +52,11 @@ const getRequeteATraiter = (responsable: string, requete: TRequete) => {
       )}`
     );
   } else {
-    return getLibelle(`Requête à traiter non attribuée - Créée le
-      ${getFormatDateFromTimestamp(requete.dateCreation)}`);
+    return getLibelle(
+      `Requête à traiter non attribuée - Créée le ${getFormatDateFromTimestamp(
+        requete.dateCreation
+      )}`
+    );
   }
 };
 
@@ -65,8 +68,11 @@ const getRequeteAValider = (responsable: string, requete: TRequete) => {
       )}`
     );
   } else {
-    return getLibelle(`Requête à valider non attribuée - Créée le
-      ${getFormatDateFromTimestamp(requete.dateCreation)}`);
+    return getLibelle(
+      `Requête à valider non attribuée - Créée le ${getFormatDateFromTimestamp(
+        requete.dateCreation
+      )}`
+    );
   }
 };
 
@@ -123,7 +129,6 @@ const getRequeteRejet = (responsable: string, requete: TRequete) => {
 };
 
 const getStatutLibellePourRequete = (requete: TRequete) => {
-  // TODO US 532 Appel au cache (Store RECE) pour récupérer les informations de l'OEC
   let responsable = requete.idUtilisateur
     ? `${premiereLettreEnMajusculeLeResteEnMinuscule(
         storeRece.getPrenomUtilisateurFromID(requete.idUtilisateur)

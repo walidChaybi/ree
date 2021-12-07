@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IDocumentReponse } from "../../../../../model/requete/v2/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
-import { IUuidRequeteParams } from "../../../../../model/requete/v2/IUuidRequeteParams";
+import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { IUuidRequeteParams } from "../../../../../model/requete/IUuidRequeteParams";
 import { BandeauRequete } from "../../../../common/composant/bandeauApercuRequete/BandeauApercuRequete";
 import { ProtectionApercu } from "../../../../common/util/route/Protection/ProtectionApercu";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
+import "./scss/ApercuRequeteTemplate.scss";
 
-interface TemplateProps {
+interface TemplateProps { 
   title: string;
   setRequeteCallback: (req: IRequeteDelivrance) => void;
   setDocumentAfficheCallback?: (docReponse: IDocumentReponse) => void;

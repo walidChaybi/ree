@@ -5,7 +5,7 @@ import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
 import { MEP_YEAR } from "../../../common/util/DateUtils";
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,

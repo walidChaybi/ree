@@ -1,14 +1,13 @@
+import { Divider, List, ListItem, ListItemText } from "@material-ui/core";
 import React, { useCallback } from "react";
-import { List, ListItem, ListItemText, Divider } from "@material-ui/core";
+import { getLibelle } from "../../../util/Utils";
 import "./scss/SuccessSignature.scss";
-import { getText } from "../../Text";
 
 interface SuccessSignatureProps {
   successes: SuccessSignatureType[];
 }
 
 export interface SuccessSignatureType {
-  messageId: string;
   date: string;
   numeroRequete: string;
 }
@@ -24,10 +23,9 @@ export const SuccessSignature: React.FC<SuccessSignatureProps> = ({
         <ListItem alignItems="flex-start" key={success.numeroRequete}>
           <ListItemText
             className={"SuccessItem"}
-            primary={getText(success.messageId, [
-              `${success.numeroRequete}`,
-              success.date
-            ])}
+            primary={getLibelle(
+              `Le(s) document(s) de la requête n°${success.numeroRequete} a (ont) été signé(s) le ${success.date}`
+            )}
           />
         </ListItem>
       );

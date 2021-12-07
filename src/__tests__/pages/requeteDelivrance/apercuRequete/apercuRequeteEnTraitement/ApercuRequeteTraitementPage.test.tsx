@@ -1,23 +1,23 @@
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
-import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { TypePieceJustificative } from "../../../../../model/requete/v2/enum/TypePieceJustificative";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
 import { ApercuRequeteTraitementPage } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
@@ -136,7 +136,7 @@ test("test du bouton de modification du courrier", async () => {
     fireEvent.click(screen.getByText(/Modifier le courrier/i));
   });
   expect(history.location.pathname).toBe(
-    "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d494"
+    "/rece/rece-ui/mesrequetes/apercurequetetraitement/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d494"
   );
 });
 

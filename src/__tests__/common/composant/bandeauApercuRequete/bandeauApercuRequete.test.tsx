@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { TRequete } from "../../../../model/requete/v2/IRequete";
-import { IStatutCourant } from "../../../../model/requete/v2/IStatutCourant";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { TRequete } from "../../../../model/requete/IRequete";
+import { IStatutCourant } from "../../../../model/requete/IStatutCourant";
 import { BandeauRequete } from "../../../../views/common/composant/bandeauApercuRequete/BandeauApercuRequete";
 import { storeRece } from "../../../../views/common/util/storeRece";
 
@@ -77,21 +77,6 @@ test("récupérer le libellé d'une requête prise en charge et attribuée", () 
   );
 });
 
-// test("récupérer le libellé d'une requête prise en charge non attribuée", () => {
-//   requete.statutCourant.statut = StatutRequete.PRISE_EN_CHARGE;
-//   render(<BandeauRequete requete={requete} />);
-//   screen.getByText(/WARN ! Non spécifié/i);
-// });
-
-// test("récupérer le libellé d'une requête à traiter non attribuée", () => {
-//   requete.statutCourant.statut = StatutRequete.A_TRAITER;
-//   render(<BandeauRequete requete={requete} />);
-//   const element = screen.getByText(
-//     /Requête à traiter non attribuée - Créée le : 01\/01\/2020/i
-//   );
-//   expect(element.className.indexOf("bleu") > -1).toBeTruthy();
-// });
-
 test("récupérer le libellé d'une requête à traiter attribuée", () => {
   requete.statutCourant.statut = StatutRequete.A_TRAITER;
   render(<BandeauRequete requete={requete} />);
@@ -142,4 +127,21 @@ test("récupérer le libellé d'une requête rejetée", () => {
   requete.statutCourant.statut = StatutRequete.REJET;
   render(<BandeauRequete requete={requete} />);
   screen.getByText(/Requête rejetée le 02\/01\/2020 par Ashley YOUNG/i);
+});
+
+test("récupérer le libellé d'une requête prise en charge non attribuée", () => {
+  requete.statutCourant.statut = StatutRequete.PRISE_EN_CHARGE;
+  requete.idUtilisateur = "";
+  render(<BandeauRequete requete={requete} />);
+  screen.getByText(/WARN ! Non spécifié/i);
+});
+
+test("récupérer le libellé d'une requête à traiter non attribuée", () => {
+  requete.statutCourant.statut = StatutRequete.A_TRAITER;
+  requete.idUtilisateur = "";
+  render(<BandeauRequete requete={requete} />);
+  const element = screen.getByText(
+    /Requête à traiter non attribuée - Créée le 01\/01\/2020/i
+  );
+  expect(element.className.indexOf("bleu") > -1).toBeTruthy();
 });

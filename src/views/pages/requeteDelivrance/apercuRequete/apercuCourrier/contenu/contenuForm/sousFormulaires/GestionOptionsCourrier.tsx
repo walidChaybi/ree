@@ -1,12 +1,12 @@
-import { DocumentDelivrance } from "../../../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { NatureActeRequete } from "../../../../../../../../model/requete/v2/enum/NatureActeRequete";
+import { DocumentDelivrance } from "../../../../../../../../model/requete/enum/DocumentDelivrance";
+import { NatureActeRequete } from "../../../../../../../../model/requete/enum/NatureActeRequete";
 import {
   OptionCourrier,
   OptionsCourrier
-} from "../../../../../../../../model/requete/v2/IOptionCourrier";
-import { IOptionCourrierDocumentReponse } from "../../../../../../../../model/requete/v2/IOptionCourrierDocumentReponse";
-import { TRequete } from "../../../../../../../../model/requete/v2/IRequete";
-import { IRequeteDelivrance } from "../../../../../../../../model/requete/v2/IRequeteDelivrance";
+} from "../../../../../../../../model/requete/IOptionCourrier";
+import { IOptionCourrierDocumentReponse } from "../../../../../../../../model/requete/IOptionCourrierDocumentReponse";
+import { TRequete } from "../../../../../../../../model/requete/IRequete";
+import { IRequeteDelivrance } from "../../../../../../../../model/requete/IRequeteDelivrance";
 import { getDocumentReponseAModifier } from "../CourrierFonctions";
 import "./scss/OptionsCourrierForm.scss";
 

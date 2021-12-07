@@ -7,9 +7,9 @@ import {
 import { FilterOptionsState } from "@material-ui/lab";
 import React, { useState } from "react";
 import { Option, Options } from "../../util/Type";
+import { getLibelle } from "../../util/Utils";
 import { BoutonOperationEnCours } from "../../widget/attente/BoutonOperationEnCours";
 import { ChampRecherche } from "../../widget/formulaire/champRecherche/ChampRechercheField";
-import { getLibelle } from "../../widget/Text";
 import "./scss/TransfertPopin.scss";
 
 interface TransfertPopinProps {

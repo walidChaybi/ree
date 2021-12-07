@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import { IReponseRequeteInfo } from "../../../../../../model/requete/v2/IReponseRequeteInfo";
+import { IReponseRequeteInfo } from "../../../../../../model/requete/IReponseRequeteInfo";
 import {
   TypePieceJointe,
   usePostPiecesJointesApi
-} from "../../../../../common/hook/v2/PiecesJointesHook";
+} from "../../../../../common/hook/PiecesJointesHook";
 import { PieceJointe } from "../../../../../common/util/FileUtils";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
 import { Fieldset } from "../../../../../common/widget/fieldset/Fieldset";
 import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
@@ -14,7 +15,6 @@ import {
   FormikComponentProps,
   SubFormProps
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { URL_MES_REQUETES_INFORMATION } from "../../../../../router/ReceUrls";
 import {
   ISauvegarderReponseReqInfoParams,

@@ -3,26 +3,30 @@ import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
+    IQueryParametersPourRequetes,
+    TypeAppelRequete
 } from "../../../../../api/appels/requeteApi";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
-import { StatutRequete } from "../../../../../model/requete/StatutRequete";
-import { useRequeteApi } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/v1/hook/DonneesRequeteHook";
+import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
+import { StatutsRequetesEspaceDelivrance } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceParams";
+import { useRequeteDelivranceApi } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/hook/DonneesRequeteDelivranceHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const queryParam: IQueryParametersPourRequetes = {
-  statuts: [StatutRequete.ASigner],
-  tri: "idSagaDila",
-  sens: "ASC"
+  statuts: StatutsRequetesEspaceDelivrance,
+  tri: "dateStatut",
+  sens: "ASC",
+  range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
 };
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const { dataState = [] } = useRequeteApi(
+  const [enChargement, setEnChargement] = React.useState(true);
+  const { dataState = [] } = useRequeteDelivranceApi(
     queryParam,
-    TypeAppelRequete.MES_REQUETES
+    TypeAppelRequete.MES_REQUETES,
+    setEnChargement
   );
   return (
     <>
@@ -52,11 +56,12 @@ afterEach(() => {
 test("monter un composant de test pour vérifier que tout va bien", async () => {
   await act(async () => {
     ReactDOM.render(<HookConsummer />, container);
-    expect(container).toBeInstanceOf(Element);
-    if (container instanceof Element) {
-      expect(container.querySelector).toBeTruthy();
-    }
   });
+  expect(container).toBeInstanceOf(Element);
+
+  if (container instanceof Element) {
+    expect(container.querySelector).toBeTruthy();
+  }
 });
 
 afterAll(() => {

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Orientation } from "../../../../../../../../model/composition/enum/Orientation";
 import { IReponseSansDelivranceCS } from "../../../../../../../../model/composition/IReponseSansDelivranceCS";
-import { DocumentDelivrance } from "../../../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { StatutRequete } from "../../../../../../../../model/requete/v2/enum/StatutRequete";
-import { IDocumentReponse } from "../../../../../../../../model/requete/v2/IDocumentReponse";
+import { DocumentDelivrance } from "../../../../../../../../model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "../../../../../../../../model/requete/enum/StatutRequete";
+import { IDocumentReponse } from "../../../../../../../../model/requete/IDocumentReponse";
 import { MimeType } from "../../../../../../../../ressources/MimeType";
-import { useCompositionReponseSansDelivranceCSApi } from "../../../../../../../common/hook/v2/composition/CompositionReponseSansDelivranceCSHook";
-import { useStockerDocumentCreerActionMajStatutRequete } from "../../../../../../../common/hook/v2/requete/StockerDocumentCreerActionMajStatutRequete";
+import { useCompositionReponseSansDelivranceCSApi } from "../../../../../../../common/hook/composition/CompositionReponseSansDelivranceCSHook";
+import { useStockerDocumentCreerActionMajStatutRequete } from "../../../../../../../common/hook/requete/StockerDocumentCreerActionMajStatutRequete";
 
 export function useReponseSansDelivranceCS(
   requeteId: string,

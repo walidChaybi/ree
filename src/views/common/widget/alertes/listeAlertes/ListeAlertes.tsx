@@ -5,10 +5,10 @@ import { IAlerte } from "../../../../../model/etatcivil/fiche/IAlerte";
 import {
   toAlertString,
   toReferenceString
-} from "../../../hook/v2/alertes/MappingAlertesActe";
+} from "../../../hook/alertes/MappingAlertesActe";
 import { storeRece } from "../../../util/storeRece";
+import { getLibelle } from "../../../util/Utils";
 import { ConfirmationPopin } from "../../popin/ConfirmationPopin";
-import { getLibelle } from "../../Text";
 import { PopinSupprimerAlerte } from "./contenu/PopinSupprimerAlerte";
 import "./scss/ListeAlertes.scss";
 

@@ -2,6 +2,7 @@ import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../../ressources/Regex";
+import { getLibelle } from "../../../../../../common/util/Utils";
 import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../../../common/widget/formulaire/FormulaireMessages";
 import { sortieChampEnMajuscule } from "../../../../../../common/widget/formulaire/utils/ControlesUtil";
@@ -10,7 +11,6 @@ import {
   SubFormProps,
   withNamespace
 } from "../../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import {
   NOM_NAISSANCE,
   NOM_USAGE

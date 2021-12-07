@@ -1,10 +1,10 @@
-import React from "react";
-import { Text, getText } from "../../common/widget/Text";
-import { useHistory } from "react-router-dom";
-import { URL_ACCUEIL } from "../../router/ReceUrls";
-import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
-import { BoutonDeconnexion } from "./BoutonDeconnexion";
 import { Tooltip } from "@material-ui/core";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
+import { getLibelle } from "../../common/util/Utils";
+import { URL_ACCUEIL } from "../../router/ReceUrls";
+import { BoutonDeconnexion } from "./BoutonDeconnexion";
 
 interface HeaderProps {
   onClick?: (event: React.MouseEvent, paramURL: string) => void;
@@ -26,16 +26,14 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
       <div className="LogoHeader">
         <img
           src={logoReceBlanc}
-          alt={getText("altLogoRece")}
+          alt={getLibelle("Logo RECE")}
           onClick={event => onClickLogo(event)}
           data-testid="LogoHeader"
         />
       </div>
-      
+
       <Tooltip title={`Version : ${version}`}>
-        <h1>
-          <Text messageId={"header"} />
-        </h1>
+        <h1>{getLibelle("Registre d'État Civil Électronique")}</h1>
       </Tooltip>
 
       <BoutonDeconnexion />

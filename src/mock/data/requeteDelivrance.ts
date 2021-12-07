@@ -1,20 +1,21 @@
 import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
-import { ChoixDelivrance } from "../../model/requete/v2/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../model/requete/v2/enum/DocumentDelivrance";
-import { MotifDelivrance } from "../../model/requete/v2/enum/MotifDelivrance";
-import { NatureActeRequete } from "../../model/requete/v2/enum/NatureActeRequete";
-import { Provenance } from "../../model/requete/v2/enum/Provenance";
-import { Qualite } from "../../model/requete/v2/enum/Qualite";
-import { SousTypeDelivrance } from "../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../model/requete/v2/enum/StatutRequete";
-import { TypeCanal } from "../../model/requete/v2/enum/TypeCanal";
-import { TypeInstitutionnel } from "../../model/requete/v2/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "../../model/requete/v2/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "../../model/requete/v2/enum/TypePieceJustificative";
-import { TypeRequete } from "../../model/requete/v2/enum/TypeRequete";
-import { IProvenancePlanete } from "../../model/requete/v2/IProvenancePlanete";
-import { IProvenanceRece } from "../../model/requete/v2/IProvenanceRece";
-import { IRequeteDelivrance } from "../../model/requete/v2/IRequeteDelivrance";
+import { ChoixDelivrance } from "../../model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "../../model/requete/enum/DocumentDelivrance";
+import { MotifDelivrance } from "../../model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "../../model/requete/enum/NatureActeRequete";
+import { Provenance } from "../../model/requete/enum/Provenance";
+import { Qualite } from "../../model/requete/enum/Qualite";
+import { SousTypeDelivrance } from "../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../model/requete/enum/StatutRequete";
+import { TypeCanal } from "../../model/requete/enum/TypeCanal";
+import { TypeInstitutionnel } from "../../model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "../../model/requete/enum/TypeMandataireReq";
+import { TypePieceJustificative } from "../../model/requete/enum/TypePieceJustificative";
+import { TypeRequete } from "../../model/requete/enum/TypeRequete";
+import { IProvenancePlanete } from "../../model/requete/IProvenancePlanete";
+import { IProvenanceRece } from "../../model/requete/IProvenanceRece";
+import { IRequerant } from "../../model/requete/IRequerant";
+import { IRequeteDelivrance } from "../../model/requete/IRequeteDelivrance";
 import { documentReponseCourrier117 } from "./DocumentReponse";
 import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
 
@@ -267,3 +268,99 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
 };
 
 export default requeteDelivrance;
+
+const requerant: IRequerant = {
+  id: "0ad81071-9733-47fb-9e46-d6cdbea1c6f3",
+  dateCreation: new Date(),
+  nomFamille: "Dubois",
+  prenom: "Alice",
+  courriel: "dubois.alice@gmail.com",
+  telephone: "123456793",
+  adresse: {
+    id: "8ef11f43-caac-47d3-a28a-c4e1f1d29c77",
+    ligne2: "Appartement 258",
+    ligne3: "Batiment Z",
+    ligne4: "61 avenue Foch",
+    ligne5: "lieu dit la martinière",
+    codePostal: "310 GL24",
+    ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+    pays: "France"
+  },
+  lienRequerant: undefined
+} as IRequerant;
+
+export const idRequeteRDCSC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
+export const requeteRDCSC = ({
+  id: idRequeteRDCSC,
+  type: TypeRequete.DELIVRANCE,
+  sousType: SousTypeDelivrance.RDCSC,
+  statutCourant: {
+    statut: StatutRequete.PRISE_EN_CHARGE
+  },
+  requerant,
+  titulaires: [
+    {
+      id: "8ef12021-61df-421b-9b3d-ab6b4344df88",
+      position: 1,
+      nomNaissance: "Brown",
+      nomUsage: "",
+      anneeNaissance: 1993,
+      moisNaissance: 10,
+      jourNaissance: 14,
+      villeNaissance: "Sydney",
+      paysNaissance: "Australie",
+      sexe: "MASCULIN",
+      nationalite: "FRANCAISE",
+      prenoms: [
+        {
+          id: "8ef12d35-0d01-4ed1-b026-0038f901a13e",
+          numeroOrdre: 1,
+          prenom: "Alphonse"
+        }
+      ],
+      parentsTitulaire: []
+    }
+  ]
+} as any) as IRequeteDelivrance;
+
+export const idRequeteRDC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
+export const requeteRDC = ({
+  id: idRequeteRDC,
+  type: TypeRequete.DELIVRANCE,
+  sousType: SousTypeDelivrance.RDC,
+  statutCourant: {
+    statut: StatutRequete.PRISE_EN_CHARGE
+  },
+  requerant,
+  titulaires: [
+    {
+      id: "8ef12021-61df-421b-9b3d-ab6b4344df88",
+      position: 1,
+      nomNaissance: "Brown",
+      nomUsage: "",
+      anneeNaissance: 1993,
+      moisNaissance: 10,
+      jourNaissance: 14,
+      villeNaissance: "Sydney",
+      paysNaissance: "Australie",
+      sexe: "MASCULIN",
+      nationalite: "FRANCAISE",
+      prenoms: [
+        {
+          id: "8ef12d35-0d01-4ed1-b026-0038f901a13e",
+          numeroOrdre: 1,
+          prenom: "Alphonse"
+        }
+      ],
+      parentsTitulaire: []
+    }
+  ]
+} as any) as IRequeteDelivrance;
+
+export const requeteRDD = {
+  type: TypeRequete.DELIVRANCE,
+  sousType: SousTypeDelivrance.RDC,
+  statutCourant: {
+    statut: StatutRequete.PRISE_EN_CHARGE
+  }
+} as IRequeteDelivrance;

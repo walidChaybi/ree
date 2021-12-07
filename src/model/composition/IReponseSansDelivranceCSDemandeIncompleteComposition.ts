@@ -1,5 +1,5 @@
-import { TypeCanal } from "../requete/v2/enum/TypeCanal";
-import { IRequerant } from "../requete/v2/IRequerant";
+import { TypeCanal } from "../requete/enum/TypeCanal";
+import { IRequerant } from "../requete/IRequerant";
 import {
   CommunComposition,
   ICommunComposition

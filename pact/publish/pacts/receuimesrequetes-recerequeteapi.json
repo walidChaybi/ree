@@ -12,7 +12,7 @@
       "request": {
         "method": "GET",
         "path": "/rece-requete-api/v1/requetes/count",
-        "query": "statuts=A_SIGNER",
+        "query": "statuts=A+signer",
         "headers": {
           "id_sso": "03901913"
         }
@@ -45,7 +45,7 @@
       "request": {
         "method": "GET",
         "path": "/rece-requete-api/v1/requetes",
-        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "query": "statuts=A+signer&tri=dateStatut&sens=ASC&range=0-1",
         "headers": {
           "id_sso": "03901913"
         }
@@ -212,7 +212,7 @@
       "request": {
         "method": "GET",
         "path": "/rece-requete-api/v1/requetes",
-        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "query": "statuts=A+signer&tri=dateStatut&sens=ASC&range=0-1",
         "headers": {
           "id_sso": "03901913"
         }
@@ -379,7 +379,7 @@
       "request": {
         "method": "GET",
         "path": "/rece-requete-api/v1/requetes",
-        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "query": "statuts=A+signer&tri=dateStatut&sens=ASC&range=0-1",
         "headers": {
           "id_sso": "03901913"
         }
@@ -409,7 +409,7 @@
       "request": {
         "method": "GET",
         "path": "/rece-requete-api/v1/requetes",
-        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1"
+        "query": "statuts=A+signer&tri=dateStatut&sens=ASC&range=0-1"
       },
       "response": {
         "status": 200,
@@ -436,7 +436,7 @@
       "request": {
         "method": "GET",
         "path": "/rece-requete-api/v1/requetes/requetesService",
-        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "query": "statuts=A+signer&tri=dateStatut&sens=ASC&range=0-1",
         "headers": {
           "id_sso": "03901913"
         }
@@ -603,7 +603,7 @@
       "request": {
         "method": "GET",
         "path": "/rece-requete-api/v1/requetes/requetesService",
-        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "query": "statuts=A+signer&tri=dateStatut&sens=ASC&range=0-1",
         "headers": {
           "id_sso": "03901913"
         }
@@ -770,7 +770,7 @@
       "request": {
         "method": "GET",
         "path": "/rece-requete-api/v1/requetes/requetesService",
-        "query": "statuts=A_SIGNER&tri=dateStatut&sens=ASC&range=0-1",
+        "query": "statuts=A+signer&tri=dateStatut&sens=ASC&range=0-1",
         "headers": {
           "id_sso": "03901913"
         }

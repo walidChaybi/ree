@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { IActionOption } from "../../../../../../../model/requete/v2/IActionOption";
+import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
+import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
-import { supprimerNullEtUndefinedDuTableau } from "../../../../../../common/util/Utils";
+import {
+  getLibelle,
+  supprimerNullEtUndefinedDuTableau
+} from "../../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../../common/widget/attente/OperationEnCours";
 import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import { receUrl } from "../../../../../../router/ReceUrls";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDelivranceToReqTableau";
 import { IChoixActionDelivranceProps } from "./ChoixAction";

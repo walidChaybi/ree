@@ -1,9 +1,9 @@
 import React from "react";
-import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
+import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import { HeaderTableauRMCInscription } from "../../../../../model/rmc/acteInscription/HeaderTableauRMC";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
-import { getLibelle } from "../../../../common/widget/Text";
+import { getLibelle } from "../../../../common/util/Utils";
+import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
 import { CheckboxColumn } from "./checkboxColumn/CheckboxColumn";
 import {
   commonHeadersTableauRMC,

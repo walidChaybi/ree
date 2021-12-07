@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IRequeteInformation } from "../../../../model/requete/v2/IRequeteInformation";
-import { IUuidRequeteParams } from "../../../../model/requete/v2/IUuidRequeteParams";
+import { IRequeteInformation } from "../../../../model/requete/IRequeteInformation";
+import { IUuidRequeteParams } from "../../../../model/requete/IUuidRequeteParams";
 import { BandeauRequete } from "../../../common/composant/bandeauApercuRequete/BandeauApercuRequete";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
-import { getLibelle } from "../../../common/widget/Text";
+import { getLibelle } from "../../../common/util/Utils";
 import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
 import { useDetailRequeteApiHook } from "../../requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { ReponseReqInfo } from "./contenu/ReponseReqInfo";

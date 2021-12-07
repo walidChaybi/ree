@@ -1,44 +1,42 @@
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import {
-  reponseSansDelivranceCSDemandeIncomplete,
-  reponseSansDelivranceCSFrancais,
-  reponseSansDelivranceCSMariage
+    reponseSansDelivranceCSDemandeIncomplete,
+    reponseSansDelivranceCSFrancais,
+    reponseSansDelivranceCSMariage
 } from "../../../../../../mock/data/Composition";
 import requeteDelivrance, {
-  requeteDelivranceInstitutionnel
-} from "../../../../../../mock/data/requeteDelivrance";
-import {
   idRequeteRDCSC,
+  requeteDelivranceInstitutionnel,
   requeteRDCSC
-} from "../../../../../../mock/data/RequeteV2";
+} from "../../../../../../mock/data/requeteDelivrance";
 import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configParamsBaseRequete } from "../../../../../../mock/superagent-config/superagent-mock-params";
-import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { ParametreBaseRequete } from "../../../../../../model/parametres/enum/ParametresBaseRequete";
-import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
 import { MenuReponseSansDelivranceCS } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivranceCS";
 import {
-  createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
-  createReponseSansDelivranceCSPourCompositionApiFrancais,
-  createReponseSansDelivranceCSPourCompositionApiMariage
+    createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
+    createReponseSansDelivranceCSPourCompositionApiFrancais,
+    createReponseSansDelivranceCSPourCompositionApiMariage
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ReponseSansDelivranceCSFonctions";
 import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
-  configRequetesV2[0],
+  configRequetes[0],
   configComposition[0],
   configEtatcivil[0],
   configParamsBaseRequete[0]

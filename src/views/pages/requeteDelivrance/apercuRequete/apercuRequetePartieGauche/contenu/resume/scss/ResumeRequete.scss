@@ -1,0 +1,57 @@
+@import "../../../../../../../../scss/colors";
+
+.ResumeRequete {
+  width: 100%;
+
+  .ResumeRequeteTitle {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: white;
+    background-color: $application-color;
+    border-radius: 4px;
+    padding: 0.5em 1em 0.5em 1.325em;
+
+    .LinkNumeroRequete {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .PanelsResumeRequete {
+    display: grid;
+    grid-template-columns: 66% 33%;
+    .SectionPanel:nth-child(2) {
+      border-left: 2px solid $border;
+      padding-left: 2rem;
+      margin: 4rem 0;
+    }
+  }
+
+  .SectionPanelArea {
+    .TitlePanelArea {
+      grid-row: 1;
+      grid-column: 1 / span 2;
+      text-align: center;
+      margin-bottom: 0.1rem;
+    }
+    .TitlePart {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .content {
+      grid-template-columns: 45% 55%;
+    }
+  }
+
+  .InfoTitulaire {
+    .TitlePart {
+      font-size: 1rem;
+      text-align: left;
+    }
+  }
+
+  .PieceJustificativeContent {
+    text-align: left !important;
+  }
+}

@@ -1,16 +1,18 @@
 import React from "react";
-import { StatutRequete } from "../../../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
+import { StatutRequete } from "../../../../../../../model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { MenuTransfert } from "../../../../../../common/composant/menuTransfert/MenuTransfert";
+import { FeatureFlag } from "../../../../../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import {
   soustypeRDCSDouRDCSC,
   soustypeRDDouRDC
 } from "../../../../../../common/util/RequetesUtils";
 import { storeRece } from "../../../../../../common/util/storeRece";
+import { getLibelle } from "../../../../../../common/util/Utils";
 import { Fieldset } from "../../../../../../common/widget/fieldset/Fieldset";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import { MenuAutre } from "./MenuAutre";
 import { MenuDelivrer } from "./MenuDelivrer";
 import { MenuDelivrerCS } from "./MenuDelivrerCS";
@@ -74,7 +76,9 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
             />
           </>
         )}
-        <MenuAutre requete={props.requete} />
+        {gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) && (
+          <MenuAutre requete={props.requete} />
+        )}
         {checkSiMenuTransferer() && <MenuTransfert requete={props.requete} />}
       </div>
     </Fieldset>

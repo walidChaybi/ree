@@ -1,4 +1,4 @@
-import { mapActe } from "../../../../../../views/common/hook/v2/repertoires/MappingRepertoires";
+import { mapActe } from "../../../../../../views/common/hook/repertoires/MappingRepertoires";
 import { getEvenement } from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/EvenementActeUtils";
 import { acte } from "../../../data/ficheActe";
 

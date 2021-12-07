@@ -1,7 +1,8 @@
 import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
 
-const REQUETE_V1_API_URL = "rece-requete-api/v1";
-const REQUETE_V2_API_URL = "rece-requete-api/v2";
+const REQUETE_API_URL_V1 = "rece-requete-api/v1";
+
+const REQUETE_API_URL = "rece-requete-api/v2";
 
 export const configParamsBaseRequete = [
   {
@@ -21,8 +22,8 @@ export const configParamsBaseRequete = [
     fixtures: function (match, params, headers, context) {
       // Récupération des paramètres de la base requête
       if (
-        (match[1] === REQUETE_V1_API_URL + "/parametres" ||
-          match[1] === REQUETE_V2_API_URL + "/parametres") &&
+        (match[1] === REQUETE_API_URL_V1 + "/parametres" ||
+          match[1] === REQUETE_API_URL + "/parametres") &&
         context.method === "post"
       ) {
         return { data: parametresBaseRequete };

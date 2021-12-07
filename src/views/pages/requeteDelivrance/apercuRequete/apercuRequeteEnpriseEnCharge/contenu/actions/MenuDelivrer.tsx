@@ -1,27 +1,29 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ChoixDelivrance } from "../../../../../../../model/requete/v2/enum/ChoixDelivrance";
-import { NatureActeRequete } from "../../../../../../../model/requete/v2/enum/NatureActeRequete";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../../../model/requete/v2/enum/StatutRequete";
-import { IActionOption } from "../../../../../../../model/requete/v2/IActionOption";
+import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
+import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
+import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../../../../model/requete/enum/StatutRequete";
+import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   IActionStatutRequete,
   useCreerActionMajStatutRequete
-} from "../../../../../../common/hook/v2/requete/CreerActionMajStatutRequete";
+} from "../../../../../../common/hook/requete/CreerActionMajStatutRequete";
 import { DoubleSubmitUtil } from "../../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
 import { getUrlWithoutIdParam } from "../../../../../../common/util/route/routeUtil";
-import { supprimerNullEtUndefinedDuTableau } from "../../../../../../common/util/Utils";
+import {
+  getLibelle,
+  supprimerNullEtUndefinedDuTableau
+} from "../../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../../common/widget/attente/OperationEnCours";
 import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
 import {
   ConfirmationPopin,
   IBoutonPopin
 } from "../../../../../../common/widget/popin/ConfirmationPopin";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import {
   PATH_APERCU_COURRIER,
   receUrl

@@ -1,25 +1,26 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import { NatureActeRequete } from "../../../../model/requete/v2/enum/NatureActeRequete";
-import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { TypeLienMandant } from "../../../../model/requete/v2/enum/TypeLienMandant";
+import { NatureActeRequete } from "../../../../model/requete/enum/NatureActeRequete";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { TypeLienMandant } from "../../../../model/requete/enum/TypeLienMandant";
 import {
   TypeLienRequerant,
   TYPE_LIEN_REQUERANT_POUR_TITULAIRE
-} from "../../../../model/requete/v2/enum/TypeLienRequerant";
+} from "../../../../model/requete/enum/TypeLienRequerant";
 import {
   TypeRequerantRDC,
   UN_TITULAIRE
-} from "../../../../model/requete/v2/enum/TypeRequerantRDC";
-import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+} from "../../../../model/requete/enum/TypeRequerantRDC";
+import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../../../common/hook/v2/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
+} from "../../../common/hook/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
 import messageManager from "../../../common/util/messageManager";
 import { Options } from "../../../common/util/Type";
+import { getLibelle } from "../../../common/util/Utils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import {
   AdresseFormDefaultValues,
@@ -31,7 +32,6 @@ import {
   RequeteFormValidationSchema
 } from "../../../common/widget/formulaire/requete/RequeteForm";
 import { ConfirmationPopin } from "../../../common/widget/popin/ConfirmationPopin";
-import { getLibelle } from "../../../common/widget/Text";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps

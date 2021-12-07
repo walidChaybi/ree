@@ -5,7 +5,7 @@ import {
   getTexteActe
 } from "../../../../../../api/appels/etatcivilApi";
 import { logError } from "../../../../../common/util/LogManager";
-import { getLibelle } from "../../../../../common/widget/Text";
+import { getLibelle } from "../../../../../common/util/Utils";
 import "./scss/ActeImage.scss";
 
 export interface ActeImageProps {

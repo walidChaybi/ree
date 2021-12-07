@@ -1,7 +1,7 @@
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { getCellTitulaires } from "../../../common/util/tableauRequete/TableauRequeteUtils";
-import { TableauTypeColumn } from "../../../common/widget/tableau/v2/TableauTypeColumn";
-import { getLibelle } from "../../../common/widget/Text";
+import { getLibelle } from "../../../common/util/Utils";
+import { TableauTypeColumn } from "../../../common/widget/tableau/TableauRece/TableauTypeColumn";
 
 export const StatutsRequetesInformation = [
   StatutRequete.PRISE_EN_CHARGE.nom,

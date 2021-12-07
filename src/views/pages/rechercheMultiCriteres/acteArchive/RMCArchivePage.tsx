@@ -6,7 +6,7 @@ import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_PAGE_ACTE
-} from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
+} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {

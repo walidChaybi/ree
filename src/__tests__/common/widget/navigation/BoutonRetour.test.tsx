@@ -1,14 +1,19 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
+import { createMemoryHistory } from "history";
+import React from "react";
+import { Router } from "react-router-dom";
 import { BoutonRetour } from "../../../../views/common/widget/navigation/BoutonRetour";
-import { BrowserRouter as Router } from "react-router-dom";
+import { URL_MES_REQUETES } from "../../../../views/router/ReceUrls";
+
+const history = createMemoryHistory();
+history.push(URL_MES_REQUETES);
 
 test("renders titre de l'application", () => {
   render(
-    <Router>
+    <Router history={history}>
       <BoutonRetour />
     </Router>
   );
-  const linkElement = screen.getByText(/ACCUEIL/i);
-  expect(linkElement).toBeInTheDocument();
+  const linkElement = screen.getByText(/<< RETOUR ACCUEIL/i);
+  expect(linkElement).toBeDefined();
 });

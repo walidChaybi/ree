@@ -1,25 +1,24 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../../model/agent/IOfficier";
 import { IAlerte } from "../../../../../../model/etatcivil/fiche/IAlerte";
-import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   AddAlerteActeApiHookParameters,
   useAddAlerteActeApiHook
-} from "../../../../../common/hook/v2/alertes/AddAlerteActeHookApi";
+} from "../../../../../common/hook/alertes/AddAlerteActeHookApi";
 import {
   DeleteAlerteActeApiHookParameters,
   useDeleteAlerteActeApiHook
-} from "../../../../../common/hook/v2/alertes/DeleteAlerteActeHookApi";
+} from "../../../../../common/hook/alertes/DeleteAlerteActeHookApi";
 import {
   GetAlertesActeApiHookParameters,
   useGetAlertesActeApiHook
-} from "../../../../../common/hook/v2/alertes/GetAlertesActeApiHook";
+} from "../../../../../common/hook/alertes/GetAlertesActeApiHook";
 import { aplatirTableau } from "../../../../../common/util/Utils";
 import { IAjouterAlerteFormValue } from "../../../../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { BoutonRetour } from "../../../../../common/widget/navigation/BoutonRetour";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { RMCAuto } from "../../../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
 import { DataRMCAuto } from "../ApercuRequetePriseEnChargePage";
 import { ChoixAction } from "./actions/ChoixAction";
@@ -231,7 +230,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
         actes={Array.from(actes.values())}
         inscriptions={Array.from(inscriptions.values())}
       />
-      <BoutonRetour message={getLibelle("<< Retour")} />
+      <BoutonRetour />
     </>
   );
 };

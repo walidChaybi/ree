@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useCallback, useState } from "react";
 import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
-import { getLibelle } from "../../../common/widget/Text";
+import { getLibelle } from "../../../common/util/Utils";
 import { PopinNouvelleRMCActeInscription } from "./PopinNouvelleRMCActeInscription";
 import "./scss/BoutonNouvelleRMCActeInscription.scss";
 

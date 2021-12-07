@@ -6,28 +6,28 @@ import {
   ICourrierComposition
 } from "../../../../../../../model/composition/ICourrierComposition";
 import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import { DocumentDelivrance } from "../../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { IAdresseRequerant } from "../../../../../../../model/requete/v2/IAdresseRequerant";
-import { IDocumentReponse } from "../../../../../../../model/requete/v2/IDocumentReponse";
-import { OptionsCourrier } from "../../../../../../../model/requete/v2/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
-import { ISauvegardeCourrier } from "../../../../../../../model/requete/v2/ISauvegardeCourrier";
+import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { IAdresseRequerant } from "../../../../../../../model/requete/IAdresseRequerant";
+import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
+import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
+import { ISauvegardeCourrier } from "../../../../../../../model/requete/ISauvegardeCourrier";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { MimeType } from "../../../../../../../ressources/MimeType";
 import {
   ICourrierParams,
   useCourrierApiHook
-} from "../../../../../../common/hook/v2/composition/CompositionCourrierHook";
+} from "../../../../../../common/hook/composition/CompositionCourrierHook";
 import {
   IElementsJasperCourrier,
   specificationCourrier
-} from "../../../../../../common/hook/v2/generation/generationCourrierHook/specificationCourrier";
+} from "../../../../../../common/hook/generation/generationCourrierHook/specificationCourrier";
 import {
   IResultGenerationUnDocument,
   RESULTAT_VIDE
-} from "../../../../../../common/hook/v2/generation/generationUtils";
-import { useInformationsActeApiHook } from "../../../../../../common/hook/v2/repertoires/ActeApiHook";
-import { useSauvegarderCourrierCreerActionMajStatutRequete } from "../../../../../../common/hook/v2/requete/sauvegardeCourrierCreerActionMajStatut";
+} from "../../../../../../common/hook/generation/generationUtils";
+import { useInformationsActeApiHook } from "../../../../../../common/hook/repertoires/ActeApiHook";
+import { useSauvegarderCourrierCreerActionMajStatutRequete } from "../../../../../../common/hook/requete/sauvegardeCourrierCreerActionMajStatut";
 import { getValeurOuVide } from "../../../../../../common/util/Utils";
 import {
   CODE_POSTAL,

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { SousTypeRequete } from "../../../../../model/requete/v2/enum/SousTypeRequete";
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
+import { SousTypeRequete } from "../../../../../model/requete/enum/SousTypeRequete";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
+import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import {
   PATH_APERCU_COURRIER,
   PATH_APERCU_REQ,
@@ -11,7 +11,7 @@ import {
   PATH_SAISIR_RDCSC,
   receUrl
 } from "../../../../router/ReceUrls";
-import { getLibelle } from "../../../widget/Text";
+import { getLibelle } from "../../../util/Utils";
 import { MigratorV1V2 } from "../../migration/MigratorV1V2";
 import { Protection } from "./Protection";
 

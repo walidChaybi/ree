@@ -3,7 +3,7 @@ import { rechercheMultiCriteresRequetes } from "../../../../../api/appels/requet
 import {
   IRequeteTableauDelivrance,
   mappingRequetesTableau
-} from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
+} from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import {
   getParamsTableau,

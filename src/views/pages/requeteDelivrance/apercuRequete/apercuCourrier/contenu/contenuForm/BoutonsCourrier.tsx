@@ -1,10 +1,10 @@
 import { connect } from "formik";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { StatutRequete } from "../../../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../../../../model/requete/v2/IRequeteDelivrance";
+import { StatutRequete } from "../../../../../../../model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
+import { getLibelle } from "../../../../../../common/util/Utils";
 import { FormikComponentProps } from "../../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import { receUrl } from "../../../../../../router/ReceUrls";
 import {
   UpdateChoixDelivranceProps,

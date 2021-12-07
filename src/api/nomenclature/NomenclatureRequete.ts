@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
-import { DocumentDelivrance } from "../../model/requete/v2/enum/DocumentDelivrance";
-import { TypePieceJustificative } from "../../model/requete/v2/enum/TypePieceJustificative";
+import { DocumentDelivrance } from "../../model/requete/enum/DocumentDelivrance";
+import { TypePieceJustificative } from "../../model/requete/enum/TypePieceJustificative";
 import { logError } from "../../views/common/util/LogManager";
 import { premiereLettreEnMajuscule } from "../../views/common/util/Utils";
 import { getNomenclatureRequete } from "../appels/requeteApi";

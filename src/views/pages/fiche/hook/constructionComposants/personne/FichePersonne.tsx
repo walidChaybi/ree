@@ -9,6 +9,7 @@ import {
 import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import {
   formatDe,
+  getLibelle,
   remplaceSNP,
   remplaceSPC
 } from "../../../../../common/util/Utils";
@@ -17,7 +18,6 @@ import { SectionPanelProps } from "../../../../../common/widget/section/SectionP
 import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { SectionPartContentProps } from "../../../../../common/widget/section/SectionPartContent";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { LienFiche } from "../../../LienFiche";
 import { IParamsAffichage } from "../acte/FicheActeUtils";
 

@@ -1,8 +1,8 @@
 import { connect } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { FormikComponentProps } from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { receUrl } from "../../../../../router/ReceUrls";
 import "../scss/ReponseReqInfo.scss";
 

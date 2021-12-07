@@ -8,11 +8,11 @@ import {
 } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import { BoutonSignature } from "../../../../views/common/widget/signature/BoutonSignature";
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const requete: IRequeteTableauDelivrance = {
   idRequete: "id1",
@@ -34,7 +34,7 @@ const requete: IRequeteTableauDelivrance = {
 test("renders titre bouton signature", () => {
   render(
     <BoutonSignature
-      libelle={"pages.delivrance.action.signature"}
+      libelle={"Signer le lot"}
       requetes={[requete]}
       reloadData={() => {
         return null;
@@ -42,8 +42,7 @@ test("renders titre bouton signature", () => {
     />
   );
   const linkElement = screen.getByText(/Signer le lot/i);
-  //@ts-ignore
-  expect(linkElement).toBeInTheDocument();
+  expect(linkElement).toBeDefined();
   fireEvent.click(linkElement);
   expect(screen.getByText(/Signature des documents/i)).toBeDefined();
 });
@@ -51,7 +50,7 @@ test("renders titre bouton signature", () => {
 test("renders titre bouton signature", async () => {
   render(
     <BoutonSignature
-      libelle={"pages.delivrance.action.signature"}
+      libelle={"Signer le lot"}
       requetes={[requete]}
       reloadData={() => {
         return null;
@@ -59,8 +58,7 @@ test("renders titre bouton signature", async () => {
     />
   );
   const linkElement = screen.getByText(/Signer le lot/i);
-  //@ts-ignore
-  expect(linkElement).toBeInTheDocument();
+  expect(linkElement).toBeDefined();
   act(() => {
     fireEvent.click(linkElement);
   });

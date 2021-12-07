@@ -5,11 +5,11 @@ import { configParamsBaseRequete } from "../../../mock/superagent-config/superag
 import { CertificatRCAComposition } from "../../../model/composition/ICertificatRCAComposition";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
 import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresBaseRequete";
-import { Qualite } from "../../../model/requete/v2/enum/Qualite";
-import { TypeCanal } from "../../../model/requete/v2/enum/TypeCanal";
-import { IRequerant } from "../../../model/requete/v2/IRequerant";
-import { ITitulaireRequeteTableau } from "../../../model/requete/v2/ITitulaireRequeteTableau";
-import { IElementsJasperCertificatRCA } from "../../../views/common/hook/v2/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
+import { Qualite } from "../../../model/requete/enum/Qualite";
+import { TypeCanal } from "../../../model/requete/enum/TypeCanal";
+import { IRequerant } from "../../../model/requete/IRequerant";
+import { ITitulaireRequeteTableau } from "../../../model/requete/ITitulaireRequeteTableau";
+import { IElementsJasperCertificatRCA } from "../../../views/common/hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
 
 const superagentMock = require("superagent-mock")(
   request,

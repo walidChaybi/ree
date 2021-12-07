@@ -1,9 +1,9 @@
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -11,22 +11,22 @@ import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
-import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
 import { ApercuCourrier } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/ApercuCourrier";
-import { URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER } from "../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
-  configRequetesV2[0],
+  configRequetes[0],
   configComposition[0]
 ]);
 
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
-    URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
+    URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
     "a4cefb71-8457-4f6b-937e-34b49335d666"
   )
 );
@@ -43,7 +43,7 @@ test("renders apercu courrier", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER}
+            path={URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID}
           >
             <ApercuCourrier />
           </Route>
@@ -90,7 +90,7 @@ test("créer courrier", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER}
+            path={URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID}
           >
             <ApercuCourrier />
           </Route>

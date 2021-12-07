@@ -7,12 +7,12 @@ import {
   PieceJointe
 } from "../../../util/FileUtils";
 import { Option, Options } from "../../../util/Type";
+import { getLibelle } from "../../../util/Utils";
 import { IconePoubelle } from "../../icones/IconePoubelle";
 import {
   TableauSimple,
   TableauSimpleProps
 } from "../../tableau/TableauSimple/TableauSimple";
-import { getLibelle } from "../../Text";
 import UploadFileField from "../champsSaisie/UploadFileField";
 import "../scss/PiecesJointesForm.scss";
 

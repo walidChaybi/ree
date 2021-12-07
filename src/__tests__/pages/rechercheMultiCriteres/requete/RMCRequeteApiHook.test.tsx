@@ -1,12 +1,12 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
-import { NB_LIGNES_PAR_APPEL } from "../../../../views/common/widget/tableau/v1/TableauRece";
+import { NB_LIGNES_PAR_APPEL_REQUETE } from "../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useRMCRequeteApiHook } from "../../../../views/pages/rechercheMultiCriteres/requete/hook/RMCRequeteApiHook";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const criteres: ICriteresRMCRequete = {
   valeurs: {
@@ -22,7 +22,7 @@ const criteres: ICriteresRMCRequete = {
       annee: ""
     }
   },
-  range: `0-${NB_LIGNES_PAR_APPEL}`
+  range: `0-${NB_LIGNES_PAR_APPEL_REQUETE}`
 };
 
 const HookConsummerRMCRequete: React.FC = () => {

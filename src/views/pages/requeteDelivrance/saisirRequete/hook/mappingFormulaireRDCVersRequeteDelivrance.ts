@@ -1,10 +1,10 @@
-import { NatureActeRequete } from "../../../../../model/requete/v2/enum/NatureActeRequete";
-import { Provenance } from "../../../../../model/requete/v2/enum/Provenance";
-import { Qualite } from "../../../../../model/requete/v2/enum/Qualite";
-import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { TypeCanal } from "../../../../../model/requete/v2/enum/TypeCanal";
-import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { NatureActeRequete } from "../../../../../model/requete/enum/NatureActeRequete";
+import { Provenance } from "../../../../../model/requete/enum/Provenance";
+import { Qualite } from "../../../../../model/requete/enum/Qualite";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
+import { TypeCanal } from "../../../../../model/requete/enum/TypeCanal";
+import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { supprimeProprietesVides } from "../../../../common/util/supprimeProprietesVides";
 import { DEUX, getValeurOuVide, SNP } from "../../../../common/util/Utils";
 import {

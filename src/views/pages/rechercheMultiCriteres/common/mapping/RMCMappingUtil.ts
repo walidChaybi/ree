@@ -1,5 +1,5 @@
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { IRMCActeArchive } from "../../../../../model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";

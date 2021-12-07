@@ -1,33 +1,33 @@
 import { useEffect, useState } from "react";
 import { getDetailRequete } from "../../../../../api/appels/requeteApi";
 import { Nationalite } from "../../../../../model/etatcivil/enum/Nationalite";
-import { ChoixDelivrance } from "../../../../../model/requete/v2/enum/ChoixDelivrance";
-import { ComplementObjetRequete } from "../../../../../model/requete/v2/enum/ComplementObjetRequete";
-import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { MotifDelivrance } from "../../../../../model/requete/v2/enum/MotifDelivrance";
-import { NatureActeRequete } from "../../../../../model/requete/v2/enum/NatureActeRequete";
-import { ObjetRequete } from "../../../../../model/requete/v2/enum/ObjetRequete";
-import { Provenance } from "../../../../../model/requete/v2/enum/Provenance";
-import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { SousTypeInformation } from "../../../../../model/requete/v2/enum/SousTypeInformation";
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { TypeCanal } from "../../../../../model/requete/v2/enum/TypeCanal";
-import { TypeLienMandant } from "../../../../../model/requete/v2/enum/TypeLienMandant";
-import { TypeMandant } from "../../../../../model/requete/v2/enum/TypeMandant";
-import { TypePieceJustificative } from "../../../../../model/requete/v2/enum/TypePieceJustificative";
-import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
-import { IAction } from "../../../../../model/requete/v2/IActions";
-import { IEvenementReqDelivrance } from "../../../../../model/requete/v2/IEvenementReqDelivrance";
-import { IMandant } from "../../../../../model/requete/v2/IMandant";
-import { IObservation } from "../../../../../model/requete/v2/IObservation";
-import { IPieceJustificativeV2 } from "../../../../../model/requete/v2/IPieceJustificativeV2";
-import { IProvenanceRequete } from "../../../../../model/requete/v2/IProvenanceRequete";
-import { Requerant } from "../../../../../model/requete/v2/IRequerant";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
-import { IRequeteInformation } from "../../../../../model/requete/v2/IRequeteInformation";
-import { IStatutCourant } from "../../../../../model/requete/v2/IStatutCourant";
-import { ITitulaireRequete } from "../../../../../model/requete/v2/ITitulaireRequete";
+import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
+import { ComplementObjetRequete } from "../../../../../model/requete/enum/ComplementObjetRequete";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
+import { MotifDelivrance } from "../../../../../model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "../../../../../model/requete/enum/NatureActeRequete";
+import { ObjetRequete } from "../../../../../model/requete/enum/ObjetRequete";
+import { Provenance } from "../../../../../model/requete/enum/Provenance";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
+import { SousTypeInformation } from "../../../../../model/requete/enum/SousTypeInformation";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
+import { TypeCanal } from "../../../../../model/requete/enum/TypeCanal";
+import { TypeLienMandant } from "../../../../../model/requete/enum/TypeLienMandant";
+import { TypeMandant } from "../../../../../model/requete/enum/TypeMandant";
+import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
+import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
+import { IAction } from "../../../../../model/requete/IActions";
+import { IEvenementReqDelivrance } from "../../../../../model/requete/IEvenementReqDelivrance";
+import { IMandant } from "../../../../../model/requete/IMandant";
+import { IObservation } from "../../../../../model/requete/IObservation";
+import { IPieceJustificative } from "../../../../../model/requete/IPieceJustificative";
+import { IProvenanceRequete } from "../../../../../model/requete/IProvenanceRequete";
+import { Requerant } from "../../../../../model/requete/IRequerant";
+import { TRequete } from "../../../../../model/requete/IRequete";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { IRequeteInformation } from "../../../../../model/requete/IRequeteInformation";
+import { IStatutCourant } from "../../../../../model/requete/IStatutCourant";
+import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
 import { logError } from "../../../../common/util/LogManager";
 import { storeRece } from "../../../../common/util/storeRece";
 
@@ -101,10 +101,10 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
   };
 }
 
-function mapPiecesJustificatives(pieces?: any): IPieceJustificativeV2[] {
-  const piecesJustificatives: IPieceJustificativeV2[] = [];
+function mapPiecesJustificatives(pieces?: any): IPieceJustificative[] {
+  const piecesJustificatives: IPieceJustificative[] = [];
   pieces?.forEach((pj: any) => {
-    const piece = pj as IPieceJustificativeV2;
+    const piece = pj as IPieceJustificative;
     piece.typePieceJustificative = TypePieceJustificative?.getEnumFor(
       pj.typePieceJustificative
     ); // pj.typePieceJustificative est un UUID car il vient du back

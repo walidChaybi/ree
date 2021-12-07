@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ChoixDelivrance } from "../../../../../../../model/requete/v2/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { IActionOption } from "../../../../../../../model/requete/v2/IActionOption";
+import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
+import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { DoubleSubmitUtil } from "../../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
 import { getUrlWithoutIdParam } from "../../../../../../common/util/route/routeUtil";
+import { getLibelle } from "../../../../../../common/util/Utils";
 import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import { PATH_APERCU_COURRIER } from "../../../../../../router/ReceUrls";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";

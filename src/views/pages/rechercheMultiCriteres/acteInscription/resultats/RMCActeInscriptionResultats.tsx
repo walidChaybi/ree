@@ -1,11 +1,11 @@
 import React from "react";
 import { IAlerte } from "../../../../../model/etatcivil/fiche/IAlerte";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
+import { TRequete } from "../../../../../model/requete/IRequete";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
+import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { getLibelle } from "../../../../common/widget/Text";
 import "../scss/RMCActeInscriptionResultats.scss";
 import { RMCTableauActes } from "./RMCTableauActes";
 import { TypeRMC } from "./RMCTableauCommun";

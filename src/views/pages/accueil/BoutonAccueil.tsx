@@ -5,26 +5,25 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "reakit/Button";
 import WithHabilitation from "../../common/util/habilitation/WithHabilitation";
-import { getText } from "../../common/widget/Text";
 import "../accueil/scss/BoutonAccueil.scss";
 
 interface BoutonAccueilProps {
-  messageId: string;
+  libelle: string;
   pageUrl: string;
   badge?: number;
   iconFA?: IconDefinition;
   disabled?: boolean;
-  titleId: string;
+  title: string;
   onClickHandler?: (event: React.MouseEvent, paramURL: string) => void;
 }
 
 export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
-  messageId,
+  libelle,
   pageUrl,
   badge = 0,
   iconFA,
   disabled = false,
-  titleId,
+  title,
   onClickHandler
 }) => {
   const history = useHistory();
@@ -49,13 +48,13 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
           <FontAwesomeIcon
             className={"IconeBouton" + (disabled ? " Disabled" : "")}
             icon={iconFA}
-            title={disabled ? "" : getText(titleId)}
+            title={disabled ? "" : title}
             data-testid="IconAccueil"
-            aria-labelledby={getText(titleId)}
+            aria-labelledby={title}
           />
         )}
-        <Button disabled={disabled} title={getText(titleId)}>
-          {getText(messageId)}
+        <Button disabled={disabled} title={title}>
+          {libelle}
         </Button>
       </Badge>
     </div>
@@ -65,10 +64,6 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
 export const BoutonAccueilEspaceDelivrance = WithHabilitation(
   BoutonAccueil,
   "BoutonAccueilEspaceDelivrance"
-);
-export const BoutonAccueilEspaceDelivranceV2 = WithHabilitation(
-  BoutonAccueil,
-  "BoutonAccueilEspaceDelivranceV2"
 );
 export const BoutonAccueilEspaceMiseAjour = WithHabilitation(
   BoutonAccueil,

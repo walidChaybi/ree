@@ -3,7 +3,7 @@ import React from "react";
 import {
   IObservation,
   Observation
-} from "../../../../model/requete/v2/IObservation";
+} from "../../../../model/requete/IObservation";
 import { AccordionRece } from "../../widget/accordion/AccordionRece";
 import "./scss/Suivis.scss";
 

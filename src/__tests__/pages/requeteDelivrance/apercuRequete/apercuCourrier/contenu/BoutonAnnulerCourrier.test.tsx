@@ -8,20 +8,20 @@ import { userDroitnonCOMEDEC } from "../../../../../../mock/data/connectedUserAv
 import {
   idRequeteRDCSC,
   requeteRDCSC
-} from "../../../../../../mock/data/RequeteV2";
-import { configRequetesV2 } from "../../../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
+} from "../../../../../../mock/data/requeteDelivrance";
+import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
+import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../../views/common/util/storeRece";
 import BoutonsCourrier, {
-  BoutonsCourrierProps
+    BoutonsCourrierProps
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/BoutonsCourrier";
 import {
-  URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
-  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+    URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
+    URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const boutonsProps = {} as BoutonsCourrierProps;
 
@@ -40,7 +40,7 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
   );
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
+      URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
       idRequeteRDCSC
     )
   );
@@ -88,7 +88,7 @@ test("render composant bouton annuler avec requete a valider", async () => {
   );
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER,
+      URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
       idRequeteRDCSC
     )
   );

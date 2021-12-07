@@ -3,6 +3,7 @@ import React from "react";
 import * as Yup from "yup";
 import { CarateresAutoriseRecherche } from "../../../../../ressources/Regex";
 import { MIN_YEAR } from "../../../../common/util/DateUtils";
+import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
@@ -17,7 +18,6 @@ import {
   FormikComponentProps,
   withNamespace
 } from "../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../common/widget/Text";
 import "../scss/FiltreRMC.scss";
 
 // Noms des champs

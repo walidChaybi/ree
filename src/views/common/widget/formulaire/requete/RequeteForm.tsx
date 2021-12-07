@@ -6,9 +6,9 @@ import {
   COPIE_INTEGRALE,
   DocumentDelivrance,
   EXTRAIT_PLURILINGUE
-} from "../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { MotifDelivrance } from "../../../../../model/requete/v2/enum/MotifDelivrance";
-import { NatureActeRequete } from "../../../../../model/requete/v2/enum/NatureActeRequete";
+} from "../../../../../model/requete/enum/DocumentDelivrance";
+import { MotifDelivrance } from "../../../../../model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "../../../../../model/requete/enum/NatureActeRequete";
 import {
   COMPLEMENT_MOTIF,
   DOCUMENT_DEMANDE,
@@ -17,7 +17,7 @@ import {
   NB_EXEMPLAIRE
 } from "../../../../pages/requeteDelivrance//saisirRequete/modelForm/ISaisirRequetePageModel";
 import { Options } from "../../../util/Type";
-import { getLibelle } from "../../Text";
+import { getLibelle } from "../../../util/Utils";
 import { InputField } from "../champsSaisie/InputField";
 import { SelectField } from "../champsSaisie/SelectField";
 import {

@@ -2,13 +2,13 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { NB_LIGNES_PAR_APPEL_ACTE } from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_ACTE } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useRMCActeApiHook } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCActeApiHook";
-import { ICriteresRecherche } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
+import { ICriteresRechercheActeInscription } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
-const criteres: ICriteresRecherche = {
+const criteres: ICriteresRechercheActeInscription = {
   valeurs: {
     titulaire: {
       nom: "Nom",
@@ -47,7 +47,7 @@ test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Ac
   });
 });
 
-const criteresRechecheNonAutorise: ICriteresRecherche = {
+const criteresRechecheNonAutorise: ICriteresRechercheActeInscription = {
   valeurs: {
     titulaire: {
       nom: "Nom",

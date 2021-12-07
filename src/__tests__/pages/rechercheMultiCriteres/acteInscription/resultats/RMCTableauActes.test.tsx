@@ -16,14 +16,12 @@ import { configEtatcivil } from "../../../../../mock/superagent-config/superagen
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_PAGE_ACTE
-} from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
+} from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RMCTableauActes } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const globalAny: any = global;
-
-//globalAny.URL.createObjectURL = jest.fn();
 globalAny.open = () => {
   return { ...window };
 };

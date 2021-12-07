@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
-} from "../../../common/hook/v2/requete/CreationActionMiseAjourStatutHook";
+} from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
 import {
   IRequeteAleatoireResultat,
   useGetRequeteAleatoire
-} from "../../../common/hook/v2/requete/PrendreEnChargeAleatoirementHook";
+} from "../../../common/hook/requete/PrendreEnChargeAleatoirementHook";
 import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
 import messageManager from "../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
+import { getLibelle } from "../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
-import { getLibelle } from "../../../common/widget/Text";
 import {
   receUrl,
   URL_MES_REQUETES_INFORMATION_APERCU_ID

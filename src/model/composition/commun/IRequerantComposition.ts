@@ -1,7 +1,7 @@
 import { getValeurOuVide } from "../../../views/common/util/Utils";
 import { LieuxUtils } from "../../LieuxUtils";
-import { TypeCanal } from "../../requete/v2/enum/TypeCanal";
-import { IRequerant, Requerant } from "../../requete/v2/IRequerant";
+import { TypeCanal } from "../../requete/enum/TypeCanal";
+import { IRequerant, Requerant } from "../../requete/IRequerant";
 
 export interface IRequerantComposition {
   identite_requerant: {

@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IQueryParametersPourRequetesV2 } from "../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { IQueryParametersPourRequetes } from "../../../../api/appels/requeteApi";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
-import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
-} from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
-import { TableauRece } from "../../../common/widget/tableau/v2/TableauRece";
+} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
+import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
+import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import { URL_MES_REQUETES_INFORMATION_APERCU_ID } from "../../../router/ReceUrls";
-import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/v2/EspaceDelivranceUtilsV2";
+import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import {
   requeteInformationColumnHeaders,
   StatutsRequetesInformation
@@ -37,7 +37,7 @@ export const MesRequetesInformationPage: React.FC = () => {
   const [
     linkParameters,
     setLinkParameters
-  ] = React.useState<IQueryParametersPourRequetesV2>({
+  ] = React.useState<IQueryParametersPourRequetes>({
     statuts: StatutsRequetesInformation,
     tri: "dateCreation",
     sens: "ASC",

@@ -4,10 +4,8 @@ import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
 import { IOfficier } from "../../../model/agent/IOfficier";
 import apiResources from "../../../ressources/api.json";
 import { OfficierContextProps } from "../../core/contexts/OfficierContext";
-import { getText } from "../widget/Text";
+import { getLibelle } from "../util/Utils";
 import { getCsrfHeader } from "./CsrfUtil";
-import { FeatureFlag } from "./featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "./featureFlag/gestionnaireFeatureFlag";
 import messageManager from "./messageManager";
 
 const TIME_OUT_MS = 2000;
@@ -19,44 +17,43 @@ interface GestionnaireFermetureProps {
   urlRedirection?: string;
 }
 
-export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> =
-  props => {
-    const history = useHistory();
-    useEffect(() => {
-      const handleBackBeforUnload = (event: any) => {
-        let resTraitement: any = true;
-        if (props.fctAAppeler) {
-          const res = props.fctAAppeler(props.paramsFctAAppler);
+export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = props => {
+  const history = useHistory();
+  useEffect(() => {
+    const handleBackBeforUnload = (event: any) => {
+      let resTraitement: any = true;
+      if (props.fctAAppeler) {
+        const res = props.fctAAppeler(props.paramsFctAAppler);
 
-          if (props.fctTraitementResultat) {
-            resTraitement = props.fctTraitementResultat(res);
-          }
+        if (props.fctTraitementResultat) {
+          resTraitement = props.fctTraitementResultat(res);
         }
-        if (resTraitement) {
-          // Cancel the default event
-          event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-          // Older browsers supported custom message
-          event.returnValue = "Are you sur to close this window";
-          if (props.urlRedirection) {
-            executeEnDiffere(function () {
-              if (props.urlRedirection) {
-                history.push(props.urlRedirection);
-              }
-            });
-          }
-        } else {
-          delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
+      }
+      if (resTraitement) {
+        // Cancel the default event
+        event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+        // Older browsers supported custom message
+        event.returnValue = "Are you sur to close this window";
+        if (props.urlRedirection) {
+          executeEnDiffere(function () {
+            if (props.urlRedirection) {
+              history.push(props.urlRedirection);
+            }
+          });
         }
-      };
-      window.top.addEventListener("beforeunload", handleBackBeforUnload);
+      } else {
+        delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
+      }
+    };
+    window.top.addEventListener("beforeunload", handleBackBeforUnload);
 
-      return () => {
-        window.top.removeEventListener("beforeunload", handleBackBeforUnload);
-      };
-    }, [props, history]);
+    return () => {
+      window.top.removeEventListener("beforeunload", handleBackBeforUnload);
+    };
+  }, [props, history]);
 
-    return null;
-  };
+  return null;
+};
 
 const HTTP_STATUS_OK = 200;
 
@@ -72,9 +69,7 @@ export const appelRequetesASigner = (officier: OfficierContextProps) => {
 const appelApi = (officierPayload: IOfficier | undefined) => {
   const req = new XMLHttpRequest();
   const api = apiResources.apis[0];
-  const version = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2)
-    ? api.usedVersions[1]
-    : api.usedVersions[0];
+  const version = api.usedVersions[0];
 
   const params = `statuts=A_SIGNER`;
   const url = `${window.origin}/${api.domain}/${api.name}/${version}${URL_REQUETES_COUNT}?${params}`;
@@ -93,9 +88,9 @@ const appelApi = (officierPayload: IOfficier | undefined) => {
 export const traiteAppelRequeteASigner = (nbRequeteASigner: number) => {
   if (nbRequeteASigner > 0) {
     executeEnDiffere(function () {
-      const msg = getText("pages.delivrance.mesRequetes.resteASigner", [
-        nbRequeteASigner
-      ]);
+      const msg = getLibelle(
+        `Il reste ${nbRequeteASigner} requête(s) à signer`
+      );
       messageManager.showWarningAndClose(msg);
     });
   }

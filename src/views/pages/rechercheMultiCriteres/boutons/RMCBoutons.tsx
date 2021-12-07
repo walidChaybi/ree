@@ -1,7 +1,7 @@
 import { connect } from "formik";
 import React from "react";
+import { getLibelle } from "../../../common/util/Utils";
 import { FormikComponentProps } from "../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../common/widget/Text";
 import RMCBoutonRappelCriteres, {
   RMCBoutonRappelCriteresProps
 } from "./RMCBoutonRappelCriteres";

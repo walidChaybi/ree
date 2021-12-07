@@ -13,7 +13,7 @@ export function TabPanel(props: TabPanelProps) {
 
   return (
     <div
-      className="TabPanelV2"
+      className="TabPanel"
       role="tabpanel"
       hidden={value !== index}
       id={`nav-tabpanel-${index}`}

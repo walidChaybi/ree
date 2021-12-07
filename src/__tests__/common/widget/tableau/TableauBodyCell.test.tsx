@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { TableauBodyCell } from "../../../../views/common/widget/tableau/v1/TableauBodyCell";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/v1/TableauRece";
+import { TableauBodyCell } from "../../../../views/common/widget/tableau/TableauRece/TableauBodyCell";
+import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece/TableauTypeColumn";
 
 test("test des prioritées des requêtes", () => {
   const { getByText } = render(
@@ -13,7 +13,7 @@ test("test des prioritées des requêtes", () => {
             column={
               new TableauTypeColumn({
                 keys: ["idSagaDila"],
-                title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+                title: "idSagaDila"
               })
             }
           />
@@ -35,7 +35,7 @@ test("test des prioritées des requêtes", () => {
             column={
               new TableauTypeColumn({
                 keys: ["idSagaDila"],
-                title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila",
+                title: "idSagaDila",
                 dataIsArray: true
               })
             }

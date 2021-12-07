@@ -1,7 +1,7 @@
-import { IElementsJasperCertificatRC } from "../../views/common/hook/v2/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
-import { TypeCanal } from "../requete/v2/enum/TypeCanal";
-import { IRequerant } from "../requete/v2/IRequerant";
-import { ITitulaireRequeteTableau } from "../requete/v2/ITitulaireRequeteTableau";
+import { IElementsJasperCertificatRC } from "../../views/common/hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
+import { TypeCanal } from "../requete/enum/TypeCanal";
+import { IRequerant } from "../requete/IRequerant";
+import { ITitulaireRequeteTableau } from "../requete/ITitulaireRequeteTableau";
 import {
   CommunComposition,
   ICommunComposition

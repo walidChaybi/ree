@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {
   getMesRequetesInformation,
-  IQueryParametersPourRequetesV2
+  IQueryParametersPourRequetes
 } from "../../../../../api/appels/requeteApi";
 import {
   IRequeteTableauInformation,
   mappingRequetesTableauInformation
-} from "../../../../../model/requete/v2/IRequeteTableauInformation";
+} from "../../../../../model/requete/IRequeteTableauInformation";
 import {
   getParamsTableau,
   IParamsTableau
@@ -14,7 +14,7 @@ import {
 import { logError } from "../../../../common/util/LogManager";
 
 export function useRequeteInformationApi(
-  queryParameters: IQueryParametersPourRequetesV2,
+  queryParameters: IQueryParametersPourRequetes,
   setEnChargement: (enChargement: boolean) => void
 ) {
   const [dataState, setDataState] = useState<IRequeteTableauInformation[]>([]);

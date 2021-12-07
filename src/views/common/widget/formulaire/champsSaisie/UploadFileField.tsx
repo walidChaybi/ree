@@ -8,7 +8,7 @@ import {
 } from "../../../util/FileUtils";
 import messageManager from "../../../util/messageManager";
 import { Option, Options } from "../../../util/Type";
-import { getLibelle } from "../../Text";
+import { getLibelle } from "../../../util/Utils";
 
 export interface UploadFileFieldProps {
   name: string;

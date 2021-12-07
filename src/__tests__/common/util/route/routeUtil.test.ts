@@ -1,20 +1,20 @@
 import {
-  URL_MES_REQUETES_ID,
-  URL_MES_REQUETES
-} from "../../../../views/router/ReceUrls";
-import {
-  getUrlWithParam,
-  getUrlWithoutIdParam,
-  getLastPathElem,
   cleanUrl,
+  getLastPathElem,
+  getUrlWithoutIdParam,
+  getUrlWithParam,
   isLastPathElemIsId,
   isPathElemId
 } from "../../../../views/common/util/route/routeUtil";
+import {
+  URL_MES_REQUETES,
+  URL_MES_REQUETES_APERCU_REQUETE_ID
+} from "../../../../views/router/ReceUrls";
 
 test("Attendu: getUrlWithParam fonctionne correctement", () => {
-  expect(getUrlWithParam(URL_MES_REQUETES_ID, String(123456))).toBe(
-    `${URL_MES_REQUETES}/apercurequete/123456`
-  );
+  expect(
+    getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_ID, String(123456))
+  ).toBe(`${URL_MES_REQUETES}/apercurequete/123456`);
   expect(getUrlWithParam(URL_MES_REQUETES, String(123456))).toBe(
     `${URL_MES_REQUETES}`
   );

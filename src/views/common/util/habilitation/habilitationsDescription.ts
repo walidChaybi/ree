@@ -27,7 +27,6 @@ export type NomComposant =
   | "BoutonAccueilRechercheActeOuInscription"
   | "BoutonAccueilTableauDeBord"
   | "BoutonAccueilEspaceDelivrance"
-  | "BoutonAccueilEspaceDelivranceV2"
   | "BoutonAccueilRechercheActe"
   | "BoutonAccueilTableau"
   | "MenuSaisirRequete"
@@ -38,9 +37,11 @@ export type NomComposant =
 export type NomComposantOuFonction = NomComposant | NomFonction;
 
 ///// ETAPE2 ////////////////////////////////////////////////////////////////
-const etape2Active = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
-const etape2 = function (obj: Droit[]) {
-  if (etape2Active) {
+const etape2BisActive = gestionnaireFeatureFlag.estActif(
+  FeatureFlag.ETAPE2_BIS
+);
+const etape2Bis = function (obj: Droit[]) {
+  if (etape2BisActive) {
     return obj;
   }
   return [Droit.AUCUN];
@@ -74,14 +75,8 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
   {
-    nomComposant: "BoutonAccueilEspaceDelivranceV2",
-    unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
-    comportementSiNonAutorise: { disabled: true },
-    visiblePourLesDroits: droitsSaufConsulterArchives
-  },
-  {
     nomComposant: "BoutonAccueilEspaceMiseAjour",
-    unDesDroits: etape2([
+    unDesDroits: etape2Bis([
       Droit.METTRE_A_JOUR_ACTE,
       Droit.METTRE_A_JOUR_RC_RCA_PACS
     ]),
@@ -90,7 +85,7 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilEspaceCreation",
-    unDesDroits: etape2([
+    unDesDroits: etape2Bis([
       Droit.CREER_ACTE_TRANSCRIT,
       Droit.CREER_ACTE_DRESSE,
       Droit.CREER_ACTE_ETABLI,
@@ -101,36 +96,36 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilCommunication",
-    unDesDroits: etape2([Droit.INFORMER_USAGER]),
+    unDesDroits: [Droit.INFORMER_USAGER],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
   {
     nomComposant: "BoutonAccueilRechercheRequete",
-    unDesDroits: etape2([Droit.CONSULTER]),
+    unDesDroits: [Droit.CONSULTER],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
   {
     nomComposant: "BoutonAccueilRechercheActeOuInscription",
-    unDesDroits: etape2([Droit.CONSULTER]),
+    unDesDroits: [Droit.CONSULTER],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
   {
     nomComposant: "BoutonAccueilRechercheActe",
-    tousLesDroits: etape2([Droit.CONSULTER_ARCHIVES]),
+    tousLesDroits: [Droit.CONSULTER_ARCHIVES],
     comportementSiNonAutorise: { disabled: true },
     visibleSeulementPourLesDroits: [Droit.CONSULTER_ARCHIVES]
   },
   {
     nomComposant: "BoutonAccueilTableau",
-    tousLesDroits: etape2([]),
+    tousLesDroits: etape2Bis([]),
     comportementSiNonAutorise: { disabled: true }
   },
   {
     nomComposant: "MenuSaisirRequete",
-    tousLesDroits: etape2([Droit.SAISIR_REQUETE]),
+    tousLesDroits: [Droit.SAISIR_REQUETE],
     comportementSiNonAutorise: { disabled: true }
   },
   {
@@ -139,7 +134,7 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonPrendreEnChargeAleatoirement",
-    unDesDroits: etape2([Droit.DELIVRER, Droit.DELIVRER_COMEDEC]),
+    unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   }

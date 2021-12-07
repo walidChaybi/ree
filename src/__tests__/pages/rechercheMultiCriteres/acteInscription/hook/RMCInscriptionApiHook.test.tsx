@@ -2,15 +2,13 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { NB_LIGNES_PAR_APPEL } from "../../../../../views/common/widget/tableau/v1/TableauRece";
-import {
-  ICriteresRecherche,
-  useRMCInscriptionApiHook
-} from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
+import { NB_LIGNES_PAR_APPEL_INSCRIPTION } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
+import { ICriteresRechercheActeInscription } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCActeInscriptionUtils";
+import { useRMCInscriptionApiHook } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/hook/RMCInscriptionApiHook";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
-const criteres: ICriteresRecherche = {
+const criteres: ICriteresRechercheActeInscription = {
   valeurs: {
     titulaire: {
       nom: "Nom",
@@ -29,7 +27,7 @@ const criteres: ICriteresRecherche = {
       }
     }
   },
-  range: `0-${NB_LIGNES_PAR_APPEL}`
+  range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`
 };
 
 const HookConsummerRMCInscription: React.FC = () => {
@@ -57,7 +55,7 @@ test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères In
   });
 });
 
-const criteresRechecheNonAutorise: ICriteresRecherche = {
+const criteresRechecheNonAutorise: ICriteresRechercheActeInscription = {
   valeurs: {
     titulaire: {
       nom: "Nom",
@@ -76,7 +74,7 @@ const criteresRechecheNonAutorise: ICriteresRecherche = {
       }
     }
   },
-  range: `0-${NB_LIGNES_PAR_APPEL}`
+  range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`
 };
 
 const HookConsummerRMCInscriptionRechecheNonAutorise: React.FC = () => {

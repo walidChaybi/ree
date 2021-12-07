@@ -1,20 +1,20 @@
 import {
-  createEvent,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    createEvent,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import {
-  DocumentsByRequete,
-  useSignatureDocumentHook
+    DocumentsByRequete,
+    useSignatureDocumentHook
 } from "../../../../../views/common/widget/signature/hook/SignatureDocumentHook";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const documentsByRequete: DocumentsByRequete = {
   id1: {

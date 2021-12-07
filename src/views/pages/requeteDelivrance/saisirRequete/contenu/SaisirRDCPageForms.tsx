@@ -1,10 +1,10 @@
 import React from "react";
 import { Options } from "../../../../common/util/Type";
+import { getLibelle } from "../../../../common/util/Utils";
 import AdresseForm from "../../../../common/widget/formulaire/adresse/AdresseForm";
 import RequeteForm from "../../../../common/widget/formulaire/requete/RequeteForm";
 import { SousFormulaire } from "../../../../common/widget/formulaire/SousFormulaire";
 import { SubFormProps } from "../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../common/widget/Text";
 import {
   ADRESSE,
   EVENEMENT,

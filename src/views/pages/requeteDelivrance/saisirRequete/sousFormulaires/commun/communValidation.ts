@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
-import { getLibelle } from "../../../../../common/widget/Text";
 import {
   NATURE,
   NOM,

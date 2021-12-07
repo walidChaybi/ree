@@ -1,4 +1,4 @@
-import { mapActe } from "../../../../../../views/common/hook/v2/repertoires/MappingRepertoires";
+import { mapActe } from "../../../../../../views/common/hook/repertoires/MappingRepertoires";
 import { getTitulaires } from "../../../../../../views/pages/fiche/hook/constructionComposants/acte/TitulairesActeUtils";
 import { acte } from "../../../data/ficheActe";
 

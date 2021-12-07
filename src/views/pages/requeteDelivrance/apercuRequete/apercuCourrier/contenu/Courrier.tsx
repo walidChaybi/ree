@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import { DocumentDelivrance } from "../../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
 import {
   OptionCourrier,
   OptionsCourrier
-} from "../../../../../../model/requete/v2/IOptionCourrier";
-import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+} from "../../../../../../model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import messageManager from "../../../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../../../common/util/route/routeUtil";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
 import {
   AdresseFormValidationSchema,
@@ -18,7 +19,6 @@ import {
 } from "../../../../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "../../../../../common/widget/popin/ConfirmationPopin";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../router/ReceUrls";
 import BoutonsCourrier, {
   BoutonsCourrierProps

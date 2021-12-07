@@ -1,10 +1,10 @@
 import React from "react";
 import { IAlerte } from "../../../../../../../model/etatcivil/fiche/IAlerte";
+import { getLibelle } from "../../../../../../common/util/Utils";
 import { AccordionRece } from "../../../../../../common/widget/accordion/AccordionRece";
 import { BoutonAjouterAlerte } from "../../../../../../common/widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import { IAjouterAlerteFormValue } from "../../../../../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { ListeAlertes } from "../../../../../../common/widget/alertes/listeAlertes/ListeAlertes";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import "./scss/AlertesActes.scss";
 
 export interface AlertesActesProps {

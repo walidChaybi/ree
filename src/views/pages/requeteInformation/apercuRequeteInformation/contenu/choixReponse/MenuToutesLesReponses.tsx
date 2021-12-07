@@ -1,11 +1,11 @@
 import { MenuItem } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
 import React from "react";
-import { ObjetRequete } from "../../../../../../model/requete/v2/enum/ObjetRequete";
-import { IReponseRequeteInfo } from "../../../../../../model/requete/v2/IReponseRequeteInfo";
+import { ObjetRequete } from "../../../../../../model/requete/enum/ObjetRequete";
+import { IReponseRequeteInfo } from "../../../../../../model/requete/IReponseRequeteInfo";
 import { Option } from "../../../../../common/util/Type";
+import { getLibelle } from "../../../../../common/util/Utils";
 import NestedMenuItem from "../../../../../common/widget/menu/NestedMenuItem";
-import { getLibelle } from "../../../../../common/widget/Text";
 import "./scss/MenuToutesLesReponses.scss";
 
 interface MenuToutesLesReponsesProps {

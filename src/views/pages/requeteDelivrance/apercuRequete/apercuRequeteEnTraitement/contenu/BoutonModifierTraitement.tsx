@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../../model/agent/IOfficier";
-import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
-} from "../../../../../common/hook/v2/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+} from "../../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
 import { getUrlWithParam } from "../../../../../common/util/route/routeUtil";
 import { storeRece } from "../../../../../common/util/storeRece";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../../../common/widget/attente/BoutonOperationEnCours";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 
 interface BoutonModifierTraitementProps {

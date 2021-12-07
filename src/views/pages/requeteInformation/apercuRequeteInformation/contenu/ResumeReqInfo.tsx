@@ -1,11 +1,11 @@
 import { Link } from "@material-ui/core";
 import React from "react";
-import { Qualite } from "../../../../../model/requete/v2/enum/Qualite";
-import { Requerant } from "../../../../../model/requete/v2/IRequerant";
-import { Requete } from "../../../../../model/requete/v2/IRequete";
-import { IRequeteInformation } from "../../../../../model/requete/v2/IRequeteInformation";
-import { TitulaireRequete } from "../../../../../model/requete/v2/ITitulaireRequete";
-import { getValeurOuVide } from "../../../../common/util/Utils";
+import { Qualite } from "../../../../../model/requete/enum/Qualite";
+import { Requerant } from "../../../../../model/requete/IRequerant";
+import { Requete } from "../../../../../model/requete/IRequete";
+import { IRequeteInformation } from "../../../../../model/requete/IRequeteInformation";
+import { TitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
+import { getLibelle, getValeurOuVide } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { SectionContentProps } from "../../../../common/widget/section/SectionContent";
 import {
@@ -18,7 +18,6 @@ import {
   ajouterContentPartAuPartUneValeurVide,
   ajouterPanelAreasAuPanel
 } from "../../../../common/widget/section/SectionUtils";
-import { getLibelle } from "../../../../common/widget/Text";
 import "./scss/ResumeReqInfo.scss";
 
 export interface RequeteInfoProps {

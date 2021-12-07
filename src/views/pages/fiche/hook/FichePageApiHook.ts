@@ -5,7 +5,7 @@ import {
   mapActe,
   mapPacs,
   mapRcRca
-} from "../../../common/hook/v2/repertoires/MappingRepertoires";
+} from "../../../common/hook/repertoires/MappingRepertoires";
 import { logError } from "../../../common/util/LogManager";
 
 export interface IDataFicheApi {

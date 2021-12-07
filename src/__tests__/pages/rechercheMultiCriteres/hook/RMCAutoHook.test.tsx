@@ -2,21 +2,21 @@ import { act, render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import {
   IRMCAutoParams,
   useRMCAutoHook
-} from "../../../../views/common/hook/v2/navigationApercuRequeteRmcAuto/RMCAutoHook";
+} from "../../../../views/common/hook/navigationApercuRequeteRmcAuto/RMCAutoHook";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import {
-  URL_MES_REQUETES_APERCU_REQUETE,
+  URL_MES_REQUETES, URL_MES_REQUETES_APERCU_REQUETE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_MES_REQUETES_V2,
+
   URL_RECHERCHE_REQUETE,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_REQUETES_SERVICE_V2
+
+  URL_REQUETES_SERVICE, URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
@@ -27,12 +27,12 @@ const paramsRequete: IRMCAutoParams = {
     document: "123456",
     titulaires: [{ nom: "George" }]
   } as IRequeteTableauDelivrance,
-  urlCourante: URL_MES_REQUETES_V2
+  urlCourante: URL_MES_REQUETES
 };
 
 const paramsRequeteService = {
   ...paramsRequete,
-  urlCourante: URL_REQUETES_SERVICE_V2
+  urlCourante: URL_REQUETES_SERVICE
 };
 
 const paramsRechercheRequete = {
@@ -43,7 +43,7 @@ const paramsRechercheRequete = {
 const paramsApercuRequete = {
   ...paramsRequete,
   urlCourante: getUrlWithParam(
-    URL_MES_REQUETES_APERCU_REQUETE,
+    URL_MES_REQUETES_APERCU_REQUETE_ID,
     "34da88e2-c5c7-4324-ac8e-b35193352e64"
   )
 };

@@ -6,11 +6,11 @@ import { CertificatSituationComposition } from "../../../model/composition/ICert
 import { IDecret } from "../../../model/etatcivil/commun/IDecret";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
 import { ParametreBaseRequete } from "../../../model/parametres/enum/ParametresBaseRequete";
-import { Qualite } from "../../../model/requete/v2/enum/Qualite";
-import { TypeCanal } from "../../../model/requete/v2/enum/TypeCanal";
-import { IRequerant } from "../../../model/requete/v2/IRequerant";
-import { IRequeteTableauDelivrance } from "../../../model/requete/v2/IRequeteTableauDelivrance";
-import { ITitulaireRequeteTableau } from "../../../model/requete/v2/ITitulaireRequeteTableau";
+import { Qualite } from "../../../model/requete/enum/Qualite";
+import { TypeCanal } from "../../../model/requete/enum/TypeCanal";
+import { IRequerant } from "../../../model/requete/IRequerant";
+import { IRequeteTableauDelivrance } from "../../../model/requete/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "../../../model/requete/ITitulaireRequeteTableau";
 
 const superagentMock = require("superagent-mock")(
   request,

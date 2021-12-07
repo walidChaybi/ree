@@ -13,7 +13,7 @@ import {
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
+} from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RMCActeInscriptionResultats } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {

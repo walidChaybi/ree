@@ -1,12 +1,12 @@
 import React from "react";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
+import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_PAGE_ACTE
-} from "../../../../common/widget/tableau/v2/TableauPaginationConstantes";
-import { getLibelle } from "../../../../common/widget/Text";
+} from "../../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RMCTableauActes } from "../../acteInscription/resultats/RMCTableauActes";
 import "../scss/RMCActeArchiveResultats.scss";
 

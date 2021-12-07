@@ -4,25 +4,25 @@ import {
   getDocumentReponseById,
   IMiseAJourDocumentParams
 } from "../../../../../api/appels/requeteApi";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
+import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import {
   ModeSignature,
   ModeSignatureUtil
 } from "../../../../../model/requete/ModeSignature";
-import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
-import { IDocumentReponse } from "../../../../../model/requete/v2/IDocumentReponse";
 import parametres from "../../../../../ressources/parametres.json";
-import { usePatchDocumentsReponseApi } from "../../../hook/v2/DocumentReponseHook";
+import { usePatchDocumentsReponseApi } from "../../../hook/DocumentReponseHook";
 import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
-} from "../../../hook/v2/requete/ActionHook";
+} from "../../../hook/requete/ActionHook";
 import { FormatDate } from "../../../util/DateUtils";
 import messageManager from "../../../util/messageManager";
 import { gestionnaireSignatureFlag } from "../../../util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "../../../util/timer/GestionnaireTimer";
-import { getText } from "../../Text";
+import { getLibelle } from "../../../util/Utils";
 import { SignatureErrors } from "../messages/ErrorsSignature";
 import { SuccessSignatureType } from "../messages/SuccessSignature";
 
@@ -83,9 +83,10 @@ export function useSignatureDocumentHook(
   documentsByRequete: DocumentsByRequete,
   pinCode?: string
 ) {
-  const [documentsToSignWating, setDocumentsToSignWating] = useState<
-    DocumentsByRequete
-  >(documentsByRequete);
+  const [
+    documentsToSignWating,
+    setDocumentsToSignWating
+  ] = useState<DocumentsByRequete>(documentsByRequete);
 
   const [idRequetesToSign, setIdRequetesToSign] = useState<string[]>(
     documentsByRequete !== undefined ? Object.keys(documentsByRequete) : []
@@ -121,7 +122,6 @@ export function useSignatureDocumentHook(
     const newSuccesses: SuccessSignatureType[] = [
       ...successSignature,
       {
-        messageId: "signature.success",
         date: moment().format(FormatDate.DDMMYYYYHHmm),
         numeroRequete: `${currentRequeteProcessing.documentsToSave[0].numeroRequete}`
       }
@@ -132,7 +132,7 @@ export function useSignatureDocumentHook(
     setIdRequetesToSign(newRequetesId);
     if (newRequetesId.length === 0) {
       messageManager.showSuccessAndClose(
-        getText("signature.successAllSignature")
+        getLibelle("Signature des documents effectuée avec succès")
       );
     }
 

@@ -1,12 +1,12 @@
 import request from "superagent";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
-import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { Qualite } from "../../../../model/requete/v2/enum/Qualite";
-import { TypeInstitutionnel } from "../../../../model/requete/v2/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "../../../../model/requete/v2/enum/TypeMandataireReq";
-import { IRequerant, Requerant } from "../../../../model/requete/v2/IRequerant";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { Qualite } from "../../../../model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "../../../../model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "../../../../model/requete/enum/TypeMandataireReq";
+import { IRequerant, Requerant } from "../../../../model/requete/IRequerant";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "../../../../views/pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("Attendu: Requerant.setRequerant particulier", async () => {
   const saisieRequeteRdcsc = mappingRequeteDelivranceVersFormulaireRDCSC(

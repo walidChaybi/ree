@@ -1,5 +1,5 @@
 import React from "react";
-import { getLibelle } from "../../../common/widget/Text";
+import { getLibelle } from "../../../common/util/Utils";
 import { OfficierContext } from "../../../core/contexts/OfficierContext";
 import { BoutonPrendreEnChargeAleatoirementRequeteInformation } from "./BoutonPrendreEnChargeAleatoirementRequeteInformation";
 import { MesRequetesInformationPage } from "./MesRequetesInformation";

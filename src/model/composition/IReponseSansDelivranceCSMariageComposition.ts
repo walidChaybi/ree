@@ -1,7 +1,7 @@
 import { formatPrenoms } from "../../views/common/util/Utils";
 import { IFicheActe } from "../etatcivil/acte/IFicheActe";
 import { TitulaireActe } from "../etatcivil/acte/ITitulaireActe";
-import { IRequeteDelivrance } from "../requete/v2/IRequeteDelivrance";
+import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
 import {
   CommunComposition,
   ICommunComposition

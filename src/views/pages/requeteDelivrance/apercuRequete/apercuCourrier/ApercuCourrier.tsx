@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { getLibelle } from "../../../../common/widget/Text";
+import { getLibelle } from "../../../../common/util/Utils";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { Courrier } from "./contenu/Courrier";
 

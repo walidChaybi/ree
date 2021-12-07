@@ -7,11 +7,11 @@ import {
   getDateString,
   getDateStringFromDateCompose
 } from "../../../../../common/util/DateUtils";
+import { getLibelle } from "../../../../../common/util/Utils";
 import {
   TableauSimple,
   TableauSimpleProps
 } from "../../../../../common/widget/tableau/TableauSimple/TableauSimple";
-import { getLibelle } from "../../../../../common/widget/Text";
 import "./scss/TableauStatut.scss";
 interface TableauStatutProps {
   statutsFiche: IStatutFiche[];

@@ -1,71 +1,10 @@
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import React from "react";
-import * as renderer from "react-test-renderer";
-import { TableauHeader } from "../../../../views/common/widget/tableau/v1/TableauHeader";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/v1/TableauRece";
+import { TableauHeader } from "../../../../views/common/widget/tableau/TableauRece/TableauHeader";
+import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece/TableauTypeColumn";
 
 const UN = 1;
 const DEUX = 2;
-
-test("renders header tableau des requêtes de l'application", () => {
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: any
-  ) => {};
-  const component = renderer.create(
-    <table>
-      <TableauHeader
-        onRequestSort={handleRequestSort}
-        order="ASC"
-        orderBy="idSagaDila"
-        columnHeaders={[
-          new TableauTypeColumn({
-            keys: ["idSagaDila"],
-            title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-          }),
-          new TableauTypeColumn({
-            keys: ["sousTypeRequete"],
-            title:
-              "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
-            rowLibelle: "referentiel.sousTypeRequete"
-          }),
-          new TableauTypeColumn({
-            keys: ["provenance"],
-            title: "pages.delivrance.mesRequetes.tableau.header.provenance",
-            rowLibelle: "referentiel.provenance"
-          }),
-          new TableauTypeColumn({
-            keys: ["natureActe"],
-            title: "pages.delivrance.mesRequetes.tableau.header.natureActe",
-            rowLibelle: "referentiel.natureActe"
-          }),
-          new TableauTypeColumn({
-            keys: ["requerant", "nomOuRaisonSociale"],
-            title: "pages.delivrance.mesRequetes.tableau.header.requerant"
-          }),
-          new TableauTypeColumn({
-            keys: ["dateCreation"],
-            title: "pages.delivrance.mesRequetes.tableau.header.dateCreation"
-          }),
-          new TableauTypeColumn({
-            keys: ["dateStatut"],
-            title: "pages.delivrance.mesRequetes.tableau.header.dateStatut"
-          }),
-          new TableauTypeColumn({
-            keys: ["statut"],
-            title: "pages.delivrance.mesRequetes.tableau.header.statut",
-            rowLibelle: "referentiel.statutRequete"
-          }),
-          new TableauTypeColumn({
-            keys: ["prioriteRequete"],
-            title: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete"
-          })
-        ]}
-      ></TableauHeader>
-    </table>
-  );
-  expect(component.toJSON()).toMatchSnapshot();
-});
 
 test("renders click sur header tableau des requêtes de l'application", () => {
   const handleRequestSort = jest.fn();
@@ -78,44 +17,40 @@ test("renders click sur header tableau des requêtes de l'application", () => {
         columnHeaders={[
           new TableauTypeColumn({
             keys: ["idSagaDila"],
-            title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+            title: "N°",
+            sortable: true
           }),
           new TableauTypeColumn({
             keys: ["sousTypeRequete"],
-            title:
-              "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
-            rowLibelle: "referentiel.sousTypeRequete"
+            title: "sousTypeRequete"
           }),
           new TableauTypeColumn({
             keys: ["provenance"],
-            title: "pages.delivrance.mesRequetes.tableau.header.provenance",
-            rowLibelle: "referentiel.provenance"
+            title: "provenance"
           }),
           new TableauTypeColumn({
             keys: ["natureActe"],
-            title: "pages.delivrance.mesRequetes.tableau.header.natureActe",
-            rowLibelle: "referentiel.natureActe"
+            title: "natureActe"
           }),
           new TableauTypeColumn({
             keys: ["requerant", "nomOuRaisonSociale"],
-            title: "pages.delivrance.mesRequetes.tableau.header.requerant"
+            title: "requerant"
           }),
           new TableauTypeColumn({
             keys: ["dateCreation"],
-            title: "pages.delivrance.mesRequetes.tableau.header.dateCreation"
+            title: "dateCreation"
           }),
           new TableauTypeColumn({
             keys: ["dateStatut"],
-            title: "pages.delivrance.mesRequetes.tableau.header.dateStatut"
+            title: "dateStatut"
           }),
           new TableauTypeColumn({
             keys: ["statut"],
-            title: "pages.delivrance.mesRequetes.tableau.header.statut",
-            rowLibelle: "referentiel.statutRequete"
+            title: "statut"
           }),
           new TableauTypeColumn({
             keys: ["prioriteRequete"],
-            title: "pages.delivrance.mesRequetes.tableau.header.prioriteRequete"
+            title: "prioriteRequete"
           })
         ]}
       ></TableauHeader>

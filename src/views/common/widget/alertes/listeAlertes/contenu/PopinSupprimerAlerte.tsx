@@ -1,6 +1,6 @@
 import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import React from "react";
-import { getLibelle } from "../../../Text";
+import { getLibelle } from "../../../../util/Utils";
 
 export interface PopinSupprimerAlerteProps {
   open: boolean;

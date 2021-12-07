@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { updateChoixDelivrance } from "../../../../../../../../api/appels/requeteApi";
-import { ChoixDelivrance } from "../../../../../../../../model/requete/v2/enum/ChoixDelivrance";
-import { IRequeteDelivrance } from "../../../../../../../../model/requete/v2/IRequeteDelivrance";
+import { ChoixDelivrance } from "../../../../../../../../model/requete/enum/ChoixDelivrance";
+import { IRequeteDelivrance } from "../../../../../../../../model/requete/IRequeteDelivrance";
 import { logError } from "../../../../../../../common/util/LogManager";
 
 export interface UpdateChoixDelivranceProps {

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { IRequeteTableauDelivrance } from "../../../../../../../../model/requete/v2/IRequeteTableauDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../../../../../model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "../../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
   IGenerationCertificatSituationParams,
   useGenerationCertificatSituationHook
-} from "../../../../../../../common/hook/v2/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
-import { specificationPhraseDelivrer } from "../../../../../../../common/hook/v2/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
-import { useGenerationInscriptionsHook } from "../../../../../../../common/hook/v2/generation/generationInscriptionsHook/GenerationInscriptionsHook";
+} from "../../../../../../../common/hook/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
+import { specificationPhraseDelivrer } from "../../../../../../../common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
+import { useGenerationInscriptionsHook } from "../../../../../../../common/hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
 import { useSupprimerAnciensDocumentsReponseHook } from "./SupprimerAnciensDocumentsReponseHook";
 
 export interface IResultDelivrerCertificatSituation {

@@ -1,16 +1,16 @@
 import { Nationalite } from "../../model/etatcivil/enum/Nationalite";
 import { NatureActe } from "../../model/etatcivil/enum/NatureActe";
-import { ChoixDelivrance } from "../../model/requete/v2/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "../../model/requete/v2/enum/DocumentDelivrance";
-import { MotifDelivrance } from "../../model/requete/v2/enum/MotifDelivrance";
-import { Provenance } from "../../model/requete/v2/enum/Provenance";
-import { Qualite } from "../../model/requete/v2/enum/Qualite";
-import { SousTypeDelivrance } from "../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../model/requete/v2/enum/StatutRequete";
-import { TypeCanal } from "../../model/requete/v2/enum/TypeCanal";
-import { TypeRequete } from "../../model/requete/v2/enum/TypeRequete";
-import { OptionsCourrier } from "../../model/requete/v2/IOptionCourrier";
-import { IRequeteDelivrance } from "../../model/requete/v2/IRequeteDelivrance";
+import { ChoixDelivrance } from "../../model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "../../model/requete/enum/DocumentDelivrance";
+import { MotifDelivrance } from "../../model/requete/enum/MotifDelivrance";
+import { Provenance } from "../../model/requete/enum/Provenance";
+import { Qualite } from "../../model/requete/enum/Qualite";
+import { SousTypeDelivrance } from "../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../model/requete/enum/StatutRequete";
+import { TypeCanal } from "../../model/requete/enum/TypeCanal";
+import { TypeRequete } from "../../model/requete/enum/TypeRequete";
+import { OptionsCourrier } from "../../model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "../../model/requete/IRequeteDelivrance";
 import { SaisieCourrier } from "../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import {
   Adresse,

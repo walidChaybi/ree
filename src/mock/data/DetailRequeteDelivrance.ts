@@ -1,4 +1,4 @@
-import { ChoixDelivrance } from "../../model/requete/v2/enum/ChoixDelivrance";
+import { ChoixDelivrance } from "../../model/requete/enum/ChoixDelivrance";
 import {
   documentReponseCARN_CSPAC_01,
   documentReponseCertificatRCA

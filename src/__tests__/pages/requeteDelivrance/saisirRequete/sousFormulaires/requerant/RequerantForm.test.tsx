@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { TypeRequerant } from "../../../../../../model/requete/v2/enum/TypeRequerant";
+import { TypeRequerant } from "../../../../../../model/requete/enum/TypeRequerant";
 import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { REQUERANT } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import RequerantForm, {

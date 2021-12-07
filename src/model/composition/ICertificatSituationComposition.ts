@@ -1,6 +1,6 @@
 import { IDecret } from "../etatcivil/commun/IDecret";
-import { IRequeteTableauDelivrance } from "../requete/v2/IRequeteTableauDelivrance";
-import { ITitulaireRequeteTableau } from "../requete/v2/ITitulaireRequeteTableau";
+import { IRequeteTableauDelivrance } from "../requete/IRequeteTableauDelivrance";
+import { ITitulaireRequeteTableau } from "../requete/ITitulaireRequeteTableau";
 import {
   CommunComposition,
   ICommunComposition

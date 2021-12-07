@@ -1,22 +1,22 @@
+import { render, screen, waitFor } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import {
-  FilAriane,
-  getUrlFromNPathElements,
-  getPathElements,
-  buildPagesInfos,
-  fildarianeLabel,
-  gestionnaireNavigation
-} from "../../../../views/common/widget/filAriane/FilAriane";
-import { createMemoryHistory } from "history";
-import { render, screen, waitFor } from "@testing-library/react";
-import {
-  URL_MES_REQUETES,
-  URL_ACCUEIL,
-  URL_MES_REQUETES_ID
-} from "../../../../views/router/ReceUrls";
-import { routesRece } from "../../../../views/router/ReceRoutes";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
+import {
+  buildPagesInfos, FilAriane,
+
+
+
+  fildarianeLabel,
+  gestionnaireNavigation, getPathElements, getUrlFromNPathElements
+} from "../../../../views/common/widget/filAriane/FilAriane";
+import { routesRece } from "../../../../views/router/ReceRoutes";
+import {
+  URL_ACCUEIL, URL_MES_REQUETES,
+
+  URL_MES_REQUETES_APERCU_REQUETE_ID
+} from "../../../../views/router/ReceUrls";
 
 test("renders composant FilAriane", () => {
   const history = createMemoryHistory();
@@ -49,7 +49,7 @@ test("renders d'un uudi en dernier élément du FilAriane", () => {
   const history = createMemoryHistory();
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_ID,
+      URL_MES_REQUETES_APERCU_REQUETE_ID,
       "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
     )
   );
@@ -79,7 +79,7 @@ test("renders de 2 éléments du FilAriane et mise à jour context", () => {
 test("renders d'un uudi en dernier élément du FilAriane et maj context", () => {
   const history = createMemoryHistory();
   history.push(
-    getUrlWithParam(URL_MES_REQUETES_ID, "f254f7ef-08ba-4fef-a45f-5f6ed326f36e")
+    getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_ID, "f254f7ef-08ba-4fef-a45f-5f6ed326f36e")
   );
   function setRetourContext(retourUrl: string) {
     expect(retourUrl).toBe(URL_MES_REQUETES);

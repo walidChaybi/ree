@@ -1,14 +1,14 @@
 import React from "react";
 import * as Yup from "yup";
-import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { TypeRequerantPacs } from "../../../../model/requete/v2/enum/TypeRequerantPacs";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
+import { TypeRequerantPacs } from "../../../../model/requete/enum/TypeRequerantPacs";
+import { getLibelle } from "../../../common/util/Utils";
 import AdresseForm, {
   AdresseFormDefaultValues,
   AdresseFormValidationSchema
 } from "../../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
 import { SubFormProps } from "../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../common/widget/Text";
 import SaisirRequeteBoutons, {
   SaisirRequeteBoutonsProps
 } from "./boutons/SaisirRequeteBoutons";

@@ -1,11 +1,11 @@
-import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { SousTypeRequete } from "../../../../model/requete/v2/enum/SousTypeRequete";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
+import { SousTypeRequete } from "../../../../model/requete/enum/SousTypeRequete";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
-} from "../../../../model/requete/v2/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/v2/IRequeteTableauDelivrance";
+} from "../../../../model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 
 const A_RETRAITER = "A_RETRAITER";
 export class MigratorV1V2 {

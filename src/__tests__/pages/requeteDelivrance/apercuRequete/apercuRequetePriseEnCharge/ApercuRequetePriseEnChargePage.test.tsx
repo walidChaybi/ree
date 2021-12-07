@@ -1,9 +1,9 @@
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -11,27 +11,27 @@ import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import {
-  DataRMCActeAvecResultat,
-  DataTableauActe
+    DataRMCActeAvecResultat,
+    DataTableauActe
 } from "../../../../../mock/data/RMCActe";
 import {
-  DataRMCInscriptionAvecResultat,
-  DataTableauInscription
+    DataRMCInscriptionAvecResultat,
+    DataTableauInscription
 } from "../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetesV2 } from "../../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { TypePieceJustificative } from "../../../../../model/requete/v2/enum/TypePieceJustificative";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
 import { ApercuRequetePriseEnChargePage } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { MOTIF_IGNORE } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
 import {
-  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_V2
+    URL_MES_REQUETES,
+    URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
-  configRequetesV2[0],
+  configRequetes[0],
   configEtatcivil[0]
 ]);
 
@@ -181,7 +181,7 @@ test("redirection requete RDD", async () => {
   });
 
   expect(history.location.pathname).toBe(
-    "/rece/rece-ui/mesrequetesv2/apercurequetetraitement/a4cefb71-8457-4f6b-937e-34b49335d884"
+    "/rece/rece-ui/mesrequetes/apercurequetetraitement/a4cefb71-8457-4f6b-937e-34b49335d884"
   );
 });
 
@@ -234,7 +234,7 @@ test("redirection requete RDC", async () => {
   });
 
   expect(history2.location.pathname).toBe(
-    "/rece/rece-ui/mesrequetesv2/apercurequetepriseencharge/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d666"
+    "/rece/rece-ui/mesrequetes/apercurequetepriseencharge/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d666"
   );
 });
 
@@ -308,7 +308,7 @@ test("ignorer requete", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(URL_MES_REQUETES_V2);
+    expect(history.location.pathname).toBe(URL_MES_REQUETES);
   });
 });
 

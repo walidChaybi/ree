@@ -1,12 +1,12 @@
 import { connect } from "formik";
 import React from "react";
+import { getLibelle } from "../../../../../../../common/util/Utils";
 import { InputField } from "../../../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SousFormulaire } from "../../../../../../../common/widget/formulaire/SousFormulaire";
 import {
   SubFormProps,
   withNamespace
 } from "../../../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../../../common/widget/Text";
 import { TEXTE } from "../../modelForm/ISaisiePageModel";
 import "./scss/TexteLibreForm.scss";
 

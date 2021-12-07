@@ -4,26 +4,32 @@ import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 import request from "superagent";
+import {
+  idRequeteRDCSC,
+  requeteRDCSC
+} from "../../../../mock/data/requeteDelivrance";
 import { requeteInformation } from "../../../../mock/data/requeteInformation";
-import { idRequeteRDCSC, requeteRDCSC } from "../../../../mock/data/RequeteV2";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { TypeEntite } from "../../../../model/agent/enum/TypeEntite";
 import { IEntite } from "../../../../model/agent/IEntiteRattachement";
 import { IUtilisateur } from "../../../../model/agent/IUtilisateur";
 import { Droit } from "../../../../model/Droit";
 import { IDroit, IHabilitation, IProfil } from "../../../../model/Habilitation";
 import { MenuTransfert } from "../../../../views/common/composant/menuTransfert/MenuTransfert";
+import { FeatureFlag } from "../../../../views/common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import {
-  URL_MES_REQUETES_APERCU_REQUETE,
+  URL_MES_REQUETES_APERCU_REQUETE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_INFORMATION,
   URL_MES_REQUETES_INFORMATION_APERCU_ID
 } from "../../../../views/router/ReceUrls";
+import { localStorageFeatureFlagMock } from "../../util/featureFlag/gestionnaireFeatureFlag.test";
 
-const superagentMock = require("superagent-mock")(request, configRequetesV2);
+const superagentMock = require("superagent-mock")(request, configRequetes);
 const superagentMock3 = require("superagent-mock")(request, configEtatcivil);
 
 const history = createMemoryHistory();
@@ -71,6 +77,10 @@ const listeUtilisateurs = [
 ];
 
 const HookConsummerMenuOuvert: React.FC = () => {
+  Object.defineProperty(window, "localStorage", {
+    value: localStorageFeatureFlagMock
+  });
+
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -89,20 +99,16 @@ const HookConsummerMenuOuvert: React.FC = () => {
 
 test("renders du bloc Menu Transfert ouvert ", async () => {
   render(<HookConsummerMenuOuvert />);
-  let menuTransfert: HTMLElement;
-  let choixService: HTMLElement;
-  let choixOEC: HTMLElement;
-  let choixAbandon: HTMLElement;
+
+  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS)).toBeTruthy();
+
+  const menuTransfert = screen.getByText("Transférer");
+  const choixService = screen.getByText(/À un service+/);
+  const choixOEC = screen.getByText(/À un officier d'état civil+/);
+  const choixAbandon = screen.getByText(/Abandon traitement+/);
 
   await waitFor(() => {
-    menuTransfert = screen.getByText("Transférer");
     expect(menuTransfert).toBeDefined();
-  });
-
-  await waitFor(() => {
-    choixService = screen.getByText(/À un service+/);
-    choixOEC = screen.getByText(/À un officier d'état civil+/);
-    choixAbandon = screen.getByText(/Abandon traitement+/);
     expect(choixService).toBeDefined();
     expect(choixOEC).toBeDefined();
     expect(choixAbandon).toBeDefined();
@@ -272,7 +278,7 @@ test("check autocomplete agent", async () => {
   });
 
   expect(history.location.pathname).toBe(
-    getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE, idRequeteRDCSC)
+    getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_ID, idRequeteRDCSC)
   );
 });
 

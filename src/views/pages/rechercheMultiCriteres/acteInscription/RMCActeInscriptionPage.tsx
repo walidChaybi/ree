@@ -7,7 +7,7 @@ import {
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "../../../common/widget/tableau/v2/TableauPaginationConstantes";
+} from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useRMCActeApiHook } from "./hook/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "./hook/RMCActeInscriptionUtils";
 import { useRMCInscriptionApiHook } from "./hook/RMCInscriptionApiHook";

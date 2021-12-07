@@ -1,4 +1,4 @@
-import { IRequeteDelivrance } from "../requete/v2/IRequeteDelivrance";
+import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
 import {
   CommunComposition,
   ICommunComposition

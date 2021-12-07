@@ -6,18 +6,18 @@ import {
   mAppartientOuAppartientAPersonne,
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
 } from "../../../model/agent/IOfficier";
-import { SousTypeDelivrance } from "../../../model/requete/v2/enum/SousTypeDelivrance";
-import { SousTypeRequete } from "../../../model/requete/v2/enum/SousTypeRequete";
-import { StatutRequete } from "../../../model/requete/v2/enum/StatutRequete";
-import { TypeRequete } from "../../../model/requete/v2/enum/TypeRequete";
-import { IActionOption } from "../../../model/requete/v2/IActionOption";
-import { DocumentReponse } from "../../../model/requete/v2/IDocumentReponse";
+import { SousTypeDelivrance } from "../../../model/requete/enum/SousTypeDelivrance";
+import { SousTypeRequete } from "../../../model/requete/enum/SousTypeRequete";
+import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
+import { TypeRequete } from "../../../model/requete/enum/TypeRequete";
+import { IActionOption } from "../../../model/requete/IActionOption";
+import { DocumentReponse } from "../../../model/requete/IDocumentReponse";
 import {
   IRequeteDelivrance,
   RequeteDelivrance
-} from "../../../model/requete/v2/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "../../../model/requete/v2/IRequeteTableauDelivrance";
-import { getText } from "../../common/widget/Text";
+} from "../../../model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "../../../model/requete/IRequeteTableauDelivrance";
+import { getLibelle } from "../../common/util/Utils";
 import { FormatDate } from "./DateUtils";
 import { MigratorV1V2 } from "./migration/MigratorV1V2";
 
@@ -50,13 +50,11 @@ export function getMessagePrioriteDeLaRequete(dateStatut: string): string {
     "days"
   );
   if (ecartEnJours <= limiteBasse) {
-    return getText("pages.delivrance.mesRequetes.tableau.body.priorite.basse");
+    return getLibelle("Priorité basse");
   } else if (ecartEnJours > limiteBasse && ecartEnJours <= limiteHaute) {
-    return getText(
-      "pages.delivrance.mesRequetes.tableau.body.priorite.moyenne"
-    );
+    return getLibelle("Priorité moyenne");
   } else {
-    return getText("pages.delivrance.mesRequetes.tableau.body.priorite.haute");
+    return getLibelle("Priorité haute");
   }
 }
 

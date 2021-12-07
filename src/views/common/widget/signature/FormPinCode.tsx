@@ -1,12 +1,10 @@
-import React from "react";
-import { useFormik } from "formik";
-
 import { TextField } from "@material-ui/core";
+import { useFormik } from "formik";
+import React from "react";
 import { Button } from "reakit/Button";
-
-import "./scss/FormPinCode.scss";
-import { getText } from "../Text";
 import { storeRece } from "../../util/storeRece";
+import { getLibelle } from "../../util/Utils";
+import "./scss/FormPinCode.scss";
 
 interface FormPinCodePros {
   onClose: (isOpen: boolean, changePage: boolean) => void;
@@ -28,9 +26,9 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
   const validate = (values: FormValues) => {
     const errors: FormValuesErrors = {};
     if (!values.pinCode) {
-      errors.pinCode = getText("signature.validate.require");
+      errors.pinCode = getLibelle("Le code pin de la carte doit être fourni");
     } else if (isNaN(Number(values.pinCode))) {
-      errors.pinCode = getText("signature.validate.isNaN");
+      errors.pinCode = getLibelle("Le code pin doit être un nombre");
     }
 
     return errors;
@@ -75,10 +73,10 @@ export const FormPinCode: React.FC<FormPinCodePros> = ({
           name={"validate"}
           disabled={formik.errors.pinCode !== undefined}
         >
-          {getText("signature.valider")}
+          {getLibelle("Valider")}
         </Button>
         <Button onClick={() => onClose(false, false)}>
-          {getText("signature.annuler")}
+          {getLibelle("Annuler")}
         </Button>
       </div>
     </form>

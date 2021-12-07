@@ -5,7 +5,7 @@
       "ports": 80,
       "domain": "rece",
       "name": "rece-requete-api",
-      "usedVersions": ["v1", "v2"]
+      "usedVersions": ["v2"]
     },
     {
       "url": "http://localhost",

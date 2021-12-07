@@ -1,16 +1,16 @@
-import React from "react";
-import * as renderer from "react-test-renderer";
-import { screen, render, fireEvent } from "@testing-library/react";
-import {
-  TableauRece,
-  TableauTypeColumn
-} from "../../../../views/common/widget/tableau/v1/TableauRece";
-import { HeaderTableauRequete } from "../../../../model/requete/HeaderTableauRequete";
-import requetes from "../../../../mock/data/requetes.json";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
+import React from "react";
 import { Router } from "react-router-dom";
-import { URL_MES_REQUETES } from "../../../../views/router/ReceUrls";
+import requetes from "../../../../mock/data/requetes.json";
 import { generateurRequetes } from "../../../../mock/script-generation-donnees/generateurRequetes";
+import {
+  NB_LIGNES_PAR_APPEL_DEFAUT,
+  NB_LIGNES_PAR_PAGE_DEFAUT
+} from "../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
+import { TableauRece } from "../../../../views/common/widget/tableau/TableauRece/TableauRece";
+import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece/TableauTypeColumn";
+import { URL_MES_REQUETES } from "../../../../views/router/ReceUrls";
 
 const HookConsummer: React.FC = (props: any) => {
   return <button onClick={props.reloadData()}>{"BoutonTest"}</button>;
@@ -19,43 +19,21 @@ const HookConsummer: React.FC = (props: any) => {
 const HookConsummer2: React.FC = (props: any) => {
   return <button onClick={props.reloadData(true)}>{"BoutonTest"}</button>;
 };
+const paramsTableau = {
+  previousDataLinkState: "",
+  nextDataLinkState: "",
+  rowsNumberState: 0,
+  minRangeState: undefined,
+  maxRangeState: undefined
+};
 
-test("renders composant TableauRece", () => {
-  const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
-
-  const handleClickOnLine = jest.fn();
-  const handleChangeSort = jest.fn();
-  const handleClickGoToLink = jest.fn();
-
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-    })
-  ];
-
-  const component = renderer.create(
-    <Router history={history}>
-      <TableauRece
-        idKey={"idRequete"}
-        onClickOnLine={handleClickOnLine}
-        sortOrderByState={""}
-        sortOrderState={"ASC"}
-        columnHeaders={columnsTableau}
-        dataState={requetes.data}
-        rowsNumberState={0}
-        nextDataLinkState={""}
-        previousDataLinkState={""}
-        goToLink={handleClickGoToLink}
-        handleChangeSort={handleChangeSort}
-        canUseSignature={false}
-      />
-    </Router>
-  );
-
-  expect(component.toJSON()).toMatchSnapshot();
-});
+const columnsTableau = [
+  new TableauTypeColumn({
+    keys: ["idSagaDila"],
+    title: "N°",
+    sortable: true
+  })
+];
 
 test("TableauRece can be reload", () => {
   const history = createMemoryHistory();
@@ -66,13 +44,6 @@ test("TableauRece can be reload", () => {
   const handleClickGoToLink = jest.fn();
   const handlerelaod = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-    })
-  ];
-
   render(
     <Router history={history}>
       <TableauRece
@@ -82,12 +53,12 @@ test("TableauRece can be reload", () => {
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
         dataState={requetes.data}
-        rowsNumberState={0}
-        nextDataLinkState={""}
-        previousDataLinkState={""}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
         handleReload={handlerelaod}
+        paramsTableau={paramsTableau}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -108,13 +79,6 @@ test("TableauRece can be reload with true", () => {
   const handleClickGoToLink = jest.fn();
   const handlerelaod = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-    })
-  ];
-
   render(
     <Router history={history}>
       <TableauRece
@@ -124,12 +88,12 @@ test("TableauRece can be reload with true", () => {
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
         dataState={generateurRequetes().data}
-        rowsNumberState={0}
-        nextDataLinkState={""}
-        previousDataLinkState={""}
+        paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
         handleReload={handlerelaod}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer2></HookConsummer2>
       </TableauRece>
@@ -150,12 +114,7 @@ test("TableauRece can be reload with true => go back", () => {
   const handleClickGoToLink = jest.fn();
   const handlerelaod = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-    })
-  ];
+  paramsTableau.rowsNumberState = 200;
 
   render(
     <Router history={history}>
@@ -166,12 +125,12 @@ test("TableauRece can be reload with true => go back", () => {
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
         dataState={generateurRequetes().data}
-        rowsNumberState={200}
-        nextDataLinkState={""}
-        previousDataLinkState={""}
+        paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
         handleReload={handlerelaod}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer2></HookConsummer2>
       </TableauRece>
@@ -196,12 +155,9 @@ test("TableauRece can change page", () => {
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-    })
-  ];
+  paramsTableau.rowsNumberState = 200;
+  paramsTableau.nextDataLinkState = "next";
+  paramsTableau.previousDataLinkState = "previous";
 
   render(
     <Router history={history}>
@@ -212,11 +168,11 @@ test("TableauRece can change page", () => {
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
         dataState={generateurRequetes().data}
-        rowsNumberState={200}
-        nextDataLinkState={"ok"}
-        previousDataLinkState={"okok"}
+        paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -252,12 +208,9 @@ test("TableauRece can change page", () => {
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-    })
-  ];
+  paramsTableau.rowsNumberState = 200;
+  paramsTableau.nextDataLinkState = "next";
+  paramsTableau.previousDataLinkState = "previous";
 
   render(
     <Router history={history}>
@@ -268,11 +221,11 @@ test("TableauRece can change page", () => {
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
         dataState={generateurRequetes().data}
-        rowsNumberState={200}
-        nextDataLinkState={"ok"}
-        previousDataLinkState={"okok"}
+        paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -292,12 +245,9 @@ test("TableauRece can't change page bakc and no error'", () => {
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-    })
-  ];
+  paramsTableau.rowsNumberState = 10;
+  paramsTableau.nextDataLinkState = "next";
+  paramsTableau.previousDataLinkState = "previous";
 
   render(
     <Router history={history}>
@@ -308,11 +258,11 @@ test("TableauRece can't change page bakc and no error'", () => {
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
         dataState={generateurRequetes().data}
-        rowsNumberState={200}
-        nextDataLinkState={"ok"}
-        previousDataLinkState={"okok"}
+        paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -334,12 +284,9 @@ test("TableauRece can't change page next and no error'", () => {
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-    })
-  ];
+  paramsTableau.rowsNumberState = 10;
+  paramsTableau.nextDataLinkState = "next";
+  paramsTableau.previousDataLinkState = "previous";
 
   const { getByText, getByTitle } = render(
     <Router history={history}>
@@ -350,11 +297,11 @@ test("TableauRece can't change page next and no error'", () => {
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
         dataState={requetes.data}
-        rowsNumberState={10}
-        nextDataLinkState={"ok"}
-        previousDataLinkState={"okok"}
+        paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>
@@ -376,14 +323,11 @@ test("TableauRece can sort", () => {
   const handleChangeSort = jest.fn();
   const handleClickGoToLink = jest.fn();
 
-  const columnsTableau = [
-    new TableauTypeColumn({
-      keys: [HeaderTableauRequete.IdSagaDila],
-      title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
-    })
-  ];
+  paramsTableau.rowsNumberState = 10;
+  paramsTableau.nextDataLinkState = "next";
+  paramsTableau.previousDataLinkState = "previous";
 
-  const { getByText, getByTitle } = render(
+  const { getByText } = render(
     <Router history={history}>
       <TableauRece
         idKey={"idRequete"}
@@ -392,11 +336,11 @@ test("TableauRece can sort", () => {
         sortOrderState={"ASC"}
         columnHeaders={columnsTableau}
         dataState={requetes.data}
-        rowsNumberState={10}
-        nextDataLinkState={"ok"}
-        previousDataLinkState={"okok"}
+        paramsTableau={paramsTableau}
         goToLink={handleClickGoToLink}
         handleChangeSort={handleChangeSort}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
       >
         <HookConsummer></HookConsummer>
       </TableauRece>

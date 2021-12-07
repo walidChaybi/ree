@@ -7,12 +7,13 @@ import {
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import { IRequete } from "../../../../../../model/requete/v2/IRequete";
+import { IRequete } from "../../../../../../model/requete/IRequete";
 import {
   IgnorerParams,
   useIgnorerApi
-} from "../../../../../common/hook/v2/requete/IgnorerHook";
+} from "../../../../../common/hook/requete/IgnorerHook";
 import { getUrlPrecedente } from "../../../../../common/util/route/routeUtil";
+import { getLibelle } from "../../../../../common/util/Utils";
 import FormAjouterAlerteBoutons, {
   FormAjouterAlerteBoutonsProps
 } from "../../../../../common/widget/alertes/ajouterAlerte/contenu/FormAjouterAlerteBoutons";
@@ -25,7 +26,6 @@ import {
   ALERTE_OBLIGATOIRE,
   COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
 } from "../../../../../common/widget/formulaire/FormulaireMessages";
-import { getLibelle } from "../../../../../common/widget/Text";
 import "../scss/IgnoreRequetePopin.scss";
 
 export interface IgnoreRequetePopinProps {

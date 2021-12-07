@@ -1,10 +1,8 @@
 import moment from "moment";
-
-import { getText } from "../../../views/common/widget/Text";
 import { FormatDate } from "../../../views/common/util/DateUtils";
 import {
-  prioriteDeLaRequete,
-  getMessagePrioriteDeLaRequete
+  getMessagePrioriteDeLaRequete,
+  prioriteDeLaRequete
 } from "../../../views/common/util/RequetesUtils";
 
 test("récupération de la priorité de la requête : Priotité basse", () => {
@@ -31,9 +29,7 @@ test("récupération du libelle de la priorité de la requête : Priotité basse
   let priorite = getMessagePrioriteDeLaRequete(
     dateRequete.format(FormatDate.DDMMYYYY)
   );
-  expect(priorite).toBe(
-    getText("pages.delivrance.mesRequetes.tableau.body.priorite.basse")
-  );
+  expect(priorite).toBe("Priorité basse");
 });
 
 test("récupération du libelle de la priorité de la requête : Priotité moyenne", () => {
@@ -41,9 +37,7 @@ test("récupération du libelle de la priorité de la requête : Priotité moyen
   let priorite = getMessagePrioriteDeLaRequete(
     dateRequete.format(FormatDate.DDMMYYYY)
   );
-  expect(priorite).toBe(
-    getText("pages.delivrance.mesRequetes.tableau.body.priorite.moyenne")
-  );
+  expect(priorite).toBe("Priorité moyenne");
 });
 
 test("récupération du libelle  de la priorité de la requête : Priotité haute", () => {
@@ -51,7 +45,5 @@ test("récupération du libelle  de la priorité de la requête : Priotité haut
   let priorite = getMessagePrioriteDeLaRequete(
     dateRequete.format(FormatDate.DDMMYYYY)
   );
-  expect(priorite).toBe(
-    getText("pages.delivrance.mesRequetes.tableau.body.priorite.haute")
-  );
+  expect(priorite).toBe("Priorité haute");
 });

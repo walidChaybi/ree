@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import { IQueryParametersPourRequetesV2 } from "../../../../../api/appels/requeteApi";
+import { IQueryParametersPourRequetes } from "../../../../../api/appels/requeteApi";
 import { configRequetesInformation } from "../../../../../mock/superagent-config/superagent-mock-requetes-information";
-import { IRequeteTableauDelivrance } from "../../../../../model/requete/v2/IRequeteTableauDelivrance";
-import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
+import { IRequeteTableauInformation } from "../../../../../model/requete/IRequeteTableauInformation";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { StatutsRequetesInformation } from "../../../../../views/pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
 import { useRequeteInformationApi } from "../../../../../views/pages/requeteInformation/espaceInformation/hook/DonneesRequeteInformationHook";
 
@@ -14,7 +14,7 @@ const superagentMock = require("superagent-mock")(
   configRequetesInformation
 );
 
-const queryParam: IQueryParametersPourRequetesV2 = {
+const queryParam: IQueryParametersPourRequetes = {
   statuts: StatutsRequetesInformation,
   tri: "dateCreation",
   sens: "ASC",
@@ -27,7 +27,7 @@ const HookConsummer: React.FC = () => {
   const { dataState } = useRequeteInformationApi(queryParam, setEnChargement);
   return (
     <>
-      {dataState.map((element: IRequeteTableauDelivrance) => {
+      {dataState.map((element: IRequeteTableauInformation) => {
         return (
           <div key={element.idRequete} data-testid={element.idRequete}>
             {element.idRequete}

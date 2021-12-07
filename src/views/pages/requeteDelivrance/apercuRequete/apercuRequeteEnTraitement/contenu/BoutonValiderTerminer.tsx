@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../../model/agent/IOfficier";
-import { StatutRequete } from "../../../../../../model/requete/v2/enum/StatutRequete";
-import { TypeCanal } from "../../../../../../model/requete/v2/enum/TypeCanal";
-import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
+import { TypeCanal } from "../../../../../../model/requete/enum/TypeCanal";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
-} from "../../../../../common/hook/v2/requete/ActionHook";
+} from "../../../../../common/hook/requete/ActionHook";
 import { storeRece } from "../../../../../common/util/storeRece";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../../../common/widget/attente/BoutonOperationEnCours";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { receUrl } from "../../../../../router/ReceUrls";
 
 interface BoutonValiderTerminerProps {

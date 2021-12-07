@@ -1,9 +1,9 @@
+import { Box, LinearProgress, Typography } from "@material-ui/core";
 import React, { useCallback, useEffect } from "react";
-import { LinearProgress, Box, Typography } from "@material-ui/core";
 import { Button } from "reakit/Button";
-import { getText } from "../../../common/widget/Text";
-import "./scss/PopinSignature.scss";
+import { getLibelle } from "../../../common/util/Utils";
 import { DocumentsByRequete } from "./hook/SignatureDocumentHook";
+import "./scss/PopinSignature.scss";
 
 interface ProgressSignature {
   onClose: (isOpen: boolean, hasErrors: boolean) => void;
@@ -64,7 +64,7 @@ export const ProgressSignature: React.FC<ProgressSignature> = ({
         }
         className={"CloseButtonSignature"}
       >
-        {getText("signature.fermer")}
+        {getLibelle("Fermer")}
       </Button>
     </>
   );

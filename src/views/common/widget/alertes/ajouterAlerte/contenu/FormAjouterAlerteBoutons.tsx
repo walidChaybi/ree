@@ -1,7 +1,7 @@
 import { connect } from "formik";
 import React from "react";
+import { getLibelle } from "../../../../util/Utils";
 import { FormikComponentProps } from "../../../formulaire/utils/FormUtil";
-import { getLibelle } from "../../../Text";
 
 export type IFormAjouterAlerteBoutonsProps = {
   onClosePopin: () => void;

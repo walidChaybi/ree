@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import { IActionOption } from "../../../../../../../model/requete/v2/IActionOption";
+import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
+import { getLibelle } from "../../../../../../common/util/Utils";
 import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 
 const INDEX_ACTION_METTRE_A_JOUR = 0;

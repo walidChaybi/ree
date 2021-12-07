@@ -4,7 +4,7 @@ export const configFakeUrl = [
     /**
      * regular expression of URL
      */
-    pattern: "http://localhost/rece/rece-requete-api/v1(.*)",
+    pattern: "http://localhost/rece/rece-requete-api/v2(.*)",
 
     /**
      * returns the data
@@ -20,7 +20,9 @@ export const configFakeUrl = [
         match[1] === "/requetes?parametre1=titi&parametre2=3&parametre3=tutu"
       ) {
         return true;
-      } else if (match[1] === "/requetes/count?statuts=A_SIGNER") {
+      }
+
+      if (match[1] === "/requetes/count?statuts=A_SIGNER") {
         return { data: this.nbRequetes };
       }
 
@@ -29,7 +31,7 @@ export const configFakeUrl = [
       }
 
       const error = {
-        msg: "url api fake requete v1 non mockée",
+        msg: "url api fake requete non mockée",
         url: match[1]
       };
       console.log("Erreur mock api (fake url): ", error);

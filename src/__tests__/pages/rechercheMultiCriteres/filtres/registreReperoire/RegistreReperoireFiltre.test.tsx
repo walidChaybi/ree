@@ -9,7 +9,7 @@ import { Form, Formik } from "formik";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { getLibelle } from "../../../../../views/common/widget/Text";
+import { getLibelle } from "../../../../../views/common/util/Utils";
 import { REGISTRE_REPERTOIRE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import RegistreRepertoireFiltre, {
   RegistreRepertoireDefaultValues,
@@ -143,3 +143,7 @@ function fireEventChange(component: any, value: any) {
     });
   });
 }
+
+afterAll(() => {
+  superagentMock.unset();
+});

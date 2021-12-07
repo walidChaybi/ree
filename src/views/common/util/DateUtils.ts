@@ -1,4 +1,4 @@
-import { getLibelle } from "../widget/Text";
+import { getLibelle } from "../util/Utils";
 import {
   CINQ,
   DEUX,

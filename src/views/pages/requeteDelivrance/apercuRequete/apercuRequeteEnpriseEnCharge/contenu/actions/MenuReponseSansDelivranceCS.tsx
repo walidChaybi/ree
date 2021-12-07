@@ -4,16 +4,18 @@ import { IReponseSansDelivranceCS } from "../../../../../../../model/composition
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "../../../../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { NOM_DOCUMENT_REFUS_FRANCAIS } from "../../../../../../../model/composition/IReponseSansDelivranceCSFrancaisComposition";
 import { NOM_DOCUMENT_REFUS_MARIAGE } from "../../../../../../../model/composition/IReponseSansDelivranceCSMariageComposition";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../../../model/requete/v2/enum/StatutRequete";
-import { IActionOption } from "../../../../../../../model/requete/v2/IActionOption";
+import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../../../../model/requete/enum/StatutRequete";
+import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { DoubleSubmitUtil } from "../../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
-import { supprimerNullEtUndefinedDuTableau } from "../../../../../../common/util/Utils";
+import {
+  getLibelle,
+  supprimerNullEtUndefinedDuTableau
+} from "../../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../../common/widget/attente/OperationEnCours";
 import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "../../../../../../common/widget/popin/ConfirmationPopin";
-import { getLibelle } from "../../../../../../common/widget/Text";
 import { receUrl } from "../../../../../../router/ReceUrls";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";

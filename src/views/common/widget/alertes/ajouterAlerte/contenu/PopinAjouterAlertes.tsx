@@ -2,10 +2,10 @@ import { Dialog, DialogContent } from "@material-ui/core";
 import React from "react";
 import * as Yup from "yup";
 import { TypeAlerte } from "../../../../../../model/etatcivil/enum/TypeAlerte";
+import { getLibelle } from "../../../../util/Utils";
 import { InputField } from "../../../formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../formulaire/champsSaisie/SelectField";
 import { Formulaire } from "../../../formulaire/Formulaire";
-import { getLibelle } from "../../../Text";
 import FormAjouterAlerteBoutons, {
   FormAjouterAlerteBoutonsProps
 } from "./FormAjouterAlerteBoutons";

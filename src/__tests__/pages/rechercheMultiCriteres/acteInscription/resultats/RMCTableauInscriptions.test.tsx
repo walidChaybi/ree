@@ -18,7 +18,7 @@ import { storeRece } from "../../../../../views/common/util/storeRece";
 import {
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "../../../../../views/common/widget/tableau/v2/TableauPaginationConstantes";
+} from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RMCTableauInscriptions } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);

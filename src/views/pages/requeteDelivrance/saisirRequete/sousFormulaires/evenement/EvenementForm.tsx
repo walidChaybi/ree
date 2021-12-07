@@ -2,6 +2,7 @@ import { connect } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
   DateComposeFormProps,
@@ -15,7 +16,6 @@ import {
   SubFormProps,
   withNamespace
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../common/widget/Text";
 import {
   DATE_EVENEMENT,
   PAYS_EVENEMENT,

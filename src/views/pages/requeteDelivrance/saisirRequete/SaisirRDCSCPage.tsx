@@ -3,16 +3,17 @@ import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { IReponseSansDelivranceCS } from "../../../../model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
-import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../../../common/hook/v2/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
+} from "../../../common/hook/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
 import messageManager from "../../../common/util/messageManager";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
+import { getLibelle } from "../../../common/util/Utils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import {
   AdresseFormDefaultValues,
@@ -21,7 +22,6 @@ import {
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
 import { DOCUMENT_OBLIGATOIRE } from "../../../common/widget/formulaire/FormulaireMessages";
 import { ConfirmationPopin } from "../../../common/widget/popin/ConfirmationPopin";
-import { getLibelle } from "../../../common/widget/Text";
 import { useReponseSansDelivranceCS } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/hook/ChoixReponseSansDelivranceCSHook";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";

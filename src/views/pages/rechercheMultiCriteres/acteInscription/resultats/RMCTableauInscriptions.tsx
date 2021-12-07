@@ -6,20 +6,20 @@ import {
   FicheUtil,
   TypeFiche
 } from "../../../../../model/etatcivil/enum/TypeFiche";
-import { DocumentDelivrance } from "../../../../../model/requete/v2/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { TypeRequete } from "../../../../../model/requete/v2/enum/TypeRequete";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
-import { IRequeteDelivrance } from "../../../../../model/requete/v2/IRequeteDelivrance";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
+import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
+import { TRequete } from "../../../../../model/requete/IRequete";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import {
+  getLibelle,
   getValeurOuVide,
   supprimeElement
 } from "../../../../common/util/Utils";
-import { TableauRece } from "../../../../common/widget/tableau/v2/TableauRece";
-import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
-import { getLibelle } from "../../../../common/widget/Text";
+import { TableauRece } from "../../../../common/widget/tableau/TableauRece/TableauRece";
+import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
 import { getMessageZeroInscription } from "../hook/RMCActeInscriptionUtils";

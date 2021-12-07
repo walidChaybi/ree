@@ -1,9 +1,9 @@
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -11,12 +11,12 @@ import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetesV2 } from "../../../../mock/superagent-config/superagent-mock-requetes-v2";
-import { DocumentDelivrance } from "../../../../model/requete/v2/enum/DocumentDelivrance";
-import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import {
-  getLastPathElem,
-  getUrlWithParam
+    getLastPathElem,
+    getUrlWithParam
 } from "../../../../views/common/util/route/routeUtil";
 import { SaisirRDCSCPage } from "../../../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { URL_MES_REQUETES_SAISIR_RDCSC } from "../../../../views/router/ReceUrls";
@@ -24,7 +24,7 @@ import { URL_MES_REQUETES_SAISIR_RDCSC } from "../../../../views/router/ReceUrls
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configComposition[0],
-  configRequetesV2[0]
+  configRequetes[0]
 ]);
 
 const history = createMemoryHistory();

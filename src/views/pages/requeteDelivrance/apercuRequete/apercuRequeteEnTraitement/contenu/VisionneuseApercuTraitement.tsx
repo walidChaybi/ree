@@ -1,12 +1,11 @@
 import { LinearProgress } from "@material-ui/core";
 import { MimeType } from "file-type";
 import React, { useEffect, useState } from "react";
-import { IRequeteDelivrance } from "../../../../../../model/requete/v2/IRequeteDelivrance";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { base64toBlob } from "../../../../../common/util/FileUtils";
 import { soustypeRDDouRDC } from "../../../../../common/util/RequetesUtils";
-import "../../../../../common/widget/document/scss/ExtraitDocument.scss";
+import { getLibelle } from "../../../../../common/util/Utils";
 import "../../../../../common/widget/document/scss/VisionneuseDocument.scss";
-import { getLibelle } from "../../../../../common/widget/Text";
 import { MenuCourrier } from "./MenuCourrier";
 
 interface IVisionneuseDocumentProps {

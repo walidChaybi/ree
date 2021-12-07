@@ -1,4 +1,4 @@
-import { StatutRequete } from "../../../../../model/requete/v2/enum/StatutRequete";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { PieceJointe } from "../../../../common/util/FileUtils";
 import { Adresse, Identite, Requerant } from "./ISaisirRequetePageModel";
 

@@ -2,11 +2,11 @@ import request, * as superagent from "superagent";
 import { v4 as uuidv4 } from "uuid";
 import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
 import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
-import { configRequetesV2 } from "../mock/superagent-config/superagent-mock-requetes-v2";
+import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
 import { getCsrfHeader } from "../views/common/util/CsrfUtil";
 import {
-  GestionnaireCache,
-  ReceCache
+    GestionnaireCache,
+    ReceCache
 } from "../views/common/util/GestionnaireCache";
 import messageManager from "../views/common/util/messageManager";
 import { URL_ACCUEIL } from "../views/router/ReceUrls";
@@ -21,7 +21,7 @@ const ERROR_OFFLINE_TIMEOUT = 5000;
 
 if (process.env.REACT_APP_MOCK) {
   require("superagent-mock")(request, [
-    configRequetesV2[0],
+    configRequetes[0],
     configAgent[0],
     configEtatcivil[0]
   ]);

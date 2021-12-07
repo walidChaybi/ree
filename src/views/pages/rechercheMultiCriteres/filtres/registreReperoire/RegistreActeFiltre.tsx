@@ -6,6 +6,7 @@ import { TypeFamille } from "../../../../../model/etatcivil/enum/TypeFamille";
 import { Option, Options } from "../../../../common/util/Type";
 import {
   enMajuscule,
+  getLibelle,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
@@ -25,7 +26,6 @@ import {
   FormikComponentProps,
   withNamespace
 } from "../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../common/widget/Text";
 import { useRecherchePocopa } from "./hook/RecherchePocopaApiHook";
 
 // Noms des champs

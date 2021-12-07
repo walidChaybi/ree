@@ -1,16 +1,9 @@
-import { Box } from "@material-ui/core";
-import LabelIcon from "@material-ui/icons/Label";
-import { render } from "@testing-library/react";
-import moment from "moment";
+import { render, screen } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { FormatDate } from "../../../../views/common/util/DateUtils";
-import {
-  getMessagePrioriteDeLaRequete,
-  prioriteDeLaRequete
-} from "../../../../views/common/util/RequetesUtils";
-import { TableauBody } from "../../../../views/common/widget/tableau/v1/TableauBody";
-import { TableauTypeColumn } from "../../../../views/common/widget/tableau/v1/TableauRece";
+import { getIconPrioriteRequete } from "../../../../views/common/util/tableauRequete/TableauRequeteUtils";
+import { TableauBody } from "../../../../views/common/widget/tableau/TableauRece/TableauBody";
+import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece/TableauTypeColumn";
 
 const subData = {
   sousTypeRequete: "RDC",
@@ -19,40 +12,38 @@ const subData = {
   requerant: "TRIBUNAL NANTES"
 };
 
-const SIX = 6;
-const TROIS = 3;
 const DONNEES = [
   {
     idRequete: 100,
     idSagaDila: 100,
     ...subData,
     dateCreation: "20/02/2020",
-    dateStatut: moment().subtract(TROIS, "day").format(FormatDate.DDMMYYYY),
+    dateStatut: "25/06/2020",
     statut: "A_SIGNER",
-    prioriteRequete: ""
+    priorite: "MOYENNE"
   },
   {
     idRequete: 101,
     idSagaDila: 101,
     ...subData,
     dateCreation: "20/02/2020",
-    dateStatut: moment().format(FormatDate.DDMMYYYY),
+    dateStatut: "20/03/2020",
     statut: "A_SIGNER",
-    prioriteRequete: ""
+    priorite: "BASSE"
   },
   {
     idRequete: 102,
     idSagaDila: 102,
     ...subData,
     dateCreation: "15/02/2020",
-    dateStatut: moment().subtract(SIX, "day").format(FormatDate.DDMMYYYY),
+    dateStatut: "15/03/2020",
     statut: "A_SIGNER",
-    prioriteRequete: ""
+    priorite: "HAUTE"
   }
 ];
 
 test("test des prioritées des requêtes", () => {
-  const renderResult = render(
+  render(
     <>
       <Router>
         <table>
@@ -62,62 +53,40 @@ test("test des prioritées des requêtes", () => {
             columnHeaders={[
               new TableauTypeColumn({
                 keys: ["idSagaDila"],
-                title: "pages.delivrance.mesRequetes.tableau.header.idSagaDila"
+                title: "idSagaDila"
               }),
               new TableauTypeColumn({
                 keys: ["sousTypeRequete"],
-                title:
-                  "pages.delivrance.mesRequetes.tableau.header.sousTypeRequete",
-                rowLibelle: "referentiel.sousTypeRequete.court"
+                title: "Sous Type"
               }),
               new TableauTypeColumn({
                 keys: ["provenance"],
-                title: "pages.delivrance.mesRequetes.tableau.header.provenance",
-                rowLibelle: "referentiel.provenance"
+                title: "Provenance"
               }),
               new TableauTypeColumn({
                 keys: ["natureActe"],
-                title: "pages.delivrance.mesRequetes.tableau.header.natureActe",
-                rowLibelle: "referentiel.natureActe"
+                title: "Nature Acte"
               }),
               new TableauTypeColumn({
                 keys: ["requerant", "libelleRequerant"],
-
-                title: "pages.delivrance.mesRequetes.tableau.header.requerant"
+                title: "Requerant"
               }),
               new TableauTypeColumn({
                 keys: ["dateCreation"],
-
-                title:
-                  "pages.delivrance.mesRequetes.tableau.header.dateCreation"
+                title: "Date requête"
               }),
               new TableauTypeColumn({
                 keys: ["dateStatut"],
-
-                title: "pages.delivrance.mesRequetes.tableau.header.dateStatut"
+                title: "Date Statut"
               }),
               new TableauTypeColumn({
                 keys: ["statut"],
-                title: "pages.delivrance.mesRequetes.tableau.header.statut",
-                rowLibelle: "referentiel.statutRequete"
+                title: "Statut"
               }),
               new TableauTypeColumn({
-                keys: ["prioriteRequete"],
-
-                title: "pages.delivrance.mesRequetes.tableau.header",
-                getElement: (row: any) => {
-                  return (
-                    <Box
-                      title={getMessagePrioriteDeLaRequete(row.dateStatut)}
-                      aria-label={getMessagePrioriteDeLaRequete(row.dateStatut)}
-                      aria-hidden={true}
-                    >
-                      <LabelIcon
-                        className={prioriteDeLaRequete(row.dateStatut)}
-                      />
-                    </Box>
-                  );
-                }
+                keys: ["priorite"],
+                title: "Priorité",
+                getElement: getIconPrioriteRequete
               })
             ]}
             onClickOnLine={(identifiant: string) => "urlBack"}
@@ -126,16 +95,25 @@ test("test des prioritées des requêtes", () => {
       </Router>
     </>
   );
-  let colonnePrioriteElement = renderResult.getByTestId("100");
+
+  let colonnePrioriteElement = screen.getByTestId("100");
+
   let element = (colonnePrioriteElement.lastChild as HTMLTableCellElement)
     .innerHTML;
+
   expect(element.indexOf("Priorité moyenne")).toBeGreaterThan(-1);
-  colonnePrioriteElement = renderResult.getByTestId("101");
+
+  colonnePrioriteElement = screen.getByTestId("101");
+
   element = (colonnePrioriteElement.lastChild as HTMLTableCellElement)
     .innerHTML;
+
   expect(element.indexOf("Priorité basse")).toBeGreaterThan(-1);
-  colonnePrioriteElement = renderResult.getByTestId("102");
+
+  colonnePrioriteElement = screen.getByTestId("102");
+
   element = (colonnePrioriteElement.lastChild as HTMLTableCellElement)
     .innerHTML;
+
   expect(element.indexOf("Priorité haute")).toBeGreaterThan(-1);
 });

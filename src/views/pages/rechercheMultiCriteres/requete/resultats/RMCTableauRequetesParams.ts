@@ -4,7 +4,7 @@ import {
   getIconPrioriteRequete,
   getObservationsNumeroRequete
 } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
-import { TableauTypeColumn } from "../../../../common/widget/tableau/v2/TableauTypeColumn";
+import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
 
 export enum HeaderTableauRequete {
   Observations = "observations",

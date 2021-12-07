@@ -1,9 +1,8 @@
 import ReportIcon from "@material-ui/icons/Report";
 import React from "react";
-import { TRequete } from "../../../../../model/requete/v2/IRequete";
+import { TRequete } from "../../../../../model/requete/IRequete";
 import { IRMCRequestRequete } from "../../../../../model/rmc/requete/IRMCRequestRequete";
-import { valeurOuUndefined } from "../../../../common/util/Utils";
-import { getLibelle } from "../../../../common/widget/Text";
+import { getLibelle, valeurOuUndefined } from "../../../../common/util/Utils";
 
 export interface ICriteresRMCAuto {
   criteres: IRMCRequestRequete[];

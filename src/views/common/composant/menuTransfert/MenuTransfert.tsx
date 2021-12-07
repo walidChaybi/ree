@@ -6,28 +6,30 @@ import {
   utilisateurADroit
 } from "../../../../model/agent/IUtilisateur";
 import { Droit } from "../../../../model/Droit";
-import { SousTypeDelivrance } from "../../../../model/requete/v2/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/v2/enum/StatutRequete";
-import { TypeRequete } from "../../../../model/requete/v2/enum/TypeRequete";
-import { IActionOption } from "../../../../model/requete/v2/IActionOption";
-import { TRequete } from "../../../../model/requete/v2/IRequete";
-import { IRequeteDelivrance } from "../../../../model/requete/v2/IRequeteDelivrance";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
+import { IActionOption } from "../../../../model/requete/IActionOption";
+import { TRequete } from "../../../../model/requete/IRequete";
+import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import {
   receUrl,
-  URL_MES_REQUETES_APERCU_REQUETE,
+  URL_MES_REQUETES_APERCU_REQUETE_ID,
   URL_MES_REQUETES_INFORMATION
 } from "../../../router/ReceUrls";
 import {
   TransfertParams,
   useTransfertApi
-} from "../../hook/v2/requete/TransfertHook";
+} from "../../hook/requete/TransfertHook";
 import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
+import { FeatureFlag } from "../../util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "../../util/route/routeUtil";
 import { storeRece } from "../../util/storeRece";
 import { Option, Options } from "../../util/Type";
+import { getLibelle } from "../../util/Utils";
 import { OperationEnCours } from "../../widget/attente/OperationEnCours";
 import { GroupeBouton } from "../../widget/menu/GroupeBouton";
-import { getLibelle } from "../../widget/Text";
 import { TransfertPopin } from "./TransfertPopin";
 
 const INDEX_ACTION_TRANSFERT_SERVICE = 0;
@@ -61,7 +63,10 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
 
   useEffect(() => {
     const opts = reponseSansDelivranceCSOptions;
-    if (props.requete.type === TypeRequete.DELIVRANCE) {
+    if (
+      props.requete.type === TypeRequete.DELIVRANCE &&
+      gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS)
+    ) {
       opts.push({
         value: INDEX_ACTION_TRANSFERT_ABANDON,
         label: getLibelle("Abandon traitement"),
@@ -80,7 +85,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       case INDEX_ACTION_TRANSFERT_OFFICIER:
         setAgentPopinOpen(true);
         break;
-      /* TODO
+      /* TODO US 572
           case INDEX_ACTION_TRANSFERT_ABANDON:
             break;*/
     }
@@ -154,7 +159,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
     if (idAction) {
       if (props.requete.type === TypeRequete.DELIVRANCE) {
         history.push(
-          getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE, props.requete.id)
+          getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_ID, props.requete.id)
         );
       } else {
         receUrl.replaceUrl(history, URL_MES_REQUETES_INFORMATION);

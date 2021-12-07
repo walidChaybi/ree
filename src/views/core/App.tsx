@@ -15,15 +15,13 @@ import {
   SeulementNavigateur
 } from "../common/util/detectionNavigateur/DetectionNavigateur";
 import { ErrorManager } from "../common/util/ErrorManager";
-import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
 import {
   appelRequetesASigner,
   GestionnaireFermeture,
   traiteAppelRequeteASigner
 } from "../common/util/GestionnaireFermeture";
 import { storeRece } from "../common/util/storeRece";
-import { URL_MES_REQUETES, URL_MES_REQUETES_V2 } from "../router/ReceUrls";
+import { URL_MES_REQUETES } from "../router/ReceUrls";
 import "./App.scss";
 import { Body } from "./body/Body";
 import { OfficierContext } from "./contexts/OfficierContext";
@@ -34,13 +32,12 @@ import { useLoginApi } from "./login/LoginHook";
 registerLocale("fr", fr);
 setDefaultLocale("fr");
 
-const etape2 = gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2);
 const App: React.FC = () => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(true);
   const login = useLoginApi();
 
   useEffect(() => {
-    if (etape2 && login.officierDataState) {
+    if (login.officierDataState) {
       Promise.all([
         GestionnaireNomenclature.chargerToutesLesNomenclatures(),
         GestionnaireCacheApi.chargerTousLesUtilisateurs(),
@@ -80,14 +77,12 @@ const App: React.FC = () => {
                     paramsFctAAppler={officier}
                     fctAAppeler={appelRequetesASigner}
                     fctTraitementResultat={traiteAppelRequeteASigner}
-                    urlRedirection={
-                      etape2 ? URL_MES_REQUETES_V2 : URL_MES_REQUETES
-                    }
+                    urlRedirection={URL_MES_REQUETES}
                   ></GestionnaireFermeture>
                 )}
               </OfficierContext.Consumer>
               <Header />
-              {(!operationEnCours || !etape2) && <Body />}
+              {(!operationEnCours) && <Body />}
               <ToastContainer
                 className={"toast-container"}
                 position="top-center"

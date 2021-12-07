@@ -2,6 +2,7 @@ import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
 import { Options } from "../../../../../../../common/util/Type";
+import { getLibelle } from "../../../../../../../common/util/Utils";
 import { InputField } from "../../../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { SousFormulaire } from "../../../../../../../common/widget/formulaire/SousFormulaire";
@@ -10,7 +11,6 @@ import {
   SubFormProps,
   withNamespace
 } from "../../../../../../../common/widget/formulaire/utils/FormUtil";
-import { getLibelle } from "../../../../../../../common/widget/Text";
 import { COURRIER, DELIVRANCE } from "../../modelForm/ISaisiePageModel";
 import "./scss/ChoixCourrierForm.scss";
 
