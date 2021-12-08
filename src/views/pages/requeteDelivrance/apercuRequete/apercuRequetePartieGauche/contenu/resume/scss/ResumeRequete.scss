@@ -10,7 +10,7 @@
     color: white;
     background-color: $application-color;
     border-radius: 4px;
-    padding: 0.5em 1em 0.5em 1.325em;
+    padding: 0.285em 1em 0.285em 1.325em;
 
     .LinkNumeroRequete {
       cursor: pointer;
@@ -18,14 +18,8 @@
     }
   }
 
-  .PanelsResumeRequete {
-    display: grid;
-    grid-template-columns: 66% 33%;
-    .SectionPanel:nth-child(2) {
-      border-left: 2px solid $border;
-      padding-left: 2rem;
-      margin: 4rem 0;
-    }
+  .PanelsResumeRequete .SectionPanel {
+    width: 92%;
   }
 
   .SectionPanelArea {

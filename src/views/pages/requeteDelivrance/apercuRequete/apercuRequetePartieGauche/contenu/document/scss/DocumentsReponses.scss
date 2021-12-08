@@ -24,7 +24,7 @@
   }
 
   ul {
-    height: 5rem;
+    height: 8rem;
     overflow-x: hidden;
     overflow-y: auto;
     text-align: left;
@@ -49,6 +49,10 @@
       .MuiTypography-colorTextSecondary {
         color: white !important;
       }
+    }
+    &.MuiListItem-root {
+      padding-top: 4px;
+      padding-bottom: 4px;
     }
   }
 }

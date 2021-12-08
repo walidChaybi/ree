@@ -15,24 +15,23 @@
     }
     display: inline-block;
   }
-
 }
 
 @media only screen and (max-width: 800px) {
-    .contenu-requete {
-      display: block;
-      .side {
-        &.left {
-          width: 60%;
-        }
-        &.right {
-          width: 100%;
-        }
-        display: inline-block;
+  .contenu-requete {
+    display: block;
+    .side {
+      &.left {
+        width: 60%;
       }
+      &.right {
+        width: 100%;
+      }
+      display: inline-block;
     }
   }
-  
-  div.MuiAccordionDetails-root {
-    padding: 0px;
-  }
+}
+
+div.MuiAccordionDetails-root {
+  padding: 0px;
+}

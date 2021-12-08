@@ -6,12 +6,11 @@ export interface BandeauFicheActeNumeroProps {
   dataBandeau: IBandeauFiche;
 }
 
-export const BandeauFicheActeNumero: React.FC<BandeauFicheActeNumeroProps> =
-  props => {
-    const data = props.dataBandeau;
-    return (
-      <div className="InfoImportante">
-        <div data-testid="titreBandeau">{data.registre}</div>
-      </div>
-    );
-  };
+export const BandeauFicheActeNumero: React.FC<BandeauFicheActeNumeroProps> = props => {
+  const data = props.dataBandeau;
+  return (
+    <div className="LigneNumeroActe">
+      <div data-testid="titreBandeau">{data.registre}</div>
+    </div>
+  );
+};

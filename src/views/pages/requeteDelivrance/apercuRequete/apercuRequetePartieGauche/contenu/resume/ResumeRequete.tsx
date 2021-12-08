@@ -43,7 +43,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
           </span>
         </div>
         {panels.length > 1 && (
-          <>
+          <div className="PanelsResumeRequete">
             <SectionPanel {...panels[ZERO]} />
             <SectionPanel {...panels[UN]} />
             <SectionPanel {...panels[DEUX]} />
@@ -54,7 +54,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
               pieces={props.requete.piecesJustificatives}
               numRequete={props.requete.numero}
             />
-          </>
+          </div>
         )}
       </div>
       {fenetreExterne && (

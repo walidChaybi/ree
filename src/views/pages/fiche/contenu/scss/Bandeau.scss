@@ -11,7 +11,8 @@
     padding: 0.2rem 1rem;
   }
 
-  .LigneNumero {
+  .LigneNumeroRcRcaPacs {
+    font-weight: 700;
     & div:first-child {
       flex-grow: 1.7;
       text-align: end;
@@ -21,22 +22,35 @@
       text-align: end;
     }
     font-size: 22px;
+    .statusFiche {
+      font-size: 20px;
+    }
   }
 
   .LigneNumeroActe {
-    justify-content: center;
-    font-size: 22px;
-  }
-
-  .statusFiche {
-    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    display: block;
   }
 
   .LignePrenomNom {
+    flex-grow: 1;
+    font-weight: 700;
     font-size: 20px;
+    text-align: start;
   }
 
-  .LignePrenomNom,
+  .LigneAlertes > div {
+    flex-grow: 1;
+    font-size: 18px;
+    text-align: end;
+  }
+
+  .IconeAlertes {
+    color: $alertes;
+    margin-right: 0.5rem;
+  }
+
   .LigneDates {
     div {
       flex-grow: 1;
@@ -47,20 +61,5 @@
     & div:last-child {
       text-align: end;
     }
-  }
-
-  .alertes {
-    font-size: 18px;
-  }
-
-  .InfoImportante {
-    font-weight: 700;
-    text-align: center;
-    display: block;
-  }
-
-  .IconeAlertes {
-    color: $alertes;
-    margin-right: 0.5rem;
   }
 }

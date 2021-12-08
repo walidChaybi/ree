@@ -55,12 +55,10 @@ export const ActeImage: React.FC<ActeImageProps> = ({ id, estReecrit }) => {
 
   return (
     <div id="docActeViewer" className="DocumentActeViewer">
-      {estReecrit ? (
+      {estReecrit && (
         <button className="ButtonSwitchActe" onClick={() => clickSwitch()}>
           Texte saisi &lt;-&gt; Image
         </button>
-      ) : (
-        <div></div>
       )}
       {url ? (
         <iframe title="Visionneuse PDF" src={url}></iframe>
