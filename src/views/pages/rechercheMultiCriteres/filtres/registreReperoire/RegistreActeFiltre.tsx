@@ -3,8 +3,6 @@ import React, { useCallback } from "react";
 import * as Yup from "yup";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { TypeFamille } from "../../../../../model/etatcivil/enum/TypeFamille";
-import { MSG_MIN_YEAR } from "../../../../../ressources/messages";
-import { MIN_YEAR } from "../../../../common/util/DateUtils";
 import { Option, Options } from "../../../../common/util/Type";
 import {
   enMajuscule,
@@ -51,7 +49,7 @@ export const RegistreActeValidationSchema = Yup.object({
   [NATURE_ACTE]: Yup.string(),
   [FAMILLE_REGISTRE]: Yup.string(),
   [NUMERO_ACTE]: Yup.string(),
-  [ANNEE]: Yup.number().min(MIN_YEAR, MSG_MIN_YEAR)
+  [ANNEE]: Yup.number()
 });
 
 export type RegistreActeFiltreProps = ComponentFiltreProps &

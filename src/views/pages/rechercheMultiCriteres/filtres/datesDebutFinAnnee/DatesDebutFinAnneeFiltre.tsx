@@ -91,7 +91,7 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
 
   return (
     <div className={props.nomFiltre}>
-      <Fieldset titre={"Filtre date de création"}>
+      <Fieldset titre={"Filtre date de création informatique"}>
         <div className="FormFiltre">
           <DateComposeForm {...dateDebutComposeFormProps} />
           <DateComposeForm {...dateFinComposeFormProps} />
