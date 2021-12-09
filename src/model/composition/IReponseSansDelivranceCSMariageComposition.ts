@@ -20,7 +20,6 @@ export interface IReponseSansDelivranceCSMariageComposition
   extends IParametresComposition,
     ICommunComposition,
     IRequerantComposition {
-  document_demande: string;
   nom_titulaire1: string;
   prenoms_titulaire1: string;
   nom_titulaire2: string;
@@ -39,8 +38,6 @@ export const ReponseSansDelivranceCSMariageComposition = {
       reponseSansDelivranceCS,
       requete.numero
     );
-
-    reponseSansDelivranceCS.document_demande = requete.documentDemande.libelle;
 
     RequerantComposition.ajoutInfosRequerant(
       reponseSansDelivranceCS,
