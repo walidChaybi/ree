@@ -13,13 +13,14 @@ export interface IRMCArchiveRequest {
   // Filtre Date de création
   dateCreationDebut?: Date;
   dateCreationFin?: Date;
-  annee?: string;
 
   // Filtre Registre
   natureActe?: NatureActe;
   familleRegistre?: TypeFamille;
   posteOuPocopa?: string;
   numeroActe?: string;
+  anneeRegistre?: string;
+
   // Evenement
   jourDateEvenement?: string;
   moisDateEvenement?: string;

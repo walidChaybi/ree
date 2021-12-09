@@ -19,6 +19,7 @@ import { RMCActeInscriptionPage } from "../../../../views/pages/rechercheMultiCr
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const globalAny: any = global;
+globalAny.URL.createObjectURL = jest.fn();
 globalAny.scroll = jest.fn();
 globalAny.open = () => {
   return { ...window };
@@ -40,17 +41,12 @@ test("Bouton réinitialisation des champs", async () => {
   });
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
-
-  const inputAnneeSeule = screen.getByLabelText(
-    "datesDebutFinAnnee.annee"
-  ) as HTMLInputElement;
   const inputJour = screen.getByLabelText(
     "datesDebutFinAnnee.dateDebut.jour"
   ) as HTMLInputElement;
 
   await waitFor(() => {
     expect(inputNom).toBeDefined();
-    expect(inputAnneeSeule).toBeDefined();
     expect(inputJour).toBeDefined();
   });
 
@@ -81,7 +77,6 @@ test("Bouton réinitialisation des champs", async () => {
   await waitFor(() => {
     expect(inputNom.value).toBe("");
     expect(inputJour.value).toBe("");
-    expect(inputAnneeSeule).toBeTruthy();
   });
 });
 
@@ -91,19 +86,11 @@ test("Bouton Rechercher du Formulaire Recherche Multi Critères Actes et Inscrip
   });
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
-  const inputAnnee = screen.getByLabelText(
-    "datesDebutFinAnnee.annee"
-  ) as HTMLInputElement;
 
   act(() => {
     fireEvent.change(inputNom, {
       target: {
         value: "mockNom"
-      }
-    });
-    fireEvent.change(inputAnnee, {
-      target: {
-        value: "1990"
       }
     });
   });
@@ -112,10 +99,6 @@ test("Bouton Rechercher du Formulaire Recherche Multi Critères Actes et Inscrip
   await act(async () => {
     fireEvent.click(submit);
   });
-});
-
-afterAll(() => {
-  superagentMock.unset();
 });
 
 ///////////////////////////////////////////////////////////////
@@ -182,21 +165,21 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
 
   // Attente affichage des RC/RCA/PACS résultat dans le tableau
   await waitFor(() => {
-    expect(screen.getByText("PACS - 2013 - 1234508")).toBeInTheDocument();
-    expect(screen.getByText("RCA - 2020 - 4093")).toBeInTheDocument();
+    expect(screen.getByText("PACS - 2013 - 1234508")).toBeDefined();
+    expect(screen.getByText("RCA - 2020 - 4093")).toBeDefined();
   });
 
   // Clique bouton page suivante
   let boutonPageSuivante = screen.queryAllByTitle("Page suivante")[1];
-  expect(boutonPageSuivante).toBeInTheDocument();
+  expect(boutonPageSuivante).toBeDefined();
   await act(async () => {
     fireEvent.click(boutonPageSuivante);
   });
 
   // Attente affichage des inscriptions (rc/rca/pacs) de la page suivante
   await waitFor(() => {
-    expect(screen.getByText("PACS - 1986 - 1234510")).toBeInTheDocument();
-    expect(screen.getByText("PACS - 2001 - 1234506")).toBeInTheDocument();
+    expect(screen.getByText("PACS - 1986 - 1234510")).toBeDefined();
+    expect(screen.getByText("PACS - 2001 - 1234506")).toBeDefined();
   });
 
   // Clique sur la dernière fiche inscription (rc/rca/pacs) du tableau
@@ -207,8 +190,8 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
 
   // Attente de l'ouverture de la fiche
   await waitFor(() => {
-    expect(screen.getByText("PACS N° 2001 - 1234506")).toBeInTheDocument();
-    expect(screen.getByText("Statut de la fiche : Actif")).toBeInTheDocument();
+    expect(screen.getByText("PACS N° 2001 - 1234506")).toBeDefined();
+    expect(screen.getByText("Statut de la fiche : Actif")).toBeDefined();
   });
 
   // Clique sur suivant de la fiche inscription (rc/rca/pacs)
@@ -219,10 +202,8 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
 
   // Attente de l'ouverture de la fiche (changement de "plage")
   await waitFor(() => {
-    expect(screen.getByText("RCA N° 2020 - 4093")).toBeInTheDocument();
-    expect(
-      screen.getByText("Statut de la fiche : Inactif")
-    ).toBeInTheDocument();
+    expect(screen.getByText("RCA N° 2020 - 4093")).toBeDefined();
+    expect(screen.getByText("Statut de la fiche : Inactif")).toBeDefined();
   });
 
   // Clique sur précédent de la fiche inscription (rc/rca/pacs), retoure à la fichie d'avant (changement de "plage" à nouveau)
@@ -233,8 +214,8 @@ test("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'ef
 
   // Attente de l'ouverture de la fiche
   await waitFor(() => {
-    expect(screen.getByText("PACS N° 2001 - 1234506")).toBeInTheDocument();
-    expect(screen.getByText("Statut de la fiche : Actif")).toBeInTheDocument();
+    expect(screen.getByText("PACS N° 2001 - 1234506")).toBeDefined();
+    expect(screen.getByText("Statut de la fiche : Actif")).toBeDefined();
   });
 });
 
@@ -278,13 +259,13 @@ test("La pagination (avec changement de plage) entre les fiches acte s'effectue 
 
   // Attente affichage des actes résultat dans le tableau
   await waitFor(() => {
-    expect(screen.getByText("DEP.IRAN.1987.13")).toBeInTheDocument();
-    expect(screen.getByText("ACQ.X.1951.1.413")).toBeInTheDocument();
+    expect(screen.getByText("DEP.IRAN.1987.13")).toBeDefined();
+    expect(screen.getByText("ACQ.X.1951.1.413")).toBeDefined();
   });
 
   // Clique bouton page suivante
   let boutonPageSuivante = screen.queryAllByTitle("Page suivante")[0];
-  expect(boutonPageSuivante).toBeInTheDocument();
+  expect(boutonPageSuivante).toBeDefined();
   await act(async () => {
     fireEvent.click(boutonPageSuivante);
   });
@@ -293,12 +274,15 @@ test("La pagination (avec changement de plage) entre les fiches acte s'effectue 
   await waitFor(() => {
     expect(
       screen.getByText("PAC.ORAN.2010.support 1.support 2.100.552")
-    ).toBeInTheDocument();
-    expect(screen.getByText("DEP.IRAN.1987.254.35")).toBeInTheDocument();
+    ).toBeDefined();
+    expect(screen.getByText("DEP.IRAN.1987.254.35")).toBeDefined();
   });
 
   // Clique sur la dernière fiche acte du tableau
   const ligne = screen.getByTestId(idFicheActe1);
+  await waitFor(() => {
+    expect(ligne).toBeDefined();
+  });
   await act(async () => {
     fireEvent.click(ligne);
   });
@@ -335,4 +319,8 @@ test("La pagination (avec changement de plage) entre les fiches acte s'effectue 
       "DEP.IRAN.1987.254.35"
     );
   });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

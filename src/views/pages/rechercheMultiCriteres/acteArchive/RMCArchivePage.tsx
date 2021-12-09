@@ -63,14 +63,16 @@ export const RMCArchivePage: React.FC = () => {
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [criteresRechercheActe, setCriteresRechercheActe] = useState<
-    ICriteresRechercheActeArchive
-  >();
+  const [
+    criteresRechercheActe,
+    setCriteresRechercheActe
+  ] = useState<ICriteresRechercheActeArchive>();
 
   // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] = useState<
-    ICriteresRechercheActeArchive
-  >();
+  const [
+    criteresRechercheFicheActe,
+    setCriteresRechercheFicheActe
+  ] = useState<ICriteresRechercheActeArchive>();
 
   const { dataRMCActe, dataTableauRMCActe } = useRMCActeArchiveApiHook(
     criteresRechercheActe
@@ -164,8 +166,7 @@ function getFormTitulaire(): JSX.Element {
 
 function getFormDatesDebutFinAnnee(): JSX.Element {
   const datesDebutFinAnneeFiltreProps = {
-    nomFiltre: DATES_DEBUT_FIN_ANNEE,
-    anneeVisible: true
+    nomFiltre: DATES_DEBUT_FIN_ANNEE
   } as DatesDebutFinAnneeFiltreProps;
   return (
     <DatesDebutFinAnneeFiltre

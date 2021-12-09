@@ -20,7 +20,6 @@ export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
     dateCreationFin: getDateFinFromDateCompose(
       criteres.datesDebutFinAnnee?.dateFin
     ),
-    annee: valeurOuUndefined(criteres.datesDebutFinAnnee?.annee),
 
     // Filtre Registre Civile
     natureActe: valeurOuUndefined(
@@ -34,6 +33,9 @@ export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
     ),
     numeroActe: valeurOuUndefined(
       criteres.registreArchive?.registre?.numeroActe
+    ),
+    anneeRegistre: valeurOuUndefined(
+      criteres.registreArchive?.registre?.anneeRegistre
     ),
     jourDateEvenement: valeurOuUndefined(
       criteres.registreArchive?.evenement?.dateEvenement?.jour

@@ -120,7 +120,7 @@ test("render composant RegistreActeFiltre", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","pocopa":{"value":"TORONTO","str":"Toronto"},"numeroActe":"123456"}}'
+      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","pocopa":{"value":"TORONTO","str":"Toronto"},"numeroActe":"123456","anneeRegistre":""}}'
     );
   });
 });

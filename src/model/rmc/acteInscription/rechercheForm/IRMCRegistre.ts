@@ -5,4 +5,5 @@ export interface IRMCRegistre {
   familleRegistre?: string;
   pocopa?: Option;
   numeroActe?: string;
+  anneeRegistre?: string;
 }

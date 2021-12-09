@@ -30,17 +30,12 @@ test("Bouton réinitialisation des champs", async () => {
   });
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
-
-  const inputAnneeSeule = screen.getByLabelText(
-    "datesDebutFinAnnee.annee"
-  ) as HTMLInputElement;
   const inputJour = screen.getByLabelText(
     "datesDebutFinAnnee.dateDebut.jour"
   ) as HTMLInputElement;
 
   await waitFor(() => {
     expect(inputNom).toBeDefined();
-    expect(inputAnneeSeule).toBeDefined();
     expect(inputJour).toBeDefined();
   });
 
@@ -70,7 +65,6 @@ test("Bouton réinitialisation des champs", async () => {
   await waitFor(() => {
     expect(inputNom.value).toBe("");
     expect(inputJour.value).toBe("");
-    expect(inputAnneeSeule).toBeTruthy();
   });
 });
 
@@ -80,19 +74,11 @@ test("Bouton Rechercher du Formulaire Recherche Multi Critères archives", async
   });
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
-  const inputAnnee = screen.getByLabelText(
-    "datesDebutFinAnnee.annee"
-  ) as HTMLInputElement;
 
   act(() => {
     fireEvent.change(inputNom, {
       target: {
         value: "mockNom"
-      }
-    });
-    fireEvent.change(inputAnnee, {
-      target: {
-        value: "1990"
       }
     });
   });
@@ -101,4 +87,8 @@ test("Bouton Rechercher du Formulaire Recherche Multi Critères archives", async
   await act(async () => {
     fireEvent.click(submit);
   });
+});
+
+afterAll(() => {
+  superagentMock.unset();
 });

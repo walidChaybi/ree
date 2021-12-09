@@ -14,7 +14,6 @@ export interface IRMCRequestActesInscriptions {
   // Filtre Date de création
   dateCreationDebut?: Date;
   dateCreationFin?: Date;
-  annee?: string;
 
   // Filtre Registre & Réppertoire Civile
   // Registre
@@ -22,6 +21,7 @@ export interface IRMCRequestActesInscriptions {
   familleRegistre?: TypeFamille;
   posteOuPocopa?: string;
   numeroActe?: string;
+  anneeRegistre?: string;
   //Repertoire
   numeroInscription?: string;
   typeRepertoire?: TypeRepertoire;

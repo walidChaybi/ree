@@ -1,26 +1,18 @@
 import { connect } from "formik";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import * as Yup from "yup";
-import { IRMCActeInscription } from "../../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { MSG_MIN_YEAR } from "../../../../../ressources/messages";
 import {
   compareDatesCompose,
   estDateVide,
-  IDateCompose,
-  MIN_YEAR
+  IDateCompose
 } from "../../../../common/util/DateUtils";
 import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues,
   DateValidationSchema
 } from "../../../../common/widget/formulaire/DateComposeForm";
-import {
-  digitSeulement,
-  traiteCarAutorises
-} from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
@@ -31,22 +23,20 @@ import "../scss/FiltreRMC.scss";
 // Noms des champs
 export const DATE_DEBUT = "dateDebut";
 export const DATE_FIN = "dateFin";
-export const ANNEE = "annee";
+
 export const dateFinInfDateDebutError = "dateFinInfDateDebutError";
 
 // Valeurs par défaut des champs
 export const DatesDebutFinAnneeDefaultValues = {
   [DATE_DEBUT]: DateDefaultValues,
-  [DATE_FIN]: DateDefaultValues,
-  [ANNEE]: ""
+  [DATE_FIN]: DateDefaultValues
 };
 
 // Schéma de validation des champs
 export const DatesDebutFinAnneeValidationSchema = Yup.object()
   .shape({
     [DATE_DEBUT]: DateValidationSchema,
-    [DATE_FIN]: DateValidationSchema,
-    [ANNEE]: Yup.number().min(MIN_YEAR, MSG_MIN_YEAR)
+    [DATE_FIN]: DateValidationSchema
   })
   .test("dateFinInferieur", function (value, error) {
     const res = compareDatesCompose(
@@ -77,7 +67,6 @@ export const DatesDebutFinAnneeValidationSchema = Yup.object()
   });
 
 interface AnneeInputProps {
-  anneeVisible?: boolean;
   anneeMin?: number;
 }
 
@@ -86,23 +75,6 @@ export type DatesDebutFinAnneeFiltreProps = AnneeInputProps &
   FormikComponentProps;
 
 const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props => {
-  const anneeVisible = props.anneeVisible ? props.anneeVisible : false;
-  const [datesDisabled, setDatesDisabled] = useState<boolean>();
-  const [anneeDisabled, setAnneeDisabled] = useState<boolean>();
-
-  // Permet de dégriser les champs dates de creation ou année apres un resetForm.
-  // Ou de griser les champs apres un rappelCriteres
-  useEffect(() => {
-    if (anneeVisible) {
-      setAnneeDisabled(
-        isDatesDirty(props.formik.values as IRMCActeInscription)
-      );
-      setDatesDisabled(
-        isAnneeDirty(props.formik.values as IRMCActeInscription)
-      );
-    }
-  }, [props.formik.dirty, props.formik.values, anneeVisible]);
-
   const dateDebutComposeFormProps = {
     labelDate: getLibelle("De "),
     nomDate: withNamespace(props.nomFiltre, DATE_DEBUT),
@@ -117,40 +89,12 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
     anneeMin: props.anneeMin
   } as DateComposeFormProps;
 
-  function anneeChange(e: React.ChangeEvent<HTMLInputElement>) {
-    traiteCarAutorises(e.target, digitSeulement);
-    if (e.target.value) {
-      setDatesDisabled(true);
-    } else {
-      setDatesDisabled(false);
-    }
-  }
-
   return (
     <div className={props.nomFiltre}>
       <Fieldset titre={"Filtre date de création"}>
         <div className="FormFiltre">
-          <DateComposeForm
-            disabled={datesDisabled}
-            {...dateDebutComposeFormProps}
-          />
-
-          <DateComposeForm
-            disabled={datesDisabled}
-            {...dateFinComposeFormProps}
-          />
-
-          {/* Recherche par annee uniquement */}
-          {anneeVisible && (
-            <InputField
-              name={withNamespace(props.nomFiltre, ANNEE)}
-              label={getLibelle("Année")}
-              ariaLabel={`${props.nomFiltre}.annee`}
-              maxLength="4"
-              onInput={anneeChange}
-              disabled={anneeDisabled}
-            />
-          )}
+          <DateComposeForm {...dateDebutComposeFormProps} />
+          <DateComposeForm {...dateFinComposeFormProps} />
         </div>
       </Fieldset>
     </div>
@@ -158,20 +102,3 @@ const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props 
 };
 
 export default connect(DatesDebutFinAnneeFiltre);
-
-function isDatesDirty(values: IRMCActeInscription) {
-  const dateDebut = values.datesDebutFinAnnee?.dateDebut;
-  const dateFin = values.datesDebutFinAnnee?.dateFin;
-  return (
-    dateDebut?.jour !== "" ||
-    dateDebut.mois !== "" ||
-    dateDebut.annee !== "" ||
-    dateFin?.jour !== "" ||
-    dateFin.mois !== "" ||
-    dateFin.annee !== ""
-  );
-}
-
-function isAnneeDirty(values: IRMCActeInscription) {
-  return values.datesDebutFinAnnee?.annee !== "";
-}

@@ -1,10 +1,4 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { DATES_DEBUT_FIN_ANNEE } from "../../../../../views/pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
@@ -12,6 +6,7 @@ import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps
 } from "../../../../../views/pages/rechercheMultiCriteres/filtres/datesDebutFinAnnee/DatesDebutFinAnneeFiltre";
+
 const HookDatesDebutFinAnneeFiltre: React.FC = () => {
   const [result, setResult] = useState("");
 
@@ -33,7 +28,7 @@ const HookDatesDebutFinAnneeFiltre: React.FC = () => {
     >
       <Form>
         <DatesDebutFinAnneeFiltre {...datesDebutFinAnneeFiltreProps} />
-        <button type="submit">Submit</button>
+        <button type="submit">Rechercher</button>
         <Field as="textarea" value={result} data-testid="result" />
       </Form>
     </Formik>
@@ -45,9 +40,6 @@ test("render composant DatesDebutFinAnneeFiltre", async () => {
     render(<HookDatesDebutFinAnneeFiltre />);
   });
 
-  const inputAnneeSeule = screen.getByLabelText(
-    "datesDebutFinAnnee.annee"
-  ) as HTMLInputElement;
   const inputJour = screen.getByLabelText(
     "datesDebutFinAnnee.dateDebut.jour"
   ) as HTMLInputElement;
@@ -67,79 +59,41 @@ test("render composant DatesDebutFinAnneeFiltre", async () => {
     "datesDebutFinAnnee.dateFin.annee"
   ) as HTMLInputElement;
 
-  const allIputDateDebutDateFin = [
-    inputJour,
-    inputMois,
-    inputAnnee,
-    inputJourFin,
-    inputMoisFin,
-    inputAnneeFin
-  ];
-
-  await waitFor(() => {
-    expectToBeDefined([inputAnneeSeule, ...allIputDateDebutDateFin]);
-  });
-
   act(() => {
-    fireEvent.input(inputAnneeSeule, {
+    fireEvent.input(inputJour, {
+      target: {
+        value: "10"
+      }
+    });
+    fireEvent.input(inputMois, {
+      target: {
+        value: "10"
+      }
+    });
+    fireEvent.input(inputAnneeFin, {
+      target: {
+        value: "2020"
+      }
+    });
+    fireEvent.input(inputJourFin, {
+      target: {
+        value: "10"
+      }
+    });
+    fireEvent.input(inputMoisFin, {
+      target: {
+        value: "10"
+      }
+    });
+    fireEvent.input(inputAnnee, {
       target: {
         value: "1990"
       }
     });
   });
 
-  expect(inputAnneeSeule.value).toBe("1990");
-  expectToBeDisabled(allIputDateDebutDateFin);
-
-  act(() => {
-    fireEvent.input(inputAnneeSeule, {
-      target: {
-        value: ""
-      }
-    });
+  const submit = screen.getByText(/Rechercher/i);
+  await act(async () => {
+    fireEvent.click(submit);
   });
-
-  expectToBeNotDisabled(allIputDateDebutDateFin);
-
-  act(() => {
-    fireEvent.input(inputJour, {
-      target: {
-        value: "10"
-      }
-    });
-  });
-
-  expectToBeDisabled([inputAnneeSeule]);
-
-  act(() => {
-    fireEvent.input(inputJour, {
-      target: {
-        value: ""
-      }
-    });
-  });
-
-  expectToBeNotDisabled([inputAnneeSeule]);
-
-  act(() => {
-    fireEvent.input(inputJourFin, {
-      target: {
-        value: "10"
-      }
-    });
-  });
-
-  expectToBeDisabled([inputAnneeSeule]);
 });
-
-function expectToBeDefined(elements: HTMLElement[]) {
-  elements.forEach(el => expect(el).toBeDefined());
-}
-
-function expectToBeDisabled(elements: HTMLElement[]) {
-  elements.forEach(el => expect(el).toBeDisabled());
-}
-
-function expectToBeNotDisabled(elements: HTMLElement[]) {
-  elements.forEach(el => expect(el).not.toBeDisabled());
-}

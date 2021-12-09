@@ -3,6 +3,8 @@ import React, { useCallback } from "react";
 import * as Yup from "yup";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { TypeFamille } from "../../../../../model/etatcivil/enum/TypeFamille";
+import { MSG_MIN_YEAR } from "../../../../../ressources/messages";
+import { MIN_YEAR } from "../../../../common/util/DateUtils";
 import { Option, Options } from "../../../../common/util/Type";
 import {
   enMajuscule,
@@ -33,20 +35,23 @@ export const NATURE_ACTE = "natureActe";
 export const FAMILLE_REGISTRE = "familleRegistre";
 export const POCOPA = "pocopa";
 export const NUMERO_ACTE = "numeroActe";
+export const ANNEE = "anneeRegistre";
 
 // Valeurs par défaut des champs
 export const RegistreActeDefaultValues = {
   [NATURE_ACTE]: "",
   [FAMILLE_REGISTRE]: "",
   [POCOPA]: null, // Pocopa est un objet de type Option ({value: "", str: ""})
-  [NUMERO_ACTE]: ""
+  [NUMERO_ACTE]: "",
+  [ANNEE]: ""
 };
 
 // Schéma de validation des champs
 export const RegistreActeValidationSchema = Yup.object({
   [NATURE_ACTE]: Yup.string(),
   [FAMILLE_REGISTRE]: Yup.string(),
-  [NUMERO_ACTE]: Yup.string()
+  [NUMERO_ACTE]: Yup.string(),
+  [ANNEE]: Yup.number().min(MIN_YEAR, MSG_MIN_YEAR)
 });
 
 export type RegistreActeFiltreProps = ComponentFiltreProps &
@@ -99,6 +104,10 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
 
   function onChampRechercheChange(option?: Option) {
     setLastPocopaSelected(option ? option.str : undefined);
+  }
+
+  function anneeChange(e: React.ChangeEvent<HTMLInputElement>) {
+    traiteCarAutorises(e.target, digitSeulement);
   }
 
   /**
@@ -175,6 +184,15 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
           disabled={props.filtreInactif}
           onBlur={onBlurNumero}
           onInput={numeroChange}
+        />
+
+        <InputField
+          name={withNamespace(props.nomFiltre, ANNEE)}
+          label={getLibelle("Année de registre")}
+          ariaLabel={`${props.nomFiltre}.annee`}
+          maxLength="4"
+          onInput={anneeChange}
+          disabled={props.filtreInactif}
         />
       </div>
     </Fieldset>

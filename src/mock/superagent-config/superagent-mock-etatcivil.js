@@ -118,9 +118,13 @@ export const configEtatcivil = [
         return { data: acteMariage };
       } else if (match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d") {
         return { data: ActeAnalyseMarginales };
-      } else if (
+      }
+
+      if (
         // acte corps
         match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g" ||
+        match[1] === "/acte/corps/923a10fb-0b15-452d-83c0-d24c76d1de8d" ||
+        match[1] === "/acte/corps/b41079a3-9e8d-478c-b04c-c4c2ac47134f" ||
         // acte texte
         match[1] === "/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
       ) {

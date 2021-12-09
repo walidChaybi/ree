@@ -96,7 +96,6 @@ export function getFormTitulaire(): JSX.Element {
 export function getFormDatesDebutFinAnnee(): JSX.Element {
   const datesDebutFinAnneeFiltreProps = {
     nomFiltre: DATES_DEBUT_FIN_ANNEE,
-    anneeVisible: true,
     anneeMin: MIN_YEAR
   } as DatesDebutFinAnneeFiltreProps;
   return (

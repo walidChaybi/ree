@@ -45,7 +45,6 @@ export function mappingCriteres(
     dateCreationFin: getDateFinFromDateCompose(
       criteres.datesDebutFinAnnee?.dateFin
     ),
-    annee: valeurOuUndefined(criteres.datesDebutFinAnnee?.annee),
 
     // Filtre Registre & Réppertoire Civile
     natureActe: valeurOuUndefined(
@@ -59,6 +58,9 @@ export function mappingCriteres(
     ),
     numeroActe: valeurOuUndefined(
       criteres.registreRepertoire?.registre?.numeroActe
+    ),
+    anneeRegistre: valeurOuUndefined(
+      criteres.registreRepertoire?.registre?.anneeRegistre
     ),
     numeroInscription: valeurOuUndefined(
       criteres.registreRepertoire?.repertoire?.numeroInscription
@@ -121,7 +123,8 @@ export function rechercherRepertoireAutorise(
     criteres.natureActe ||
     criteres.familleRegistre ||
     criteres.posteOuPocopa ||
-    criteres.numeroActe
+    criteres.numeroActe ||
+    criteres.anneeRegistre
   );
 }
 
