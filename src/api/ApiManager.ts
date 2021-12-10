@@ -5,14 +5,16 @@ import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatc
 import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
 import { getCsrfHeader } from "../views/common/util/CsrfUtil";
 import {
-    GestionnaireCache,
-    ReceCache
+  GestionnaireCache,
+  ReceCache
 } from "../views/common/util/GestionnaireCache";
 import messageManager from "../views/common/util/messageManager";
 import { URL_ACCUEIL } from "../views/router/ReceUrls";
 
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (43200 secondes)
+
+export const HTTP_STATUS_OK = 200;
 
 const HTTP_FORBIDDEN = 403;
 export const HTTP_NOT_FOUND = 404;
@@ -32,7 +34,8 @@ type ApisAutorisees =
   | "rece-agent-api"
   | "rece-etatcivil-api"
   | "rece-outiltech-api"
-  | "rece-composition-api";
+  | "rece-composition-api"
+  | "rece-mail-api";
 
 interface IApi {
   url: string;

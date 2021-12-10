@@ -76,7 +76,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
               )}
             <MenuTransfert requete={requete} menuFermer={true} />
           </div>
-          <ReponseReqInfoForm reponse={reponseChoisie} requeteId={requete.id} />
+          <ReponseReqInfoForm reponse={reponseChoisie} requete={requete} />
         </div>
       </Fieldset>
     </>

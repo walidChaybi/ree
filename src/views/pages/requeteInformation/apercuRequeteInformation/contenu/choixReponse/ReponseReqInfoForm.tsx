@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { IReponseRequeteInfo } from "../../../../../../model/requete/IReponseRequeteInfo";
+import { IRequeteInformation } from "../../../../../../model/requete/IRequeteInformation";
 import {
   TypePieceJointe,
   usePostPiecesJointesApi
@@ -17,6 +18,10 @@ import {
 } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import { URL_MES_REQUETES_INFORMATION } from "../../../../../router/ReceUrls";
 import {
+  IEnvoyerReponseReqInfoParams,
+  useEnvoyerReponsesReqInfoHook
+} from "../hook/EnvoyerReponseReqInfoHook";
+import {
   ISauvegarderReponseReqInfoParams,
   useSauvegarderReponsesReqInfoHook
 } from "../hook/SauvegarderReponseReqInfoHook";
@@ -31,8 +36,8 @@ import ReponseReqInfoSubForm, {
 } from "./ReponseReqInfoSubForm";
 
 export interface ReponseReqInfoProps {
+  requete: IRequeteInformation;
   reponse?: IReponseRequeteInfo;
-  requeteId: string;
 }
 
 export type ReponseReqInfoFormProps = FormikComponentProps &
@@ -56,25 +61,29 @@ const ValidationSchemaReponseInfoForm = Yup.object({
 });
 
 export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
-  reponse,
-  requeteId
+  requete,
+  reponse
 }) => {
   const history = useHistory();
   const blocsForm: JSX.Element[] = getReponseForm(reponse);
-  const [reponseAEnvoyer, setReponseAEnvoyer] = useState<
-    ISauvegarderReponseReqInfoParams | undefined
-  >();
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+
   const [reponseSaisie, setReponseSaisie] = useState<
     ISauvegarderReponseReqInfoParams | undefined
   >();
-  const [piecesAEnvoyer, setPiecesAEnvoyer] = useState<
-    PieceJointe[] | undefined
+  const [reponseASauvegarder, setReponseASauvegarder] = useState<
+    ISauvegarderReponseReqInfoParams | undefined
   >();
-  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const [reponseAEnvoyer, setReponseAEnvoyer] = useState<
+    IEnvoyerReponseReqInfoParams | undefined
+  >();
   const [
     ajoutPieceJointeTermine,
     setAjoutPieceJointeTermine
   ] = useState<boolean>(false);
+  const [piecesAEnvoyer, setPiecesAEnvoyer] = useState<
+    PieceJointe[] | undefined
+  >();
 
   const onSubmit = (reponseForm: IReponseInfoFormValue) => {
     setOperationEnCours(true);
@@ -84,19 +93,18 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
       setAjoutPieceJointeTermine(true);
     }
     setReponseSaisie({
-      idRequete: requeteId,
+      idRequete: requete.id,
       corpsMail: reponseForm.reponse.corpsMail,
       idReponse: reponse?.id
     });
   };
 
+  // 1 - On sauvegarde les pièces jointes
   const [receptionRetourAjoutPieceJointe] = usePostPiecesJointesApi(
     TypePieceJointe.PIECE_COMPLEMENT_INFORMATION,
-    requeteId,
+    requete.id,
     piecesAEnvoyer
   );
-
-  const idReponse = useSauvegarderReponsesReqInfoHook(reponseAEnvoyer);
 
   useEffect(() => {
     if (receptionRetourAjoutPieceJointe) {
@@ -105,10 +113,28 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   }, [receptionRetourAjoutPieceJointe]);
 
   useEffect(() => {
-    if (ajoutPieceJointeTermine) {
-      setReponseAEnvoyer(reponseSaisie);
+    if (ajoutPieceJointeTermine && reponseSaisie) {
+      setReponseAEnvoyer({
+        reponseSaisie,
+        requete,
+        piecesJointes: piecesAEnvoyer
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ajoutPieceJointeTermine, reponseSaisie]);
+
+  // 2 - On envoi le mail avec la réponse et les pièces jointes
+  const mailEnvoyer = useEnvoyerReponsesReqInfoHook(reponseAEnvoyer);
+
+  useEffect(() => {
+    if (mailEnvoyer) {
+      setReponseASauvegarder(reponseSaisie);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mailEnvoyer]);
+
+  // 3 - On sauvegarde la requête et on change son statut
+  const idReponse = useSauvegarderReponsesReqInfoHook(reponseASauvegarder);
 
   useEffect(() => {
     if (idReponse) {

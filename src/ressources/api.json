@@ -5,7 +5,7 @@
       "ports": 80,
       "domain": "rece",
       "name": "rece-requete-api",
-      "usedVersions": ["v2"]
+      "usedVersions": ["v1", "v2"]
     },
     {
       "url": "http://localhost",
@@ -26,6 +26,13 @@
       "ports": 80,
       "domain": "rece",
       "name": "rece-outiltech-api",
+      "usedVersions": ["v1"]
+    },
+    {
+      "url": "http://localhost",
+      "ports": 80,
+      "domain": "rece",
+      "name": "rece-mail-api",
       "usedVersions": ["v1"]
     }
   ]

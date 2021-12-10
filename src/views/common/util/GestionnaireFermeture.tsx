@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { HTTP_STATUS_OK } from "../../../api/ApiManager";
 import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
 import { IOfficier } from "../../../model/agent/IOfficier";
 import apiResources from "../../../ressources/api.json";
@@ -54,8 +55,6 @@ export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = props
 
   return null;
 };
-
-const HTTP_STATUS_OK = 200;
 
 export const appelRequetesASigner = (officier: OfficierContextProps) => {
   const officierPayload = officier?.officierDataState;

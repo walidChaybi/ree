@@ -15,6 +15,7 @@ import {
   configEtatcivil,
   NORESULT
 } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configMail } from "../../../../mock/superagent-config/superagent-mock-mail";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
@@ -26,7 +27,8 @@ import {
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetesInformation[0],
-  configEtatcivil[0]
+  configEtatcivil[0],
+  configMail[0]
 ]);
 
 let history: any;
