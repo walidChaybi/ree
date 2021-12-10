@@ -121,12 +121,8 @@ function getTypeInscription(rcrca: IFicheRcRca): JSX.Element {
 }
 
 function getUniteDuree(duree?: IDureeInscription) {
-  if (duree) {
-    if (duree.uniteDuree) {
-      return `${duree.nombreDuree} ${duree.uniteDuree}`;
-    } else {
-      return `${duree.autreDuree}`;
-    }
+  if (duree && duree.uniteDuree) {
+    return `${duree.nombreDuree} ${duree.uniteDuree}`;
   }
   return "";
 }

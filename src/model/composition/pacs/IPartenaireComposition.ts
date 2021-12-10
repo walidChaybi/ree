@@ -34,7 +34,7 @@ export const PartenaireComposition = {
         partenaire
       );
       obj.lieu_naissance_partenaire_1 = Partenaire.getLieuNaissance(partenaire);
-      obj.sexe_partenaire_1 = Partenaire.getSexe(partenaire);
+      obj.sexe_partenaire_1 = Partenaire.getSexe(partenaire).toLowerCase();
     }
   },
 
@@ -51,7 +51,7 @@ export const PartenaireComposition = {
         partenaire
       );
       obj.lieu_naissance_partenaire_2 = Partenaire.getLieuNaissance(partenaire);
-      obj.sexe_partenaire_2 = Partenaire.getSexe(partenaire);
+      obj.sexe_partenaire_2 = Partenaire.getSexe(partenaire).toLowerCase();
     }
   }
 };

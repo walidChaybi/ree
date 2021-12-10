@@ -4,15 +4,15 @@ import { TypeInscriptionRc } from "../../../../../../model/etatcivil/enum/TypeIn
 import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import {
-  getDateFormatJasper,
-  getDateFromTimestamp
+    getDateFormatJasper,
+    getDateFromTimestamp
 } from "../../../../util/DateUtils";
 import {
-  getDecisionExequatur,
-  getDecisionJuridiction,
-  getDecisionNotaire,
-  getInteressesDecision,
-  getParagrapheFin
+    getDecisionExequatur,
+    getDecisionJuridiction,
+    getDecisionNotaire,
+    getInteressesDecision,
+    getParagrapheFin
 } from "./specificationCommunes";
 
 export interface IElementsJasperCertificatRCA {
@@ -74,7 +74,7 @@ function getDecisionONACInscription(
   let decisionRecue = "";
   const titreOnac = infosRCA.decision?.autorite.titreOnac;
 
-  decisionRecue += "Le service central d'état civil a reçu la décision ";
+  decisionRecue += "Le Service central d'état civil a reçu la décision ";
 
   decisionRecue +=
     titreOnac && titreOnac === "Directrice générale"

@@ -55,14 +55,14 @@ export function getDecisionJuridiction(
       typeDecision = "l'ordonnance";
       break;
     case TypeDecision.DECISION_JUDICIAIRE:
-      typeDecision = "la décision judiciaire";
+      typeDecision = "la décision";
       break;
     default:
       typeDecision = "";
       break;
   }
 
-  decisionRecue = `Le service central d'état civil a reçu ${typeDecision} `;
+  decisionRecue = `Le Service central d'état civil a reçu ${typeDecision} `;
   decisionRecue += `du ${infos.decision?.autorite.typeJuridiction} de ${localite}, `;
   decisionRecue += `en date du ${dateDecision}`;
 
@@ -77,7 +77,7 @@ export function getDecisionNotaire(
   let decisionRecue = "";
   // décision de Notaire de type "Convention"
   if (infos.decision?.type === TypeDecision.CONVENTION) {
-    decisionRecue = `Le service central d'état civil a reçu la convention déposée au rang des minutes de Maitre `;
+    decisionRecue = `Le Service central d'état civil a reçu la convention déposée au rang des minutes de Maître `;
   }
   // décision de Notaire de type "Requete"
   else if (infos.decision?.type === TypeDecision.REQUETE) {
@@ -87,12 +87,12 @@ export function getDecisionNotaire(
       infos.decision?.juridictionExecutante?.pays,
       infos.decision?.juridictionExecutante?.arrondissement
     );
-    decisionRecue = `Le service central d'état civil a reçu un extrait de la requête présentée auprès du ${infos.decision?.juridictionExecutante?.typeJuridiction} `;
-    decisionRecue += `de ${localiteJuridictionExecutante} afin d'obtenir homologation de l'acte reçu par Maitre `;
+    decisionRecue = `Le Service central d'état civil a reçu un extrait de la requête présentée auprès du ${infos.decision?.juridictionExecutante?.typeJuridiction} `;
+    decisionRecue += `de ${localiteJuridictionExecutante} afin d'obtenir homologation de l'acte reçu par Maître `;
   }
   // décision de Notaire autre que de type "Convention" ou "Requete"
   else {
-    decisionRecue = `Le service central d'état civil a reçu un acte établi par Maitre `;
+    decisionRecue = `Le Service central d'état civil a reçu un acte établi par Maître `;
   }
 
   decisionRecue += `${infos.decision?.autorite.prenomNotaire} ${infos.decision?.autorite.nomNotaire}, `;
@@ -258,7 +258,7 @@ function getLignesInteresseDecision(data: IInteresse, showDeces: boolean) {
 }
 
 function getLignesMariageInteresses(data: IMariageInteresse) {
-  let mariageInteresses = "Mariés";
+  let mariageInteresses = "\nMariés";
 
   mariageInteresses +=
     !data.aletranger && !LieuxUtils.isPaysFrance(data.paysMariage)
@@ -289,7 +289,7 @@ export function getInteressesDecision(data: IFicheRcRca) {
   );
   data.interesses.forEach(interesse => {
     if (interesses !== "") {
-      interesses = addPhrase(interesses, "et");
+      interesses = addPhrase(interesses, "\net\n");
     }
     interesses = addPhrase(
       interesses,

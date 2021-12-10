@@ -164,7 +164,7 @@ function getPrenomNomNotaire(autorite: IAutorite): SectionContentProps {
   return {
     libelle: "Prénom NOM",
     value: (
-      <span>{`Maitre ${formatPrenom(autorite.prenomNotaire)} ${formatNom(
+      <span>{`Maître ${formatPrenom(autorite.prenomNotaire)} ${formatNom(
         autorite.nomNotaire
       )}`}</span>
     )

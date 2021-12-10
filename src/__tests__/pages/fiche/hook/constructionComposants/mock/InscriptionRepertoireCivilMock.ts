@@ -34,7 +34,6 @@ export const ficheInscriptionRepertoireCivil = {
   duree: {
     nombreDuree: 2,
     uniteDuree: "années",
-    autreDuree: "Viager",
     dateFinDeMesure: 1581724800000
   },
   statutsFiche: [
@@ -66,7 +65,7 @@ export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImp
   dateInscription: new Date(1518652800000),
   duree: {
     nombreDuree: 2,
-    autreDuree: "Viager",
+    uniteDuree: "années",
     dateFinDeMesure: 1581724800000
   }
 };
@@ -82,7 +81,6 @@ export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
   inscriptionsLiees: [],
   dateInscription: new Date(1518652800000),
   duree: {
-    autreDuree: "Viager",
     dateFinDeMesure: 1581724800000
   }
 };

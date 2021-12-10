@@ -86,13 +86,13 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
   const component = getInscriptionRepertoireCivil(
     ficheInscriptionRepertoireCivilSansUniteDureeInscription as IFicheRcRca
   );
-  const idxDureeInscription = component.partContent.contents.findIndex(
-    content => content.libelle === "Durée inscription"
+  const idxDateFinDeMesure = component.partContent.contents.findIndex(
+    content => content.libelle === "Date fin de mesure"
   );
-  const valueDureeInscription =
-    component.partContent.contents[idxDureeInscription].value;
-  expect(idxDureeInscription).toBeGreaterThan(-1);
-  expect(valueDureeInscription).toBe("Viager");
+  const valueDateFinDeMesure =
+    component.partContent.contents[idxDateFinDeMesure].value;
+  expect(idxDateFinDeMesure).toBeGreaterThan(-1);
+  expect(valueDateFinDeMesure).toBe("15/02/2020");
 });
 
 test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans inscriptions liees et sans inscriptions impactées", async () => {

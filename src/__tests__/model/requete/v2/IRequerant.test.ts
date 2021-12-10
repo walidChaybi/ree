@@ -45,7 +45,7 @@ test("Attendu: Requerant.setRequerant mandataire", async () => {
     qualite: Qualite.MANDATAIRE_HABILITE,
     mandataireHabilite: {
       type: TypeMandataireReq.NOTAIRE,
-      raisonSociale: "Maitre Duflan",
+      raisonSociale: "Maître Duflan",
       nature: ""
     }
   };

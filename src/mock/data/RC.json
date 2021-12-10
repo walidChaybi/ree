@@ -129,7 +129,7 @@
     },
     "duree": {
       "nombreDuree": 2,
-      "autreDuree": "Viager",
+      "uniteDuree": "années",
       "dateFinDeMesure": 1581724800
     },
     "codesMandataires": [
