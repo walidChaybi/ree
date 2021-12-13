@@ -118,6 +118,7 @@ function isRegistreDirty(values: IRMCActeInscription) {
   return (
     criteres?.familleRegistre !== "" ||
     criteres?.natureActe !== "" ||
+    criteres?.anneeRegistre !== "" ||
     criteres?.numeroActe !== "" ||
     criteres?.pocopa !== null
   );

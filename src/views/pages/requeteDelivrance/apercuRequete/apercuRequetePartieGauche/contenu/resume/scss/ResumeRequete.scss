@@ -18,10 +18,6 @@
     }
   }
 
-  .PanelsResumeRequete .SectionPanel {
-    width: 92%;
-  }
-
   .SectionPanelArea {
     .TitlePanelArea {
       grid-row: 1;
@@ -34,7 +30,7 @@
       margin-bottom: 0.5rem;
     }
     .content {
-      grid-template-columns: 45% 55%;
+      grid-template-columns: 45% 50%;
     }
   }
 

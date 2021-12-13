@@ -16,6 +16,7 @@ import {
 } from "../../../../common/widget/formulaire/champRecherche/ChampRechercheField";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
+import { MIN_LENGTH_ANNEE_MESSAGE } from "../../../../common/widget/formulaire/FormulaireMessages";
 import {
   digitSeulement,
   traiteCarAutorises,
@@ -39,17 +40,19 @@ export const ANNEE = "anneeRegistre";
 export const RegistreActeDefaultValues = {
   [NATURE_ACTE]: "",
   [FAMILLE_REGISTRE]: "",
+  [ANNEE]: "",
   [POCOPA]: null, // Pocopa est un objet de type Option ({value: "", str: ""})
-  [NUMERO_ACTE]: "",
-  [ANNEE]: ""
+  [NUMERO_ACTE]: ""
 };
+
+const MIN_LENGTH_ANNEE = 999;
 
 // Schéma de validation des champs
 export const RegistreActeValidationSchema = Yup.object({
   [NATURE_ACTE]: Yup.string(),
   [FAMILLE_REGISTRE]: Yup.string(),
-  [NUMERO_ACTE]: Yup.string(),
-  [ANNEE]: Yup.number()
+  [ANNEE]: Yup.number().min(MIN_LENGTH_ANNEE, MIN_LENGTH_ANNEE_MESSAGE),
+  [NUMERO_ACTE]: Yup.string()
 });
 
 export type RegistreActeFiltreProps = ComponentFiltreProps &
@@ -165,6 +168,15 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
           onChange={onFamilleRegistreChange}
         />
 
+        <InputField
+          name={withNamespace(props.nomFiltre, ANNEE)}
+          label={getLibelle("Année de registre")}
+          ariaLabel={`${props.nomFiltre}.annee`}
+          maxLength="4"
+          onInput={anneeChange}
+          disabled={props.filtreInactif}
+        />
+
         <ChampRechercheField
           {...({
             name: pocopaWithNamespace,
@@ -182,15 +194,6 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
           disabled={props.filtreInactif}
           onBlur={onBlurNumero}
           onInput={numeroChange}
-        />
-
-        <InputField
-          name={withNamespace(props.nomFiltre, ANNEE)}
-          label={getLibelle("Année de registre")}
-          ariaLabel={`${props.nomFiltre}.annee`}
-          maxLength="4"
-          onInput={anneeChange}
-          disabled={props.filtreInactif}
         />
       </div>
     </Fieldset>

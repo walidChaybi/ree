@@ -229,6 +229,11 @@ function getRequerant(requerant: IRequerant): SectionPartProps[] {
       partContent: {
         contents: getRequerantInfo2(requerant)
       }
+    },
+    {
+      partContent: {
+        contents: getRequerantInfo3(requerant)
+      }
     }
   ];
 }
@@ -311,11 +316,6 @@ function getRequerantInfo2(requerant: IRequerant): SectionContentProps[] {
   );
   ajouterContentPartAuPartUneValeur(
     infosRequerant,
-    getLibelle("Adresse email"),
-    requerant.courriel
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
     getLibelle("N° de téléphone"),
     requerant.telephone
   );
@@ -323,6 +323,18 @@ function getRequerantInfo2(requerant: IRequerant): SectionContentProps[] {
     infosRequerant,
     getLibelle("Lien avec le titulaire"),
     lienTitulaire
+  );
+
+  return infosRequerant;
+}
+
+function getRequerantInfo3(requerant: IRequerant): SectionContentProps[] {
+  const infosRequerant = [] as SectionContentProps[];
+
+  ajouterContentPartAuPartUneValeur(
+    infosRequerant,
+    getLibelle("Adresse email"),
+    requerant.courriel
   );
 
   return infosRequerant;

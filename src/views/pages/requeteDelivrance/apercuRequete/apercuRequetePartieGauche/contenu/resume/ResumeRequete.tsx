@@ -59,7 +59,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
       </div>
       {fenetreExterne && (
         <FenetreExterne
-          titre={`Detail requête : N°${props.requete.numero}`}
+          titre={`Détails requête : N°${props.requete.numero}`}
           onCloseHandler={onClose}
           height={height}
           width={width}

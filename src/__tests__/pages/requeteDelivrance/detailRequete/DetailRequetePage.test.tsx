@@ -32,7 +32,7 @@ test("renders Page requete with all elements", async () => {
     );
   });
   await waitFor(() => {
-    expect(screen.getAllByText("Détails de requête")).toHaveLength(1);
+    expect(screen.getAllByText("Détails requête")).toHaveLength(1);
   });
 });
 

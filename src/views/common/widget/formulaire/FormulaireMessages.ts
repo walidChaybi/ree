@@ -35,4 +35,6 @@ export const MOTIF_OBLIGATOIRE = "Le motif de délivrance est obligatoire";
 export const ALERTE_AUTRE = `L'observation est obligatoire si le motif est "Autre"`;
 export const COMPLEMENT_DESCRIPTION_LIMITE_TAILLE = `L'observation ne peut pas dépasser 150 caractères`;
 
+export const MIN_LENGTH_ANNEE_MESSAGE = "L'année doit être sur 4 chiffres";
+
 export const CHAMP_OBLIGATOIRE = "Ce champ est obligatoire";
