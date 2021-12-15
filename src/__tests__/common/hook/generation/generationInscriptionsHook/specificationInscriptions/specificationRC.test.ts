@@ -102,7 +102,7 @@ Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX
 Date de naissance: 24 décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
 
-Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
+mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe(
@@ -137,7 +137,7 @@ Pierre-Olivier, Félix-Antoine, François-Xavier LE ROUX
 Date de naissance: 24 décembre 1987
 Lieu de naissance: Châteauneuf-du-Faou (Finistère, Bretagne)
 
-Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
+mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe(
@@ -169,7 +169,7 @@ Marie-Charlotte, Anne-Claire, Lily-Rose, Abby-Gaëlle SLAOUI
 Date de naissance: 1er septembre 1983
 Lieu de naissance: Brest (Finistère)
 
-Mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
+mariés à Nanning - Zhuang du Guangxi (Chine, Pays du Soleil Levant) le 12 juin 2020`;
   expect(elementsJasper.anneeInscription).toBe("2020");
   expect(elementsJasper.numeroInscription).toBe("2");
   expect(elementsJasper.decisionRecue1).toBe(

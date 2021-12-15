@@ -68,7 +68,7 @@ Harleen, Charlène QUINZEL
 Date de naissance: 1993
 Lieu de naissance: Nantes (Loire-Atlantique)
 
-Mariés devant les autorités consulaires de Italie en France le 28 juin 2018`;
+mariés devant les autorités consulaires de Italie en France le 28 juin 2018`;
   expect(elementsJasper.anneeInscription).toBe("1998");
   expect(elementsJasper.numeroInscription).toBe("4094");
   expect(elementsJasper.decisionRecue).toBe(

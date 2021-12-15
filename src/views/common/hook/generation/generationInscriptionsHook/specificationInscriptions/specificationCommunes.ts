@@ -258,7 +258,7 @@ function getLignesInteresseDecision(data: IInteresse, showDeces: boolean) {
 }
 
 function getLignesMariageInteresses(data: IMariageInteresse) {
-  let mariageInteresses = "\nMariés";
+  let mariageInteresses = "\nmariés";
 
   mariageInteresses +=
     !data.aletranger && !LieuxUtils.isPaysFrance(data.paysMariage)
