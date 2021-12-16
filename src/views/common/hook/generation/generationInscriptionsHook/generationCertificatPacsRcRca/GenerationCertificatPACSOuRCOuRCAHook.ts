@@ -10,9 +10,10 @@ import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscrip
 import { MimeType } from "../../../../../../ressources/MimeType";
 import { useCertificatPacsRcRcaApiHook } from "../../../composition/CompositionCertificatPacsRcRca";
 import { usePostDocumentsReponseApi } from "../../../DocumentReponseHook";
+import { TFiche } from "../../../repertoires/MappingRepertoires";
 import { useInformationsRepertoireApiHook } from "../../../repertoires/RepertoireApiHook";
 import {
-  IResultGenerationPlusieursDocument,
+  IResultGenerationInscriptions,
   RESULTAT_VIDE
 } from "../../generationUtils";
 import { useGestionCertificatCourant as useGestionPacsRcRcaCourant } from "./GenerationCertificatGestionPacsRcRcaCourantHook";
@@ -27,7 +28,7 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   typeCertificat: TypePacsRcRca,
   requete?: IRequeteTableauDelivrance,
   listePacsRcRca?: IResultatRMCInscription[]
-): IResultGenerationPlusieursDocument | undefined {
+): IResultGenerationInscriptions | undefined {
   const [
     certificatComposition,
     setCertificatComposition
@@ -40,6 +41,10 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
     setDocumentsReponsePourStockage
   ] = useState<IDocumentReponse[]>(); // Ne contiendra qu'un seul IDocumentReponse (on stock les doc un par un)
 
+  const [fichePacsRcRcaTraiter, setFichePacsRcRcaTraiter] = useState<TFiche[]>(
+    []
+  );
+
   const [uuidDocumentsGeneres, setUuidDocumentsGeneres] = useState<string[]>(
     []
   );
@@ -48,7 +53,7 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   const [
     resultGenerationCertificat,
     setResultGenerationCertificat
-  ] = useState<IResultGenerationPlusieursDocument>();
+  ] = useState<IResultGenerationInscriptions>();
 
   // 0- récupération du pacs, rc ou rca à traiter
   const { pacsRcRcaCourant } = useGestionPacsRcRcaCourant(
@@ -57,7 +62,8 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
     listePacsRcRcaATraiter,
     requete,
     listePacsRcRca,
-    uuidDocumentsGeneres
+    uuidDocumentsGeneres,
+    fichePacsRcRcaTraiter
   );
 
   // 1- Récupération des informations sur le PACS courant
@@ -124,6 +130,9 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
         ...uuidDocumentsGeneres,
         ...uuidDocumentsReponseStockes
       ]);
+      const fiches = fichePacsRcRcaTraiter;
+      fiches.push(informationsPacsRcRca);
+      setFichePacsRcRcaTraiter(fiches);
     }
     if (listePacsRcRcaATraiter) {
       // "Dépilement" du premier élément pour traiter le prochain PACS/RC/RCA

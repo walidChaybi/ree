@@ -7,6 +7,7 @@ import {
   useGenerationCertificatSituationHook
 } from "../../../../../../../common/hook/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
 import { specificationPhraseDelivrer } from "../../../../../../../common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
+import { INbInscriptionsInfos } from "../../../../../../../common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { useGenerationInscriptionsHook } from "../../../../../../../common/hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
 import { useSupprimerAnciensDocumentsReponseHook } from "./SupprimerAnciensDocumentsReponseHook";
 
@@ -52,8 +53,12 @@ export function useDelivrerCertificatSituationHook(
     if (resultGenerationInscription) {
       setParamsCertificatSituation({
         requete,
-        dataRMCAutoInscription,
-        dataRMCAutoActe,
+        nbInscriptionsInfos: {} as INbInscriptionsInfos,
+        infosInscription: {
+          infosPacs: resultGenerationInscription.pacs || [],
+          infosRc: resultGenerationInscription.rc || [],
+          infosRca: resultGenerationInscription.rca || []
+        },
         specificationPhrase: specificationPhraseDelivrer
       });
     }

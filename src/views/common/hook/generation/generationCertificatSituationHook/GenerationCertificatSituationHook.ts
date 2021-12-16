@@ -12,20 +12,20 @@ import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { MimeType } from "../../../../../ressources/MimeType";
 import { useCertificatSituationApiHook } from "../../composition/CompositionCertificatSituationHook";
 import { useStockerDocumentCreerActionMajStatutRequete } from "../../requete/StockerDocumentCreerActionMajStatutRequete";
 import { IResultGenerationUnDocument, RESULTAT_VIDE } from "../generationUtils";
 import { specificationDecret } from "./specificationTitreDecretPhrase/specificationDecret";
+import { IInfosInscriptions } from "./specificationTitreDecretPhrase/specificationPhraseDelivrer";
+import { INbInscriptionsInfos } from "./specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { specificationTitre } from "./specificationTitreDecretPhrase/specificationTitre";
 
 export interface IGenerationCertificatSituationParams {
   requete?: IRequeteTableauDelivrance;
-  dataRMCAutoInscription?: IResultatRMCInscription[];
-  dataRMCAutoActe?: IResultatRMCActe[];
+  nbInscriptionsInfos?: INbInscriptionsInfos;
   specificationPhrase?: any;
+  infosInscription?: IInfosInscriptions;
 }
 export interface IPhrasesJasperCertificatSituation {
   phrasesLiees?: string;
@@ -56,15 +56,14 @@ export function useGenerationCertificatSituationHook(
       params &&
       params.requete &&
       params.requete.document &&
-      params.dataRMCAutoInscription &&
-      params.dataRMCAutoActe
+      (params.nbInscriptionsInfos || params.infosInscription)
     ) {
       if (params?.requete.titulaires && params.requete.titulaires.length > 0) {
         const phrases: IPhrasesJasperCertificatSituation = params.specificationPhrase.getPhrasesJasper(
           params.requete.document, // id du type de document demandé
           params.requete.titulaires[0].sexe,
-          params.dataRMCAutoActe,
-          params.dataRMCAutoInscription
+          params.nbInscriptionsInfos,
+          params.infosInscription
         );
         construitCertificatSituation(
           phrases.phrasesLiees,

@@ -27,7 +27,7 @@ export const TitulaireComposition = {
     if (titulaire) {
       obj.nom = getValeurOuVide(titulaire.nom);
       obj.prenoms = getValeurOuVide(formatPrenoms(titulaire.prenoms));
-      obj.sexe = titulaire.sexe.libelle;
+      obj.sexe = titulaire.sexe.libelle.toLowerCase();
 
       obj.jour_naissance = getJourOu1er(titulaire.jourNaissance);
       obj.mois_naissance = getMoisEnLettre(titulaire.moisNaissance);

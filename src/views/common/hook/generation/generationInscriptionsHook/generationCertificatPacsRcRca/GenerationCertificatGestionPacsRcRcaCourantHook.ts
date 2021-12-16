@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { IRequeteTableauDelivrance } from "../../../../../../model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IResultGenerationPlusieursDocument } from "../../generationUtils";
+import { TFiche } from "../../../repertoires/MappingRepertoires";
+import { IResultGenerationInscriptions } from "../../generationUtils";
 
 export function useGestionCertificatCourant(
   setListePacsRcRcaATraiter: React.Dispatch<
     React.SetStateAction<IResultatRMCInscription[] | undefined>
   >,
   setResultGenerationCertificat: React.Dispatch<
-    React.SetStateAction<IResultGenerationPlusieursDocument | undefined>
+    React.SetStateAction<IResultGenerationInscriptions | undefined>
   >,
   listePacsRcRcaATraiter?: IResultatRMCInscription[],
   requete?: IRequeteTableauDelivrance,
   listePacsRcRca?: IResultatRMCInscription[],
-  uuidDocumentsGeneres?: string[]
+  uuidDocumentsGeneres?: string[],
+  fichePacsRcRcaTraiter?: TFiche[]
 ) {
   const [
     pacsRcRcaCourant,
@@ -43,7 +45,8 @@ export function useGestionCertificatCourant(
       ) {
         // Il n'y a plus de doc à traiter on créé et renvoie le résultat
         setResultGenerationCertificat({
-          idDocumentsReponse: uuidDocumentsGeneres
+          idDocumentsReponse: uuidDocumentsGeneres,
+          fiches: fichePacsRcRcaTraiter
         });
       }
     }

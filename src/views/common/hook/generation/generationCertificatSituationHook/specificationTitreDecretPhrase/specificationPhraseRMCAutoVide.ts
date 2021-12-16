@@ -1,9 +1,5 @@
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
 import {
-  FicheUtil,
-  TypeFiche
-} from "../../../../../../model/etatcivil/enum/TypeFiche";
-import {
   CODE_CERTIFICAT_SITUATION_PACS,
   CODE_CERTIFICAT_SITUATION_PACS_RC,
   CODE_CERTIFICAT_SITUATION_PACS_RCA,
@@ -13,12 +9,11 @@ import {
   CODE_CERTIFICAT_SITUATION_RC_RCA,
   DocumentDelivrance
 } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { getLibelle } from "../../../../util/Utils";
 import { IPhrasesJasperCertificatSituation } from "../GenerationCertificatSituationHook";
 
-interface INbInscriptionsInfos {
+export interface INbInscriptionsInfos {
+  nbActe: number;
   nbPacs: number;
   nbRc: number;
   nbRca: number;
@@ -32,14 +27,8 @@ class Condition {
     public nbRca?: number
   ) {}
 
-  estVerifiee(
-    dataRMCAutoActe?: IResultatRMCActe[],
-    dataRMCAutoInscription?: IResultatRMCInscription[]
-  ) {
-    let cond = dataRMCAutoActe?.length === this.nbActe;
-    const nbInscriptionsInfos: INbInscriptionsInfos = this.getNbInscriptionsInfos(
-      dataRMCAutoInscription
-    );
+  estVerifiee(nbInscriptionsInfos: INbInscriptionsInfos) {
+    let cond = nbInscriptionsInfos.nbActe === this.nbActe;
 
     if (this.nbPacs !== undefined) {
       cond = cond && this.nbPacs === nbInscriptionsInfos.nbPacs;
@@ -55,33 +44,6 @@ class Condition {
 
     return cond;
   }
-
-  private getNbInscriptionsInfos(
-    dataRMCAutoInscription?: IResultatRMCInscription[]
-  ) {
-    const infos: INbInscriptionsInfos = { nbRc: 0, nbRca: 0, nbPacs: 0 };
-
-    if (dataRMCAutoInscription) {
-      dataRMCAutoInscription.forEach(data => {
-        const typeFiche: TypeFiche = FicheUtil.getTypeFicheFromString(
-          data.categorie
-        );
-        switch (typeFiche) {
-          case TypeFiche.RC:
-            infos.nbRc++;
-            break;
-          case TypeFiche.RCA:
-            infos.nbRca++;
-            break;
-          case TypeFiche.PACS:
-            infos.nbPacs++;
-            break;
-        }
-      });
-    }
-
-    return infos;
-  }
 }
 
 class Specification {
@@ -91,15 +53,11 @@ class Specification {
     public phraseFeminin: string
   ) {}
 
-  getPhrase(
-    sexe: Sexe,
-    dataRMCAutoActe?: IResultatRMCActe[],
-    dataRMCAutoInscription?: IResultatRMCInscription[]
-  ) {
+  getPhrase(sexe: Sexe, nbInscriptionsInfos: INbInscriptionsInfos) {
     let phrasesLiees: string | undefined;
     phrasesLiees = "";
 
-    if (this.condition.estVerifiee(dataRMCAutoActe, dataRMCAutoInscription)) {
+    if (this.condition.estVerifiee(nbInscriptionsInfos)) {
       phrasesLiees =
         sexe === Sexe.FEMININ ? this.phraseFeminin : this.phraseMasculin;
     }
@@ -201,8 +159,7 @@ class SpecificationPhrase {
   getPhrasesJasper(
     idDocumentDemande: string,
     sexe: Sexe,
-    dataRMCAutoActe?: IResultatRMCActe[],
-    dataRMCAutoInscription?: IResultatRMCInscription[]
+    nbInscriptionsInfos: INbInscriptionsInfos
   ): IPhrasesJasperCertificatSituation {
     let phrasesJasper = {} as IPhrasesJasperCertificatSituation;
     if (this.MAP_SPECIFICATION.size === 0) {
@@ -211,11 +168,7 @@ class SpecificationPhrase {
 
     const specification = this.MAP_SPECIFICATION.get(idDocumentDemande);
     if (specification) {
-      phrasesJasper = specification.getPhrase(
-        sexe,
-        dataRMCAutoActe,
-        dataRMCAutoInscription
-      );
+      phrasesJasper = specification.getPhrase(sexe, nbInscriptionsInfos);
     }
     return phrasesJasper;
   }

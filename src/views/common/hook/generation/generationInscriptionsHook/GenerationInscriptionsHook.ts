@@ -4,9 +4,14 @@ import {
   TypeFiche
 } from "../../../../../model/etatcivil/enum/TypeFiche";
 import { TypePacsRcRca } from "../../../../../model/etatcivil/enum/TypePacsRcRca";
+import { IFichePacs } from "../../../../../model/etatcivil/pacs/IFichePacs";
+import { IFicheRcRca } from "../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IResultGenerationPlusieursDocument } from "../generationUtils";
+import {
+  IResultGenerationInscriptions,
+  IResultGenerationPlusieursInscriptions
+} from "../generationUtils";
 import { useGenerationCertificatPACSOuRCOuRCAHook } from "./generationCertificatPacsRcRca/GenerationCertificatPACSOuRCOuRCAHook";
 
 export function useGenerationInscriptionsHook(
@@ -22,10 +27,14 @@ export function useGenerationInscriptionsHook(
 
   const [idDocumentsReponse, setIdDocumentsReponse] = useState<string[]>([]);
 
+  const [listeRCTraiter, setListeRCTraiter] = useState<IFicheRcRca[]>();
+
+  const [listeRCATraiter, setListeRCATraiter] = useState<IFicheRcRca[]>();
+
   const [
-    resultGenerationInscription,
-    setResultGenerationInscription
-  ] = useState<IResultGenerationPlusieursDocument>();
+    resultGenerationPlusieursInscriptions,
+    setResultGenerationPlusieursInscriptions
+  ] = useState<IResultGenerationPlusieursInscriptions>();
 
   // 1 - Récupération des RC
   useEffect(() => {
@@ -49,6 +58,7 @@ export function useGenerationInscriptionsHook(
     if (nonVide(dataRMCAutoInscription, resultGenerationCertificatRC)) {
       if (resultGenerationCertificatRC?.idDocumentsReponse) {
         setIdDocumentsReponse(resultGenerationCertificatRC.idDocumentsReponse);
+        setListeRCTraiter(resultGenerationCertificatRC.fiches as IFicheRcRca[]);
       }
       setListeRCA(
         // @ts-ignore dataRMCAutoInscription forcément non vide
@@ -74,6 +84,9 @@ export function useGenerationInscriptionsHook(
           ...idDocumentsReponse,
           ...resultGenerationCertificatRCA.idDocumentsReponse
         ]);
+        setListeRCATraiter(
+          resultGenerationCertificatRCA.fiches as IFicheRcRca[]
+        );
       }
       setListePACS(
         // @ts-ignore dataRMCAutoInscription forcément non vide
@@ -94,23 +107,26 @@ export function useGenerationInscriptionsHook(
   // 4 - Maj du state résultat 'resultGenerationInscription' pour invoquer ensuite la génération du certificat de situation général (cf. DelivrerCertificatSituationHook.ts)
   useEffect(() => {
     if (resultGenerationCertificatPACS?.idDocumentsReponse) {
-      setResultGenerationInscription({
+      setResultGenerationPlusieursInscriptions({
         idDocumentsReponse: [
           ...idDocumentsReponse,
           ...resultGenerationCertificatPACS.idDocumentsReponse
-        ]
+        ],
+        pacs: resultGenerationCertificatPACS.fiches as IFichePacs[],
+        rc: listeRCTraiter,
+        rca: listeRCATraiter
       });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultGenerationCertificatPACS]);
 
-  return resultGenerationInscription;
+  return resultGenerationPlusieursInscriptions;
 }
 
 function nonVide(
   dataRMCAutoInscription?: IResultatRMCInscription[],
-  resultGenerationCertificat?: IResultGenerationPlusieursDocument | undefined
+  resultGenerationCertificat?: IResultGenerationInscriptions | undefined
 ) {
   return dataRMCAutoInscription && resultGenerationCertificat;
 }

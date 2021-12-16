@@ -113,9 +113,9 @@ export const pacsModificationNotaireMap: IFichePacs = {
   annee: "2018",
   dateDerniereMaj: new Date("2020-11-26"),
   dateDerniereDelivrance: new Date("2020-12-30"),
-  statut: StatutPacs.ENREGISTRE,
+  statut: StatutPacs.MODIFIE,
   dateEnregistrementParAutorite: new Date("1970-01-19"),
-  dateInscription: new Date("2020-12-04"),
+  dateInscription: new Date("2020-12-01"),
   autorite: {
     typeAutorite: TypeAutorite.NOTAIRE,
     numeroDepartement: "75",
@@ -242,7 +242,7 @@ export const annulationJuridictionMap: IFichePacs = {
   annee: "2018",
   dateDerniereMaj: new Date("2020-11-26"),
   dateDerniereDelivrance: new Date("2020-12-30"),
-  statut: StatutPacs.ENREGISTRE,
+  statut: StatutPacs.ANNULE,
   dateEnregistrementParAutorite: new Date("1970-01-19"),
   dateInscription: new Date("2020-12-04"),
   autorite: {
@@ -336,9 +336,9 @@ export const dissolutionJuridictionMap: IFichePacs = {
   annee: "2018",
   dateDerniereMaj: new Date("2020-11-26"),
   dateDerniereDelivrance: new Date("2020-12-30"),
-  statut: StatutPacs.ENREGISTRE,
+  statut: StatutPacs.DISSOUS,
   dateEnregistrementParAutorite: new Date("1970-01-19"),
-  dateInscription: new Date("2020-12-04"),
+  dateInscription: new Date("2020-12-01"),
   autorite: {
     typeAutorite: TypeAutorite.JURIDICTION,
     numeroDepartement: "75",
@@ -432,7 +432,7 @@ export const dissolutionPosteMap: IFichePacs = {
   annee: "2018",
   dateDerniereMaj: new Date("2020-11-26"),
   dateDerniereDelivrance: new Date("2020-12-30"),
-  statut: StatutPacs.ENREGISTRE,
+  statut: StatutPacs.DISSOUS,
   dateEnregistrementParAutorite: new Date("1970-01-19"),
   dateInscription: new Date("2020-12-04"),
   autorite: {

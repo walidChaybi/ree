@@ -1,8 +1,12 @@
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
+import { StatutPacesUtil } from "../../../../../../model/etatcivil/enum/StatutPacs";
+import { TypeFiche } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import {
-  FicheUtil,
-  TypeFiche
-} from "../../../../../../model/etatcivil/enum/TypeFiche";
+  InscriptionRcUtil,
+  TypeInscriptionRc
+} from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
+import { IFichePacs } from "../../../../../../model/etatcivil/pacs/IFichePacs";
+import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import {
   CODE_CERTIFICAT_SITUATION_PACS,
   CODE_CERTIFICAT_SITUATION_PACS_RC,
@@ -13,67 +17,31 @@ import {
   CODE_CERTIFICAT_SITUATION_RC_RCA,
   DocumentDelivrance
 } from "../../../../../../model/requete/enum/DocumentDelivrance";
-import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { getDateFormatJasper } from "../../../../util/DateUtils";
 import { getLibelle, replaceIndexByValue } from "../../../../util/Utils";
 import { IPhrasesJasperCertificatSituation } from "../GenerationCertificatSituationHook";
-interface IInscriptionsInfos {
-  infosPacs: IResultatRMCInscription[];
-  infosRc: IResultatRMCInscription[];
-  infosRca: IResultatRMCInscription[];
+import { INbInscriptionsInfos } from "./specificationPhraseRMCAutoVide";
+export interface IInfosInscriptions {
+  infosPacs: IFichePacs[];
+  infosRc: IFicheRcRca[];
+  infosRca: IFicheRcRca[];
 }
 
 class DemandeDeliver {
   constructor(public pacs = false, public rc = false, public rca = false) {}
-
-  estDemande(
-    dataRMCAutoInscription?: IResultatRMCInscription[]
-  ): IInscriptionsInfos {
-    const infos = {} as IInscriptionsInfos;
-    infos.infosPacs = [];
-    infos.infosRc = [];
-    infos.infosRca = [];
-
-    if (dataRMCAutoInscription) {
-      dataRMCAutoInscription.forEach(data => {
-        const typeFiche: TypeFiche = FicheUtil.getTypeFicheFromString(
-          data.categorie
-        );
-        switch (typeFiche) {
-          case TypeFiche.RC:
-            infos.infosRc.push(data);
-            break;
-          case TypeFiche.RCA:
-            infos.infosRca.push(data);
-            break;
-          case TypeFiche.PACS:
-            infos.infosPacs.push(data);
-            break;
-        }
-      });
-    }
-
-    return infos;
-  }
 }
 
 class SpecificationDeliver {
   constructor(public demande: DemandeDeliver) {}
 
-  getPhraseEtPiecesJointes(
-    sexe: Sexe,
-    dataRMCAutoInscription?: IResultatRMCInscription[]
-  ) {
+  getPhraseEtPiecesJointes(sexe: Sexe, infosInscription: IInfosInscriptions) {
     let phrasesLiees: string | undefined;
     phrasesLiees = "";
-
-    const infos = this.demande.estDemande(dataRMCAutoInscription);
 
     phrasesLiees = this.nextPhrase(
       phrasesLiees,
       this.demande.pacs,
-      infos.infosPacs,
+      infosInscription.infosPacs,
       sexe,
       TypeFiche.PACS
     );
@@ -81,7 +49,7 @@ class SpecificationDeliver {
     phrasesLiees = this.nextPhrase(
       phrasesLiees,
       this.demande.rc,
-      infos.infosRc,
+      infosInscription.infosRc,
       sexe,
       TypeFiche.RC
     );
@@ -89,14 +57,17 @@ class SpecificationDeliver {
     phrasesLiees = this.nextPhrase(
       phrasesLiees,
       this.demande.rca,
-      infos.infosRca,
+      infosInscription.infosRca,
       sexe,
       TypeFiche.RCA
     );
 
     let phrasesPiecesJointes: string | undefined;
 
-    phrasesPiecesJointes = this.getPiecesJointes(this.demande, infos);
+    phrasesPiecesJointes = this.getPiecesJointes(
+      this.demande,
+      infosInscription
+    );
 
     phrasesLiees = phrasesLiees !== "" ? phrasesLiees : undefined;
 
@@ -106,32 +77,31 @@ class SpecificationDeliver {
   nextPhrase(
     phrases: string,
     demande: boolean,
-    infos: IResultatRMCInscription[],
+    infosInscription: IFichePacs[] | IFicheRcRca[],
     sexe: Sexe,
     type: TypeFiche
   ) {
     const messages = this.getText(type);
     let phraseSuivante = "";
-    if (demande && infos.length > 0) {
-      infos.forEach((info: IResultatRMCInscription) => {
-        if (
-          info.anneeInscription &&
-          info.numeroInscription &&
-          info.dateInscription
-        ) {
+    if (demande && infosInscription.length > 0) {
+      infosInscription.forEach((info: IFichePacs | IFicheRcRca) => {
+        if (info.annee && info.numero && info.dateInscription) {
           phraseSuivante =
             sexe === Sexe.FEMININ ? messages.inscrite : messages.inscrit;
           const date = new Date(info.dateInscription);
+          const infoComplementaire = this.getInfoComplementaire(type, info);
+
           phraseSuivante = replaceIndexByValue(phraseSuivante, [
             getDateFormatJasper(date),
-            info.anneeInscription,
-            info.numeroInscription
+            info.annee,
+            info.numero,
+            infoComplementaire
           ]);
         }
 
         phrases = this.addPhrase(phrases, phraseSuivante);
       });
-    } else if (demande && infos.length === 0) {
+    } else if (demande && infosInscription.length === 0) {
       phrases = this.addPhrase(
         phrases,
         sexe === Sexe.FEMININ ? messages.pasInscrite : messages.pasInscrit
@@ -146,6 +116,29 @@ class SpecificationDeliver {
     } else {
       return `${phrase}\n${phraseSuivante}`;
     }
+  }
+
+  getInfoComplementaire(type: TypeFiche, info: IFichePacs | IFicheRcRca) {
+    let infoComplementaire = "";
+    if (type === TypeFiche.PACS) {
+      info = info as IFichePacs;
+      infoComplementaire = ` (${StatutPacesUtil.getLibelle(
+        info.statut
+      ).toLowerCase()})`;
+    }
+    if (type === TypeFiche.RC) {
+      info = info as IFicheRcRca;
+      infoComplementaire =
+        info.typeInscription === TypeInscriptionRc.MODIFICATION
+          ? ` (${InscriptionRcUtil.getLibelle(
+              info.typeInscription
+            ).toLowerCase()} RC n°${info.inscriptionsImpactees[0].annee}-${
+              info.inscriptionsImpactees[0].numero
+            })`
+          : "";
+    }
+
+    return infoComplementaire;
   }
 
   getText(type: TypeFiche) {
@@ -181,11 +174,17 @@ class SpecificationDeliver {
     }
   }
 
-  getPiecesJointes(demande: DemandeDeliver, infos: IInscriptionsInfos) {
+  getPiecesJointes(
+    demande: DemandeDeliver,
+    infosInscription: IInfosInscriptions
+  ) {
     let piecesJointes = "";
-    const pacsDemanderEtPresent = demande.pacs && infos.infosPacs.length > 0;
-    const rcDemanderEtPresent = demande.rc && infos.infosRc.length > 0;
-    const rcaDemanderEtPresent = demande.rca && infos.infosRca.length > 0;
+    const pacsDemanderEtPresent =
+      demande.pacs && infosInscription.infosPacs.length > 0;
+    const rcDemanderEtPresent =
+      demande.rc && infosInscription.infosRc.length > 0;
+    const rcaDemanderEtPresent =
+      demande.rca && infosInscription.infosRca.length > 0;
 
     if (pacsDemanderEtPresent || rcDemanderEtPresent || rcaDemanderEtPresent) {
       piecesJointes = PIECE_JOINTE;
@@ -214,18 +213,18 @@ const PAS_INSCRITE_PACS = getLibelle(
   "- N'est pas inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger."
 );
 const INSCRIT_PACS = getLibelle(
-  "- Est inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le {0} sous la référence PAC n°{1}-{2}."
+  "- Est inscrit au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le {0} sous la référence PAC n°{1}-{2}{3}."
 );
 const INSCRITE_PACS = getLibelle(
-  "- Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le {0} sous la référence PAC n°{1}-{2}."
+  "- Est inscrite au registre des PACS des personnes de nationalité étrangère et nées à l’étranger depuis le {0} sous la référence PAC n°{1}-{2}{3}."
 );
 const PAS_INSCRIT_RC = getLibelle("- N’est pas inscrit au répertoire civil.");
 const PAS_INSCRITE_RC = getLibelle("- N’est pas inscrite au répertoire civil.");
 const INSCRIT_RC = getLibelle(
-  "- Est inscrit au répertoire civil depuis le {0} sous la référence RC n°{1}-{2}."
+  "- Est inscrit au répertoire civil depuis le {0} sous la référence RC n°{1}-{2}{3}."
 );
 const INSCRITE_RC = getLibelle(
-  "- Est inscrite au répertoire civil depuis le {0} sous la référence RC n°{1}-{2}."
+  "- Est inscrite au répertoire civil depuis le {0} sous la référence RC n°{1}-{2}{3}."
 );
 const PAS_INSCRIT_RCA = getLibelle(
   "- N’est pas inscrit au répertoire civil annexe."
@@ -241,7 +240,7 @@ const INSCRITE_RCA = getLibelle(
 );
 
 const PIECE_JOINTE = getLibelle(
-  "- A toutes fins utiles, vous trouverez joint(s) à ce certificat :"
+  "A toutes fins utiles, vous trouverez joint(s) à ce certificat :"
 );
 const PIECE_JOINTE_PACS = getLibelle(
   "- la communication des informations relatives à un pacte civil de solidarité"
@@ -312,8 +311,8 @@ class SpecificationDeliverPhrase {
   getPhrasesJasper(
     idDocumentDemande: string,
     sexe: Sexe,
-    dataRMCAutoActe?: IResultatRMCActe[],
-    dataRMCAutoInscription?: IResultatRMCInscription[]
+    nbInscriptionsInfos: INbInscriptionsInfos,
+    infosInscription: IInfosInscriptions
   ) {
     let phrasesJasper = {} as IPhrasesJasperCertificatSituation;
 
@@ -325,7 +324,7 @@ class SpecificationDeliverPhrase {
     if (specification) {
       phrasesJasper = specification.getPhraseEtPiecesJointes(
         sexe,
-        dataRMCAutoInscription
+        infosInscription
       );
     }
     return phrasesJasper;

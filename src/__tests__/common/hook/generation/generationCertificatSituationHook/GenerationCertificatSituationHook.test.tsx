@@ -11,13 +11,14 @@ import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
-import { IResultatRMCActe } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
-    IGenerationCertificatSituationParams,
-    useGenerationCertificatSituationHook
+  IGenerationCertificatSituationParams,
+  useGenerationCertificatSituationHook
 } from "../../../../../views/common/hook/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
-import { specificationPhraseRMCAutoVide } from "../../../../../views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import {
+  INbInscriptionsInfos,
+  specificationPhraseRMCAutoVide
+} from "../../../../../views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
@@ -41,13 +42,16 @@ const requete = {
   titulaires: [titulaire]
 } as IRequeteTableauDelivrance;
 
-const dataRMCAutoInscription = [] as IResultatRMCInscription[];
-const dataRMCAutoActe = [] as IResultatRMCActe[];
+const nbInscriptionsInfos = {
+  nbActe: 0,
+  nbPacs: 0,
+  nbRc: 0,
+  nbRca: 0
+} as INbInscriptionsInfos;
 
 const params = {
   requete,
-  dataRMCAutoInscription,
-  dataRMCAutoActe,
+  nbInscriptionsInfos,
   specificationPhrase: specificationPhraseRMCAutoVide
 } as IGenerationCertificatSituationParams;
 

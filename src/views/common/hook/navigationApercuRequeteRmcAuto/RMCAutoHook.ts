@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import {
+  FicheUtil,
+  TypeFiche
+} from "../../../../model/etatcivil/enum/TypeFiche";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -19,7 +23,10 @@ import {
   IGenerationCertificatSituationParams,
   useGenerationCertificatSituationHook
 } from "../generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
-import { specificationPhraseRMCAutoVide } from "../generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import {
+  INbInscriptionsInfos,
+  specificationPhraseRMCAutoVide
+} from "../generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { IResultGenerationUnDocument } from "../generation/generationUtils";
 
 const INFO_CS_RMC_AUTO_VIDE = getLibelle(
@@ -57,8 +64,10 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
     if (params && !params.pasDeTraitementAuto) {
       setParamsCertificatSituation({
         requete: params.requete,
-        dataRMCAutoInscription,
-        dataRMCAutoActe,
+        nbInscriptionsInfos: getNbInscriptionsInfos(
+          dataRMCAutoActe,
+          dataRMCAutoInscription
+        ),
         specificationPhrase: specificationPhraseRMCAutoVide
       });
     }
@@ -122,6 +131,44 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
 
   return urlDataRMCAuto;
 }
+
+function getNbInscriptionsInfos(
+  dataRMCAutoActe?: IResultatRMCActe[],
+  dataRMCAutoInscription?: IResultatRMCInscription[]
+) {
+  const infos: INbInscriptionsInfos = {
+    nbActe: 0,
+    nbRc: 0,
+    nbRca: 0,
+    nbPacs: 0
+  };
+
+  if (dataRMCAutoActe) {
+    infos.nbActe = dataRMCAutoActe.length;
+  }
+
+  if (dataRMCAutoInscription) {
+    dataRMCAutoInscription.forEach(data => {
+      const typeFiche: TypeFiche = FicheUtil.getTypeFicheFromString(
+        data.categorie
+      );
+      switch (typeFiche) {
+        case TypeFiche.RC:
+          infos.nbRc++;
+          break;
+        case TypeFiche.RCA:
+          infos.nbRca++;
+          break;
+        case TypeFiche.PACS:
+          infos.nbPacs++;
+          break;
+      }
+    });
+  }
+
+  return infos;
+}
+
 function toutLesTraitementAmontOntEteEffectues(
   params: IRMCAutoParams | undefined,
   dataRMCAutoActe: IResultatRMCActe[] | undefined,

@@ -1,3 +1,7 @@
+import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
+import { IFicheRcRca } from "../../../../model/etatcivil/rcrca/IFicheRcRca";
+import { TFiche } from "../repertoires/MappingRepertoires";
+
 export const RESULTAT_VIDE = {};
 
 export interface IResultGenerationUnDocument {
@@ -5,6 +9,18 @@ export interface IResultGenerationUnDocument {
   contenuDocumentReponse?: string;
 }
 
-export interface IResultGenerationPlusieursDocument {
+export interface IResultGenerationPlusieursDocuments {
+  idDocumentsReponse?: string[];
+}
+
+export interface IResultGenerationInscriptions {
+  fiches?: TFiche[];
+  idDocumentsReponse?: string[];
+}
+
+export interface IResultGenerationPlusieursInscriptions {
+  pacs?: IFichePacs[];
+  rc?: IFicheRcRca[];
+  rca?: IFicheRcRca[];
   idDocumentsReponse?: string[];
 }

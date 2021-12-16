@@ -26,7 +26,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", async () => {
   ).toBe("Statut du PACS");
   expect(
     panels.panels[0].panelAreas[0].parts[0].partContent.contents[0].value
-  ).toBe("Enregistré");
+  ).toBe("Modifié");
   ///////////// PARTIE 2: Partenaires
   expect(panels.panels[0].panelAreas[1].parts.length).toBe(2);
   expect(panels.panels[0].panelAreas[1].parts[0].partContent.title).toBe(
