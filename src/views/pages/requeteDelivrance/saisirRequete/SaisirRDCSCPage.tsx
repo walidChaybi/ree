@@ -48,7 +48,7 @@ import {
 } from "./modelForm/ISaisirRDCSCPageModel";
 import "./scss/SaisirRequetePage.scss";
 import {
-  IdentiteFormDefaultValues,
+  IdentiteFormDefaultValuesRDCSC,
   IdentiteFormValidationSchema
 } from "./sousFormulaires/identite/IdentiteForm";
 import {
@@ -59,7 +59,7 @@ import {
 // Valeurs par défaut des champs
 const DefaultValuesSaisirRDCSC = {
   [DOCUMENT]: "",
-  [INTERESSE]: IdentiteFormDefaultValues,
+  [INTERESSE]: IdentiteFormDefaultValuesRDCSC,
   [REQUERANT]: RequerantFormDefaultValues,
   [ADRESSE]: AdresseFormDefaultValues,
   [PIECES_JOINTES]: null

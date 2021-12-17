@@ -39,7 +39,7 @@ import ParentForm, {
 } from "./parent/ParentForm";
 import "./scss/IdentiteForm.scss";
 
-// Valeurs par défaut des champs
+// Valeurs par défaut des champs pour RDAPC et RDC
 export const IdentiteFormDefaultValues = {
   [NOMS]: NomsFormDefaultValues,
   [PRENOMS]: PrenomsFormDefaultValues,
@@ -48,6 +48,12 @@ export const IdentiteFormDefaultValues = {
   [NATIONALITE]: "INCONNUE",
   [PARENT1]: undefined,
   [PARENT2]: undefined
+};
+
+// La valeur par défaut de la nationalité est ETRANGERE uniquement pour la saisie de RDCSC
+export const IdentiteFormDefaultValuesRDCSC = {
+  ...IdentiteFormDefaultValues,
+  nationalite:"ETRANGERE"
 };
 
 // Schéma de validation des champs
