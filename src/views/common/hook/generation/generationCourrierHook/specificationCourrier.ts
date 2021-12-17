@@ -4,6 +4,8 @@ import {
   IFicheActe
 } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { TitulaireActe } from "../../../../../model/etatcivil/acte/ITitulaireActe";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
+import { SousTypeRequete } from "../../../../../model/requete/enum/SousTypeRequete";
 import {
   OptionCourrier,
   OptionsCourrier
@@ -36,6 +38,8 @@ export interface IElementsJasperCourrier {
   optionsTexteLibre: OptionsJasper[];
   referenceActe: string;
   natureActe: string;
+  texte_variable_RDD?: string;
+  texte_variable_RDC?: string;
 }
 
 async function ajoutInfosTitulaire(
@@ -161,6 +165,30 @@ function getTexteOption(option: OptionCourrier) {
     : option.texteOptionCourrier;
 }
 
+const TEXTE_VARIABLE_RDD = `Le document d’état civil joint est délivré sur support électronique conformément à l’ordonnance n° 2019-724 du 10 juillet 2019 – chapitre III, article 10 ; il est signé par un officier de l’état civil au moyen d’un procédé de signature électronique sécurisée et n’a pas de durée de validité, sauf disposition spécifique (ex : dossier de mariage ou de PACS). Il peut être utilisé pour plusieurs démarches différentes. 
+
+Vous pouvez imprimer ce document pour le remettre à un tiers qui a l’obligation de l’accepter. Le destinataire de l’acte aura la possibilité, pendant 6 mois, de vérifier la fiabilité des informations indiquées sur le document au moyen d’un télé-service de vérification.
+
+Ce télé-service est accessible sur le site ci-contre : https://pastel.diplomatie.gouv.fr/rece-televerification-ui/accueil et requiert la saisie d’un code de télé-vérification (CTV) inscrit au bas et à droite de l’acte qui vous a été délivré. Vous êtes tenu d’indiquer au destinataire de l’acte, l’adresse du télé-service et de vérifier que le CTV est lisible après impression.
+
+Si vous souhaitez que l’acte que vous avez demandé vous soit transmis par voie postale sur support papier, il vous appartient d’en faire la demande via l’adresse suivante : 
+https://psl.service-public.fr/mademarche/demarche_impr/demarche
+`;
+const TEXTE_VARIABLE_RDC = `Pour formuler une nouvelle demande, il vous est conseillé d’utiliser le formulaire disponible sur internet, à l’adresse suivante :
+
+https://psl.service-public.fr/mademarche/delivrance_demat/demarche`;
+
+function ajoutTexteVariable(
+  elementsJasper: IElementsJasperCourrier,
+  sousTypeRequete: SousTypeRequete
+) {
+  if (sousTypeRequete === SousTypeDelivrance.RDD) {
+    elementsJasper.texte_variable_RDD = TEXTE_VARIABLE_RDD;
+  } else if (sousTypeRequete === SousTypeDelivrance.RDC) {
+    elementsJasper.texte_variable_RDC = TEXTE_VARIABLE_RDC;
+  }
+}
+
 /////////////////////////////////////////////////////////////////////
 class SpecificationCourrier {
   getElementsJasper(
@@ -178,6 +206,7 @@ class SpecificationCourrier {
       ajoutInfosTitulaire(elementsJasper, requete, acte);
       ajoutOptions(elementsJasper, optionsChoisies);
       elementsJasper.texteLibre = saisieCourrier.texteLibre.texte;
+      ajoutTexteVariable(elementsJasper, requete.sousType);
     }
     return elementsJasper;
   }

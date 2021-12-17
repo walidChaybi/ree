@@ -29,6 +29,8 @@ export interface ICourrierComposition
   options_texte_libre: OptionsJasper[];
   reference_acte?: string;
   nature_acte?: string;
+  texte_variable_RDD?: string;
+  texte_variable_RDC?: string;
 }
 
 export const CourrierComposition = {
@@ -67,6 +69,9 @@ export const CourrierComposition = {
     courrier.options_texte_libre = elementsJasper.optionsTexteLibre;
 
     courrier.nature_acte = elementsJasper.natureActe;
+
+    courrier.texte_variable_RDD = elementsJasper.texte_variable_RDD;
+    courrier.texte_variable_RDC = elementsJasper.texte_variable_RDC;
 
     return courrier;
   }
