@@ -134,7 +134,7 @@ export const RequeteRDDCourrier17 = {
     {
       id: "6dc0fa55-46cb-4bf2-92b3-7b061519e1bc",
       numeroOrdre: 1,
-      libelle: "A valider",
+      libelle: "À valider",
       dateAction: 1633532202703,
       idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d5e",
       trigramme: "MLA"

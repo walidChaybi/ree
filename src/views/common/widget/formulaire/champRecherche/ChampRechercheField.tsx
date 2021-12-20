@@ -41,6 +41,7 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
       classes={{
         option: classes.option
       }}
+      disablePortal={true}
       className="Autocomplete"
       disabled={props.disabled}
       filterOptions={props.filterOptions}

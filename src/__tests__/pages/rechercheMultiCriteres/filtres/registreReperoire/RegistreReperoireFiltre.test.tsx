@@ -48,17 +48,17 @@ test("renders filtre Registre et Repertoire", async () => {
   });
 
   // Test du grisé/dégrisé des registres et répertoires
-  const natureActe = screen.getByLabelText(
+  const natureActe = screen.getByTestId(
     "registreRepertoire.registre.natureActe"
-  ) as HTMLInputElement;
+  ).childNodes[0] as HTMLInputElement;
 
   const numeroInscription = screen.getByLabelText(
     "registreRepertoire.repertoire.numeroInscription"
   ) as HTMLInputElement;
 
-  const typeRepertoire = screen.getByLabelText(
+  const typeRepertoire = screen.getByTestId(
     "registreRepertoire.repertoire.typeRepertoire"
-  ) as HTMLInputElement;
+  ).childNodes[0] as HTMLInputElement;
 
   const paysEvenement = screen.getByLabelText(
     "registreRepertoire.evenement.paysEvenement"

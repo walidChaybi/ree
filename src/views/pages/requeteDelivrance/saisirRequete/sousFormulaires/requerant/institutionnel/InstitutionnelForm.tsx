@@ -33,9 +33,8 @@ export const InstitutionnelFormDefaultValues = {
 };
 
 // Schéma de validation des champs
-export const InstitutionnelFormValidationSchema = getFormValidationCarAutorisesEtNAtureObligatoireShema(
-  NOM_INSTITUTION
-);
+export const InstitutionnelFormValidationSchema =
+  getFormValidationCarAutorisesEtNAtureObligatoireShema(NOM_INSTITUTION);
 
 const InstitutionnelForm: React.FC<SubFormProps> = props => {
   const nomWithNamespace = withNamespace(props.nom, NOM);
@@ -64,6 +63,7 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
         onChange={e => {
           onChangeTypeInstitutionnel(e);
         }}
+        formik={props.formik}
       />
       {!natureInactif && (
         <InputField

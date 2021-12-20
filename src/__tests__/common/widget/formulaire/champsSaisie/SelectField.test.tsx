@@ -1,0 +1,49 @@
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
+import { Formik } from "formik";
+import React from "react";
+import { SelectField } from "../../../../../views/common/widget/formulaire/champsSaisie/SelectField";
+import { FormikComponentProps } from "../../../../../views/common/widget/formulaire/utils/FormUtil";
+
+// Pour un test du composant dans un formulaire voir RegistreActeFiltre.test.tsx
+test("Attendu: composant SelectField fonctionne correctement", async () => {
+  const onChange = jest.fn();
+  const options = [
+    { value: "k1", str: "str1" },
+    { value: "k2", str: "str2" }
+  ];
+  const formik = {} as FormikComponentProps;
+  render(
+    <Formik initialValues={{ gt: "gfr" }} onSubmit={jest.fn()}>
+      <SelectField
+        name="testSelectField"
+        options={options}
+        onChange={onChange}
+        label="testSelectField"
+        formik={formik.formik}
+      />
+    </Formik>
+  );
+
+  const select = screen.getByTestId("testSelectField")
+    .childNodes[0] as HTMLInputElement;
+
+  expect(select).toBeDefined();
+
+  act(() => {
+    fireEvent.change(select, {
+      target: {
+        value: "k1"
+      }
+    });
+  });
+
+  await waitFor(() => {
+    expect(select.value).toBe("k1");
+  });
+});

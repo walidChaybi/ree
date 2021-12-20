@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
@@ -12,8 +12,8 @@ import { configRequetes } from "../../../../../../mock/superagent-config/superag
 import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { MANDATAIRE } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import MandataireForm, {
-    MandataireFormDefaultValues,
-    MandataireFormValidationSchema
+  MandataireFormDefaultValues,
+  MandataireFormValidationSchema
 } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/mandataire/MandataireForm";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -51,9 +51,8 @@ test("render composant Mandataire Formulaire", async () => {
     render(<HookMandataireForm />);
   });
 
-  const inputType = screen.getByLabelText(
-    "mandataire.type"
-  ) as HTMLInputElement;
+  const inputType = screen.getByTestId("mandataire.type")
+    .childNodes[0] as HTMLInputElement;
   const inputRaisonSociale = screen.getByLabelText(
     "mandataire.raisonSociale"
   ) as HTMLInputElement;
@@ -106,9 +105,8 @@ test("render composant Mandataire Formulaire : Affichage de l'input Nature", asy
     render(<HookMandataireForm />);
   });
 
-  const inputType = screen.getByLabelText(
-    "mandataire.type"
-  ) as HTMLInputElement;
+  const inputType = screen.getByTestId("mandataire.type")
+    .childNodes[0] as HTMLInputElement;
 
   act(() => {
     fireEvent.change(inputType, {

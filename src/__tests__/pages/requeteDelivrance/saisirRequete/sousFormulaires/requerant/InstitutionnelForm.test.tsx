@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
@@ -12,8 +12,8 @@ import { configRequetes } from "../../../../../../mock/superagent-config/superag
 import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { INSTITUTI0NNEL } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import InstitutionnelForm, {
-    InstitutionnelFormDefaultValues,
-    InstitutionnelFormValidationSchema
+  InstitutionnelFormDefaultValues,
+  InstitutionnelFormValidationSchema
 } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -51,9 +51,8 @@ test("render composant Institutionnel Formulaire", async () => {
     render(<HookInstitutionnelForm />);
   });
 
-  const inputType = screen.getByLabelText(
-    "institutionnel.type"
-  ) as HTMLInputElement;
+  const inputType = screen.getByTestId("institutionnel.type")
+    .childNodes[0] as HTMLInputElement;
   const inputNomInstitution = screen.getByLabelText(
     "institutionnel.nomInstitution"
   ) as HTMLInputElement;
@@ -108,9 +107,8 @@ test("render input Nature Institutionnel Formulaire", async () => {
     render(<HookInstitutionnelForm />);
   });
 
-  const inputType = screen.getByLabelText(
-    "institutionnel.type"
-  ) as HTMLInputElement;
+  const inputType = screen.getByTestId("institutionnel.type")
+    .childNodes[0] as HTMLInputElement;
 
   act(() => {
     fireEvent.change(inputType, {

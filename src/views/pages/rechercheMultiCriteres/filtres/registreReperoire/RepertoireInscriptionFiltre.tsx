@@ -53,102 +53,107 @@ export type RepertoireInscriptionFiltreProps = TypeRepertoireInputProps &
   ComponentFiltreProps &
   FormikComponentProps;
 
-const RepertoireInscriptionFiltre: React.FC<RepertoireInscriptionFiltreProps> = props => {
-  const numeroInscriptionWithNamespace = withNamespace(
-    props.nomFiltre,
-    NUMERO_INSCRIPTION
-  );
-  const typeRepertoireWithNamespace = withNamespace(
-    props.nomFiltre,
-    TYPE_REPERTOIRE
-  );
-  const natureInscriptionWithNamespace = withNamespace(
-    props.nomFiltre,
-    NATURE_INSCRIPTION
-  );
-
-  const [natureInactif, setNatureInactif] = useState<boolean>(true);
-  const [natureOptions, setNatureOptions] = useState<Options>([]);
-
-  const onBlurNumero = (e: any) => {
-    traiteEspace(e, props.formik.handleChange);
-    props.formik.handleBlur(e);
-  };
-
-  const manageNatureOptions = async (type: string) => {
-    if (type === "RC") {
-      setNatureOptions(NatureRc.getAllEnumsAsOptions());
-    } else if (type === "RCA") {
-      setNatureOptions(NatureRca.getAllEnumsAsOptions());
-    } else {
-      setNatureOptions([]);
-    }
-  };
-
-  const onChangeTypeRepertoire = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    props.formik.setFieldValue(natureInscriptionWithNamespace, "");
-    manageNatureOptions(e.target.value);
-    props.formik.handleChange(e);
-  };
-
-  const limitChar = 4;
-
-  const formatNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const value = e.target.value;
-    if (
-      value.length === limitChar + 1 &&
-      value.charAt(limitChar) !== "-" &&
-      !value.includes("-")
-    ) {
-      e.target.value = `${value.slice(0, limitChar)}-${value.slice(limitChar)}`;
-    }
-  };
-
-  // Permet de dégriser ou griser le champs Nature inscription apres un resetForm ou un rappelCriteres
-  useEffect(() => {
-    setNatureInactif(isTypeRepDirty(props.formik.values, props.nomFiltre));
-    const type = getIn(
-      props.formik.values,
-      withNamespace(props.nomFiltre, TYPE_REPERTOIRE)
+const RepertoireInscriptionFiltre: React.FC<RepertoireInscriptionFiltreProps> =
+  props => {
+    const numeroInscriptionWithNamespace = withNamespace(
+      props.nomFiltre,
+      NUMERO_INSCRIPTION
     );
-    manageNatureOptions(type);
-  }, [props.formik.dirty, props.formik.values, props.nomFiltre]);
+    const typeRepertoireWithNamespace = withNamespace(
+      props.nomFiltre,
+      TYPE_REPERTOIRE
+    );
+    const natureInscriptionWithNamespace = withNamespace(
+      props.nomFiltre,
+      NATURE_INSCRIPTION
+    );
 
-  return (
-    <Fieldset titre={getLibelle("Filtre répertoire")}>
-      <div className="FormFiltre">
-        <SelectField
-          name={typeRepertoireWithNamespace}
-          label={getLibelle("Type de répertoire")}
-          options={TypeRepertoire.getAllEnumsAsOptions().filter(el => {
-            return props.filtreTypeRepertoire
-              ? el.value === props.filtreTypeRepertoire.libelle
-              : true;
-          })}
-          onChange={e => {
-            onChangeTypeRepertoire(e);
-          }}
-          disabled={props.filtreInactif}
-        />
-        <InputField
-          name={numeroInscriptionWithNamespace}
-          label={getLibelle("N° de l'inscription")}
-          onInput={formatNumber}
-          disabled={props.filtreInactif}
-          onBlur={onBlurNumero}
-        />
-        <SelectField
-          name={natureInscriptionWithNamespace}
-          label={getLibelle("Nature de l'inscription")}
-          options={natureOptions}
-          disabled={natureInactif || props.filtreInactif}
-        />
-      </div>
-    </Fieldset>
-  );
-};
+    const [natureInactif, setNatureInactif] = useState<boolean>(true);
+    const [natureOptions, setNatureOptions] = useState<Options>([]);
+
+    const onBlurNumero = (e: any) => {
+      traiteEspace(e, props.formik.handleChange);
+      props.formik.handleBlur(e);
+    };
+
+    const manageNatureOptions = async (type: string) => {
+      if (type === "RC") {
+        setNatureOptions(NatureRc.getAllEnumsAsOptions());
+      } else if (type === "RCA") {
+        setNatureOptions(NatureRca.getAllEnumsAsOptions());
+      } else {
+        setNatureOptions([]);
+      }
+    };
+
+    const onChangeTypeRepertoire = (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      props.formik.setFieldValue(natureInscriptionWithNamespace, "");
+      manageNatureOptions(e.target.value);
+      props.formik.handleChange(e);
+    };
+
+    const limitChar = 4;
+
+    const formatNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      const value = e.target.value;
+      if (
+        value.length === limitChar + 1 &&
+        value.charAt(limitChar) !== "-" &&
+        !value.includes("-")
+      ) {
+        e.target.value = `${value.slice(0, limitChar)}-${value.slice(
+          limitChar
+        )}`;
+      }
+    };
+
+    // Permet de dégriser ou griser le champs Nature inscription apres un resetForm ou un rappelCriteres
+    useEffect(() => {
+      setNatureInactif(isTypeRepDirty(props.formik.values, props.nomFiltre));
+      const type = getIn(
+        props.formik.values,
+        withNamespace(props.nomFiltre, TYPE_REPERTOIRE)
+      );
+      manageNatureOptions(type);
+    }, [props.formik.dirty, props.formik.values, props.nomFiltre]);
+
+    return (
+      <Fieldset titre={getLibelle("Filtre répertoire")}>
+        <div className="FormFiltre">
+          <SelectField
+            name={typeRepertoireWithNamespace}
+            label={getLibelle("Type de répertoire")}
+            options={TypeRepertoire.getAllEnumsAsOptions().filter(el => {
+              return props.filtreTypeRepertoire
+                ? el.value === props.filtreTypeRepertoire.libelle
+                : true;
+            })}
+            onChange={e => {
+              onChangeTypeRepertoire(e);
+            }}
+            disabled={props.filtreInactif}
+            formik={props.formik}
+          />
+          <InputField
+            name={numeroInscriptionWithNamespace}
+            label={getLibelle("N° de l'inscription")}
+            onInput={formatNumber}
+            disabled={props.filtreInactif}
+            onBlur={onBlurNumero}
+          />
+          <SelectField
+            name={natureInscriptionWithNamespace}
+            label={getLibelle("Nature de l'inscription")}
+            options={natureOptions}
+            disabled={natureInactif || props.filtreInactif}
+            formik={props.formik}
+          />
+        </div>
+      </Fieldset>
+    );
+  };
 
 export default connect(RepertoireInscriptionFiltre);
 

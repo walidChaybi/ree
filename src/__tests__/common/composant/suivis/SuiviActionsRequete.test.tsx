@@ -21,7 +21,7 @@ test("renders suivi des actions requete", async () => {
     expect(elem1.innerHTML).toBe("Saisie de la requête - 10/03/2020 - BOB");
     elem2 = screen.getByText(/APP/i);
     expect(elem2).toBeDefined();
-    expect(elem2.innerHTML).toBe("A traiter - 10/03/2020 - APP");
+    expect(elem2.innerHTML).toBe("À traiter - 10/03/2020 - APP");
   });
 });
 

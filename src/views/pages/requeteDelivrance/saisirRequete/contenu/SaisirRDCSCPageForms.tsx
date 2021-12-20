@@ -7,6 +7,7 @@ import AdresseForm from "../../../../common/widget/formulaire/adresse/AdresseFor
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
 import PiecesJointesForm from "../../../../common/widget/formulaire/piecesJointes/PiecesJointesForm";
 import { SubFormProps } from "../../../../common/widget/formulaire/utils/FormUtil";
+import { SaisirRequeteBoutonsProps } from "../boutons/SaisirRequeteBoutons";
 import {
   ADRESSE,
   DOCUMENT,
@@ -21,9 +22,10 @@ import RequerantForm from "../sousFormulaires/requerant/RequerantForm";
 
 export const getBlocsForm = (
   documentDemandeOptions: any,
-  detailRequeteState: TRequete | undefined
+  detailRequeteState: TRequete | undefined,
+  boutonsProps: SaisirRequeteBoutonsProps
 ): JSX.Element[] => [
-  getDocumentDemande(documentDemandeOptions),
+  getDocumentDemande(documentDemandeOptions, boutonsProps),
   getInteresseForm(detailRequeteState),
   getRequerantForm(detailRequeteState),
   getAdresseForm(),
@@ -31,7 +33,8 @@ export const getBlocsForm = (
 ];
 
 export function getDocumentDemande(
-  documentDemandeOptions: Options
+  documentDemandeOptions: Options,
+  boutonsProps: SaisirRequeteBoutonsProps
 ): JSX.Element {
   return (
     <div className="DocumentInput" key={DOCUMENT}>
@@ -39,6 +42,7 @@ export function getDocumentDemande(
         name={DOCUMENT}
         label={getLibelle("Document demandé")}
         options={documentDemandeOptions}
+        formik={boutonsProps.formik}
       />
     </div>
   );

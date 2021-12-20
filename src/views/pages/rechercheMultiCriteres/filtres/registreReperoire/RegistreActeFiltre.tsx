@@ -70,15 +70,12 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
   const natureActeWithNamespace = withNamespace(props.nomFiltre, NATURE_ACTE);
 
   // State: Gestion Autocomplete
-  const [
-    valeurChampAutocomplete,
-    setValeurChampAutocomplete
-  ] = React.useState<string>("");
+  const [valeurChampAutocomplete, setValeurChampAutocomplete] =
+    React.useState<string>("");
 
   // State: dernier pocopas sélectionné
-  const [lastPocopaSelected, setLastPocopaSelected] = React.useState<
-    string | undefined
-  >(undefined);
+  const [lastPocopaSelected, setLastPocopaSelected] =
+    React.useState<string | undefined>(undefined);
 
   const familleRegistre = props.formik.getFieldProps(
     familleRegistreWithNamespace
@@ -159,6 +156,7 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
           label={getLibelle("Nature de l'acte")}
           options={NatureActe.getAllEnumsAsOptions()}
           disabled={props.filtreInactif}
+          formik={props.formik}
         />
         <SelectField
           name={familleRegistreWithNamespace}
@@ -166,6 +164,7 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
           options={TypeFamille.getAllEnumsAsOptions()}
           disabled={props.filtreInactif}
           onChange={onFamilleRegistreChange}
+          formik={props.formik}
         />
 
         <InputField

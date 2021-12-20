@@ -137,7 +137,7 @@ export const configRequetes = [
       // Stockage Document Maj Statut
       if (
         match[1] ===
-          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/document?libelleAction=A%20valider&statutRequete=A_VALIDER" ||
+          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
         match[1] ===
           "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd/document?libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER"
       ) {
@@ -177,8 +177,7 @@ export const configRequetes = [
           return {
             headers: {
               "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
-              link:
-                '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
+              link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCRequete.data
           };
@@ -222,9 +221,9 @@ export const configRequetes = [
       // Sauvegarde courrier Accompagnement
       if (
         match[1] ===
-          "/requetes/delivrance/85b32284-d3dd-4502-bfbd-5634ba52ba22/courrier?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=A%20valider&statutRequete=A_VALIDER" ||
+          "/requetes/delivrance/85b32284-d3dd-4502-bfbd-5634ba52ba22/courrier?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
         match[1] ===
-          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=A%20signer&statutRequete=A_SIGNER"
+          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
       }

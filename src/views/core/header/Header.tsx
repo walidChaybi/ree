@@ -2,9 +2,12 @@ import { Tooltip } from "@material-ui/core";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
+import { officierHabiliterPourLeDroit } from "../../../model/agent/IOfficier";
+import { Droit } from "../../../model/Droit";
 import { getLibelle } from "../../common/util/Utils";
 import { URL_ACCUEIL } from "../../router/ReceUrls";
 import { BoutonDeconnexion } from "./BoutonDeconnexion";
+import { BoutonRechercheRmc } from "./BoutonRechercheRmc";
 
 interface HeaderProps {
   onClick?: (event: React.MouseEvent, paramURL: string) => void;
@@ -33,10 +36,20 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
       </div>
 
       <Tooltip title={`Version : ${version}`}>
-        <h1>{getLibelle("Registre d'État Civil Électronique")}</h1>
+          <h1>{getLibelle("Registre d'État Civil Électronique")}</h1>
       </Tooltip>
 
-      <BoutonDeconnexion />
+      <div className="coteDroit">
+        {officierHabiliterPourLeDroit(Droit.CONSULTER) && (
+          <>
+            <BoutonRechercheRmc />
+            <div className="traitVerticalConteneur">
+              <div className="traitVertical" />
+            </div>
+          </>
+        )}
+        <BoutonDeconnexion />
+      </div>
     </header>
   );
 };

@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -63,7 +63,7 @@ test("renders ApercuRequeteTraitementPage", async () => {
   const listeAction1 = screen.getByText(
     /Saisie de la requête - 10\/03\/2020 - APP/i
   );
-  const listeAction2 = screen.getByText(/A traiter - 10\/03\/2020 - BOB/i);
+  const listeAction2 = screen.getByText(/À traiter - 10\/03\/2020 - BOB/i);
 
   const listeObservation1 = screen.getByText(
     /C'est vraiment dur de pouvo... - 02\/01\/1970/i

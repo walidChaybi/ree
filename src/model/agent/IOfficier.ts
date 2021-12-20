@@ -17,7 +17,7 @@ export interface IOfficier extends IUtilisateur {
   ministere: string;
 }
 
-/** Savoir si l'officier connecté à le droit ou le profilt demandé en paramètre */
+/** Savoir si l'officier connecté à le droit ou le profil demandé en paramètre */
 export function officierHabiliterPourLeDroit(droit: Droit) {
   return storeRece.utilisateurCourant
     ? utilisateurADroit(droit, storeRece.utilisateurCourant)

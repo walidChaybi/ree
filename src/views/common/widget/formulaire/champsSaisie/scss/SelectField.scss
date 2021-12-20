@@ -1,0 +1,22 @@
+.SelectField{
+    select{
+        //font-family: "NotoSansUI-Regular", sans-serif!important
+    }
+    select:disabled {
+        border-color: #959595!important;
+        background-color: #dedede!important;
+    }
+
+    .MuiSelect-select:focus{
+        background-color: white!important;
+    }
+
+    .MuiSelect-outlined.MuiSelect-outlined{
+        padding:0 0 0 10px !important;
+        height: 30px;
+        background: white;
+    }
+    option{
+        //font-family: "NotoSansUI-Regular", sans-serif!important
+    }
+}  

@@ -76,6 +76,7 @@ export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
               name={ID_TYPE_ALERTE}
               label={getLibelle("Sélectionner l'alerte à ajouter :")}
               options={TypeAlerte.getAllEnumsAsOptions()}
+              formik={boutonsProps.formik}
             />
             <InputField
               name={COMPLEMENT_DESCRIPTION}

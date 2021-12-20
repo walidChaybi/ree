@@ -63,14 +63,13 @@ test("render formulaire LienTitulaire", async () => {
   });
 });
 
-test("input Nature du formaulaire LienTitulaire", async () => {
+test("input Nature du formulaire LienTitulaire", async () => {
   await act(async () => {
     render(<HookLienTitulaireForm />);
   });
 
-  const inputLien = screen.getByLabelText(
-    "lienTitulaire.lien"
-  ) as HTMLInputElement;
+  const inputLien = screen.getByTestId("lienTitulaire.lien")
+    .childNodes[0] as HTMLInputElement;
 
   act(() => {
     fireEvent.change(inputLien, {

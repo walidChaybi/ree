@@ -23,7 +23,7 @@ export const ReponseAppelDetailRequeteCreation = {
       {
         id: "1d189cd9-0df0-45dc-a4cf-0174eb621235",
         numeroOrdre: 1,
-        libelle: "A traiter",
+        libelle: "À traiter",
         dateAction: 1583794800000,
         idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
         trigramme: "APP"

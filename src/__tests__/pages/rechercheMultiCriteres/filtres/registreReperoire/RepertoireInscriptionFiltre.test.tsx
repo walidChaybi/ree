@@ -57,12 +57,10 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   const numeroInscription = screen.getByLabelText(
     "repertoire.numeroInscription"
   ) as HTMLInputElement;
-  const typeRepertoire = screen.getByLabelText(
-    "repertoire.typeRepertoire"
-  ) as HTMLInputElement;
-  const natureInscription = screen.getByLabelText(
-    "repertoire.natureInscription"
-  ) as HTMLInputElement;
+  const typeRepertoire = screen.getByTestId("repertoire.typeRepertoire")
+    .childNodes[0] as HTMLInputElement;
+  const natureInscription = screen.getByTestId("repertoire.natureInscription")
+    .childNodes[0] as HTMLInputElement;
   const submit = screen.getByText(/Submit/i);
 
   act(() => {
@@ -107,12 +105,10 @@ test("Le champ Nature de l'inscription est conditionné par le choix de l'utilis
   const numeroInscription = screen.getByLabelText(
     "repertoire.numeroInscription"
   ) as HTMLInputElement;
-  const typeRepertoire = screen.getByLabelText(
-    "repertoire.typeRepertoire"
-  ) as HTMLInputElement;
-  const natureInscription = screen.getByLabelText(
-    "repertoire.natureInscription"
-  ) as HTMLInputElement;
+  const typeRepertoire = screen.getByTestId("repertoire.typeRepertoire")
+    .childNodes[0] as HTMLInputElement;
+  const natureInscription = screen.getByTestId("repertoire.natureInscription")
+    .childNodes[0] as HTMLInputElement;
   const submit = screen.getByText(/Submit/i);
 
   act(() => {
@@ -157,12 +153,10 @@ test("Le champ Nature de l'inscription est désactivé par le choix de l'utilisa
   const numeroInscription = screen.getByLabelText(
     "repertoire.numeroInscription"
   ) as HTMLInputElement;
-  const typeRepertoire = screen.getByLabelText(
-    "repertoire.typeRepertoire"
-  ) as HTMLInputElement;
-  const natureInscription = screen.getByLabelText(
-    "repertoire.natureInscription"
-  ) as HTMLInputElement;
+  const typeRepertoire = screen.getByTestId("repertoire.typeRepertoire")
+    .childNodes[0] as HTMLInputElement;
+  const natureInscription = screen.getByTestId("repertoire.natureInscription")
+    .childNodes[0] as HTMLInputElement;
 
   act(() => {
     fireEvent.change(numeroInscription, {
@@ -191,9 +185,8 @@ test("Le champ Nature de l'inscription est désactivé car l'utilisateur n'a pas
   const numeroInscription = screen.getByLabelText(
     "repertoire.numeroInscription"
   ) as HTMLInputElement;
-  const natureInscription = screen.getByLabelText(
-    "repertoire.natureInscription"
-  ) as HTMLInputElement;
+  const natureInscription = screen.getByTestId("repertoire.natureInscription")
+    .childNodes[0] as HTMLInputElement;
 
   act(() => {
     fireEvent.change(numeroInscription, {

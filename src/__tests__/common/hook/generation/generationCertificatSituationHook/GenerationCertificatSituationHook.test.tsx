@@ -73,7 +73,7 @@ beforeAll(() => {
   DocumentDelivrance.init();
 });
 
-test("Attendu: la génération d'un certificat de situation pour une recherche RMC auto vide et une demande PACS et tituliare Masculin fonctionne correctement", async () => {
+test("Attendu: la génération d'un certificat de situation pour une recherche RMC auto vide et une demande PACS et titulaire Masculin fonctionne correctement", async () => {
   render(<HookConsummer></HookConsummer>);
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
   const resulatContenu = screen.getByTestId("resulatContenu");

@@ -68,7 +68,7 @@ const redirectionEnFonctionMaRequete = (
     switch (requete.statut) {
       case StatutRequete.TRANSFEREE.libelle:
       case StatutRequete.A_TRAITER.libelle:
-        // US 210 et au statut "A traiter" ou "Transférée", on lance la "RMC Auto" et redirection suivant le résultat
+        // US 210 et au statut "À traiter" ou "Transférée", on lance la "RMC Auto" et redirection suivant le résultat
         redirectionATraiterTransferee(requete, setRedirection, urlWithParam);
         break;
       case StatutRequete.PRISE_EN_CHARGE.libelle:
@@ -77,7 +77,7 @@ const redirectionEnFonctionMaRequete = (
         break;
       case StatutRequete.A_SIGNER.libelle:
       case StatutRequete.A_VALIDER.libelle:
-        // US 207 et au statut "A signer" ou "A valider", redirection vers "Aperçu du traitement"
+        // US 207 et au statut "À signer" ou "À valider", redirection vers "Aperçu du traitement"
         redirectionApercuTraitement(setRedirection, urlWithParam, requete);
         break;
       case StatutRequete.BROUILLON.libelle:

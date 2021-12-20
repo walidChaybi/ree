@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -53,9 +53,8 @@ test("renders apercu courrier", async () => {
   });
 
   const boutonValider = screen.getByText(/Valider/i) as HTMLButtonElement;
-  const inputCourrier = screen.getByLabelText(
-    "choixCourrier.courrier"
-  ) as HTMLSelectElement;
+  const inputCourrier = screen.getByTestId("choixCourrier.courrier")
+    .childNodes[0] as HTMLSelectElement;
 
   await waitFor(() => {
     expect(screen.getAllByText(/Création du courrier/i)).toBeDefined();

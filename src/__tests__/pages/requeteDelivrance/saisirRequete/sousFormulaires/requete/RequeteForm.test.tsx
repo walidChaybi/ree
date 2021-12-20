@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
@@ -11,8 +11,8 @@ import request from "superagent";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
 import RequeteForm, {
-    RequeteFormDefaultValues,
-    RequeteFormValidationSchema
+  RequeteFormDefaultValues,
+  RequeteFormValidationSchema
 } from "../../../../../../views/common/widget/formulaire/requete/RequeteForm";
 import { SubFormProps } from "../../../../../../views/common/widget/formulaire/utils/FormUtil";
 import { REQUETE } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCPageModel";
@@ -54,16 +54,15 @@ const HookRequeteForm: React.FC = () => {
 test("render component Requete Formulaire", async () => {
   render(<HookRequeteForm />);
 
-  const inputNatureActe = screen.getByLabelText(
-    "requete.natureActe"
-  ) as HTMLInputElement;
-  const inputDocumentDemande = screen.getByLabelText(
-    "requete.documentDemande"
-  ) as HTMLInputElement;
+  const inputNatureActe = screen.getByTestId("requete.natureActe")
+    .childNodes[0] as HTMLInputElement;
+  const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
+    .childNodes[0] as HTMLInputElement;
   const inputNbExemplaire = screen.getByLabelText(
     "requete.nbExemplaire"
   ) as HTMLInputElement;
-  const inputMotif = screen.getByLabelText("requete.motif") as HTMLInputElement;
+  const inputMotif = screen.getByTestId("requete.motif")
+    .childNodes[0] as HTMLInputElement;
 
   const submit = screen.getByText(/Submit/i);
 

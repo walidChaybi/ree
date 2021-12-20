@@ -16,32 +16,28 @@ import { goToLinkRMC } from "./resultats/RMCTableauCommun";
 import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";
 import "./scss/RMCActeInscriptionPage.scss";
 
-export const RMCActeInscriptionPage: React.FC = () => {
-  const [
-    valuesRMCActeInscription,
-    setValuesRMCActeInscription
-  ] = useState<IRMCActeInscription>({});
+interface RMCActeInscriptionPage {
+  noAutoScroll: boolean;
+}
 
-  const [
-    nouvelleRMCActeInscription,
-    setNouvelleRMCActeInscription
-  ] = useState<boolean>(false);
+export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPage> = ({
+  noAutoScroll
+}) => {
+  const [valuesRMCActeInscription, setValuesRMCActeInscription] =
+    useState<IRMCActeInscription>({});
 
-  const [
-    criteresRechercheActe,
-    setCriteresRechercheActe
-  ] = useState<ICriteresRechercheActeInscription>();
+  const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] =
+    useState<boolean>(false);
 
-  const [
-    criteresRechercheInscription,
-    setCriteresRechercheInscription
-  ] = useState<ICriteresRechercheActeInscription>();
+  const [criteresRechercheActe, setCriteresRechercheActe] =
+    useState<ICriteresRechercheActeInscription>();
+
+  const [criteresRechercheInscription, setCriteresRechercheInscription] =
+    useState<ICriteresRechercheActeInscription>();
 
   // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [
-    criteresRechercheFicheActe,
-    setCriteresRechercheFicheActe
-  ] = useState<ICriteresRechercheActeInscription>();
+  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] =
+    useState<ICriteresRechercheActeInscription>();
 
   // Critères de recherche pour alimenter les données des fiches Inscription en effet leur pagination/navigation est indépendante du tableau de résultats
   const [
@@ -53,10 +49,8 @@ export const RMCActeInscriptionPage: React.FC = () => {
     criteresRechercheActe
   );
 
-  const {
-    dataRMCInscription,
-    dataTableauRMCInscription
-  } = useRMCInscriptionApiHook(criteresRechercheInscription);
+  const { dataRMCInscription, dataTableauRMCInscription } =
+    useRMCInscriptionApiHook(criteresRechercheInscription);
 
   /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
   const resultatRMCFicheActe = useRMCActeApiHook(criteresRechercheFicheActe);
@@ -134,10 +128,13 @@ export const RMCActeInscriptionPage: React.FC = () => {
   return (
     <>
       <RMCActeInscriptionForm onSubmit={onSubmitRMCActeInscription} />
-      <AutoScroll
-        autoScroll={nouvelleRMCActeInscription}
-        baliseRef={RMCActeInscriptionRef}
-      />
+      {!noAutoScroll && (
+        <AutoScroll
+          autoScroll={nouvelleRMCActeInscription}
+          baliseRef={RMCActeInscriptionRef}
+        />
+      )}
+
       {dataRMCActe &&
         dataTableauRMCActe &&
         dataRMCInscription &&

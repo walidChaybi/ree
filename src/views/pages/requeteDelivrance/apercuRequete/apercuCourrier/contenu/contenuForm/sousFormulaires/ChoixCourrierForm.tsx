@@ -54,6 +54,7 @@ const ChoixCourrierForm: React.FC<ChoixCourrierSubFormProps> = props => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChangeTypeCourrier(e);
           }}
+          formik={props.formik}
         />
       </div>
     </SousFormulaire>

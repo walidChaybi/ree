@@ -32,7 +32,7 @@ export const ReponseAppelRMCRequete = {
         attribueA: "PROVISTE Alain",
         dateCreation: 1639307533,
         dateDernierMAJ: 1556694302,
-        statut: "A traiter",
+        statut: "À traiter",
         priorite: "HAUTE",
         observations: ["1) Observation"],
         titulaires: [
@@ -103,7 +103,7 @@ export const ReponseAppelRMCRequete = {
         attribueA: "Bureau des Affaires",
         dateCreation: 1615395083,
         dateDernierMAJ: 1614531151,
-        statut: "A signer",
+        statut: "À signer",
         priorite: "HAUTE",
         observations: [],
         titulaires: []
@@ -127,7 +127,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     attribueA: "PROVISTE Alain",
     dateCreation: "22/01/1991",
     dateDerniereMaj: "22/02/1991",
-    statut: "A traiter",
+    statut: "À traiter",
     priorite: "HAUTE",
     observations: ["1) Observation"],
     titulaires: [
@@ -200,7 +200,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     attribueA: "Bureau des Affaires Juridiques",
     dateCreation: "10/01/1990",
     dateDerniereMaj: "10/02/1990",
-    statut: "A signer",
+    statut: "À signer",
     priorite: "MOYENNE",
     observations: [],
     titulaires: []
@@ -219,7 +219,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     attribueA: "PROVISTE Alain",
     dateCreation: "20/01/1991",
     dateDerniereMaj: "20/02/1991",
-    statut: "A traiter",
+    statut: "À traiter",
     priorite: "HAUTE",
     observations: ["1) Observation"],
     titulaires: [
@@ -310,7 +310,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     attribueA: "Bureau des Affaires Juridiques",
     dateCreation: "02/01/1990",
     dateDerniereMaj: "02/02/1990",
-    statut: "A signer",
+    statut: "À signer",
     priorite: "MOYENNE",
     observations: [],
     titulaires: []
@@ -329,7 +329,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     attribueA: "PROVISTE Alain",
     dateCreation: "12/01/1991",
     dateDerniereMaj: "12/02/1991",
-    statut: "A traiter",
+    statut: "À traiter",
     priorite: "HAUTE",
     observations: ["1) Observation"],
     titulaires: [
@@ -403,7 +403,7 @@ export const DataRMCRequeteAvecResultat: IRequeteTableauDelivrance[] = [
     attribueA: "Bureau des Affaires Juridiques",
     dateCreation: "22/01/1990",
     dateDerniereMaj: "22/02/1990",
-    statut: "A signer",
+    statut: "À signer",
     priorite: "MOYENNE",
     observations: [],
     titulaires: []

@@ -47,15 +47,12 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   const numeroRequete = screen.getByLabelText(
     "requete.numeroRequete"
   ) as HTMLInputElement;
-  const typeRequete = screen.getByLabelText(
-    "requete.typeRequete"
-  ) as HTMLInputElement;
-  const sousTypeRequete = screen.getByLabelText(
-    "requete.sousTypeRequete"
-  ) as HTMLInputElement;
-  const statutRequete = screen.getByLabelText(
-    "requete.statutRequete"
-  ) as HTMLInputElement;
+  const typeRequete = screen.getByTestId("requete.typeRequete")
+    .childNodes[0] as HTMLInputElement;
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete")
+    .childNodes[0] as HTMLInputElement;
+  const statutRequete = screen.getByTestId("requete.statutRequete")
+    .childNodes[0] as HTMLInputElement;
 
   const submit = screen.getByText(/Submit/i);
 
@@ -106,15 +103,12 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   const numeroRequete = screen.getByLabelText(
     "requete.numeroRequete"
   ) as HTMLInputElement;
-  const typeRequete = screen.getByLabelText(
-    "requete.typeRequete"
-  ) as HTMLInputElement;
-  const sousTypeRequete = screen.getByLabelText(
-    "requete.sousTypeRequete"
-  ) as HTMLInputElement;
-  const statutRequete = screen.getByLabelText(
-    "requete.statutRequete"
-  ) as HTMLInputElement;
+  const typeRequete = screen.getByTestId("requete.typeRequete")
+    .childNodes[0] as HTMLInputElement;
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete")
+    .childNodes[0] as HTMLInputElement;
+  const statutRequete = screen.getByTestId("requete.statutRequete")
+    .childNodes[0] as HTMLInputElement;
 
   const submit = screen.getByText(/Submit/i);
 
@@ -165,15 +159,12 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   const numeroRequete = screen.getByLabelText(
     "requete.numeroRequete"
   ) as HTMLInputElement;
-  const typeRequete = screen.getByLabelText(
-    "requete.typeRequete"
-  ) as HTMLInputElement;
-  const sousTypeRequete = screen.getByLabelText(
-    "requete.sousTypeRequete"
-  ) as HTMLInputElement;
-  const statutRequete = screen.getByLabelText(
-    "requete.statutRequete"
-  ) as HTMLInputElement;
+  const typeRequete = screen.getByTestId("requete.typeRequete")
+    .childNodes[0] as HTMLInputElement;
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete")
+    .childNodes[0] as HTMLInputElement;
+  const statutRequete = screen.getByTestId("requete.statutRequete")
+    .childNodes[0] as HTMLInputElement;
 
   const submit = screen.getByText(/Submit/i);
 
@@ -224,15 +215,12 @@ test("Le champ Type requete est conditionné par le choix de l'utilisateur à la
   const numeroRequete = screen.getByLabelText(
     "requete.numeroRequete"
   ) as HTMLInputElement;
-  const typeRequete = screen.getByLabelText(
-    "requete.typeRequete"
-  ) as HTMLInputElement;
-  const sousTypeRequete = screen.getByLabelText(
-    "requete.sousTypeRequete"
-  ) as HTMLInputElement;
-  const statutRequete = screen.getByLabelText(
-    "requete.statutRequete"
-  ) as HTMLInputElement;
+  const typeRequete = screen.getByTestId("requete.typeRequete")
+    .childNodes[0] as HTMLInputElement;
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete")
+    .childNodes[0] as HTMLInputElement;
+  const statutRequete = screen.getByTestId("requete.statutRequete")
+    .childNodes[0] as HTMLInputElement;
 
   const submit = screen.getByText(/Submit/i);
 
@@ -283,12 +271,10 @@ test("Sous Type Requete : Disabled / message d'erreur CARACTERES_ALPHANUMERIQUE 
   const numeroRequete = screen.getByLabelText(
     "requete.numeroRequete"
   ) as HTMLInputElement;
-  const sousTypeRequete = screen.getByLabelText(
-    "requete.sousTypeRequete"
-  ) as HTMLInputElement;
-  const statutRequete = screen.getByLabelText(
-    "requete.statutRequete"
-  ) as HTMLInputElement;
+  const sousTypeRequete = screen.getByTestId("requete.sousTypeRequete")
+    .childNodes[0] as HTMLInputElement;
+  const statutRequete = screen.getByTestId("requete.statutRequete")
+    .childNodes[0] as HTMLInputElement;
   const submit = screen.getByText(/Submit/i);
 
   act(() => {

@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -11,12 +11,12 @@ import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import {
-    DataRMCActeAvecResultat,
-    DataTableauActe
+  DataRMCActeAvecResultat,
+  DataTableauActe
 } from "../../../../../mock/data/RMCActe";
 import {
-    DataRMCInscriptionAvecResultat,
-    DataTableauInscription
+  DataRMCInscriptionAvecResultat,
+  DataTableauInscription
 } from "../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
@@ -26,8 +26,8 @@ import { storeRece } from "../../../../../views/common/util/storeRece";
 import { ApercuRequetePriseEnChargePage } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { MOTIF_IGNORE } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
 import {
-    URL_MES_REQUETES,
-    URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+  URL_MES_REQUETES,
+  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
@@ -86,7 +86,7 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
   const listeAction1 = screen.getByText(
     /Saisie de la requête - 10\/03\/2020 - APP/i
   );
-  const listeAction2 = screen.getByText(/A traiter - 10\/03\/2020 - BOB/i);
+  const listeAction2 = screen.getByText(/À traiter - 10\/03\/2020 - BOB/i);
 
   const listeObservation1 = screen.getByText(
     /C'est vraiment dur de pouvo... - 02\/01\/1970/i
@@ -286,7 +286,8 @@ test("ignorer requete", async () => {
     fireEvent.click(bontonIgnore);
   });
 
-  const select = screen.getByLabelText(MOTIF_IGNORE) as HTMLSelectElement;
+  const select = screen.getByTestId(MOTIF_IGNORE)
+    .childNodes[0] as HTMLSelectElement;
 
   await act(async () => {
     expect(select).toBeDefined();

@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
@@ -12,12 +12,12 @@ import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
 import {
-    getDefaultValuesCourrier,
-    getTypesCourrier
+  getDefaultValuesCourrier,
+  getTypesCourrier
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import ChoixCourrierForm, {
-    ChoixCourrierSubFormProps,
-    ValidationSchemaChoixCourrier
+  ChoixCourrierSubFormProps,
+  ValidationSchemaChoixCourrier
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
 import { CHOIX_COURRIER } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
@@ -60,9 +60,8 @@ test("renders ChoixCourrierForm", async () => {
   const inputDelivrance = screen.getByLabelText(
     "choixCourrier.delivrance"
   ) as HTMLInputElement;
-  const inputCourrier = screen.getByLabelText(
-    "choixCourrier.courrier"
-  ) as HTMLInputElement;
+  const inputCourrier = screen.getByTestId("choixCourrier.courrier")
+    .childNodes[0] as HTMLInputElement;
 
   await waitFor(() => {
     expect(inputDelivrance.value).toBe(

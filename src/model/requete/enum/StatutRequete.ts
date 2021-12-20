@@ -12,7 +12,7 @@ export class StatutRequete extends EnumWithComplete {
   public static readonly REJET = new StatutRequete("REJET", "Rejet");
   public static readonly A_TRAITER = new StatutRequete(
     "A_TRAITER",
-    "A traiter"
+    "À traiter"
   );
   public static readonly PRISE_EN_CHARGE = new StatutRequete(
     "PRISE_EN_CHARGE",
@@ -24,9 +24,9 @@ export class StatutRequete extends EnumWithComplete {
   );
   public static readonly A_VALIDER = new StatutRequete(
     "A_VALIDER",
-    "A valider"
+    "À valider"
   );
-  public static readonly A_SIGNER = new StatutRequete("A_SIGNER", "A signer");
+  public static readonly A_SIGNER = new StatutRequete("A_SIGNER", "À signer");
   public static readonly IGNOREE = new StatutRequete("IGNOREE", "Ignorée");
   public static readonly TRAITE_A_IMPRIMER = new StatutRequete(
     "TRAITE_A_IMPRIMER",

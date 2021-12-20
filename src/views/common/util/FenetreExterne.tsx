@@ -36,6 +36,7 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
       mounted: false
     };
     this.htmlDivElement = document.createElement("div");
+    // FIXME this . htmlDivElement . classList . add("App"); // Ajout de la classe CSS de l'application principale
     this.eventCopyStyles = this.eventCopyStyles.bind(this);
 
     window.top.addEventListener("refreshStyles", this.eventCopyStyles);
@@ -136,10 +137,16 @@ function nombreAleatoire(min: number, max: number) {
 /** Recopie des syles css d'un document à un autre */
 function copyStyles(sourceDoc: Document, targetDoc: Document) {
   removeStyles(targetDoc);
+
+  /* FIXME if sourceDoc.fonts && targetDoc.fonts 
+    sourceDoc . fonts . forEach(fontFace => {
+      targetDoc.fonts.add(fontFace);
+    });
+  */
   Array.from(sourceDoc.styleSheets).forEach(styleSheet => {
     try {
       // pour sonar: as any as CSSStyleSheet
-      const cSSStyleSheet = styleSheet as any as CSSStyleSheet;
+      const cSSStyleSheet = (styleSheet as any) as CSSStyleSheet;
       if (cSSStyleSheet.cssRules) {
         const newStyleEl = sourceDoc.createElement("style");
 

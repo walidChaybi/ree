@@ -82,7 +82,7 @@ const App: React.FC = () => {
                 )}
               </OfficierContext.Consumer>
               <Header />
-              {(!operationEnCours) && <Body />}
+              {!operationEnCours && <Body />}
               <ToastContainer
                 className={"toast-container"}
                 position="top-center"

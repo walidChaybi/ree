@@ -30,9 +30,8 @@ export const MandataireFormDefaultValues = {
 };
 
 // Schéma de validation des champs
-export const MandataireFormValidationSchema = getFormValidationCarAutorisesEtNAtureObligatoireShema(
-  RAISON_SOCIALE
-);
+export const MandataireFormValidationSchema =
+  getFormValidationCarAutorisesEtNAtureObligatoireShema(RAISON_SOCIALE);
 const MandataireForm: React.FC<SubFormProps> = props => {
   const nomWithNamespace = withNamespace(props.nom, NOM);
   const prenomWithNamespace = withNamespace(props.nom, PRENOM);
@@ -59,6 +58,7 @@ const MandataireForm: React.FC<SubFormProps> = props => {
         onChange={e => {
           onChangeTypeMandataire(e);
         }}
+        formik={props.formik}
       />
       {!natureInactif && (
         <InputField

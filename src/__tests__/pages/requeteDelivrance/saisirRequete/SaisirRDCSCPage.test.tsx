@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -15,8 +15,8 @@ import { configRequetes } from "../../../../mock/superagent-config/superagent-mo
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import {
-    getLastPathElem,
-    getUrlWithParam
+  getLastPathElem,
+  getUrlWithParam
 } from "../../../../views/common/util/route/routeUtil";
 import { SaisirRDCSCPage } from "../../../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { URL_MES_REQUETES_SAISIR_RDCSC } from "../../../../views/router/ReceUrls";
@@ -54,9 +54,8 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     </Router>
   );
 
-  const inputDocumentDemande = screen.getByLabelText(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
     "interesse.naissance.paysEvenement"
   ) as HTMLInputElement;
@@ -122,9 +121,8 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       <SaisirRDCSCPage />
     </Router>
   );
-  const inputDocumentDemande = screen.getByLabelText(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
     "interesse.naissance.paysEvenement"
   ) as HTMLInputElement;
@@ -176,9 +174,8 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     </Router>
   );
 
-  const inputDocumentDemande = screen.getByLabelText(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
     "interesse.naissance.paysEvenement"
   ) as HTMLInputElement;
@@ -237,9 +234,8 @@ test("test du Sauvegarder du formulaire de saisie d'une Requête de Délivrance 
       <SaisirRDCSCPage />
     </Router>
   );
-  const inputDocumentDemande = screen.getByLabelText(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
     "interesse.naissance.paysEvenement"
   ) as HTMLInputElement;
@@ -317,9 +313,8 @@ test("Remplissage du formulaire avec requete", () => {
     </Router>
   );
 
-  const inputDocumentDemande = screen.getByLabelText(
-    "document"
-  ) as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("document")
+    .childNodes[0] as HTMLSelectElement;
   waitFor(() => {
     expect(inputDocumentDemande.value).toEqual(
       "34da88e2-c5c7-4324-ac8e-b35193352e64"

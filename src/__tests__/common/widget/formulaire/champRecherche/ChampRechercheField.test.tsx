@@ -1,5 +1,5 @@
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import { render, screen, act, fireEvent } from "@testing-library/react";
 import { ChampRecherche } from "../../../../../views/common/widget/formulaire/champRecherche/ChampRechercheField";
 
 // Pour un test du composant dans un formulaire voir RegistreActeFiltre.test.tsx
@@ -17,7 +17,6 @@ test("Attendu: composant ChampRecherche fonctionne correctement", async () => {
       options={options}
       onChange={onChange}
       onInput={onInput}
-      getValue={() => options[0]}
       onClickClear={onClickClear}
     />
   );

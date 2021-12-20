@@ -8,7 +8,7 @@
 
 .AppHeader {
   background: $application-color;
-  height: 4em;
+  height: 4rem;
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.55);
   color: white;
   display: grid;
@@ -16,12 +16,34 @@
 
   .LogoHeader {
     text-align: start;
-    img {
-      margin: 0.5rem;
-      cursor: pointer;
-      width: 20%;
+    line-height: 4rem;
+      img {
+        padding: 0 0 0 0.5rem ;
+        cursor: pointer;
+        width: 8rem;
+        vertical-align: middle;
     }
   }
+
+  .coteDroit{
+    display:flex;
+    justify-content: flex-end;
+    height: 4rem;
+    .loupeChampsRecherche{
+      color: white;
+    }
+    .traitVerticalConteneur{
+      line-height: 4rem;
+      .traitVertical{
+        height: 2.5rem;
+        width: 1px;
+        vertical-align: middle;
+        display: inline-block;
+        background: #03476e;
+      }
+    }
+  }
+
 
   h1 {
     margin: 1.1rem;
@@ -29,7 +51,8 @@
 
   .UtilisateurBouton {
     text-align: end;
-    margin: 0.7rem 2rem;
+    margin: 0 1rem;
+    line-height: 4rem;
 
     button span {
       color: white;

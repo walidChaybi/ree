@@ -164,9 +164,8 @@ test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte",
   const boutonValiderAjoutAlerte = screen.getByText(
     "Valider"
   ) as HTMLButtonElement;
-  const selectTypeAlerte = screen.getByLabelText(
-    ID_TYPE_ALERTE
-  ) as HTMLInputElement;
+  const selectTypeAlerte = screen.getByTestId(ID_TYPE_ALERTE)
+    .childNodes[0] as HTMLInputElement;
   const textareaComplementDescription = screen.getByLabelText(
     COMPLEMENT_DESCRIPTION
   ) as HTMLInputElement;

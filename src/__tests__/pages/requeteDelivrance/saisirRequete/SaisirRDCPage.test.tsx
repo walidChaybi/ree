@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -49,9 +49,8 @@ test("test onChangeNature", async () => {
     );
   });
 
-  const inputNatureActe = screen.getByLabelText(
-    "requete.natureActe"
-  ) as HTMLInputElement;
+  const inputNatureActe = screen.getByTestId("requete.natureActe")
+    .childNodes[0] as HTMLInputElement;
 
   await waitFor(() => {
     expect(inputNatureActe).toBeDefined();
@@ -149,18 +148,16 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   );
 
   // Champs Requete
-  const inputNatureActe = screen.getByLabelText(
-    "requete.natureActe"
-  ) as HTMLSelectElement;
-  const inputDocumentDemande = screen.getByLabelText(
-    "requete.documentDemande"
-  ) as HTMLSelectElement;
+  const inputNatureActe = screen.getByTestId("requete.natureActe")
+    .childNodes[0] as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
+    .childNodes[0] as HTMLSelectElement;
   const inputNbExemplaire = screen.getByLabelText(
     "requete.nbExemplaire"
   ) as HTMLSelectElement;
-  const inputMotif = screen.getByLabelText(
-    "requete.motif"
-  ) as HTMLSelectElement;
+  const inputMotif = screen.getByTestId("requete.motif")
+    .childNodes[0] as HTMLSelectElement;
+
   await act(async () => {
     fireEvent.change(inputNatureActe, {
       target: {
@@ -293,18 +290,15 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   );
 
   // Champs Requete
-  const inputNatureActe = screen.getByLabelText(
-    "requete.natureActe"
-  ) as HTMLSelectElement;
-  const inputDocumentDemande = screen.getByLabelText(
-    "requete.documentDemande"
-  ) as HTMLSelectElement;
+  const inputNatureActe = screen.getByTestId("requete.natureActe")
+    .childNodes[0] as HTMLSelectElement;
+  const inputDocumentDemande = screen.getByTestId("requete.documentDemande")
+    .childNodes[0] as HTMLSelectElement;
   const inputNbExemplaire = screen.getByLabelText(
     "requete.nbExemplaire"
   ) as HTMLSelectElement;
-  const inputMotif = screen.getByLabelText(
-    "requete.motif"
-  ) as HTMLSelectElement;
+  const inputMotif = screen.getByTestId("requete.motif")
+    .childNodes[0] as HTMLSelectElement;
 
   await act(async () => {
     fireEvent.change(inputNatureActe, {
