@@ -9,14 +9,23 @@ export interface UpdateChoixDelivranceProps {
   choixDelivrance?: ChoixDelivrance;
 }
 
-export function useUpdateChoixDelivrance(params?: UpdateChoixDelivranceProps) {
-  const [idRequete, setIdRequete] = useState<string | undefined>();
+export interface IUpdateChoixDelivranceResultat {
+  idRequete?: string;
+}
+
+export function useUpdateChoixDelivrance(
+  params?: UpdateChoixDelivranceProps
+): IUpdateChoixDelivranceResultat | undefined {
+  const [
+    updateChoixDelivranceResultat,
+    setUpdateChoixDelivranceResultat
+  ] = useState<IUpdateChoixDelivranceResultat>();
 
   useEffect(() => {
     if (params && params.choixDelivrance) {
       updateChoixDelivrance(params.requete.id, params.choixDelivrance.nom)
         .then((result: any) => {
-          setIdRequete(result.body.data);
+          setUpdateChoixDelivranceResultat({ idRequete: result.body.data });
         })
         .catch((error: any) => {
           handleLogError(error);
@@ -24,14 +33,14 @@ export function useUpdateChoixDelivrance(params?: UpdateChoixDelivranceProps) {
     } else if (params) {
       updateChoixDelivrance(params.requete.id, null)
         .then((result: any) => {
-          setIdRequete(result.body.data);
+          setUpdateChoixDelivranceResultat({ idRequete: result.body.data });
         })
         .catch((error: any) => {
           handleLogError(error);
         });
     }
   }, [params]);
-  return idRequete;
+  return updateChoixDelivranceResultat;
 }
 
 function handleLogError(error: any) {

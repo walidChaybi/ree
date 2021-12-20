@@ -1,5 +1,5 @@
 import { getValeurOuVide } from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../LieuxUtils";
+import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
 import { TypeCanal } from "../../requete/enum/TypeCanal";
 import { IRequerant, Requerant } from "../../requete/IRequerant";
 

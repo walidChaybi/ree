@@ -12,6 +12,8 @@ const URL_COMPOSITION_CERTIFICAT_RC =
   "/composition/CERTIFICAT_INSCRIPTION_RC/1";
 
 const URL_COMPOSITION_ATTESTATION_PACS = "/composition/ATTESTATION_PACS/1";
+const URL_COMPOSITION_EXTRAIT_COPIE_ACTE_TEXTE =
+  "/composition/EXTAIT_COPIE_ACTE_TEXTE/1";
 
 function getCompositionReponseSansDelivranceCS(
   document: string,
@@ -65,6 +67,14 @@ function getCompositionCourrier(codeCourrier: string, obj: any): Promise<any> {
   return getComposition(`/composition/${codeCourrier}/1`, obj);
 }
 
+function getCompositionExtraitOuCopieActeTexte(obj: any): Promise<any> {
+  return getComposition(URL_COMPOSITION_EXTRAIT_COPIE_ACTE_TEXTE, obj);
+}
+
+function getCompositionCopieActeImage(obj: any): Promise<any> {
+  return getComposition("/TODO", obj);
+}
+
 function getComposition(
   uri: string,
   data: any
@@ -84,5 +94,7 @@ export const compositionApi = {
   getCompositionCertificatRC,
   getCompositionCertificatPACS,
   getCompositionCertificatPacsRcRca,
-  getCompositionCourrier
+  getCompositionCourrier,
+  getCompositionExtraitOuCopieActeTexte,
+  getCompositionCopieActeImage
 };

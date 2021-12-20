@@ -12,6 +12,11 @@ export class Sexe extends EnumWithLibelle {
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, Sexe);
   }
+
+  public static getEnumFromLibelle(str?: string) {
+    return str ? EnumWithLibelle.getEnumFromLibelle(Sexe, str) : undefined;
+  }
+
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(Sexe, false, false);
   }

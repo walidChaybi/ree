@@ -25,24 +25,25 @@ export const MenuReponseSansDelivrance: React.FC<IChoixActionDelivranceProps> = 
   const history = useHistory();
   const refRepondreSansDelivranceOptions0 = useRef(null);
 
-  const [
-    paramUpdateChoixDelivrance,
-    setParamUpdateChoixDelivrance
-  ] = useState<UpdateChoixDelivranceProps>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<
+    UpdateChoixDelivranceProps
+  >();
   const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
 
-  const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
+  const updateChoixDelivranceResultat = useUpdateChoixDelivrance(
+    paramUpdateChoixDelivrance
+  );
 
   useEffect(() => {
-    if (idRequete) {
+    if (updateChoixDelivranceResultat?.idRequete) {
       const url = `${getUrlWithoutIdParam(
         history.location.pathname
-      )}/${PATH_APERCU_COURRIER}/${idRequete}`;
+      )}/${PATH_APERCU_COURRIER}/${updateChoixDelivranceResultat.idRequete}`;
 
       history.push(url, props.actes);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idRequete]);
+  }, [updateChoixDelivranceResultat]);
 
   const repondreSansDelivranceOptions: IActionOption[] = [
     {

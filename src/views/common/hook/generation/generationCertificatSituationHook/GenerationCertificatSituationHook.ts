@@ -14,7 +14,10 @@ import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequete
 import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
 import { MimeType } from "../../../../../ressources/MimeType";
 import { useCertificatSituationApiHook } from "../../composition/CompositionCertificatSituationHook";
-import { useStockerDocumentCreerActionMajStatutRequete } from "../../requete/StockerDocumentCreerActionMajStatutRequete";
+import {
+  IStockerDocumentCreerActionMajStatutRequeteParams,
+  useStockerDocumentCreerActionMajStatutRequete
+} from "../../requete/StockerDocumentCreerActionMajStatutRequete";
 import { IResultGenerationUnDocument, RESULTAT_VIDE } from "../generationUtils";
 import { specificationDecret } from "./specificationTitreDecretPhrase/specificationDecret";
 import { IInfosInscriptions } from "./specificationTitreDecretPhrase/specificationPhraseDelivrer";
@@ -46,9 +49,9 @@ export function useGenerationCertificatSituationHook(
   ] = useState<ICertificatSituationComposition>();
 
   const [
-    documentReponsePourStockage,
-    setDocumentReponsePourStockage
-  ] = useState<IDocumentReponse | undefined>();
+    stockerDocumentCreerActionMajStatutRequeteParams,
+    setStockerDocumentCreerActionMajStatutRequeteParams
+  ] = useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
 
   // 1 - Construction du Certificat de situation
   useEffect(() => {
@@ -88,24 +91,28 @@ export function useGenerationCertificatSituationHook(
   // 3 - Création du document réponse (après appel 'useCertificatSituationRmcAutoVideApi') pour stockage dans la BDD et Swift
   useEffect(() => {
     if (donneesComposition && params?.requete) {
-      setDocumentReponsePourStockage({
-        contenu: donneesComposition.contenu,
-        nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
-        mimeType: MimeType.APPLI_PDF,
-        typeDocument: DocumentDelivrance.getKeyForCode("CERTIFICAT_SITUATION"), // UUID du type de document demandé (nomenclature)
-        nbPages: donneesComposition.nbPages,
-        orientation: Orientation.PORTRAIT
-      } as IDocumentReponse);
+      setStockerDocumentCreerActionMajStatutRequeteParams({
+        documentReponsePourStockage: {
+          contenu: donneesComposition.contenu,
+          nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
+          mimeType: MimeType.APPLI_PDF,
+          typeDocument: DocumentDelivrance.getKeyForCode(
+            "CERTIFICAT_SITUATION"
+          ), // UUID du type de document demandé (nomenclature)
+          nbPages: donneesComposition.nbPages,
+          orientation: Orientation.PORTRAIT
+        } as IDocumentReponse,
+        libelleAction: StatutRequete.A_VALIDER.libelle,
+        statutRequete: StatutRequete.A_VALIDER,
+        requeteId: params?.requete?.idRequete
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [donneesComposition]);
 
   // 4- Stockage du document réponse une fois celui-ci créé
   const uuidDocumentReponse = useStockerDocumentCreerActionMajStatutRequete(
-    StatutRequete.A_VALIDER.libelle,
-    StatutRequete.A_VALIDER,
-    documentReponsePourStockage,
-    params?.requete?.idRequete
+    stockerDocumentCreerActionMajStatutRequeteParams
   );
 
   // 5 - Une fois le document stocker, création du résultat
@@ -123,7 +130,7 @@ export function useGenerationCertificatSituationHook(
   return resultGenerationCertificatSituation;
 }
 
-async function construitCertificatSituation(
+function construitCertificatSituation(
   phrasesLiees: string | undefined,
   requete: IRequeteTableauDelivrance,
   setCertificatSituationComposition: any,

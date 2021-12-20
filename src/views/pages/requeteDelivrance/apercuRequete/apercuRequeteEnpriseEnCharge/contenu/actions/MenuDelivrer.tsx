@@ -3,14 +3,13 @@ import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
 import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../../../../model/requete/enum/StatutRequete";
 import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
-  IActionStatutRequete,
-  useCreerActionMajStatutRequete
-} from "../../../../../../common/hook/requete/CreerActionMajStatutRequete";
+  IGenerationECParams,
+  useGenerationEC
+} from "../../../../../../common/hook/generation/generationECHook/generationECHook";
 import { DoubleSubmitUtil } from "../../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
 import { getUrlWithoutIdParam } from "../../../../../../common/util/route/routeUtil";
@@ -33,12 +32,14 @@ import {
   UpdateChoixDelivranceProps,
   useUpdateChoixDelivrance
 } from "./hook/UpdateChoixDelivranceHook";
-
-const INDEX_ACTION_COPIE_INTEGRALE = 0;
-const INDEX_ACTION_EXTRAIT_AVEC_FILIATION = 1;
-const INDEX_ACTION_EXTRAIT_SANS_FILIATION = 2;
-const INDEX_ACTION_EXTRAIT_PLURILINGUE = 3;
-const INDEX_ACTION_COPIE_ARCHIVE = 4;
+import {
+  estChoixExtraitAvecOuSansFiliation,
+  getBoutonOK,
+  getBoutonsOuiNon,
+  getOptionsMenuDelivrer,
+  nonVide,
+  unActeEtUnSeulSelectionne
+} from "./MenuDelivrerUtil";
 
 export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const history = useHistory();
@@ -52,16 +53,13 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [
-    paramUpdateChoixDelivrance,
-    setParamUpdateChoixDelivrance
-  ] = useState<UpdateChoixDelivranceProps>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<
+    UpdateChoixDelivranceProps
+  >();
 
-  const [
-    actionStatutRequete,
-    setActionStatutRequete
-  ] = useState<IActionStatutRequete>();
-
+  const [generationDocumentECParams, setGenerationDocumentECParams] = useState<
+    IGenerationECParams
+  >();
   useEffect(() => {
     setInscriptions(
       props.inscriptions
@@ -74,27 +72,37 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   }, [props.actes, props.inscriptions]);
 
   // 1 - Mise à jour du choix delivrance
-  const idRequete = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
+  const updateChoixDelivranceResultat = useUpdateChoixDelivrance(
+    paramUpdateChoixDelivrance
+  );
 
-  // 2 - Création des paramètres pour la création de l'action
-  // et la mise à jour du statut de la requête si celle-ci est une RDD
+  // 2 - Création des paramètre pour la génération du document demandé
   useEffect(() => {
-    if (idRequete && props.requete.sousType === SousTypeDelivrance.RDD) {
-      const statutRequete =
-        choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
-          ? StatutRequete.A_VALIDER
-          : StatutRequete.A_SIGNER;
-      setActionStatutRequete({
-        libelleAction: statutRequete.libelle,
-        statutRequete,
-        requeteId: idRequete
+    if (
+      actes &&
+      updateChoixDelivranceResultat?.idRequete &&
+      choixDelivrance &&
+      (props.requete.sousType === SousTypeDelivrance.RDD ||
+        props.requete.sousType === SousTypeDelivrance.RDC)
+    ) {
+      setGenerationDocumentECParams({
+        idActe: actes[0].idActe,
+        requete: props.requete,
+        choixDelivrance
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idRequete]);
+  }, [updateChoixDelivranceResultat]);
 
-  // 3 -  Mise à jour du status de la requête + création d'une action
-  const { idAction } = useCreerActionMajStatutRequete(actionStatutRequete);
+  // 3 - Génération du document demandé
+  const resultatGenerationEC = useGenerationEC(generationDocumentECParams);
+
+  // Gestion de l'erreur éventuelle après appel du hook
+  useEffect(() => {
+    if (resultatGenerationEC?.erreur) {
+      setOperationEnCours(false);
+    }
+  }, [resultatGenerationEC]);
 
   const resetDoubleSubmit = () => {
     listeActions.forEach(el => {
@@ -176,7 +184,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
 
   // Le contrôle de cohérence a eu lieu
   useEffect(() => {
-    if (messagesBloquant && messagesBloquant.length === 0) {
+    if (choixDelivrance && messagesBloquant && messagesBloquant.length === 0) {
       // Le contrôle de cohérence a eu lieu et pas de message bloquant
       setOperationEnCours(true);
       // Déclanche le hook de mise à jour du choix de délivrance
@@ -189,15 +197,20 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
 
   // La mise à jour du choix de délivrance et du statut ont été effectués (cf.)
   useEffect(() => {
-    if (idRequete) {
+    if (
+      updateChoixDelivranceResultat?.idRequete &&
+      resultatGenerationEC?.resultGenerationUnDocument
+    ) {
       if (props.requete.sousType === SousTypeDelivrance.RDC) {
         history.push(
           `${getUrlWithoutIdParam(
             history.location.pathname
-          )}/${PATH_APERCU_COURRIER}/${idRequete}`,
+          )}/${PATH_APERCU_COURRIER}/${
+            updateChoixDelivranceResultat.idRequete
+          }`,
           actes?.[0]
         );
-      } else if (idAction) {
+      } else {
         // Si la requete est une RDD et que l'action est enregistré
         const url = receUrl.getUrlApercuTraitementAPartirDe(
           history.location.pathname
@@ -206,7 +219,12 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idRequete, idAction, history, props.requete]);
+  }, [
+    updateChoixDelivranceResultat,
+    resultatGenerationEC,
+    history,
+    props.requete
+  ]);
 
   const listeActions = filtrerListeActions(props.requete, delivrerOptions);
 
@@ -215,6 +233,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       <OperationEnCours
         visible={operationEnCours}
         onTimeoutEnd={() => setOperationEnCours(false)}
+        onClick={() => setOperationEnCours(false)}
       />
       <GroupeBouton
         titre={getLibelle("Délivrer")}
@@ -232,104 +251,3 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     </>
   );
 };
-
-function getBoutonOK(
-  setMessagesBloquant: React.Dispatch<
-    React.SetStateAction<string[] | undefined>
-  >,
-  resetDoubleSubmit: Function
-): IBoutonPopin[] {
-  return [
-    {
-      label: getLibelle("OK"),
-      action: () => {
-        setMessagesBloquant(undefined);
-        resetDoubleSubmit();
-      }
-    }
-  ];
-}
-
-function getBoutonsOuiNon(
-  setMessagesBloquant: React.Dispatch<
-    React.SetStateAction<string[] | undefined>
-  >,
-  resetDoubleSubmit: Function
-): IBoutonPopin[] {
-  return [
-    {
-      label: getLibelle("Oui"),
-      action: () => {
-        setMessagesBloquant([]);
-      }
-    },
-    {
-      label: getLibelle("Non"),
-      action: () => {
-        setMessagesBloquant(undefined);
-        resetDoubleSubmit();
-      }
-    }
-  ];
-}
-
-function getOptionsMenuDelivrer(
-  refDelivrerOptions0: React.MutableRefObject<null>
-): IActionOption[] {
-  return [
-    {
-      value: INDEX_ACTION_COPIE_INTEGRALE,
-      label: getLibelle("Copie intégrale"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0,
-      choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE
-    },
-    {
-      value: INDEX_ACTION_EXTRAIT_AVEC_FILIATION,
-      label: getLibelle("Extrait avec filiation"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0,
-      // attribut supplémentaire pour trouver facilement le choix de délivrance en fonction de l'index du menu sélectionné
-      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
-    },
-    {
-      value: INDEX_ACTION_EXTRAIT_SANS_FILIATION,
-      label: getLibelle("Extrait sans filiation"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0,
-      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
-    },
-    {
-      value: INDEX_ACTION_EXTRAIT_PLURILINGUE,
-      label: getLibelle("Extrait plurilingue"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0,
-      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
-    },
-    {
-      value: INDEX_ACTION_COPIE_ARCHIVE,
-      label: getLibelle("Copie archive (118)"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
-      ref: refDelivrerOptions0,
-      choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
-    }
-  ];
-}
-
-export function unActeEtUnSeulSelectionne(
-  listeActes?: any[],
-  listeInscriptions?: any[]
-) {
-  return listeActes?.length === 1 && listeInscriptions?.length === 0;
-}
-
-export function estChoixExtraitAvecOuSansFiliation(indexMenu: number) {
-  return (
-    indexMenu === INDEX_ACTION_EXTRAIT_AVEC_FILIATION ||
-    indexMenu === INDEX_ACTION_EXTRAIT_SANS_FILIATION
-  );
-}
-
-export function nonVide(messages?: string[]) {
-  return messages !== undefined && messages.length > 0;
-}

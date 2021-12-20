@@ -7,7 +7,7 @@ import {
   formatPrenom,
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../LieuxUtils";
+import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
 import { AutresNoms } from "../enum/AutresNoms";
 import { Nationalite } from "../enum/Nationalite";
 import { Sexe } from "../enum/Sexe";

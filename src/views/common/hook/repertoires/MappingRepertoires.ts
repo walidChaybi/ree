@@ -6,12 +6,14 @@ import { IFicheLien } from "../../../../model/etatcivil/commun/IFicheLien";
 import { ILieuEvenement } from "../../../../model/etatcivil/commun/ILieuEvenement";
 import { IPersonne } from "../../../../model/etatcivil/commun/IPersonne";
 import { AutresNoms } from "../../../../model/etatcivil/enum/AutresNoms";
+import { ExistenceContratMariage } from "../../../../model/etatcivil/enum/ExistenceContratMariage";
 import { Nationalite } from "../../../../model/etatcivil/enum/Nationalite";
 import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
 import { NatureRc } from "../../../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
+import { TypeActe } from "../../../../model/etatcivil/enum/TypeActe";
 import { TypeVisibiliteArchiviste } from "../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
 import { IPartenaire } from "../../../../model/etatcivil/pacs/IPartenaire";
@@ -88,7 +90,7 @@ function mapStatutFiche(data: any) {
 }
 
 export function mapActe(data: any): IFicheActe {
-  const dataActe: IFicheActe = data;
+  const dataActe: IFicheActe = { ...data };
   dataActe.nature = NatureActe.getEnumFor(data.nature);
   dataActe.registre = mapRegistre(data.registre);
   dataActe.dateDerniereDelivrance = data.dateDerniereDelivrance
@@ -103,6 +105,16 @@ export function mapActe(data: any): IFicheActe {
   dataActe.visibiliteArchiviste = TypeVisibiliteArchiviste.getEnumFor(
     data.visibiliteArchiviste
   );
+
+  if (data.detailMariage) {
+    dataActe.detailMariage = { ...data.detailMariage };
+    //@ts-ignore (dataActe.detailMariage ne peut pas être nul du fait du test ci-dessus)
+    dataActe.detailMariage.existenceContrat = ExistenceContratMariage.getEnumFor(
+      data.detailMariage.existenceContrat
+    );
+  }
+
+  dataActe.type = TypeActe.getEnumFor(data.type);
 
   return dataActe;
 }

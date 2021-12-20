@@ -1,19 +1,30 @@
 import { useEffect, useState } from "react";
 import { getInformationsFicheActe } from "../../../../api/appels/etatcivilApi";
+import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
 import { logError } from "../../util/LogManager";
-import { mapActe, TFiche } from "./MappingRepertoires";
+import { mapActe } from "./MappingRepertoires";
 
-export function useInformationsActeApiHook(identifiant?: string) {
-  const [informationsActe, setInformationsActe] = useState<
-    TFiche | undefined
+export interface IActeApiHookParams {
+  idActe?: string;
+}
+
+export interface IActeApiHookResultat {
+  acte?: IFicheActe;
+}
+
+export function useInformationsActeApiHook(
+  params?: IActeApiHookParams
+): IActeApiHookResultat | undefined {
+  const [acteApiHookResultat, setActeApiHookResultat] = useState<
+    IActeApiHookResultat
   >();
 
   useEffect(() => {
-    if (identifiant) {
-      getInformationsFicheActe(identifiant)
+    if (params?.idActe) {
+      getInformationsFicheActe(params.idActe)
         .then((result: any) => {
-          const infoRepertoire = mapActe(result.body.data) as TFiche;
-          setInformationsActe(infoRepertoire);
+          const acte: IFicheActe = mapActe(result.body.data);
+          setActeApiHookResultat({ acte });
         })
         .catch((error: any) => {
           logError({
@@ -22,10 +33,8 @@ export function useInformationsActeApiHook(identifiant?: string) {
             error
           });
         });
-    } else {
-      setInformationsActe({} as TFiche);
     }
-  }, [identifiant]);
+  }, [params]);
 
-  return informationsActe;
+  return acteApiHookResultat;
 }

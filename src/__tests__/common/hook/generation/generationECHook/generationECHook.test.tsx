@@ -1,0 +1,47 @@
+import { render, screen, waitFor } from "@testing-library/react";
+import React from "react";
+import request from "superagent";
+import { ReponseAppelDetailRequeteDelivrance } from "../../../../../mock/data/DetailRequeteDelivrance";
+import { idFicheActeMariage } from "../../../../../mock/data/ficheActe";
+import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
+import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
+import {
+  IGenerationECParams,
+  useGenerationEC
+} from "../../../../../views/common/hook/generation/generationECHook/generationECHook";
+import { mappingRequeteDelivrance } from "../../../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
+
+const superagentMock = require("superagent-mock")(request, [
+  configRequetes[0],
+  configEtatcivil[0],
+  configComposition[0]
+]);
+
+const ecMariageSansFiliationparams: IGenerationECParams = {
+  idActe: idFicheActeMariage,
+  requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
+};
+
+const HookConsumer: React.FC = () => {
+  const resultat = useGenerationEC(ecMariageSansFiliationparams);
+
+  return <div>{resultat?.resultGenerationUnDocument?.idDocumentReponse}</div>;
+};
+
+test("Attendu: un extrait de mariage sans filiation est généré via useGenerationEC", async () => {
+  render(<HookConsumer />);
+
+  await waitFor(() => {
+    // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+    expect(
+      screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")
+    ).toBeInTheDocument();
+  });
+});
+
+afterAll(() => {
+  superagentMock.unset();
+});

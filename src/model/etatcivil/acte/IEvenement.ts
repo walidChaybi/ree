@@ -1,9 +1,9 @@
 import {
-  getDateStringFromDateCompose,
-  formatAHeure
+  formatAHeure,
+  getDateStringFromDateCompose
 } from "../../../views/common/util/DateUtils";
 import { numberToString } from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../LieuxUtils";
+import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
 
 export interface IEvenement {
   heure?: number;
@@ -16,6 +16,7 @@ export interface IEvenement {
   arrondissement?: string;
   region?: string;
   pays: string;
+  lieuReprise?: string;
 }
 
 export const Evenement = {

@@ -4,10 +4,8 @@ import {
   getLieuMariage,
   IMariageInteresse
 } from "../../../../../../model/etatcivil/rcrca/IMariageInteresse";
-import {
-  formatDeOuLe,
-  getDateStringFromDateCompose
-} from "../../../../../common/util/DateUtils";
+import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
+import { EtatCivilUtil } from "../../../../../common/utilMetier/EtatCivilUtil";
 import "./scss/Mariage.scss";
 
 export const Mariage: React.FC<IMariageInteresse> = props => {
@@ -24,7 +22,7 @@ export const Mariage: React.FC<IMariageInteresse> = props => {
       <span>
         {
           <label className="libelleContent">
-            {formatDeOuLe(props.dateMariage)}
+            {EtatCivilUtil.formatLeOuEnAPartirDate(props.dateMariage)}
           </label>
         }
         <span className="valueContent mariage">

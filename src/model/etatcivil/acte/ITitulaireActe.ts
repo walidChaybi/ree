@@ -4,7 +4,7 @@ import {
   formatPrenom,
   numberToString
 } from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../LieuxUtils";
+import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
 import { Sexe } from "../enum/Sexe";
 import { IAdresse } from "./IAdresse";
 import { IEvenement } from "./IEvenement";
@@ -20,6 +20,8 @@ export interface ITitulaireActe {
   profession?: string;
   domicile?: IAdresse;
   filiations?: IFiliation[];
+  nomPartie1?: string;
+  nomPartie2?: string;
 }
 
 export const TitulaireActe = {

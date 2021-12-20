@@ -2,12 +2,12 @@ import React from "react";
 import { FicheUtil } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
 import { IInteresse } from "../../../../../../model/etatcivil/rcrca/IInteresse";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
 import {
   getLibelle,
   triListeObjetsSurPropriete
 } from "../../../../../common/util/Utils";
+import { LieuxUtils } from "../../../../../common/utilMetier/LieuxUtils";
 import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 import { Mariage } from "./Mariage";

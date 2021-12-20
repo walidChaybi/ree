@@ -1,4 +1,4 @@
-import { LieuxUtils } from "../../model/LieuxUtils";
+import { LieuxUtils } from "../../views/common/utilMetier/LieuxUtils";
 
 test("Lieux model", () => {
   expect(LieuxUtils.isPaysFrance("france")).toBe(true);

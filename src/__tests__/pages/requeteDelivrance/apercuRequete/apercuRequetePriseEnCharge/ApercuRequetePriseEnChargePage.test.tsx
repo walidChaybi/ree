@@ -18,6 +18,7 @@ import {
   DataRMCInscriptionAvecResultat,
   DataTableauInscription
 } from "../../../../../mock/data/RMCInscription";
+import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
@@ -32,7 +33,8 @@ import {
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
-  configEtatcivil[0]
+  configEtatcivil[0],
+  configComposition[0]
 ]);
 
 const globalAny: any = global;

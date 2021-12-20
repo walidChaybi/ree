@@ -3,20 +3,22 @@ import React from "react";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
-import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
 import { useInformationsActeApiHook } from "../../../../views/common/hook/repertoires/ActeApiHook";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
+const hookParams = {
+  idActe: "923a10fb-0b15-452d-83c0-d24c76d1d19d"
+};
 const HookConsummerActe: React.FC = () => {
-  const informationsActe = useInformationsActeApiHook(
-    "923a10fb-0b15-452d-83c0-d24c76d1d19d"
-  ) as IFicheActe;
+  const acteApiHookResultat = useInformationsActeApiHook(hookParams);
 
   return (
     <>
-      {informationsActe && (
-        <div data-testid={"test-fiche-hook-acte"}>{informationsActe.id}</div>
+      {acteApiHookResultat && (
+        <div data-testid={"test-fiche-hook-acte"}>
+          {acteApiHookResultat.acte?.id}
+        </div>
       )}
     </>
   );

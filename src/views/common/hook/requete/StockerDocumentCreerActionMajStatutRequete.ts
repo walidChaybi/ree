@@ -4,26 +4,31 @@ import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
 import { logError } from "../../util/LogManager";
 
+export interface IStockerDocumentCreerActionMajStatutRequeteParams {
+  libelleAction: string;
+  statutRequete: StatutRequete;
+  documentReponsePourStockage?: IDocumentReponse;
+  requeteId?: string;
+}
+
 export function useStockerDocumentCreerActionMajStatutRequete(
-  libelleAction: string,
-  statutRequete: StatutRequete,
-  documentReponsePourStockage?: IDocumentReponse,
-  requeteId?: string
+  params?: IStockerDocumentCreerActionMajStatutRequeteParams
 ) {
   const [uuidDocumentReponse, setUuidDocumentReponse] = useState<string>();
   // 4- Une fois le document stocké, création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   useEffect(() => {
     if (
-      requeteId &&
-      libelleAction &&
-      statutRequete &&
-      documentReponsePourStockage
+      params &&
+      params.requeteId &&
+      params.libelleAction &&
+      params.statutRequete &&
+      params.documentReponsePourStockage
     ) {
       postSauvDocumentCreerActionMajStatutRequete(
-        requeteId,
-        libelleAction,
-        statutRequete,
-        documentReponsePourStockage
+        params.requeteId,
+        params.libelleAction,
+        params.statutRequete,
+        params.documentReponsePourStockage
       )
         .then(result => {
           setUuidDocumentReponse(result.body.data[0]);
@@ -36,7 +41,7 @@ export function useStockerDocumentCreerActionMajStatutRequete(
           });
         });
     }
-  }, [documentReponsePourStockage, libelleAction, requeteId, statutRequete]);
+  }, [params]);
 
   return uuidDocumentReponse;
 }

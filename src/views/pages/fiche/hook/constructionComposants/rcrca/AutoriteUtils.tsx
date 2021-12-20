@@ -12,12 +12,12 @@ import {
   TypeFiche
 } from "../../../../../../model/etatcivil/enum/TypeFiche";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import {
   formatNom,
   formatPrenom,
   getValeurOuVide
 } from "../../../../../common/util/Utils";
+import { LieuxUtils } from "../../../../../common/utilMetier/LieuxUtils";
 import { SectionContentProps } from "../../../../../common/widget/section/SectionContent";
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 

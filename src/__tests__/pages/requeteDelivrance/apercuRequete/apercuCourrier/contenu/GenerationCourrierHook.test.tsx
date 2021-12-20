@@ -3,9 +3,9 @@ import React from "react";
 import request from "superagent";
 import { idDocumentsReponse } from "../../../../../../mock/data/DocumentReponse";
 import {
-    OptionsChoisiesCourrier17,
-    RequeteRDDCourrier17,
-    SaisieCourrier17
+  OptionsChoisiesCourrier17,
+  RequeteRDDCourrier17,
+  SaisieCourrier17
 } from "../../../../../../mock/data/SaisieCourrier";
 import { configComposition } from "../../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
@@ -45,7 +45,7 @@ beforeAll(() => {
   DocumentDelivrance.init();
 });
 
-test("Attendu: la génération d'un courrier", async () => {
+test("Attendu: la génération d'un courrier s'effectue correctement", async () => {
   render(<HookConsummer></HookConsummer>);
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
 

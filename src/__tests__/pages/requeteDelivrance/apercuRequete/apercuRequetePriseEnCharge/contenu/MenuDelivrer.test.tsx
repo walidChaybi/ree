@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -18,12 +18,12 @@ import { configEtatcivil } from "../../../../../../mock/superagent-config/supera
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
+import { MenuDelivrer } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrer";
 import {
-    estChoixExtraitAvecOuSansFiliation,
-    MenuDelivrer,
-    nonVide,
-    unActeEtUnSeulSelectionne
-} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrer";
+  estChoixExtraitAvecOuSansFiliation,
+  nonVide,
+  unActeEtUnSeulSelectionne
+} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
 import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);

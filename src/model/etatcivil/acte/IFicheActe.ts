@@ -4,9 +4,12 @@ import {
 } from "../../../views/common/util/Utils";
 import { IPersonne } from "../commun/IPersonne";
 import { NatureActe } from "../enum/NatureActe";
+import { TypeActe } from "../enum/TypeActe";
 import { TypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
 import { IAnalyseMarginale } from "./IAnalyseMarginale";
+import { IDetailMariage } from "./IDetailMariage";
 import { IEvenement } from "./IEvenement";
+import { ICorpsImage } from "./imageActe/ICorpsImage";
 import { IRegistre } from "./IRegistre";
 import { ITitulaireActe } from "./ITitulaireActe";
 
@@ -24,6 +27,10 @@ export interface IFicheActe {
   dateDerniereDelivrance?: Date;
   visibiliteArchiviste: TypeVisibiliteArchiviste;
   analyseMarginales?: IAnalyseMarginale[];
+  detailMariage?: IDetailMariage;
+  corpsText?: string;
+  corpsImage?: ICorpsImage;
+  type: TypeActe;
 }
 
 export const FicheActe = {
@@ -42,5 +49,16 @@ export const FicheActe = {
       numeroBisTer: getValeurOuVide(acte?.numeroBisTer)
     };
     return Object.values(compactObject(registre)).join(".");
+  },
+  estActeImage(acte: IFicheActe) {
+    return (
+      acte.type === TypeActe.IMAGE ||
+      (acte.corpsImage &&
+        acte.corpsImage.images &&
+        acte.corpsImage.images.length > 0)
+    );
+  },
+  estActeTexte(acte: IFicheActe) {
+    return acte.type === TypeActe.TEXTE || !acte.corpsImage;
   }
 };

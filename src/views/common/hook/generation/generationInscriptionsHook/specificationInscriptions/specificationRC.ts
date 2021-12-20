@@ -5,12 +5,12 @@ import {
   TypeInscriptionRc
 } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import {
   getDateFormatJasper,
   getDateFromTimestamp
 } from "../../../../util/DateUtils";
 import { formatDe } from "../../../../util/Utils";
+import { LieuxUtils } from "../../../../utilMetier/LieuxUtils";
 import {
   getDecisionExequatur,
   getDecisionJuridiction,

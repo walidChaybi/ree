@@ -3,7 +3,7 @@ import {
   formatPremieresLettresMajusculesNomCompose,
   getValeurOuVide,
   premiereLettreEnMajuscule
-} from "../views/common/util/Utils";
+} from "../util/Utils";
 
 const FRANCE = "FRANCE";
 const PARIS = "PARIS";
@@ -99,8 +99,9 @@ export class LieuxUtils {
       ? formatPremieresLettresMajusculesNomCompose(pays)
       : "";
 
-    const regionStringEntreParentheses =
-      LieuxUtils.getRegionEntreParentheses(regionString);
+    const regionStringEntreParentheses = LieuxUtils.getRegionEntreParentheses(
+      regionString
+    );
     if (LieuxUtils.isPaysFrance(pays)) {
       if (
         !LieuxUtils.isVilleAvecArrondissement(ville) ||

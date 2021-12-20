@@ -40,7 +40,10 @@ import {
 } from "./contenuForm/CourrierForms";
 import { ValidationSchemaChoixCourrier } from "./contenuForm/sousFormulaires/ChoixCourrierForm";
 import { ValidationSchemaOptionCourrier } from "./contenuForm/sousFormulaires/OptionsCourrierForm";
-import { useGenerationCourrierHook } from "./hook/GenerationCourrierHook";
+import {
+  IGenerationCourrierParams,
+  useGenerationCourrierHook
+} from "./hook/GenerationCourrierHook";
 import {
   ADRESSE,
   CHOIX_COURRIER,
@@ -65,10 +68,13 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
   const [messagesBloquant, setMessagesBloquant] = useState<string>();
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
+  const [documentDelivranceChoisi, setDocumentDelivranceChoisi] = useState<
+    DocumentDelivrance
+  >();
   const [
-    documentDelivranceChoisi,
-    setDocumentDelivranceChoisi
-  ] = useState<DocumentDelivrance>();
+    generationCourrierHookParams,
+    setGenerationCourrierHookParams
+  ] = useState<IGenerationCourrierParams>();
 
   // Schéma de validation en sortie de champs
   const ValidationSchemaCourrier = Yup.object({
@@ -107,7 +113,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const onSubmit = (values: SaisieCourrier) => {
     if (controleFormulaire(values, optionsChoisies, setMessagesBloquant)) {
       setOperationEnCours(true);
-      setSaisieCourrier(values);
+      setSaisieCourrier({ ...values });
     }
   };
 
@@ -155,12 +161,21 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   /** Saisie du courrier */
   const history = useHistory();
 
-  const generationCourrier = useGenerationCourrierHook({
-    saisieCourrier,
-    optionsChoisies,
-    requete: props.requete,
-    acte: props.acte
-  });
+  useEffect(() => {
+    if (saisieCourrier && props.requete.choixDelivrance) {
+      setGenerationCourrierHookParams({
+        saisieCourrier,
+        optionsChoisies,
+        requete: props.requete,
+        acte: props.acte
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [saisieCourrier]);
+
+  const generationCourrier = useGenerationCourrierHook(
+    generationCourrierHookParams
+  );
 
   useEffect(() => {
     if (generationCourrier) {

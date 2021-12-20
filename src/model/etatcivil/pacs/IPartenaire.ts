@@ -8,7 +8,7 @@ import {
   getValeurOuVide,
   jointPrenoms
 } from "../../../views/common/util/Utils";
-import { LieuxUtils } from "../../LieuxUtils";
+import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
 import { Nationalite } from "../enum/Nationalite";
 import { Sexe } from "../enum/Sexe";
 import { IPrenom } from "../fiche/IPrenom";

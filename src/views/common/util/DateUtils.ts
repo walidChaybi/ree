@@ -129,6 +129,10 @@ export function getDateString(date: Date): string {
   return date ? new Intl.DateTimeFormat("fr-FR").format(date) : "";
 }
 
+export function getDateDuJour(): string {
+  return getDateString(new Date());
+}
+
 // Convertion d'un Timestamp (en millisecondes depuis 1970) en Date
 export function getDateFromTimestamp(timestamp: number): Date {
   return new Date(timestamp);
@@ -258,14 +262,6 @@ export function formatAHeure(heure?: number, minute?: number) {
     }
   }
   return "";
-}
-
-export function formatDeOuLe(date: IDateCompose) {
-  if (date && date.jour) {
-    return "Le";
-  } else {
-    return "En";
-  }
 }
 
 const MAP_MOIS_LETTRES = new Map<number, string>();

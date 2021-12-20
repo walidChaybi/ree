@@ -5,7 +5,6 @@ import {
   CourrierComposition,
   ICourrierComposition
 } from "../../../../../../../model/composition/ICourrierComposition";
-import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
 import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { IAdresseRequerant } from "../../../../../../../model/requete/IAdresseRequerant";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
@@ -26,7 +25,10 @@ import {
   IResultGenerationUnDocument,
   RESULTAT_VIDE
 } from "../../../../../../common/hook/generation/generationUtils";
-import { useInformationsActeApiHook } from "../../../../../../common/hook/repertoires/ActeApiHook";
+import {
+  IActeApiHookParams,
+  useInformationsActeApiHook
+} from "../../../../../../common/hook/repertoires/ActeApiHook";
 import { useSauvegarderCourrierCreerActionMajStatutRequete } from "../../../../../../common/hook/requete/sauvegardeCourrierCreerActionMajStatut";
 import { getValeurOuVide } from "../../../../../../common/util/Utils";
 import {
@@ -63,45 +65,60 @@ export interface IGenerationCourrierParams {
 }
 
 export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
-  const [
-    resultatGenerationCourrier,
-    setResultatGenerationCourrier
-  ] = useState<IResultGenerationUnDocument>();
+  const [resultatGenerationCourrier, setResultatGenerationCourrier] = useState<
+    IResultGenerationUnDocument
+  >();
 
   const [courrierParams, setCourrierParams] = useState<ICourrierParams>();
 
   const [courrier, setCourrier] = useState<DocumentDelivrance | undefined>();
 
-  const [idActe, setIdActe] = useState<string | undefined>();
-
-  const [acte, setActe] = useState<IFicheActe>();
+  const [acteApiHookParams, setActeApiHookParams] = useState<
+    IActeApiHookParams
+  >();
 
   const [
     requeteDelivrancePourSauvegarde,
     setRequeteDelivrancePourSauvegarde
   ] = useState<ISauvegardeCourrier | undefined>();
 
+  const [
+    basculerConstructionCourrier,
+    setBasculerConstructionCourrier
+  ] = useState<boolean>(false);
+
   useEffect(() => {
-    if (
-      params?.saisieCourrier &&
-      params.saisieCourrier.choixCourrier.courrier
-    ) {
+    if (uuidCourrierPresent(params)) {
+      // @ts-ignore params.saisieCourrier n'est pas null
       const uuidCourrier = params.saisieCourrier.choixCourrier.courrier;
       setCourrier(DocumentDelivrance.getDocumentDelivrance(uuidCourrier));
-      setIdActe(getIdActe(params?.acte));
+      setActApiHookParamsOuBasculerConstructionCourrier(
+        setActeApiHookParams,
+        setBasculerConstructionCourrier,
+        params
+      );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
-  const informationsActe = useInformationsActeApiHook(idActe) as IFicheActe;
+  const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
 
   useEffect(() => {
-    setActe(informationsActe);
-  }, [informationsActe]);
+    if (acteApiHookResultat) {
+      setBasculerConstructionCourrier(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acteApiHookResultat]);
 
   // 1 - Construction du Courrier
   useEffect(() => {
-    if (presenceDeLaRequeteDuDocEtSaisieCourrier(params)) {
-      if (presenceDesElementsPourLaGeneration(params, courrier, acte)) {
+    if (
+      presenceDeLaRequeteDuDocEtSaisieCourrier(
+        params,
+        basculerConstructionCourrier
+      )
+    ) {
+      if (presenceDesElementsPourLaGeneration(params, courrier)) {
         const elements: IElementsJasperCourrier = specificationCourrier.getElementsJasper(
           // @ts-ignore presenceDesElementsPourLaGeneration
           params.saisieCourrier,
@@ -109,7 +126,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
           params.requete,
           // @ts-ignore presenceDesElementsPourLaGeneration
           params.optionsChoisies,
-          acte
+          acteApiHookResultat?.acte
         );
         construitCourrier(
           elements,
@@ -125,7 +142,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [acte]);
+  }, [basculerConstructionCourrier, courrier]);
 
   // 2 - Création du courrier: appel api composition
   // récupération du document en base64
@@ -160,9 +177,16 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   // 6- Une fois la requête mise à jour et l'action créé, changement de page
   useEffect(() => {
-    if (uuidDocumentsReponse && donneesComposition) {
+    if (
+      uuidDocumentReponseEtDonneesCompositionPresents(
+        uuidDocumentsReponse,
+        donneesComposition
+      )
+    ) {
       setResultatGenerationCourrier({
+        //@ts-ignore non null
         idDocumentReponse: uuidDocumentsReponse[0],
+        //@ts-ignore non null
         contenuDocumentReponse: donneesComposition.contenu
       });
     }
@@ -172,33 +196,54 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   return resultatGenerationCourrier;
 }
 
-function getIdActe(acte?: IResultatRMCActe) {
-  if (acte && acte?.idActe) {
-    return acte?.idActe;
+function setActApiHookParamsOuBasculerConstructionCourrier(
+  setActeApiHookParams: any,
+  setBasculerConstructionCourrier: any,
+  generationCourrierParams?: IGenerationCourrierParams
+) {
+  if (generationCourrierParams?.acte) {
+    setActeApiHookParams({ idActe: generationCourrierParams?.acte.idActe });
   } else {
-    return "";
+    setBasculerConstructionCourrier(true);
   }
+}
+function uuidCourrierPresent(
+  generationCourrierParams?: IGenerationCourrierParams
+): boolean {
+  return (
+    generationCourrierParams?.saisieCourrier != null &&
+    generationCourrierParams.saisieCourrier.choixCourrier.courrier != null
+  );
+}
+
+function uuidDocumentReponseEtDonneesCompositionPresents(
+  uuidDocumentsReponse: string[] | undefined,
+  donneesComposition: IDonneesComposition | undefined
+) {
+  return uuidDocumentsReponse != null && donneesComposition != null;
 }
 
 function presenceDeLaRequeteDuDocEtSaisieCourrier(
-  params: IGenerationCourrierParams | undefined
+  params: IGenerationCourrierParams | undefined,
+  basculerConstructionCourrier: boolean
 ) {
   return (
-    params?.requete && params.requete.documentDemande && params.saisieCourrier
+    basculerConstructionCourrier &&
+    params?.requete &&
+    params.requete.documentDemande &&
+    params.saisieCourrier
   );
 }
 
 function presenceDesElementsPourLaGeneration(
   params: IGenerationCourrierParams | undefined,
-  courrier: DocumentDelivrance | undefined,
-  acte: IFicheActe | undefined
+  courrier: DocumentDelivrance | undefined
 ) {
   return (
     params?.requete &&
     params?.requete.titulaires &&
     params.requete.titulaires.length > 0 &&
-    courrier &&
-    acte
+    courrier
   );
 }
 

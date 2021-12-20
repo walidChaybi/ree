@@ -9,7 +9,6 @@ import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca
 import { IInteresse } from "../../../../../../model/etatcivil/rcrca/IInteresse";
 import { IMariageInteresse } from "../../../../../../model/etatcivil/rcrca/IMariageInteresse";
 import { IParent } from "../../../../../../model/etatcivil/rcrca/IParent";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import {
   getDateFormatJasper,
   getDateFormatJasperFromCompose,
@@ -22,6 +21,7 @@ import {
   formatPrenom,
   triListeObjetsSurPropriete
 } from "../../../../util/Utils";
+import { LieuxUtils } from "../../../../utilMetier/LieuxUtils";
 
 export function getDecisionExequatur(data: IFicheRcRca) {
   let decision = undefined;

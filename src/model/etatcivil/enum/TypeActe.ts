@@ -1,0 +1,11 @@
+import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+
+export class TypeActe extends EnumWithLibelle {
+  public static readonly IMAGE = new TypeActe("IMAGE");
+  public static readonly TEXTE = new TypeActe("TEXTE");
+  public static readonly INCONNU = new TypeActe("INCONNU");
+
+  public static getEnumFor(str: string) {
+    return EnumWithLibelle.getEnumFor(str, TypeActe);
+  }
+}

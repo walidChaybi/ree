@@ -14,8 +14,10 @@ import {
 import {
   ficheActe1,
   ficheActe2,
+  ficheActeMariage,
   idFicheActe1,
-  idFicheActe2
+  idFicheActe2,
+  idFicheActeMariage
 } from "../data/ficheActe";
 import { fichePacs, idFichePacs } from "../data/fichePacs";
 import {
@@ -151,6 +153,10 @@ export const configEtatcivil = [
         return ficheActe2;
       }
       /////////////////////////////////////////////////////////////////////
+
+      if (match[1] === `/acte/${idFicheActeMariage}`) {
+        return ficheActeMariage;
+      }
 
       // RMC Acte
       if (match[1] === "/acte/rmc?range=0-100") {

@@ -2,17 +2,17 @@ import { TypeAutoriteUtil } from "../../../../../../model/etatcivil/enum/TypeAut
 import { TypeDecision } from "../../../../../../model/etatcivil/enum/TypeDecision";
 import { TypeInscriptionRc } from "../../../../../../model/etatcivil/enum/TypeInscriptionRc";
 import { IFicheRcRca } from "../../../../../../model/etatcivil/rcrca/IFicheRcRca";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import {
-    getDateFormatJasper,
-    getDateFromTimestamp
+  getDateFormatJasper,
+  getDateFromTimestamp
 } from "../../../../util/DateUtils";
+import { LieuxUtils } from "../../../../utilMetier/LieuxUtils";
 import {
-    getDecisionExequatur,
-    getDecisionJuridiction,
-    getDecisionNotaire,
-    getInteressesDecision,
-    getParagrapheFin
+  getDecisionExequatur,
+  getDecisionJuridiction,
+  getDecisionNotaire,
+  getInteressesDecision,
+  getParagrapheFin
 } from "./specificationCommunes";
 
 export interface IElementsJasperCertificatRCA {

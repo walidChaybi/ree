@@ -41,12 +41,39 @@ export class ChoixDelivrance extends EnumWithComplete {
   }
 
   public static estReponseAvecDelivrance(choix: ChoixDelivrance) {
-    if (
+    return !ChoixDelivrance.estReponseSansDelivrance(choix);
+  }
+
+  public static estReponseSansDelivrance(choix: ChoixDelivrance) {
+    return (
       choix === ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC ||
       choix === ChoixDelivrance.REP_SANS_DEL_EC_DIVERS ||
       choix === ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE
-    ) {
-      return false;
-    } else return true;
+    );
+  }
+
+  public static estChoixDelivranceCopie(choix: ChoixDelivrance) {
+    return (
+      choix === ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE ||
+      choix === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
+    );
+  }
+
+  public static estChoixDelivranceCopieArchive(choix: ChoixDelivrance) {
+    return choix === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
+  }
+
+  public static estChoixDelivranceAvecFiliation(choix: ChoixDelivrance) {
+    return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
+  }
+
+  public static estChoixDelivranceAvecOuSansFiliation(choix: ChoixDelivrance) {
+    return (
+      choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION ||
+      choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+    );
+  }
+  public static estChoixDelivrancePlurilingue(choix: ChoixDelivrance) {
+    return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE;
   }
 }

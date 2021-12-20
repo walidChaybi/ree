@@ -1,11 +1,11 @@
-import { TypeAutorite, TypeAutoriteUtil } from "../enum/TypeAutorite";
-import { LieuxUtils } from "../../LieuxUtils";
 import {
-  getValeurOuVide,
-  premiereLettreEnMajusculeLeResteEnMinuscule,
+  formatNom,
   formatPrenom,
-  formatNom
+  getValeurOuVide,
+  premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../../views/common/util/Utils";
+import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+import { TypeAutorite, TypeAutoriteUtil } from "../enum/TypeAutorite";
 
 // Regroupe les autorités commune, notaire, onac, juridiction, poste
 export interface IAutorite {

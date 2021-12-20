@@ -2,6 +2,7 @@ import {
   getDateFormatJasper,
   getDateFromTimestamp
 } from "../../../views/common/util/DateUtils";
+import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
 import { IAutorite } from "../../etatcivil/commun/IAutorite";
 import { TypeAutorite } from "../../etatcivil/enum/TypeAutorite";
 import { TypeJuridiction } from "../../etatcivil/enum/TypeJuridiction";
@@ -9,7 +10,6 @@ import { IAnnulation } from "../../etatcivil/pacs/IAnnulation";
 import { IDissolution } from "../../etatcivil/pacs/IDissolution";
 import { IFichePacs } from "../../etatcivil/pacs/IFichePacs";
 import { IModification } from "../../etatcivil/pacs/IModification";
-import { LieuxUtils } from "../../LieuxUtils";
 import { ICertificatPACSComposition } from "./ICertificatPACSComposition";
 
 export const ParagrapheComposition = {

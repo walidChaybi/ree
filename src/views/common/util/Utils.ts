@@ -71,12 +71,20 @@ export function remplaceSPC(prenom: string) {
   return prenom;
 }
 
-export function formatPrenom(prenom?: string): string {
+export function formatPrenom(
+  prenom?: string,
+  prenomParDefaut = SANS_PRENOM_CONNU,
+  enMajuscules = true
+): string {
   let prenomFormate = "";
   if (prenom === SPC) {
-    prenomFormate = SANS_PRENOM_CONNU;
+    prenomFormate = prenomParDefaut;
   } else {
-    prenomFormate = formatMajusculesMinusculesMotCompose(prenom);
+    prenomFormate = enMajuscules
+      ? formatMajusculesMinusculesMotCompose(prenom)
+      : prenom
+      ? prenom
+      : "";
   }
 
   return prenomFormate;
@@ -89,12 +97,16 @@ export function remplaceSNP(nom: string) {
   return nom;
 }
 
-export function formatNom(nom?: string): string {
-  let nomFormate = "";
+export function formatNom(
+  nom?: string,
+  nomParDefaut = SANS_NOM_PATRONYMIQUE,
+  enMajuscules = true
+): string {
+  let nomFormate = nom || "";
   if (nom === SNP) {
-    nomFormate = SANS_NOM_PATRONYMIQUE;
+    nomFormate = nomParDefaut;
   } else {
-    nomFormate = enMajuscule(nom);
+    nomFormate = enMajuscules ? enMajuscule(nom) : nomFormate;
   }
 
   return nomFormate;
@@ -175,8 +187,14 @@ export function formatNoms(noms?: string[]): string {
 }
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
-export function formatPrenoms(prenoms?: string[]): string {
-  return prenoms ? joint(prenoms.map(p => formatPrenom(p))) : "";
+export function formatPrenoms(
+  prenoms?: string[],
+  prenomParDefaut = SANS_PRENOM_CONNU,
+  enMajuscules = true
+): string {
+  return prenoms
+    ? joint(prenoms.map(p => formatPrenom(p, prenomParDefaut, enMajuscules)))
+    : "";
 }
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","

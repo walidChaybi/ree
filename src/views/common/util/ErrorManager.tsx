@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import * as React from "react";
-import { URL_ACCUEIL } from "../../router/ReceUrls";
+import { URL_CONTEXT_APP } from "../../router/ReceUrls";
 import { getLibelle } from "../util/Utils";
 import { logError } from "./LogManager";
 
@@ -69,7 +69,7 @@ export class ErrorManager extends React.Component<LocalProps, LocalState> {
           "Une erreur inatendue est survenue (veuillez contacter un administrateur), vous allez être redirigé vers la page d'accueil"
         )
       );
-      window.location.replace(URL_ACCUEIL);
+      window.location.replace(URL_CONTEXT_APP);
     }
     return this.props.children;
   }

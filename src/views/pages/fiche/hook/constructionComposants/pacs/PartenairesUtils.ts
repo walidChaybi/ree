@@ -1,5 +1,4 @@
 import { IPartenaire } from "../../../../../../model/etatcivil/pacs/IPartenaire";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import { getDateStringFromDateCompose } from "../../../../../common/util/DateUtils";
 import {
   formatNom,
@@ -7,6 +6,7 @@ import {
   formatPrenoms,
   jointPrenoms
 } from "../../../../../common/util/Utils";
+import { LieuxUtils } from "../../../../../common/utilMetier/LieuxUtils";
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
 export function getPartenaires(partenaires: IPartenaire[]): SectionPartProps[] {

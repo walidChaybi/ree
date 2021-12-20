@@ -1,6 +1,5 @@
 import React from "react";
 import { IStatutFiche } from "../../../../../../model/etatcivil/fiche/IStatutFiche";
-import { LieuxUtils } from "../../../../../../model/LieuxUtils";
 import { processDataStorting } from "../../../../../../views/common/widget/tableau/TableUtils";
 import {
   getDateFromTimestamp,
@@ -8,6 +7,7 @@ import {
   getDateStringFromDateCompose
 } from "../../../../../common/util/DateUtils";
 import { getLibelle } from "../../../../../common/util/Utils";
+import { LieuxUtils } from "../../../../../common/utilMetier/LieuxUtils";
 import {
   TableauSimple,
   TableauSimpleProps
