@@ -2,6 +2,8 @@ import { LinearProgress } from "@material-ui/core";
 import { MimeType } from "file-type";
 import React, { useEffect, useState } from "react";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
+import { FeatureFlag } from "../../../../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { base64toBlob } from "../../../../../common/util/FileUtils";
 import { soustypeRDDouRDC } from "../../../../../common/util/RequetesUtils";
 import { getLibelle } from "../../../../../common/util/Utils";
@@ -28,9 +30,10 @@ export const VisionneuseApercuTraitement: React.FC<IVisionneuseDocumentProps> = 
       <div className="Fieldset">
         <div className="Titre">
           <span>{getLibelle("Aperçu des documents")}</span>
-          {soustypeRDDouRDC(props.requete.sousType) && (
-            <MenuCourrier requete={props.requete}></MenuCourrier>
-          )}
+          {gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) &&
+            soustypeRDDouRDC(props.requete.sousType) && (
+              <MenuCourrier requete={props.requete}></MenuCourrier>
+            )}
         </div>
         {url ? (
           <iframe title={getLibelle("Aperçu des documents")} src={url}></iframe>

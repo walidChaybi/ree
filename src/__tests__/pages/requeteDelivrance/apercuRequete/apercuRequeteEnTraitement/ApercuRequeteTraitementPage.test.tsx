@@ -12,6 +12,7 @@ import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
+import { gestionnaireFeatureFlag } from "../../../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
 import { ApercuRequeteTraitementPage } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
@@ -22,8 +23,17 @@ const superagentMock = require("superagent-mock")(request, configRequetes);
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
 
+const sauvFonctionEstActive = gestionnaireFeatureFlag.estActif;
 beforeAll(() => {
   TypePieceJustificative.init();
+  gestionnaireFeatureFlag.estActif = function () {
+    return true;
+  };
+});
+
+afterAll(() => {
+  gestionnaireFeatureFlag.estActif = sauvFonctionEstActive;
+  superagentMock.unset();
 });
 
 const history = createMemoryHistory();
@@ -138,8 +148,4 @@ test("test du bouton de modification du courrier", async () => {
   expect(history.location.pathname).toBe(
     "/rece/rece-ui/mesrequetes/apercurequetetraitement/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d494"
   );
-});
-
-afterAll(() => {
-  superagentMock.unset();
 });
