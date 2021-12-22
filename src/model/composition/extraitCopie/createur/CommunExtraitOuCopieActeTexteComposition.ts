@@ -47,8 +47,10 @@ export class CommunExtraitOuCopieActeTexteComposition {
     return { ecTitulaire1, ecTitulaire2 };
   }
 
-  public static creerDateNaissanceOuAgeDeTitulaire(titulaire: ITitulaireActe) {
-    let dateNaissanceOuAgeDeTitulaire;
+  public static creerDateNaissanceOuAgeDeTitulaire(
+    titulaire: ITitulaireActe
+  ): string {
+    let dateNaissanceOuAgeDeTitulaire = "";
     const sexeTitulaire = titulaire.sexe
       ? Sexe.getEnumFor(titulaire.sexe)
       : Sexe.INCONNU;
@@ -61,12 +63,12 @@ export class CommunExtraitOuCopieActeTexteComposition {
         titulaire.naissance
       ); //<date de naissance titulaire)>
       dateNaissanceOuAgeDeTitulaire = `${neOuNeeTitulaire} ${leOuEnDateNaissanceTitulaire} ${dateNaissanceTitulaire}`;
-    } else {
+    } else if (titulaire.age) {
       const ageOuAgee = EtatCivilUtil.formatAgeOuAgee(sexeTitulaire); //âgé(e) [accord selon genre du titulaire]
 
       dateNaissanceOuAgeDeTitulaire = `${ageOuAgee} de ${getValeurOuVide(
         titulaire.age
-      )} ${neOuNeeTitulaire} `; //(OU âgé(e) [accord selon genre du titulaire] de <âge titulaire au moment de l’événement> ans né(e) [accord selon genre du titulaire]
+      )} ans ${neOuNeeTitulaire}`; //(OU âgé(e) [accord selon genre du titulaire] de <âge titulaire au moment de l’événement> ans né(e) [accord selon genre du titulaire]
     }
 
     return dateNaissanceOuAgeDeTitulaire;
