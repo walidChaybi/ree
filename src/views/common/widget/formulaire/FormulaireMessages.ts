@@ -36,5 +36,7 @@ export const ALERTE_AUTRE = `L'observation est obligatoire si le motif est "Autr
 export const COMPLEMENT_DESCRIPTION_LIMITE_TAILLE = `L'observation ne peut pas dépasser 150 caractères`;
 
 export const MIN_LENGTH_ANNEE_MESSAGE = "L'année doit être sur 4 chiffres";
+export const MAX_ANNEE_MESSAGE =
+  "L'année ne peut pas être postérieur à l'année courante";
 
 export const CHAMP_OBLIGATOIRE = "Ce champ est obligatoire";

@@ -16,7 +16,10 @@ import {
 } from "../../../../common/widget/formulaire/champRecherche/ChampRechercheField";
 import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { MIN_LENGTH_ANNEE_MESSAGE } from "../../../../common/widget/formulaire/FormulaireMessages";
+import {
+  MAX_ANNEE_MESSAGE,
+  MIN_LENGTH_ANNEE_MESSAGE
+} from "../../../../common/widget/formulaire/FormulaireMessages";
 import {
   digitSeulement,
   traiteCarAutorises,
@@ -51,7 +54,9 @@ const MIN_LENGTH_ANNEE = 999;
 export const RegistreActeValidationSchema = Yup.object({
   [NATURE_ACTE]: Yup.string(),
   [FAMILLE_REGISTRE]: Yup.string(),
-  [ANNEE]: Yup.number().min(MIN_LENGTH_ANNEE, MIN_LENGTH_ANNEE_MESSAGE),
+  [ANNEE]: Yup.number()
+    .min(MIN_LENGTH_ANNEE, MIN_LENGTH_ANNEE_MESSAGE)
+    .max(new Date().getFullYear(), MAX_ANNEE_MESSAGE),
   [NUMERO_ACTE]: Yup.string()
 });
 
