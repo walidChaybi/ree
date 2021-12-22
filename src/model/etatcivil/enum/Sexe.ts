@@ -9,11 +9,11 @@ export class Sexe extends EnumWithLibelle {
   public static readonly INDETERMINE = new Sexe("Indéterminé");
   public static readonly INCONNU = new Sexe("Non renseigné");
 
-  public static getEnumFor(str: string) {
+  public static getEnumFor(str: string): Sexe {
     return EnumWithLibelle.getEnumFor(str, Sexe);
   }
 
-  public static getEnumFromLibelle(str?: string) {
+  public static getEnumFromLibelle(str?: string): Sexe {
     return str ? EnumWithLibelle.getEnumFromLibelle(Sexe, str) : undefined;
   }
 

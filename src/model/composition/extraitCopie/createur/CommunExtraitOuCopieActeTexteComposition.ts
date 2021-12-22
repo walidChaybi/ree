@@ -49,7 +49,9 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
   public static creerDateNaissanceOuAgeDeTitulaire(titulaire: ITitulaireActe) {
     let dateNaissanceOuAgeDeTitulaire;
-    const sexeTitulaire = Sexe.getEnumFromLibelle(titulaire.sexe);
+    const sexeTitulaire = titulaire.sexe
+      ? Sexe.getEnumFor(titulaire.sexe)
+      : Sexe.INCONNU;
     const neOuNeeTitulaire = EtatCivilUtil.formatNeOuNee(sexeTitulaire); //né(e) [accord selon genre du titulaire]
     if (titulaire.naissance?.annee) {
       const leOuEnDateNaissanceTitulaire = EtatCivilUtil.formatLeOuEn(
