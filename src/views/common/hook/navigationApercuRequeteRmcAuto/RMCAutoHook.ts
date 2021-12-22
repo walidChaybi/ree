@@ -54,14 +54,18 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
     `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
   );
 
-  const [
-    paramsCertificatSituation,
-    setParamsCertificatSituation
-  ] = useState<IGenerationCertificatSituationParams>();
+  const [paramsCertificatSituation, setParamsCertificatSituation] = useState<
+    IGenerationCertificatSituationParams
+  >();
 
   useEffect(() => {
     // si pasDeTraitementAuto=true alors pas de génération de certificat de situation automatiquement en fonction des résultats de la RMC auto
-    if (params && !params.pasDeTraitementAuto) {
+    if (
+      params &&
+      !params.pasDeTraitementAuto &&
+      dataRMCAutoInscription &&
+      dataRMCAutoActe
+    ) {
       setParamsCertificatSituation({
         requete: params.requete,
         nbInscriptionsInfos: getNbInscriptionsInfos(
