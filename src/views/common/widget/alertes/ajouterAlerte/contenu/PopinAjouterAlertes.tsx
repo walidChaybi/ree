@@ -6,10 +6,8 @@ import { getLibelle } from "../../../../util/Utils";
 import { InputField } from "../../../formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../formulaire/champsSaisie/SelectField";
 import { Formulaire } from "../../../formulaire/Formulaire";
-import FormAjouterAlerteBoutons, {
-  FormAjouterAlerteBoutonsProps
-} from "./FormAjouterAlerteBoutons";
-import "./scss/PopinAjouterAlertes.scss";
+import FormBoutons, { FormBoutonsProps } from "../../../popin/FormBoutons";
+import "../../../popin/scss/PopinAjouter.scss";
 
 export const ID_TYPE_ALERTE = "idTypeAlerte";
 export const COMPLEMENT_DESCRIPTION = "complementDescription";
@@ -55,10 +53,10 @@ export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
 }) => {
   const boutonsProps = {
     onClosePopin
-  } as FormAjouterAlerteBoutonsProps;
+  } as FormBoutonsProps;
 
   return (
-    <div className="PopinAjouterAlertes">
+    <div className="PopinAjouter">
       <Dialog
         disablePortal={true}
         open={open}
@@ -67,7 +65,7 @@ export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
       >
         <DialogContent>
           <Formulaire
-            className="FormulaireAjouterAlertes"
+            className="FormulaireAjouter"
             formDefaultValues={DefaultValues}
             formValidationSchema={ValidationSchema}
             onSubmit={onSubmit}
@@ -88,7 +86,7 @@ export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
               rows={NB_LIGNE_COMPLEMENT_DESCRIPTION}
               maxLength={"150"}
             />
-            <FormAjouterAlerteBoutons {...boutonsProps} />
+            <FormBoutons {...boutonsProps} />
           </Formulaire>
         </DialogContent>
       </Dialog>

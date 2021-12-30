@@ -21,7 +21,10 @@ export const ApercuRequetePartieGauche: React.FC<ApercuRequetePartieGaucheProps>
         StatutRequete.PRISE_EN_CHARGE && (
         <RMCRequetesAssocieesResultats requete={props.requete} />
       )}
-      <SuiviObservationsRequete observations={props.requete.observations} />
+      <SuiviObservationsRequete
+        observations={props.requete.observations}
+        idRequete={props.requete.id}
+      />
       <SuiviActionsRequete actions={props.requete?.actions} />
       <DocumentsReponses
         requete={props.requete}

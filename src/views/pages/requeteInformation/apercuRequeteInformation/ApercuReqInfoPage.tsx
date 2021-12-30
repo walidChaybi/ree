@@ -57,6 +57,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = ({
               {requete.observations && requete.observations.length > 0 && (
                 <SuiviObservationsRequete
                   observations={requete.observations}
+                  idRequete={requete.id}
                 ></SuiviObservationsRequete>
               )}
               <RMCRequetesAssocieesResultats requete={requete} />

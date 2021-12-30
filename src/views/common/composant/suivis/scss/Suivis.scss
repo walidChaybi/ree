@@ -35,4 +35,22 @@
       }
     }
   }
+
+  .Observation{
+    display: inline;
+    cursor:pointer
+  }
+
+  .IconeSupprimer{
+    margin-left: 5px;
+    cursor:pointer
+  }
+  
+  .BoutonAjouter{
+    cursor:pointer;
+    padding: 5px 5px 0 0px;
+    position:absolute;
+    right :0px;
+    z-index: 2;
+  }
 }

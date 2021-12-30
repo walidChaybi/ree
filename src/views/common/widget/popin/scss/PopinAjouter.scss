@@ -1,6 +1,12 @@
-@import "./../../../../../../../scss/colors";
+@import "./../../../../../scss/colors";
 
-.PopinAjouterAlertes {
+.PopinAjouter {
+
+  textarea {
+    min-width: 40rem;
+    height: 8rem;
+  }
+  
   .MuiDialog-paperWidthSm {
     max-width: unset;
   }
@@ -8,7 +14,7 @@
     padding: 0px !important;
   }
 
-  .FormulaireAjouterAlertes {
+  .FormulaireAjouter {
     margin: 1em;
 
     .Fieldset {
@@ -19,7 +25,7 @@
         display: none;
       }
 
-      .FormAjouterAlerteBoutons {
+      .FormAjouterBoutons {
         float: right;
       }
     }

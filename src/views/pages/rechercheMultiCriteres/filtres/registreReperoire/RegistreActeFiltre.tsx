@@ -132,7 +132,7 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
         p =>
           ({
             value: enMajuscule(p),
-            str: premiereLettreEnMajusculeLeResteEnMinuscule(p)
+            str: p
           } as Option)
       );
     }

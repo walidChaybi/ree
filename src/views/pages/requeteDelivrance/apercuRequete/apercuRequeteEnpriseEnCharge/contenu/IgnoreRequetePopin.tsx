@@ -14,9 +14,6 @@ import {
 } from "../../../../../common/hook/requete/IgnorerHook";
 import { getUrlPrecedente } from "../../../../../common/util/route/routeUtil";
 import { getLibelle } from "../../../../../common/util/Utils";
-import FormAjouterAlerteBoutons, {
-  FormAjouterAlerteBoutonsProps
-} from "../../../../../common/widget/alertes/ajouterAlerte/contenu/FormAjouterAlerteBoutons";
 import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
 import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "../../../../../common/widget/formulaire/champsSaisie/SelectField";
@@ -26,6 +23,9 @@ import {
   ALERTE_OBLIGATOIRE,
   COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
 } from "../../../../../common/widget/formulaire/FormulaireMessages";
+import FormBoutons, {
+  FormBoutonsProps
+} from "../../../../../common/widget/popin/FormBoutons";
 import "../scss/IgnoreRequetePopin.scss";
 
 export interface IgnoreRequetePopinProps {
@@ -85,7 +85,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
 
   const boutonsProps = {
     onClosePopin
-  } as FormAjouterAlerteBoutonsProps;
+  } as FormBoutonsProps;
 
   const onSubmit = (res: IIgnorerFormValue) => {
     setOperationEnCours(true);
@@ -154,7 +154,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
               rows={NB_LIGNE_COMPLEMENT_DESCRIPTION}
               maxLength={"150"}
             />
-            <FormAjouterAlerteBoutons {...boutonsProps} />
+            <FormBoutons {...boutonsProps} />
           </Formulaire>
         </DialogContent>
       </Dialog>

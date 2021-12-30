@@ -33,6 +33,7 @@ export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/requetes/action";
 export const URL_TRANSFERT = "/requetes/action/transfert";
+export const URL_OBSERVATION = "/requetes/observation";
 export const URL_IGNORER = "/requetes/action/ignorer";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
 export const URL_OPTION_COURRIER = "/optioncourrier";
@@ -473,6 +474,32 @@ export function getNbReqInfo(listeStatuts: string): Promise<any> {
     uri: URL_NB_REQ_INFO,
     parameters: {
       statuts: listeStatuts
+    }
+  });
+}
+
+export function postObservation(
+  idRequete: string,
+  texteObservation: string,
+  idObservation?: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: URL_OBSERVATION,
+    parameters: {
+      idRequete,
+      texteObservation,
+      idObservation
+    }
+  });
+}
+
+export function deleteObservation(idObservation: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.DELETE,
+    uri: URL_OBSERVATION,
+    parameters: {
+      idObservation
     }
   });
 }

@@ -88,7 +88,7 @@ test("render composant RegistreActeFiltre", async () => {
     });
   });
   await waitFor(() => {
-    expect(screen.getByText("Toronto")).toBeInTheDocument();
+    expect(screen.getByText("TORONTO")).toBeInTheDocument();
   });
   act(() => {
     fireEvent.keyDown(pocopa, { key: "ArrowDown" });
@@ -118,7 +118,7 @@ test("render composant RegistreActeFiltre", async () => {
 
   await waitFor(() => {
     expect(result.innerHTML).toBe(
-      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","anneeRegistre":"","pocopa":{"value":"TORONTO","str":"Toronto"},"numeroActe":"123456"}}'
+      '{"registre":{"natureActe":"MARIAGE","familleRegistre":"ACQ","anneeRegistre":"","pocopa":{"value":"TORONTO","str":"TORONTO"},"numeroActe":"123456"}}'
     );
   });
 });

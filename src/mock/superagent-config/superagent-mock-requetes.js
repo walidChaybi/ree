@@ -379,6 +379,24 @@ export const configRequetes = [
         return { data: {} };
       }
 
+      // Ajout observation
+      if (
+        (match[1] ===
+          "/requetes/action/observation?idRequete=123&texteObservation=salut" ||
+          " '/requetes/action/observation?idRequete=123&texteObservation=salut&idObservation=id0000'") &&
+        context.method === "post"
+      ) {
+        return { data: "123456789" };
+      }
+
+      // Suppression observation
+      if (
+        match[1] === "/requetes/action/observation?idObservation=id0000" &&
+        context.method === "delete"
+      ) {
+        return { data: true };
+      }
+
       // Transfert requête
       if (
         (match[1] === "/requetes/action/transfert" ||
