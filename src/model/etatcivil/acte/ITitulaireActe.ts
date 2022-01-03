@@ -22,6 +22,10 @@ export interface ITitulaireActe {
   filiations?: IFiliation[];
   nomPartie1?: string;
   nomPartie2?: string;
+  nomAvantMariage?: string;
+  nomApresMariage?: string;
+  nomDernierConjoint?: string;
+  prenomsDernierConjoint?: string;
 }
 
 export const TitulaireActe = {

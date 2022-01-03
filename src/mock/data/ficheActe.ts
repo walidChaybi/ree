@@ -539,7 +539,11 @@ export const ficheActeMariage = {
         typeDeclarationConjointe: null,
         dateDeclarationConjointe: null,
         nomPartie1: null,
-        nomPartie2: null
+        nomPartie2: null,
+        nomAvantMariage: null,
+        nomApresMariage: null,
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null
       },
       {
         nom: "PRODESK",
@@ -592,7 +596,11 @@ export const ficheActeMariage = {
         typeDeclarationConjointe: null,
         dateDeclarationConjointe: null,
         nomPartie1: null,
-        nomPartie2: null
+        nomPartie2: null,
+        nomAvantMariage: null,
+        nomApresMariage: null,
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null
       }
     ],
     piecesAnnexes: [],
