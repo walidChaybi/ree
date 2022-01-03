@@ -81,7 +81,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     const dateEvenement = EtatCivilUtil.formatDateEvenement(acte.evenement); //[selon présence ou non d’une date d’événement complète] <date Evènement Acte>
     const lieuEvenement = acte.evenement?.lieuReprise
       ? acte.evenement.lieuReprise
-      : LieuxUtils.getLieu(
+      : LieuxUtils.getLieuExtraitCopie(
           acte.evenement?.ville,
           acte.evenement?.region,
           acte.evenement?.pays
@@ -102,7 +102,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
     const lieuNaissance = titulaire.naissance?.lieuReprise
       ? titulaire.naissance.lieuReprise
-      : LieuxUtils.getLieu(
+      : LieuxUtils.getLieuExtraitCopie(
           titulaire.naissance?.ville,
           titulaire.naissance?.region,
           titulaire.naissance?.pays,

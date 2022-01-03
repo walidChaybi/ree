@@ -121,6 +121,32 @@ export class LieuxUtils {
       );
     }
   }
+
+  public static getLieuExtraitCopie(
+    ville?: string,
+    region?: string,
+    pays?: string,
+    arrondissement?: string
+  ): string {
+    const villeString = formatPremieresLettresMajusculesNomCompose(ville);
+    const regionString = formatPremieresLettresMajusculesNomCompose(region);
+    const paysString = formatPremieresLettresMajusculesNomCompose(pays);
+    const arrondissementString = arrondissement ? ` ${arrondissement}` : "";
+
+    if (!ville && !region && !pays) {
+      return "";
+    } else if (!ville && !region) {
+      return `-- (${paysString})`;
+    } else if (!ville) {
+      return `${regionString} (${paysString})`;
+    } else if (!pays) {
+      return `${villeString}${arrondissementString}, ${regionString}`;
+    } else if (!region) {
+      return `${villeString}${arrondissementString} (${paysString})`;
+    }
+    return `${villeString}${arrondissementString}, ${regionString} (${paysString})`;
+  }
+
   private static getRegionEntreParentheses(regionString: string) {
     return regionString ? ` (${regionString})` : "";
   }

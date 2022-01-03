@@ -28,9 +28,7 @@ export class ExtraitCopieActeTexteMariageComposition {
       acteMariage
     );
 
-    if (archive) {
-      composition.filigrane_archive = true;
-    }
+    composition.filigrane_archive = archive;
 
     if (avecFiliation) {
       // TODO
@@ -46,14 +44,14 @@ export class ExtraitCopieActeTexteMariageComposition {
       composition.corps_texte = acteMariage.corpsText;
     } else {
       composition.corps_texte = `${ecActe.leouEnEvenement} ${ecActe.dateEvenement}
-  a été célébré à ${ecActe.lieuEvenement}
-  le mariage
-  de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}
-  ${ecTitulaire1.dateNaissanceOuAge} à ${ecTitulaire1.lieuNaissance}
-  et de ${ecTitulaire2.prenoms} ${ecTitulaire2.nom} ${ecTitulaire2.partiesNom}
-  ${ecTitulaire2.dateNaissanceOuAge} à ${ecTitulaire2.lieuNaissance}
+a été célébré à ${ecActe.lieuEvenement}
+le mariage
+de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}
+${ecTitulaire1.dateNaissanceOuAge} à ${ecTitulaire1.lieuNaissance}
+et de ${ecTitulaire2.prenoms} ${ecTitulaire2.nom} ${ecTitulaire2.partiesNom}
+${ecTitulaire2.dateNaissanceOuAge} à ${ecTitulaire2.lieuNaissance}
   
-  Contrat de mariage : ${enonciationContratDeMariage}`;
+Contrat de mariage : ${enonciationContratDeMariage}`;
     }
 
     return composition;

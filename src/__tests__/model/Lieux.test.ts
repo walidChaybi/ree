@@ -72,3 +72,28 @@ test("Attendu: getLieu fonctionne correctement", () => {
 
   expect(LieuxUtils.getLieu("casablanca")).toBe("Casablanca");
 });
+
+
+test("Attendu: getLieu fonctionne correctement", () => {
+  expect(
+    LieuxUtils.getLieuExtraitCopie("nantes", "pays de la loire", "france")
+  ).toBe("Nantes, Pays de la Loire (France)");
+
+  expect(LieuxUtils.getLieuExtraitCopie("Lyon", "rhône", "france", "3")).toBe(
+    "Lyon 3, Rhône (France)"
+  );
+
+  expect(LieuxUtils.getLieuExtraitCopie("paris", undefined, "france")).toBe(
+    "Paris (France)"
+  );
+
+  expect(LieuxUtils.getLieuExtraitCopie(undefined, undefined, "france")).toBe(
+    "-- (France)"
+  );
+
+  expect(
+    LieuxUtils.getLieuExtraitCopie("paris", undefined, "france", "18")
+  ).toBe("Paris 18 (France)");
+
+  expect(LieuxUtils.getLieuExtraitCopie()).toBe("");
+});
