@@ -35,6 +35,7 @@ export const URL_IGNORER = "/requetes/action/ignorer";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
 export const URL_OPTION_COURRIER = "/optioncourrier";
 export const URL_REPONSE_REQ_INFO = "/reponse";
+export const URL_NB_REQ_INFO = "/requetes/information/count";
 
 const URL_REPONSES = "/reponses";
 
@@ -455,5 +456,15 @@ export function patchDocumentsReponses(
     uri: URL_DOCUMENT_REPONSE,
     data: miseAJourDocumentParams,
     headers: []
+  });
+}
+
+export function getNbReqInfo(listeStatuts: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: URL_NB_REQ_INFO,
+    parameters: {
+      statuts: listeStatuts
+    }
   });
 }

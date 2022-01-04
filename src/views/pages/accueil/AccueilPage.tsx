@@ -6,9 +6,10 @@ import {
   faSearch,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logoRece from "../../../img/logo-rece.svg";
 import { IOfficier } from "../../../model/agent/IOfficier";
+import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
 import { getLibelle } from "../../common/util/Utils";
 import {
   OfficierContext,
@@ -25,8 +26,20 @@ import {
   BoutonAccueilRechercheRequete,
   BoutonAccueilTableau
 } from "./BoutonAccueil";
+import { useNbReqInfoHook } from "./hook/NbReqInfoHook";
 
 export const AccueilPage: React.FC = () => {
+  const [nbReqInfo, setNbReqInfo] = useState<number>();
+  const nbReqInfoAPI = useNbReqInfoHook(
+    [StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.TRANSFEREE.nom].join(",")
+  );
+
+  useEffect(() => {
+    if (nbReqInfoAPI) {
+      setNbReqInfo(nbReqInfoAPI);
+    }
+  }, [nbReqInfoAPI]);
+
   return (
     <div className="AccueilPage">
       <title>{getLibelle("Accueil")}</title>
@@ -68,6 +81,7 @@ export const AccueilPage: React.FC = () => {
           title={getLibelle(
             "Bouton pour accèder à la communication avec les usagers"
           )}
+          badge={nbReqInfo}
         ></BoutonAccueilCommunication>
         <BoutonAccueilRechercheRequete
           libelle={getLibelle("Rechercher une requête")}
