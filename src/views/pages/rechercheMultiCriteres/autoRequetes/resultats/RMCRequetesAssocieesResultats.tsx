@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { IRequete } from "../../../../../model/requete/IRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
@@ -13,7 +13,7 @@ import "../scss/RMCRequetesAssocieesResultats.scss";
 import { RMCTableauRequetesAssociees } from "./RMCTableauRequetesAssociees";
 
 export interface RMCRequetesAssocieesResultatsProps {
-  requete: IRequeteDelivrance;
+  requete: IRequete;
 }
 
 export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResultatsProps> = props => {

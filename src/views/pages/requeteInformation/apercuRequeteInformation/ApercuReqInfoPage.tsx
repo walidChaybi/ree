@@ -8,6 +8,7 @@ import { SuiviObservationsRequete } from "../../../common/composant/suivis/Suivi
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { getLibelle } from "../../../common/util/Utils";
 import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
+import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { useDetailRequeteApiHook } from "../../requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { ReponseReqInfo } from "./contenu/ReponseReqInfo";
 import { ResumeReqInfo } from "./contenu/ResumeReqInfo";
@@ -42,6 +43,7 @@ export const ApercuReqInfoPage: React.FC = () => {
                   observations={requete.observations}
                 ></SuiviObservationsRequete>
               )}
+              <RMCRequetesAssocieesResultats requete={requete} />
               <SuiviActionsRequete
                 actions={requete.actions}
               ></SuiviActionsRequete>
