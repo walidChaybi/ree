@@ -58,7 +58,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     if (titulaire.naissance?.annee) {
       const leOuEnDateNaissanceTitulaire = EtatCivilUtil.formatLeOuEn(
         titulaire.naissance?.jour
-      ); // le (ou en) [selon présence ou non d’une date de naissance complète]
+      ).toLowerCase(); // le (ou en) [selon présence ou non d’une date de naissance complète]
       const dateNaissanceTitulaire = EtatCivilUtil.formatDateEvenement(
         titulaire.naissance
       ); //<date de naissance titulaire)>
