@@ -10,15 +10,15 @@ import { getLibelle } from "../../common/util/Utils";
 import { RMCActeInscriptionPage } from "../../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import "../../pages/rechercheMultiCriteres/acteInscription/scss/RMCActeInscriptionPage.scss";
 
-interface BoutonRechercheRmcProps {}
-
 const width = 1200;
 const ratioHeight = 1;
 
-export const BoutonRechercheRmc: React.FC<BoutonRechercheRmcProps> = () => {
+export const BoutonRechercheRmc: React.FC = () => {
   const [rmcExterne, setRmcExterne] = useState<boolean>(false);
-  const [fenetreExterneUtil, setFenetreExterneUtil] =
-    useState<FenetreExterneUtil>();
+  const [
+    fenetreExterneUtil,
+    setFenetreExterneUtil
+  ] = useState<FenetreExterneUtil>();
 
   const handleClick = () => {
     if (!rmcExterne) {
