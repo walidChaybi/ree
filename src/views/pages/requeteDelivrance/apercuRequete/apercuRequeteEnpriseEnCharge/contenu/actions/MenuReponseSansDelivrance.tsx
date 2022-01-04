@@ -25,9 +25,10 @@ export const MenuReponseSansDelivrance: React.FC<IChoixActionDelivranceProps> = 
   const history = useHistory();
   const refRepondreSansDelivranceOptions0 = useRef(null);
 
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<
-    UpdateChoixDelivranceProps
-  >();
+  const [
+    paramUpdateChoixDelivrance,
+    setParamUpdateChoixDelivrance
+  ] = useState<UpdateChoixDelivranceProps>();
   const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
 
   const updateChoixDelivranceResultat = useUpdateChoixDelivrance(
@@ -40,7 +41,7 @@ export const MenuReponseSansDelivrance: React.FC<IChoixActionDelivranceProps> = 
         history.location.pathname
       )}/${PATH_APERCU_COURRIER}/${updateChoixDelivranceResultat.idRequete}`;
 
-      history.push(url, props.actes);
+      history.push(url, props.actes?.[0]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateChoixDelivranceResultat]);
