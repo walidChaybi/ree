@@ -21,6 +21,7 @@ interface ChampRechercheProps {
     options: Option[],
     state: FilterOptionsState<Option>
   ) => Option[];
+  disabledPortal?: boolean;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +42,7 @@ export const ChampRecherche: React.FC<ChampRechercheProps> = props => {
       classes={{
         option: classes.option
       }}
-      disablePortal={true}
+      disablePortal={props.disabledPortal ? props.disabledPortal : false}
       className="Autocomplete"
       disabled={props.disabled}
       filterOptions={props.filterOptions}
@@ -114,7 +115,8 @@ const _ChampRechercheField: React.FC<ChampRechercheFieldProps> = ({
   onInput,
   onChange,
   noOptionsText,
-  formik
+  formik,
+  disabledPortal
 }) => {
   return (
     <div className="BlockInput">
@@ -149,6 +151,7 @@ const _ChampRechercheField: React.FC<ChampRechercheFieldProps> = ({
         disabled={disabled}
         noOptionsText={noOptionsText}
         value={formik.getFieldProps(name).value}
+        disabledPortal={disabledPortal}
       />
     </div>
   );

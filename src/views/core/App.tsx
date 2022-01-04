@@ -20,6 +20,7 @@ import {
   GestionnaireFermeture,
   traiteAppelRequeteASigner
 } from "../common/util/GestionnaireFermeture";
+import { logError } from "../common/util/LogManager";
 import { storeRece } from "../common/util/storeRece";
 import { URL_MES_REQUETES } from "../router/ReceUrls";
 import "./App.scss";
@@ -35,6 +36,10 @@ setDefaultLocale("fr");
 const App: React.FC = () => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(true);
   const login = useLoginApi();
+
+  useEffect(() => {
+    loadFonts();
+  }, []);
 
   useEffect(() => {
     if (login.officierDataState) {
@@ -99,6 +104,40 @@ const App: React.FC = () => {
       </ErrorManager>
     </SeulementNavigateur>
   );
+};
+
+const loadFonts = () => {
+  // Ajout des polices dynamiquement pour pouvoir être copié dans fenêtre externe
+  const notoSansRegular = new FontFace(
+    "NotoSansUI-Regular",
+    `url(${process.env.PUBLIC_URL}/NotoSansUI-Regular.ttf)`
+  );
+  notoSansRegular
+    .load()
+    .then(loadedFace => {
+      document.fonts.add(loadedFace);
+    })
+    .catch(error => {
+      erreurChargementPolice("Regular");
+    });
+  const notoSansBold = new FontFace(
+    "NotoSansUI-Bold",
+    `url(${process.env.PUBLIC_URL}/NotoSansUI-Bold.ttf)`
+  );
+  notoSansBold
+    .load()
+    .then(loadedFace => {
+      document.fonts.add(loadedFace);
+    })
+    .catch(error => {
+      erreurChargementPolice("Bold");
+    });
+};
+
+const erreurChargementPolice = (typePolice: string) => {
+  return logError({
+    messageUtilisateur: "Impossible de charger NotoSansUI-" + typePolice
+  });
 };
 
 export default App;

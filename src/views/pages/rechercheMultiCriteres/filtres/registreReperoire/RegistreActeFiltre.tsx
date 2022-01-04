@@ -188,7 +188,8 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
             onChange: onChampRechercheChange,
             onInput: onChampRechercheInput,
             options: getPocopasAsOptions(),
-            disabled: props.filtreInactif
+            disabled: props.filtreInactif,
+            disabledPortal: true
           } as ChampRechercheFieldProps)}
         />
 
