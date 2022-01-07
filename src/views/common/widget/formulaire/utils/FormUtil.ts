@@ -30,6 +30,7 @@ export interface ISubForm {
   requete?: TRequete;
   formulaireReduit?: boolean;
   disabled?: boolean;
+  visible?: boolean;
 }
 
 export type SubFormProps = ISubForm & FormikComponentProps;

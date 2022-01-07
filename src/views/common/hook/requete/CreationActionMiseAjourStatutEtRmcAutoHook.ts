@@ -4,7 +4,7 @@ import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTab
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
+} from "../navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut

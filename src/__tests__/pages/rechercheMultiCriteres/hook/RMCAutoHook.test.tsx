@@ -6,17 +6,17 @@ import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTab
 import {
   IRMCAutoParams,
   useRMCAutoHook
-} from "../../../../views/common/hook/navigationApercuRequeteRmcAuto/RMCAutoHook";
+} from "../../../../views/common/hook/navigationApercuRequeteDelivrance/RMCAutoHook";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import {
-  URL_MES_REQUETES, URL_MES_REQUETES_APERCU_REQUETE_ID,
+  URL_MES_REQUETES,
+  URL_MES_REQUETES_APERCU_REQUETE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
-
   URL_RECHERCHE_REQUETE,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-
-  URL_REQUETES_SERVICE, URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+  URL_REQUETES_SERVICE,
+  URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);

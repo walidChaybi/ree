@@ -10,7 +10,7 @@ import { getUrlWithParam } from "../../../../../views/common/util/route/routeUti
 import { RMCRequetesAssocieesResultats } from "../../../../../views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import {
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_INFORMATION_APERCU_ID
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID
 } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -43,14 +43,14 @@ test("renders Fielset Recherche requêtes associées aux titulaires d'une requê
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_INFORMATION_APERCU_ID,
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
         requeteInformation.id
       )
     );
 
     render(
       <Router history={history}>
-        <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+        <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
           <RMCRequetesAssocieesResultats requete={requeteInformation} />
         </Route>
       </Router>

@@ -73,7 +73,7 @@ export const ReponseAppelDetailRequeteInformation = {
     observations: null,
     statut: {
       id: "bbdfbf8e-3a26-4244-b858-4b0b68b9c262",
-      statutRequete: "A_VALIDER",
+      statutRequete: "TRANSFEREE",
       dateEffet: 1634702704000,
       raisonStatut: null
     },
@@ -97,9 +97,9 @@ export const ReponseAppelDetailRequeteCompletion = {
   hasTechnicalError: false,
   hasBusinessError: false,
   status: 200,
-  url: "/rece-requete-api/v2/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10857",
+  url: "/rece-requete-api/v2/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10555",
   data: {
-    id: "bbd05aed-8ea9-45ba-a7d7-b8d55ad10857",
+    id: "bbd05aed-8ea9-45ba-a7d7-b8d55ad10555",
     numeroFonctionnel: "LRU1A5",
     dateCreation: 1634708514000,
     canal: "INTERNET",
@@ -168,7 +168,7 @@ export const ReponseAppelDetailRequeteCompletion = {
     observations: null,
     statut: {
       id: "bbdfbf8e-3a26-4244-b858-4b0b68b9c262",
-      statutRequete: "A_VALIDER",
+      statutRequete: "PRISE_EN_CHARGE",
       dateEffet: 1634702704000,
       raisonStatut: null
     },

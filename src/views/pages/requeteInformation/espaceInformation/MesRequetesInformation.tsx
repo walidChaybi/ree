@@ -3,7 +3,14 @@ import { useHistory } from "react-router-dom";
 import { IQueryParametersPourRequetes } from "../../../../api/appels/requeteApi";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { getUrlWithParam } from "../../../common/util/route/routeUtil";
+import {
+  INavigationApercuReqInfoParams,
+  useNavigationApercuInformation
+} from "../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
+import {
+  CreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
@@ -13,26 +20,29 @@ import {
 } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
-import { URL_MES_REQUETES_INFORMATION_APERCU_ID } from "../../../router/ReceUrls";
+import { receUrl } from "../../../router/ReceUrls";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import {
   requeteInformationColumnHeaders,
   StatutsRequetesInformation
 } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationHook";
-import { useUpdateStatutRequeteInformation } from "./hook/UpdateStatutRequeteInformation";
 import "./scss/RequeteTableau.scss";
 
 export const MesRequetesInformationPage: React.FC = () => {
   const history = useHistory();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
-  const [idRequeteToUpdate, setIdRequeteToUpdate] = useState<string>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const idRequeteMiseAJour = useUpdateStatutRequeteInformation(
-    idRequeteToUpdate,
-    StatutRequete.PRISE_EN_CHARGE
-  );
+  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<
+    CreationActionMiseAjourStatutHookParams | undefined
+  >();
+  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
+    INavigationApercuReqInfoParams | undefined
+  >();
+
+  useCreationActionMiseAjourStatut(paramsMAJReqInfo);
+  useNavigationApercuInformation(paramsNavReqInfo);
 
   const [
     linkParameters,
@@ -43,6 +53,7 @@ export const MesRequetesInformationPage: React.FC = () => {
     sens: "ASC",
     range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
   });
+
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
@@ -67,32 +78,36 @@ export const MesRequetesInformationPage: React.FC = () => {
     setLinkParameters(queryParameters);
   }, []);
 
-  const redirectionVersApercu = useCallback(
-    (idRequete: string) => {
-      history.push(
-        getUrlWithParam(URL_MES_REQUETES_INFORMATION_APERCU_ID, idRequete)
-      );
-    },
-    [history]
-  );
-
   function onClickOnLine(
     idRequete: string,
     data: IRequeteTableauDelivrance[],
     idx: number
   ) {
-    if (data[idx].statut === StatutRequete.TRANSFEREE.libelle) {
-      setIdRequeteToUpdate(idRequete);
+    const requete = data[idx];
+    const urlCourante = receUrl.getUrlCourante(history);
+
+    if (requete.statut === StatutRequete.TRANSFEREE.libelle) {
+      setParamsMAJReqInfo({
+        requete,
+        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
+        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        urlCourante,
+        callback: () => {
+          setParamsNavReqInfo({
+            requete,
+            callback: finOperationEnCours,
+            urlCourante
+          });
+        }
+      });
     } else {
-      redirectionVersApercu(idRequete);
+      setParamsNavReqInfo({
+        requete,
+        callback: finOperationEnCours,
+        urlCourante
+      });
     }
   }
-
-  useEffect(() => {
-    if (idRequeteMiseAJour) {
-      redirectionVersApercu(idRequeteMiseAJour);
-    }
-  }, [idRequeteMiseAJour, redirectionVersApercu]);
 
   useEffect(() => {
     if (dataState && dataState.length === 0) {

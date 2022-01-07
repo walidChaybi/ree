@@ -27,7 +27,9 @@ import {
 } from "../hook/SauvegarderReponseReqInfoHook";
 import "../scss/ReponseReqInfo.scss";
 import PiecesJointesReqInfoForm from "./PiecesJointesReqInfoForm";
-import ReponseReqInfoBoutons from "./ReponseReqInfoBoutons";
+import ReponseReqInfoBoutons, {
+  BoutonsReponseReqInfoProps
+} from "./ReponseReqInfoBoutons";
 import ReponseReqInfoSubForm, {
   DefaultValuesReponseInfoSubForm,
   IReponseInfoSubFormValue,
@@ -37,6 +39,8 @@ import ReponseReqInfoSubForm, {
 
 export interface ReponseReqInfoProps {
   requete: IRequeteInformation;
+  formulaireDisabled: boolean;
+  boutonVisible: boolean;
   reponse?: IReponseRequeteInfo;
 }
 
@@ -62,10 +66,16 @@ const ValidationSchemaReponseInfoForm = Yup.object({
 
 export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   requete,
+  formulaireDisabled,
+  boutonVisible,
   reponse
 }) => {
   const history = useHistory();
-  const blocsForm: JSX.Element[] = getReponseForm(reponse);
+  const blocsForm: JSX.Element[] = getReponseForm(
+    formulaireDisabled,
+    boutonVisible,
+    reponse
+  );
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   const [reponseSaisie, setReponseSaisie] = useState<
@@ -143,7 +153,9 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
     }
   }, [idReponse, history]);
 
-  const boutonsProps = {} as FormikComponentProps;
+  const boutonsProps = {
+    formulaireDisabled
+  } as BoutonsReponseReqInfoProps;
 
   return (
     <div className="ReponseReqInfo">
@@ -170,14 +182,23 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   );
 };
 
-export function getReponseForm(reponse?: IReponseRequeteInfo): JSX.Element[] {
-  const reponseReqInfoFromProps = {
-    reponse
-  } as ReponseReqInfoSubFormProps;
+export function getReponseForm(
+  formulaireDisabled: boolean,
+  boutonVisible: boolean,
+  reponse?: IReponseRequeteInfo
+): JSX.Element[] {
   const piecesJointesFormProps = {
     nom: PIECES_JOINTES,
-    titre: getLibelle("Pièces justificatives")
+    titre: getLibelle("Pièces justificatives"),
+    visible: boutonVisible,
+    disabled: formulaireDisabled
   } as SubFormProps;
+
+  const reponseReqInfoFromProps = {
+    reponse,
+    formulaireDisabled
+  } as ReponseReqInfoSubFormProps;
+
   return [
     <PiecesJointesReqInfoForm
       key={PIECES_JOINTES}

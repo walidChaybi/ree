@@ -5,7 +5,8 @@ import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import {
   PATH_APERCU_COURRIER,
-  PATH_APERCU_REQ,
+  PATH_APERCU_REQ_DEL,
+  PATH_APERCU_REQ_INFO,
   PATH_APERCU_REQ_PRISE,
   PATH_APERCU_REQ_TRAITEMENT,
   PATH_SAISIR_RDCSC,
@@ -34,7 +35,7 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     if (
       // @ts-ignore
       window.protectionOff ||
-      receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ + "/")
+      receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_DEL + "/")
     ) {
       setEstBonStatut(true);
     } else {
@@ -85,7 +86,9 @@ function checkURLDelivrance(
       );
     case StatutRequete.TRANSFEREE:
     case StatutRequete.A_TRAITER:
-      return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ + "/");
+      return receUrl
+        .getUrlCourante(history)
+        .includes(PATH_APERCU_REQ_DEL + "/");
     case StatutRequete.A_VALIDER:
     case StatutRequete.A_SIGNER:
       return (
@@ -110,7 +113,9 @@ function checkURLInformation(history: any, statut?: StatutRequete) {
   switch (statut) {
     case StatutRequete.PRISE_EN_CHARGE:
     case StatutRequete.TRANSFEREE:
-      return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ);
+    case StatutRequete.REJET:
+    case StatutRequete.TRAITE_REPONDU:
+      return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_INFO);
     default:
       return false;
   }

@@ -3,28 +3,28 @@ import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDeliv
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import {
-  PATH_APERCU_REQ,
+  PATH_APERCU_REQ_DEL,
   PATH_APERCU_REQ_TRAITEMENT
 } from "../../../router/ReceUrls";
 import { MigratorV1V2 } from "../../util/migration/MigratorV1V2";
 import {
-  autorisePrendreEnChargeTableau,
+  autorisePrendreEnChargeReqTableauDelivrance,
   typeEstDelivrance
 } from "../../util/RequetesUtils";
 import { getUrlWithParam } from "../../util/route/routeUtil";
 import { storeRece } from "../../util/storeRece";
 
-export interface INavigationApercu {
+export interface INavigationApercuDelivrance {
   isRmcAuto?: boolean;
   url?: string;
 }
 
-export function useNavigationApercu(
+export function useNavigationApercuDelivrance(
   urlWithParam?: string,
   requete?: IRequeteTableauDelivrance
-): INavigationApercu | undefined {
+): INavigationApercuDelivrance | undefined {
   const [redirection, setRedirection] = useState<
-    INavigationApercu | undefined
+    INavigationApercuDelivrance | undefined
   >();
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export function useNavigationApercu(
 const redirectionEnFonctionMaRequete = (
   requete: IRequeteTableauDelivrance,
   setRedirection: (
-    value: React.SetStateAction<INavigationApercu | undefined>
+    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
   urlWithParam: string
 ) => {
@@ -102,7 +102,7 @@ function estUneRequeteDeDelivranceAvecUnStatut(
 
 function redirectionApercuTraitement(
   setRedirection: (
-    value: React.SetStateAction<INavigationApercu | undefined>
+    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
   urlWithParam: string,
   requete: IRequeteTableauDelivrance
@@ -117,14 +117,14 @@ function redirectionApercuTraitement(
 
 function redirectionApercuRequete(
   setRedirection: (
-    value: React.SetStateAction<INavigationApercu | undefined>
+    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
   urlWithParam: string,
   requete: IRequeteTableauDelivrance
 ) {
   setRedirection({
     url: getUrlWithParam(
-      `${urlWithParam}/${PATH_APERCU_REQ}/:idRequete`,
+      `${urlWithParam}/${PATH_APERCU_REQ_DEL}/:idRequete`,
       requete.idRequete
     )
   });
@@ -133,11 +133,11 @@ function redirectionApercuRequete(
 function redirectionATraiterTransferee(
   requete: IRequeteTableauDelivrance,
   setRedirection: (
-    value: React.SetStateAction<INavigationApercu | undefined>
+    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
   urlWithParam: string
 ) {
-  if (autorisePrendreEnChargeTableau(requete)) {
+  if (autorisePrendreEnChargeReqTableauDelivrance(requete)) {
     setRedirection({ isRmcAuto: true });
   } else {
     redirectionApercuRequete(setRedirection, urlWithParam, requete);
@@ -147,7 +147,7 @@ function redirectionATraiterTransferee(
 function redirectionBrouillon(
   requete: IRequeteTableauDelivrance,
   setRedirection: (
-    value: React.SetStateAction<INavigationApercu | undefined>
+    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
   urlWithParam: string
 ) {

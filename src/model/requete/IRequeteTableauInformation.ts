@@ -7,23 +7,16 @@ import { ObjetRequete } from "./enum/ObjetRequete";
 import { Qualite } from "./enum/Qualite";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { StatutRequete } from "./enum/StatutRequete";
+import { IRequeteTableau } from "./IRequeteTableau";
 import {
   ITitulaireRequeteTableau,
   mapTitulaires
 } from "./ITitulaireRequeteTableau";
 
-export interface IRequeteTableauInformation {
-  idRequete: string;
-  numero?: string;
-  sousType?: string;
+export interface IRequeteTableauInformation extends IRequeteTableau {
   objet?: string;
-  dateCreation?: string;
-  statut?: string;
-  nomCompletRequerant?: string;
   typeRequerant?: string;
-  titulaires?: ITitulaireRequeteTableau[];
   nomsTitulaires?: string;
-  idUtilisateur?: string;
 }
 
 //////////////////////////////////////////

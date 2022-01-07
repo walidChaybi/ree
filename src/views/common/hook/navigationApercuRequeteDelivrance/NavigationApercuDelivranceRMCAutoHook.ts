@@ -3,7 +3,10 @@ import { useHistory } from "react-router-dom";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import { IUrlData, receUrl } from "../../../router/ReceUrls";
 import { tousNonVides } from "../../util/Utils";
-import { INavigationApercu, useNavigationApercu } from "./NavigationApercuHook";
+import {
+  INavigationApercuDelivrance,
+  useNavigationApercuDelivrance
+} from "./NavigationApercuDelivranceHook";
 import { IRMCAutoParams, useRMCAutoHook } from "./RMCAutoHook";
 
 export interface INavigationApercuRMCAutoParams {
@@ -23,7 +26,9 @@ export function useNavigationApercuRMCAuto(
 
   const rmcAutoUrlData: IUrlData | undefined = useRMCAutoHook(paramsRMCAuto);
 
-  const navigation: INavigationApercu | undefined = useNavigationApercu(
+  const navigation:
+    | INavigationApercuDelivrance
+    | undefined = useNavigationApercuDelivrance(
     rmcAutoNavigationParams?.urlCourante,
     rmcAutoNavigationParams?.requete
   );

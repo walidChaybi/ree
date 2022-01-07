@@ -17,32 +17,21 @@ import { StatutRequete } from "./enum/StatutRequete";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
 import { IRequerant, Requerant } from "./IRequerant";
-import {
-  ITitulaireRequeteTableau,
-  mapTitulaires
-} from "./ITitulaireRequeteTableau";
+import { IRequeteTableau } from "./IRequeteTableau";
+import { mapTitulaires } from "./ITitulaireRequeteTableau";
 
-export interface IRequeteTableauDelivrance {
-  idRequete: string;
-  numero?: string;
+export interface IRequeteTableauDelivrance extends IRequeteTableau {
   numeroTeledossier?: string;
   idSagaDila?: string;
-  type?: string;
-  sousType: string;
   provenance?: string;
   nature?: string;
   document?: string; // id du type de document demandé
   documentLibelle?: string; // libellé du type de document demandé
-  titulaires?: ITitulaireRequeteTableau[];
   requerant?: IRequerant;
-  nomCompletRequerant?: string;
   attribueA?: string;
-  dateCreation?: string;
   dateDerniereMaj?: string;
-  statut?: string;
   priorite?: string;
   observations?: string[];
-  idUtilisateur?: string;
   idCorbeilleAgent?: string;
   nomUtilisateurAttribueA?: string;
   idEntiteRattachement?: string;
@@ -64,16 +53,16 @@ export interface IDocumentReponseTableau {
 /** Requetes: mapping après appel d'api */
 //////////////////////////////////////////
 
-export function mappingRequetesTableau(
+export function mappingRequetesTableauDelivrance(
   resultatsRecherche: any,
   mappingSupplementaire: boolean
 ): IRequeteTableauDelivrance[] {
   return resultatsRecherche?.map((requete: any) => {
-    return mappingUneRequeteTableau(requete, mappingSupplementaire);
+    return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire);
   });
 }
 
-export function mappingUneRequeteTableau(
+export function mappingUneRequeteTableauDelivrance(
   requete: any,
   mappingSupplementaire: boolean
 ): IRequeteTableauDelivrance {

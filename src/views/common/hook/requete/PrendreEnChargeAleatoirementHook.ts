@@ -4,7 +4,7 @@ import { getRequeteAleatoire } from "../../../../api/appels/requeteApi";
 import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import {
   IRequeteTableauDelivrance,
-  mappingUneRequeteTableau
+  mappingUneRequeteTableauDelivrance
 } from "../../../../model/requete/IRequeteTableauDelivrance";
 import {
   IRequeteTableauInformation,
@@ -32,7 +32,7 @@ export function useGetRequeteAleatoire(
             const resultat = await getRequeteAleatoire(
               TypeRequete.DELIVRANCE.nom
             );
-            const requeteResultatMappee = mappingUneRequeteTableau(
+            const requeteResultatMappee = mappingUneRequeteTableauDelivrance(
               resultat.body.data,
               false
             );

@@ -9,6 +9,7 @@ interface MenuReponsesProposeesProps {
   onClick: (reponse: IReponseRequeteInfo) => void;
   listeReponse?: IReponseRequeteInfo[];
   requete: IRequeteInformation;
+  disabled: boolean;
 }
 
 export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = props => {
@@ -49,7 +50,10 @@ export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = props
     <>
       {props.listeReponse && (
         <div>
-          <button onClick={e => handleClickBoutonReponse(e)}>
+          <button
+            onClick={e => handleClickBoutonReponse(e)}
+            disabled={props.disabled}
+          >
             {getLibelle("Réponses proposées")}
           </button>
 

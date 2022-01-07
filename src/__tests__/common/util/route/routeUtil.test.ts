@@ -14,40 +14,40 @@ import {
 test("Attendu: getUrlWithParam fonctionne correctement", () => {
   expect(
     getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_ID, String(123456))
-  ).toBe(`${URL_MES_REQUETES}/apercurequete/123456`);
+  ).toBe(`${URL_MES_REQUETES}/apercurequetedelivrance/123456`);
   expect(getUrlWithParam(URL_MES_REQUETES, String(123456))).toBe(
     `${URL_MES_REQUETES}`
   );
 });
 
 const urlWitIdOk =
-  "/rece/rece-ui/mesrequetes/apercurequete/a8c57b94-b623-4e79-b3a4-08cdf0447623";
+  "/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623";
 
 test("Attendu: getUrlWithoutParam fonctionne correctement", () => {
   expect(getUrlWithoutIdParam(urlWitIdOk)).toBe(
-    "/rece/rece-ui/mesrequetes/apercurequete"
+    "/rece/rece-ui/mesrequetes/apercurequetedelivrance"
   );
 
   expect(
     getUrlWithoutIdParam(
-      "/rece/rece-ui/mesrequetes/apercurequete//a8c57b94-b623-4e79-b3a4-08cdf0447623"
+      "/rece/rece-ui/mesrequetes/apercurequetedelivrance//a8c57b94-b623-4e79-b3a4-08cdf0447623"
     )
-  ).toBe("/rece/rece-ui/mesrequetes/apercurequete");
+  ).toBe("/rece/rece-ui/mesrequetes/apercurequetedelivrance");
 
   expect(
     getUrlWithoutIdParam(
-      "/rece/rece-ui/mesrequetes/apercurequete/a8c57b94-b623-4e79-b3a4-08cdf0447623/"
+      "/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623/"
     )
-  ).toBe("/rece/rece-ui/mesrequetes/apercurequete");
+  ).toBe("/rece/rece-ui/mesrequetes/apercurequetedelivrance");
 });
 
 test("Attendu: getLastPathElem fonctionne correctement", () => {
-  expect(getLastPathElem("/rece/rece-ui/mesrequetes/apercurequete")).toBe(
-    "apercurequete"
-  );
-  expect(getLastPathElem("/rece/rece-ui/mesrequetes/apercurequete/")).toBe(
-    "apercurequete"
-  );
+  expect(
+    getLastPathElem("/rece/rece-ui/mesrequetes/apercurequetedelivrance")
+  ).toBe("apercurequetedelivrance");
+  expect(
+    getLastPathElem("/rece/rece-ui/mesrequetes/apercurequetedelivrance/")
+  ).toBe("apercurequetedelivrance");
 });
 
 test("Attendu: cleanUrl fonctionne correctement", () => {
@@ -55,13 +55,13 @@ test("Attendu: cleanUrl fonctionne correctement", () => {
 
   expect(
     cleanUrl(
-      "/rece/rece-ui/mesrequetes/apercurequete//a8c57b94-b623-4e79-b3a4-08cdf0447623"
+      "/rece/rece-ui/mesrequetes/apercurequetedelivrance//a8c57b94-b623-4e79-b3a4-08cdf0447623"
     )
   ).toBe(urlWitIdOk);
 
   expect(
     cleanUrl(
-      "/rece/rece-ui/mesrequetes/apercurequete/a8c57b94-b623-4e79-b3a4-08cdf0447623/"
+      "/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623/"
     )
   ).toBe(urlWitIdOk);
 });
@@ -69,7 +69,7 @@ test("Attendu: cleanUrl fonctionne correctement", () => {
 test("Attendu: isLastPathElemIsId fonctionne correctement", () => {
   expect(
     isLastPathElemIsId(
-      "/rece/rece-ui/mesrequetes/apercurequete/a8c57b94-b623-4e79-b3a4-08cdf0447623/"
+      "/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623/"
     )
   ).toBeTruthy();
 

@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import { rechercheMultiCriteresAutoRequetes } from "../../../../../api/appels/requeteApi";
 import { TRequete } from "../../../../../model/requete/IRequete";
-import {
-  IRequeteTableauDelivrance,
-  mappingRequetesTableau
-} from "../../../../../model/requete/IRequeteTableauDelivrance";
+import { TRequeteTableau } from "../../../../../model/requete/IRequeteTableau";
 import {
   getParamsTableau,
   IParamsTableau
 } from "../../../../common/util/GestionDesLiensApi";
 import { logError } from "../../../../common/util/LogManager";
+import { mappingRequetesTableau } from "../../../../common/util/RequetesUtils";
 import { determinerCriteresRMCAuto } from "./RMCAutoRequetesUtils";
 
 export function useRMCAutoRequeteApiHook(requete: TRequete, range: string) {
   const [dataRMCAutoRequete, setDataRMCAutoRequete] = useState<
-    IRequeteTableauDelivrance[]
+    TRequeteTableau[]
   >();
 
   const [

@@ -15,8 +15,8 @@ import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { OfficierContext } from "../../../../views/core/contexts/OfficierContext";
 import EspaceInformationPage from "../../../../views/pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import {
-  URL_MES_REQUETES_INFORMATION,
-  URL_MES_REQUETES_INFORMATION_APERCU_ID
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_INFORMATION
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(
@@ -26,7 +26,7 @@ const superagentMock = require("superagent-mock")(
 const history = createMemoryHistory();
 history.push(URL_MES_REQUETES_INFORMATION);
 
-test("renders Page requete information et clique sur une A_TRAITER", async () => {
+test("renders Page requete information et clique sur une TRANSFEREE", async () => {
   render(
     <Router history={history}>
       <OfficierContext.Provider
@@ -61,7 +61,7 @@ test("renders Page requete information et clique sur une A_TRAITER", async () =>
   await waitFor(() => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
-        URL_MES_REQUETES_INFORMATION_APERCU_ID,
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
         "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"
       )
     );

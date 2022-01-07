@@ -10,8 +10,8 @@ import { configRequetesInformation } from "../../../../mock/superagent-config/su
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import BoutonPrendreEnChargeAleatoirementRequeteInformation from "../../../../views/pages/requeteInformation/espaceInformation/BoutonPrendreEnChargeAleatoirementRequeteInformation";
 import {
-  URL_MES_REQUETES_INFORMATION,
-  URL_MES_REQUETES_INFORMATION_APERCU_ID
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_INFORMATION
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
@@ -39,7 +39,7 @@ test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l
   await waitFor(() => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
-        URL_MES_REQUETES_INFORMATION_APERCU_ID,
+        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
         ReponseMesRequetesInformation[1].id
       )
     );

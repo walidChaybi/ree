@@ -185,7 +185,7 @@ export function getUrlFromNPathElements(pathElements: string[], idx: number) {
 
 export function getPathElements(path: string) {
   // cas possibles:
-  // /rece/rece-ui/mesrequetes/apercurequete => "mesrequetes/apercurequete"
+  // /rece/rece-ui/mesrequetes/apercurequetedelivrance => "mesrequetes/apercurequetedelivrance"
   // /rece/rece-ui/ => "/""
   // /rece/rece-ui => ""
   // /rece/rece-ui/accueil => ""

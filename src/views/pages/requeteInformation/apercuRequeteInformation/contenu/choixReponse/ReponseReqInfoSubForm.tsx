@@ -38,7 +38,8 @@ export const ValidationSchemaReponseInfoSubForm = Yup.object({
 
 const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({
   reponse,
-  formik
+  formik,
+  formulaireDisabled
 }) => {
   const libelleWithNamespace = withNamespace(REPONSE, LIBELLE);
   const corpsMailWithNamespace = withNamespace(REPONSE, CORPS_MAIL);
@@ -64,6 +65,7 @@ const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({
         component={"textarea"}
         maxLength={(NB_CARACTERES_CORPS_MAIL + 1).toString()}
         rows={NB_LIGNE_CORPS_MAIL}
+        disabled={formulaireDisabled}
       />
     </>
   );

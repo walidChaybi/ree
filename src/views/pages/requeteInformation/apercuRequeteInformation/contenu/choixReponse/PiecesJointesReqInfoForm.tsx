@@ -17,22 +17,28 @@ const PiecesJointesReqInfoForm: React.FC<SubFormProps> = props => {
   };
 
   useEffect(() => {
-    if (props.formik.getFieldProps(props.nom).value) {
+    if (props.disabled) {
+      setEstDisabled(true);
+    } else if (props.formik.getFieldProps(props.nom).value) {
       setEstDisabled(
         props.formik.getFieldProps(props.nom).value.length >= NOMBRE_PIECE_MAX
       );
     }
-  }, [props.formik, props.nom]);
+  }, [props.formik, props.nom, props.disabled]);
 
   return (
-    <div className="PiecesJointesReqInfo">
-      <PiecesJointes
-        piecesJointes={piecesJointes}
-        setPiecesJointes={setPiecesJointes}
-        libelleBouton="Ajouter une pièce jointe"
-        disabled={estDisabled}
-      />
-    </div>
+    <>
+      {props.visible && (
+        <div className="PiecesJointesReqInfo">
+          <PiecesJointes
+            piecesJointes={piecesJointes}
+            setPiecesJointes={setPiecesJointes}
+            libelleBouton="Ajouter une pièce jointe"
+            disabled={estDisabled}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

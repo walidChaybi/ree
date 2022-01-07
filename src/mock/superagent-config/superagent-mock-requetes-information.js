@@ -4,6 +4,7 @@ import {
 } from "../data/DetailRequeteInformation";
 import { ReponseMesRequetesInformation } from "../data/EspaceInformation";
 import { NOMENCLATURE_REPONSE } from "../data/NomenclatureReponse";
+import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const NORESULT = "NORESULT";
 
@@ -63,9 +64,9 @@ export const configRequetesInformation = [
       // Mise à jour statut requête Information
       if (
         match[1] ===
-        "/requetes/information/statut/0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62?statut=PRISE_EN_CHARGE"
+        "/requetes/action?idRequete=0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
       ) {
-        return { data: "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62" };
+        return { data: ["0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"] };
       }
 
       // Prise en charge aléatoire
@@ -83,6 +84,20 @@ export const configRequetesInformation = [
       ) {
         return { data: "123456789" };
       }
+
+      // RMC Auto Requete
+      if (match[1] === "/requetes/rmcauto?range=0-105") {
+        return {
+          headers: {
+            "content-range":
+              "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+          },
+          data: ReponseAppelRMCRequete.data
+        };
+      }
+
       const error = { msg: "url params non mockée", url: match[1] };
       console.log("Erreur mock api requ info: ", error);
       return {

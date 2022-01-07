@@ -8,7 +8,7 @@ import { SousTypeDelivrance } from "../../../model/requete/enum/SousTypeDelivran
 import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
 import { TypeRequete } from "../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "../../../model/requete/IRequeteTableauDelivrance";
-import { useNavigationApercu } from "../../../views/common/hook/navigationApercuRequeteRmcAuto/NavigationApercuHook";
+import { useNavigationApercuDelivrance } from "../../../views/common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { storeRece } from "../../../views/common/util/storeRece";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -25,7 +25,10 @@ const requete1: IRequeteTableauDelivrance = {
 storeRece.utilisateurCourant = userDroitCOMEDEC;
 
 const HookConsummerNavigation: React.FC = () => {
-  const res = useNavigationApercu("/rece/rece-ui/mesrequetes", requete1);
+  const res = useNavigationApercuDelivrance(
+    "/rece/rece-ui/mesrequetes",
+    requete1
+  );
   return (
     <>
       <div data-testid="url">{res?.url}</div>
@@ -39,7 +42,7 @@ test("test apercu traitement", async () => {
     const { getByTestId } = render(<HookConsummerNavigation />);
     await waitFor(() =>
       expect(getByTestId("url").textContent).toBe(
-        "/rece/rece-ui/mesrequetes/apercurequete/0"
+        "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
       )
     );
   });
@@ -57,7 +60,10 @@ const requete2: IRequeteTableauDelivrance = {
 storeRece.utilisateurCourant = userDroitCOMEDEC;
 
 const HookConsummerNavigation2: React.FC = () => {
-  const res = useNavigationApercu("/rece/rece-ui/mesrequetes", requete2);
+  const res = useNavigationApercuDelivrance(
+    "/rece/rece-ui/mesrequetes",
+    requete2
+  );
   return (
     <>
       <div data-testid="url">{res?.url}</div>
@@ -71,7 +77,7 @@ test("test apercu traitement", async () => {
     const { getByTestId } = render(<HookConsummerNavigation2 />);
     await waitFor(() =>
       expect(getByTestId("url").textContent).toBe(
-        "/rece/rece-ui/mesrequetes/apercurequete/0"
+        "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
       )
     );
   });
@@ -88,7 +94,10 @@ const requete3: IRequeteTableauDelivrance = {
 };
 
 const HookConsummerNavigation3: React.FC = () => {
-  const res = useNavigationApercu("/rece/rece-ui/mesrequetes", requete3);
+  const res = useNavigationApercuDelivrance(
+    "/rece/rece-ui/mesrequetes",
+    requete3
+  );
   return (
     <>
       <div data-testid="url">{res?.url}</div>

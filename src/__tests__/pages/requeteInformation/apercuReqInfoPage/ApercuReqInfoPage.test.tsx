@@ -17,12 +17,13 @@ import {
 } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configMail } from "../../../../mock/superagent-config/superagent-mock-mail";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
+import { IOfficier } from "../../../../model/agent/IOfficier";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { ApercuReqInfoPage } from "../../../../views/pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import {
-  URL_MES_REQUETES_INFORMATION,
-  URL_MES_REQUETES_INFORMATION_APERCU_ID
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_INFORMATION
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
@@ -32,20 +33,20 @@ const superagentMock = require("superagent-mock")(request, [
 ]);
 
 let history: any;
+history = createMemoryHistory();
 
 beforeAll(() => {
-  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
-});
-
-beforeEach(async () => {
-  history = createMemoryHistory();
   history.push(URL_MES_REQUETES_INFORMATION);
+  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
+  storeRece.utilisateurCourant = {
+    idUtilisateur: LISTE_UTILISATEURS[3].idUtilisateur
+  } as IOfficier;
 });
 
 test("renders ApercuReqInfoPage", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
       "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
     )
   );
@@ -54,7 +55,7 @@ test("renders ApercuReqInfoPage", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
             <ApercuReqInfoPage />
           </Route>
         </Router>
@@ -64,7 +65,7 @@ test("renders ApercuReqInfoPage", async () => {
 
   const title = screen.getByText(/Aperçu requête d'information/i);
   const bandeau = screen.getByText(
-    /Requête à valider, attribuée à Benoît TANGUY - Le : 20\/10\/2021/i
+    /Requête transférée à Benoît TANGUY - Le : 20\/10\/2021/i
   );
 
   const resume = screen.getByText(/Résumé de la requête d'information/i);
@@ -90,7 +91,7 @@ test("renders ApercuReqInfoPage", async () => {
   });
 
   // Alimentation Résumé de la requête d'information
-  const sousType = screen.getByText(/Sous-type/i);
+  const sousType = screen.getAllByText(/Sous-type/i);
   const valeurSousType = screen.getByText("Information");
   const objet = screen.getByText("Objet");
   const valeurObjet = screen.getAllByText(
@@ -120,7 +121,7 @@ test("renders ApercuReqInfoPage", async () => {
   );
 
   await waitFor(() => {
-    expect(sousType).toBeDefined();
+    expect(sousType.length).toEqual(2);
     expect(valeurSousType).toBeDefined();
     expect(objet).toBeDefined();
     expect(valeurObjet.length).toEqual(2);
@@ -190,7 +191,7 @@ test("renders ApercuReqInfoPage", async () => {
 test("bouton annuler", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
       "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
     )
   );
@@ -199,7 +200,7 @@ test("bouton annuler", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
             <ApercuReqInfoPage />
           </Route>
         </Router>
@@ -225,7 +226,7 @@ test("bouton annuler", async () => {
 test("bouton saisie libre", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
       "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
     )
   );
@@ -234,7 +235,7 @@ test("bouton saisie libre", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
             <ApercuReqInfoPage />
           </Route>
         </Router>
@@ -268,7 +269,7 @@ test("bouton saisie libre", async () => {
 test("complétion en cours", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
       "bbd05aed-8ea9-45ba-a7d7-b8d55ad10555"
     )
   );
@@ -277,7 +278,7 @@ test("complétion en cours", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
             <ApercuReqInfoPage />
           </Route>
         </Router>
@@ -293,7 +294,7 @@ test("complétion en cours", async () => {
 test("renders ApercuReqInfoPage Double Menu", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
       "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
     )
   );
@@ -302,7 +303,7 @@ test("renders ApercuReqInfoPage Double Menu", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
             <ApercuReqInfoPage />
           </Route>
         </Router>
@@ -358,7 +359,7 @@ test("renders ApercuReqInfoPage Double Menu", async () => {
 test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
       "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
     )
   );
@@ -367,7 +368,7 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_INFORMATION_APERCU_ID}>
+          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
             <ApercuReqInfoPage />
           </Route>
         </Router>

@@ -3,8 +3,10 @@ import { BesoinUsager } from "../../../../../model/requete/enum/BesoinUsager";
 import { ComplementObjetRequete } from "../../../../../model/requete/enum/ComplementObjetRequete";
 import { ObjetRequete } from "../../../../../model/requete/enum/ObjetRequete";
 import { SousTypeInformation } from "../../../../../model/requete/enum/SousTypeInformation";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { IReponseRequeteInfo } from "../../../../../model/requete/IReponseRequeteInfo";
 import { MenuTransfert } from "../../../../common/composant/menuTransfert/MenuTransfert";
+import { storeRece } from "../../../../common/util/storeRece";
 import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { BoutonReponseLibre } from "./choixReponse/BoutonReponseLibre";
@@ -27,6 +29,31 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
   const [reponseChoisie, setReponseChoisie] = useState<IReponseRequeteInfo>(
     SAISIE_LIBRE_REPONSE
   );
+
+  const [lesBoutonsDisabled, setLesBoutonsDisabled] = useState(false);
+  const [formulaireDisabled, setFormulaireDisabled] = useState(false);
+  const [tousLesBoutonsVisibles, setTousLesBoutonsVisibles] = useState(true);
+  const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] = useState(
+    true
+  );
+
+  useEffect(() => {
+    const mauvaisUtilisateur =
+      requete.idUtilisateur !== storeRece.utilisateurCourant?.idUtilisateur;
+
+    const rejetOuTraiteRepondu =
+      requete.statutCourant.statut === StatutRequete.REJET ||
+      requete.statutCourant.statut === StatutRequete.TRAITE_REPONDU;
+
+    const completerDemande =
+      requete.besoinUsager === BesoinUsager.COMPLETER_DEMANDE &&
+      requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS;
+
+    setLesBoutonsDisabled(mauvaisUtilisateur);
+    setFormulaireDisabled(mauvaisUtilisateur || rejetOuTraiteRepondu);
+    setTousLesBoutonsVisibles(!rejetOuTraiteRepondu);
+    setLesBoutonsReponsesVisibles(!completerDemande);
+  }, [requete]);
 
   const { reponsesReqInfo } = useReponsesReqInfoApiHook();
 
@@ -54,29 +81,41 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
     <>
       <Fieldset titre={getLibelle("Choix de la réponse")}>
         <div>
-          <div className="BoutonsReponse">
-            {requete.besoinUsager !== BesoinUsager.COMPLETER_DEMANDE &&
-              requete.sousType !==
-                SousTypeInformation.COMPLETION_REQUETE_EN_COURS && (
+          {tousLesBoutonsVisibles && (
+            <div className="BoutonsReponse">
+              {lesBoutonsReponsesVisibles && (
                 <>
                   <MenuReponsesProposees
                     listeReponse={reponsesReqInfo}
                     requete={requete}
                     onClick={onClick}
+                    disabled={lesBoutonsDisabled}
                   />
                   <MenuToutesLesReponses
                     listeReponse={reponsesReqInfo}
                     onClick={onClick}
+                    disabled={lesBoutonsDisabled}
                   />
                   <BoutonReponseLibre
                     onClick={onClick}
                     reponse={SAISIE_LIBRE_REPONSE}
+                    disabled={lesBoutonsDisabled}
                   ></BoutonReponseLibre>
                 </>
               )}
-            <MenuTransfert requete={requete} menuFermer={true} />
-          </div>
-          <ReponseReqInfoForm reponse={reponseChoisie} requete={requete} />
+              <MenuTransfert
+                requete={requete}
+                menuFermer={true}
+                disabled={lesBoutonsDisabled}
+              />
+            </div>
+          )}
+          <ReponseReqInfoForm
+            reponse={reponseChoisie}
+            requete={requete}
+            formulaireDisabled={formulaireDisabled}
+            boutonVisible={tousLesBoutonsVisibles}
+          />
         </div>
       </Fieldset>
     </>

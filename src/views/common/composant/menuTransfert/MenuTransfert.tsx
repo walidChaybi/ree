@@ -39,6 +39,7 @@ const INDEX_ACTION_TRANSFERT_ABANDON = 2;
 export interface IMenuTransfertProps {
   requete: TRequete;
   menuFermer?: boolean;
+  disabled?: boolean;
 }
 
 export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
@@ -176,7 +177,10 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       />
       {props.menuFermer ? (
         <div>
-          <button onClick={e => handleClickBoutonReponse(e)}>
+          <button
+            onClick={e => handleClickBoutonReponse(e)}
+            disabled={props.disabled}
+          >
             {getLibelle("Transférer")}
           </button>
 

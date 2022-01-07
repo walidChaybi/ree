@@ -5,15 +5,19 @@ import { getLibelle } from "../../../../../common/util/Utils";
 interface BoutonReponseLibreProps {
   onClick: (reponse: IReponseRequeteInfo) => void;
   reponse: IReponseRequeteInfo;
+  disabled: boolean;
 }
 
 export const BoutonReponseLibre: React.FC<BoutonReponseLibreProps> = props => {
   const handleClick = () => {
     props.onClick(props.reponse);
   };
+
   return (
     <div className="MenuReponse">
-      <button onClick={handleClick}>{getLibelle("Réponse libre")}</button>
+      <button onClick={handleClick} disabled={props.disabled}>
+        {getLibelle("Réponse libre")}
+      </button>
     </div>
   );
 };

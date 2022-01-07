@@ -20,7 +20,7 @@ export const ReponseMesRequetesInformation = [
     objet: "Objet de la requête",
     qualiteRequerant: "INSTITUTIONNEL",
     sousType: "INFORMATION",
-    statut: "A_VALIDER",
+    statut: "PRISE_EN_CHARGE",
     titulaires: [
       {
         nom: "nom1",

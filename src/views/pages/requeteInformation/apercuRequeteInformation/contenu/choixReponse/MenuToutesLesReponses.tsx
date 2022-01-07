@@ -11,6 +11,7 @@ import "./scss/MenuToutesLesReponses.scss";
 interface MenuToutesLesReponsesProps {
   onClick: (reponse: IReponseRequeteInfo) => void;
   listeReponse?: IReponseRequeteInfo[];
+  disabled: boolean;
 }
 
 export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props => {
@@ -36,7 +37,10 @@ export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props
     <>
       {props.listeReponse && (
         <div>
-          <button onClick={e => handleClickBoutonReponse(e)}>
+          <button
+            onClick={e => handleClickBoutonReponse(e)}
+            disabled={props.disabled}
+          >
             {getLibelle("Toutes les réponses disponibles")}
           </button>
 

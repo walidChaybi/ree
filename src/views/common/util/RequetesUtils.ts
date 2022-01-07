@@ -16,7 +16,15 @@ import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "../../../model/requete/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "../../../model/requete/IRequeteTableauDelivrance";
+import { TRequeteTableau } from "../../../model/requete/IRequeteTableau";
+import {
+  IRequeteTableauDelivrance,
+  mappingUneRequeteTableauDelivrance
+} from "../../../model/requete/IRequeteTableauDelivrance";
+import {
+  IRequeteTableauInformation,
+  mappingUneRequeteTableauInformation
+} from "../../../model/requete/IRequeteTableauInformation";
 import { getLibelle } from "../../common/util/Utils";
 import { FormatDate } from "./DateUtils";
 import { MigratorV1V2 } from "./migration/MigratorV1V2";
@@ -75,6 +83,9 @@ export const statutEstASignerAValider = (statut: string) =>
 export const typeEstDelivrance = (type: string) =>
   type === TypeRequete.DELIVRANCE.libelle;
 
+export const typeEstInformation = (type: string) =>
+  type === TypeRequete.INFORMATION.libelle;
+
 export const autorisePrendreEnChargeDelivrance = (
   requete: IRequeteDelivrance
 ) => {
@@ -89,13 +100,15 @@ export const autorisePrendreEnChargeDelivrance = (
   );
 };
 
-export const autorisePrendreEnChargeTableau = (
+export const autorisePrendreEnChargeReqTableauDelivrance = (
   requete: IRequeteTableauDelivrance
 ) =>
   !MigratorV1V2.estSousTypeRDDouRDC(requete.sousType) &&
-  autorisePrendreEnChargeTableau2(requete);
+  estAutorisePrendreEnChargeReqTableauDelivrance(requete);
 
-const autorisePrendreEnChargeTableau2 = (requete: IRequeteTableauDelivrance) =>
+const estAutorisePrendreEnChargeReqTableauDelivrance = (
+  requete: IRequeteTableauDelivrance
+) =>
   typeEstDelivrance(requete.type ? requete.type : "") &&
   statutEstATraiterOuTransferee(requete.statut ? requete.statut : "") &&
   mAppartient(requete.idUtilisateur ? requete.idUtilisateur : "") &&
@@ -105,6 +118,13 @@ const autorisePrendreEnChargeTableau2 = (requete: IRequeteTableauDelivrance) =>
   appartientAMonServiceOuServicesMeresOuServicesFilles(
     requete.idEntiteRattachement ? requete.idEntiteRattachement : ""
   );
+
+export const autorisePrendreEnChargeReqTableauInformation = (
+  requete: IRequeteTableauInformation
+) =>
+  mAppartient(requete.idUtilisateur ? requete.idUtilisateur : "") &&
+  requete.statut === StatutRequete.TRANSFEREE.libelle &&
+  typeEstInformation(requete.type ? requete.type : "");
 
 export const filtrerListeActions = (
   requete: IRequeteDelivrance,
@@ -152,4 +172,23 @@ export function soustypeRDCSDouRDCSC(sousType: SousTypeRequete): boolean {
     sousType === SousTypeDelivrance.RDCSD ||
     sousType === SousTypeDelivrance.RDCSC
   );
+}
+
+export function mappingRequetesTableau(
+  resultatsRecherche: any,
+  mappingSupplementaire: boolean
+): TRequeteTableau[] {
+  return resultatsRecherche?.map((requete: TRequeteTableau) => {
+    if (requete.type === TypeRequete.DELIVRANCE.libelle) {
+      return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire);
+    } else if (requete.type === TypeRequete.INFORMATION.libelle) {
+      return mappingUneRequeteTableauInformation(
+        requete,
+        mappingSupplementaire
+      );
+    } else {
+      // TODO Mapping provisoire pour les autres Type Requete ( CREATION et MISE_A_JOUR )
+      return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire);
+    }
+  });
 }

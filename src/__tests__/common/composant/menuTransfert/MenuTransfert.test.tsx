@@ -24,8 +24,8 @@ import { storeRece } from "../../../../views/common/util/storeRece";
 import {
   URL_MES_REQUETES_APERCU_REQUETE_ID,
   URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_INFORMATION,
-  URL_MES_REQUETES_INFORMATION_APERCU_ID
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_INFORMATION
 } from "../../../../views/router/ReceUrls";
 import { localStorageFeatureFlagMock } from "../../util/featureFlag/gestionnaireFeatureFlag.test";
 
@@ -285,7 +285,7 @@ test("check autocomplete agent", async () => {
 const HookConsummerMenuFermer: React.FC = () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_INFORMATION_APERCU_ID,
+      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
       requeteInformation.id
     )
   );

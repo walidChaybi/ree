@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDetailRequete } from "../../../../../api/appels/requeteApi";
 import { Nationalite } from "../../../../../model/etatcivil/enum/Nationalite";
+import { BesoinUsager } from "../../../../../model/requete/enum/BesoinUsager";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import { ComplementObjetRequete } from "../../../../../model/requete/enum/ComplementObjetRequete";
 import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
@@ -215,6 +216,6 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
     numeroRequeteLiee: data.numeroRequeteLiee,
     idRequeteLiee: data.idRequeteLiee,
     piecesComplementInformation: data.piecesComplementInformation,
-    besoinUsager: data.besoinUsager
+    besoinUsager: BesoinUsager.getEnumFor(data.besoinUsager)
   };
 }

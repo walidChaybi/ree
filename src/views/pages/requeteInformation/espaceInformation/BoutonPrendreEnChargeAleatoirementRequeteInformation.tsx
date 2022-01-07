@@ -17,7 +17,7 @@ import { getLibelle } from "../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
 import {
   receUrl,
-  URL_MES_REQUETES_INFORMATION_APERCU_ID
+  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID
 } from "../../../router/ReceUrls";
 
 export const BoutonPrendreEnChargeAleatoirementRequeteInformation: React.FC = (
@@ -66,7 +66,7 @@ export const BoutonPrendreEnChargeAleatoirementRequeteInformation: React.FC = (
     if (requeteAleatoireResultat?.requeteInformation) {
       history.push(
         getUrlWithParam(
-          URL_MES_REQUETES_INFORMATION_APERCU_ID,
+          URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
           requeteAleatoireResultat.requeteInformation.idRequete
         )
       );

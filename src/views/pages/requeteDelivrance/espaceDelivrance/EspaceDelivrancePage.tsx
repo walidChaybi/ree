@@ -5,7 +5,7 @@ import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTab
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../../../common/hook/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
+} from "../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import { NomComposant } from "../../../common/util/habilitation/habilitationsDescription";
 import { getLibelle } from "../../../common/util/Utils";
 import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";

@@ -1,16 +1,29 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
+import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
+import { IRequeteTableauInformation } from "../../../../../model/requete/IRequeteTableauInformation";
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../../../../common/hook/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
+} from "../../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import {
+  INavigationApercuReqInfoParams,
+  useNavigationApercuInformation
+} from "../../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import {
+  CreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "../../../../common/hook/requete/CreationActionMiseAjourStatutHook";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import { autorisePrendreEnChargeTableau } from "../../../../common/util/RequetesUtils";
+import {
+  autorisePrendreEnChargeReqTableauDelivrance,
+  autorisePrendreEnChargeReqTableauInformation
+} from "../../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import {
@@ -39,16 +52,27 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<
+  //**** RMC AUTO ****//
+  const [paramsMAJReqDelivrance, setParamsMAJReqDelivrance] = useState<
     CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
-  //**** RMC AUTO ****//
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
     INavigationApercuRMCAutoParams | undefined
   >();
 
-  useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
+  useCreationActionMiseAjourStatutEtRmcAuto(paramsMAJReqDelivrance);
   useNavigationApercuRMCAuto(paramsRMCAuto);
+
+  /**** Navigation vers Apercu Information ****/
+  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<
+    CreationActionMiseAjourStatutHookParams | undefined
+  >();
+  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
+    INavigationApercuReqInfoParams | undefined
+  >();
+
+  useCreationActionMiseAjourStatut(paramsMAJReqInfo);
+  useNavigationApercuInformation(paramsNavReqInfo);
 
   useEffect(() => {
     if (dataRMCRequete && dataRMCRequete.length === 0) {
@@ -66,29 +90,65 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     [setRangeRequete]
   );
 
+  const finOperationEnCours = () => {
+    setOperationEnCours(false);
+  };
+
   const onClickOnLine = (
     idRequete: string,
     data: IRequeteTableauDelivrance[],
     idx: number
   ) => {
-    setOperationEnCours(true);
     const requeteSelect = data[idx];
-    if (autorisePrendreEnChargeTableau(requeteSelect)) {
-      setParamsMiseAJour({
-        libelleAction: "Prendre en charge",
+    if (requeteSelect.type === TypeRequete.DELIVRANCE.libelle) {
+      onClickReqDelivrance(requeteSelect);
+    } else if (requeteSelect.type === TypeRequete.INFORMATION.libelle) {
+      onClickReqInformation(requeteSelect);
+    }
+  };
+
+  const urlCourante = URL_RECHERCHE_REQUETE;
+
+  const onClickReqDelivrance = (requete: IRequeteTableauDelivrance) => {
+    setOperationEnCours(true);
+    if (autorisePrendreEnChargeReqTableauDelivrance(requete)) {
+      setParamsMAJReqDelivrance({
+        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
-        requete: requeteSelect,
-        urlCourante: URL_RECHERCHE_REQUETE
+        requete,
+        urlCourante
       });
     } else {
       setParamsRMCAuto({
-        requete: requeteSelect,
-        urlCourante: URL_RECHERCHE_REQUETE
+        requete,
+        urlCourante
       });
     }
   };
-  const finOperationEnCours = () => {
-    setOperationEnCours(false);
+
+  const onClickReqInformation = (requete: IRequeteTableauInformation) => {
+    setOperationEnCours(true);
+    if (autorisePrendreEnChargeReqTableauInformation(requete)) {
+      setParamsMAJReqInfo({
+        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
+        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        requete,
+        urlCourante: URL_RECHERCHE_REQUETE,
+        callback: () => {
+          setParamsNavReqInfo({
+            requete,
+            callback: finOperationEnCours,
+            urlCourante
+          });
+        }
+      });
+    } else {
+      setParamsNavReqInfo({
+        requete,
+        callback: finOperationEnCours,
+        urlCourante
+      });
+    }
   };
 
   return (

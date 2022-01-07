@@ -9,7 +9,7 @@ import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { autorisePrendreEnChargeTableau } from "../../../common/util/RequetesUtils";
+import { autorisePrendreEnChargeReqTableauDelivrance } from "../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { getLibelle } from "../../../common/util/Utils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
@@ -103,7 +103,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   ) {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
-    if (autorisePrendreEnChargeTableau(requeteSelect)) {
+    if (autorisePrendreEnChargeReqTableauDelivrance(requeteSelect)) {
       setParamsMiseAJour({
         libelleAction: "Prendre en charge",
         statutRequete: StatutRequete.PRISE_EN_CHARGE,

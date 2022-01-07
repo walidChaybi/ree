@@ -4,17 +4,17 @@ import React from "react";
 import { Router } from "react-router-dom";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import {
-  buildPagesInfos, FilAriane,
-
-
-
+  buildPagesInfos,
+  FilAriane,
   fildarianeLabel,
-  gestionnaireNavigation, getPathElements, getUrlFromNPathElements
+  gestionnaireNavigation,
+  getPathElements,
+  getUrlFromNPathElements
 } from "../../../../views/common/widget/filAriane/FilAriane";
 import { routesRece } from "../../../../views/router/ReceRoutes";
 import {
-  URL_ACCUEIL, URL_MES_REQUETES,
-
+  URL_ACCUEIL,
+  URL_MES_REQUETES,
   URL_MES_REQUETES_APERCU_REQUETE_ID
 } from "../../../../views/router/ReceUrls";
 
@@ -79,7 +79,10 @@ test("renders de 2 éléments du FilAriane et mise à jour context", () => {
 test("renders d'un uudi en dernier élément du FilAriane et maj context", () => {
   const history = createMemoryHistory();
   history.push(
-    getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_ID, "f254f7ef-08ba-4fef-a45f-5f6ed326f36e")
+    getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQUETE_ID,
+      "f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
+    )
   );
   function setRetourContext(retourUrl: string) {
     expect(retourUrl).toBe(URL_MES_REQUETES);
@@ -107,10 +110,9 @@ test("Attendu: getUrlFromNPathElements fonctionne correctement", () => {
 });
 
 test("Attendu: getPathElements fonctionne correctement", () => {
-  expect(getPathElements("/rece/rece-ui/mesrequetes/apercurequete")).toEqual([
-    "mesrequetes",
-    "apercurequete"
-  ]);
+  expect(
+    getPathElements("/rece/rece-ui/mesrequetes/apercurequetedelivrance")
+  ).toEqual(["mesrequetes", "apercurequetedelivrance"]);
   expect(getPathElements("/rece/rece-ui/")).toEqual([]);
   expect(getPathElements("/rece/rece-ui")).toEqual([]);
   expect(getPathElements("/rece/rece-ui/accueil")).toEqual([]);
@@ -119,11 +121,11 @@ test("Attendu: getPathElements fonctionne correctement", () => {
 
 test("Attendu: buildPagesInfos fonctionne correctement", () => {
   gestionnaireNavigation.addUrl(
-    "/rece/rece-ui/mesrequetes/apercurequete/a8c57b94-b623-4e79-b3a4-08cdf0447623"
+    "/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623"
   );
   expect(
     buildPagesInfos(
-      "/rece/rece-ui/mesrequetes/apercurequete/a8c57b94-b623-4e79-b3a4-08cdf0447623",
+      "/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623",
       routesRece,
       gestionnaireNavigation
     )
@@ -134,7 +136,7 @@ test("Attendu: buildPagesInfos fonctionne correctement", () => {
       derniere: false
     },
     {
-      url: `${URL_MES_REQUETES}/apercurequete/a8c57b94-b623-4e79-b3a4-08cdf0447623`,
+      url: `${URL_MES_REQUETES}/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623`,
       libelle: "Aperçu de requête",
       derniere: true
     }

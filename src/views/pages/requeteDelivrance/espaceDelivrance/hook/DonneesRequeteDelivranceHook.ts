@@ -6,7 +6,7 @@ import {
 } from "../../../../../api/appels/requeteApi";
 import {
   IRequeteTableauDelivrance,
-  mappingRequetesTableau
+  mappingRequetesTableauDelivrance
 } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import {
   getParamsTableau,
@@ -31,7 +31,10 @@ export function useRequeteDelivranceApi(
           listeStatuts,
           queryParameters
         );
-        const mesRequetes = mappingRequetesTableau(result?.body?.data, false);
+        const mesRequetes = mappingRequetesTableauDelivrance(
+          result?.body?.data,
+          false
+        );
         setDataState(mesRequetes);
         setParamsTableau(getParamsTableau(result));
         setEnChargement(false);

@@ -91,7 +91,7 @@ test("Clic sur une Requête du tableau sans un idUtilisateur", async () => {
 
   await waitFor(() => {
     expect(history.location.pathname).toEqual(
-      "/rece/rece-ui/rechercherequete/apercurequete/4578e56c-421c-4e6a-b587-a238a665daf8"
+      "/rece/rece-ui/rechercherequete/apercurequeteinformation/4578e56c-421c-4e6a-b587-a238a665daf8"
     );
   });
 });

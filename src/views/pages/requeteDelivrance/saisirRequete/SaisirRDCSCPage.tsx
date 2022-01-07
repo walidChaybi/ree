@@ -10,7 +10,7 @@ import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance
 import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
-} from "../../../common/hook/navigationApercuRequeteRmcAuto/NavigationApercuRMCAutoHook";
+} from "../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import messageManager from "../../../common/util/messageManager";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";
 import { getLibelle } from "../../../common/util/Utils";
