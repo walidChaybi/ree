@@ -2,6 +2,7 @@ import {
   IElementsJasperCourrier,
   OptionsJasper
 } from "../../views/common/hook/generation/generationCourrierHook/specificationCourrier";
+import { ChoixDelivrance } from "../requete/enum/ChoixDelivrance";
 import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
 import {
   CommunComposition,
@@ -39,7 +40,14 @@ export const CourrierComposition = {
     elementsJasper: IElementsJasperCourrier
   ) {
     const courrier = {} as ICourrierComposition;
-    ParametresComposition.ajoutParametres(courrier);
+    if (
+      requete.choixDelivrance &&
+      ChoixDelivrance.estReponseSansDelivrance(requete.choixDelivrance)
+    ) {
+      ParametresComposition.ajoutParametres(courrier, true);
+    } else {
+      ParametresComposition.ajoutParametres(courrier);
+    }
 
     CommunComposition.ajoutParamCommuns(courrier, requete.numero);
 

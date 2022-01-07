@@ -4,10 +4,18 @@ import {
   BLOC_MARQUES_MINISTERE,
   DIRECTION_LIGNE_2,
   DIRECTION_LIGNE_3,
-  LIBELLE_FONCTION_AGENT_2,
+
+
+
+
+
+
+
+
+  LIBELLE_FONCTION_AGENT_1, LIBELLE_FONCTION_AGENT_2,
   NOM_DIRECTION,
   SCEAU_MINISTERE,
-  SERVICE_DELIVREUR_NOM,
+
   SERVICE_DELIVREUR_RUE,
   SERVICE_DELIVREUR_SERVICE_TELEPHONE,
   SERVICE_DELIVREUR_SERVICE_VILLE,
@@ -36,7 +44,7 @@ export interface IParametresComposition {
 }
 
 export const ParametresComposition = {
-  ajoutParametres(obj: IParametresComposition) {
+  ajoutParametres(obj: IParametresComposition, oec = false) {
     obj = obj || {};
 
     obj.image_bloc_marques = ParametreBaseRequete.getEnumFor(
@@ -50,9 +58,6 @@ export const ParametresComposition = {
     obj.adresse_internet = ParametreBaseRequete.getEnumFor(
       ADRESSE_INTERNET_MINISTERE
     )?.libelle;
-    obj.service_delivreur = ParametreBaseRequete.getEnumFor(
-      SERVICE_DELIVREUR_NOM
-    )?.libelle;
     obj.adr_service_delivreur = {
       ligne4: ParametreBaseRequete.getEnumFor(SERVICE_DELIVREUR_RUE)?.libelle,
       ligne6: ParametreBaseRequete.getEnumFor(SERVICE_DELIVREUR_VILLE)?.libelle
@@ -64,7 +69,9 @@ export const ParametresComposition = {
       SERVICE_DELIVREUR_SERVICE_VILLE
     )?.libelle;
     obj.date_delivrance = dateCourrier();
-    obj.cachet_signature = ParametreBaseRequete.getEnumFor(
+    obj.cachet_signature = oec ? ParametreBaseRequete.getEnumFor(
+      LIBELLE_FONCTION_AGENT_1
+    )?.libelle : ParametreBaseRequete.getEnumFor(
       LIBELLE_FONCTION_AGENT_2
     )?.libelle;
     obj.sceau_ministere = ParametreBaseRequete.getEnumFor(

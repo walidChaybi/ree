@@ -14,7 +14,6 @@ const baseReponseSansDelivranceCS = {
     ligne3: "et de l’administration consulaire"
   },
   adresse_internet: "courrier.scec@diplomatie.gouv.fr",
-  service_delivreur: "Service central d'état civil",
   adr_service_delivreur: {
     ligne4: "11, rue de la Maison Blanche",
     ligne6: "44941 Nantes CEDEX 9"
@@ -47,7 +46,6 @@ const baseReponseSansDelivranceCSInstitutionnel = {
     ligne3: "et de l’administration consulaire"
   },
   adresse_internet: "courrier.scec@diplomatie.gouv.fr",
-  service_delivreur: "Service central d'état civil",
   adr_service_delivreur: {
     ligne4: "11, rue de la Maison Blanche",
     ligne6: "44941 Nantes CEDEX 9"
@@ -132,7 +130,6 @@ export const certificatSituation: ICertificatSituationComposition = {
   },
   pays_naissance: "paysNaissance",
   prenoms: "Pre1, Pre2",
-  service_delivreur: "Service central d'état civil",
   sexe: "masculin",
   tel_service_delivreur: "01.41.86.42.47",
   titre: "titre",
@@ -179,7 +176,6 @@ export const certificatRCA: ICertificatRCAComposition = {
   },
   pays_naissance: "paysNaissance",
   prenoms: "Pre1, Pre2",
-  service_delivreur: "Service central d'état civil",
   sexe: "masculin",
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
