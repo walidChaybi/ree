@@ -90,7 +90,9 @@ export function getResume(data: IFicheRcRca) {
     data.typeInscription === TypeInscriptionRc.INSCRIPTION &&
     data.nature.type === "Protection des majeurs"
   ) {
-    resume = `sous le régime de ${data.nature.libelle}`;
+    resume = `sous le régime ${formatDe(data.nature.libelle)}${
+      data.nature.libelle
+    }`;
   }
   return resume;
 }
