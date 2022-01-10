@@ -1,6 +1,7 @@
 import { MimeType } from "file-type/core";
 import { Orientation } from "../composition/enum/Orientation";
 import { DocumentDelivrance } from "./enum/DocumentDelivrance";
+import { Validation } from "./enum/Validation";
 import { IOptionCourrierDocumentReponse } from "./IOptionCourrierDocumentReponse";
 import { ITexteLibreCourrier } from "./ITexteLibreCourrier";
 
@@ -25,6 +26,8 @@ export interface IDocumentReponse {
   documentASignerElec?: {
     dateSignatureElectronique?: number;
   };
+  validation?: Validation;
+  uuidActe?: string;
 }
 
 export const DocumentReponse = {

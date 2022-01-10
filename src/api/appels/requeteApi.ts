@@ -262,7 +262,7 @@ export async function postSauvDocumentCreerActionMajStatutRequete(
   idRequete: string,
   libelleAction: string,
   statutRequete: StatutRequete,
-  requete: Object
+  document: Object
 ) {
   return api.fetch({
     method: HttpMethod.PATCH,
@@ -271,7 +271,7 @@ export async function postSauvDocumentCreerActionMajStatutRequete(
       libelleAction,
       statutRequete: StatutRequete.getKey(statutRequete)
     },
-    data: requete
+    data: document
   });
 }
 

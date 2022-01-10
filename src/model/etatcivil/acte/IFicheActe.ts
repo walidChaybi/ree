@@ -1,12 +1,14 @@
 import {
   compactObject,
-  getValeurOuVide
+  getValeurOuVide,
 } from "../../../views/common/util/Utils";
 import { IPersonne } from "../commun/IPersonne";
 import { NatureActe } from "../enum/NatureActe";
 import { TypeActe } from "../enum/TypeActe";
 import { TypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
+import { TypeExtrait } from "./../enum/TypeExtrait";
 import { IAnalyseMarginale } from "./IAnalyseMarginale";
+import { ICorpsExtraitRectification } from "./ICorpsExtraitRectification";
 import { IDetailMariage } from "./IDetailMariage";
 import { IEvenement } from "./IEvenement";
 import { ICorpsImage } from "./imageActe/ICorpsImage";
@@ -31,6 +33,7 @@ export interface IFicheActe {
   corpsText?: string;
   corpsImage?: ICorpsImage;
   type: TypeActe;
+  corpsExtraitRectifications: ICorpsExtraitRectification[];
 }
 
 export const FicheActe = {
@@ -46,7 +49,7 @@ export const FicheActe = {
       support1: getValeurOuVide(acte?.registre?.support1).toLocaleUpperCase(),
       support2: getValeurOuVide(acte?.registre?.support2).toLocaleUpperCase(),
       numeroActe: getValeurOuVide(acte?.numero),
-      numeroBisTer: getValeurOuVide(acte?.numeroBisTer)
+      numeroBisTer: getValeurOuVide(acte?.numeroBisTer),
     };
     return Object.values(compactObject(registre)).join(".");
   },
@@ -60,5 +63,16 @@ export const FicheActe = {
   },
   estActeTexte(acte: IFicheActe) {
     return acte.type === TypeActe.TEXTE || !acte.corpsImage;
-  }
+  },
+  getCorpsExtraitRectificationTexte(
+    acte: IFicheActe,
+    typeExtrait: TypeExtrait
+  ): string | undefined {
+    const corpsExtraitRectification = acte.corpsExtraitRectifications.find(
+      (cer) => (cer.type = typeExtrait)
+    );
+    return corpsExtraitRectification
+      ? corpsExtraitRectification.texte
+      : undefined;
+  },
 };

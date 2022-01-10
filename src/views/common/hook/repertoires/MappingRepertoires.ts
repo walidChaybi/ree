@@ -1,3 +1,4 @@
+import { ICorpsExtraitRectification } from "../../../../model/etatcivil/acte/ICorpsExtraitRectification";
 import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
 import { IRegistre } from "../../../../model/etatcivil/acte/IRegistre";
 import { ITypeRegistre } from "../../../../model/etatcivil/acte/ITypeRegistre";
@@ -14,6 +15,7 @@ import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
 import { TypeActe } from "../../../../model/etatcivil/enum/TypeActe";
+import { TypeExtrait } from "../../../../model/etatcivil/enum/TypeExtrait";
 import { TypeVisibiliteArchiviste } from "../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
 import { IPartenaire } from "../../../../model/etatcivil/pacs/IPartenaire";
@@ -24,6 +26,7 @@ import {
 } from "../../../../model/etatcivil/rcrca/IInteresse";
 import { getDateFromTimestamp, IDateCompose } from "../../util/DateUtils";
 import { formatNom, formatPrenom } from "../../util/Utils";
+import { IDetailMariage } from "./../../../../model/etatcivil/acte/IDetailMariage";
 
 export type TFiche = IFicheRcRca | IFichePacs | IFicheActe;
 
@@ -106,17 +109,40 @@ export function mapActe(data: any): IFicheActe {
     data.visibiliteArchiviste
   );
 
-  if (data.detailMariage) {
-    dataActe.detailMariage = { ...data.detailMariage };
-    //@ts-ignore (dataActe.detailMariage ne peut pas être nul du fait du test ci-dessus)
-    dataActe.detailMariage.existenceContrat = ExistenceContratMariage.getEnumFor(
-      data.detailMariage.existenceContrat
-    );
-  }
+  dataActe.detailMariage = mapDetailMariage(data.detailMariage);
 
   dataActe.type = TypeActe.getEnumFor(data.type);
 
+  dataActe.corpsExtraitRectifications = mapCorpsRectifications(
+    data.corpsExtraitRectifications
+  );
+
   return dataActe;
+}
+
+function mapDetailMariage(dm: any): IDetailMariage | undefined {
+  let detailMariage: IDetailMariage | undefined;
+  if (dm) {
+    detailMariage = { ...dm };
+    //@ts-ignore (dataActe.detailMariage ne peut pas être nul du fait du test ci-dessus)
+    detailMariage.existenceContrat = ExistenceContratMariage.getEnumFor(
+      dm.existenceContrat
+    );
+  }
+  return detailMariage;
+}
+
+function mapCorpsRectifications(cers: any[]): ICorpsExtraitRectification[] {
+  let corpsExtraitRectifications: ICorpsExtraitRectification[] = [];
+  if (cers) {
+    corpsExtraitRectifications = cers.map((cer: any) => {
+      const cerMape = { ...cer };
+      cerMape.type = TypeExtrait.getEnumFor(cer.type);
+      return cerMape;
+    });
+  }
+
+  return corpsExtraitRectifications;
 }
 
 function mapPersonnes(personnes: any, numero: any): IPersonne[] {

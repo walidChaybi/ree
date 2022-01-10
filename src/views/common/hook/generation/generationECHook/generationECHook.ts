@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Orientation } from "../../../../../model/composition/enum/Orientation";
 import { IExtraitCopieComposition } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
+import { Validation } from "../../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { MimeType } from "../../../../../ressources/MimeType";
@@ -88,7 +89,9 @@ export function useGenerationEC(
           typeDocument: getTypeDocument(params.choixDelivrance), // UUID du type de document demandé (nomenclature)
           nbPages: extraitCopieApiHookResultat.donneesComposition.nbPages,
           mimeType: MimeType.APPLI_PDF,
-          orientation: Orientation.PORTRAIT
+          orientation: Orientation.PORTRAIT,
+          validation: Validation.N,
+          uuidActe: acteApiHookResultat?.acte?.id
         } as IDocumentReponse,
 
         libelleAction: statutRequete.libelle,
