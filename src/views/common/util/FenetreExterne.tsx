@@ -109,8 +109,34 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
       titre
     } = this.props;
 
-    const windowFetures = `width=${width},height=${height},left=${left},top=${top}`;
-    this.fenetreExterne = window.open("", "", windowFetures);
+    const bodyPadding =
+      document.getElementsByClassName("AppBody").length > 0
+        ? parseInt(
+            window
+              .getComputedStyle(
+                document.getElementsByClassName("AppBody")[0],
+                null
+              )
+              .getPropertyValue("padding-left"),
+            10
+          )
+        : 0;
+
+    const resumeRequeteWidth =
+      document.getElementsByClassName("ResumeRequete").length > 0
+        ? parseInt(
+            window.getComputedStyle(
+              document.getElementsByClassName("ResumeRequete")[0],
+              null
+            ).width,
+            10
+          )
+        : 0;
+
+    const windowFeatures = `width=${width},height=${height},left=${
+      left + bodyPadding + resumeRequeteWidth
+    },top=${top}`;
+    this.fenetreExterne = window.open("", "", windowFeatures);
 
     if (this.fenetreExterne && this.props.setFenetreExterneUtil) {
       this.props.setFenetreExterneUtil({ ref: this.fenetreExterne });
