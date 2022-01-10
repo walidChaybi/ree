@@ -4,18 +4,10 @@ import {
   BLOC_MARQUES_MINISTERE,
   DIRECTION_LIGNE_2,
   DIRECTION_LIGNE_3,
-
-
-
-
-
-
-
-
-  LIBELLE_FONCTION_AGENT_1, LIBELLE_FONCTION_AGENT_2,
+  LIBELLE_FONCTION_AGENT_1,
+  LIBELLE_FONCTION_AGENT_2,
   NOM_DIRECTION,
   SCEAU_MINISTERE,
-
   SERVICE_DELIVREUR_RUE,
   SERVICE_DELIVREUR_SERVICE_TELEPHONE,
   SERVICE_DELIVREUR_SERVICE_VILLE,
@@ -31,7 +23,6 @@ export interface IParametresComposition {
     ligne3: string; //"et de l’administration consulaire";
   };
   adresse_internet: string; //"www.diplomatie.gouv.fr/fr/";
-  service_delivreur: string; //"Service central de l'état civil";
   adr_service_delivreur: {
     ligne4: string; //"11, rue de la Maison Blanche";
     ligne6: string; //"44941 NANTES CEDEX 9";
@@ -69,11 +60,9 @@ export const ParametresComposition = {
       SERVICE_DELIVREUR_SERVICE_VILLE
     )?.libelle;
     obj.date_delivrance = dateCourrier();
-    obj.cachet_signature = oec ? ParametreBaseRequete.getEnumFor(
-      LIBELLE_FONCTION_AGENT_1
-    )?.libelle : ParametreBaseRequete.getEnumFor(
-      LIBELLE_FONCTION_AGENT_2
-    )?.libelle;
+    obj.cachet_signature = oec
+      ? ParametreBaseRequete.getEnumFor(LIBELLE_FONCTION_AGENT_1)?.libelle
+      : ParametreBaseRequete.getEnumFor(LIBELLE_FONCTION_AGENT_2)?.libelle;
     obj.sceau_ministere = ParametreBaseRequete.getEnumFor(
       SCEAU_MINISTERE
     )?.libelle;
