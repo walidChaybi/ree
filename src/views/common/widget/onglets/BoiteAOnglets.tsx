@@ -8,14 +8,24 @@ import { getLibelle } from "../../util/Utils";
 import { LinkTab } from "./LinkTab";
 import { TabPanel } from "./TabPanel";
 
-const TabPanelMesRequetesWithHabilitation = WithHabilitation(
+const TabPanelRequetesDelivranceServiceWithHabilitation = WithHabilitation(
   TabPanel,
-  "TabPanelMesRequetes"
+  "TabPanelRequetesDelivranceService"
 );
 
-const LinkTabMesRequeteWithHabilitation = WithHabilitation(
+const LinkTabRequetesDelivranceServiceWithHabilitation = WithHabilitation(
   LinkTab,
-  "LinkTabMesRequetes"
+  "LinkTabRequetesDelivranceService"
+);
+
+const TabPanelRequetesInfoServiceWithHabilitation = WithHabilitation(
+  TabPanel,
+  "TabPanelRequetesInfoService"
+);
+
+const LinkTabRequetesInfoServiceWithHabilitation = WithHabilitation(
+  LinkTab,
+  "LinkTabRequetesInfoService"
 );
 
 export interface IBoiteAOngletsProps {
@@ -58,12 +68,22 @@ export const BoiteAOnglet: React.FC<IBoiteAOngletsProps> = props => {
         >
           {props.onglets.map((onglet, index) => {
             switch (onglet.enTete.nomHabilitation) {
-              case "LinkTabMesRequetes":
+              case "LinkTabRequetesDelivranceService":
                 // On est obligé de créer le composant LinkPanel_XXX_WithHabilitation à l'avance
                 // car s'il est créé dynamiquement le composant parent (RequetesServicePage)
                 // est démonté et remonté intempestivement plusieurs fois
                 return (
-                  <LinkTabMesRequeteWithHabilitation
+                  <LinkTabRequetesDelivranceServiceWithHabilitation
+                    key={index}
+                    label={getLibelle(onglet.enTete.titre)}
+                    href={onglet.enTete.url}
+                    {...a11yProps(index)}
+                  />
+                );
+
+              case "LinkTabRequetesInfoService":
+                return (
+                  <LinkTabRequetesInfoServiceWithHabilitation
                     key={index}
                     label={getLibelle(onglet.enTete.titre)}
                     href={onglet.enTete.url}
@@ -88,18 +108,28 @@ export const BoiteAOnglet: React.FC<IBoiteAOngletsProps> = props => {
 
       {props.onglets.map((onglet, index) => {
         switch (onglet.corps.nomHabilitation) {
-          case "TabPanelMesRequetes":
+          case "TabPanelRequetesDelivranceService":
             // On est obligé de créer le composant TabPanel_XXX_WithHabilitation à l'avance
             // car s'il est créé dynamiquement le composant parent (RequetesServicePage)
             // est démonté et remonté intempestivement plusieurs fois
             return (
-              <TabPanelMesRequetesWithHabilitation
+              <TabPanelRequetesDelivranceServiceWithHabilitation
                 value={selectedTabState}
                 index={index}
                 key={index}
               >
                 {onglet.corps.composant}
-              </TabPanelMesRequetesWithHabilitation>
+              </TabPanelRequetesDelivranceServiceWithHabilitation>
+            );
+          case "TabPanelRequetesInfoService":
+            return (
+              <TabPanelRequetesInfoServiceWithHabilitation
+                value={selectedTabState}
+                index={index}
+                key={index}
+              >
+                {onglet.corps.composant}
+              </TabPanelRequetesInfoServiceWithHabilitation>
             );
           default:
             return (

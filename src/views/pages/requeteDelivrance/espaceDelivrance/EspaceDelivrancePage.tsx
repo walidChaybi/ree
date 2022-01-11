@@ -59,13 +59,13 @@ const getOnglets = (
       enTete: {
         titre: "Les requêtes de délivrance de mon service",
         url: URL_REQUETES_DELIVRANCE_SERVICE,
-        nomHabilitation: "LinkTabMesRequetes" as NomComposant
+        nomHabilitation: "LinkTabRequetesDelivranceService" as NomComposant
       },
       corps: {
         composant: (
           <RequetesServicePage setParamsRMCAuto={recuperationParamsRMCAuto} />
         ),
-        nomHabilitation: "TabPanelMesRequetes" as NomComposant
+        nomHabilitation: "TabPanelRequetesDelivranceService" as NomComposant
       }
     }
   ];

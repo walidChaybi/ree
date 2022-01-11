@@ -43,11 +43,11 @@ const getOnglets = (): IOngletProps[] => {
       enTete: {
         titre: "Les requêtes d'information de mon service",
         url: URL_REQUETES_INFORMATION_SERVICE,
-        nomHabilitation: "LinkTabMesRequetesInfo" as NomComposant
+        nomHabilitation: "LinkTabRequetesInfoService" as NomComposant
       },
       corps: {
         composant: <ReqInfoServicePage parametresReqInfo={parametresReqInfo} />,
-        nomHabilitation: "TabPanelMesRequetesInfo" as NomComposant
+        nomHabilitation: "TabPanelRequetesInfoService" as NomComposant
       }
     }
   ];

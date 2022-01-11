@@ -19,8 +19,8 @@ export interface IHabiliationDescription {
 export type NomFonction = "";
 
 export type NomComposant =
-  | "LinkTabMesRequetes"
-  | "LinkTabMesRequetesInfo"
+  | "LinkTabRequetesDelivranceService"
+  | "LinkTabRequetesInfoService"
   | "BoutonAccueilEspaceMiseAjour"
   | "BoutonAccueilEspaceCreation"
   | "BoutonAccueilCommunication"
@@ -31,8 +31,8 @@ export type NomComposant =
   | "BoutonAccueilRechercheActe"
   | "BoutonAccueilTableau"
   | "MenuSaisirRequete"
-  | "TabPanelMesRequetes"
-  | "TabPanelMesRequetesInfo"
+  | "TabPanelRequetesDelivranceService"
+  | "TabPanelRequetesInfoService"
   | "BoutonPrendreEnChargeAleatoirement"
   | "BoutonPrendreEnChargeAleatoirementRequeteInformation";
 
@@ -66,12 +66,12 @@ export const droitsSaufConsulterArchives = [
 
 export const habilitationsDescription: IHabiliationDescription[] = [
   {
-    nomComposant: "LinkTabMesRequetes",
+    nomComposant: "LinkTabRequetesDelivranceService",
     unDesDroits: [Droit.ATTRIBUER],
     comportementSiNonAutorise: { disabled: true }
   },
   {
-    nomComposant: "LinkTabMesRequetesInfo",
+    nomComposant: "LinkTabRequetesInfoService",
     unDesDroits: [Droit.ATTRIBUER],
     comportementSiNonAutorise: { disabled: true }
   },
@@ -136,11 +136,11 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     comportementSiNonAutorise: { disabled: true }
   },
   {
-    nomComposant: "TabPanelMesRequetes",
+    nomComposant: "TabPanelRequetesDelivranceService",
     visiblePourLesDroits: [Droit.ATTRIBUER]
   },
   {
-    nomComposant: "TabPanelMesRequetesInfo",
+    nomComposant: "TabPanelRequetesInfoService",
     visiblePourLesDroits: [Droit.ATTRIBUER]
   },
   {
