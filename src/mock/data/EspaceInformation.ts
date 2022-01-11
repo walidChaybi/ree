@@ -64,7 +64,8 @@ export const ReponseRequetesInfoService = [
     nomCompletRequerant: "Tribunal de Nantes",
     numero: "EVIPG5",
     objet: "Objet de la requête",
-    qualiteRequerant: "INSTITUTIONNEL",
+    qualiteRequerant: "MANDATAIRE_HABILITE",
+    typeMandataire: "AVOCAT",
     sousType: "INFORMATION",
     statut: "PRISE_EN_CHARGE",
     titulaires: [

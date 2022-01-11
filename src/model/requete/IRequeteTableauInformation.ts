@@ -7,6 +7,7 @@ import { ObjetRequete } from "./enum/ObjetRequete";
 import { Qualite } from "./enum/Qualite";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { StatutRequete } from "./enum/StatutRequete";
+import { TypeMandataireReq } from "./enum/TypeMandataireReq";
 import { IRequeteTableau } from "./IRequeteTableau";
 import {
   ITitulaireRequeteTableau,
@@ -44,13 +45,23 @@ export function mappingUneRequeteTableauInformation(
     dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
     nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),
-    typeRequerant: Qualite.getEnumFor(
-      getValeurOuVide(requete?.qualiteRequerant)
-    ).libelle,
+    typeRequerant: getTypeRequerant(
+      requete?.qualiteRequerant,
+      requete?.typeMandataire
+    ),
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     nomsTitulaires: getNomsTitulaires(requete?.titulaires),
     idUtilisateur: valeurOuUndefined(requete?.idUtilisateur)
   } as IRequeteTableauInformation;
+}
+
+function getTypeRequerant(qualiteRequerant: string, typeMandataire: string) {
+  if (typeMandataire != null) {
+    return TypeMandataireReq.getEnumFor(getValeurOuVide(typeMandataire))
+      .libelle;
+  } else {
+    return Qualite.getEnumFor(getValeurOuVide(qualiteRequerant)).libelle;
+  }
 }
 
 function getNomsTitulaires(titulaires: ITitulaireRequeteTableau[]) {
