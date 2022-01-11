@@ -14,7 +14,7 @@ import { TRequete } from "../../../../model/requete/IRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import {
   receUrl,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+  URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_INFORMATION
 } from "../../../router/ReceUrls";
 import {
@@ -24,7 +24,6 @@ import {
 import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
 import { FeatureFlag } from "../../util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeatureFlag";
-import { getUrlWithParam } from "../../util/route/routeUtil";
 import { storeRece } from "../../util/storeRece";
 import { Option, Options } from "../../util/Type";
 import { getLibelle } from "../../util/Utils";
@@ -159,12 +158,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   useEffect(() => {
     if (idAction) {
       if (props.requete.type === TypeRequete.DELIVRANCE) {
-        history.push(
-          getUrlWithParam(
-            URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-            props.requete.id
-          )
-        );
+        receUrl.replaceUrl(history, URL_MES_REQUETES_DELIVRANCE);
       } else {
         receUrl.replaceUrl(history, URL_MES_REQUETES_INFORMATION);
       }

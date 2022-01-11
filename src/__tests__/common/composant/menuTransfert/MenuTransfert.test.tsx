@@ -23,7 +23,7 @@ import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+  URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_INFORMATION
 } from "../../../../views/router/ReceUrls";
@@ -277,12 +277,7 @@ test("check autocomplete agent", async () => {
     fireEvent.click(valider);
   });
 
-  expect(history.location.pathname).toBe(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-      idRequeteRDCSC
-    )
-  );
+  expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
 });
 
 const HookConsummerMenuFermer: React.FC = () => {
