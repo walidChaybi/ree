@@ -29,11 +29,11 @@ import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/re
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
 import { MenuReponseSansDelivranceCS } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivranceCS";
 import {
-    createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
-    createReponseSansDelivranceCSPourCompositionApiFrancais,
-    createReponseSansDelivranceCSPourCompositionApiMariage
+  createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
+  createReponseSansDelivranceCSPourCompositionApiFrancais,
+  createReponseSansDelivranceCSPourCompositionApiMariage
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ReponseSansDelivranceCSFonctions";
-import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
@@ -45,7 +45,7 @@ const superagentMock = require("superagent-mock")(request, [
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
-    URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
     idRequeteRDCSC
   )
 );

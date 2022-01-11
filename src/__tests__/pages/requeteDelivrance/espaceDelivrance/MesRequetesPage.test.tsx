@@ -11,11 +11,11 @@ import { Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { MesRequetesPage } from "../../../../views/pages/requeteDelivrance/espaceDelivrance/MesRequetesPage";
-import { URL_MES_REQUETES } from "../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const history = createMemoryHistory();
-history.push(URL_MES_REQUETES);
+history.push(URL_MES_REQUETES_DELIVRANCE);
 const miseAJourCompteur = jest.fn();
 const setParamsRMCAuto = jest.fn();
 

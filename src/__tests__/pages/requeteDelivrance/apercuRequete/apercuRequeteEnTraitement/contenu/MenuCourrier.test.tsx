@@ -10,12 +10,12 @@ import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
 import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
 import { MenuCourrier } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/MenuCourrier";
-import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../../views/router/ReceUrls";
 
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
-    URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
     "a4cefb71-8457-4f6b-937e-34b49335d494"
   )
 );
@@ -33,7 +33,7 @@ test("renders informations sur l'état de la requete", async () => {
       <Router history={history}>
         <Route
           exact={true}
-          path={URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID}
+          path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
         >
           <MenuCourrier requete={requeteDelivrance} />
         </Route>

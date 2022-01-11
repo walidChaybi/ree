@@ -14,13 +14,13 @@ import {
 import { routesRece } from "../../../../views/router/ReceRoutes";
 import {
   URL_ACCUEIL,
-  URL_MES_REQUETES,
-  URL_MES_REQUETES_APERCU_REQUETE_ID
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
 } from "../../../../views/router/ReceUrls";
 
 test("renders composant FilAriane", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
   render(
     <Router history={history}>
       <FilAriane routes={routesRece} />
@@ -31,7 +31,7 @@ test("renders composant FilAriane", () => {
 
 test("renders de 2 éléments du FilAriane", async () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
   render(
     <Router history={history}>
       <FilAriane routes={routesRece} />
@@ -49,7 +49,7 @@ test("renders d'un uudi en dernier élément du FilAriane", () => {
   const history = createMemoryHistory();
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
       "/f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
     )
   );
@@ -65,7 +65,7 @@ test("renders d'un uudi en dernier élément du FilAriane", () => {
 
 test("renders de 2 éléments du FilAriane et mise à jour context", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
   function setRetourContext(retourUrl: string) {
     expect(retourUrl).toBe(URL_ACCUEIL);
   }
@@ -80,12 +80,12 @@ test("renders d'un uudi en dernier élément du FilAriane et maj context", () =>
   const history = createMemoryHistory();
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_ID,
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
       "f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
     )
   );
   function setRetourContext(retourUrl: string) {
-    expect(retourUrl).toBe(URL_MES_REQUETES);
+    expect(retourUrl).toBe(URL_MES_REQUETES_DELIVRANCE);
   }
   render(
     <Router history={history}>
@@ -131,12 +131,12 @@ test("Attendu: buildPagesInfos fonctionne correctement", () => {
     )
   ).toEqual([
     {
-      url: URL_MES_REQUETES,
-      libelle: "Mes requêtes",
+      url: URL_MES_REQUETES_DELIVRANCE,
+      libelle: "Mes requêtes de délivrance",
       derniere: false
     },
     {
-      url: `${URL_MES_REQUETES}/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623`,
+      url: `${URL_MES_REQUETES_DELIVRANCE}/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623`,
       libelle: "Aperçu de requête",
       derniere: true
     }

@@ -21,7 +21,7 @@ import {
 import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "../../../common/widget/tableau/TableauRece/TableauTypeColumn";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
-import { URL_REQUETES_SERVICE } from "../../../router/ReceUrls";
+import { URL_REQUETES_DELIVRANCE_SERVICE } from "../../../router/ReceUrls";
 import {
   dateStatutColumnHeaders,
   HeaderTableauRequete,
@@ -56,10 +56,9 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
 
-  const [
-    linkParameters,
-    setLinkParameters
-  ] = React.useState<IQueryParametersPourRequetes>({
+  const [linkParameters, setLinkParameters] = React.useState<
+    IQueryParametersPourRequetes
+  >({
     statuts: StatutsRequetesEspaceDelivrance,
     tri: "dateStatut",
     sens: "ASC",
@@ -70,7 +69,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
 
   const { dataState, paramsTableau } = useRequeteDelivranceApi(
     linkParameters,
-    TypeAppelRequete.REQUETE_SERVICE,
+    TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE,
     setEnChargement
   );
 
@@ -108,10 +107,14 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
         libelleAction: "Prendre en charge",
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         requete: requeteSelect,
-        urlCourante: URL_REQUETES_SERVICE
+        urlCourante: URL_REQUETES_DELIVRANCE_SERVICE
       });
     } else {
-      props.setParamsRMCAuto(idRequete, data[idx], URL_REQUETES_SERVICE);
+      props.setParamsRMCAuto(
+        idRequete,
+        data[idx],
+        URL_REQUETES_DELIVRANCE_SERVICE
+      );
     }
   }
 

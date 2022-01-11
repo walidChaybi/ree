@@ -8,7 +8,7 @@ import { configRequetes } from "../../mock/superagent-config/superagent-mock-req
 import { IOfficier } from "../../model/agent/IOfficier";
 import { Droit } from "../../model/Droit";
 import { storeRece } from "../../views/common/util/storeRece";
-import { URL_REQUETES_SERVICE } from "../../views/router/ReceUrls";
+import { URL_REQUETES_DELIVRANCE_SERVICE } from "../../views/router/ReceUrls";
 import { RouterComponent } from "../../views/router/RouteComponent";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const u: any = mockConnectedUser;
@@ -17,7 +17,8 @@ storeRece.utilisateurCourant = u as IOfficier;
 test("L'utilisateur est redirigé vers la page d'accueil car il n'a pa le droit attribuer", async () => {
   storeRece.utilisateurCourant!.habilitations[0].profil.droits = [];
   const history = createMemoryHistory();
-  history.push(URL_REQUETES_SERVICE);
+
+  history.push(URL_REQUETES_DELIVRANCE_SERVICE);
   act(() => {
     render(
       <Router history={history}>
@@ -36,7 +37,8 @@ test("L'utilisateur accède à la page 'Espace délivrance' car il a le droit at
     nom: Droit.ATTRIBUER
   };
   const history = createMemoryHistory();
-  history.push(URL_REQUETES_SERVICE);
+
+  history.push(URL_REQUETES_DELIVRANCE_SERVICE);
   act(() => {
     render(
       <Router history={history}>

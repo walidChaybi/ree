@@ -19,7 +19,7 @@ import {
   getUrlWithParam
 } from "../../../../views/common/util/route/routeUtil";
 import { SaisirRDCSCPage } from "../../../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
-import { URL_MES_REQUETES_SAISIR_RDCSC } from "../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
@@ -28,7 +28,7 @@ const superagentMock = require("superagent-mock")(request, [
 ]);
 
 const history = createMemoryHistory();
-history.push(URL_MES_REQUETES_SAISIR_RDCSC);
+history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
 
 beforeEach(async () => {
   DocumentDelivrance.init();
@@ -111,7 +111,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
     // Re-init pour les tests suivants
-    history.push(URL_MES_REQUETES_SAISIR_RDCSC);
+    history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
   });
 });
 
@@ -224,7 +224,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
     // Re-init pour les tests suivants
-    history.push(URL_MES_REQUETES_SAISIR_RDCSC);
+    history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
   });
 });
 
@@ -300,14 +300,14 @@ test("test du Sauvegarder du formulaire de saisie d'une Requête de Délivrance 
 test("Remplissage du formulaire avec requete", () => {
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_SAISIR_RDCSC,
+      URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
       "a4cefb71-8457-4f6b-937e-34b49335d405"
     )
   );
 
   render(
     <Router history={history}>
-      <Route exact={true} path={URL_MES_REQUETES_SAISIR_RDCSC}>
+      <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC}>
         <SaisirRDCSCPage />
       </Route>
     </Router>

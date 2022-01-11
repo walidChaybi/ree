@@ -16,7 +16,7 @@ import { gestionnaireFeatureFlag } from "../../../../../views/common/util/featur
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
 import { ApercuRequeteTraitementPage } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
-import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -39,7 +39,7 @@ afterAll(() => {
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
-    URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
     "a4cefb71-8457-4f6b-937e-34b49335d494"
   )
 );
@@ -55,7 +55,7 @@ test("renders ApercuRequeteTraitementPage", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
           >
             <ApercuRequeteTraitementPage />
           </Route>
@@ -100,7 +100,7 @@ test("renders document réponses", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
           >
             <ApercuRequeteTraitementPage />
           </Route>
@@ -130,7 +130,7 @@ test("test du bouton de modification du courrier", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
           >
             <ApercuRequeteTraitementPage />
           </Route>

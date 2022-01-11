@@ -15,7 +15,7 @@ import { TypePieceJustificative } from "../../../../../../../model/requete/enum/
 import { getUrlWithParam } from "../../../../../../../views/common/util/route/routeUtil";
 import { ResumeRequete } from "../../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
 import { mappingRequeteDelivrance } from "../../../../../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
-import { URL_MES_REQUETES_APERCU_REQUETE_ID } from "../../../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -35,7 +35,7 @@ test("renders Page requete with all elements", async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
         "a4cefb71-8457-4f6b-937e-34b49335d404"
       )
     );
@@ -43,7 +43,10 @@ test("renders Page requete with all elements", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQUETE_ID}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
+          >
             <ResumeRequete
               requete={
                 await mappingRequeteDelivrance(
@@ -88,7 +91,7 @@ test("renders Page requete with 1 titulaire", async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
         "a4cefb71-8457-4f6b-937e-34b49335d404"
       )
     );
@@ -96,7 +99,10 @@ test("renders Page requete with 1 titulaire", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQUETE_ID}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
+          >
             <ResumeRequete
               requete={
                 await mappingRequeteDelivrance(
@@ -138,7 +144,7 @@ test("renders Page requete without titulaire", async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
         "a4cefb71-8457-4f6b-937e-34b49335d404"
       )
     );
@@ -146,7 +152,10 @@ test("renders Page requete without titulaire", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQUETE_ID}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
+          >
             <ResumeRequete
               requete={
                 await mappingRequeteDelivrance(
@@ -188,7 +197,7 @@ test("renders Page requete type creation", async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
         "a4cefb71-8457-4f6b-937e-34b49335d404"
       )
     );
@@ -196,7 +205,10 @@ test("renders Page requete type creation", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQUETE_ID}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
+          >
             <ResumeRequete
               requete={
                 await mappingRequeteDelivrance(

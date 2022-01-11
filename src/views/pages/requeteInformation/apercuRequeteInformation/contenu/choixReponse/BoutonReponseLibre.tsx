@@ -15,7 +15,7 @@ export const BoutonReponseLibre: React.FC<BoutonReponseLibreProps> = props => {
 
   return (
     <div className="MenuReponse">
-      <button onClick={handleClick} disabled={props.disabled}>
+      <button disabled={props.disabled} onClick={handleClick}>
         {getLibelle("Réponse libre")}
       </button>
     </div>

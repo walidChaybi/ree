@@ -12,7 +12,6 @@ import { storeRece } from "../../../common/util/storeRece";
 export interface CreationActionMiseAjourStatutHookParams {
   statutRequete: StatutRequete;
   libelleAction: string;
-  urlCourante: string;
   requete?: IRequeteTableauInformation | IRequeteTableauDelivrance;
   pasDeTraitementAuto?: boolean;
   callback?: () => void;

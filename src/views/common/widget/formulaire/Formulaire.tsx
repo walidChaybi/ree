@@ -9,6 +9,7 @@ interface FomulaireProps {
   formValidationSchema: any;
   onSubmit: (values: any, errors?: any) => void;
   className?: string;
+  disabled?: boolean;
 }
 
 export const Formulaire: React.FC<FomulaireProps> = ({
@@ -17,7 +18,8 @@ export const Formulaire: React.FC<FomulaireProps> = ({
   formDefaultValues,
   formValidationSchema,
   onSubmit,
-  className
+  className,
+  disabled
 }) => {
   return (
     <div className={className ? `${className} Formulaire` : "Formulaire"}>
@@ -27,6 +29,7 @@ export const Formulaire: React.FC<FomulaireProps> = ({
           initialValues={formDefaultValues}
           validationSchema={formValidationSchema}
           enableReinitialize={true}
+          disabled={disabled}
         >
           <Form>{children}</Form>
         </Formik>

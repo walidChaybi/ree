@@ -11,8 +11,8 @@ import { getLibelle } from "../../../common/util/Utils";
 import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";
 import { OfficierContext } from "../../../core/contexts/OfficierContext";
 import {
-  URL_MES_REQUETES,
-  URL_REQUETES_SERVICE
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_REQUETES_DELIVRANCE_SERVICE
 } from "../../../router/ReceUrls";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
 import { CompteurRequete } from "./contenu/CompteurRequete";
@@ -44,7 +44,7 @@ const getOnglets = (
     {
       enTete: {
         titre: "Mes requêtes de délivrance",
-        url: URL_MES_REQUETES
+        url: URL_MES_REQUETES_DELIVRANCE
       },
       corps: {
         composant: (
@@ -57,8 +57,8 @@ const getOnglets = (
     },
     {
       enTete: {
-        titre: "Requêtes de mon service",
-        url: URL_REQUETES_SERVICE,
+        titre: "Les requêtes de délivrance de mon service",
+        url: URL_REQUETES_DELIVRANCE_SERVICE,
         nomHabilitation: "LinkTabMesRequetes" as NomComposant
       },
       corps: {

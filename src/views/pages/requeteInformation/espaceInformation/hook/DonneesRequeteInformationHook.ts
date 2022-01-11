@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import {
   getMesRequetesInformation,
-  IQueryParametersPourRequetes
+  IQueryParametersPourRequetes,
+  TypeAppelRequete
 } from "../../../../../api/appels/requeteApi";
 import {
   IRequeteTableauInformation,
@@ -15,6 +16,7 @@ import { logError } from "../../../../common/util/LogManager";
 
 export function useRequeteInformationApi(
   queryParameters: IQueryParametersPourRequetes,
+  typeRequete: TypeAppelRequete,
   setEnChargement: (enChargement: boolean) => void
 ) {
   const [dataState, setDataState] = useState<IRequeteTableauInformation[]>([]);
@@ -26,6 +28,7 @@ export function useRequeteInformationApi(
         const listeStatuts = queryParameters?.statuts?.join(",");
         const result = await getMesRequetesInformation(
           listeStatuts,
+          typeRequete,
           queryParameters
         );
         const mesRequetes = mappingRequetesTableauInformation(
@@ -44,7 +47,7 @@ export function useRequeteInformationApi(
       }
     }
     fetchMesRequetes();
-  }, [queryParameters, setEnChargement]);
+  }, [queryParameters, typeRequete, setEnChargement]);
 
   return {
     dataState,

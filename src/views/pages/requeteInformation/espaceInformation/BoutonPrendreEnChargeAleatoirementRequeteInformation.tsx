@@ -15,10 +15,7 @@ import messageManager from "../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { getLibelle } from "../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
-import {
-  receUrl,
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID
-} from "../../../router/ReceUrls";
+import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID } from "../../../router/ReceUrls";
 
 export const BoutonPrendreEnChargeAleatoirementRequeteInformation: React.FC = (
   props: any
@@ -44,7 +41,6 @@ export const BoutonPrendreEnChargeAleatoirementRequeteInformation: React.FC = (
           requete: requeteAleatoireResultat.requeteInformation,
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
-          urlCourante: receUrl.getUrlCourante(history),
           callback: redirectApercuRequeteInfo
         });
       } else if (!requeteAleatoireResultat.requeteInformation) {

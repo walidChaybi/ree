@@ -4,9 +4,9 @@ import { RetourContext } from "../../../core/body/Body";
 import {
   URL_ACCUEIL,
   URL_CONTEXT_APP,
-  URL_MES_REQUETES,
+  URL_MES_REQUETES_DELIVRANCE,
   URL_RECHERCHE_REQUETE,
-  URL_REQUETES_SERVICE
+  URL_REQUETES_DELIVRANCE_SERVICE
 } from "../../../router/ReceUrls";
 import { getUrlPrecedente } from "../../util/route/routeUtil";
 
@@ -19,8 +19,8 @@ export const BoutonRetour: React.FC = () => {
     case URL_ACCUEIL:
       libelle = "Accueil";
       break;
-    case URL_MES_REQUETES:
-    case URL_REQUETES_SERVICE:
+    case URL_MES_REQUETES_DELIVRANCE:
+    case URL_REQUETES_DELIVRANCE_SERVICE:
       libelle = "espace délivrance";
       break;
     case URL_RECHERCHE_REQUETE:

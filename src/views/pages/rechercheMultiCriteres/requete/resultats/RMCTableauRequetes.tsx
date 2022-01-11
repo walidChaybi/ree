@@ -133,7 +133,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         requete,
-        urlCourante: URL_RECHERCHE_REQUETE,
         callback: () => {
           setParamsNavReqInfo({
             requete,

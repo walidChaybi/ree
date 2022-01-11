@@ -8,7 +8,7 @@ import { configRequetes } from "../../../../../mock/superagent-config/superagent
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
 import { ApercuRequetePage } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
-import { URL_MES_REQUETES_APERCU_REQUETE_ID } from "../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const globalAny: any = global;
@@ -16,7 +16,7 @@ globalAny.URL.createObjectURL = jest.fn();
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
-    URL_MES_REQUETES_APERCU_REQUETE_ID,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
     "a4cefb71-8457-4f6b-937e-34b49335d404"
   )
 );
@@ -30,7 +30,10 @@ test("renders ApercuRequetePage", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQUETE_ID}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
+          >
             <ApercuRequetePage />
           </Route>
         </Router>

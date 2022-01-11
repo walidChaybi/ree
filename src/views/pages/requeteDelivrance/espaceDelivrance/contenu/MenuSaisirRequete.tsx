@@ -11,14 +11,14 @@ import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/ges
 import WithHabilitation from "../../../../common/util/habilitation/WithHabilitation";
 import { getLibelle } from "../../../../common/util/Utils";
 import {
-  URL_MES_REQUETES_SAISIR_RDAPC,
-  URL_MES_REQUETES_SAISIR_RDC,
-  URL_MES_REQUETES_SAISIR_RDCSC,
-  URL_MES_REQUETES_SAISIR_RDLFC,
-  URL_REQUETES_SERVICE_SAISIR_RDAPC,
-  URL_REQUETES_SERVICE_SAISIR_RDC,
-  URL_REQUETES_SERVICE_SAISIR_RDCSC,
-  URL_REQUETES_SERVICE_SAISIR_RDLFC
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC,
+  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC,
+  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
+  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
+  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
 } from "../../../../router/ReceUrls";
 import "./scss/MenuSaisirRequete.scss";
 
@@ -44,19 +44,19 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
     if (props.indexTabPanel === 1) {
       switch (nomRequete) {
         case "RDAPC":
-          history.push(URL_REQUETES_SERVICE_SAISIR_RDAPC);
+          history.push(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC);
           break;
 
         case "RDCSC":
-          history.push(URL_REQUETES_SERVICE_SAISIR_RDCSC);
+          history.push(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC);
           break;
 
         case "RDC":
-          history.push(URL_REQUETES_SERVICE_SAISIR_RDC);
+          history.push(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC);
           break;
 
         case "RDLFC":
-          history.push(URL_REQUETES_SERVICE_SAISIR_RDLFC);
+          history.push(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC);
           break;
 
         default:
@@ -65,19 +65,19 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
     } else {
       switch (nomRequete) {
         case "RDAPC":
-          history.push(URL_MES_REQUETES_SAISIR_RDAPC);
+          history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC);
           break;
 
         case "RDCSC":
-          history.push(URL_MES_REQUETES_SAISIR_RDCSC);
+          history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
           break;
 
         case "RDC":
-          history.push(URL_MES_REQUETES_SAISIR_RDC);
+          history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
           break;
 
         case "RDLFC":
-          history.push(URL_MES_REQUETES_SAISIR_RDLFC);
+          history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC);
           break;
 
         default:

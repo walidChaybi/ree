@@ -19,7 +19,7 @@ import {
 } from "../../../../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "../../../../../common/widget/popin/ConfirmationPopin";
-import { URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../router/ReceUrls";
 import BoutonsCourrier, {
   BoutonsCourrierProps
 } from "./contenuForm/BoutonsCourrier";
@@ -68,13 +68,10 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
   const [messagesBloquant, setMessagesBloquant] = useState<string>();
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
-  const [documentDelivranceChoisi, setDocumentDelivranceChoisi] = useState<
-    DocumentDelivrance
-  >();
-  const [
-    generationCourrierHookParams,
-    setGenerationCourrierHookParams
-  ] = useState<IGenerationCourrierParams>();
+  const [documentDelivranceChoisi, setDocumentDelivranceChoisi] =
+    useState<DocumentDelivrance>();
+  const [generationCourrierHookParams, setGenerationCourrierHookParams] =
+    useState<IGenerationCourrierParams>();
 
   // Schéma de validation en sortie de champs
   const ValidationSchemaCourrier = Yup.object({
@@ -185,7 +182,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
       );
       history.push(
         getUrlWithParam(
-          URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
+          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
           props.requete.id
         )
       );

@@ -20,7 +20,7 @@ import { TypeRequete } from "../../../../../../model/requete/enum/TypeRequete";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { storeRece } from "../../../../../../views/common/util/storeRece";
 import { BoutonPrendreEnCharge } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequete/contenu/BoutonPrendreEnCharge";
-import { URL_MES_REQUETES_APERCU_REQUETE_ID } from "../../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
@@ -63,7 +63,7 @@ const requeteTestCOURRIER = {
 test("est à A_TRAITER ou TRANSFEREE et provient de COURRIER", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_APERCU_REQUETE_ID);
+  history.push(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID);
 
   const { getByText } = render(
     <Router history={history}>
@@ -121,7 +121,7 @@ const requeteTestCOMEDEC = {
 test("est à A_TRAITER ou TRANSFEREE et provient de COMEDEC", async () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_APERCU_REQUETE_ID);
+  history.push(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID);
 
   const { getByText } = render(
     <Router history={history}>

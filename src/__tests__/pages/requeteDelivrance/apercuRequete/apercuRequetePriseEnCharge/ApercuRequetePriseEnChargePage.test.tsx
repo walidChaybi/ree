@@ -27,8 +27,8 @@ import { storeRece } from "../../../../../views/common/util/storeRece";
 import { ApercuRequetePriseEnChargePage } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { MOTIF_IGNORE } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
 import {
-  URL_MES_REQUETES,
-  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
@@ -47,7 +47,7 @@ globalAny.close = jest.fn();
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
-    URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
     "a4cefb71-8457-4f6b-937e-34b49335d884"
   ),
   {
@@ -70,7 +70,7 @@ test("renders ApercuRequetePriseEnChargePage", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
           >
             <ApercuRequetePriseEnChargePage />
           </Route>
@@ -154,7 +154,7 @@ test("redirection requete RDD", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
           >
             <ApercuRequetePriseEnChargePage />
           </Route>
@@ -191,7 +191,7 @@ test("redirection requete RDC", async () => {
   const history2 = createMemoryHistory();
   history2.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       "a4cefb71-8457-4f6b-937e-34b49335d666"
     ),
     {
@@ -207,7 +207,7 @@ test("redirection requete RDC", async () => {
         <Router history={history2}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
           >
             <ApercuRequetePriseEnChargePage />
           </Route>
@@ -244,7 +244,7 @@ test("ignorer requete", async () => {
   const history = createMemoryHistory();
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       "a4cefb71-8457-4f6b-937e-34b49335d666"
     ),
     {
@@ -260,7 +260,7 @@ test("ignorer requete", async () => {
         <Router history={history}>
           <Route
             exact={true}
-            path={URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID}
           >
             <ApercuRequetePriseEnChargePage />
           </Route>
@@ -311,7 +311,7 @@ test("ignorer requete", async () => {
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toBe(URL_MES_REQUETES);
+    expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
   });
 });
 

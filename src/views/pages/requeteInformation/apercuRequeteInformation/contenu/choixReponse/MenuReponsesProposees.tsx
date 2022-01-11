@@ -51,8 +51,8 @@ export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = props
       {props.listeReponse && (
         <div>
           <button
-            onClick={e => handleClickBoutonReponse(e)}
             disabled={props.disabled}
+            onClick={e => handleClickBoutonReponse(e)}
           >
             {getLibelle("Réponses proposées")}
           </button>

@@ -12,16 +12,16 @@ import { FeatureFlag } from "../../../../../views/common/util/featureFlag/Featur
 import { gestionnaireFeatureFlag } from "../../../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import MenuSaisirRequete from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/contenu/MenuSaisirRequete";
 import {
-  URL_MES_REQUETES,
-  URL_MES_REQUETES_SAISIR_RDAPC,
-  URL_MES_REQUETES_SAISIR_RDC,
-  URL_MES_REQUETES_SAISIR_RDCSC,
-  URL_MES_REQUETES_SAISIR_RDLFC,
-  URL_REQUETES_SERVICE,
-  URL_REQUETES_SERVICE_SAISIR_RDAPC,
-  URL_REQUETES_SERVICE_SAISIR_RDC,
-  URL_REQUETES_SERVICE_SAISIR_RDCSC,
-  URL_REQUETES_SERVICE_SAISIR_RDLFC
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC,
+  URL_REQUETES_DELIVRANCE_SERVICE,
+  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC,
+  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
+  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
+  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
 } from "../../../../../views/router/ReceUrls";
 import { localStorageFeatureFlagMock } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag.test";
 
@@ -32,7 +32,7 @@ const HookConsummerSaisirRequeteMesRequete: React.FC = () => {
     value: localStorageFeatureFlagMock
   });
 
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   return (
     <Router history={history}>
@@ -46,7 +46,7 @@ const HookConsummerSaisirRequeteMesRequeteDeService: React.FC = () => {
     value: localStorageFeatureFlagMock
   });
 
-  history.push(URL_REQUETES_SERVICE);
+  history.push(URL_REQUETES_DELIVRANCE_SERVICE);
 
   return (
     <Router history={history}>
@@ -81,7 +81,9 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance"
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(URL_MES_REQUETES_SAISIR_RDCSC);
+    expect(history.location.pathname).toEqual(
+      URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC
+    );
   });
 });
 
@@ -109,7 +111,9 @@ test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Délivrance"
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(URL_MES_REQUETES_SAISIR_RDAPC);
+    expect(history.location.pathname).toEqual(
+      URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC
+    );
   });
 });
 
@@ -135,7 +139,9 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Délivrance", 
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(URL_MES_REQUETES_SAISIR_RDC);
+    expect(history.location.pathname).toEqual(
+      URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC
+    );
   });
 });
 
@@ -163,7 +169,9 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Délivrance"
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(URL_MES_REQUETES_SAISIR_RDLFC);
+    expect(history.location.pathname).toEqual(
+      URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC
+    );
   });
 });
 
@@ -192,7 +200,7 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", as
 
   await waitFor(() => {
     expect(history.location.pathname).toEqual(
-      URL_REQUETES_SERVICE_SAISIR_RDCSC
+      URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC
     );
   });
 });
@@ -222,7 +230,7 @@ test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Service", as
 
   await waitFor(() => {
     expect(history.location.pathname).toEqual(
-      URL_REQUETES_SERVICE_SAISIR_RDAPC
+      URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC
     );
   });
 });
@@ -249,7 +257,9 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Service", asyn
   });
 
   await waitFor(() => {
-    expect(history.location.pathname).toEqual(URL_REQUETES_SERVICE_SAISIR_RDC);
+    expect(history.location.pathname).toEqual(
+      URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC
+    );
   });
 });
 
@@ -278,7 +288,7 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Service", as
 
   await waitFor(() => {
     expect(history.location.pathname).toEqual(
-      URL_REQUETES_SERVICE_SAISIR_RDLFC
+      URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
     );
   });
 });

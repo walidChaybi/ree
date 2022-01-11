@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -50,7 +50,9 @@ test("renders delivrancePage", async () => {
   const title = screen.getByText(/Espace délivrance/i);
   const mesRequetes = screen.getByText(/Mes requêtes de délivrance/i);
   const compteur = screen.getByText(/Total de requêtes à signer/i);
-  const requetesService = screen.getByText(/Requêtes de mon service/i);
+  const requetesService = screen.getByText(
+    /Les requêtes de délivrance de mon service/i
+  );
 
   await waitFor(() => {
     expect(title).toBeDefined();

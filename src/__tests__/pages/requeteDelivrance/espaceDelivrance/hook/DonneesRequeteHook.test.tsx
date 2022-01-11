@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
 import {
-    IQueryParametersPourRequetes,
-    TypeAppelRequete
+  IQueryParametersPourRequetes,
+  TypeAppelRequete
 } from "../../../../../api/appels/requeteApi";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
@@ -25,7 +25,7 @@ const HookConsummer: React.FC = () => {
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState = [] } = useRequeteDelivranceApi(
     queryParam,
-    TypeAppelRequete.MES_REQUETES,
+    TypeAppelRequete.MES_REQUETES_DELIVRANCE,
     setEnChargement
   );
   return (

@@ -13,7 +13,7 @@ import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequet
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { storeRece } from "../../../../../../views/common/util/storeRece";
 import { BoutonValiderTerminer } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonValiderTerminer";
-import { URL_MES_REQUETES_APERCU_REQUETE_ID } from "../../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -50,7 +50,7 @@ const requeteTestCOURRIER = {
 test("est à A_VALIDER et provient de COURRIER", async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_APERCU_REQUETE_ID);
+  history.push(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID);
 
   const { getByText } = render(
     <Router history={history}>

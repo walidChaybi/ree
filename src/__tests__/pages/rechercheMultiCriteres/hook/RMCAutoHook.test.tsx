@@ -9,14 +9,14 @@ import {
 } from "../../../../views/common/hook/navigationApercuRequeteDelivrance/RMCAutoHook";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import {
-  URL_MES_REQUETES,
-  URL_MES_REQUETES_APERCU_REQUETE_ID,
-  URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_REQUETES_SERVICE,
-  URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+  URL_REQUETES_DELIVRANCE_SERVICE,
+  URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
@@ -27,12 +27,12 @@ const paramsRequete: IRMCAutoParams = {
     document: "123456",
     titulaires: [{ nom: "George" }]
   } as IRequeteTableauDelivrance,
-  urlCourante: URL_MES_REQUETES
+  urlCourante: URL_MES_REQUETES_DELIVRANCE
 };
 
 const paramsRequeteService = {
   ...paramsRequete,
-  urlCourante: URL_REQUETES_SERVICE
+  urlCourante: URL_REQUETES_DELIVRANCE_SERVICE
 };
 
 const paramsRechercheRequete = {
@@ -43,7 +43,7 @@ const paramsRechercheRequete = {
 const paramsApercuRequete = {
   ...paramsRequete,
   urlCourante: getUrlWithParam(
-    URL_MES_REQUETES_APERCU_REQUETE_ID,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
     "34da88e2-c5c7-4324-ac8e-b35193352e64"
   )
 };
@@ -55,7 +55,7 @@ const paramsApercuRequeteTraitement: IRMCAutoParams = {
     statut: "Prise en charge"
   } as IRequeteTableauDelivrance,
   urlCourante: getUrlWithParam(
-    URL_MES_REQUETES_APERCU_REQUETE_TRAITEMENT_ID,
+    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
     "34da88e2-c5c7-4324-ac8e-b35193352e64"
   ),
   pasDeTraitementAuto: true
@@ -91,7 +91,7 @@ test('Test useRMCAutoHook : redirection à partir de "Mes Requêtes"', async () 
     const { getByTestId } = render(<HookConsummerRequete />);
     await waitFor(() =>
       expect(getByTestId("urlRedirection").textContent).toBe(
-        URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
       )
     );
   });
@@ -102,7 +102,7 @@ test('Test useRMCAutoHook : redirection à partir de "Requêtes Service"', async
     const { getByTestId } = render(<HookConsummerRequeteService />);
     await waitFor(() =>
       expect(getByTestId("urlRedirection").textContent).toBe(
-        URL_REQUETES_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+        URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
       )
     );
   });
@@ -124,7 +124,7 @@ test('Test useRMCAutoHook : redirection à partir de "Apercu Requêtes (prise en
     const { getByTestId } = render(<HookConsummerApercuRequete />);
     await waitFor(() =>
       expect(getByTestId("urlRedirection").textContent).toBe(
-        URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
       )
     );
   });
@@ -135,7 +135,7 @@ test('Test useRMCAutoHook : redirection à partir de "Apercu Requêtes Traitemen
     const { getByTestId } = render(<HookConsummerApercuTraitement />);
     await waitFor(() =>
       expect(getByTestId("urlRedirection").textContent).toBe(
-        URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
       )
     );
   });

@@ -2,7 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
 import request from "superagent";
-import { IQueryParametersPourRequetes } from "../../../../../api/appels/requeteApi";
+import {
+  IQueryParametersPourRequetes,
+  TypeAppelRequete
+} from "../../../../../api/appels/requeteApi";
 import { configRequetesInformation } from "../../../../../mock/superagent-config/superagent-mock-requetes-information";
 import { IRequeteTableauInformation } from "../../../../../model/requete/IRequeteTableauInformation";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
@@ -24,7 +27,11 @@ let container: Element | null;
 
 const HookConsummer: React.FC = () => {
   const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState } = useRequeteInformationApi(queryParam, setEnChargement);
+  const { dataState } = useRequeteInformationApi(
+    queryParam,
+    TypeAppelRequete.MES_REQUETES_INFO,
+    setEnChargement
+  );
   return (
     <>
       {dataState.map((element: IRequeteTableauInformation) => {

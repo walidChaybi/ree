@@ -6,9 +6,9 @@ import { SousTypeInformation } from "../../../../../model/requete/enum/SousTypeI
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { IReponseRequeteInfo } from "../../../../../model/requete/IReponseRequeteInfo";
 import { MenuTransfert } from "../../../../common/composant/menuTransfert/MenuTransfert";
-import { storeRece } from "../../../../common/util/storeRece";
 import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
+import { storeRece } from "./../../../../common/util/storeRece";
 import { BoutonReponseLibre } from "./choixReponse/BoutonReponseLibre";
 import { MenuReponsesProposees } from "./choixReponse/MenuReponsesProposees";
 import { MenuToutesLesReponses } from "./choixReponse/MenuToutesLesReponses";
@@ -72,6 +72,12 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reponsesReqInfo]);
+
+  useEffect(() => {
+    if (requete.idUtilisateur !== storeRece.utilisateurCourant?.idUtilisateur) {
+      setLesBoutonsDisabled(true);
+    }
+  }, [requete.idUtilisateur]);
 
   const onClick = (reponse: IReponseRequeteInfo) => {
     setReponseChoisie(reponse);

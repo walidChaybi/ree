@@ -7,7 +7,7 @@ import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { DetailRequetePage } from "../../../../views/pages/requeteDelivrance/detailRequete/DetailRequetePage";
-import { URL_MES_REQUETES_APERCU_REQUETE_ID } from "../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -16,7 +16,7 @@ test("renders Page requete with all elements", async () => {
     const history = createMemoryHistory();
     history.push(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_ID,
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
         "a4cefb71-8457-4f6b-937e-34b49335d404"
       )
     );
@@ -24,7 +24,10 @@ test("renders Page requete with all elements", async () => {
     render(
       <>
         <Router history={history}>
-          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQUETE_ID}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
+          >
             <DetailRequetePage />
           </Route>
         </Router>

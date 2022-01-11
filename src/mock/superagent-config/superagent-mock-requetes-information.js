@@ -2,7 +2,10 @@ import {
   ReponseAppelDetailRequeteCompletion,
   ReponseAppelDetailRequeteInformation
 } from "../data/DetailRequeteInformation";
-import { ReponseMesRequetesInformation } from "../data/EspaceInformation";
+import {
+  ReponseMesRequetesInformation,
+  ReponseRequetesInfoService
+} from "../data/EspaceInformation";
 import { NOMENCLATURE_REPONSE } from "../data/NomenclatureReponse";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
@@ -24,18 +27,30 @@ export const configRequetesInformation = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
+      // Mes requetes d'information (espace information)
       if (
         match[1] ===
-          "/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105" ||
-        match[1] ===
-          "/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=numero&sens=ASC&range=0-105"
+        "/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseMesRequetesInformation,
           headers: {
             "content-range": "0-15/" + ReponseMesRequetesInformation.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=numero&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+          }
+        };
+      }
+
+      // Requetes d'information de mon service (espace information)
+      if (
+        match[1] ===
+        "/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
+      ) {
+        return {
+          data: ReponseRequetesInfoService,
+          headers: {
+            "content-range": "0-15/" + ReponseRequetesInfoService.length,
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -44,7 +59,7 @@ export const configRequetesInformation = [
       if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856") {
         return { data: ReponseAppelDetailRequeteInformation.data };
       }
-      if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10555") {
+      if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10557") {
         return { data: ReponseAppelDetailRequeteCompletion.data };
       }
 

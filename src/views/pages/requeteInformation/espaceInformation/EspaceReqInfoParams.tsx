@@ -26,7 +26,7 @@ const style = {
 export const requeteInformationColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Numero],
-    title: getLibelle("N°"),
+    title: getLibelle("N° requête"),
     align: "center",
     style
   }),
@@ -52,17 +52,17 @@ export const requeteInformationColumnHeaders = [
   }),
   new TableauTypeColumn({
     keys: ["typeRequerant"],
-    title: getLibelle("Type Requérant"),
+    title: getLibelle("Type requérant"),
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.NomRequerant],
-    title: getLibelle("Requérant"),
+    title: getLibelle("Prénom / Nom requérant"),
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Titulaire],
-    title: getLibelle("Titulaire"),
+    title: getLibelle("Prénom / Nom de naissance titulaire"),
     align: "center",
     dataIsArray: true,
     getElement: getCellTitulaires

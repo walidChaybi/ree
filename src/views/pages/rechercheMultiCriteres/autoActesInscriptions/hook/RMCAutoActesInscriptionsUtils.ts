@@ -16,9 +16,9 @@ import {
   PATH_APERCU_REQ_PRISE,
   PATH_APERCU_REQ_TRAITEMENT,
   receUrl,
-  URL_MES_REQUETES,
+  URL_MES_REQUETES_DELIVRANCE,
   URL_RECHERCHE_REQUETE,
-  URL_REQUETES_SERVICE
+  URL_REQUETES_DELIVRANCE_SERVICE
 } from "../../../../router/ReceUrls";
 
 export interface ICriteresRMCAuto {
@@ -140,8 +140,8 @@ function getPrenomTitulaire(
 
 function estUrlEspaceDelivranceOuRMCRequete(url: string) {
   return (
-    url === URL_REQUETES_SERVICE ||
+    url === URL_REQUETES_DELIVRANCE_SERVICE ||
     url === URL_RECHERCHE_REQUETE ||
-    url === URL_MES_REQUETES
+    url === URL_MES_REQUETES_DELIVRANCE
   );
 }

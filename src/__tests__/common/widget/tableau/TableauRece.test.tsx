@@ -10,7 +10,7 @@ import {
 } from "../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "../../../../views/common/widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "../../../../views/common/widget/tableau/TableauRece/TableauTypeColumn";
-import { URL_MES_REQUETES } from "../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE } from "../../../../views/router/ReceUrls";
 
 const HookConsummer: React.FC = (props: any) => {
   return <button onClick={props.reloadData()}>{"BoutonTest"}</button>;
@@ -37,7 +37,7 @@ const columnsTableau = [
 
 test("TableauRece can be reload", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
@@ -72,7 +72,7 @@ test("TableauRece can be reload", () => {
 
 test("TableauRece can be reload with true", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
@@ -107,7 +107,7 @@ test("TableauRece can be reload with true", () => {
 
 test("TableauRece can be reload with true => go back", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
@@ -149,7 +149,7 @@ test("TableauRece can be reload with true => go back", () => {
 
 test("TableauRece can change page", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
@@ -202,7 +202,7 @@ test("TableauRece can change page", () => {
 
 test("TableauRece can change page", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
@@ -239,7 +239,7 @@ test("TableauRece can change page", () => {
 
 test("TableauRece can't change page bakc and no error'", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
@@ -278,7 +278,7 @@ test("TableauRece can't change page bakc and no error'", () => {
 
 test("TableauRece can't change page next and no error'", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();
@@ -317,7 +317,7 @@ test("TableauRece can't change page next and no error'", () => {
 
 test("TableauRece can sort", () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   const handleClickOnLine = jest.fn();
   const handleChangeSort = jest.fn();

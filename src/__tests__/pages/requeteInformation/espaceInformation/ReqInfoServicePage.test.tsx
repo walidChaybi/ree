@@ -1,22 +1,18 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
+import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 import request from "superagent";
-import officier from "../../../../mock/data/connectedUser.json";
+import { IQueryParametersPourRequetes } from "../../../../api/appels/requeteApi";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import { OfficierContext } from "../../../../views/core/contexts/OfficierContext";
-import EspaceInformationPage from "../../../../views/pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
+import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
+import { StatutsRequetesInformation } from "../../../../views/pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
+import { ReqInfoServicePage } from "../../../../views/pages/requeteInformation/espaceInformation/ReqInfoServicePage";
 import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_INFORMATION
+  URL_REQUETES_INFORMATION_SERVICE,
+  URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(
@@ -24,24 +20,27 @@ const superagentMock = require("superagent-mock")(
   configRequetesInformation
 );
 
-let history: any;
-beforeEach(() => {
-  history = createMemoryHistory();
-  history.push(URL_MES_REQUETES_INFORMATION);
-});
+const history = createMemoryHistory();
 
-test("renders Page requete information et clique sur une TRANSFEREE", async () => {
-  render(
+const parametresReqInfo = {
+  statuts: StatutsRequetesInformation,
+  tri: "dateCreation",
+  sens: "ASC",
+  range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+} as IQueryParametersPourRequetes;
+
+const HookConsummer: React.FC = () => {
+  history.push(URL_REQUETES_INFORMATION_SERVICE);
+
+  return (
     <Router history={history}>
-      <OfficierContext.Provider
-        value={{
-          officierDataState: { idSSO: officier.id_sso, ...officier }
-        }}
-      >
-        <EspaceInformationPage />
-      </OfficierContext.Provider>
+      <ReqInfoServicePage parametresReqInfo={parametresReqInfo} />
     </Router>
   );
+};
+
+test("renders Requête Service Info, Clic requête au statut TRANSFEREE", async () => {
+  render(<HookConsummer />);
 
   const titreNumero = screen.getByText("N° requête");
   const pageSuivante = screen.getByTitle("Page suivante");
@@ -55,7 +54,7 @@ test("renders Page requete information et clique sur une TRANSFEREE", async () =
     expect(screen.getByText("NOM2 p1")).toBeDefined();
   });
 
-  act(() => {
+  await act(async () => {
     // Clic sur une ligne
     fireEvent.click(screen.getByText("EVIPG4"));
   });
@@ -63,7 +62,7 @@ test("renders Page requete information et clique sur une TRANSFEREE", async () =
   await waitFor(() => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
         "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"
       )
     );
@@ -72,17 +71,7 @@ test("renders Page requete information et clique sur une TRANSFEREE", async () =
 
 test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", async () => {
   await act(async () => {
-    render(
-      <Router history={history}>
-        <OfficierContext.Provider
-          value={{
-            officierDataState: { idSSO: officier.id_sso, ...officier }
-          }}
-        >
-          <EspaceInformationPage />
-        </OfficierContext.Provider>
-      </Router>
-    );
+    render(<HookConsummer />);
   });
 
   const req = screen.getByText("EVIPG5");
@@ -99,7 +88,7 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
   await waitFor(() => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+        URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
         "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"
       )
     );

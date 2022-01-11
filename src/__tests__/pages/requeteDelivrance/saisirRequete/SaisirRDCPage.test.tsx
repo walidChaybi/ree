@@ -14,12 +14,12 @@ import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDeliv
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { getLastPathElem } from "../../../../views/common/util/route/routeUtil";
 import { SaisirRDCPage } from "../../../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
-import { URL_MES_REQUETES_SAISIR_RDC } from "../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const history = createMemoryHistory();
-history.push(URL_MES_REQUETES_SAISIR_RDC);
+history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
 
 beforeAll(() => {
   DocumentDelivrance.init();
@@ -278,7 +278,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
     // Re-init pour les tests suivants
-    history.push(URL_MES_REQUETES_SAISIR_RDC);
+    history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
   });
 });
 
@@ -394,7 +394,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
     // Re-init pour les tests suivants
-    history.push(URL_MES_REQUETES_SAISIR_RDC);
+    history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
   });
 });
 

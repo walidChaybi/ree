@@ -6,8 +6,8 @@ import {
 } from "../../../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import {
   PATH_APERCU_REQ_TRAITEMENT,
-  URL_MES_REQUETES,
-  URL_REQUETES_SERVICE
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_REQUETES_DELIVRANCE_SERVICE
 } from "../../../../views/router/ReceUrls";
 
 const requete = {
@@ -44,13 +44,21 @@ test("criteresRMCAutoMapper", () => {
 });
 
 test("redirectionRMCAuto", () => {
-  const res = redirectionRMCAuto(requete, URL_REQUETES_SERVICE, [null], [null]);
+  const res = redirectionRMCAuto(
+    requete,
+    URL_REQUETES_DELIVRANCE_SERVICE,
+    [null],
+    [null]
+  );
   expect(res).toStrictEqual(
     "/rece/rece-ui/requetesservice/apercurequetepriseencharge/0"
   );
 });
 test("redirectionRMCAutoApercuTraitement", () => {
-  const res = redirectionRMCAutoApercuTraitement("0", URL_MES_REQUETES);
+  const res = redirectionRMCAutoApercuTraitement(
+    "0",
+    URL_MES_REQUETES_DELIVRANCE
+  );
   expect(res).toStrictEqual(
     "/rece/rece-ui/mesrequetes/apercurequetetraitement/0"
   );
@@ -58,7 +66,7 @@ test("redirectionRMCAutoApercuTraitement", () => {
 test("redirectionRMCAutoModifierTraitement", () => {
   const res = redirectionRMCAuto(
     requete,
-    `${URL_REQUETES_SERVICE}/${PATH_APERCU_REQ_TRAITEMENT}/0`,
+    `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_TRAITEMENT}/0`,
     [null],
     [null]
   );

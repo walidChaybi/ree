@@ -6,11 +6,11 @@ import { Router } from "react-router-dom";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { RequetesServicePage } from "../../../../views/pages/requeteDelivrance/espaceDelivrance/RequetesServicePage";
-import { URL_REQUETES_SERVICE } from "../../../../views/router/ReceUrls";
+import { URL_REQUETES_DELIVRANCE_SERVICE } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const history = createMemoryHistory();
-history.push(URL_REQUETES_SERVICE);
+history.push(URL_REQUETES_DELIVRANCE_SERVICE);
 const setParamsRMCAuto = jest.fn();
 
 test("renders Page requete interactions works, no errors returned", async () => {

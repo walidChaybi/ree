@@ -22,7 +22,7 @@ import {
 } from "../common/util/GestionnaireFermeture";
 import { logError } from "../common/util/LogManager";
 import { storeRece } from "../common/util/storeRece";
-import { URL_MES_REQUETES } from "../router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE } from "../router/ReceUrls";
 import "./App.scss";
 import { Body } from "./body/Body";
 import { OfficierContext } from "./contexts/OfficierContext";
@@ -82,7 +82,7 @@ const App: React.FC = () => {
                     paramsFctAAppler={officier}
                     fctAAppeler={appelRequetesASigner}
                     fctTraitementResultat={traiteAppelRequeteASigner}
-                    urlRedirection={URL_MES_REQUETES}
+                    urlRedirection={URL_MES_REQUETES_DELIVRANCE}
                   ></GestionnaireFermeture>
                 )}
               </OfficierContext.Consumer>

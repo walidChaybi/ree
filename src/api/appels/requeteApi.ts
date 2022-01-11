@@ -11,9 +11,11 @@ import { SortOrder } from "../../views/common/widget/tableau/TableUtils";
 import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
-export const URL_REQUETES_SERVICE = "/requetes/requetesService";
+export const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
+export const URL_REQUETES_INFO_SERVICE =
+  "/requetes/information/requetesService";
 export const URL_REQUETES = "/requetes";
-export const URL_MES_REQUETES = "/requetes/mesrequetes";
+export const URL_MES_REQUETES_DELIVRANCE = "/requetes/mesrequetes";
 export const URL_MES_REQUETES_INFO = "/requetes/information/mesrequetes";
 export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_INFORMATION_STATUT = "/requetes/information/statut";
@@ -45,8 +47,10 @@ export interface IRequestDocumentApiResult {
 }
 
 export enum TypeAppelRequete {
-  REQUETE_SERVICE = "requeteService",
-  MES_REQUETES = "mesRequetes"
+  REQUETE_DELIVRANCE_SERVICE = "requeteService",
+  REQUETE_INFO_SERVICE = "requeteInfoService",
+  MES_REQUETES_DELIVRANCE = "mesRequetes",
+  MES_REQUETES_INFO = "mesRequetesInfo"
 }
 
 export interface IQueryParametersPourRequetes {
@@ -101,9 +105,9 @@ export function getMesRequetesDelivrance(
   return api.fetch({
     method: HttpMethod.GET,
     uri:
-      typeRequete === TypeAppelRequete.REQUETE_SERVICE
-        ? URL_REQUETES_SERVICE
-        : URL_MES_REQUETES,
+      typeRequete === TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE
+        ? URL_REQUETES_DELIVRANCE_SERVICE
+        : URL_MES_REQUETES_DELIVRANCE,
     parameters: {
       statuts: listeStatuts,
       tri:
@@ -118,11 +122,15 @@ export function getMesRequetesDelivrance(
 
 export function getMesRequetesInformation(
   listeStatuts: string,
+  typeRequete: TypeAppelRequete,
   queryParameters: IQueryParametersPourRequetes
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: URL_MES_REQUETES_INFO,
+    uri:
+      typeRequete === TypeAppelRequete.REQUETE_INFO_SERVICE
+        ? URL_REQUETES_INFO_SERVICE
+        : URL_MES_REQUETES_INFO,
     parameters: {
       statuts: listeStatuts,
       tri:

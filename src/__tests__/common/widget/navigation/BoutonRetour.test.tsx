@@ -3,10 +3,10 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import { BoutonRetour } from "../../../../views/common/widget/navigation/BoutonRetour";
-import { URL_MES_REQUETES } from "../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE } from "../../../../views/router/ReceUrls";
 
 const history = createMemoryHistory();
-history.push(URL_MES_REQUETES);
+history.push(URL_MES_REQUETES_DELIVRANCE);
 
 test("renders titre de l'application", () => {
   render(

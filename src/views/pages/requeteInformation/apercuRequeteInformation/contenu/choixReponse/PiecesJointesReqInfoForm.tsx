@@ -8,7 +8,7 @@ import "./scss/PiecesJointesReqInfo.scss";
 const NOMBRE_PIECE_MAX = 2;
 
 const PiecesJointesReqInfoForm: React.FC<SubFormProps> = props => {
-  const [estDisabled, setEstDisabled] = useState(false);
+  const [estDisabled, setEstDisabled] = useState<boolean>(false);
   const piecesJointes: PieceJointe[] =
     props.formik.getFieldProps(props.nom).value || [];
 

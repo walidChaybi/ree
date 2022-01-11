@@ -9,7 +9,7 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import { BoiteAOnglet } from "../../../../views/common/widget/onglets/BoiteAOnglets";
-import { URL_MES_REQUETES } from "../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE } from "../../../../views/router/ReceUrls";
 
 const mock = [
   {
@@ -26,7 +26,7 @@ const mock = [
 
 test("renders BoiteAOnglet", async () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   await act(async () => {
     render(

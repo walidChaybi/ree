@@ -15,7 +15,7 @@ import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
 import { BoutonDeconnexion } from "../../../views/core/header/BoutonDeconnexion";
 import {
   URL_DECONNEXION,
-  URL_MES_REQUETES
+  URL_MES_REQUETES_DELIVRANCE
 } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configFakeUrl);
@@ -26,7 +26,7 @@ let boutonElement: HTMLElement;
 
 beforeEach(async () => {
   history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
 
   handleClickButton = jest.fn();
   render(
@@ -53,8 +53,8 @@ test("renders click BoutonDeconnexion (nbRequetes = 0)", async () => {
   });
   const linkElement = screen.getByText(/Déconnexion/i);
   await act(async () => {
-  fireEvent.click(linkElement);  
-});
+    fireEvent.click(linkElement);
+  });
 
   await waitFor(() => {
     expect(linkElement).toBeDefined();
@@ -66,7 +66,7 @@ test("renders click BoutonDeconnexion (nbRequetes = 0)", async () => {
 test("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de confirmation et lorsque 'Oui' est cliqué la déconnexion est effective", async () => {
   configFakeUrl[0].nbRequetes = 1;
   fireEvent.click(boutonElement);
-  
+
   await waitFor(() => {
     expect(handleClickButton).toHaveBeenCalledTimes(1);
     expect(history).toHaveLength(2);
@@ -119,7 +119,7 @@ test("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de conf
   });
   await waitFor(() => {
     expect(history).toHaveLength(3);
-    expect(history.location.pathname).toBe(URL_MES_REQUETES);
+    expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
   });
 });
 

@@ -13,7 +13,10 @@ import {
   premiereLettreEnMajusculeLeResteEnMinuscule
 } from "../../common/util/Utils";
 import { ConfirmationPopin } from "../../common/widget/popin/ConfirmationPopin";
-import { URL_DECONNEXION, URL_MES_REQUETES } from "../../router/ReceUrls";
+import {
+  URL_DECONNEXION,
+  URL_MES_REQUETES_DELIVRANCE
+} from "../../router/ReceUrls";
 import { OfficierContext } from "../contexts/OfficierContext";
 
 interface BoutonDeconnexionProps {
@@ -26,9 +29,8 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   onClick
 }) => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
-  const [confirmationDeco, setConfirmationDeco] = React.useState<boolean>(
-    false
-  );
+  const [confirmationDeco, setConfirmationDeco] =
+    React.useState<boolean>(false);
   const [nbRequetes, setNbRequetes] = React.useState<number>(0);
   const history = useHistory();
 
@@ -84,7 +86,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
       label: "Non",
       action: () => {
         setConfirmationDeco(false);
-        history.push(URL_MES_REQUETES);
+        history.push(URL_MES_REQUETES_DELIVRANCE);
       }
     },
     {

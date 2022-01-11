@@ -7,16 +7,19 @@ import {
   isPathElemId
 } from "../../../../views/common/util/route/routeUtil";
 import {
-  URL_MES_REQUETES,
-  URL_MES_REQUETES_APERCU_REQUETE_ID
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
 } from "../../../../views/router/ReceUrls";
 
 test("Attendu: getUrlWithParam fonctionne correctement", () => {
   expect(
-    getUrlWithParam(URL_MES_REQUETES_APERCU_REQUETE_ID, String(123456))
-  ).toBe(`${URL_MES_REQUETES}/apercurequetedelivrance/123456`);
-  expect(getUrlWithParam(URL_MES_REQUETES, String(123456))).toBe(
-    `${URL_MES_REQUETES}`
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+      String(123456)
+    )
+  ).toBe(`${URL_MES_REQUETES_DELIVRANCE}/apercurequetedelivrance/123456`);
+  expect(getUrlWithParam(URL_MES_REQUETES_DELIVRANCE, String(123456))).toBe(
+    `${URL_MES_REQUETES_DELIVRANCE}`
   );
 });
 

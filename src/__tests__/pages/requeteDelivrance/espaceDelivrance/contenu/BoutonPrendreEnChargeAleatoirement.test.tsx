@@ -10,8 +10,8 @@ import { configRequetes } from "../../../../../mock/superagent-config/superagent
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { BoutonPrendreEnChargeAleatoirement } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/contenu/BoutonPrendreEnChargeAleatoirement";
 import {
-    URL_MES_REQUETES,
-    URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../../views/router/ReceUrls";
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
@@ -20,7 +20,7 @@ const superagentMock = require("superagent-mock")(request, [
 
 test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace Délivrance", async () => {
   const history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
   render(
     <Router history={history}>
       <BoutonPrendreEnChargeAleatoirement />
@@ -38,7 +38,7 @@ test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l
   await waitFor(() => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
         ReponseAppelMesRequetes[1].id
       )
     );

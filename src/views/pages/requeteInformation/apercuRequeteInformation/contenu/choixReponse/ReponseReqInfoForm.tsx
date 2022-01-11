@@ -87,10 +87,9 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   const [reponseAEnvoyer, setReponseAEnvoyer] = useState<
     IEnvoyerReponseReqInfoParams | undefined
   >();
-  const [
-    ajoutPieceJointeTermine,
-    setAjoutPieceJointeTermine
-  ] = useState<boolean>(false);
+  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] = useState<
+    boolean
+  >(false);
   const [piecesAEnvoyer, setPiecesAEnvoyer] = useState<
     PieceJointe[] | undefined
   >();
@@ -175,7 +174,10 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
           onSubmit={onSubmit}
         >
           <div>{blocsForm}</div>
-          <ReponseReqInfoBoutons {...boutonsProps} />
+          <ReponseReqInfoBoutons
+            {...boutonsProps}
+            formulaireDisabled={formulaireDisabled}
+          />
         </Formulaire>
       </Fieldset>
     </div>

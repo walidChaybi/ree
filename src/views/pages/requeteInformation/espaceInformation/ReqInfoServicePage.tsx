@@ -5,15 +5,12 @@ import {
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import {
-  INavigationApercuReqInfoParams,
-  useNavigationApercuInformation
-} from "../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
+import { IRequeteTableauInformation } from "../../../../model/requete/IRequeteTableauInformation";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
+import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
@@ -22,7 +19,7 @@ import {
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
-import { receUrl } from "../../../router/ReceUrls";
+import { URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID } from "../../../router/ReceUrls";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { requeteInformationColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationHook";
@@ -32,22 +29,17 @@ interface LocalProps {
   parametresReqInfo: IQueryParametersPourRequetes;
 }
 
-export const MesRequetesInformationPage: React.FC<LocalProps> = ({
+export const ReqInfoServicePage: React.FC<LocalProps> = ({
   parametresReqInfo
 }) => {
   const history = useHistory();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
+  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<
+    CreationActionMiseAjourStatutHookParams
+  >();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<
-    CreationActionMiseAjourStatutHookParams | undefined
-  >();
-  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
-    INavigationApercuReqInfoParams | undefined
-  >();
-
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
-  useNavigationApercuInformation(paramsNavReqInfo);
 
   const [linkParameters, setLinkParameters] = React.useState<
     IQueryParametersPourRequetes
@@ -55,44 +47,48 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
-    TypeAppelRequete.MES_REQUETES_INFO,
+    TypeAppelRequete.REQUETE_INFO_SERVICE,
     setEnChargement
   );
 
   const goToLink = useCallback((link: string) => {
-    const queryParametersPourRequetes = goToLinkRequete(link, "requetes");
+    const queryParametersPourRequetes = goToLinkRequete(
+      link,
+      "requetesinformationservice"
+    );
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }
   }, []);
 
+  const redirectionVersApercu = useCallback(
+    (idRequete: string) => {
+      history.push(
+        getUrlWithParam(
+          URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
+          idRequete
+        )
+      );
+    },
+    [history]
+  );
+
   function onClickOnLine(
     idRequete: string,
-    data: IRequeteTableauDelivrance[],
+    data: IRequeteTableauInformation[],
     idx: number
   ) {
-    const requete = data[idx];
-    const urlCourante = receUrl.getUrlCourante(history);
-
-    if (requete.statut === StatutRequete.TRANSFEREE.libelle) {
+    if (data[idx].statut === StatutRequete.TRANSFEREE.libelle) {
       setParamsMAJReqInfo({
-        requete,
+        requete: data[idx],
         libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
         callback: () => {
-          setParamsNavReqInfo({
-            requete,
-            callback: finOperationEnCours,
-            urlCourante
-          });
+          redirectionVersApercu(idRequete);
         }
       });
     } else {
-      setParamsNavReqInfo({
-        requete,
-        callback: finOperationEnCours,
-        urlCourante
-      });
+      redirectionVersApercu(idRequete);
     }
   }
 
@@ -126,7 +122,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
         enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
-      ></TableauRece>
+      />
       <BoutonRetour />
     </>
   );

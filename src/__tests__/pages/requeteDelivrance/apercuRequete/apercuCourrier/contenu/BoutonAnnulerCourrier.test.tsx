@@ -14,11 +14,11 @@ import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequet
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../../views/common/util/storeRece";
 import BoutonsCourrier, {
-    BoutonsCourrierProps
+  BoutonsCourrierProps
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/BoutonsCourrier";
 import {
-    URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
-    URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID
+  URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -34,13 +34,13 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
   } as BoutonsCourrierProps;
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequeteRDCSC
     )
   );
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
+      URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
       idRequeteRDCSC
     )
   );
@@ -65,7 +65,7 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
   await waitFor(() => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
         idRequeteRDCSC
       )
     );
@@ -82,13 +82,13 @@ test("render composant bouton annuler avec requete a valider", async () => {
   } as BoutonsCourrierProps;
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequeteRDCSC
     )
   );
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
+      URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
       idRequeteRDCSC
     )
   );
@@ -113,7 +113,7 @@ test("render composant bouton annuler avec requete a valider", async () => {
   await waitFor(() => {
     expect(history.location.pathname).toBe(
       getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
         idRequeteRDCSC
       )
     );

@@ -34,7 +34,6 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
       setNewsParams({
         statutRequete: params?.statutRequete,
         libelleAction: params?.libelleAction,
-        urlCourante: params?.urlCourante,
         requete: params?.requete,
         pasDeTraitementAuto: params?.pasDeTraitementAuto,
         callback: lancerRMCAuto

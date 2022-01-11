@@ -24,7 +24,7 @@ import {
   nonVide,
   unActeEtUnSeulSelectionne
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
-import { URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const superagentMockRequete = require("superagent-mock")(
@@ -44,7 +44,7 @@ test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-typ
   const history = createMemoryHistory();
   history.push(
     getUrlWithParam(
-      URL_MES_REQUETES_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
       idRequeteRDC
     )
   );

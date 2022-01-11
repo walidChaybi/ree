@@ -38,8 +38,8 @@ export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props
       {props.listeReponse && (
         <div>
           <button
-            onClick={e => handleClickBoutonReponse(e)}
             disabled={props.disabled}
+            onClick={e => handleClickBoutonReponse(e)}
           >
             {getLibelle("Toutes les réponses disponibles")}
           </button>

@@ -7,7 +7,7 @@ import officier from "../../../mock/data/connectedUser.json";
 import { configFakeUrl } from "../../../mock/superagent-config/superagent-mock-fake-url";
 import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
 import { BoutonRechercheRmc } from "../../../views/core/header/BoutonRechercheRmc";
-import { URL_MES_REQUETES } from "../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configFakeUrl);
 
@@ -21,7 +21,7 @@ globalAny.close = jest.fn();
 
 beforeEach(async () => {
   history = createMemoryHistory();
-  history.push(URL_MES_REQUETES);
+  history.push(URL_MES_REQUETES_DELIVRANCE);
   render(
     <Router history={history}>
       <OfficierContext.Provider
