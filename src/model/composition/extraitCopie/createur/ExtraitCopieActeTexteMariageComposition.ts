@@ -29,9 +29,7 @@ export class ExtraitCopieActeTexteMariageComposition {
       acteMariage
     );
 
-    if (archive) {
-      composition.filigrane_archive = true;
-    }
+    composition.filigrane_archive = archive;
 
     const enonciationContratDeMariage = ExtraitCopieActeTexteMariageComposition.creerEnonciationContratMariage(
       acteMariage.detailMariage?.existenceContrat,
