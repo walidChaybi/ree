@@ -14,37 +14,36 @@ export class ExtraitCopieActeTexteMariageComposition {
   ) {
     const composition = {} as IExtraitCopieComposition;
 
-    const { ecTitulaire1, ecTitulaire2 } =
-      CommunExtraitOuCopieActeTexteComposition.creerExtraitCopie(
-        composition,
-        acteMariage
-      );
+    const {
+      ecTitulaire1,
+      ecTitulaire2
+    } = CommunExtraitOuCopieActeTexteComposition.creerExtraitCopie(
+      composition,
+      acteMariage
+    );
 
     composition.type_document = copie ? "COPIE" : "EXTRAIT";
     composition.nature_acte = "MARIAGE";
 
-    const ecActe =
-      CommunExtraitOuCopieActeTexteComposition.creerEvenementActeCompositionEC(
-        acteMariage
-      );
+    const ecActe = CommunExtraitOuCopieActeTexteComposition.creerEvenementActeCompositionEC(
+      acteMariage
+    );
 
     if (archive) {
       composition.filigrane_archive = true;
     }
 
-    const enonciationContratDeMariage =
-      ExtraitCopieActeTexteMariageComposition.creerEnonciationContratMariage(
-        acteMariage.detailMariage?.existenceContrat,
-        acteMariage.detailMariage?.contrat
-      ); //<énonciation contrat de mariage>
+    const enonciationContratDeMariage = ExtraitCopieActeTexteMariageComposition.creerEnonciationContratMariage(
+      acteMariage.detailMariage?.existenceContrat,
+      acteMariage.detailMariage?.contrat
+    ); //<énonciation contrat de mariage>
 
-    const corpsExtraitRectification =
-      FicheActe.getCorpsExtraitRectificationTexte(
-        acteMariage,
-        avecFiliation
-          ? TypeExtrait.EXTRAIT_AVEC_FILIATION
-          : TypeExtrait.EXTRAIT_SANS_FILIATION
-      );
+    const corpsExtraitRectification = FicheActe.getCorpsExtraitRectificationTexte(
+      acteMariage,
+      avecFiliation
+        ? TypeExtrait.EXTRAIT_AVEC_FILIATION
+        : TypeExtrait.EXTRAIT_SANS_FILIATION
+    );
 
     if (copie && acteMariage.corpsText) {
       // Une copie est demandée (et non un extrait) pour un acte texte
@@ -58,14 +57,14 @@ export class ExtraitCopieActeTexteMariageComposition {
       }
 
       composition.corps_texte = `${ecActe.leouEnEvenement} ${ecActe.dateEvenement}
-  a été célébré à ${ecActe.lieuEvenement}
-  le mariage
-  de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}
-  ${ecTitulaire1.dateNaissanceOuAge} à ${ecTitulaire1.lieuNaissance}
-  et de ${ecTitulaire2.prenoms} ${ecTitulaire2.nom} ${ecTitulaire2.partiesNom}
-  ${ecTitulaire2.dateNaissanceOuAge} à ${ecTitulaire2.lieuNaissance}
-  
-  Contrat de mariage : ${enonciationContratDeMariage}`;
+a été célébré à ${ecActe.lieuEvenement}
+le mariage
+de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}
+${ecTitulaire1.dateNaissanceOuAge} à ${ecTitulaire1.lieuNaissance}
+et de ${ecTitulaire2.prenoms} ${ecTitulaire2.nom} ${ecTitulaire2.partiesNom}
+${ecTitulaire2.dateNaissanceOuAge} à ${ecTitulaire2.lieuNaissance}
+
+Contrat de mariage : ${enonciationContratDeMariage}`;
     }
 
     return composition;
