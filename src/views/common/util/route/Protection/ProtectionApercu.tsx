@@ -20,13 +20,15 @@ interface ProtectionApercuProps {
   statut?: StatutRequete;
   type?: TypeRequete;
   sousType?: SousTypeRequete;
+  forcePass?: boolean;
 }
 
 export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
   children,
   statut,
   type,
-  sousType
+  sousType,
+  forcePass
 }) => {
   const history = useHistory();
   const [estBonStatut, setEstBonStatut] = useState<boolean>(true);
@@ -35,13 +37,14 @@ export const ProtectionApercu: React.FC<ProtectionApercuProps> = ({
     if (
       // @ts-ignore
       window.protectionOff ||
-      receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_DEL + "/")
+      receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_DEL + "/") ||
+      forcePass
     ) {
       setEstBonStatut(true);
     } else {
       setEstBonStatut(checkURL(history, statut, type, sousType));
     }
-  }, [statut, type, sousType, history]);
+  }, [statut, type, sousType, history, forcePass]);
 
   return (
     <Protection

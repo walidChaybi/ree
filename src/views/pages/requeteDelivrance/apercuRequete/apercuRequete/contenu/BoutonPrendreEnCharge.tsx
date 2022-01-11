@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
@@ -16,43 +16,44 @@ import "./scss/BoutonPrendreEnCharge.scss";
 
 interface BoutonPrendreEnChargeProps {
   requete: IRequeteDelivrance;
+  disabled?: boolean;
 }
 
-export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props => {
-  const history = useHistory();
-  const [estDisabled, setEstDisabled] = useState(true);
+export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> =
+  props => {
+    const history = useHistory();
 
-  const [params, setParams] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
+    const [params, setParams] =
+      useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
 
-  const setActionEtUpdateStatut = () => {
-    setParams({
-      requete: mapRequeteRmcAuto(props.requete),
-      libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-      statutRequete: StatutRequete.PRISE_EN_CHARGE,
-      urlCourante: getUrlWithParam(history.location.pathname, props.requete.id)
-    });
+    const setActionEtUpdateStatut = () => {
+      setParams({
+        requete: mapRequeteRmcAuto(props.requete),
+        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
+        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        urlCourante: getUrlWithParam(
+          history.location.pathname,
+          props.requete.id
+        )
+      });
+    };
+
+    useCreationActionMiseAjourStatutEtRmcAuto(params);
+
+    return (
+      <BoutonOperationEnCours
+        onClick={setActionEtUpdateStatut}
+        class="BoutonPrendreEnCharge"
+        estDesactive={
+          !autorisePrendreEnChargeDelivrance(
+            props.requete || props.disabled === true
+          )
+        }
+      >
+        {getLibelle("Prendre en charge")}
+      </BoutonOperationEnCours>
+    );
   };
-
-  useCreationActionMiseAjourStatutEtRmcAuto(params);
-
-  useEffect(() => {
-    if (autorisePrendreEnChargeDelivrance(props.requete)) {
-      setEstDisabled(false);
-    }
-  }, [props.requete]);
-
-  return (
-    <BoutonOperationEnCours
-      onClick={setActionEtUpdateStatut}
-      class="BoutonPrendreEnCharge"
-      estDesactive={estDisabled}
-    >
-      {getLibelle("Prendre en charge")}
-    </BoutonOperationEnCours>
-  );
-};
 
 const mapRequeteRmcAuto = (
   requete: IRequeteDelivrance

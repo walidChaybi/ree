@@ -5,7 +5,7 @@ export const ReponseAppelDetailRequeteInformation = {
   url: "/rece-requete-api/v2/requetes/a4cefb71-8457-4f6b-937e-34b49335d404",
   data: {
     id: "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856",
-    numeroFonctionnel: "LRU1A5",
+    numeroFonctionnel: "LRU1A3",
     dateCreation: 1634708514000,
     canal: "INTERNET",
     type: "INFORMATION",
@@ -87,7 +87,9 @@ export const ReponseAppelDetailRequeteInformation = {
       "Je pense avoir oublier de mettre mon pays de naissance qui est l'espagne. Est-ce trop tard ? Monsieur XXX",
     reponse: null,
     provenance: "INTERNET",
-    numeroRequeteLiee: "9TY6ML",
+    numeroRequeteLiee: "LRU1A5",
+    typeRequeteLiee: "INFORMATION",
+    idRequeteLiee: "bbd05aed-8ea9-45ba-a7d7-b8d55ad10555",
     piecesComplementInformation: [],
     besoinUsager: null
   }

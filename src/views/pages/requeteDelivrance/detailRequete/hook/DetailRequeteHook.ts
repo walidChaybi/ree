@@ -32,15 +32,14 @@ import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequet
 import { logError } from "../../../../common/util/LogManager";
 import { storeRece } from "../../../../common/util/storeRece";
 
-export function useDetailRequeteApiHook(idRequete: string) {
-  const [detailRequeteState, setDetailRequeteState] = useState<
-    TRequete | undefined
-  >();
+export function useDetailRequeteApiHook(idRequete: string | undefined) {
+  const [detailRequeteState, setDetailRequeteState] =
+    useState<TRequete | undefined>();
 
   useEffect(() => {
     async function fetchDetailRequete() {
       try {
-        if (idRequete != null) {
+        if (idRequete) {
           const result = await getDetailRequete(idRequete);
           const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
           if (typeRequete === TypeRequete.DELIVRANCE) {
@@ -215,6 +214,7 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
     provenanceRequete: Provenance.getEnumFor(data.provenance),
     numeroRequeteLiee: data.numeroRequeteLiee,
     idRequeteLiee: data.idRequeteLiee,
+    typeRequeteLiee: TypeRequete.getEnumFor(data.typeRequeteLiee),
     piecesComplementInformation: data.piecesComplementInformation,
     besoinUsager: BesoinUsager.getEnumFor(data.besoinUsager)
   };

@@ -8,7 +8,13 @@ import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour"
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { BoutonPrendreEnCharge } from "./contenu/BoutonPrendreEnCharge";
 
-export const ApercuRequetePage: React.FC = () => {
+interface ApercuRequetePageProps {
+  idRequeteAAfficher?: string;
+}
+
+export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
+  idRequeteAAfficher
+}) => {
   const [documentAffiche, setDocumentAffiche] = useState<IDocumentReponse>();
 
   const [requete, setRequete] = useState<IRequeteDelivrance>();
@@ -32,6 +38,7 @@ export const ApercuRequetePage: React.FC = () => {
       title={getLibelle("Aperçu de la requête")}
       setRequeteCallback={setRequeteCallback}
       setDocumentAfficheCallback={setDocumentAfficheCallback}
+      idRequeteAAfficher={idRequeteAAfficher}
     >
       {requete && (
         <>
@@ -42,7 +49,10 @@ export const ApercuRequetePage: React.FC = () => {
           />
           <BoutonRetour />
           {!MigratorV1V2.estRDDouRDC(requete) && (
-            <BoutonPrendreEnCharge requete={requete}></BoutonPrendreEnCharge>
+            <BoutonPrendreEnCharge
+              requete={requete}
+              disabled={idRequeteAAfficher !== undefined}
+            ></BoutonPrendreEnCharge>
           )}
         </>
       )}

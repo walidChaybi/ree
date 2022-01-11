@@ -1,4 +1,3 @@
-import { Link } from "@material-ui/core";
 import React from "react";
 import { Qualite } from "../../../../../model/requete/enum/Qualite";
 import { Requerant } from "../../../../../model/requete/IRequerant";
@@ -6,7 +5,6 @@ import { Requete } from "../../../../../model/requete/IRequete";
 import { IRequeteInformation } from "../../../../../model/requete/IRequeteInformation";
 import { TitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
 import { getLibelle, getValeurOuVide } from "../../../../common/util/Utils";
-import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import { SectionContentProps } from "../../../../common/widget/section/SectionContent";
 import {
   SectionPanel,
@@ -18,20 +16,27 @@ import {
   ajouterContentPartAuPartUneValeurVide,
   ajouterPanelAreasAuPanel
 } from "../../../../common/widget/section/SectionUtils";
+import { FenetreApercuRequeteLiee } from "./FenetreApercuRequeteLiee";
 import "./scss/ResumeReqInfo.scss";
 
 export interface RequeteInfoProps {
   requete: IRequeteInformation;
+  disabled?: boolean;
 }
 
 export const ResumeReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
   const panels = getPanelResumeRequete(requete);
 
   return (
-    <div className="ResumeReqInfo">
-      <Fieldset titre={getLibelle("Résumé de la requête d'information")}>
+    <div className="ResumeRequete Fieldset ResumeReqInfo">
+      <div className="ResumeRequeteTitle">
+        <div>{`Résumé de la requête d'information`}</div>
+
+        <div>{`N°${requete.numero}`}</div>
+      </div>
+      <div className="PanelsResumeRequete">
         <SectionPanel {...panels} />
-      </Fieldset>
+      </div>
     </div>
   );
 };
@@ -92,9 +97,17 @@ function getRequeteInfo(
 
   let requeteLiee: string | JSX.Element = "";
 
-  if (detailRequete.numeroRequeteLiee && detailRequete.idRequeteLiee) {
+  if (
+    detailRequete.numeroRequeteLiee &&
+    detailRequete.idRequeteLiee &&
+    detailRequete.typeRequeteLiee
+  ) {
     requeteLiee = (
-      <Link className="NumeroReqLiee">{detailRequete.numeroRequeteLiee}</Link>
+      <FenetreApercuRequeteLiee
+        idRequeteLiee={detailRequete.idRequeteLiee}
+        numeroRequeteLiee={detailRequete.numeroRequeteLiee}
+        typeRequeteLiee={detailRequete.typeRequeteLiee}
+      />
     );
   } else if (detailRequete.numeroRequeteLiee) {
     requeteLiee = detailRequete.numeroRequeteLiee;

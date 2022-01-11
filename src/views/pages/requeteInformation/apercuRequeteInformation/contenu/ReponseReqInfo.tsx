@@ -17,7 +17,10 @@ import { useReponsesReqInfoApiHook } from "./hook/ReponsesReqInfoHook";
 import { RequeteInfoProps } from "./ResumeReqInfo";
 import "./scss/ReponseReqInfo.scss";
 
-export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
+export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
+  requete,
+  disabled
+}) => {
   const SAISIE_LIBRE_REPONSE = {
     id: "",
     libelle: "Saisie libre agent",
@@ -26,16 +29,14 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
     corpsMail: ""
   };
 
-  const [reponseChoisie, setReponseChoisie] = useState<IReponseRequeteInfo>(
-    SAISIE_LIBRE_REPONSE
-  );
+  const [reponseChoisie, setReponseChoisie] =
+    useState<IReponseRequeteInfo>(SAISIE_LIBRE_REPONSE);
 
   const [lesBoutonsDisabled, setLesBoutonsDisabled] = useState(false);
   const [formulaireDisabled, setFormulaireDisabled] = useState(false);
   const [tousLesBoutonsVisibles, setTousLesBoutonsVisibles] = useState(true);
-  const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] = useState(
-    true
-  );
+  const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] =
+    useState(true);
 
   useEffect(() => {
     const mauvaisUtilisateur =
@@ -49,11 +50,13 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
       requete.besoinUsager === BesoinUsager.COMPLETER_DEMANDE &&
       requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS;
 
-    setLesBoutonsDisabled(mauvaisUtilisateur);
-    setFormulaireDisabled(mauvaisUtilisateur || rejetOuTraiteRepondu);
+    setLesBoutonsDisabled(disabled ? disabled : mauvaisUtilisateur);
+    setFormulaireDisabled(
+      disabled ? disabled : mauvaisUtilisateur || rejetOuTraiteRepondu
+    );
     setTousLesBoutonsVisibles(!rejetOuTraiteRepondu);
     setLesBoutonsReponsesVisibles(!completerDemande);
-  }, [requete]);
+  }, [requete, disabled]);
 
   const { reponsesReqInfo } = useReponsesReqInfoApiHook();
 

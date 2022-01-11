@@ -23,7 +23,7 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const paramsRequete: IRMCAutoParams = {
   requete: {
-    idRequete: ":idRequete",
+    idRequete: ":idRequeteParam",
     document: "123456",
     titulaires: [{ nom: "George" }]
   } as IRequeteTableauDelivrance,
@@ -50,7 +50,7 @@ const paramsApercuRequete = {
 
 const paramsApercuRequeteTraitement: IRMCAutoParams = {
   requete: {
-    idRequete: ":idRequete",
+    idRequete: ":idRequeteParam",
     document: "123456",
     statut: "Prise en charge"
   } as IRequeteTableauDelivrance,

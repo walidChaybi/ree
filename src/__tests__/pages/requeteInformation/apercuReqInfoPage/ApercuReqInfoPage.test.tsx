@@ -34,6 +34,12 @@ const superagentMock = require("superagent-mock")(request, [
 
 let history: any;
 history = createMemoryHistory();
+const globalAny: any = global;
+globalAny.open = () => {
+  return { ...window };
+};
+globalAny.close = jest.fn();
+URL.createObjectURL = jest.fn();
 
 beforeAll(() => {
   history.push(URL_MES_REQUETES_INFORMATION);
@@ -104,7 +110,7 @@ test("renders ApercuReqInfoPage", async () => {
   const dateCreation = screen.getByText(/Date de création/i);
   const valeurDateCreation = screen.getByText("20/10/2021");
   const numeroReq = screen.getByText(/N° de la requête liée/i);
-  const valeurNumeroReq = screen.getByText(/9TY6ML/i);
+  const valeurNumeroReq = screen.getByText(/LRU1A5/i);
   const typeRequerant = screen.getByText(/Type requérant/i);
   const valeurTypeRequerant = screen.getByText(/Mandataire habilité/i);
   const identiteRequerant = screen.getByText(/Identité du requérant/i);
@@ -222,6 +228,42 @@ test("bouton annuler", async () => {
     expect(history.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
   });
 });
+
+test("clique requete liée", async () => {
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+      "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
+    )
+  );
+
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
+            <ApercuReqInfoPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  const valeurRequeteLiee = screen.getByText(/LRU1A5/i);
+
+  await waitFor(() => {
+    expect(valeurRequeteLiee).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(valeurRequeteLiee);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Aperçu requête : N°LRU1A5")).toBeDefined();
+  });
+});
+
 
 test("bouton saisie libre", async () => {
   history.push(

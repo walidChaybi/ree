@@ -9,16 +9,27 @@ import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteH
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import "./scss/ApercuRequeteTemplate.scss";
 
-interface TemplateProps { 
+interface TemplateProps {
+  idRequeteAAfficher?: string;
   title: string;
   setRequeteCallback: (req: IRequeteDelivrance) => void;
   setDocumentAfficheCallback?: (docReponse: IDocumentReponse) => void;
 }
 
 export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
-  const { idRequete } = useParams<IUuidRequeteParams>();
+  const [idRequete, setIdRequete] = useState<string>();
+  const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
   const [requete, setRequete] = useState<IRequeteDelivrance>();
+
+  useEffect(() => {
+    // L'idRequete peut venir de l'URL ou bien être une props dans le cas d'une requete liée
+    if (props.idRequeteAAfficher) {
+      setIdRequete(props.idRequeteAAfficher);
+    } else {
+      setIdRequete(idRequeteParam);
+    }
+  }, [idRequeteParam, props.idRequeteAAfficher]);
 
   useEffect(() => {
     if (detailRequeteState) {
@@ -40,6 +51,7 @@ export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
           statut={requete.statutCourant.statut}
           type={requete.type}
           sousType={requete.sousType}
+          forcePass={props.idRequeteAAfficher !== undefined}
         >
           <BandeauRequete requete={requete} />
           <div className="contenu-requete">

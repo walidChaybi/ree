@@ -14,11 +14,26 @@ import { ReponseReqInfo } from "./contenu/ReponseReqInfo";
 import { ResumeReqInfo } from "./contenu/ResumeReqInfo";
 import "./scss/ApercuReqInfoPage.scss";
 
-export const ApercuReqInfoPage: React.FC = () => {
-  const { idRequete } = useParams<IUuidRequeteParams>();
+interface ApercuReqInfoPageProps {
+  idRequeteAAfficher?: string;
+}
+
+export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = ({
+  idRequeteAAfficher
+}) => {
+  const [idRequete, setIdRequete] = useState<string>();
+  const [requete, setRequete] = useState<IRequeteInformation>();
+  const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 
-  const [requete, setRequete] = useState<IRequeteInformation>();
+  useEffect(() => {
+    // L'idRequete peut venir de l'URL ou bien être une props dans le cas d'une requete liée
+    if (idRequeteAAfficher) {
+      setIdRequete(idRequeteAAfficher);
+    } else {
+      setIdRequete(idRequeteParam);
+    }
+  }, [idRequeteParam, idRequeteAAfficher]);
 
   useEffect(() => {
     if (detailRequeteState) {
@@ -33,6 +48,7 @@ export const ApercuReqInfoPage: React.FC = () => {
         <ProtectionApercu
           statut={requete.statutCourant.statut}
           type={requete.type}
+          forcePass={idRequeteAAfficher !== undefined}
         >
           <BandeauRequete requete={requete} />
           <div className="contenuRequeteInfo">
@@ -50,7 +66,10 @@ export const ApercuReqInfoPage: React.FC = () => {
             </div>
             <div className="side right">
               <RMCAuto requete={detailRequeteState} />
-              <ReponseReqInfo requete={requete} />
+              <ReponseReqInfo
+                requete={requete}
+                disabled={idRequeteAAfficher !== undefined}
+              />
             </div>
           </div>
         </ProtectionApercu>

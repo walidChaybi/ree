@@ -1,3 +1,3 @@
 export interface IUuidRequeteParams {
-  idRequete: string;
+  idRequeteParam: string;
 }
