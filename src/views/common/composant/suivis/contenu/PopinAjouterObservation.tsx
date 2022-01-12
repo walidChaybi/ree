@@ -29,11 +29,11 @@ const OBSERVATION_LIMITE_TAILLE = `L'observation ne peut pas dépasser ${OBSERVA
 // Schéma de validation en sortie de champs
 const ValidationSchema = Yup.object({
   [OBSERVATION]: Yup.string().max(
-    OBSERVATION_MAX_LENGTH,
+    OBSERVATION_MAX_LENGTH - 1,
     OBSERVATION_LIMITE_TAILLE
   )
 });
- 
+
 export interface PopinAjouterObservationProps {
   open: boolean;
   onClosePopin: () => void;
@@ -70,7 +70,7 @@ export const PopinAjouterObservation: React.FC<PopinAjouterObservationProps> =
                 label={getLibelle("Saisissez l'observation")}
                 placeholder={getLibelle("Description")}
                 rows={NB_LIGNE_COMPLEMENT_DESCRIPTION}
-                maxLength={"151"}
+                maxLength={OBSERVATION_MAX_LENGTH.toString()}
               />
               <FormBoutons {...boutonsProps} />
             </Formulaire>

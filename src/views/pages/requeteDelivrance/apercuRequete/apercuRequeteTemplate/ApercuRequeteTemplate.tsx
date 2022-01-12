@@ -58,6 +58,7 @@ export const ApercuRequeteTemplate: React.FC<TemplateProps> = props => {
             <ApercuRequetePartieGauche
               requete={requete}
               onClickDocumentAffiche={props.setDocumentAfficheCallback}
+              disabled={props.idRequeteAAfficher !== undefined}
             />
             <div className="side right">{props.children}</div>
           </div>

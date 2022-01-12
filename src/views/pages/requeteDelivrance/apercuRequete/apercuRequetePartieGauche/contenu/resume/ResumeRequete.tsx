@@ -64,7 +64,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
           height={height}
           width={width}
         >
-          <DetailRequetePage />
+          <DetailRequetePage idRequeteAAfficher={props.requete.id} />
         </FenetreExterne>
       )}
     </>

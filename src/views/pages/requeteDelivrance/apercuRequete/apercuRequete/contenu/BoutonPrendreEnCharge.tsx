@@ -45,9 +45,7 @@ export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> =
         onClick={setActionEtUpdateStatut}
         class="BoutonPrendreEnCharge"
         estDesactive={
-          !autorisePrendreEnChargeDelivrance(
-            props.requete || props.disabled === true
-          )
+          !autorisePrendreEnChargeDelivrance(props.requete) || props.disabled
         }
       >
         {getLibelle("Prendre en charge")}

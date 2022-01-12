@@ -29,6 +29,7 @@ import "./scss/Suivis.scss";
 interface SuiviObservationsRequeteProps {
   observations?: IObservation[];
   idRequete: string;
+  disabled?: boolean;
 }
 
 export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
@@ -52,8 +53,10 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
     const resultatCreation = useCreationObservationApi(creationObservation);
 
     const onClick = (): void => {
-      setTexteObservation(undefined);
-      setIsOpen(true);
+      if (!props.disabled) {
+        setTexteObservation(undefined);
+        setIsOpen(true);
+      }
     };
 
     const onClosePopin = (): void => {
@@ -123,7 +126,10 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
     }, [resultatSuppression]);
 
     const onClickSupprimer = (ob: IObservation) => {
-      if (storeRece.utilisateurCourant?.idUtilisateur === ob.idUtilisateur) {
+      if (
+        storeRece.utilisateurCourant?.idUtilisateur === ob.idUtilisateur &&
+        !props.disabled
+      ) {
         setObservationASupprimer({ idObservation: ob.id });
       } else {
         logError({
@@ -134,15 +140,18 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
     };
 
     const onClickModifier = (ob: IObservation) => {
-      if (storeRece.utilisateurCourant?.idUtilisateur !== ob.idUtilisateur) {
+      if (
+        storeRece.utilisateurCourant?.idUtilisateur === ob.idUtilisateur &&
+        !props.disabled
+      ) {
+        setIdObservationAModifier(ob.id);
+        setTexteObservation(ob.texte);
+        setIsOpen(true);
+      } else {
         logError({
           messageUtilisateur:
             "Vous ne pouvez pas modifier une observation que vous n'avez pas vous-même enregistrée"
         });
-      } else {
-        setIdObservationAModifier(ob.id);
-        setTexteObservation(ob.texte);
-        setIsOpen(true);
       }
     };
 

@@ -8,6 +8,7 @@ import "../scss/ReponseReqInfo.scss";
 
 export type BoutonsReponseReqInfoProps = {
   formulaireDisabled: boolean;
+  retourVisible?: boolean;
 } & FormikComponentProps;
 
 const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
@@ -29,15 +30,17 @@ const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
   return (
     <>
       <div className="Boutons">
-        <button
-          type="button"
-          id="boutonAnnuler"
-          onClick={() => {
-            handleAnnuler();
-          }}
-        >
-          {libelleRetour}
-        </button>
+        {props.retourVisible && (
+          <button
+            type="button"
+            id="boutonAnnuler"
+            onClick={() => {
+              handleAnnuler();
+            }}
+          >
+            {libelleRetour}
+          </button>
+        )}
         <button
           disabled={props.formulaireDisabled || !props.formik.isValid}
           type="button"

@@ -11,25 +11,28 @@ import { ResumeRequete } from "./contenu/resume/ResumeRequete";
 interface ApercuRequetePartieGaucheProps {
   requete: IRequeteDelivrance;
   onClickDocumentAffiche?: (docReponse: IDocumentReponse) => void;
+  disabled?: boolean;
 }
 
-export const ApercuRequetePartieGauche: React.FC<ApercuRequetePartieGaucheProps> = props => {
-  return (
-    <div className="side left">
-      <ResumeRequete requete={props.requete} />
-      {props.requete?.statutCourant.statut ===
-        StatutRequete.PRISE_EN_CHARGE && (
-        <RMCRequetesAssocieesResultats requete={props.requete} />
-      )}
-      <SuiviObservationsRequete
-        observations={props.requete.observations}
-        idRequete={props.requete.id}
-      />
-      <SuiviActionsRequete actions={props.requete?.actions} />
-      <DocumentsReponses
-        requete={props.requete}
-        onClickDocumentAffiche={props.onClickDocumentAffiche}
-      />
-    </div>
-  );
-};
+export const ApercuRequetePartieGauche: React.FC<ApercuRequetePartieGaucheProps> =
+  props => {
+    return (
+      <div className="side left">
+        <ResumeRequete requete={props.requete} />
+        {props.requete?.statutCourant.statut ===
+          StatutRequete.PRISE_EN_CHARGE && (
+          <RMCRequetesAssocieesResultats requete={props.requete} />
+        )}
+        <SuiviObservationsRequete
+          observations={props.requete.observations}
+          idRequete={props.requete.id}
+          disabled={props.disabled}
+        />
+        <SuiviActionsRequete actions={props.requete?.actions} />
+        <DocumentsReponses
+          requete={props.requete}
+          onClickDocumentAffiche={props.onClickDocumentAffiche}
+        />
+      </div>
+    );
+  };

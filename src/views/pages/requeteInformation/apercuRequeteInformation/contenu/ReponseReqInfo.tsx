@@ -34,6 +34,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
 
   const [lesBoutonsDisabled, setLesBoutonsDisabled] = useState(false);
   const [formulaireDisabled, setFormulaireDisabled] = useState(false);
+  const [retourVisible, setRetourVisible] = useState(false);
   const [tousLesBoutonsVisibles, setTousLesBoutonsVisibles] = useState(true);
   const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] =
     useState(true);
@@ -50,6 +51,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
       requete.besoinUsager === BesoinUsager.COMPLETER_DEMANDE &&
       requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS;
 
+    setRetourVisible(!disabled);
     setLesBoutonsDisabled(disabled ? disabled : mauvaisUtilisateur);
     setFormulaireDisabled(
       disabled ? disabled : mauvaisUtilisateur || rejetOuTraiteRepondu
@@ -124,6 +126,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
             requete={requete}
             formulaireDisabled={formulaireDisabled}
             boutonVisible={tousLesBoutonsVisibles}
+            retourVisible={retourVisible}
           />
         </div>
       </Fieldset>

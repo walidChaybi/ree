@@ -47,7 +47,7 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
             contenu={documentAffiche?.contenu}
             typeMime={documentAffiche?.mimeType}
           />
-          <BoutonRetour />
+          {!idRequeteAAfficher && <BoutonRetour />}
           {!MigratorV1V2.estRDDouRDC(requete) && (
             <BoutonPrendreEnCharge
               requete={requete}

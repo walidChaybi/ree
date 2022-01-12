@@ -42,6 +42,7 @@ export interface ReponseReqInfoProps {
   formulaireDisabled: boolean;
   boutonVisible: boolean;
   reponse?: IReponseRequeteInfo;
+  retourVisible?: boolean;
 }
 
 export type ReponseReqInfoFormProps = FormikComponentProps &
@@ -68,7 +69,8 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   requete,
   formulaireDisabled,
   boutonVisible,
-  reponse
+  reponse,
+  retourVisible
 }) => {
   const history = useHistory();
   const blocsForm: JSX.Element[] = getReponseForm(
@@ -78,21 +80,16 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   );
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [reponseSaisie, setReponseSaisie] = useState<
-    ISauvegarderReponseReqInfoParams | undefined
-  >();
-  const [reponseASauvegarder, setReponseASauvegarder] = useState<
-    ISauvegarderReponseReqInfoParams | undefined
-  >();
-  const [reponseAEnvoyer, setReponseAEnvoyer] = useState<
-    IEnvoyerReponseReqInfoParams | undefined
-  >();
-  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] = useState<
-    boolean
-  >(false);
-  const [piecesAEnvoyer, setPiecesAEnvoyer] = useState<
-    PieceJointe[] | undefined
-  >();
+  const [reponseSaisie, setReponseSaisie] =
+    useState<ISauvegarderReponseReqInfoParams | undefined>();
+  const [reponseASauvegarder, setReponseASauvegarder] =
+    useState<ISauvegarderReponseReqInfoParams | undefined>();
+  const [reponseAEnvoyer, setReponseAEnvoyer] =
+    useState<IEnvoyerReponseReqInfoParams | undefined>();
+  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] =
+    useState<boolean>(false);
+  const [piecesAEnvoyer, setPiecesAEnvoyer] =
+    useState<PieceJointe[] | undefined>();
 
   const onSubmit = (reponseForm: IReponseInfoFormValue) => {
     setOperationEnCours(true);
@@ -177,6 +174,7 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
           <ReponseReqInfoBoutons
             {...boutonsProps}
             formulaireDisabled={formulaireDisabled}
+            retourVisible={retourVisible}
           />
         </Formulaire>
       </Fieldset>
