@@ -68,7 +68,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
           />
           <BoutonRetour />
           <div className="BoutonsAction">
-            {!MigratorV1V2.estRDDouRDC(requete) && (
+            {MigratorV1V2.nEstPasRDDouRDCouEstEtape2Bis(requete) && (
               <>
                 <BoutonModifierTraitement
                   requete={requete}

@@ -6,6 +6,8 @@ import {
   RequeteDelivrance
 } from "../../../../model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
+import { FeatureFlag } from "../featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../featureFlag/gestionnaireFeatureFlag";
 
 const A_RETRAITER = "A_RETRAITER";
 export class MigratorV1V2 {
@@ -97,7 +99,14 @@ export class MigratorV1V2 {
     return requete.sousType === SousTypeDelivrance.RDD;
   }
 
-  public static estRDDouRDC(requete: IRequeteDelivrance) {
+  public static nEstPasRDDouRDCouEstEtape2Bis(requete: IRequeteDelivrance) {
+    return (
+      !MigratorV1V2.estRDDouRDC(requete) ||
+      gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS)
+    );
+  }
+
+  private static estRDDouRDC(requete: IRequeteDelivrance) {
     return (
       requete.sousType === SousTypeDelivrance.RDD ||
       requete.sousType === SousTypeDelivrance.RDC
