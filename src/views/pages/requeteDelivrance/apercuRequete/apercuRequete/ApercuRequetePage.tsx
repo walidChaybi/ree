@@ -48,7 +48,7 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
             typeMime={documentAffiche?.mimeType}
           />
           {!idRequeteAAfficher && <BoutonRetour />}
-          {!MigratorV1V2.nEstPasRDDouRDCouEstEtape2Bis(requete) && (
+          {MigratorV1V2.nEstPasRDDouRDCouEstEtape2Bis(requete) && (
             <BoutonPrendreEnCharge
               requete={requete}
               disabled={idRequeteAAfficher !== undefined}
