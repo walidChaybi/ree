@@ -44,7 +44,8 @@ export const DocumentReponse = {
   },
 
   triDocumentsDelivrance(documents: IDocumentReponse[]): IDocumentReponse[] {
-    return documents.sort(
+    const documentsSansDoublonSansCtv = this.enleverDoublonSansCtv(documents);
+    return documentsSansDoublonSansCtv.sort(
       (doc1, doc2) =>
         DocumentDelivrance.getNumeroOrdre(doc1.typeDocument) -
         DocumentDelivrance.getNumeroOrdre(doc2.typeDocument)
@@ -62,5 +63,30 @@ export const DocumentReponse = {
     }
 
     return libelle;
+  },
+  
+  //Si doublon copie avec ctv ET copie sans ctv
+  enleverDoublonSansCtv(documents: IDocumentReponse[]): IDocumentReponse[] {
+    const documentsSansCtvs : IDocumentReponse[] = [];
+    const documentsAvecCtvs : IDocumentReponse[] = [];
+
+    documents.forEach(document => {
+      if (!document.avecCtv) {
+        documentsSansCtvs.push(document);
+      } else {
+        documentsAvecCtvs.push(document);
+      }
+    });
+
+    const documentsSansDoublonSansCtv : IDocumentReponse[] = [];
+
+    documentsSansCtvs.forEach(documentSansCtv => {
+      const aDoublon = documentsAvecCtvs.find(documentAvecCtv => documentSansCtv.typeDocument === documentAvecCtv.typeDocument);
+      aDoublon ? documentsSansDoublonSansCtv.push(aDoublon) : documentsSansDoublonSansCtv.push(documentSansCtv);
+    });
+
+    return documentsSansDoublonSansCtv;
   }
 };
+
+
