@@ -64,11 +64,13 @@ export const DocumentReponse = {
 
     return libelle;
   },
-  
-  //Si doublon copie avec ctv ET copie sans ctv
+
+  // Elimine les documents sans CTV qui existent déjà avec un CTV dans les documents réponse
   enleverDoublonSansCtv(documents: IDocumentReponse[]): IDocumentReponse[] {
-    const documentsSansCtvs : IDocumentReponse[] = [];
-    const documentsAvecCtvs : IDocumentReponse[] = [];
+    let resulatDocumentsSansDoublons: IDocumentReponse[];
+
+    const documentsSansCtvs: IDocumentReponse[] = [];
+    const documentsAvecCtvs: IDocumentReponse[] = [];
 
     documents.forEach(document => {
       if (!document.avecCtv) {
@@ -78,15 +80,28 @@ export const DocumentReponse = {
       }
     });
 
-    const documentsSansDoublonSansCtv : IDocumentReponse[] = [];
+    resulatDocumentsSansDoublons = documentsAvecCtvs;
 
     documentsSansCtvs.forEach(documentSansCtv => {
-      const aDoublon = documentsAvecCtvs.find(documentAvecCtv => documentSansCtv.typeDocument === documentAvecCtv.typeDocument);
-      aDoublon ? documentsSansDoublonSansCtv.push(aDoublon) : documentsSansDoublonSansCtv.push(documentSansCtv);
+      if (
+        !documentSansCtvExisteDejaAvecCtv(documentSansCtv, documentsAvecCtvs)
+      ) {
+        resulatDocumentsSansDoublons.push(documentSansCtv);
+      }
     });
 
-    return documentsSansDoublonSansCtv;
+    return resulatDocumentsSansDoublons;
   }
 };
 
-
+function documentSansCtvExisteDejaAvecCtv(
+  documentSansCtv: IDocumentReponse,
+  documentsAvecCtvs: IDocumentReponse[]
+): boolean {
+  return (
+    documentsAvecCtvs.find(
+      documentAvecCtv =>
+        documentSansCtv.typeDocument === documentAvecCtv.typeDocument
+    ) !== undefined
+  );
+}
