@@ -36,7 +36,8 @@ export const configRequetesInformation = [
           data: ReponseMesRequetesInformation,
           headers: {
             "content-range": "0-15/" + ReponseMesRequetesInformation.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -50,7 +51,8 @@ export const configRequetesInformation = [
           data: ReponseRequetesInfoService,
           headers: {
             "content-range": "0-15/" + ReponseRequetesInfoService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -59,7 +61,10 @@ export const configRequetesInformation = [
       if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856") {
         return { data: ReponseAppelDetailRequeteInformation.data };
       }
-      if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10557") {
+      if (
+        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10557" ||
+        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10555"
+      ) {
         return { data: ReponseAppelDetailRequeteCompletion.data };
       }
 

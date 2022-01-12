@@ -57,7 +57,7 @@ export const CodesExtraitCopie = [
 
 const ORDRE_MAX = 999;
 
-const COURRIER = "Courrier";
+export const COURRIER = "Courrier";
 const ORDRE_DOCUMENTS_DELIVRANCE = {
   "Copie intégrale": 10,
   "Extrait avec filiation": 20,

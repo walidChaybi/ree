@@ -11,6 +11,7 @@ import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
 import { gestionnaireFeatureFlag } from "../../../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
@@ -24,28 +25,28 @@ const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
 
 const sauvFonctionEstActive = gestionnaireFeatureFlag.estActif;
+
+let history: any;
+
 beforeAll(() => {
+  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
+  DocumentDelivrance.init();
   TypePieceJustificative.init();
   gestionnaireFeatureFlag.estActif = function () {
     return true;
   };
+  history = createMemoryHistory();
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+      "a4cefb71-8457-4f6b-937e-34b49335d494"
+    )
+  );
 });
 
 afterAll(() => {
   gestionnaireFeatureFlag.estActif = sauvFonctionEstActive;
   superagentMock.unset();
-});
-
-const history = createMemoryHistory();
-history.push(
-  getUrlWithParam(
-    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-    "a4cefb71-8457-4f6b-937e-34b49335d494"
-  )
-);
-
-beforeAll(() => {
-  storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 
 test("renders ApercuRequeteTraitementPage", async () => {
@@ -109,8 +110,8 @@ test("renders document réponses", async () => {
     );
   });
   const title = screen.getByText(/Documents à délivrer/i);
-  const doc1 = screen.getByText(/CARN_CSPAC_01/i);
-  const doc2 = screen.getByText(/CERTIFICAT_INSCRIPTION_RCA/i);
+  const doc1 = screen.getAllByText(/^Courrier$/)[1]; // Il y a deux fois le libellé Courrier: un pour le canal et un pour les documenets délivrés
+  const doc2 = screen.getByText(/Certificat d'inscription au RCA/i);
 
   await waitFor(() => {
     expect(title).toBeDefined();

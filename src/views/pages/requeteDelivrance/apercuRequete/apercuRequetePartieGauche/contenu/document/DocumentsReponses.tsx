@@ -99,7 +99,7 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
             <ListItem
               key={el.id}
               onClick={() => {
-                onClick({ id: el.id, nom: el.nom });
+                onClick({ id: el.id, nom: DocumentReponse.getLibelle(el) });
               }}
               className="documentReponse"
             >
@@ -114,7 +114,10 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
                   </Avatar>
                 )}
               </ListItemAvatar>
-              <ListItemText className="InformationDocument" primary={el.nom} />
+              <ListItemText
+                className="InformationDocument"
+                primary={DocumentReponse.getLibelle(el)}
+              />
             </ListItem>
           ))}
         </List>

@@ -9,6 +9,7 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
+import { DocumentDelivrance } from "../../../../../../src/model/requete/enum/DocumentDelivrance";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
 import {
   DataRMCActeAvecResultat,
@@ -30,7 +31,6 @@ import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../../views/router/ReceUrls";
-
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
   configEtatcivil[0],
@@ -44,23 +44,26 @@ globalAny.open = () => {
 };
 globalAny.close = jest.fn();
 
-const history = createMemoryHistory();
-history.push(
-  getUrlWithParam(
-    URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-    "a4cefb71-8457-4f6b-937e-34b49335d884"
-  ),
-  {
-    dataRMCAutoActe: DataRMCActeAvecResultat,
-    dataTableauRMCAutoActe: { DataTableauActe },
-    dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
-    dataTableauRMCAutoInscription: { DataTableauInscription }
-  }
-);
+let history: any;
 
 beforeAll(() => {
+  DocumentDelivrance.init();
   TypePieceJustificative.init();
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
+
+  history = createMemoryHistory();
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+      "a4cefb71-8457-4f6b-937e-34b49335d884"
+    ),
+    {
+      dataRMCAutoActe: DataRMCActeAvecResultat,
+      dataTableauRMCAutoActe: { DataTableauActe },
+      dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
+      dataTableauRMCAutoInscription: { DataTableauInscription }
+    }
+  );
 });
 
 test("renders ApercuRequetePriseEnChargePage", async () => {
@@ -269,8 +272,8 @@ test("ignorer requete", async () => {
     );
   });
   const title = screen.getByText(/Documents à délivrer/i);
-  const doc1 = screen.getByText(/CARN_CSPAC_01/i);
-  const doc2 = screen.getByText(/CERTIFICAT_INSCRIPTION_RCA/i);
+  const doc1 = screen.getAllByText(/^Courrier$/)[1]; // Il y a deux fois le libellé Courrier: un pour le canal et un pour les documenets délivrés
+  const doc2 = screen.getByText(/Certificat d'inscription au RCA/i);
 
   await waitFor(() => {
     expect(title).toBeDefined();

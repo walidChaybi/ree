@@ -16,7 +16,7 @@ export const idDocumentsReponse2 = [
 export const documentReponseCARN_CSPAC_01: IDocumentReponse = {
   id: idDocumentsReponse[0],
   nom: "CARN_CSPAC_01",
-  typeDocument: "c4f4c8fb-5ab1-40df-98ef-b4ea0dde4cb6",
+  typeDocument: "0c82b27a-7ade-4dce-aa61-b88f07726c1b",
   mimeType: "image/png",
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
@@ -28,7 +28,7 @@ export const documentReponseCARN_CSPAC_01: IDocumentReponse = {
 export const documentReponseCertificatRCA: IDocumentReponse = {
   id: idDocumentsReponse[1],
   nom: "CERTIFICAT_INSCRIPTION_RCA",
-  typeDocument: "c4f4c8fb-5ab1-40df-98ef-b4ea0dde4cc7",
+  typeDocument: "d407f403-ca22-4e06-9c46-b7ab7fa5b9fc",
   mimeType: "image/png",
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)

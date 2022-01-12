@@ -1,6 +1,6 @@
 import { MimeType } from "file-type/core";
 import { Orientation } from "../composition/enum/Orientation";
-import { DocumentDelivrance } from "./enum/DocumentDelivrance";
+import { COURRIER, DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { Validation } from "./enum/Validation";
 import { IOptionCourrierDocumentReponse } from "./IOptionCourrierDocumentReponse";
 import { ITexteLibreCourrier } from "./ITexteLibreCourrier";
@@ -49,5 +49,18 @@ export const DocumentReponse = {
         DocumentDelivrance.getNumeroOrdre(doc1.typeDocument) -
         DocumentDelivrance.getNumeroOrdre(doc2.typeDocument)
     );
+  },
+  getLibelle(document: IDocumentReponse) {
+    let libelle: string;
+    const documentDelivrance = DocumentDelivrance.getEnumFor(
+      document.typeDocument
+    );
+    if (DocumentDelivrance.estCourrierDAccompagnement(documentDelivrance)) {
+      libelle = COURRIER;
+    } else {
+      libelle = documentDelivrance.libelle;
+    }
+
+    return libelle;
   }
 };
