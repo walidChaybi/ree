@@ -5,7 +5,8 @@ export enum TypeInscriptionRc {
   RADIATION = "RADIATION",
   MAIN_LEVEE = "MAIN_LEVEE",
   FIN_MESURE = "FIN_MESURE",
-  CADUCITE = "CADUCITE"
+  CADUCITE = "CADUCITE",
+  INCONNU = "INCONNU"
 }
 
 export class InscriptionRcUtil {
@@ -16,7 +17,8 @@ export class InscriptionRcUtil {
     [TypeInscriptionRc.RADIATION]: "Radiation",
     [TypeInscriptionRc.MAIN_LEVEE]: "Main levée",
     [TypeInscriptionRc.FIN_MESURE]: "Fin de mesure",
-    [TypeInscriptionRc.CADUCITE]: "Caducité"
+    [TypeInscriptionRc.CADUCITE]: "Caducité",
+    [TypeInscriptionRc.INCONNU]: "Inconnu"
   };
 
   public static getLibelle(inscriptionRc?: TypeInscriptionRc): string {
