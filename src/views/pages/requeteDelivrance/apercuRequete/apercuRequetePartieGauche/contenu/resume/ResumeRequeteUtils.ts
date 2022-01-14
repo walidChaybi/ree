@@ -213,7 +213,11 @@ function getNomOuRaisonSociale(requerant: IRequerant) {
   let nom: string | undefined;
   switch (requerant?.qualiteRequerant.qualite) {
     case Qualite.MANDATAIRE_HABILITE:
-      nom = requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale;
+      if (requerant?.qualiteRequerant.mandataireHabilite?.raisonSociale) {
+        nom = requerant.qualiteRequerant.mandataireHabilite.raisonSociale;
+      } else if (requerant?.nomFamille) {
+        nom = `${requerant.nomFamille} ${requerant.prenom}`;
+      }
       break;
     case Qualite.AUTRE_PROFESSIONNEL:
       nom = requerant?.qualiteRequerant.autreProfessionnel?.raisonSociale;

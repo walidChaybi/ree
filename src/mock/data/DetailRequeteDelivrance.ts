@@ -1242,8 +1242,8 @@ export const ReponseAppelDetailRequeteDelivranceUnTitulaire = {
     requerant: {
       id: "97d0e400-19d3-47fa-aedb-137002a96f18",
       dateCreation: 1528192343,
-      nomFamille: "",
-      prenom: "",
+      nomFamille: "JACQUES",
+      prenom: "Charles",
       courriel: "cjacques@candw.fr",
       telephone: "0152698741",
       adresse: {

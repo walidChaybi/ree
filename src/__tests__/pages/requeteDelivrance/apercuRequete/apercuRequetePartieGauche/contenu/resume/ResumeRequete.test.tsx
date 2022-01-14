@@ -233,6 +233,73 @@ test("renders Page requete type creation", async () => {
   });
 });
 
+test("renders Page requete with mandataire hablité without raison sociale", async () => {
+  const reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale =
+    ReponseAppelDetailRequeteDelivranceUnTitulaire.data;
+
+  reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale.requerant.detailQualiteMandataireHabilite = {
+    id: "94cb55b0-7cb1-4d65-9aae-e6c972e29ed9",
+    type: "AVOCAT",
+    nature: "",
+    crpcen: ""
+  } as any;
+
+  console.log(
+    reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale
+  );
+
+  await act(async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d404"
+      )
+    );
+
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
+          >
+            <ResumeRequete
+              requete={
+                await mappingRequeteDelivrance(
+                  reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale
+                )
+              }
+            />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Résumé requête")).toBeDefined();
+    expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
+    expect(
+      screen.getByText("Requête de Délivrance Extrait/Copie Dématérialisée")
+    ).toBeDefined();
+    expect(screen.getByText("Info titulaire 1")).toBeDefined();
+    expect(screen.getByText("CAMPBALL")).toBeDefined();
+    expect(screen.getByText("Nature")).toBeDefined();
+    expect(screen.getByText("Date de l'évènement")).toBeDefined();
+    expect(screen.getByText("12/05/2019")).toBeDefined();
+    expect(screen.getByText("Lieu de l'évènement")).toBeDefined();
+    expect(screen.getByText("Tunis")).toBeDefined();
+    expect(screen.getByText("Document")).toBeDefined();
+    expect(screen.getByText("Motif")).toBeDefined();
+    expect(screen.getByText("Canal")).toBeDefined();
+    expect(screen.getByText("Nom requérant")).toBeDefined();
+    expect(screen.getByText("JACQUES Charles")).toBeDefined();
+    expect(screen.getByText("Père/mère")).toBeDefined();
+    fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));
+  });
+});
+
 afterAll(() => {
   superagentMock.unset();
 });
