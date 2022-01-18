@@ -36,6 +36,10 @@
   }
 
   .documentReponse {
+    &.selected {
+      background-color: #9bcbe7 !important;
+    }
+
     &:hover {
       cursor: pointer;
       background-color: $application-hoover !important;

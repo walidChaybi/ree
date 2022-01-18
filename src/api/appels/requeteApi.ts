@@ -285,7 +285,7 @@ export async function postSauvDocumentCreerActionMajStatutRequete(
 }
 
 export function getDocumentReponseById(idDcumentReponse: string): Promise<any> {
-  return api.fetch({
+  return api.fetchCache({
     method: HttpMethod.GET,
     uri: `${URL_DOCUMENT_REPONSE}/${idDcumentReponse}`
   });

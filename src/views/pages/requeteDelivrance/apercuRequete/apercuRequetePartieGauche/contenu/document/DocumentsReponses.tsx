@@ -101,7 +101,9 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
               onClick={() => {
                 onClick({ id: el.id, nom: DocumentReponse.getLibelle(el) });
               }}
-              className="documentReponse"
+              className={`documentReponse ${
+                documentAffiche?.id === el.id ? "selected" : ""
+              }`}
             >
               <ListItemAvatar>
                 {el.mimeType === "application/pdf" ? (
