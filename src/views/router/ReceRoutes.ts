@@ -27,12 +27,10 @@ import {
   URL_DECONNEXION,
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_TRAITEMENT_COURRIER_ID,
-  URL_MES_REQUETES_DELIVRANCE_EXTRAIT_COPIE_COURRIER_ID,
+  URL_MES_REQUETES_DELIVRANCE_COURRIER_ID,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
@@ -47,19 +45,16 @@ import {
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_RECHERCHE_REQUETE,
-  URL_RECHERCHE_REQUETE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_RECHERCHE_REQUETE_APERCU_TRAITEMENT_COURRIER_ID,
+  URL_RECHERCHE_REQUETE_COURRIER_ID,
   URL_REQUETES_DELIVRANCE_SERVICE,
-  URL_REQUETES_DELIVRANCE_SERVICE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_REQUETES_DELIVRANCE_SERVICE_APERCU_TRAITEMENT_COURRIER_ID,
-  URL_REQUETES_DELIVRANCE_SERVICE_EXTRAIT_COPIE_COURRIER_ID,
+  URL_REQUETES_DELIVRANCE_SERVICE_COURRIER_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
@@ -79,7 +74,7 @@ const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête";
 const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
 const LIBELLE_CREATION = "Création d'un courrier";
-const LIBELLE_MODIFICATION = "Modification d'un courrier";
+//const LIBELLE_MODIFICATION = "Modification d'un courrier";
 
 export const routesRece: IRoute[] = [
   {
@@ -202,39 +197,11 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
   },
   {
-    url: URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
+    url: URL_MES_REQUETES_DELIVRANCE_COURRIER_ID,
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
     libelle: getLibelle(LIBELLE_CREATION)
-  },
-  {
-    url: URL_MES_REQUETES_DELIVRANCE_EXTRAIT_COPIE_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_CREATION)
-  },
-  {
-    url: URL_MES_REQUETES_DELIVRANCE_APERCU_TRAITEMENT_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_MODIFICATION)
-  },
-  {
-    url: URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_CREATION)
-  },
-  {
-    url: URL_MES_REQUETES_DELIVRANCE_APERCU_TRAITEMENT_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_MODIFICATION)
   },
   ////////////////////////////////////////////////////////
   ///// REQUETES DE DELIVRANCE DE MON SERVICE (RDMS) /////
@@ -338,25 +305,11 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(LIBELLE_APERCU_REQUETE_TRAITEMENT)
   },
   {
-    url: URL_REQUETES_DELIVRANCE_SERVICE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
+    url: URL_REQUETES_DELIVRANCE_SERVICE_COURRIER_ID,
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
     libelle: getLibelle(LIBELLE_CREATION)
-  },
-  {
-    url: URL_REQUETES_DELIVRANCE_SERVICE_EXTRAIT_COPIE_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_CREATION)
-  },
-  {
-    url: URL_REQUETES_DELIVRANCE_SERVICE_APERCU_TRAITEMENT_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_MODIFICATION)
   },
   //////////////////////////////////////////
   ///// RECHERCHE MULTI-CRITERES (RMC) /////
@@ -407,25 +360,11 @@ export const routesRece: IRoute[] = [
     )
   },
   {
-    url: URL_RECHERCHE_REQUETE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
+    url: URL_RECHERCHE_REQUETE_COURRIER_ID,
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
     libelle: getLibelle(LIBELLE_CREATION)
-  },
-  {
-    url: URL_RECHERCHE_REQUETE_APERCU_TRAITEMENT_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_MODIFICATION)
-  },
-  {
-    url: URL_RECHERCHE_REQUETE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_MODIFICATION)
   },
   //////////////////////////////////////////////
   ///////// REQUETE D'INFORMATION (RI) /////////

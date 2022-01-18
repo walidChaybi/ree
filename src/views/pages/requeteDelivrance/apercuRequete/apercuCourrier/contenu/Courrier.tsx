@@ -19,7 +19,10 @@ import {
 } from "../../../../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "../../../../../common/widget/popin/ConfirmationPopin";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID } from "../../../../../router/ReceUrls";
+import {
+  receUrl,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
+} from "../../../../../router/ReceUrls";
 import BoutonsCourrier, {
   BoutonsCourrierProps
 } from "./contenuForm/BoutonsCourrier";
@@ -180,7 +183,8 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
       messageManager.showSuccessAndClose(
         getLibelle("Le courrier a bien été enregistré")
       );
-      history.push(
+      receUrl.replaceUrl(
+        history,
         getUrlWithParam(
           URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
           props.requete.id

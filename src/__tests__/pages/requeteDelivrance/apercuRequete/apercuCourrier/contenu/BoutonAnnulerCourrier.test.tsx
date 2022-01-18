@@ -4,6 +4,7 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
+import { URL_MES_REQUETES_DELIVRANCE } from "../../../../../../api/appels/requeteApi";
 import { userDroitnonCOMEDEC } from "../../../../../../mock/data/connectedUserAvecDroit";
 import {
   idRequeteRDCSC,
@@ -16,10 +17,7 @@ import { storeRece } from "../../../../../../views/common/util/storeRece";
 import BoutonsCourrier, {
   BoutonsCourrierProps
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/BoutonsCourrier";
-import {
-  URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-} from "../../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_COURRIER_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -32,17 +30,9 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
     ...boutonsProps,
     requete: requeteRDCSC
   } as BoutonsCourrierProps;
+  history.push(getUrlWithParam(URL_MES_REQUETES_DELIVRANCE, idRequeteRDCSC));
   history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequeteRDCSC
-    )
-  );
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
-      idRequeteRDCSC
-    )
+    getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_COURRIER_ID, idRequeteRDCSC)
   );
   const { getByText } = render(
     <Router history={history}>
@@ -64,10 +54,7 @@ test("render composant bouton annuler avec requete prise en charge", async () =>
 
   await waitFor(() => {
     expect(history.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequeteRDCSC
-      )
+      getUrlWithParam(URL_MES_REQUETES_DELIVRANCE, idRequeteRDCSC)
     );
   });
 });
@@ -80,17 +67,9 @@ test("render composant bouton annuler avec requete a valider", async () => {
     ...boutonsProps,
     requete: requeteRDCSC
   } as BoutonsCourrierProps;
+  history.push(getUrlWithParam(URL_MES_REQUETES_DELIVRANCE, idRequeteRDCSC));
   history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-      idRequeteRDCSC
-    )
-  );
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
-      idRequeteRDCSC
-    )
+    getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_COURRIER_ID, idRequeteRDCSC)
   );
   const { getByText } = render(
     <Router history={history}>
@@ -112,10 +91,7 @@ test("render composant bouton annuler avec requete a valider", async () => {
 
   await waitFor(() => {
     expect(history.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequeteRDCSC
-      )
+      getUrlWithParam(URL_MES_REQUETES_DELIVRANCE, idRequeteRDCSC)
     );
   });
 });

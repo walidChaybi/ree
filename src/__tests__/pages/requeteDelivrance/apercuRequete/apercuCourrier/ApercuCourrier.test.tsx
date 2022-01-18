@@ -16,7 +16,7 @@ import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDe
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../../views/common/util/storeRece";
 import { ApercuCourrier } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/ApercuCourrier";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID } from "../../../../../views/router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_COURRIER_ID } from "../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
@@ -26,7 +26,7 @@ const superagentMock = require("superagent-mock")(request, [
 const history = createMemoryHistory();
 history.push(
   getUrlWithParam(
-    URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID,
+    URL_MES_REQUETES_DELIVRANCE_COURRIER_ID,
     "a4cefb71-8457-4f6b-937e-34b49335d666"
   )
 );
@@ -41,12 +41,7 @@ test("renders apercu courrier", async () => {
     render(
       <>
         <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID
-            }
-          >
+          <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_COURRIER_ID}>
             <ApercuCourrier />
           </Route>
         </Router>
@@ -89,12 +84,7 @@ test("créer courrier", async () => {
     render(
       <>
         <Router history={history}>
-          <Route
-            exact={true}
-            path={
-              URL_MES_REQUETES_DELIVRANCE_APERCU_PRISE_EN_CHARGE_COURRIER_ID
-            }
-          >
+          <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_COURRIER_ID}>
             <ApercuCourrier />
           </Route>
         </Router>
