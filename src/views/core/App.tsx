@@ -21,6 +21,7 @@ import {
   traiteAppelRequeteASigner
 } from "../common/util/GestionnaireFermeture";
 import { logError } from "../common/util/LogManager";
+import { MigratorV1V2 } from "../common/util/migration/MigratorV1V2";
 import { storeRece } from "../common/util/storeRece";
 import { URL_MES_REQUETES_DELIVRANCE } from "../router/ReceUrls";
 import "./App.scss";
@@ -38,6 +39,7 @@ const App: React.FC = () => {
   const login = useLoginApi();
 
   useEffect(() => {
+    MigratorV1V2.init();
     loadFonts();
   }, []);
 

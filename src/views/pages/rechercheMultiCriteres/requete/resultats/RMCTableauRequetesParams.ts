@@ -30,13 +30,13 @@ export const columnsTableauRequete = [
     title: "",
     align: "center",
     getElement: getObservationsNumeroRequete,
-    style: { width: "1px" }
+    style: { width: "16px" }
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Numero],
     title: "N°",
     align: "center",
-    style: { width: "100px" }
+    style: { width: "70px" }
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.NumeroTeledossier],

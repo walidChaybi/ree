@@ -17,7 +17,7 @@ export class MigratorV1V2 {
   //  - StatutRequete.TRAITE_A_DELIVRER_DEMAT pour RDD qui ne sont pas à signer
   //  - StatutRequete.TRAITE_A_IMPRIMER (uniquement pour les RDC)
 
-  public static getStatutARetraiter(): StatutRequete {
+  public static init() {
     // @ts-ignore
     if (!StatutRequete[A_RETRAITER]) {
       // @ts-ignore
@@ -26,6 +26,10 @@ export class MigratorV1V2 {
         "A retraiter dans Saga"
       );
     }
+  }
+
+  public static getStatutARetraiter(): StatutRequete {
+    this.init();
     // @ts-ignore
     return StatutRequete[A_RETRAITER];
   }
