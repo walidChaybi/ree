@@ -51,6 +51,7 @@ export const DocumentReponse = {
         DocumentDelivrance.getNumeroOrdre(doc2.typeDocument)
     );
   },
+
   getLibelle(document: IDocumentReponse) {
     let libelle: string;
     const documentDelivrance = DocumentDelivrance.getEnumFor(
@@ -80,7 +81,7 @@ export const DocumentReponse = {
       }
     });
 
-    resulatDocumentsSansDoublons = documentsAvecCtvs;
+    resulatDocumentsSansDoublons = [...documentsAvecCtvs];
 
     documentsSansCtvs.forEach(documentSansCtv => {
       if (
