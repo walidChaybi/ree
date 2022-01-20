@@ -148,10 +148,10 @@ export const SaisirRDCSCPage: React.FC = () => {
   );
 
   const getIdRequeteCreee = useCallback(() => {
-    if (creationRequeteDelivranceRDCSCResultat) {
-      return creationRequeteDelivranceRDCSCResultat.requete.id;
-    } else if (updateRequeteDelivranceRDCSCResultat) {
+    if (updateRequeteDelivranceRDCSCResultat) {
       return updateRequeteDelivranceRDCSCResultat.requete.id;
+    } else if (creationRequeteDelivranceRDCSCResultat) {
+      return creationRequeteDelivranceRDCSCResultat.requete.id;
     }
     return undefined;
   }, [
@@ -228,16 +228,7 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const redirectApresCreationOuModification = useCallback(
     (statutFinal: StatutRequete) => {
-      if (creationRequeteDelivranceRDCSCResultat && creationRequeteRDCSC) {
-        // Maj du statut de la requête suite à l'appel d'api de mise à jour de statut de la requête
-        //   pour éviter de faire un nouvelle appel d'api pour recharger la requête avec le bon statut
-        creationRequeteDelivranceRDCSCResultat.requete.statutCourant.statut = statutFinal;
-        redirectionPage(
-          creationRequeteDelivranceRDCSCResultat.requete,
-          statutFinal,
-          creationRequeteDelivranceRDCSCResultat.refus
-        );
-      } else if (updateRequeteDelivranceRDCSCResultat && updateRequeteRDCSC) {
+      if (updateRequeteDelivranceRDCSCResultat && updateRequeteRDCSC) {
         // Maj du statut de la requête suite à l'appel d'api de mise à jour de statut de la requête
         //   pour éviter de faire un nouvelle appel d'api pour recharger la requête avec le bon statut
         updateRequeteDelivranceRDCSCResultat.requete.statutCourant.statut = statutFinal;
@@ -245,6 +236,18 @@ export const SaisirRDCSCPage: React.FC = () => {
           updateRequeteDelivranceRDCSCResultat.requete,
           statutFinal,
           updateRequeteDelivranceRDCSCResultat.refus
+        );
+      } else if (
+        creationRequeteDelivranceRDCSCResultat &&
+        creationRequeteRDCSC
+      ) {
+        // Maj du statut de la requête suite à l'appel d'api de mise à jour de statut de la requête
+        //   pour éviter de faire un nouvelle appel d'api pour recharger la requête avec le bon statut
+        creationRequeteDelivranceRDCSCResultat.requete.statutCourant.statut = statutFinal;
+        redirectionPage(
+          creationRequeteDelivranceRDCSCResultat.requete,
+          statutFinal,
+          creationRequeteDelivranceRDCSCResultat.refus
         );
       }
     },
@@ -266,9 +269,9 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const majStatutRequeteSiBesoinEtRedirection = useCallback(() => {
     const statutFinal: StatutRequete | undefined =
-      creationRequeteRDCSC?.statutFinal || updateRequeteRDCSC?.statutFinal;
+      updateRequeteRDCSC?.statutFinal || creationRequeteRDCSC?.statutFinal;
     const futurStatut: StatutRequete | undefined =
-      creationRequeteRDCSC?.futurStatut || updateRequeteRDCSC?.futurStatut;
+      updateRequeteRDCSC?.futurStatut || creationRequeteRDCSC?.futurStatut;
     majIdRequete();
     if (statutFinal && statutFinal !== futurStatut) {
       setMetAJourStatutRequeteApresMajPiecesJointes({
@@ -298,7 +301,9 @@ export const SaisirRDCSCPage: React.FC = () => {
       updateRequeteDelivranceRDCSCResultat?.requete
     ) {
       // Une fois la requête créée ou mise à jour, la mise à jour des pièces jointes peut se faire
-      const pjAMettreAjour = saisieRequeteRDCSC?.[PIECES_JOINTES];
+      const pjAMettreAjour = getPiecesJointesAMettreAJour(
+        saisieRequeteRDCSC?.[PIECES_JOINTES]
+      );
       if (pjAMettreAjour && pjAMettreAjour.length > 0) {
         setPiecesjointesAMettreAJour(pjAMettreAjour);
       } else {
@@ -436,3 +441,11 @@ export const SaisirRDCSCPage: React.FC = () => {
     </ProtectionApercu>
   );
 };
+
+function getPiecesJointesAMettreAJour(formulairePiecesJointes?: PieceJointe[]) {
+  // On ne prend que les pjs dont le contenu est renseigné,
+  //   en effet si le contenu est vide c'est qu'il a été écrasé par la requête lors de la sauvegarde (la requête ramène ses pièces jointes mais sans le contenu)
+  return formulairePiecesJointes?.filter(
+    formulairePj => formulairePj.base64File.base64String
+  );
+}
