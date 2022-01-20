@@ -33,7 +33,6 @@ const superagentMock = require("superagent-mock")(request, [
 ]);
 
 let history: any;
-history = createMemoryHistory();
 const globalAny: any = global;
 globalAny.open = () => {
   return { ...window };
@@ -42,6 +41,7 @@ globalAny.close = jest.fn();
 URL.createObjectURL = jest.fn();
 
 beforeAll(() => {
+  history = createMemoryHistory();
   history.push(URL_MES_REQUETES_INFORMATION);
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
   storeRece.utilisateurCourant = {
@@ -263,7 +263,6 @@ test("clique requete liée", async () => {
     expect(screen.getByText("Aperçu requête : N°LRU1A5")).toBeDefined();
   });
 });
-
 
 test("bouton saisie libre", async () => {
   history.push(

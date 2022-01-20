@@ -244,10 +244,6 @@ test("renders Page requete with mandataire hablité without raison sociale", asy
     crpcen: ""
   } as any;
 
-  console.log(
-    reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale
-  );
-
   await act(async () => {
     const history = createMemoryHistory();
     history.push(

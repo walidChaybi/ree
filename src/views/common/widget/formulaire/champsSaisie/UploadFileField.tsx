@@ -23,6 +23,7 @@ export interface UploadFileFieldProps {
   contenu?: Base64File;
   hideInput?: boolean;
   onFileChange: (base64File: Base64File, type?: Option) => void;
+  verificationAvantDOuvriLeMenu?: () => boolean;
 }
 
 const UploadFileField: React.FC<UploadFileFieldProps> = props => {
@@ -59,7 +60,13 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
   ) => {
     e.preventDefault();
     if (props.menuItems) {
-      setMenu(e.currentTarget);
+      if (props.verificationAvantDOuvriLeMenu) {
+        if (props.verificationAvantDOuvriLeMenu()) {
+          setMenu(e.currentTarget);
+        }
+      } else {
+        setMenu(e.currentTarget);
+      }
     } else {
       refLabelButton.current?.click();
     }

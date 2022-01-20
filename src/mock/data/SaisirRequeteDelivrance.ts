@@ -15,7 +15,7 @@ export const CreationRDCSC = {
   observations: [],
   piecesJustificatives: [],
   sousType: "RDCSC",
-  documentDemande: [],
+  documentDemande: "34da88e2-c5c7-4324-ac8e-b35193352e64",
   nbExemplaireImpression: 1,
   provenanceRequete: "COURRIER",
   evenement: [],

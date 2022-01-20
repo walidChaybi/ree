@@ -6,6 +6,7 @@ import {
   ExtensionDocumentTypeMime,
   PieceJointe
 } from "../../../util/FileUtils";
+import messageManager from "../../../util/messageManager";
 import { Option, Options } from "../../../util/Type";
 import { getLibelle } from "../../../util/Utils";
 import { IconePoubelle } from "../../icones/IconePoubelle";
@@ -33,6 +34,7 @@ interface PiecesJointesProps {
   disabled?: boolean;
 }
 
+const MAX_PIECES_JOINTES = 3;
 export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
   function onFileChange(base64File: Base64File, type?: Option) {
     const pjTrouvee = props.piecesJointes.find(
@@ -78,6 +80,9 @@ export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
           acceptFileTypes={FILE_TYPES}
           maxSizeKB={FILE_MAX_SIZE_KB}
           onFileChange={onFileChange}
+          verificationAvantDOuvriLeMenu={() => {
+            return verificationAvantDOuvriLeMenu(props.piecesJointes);
+          }}
         />
       </div>
       {/* Bloc Tableau Pieces Jointes */}
@@ -167,4 +172,15 @@ function getColonneNomPJ(pj: PieceJointe): JSX.Element {
       <span>{pj.base64File.fileName}</span>
     </>
   );
+}
+
+export function verificationAvantDOuvriLeMenu(piecesJointes: PieceJointe[]) {
+  let ouvrirLeMenu = true;
+  if (piecesJointes.length >= MAX_PIECES_JOINTES) {
+    messageManager.showErrorAndClose(
+      getLibelle("Le nombre maximal de pièces jointes est atteint")
+    );
+    ouvrirLeMenu = false;
+  }
+  return ouvrirLeMenu;
 }

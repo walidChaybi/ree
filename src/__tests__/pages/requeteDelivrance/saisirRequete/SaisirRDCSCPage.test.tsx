@@ -14,10 +14,7 @@ import { configEtatcivil } from "../../../../mock/superagent-config/superagent-m
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import {
-  getLastPathElem,
-  getUrlWithParam
-} from "../../../../views/common/util/route/routeUtil";
+import { getLastPathElem } from "../../../../views/common/util/route/routeUtil";
 import { SaisirRDCSCPage } from "../../../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC } from "../../../../views/router/ReceUrls";
 
@@ -27,11 +24,12 @@ const superagentMock = require("superagent-mock")(request, [
   configRequetes[0]
 ]);
 
-const history = createMemoryHistory();
-history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
+let history: any;
 
 beforeEach(async () => {
-  DocumentDelivrance.init();
+  history = createMemoryHistory();
+  history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
+  await DocumentDelivrance.init();
 });
 
 test("renders formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
@@ -83,7 +81,6 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
       }
     });
   });
-
   const submit = screen.getByText(/Prendre en charge/i);
 
   await act(async () => {
@@ -110,8 +107,6 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     expect(getLastPathElem(history.location.pathname)).toEqual(
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
-    // Re-init pour les tests suivants
-    history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
   });
 });
 
@@ -223,8 +218,6 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
     expect(getLastPathElem(history.location.pathname)).toEqual(
       "1072bc37-f889-4365-8f75-912166b767dd"
     );
-    // Re-init pour les tests suivants
-    history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
   });
 });
 
@@ -298,13 +291,6 @@ test("test du Sauvegarder du formulaire de saisie d'une Requête de Délivrance 
 });
 
 test("Remplissage du formulaire avec requete", () => {
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
-      "a4cefb71-8457-4f6b-937e-34b49335d405"
-    )
-  );
-
   render(
     <Router history={history}>
       <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC}>

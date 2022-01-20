@@ -80,16 +80,21 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   );
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [reponseSaisie, setReponseSaisie] =
-    useState<ISauvegarderReponseReqInfoParams | undefined>();
-  const [reponseASauvegarder, setReponseASauvegarder] =
-    useState<ISauvegarderReponseReqInfoParams | undefined>();
-  const [reponseAEnvoyer, setReponseAEnvoyer] =
-    useState<IEnvoyerReponseReqInfoParams | undefined>();
-  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] =
-    useState<boolean>(false);
-  const [piecesAEnvoyer, setPiecesAEnvoyer] =
-    useState<PieceJointe[] | undefined>();
+  const [reponseSaisie, setReponseSaisie] = useState<
+    ISauvegarderReponseReqInfoParams | undefined
+  >();
+  const [reponseASauvegarder, setReponseASauvegarder] = useState<
+    ISauvegarderReponseReqInfoParams | undefined
+  >();
+  const [reponseAEnvoyer, setReponseAEnvoyer] = useState<
+    IEnvoyerReponseReqInfoParams | undefined
+  >();
+  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] = useState<
+    boolean
+  >(false);
+  const [piecesAEnvoyer, setPiecesAEnvoyer] = useState<
+    PieceJointe[] | undefined
+  >();
 
   const onSubmit = (reponseForm: IReponseInfoFormValue) => {
     setOperationEnCours(true);
@@ -106,17 +111,17 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   };
 
   // 1 - On sauvegarde les pièces jointes
-  const [receptionRetourAjoutPieceJointe] = usePostPiecesJointesApi(
+  const postPiecesJointesApiResultat = usePostPiecesJointesApi(
     TypePieceJointe.PIECE_COMPLEMENT_INFORMATION,
     requete.id,
     piecesAEnvoyer
   );
 
   useEffect(() => {
-    if (receptionRetourAjoutPieceJointe) {
+    if (postPiecesJointesApiResultat && !postPiecesJointesApiResultat.erreur) {
       setAjoutPieceJointeTermine(true);
     }
-  }, [receptionRetourAjoutPieceJointe]);
+  }, [postPiecesJointesApiResultat]);
 
   useEffect(() => {
     if (ajoutPieceJointeTermine && reponseSaisie) {

@@ -16,14 +16,6 @@ export function getPrenoms(prenoms: any): IPrenomOrdonnes[] {
   return prenomsInteresse;
 }
 
-export function getPiecesJustificatives(
-  nouvellesPiecesJointes: any
-): IPieceJustificative[] {
-  return nouvellesPiecesJointes
-    ? nouvellesPiecesJointes.map((pj: any) => getPieceJustificative(pj))
-    : [];
-}
-
 export function getPieceJustificative(pj: any) {
   const piece = getDocumentSwift(pj);
   piece.typePieceJustificative = pj.type?.value;

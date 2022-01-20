@@ -12,7 +12,7 @@ import {
   UpdateRequeteRDCSC
 } from "../modelForm/ISaisirRDCSCPageModel";
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
-import { getPiecesJustificatives, getPrenoms } from "./mappingCommun";
+import { getPrenoms } from "./mappingCommun";
 
 export function mappingFormulaireRDCSCVersRequeteDelivrance(
   requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC
@@ -24,10 +24,7 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
     provenance: Provenance.COURRIER.nom,
     documentDemande: requeteRDCSC.saisie.document,
     titulaires: [getInteresseRequete(requeteRDCSC.saisie.interesse)],
-    requerant: getRequerant(requeteRDCSC.saisie),
-    piecesJustificatives: getPiecesJustificatives(
-      requeteRDCSC.saisie.piecesJointes
-    )
+    requerant: getRequerant(requeteRDCSC.saisie)
   } as any) as IRequeteDelivrance;
   return supprimeProprietesVides(requete);
 }

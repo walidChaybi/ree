@@ -30,6 +30,7 @@ export const URL_DOCUMENT = "/document";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
 export const URL_PIECE_COMPLEMENT_INFORMATION = "/piececomplementinformation";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
+export const URL_PIECE_JUSTIFICATIVE = "/piecejustificative";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/requetes/action";
 export const URL_TRANSFERT = "/requetes/action/transfert";
@@ -326,21 +327,18 @@ export function deleteDocumentsReponseApi(idRequete: string) {
 export function getPieceJustificativeById(idPiece: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_PIECES_JUSTIFICATIVES}/${idPiece}`
+    uri: `${URL_REQUETES}${URL_PIECES_JUSTIFICATIVES}/${idPiece}`
   });
 }
 
 export function postPieceJustificative(
   idRequete: string,
-  piecesJustificatives: IPieceJustificative[]
+  pieceJustificative: IPieceJustificative
 ) {
   return api.fetch({
     method: HttpMethod.POST,
-    uri: `${URL_PIECES_JUSTIFICATIVES}`,
-    data: {
-      idRequete,
-      piecesJustificatives
-    }
+    uri: `${URL_REQUETES}/${idRequete}${URL_PIECE_JUSTIFICATIVE}`,
+    data: pieceJustificative
   });
 }
 

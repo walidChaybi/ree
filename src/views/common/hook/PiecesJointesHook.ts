@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
-import { postPieceComplementInformationApi } from "../../../api/appels/requeteApi";
-import { getPieceComplementInformation } from "../../pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
+import {
+  postPieceComplementInformationApi,
+  postPieceJustificative
+} from "../../../api/appels/requeteApi";
+import {
+  getPieceComplementInformation,
+  getPieceJustificative
+} from "../../pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import { PieceJointe } from "../util/FileUtils";
 import { logError } from "../util/LogManager";
 
@@ -9,16 +15,19 @@ export enum TypePieceJointe {
   PIECE_JUSTIFICATIVE
 }
 
+export interface IPostPiecesJointesApiResultat {
+  uuidDocuments: string[];
+  erreur?: any;
+}
+
 export function usePostPiecesJointesApi(
   typePiece: TypePieceJointe,
   idRequete?: string,
   piecesJointes?: PieceJointe[]
-): [boolean, string[]] {
-  const [uuiDocuments, setUuidDocuments] = useState<string[]>([]);
-  const [
-    ajoutPieceJointeTermine,
-    setAjoutPieceJointeTermine
-  ] = useState<boolean>(false);
+): IPostPiecesJointesApiResultat | undefined {
+  const [resultat, setResultat] = useState<IPostPiecesJointesApiResultat>();
+  const [uuidDocuments, setUuidDocuments] = useState<string[]>([]);
+
   const [piecesJointesAEnvoyer, setPiecesJointesAEnvoyer] = useState<
     PieceJointe[]
   >();
@@ -37,35 +46,42 @@ export function usePostPiecesJointesApi(
         piecesJointesAEnvoyer.length > 0
       ) {
         try {
-          let pieceAEnvoyer: any;
           let result;
+          const pieceJointeAEnvoyer = piecesJointesAEnvoyer[0];
           if (typePiece === TypePieceJointe.PIECE_COMPLEMENT_INFORMATION) {
-            pieceAEnvoyer = getPieceComplementInformation(
-              piecesJointesAEnvoyer[0]
-            );
             result = await postPieceComplementInformationApi(
               idRequete,
-              pieceAEnvoyer
+              getPieceComplementInformation(pieceJointeAEnvoyer)
             );
-            // TODO US 620 case Piece justificative
+          } else if (typePiece === TypePieceJointe.PIECE_JUSTIFICATIVE) {
+            result = await postPieceJustificative(
+              idRequete,
+              getPieceJustificative(pieceJointeAEnvoyer)
+            );
           }
           if (result) {
-            setUuidDocuments([...uuiDocuments, result.body.data]);
+            setUuidDocuments([...uuidDocuments, result.body.data]);
             setPiecesJointesAEnvoyer(piecesJointesAEnvoyer.slice(1));
           }
         } catch (error) {
+          setResultat({
+            erreur: error,
+            uuidDocuments
+          });
           logError({
             messageUtilisateur: `Impossible de stocker le document ${piecesJointesAEnvoyer[0].base64File.fileName}`,
             error
           });
         }
       } else if (piecesJointesAEnvoyer && piecesJointesAEnvoyer.length === 0) {
-        setAjoutPieceJointeTermine(true);
+        setResultat({
+          uuidDocuments
+        });
       }
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [piecesJointesAEnvoyer]);
 
-  return [ajoutPieceJointeTermine, uuiDocuments];
+  return resultat;
 }

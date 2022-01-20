@@ -57,7 +57,8 @@ export const configRequetes = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-100/" + ReponseAppelMesRequetes.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -70,7 +71,8 @@ export const configRequetes = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-100/" + ReponseAppelMesRequetes.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -83,7 +85,8 @@ export const configRequetes = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-100/" + ReponseAppelMesRequetes.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -97,7 +100,8 @@ export const configRequetes = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -110,7 +114,8 @@ export const configRequetes = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -123,7 +128,8 @@ export const configRequetes = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -177,7 +183,8 @@ export const configRequetes = [
           return {
             headers: {
               "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
-              link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
+              link:
+                '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCRequete.data
           };
@@ -280,7 +287,8 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance?refus=false&futurStatut=PRISE_EN_CHARGE" ||
         match[1] === "/requetes/delivrance?refus=true&futurStatut=A_TRAITER" ||
-        match[1] === "/requetes/delivrance?refus=false&futurStatut=BROUILLON"
+        match[1] === "/requetes/delivrance?refus=false&futurStatut=BROUILLON" ||
+        match[1] === "/requetes/delivrance?refus=true&futurStatut=BROUILLON"
       ) {
         return {
           data: CreationRDCSC
@@ -335,14 +343,18 @@ export const configRequetes = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+            link:
+              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
         };
       }
 
       // Récupération d'un document par son id
-      if (match[1] === "/piecesjustificatives/" + idDocumentsReponse[0]) {
+      if (
+        match[1] ===
+        "/requetes/piecesjustificatives/" + idDocumentsReponse[0]
+      ) {
         return { data: documentReponseCARN_CSPAC_01 };
       }
 
@@ -382,8 +394,11 @@ export const configRequetes = [
       // Ajout observation
       if (
         (match[1] ===
-          "/requetes/action/observation?idRequete=123&texteObservation=salut" ||
-          " '/requetes/action/observation?idRequete=123&texteObservation=salut&idObservation=id0000'") &&
+          "/requetes/observation?idRequete=123&texteObservation=salut" ||
+          match[1] ===
+            "/requetes/observation?idRequete=123&texteObservation=salut&idObservation=id0000" ||
+          match[1] ===
+            "/requetes/observation?idRequete=123&texteObservation=salut&idObservation=123456789") &&
         context.method === "post"
       ) {
         return { data: "123456789" };
@@ -391,7 +406,7 @@ export const configRequetes = [
 
       // Suppression observation
       if (
-        match[1] === "/requetes/action/observation?idObservation=id0000" &&
+        match[1] === "/requetes/observation?idObservation=id0000" &&
         context.method === "delete"
       ) {
         return { data: true };
@@ -455,7 +470,13 @@ export const configRequetes = [
           match[1] ===
             "/requetes/action?idRequete=id1&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_IMPRIMER" ||
           match[1] ===
-            "/requetes/action?idRequete=id2&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_IMPRIMER") &&
+            "/requetes/action?idRequete=id2&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_IMPRIMER" ||
+          match[1] ===
+            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=%C3%80%20traiter&statutRequete=A_TRAITER" ||
+          match[1] ===
+            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+          match[1] ===
+            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Brouillon&statutRequete=BROUILLON") &&
         context.method === "post"
       ) {
         return { data: "123456789" };
