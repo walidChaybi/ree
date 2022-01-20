@@ -9,10 +9,12 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
+import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { getLastPathElem } from "../../../../views/common/util/route/routeUtil";
+import { storeRece } from "../../../../views/common/util/storeRece";
 import { SaisirRDCPage } from "../../../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC } from "../../../../views/router/ReceUrls";
 
@@ -23,6 +25,7 @@ history.push(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
 
 beforeAll(() => {
   DocumentDelivrance.init();
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
 });
 
 test("renders formulaire de saisie d'une Requête de Délivrance Extrait Copie", async () => {

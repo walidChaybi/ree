@@ -9,12 +9,14 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
+import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { getLastPathElem } from "../../../../views/common/util/route/routeUtil";
+import { storeRece } from "../../../../views/common/util/storeRece";
 import { SaisirRDCSCPage } from "../../../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC } from "../../../../views/router/ReceUrls";
 
@@ -25,6 +27,10 @@ const superagentMock = require("superagent-mock")(request, [
 ]);
 
 let history: any;
+
+beforeAll(() => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
+});
 
 beforeEach(async () => {
   history = createMemoryHistory();

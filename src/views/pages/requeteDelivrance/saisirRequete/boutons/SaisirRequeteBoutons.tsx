@@ -8,6 +8,7 @@ import "./scss/SaisirRequeteBoutons.scss";
 
 export type SaisirRequeteBoutonsProps = {
   setIsBrouillon: any;
+  desactiverPrendreEnCharge: boolean;
 } & FormikComponentProps;
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
@@ -16,7 +17,7 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
       <div className="Boutons">
         <button
           disabled={
-            !props.formik.dirty && officierHabiliterPourLeDroit(Droit.DELIVRER)
+            !props.formik.dirty || !officierHabiliterPourLeDroit(Droit.DELIVRER)
           }
           type="button"
           id="boutonSauvegarder"
@@ -29,7 +30,8 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
         </button>
         <button
           disabled={
-            !props.formik.dirty && officierHabiliterPourLeDroit(Droit.DELIVRER)
+            !officierHabiliterPourLeDroit(Droit.DELIVRER) ||
+            (!props.formik.dirty && props.desactiverPrendreEnCharge)
           }
           type="button"
           id="boutonPrendreEnCharge"
