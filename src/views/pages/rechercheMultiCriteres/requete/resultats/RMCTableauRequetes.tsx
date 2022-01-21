@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
@@ -53,23 +54,19 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   //**** RMC AUTO ****//
-  const [paramsMAJReqDelivrance, setParamsMAJReqDelivrance] = useState<
-    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
-    INavigationApercuRMCAutoParams | undefined
-  >();
+  const [paramsMAJReqDelivrance, setParamsMAJReqDelivrance] =
+    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsRMCAuto, setParamsRMCAuto] =
+    useState<INavigationApercuRMCAutoParams | undefined>();
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMAJReqDelivrance);
   useNavigationApercuRMCAuto(paramsRMCAuto);
 
   /**** Navigation vers Apercu Information ****/
-  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<
-    CreationActionMiseAjourStatutHookParams | undefined
-  >();
-  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
-    INavigationApercuReqInfoParams | undefined
-  >();
+  const [paramsMAJReqInfo, setParamsMAJReqInfo] =
+    useState<CreationActionMiseAjourStatutHookParams | undefined>();
+  const [paramsNavReqInfo, setParamsNavReqInfo] =
+    useState<INavigationApercuReqInfoParams | undefined>();
 
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
   useNavigationApercuInformation(paramsNavReqInfo);
@@ -121,7 +118,11 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     } else {
       setParamsRMCAuto({
         requete,
-        urlCourante
+        urlCourante,
+        // La RMC ne remonte pas les informations suffisantes pour générer un certificat de situation automatique
+        pasDeTraitementAuto: SousTypeDelivrance.estSousTypeCertificatSituation(
+          SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType)
+        )
       });
     }
   };

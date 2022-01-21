@@ -73,8 +73,7 @@ import {
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête";
 const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
-const LIBELLE_CREATION = "Création d'un courrier";
-//const LIBELLE_MODIFICATION = "Modification d'un courrier";
+const LIBELLE_COURRIER = "Gestion du courrier";
 
 export const routesRece: IRoute[] = [
   {
@@ -201,7 +200,7 @@ export const routesRece: IRoute[] = [
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_CREATION)
+    libelle: getLibelle(LIBELLE_COURRIER)
   },
   ////////////////////////////////////////////////////////
   ///// REQUETES DE DELIVRANCE DE MON SERVICE (RDMS) /////
@@ -309,7 +308,7 @@ export const routesRece: IRoute[] = [
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_CREATION)
+    libelle: getLibelle(LIBELLE_COURRIER)
   },
   //////////////////////////////////////////
   ///// RECHERCHE MULTI-CRITERES (RMC) /////
@@ -364,7 +363,7 @@ export const routesRece: IRoute[] = [
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_CREATION)
+    libelle: getLibelle(LIBELLE_COURRIER)
   },
   //////////////////////////////////////////////
   ///////// REQUETE D'INFORMATION (RI) /////////

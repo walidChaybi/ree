@@ -147,6 +147,6 @@ test("test du bouton de modification du courrier", async () => {
     fireEvent.click(screen.getByText(/Modifier le courrier/i));
   });
   expect(history.location.pathname).toBe(
-    "/rece/rece-ui/mesrequetes/apercurequetetraitement/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d494"
+    "/rece/rece-ui/mesrequetes/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d494"
   );
 });

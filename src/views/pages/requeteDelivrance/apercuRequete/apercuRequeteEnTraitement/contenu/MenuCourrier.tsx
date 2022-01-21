@@ -5,10 +5,10 @@ import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTyp
 import { IActionOption } from "../../../../../../model/requete/IActionOption";
 import { DocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { getUrlWithoutIdParam } from "../../../../../common/util/route/routeUtil";
+import { getUrlPrecedente } from "../../../../../common/util/route/routeUtil";
 import { getLibelle } from "../../../../../common/util/Utils";
 import { MenuAction } from "../../../../../common/widget/menu/MenuAction";
-import { PATH_APERCU_COURRIER } from "../../../../../router/ReceUrls";
+import { PATH_APERCU_COURRIER, receUrl } from "../../../../../router/ReceUrls";
 
 const INDEX_MODIFIER_COURRIER = 0;
 const INDEX_AFFICHER_EC = 1;
@@ -71,8 +71,9 @@ export const MenuCourrier: React.FC<IMenuCourrierProps> = props => {
   const handleAction = (indexMenu: number) => {
     switch (indexMenu) {
       case INDEX_MODIFIER_COURRIER:
-        history.push(
-          `${getUrlWithoutIdParam(
+        receUrl.replaceUrl(
+          history,
+          `${getUrlPrecedente(
             history.location.pathname
           )}/${PATH_APERCU_COURRIER}/${props.requete.id}`
         );
