@@ -30,6 +30,10 @@ export class MotifDelivrance extends EnumWithLibelle {
     "Papier d'identité / Passeport"
   );
 
+  public static readonly NON_PRECISE_PAR_REQUERANT = new MotifDelivrance(
+    "Non précisé par le requérant"
+  );
+
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, MotifDelivrance);
   }

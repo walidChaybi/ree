@@ -64,7 +64,7 @@ test("renders Page requete with all elements", async () => {
     expect(screen.getByText("Résumé requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
-      screen.getByText("Requête de Délivrance Extrait/Copie Dématérialisée")
+      screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
     expect(screen.getByText("Info titulaire 1")).toBeDefined();
     expect(screen.getByText("CAMPBALL")).toBeDefined();
@@ -120,7 +120,7 @@ test("renders Page requete with 1 titulaire", async () => {
     expect(screen.getByText("Résumé requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
-      screen.getByText("Requête de Délivrance Extrait/Copie Dématérialisée")
+      screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
     expect(screen.getByText("Info titulaire 1")).toBeDefined();
     expect(screen.getByText("CAMPBALL")).toBeDefined();
@@ -173,7 +173,7 @@ test("renders Page requete without titulaire", async () => {
     expect(screen.getByText("Résumé requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
-      screen.getByText("Requête de Délivrance Extrait/Copie Dématérialisée")
+      screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
     expect(screen.getByText("Il n'y a pas de titulaire")).toBeDefined();
     expect(screen.getByText("Nature")).toBeDefined();
@@ -277,7 +277,7 @@ test("renders Page requete with mandataire hablité without raison sociale", asy
     expect(screen.getByText("Résumé requête")).toBeDefined();
     expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
     expect(
-      screen.getByText("Requête de Délivrance Extrait/Copie Dématérialisée")
+      screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
     expect(screen.getByText("Info titulaire 1")).toBeDefined();
     expect(screen.getByText("CAMPBALL")).toBeDefined();

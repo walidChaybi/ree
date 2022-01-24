@@ -8,47 +8,47 @@ export const LISTE_DES_REQUETES_COURRIER = ["RDAPC", "RDCSC", "RDC", "RDLFC"];
 export class SousTypeDelivrance extends EnumWithComplete {
   public static readonly RDD = new SousTypeDelivrance(
     "RDD",
-    "Requête de Délivrance Extrait/Copie Dématérialisée",
+    "Délivrance Extrait/Copie dématérialisée",
     "Délivrance E/C (d)"
   );
   public static readonly RDC = new SousTypeDelivrance(
     "RDC",
-    "Requête de Délivrance Extrait/Copie Courrier",
+    "Délivrance Extrait/Copie courrier",
     "Délivrance E/C (c)"
   );
   public static readonly RDAPD = new SousTypeDelivrance(
     "RDAPD",
-    "Requête de Délivrance Attestation de PACS Démat",
+    "Délivrance Attestation de PACS dématérialisée",
     "Délivrance AP (d)"
   );
   public static readonly RDAPC = new SousTypeDelivrance(
     "RDAPC",
-    "Requête de Délivrance d'attestation de Pacte Civil de Solidarité",
+    "Délivrance Attestation de PACS courrier",
     "Délivrance AP (c)"
   );
   public static readonly RDCSD = new SousTypeDelivrance(
     "RDCSD",
-    "Requête de Délivrance Certificat de Situation Démat",
+    "Délivrance Certificat de Situation dématérialisée",
     "Délivrance CS (d)"
   );
   public static readonly RDCSC = new SousTypeDelivrance(
     "RDCSC",
-    "Requête de Délivrance Certificat de Situation Courrier",
+    "Délivrance Certificat de Situation courrier",
     "Délivrance CS (c)"
   );
   public static readonly RDDP = new SousTypeDelivrance(
     "RDDP",
-    "Requête de Délivrance Démat Planète",
+    "Délivrance Planète",
     "Délivrance Planète"
   );
   public static readonly RDDCO = new SousTypeDelivrance(
     "RDDCO",
-    "Requête de Délivrance Démat Comedec",
+    "Délivrance Comedec",
     "Délivrance Comedec"
   );
   public static readonly RDLFC = new SousTypeDelivrance(
     "RDLFC",
-    "Requête de Délivrance Livret de Famille Courrier",
+    "Délivrance Livret de famille courrier",
     "Délivrance LF (c)"
   );
 

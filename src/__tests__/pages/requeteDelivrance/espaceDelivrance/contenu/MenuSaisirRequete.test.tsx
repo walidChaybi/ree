@@ -67,9 +67,7 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance"
     fireEvent.click(boutonMenu);
   });
 
-  const RDCSC = screen.getByText(
-    "Requête de Délivrance Certificat de Situation Courrier"
-  );
+  const RDCSC = screen.getByText("Délivrance Certificat de Situation courrier");
 
   await waitFor(() => {
     expect(RDCSC).toBeDefined();
@@ -97,9 +95,7 @@ test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Délivrance"
     fireEvent.click(boutonMenu);
   });
 
-  const RDAPC = screen.getByText(
-    "Requête de Délivrance d'attestation de Pacte Civil de Solidarité"
-  );
+  const RDAPC = screen.getByText("Délivrance Attestation de PACS courrier");
 
   await waitFor(() => {
     expect(RDAPC).toBeDefined();
@@ -127,7 +123,7 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Délivrance", 
     fireEvent.click(boutonMenu);
   });
 
-  const RDC = screen.getByText("Requête de Délivrance Extrait/Copie Courrier");
+  const RDC = screen.getByText("Délivrance Extrait/Copie courrier");
 
   await waitFor(() => {
     expect(RDC).toBeDefined();
@@ -155,9 +151,7 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Délivrance"
     fireEvent.click(boutonMenu);
   });
 
-  const RDLFC = screen.getByText(
-    "Requête de Délivrance Livret de Famille Courrier"
-  );
+  const RDLFC = screen.getByText("Délivrance Livret de famille courrier");
 
   await waitFor(() => {
     expect(RDLFC).toBeDefined();
@@ -185,9 +179,7 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", as
     fireEvent.click(boutonMenu);
   });
 
-  const RDCSC = screen.getByText(
-    "Requête de Délivrance Certificat de Situation Courrier"
-  );
+  const RDCSC = screen.getByText("Délivrance Certificat de Situation courrier");
 
   await waitFor(() => {
     expect(RDCSC).toBeDefined();
@@ -215,9 +207,7 @@ test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Service", as
     fireEvent.click(boutonMenu);
   });
 
-  const RDAPC = screen.getByText(
-    "Requête de Délivrance d'attestation de Pacte Civil de Solidarité"
-  );
+  const RDAPC = screen.getByText("Délivrance Attestation de PACS courrier");
 
   await waitFor(() => {
     expect(RDAPC).toBeDefined();
@@ -245,7 +235,7 @@ test("renders menu 'Saisir une requête' RDC dans Mes requetes de Service", asyn
     fireEvent.click(boutonMenu);
   });
 
-  const RDC = screen.getByText("Requête de Délivrance Extrait/Copie Courrier");
+  const RDC = screen.getByText("Délivrance Extrait/Copie courrier");
 
   await waitFor(() => {
     expect(RDC).toBeDefined();
@@ -273,9 +263,7 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Service", as
     fireEvent.click(boutonMenu);
   });
 
-  const RDLFC = screen.getByText(
-    "Requête de Délivrance Livret de Famille Courrier"
-  );
+  const RDLFC = screen.getByText("Délivrance Livret de famille courrier");
 
   await waitFor(() => {
     expect(RDLFC).toBeDefined();
