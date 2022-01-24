@@ -7,6 +7,7 @@ import { InputField } from "../../../../../../common/widget/formulaire/champsSai
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../../../common/widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "../../../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
+  IGNORER_TABULATION,
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
@@ -125,6 +126,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
     return (
       <button
         type="button"
+        tabIndex={IGNORER_TABULATION}
         className="BoutonDanger"
         disabled={btnSupprimerInactif}
         onClick={() => supprimerPrenom(champ)}

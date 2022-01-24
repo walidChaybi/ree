@@ -7,6 +7,7 @@ import { InputField } from "../../../../../../common/widget/formulaire/champsSai
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../../../common/widget/formulaire/FormulaireMessages";
 import { sortieChampEnMajuscule } from "../../../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
+  IGNORER_TABULATION,
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
@@ -59,7 +60,12 @@ const NomsForm: React.FC<SubFormProps> = props => {
 
   function getBoutonAjouter(): JSX.Element {
     return (
-      <button type="button" disabled={nomUsagePresent} onClick={toggleNomUsage}>
+      <button
+        type="button"
+        tabIndex={IGNORER_TABULATION}
+        disabled={nomUsagePresent}
+        onClick={toggleNomUsage}
+      >
         {getLibelle("Ajouter un nom d'usage")}
       </button>
     );
@@ -68,6 +74,7 @@ const NomsForm: React.FC<SubFormProps> = props => {
   function getBoutonSupprimer(): JSX.Element {
     return (
       <button
+        tabIndex={IGNORER_TABULATION}
         type="button"
         className="BoutonDanger"
         disabled={!nomUsagePresent}

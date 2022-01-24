@@ -6,6 +6,7 @@ export const NB_CARACT_MAX_SAISIE = "100";
 export const NB_CARACT_ADRESSE = "38";
 export const NB_CARACT_COMMUNE = "32";
 export const NB_CARACT_CODE_POSTAL = "5";
+export const IGNORER_TABULATION = -1;
 
 export type FormikComponentProps = {
   formik: FormikProps<FormikValues>;
