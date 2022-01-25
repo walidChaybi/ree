@@ -71,8 +71,9 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
     STATUT_REQUETE
   );
 
-  const [sousTypeRequeteInactif, setSousTypeRequeteInactif] =
-    useState<boolean>(true);
+  const [sousTypeRequeteInactif, setSousTypeRequeteInactif] = useState<boolean>(
+    true
+  );
 
   const [sousTypeRequeteOptions, setSousTypeRequeteOptions] = useState<Options>(
     []
@@ -80,17 +81,11 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
 
   const manageTypeRequeteOptions = (type: string) => {
     if (type === "DELIVRANCE") {
-      setSousTypeRequeteOptions(
-        SousTypeDelivrance.getAllLibellesCourtAsOptions()
-      );
+      setSousTypeRequeteOptions(SousTypeDelivrance.getAllEnumsAsOptions());
     } else if (type === "CREATION") {
-      setSousTypeRequeteOptions(
-        SousTypeCreation.getAllLibellesCourtAsOptions()
-      );
+      setSousTypeRequeteOptions(SousTypeCreation.getAllEnumsAsOptions());
     } else if (type === "MISE_A_JOUR") {
-      setSousTypeRequeteOptions(
-        SousTypeMiseAJour.getAllLibellesCourtAsOptions()
-      );
+      setSousTypeRequeteOptions(SousTypeMiseAJour.getAllEnumsAsOptions());
     } else if (type === "INFORMATION") {
       setSousTypeRequeteOptions(SousTypeInformation.getAllEnumsAsOptions());
     } else {
