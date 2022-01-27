@@ -99,9 +99,9 @@ export class LieuxUtils {
       ? formatPremieresLettresMajusculesNomCompose(pays)
       : "";
 
-    const regionStringEntreParentheses = LieuxUtils.getRegionEntreParentheses(
-      regionString
-    );
+    const regionStringEntreParentheses =
+      LieuxUtils.getLieuEntreParentheses(regionString);
+
     if (LieuxUtils.isPaysFrance(pays)) {
       if (
         !LieuxUtils.isVilleAvecArrondissement(ville) ||
@@ -147,8 +147,8 @@ export class LieuxUtils {
     return `${villeString}${arrondissementString}, ${regionString} (${paysString})`;
   }
 
-  private static getRegionEntreParentheses(regionString: string) {
-    return regionString ? ` (${regionString})` : "";
+  private static getLieuEntreParentheses(lieu: string) {
+    return lieu ? ` (${lieu})` : "";
   }
 
   public static getLocalisationAutorite(
@@ -161,7 +161,7 @@ export class LieuxUtils {
     const villeString = ville
       ? formatPremieresLettresMajusculesNomCompose(ville)
       : "";
-    const libelleDepartementString = LieuxUtils.getRegionEntreParentheses(
+    const libelleDepartementString = LieuxUtils.getLieuEntreParentheses(
       libelleDepartement
         ? formatPremieresLettresMajusculesNomCompose(libelleDepartement)
         : ""

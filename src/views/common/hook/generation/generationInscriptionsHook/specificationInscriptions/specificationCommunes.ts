@@ -81,8 +81,9 @@ export function getDecisionNotaire(
   }
   // décision de Notaire de type "Requete"
   else if (infos.decision?.type === TypeDecision.REQUETE) {
-    const localiteJuridictionExecutante = LieuxUtils.getLieu(
+    const localiteJuridictionExecutante = LieuxUtils.getLocalisationAutorite(
       infos.decision?.juridictionExecutante?.ville,
+      infos.decision?.juridictionExecutante?.libelleDepartement,
       infos.decision?.juridictionExecutante?.region,
       infos.decision?.juridictionExecutante?.pays,
       infos.decision?.juridictionExecutante?.arrondissement
