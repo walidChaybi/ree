@@ -5,7 +5,7 @@ import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
 import { IOfficier } from "../../../model/agent/IOfficier";
 import apiResources from "../../../ressources/api.json";
 import { OfficierContextProps } from "../../core/contexts/OfficierContext";
-import { URL_ACCUEIL } from "../../router/ReceUrls";
+import { URL_ACCUEIL, URL_DECONNEXION } from "../../router/ReceUrls";
 import { getLibelle } from "../util/Utils";
 import { getCsrfHeader } from "./CsrfUtil";
 import messageManager from "./messageManager";
@@ -32,9 +32,9 @@ export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> =
             resTraitement = props.fctTraitementResultat(res);
           }
         }
-        // Retour à l'accueil afin de fermer toutes les fenêtres externes ouvertes
-        history.push(URL_ACCUEIL);
         if (resTraitement) {
+          // Direction la page d'accueil afin de fermer toutes les fenêtres externes ouvertes
+          history.push(URL_ACCUEIL);
           // Cancel the default event
           event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
           // Older browsers supported custom message
@@ -47,6 +47,8 @@ export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> =
             });
           }
         } else {
+          // Direction la page de deconnexion afin de fermer toutes les fenêtres externes ouvertes et de ne pas empecher la deconnexion
+          history.push(URL_DECONNEXION);
           delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
         }
       };
