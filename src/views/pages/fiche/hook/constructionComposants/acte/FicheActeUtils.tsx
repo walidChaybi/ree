@@ -96,7 +96,8 @@ export function getParamsAffichageFicheActe(
   // S'il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
   if (
     officierALeDroitSurLePerimetre(Droit.CONSULTER, PERIMETRE_MEAE) ||
-    officierAutoriserSurLeTypeRegistre(idTypeRegistre)
+    officierAutoriserSurLeTypeRegistre(idTypeRegistre) ||
+    officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)
   ) {
     params.visuBoutonAlertes = true;
     params.visuActe = "classique";
