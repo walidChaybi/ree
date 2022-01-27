@@ -5,6 +5,7 @@ import { URL_REQUETES_COUNT } from "../../../api/appels/requeteApi";
 import { IOfficier } from "../../../model/agent/IOfficier";
 import apiResources from "../../../ressources/api.json";
 import { OfficierContextProps } from "../../core/contexts/OfficierContext";
+import { URL_ACCUEIL } from "../../router/ReceUrls";
 import { getLibelle } from "../util/Utils";
 import { getCsrfHeader } from "./CsrfUtil";
 import messageManager from "./messageManager";
@@ -18,43 +19,46 @@ interface GestionnaireFermetureProps {
   urlRedirection?: string;
 }
 
-export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = props => {
-  const history = useHistory();
-  useEffect(() => {
-    const handleBackBeforUnload = (event: any) => {
-      let resTraitement: any = true;
-      if (props.fctAAppeler) {
-        const res = props.fctAAppeler(props.paramsFctAAppler);
+export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> =
+  props => {
+    const history = useHistory();
+    useEffect(() => {
+      const handleBackBeforUnload = (event: any) => {
+        let resTraitement: any = true;
+        if (props.fctAAppeler) {
+          const res = props.fctAAppeler(props.paramsFctAAppler);
 
-        if (props.fctTraitementResultat) {
-          resTraitement = props.fctTraitementResultat(res);
+          if (props.fctTraitementResultat) {
+            resTraitement = props.fctTraitementResultat(res);
+          }
         }
-      }
-      if (resTraitement) {
-        // Cancel the default event
-        event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-        // Older browsers supported custom message
-        event.returnValue = "Are you sur to close this window";
-        if (props.urlRedirection) {
-          executeEnDiffere(function () {
-            if (props.urlRedirection) {
-              history.push(props.urlRedirection);
-            }
-          });
+        // Retour à l'accueil afin de fermer toutes les fenêtres externes ouvertes
+        history.push(URL_ACCUEIL);
+        if (resTraitement) {
+          // Cancel the default event
+          event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+          // Older browsers supported custom message
+          event.returnValue = "Are you sur to close this window";
+          if (props.urlRedirection) {
+            executeEnDiffere(function () {
+              if (props.urlRedirection) {
+                history.push(props.urlRedirection);
+              }
+            });
+          }
+        } else {
+          delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
         }
-      } else {
-        delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
-      }
-    };
-    window.top.addEventListener("beforeunload", handleBackBeforUnload);
+      };
+      window.top.addEventListener("beforeunload", handleBackBeforUnload);
 
-    return () => {
-      window.top.removeEventListener("beforeunload", handleBackBeforUnload);
-    };
-  }, [props, history]);
+      return () => {
+        window.top.removeEventListener("beforeunload", handleBackBeforUnload);
+      };
+    }, [props, history]);
 
-  return null;
-};
+    return null;
+  };
 
 export const appelRequetesASigner = (officier: OfficierContextProps) => {
   const officierPayload = officier?.officierDataState;
@@ -68,7 +72,7 @@ export const appelRequetesASigner = (officier: OfficierContextProps) => {
 const appelApi = (officierPayload: IOfficier | undefined) => {
   const req = new XMLHttpRequest();
   const api = apiResources.apis[0];
-  const version = api.usedVersions[0];
+  const version = api.usedVersions[1];
 
   const params = `statuts=A_SIGNER`;
   const url = `${window.origin}/${api.domain}/${api.name}/${version}${URL_REQUETES_COUNT}?${params}`;
@@ -77,9 +81,13 @@ const appelApi = (officierPayload: IOfficier | undefined) => {
   // Ajout de la valeur du cookie csrf dans l'entête
   const header = getCsrfHeader();
   req.setRequestHeader(header.header, header.value);
-
-  // Envoi de la requête
-  req.send();
+  try {
+    // Envoi de la requête
+    req.send();
+  } catch (e) {
+    // en cas d'erreur, on considère qu'il n'y a pas de requête à signer
+    return { response: { date: 0 }, status: HTTP_STATUS_OK };
+  }
 
   return req;
 };
