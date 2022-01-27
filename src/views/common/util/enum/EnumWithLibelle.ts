@@ -53,7 +53,10 @@ export class EnumWithLibelle {
     }
 
     if (tri) {
-      options.sort((o1: any, o2: any) => o1.str.localeCompare(o2.str));
+      options.sort(
+        (o1: any, o2: any) =>
+          o1.str.localeCompare(o2.str, undefined, { ignorePunctuation: true }) //ignorer les guillemets pour le tri
+      );
     }
 
     // Placement du libellé "Autre" à la fin

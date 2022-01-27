@@ -19,11 +19,7 @@ export async function peupleNatureRc() {
       for (const data of natureRcs.body.data) {
         NatureRc.addEnum(
           data.id,
-          new NatureRc(
-            data.article,
-            data.type,
-            premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle)
-          )
+          new NatureRc(data.article, data.type, data.libelle)
         );
       }
     } catch (error) {
@@ -43,11 +39,7 @@ export async function peupleNatureRca() {
       for (const data of natureRcas.body.data) {
         NatureRca.addEnum(
           data.id,
-          new NatureRca(
-            data.article,
-            data.type,
-            premiereLettreEnMajusculeLeResteEnMinuscule(data.libelle)
-          )
+          new NatureRca(data.article, data.type, data.libelle)
         );
       }
     } catch (error) {
