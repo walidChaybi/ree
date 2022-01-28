@@ -32,9 +32,11 @@ export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> =
             resTraitement = props.fctTraitementResultat(res);
           }
         }
-        if (resTraitement) {
-          // Direction la page d'accueil afin de fermer toutes les fenêtres externes ouvertes
+        // Direction la page d'accueil afin de fermer toutes les fenêtres externes ouvertes et de ne pas empecher la deconnexion
+        if (history.location.pathname !== URL_DECONNEXION) {
           history.push(URL_ACCUEIL);
+        }
+        if (resTraitement) {
           // Cancel the default event
           event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
           // Older browsers supported custom message
@@ -47,8 +49,6 @@ export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> =
             });
           }
         } else {
-          // Direction la page de deconnexion afin de fermer toutes les fenêtres externes ouvertes et de ne pas empecher la deconnexion
-          history.push(URL_DECONNEXION);
           delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
         }
       };
