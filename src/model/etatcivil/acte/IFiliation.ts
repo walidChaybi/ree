@@ -1,8 +1,9 @@
+import { LienParente } from "../enum/LienParente";
 import { IAdresse } from "./IAdresse";
 import { IEvenement } from "./IEvenement";
 
 export interface IFiliation {
-  type: string;
+  lienParente: LienParente;
   ordre: number;
   nom: string;
   sexe: string;

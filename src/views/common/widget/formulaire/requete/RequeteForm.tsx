@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import {
   CodesExtraitCopie,
-  COPIE_INTEGRALE,
-  DocumentDelivrance,
-  EXTRAIT_PLURILINGUE
+  CODE_COPIE_INTEGRALE,
+  CODE_EXTRAIT_PLURILINGUE,
+  DocumentDelivrance
 } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../../model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "../../../../../model/requete/enum/NatureActeRequete";
@@ -47,8 +47,8 @@ export const RequeteFormDefaultValues = {
 const NB_EXEMPLAIRE_MAX = 5;
 
 export const LISTE_DOCUMENT_DEMANDE_DECES = [
-  COPIE_INTEGRALE,
-  EXTRAIT_PLURILINGUE
+  CODE_COPIE_INTEGRALE,
+  CODE_EXTRAIT_PLURILINGUE
 ];
 
 // Schéma de validation des champs

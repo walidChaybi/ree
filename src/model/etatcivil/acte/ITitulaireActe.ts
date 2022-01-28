@@ -5,6 +5,7 @@ import {
   numberToString
 } from "../../../views/common/util/Utils";
 import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+import { LienParente } from "../enum/LienParente";
 import { Sexe } from "../enum/Sexe";
 import { IAdresse } from "./IAdresse";
 import { IEvenement } from "./IEvenement";
@@ -77,5 +78,15 @@ export const TitulaireActe = {
           titulaire.naissance.arrondissement
         )
       : "";
+  },
+  getParents(titulaire?: ITitulaireActe): IFiliation[] {
+    return titulaire && titulaire.filiations
+      ? titulaire.filiations.filter(
+          filiation =>
+            filiation.lienParente === LienParente.PARENT ||
+            LienParente.PARENT_ADOPTANT ||
+            LienParente.ADOPTANT_CONJOINT_DU_PARENT
+        )
+      : [];
   }
 };

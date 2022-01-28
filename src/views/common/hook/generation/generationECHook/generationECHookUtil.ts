@@ -1,5 +1,6 @@
 import {
   IExtraitCopieComposition,
+  NOM_DOCUMENT_EC_AVEC_FILIATION,
   NOM_DOCUMENT_EC_SANS_FILIATION
 } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
 import {
@@ -8,6 +9,7 @@ import {
 } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import {
+  CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_SANS_FILIATION,
   DocumentDelivrance
 } from "../../../../../model/requete/enum/DocumentDelivrance";
@@ -52,6 +54,11 @@ export function getTypeDocument(choixDelivrance: ChoixDelivrance) {
         CODE_EXTRAIT_SANS_FILIATION
       );
       break;
+    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
+      uuidTypeDocument = DocumentDelivrance.getKeyForCode(
+        CODE_EXTRAIT_AVEC_FILIATION
+      );
+      break;
     // FIXME A Complèter
     default:
       break;
@@ -64,6 +71,9 @@ export function getNomDocument(choixDelivrance: ChoixDelivrance) {
   switch (choixDelivrance) {
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
       nomDocument = NOM_DOCUMENT_EC_SANS_FILIATION;
+      break;
+    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
+      nomDocument = NOM_DOCUMENT_EC_AVEC_FILIATION;
       break;
     // FIXME A Complèter
     default:

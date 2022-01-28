@@ -27,6 +27,18 @@ export class EtatCivilUtil {
     return sexe === Sexe.FEMININ ? "agée" : "agé";
   }
 
+  public static formatFilsOuFille(sexe: Sexe) {
+    return sexe === Sexe.FEMININ
+      ? "fille de"
+      : Sexe.MASCULIN
+      ? "fils de"
+      : "de";
+  }
+
+  public static formatFilsOuFilleAdoptant(sexe?: Sexe) {
+    return sexe === Sexe.FEMININ ? "adoptée par" : "adopté par";
+  }
+
   public static formatDateEvenement(evenement?: IEvenement) {
     return getDateFormatJasperFromCompose({
       jour: getValeurOuVide(evenement?.jour),

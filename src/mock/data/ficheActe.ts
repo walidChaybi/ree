@@ -526,6 +526,7 @@ export const ficheActeMariage = {
             naissance: null,
             profession: "Coiffeuse",
             age: null,
+            lienParente: "PARENT",
             domicile: {
               voie: "16 avenue des Palmiers",
               ville: "Djibouti",
@@ -534,6 +535,60 @@ export const ficheActeMariage = {
               pays: "DJIBOUTI"
             },
             prenoms: ["Carmela", "Linzy"]
+          },
+          {
+            type: null,
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "FEMININ",
+            naissance: null,
+            profession: "Coiffeuse",
+            age: null,
+            lienParente: "PARENT",
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmelaa", "Linzy"]
+          },
+          {
+            type: null,
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "FEMININ",
+            naissance: null,
+            profession: "Coiffeuse",
+            age: null,
+            lienParente: "PARENT_ADOPTANT",
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmelaaa", "Linzy"]
+          },
+          {
+            type: null,
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "FEMININ",
+            naissance: null,
+            profession: "Coiffeuse",
+            age: null,
+            lienParente: "PARENT_ADOPTANT",
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Carmelaaaa", "Linzy"]
           }
         ],
         typeDeclarationConjointe: null,

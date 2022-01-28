@@ -12,7 +12,7 @@ import {
 } from "../../../../../../common/hook/generation/generationECHook/generationECHook";
 import { DoubleSubmitUtil } from "../../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
-import { getUrlWithoutIdParam } from "../../../../../../common/util/route/routeUtil";
+import { getUrlPrecedente } from "../../../../../../common/util/route/routeUtil";
 import {
   getLibelle,
   supprimerNullEtUndefinedDuTableau
@@ -53,13 +53,11 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<
-    UpdateChoixDelivranceProps
-  >();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
+    useState<UpdateChoixDelivranceProps>();
 
-  const [generationDocumentECParams, setGenerationDocumentECParams] = useState<
-    IGenerationECParams
-  >();
+  const [generationDocumentECParams, setGenerationDocumentECParams] =
+    useState<IGenerationECParams>();
   useEffect(() => {
     setInscriptions(
       props.inscriptions
@@ -119,9 +117,8 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     resetDoubleSubmit
   );
 
-  const delivrerOptions: IActionOption[] = getOptionsMenuDelivrer(
-    refDelivrerOptions0
-  );
+  const delivrerOptions: IActionOption[] =
+    getOptionsMenuDelivrer(refDelivrerOptions0);
 
   const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = (
     indexMenu: number,
@@ -202,12 +199,11 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       resultatGenerationEC?.resultGenerationUnDocument
     ) {
       if (props.requete.sousType === SousTypeDelivrance.RDC) {
-        history.push(
-          `${getUrlWithoutIdParam(
+        receUrl.replaceUrl(
+          history,
+          `${getUrlPrecedente(
             history.location.pathname
-          )}/${PATH_APERCU_COURRIER}/${
-            updateChoixDelivranceResultat.idRequete
-          }`,
+          )}/${PATH_APERCU_COURRIER}/${props.requete.id}`,
           actes?.[0]
         );
       } else {

@@ -25,14 +25,32 @@ const ecMariageSansFiliationparams: IGenerationECParams = {
   choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
 };
 
-const HookConsumer: React.FC = () => {
-  const resultat = useGenerationEC(ecMariageSansFiliationparams);
-
-  return <div>{resultat?.resultGenerationUnDocument?.idDocumentReponse}</div>;
+const ecMariageAvecFiliationparams: IGenerationECParams = {
+  idActe: idFicheActeMariage,
+  requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
 };
 
+const HookConsumer: React.FC<IGenerationECParams> =
+  ecMariageFiliationparams => {
+    const resultat = useGenerationEC(ecMariageFiliationparams);
+
+    return <div>{resultat?.resultGenerationUnDocument?.idDocumentReponse}</div>;
+  };
+
 test("Attendu: un extrait de mariage sans filiation est généré via useGenerationEC", async () => {
-  render(<HookConsumer />);
+  render(<HookConsumer {...ecMariageSansFiliationparams} />);
+
+  await waitFor(() => {
+    // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+    expect(
+      screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")
+    ).toBeInTheDocument();
+  });
+});
+
+test("Attendu: un extrait de mariage avec filiation est généré via useGenerationEC", async () => {
+  render(<HookConsumer {...ecMariageAvecFiliationparams} />);
 
   await waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)

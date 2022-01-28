@@ -2,7 +2,11 @@ import { getValeurOuVide } from "../../../../views/common/util/Utils";
 import { EtatCivilUtil } from "../../../../views/common/utilMetier/EtatCivilUtil";
 import { LieuxUtils } from "../../../../views/common/utilMetier/LieuxUtils";
 import { FicheActe, IFicheActe } from "../../../etatcivil/acte/IFicheActe";
-import { ITitulaireActe } from "../../../etatcivil/acte/ITitulaireActe";
+import {
+  ITitulaireActe,
+  TitulaireActe
+} from "../../../etatcivil/acte/ITitulaireActe";
+import { LienParente } from "../../../etatcivil/enum/LienParente";
 import { Sexe } from "../../../etatcivil/enum/Sexe";
 import { CommunComposition } from "../../commun/ICommunComposition";
 import { IExtraitCopieComposition } from "../IExtraitCopieComposition";
@@ -19,6 +23,14 @@ interface ITitulaireCompositionEC {
   partiesNom: string;
   lieuNaissance: string;
   dateNaissanceOuAge: string;
+  parentsTitulaire: IParentsTitulaireCompositionEC[];
+}
+
+export interface IParentsTitulaireCompositionEC {
+  prenoms: string;
+  nom: string;
+  lienParente: string;
+  filsOuFille: string;
 }
 
 export class CommunExtraitOuCopieActeTexteComposition {
@@ -29,13 +41,15 @@ export class CommunExtraitOuCopieActeTexteComposition {
     const titulaire1 = acte.titulaires[0];
     const titulaire2 = acte.titulaires[1];
 
-    const ecTitulaire1 = CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-      titulaire1
-    );
+    const ecTitulaire1 =
+      CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
+        titulaire1
+      );
 
-    const ecTitulaire2 = CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-      titulaire2
-    );
+    const ecTitulaire2 =
+      CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
+        titulaire2
+      );
 
     CommunComposition.ajoutDateDujour(composition);
     composition.reference_acte = FicheActe.getReference(acte);
@@ -109,16 +123,52 @@ export class CommunExtraitOuCopieActeTexteComposition {
           titulaire.naissance?.arrondissement
         ); // <Lieu de naissance titulaire 1>
 
-    const dateNaissanceOuAge = this.creerDateNaissanceOuAgeDeTitulaire(
-      titulaire
-    );
+    const dateNaissanceOuAge =
+      this.creerDateNaissanceOuAgeDeTitulaire(titulaire);
+
+    const parents = TitulaireActe.getParents(titulaire);
+
+    const parentsTitulaire = parents.map(parent => {
+      const prenomsParent = EtatCivilUtil.getPrenomsOuVide(parent.prenoms); //<Prénom(s) filiation)>
+      const nomParent = EtatCivilUtil.getNomOuVide(parent.nom); //<Nom filiation>
+      const lienParente = parent.lienParente;
+      const filsOuFille =
+        parent.lienParente === LienParente.PARENT
+          ? this.creerFilsOuFilleDeFiliationTitulaire(titulaire) //'fils de', 'fille de' ou 'de' [accord selon genre du titulaire]
+          : this.creerFilsOuFilleDeFiliationAdoptantTitulaire(titulaire); //'adopté par', 'adoptée par' [accord selon genre du titulaire]
+      return {
+        prenoms: prenomsParent,
+        nom: nomParent,
+        lienParente,
+        filsOuFille
+      };
+    });
 
     return {
       prenoms,
       nom,
       partiesNom,
       lieuNaissance,
-      dateNaissanceOuAge
+      dateNaissanceOuAge,
+      parentsTitulaire
     };
+  }
+
+  public static creerFilsOuFilleDeFiliationTitulaire(
+    titulaire: ITitulaireActe
+  ): string {
+    const sexeTitulaire = titulaire.sexe
+      ? Sexe.getEnumFor(titulaire.sexe)
+      : Sexe.INCONNU;
+    return EtatCivilUtil.formatFilsOuFille(sexeTitulaire); //fils ou fille [accord selon genre du titulaire]
+  }
+
+  public static creerFilsOuFilleDeFiliationAdoptantTitulaire(
+    titulaire: ITitulaireActe
+  ): string {
+    const sexeTitulaire = titulaire.sexe
+      ? Sexe.getEnumFor(titulaire.sexe)
+      : Sexe.INCONNU;
+    return EtatCivilUtil.formatFilsOuFilleAdoptant(sexeTitulaire); //adopté ou adoptée [accord selon genre du titulaire]
   }
 }
