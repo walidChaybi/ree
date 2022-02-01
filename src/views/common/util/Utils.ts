@@ -275,7 +275,8 @@ export function compactObject(object: any): any {
     if (
       object[property] === undefined ||
       object[property] === null ||
-      object[property] === ""
+      object[property] === "" ||
+      (typeof object[property] === "string" && object[property].trim() === "")
     ) {
       delete object[property];
     }
