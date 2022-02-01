@@ -29,6 +29,7 @@ export interface IGenerationECParams {
   idActe: string;
   requete: IRequeteDelivrance;
   choixDelivrance: ChoixDelivrance;
+  validation: Validation;
 }
 
 export interface IGenerationECResultat {
@@ -66,9 +67,15 @@ export function useGenerationEC(
     if (nonNull(acteApiHookResultat?.acte, params)) {
       let composition;
       const acte = acteApiHookResultat?.acte;
-
-      //@ts-ignore nonNull
-      composition = creationComposition(acte, params.choixDelivrance);
+      composition = creationComposition(
+        // @ts-ignore NonNull
+        acte,
+        // @ts-ignore NonNull
+        params.choixDelivrance,
+        // @ts-ignore NonNull
+        params.requete.sousType,
+        params?.validation
+      );
 
       setParamECHook(composition);
     }
@@ -90,7 +97,7 @@ export function useGenerationEC(
           nbPages: extraitCopieApiHookResultat.donneesComposition.nbPages,
           mimeType: MimeType.APPLI_PDF,
           orientation: Orientation.PORTRAIT,
-          validation: Validation.N,
+          validation: params.validation,
           uuidActe: acteApiHookResultat?.acte?.id
         } as IDocumentReponse,
 

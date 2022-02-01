@@ -1,4 +1,7 @@
-import { IAnalyseMarginale } from "../../../../../model/etatcivil/acte/IAnalyseMarginale";
+import {
+  AnalyseMarginale,
+  IAnalyseMarginale
+} from "../../../../../model/etatcivil/acte/IAnalyseMarginale";
 import {
   FicheActe,
   IFicheActe
@@ -48,14 +51,12 @@ async function ajoutInfosTitulaire(
   acte?: IFicheActe
 ) {
   let titulaires = [];
-  let analyseMarginale = {} as IAnalyseMarginale;
+  let analyseMarginale: IAnalyseMarginale | undefined;
 
   if (acte?.id && acte?.analyseMarginales) {
-    acte?.analyseMarginales.forEach((analyse: IAnalyseMarginale) => {
-      if (analyse.dateFinEffet === null) {
-        analyseMarginale = analyse;
-      }
-    });
+    analyseMarginale = AnalyseMarginale.getLaBonneAnalyseMarginale(
+      acte?.analyseMarginales
+    );
   }
 
   if (analyseMarginale?.titulaires) {

@@ -1,4 +1,7 @@
-import { getDateDuJour } from "../../../views/common/util/DateUtils";
+import {
+  getDateDuJour,
+  getDateFormatJasper
+} from "../../../views/common/util/DateUtils";
 import { getValeurOuVide } from "../../../views/common/util/Utils";
 
 export interface ICommunComposition {
@@ -6,6 +9,7 @@ export interface ICommunComposition {
   titre?: string;
   numero_requete?: string;
   date_jour?: string;
+  date_delivrance: string;
 }
 
 export const CommunComposition = {
@@ -14,7 +18,8 @@ export const CommunComposition = {
     numero?: string,
     objet?: string,
     titre?: string,
-    dateDujour = false
+    dateDujour = false,
+    dateDelivrance = false
   ) {
     objJson = objJson || {};
 
@@ -24,7 +29,21 @@ export const CommunComposition = {
     if (dateDujour) {
       objJson.date_jour = getDateDuJour();
     }
+    if (dateDelivrance) {
+      objJson.date_delivrance = getDateFormatJasper(new Date());
+    }
     return objJson;
+  },
+
+  ajoutDateDeDelivrance(objJson: ICommunComposition) {
+    return this.ajoutParamCommuns(
+      objJson,
+      undefined,
+      undefined,
+      undefined,
+      false,
+      true
+    );
   },
 
   ajoutDateDujour(objJson: ICommunComposition) {

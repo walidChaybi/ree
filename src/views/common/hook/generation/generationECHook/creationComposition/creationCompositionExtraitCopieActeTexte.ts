@@ -3,15 +3,22 @@ import { IExtraitCopieComposition } from "../../../../../../model/composition/ex
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
 import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
+import { Validation } from "../../../../../../model/requete/enum/Validation";
 
 export const creationCompositionExtraitCopieActeTexte = function (
   acteComplet: IFicheActe,
-  choixDelivrance: ChoixDelivrance
+  choixDelivrance: ChoixDelivrance,
+  sousTypeRequete: SousTypeDelivrance,
+  validation: Validation
 ) {
   let composition;
   if (acteComplet.nature === NatureActe.MARIAGE) {
     composition = ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexte(
       acteComplet,
+      choixDelivrance,
+      sousTypeRequete,
+      validation,
       ChoixDelivrance.estChoixDelivranceAvecFiliation(choixDelivrance),
       ChoixDelivrance.estChoixDelivranceCopie(choixDelivrance),
       ChoixDelivrance.estChoixDelivranceCopieArchive(choixDelivrance)

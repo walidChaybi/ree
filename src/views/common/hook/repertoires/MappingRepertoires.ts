@@ -1,3 +1,4 @@
+import { IAnalyseMarginale } from "../../../../model/etatcivil/acte/IAnalyseMarginale";
 import { ICorpsExtraitRectification } from "../../../../model/etatcivil/acte/ICorpsExtraitRectification";
 import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
 import { IRegistre } from "../../../../model/etatcivil/acte/IRegistre";
@@ -117,7 +118,17 @@ export function mapActe(data: any): IFicheActe {
     data.corpsExtraitRectifications
   );
 
+  dataActe.analyseMarginales = mapAnalysesMarginales(data.analyseMarginales);
+
   return dataActe;
+}
+
+function mapAnalysesMarginales(ams: any[]): IAnalyseMarginale[] | undefined {
+  return ams?.map((am: any) => ({
+    ...am,
+    dateDebut: am.dateDebut ? getDateFromTimestamp(am.dateDebut) : undefined,
+    dateFin: am.dateFin ? getDateFromTimestamp(am.dateFin) : undefined
+  }));
 }
 
 function mapDetailMariage(dm: any): IDetailMariage | undefined {

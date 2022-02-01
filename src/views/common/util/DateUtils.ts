@@ -317,3 +317,7 @@ export function dateCourrier(): string {
   const year = today.getFullYear().toString();
   return `${day} ${month} ${year}`;
 }
+
+export function estDateAtteinte(date: Date) {
+  return Date.now() >= date.getTime();
+}

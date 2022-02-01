@@ -3,50 +3,53 @@ import { FicheActe, IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { ExistenceContratMariage } from "../../../etatcivil/enum/ExistenceContratMariage";
 import { LienParente } from "../../../etatcivil/enum/LienParente";
 import { TypeExtrait } from "../../../etatcivil/enum/TypeExtrait";
+import { ChoixDelivrance } from "../../../requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "../../../requete/enum/SousTypeDelivrance";
+import { Validation } from "../../../requete/enum/Validation";
 import { IExtraitCopieComposition } from "../IExtraitCopieComposition";
 import {
   CommunExtraitOuCopieActeTexteComposition,
-  IParentsTitulaireCompositionEC
+  IParentsTitulaireCompositionEC,
+  ITitulaireCompositionEC
 } from "./CommunExtraitOuCopieActeTexteComposition";
 
 export class ExtraitCopieActeTexteMariageComposition {
   public static creerExtraitCopieActeTexte(
     acteMariage: IFicheActe,
+    choixDelivrance: ChoixDelivrance,
+    sousTypeRequete: SousTypeDelivrance,
+    validation: Validation,
     avecFiliation = false,
     copie = false,
     archive = false
   ) {
     const composition = {} as IExtraitCopieComposition;
 
-    const { ecTitulaire1, ecTitulaire2 } =
-      CommunExtraitOuCopieActeTexteComposition.creerExtraitCopie(
-        composition,
-        acteMariage
-      );
+    // Filigrane archive (le bloc de signature sera automatiquement masqué)
+    composition.filigrane_archive = archive;
 
+    // Création de l'entête
+    CommunExtraitOuCopieActeTexteComposition.creerReferenceActeEtDateDuJour(
+      composition,
+      acteMariage
+    );
+
+    // Type et nature de document
     composition.type_document = copie ? "COPIE" : "EXTRAIT";
     composition.nature_acte = "MARIAGE";
 
-    const ecActe =
-      CommunExtraitOuCopieActeTexteComposition.creerEvenementActeCompositionEC(
-        acteMariage
-      );
+    CommunExtraitOuCopieActeTexteComposition.créerAnalyseMarginale(
+      composition,
+      acteMariage
+    );
 
-    composition.filigrane_archive = archive;
-
-    const enonciationContratDeMariage =
-      ExtraitCopieActeTexteMariageComposition.creerEnonciationContratMariage(
-        acteMariage.detailMariage?.existenceContrat,
-        acteMariage.detailMariage?.contrat
-      ); //<énonciation contrat de mariage>
-
-    const corpsExtraitRectification =
-      FicheActe.getCorpsExtraitRectificationTexte(
-        acteMariage,
-        avecFiliation
-          ? TypeExtrait.EXTRAIT_AVEC_FILIATION
-          : TypeExtrait.EXTRAIT_SANS_FILIATION
-      );
+    // Récupération de l'éventuelle rectification qui remplacera le corps
+    const corpsExtraitRectification = FicheActe.getCorpsExtraitRectificationTexte(
+      acteMariage,
+      avecFiliation
+        ? TypeExtrait.EXTRAIT_AVEC_FILIATION
+        : TypeExtrait.EXTRAIT_SANS_FILIATION
+    );
 
     if (copie && acteMariage.corpsText) {
       // Une copie est demandée (et non un extrait) pour un acte texte
@@ -55,43 +58,64 @@ export class ExtraitCopieActeTexteMariageComposition {
       // L'acte comporte un corps d'extrait modifié correspondant au type d'extrait traité : extrait avec ou sans filiation
       composition.corps_texte = corpsExtraitRectification;
     } else {
-      let parents1 = "";
-      let parents2 = "";
-      let parentsAdoptants1 = "";
-      let parentsAdoptants2 = "";
+      composition.corps_texte = ExtraitCopieActeTexteMariageComposition.getCorpsTexte(
+        acteMariage,
+        avecFiliation
+      );
+    }
 
-      if (avecFiliation) {
-        //Construction string parents
-        parents1 = this.constructionPhraseParents(
-          ecTitulaire1.parentsTitulaire.filter(
-            parent => parent.lienParente === LienParente.PARENT
-          ),
-          LienParente.PARENT
-        );
-        parentsAdoptants1 = this.constructionPhraseParents(
-          ecTitulaire1.parentsTitulaire.filter(
-            parent => parent.lienParente !== LienParente.PARENT
-          ),
-          LienParente.PARENT_ADOPTANT
-        );
+    CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
+      composition,
+      choixDelivrance,
+      sousTypeRequete,
+      acteMariage.nature,
+      validation,
+      archive
+    );
+    return composition;
+  }
 
-        //Construction string parents adoptants
-        parents2 = this.constructionPhraseParents(
-          ecTitulaire2.parentsTitulaire.filter(
-            parent => parent.lienParente === LienParente.PARENT
-          ),
-          LienParente.PARENT
-        );
-        parentsAdoptants2 = this.constructionPhraseParents(
-          ecTitulaire2.parentsTitulaire.filter(
-            parent => parent.lienParente !== LienParente.PARENT
-          ),
-          LienParente.PARENT_ADOPTANT
-        );
-      }
+  private static getCorpsTexte(
+    acteMariage: IFicheActe,
+    avecFiliation: boolean
+  ) {
+    const {
+      ecTitulaire1,
+      ecTitulaire2
+    } = CommunExtraitOuCopieActeTexteComposition.getTitulairesCorpsText(
+      acteMariage
+    );
 
-      composition.corps_texte = `${ecActe.leouEnEvenement} ${ecActe.dateEvenement}
-a été célébré à ${ecActe.lieuEvenement}
+    let parents1 = "";
+    let parents2 = "";
+    let parentsAdoptants1 = "";
+    let parentsAdoptants2 = "";
+
+    if (avecFiliation) {
+      ({
+        parents1,
+        parentsAdoptants1,
+        parents2,
+        parentsAdoptants2
+      } = ExtraitCopieActeTexteMariageComposition.getPhrasesParents(
+        ecTitulaire1,
+        ecTitulaire2
+      ));
+    }
+
+    // Création de l'événement pour le corps
+    const evtActe = CommunExtraitOuCopieActeTexteComposition.getEvenementActeCompositionEC(
+      acteMariage
+    );
+
+    // Création le l'énonciation du contrat pour le corps
+    const enonciationContratDeMariage = ExtraitCopieActeTexteMariageComposition.getEnonciationContratMariage(
+      acteMariage.detailMariage?.existenceContrat,
+      acteMariage.detailMariage?.contrat
+    ); //<énonciation contrat de mariage>
+
+    return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement}
+a été célébré à ${evtActe.lieuEvenement}
 le mariage
 de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}
 ${ecTitulaire1.dateNaissanceOuAge} à ${ecTitulaire1.lieuNaissance}${parents1}${parentsAdoptants1}
@@ -99,8 +123,44 @@ et de ${ecTitulaire2.prenoms} ${ecTitulaire2.nom} ${ecTitulaire2.partiesNom}
 ${ecTitulaire2.dateNaissanceOuAge} à ${ecTitulaire2.lieuNaissance}${parents2}${parentsAdoptants2}
 
 Contrat de mariage : ${enonciationContratDeMariage}`;
-    }
-    return composition;
+  }
+
+  private static getPhrasesParents(
+    ecTitulaire1: ITitulaireCompositionEC,
+    ecTitulaire2: ITitulaireCompositionEC
+  ) {
+    let parents1 = "";
+    let parents2 = "";
+    let parentsAdoptants1 = "";
+    let parentsAdoptants2 = "";
+    //Construction phrase parents
+    parents1 = this.constructionPhraseParents(
+      ecTitulaire1.parentsTitulaire.filter(
+        parent => parent.lienParente === LienParente.PARENT
+      ),
+      LienParente.PARENT
+    );
+    parentsAdoptants1 = this.constructionPhraseParents(
+      ecTitulaire1.parentsTitulaire.filter(
+        parent => parent.lienParente !== LienParente.PARENT
+      ),
+      LienParente.PARENT_ADOPTANT
+    );
+
+    //Construction phrase parents adoptants
+    parents2 = this.constructionPhraseParents(
+      ecTitulaire2.parentsTitulaire.filter(
+        parent => parent.lienParente === LienParente.PARENT
+      ),
+      LienParente.PARENT
+    );
+    parentsAdoptants2 = this.constructionPhraseParents(
+      ecTitulaire2.parentsTitulaire.filter(
+        parent => parent.lienParente !== LienParente.PARENT
+      ),
+      LienParente.PARENT_ADOPTANT
+    );
+    return { parents1, parentsAdoptants1, parents2, parentsAdoptants2 };
   }
 
   private static constructionPhraseParents(
@@ -130,7 +190,7 @@ Contrat de mariage : ${enonciationContratDeMariage}`;
     return resultatPhraseParents;
   }
 
-  private static creerEnonciationContratMariage(
+  private static getEnonciationContratMariage(
     existanceContratMariage?: ExistenceContratMariage,
     text?: string
   ): string {

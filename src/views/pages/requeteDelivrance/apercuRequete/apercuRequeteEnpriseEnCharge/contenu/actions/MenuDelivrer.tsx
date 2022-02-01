@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
 import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
+import { Validation } from "../../../../../../../model/requete/enum/Validation";
 import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -53,11 +54,13 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
-    useState<UpdateChoixDelivranceProps>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<
+    UpdateChoixDelivranceProps
+  >();
 
-  const [generationDocumentECParams, setGenerationDocumentECParams] =
-    useState<IGenerationECParams>();
+  const [generationDocumentECParams, setGenerationDocumentECParams] = useState<
+    IGenerationECParams
+  >();
   useEffect(() => {
     setInscriptions(
       props.inscriptions
@@ -86,7 +89,8 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       setGenerationDocumentECParams({
         idActe: actes[0].idActe,
         requete: props.requete,
-        choixDelivrance
+        choixDelivrance,
+        validation: Validation.N
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,8 +121,9 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     resetDoubleSubmit
   );
 
-  const delivrerOptions: IActionOption[] =
-    getOptionsMenuDelivrer(refDelivrerOptions0);
+  const delivrerOptions: IActionOption[] = getOptionsMenuDelivrer(
+    refDelivrerOptions0
+  );
 
   const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = (
     indexMenu: number,

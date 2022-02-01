@@ -2,6 +2,7 @@ import {
   compareDatesCompose,
   compareNumber,
   dateCourrier,
+  estDateAtteinte,
   estDateReceValide,
   estDateValide,
   estDateVide,
@@ -378,7 +379,19 @@ test("formatMois", () => {
   expect(formatMois("010")).toBe("octobre");
 });
 
-test("dateCourrier()", () => {
+test("dateCourdateCourrierrier()", () => {
   const today = dateCourrier();
   expect(today).not.toBeNull();
+});
+
+test("estDateAtteinte()", () => {
+  const d1 = new Date(2020, 0, 1);
+  expect(estDateAtteinte(d1)).toBeTruthy();
+  const today = new Date();
+  const d2 = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 1
+  );
+  expect(estDateAtteinte(d2)).toBeFalsy();
 });

@@ -1,4 +1,14 @@
-import { getValeurOuVide } from "../../../../views/common/util/Utils";
+import {
+  AnalyseMarginale,
+  IAnalyseMarginale
+} from "../../../../model/etatcivil/acte/IAnalyseMarginale";
+import {
+  DEUX,
+  getValeurOuVide,
+  TROIS,
+  UN,
+  ZERO
+} from "../../../../views/common/util/Utils";
 import { EtatCivilUtil } from "../../../../views/common/utilMetier/EtatCivilUtil";
 import { LieuxUtils } from "../../../../views/common/utilMetier/LieuxUtils";
 import { FicheActe, IFicheActe } from "../../../etatcivil/acte/IFicheActe";
@@ -7,23 +17,34 @@ import {
   TitulaireActe
 } from "../../../etatcivil/acte/ITitulaireActe";
 import { LienParente } from "../../../etatcivil/enum/LienParente";
+import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { Sexe } from "../../../etatcivil/enum/Sexe";
+import { LIBELLE_FONCTION_AGENT_1 } from "../../../parametres/clesParametres";
+import { ParametreBaseRequete } from "../../../parametres/enum/ParametresBaseRequete";
+import { ChoixDelivrance } from "../../../requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "../../../requete/enum/SousTypeDelivrance";
+import { Validation } from "../../../requete/enum/Validation";
 import { CommunComposition } from "../../commun/ICommunComposition";
 import { IExtraitCopieComposition } from "../IExtraitCopieComposition";
 
-interface IActeCompositionEC {
+export interface IActeCompositionEC {
   leouEnEvenement: string;
   dateEvenement: string;
   lieuEvenement: string;
 }
 
-interface ITitulaireCompositionEC {
+export interface ITitulaireCompositionEC {
   prenoms: string;
   nom: string;
   partiesNom: string;
   lieuNaissance: string;
   dateNaissanceOuAge: string;
   parentsTitulaire: IParentsTitulaireCompositionEC[];
+}
+
+export interface ITitulaireAMCompositionEC {
+  prenoms: string;
+  nom: string;
 }
 
 export interface IParentsTitulaireCompositionEC {
@@ -34,31 +55,87 @@ export interface IParentsTitulaireCompositionEC {
 }
 
 export class CommunExtraitOuCopieActeTexteComposition {
-  public static creerExtraitCopie(
-    composition: IExtraitCopieComposition,
-    acte: IFicheActe
-  ) {
+  public static readonly FORMULE_SIGNATURE_DELIVRANCE = [
+    "Copie délivrée selon procédé informatisé",
+    "Extrait délivré selon procédé informatisé",
+    "Données contenues dans la copie d’acte transmises par le Service central d’état civil n’ayant pas valeur authentique",
+    "Cette transcription ne tient pas lieu d’acte de naissance"
+  ];
+
+  public static getTitulairesCorpsText(acte: IFicheActe) {
     const titulaire1 = acte.titulaires[0];
     const titulaire2 = acte.titulaires[1];
 
-    const ecTitulaire1 =
-      CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-        titulaire1
+    const ecTitulaire1 = CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
+      titulaire1
+    );
+
+    const ecTitulaire2 = CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
+      titulaire2
+    );
+    return { ecTitulaire1, ecTitulaire2 };
+  }
+
+  public static créerAnalyseMarginale(
+    composition: IExtraitCopieComposition,
+    acte: IFicheActe
+  ) {
+    // Titulaires analyse marginale
+    if (acte.analyseMarginales) {
+      const {
+        titulaireAMCompositionEC1,
+        titulaireAMCompositionEC2
+      } = CommunExtraitOuCopieActeTexteComposition.creerTitulairesAnalayseMarginaleCompositionEC(
+        acte.analyseMarginales
       );
 
-    const ecTitulaire2 =
-      CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-        titulaire2
-      );
+      if (titulaireAMCompositionEC1) {
+        composition.nom_titulaire1 = titulaireAMCompositionEC1.nom;
+        composition.prenoms_titulaire1 = titulaireAMCompositionEC1.prenoms;
+      }
+      if (titulaireAMCompositionEC2) {
+        composition.nom_titulaire2 = titulaireAMCompositionEC2.nom;
+        composition.prenoms_titulaire2 = titulaireAMCompositionEC2.prenoms;
+      }
+    }
+  }
 
+  public static creerReferenceActeEtDateDuJour(
+    composition: IExtraitCopieComposition,
+    acte: IFicheActe
+  ) {
     CommunComposition.ajoutDateDujour(composition);
     composition.reference_acte = FicheActe.getReference(acte);
-    composition.nom_titulaire1 = ecTitulaire1.nom;
-    composition.prenoms_titulaire1 = ecTitulaire1.prenoms;
-    composition.nom_titulaire2 = ecTitulaire2.nom;
-    composition.prenoms_titulaire2 = ecTitulaire2.prenoms;
+  }
 
-    return { ecTitulaire1, ecTitulaire2 };
+  private static creerTitulairesAnalayseMarginaleCompositionEC(
+    analyseMarginales: IAnalyseMarginale[]
+  ) {
+    let titulaireAMCompositionEC1: ITitulaireAMCompositionEC | undefined;
+    let titulaireAMCompositionEC2: ITitulaireAMCompositionEC | undefined;
+    const analyseMarginale = AnalyseMarginale.getLaBonneAnalyseMarginale(
+      analyseMarginales
+    );
+
+    const {
+      titulaireAM1,
+      titulaireAM2
+    } = AnalyseMarginale.getTitulairesDansLeBonOrdre(analyseMarginale);
+
+    if (titulaireAM1) {
+      titulaireAMCompositionEC1 = {
+        nom: EtatCivilUtil.getNomOuVide(titulaireAM1.nom),
+        prenoms: EtatCivilUtil.getPrenomsOuVide(titulaireAM1.prenoms)
+      };
+    }
+    if (titulaireAM2) {
+      titulaireAMCompositionEC2 = {
+        nom: EtatCivilUtil.getNomOuVide(titulaireAM2.nom),
+        prenoms: EtatCivilUtil.getPrenomsOuVide(titulaireAM2.prenoms)
+      };
+    }
+
+    return { titulaireAMCompositionEC1, titulaireAMCompositionEC2 };
   }
 
   public static creerDateNaissanceOuAgeDeTitulaire(
@@ -88,7 +165,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     return dateNaissanceOuAgeDeTitulaire;
   }
 
-  public static creerEvenementActeCompositionEC(
+  public static getEvenementActeCompositionEC(
     acte: IFicheActe
   ): IActeCompositionEC {
     const leouEnEvenement = EtatCivilUtil.formatLeOuEn(acte.evenement?.jour);
@@ -123,8 +200,9 @@ export class CommunExtraitOuCopieActeTexteComposition {
           titulaire.naissance?.arrondissement
         ); // <Lieu de naissance titulaire 1>
 
-    const dateNaissanceOuAge =
-      this.creerDateNaissanceOuAgeDeTitulaire(titulaire);
+    const dateNaissanceOuAge = this.creerDateNaissanceOuAgeDeTitulaire(
+      titulaire
+    );
 
     const parents = TitulaireActe.getParents(titulaire);
 
@@ -170,5 +248,80 @@ export class CommunExtraitOuCopieActeTexteComposition {
       ? Sexe.getEnumFor(titulaire.sexe)
       : Sexe.INCONNU;
     return EtatCivilUtil.formatFilsOuFilleAdoptant(sexeTitulaire); //adopté ou adoptée [accord selon genre du titulaire]
+  }
+
+  public static creerBlocSignature(
+    composition: IExtraitCopieComposition,
+    choixDelivrance: ChoixDelivrance,
+    sousTypeRequete: SousTypeDelivrance,
+    natureActe: NatureActe,
+    validation: Validation,
+    archive: boolean
+  ) {
+    if (validation === Validation.E || archive) {
+      composition.pas_de_bloc_signature = true;
+    } else {
+      composition.pas_de_bloc_signature = false;
+      CommunExtraitOuCopieActeTexteComposition.creerFormuleSignatureDelivrance(
+        composition,
+        choixDelivrance,
+        sousTypeRequete,
+        natureActe
+      );
+
+      // Ajout de la date de délivrance
+      CommunComposition.ajoutDateDeDelivrance(composition);
+
+      if (sousTypeRequete === SousTypeDelivrance.RDDP) {
+        composition.pas_de_signature = true;
+        composition.pas_de_nomPrenomAgent = true;
+      } else {
+        //Ajout du cachet
+        composition.cachet_signature = ParametreBaseRequete.getEnumFor(
+          LIBELLE_FONCTION_AGENT_1
+        ).libelle;
+      }
+    }
+  }
+
+  public static creerFormuleSignatureDelivrance(
+    composition: IExtraitCopieComposition,
+    choixDelivrance: ChoixDelivrance,
+    sousTypeRequete: SousTypeDelivrance,
+    natureActe: NatureActe
+  ) {
+    // Formule de signature délivrance
+    if (
+      sousTypeRequete === SousTypeDelivrance.RDD ||
+      sousTypeRequete === SousTypeDelivrance.RDC
+    ) {
+      if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE) {
+        composition.formule_signature_delivrance =
+          CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[
+            ZERO
+          ];
+      } else if (
+        choixDelivrance ===
+          ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION ||
+        choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+      ) {
+        if (natureActe === NatureActe.ADOPTION_SIMPLE) {
+          composition.formule_signature_delivrance =
+            CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[
+              TROIS
+            ];
+        } else {
+          composition.formule_signature_delivrance =
+            CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[
+              UN
+            ];
+        }
+      }
+    } else if (sousTypeRequete === SousTypeDelivrance.RDDP) {
+      composition.formule_signature_delivrance =
+        CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[
+          DEUX
+        ];
+    }
   }
 }

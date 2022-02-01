@@ -5,6 +5,7 @@ export const SANS_PRENOM_CONNU = "Sans prénom connu";
 export const SNP = "SNP";
 export const SANS_NOM_PATRONYMIQUE = "Sans nom patronymique";
 
+export const ZERO = 0;
 export const UN = 1;
 export const DEUX = 2;
 export const TROIS = 3;

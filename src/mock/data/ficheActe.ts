@@ -242,8 +242,8 @@ export const ficheActe1 = {
     },
     analyseMarginales: [
       {
-        dateDebutEffet: null,
-        dateFinEffet: null,
+        dateDebut: null,
+        dateFin: null,
         nomOec: null,
         prenomOec: null,
         motif: null,

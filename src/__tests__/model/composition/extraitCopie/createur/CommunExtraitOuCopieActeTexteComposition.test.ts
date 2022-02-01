@@ -1,0 +1,142 @@
+import request from "superagent";
+import { configParamsBaseRequete } from "../../../../../mock/superagent-config/superagent-mock-params";
+import { CommunExtraitOuCopieActeTexteComposition } from "../../../../../model/composition/extraitCopie/createur/CommunExtraitOuCopieActeTexteComposition";
+import { IExtraitCopieComposition } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
+import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { LIBELLE_FONCTION_AGENT_1 } from "../../../../../model/parametres/clesParametres";
+import { ParametreBaseRequete } from "../../../../../model/parametres/enum/ParametresBaseRequete";
+import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
+import { Validation } from "../../../../../model/requete/enum/Validation";
+const superagentMock = require("superagent-mock")(
+  request,
+  configParamsBaseRequete
+);
+
+beforeAll(async () => {
+  await ParametreBaseRequete.init();
+});
+
+afterAll(() => {
+  superagentMock.unset();
+});
+
+test("Attendu: creerFormuleSignatureDelivrance fonctionne correctement", () => {
+  const composition = {} as IExtraitCopieComposition;
+  let choixDelivrance = ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE;
+  let sousType = SousTypeDelivrance.RDD;
+  let natureActe = NatureActe.ADOPTION;
+
+  CommunExtraitOuCopieActeTexteComposition.creerFormuleSignatureDelivrance(
+    composition,
+    choixDelivrance,
+    sousType,
+    natureActe
+  );
+  expect(composition.formule_signature_delivrance).toBe(
+    CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[0]
+  );
+
+  sousType = SousTypeDelivrance.RDC;
+  CommunExtraitOuCopieActeTexteComposition.creerFormuleSignatureDelivrance(
+    composition,
+    choixDelivrance,
+    sousType,
+    natureActe
+  );
+  expect(composition.formule_signature_delivrance).toBe(
+    CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[0]
+  );
+
+  choixDelivrance = ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;
+  CommunExtraitOuCopieActeTexteComposition.creerFormuleSignatureDelivrance(
+    composition,
+    choixDelivrance,
+    sousType,
+    natureActe
+  );
+  expect(composition.formule_signature_delivrance).toBe(
+    CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[1]
+  );
+
+  choixDelivrance = ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
+  natureActe = NatureActe.ADOPTION_SIMPLE;
+  CommunExtraitOuCopieActeTexteComposition.creerFormuleSignatureDelivrance(
+    composition,
+    choixDelivrance,
+    sousType,
+    natureActe
+  );
+  expect(composition.formule_signature_delivrance).toBe(
+    CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[3]
+  );
+
+  sousType = SousTypeDelivrance.RDDP;
+  CommunExtraitOuCopieActeTexteComposition.creerFormuleSignatureDelivrance(
+    composition,
+    choixDelivrance,
+    sousType,
+    natureActe
+  );
+  expect(composition.formule_signature_delivrance).toBe(
+    CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[2]
+  );
+});
+
+test("Attendu: creerBlocSignature fonctionne correctement", () => {
+  const composition = {} as IExtraitCopieComposition;
+  let choixDelivrance = ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE;
+  let sousType = SousTypeDelivrance.RDD;
+  let natureActe = NatureActe.ADOPTION;
+  let validation = Validation.O;
+  let archive = false;
+
+  CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
+    composition,
+    choixDelivrance,
+    sousType,
+    natureActe,
+    validation,
+    archive
+  );
+  expect(composition.pas_de_bloc_signature).toBeFalsy();
+  expect(composition.cachet_signature).toBe(
+    ParametreBaseRequete.getEnumFor(LIBELLE_FONCTION_AGENT_1).libelle
+  );
+
+  validation = Validation.E;
+  CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
+    composition,
+    choixDelivrance,
+    sousType,
+    natureActe,
+    validation,
+    archive
+  );
+  expect(composition.pas_de_bloc_signature).toBeTruthy();
+
+  sousType = SousTypeDelivrance.RDDP;
+  validation = Validation.O;
+  CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
+    composition,
+    choixDelivrance,
+    sousType,
+    natureActe,
+    validation,
+    archive
+  );
+  expect(composition.pas_de_signature).toBeTruthy();
+  expect(composition.pas_de_nomPrenomAgent).toBeTruthy();
+
+  sousType = SousTypeDelivrance.RDD;
+  archive = true;
+  CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
+    composition,
+    choixDelivrance,
+    sousType,
+    natureActe,
+    validation,
+    archive
+  );
+  expect(composition.pas_de_bloc_signature).toBeTruthy();
+});

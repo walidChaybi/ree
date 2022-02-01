@@ -13,7 +13,9 @@ import {
   CODE_EXTRAIT_SANS_FILIATION,
   DocumentDelivrance
 } from "../../../../../model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
+import { Validation } from "../../../../../model/requete/enum/Validation";
 import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/creationCompositionExtraitCopieActeTexte";
 import { IGenerationECParams } from "./generationECHook";
 
@@ -90,34 +92,26 @@ export function getStatutRequete(choixDelivrance: ChoixDelivrance) {
 
 export function creationComposition(
   acte: IFicheActe,
-  choixDelivrance: ChoixDelivrance
+  choixDelivrance: ChoixDelivrance,
+  sousTypeRequete: SousTypeDelivrance,
+  validation: Validation
 ): IExtraitCopieComposition | undefined {
   let composition;
   if (
-    estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(
-      //@ts-ignore nonNull
-      acte,
-      //@ts-ignore nonNull
-      choixDelivrance
-    )
+    estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte, choixDelivrance)
   ) {
     composition = creationCompositionExtraitCopieActeTexte(
-      //@ts-ignore nonNull
       acte,
-      //@ts-ignore nonNull
-      choixDelivrance
+      choixDelivrance,
+      sousTypeRequete,
+      validation
     );
-  }
-  //@ts-ignore nonNull
-  else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
+  } else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
     composition = {
       nature_acte: "TODO",
       type_document: "TODO"
     } as IExtraitCopieComposition;
-  } else if (
-    //@ts-ignore nonNull
-    estDemandeCopieActeImage(acte, choixDelivrance)
-  ) {
+  } else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
     composition = {
       nature_acte: "TODO2",
       type_document: "TODO2",

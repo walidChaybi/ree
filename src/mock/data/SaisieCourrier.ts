@@ -530,8 +530,8 @@ export const ActeAnalyseMarginales = {
   corpsImage: null,
   analyseMarginales: [
     {
-      dateDebutEffet: null,
-      dateFinEffet: null,
+      dateDebut: null,
+      dateFin: null,
       nomOec: "Lens",
       prenomOec: "Alexis",
       motif: null,
