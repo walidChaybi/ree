@@ -76,7 +76,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     return { ecTitulaire1, ecTitulaire2 };
   }
 
-  public static créerAnalyseMarginale(
+  public static creerAnalyseMarginale(
     composition: IExtraitCopieComposition,
     acte: IFicheActe
   ) {
@@ -85,7 +85,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
       const {
         titulaireAMCompositionEC1,
         titulaireAMCompositionEC2
-      } = CommunExtraitOuCopieActeTexteComposition.creerTitulairesAnalayseMarginaleCompositionEC(
+      } = CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(
         acte.analyseMarginales
       );
 
@@ -108,7 +108,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     composition.reference_acte = FicheActe.getReference(acte);
   }
 
-  private static creerTitulairesAnalayseMarginaleCompositionEC(
+  private static getTitulairesAnalayseMarginaleCompositionEC(
     analyseMarginales: IAnalyseMarginale[]
   ) {
     let titulaireAMCompositionEC1: ITitulaireAMCompositionEC | undefined;

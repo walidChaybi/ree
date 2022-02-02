@@ -1,5 +1,8 @@
 import { estDateAtteinte } from "../../../views/common/util/DateUtils";
-import { triListeObjetsSurPropriete } from "../../../views/common/util/Utils";
+import {
+  triListeObjetsSurDate,
+  triListeObjetsSurPropriete
+} from "../../../views/common/util/Utils";
 import { ITitulaireActe } from "./ITitulaireActe";
 
 export interface IAnalyseMarginale {
@@ -37,25 +40,32 @@ export const AnalyseMarginale = {
    * Retourne l'AM la plus récente. ie: la ate de début est la plus récente et la date de fin est vide ou non atteinte
    */
   getLaBonneAnalyseMarginale(
-    analyseMarginales: IAnalyseMarginale[]
+    analyseMarginales?: IAnalyseMarginale[]
   ): IAnalyseMarginale | undefined {
-    let analyseMarginaleLaPlusRecente: IAnalyseMarginale;
+    let analyseMarginaleLaPlusRecente: IAnalyseMarginale | undefined;
 
-    const analyseMarginalesTries = triListeObjetsSurPropriete(
-      [...analyseMarginales],
-      "dateDebut"
-    );
+    if (analyseMarginales && analyseMarginales.length > 0) {
+      const analyseMarginalesTries = triListeObjetsSurDate(
+        [...analyseMarginales],
+        "dateDebut"
+      );
 
-    let idx = analyseMarginalesTries.length - 1;
-    analyseMarginaleLaPlusRecente = analyseMarginalesTries[idx];
-    while (
-      analyseMarginaleLaPlusRecente &&
-      analyseMarginaleLaPlusRecente.dateFin &&
-      estDateAtteinte(analyseMarginaleLaPlusRecente.dateFin)
-    ) {
-      idx--;
-      analyseMarginaleLaPlusRecente =
-        analyseMarginalesTries[analyseMarginalesTries.length - idx];
+      let idx = analyseMarginalesTries.length - 1;
+      analyseMarginaleLaPlusRecente = analyseMarginalesTries[idx];
+      while (
+        analyseMarginaleLaPlusRecente &&
+        analyseMarginaleLaPlusRecente.dateFin &&
+        estDateAtteinte(analyseMarginaleLaPlusRecente.dateFin)
+      ) {
+        idx--;
+        analyseMarginaleLaPlusRecente = analyseMarginalesTries[idx];
+      }
+
+      // si toutes les analyses marginales ont une date de fin révolue alors on prend la plus récente
+      if (!analyseMarginaleLaPlusRecente) {
+        analyseMarginaleLaPlusRecente =
+          analyseMarginalesTries[analyseMarginalesTries.length - 1];
+      }
     }
 
     return analyseMarginaleLaPlusRecente;

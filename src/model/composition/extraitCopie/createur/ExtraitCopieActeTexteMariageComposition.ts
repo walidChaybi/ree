@@ -38,7 +38,7 @@ export class ExtraitCopieActeTexteMariageComposition {
     composition.type_document = copie ? "COPIE" : "EXTRAIT";
     composition.nature_acte = "MARIAGE";
 
-    CommunExtraitOuCopieActeTexteComposition.créerAnalyseMarginale(
+    CommunExtraitOuCopieActeTexteComposition.creerAnalyseMarginale(
       composition,
       acteMariage
     );

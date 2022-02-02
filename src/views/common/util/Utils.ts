@@ -34,6 +34,14 @@ export function triListeObjetsSurPropriete(objets: any[], propriete: string) {
     : [];
 }
 
+export function triListeObjetsSurDate(objets: any[], nomPropriete: string) {
+  return objets
+    ? objets.sort(
+        (o1, o2) => o1[nomPropriete].getTime() - o2[nomPropriete].getTime()
+      )
+    : [];
+}
+
 export function formatMajusculesMinusculesMotCompose(str?: string) {
   let res = "";
   if (str) {
