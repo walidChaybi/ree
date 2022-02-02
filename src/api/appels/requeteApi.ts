@@ -250,11 +250,24 @@ export async function updateChoixDelivrance(
   });
 }
 
+export async function postSauvegarderDocument(
+  idRequete: string,
+  requete: Object
+) {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_COURRIER}`,
+    parameters: {
+      idRequete
+    },
+    data: requete
+  });
+}
 export async function postSauvCourrierCreerActionMajStatutRequete(
   idRequete: string,
-  libelleAction: string,
   statutRequete: StatutRequete,
-  requete: Object
+  requete: Object,
+  libelleAction?: string
 ) {
   return api.fetch({
     method: HttpMethod.PATCH,

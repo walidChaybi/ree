@@ -27,7 +27,8 @@ const HookConsummer: React.FC = () => {
   const res = useGenerationCourrierHook({
     saisieCourrier,
     optionsChoisies,
-    requete
+    requete,
+    mettreAJourStatut: true
   });
 
   return (

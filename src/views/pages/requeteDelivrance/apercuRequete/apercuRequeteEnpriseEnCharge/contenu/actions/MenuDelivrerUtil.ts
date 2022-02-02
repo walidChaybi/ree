@@ -1,9 +1,24 @@
 import React from "react";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
+import {
+  DELIVRANCE_ACTE,
+  DELIVRANCE_ACTE_NON_ANTHENTIQUE,
+  DocumentDelivrance
+} from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { MotifDelivrance } from "../../../../../../../model/requete/enum/MotifDelivrance";
 import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
 import { IActionOption } from "../../../../../../../model/requete/IActionOption";
-import { getLibelle } from "../../../../../../common/util/Utils";
+import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
+import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import {
+  getLibelle,
+  getValeurOuVide
+} from "../../../../../../common/util/Utils";
 import { IBoutonPopin } from "../../../../../../common/widget/popin/ConfirmationPopin";
+import { SaisieCourrier } from "../../../apercuCourrier/contenu/modelForm/ISaisiePageModel";
+
+const ORDRE_OPTION_MAX = 900;
 
 export function getBoutonOK(
   setMessagesBloquant: React.Dispatch<
@@ -111,3 +126,53 @@ export function estChoixExtraitAvecOuSansFiliation(indexMenu: number) {
 export function nonVide(messages?: string[]) {
   return messages !== undefined && messages.length > 0;
 }
+
+export const sousTypeCreationCourrierAutomatique = (type: SousTypeDelivrance) =>
+  type === SousTypeDelivrance.RDD || type === SousTypeDelivrance.RDDP;
+
+export const compositionCourrierAutomatique = (
+  choixDelivrance: ChoixDelivrance,
+  optionsChoisies?: OptionsCourrier,
+  requete?: IRequeteDelivrance,
+  acte?: IResultatRMCActe
+) => {
+  return {
+    saisieCourrier: {
+      choixCourrier: {
+        delivrance: ChoixDelivrance.getKeyForNom(
+          ChoixDelivrance,
+          choixDelivrance.nom
+        ),
+        courrier: getIdCourrierAuto(choixDelivrance)
+      },
+      texteLibre: { texte: "" },
+      requerant: {
+        requerantLigne1: requete?.requerant.prenom,
+        requerantLigne2: requete?.requerant.nomFamille
+      },
+      requete: {
+        motif: MotifDelivrance.getKey(getValeurOuVide(requete?.motif)),
+        nbExemplaire: requete?.nbExemplaireImpression
+      }
+    } as SaisieCourrier,
+    optionsChoisies: optionsChoisies
+      ?.filter(option => {
+        return option.optionParDefaut && option.ordreEdition < ORDRE_OPTION_MAX;
+      })
+      .sort((a, b) => a.ordreEdition - b.ordreEdition),
+    requete,
+    acte
+  };
+};
+
+export const getIdCourrierAuto = (choixDelivrance?: ChoixDelivrance) => {
+  let res = "";
+  if (choixDelivrance) {
+    if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE) {
+      res = DocumentDelivrance.getKeyForCode(DELIVRANCE_ACTE_NON_ANTHENTIQUE);
+    } else {
+      res = DocumentDelivrance.getKeyForCode(DELIVRANCE_ACTE);
+    }
+  }
+  return res;
+};

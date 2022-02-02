@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../../../../../model/requete/enum/Validation";
@@ -28,17 +29,25 @@ import {
   PATH_APERCU_COURRIER,
   receUrl
 } from "../../../../../../router/ReceUrls";
+import {
+  IGenerationCourrierParams,
+  useGenerationCourrierHook
+} from "../../../apercuCourrier/contenu/hook/GenerationCourrierHook";
+import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
   UpdateChoixDelivranceProps,
   useUpdateChoixDelivrance
 } from "./hook/UpdateChoixDelivranceHook";
 import {
+  compositionCourrierAutomatique,
   estChoixExtraitAvecOuSansFiliation,
   getBoutonOK,
   getBoutonsOuiNon,
+  getIdCourrierAuto,
   getOptionsMenuDelivrer,
   nonVide,
+  sousTypeCreationCourrierAutomatique,
   unActeEtUnSeulSelectionne
 } from "./MenuDelivrerUtil";
 
@@ -48,19 +57,19 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
-  const [inscriptions, setInscriptions] = useState<
-    IResultatRMCInscription[] | undefined
-  >();
+  const [inscriptions, setInscriptions] =
+    useState<IResultatRMCInscription[] | undefined>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
   const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<
     UpdateChoixDelivranceProps
   >();
+  const [creationCourrierParams, setCreationCourrierParams] =
+    useState<IGenerationCourrierParams>();
 
-  const [generationDocumentECParams, setGenerationDocumentECParams] = useState<
-    IGenerationECParams
-  >();
+  const [generationDocumentECParams, setGenerationDocumentECParams] =
+    useState<IGenerationECParams>();
   useEffect(() => {
     setInscriptions(
       props.inscriptions
@@ -77,15 +86,36 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     paramUpdateChoixDelivrance
   );
 
+  const options = useOptionsCourriersApiHook(
+    DocumentDelivrance.getDocumentDelivrance(
+      getIdCourrierAuto(choixDelivrance)
+    ),
+    props.requete
+  );
+
   // 2 - Création des paramètre pour la génération du document demandé
   useEffect(() => {
     if (
       actes &&
       updateChoixDelivranceResultat?.idRequete &&
       choixDelivrance &&
-      (props.requete.sousType === SousTypeDelivrance.RDD ||
+      (sousTypeCreationCourrierAutomatique(props.requete.sousType) ||
         props.requete.sousType === SousTypeDelivrance.RDC)
     ) {
+      if (
+        sousTypeCreationCourrierAutomatique(props.requete.sousType) &&
+        options
+      ) {
+        setCreationCourrierParams({
+          ...compositionCourrierAutomatique(
+            choixDelivrance,
+            options,
+            props.requete,
+            actes[0]
+          ),
+          mettreAJourStatut: false
+        });
+      }
       setGenerationDocumentECParams({
         idActe: actes[0].idActe,
         requete: props.requete,
@@ -94,7 +124,9 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateChoixDelivranceResultat]);
+  }, [updateChoixDelivranceResultat, options]);
+
+  const generationCourrier = useGenerationCourrierHook(creationCourrierParams);
 
   // 3 - Génération du document demandé
   const resultatGenerationEC = useGenerationEC(generationDocumentECParams);
@@ -211,7 +243,10 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
           )}/${PATH_APERCU_COURRIER}/${props.requete.id}`,
           actes?.[0]
         );
-      } else {
+      } else if (
+        sousTypeCreationCourrierAutomatique(props.requete.sousType) &&
+        generationCourrier
+      ) {
         // Si la requete est une RDD et que l'action est enregistré
         const url = receUrl.getUrlApercuTraitementAPartirDe(
           history.location.pathname
@@ -223,6 +258,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   }, [
     updateChoixDelivranceResultat,
     resultatGenerationEC,
+    generationCourrier,
     history,
     props.requete
   ]);

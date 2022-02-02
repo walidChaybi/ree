@@ -60,7 +60,7 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
   );
   const [optionSelectionne, setOptionSelectionne] = useState<OptionCourrier>();
 
-  const { optionsCourrierDisponibles } = useOptionsCourriersApiHook(
+  const optionsCourrierDisponibles = useOptionsCourriersApiHook(
     props.documentDelivranceChoisi,
     props.requete as IRequeteDelivrance
   );

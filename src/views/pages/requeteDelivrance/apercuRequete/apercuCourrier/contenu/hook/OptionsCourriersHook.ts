@@ -9,11 +9,9 @@ import { recupererLesOptionsDisponiblesPourLeCourrier } from "../contenuForm/sou
 export function useOptionsCourriersApiHook(
   documentDelivranceChoisi?: DocumentDelivrance,
   requete?: IRequeteDelivrance
-) {
-  const [
-    optionsCourrierDisponibles,
-    setOptionsCourrierDisponibles
-  ] = useState<OptionsCourrier>([]);
+): OptionsCourrier {
+  const [optionsCourrierDisponibles, setOptionsCourrierDisponibles] =
+    useState<OptionsCourrier>([]);
 
   useEffect(() => {
     if (documentDelivranceChoisi && requete) {
@@ -34,7 +32,5 @@ export function useOptionsCourriersApiHook(
         });
     }
   }, [documentDelivranceChoisi, requete]);
-  return {
-    optionsCourrierDisponibles
-  };
+  return optionsCourrierDisponibles;
 }

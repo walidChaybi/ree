@@ -7,9 +7,8 @@ export class MotifDelivrance extends EnumWithLibelle {
   public static readonly CERTIFICAT_NATIONALITE_FRANCAISE = new MotifDelivrance(
     "Certificat de nationalité française"
   );
-  public static readonly DECLARATION_ACQUISITION_NATIONALITE_FRANCAISE = new MotifDelivrance(
-    "Déclaration d'acquisiton de nationalité française"
-  );
+  public static readonly DECLARATION_ACQUISITION_NATIONALITE_FRANCAISE =
+    new MotifDelivrance("Déclaration d'acquisiton de nationalité française");
   public static readonly DIVORCE_CONTENTIEUX = new MotifDelivrance(
     "Divorce / contentieux"
   );
@@ -18,9 +17,8 @@ export class MotifDelivrance extends EnumWithLibelle {
   public static readonly PENSION_REVERSION = new MotifDelivrance(
     "Pension de reversion"
   );
-  public static readonly PRESTATIONS_SOCIALES_OU_FAMILIALES = new MotifDelivrance(
-    "Prestations sociales ou familiales"
-  );
+  public static readonly PRESTATIONS_SOCIALES_OU_FAMILIALES =
+    new MotifDelivrance("Prestations sociales ou familiales");
   public static readonly RETRAITE = new MotifDelivrance("Retraite");
   public static readonly TITRE_SEJOUR_VISA_ETRANGER = new MotifDelivrance(
     "Titre de séjour / Visa étranger"

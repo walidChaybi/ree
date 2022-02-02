@@ -62,30 +62,25 @@ export interface IGenerationCourrierParams {
   optionsChoisies?: OptionsCourrier;
   requete?: IRequeteDelivrance;
   acte?: IResultatRMCActe;
+  mettreAJourStatut: boolean;
 }
 
 export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
-  const [resultatGenerationCourrier, setResultatGenerationCourrier] = useState<
-    IResultGenerationUnDocument
-  >();
+  const [resultatGenerationCourrier, setResultatGenerationCourrier] =
+    useState<IResultGenerationUnDocument>();
 
   const [courrierParams, setCourrierParams] = useState<ICourrierParams>();
 
   const [courrier, setCourrier] = useState<DocumentDelivrance | undefined>();
 
-  const [acteApiHookParams, setActeApiHookParams] = useState<
-    IActeApiHookParams
-  >();
+  const [acteApiHookParams, setActeApiHookParams] =
+    useState<IActeApiHookParams>();
 
-  const [
-    requeteDelivrancePourSauvegarde,
-    setRequeteDelivrancePourSauvegarde
-  ] = useState<ISauvegardeCourrier | undefined>();
+  const [requeteDelivrancePourSauvegarde, setRequeteDelivrancePourSauvegarde] =
+    useState<ISauvegardeCourrier | undefined>();
 
-  const [
-    basculerConstructionCourrier,
-    setBasculerConstructionCourrier
-  ] = useState<boolean>(false);
+  const [basculerConstructionCourrier, setBasculerConstructionCourrier] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (uuidCourrierPresent(params)) {
@@ -119,15 +114,16 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
       )
     ) {
       if (presenceDesElementsPourLaGeneration(params, courrier)) {
-        const elements: IElementsJasperCourrier = specificationCourrier.getElementsJasper(
-          // @ts-ignore presenceDesElementsPourLaGeneration
-          params.saisieCourrier,
-          // @ts-ignore presenceDesElementsPourLaGeneration
-          params.requete,
-          // @ts-ignore presenceDesElementsPourLaGeneration
-          params.optionsChoisies,
-          acteApiHookResultat?.acte
-        );
+        const elements: IElementsJasperCourrier =
+          specificationCourrier.getElementsJasper(
+            // @ts-ignore presenceDesElementsPourLaGeneration
+            params.saisieCourrier,
+            // @ts-ignore presenceDesElementsPourLaGeneration
+            params.requete,
+            // @ts-ignore presenceDesElementsPourLaGeneration
+            params.optionsChoisies,
+            acteApiHookResultat?.acte
+          );
         construitCourrier(
           elements,
           // @ts-ignore presenceDesElementsPourLaGeneration
@@ -146,9 +142,8 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   // 2 - Création du courrier: appel api composition
   // récupération du document en base64
-  const donneesComposition:
-    | IDonneesComposition
-    | undefined = useCourrierApiHook(courrierParams);
+  const donneesComposition: IDonneesComposition | undefined =
+    useCourrierApiHook(courrierParams);
 
   // 3 - Création du document réponse pour stockage dans la BDD et Swift
   useEffect(() => {
@@ -168,12 +163,13 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   // 4- Stockage du document réponse une fois celui-ci créé
   // 5- Création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   // 6- Mise à jour du status de la requête + création d'une action
-  const uuidDocumentsReponse = useSauvegarderCourrierCreerActionMajStatutRequete(
-    getStatutEnTraitement(params?.requete?.choixDelivrance).libelle,
-    getStatutEnTraitement(params?.requete?.choixDelivrance),
-    requeteDelivrancePourSauvegarde,
-    params?.requete?.id
-  );
+  const uuidDocumentsReponse =
+    useSauvegarderCourrierCreerActionMajStatutRequete(
+      getStatutEnTraitement(params?.requete?.choixDelivrance),
+      libelleSelonMajStatut(params),
+      requeteDelivrancePourSauvegarde,
+      params?.requete?.id
+    );
 
   // 6- Une fois la requête mise à jour et l'action créé, changement de page
   useEffect(() => {
@@ -194,6 +190,14 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   }, [uuidDocumentsReponse]);
 
   return resultatGenerationCourrier;
+}
+
+function libelleSelonMajStatut(
+  params: IGenerationCourrierParams | undefined
+): string | undefined {
+  return params?.mettreAJourStatut
+    ? getStatutEnTraitement(params?.requete?.choixDelivrance).libelle
+    : undefined;
 }
 
 function setActApiHookParamsOuBasculerConstructionCourrier(
@@ -311,13 +315,15 @@ function mappingAdresseSaisieToAdresseRequerant(
   saisieCourrier: SaisieCourrier | undefined
 ): IAdresseRequerant {
   return {
-    ligne2: getValeurOuVide(saisieCourrier?.[ADRESSE][COMPLEMENT_DESTINATAIRE]),
-    ligne3: getValeurOuVide(saisieCourrier?.[ADRESSE][COMPLEMENT_POINT_GEO]),
-    ligne4: getValeurOuVide(saisieCourrier?.[ADRESSE][VOIE]),
-    ligne5: getValeurOuVide(saisieCourrier?.[ADRESSE][LIEU_DIT]),
-    codePostal: getValeurOuVide(saisieCourrier?.[ADRESSE][CODE_POSTAL]),
-    ville: getValeurOuVide(saisieCourrier?.[ADRESSE][COMMUNE]),
-    pays: getValeurOuVide(saisieCourrier?.[ADRESSE][PAYS])
+    ligne2: getValeurOuVide(
+      saisieCourrier?.[ADRESSE]?.[COMPLEMENT_DESTINATAIRE]
+    ),
+    ligne3: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[COMPLEMENT_POINT_GEO]),
+    ligne4: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[VOIE]),
+    ligne5: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[LIEU_DIT]),
+    codePostal: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[CODE_POSTAL]),
+    ville: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[COMMUNE]),
+    pays: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[PAYS])
   };
 }
 
@@ -325,8 +331,9 @@ function requeteAvecAdresseSaisie(
   requete: IRequeteDelivrance,
   saisieCourrier: SaisieCourrier
 ) {
-  requete.requerant.adresse = mappingAdresseSaisieToAdresseRequerant(
-    saisieCourrier
-  );
+  if (saisieCourrier[ADRESSE]) {
+    requete.requerant.adresse =
+      mappingAdresseSaisieToAdresseRequerant(saisieCourrier);
+  }
   return requete;
 }

@@ -5,22 +5,21 @@ import { ISauvegardeCourrier } from "../../../../model/requete/ISauvegardeCourri
 import { logError } from "../../util/LogManager";
 
 export function useSauvegarderCourrierCreerActionMajStatutRequete(
-  libelleAction: string,
   statutRequete: StatutRequete,
+  libelleAction?: string,
   requete?: ISauvegardeCourrier | undefined,
   requeteId?: string
 ) {
-  const [uuidDocumentsReponse, setUuidDocumentsReponse] = useState<
-    string[] | undefined
-  >();
+  const [uuidDocumentsReponse, setUuidDocumentsReponse] =
+    useState<string[] | undefined>();
   useEffect(
     () => {
       if (requete && requeteId) {
         postSauvCourrierCreerActionMajStatutRequete(
           requeteId,
-          libelleAction,
           statutRequete,
-          requete
+          requete,
+          libelleAction
         )
           .then(result => {
             setUuidDocumentsReponse(result.body.data);
