@@ -128,6 +128,14 @@ const getRequeteRejet = (responsable: string, requete: TRequete) => {
   );
 };
 
+const getRequeteRejetImpression = (responsable: string, requete: TRequete) => {
+  return getLibelle(
+    `Requête en rejet impression - Le ${getFormatDateFromTimestamp(
+      requete.statutCourant.dateEffet
+    )}`
+  );
+};
+
 const getStatutLibellePourRequete = (requete: TRequete) => {
   let responsable = requete.idUtilisateur
     ? `${premiereLettreEnMajusculeLeResteEnMinuscule(
@@ -195,6 +203,11 @@ function getStatutLibelleSuite(requete: TRequete, responsable: string) {
     case StatutRequete.REJET:
       libelle = getRequeteRejet(responsable, requete);
       break;
+
+    case StatutRequete.REJET_IMPRESSION:
+      libelle = getRequeteRejetImpression(responsable, requete);
+      break;
+
     default:
       libelle = "";
       break;
@@ -218,7 +231,8 @@ function getClassName(statut: StatutRequete) {
       statut === StatutRequete.TRAITE_A_DELIVRER_DEMAT ||
       statut === StatutRequete.TRAITE_A_IMPRIMER ||
       statut === StatutRequete.TRAITE_DELIVRE_DEMAT ||
-      statut === StatutRequete.TRAITE_IMPRIME
+      statut === StatutRequete.TRAITE_IMPRIME ||
+      statut === StatutRequete.REJET_IMPRESSION
     );
   }
 

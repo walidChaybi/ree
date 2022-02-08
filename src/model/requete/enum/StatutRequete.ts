@@ -48,7 +48,11 @@ export class StatutRequete extends EnumWithComplete {
     "TRAITE_REPONDU",
     "Traitée - Répondue"
   );
-
+  public static readonly REJET_IMPRESSION = new StatutRequete(
+    "REJET_IMPRESSION",
+    "Traité - Rejet impression"
+  );
+  
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, StatutRequete);
   }

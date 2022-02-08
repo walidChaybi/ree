@@ -129,6 +129,12 @@ test("récupérer le libellé d'une requête rejetée", () => {
   screen.getByText(/Requête rejetée le 02\/01\/2020 par Ashley YOUNG/i);
 });
 
+test("récupérer le libellé d'une requête rejet impression", () => {
+  requete.statutCourant.statut = StatutRequete.REJET_IMPRESSION;
+  render(<BandeauRequete requete={requete} />);
+  screen.getByText(/Requête en rejet impression - Le 02\/01\/2020/i);
+});
+
 test("récupérer le libellé d'une requête prise en charge non attribuée", () => {
   requete.statutCourant.statut = StatutRequete.PRISE_EN_CHARGE;
   requete.idUtilisateur = "";
