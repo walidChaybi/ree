@@ -3,7 +3,6 @@ import { MimeType } from "file-type";
 import React, { useEffect, useState } from "react";
 import { base64toBlob } from "../../util/FileUtils";
 import { getLibelle } from "../../util/Utils";
-import { Fieldset } from "../fieldset/Fieldset";
 import "./scss/VisionneuseDocument.scss";
 
 interface IVisionneuseDocumentProps {
@@ -12,28 +11,31 @@ interface IVisionneuseDocumentProps {
   typeMime?: MimeType;
 }
 
-export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = props => {
+export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
+  titre,
+  contenu,
+  typeMime
+}) => {
   const [url, setUrl] = useState<string>();
 
   useEffect(() => {
-    if (props.contenu && props.typeMime) {
-      setUrl(base64toBlob(props.contenu, props.typeMime));
+    if (contenu && typeMime) {
+      setUrl(base64toBlob(contenu, typeMime));
     }
-  }, [props.contenu, props.typeMime]);
+  }, [contenu, typeMime]);
 
   return (
     <div className={"VisionneuseDocument"}>
-      <Fieldset titre={props.titre}>
         {url ? (
-          <iframe title={props.titre} src={url}></iframe>
-        ) : props.contenu === "" ? (
+          <iframe title={titre} src={url}></iframe>
+        ) : contenu === "" ? (
           <p className="messagePasDoc">
             {getLibelle("Aucun document à afficher")}
           </p>
         ) : (
           <LinearProgress className="ProgressBar" />
         )}
-      </Fieldset>
     </div>
   );
 };
+

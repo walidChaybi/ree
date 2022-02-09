@@ -10,6 +10,15 @@
     padding: 0.1rem 0.25rem;
   }
 
+  .BarreBoutons {
+    text-align: center;
+    .Warning{
+    color:red;
+    height: 100%;
+    svg {vertical-align: middle;}
+  }
+}
+
   .VisionneuseDocument {
     .Titre {
       position: relative;

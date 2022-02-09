@@ -60,16 +60,14 @@ export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> =
   }
 
   return (
-    <>
-      <BoutonOperationEnCours
-        onClick={setActionEtUpdateStatut}
-        estDesactive={estDisabled}
-        title={getLibelle(
-          "Retour à la prise en charge de la requête, les documents constitués seront supprimés"
-        )}
-      >
-        {getLibelle("Modifier le traitement")}
-      </BoutonOperationEnCours>
-    </>
+    <BoutonOperationEnCours
+      onClick={setActionEtUpdateStatut}
+      estDesactive={estDisabled}
+      title={getLibelle(
+        "Retour à la prise en charge de la requête, les documents constitués seront supprimés"
+      )}
+    >
+      {getLibelle("Modifier le traitement")}
+    </BoutonOperationEnCours>
   );
 };

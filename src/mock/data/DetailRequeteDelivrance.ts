@@ -495,6 +495,7 @@ export const ReponseAppelDetailRequeteDelivranceASigner = {
     motif: "RETRAITE",
     complementMotif: "",
     dateDelivranceDemat: null,
+    choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE.nom,
     provenance: "PLANETE",
     documentDemande: "Attestation de PACS",
     nombreExemplairesDemandes: null,

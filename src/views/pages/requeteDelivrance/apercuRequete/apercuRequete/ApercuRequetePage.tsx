@@ -3,7 +3,7 @@ import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse"
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { MigratorV1V2 } from "../../../../common/util/migration/MigratorV1V2";
 import { getLibelle } from "../../../../common/util/Utils";
-import { VisionneuseDocument } from "../../../../common/widget/document/VisionneuseDocument";
+import { VisionneuseAvecTitre } from "../../../../common/widget/document/VisionneuseAvecTitre";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { BoutonPrendreEnCharge } from "./contenu/BoutonPrendreEnCharge";
@@ -42,7 +42,7 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
     >
       {requete && (
         <>
-          <VisionneuseDocument
+          <VisionneuseAvecTitre
             titre={getLibelle("Aperçu des documents")}
             contenu={documentAffiche?.contenu}
             typeMime={documentAffiche?.mimeType}

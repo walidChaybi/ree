@@ -2,7 +2,7 @@ import { MimeType } from "file-type/core";
 import React from "react";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import { FenetreExterne } from "../../../../../../common/util/FenetreExterne";
-import { VisionneuseDocument } from "../../../../../../common/widget/document/VisionneuseDocument";
+import { VisionneuseAvecTitre } from "../../../../../../common/widget/document/VisionneuseAvecTitre";
 
 interface DocumentReponseProps {
   numRequete: string;
@@ -24,11 +24,11 @@ export const FenetreDocumentReponse: React.FC<DocumentReponseProps> = props => {
       ratioWidth={ratioWidth}
       ratioHeight={ratioHeight}
     >
-      <VisionneuseDocument
+      <VisionneuseAvecTitre
         titre={"Document réponse"}
         contenu={props.contenuPiece?.contenu}
         typeMime={props.contenuPiece?.mimeType as MimeType}
-      ></VisionneuseDocument>
+      ></VisionneuseAvecTitre>
     </FenetreExterne>
   );
 };

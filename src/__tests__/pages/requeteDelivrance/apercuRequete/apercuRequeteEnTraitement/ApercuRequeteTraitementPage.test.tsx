@@ -28,7 +28,7 @@ const sauvFonctionEstActive = gestionnaireFeatureFlag.estActif;
 
 let history: any;
 
-beforeAll(() => {
+beforeEach(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
   DocumentDelivrance.init();
   TypePieceJustificative.init();
@@ -139,10 +139,6 @@ test("test du bouton de modification du courrier", async () => {
       </>
     );
   });
-
-  await act(async () => {
-    fireEvent.click(screen.getByText("Actions"));
-  });
   await act(async () => {
     fireEvent.click(screen.getByText(/Modifier le courrier/i));
   });
@@ -150,3 +146,28 @@ test("test du bouton de modification du courrier", async () => {
     "/rece/rece-ui/mesrequetes/apercucourrier/a4cefb71-8457-4f6b-937e-34b49335d494"
   );
 });
+
+test("test du bouton de validation document", async () => {
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID}
+          >
+            <ApercuRequeteTraitementPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText(/Valider le document à traiter/i));
+  });
+  expect(history.location.pathname).toBe(
+    "/rece/rece-ui/mesrequetes/apercurequetetraitement/edition/a4cefb71-8457-4f6b-937e-34b49335d494"
+  );
+});
+
