@@ -181,7 +181,7 @@ function filtreSurNatureActe(
       return options.filter((opt: OptionCourrier) => opt.acteDeces);
 
     case NatureActeRequete.MARIAGE:
-      return options.filter((opt: OptionCourrier) => opt.acteDeces);
+      return options.filter((opt: OptionCourrier) => opt.acteMariage);
     default:
       return options;
   }
