@@ -62,9 +62,8 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<
-    UpdateChoixDelivranceProps
-  >();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
+    useState<UpdateChoixDelivranceProps>();
   const [creationCourrierParams, setCreationCourrierParams] =
     useState<IGenerationCourrierParams>();
 
@@ -95,32 +94,34 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
 
   // 2 - Création des paramètre pour la génération du document demandé
   useEffect(() => {
-    if (
-      actes &&
-      updateChoixDelivranceResultat?.idRequete &&
-      choixDelivrance &&
-      (sousTypeCreationCourrierAutomatique(props.requete.sousType) ||
-        props.requete.sousType === SousTypeDelivrance.RDC)
-    ) {
-      if (
-        sousTypeCreationCourrierAutomatique(props.requete.sousType) &&
-        options
-      ) {
-        setCreationCourrierParams({
-          ...compositionCourrierAutomatique(
-            choixDelivrance,
-            options,
-            props.requete,
-            actes[0]
-          ),
-          mettreAJourStatut: false
-        });
-      }
+    if (actes && updateChoixDelivranceResultat?.idRequete && choixDelivrance) {
       setGenerationDocumentECParams({
         idActe: actes[0].idActe,
         requete: props.requete,
         choixDelivrance,
         validation: Validation.N
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateChoixDelivranceResultat]);
+
+  // 2bis - Création des paramètre pour la génération du courrier auto
+  useEffect(() => {
+    if (
+      actes &&
+      updateChoixDelivranceResultat?.idRequete &&
+      choixDelivrance &&
+      options &&
+      sousTypeCreationCourrierAutomatique(props.requete.sousType)
+    ) {
+      setCreationCourrierParams({
+        ...compositionCourrierAutomatique(
+          choixDelivrance,
+          options,
+          props.requete,
+          actes[0]
+        ),
+        mettreAJourStatut: false
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,9 +154,8 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     resetDoubleSubmit
   );
 
-  const delivrerOptions: IActionOption[] = getOptionsMenuDelivrer(
-    refDelivrerOptions0
-  );
+  const delivrerOptions: IActionOption[] =
+    getOptionsMenuDelivrer(refDelivrerOptions0);
 
   const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = (
     indexMenu: number,

@@ -168,7 +168,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         optionsChoisies,
         requete: props.requete,
         acte: props.acte,
-        mettreAJourStatut: true
+        mettreAJourStatut: props.requete.documentsReponses.length === 0
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

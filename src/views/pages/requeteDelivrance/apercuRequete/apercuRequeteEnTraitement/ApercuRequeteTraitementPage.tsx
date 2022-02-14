@@ -2,6 +2,7 @@ import { Warning } from "@material-ui/icons";
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import {
@@ -95,9 +96,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
             contenu={documentAffiche?.contenu}
             typeMime={documentAffiche?.mimeType}
           >
-            <div className="BarreBoutons">
-              {afficherBoutonsActions(requete, modifierCourrier, edition)}
-            </div>
+            {afficherBoutonsActions(requete, modifierCourrier, edition)}
           </VisionneuseAvecTitre>
           <BoutonRetour />
           <div className="BoutonsAction">
@@ -139,25 +138,31 @@ const afficherBoutonsActions = (
 ) => {
   return (
     <>
-      <BoutonOperationEnCours onClick={modifierCourrier}>
-        {getLibelle("Modifier le courrier")}
-      </BoutonOperationEnCours>
-      {requete.choixDelivrance &&
-        ChoixDelivrance.estReponseAvecDelivrance(requete.choixDelivrance) && (
-          <>
-            <BoutonOperationEnCours onClick={edition}>
-              {getLibelle("Valider le document à traiter")}
-            </BoutonOperationEnCours>
-            {!documentsSontValides(requete) && (
-              <span
-                className="Warning"
-                title="Le ou les documents à délivrer ne sont pas validés. Cliquez sur le bouton pour les valider"
-              >
-                <Warning />
-              </span>
+      {boutonPresent(requete.sousType) && (
+        <div className="BarreBoutons">
+          <BoutonOperationEnCours onClick={modifierCourrier}>
+            {getLibelle("Modifier le courrier")}
+          </BoutonOperationEnCours>
+          {requete.choixDelivrance &&
+            ChoixDelivrance.estReponseAvecDelivrance(
+              requete.choixDelivrance
+            ) && (
+              <>
+                <BoutonOperationEnCours onClick={edition}>
+                  {getLibelle("Valider le document à traiter")}
+                </BoutonOperationEnCours>
+                {!documentsSontValides(requete) && (
+                  <span
+                    className="Warning"
+                    title="Le ou les documents à délivrer ne sont pas validés. Cliquez sur le bouton pour les valider"
+                  >
+                    <Warning />
+                  </span>
+                )}
+              </>
             )}
-          </>
-        )}
+        </div>
+      )}
     </>
   );
 };
@@ -165,5 +170,13 @@ const afficherBoutonsActions = (
 const documentsSontValides = (requete: IRequeteDelivrance) => {
   return requete.documentsReponses.some(
     el => el.validation === Validation.E || el.validation === Validation.N
+  );
+};
+
+const boutonPresent = (sousType: SousTypeDelivrance) => {
+  return (
+    sousType === SousTypeDelivrance.RDC ||
+    sousType === SousTypeDelivrance.RDD ||
+    sousType === SousTypeDelivrance.RDDP
   );
 };
