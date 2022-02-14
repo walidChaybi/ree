@@ -16,6 +16,10 @@ import {
   GetAlertesActeApiHookParameters,
   useGetAlertesActeApiHook
 } from "../../../../../common/hook/alertes/GetAlertesActeApiHook";
+import {
+  GetNbrTitulairesActeHookParameters,
+  useGetNbrTitulairesActeApiHook
+} from "../../../../../common/hook/repertoires/NbrTitulairesActeHook";
 import { aplatirTableau } from "../../../../../common/util/Utils";
 import { IAjouterAlerteFormValue } from "../../../../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { BoutonRetour } from "../../../../../common/widget/navigation/BoutonRetour";
@@ -46,6 +50,17 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   /* Etat inscriptions sélectionnées */
   const [inscriptions, setInscriptions] = useState<
     Map<number, IResultatRMCInscription>
+  >(new Map([]));
+
+  /* Etat paramètres d'appel de l'API de récupération du nombre de titulaires d'un acte */
+  const [
+    nbrTitulairesActeHookParameters,
+    setNbrTitulairesActeHookParameters
+  ] = useState<GetNbrTitulairesActeHookParameters>();
+
+  /* Nombre de titulaires associés aux actes sélectionnés */
+  const [nbrTitulairesActe, setNbrTitulairesActe] = useState<
+    Map<string, number>
   >(new Map([]));
 
   /* Etat ajout des alertes possible */
@@ -85,6 +100,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
       }
       setActes(newSelected);
       setAlertesActeApiHookParameters({ idActe: data?.idActe, isChecked });
+      setNbrTitulairesActeHookParameters({ idActe: data?.idActe, isChecked });
     },
     [actes]
   );
@@ -112,7 +128,33 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
     setActes(new Map([]));
     setInscriptions(new Map([]));
     setAlertes(new Map([]));
+    setNbrTitulairesActe(new Map([]));
   }, []);
+
+  /* Hook d'appel de l'API de récupération du nombre de titulaires associés à un acte */
+  const resultatGetNbrTitulairesActe = useGetNbrTitulairesActeApiHook(
+    nbrTitulairesActeHookParameters
+  );
+
+  /* Actualisation de la liste des nombres de titulaires des actes sélectionnés */
+  useEffect(() => {
+    if (nbrTitulairesActeHookParameters) {
+      const newNbrTitulairesActe = new Map(nbrTitulairesActe);
+      if (
+        nbrTitulairesActeHookParameters.isChecked &&
+        resultatGetNbrTitulairesActe
+      ) {
+        newNbrTitulairesActe.set(
+          nbrTitulairesActeHookParameters.idActe,
+          resultatGetNbrTitulairesActe
+        );
+      } else {
+        newNbrTitulairesActe.delete(nbrTitulairesActeHookParameters.idActe);
+      }
+      setNbrTitulairesActe(newNbrTitulairesActe);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nbrTitulairesActeHookParameters, resultatGetNbrTitulairesActe]);
 
   /* Hook d'appel de l'API de récupération des alertes associées à un acte */
   const resultatGetAlertesActe = useGetAlertesActeApiHook(
@@ -229,6 +271,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
         requete={detailRequete}
         actes={Array.from(actes.values())}
         inscriptions={Array.from(inscriptions.values())}
+        nbrTitulairesActe={nbrTitulairesActe}
       />
       <BoutonRetour />
     </>

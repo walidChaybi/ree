@@ -103,7 +103,7 @@ export const autorisePrendreEnChargeDelivrance = (
 export const autorisePrendreEnChargeReqTableauDelivrance = (
   requete: IRequeteTableauDelivrance
 ) =>
-  !MigratorV1V2.estSousTypeRDDouRDC(requete.sousType) &&
+  !MigratorV1V2.estSousTypeRDDouRDCouRDDP(requete.sousType) &&
   estAutorisePrendreEnChargeReqTableauDelivrance(requete);
 
 const estAutorisePrendreEnChargeReqTableauDelivrance = (
@@ -161,9 +161,11 @@ export function getIdDocumentReponseAAfficher(
   return idDocumentAAfficher;
 }
 
-export function soustypeRDDouRDC(sousType: SousTypeRequete): boolean {
+export function soustypeRDDouRDCouRDDP(sousType: SousTypeRequete): boolean {
   return (
-    sousType === SousTypeDelivrance.RDD || sousType === SousTypeDelivrance.RDC
+    sousType === SousTypeDelivrance.RDD ||
+    sousType === SousTypeDelivrance.RDC ||
+    sousType === SousTypeDelivrance.RDDP
   );
 }
 

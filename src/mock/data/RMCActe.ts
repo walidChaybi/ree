@@ -41,7 +41,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateNaissance: "08/06/1961",
     paysNaissance: "Tunisie",
     nature: "Reconnaissance",
-    registre: "4568"
+    registre: "4568",
+    type: "TEXTE"
   },
   {
     idActe: "d8708d77-a359-4553-be72-1eb5f246d4dc",
@@ -51,7 +52,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateNaissance: "08/06/1960",
     paysNaissance: "Tunisie",
     nature: "Reconnaissance",
-    registre: "4569"
+    registre: "4569",
+    type: "TEXTE"
   },
   {
     idActe: "2748bb45-22cd-41ea-90db-0483b8ffc8a8",
@@ -61,7 +63,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateNaissance: "02/11/1991",
     paysNaissance: "Australie",
     nature: "Naissance",
-    registre: "8547"
+    registre: "8547",
+    type: "TEXTE"
   },
   {
     idActe: "d8708d77-a359-4553-be72-1eb5f246d4db",
@@ -71,7 +74,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateNaissance: "08/06/1960",
     paysNaissance: "Tunisie",
     nature: "Reconnaissance",
-    registre: "4570"
+    registre: "4570",
+    type: "TEXTE"
   },
   {
     idActe: "2748bb45-22cd-41ea-90db-0483b8ffc8a9",
@@ -81,7 +85,8 @@ export const DataRMCActeAvecResultat: IResultatRMCActe[] = [
     dateNaissance: "02/11/1991",
     paysNaissance: "Australie",
     nature: "Naissance",
-    registre: "8548"
+    registre: "8548",
+    type: "TEXTE"
   }
 ];
 

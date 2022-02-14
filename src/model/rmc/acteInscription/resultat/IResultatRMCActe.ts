@@ -7,4 +7,5 @@ export interface IResultatRMCActe {
   paysNaissance: string;
   nature: string;
   registre: string;
+  type: string;
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { TypeActe } from "../../../../../../../model/etatcivil/enum/TypeActe";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
@@ -42,6 +43,8 @@ import {
 import {
   compositionCourrierAutomatique,
   estChoixExtraitAvecOuSansFiliation,
+  estChoixExtraitAvecOuSansFiliationOuPlurilingue,
+  estNombreTitulairesIncoherent,
   getBoutonOK,
   getBoutonsOuiNon,
   getIdCourrierAuto,
@@ -162,35 +165,15 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     listeActes: IResultatRMCActe[] | undefined,
     listeInscriptions: IResultatRMCInscription[] | undefined
   ) => {
-    const requeteDelivrance = props.requete;
     const sousType = props.requete?.sousType?.nom;
     let message: string[] = [];
     if (
       sousType === SousTypeDelivrance.RDC.nom ||
-      sousType === SousTypeDelivrance.RDD.nom
+      sousType === SousTypeDelivrance.RDD.nom ||
+      sousType === SousTypeDelivrance.RDDP.nom
     ) {
       if (unActeEtUnSeulSelectionne(listeActes, listeInscriptions)) {
-        if (
-          estChoixExtraitAvecOuSansFiliation(indexMenu) &&
-          listeActes?.[0]?.nature === NatureActeRequete.DECES.libelle
-        ) {
-          message = [
-            getLibelle(
-              "Pas de délivrance d'extrait avec ou sans filiation pour un acte de décès."
-            )
-          ];
-          setBoutonsPopin(boutonOK);
-        } else if (
-          listeActes?.[0]?.nature !==
-          requeteDelivrance?.evenement?.natureActe?.libelle
-        ) {
-          message = [
-            getLibelle(
-              "La nature de l'acte sélectionné ne correspond pas à la nature de l'acte demandé. Voulez-vous continuer ?"
-            )
-          ];
-          setBoutonsPopin(boutonsOuiNon);
-        }
+        message = controleCoherenceUnActeSelectionne(indexMenu, listeActes);
       } else {
         message = [
           getLibelle("Veuillez sélectionner un et un seul acte à délivrer.")
@@ -199,6 +182,56 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       }
     }
     setMessagesBloquant(message);
+  };
+
+  const controleCoherenceUnActeSelectionne = (
+    indexMenu: number,
+    listeActes: IResultatRMCActe[] | undefined
+  ) => {
+    const requeteDelivrance = props.requete;
+    const nbrTitulaire = listeActes?.[0]
+      ? props.nbrTitulairesActe?.get(listeActes?.[0].idActe)
+      : undefined;
+    let message: string[] = [];
+    if (listeActes?.[0]?.type === TypeActe.INCONNU.libelle) {
+      message = [
+        getLibelle(
+          "Il n'y a pas de corps disponible pour l'acte sélectionné, sa délivrance n'est pas possible à ce jour."
+        )
+      ];
+      setBoutonsPopin(boutonOK);
+    } else if (
+      estChoixExtraitAvecOuSansFiliationOuPlurilingue(indexMenu) &&
+      estNombreTitulairesIncoherent(listeActes?.[0]?.nature, nbrTitulaire)
+    ) {
+      message = [
+        getLibelle(
+          "Pas de délivrance d'extrait sur la base d'un acte à titulaires multiples."
+        )
+      ];
+      setBoutonsPopin(boutonOK);
+    } else if (
+      estChoixExtraitAvecOuSansFiliation(indexMenu) &&
+      listeActes?.[0]?.nature === NatureActeRequete.DECES.libelle
+    ) {
+      message = [
+        getLibelle(
+          "Pas de délivrance d'extrait avec ou sans filiation pour un acte de décès."
+        )
+      ];
+      setBoutonsPopin(boutonOK);
+    } else if (
+      listeActes?.[0]?.nature !==
+      requeteDelivrance?.evenement?.natureActe?.libelle
+    ) {
+      message = [
+        getLibelle(
+          "La nature de l'acte sélectionné ne correspond pas à la nature de l'acte demandé. Voulez-vous continuer ?"
+        )
+      ];
+      setBoutonsPopin(boutonsOuiNon);
+    }
+    return message;
   };
 
   const handleDelivrerMenu = (indexMenu: number) => {

@@ -52,21 +52,33 @@ export const MenuReponseSansDelivrance: React.FC<IChoixActionDelivranceProps> =
       {
         value: INDEX_REQUETE_INCOMPLETE,
         label: getLibelle("Requête incomplète (117 - 18 - 19)"),
-        sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+        sousTypes: [
+          SousTypeDelivrance.RDC,
+          SousTypeDelivrance.RDD,
+          SousTypeDelivrance.RDDP
+        ],
         ref: refRepondreSansDelivranceOptions0,
         choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE
       },
       {
         value: INDEX_ACTE_NON_DETENU,
         label: getLibelle("Acte non détenu au SCEC (115 - 64 - 24, ...)"),
-        sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+        sousTypes: [
+          SousTypeDelivrance.RDC,
+          SousTypeDelivrance.RDD,
+          SousTypeDelivrance.RDDP
+        ],
         ref: refRepondreSansDelivranceOptions0,
         choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC
       },
       {
         value: INDEX_DIVERS,
         label: getLibelle("Divers (17, ...)"),
-        sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+        sousTypes: [
+          SousTypeDelivrance.RDC,
+          SousTypeDelivrance.RDD,
+          SousTypeDelivrance.RDDP
+        ],
         ref: refRepondreSansDelivranceOptions0,
         choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_DIVERS
       },
@@ -76,7 +88,8 @@ export const MenuReponseSansDelivrance: React.FC<IChoixActionDelivranceProps> =
         sousTypes: [
           SousTypeDelivrance.RDC,
           SousTypeDelivrance.RDAPC,
-          SousTypeDelivrance.RDCSC
+          SousTypeDelivrance.RDCSC,
+          SousTypeDelivrance.RDDP
         ],
         ref: refRepondreSansDelivranceOptions0
       }

@@ -8,6 +8,7 @@ import { ApiManager, HttpMethod } from "../ApiManager";
 const api = ApiManager.getInstance("rece-etatcivil-api", "v1");
 
 export const URL_ACTE = "/acte";
+export const URL_COUNT_TITULAIRE = "/count/titulaire";
 export const URL_ETAT_CIVIL = "/repertoirecivil";
 export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
 export const URL_ACTE_RMC = "/acte/rmc";
@@ -55,6 +56,16 @@ export function getInformationsFicheActe(identifiant: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${identifiant}`
+  });
+}
+
+/**
+ * Récupération du nombre de titulaire d'un ACTE
+ */
+ export function getNbrTitulairesActe(identifiant: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE}/${identifiant}${URL_COUNT_TITULAIRE}`
   });
 }
 

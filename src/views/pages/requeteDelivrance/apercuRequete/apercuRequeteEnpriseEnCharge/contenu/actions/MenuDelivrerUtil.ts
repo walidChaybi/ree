@@ -6,6 +6,7 @@ import {
   DocumentDelivrance
 } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "../../../../../../../model/requete/enum/MotifDelivrance";
+import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
 import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
@@ -19,6 +20,8 @@ import { IBoutonPopin } from "../../../../../../common/widget/popin/Confirmation
 import { SaisieCourrier } from "../../../apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
 const ORDRE_OPTION_MAX = 900;
+const MAX_TITULAIRE_DELIVRANCE_NAISSANCE_DECES = 1;
+const MAX_TITULAIRE_DELIVRANCE_MARIAGE = 2;
 
 export function getBoutonOK(
   setMessagesBloquant: React.Dispatch<
@@ -73,14 +76,22 @@ export function getOptionsMenuDelivrer(
     {
       value: INDEX_ACTION_COPIE_INTEGRALE,
       label: getLibelle("Copie intégrale"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+      sousTypes: [
+        SousTypeDelivrance.RDC,
+        SousTypeDelivrance.RDD,
+        SousTypeDelivrance.RDDP
+      ],
       ref: refDelivrerOptions0,
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE
     },
     {
       value: INDEX_ACTION_EXTRAIT_AVEC_FILIATION,
       label: getLibelle("Extrait avec filiation"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+      sousTypes: [
+        SousTypeDelivrance.RDC,
+        SousTypeDelivrance.RDD,
+        SousTypeDelivrance.RDDP
+      ],
       ref: refDelivrerOptions0,
       // attribut supplémentaire pour trouver facilement le choix de délivrance en fonction de l'index du menu sélectionné
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
@@ -88,7 +99,11 @@ export function getOptionsMenuDelivrer(
     {
       value: INDEX_ACTION_EXTRAIT_SANS_FILIATION,
       label: getLibelle("Extrait sans filiation"),
-      sousTypes: [SousTypeDelivrance.RDC, SousTypeDelivrance.RDD],
+      sousTypes: [
+        SousTypeDelivrance.RDC,
+        SousTypeDelivrance.RDD,
+        SousTypeDelivrance.RDDP
+      ],
       ref: refDelivrerOptions0,
       choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
     },
@@ -121,6 +136,33 @@ export function estChoixExtraitAvecOuSansFiliation(indexMenu: number) {
     indexMenu === INDEX_ACTION_EXTRAIT_AVEC_FILIATION ||
     indexMenu === INDEX_ACTION_EXTRAIT_SANS_FILIATION
   );
+}
+
+export function estChoixExtraitAvecOuSansFiliationOuPlurilingue(
+  indexMenu: number
+) {
+  return (
+    indexMenu === INDEX_ACTION_EXTRAIT_AVEC_FILIATION ||
+    indexMenu === INDEX_ACTION_EXTRAIT_SANS_FILIATION ||
+    indexMenu === INDEX_ACTION_EXTRAIT_PLURILINGUE
+  );
+}
+
+export function estNombreTitulairesIncoherent(
+  natureActe?: string,
+  nombreTitulaires?: number
+) {
+  if (nombreTitulaires) {
+    return (
+      (NatureActeRequete.NAISSANCE.libelle === natureActe &&
+        nombreTitulaires > MAX_TITULAIRE_DELIVRANCE_NAISSANCE_DECES) ||
+      (NatureActeRequete.DECES.libelle === natureActe &&
+        nombreTitulaires > MAX_TITULAIRE_DELIVRANCE_NAISSANCE_DECES) ||
+      (NatureActeRequete.MARIAGE.libelle === natureActe &&
+        nombreTitulaires > MAX_TITULAIRE_DELIVRANCE_MARIAGE)
+    );
+  }
+  return false;
 }
 
 export function nonVide(messages?: string[]) {

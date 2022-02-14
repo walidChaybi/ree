@@ -122,6 +122,15 @@ export const configEtatcivil = [
         return { data: ActeAnalyseMarginales };
       }
 
+      /////////////////////////////////////////////////////////////////////
+      // nombre de titulaires utilisé pour les sur l'apercu en prise en chage
+      if (
+        match[1] ===
+        `/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/count/titulaire`
+      ) {
+        return ficheActe1;
+      }
+
       if (
         // acte corps
         match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g" ||

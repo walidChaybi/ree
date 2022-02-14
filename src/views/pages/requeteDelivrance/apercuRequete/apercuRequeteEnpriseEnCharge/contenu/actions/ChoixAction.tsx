@@ -8,7 +8,7 @@ import { FeatureFlag } from "../../../../../../common/util/featureFlag/FeatureFl
 import { gestionnaireFeatureFlag } from "../../../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import {
   soustypeRDCSDouRDCSC,
-  soustypeRDDouRDC
+  soustypeRDDouRDCouRDDP
 } from "../../../../../../common/util/RequetesUtils";
 import { storeRece } from "../../../../../../common/util/storeRece";
 import { getLibelle } from "../../../../../../common/util/Utils";
@@ -26,6 +26,7 @@ export interface IChoixActionDelivranceProps {
   inscriptions?: IResultatRMCInscription[];
   dataHistory?: any;
   menuFermer?: boolean;
+  nbrTitulairesActe?: Map<string, number>;
 }
 
 export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
@@ -46,13 +47,14 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
   return (
     <Fieldset titre={getLibelle("Actions")}>
       <div className="ChoixAction">
-        {soustypeRDDouRDC(sousType) && (
+        {soustypeRDDouRDCouRDDP(sousType) && (
           <>
             <MenuDelivrer
               requete={props.requete}
               actes={props.actes}
               inscriptions={props.inscriptions}
               dataHistory={props.dataHistory}
+              nbrTitulairesActe={props.nbrTitulairesActe}
             />
             <MenuReponseSansDelivrance
               requete={props.requete}

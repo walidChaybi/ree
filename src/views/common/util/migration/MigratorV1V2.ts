@@ -117,10 +117,11 @@ export class MigratorV1V2 {
     );
   }
 
-  public static estSousTypeRDDouRDC(sousTypeLibelleCourt?: string) {
+  public static estSousTypeRDDouRDCouRDDP(sousTypeLibelleCourt?: string) {
     return (
       sousTypeLibelleCourt === SousTypeDelivrance.RDD.libelleCourt ||
-      sousTypeLibelleCourt === SousTypeDelivrance.RDC.libelleCourt
+      sousTypeLibelleCourt === SousTypeDelivrance.RDC.libelleCourt ||
+      sousTypeLibelleCourt === SousTypeDelivrance.RDDP.libelleCourt
     );
   }
 }
