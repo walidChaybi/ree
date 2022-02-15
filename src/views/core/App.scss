@@ -17,24 +17,24 @@
   .LogoHeader {
     text-align: start;
     line-height: 4rem;
-      img {
-        padding: 0 0 0 0.5rem ;
-        cursor: pointer;
-        width: 8rem;
-        vertical-align: middle;
+    img {
+      padding: 0 0 0 0.5rem;
+      cursor: pointer;
+      width: 8rem;
+      vertical-align: middle;
     }
   }
 
-  .coteDroit{
-    display:flex;
+  .coteDroit {
+    display: flex;
     justify-content: flex-end;
     height: 4rem;
-    .loupeChampsRecherche{
+    .loupeChampsRecherche {
       color: white;
     }
-    .traitVerticalConteneur{
+    .traitVerticalConteneur {
       line-height: 4rem;
-      .traitVertical{
+      .traitVertical {
         height: 2.5rem;
         width: 1px;
         vertical-align: middle;
@@ -44,9 +44,8 @@
     }
   }
 
-
   h1 {
-    margin: 1.1rem;
+    margin: auto;
   }
 
   .UtilisateurBouton {
@@ -58,7 +57,7 @@
       color: white;
       text-transform: initial;
       font-family: $application-font-family;
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
 
     button {
