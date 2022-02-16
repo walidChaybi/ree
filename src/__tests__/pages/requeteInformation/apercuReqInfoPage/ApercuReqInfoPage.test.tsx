@@ -328,7 +328,7 @@ test("complétion en cours", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByDisplayValue("Saisie libre agent")).toBeDefined();
+    expect(screen.getByDisplayValue("Réponse libre agent")).toBeDefined();
   });
 });
 

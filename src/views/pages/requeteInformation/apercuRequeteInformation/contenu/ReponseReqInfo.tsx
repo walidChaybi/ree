@@ -4,7 +4,10 @@ import { ComplementObjetRequete } from "../../../../../model/requete/enum/Comple
 import { ObjetRequete } from "../../../../../model/requete/enum/ObjetRequete";
 import { SousTypeInformation } from "../../../../../model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
-import { IReponseRequeteInfo } from "../../../../../model/requete/IReponseRequeteInfo";
+import {
+  IReponseRequeteInfo,
+  ReponseRequeteInfo
+} from "../../../../../model/requete/IReponseRequeteInfo";
 import { MenuTransfert } from "../../../../common/composant/menuTransfert/MenuTransfert";
 import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
@@ -23,21 +26,23 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
 }) => {
   const SAISIE_LIBRE_REPONSE = {
     id: "",
-    libelle: "Saisie libre agent",
+    libelle: "Réponse libre agent",
     objet: requete.objet.libelle,
     complementObjet: requete.complementObjet.libelle,
     corpsMail: ""
   };
 
-  const [reponseChoisie, setReponseChoisie] =
-    useState<IReponseRequeteInfo>(SAISIE_LIBRE_REPONSE);
+  const [reponseChoisie, setReponseChoisie] = useState<IReponseRequeteInfo>(
+    SAISIE_LIBRE_REPONSE
+  );
 
   const [lesBoutonsDisabled, setLesBoutonsDisabled] = useState(false);
   const [formulaireDisabled, setFormulaireDisabled] = useState(false);
   const [retourVisible, setRetourVisible] = useState(false);
   const [tousLesBoutonsVisibles, setTousLesBoutonsVisibles] = useState(true);
-  const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] =
-    useState(true);
+  const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] = useState(
+    true
+  );
 
   useEffect(() => {
     const mauvaisUtilisateur =
@@ -64,15 +69,25 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
 
   useEffect(() => {
     if (requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS) {
-      const reponseLibre = reponsesReqInfo.find(
-        (reponse: IReponseRequeteInfo) =>
-          reponse.objet === ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom &&
-          reponse.complementObjet ===
-            ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
+      const reponseLibre = ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
+        {
+          objet: ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom,
+          complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
+        },
+        reponsesReqInfo
       );
+
       if (reponseLibre) {
         setReponseChoisie(reponseLibre);
       }
+    } else if (requete.reponseChoisie) {
+      setReponseChoisie({
+        ...requete.reponseChoisie,
+        libelle: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId(
+          requete.reponseChoisie,
+          reponsesReqInfo
+        )
+      });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

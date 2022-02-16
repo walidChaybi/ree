@@ -33,8 +33,9 @@ import { logError } from "../../../../common/util/LogManager";
 import { storeRece } from "../../../../common/util/storeRece";
 
 export function useDetailRequeteApiHook(idRequete: string | undefined) {
-  const [detailRequeteState, setDetailRequeteState] =
-    useState<TRequete | undefined>();
+  const [detailRequeteState, setDetailRequeteState] = useState<
+    TRequete | undefined
+  >();
 
   useEffect(() => {
     async function fetchDetailRequete() {
@@ -210,7 +211,10 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
     objet: ObjetRequete.getEnumFor(data.objet),
     complementObjet: ComplementObjetRequete.getEnumFor(data.complementObjet),
     commentaire: data.commentaire,
-    reponse: data.reponse,
+    reponseChoisie: {
+      ...data.reponseChoisie,
+      corpsMail: data.reponseChoisie?.corpsMailFinal
+    }, // Transformation corpsMailFinal en corpsMail
     provenanceRequete: Provenance.getEnumFor(data.provenance),
     numeroRequeteLiee: data.numeroRequeteLiee,
     idRequeteLiee: data.idRequeteLiee,

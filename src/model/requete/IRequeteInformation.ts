@@ -13,7 +13,7 @@ export interface IRequeteInformation extends IRequete {
   objet: ObjetRequete;
   complementObjet: ComplementObjetRequete;
   commentaire: string;
-  reponse?: IReponseRequeteInfo;
+  reponseChoisie?: IReponseRequeteInfo;
   provenanceRequete: Provenance;
   numeroRequeteLiee?: string;
   idRequeteLiee?: string;

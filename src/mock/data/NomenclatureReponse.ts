@@ -28,6 +28,14 @@ export const NOMENCLATURE_REPONSE = [
     complementObjet: "CODE_VERIFICATION_NON_VISIBLE",
     libelle: "Pas d'impression du CTV",
     corpsMail: "Corps Pas d'impression du CTV"
+  },
+  {
+    id: "050d4ac8-c934-4bbe-ab80-0bd0e614b97c",
+    objet: "COMPLETION_REQUETE_EN_COURS",
+    complementObjet: "REPONSE_LIBRE_AGENT",
+    libelle: "Réponse libre agent",
+    corpsMail:
+      "Madame, Monsieur, \n\nNous avons bien reçu le(s) documents(s) que vous avez transmis."
   }
 ];
 
