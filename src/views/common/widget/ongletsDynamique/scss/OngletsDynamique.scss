@@ -1,0 +1,12 @@
+.OngletsDynamique{
+    margin: 1rem 0;
+    display: inline-flex;
+    button{
+        height:2rem;
+        min-width: -webkit-fill-available;
+        background-color:#0579be ;
+        &.selected{
+            background-color: #03476e;
+        }
+    }
+}

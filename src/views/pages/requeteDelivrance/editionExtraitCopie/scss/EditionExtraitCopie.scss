@@ -1,0 +1,41 @@
+@import "../../../../../scss/colors";
+
+.EditionExtraitCopie{
+    text-align: start;
+    .contenu-edition {
+        display: flex;
+        .side {
+            &.Visualisation {
+            width: 50%;
+            }
+            &.Edition {
+            width: 50%;
+            text-align: right;
+            }
+            display: inline-block;
+        }
+        .VoletAvecOnglet{
+            .TitreVolet {
+                color: $application-color ;
+                line-height: 42px;
+                font-size: 28px;
+                text-align: left;
+            }
+            .BarreOnglet{
+              margin-top: 1rem;
+            }
+            .ContenuVolet{
+                height: 800px;
+            }
+        }
+
+        .Separateur{
+            background-color: grey;
+            width: 1px;
+            height: 40rem;
+            margin: 10rem 1rem;
+        }
+    }
+
+
+}

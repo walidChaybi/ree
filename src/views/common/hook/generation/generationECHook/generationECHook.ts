@@ -98,7 +98,7 @@ export function useGenerationEC(
           mimeType: MimeType.APPLI_PDF,
           orientation: Orientation.PORTRAIT,
           validation: params.validation,
-          uuidActe: acteApiHookResultat?.acte?.id
+          idActe: acteApiHookResultat?.acte?.id
         } as IDocumentReponse,
 
         libelleAction: statutRequete.libelle,

@@ -16,6 +16,7 @@ interface IMenuActionProps {
   deplierEnBas?: boolean;
   className?: string;
   widthMenuItem?: string;
+  afficheChevron?: boolean;
 }
 
 export const MenuAction: React.FC<IMenuActionProps> = props => {
@@ -49,7 +50,7 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
     <div className={`MenuAction ${props.className}`}>
       <button onClick={handleClick}>
         <span>{props.titre}</span>
-        {afficheFleche()}
+        {props.afficheChevron && afficheFleche()}
       </button>
       <Menu
         className="Menu"

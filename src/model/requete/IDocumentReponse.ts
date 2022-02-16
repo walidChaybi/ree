@@ -27,7 +27,6 @@ export interface IDocumentReponse {
     dateSignatureElectronique?: number;
   };
   validation?: Validation;
-  uuidActe?: string;
 }
 
 export const DocumentReponse = {

@@ -15,6 +15,7 @@ import { ApercuCourrier } from "../pages/requeteDelivrance/apercuRequete/apercuC
 import { ApercuRequetePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuRequetePriseEnChargePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
+import { EditionExtraitCopiePage } from "../pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import EspaceDelivrancePage from "../pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { SaisirRDAPCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDAPCPage";
 import { SaisirRDCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
@@ -151,7 +152,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
-    component: ApercuCourrier, //EditionExtraitCopiePage,
+    component: EditionExtraitCopiePage,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
     libelle: getLibelle("Édition")

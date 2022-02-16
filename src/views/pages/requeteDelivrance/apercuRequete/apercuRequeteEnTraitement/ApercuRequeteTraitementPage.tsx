@@ -68,7 +68,8 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
       history,
       `${getUrlPrecedente(history.location.pathname)}/${PATH_APERCU_COURRIER}/${
         requete?.id
-      }`
+      }`,
+      documentAffiche?.idActe
     );
   };
 
@@ -76,7 +77,8 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
     history.push(
       `${getUrlWithoutIdParam(history.location.pathname)}/${PATH_EDITION}/${
         requete?.id
-      }`
+      }`,
+      documentAffiche?.id
     );
   };
 

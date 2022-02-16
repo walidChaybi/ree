@@ -11,7 +11,6 @@ import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentRe
 import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { ISauvegardeCourrier } from "../../../../../../../model/requete/ISauvegardeCourrier";
-import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { MimeType } from "../../../../../../../ressources/MimeType";
 import {
   ICourrierParams,
@@ -61,7 +60,7 @@ export interface IGenerationCourrierParams {
   saisieCourrier?: SaisieCourrier;
   optionsChoisies?: OptionsCourrier;
   requete?: IRequeteDelivrance;
-  acte?: IResultatRMCActe;
+  idActe?: string;
   mettreAJourStatut: boolean;
 }
 
@@ -90,7 +89,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
       setActApiHookParamsOuBasculerConstructionCourrier(
         setActeApiHookParams,
         setBasculerConstructionCourrier,
-        params
+        params?.idActe
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -203,14 +202,15 @@ function libelleSelonMajStatut(
 function setActApiHookParamsOuBasculerConstructionCourrier(
   setActeApiHookParams: any,
   setBasculerConstructionCourrier: any,
-  generationCourrierParams?: IGenerationCourrierParams
+  idActe?: string
 ) {
-  if (generationCourrierParams?.acte) {
-    setActeApiHookParams({ idActe: generationCourrierParams?.acte.idActe });
+  if (idActe) {
+    setActeApiHookParams({ idActe });
   } else {
     setBasculerConstructionCourrier(true);
   }
 }
+
 function uuidCourrierPresent(
   generationCourrierParams?: IGenerationCourrierParams
 ): boolean {

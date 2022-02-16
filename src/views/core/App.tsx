@@ -1,5 +1,7 @@
 /* istanbul ignore file */
 
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
 import fr from "date-fns/locale/fr";
 import React, { useEffect, useState } from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
@@ -34,6 +36,17 @@ import { useLoginApi } from "./login/LoginHook";
 registerLocale("fr", fr);
 setDefaultLocale("fr");
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#03476e"
+    },
+    secondary: {
+      main: "#0579be"
+    }
+  }
+});
+
 const App: React.FC = () => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(true);
   const login = useLoginApi();
@@ -63,48 +76,50 @@ const App: React.FC = () => {
   }, [login.erreurState]);
 
   return (
-    <SeulementNavigateur
-      navigateurs={
-        process.env.NODE_ENV === "development" ? [FIREFOX, CHROME] : [FIREFOX]
-      }
-    >
-      <ErrorManager>
-        <Router>
-          <div className="App">
-            <OfficierContext.Provider value={login}>
-              <OfficierContext.Consumer>
-                {officier => {
-                  storeRece.utilisateurCourant = officier?.officierDataState;
-                  return null;
-                }}
-              </OfficierContext.Consumer>
-              <OfficierContext.Consumer>
-                {officier => (
-                  <GestionnaireFermeture
-                    paramsFctAAppler={officier}
-                    fctAAppeler={appelRequetesASigner}
-                    fctTraitementResultat={traiteAppelRequeteASigner}
-                    urlRedirection={URL_MES_REQUETES_DELIVRANCE}
-                  ></GestionnaireFermeture>
-                )}
-              </OfficierContext.Consumer>
-              <Header />
-              {!operationEnCours && <Body />}
-              <ToastContainer
-                className={"toast-container"}
-                position="top-center"
-                hideProgressBar={false}
-                newestOnTop={true}
-                closeOnClick={true}
-                rtl={false}
-                draggable={true}
-                pauseOnHover={true}
-              />
-            </OfficierContext.Provider>
-          </div>
-        </Router>
-      </ErrorManager>
-    </SeulementNavigateur>
+    <ThemeProvider theme={theme}>
+      <SeulementNavigateur
+        navigateurs={
+          process.env.NODE_ENV === "development" ? [FIREFOX, CHROME] : [FIREFOX]
+        }
+      >
+        <ErrorManager>
+          <Router>
+            <div className="App">
+              <OfficierContext.Provider value={login}>
+                <OfficierContext.Consumer>
+                  {officier => {
+                    storeRece.utilisateurCourant = officier?.officierDataState;
+                    return null;
+                  }}
+                </OfficierContext.Consumer>
+                <OfficierContext.Consumer>
+                  {officier => (
+                    <GestionnaireFermeture
+                      paramsFctAAppler={officier}
+                      fctAAppeler={appelRequetesASigner}
+                      fctTraitementResultat={traiteAppelRequeteASigner}
+                      urlRedirection={URL_MES_REQUETES_DELIVRANCE}
+                    ></GestionnaireFermeture>
+                  )}
+                </OfficierContext.Consumer>
+                <Header />
+                {!operationEnCours && <Body />}
+                <ToastContainer
+                  className={"toast-container"}
+                  position="top-center"
+                  hideProgressBar={false}
+                  newestOnTop={true}
+                  closeOnClick={true}
+                  rtl={false}
+                  draggable={true}
+                  pauseOnHover={true}
+                />
+              </OfficierContext.Provider>
+            </div>
+          </Router>
+        </ErrorManager>
+      </SeulementNavigateur>
+    </ThemeProvider>
   );
 };
 

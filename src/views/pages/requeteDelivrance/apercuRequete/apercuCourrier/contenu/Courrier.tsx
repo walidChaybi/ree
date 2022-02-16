@@ -8,7 +8,6 @@ import {
   OptionsCourrier
 } from "../../../../../../model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import messageManager from "../../../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../../../common/util/route/routeUtil";
 import { getLibelle } from "../../../../../common/util/Utils";
@@ -57,7 +56,7 @@ import "./scss/Courrier.scss";
 
 interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
-  acte?: IResultatRMCActe;
+  idActe?: string;
 }
 
 export const Courrier: React.FC<ModificationCourrierProps> = props => {
@@ -167,8 +166,8 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         saisieCourrier,
         optionsChoisies,
         requete: props.requete,
-        acte: props.acte,
-        mettreAJourStatut: props.requete.documentsReponses.length === 0
+        idActe: props.idActe,
+        mettreAJourStatut: true
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -188,8 +187,9 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         history,
         getUrlWithParam(
           URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-          props.requete.id
-        )
+          `${props.requete.id}&${props.idActe}`
+        ),
+        props.idActe
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

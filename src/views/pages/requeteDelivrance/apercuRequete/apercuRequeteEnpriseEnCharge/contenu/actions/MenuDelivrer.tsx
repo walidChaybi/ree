@@ -241,7 +241,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
           `${getUrlPrecedente(
             history.location.pathname
           )}/${PATH_APERCU_COURRIER}/${props.requete.id}`,
-          actes?.[0]
+          actes?.[0].idActe
         );
       } else if (
         sousTypeCreationCourrierAutomatique(props.requete.sousType) &&
@@ -251,7 +251,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
         const url = receUrl.getUrlApercuTraitementAPartirDe(
           history.location.pathname
         );
-        receUrl.replaceUrl(history, url);
+        receUrl.replaceUrl(history, url, actes?.[0].idActe);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
