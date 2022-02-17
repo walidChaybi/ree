@@ -3,10 +3,15 @@ import {
   NOM_DOCUMENT_EC_AVEC_FILIATION,
   NOM_DOCUMENT_EC_SANS_FILIATION
 } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
+import { AnalyseMarginale, IAnalyseMarginale } from "../../../../../model/etatcivil/acte/IAnalyseMarginale";
+import { ICorpsExtraitRectification } from "../../../../../model/etatcivil/acte/ICorpsExtraitRectification";
 import {
   FicheActe,
   IFicheActe
 } from "../../../../../model/etatcivil/acte/IFicheActe";
+import { ITitulaireActe } from "../../../../../model/etatcivil/acte/ITitulaireActe";
+import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { TypeExtrait } from "../../../../../model/etatcivil/enum/TypeExtrait";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import {
   CODE_EXTRAIT_AVEC_FILIATION,
@@ -16,6 +21,7 @@ import {
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { Validation } from "../../../../../model/requete/enum/Validation";
+import { SNP, SPC } from "../../../../common/util/Utils";
 import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/creationCompositionExtraitCopieActeTexte";
 import { IGenerationECParams } from "./generationECHook";
 
@@ -121,3 +127,75 @@ export function creationComposition(
 
   return composition;
 }
+
+export const controlerDonneesGenerationExtraitMariageOuNaissance = function (
+  acte: IFicheActe,
+  choixDelivrance: ChoixDelivrance,
+  validation: Validation
+) {
+  // Pour un choix de délivrance d'extrait avec ou sans filiation d'un acte de mariage ou de naissance
+  // Si l'acte ne comporte pas de corps d'extrait modifier correspondant au choix de delivrance
+  // ou que les noms et prenoms de l'analyse marginales sont absents
+  // ou que le genre est d'un des titulaires est inconnu
+  // ou que l'année ou le lieux de l'évenement ne sont absents
+  if (estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage(acte, choixDelivrance)
+    && aPasCorpsExtraitRectificationCorrespondant(acte.corpsExtraitRectifications, choixDelivrance)
+    && (aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte.analyseMarginales)
+    || aGenreTitulaireInconnu(acte.titulaires)
+    || aDonneesLieuOuAnneeEvenementAbsentes(acte))) {
+    return Validation.E;
+  }
+  return validation;
+};
+
+export const estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage = function(
+  acte: IFicheActe,
+  choixDelivrance: ChoixDelivrance) {
+  return (acte.nature === NatureActe.NAISSANCE || acte.nature === NatureActe.MARIAGE)
+  && (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+    || choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION);
+};
+
+export const aDonneesLieuOuAnneeEvenementAbsentes = function (
+  acte: IFicheActe
+) {
+  return !acte.evenement?.annee
+  || (!acte.evenement?.lieuReprise
+  && !acte.evenement?.ville
+  && !acte.evenement?.region
+  && !acte.evenement?.pays);
+};
+
+export const aGenreTitulaireInconnu = function (
+  titulaires?: ITitulaireActe[]
+) {
+  if (titulaires) {
+    return titulaires?.find(titulaire => titulaire.sexe === "INCONNU");
+  }
+  return true;
+};
+
+export const aNomEtPrenomTitulaireAbsentsAnalyseMarginale = function (
+  analysesMarginales?: IAnalyseMarginale[]
+) {
+  const analyseMarginale = AnalyseMarginale.getLaBonneAnalyseMarginale(analysesMarginales);
+  if (analyseMarginale) {
+    return analyseMarginale.titulaires?.find(titulaire => (!titulaire.nom && titulaire.prenoms?.length === 0)
+      || (titulaire.nom === SNP && titulaire.prenoms?.[0] === SPC));
+  }
+  return true;
+};
+
+export const aPasCorpsExtraitRectificationCorrespondant = function (
+  corpsExtraitRectifications: ICorpsExtraitRectification[],
+  choixDelivrance: ChoixDelivrance
+) {
+  return corpsExtraitRectifications.filter(el => {
+    if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION) {
+      return el.type === TypeExtrait.EXTRAIT_AVEC_FILIATION;
+    } else if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION) {
+      return el.type === TypeExtrait.EXTRAIT_SANS_FILIATION;
+    }
+    return false;
+  }).length === 0;
+};

@@ -15,7 +15,7 @@ export interface IExtraitCopieComposition
   nom_titulaire1: string;
   prenoms_titulaire2: string;
   nom_titulaire2: string;
-  corps_texte: string;
+  corps_texte?: string;
   corps_image: string[];
   filigrane_archive: boolean;
   formule_signature_delivrance: string;
@@ -23,4 +23,5 @@ export interface IExtraitCopieComposition
   pas_de_signature: boolean;
   pas_de_nomPrenomAgent: boolean;
   code_CTV: string;
+  erreur?: string;
 }

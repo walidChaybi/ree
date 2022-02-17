@@ -10,6 +10,7 @@ import { configComposition } from "../../../../../mock/superagent-config/superag
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
+import { Validation } from "../../../../../model/requete/enum/Validation";
 import {
   IGenerationECParams,
   useGenerationEC
@@ -25,19 +26,22 @@ const superagentMock = require("superagent-mock")(request, [
 const ecMariageSansFiliationparams: IGenerationECParams = {
   idActe: idFicheActeMariage,
   requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION,
+  validation: Validation.N
 };
 
 const ecMariageAvecFiliationparams: IGenerationECParams = {
   idActe: idFicheActeMariage,
   requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION,
+  validation: Validation.N
 };
 
 const ecNaissanceSansFiliationparams: IGenerationECParams = {
   idActe: idFicheActe1,
   requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION,
+  validation: Validation.N
 };
 
 const HookConsumer: React.FC<IGenerationECParams> =

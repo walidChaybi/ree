@@ -23,7 +23,7 @@ export const creationCompositionExtraitCopieActeTexte = function (
         validation,
         ChoixDelivrance.estChoixDelivranceAvecFiliation(choixDelivrance),
         ChoixDelivrance.estChoixDelivranceCopie(choixDelivrance),
-        ChoixDelivrance.estChoixDelivranceCopieArchive(choixDelivrance),
+        ChoixDelivrance.estChoixDelivranceCopieArchive(choixDelivrance)
       );
   } else if (acteComplet.nature === NatureActe.DECES) {
     /* istanbul ignore next */

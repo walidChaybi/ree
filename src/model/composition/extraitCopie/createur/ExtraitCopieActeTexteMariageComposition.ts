@@ -1,4 +1,7 @@
-import { getValeurOuVide } from "../../../../views/common/util/Utils";
+import {
+  getLibelle,
+  getValeurOuVide
+} from "../../../../views/common/util/Utils";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { ExistenceContratMariage } from "../../../etatcivil/enum/ExistenceContratMariage";
 import { LienParente } from "../../../etatcivil/enum/LienParente";
@@ -23,10 +26,19 @@ export class ExtraitCopieActeTexteMariageComposition {
     archive = false
   ) {
     const natureActe = NatureActe.getKey(NatureActe.MARIAGE);
-    const getCorpsTexte = ExtraitCopieActeTexteMariageComposition.getCorpsTexte(
-      acte,
-      avecFiliation
-    );
+    const getCorpsTexte =
+      Validation.E !== validation
+        ? ExtraitCopieActeTexteMariageComposition.getCorpsTexte(
+            acte,
+            avecFiliation
+          )
+        : undefined;
+    const erreur =
+      Validation.E === validation
+        ? getLibelle(
+            "L'absence d'informations ne permet pas de générer l'extrait."
+          )
+        : undefined;
 
     return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
       acte,
@@ -37,7 +49,8 @@ export class ExtraitCopieActeTexteMariageComposition {
       avecFiliation,
       copie,
       archive,
-      getCorpsTexte
+      getCorpsTexte,
+      erreur
     });
   }
 

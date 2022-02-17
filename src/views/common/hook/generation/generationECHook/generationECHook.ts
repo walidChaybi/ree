@@ -17,6 +17,7 @@ import {
 } from "../../requete/StockerDocumentCreerActionMajStatutRequete";
 import { IResultGenerationUnDocument } from "../generationUtils";
 import {
+  controlerDonneesGenerationExtraitMariageOuNaissance,
   creationComposition,
   getNomDocument,
   getStatutRequete,
@@ -49,9 +50,11 @@ export function useGenerationEC(
     setStockerDocumentCreerActionMajStatutRequeteParams
   ] = useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
 
-  const [acteApiHookParams, setActeApiHookParams] = useState<
-    IActeApiHookParams
-  >();
+  const [acteApiHookParams, setActeApiHookParams] =
+    useState<IActeApiHookParams>();
+
+  const [validation, setValidation] =
+  useState<Validation>();
 
   useEffect(() => {
     if (params && params.idActe) {
@@ -67,6 +70,18 @@ export function useGenerationEC(
     if (nonNull(acteApiHookResultat?.acte, params)) {
       let composition;
       const acte = acteApiHookResultat?.acte;
+
+      // Verification des données pour la génération d'extrait mariage/naissance
+      // En cas de validation en erreur alors un etrait en erreur sera généré
+      const validationControle = controlerDonneesGenerationExtraitMariageOuNaissance(
+        // @ts-ignore NonNull
+        acte,
+        // @ts-ignore NonNull
+        params.choixDelivrance,
+        // @ts-ignore NonNull
+        params.validation
+      );
+
       composition = creationComposition(
         // @ts-ignore NonNull
         acte,
@@ -74,9 +89,9 @@ export function useGenerationEC(
         params.choixDelivrance,
         // @ts-ignore NonNull
         params.requete.sousType,
-        params?.validation
+        validationControle
       );
-
+      setValidation(validationControle);
       setParamECHook(composition);
     }
   }, [acteApiHookResultat, params]);
@@ -97,7 +112,7 @@ export function useGenerationEC(
           nbPages: extraitCopieApiHookResultat.donneesComposition.nbPages,
           mimeType: MimeType.APPLI_PDF,
           orientation: Orientation.PORTRAIT,
-          validation: params.validation,
+          validation,
           idActe: acteApiHookResultat?.acte?.id
         } as IDocumentReponse,
 

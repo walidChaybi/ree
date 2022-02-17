@@ -66,7 +66,8 @@ interface ICreerExtraitCopieActeTexteParams {
   avecFiliation: boolean;
   copie: boolean;
   archive: boolean;
-  getCorpsTexte: string;
+  getCorpsTexte?: string;
+  erreur?: string;
 }
 
 export class CommunExtraitOuCopieActeTexteComposition {
@@ -109,14 +110,19 @@ export class CommunExtraitOuCopieActeTexteComposition {
           : TypeExtrait.EXTRAIT_SANS_FILIATION
       );
 
-    if (params.copie && params.acte.corpsText) {
-      // Une copie est demandée (et non un extrait) pour un acte texte
-      composition.corps_texte = params.acte.corpsText;
-    } else if (corpsExtraitRectification) {
-      // L'acte comporte un corps d'extrait modifié correspondant au type d'extrait traité : extrait avec ou sans filiation
-      composition.corps_texte = corpsExtraitRectification;
-    } else {
-      composition.corps_texte = params.getCorpsTexte;
+    // Erreur (Dans le cas d'un manque d'information pour la génération du document)
+    composition.erreur = params.erreur;
+
+    if (!params.erreur) {
+      if (params.copie && params.acte.corpsText) {
+        // Une copie est demandée (et non un extrait) pour un acte texte
+        composition.corps_texte = params.acte.corpsText;
+      } else if (corpsExtraitRectification) {
+        // L'acte comporte un corps d'extrait modifié correspondant au type d'extrait traité : extrait avec ou sans filiation
+        composition.corps_texte = corpsExtraitRectification;
+      } else {
+        composition.corps_texte = params.getCorpsTexte;
+      }  
     }
 
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
