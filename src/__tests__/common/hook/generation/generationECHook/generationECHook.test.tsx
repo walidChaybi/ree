@@ -2,7 +2,10 @@ import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { ReponseAppelDetailRequeteDelivrance } from "../../../../../mock/data/DetailRequeteDelivrance";
-import { idFicheActeMariage } from "../../../../../mock/data/ficheActe";
+import {
+  idFicheActe1,
+  idFicheActeMariage
+} from "../../../../../mock/data/ficheActe";
 import { configComposition } from "../../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
@@ -31,6 +34,12 @@ const ecMariageAvecFiliationparams: IGenerationECParams = {
   choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
 };
 
+const ecNaissanceSansFiliationparams: IGenerationECParams = {
+  idActe: idFicheActe1,
+  requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
+};
+
 const HookConsumer: React.FC<IGenerationECParams> =
   ecMariageFiliationparams => {
     const resultat = useGenerationEC(ecMariageFiliationparams);
@@ -51,6 +60,17 @@ test("Attendu: un extrait de mariage sans filiation est généré via useGenerat
 
 test("Attendu: un extrait de mariage avec filiation est généré via useGenerationEC", async () => {
   render(<HookConsumer {...ecMariageAvecFiliationparams} />);
+
+  await waitFor(() => {
+    // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+    expect(
+      screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")
+    ).toBeInTheDocument();
+  });
+});
+
+test("Attendu: un extrait de naissance sans filiation est généré via useGenerationEC", async () => {
+  render(<HookConsumer {...ecNaissanceSansFiliationparams} />);
 
   await waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)

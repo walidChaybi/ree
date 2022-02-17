@@ -36,9 +36,16 @@ export function triListeObjetsSurPropriete(objets: any[], propriete: string) {
 
 export function triListeObjetsSurDate(objets: any[], nomPropriete: string) {
   return objets
-    ? objets.sort(
-        (o1, o2) => o1[nomPropriete].getTime() - o2[nomPropriete].getTime()
-      )
+    ? objets.sort((o1, o2) => {
+        let res = 0;
+        if (
+          o1[nomPropriete] instanceof Date &&
+          o2[nomPropriete] instanceof Date
+        ) {
+          res = o1[nomPropriete].getTime() - o2[nomPropriete].getTime();
+        }
+        return res;
+      })
     : [];
 }
 

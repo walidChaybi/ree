@@ -1,12 +1,11 @@
 import { getValeurOuVide } from "../../../../views/common/util/Utils";
-import { FicheActe, IFicheActe } from "../../../etatcivil/acte/IFicheActe";
+import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { ExistenceContratMariage } from "../../../etatcivil/enum/ExistenceContratMariage";
 import { LienParente } from "../../../etatcivil/enum/LienParente";
-import { TypeExtrait } from "../../../etatcivil/enum/TypeExtrait";
+import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { ChoixDelivrance } from "../../../requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../requete/enum/Validation";
-import { IExtraitCopieComposition } from "../IExtraitCopieComposition";
 import {
   CommunExtraitOuCopieActeTexteComposition,
   IParentsTitulaireCompositionEC,
@@ -14,8 +13,8 @@ import {
 } from "./CommunExtraitOuCopieActeTexteComposition";
 
 export class ExtraitCopieActeTexteMariageComposition {
-  public static creerExtraitCopieActeTexte(
-    acteMariage: IFicheActe,
+  public static creerExtraitCopieActeTexteMariage(
+    acte: IFicheActe,
     choixDelivrance: ChoixDelivrance,
     sousTypeRequete: SousTypeDelivrance,
     validation: Validation,
@@ -23,68 +22,33 @@ export class ExtraitCopieActeTexteMariageComposition {
     copie = false,
     archive = false
   ) {
-    const composition = {} as IExtraitCopieComposition;
-
-    // Filigrane archive (le bloc de signature sera automatiquement masqué)
-    composition.filigrane_archive = archive;
-
-    // Création de l'entête
-    CommunExtraitOuCopieActeTexteComposition.creerReferenceActeEtDateDuJour(
-      composition,
-      acteMariage
-    );
-
-    // Type et nature de document
-    composition.type_document = copie ? "COPIE" : "EXTRAIT";
-    composition.nature_acte = "MARIAGE";
-
-    CommunExtraitOuCopieActeTexteComposition.creerAnalyseMarginale(
-      composition,
-      acteMariage
-    );
-
-    // Récupération de l'éventuelle rectification qui remplacera le corps
-    const corpsExtraitRectification = FicheActe.getCorpsExtraitRectificationTexte(
-      acteMariage,
+    const natureActe = NatureActe.getKey(NatureActe.MARIAGE);
+    const getCorpsTexte = ExtraitCopieActeTexteMariageComposition.getCorpsTexte(
+      acte,
       avecFiliation
-        ? TypeExtrait.EXTRAIT_AVEC_FILIATION
-        : TypeExtrait.EXTRAIT_SANS_FILIATION
     );
 
-    if (copie && acteMariage.corpsText) {
-      // Une copie est demandée (et non un extrait) pour un acte texte
-      composition.corps_texte = acteMariage.corpsText;
-    } else if (corpsExtraitRectification) {
-      // L'acte comporte un corps d'extrait modifié correspondant au type d'extrait traité : extrait avec ou sans filiation
-      composition.corps_texte = corpsExtraitRectification;
-    } else {
-      composition.corps_texte = ExtraitCopieActeTexteMariageComposition.getCorpsTexte(
-        acteMariage,
-        avecFiliation
-      );
-    }
-
-    CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
-      composition,
+    return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
+      acte,
+      natureActe,
       choixDelivrance,
       sousTypeRequete,
-      acteMariage.nature,
       validation,
-      archive
-    );
-    return composition;
+      avecFiliation,
+      copie,
+      archive,
+      getCorpsTexte
+    });
   }
 
   private static getCorpsTexte(
     acteMariage: IFicheActe,
     avecFiliation: boolean
   ) {
-    const {
-      ecTitulaire1,
-      ecTitulaire2
-    } = CommunExtraitOuCopieActeTexteComposition.getTitulairesCorpsText(
-      acteMariage
-    );
+    const { ecTitulaire1, ecTitulaire2 } =
+      CommunExtraitOuCopieActeTexteComposition.getTitulairesCorpsText(
+        acteMariage
+      );
 
     let parents1 = "";
     let parents2 = "";
@@ -92,27 +56,25 @@ export class ExtraitCopieActeTexteMariageComposition {
     let parentsAdoptants2 = "";
 
     if (avecFiliation) {
-      ({
-        parents1,
-        parentsAdoptants1,
-        parents2,
-        parentsAdoptants2
-      } = ExtraitCopieActeTexteMariageComposition.getPhrasesParents(
-        ecTitulaire1,
-        ecTitulaire2
-      ));
+      ({ parents1, parentsAdoptants1, parents2, parentsAdoptants2 } =
+        ExtraitCopieActeTexteMariageComposition.getPhrasesParents(
+          ecTitulaire1,
+          ecTitulaire2
+        ));
     }
 
     // Création de l'événement pour le corps
-    const evtActe = CommunExtraitOuCopieActeTexteComposition.getEvenementActeCompositionEC(
-      acteMariage
-    );
+    const evtActe =
+      CommunExtraitOuCopieActeTexteComposition.getEvenementActeCompositionEC(
+        acteMariage
+      );
 
     // Création le l'énonciation du contrat pour le corps
-    const enonciationContratDeMariage = ExtraitCopieActeTexteMariageComposition.getEnonciationContratMariage(
-      acteMariage.detailMariage?.existenceContrat,
-      acteMariage.detailMariage?.contrat
-    ); //<énonciation contrat de mariage>
+    const enonciationContratDeMariage =
+      ExtraitCopieActeTexteMariageComposition.getEnonciationContratMariage(
+        acteMariage.detailMariage?.existenceContrat,
+        acteMariage.detailMariage?.contrat
+      ); //<énonciation contrat de mariage>
 
     return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement}
 a été célébré à ${evtActe.lieuEvenement}
@@ -122,7 +84,7 @@ ${ecTitulaire1.dateNaissanceOuAge} à ${ecTitulaire1.lieuNaissance}${parents1}${
 et de ${ecTitulaire2.prenoms} ${ecTitulaire2.nom} ${ecTitulaire2.partiesNom}
 ${ecTitulaire2.dateNaissanceOuAge} à ${ecTitulaire2.lieuNaissance}${parents2}${parentsAdoptants2}
 
-Contrat de mariage : ${enonciationContratDeMariage}`;
+Contrat de mariage : ${enonciationContratDeMariage}`;
   }
 
   private static getPhrasesParents(

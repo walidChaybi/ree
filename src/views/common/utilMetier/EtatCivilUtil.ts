@@ -1,6 +1,7 @@
 import { IEvenement } from "../../../model/etatcivil/acte/IEvenement";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
 import {
+  formatAHeure,
   getDateFormatJasperFromCompose,
   IDateCompose
 } from "../util/DateUtils";
@@ -35,6 +36,10 @@ export class EtatCivilUtil {
       : "de";
   }
 
+  public static formatGenreDetermineOuNon(sexe?: Sexe) {
+    return sexe === Sexe.FEMININ || Sexe.MASCULIN ? "du" : "de";
+  }
+
   public static formatFilsOuFilleAdoptant(sexe?: Sexe) {
     return sexe === Sexe.FEMININ ? "adoptée par" : "adopté par";
   }
@@ -45,6 +50,10 @@ export class EtatCivilUtil {
       mois: getValeurOuVide(evenement?.mois),
       annee: getValeurOuVide(evenement?.annee)
     });
+  }
+
+  public static formatHeureEvenement(evenement?: IEvenement) {
+    return getValeurOuVide(formatAHeure(evenement?.heure, evenement?.minute));
   }
 
   public static getPrenomsOuVide(prenoms?: string[]) {

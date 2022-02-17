@@ -1,4 +1,5 @@
 import { ExtraitCopieActeTexteMariageComposition } from "../../../../../../model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
+import { ExtraitCopieActeTexteNaissanceComposition } from "../../../../../../model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
 import { IExtraitCopieComposition } from "../../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
@@ -14,15 +15,16 @@ export const creationCompositionExtraitCopieActeTexte = function (
 ) {
   let composition;
   if (acteComplet.nature === NatureActe.MARIAGE) {
-    composition = ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexte(
-      acteComplet,
-      choixDelivrance,
-      sousTypeRequete,
-      validation,
-      ChoixDelivrance.estChoixDelivranceAvecFiliation(choixDelivrance),
-      ChoixDelivrance.estChoixDelivranceCopie(choixDelivrance),
-      ChoixDelivrance.estChoixDelivranceCopieArchive(choixDelivrance)
-    );
+    composition =
+      ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage(
+        acteComplet,
+        choixDelivrance,
+        sousTypeRequete,
+        validation,
+        ChoixDelivrance.estChoixDelivranceAvecFiliation(choixDelivrance),
+        ChoixDelivrance.estChoixDelivranceCopie(choixDelivrance),
+        ChoixDelivrance.estChoixDelivranceCopieArchive(choixDelivrance),
+      );
   } else if (acteComplet.nature === NatureActe.DECES) {
     /* istanbul ignore next */
     // TODO ExtraitCopieActeTexteDecesComposition.creerExtraitCopieActeTexte
@@ -31,12 +33,16 @@ export const creationCompositionExtraitCopieActeTexte = function (
       type_document: "EXTRAIT"
     } as IExtraitCopieComposition;
   } else if (acteComplet.nature === NatureActe.NAISSANCE) {
-    /* istanbul ignore next */
-    // TODO ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexte
-    composition = {
-      nature_acte: "NAISSANCE",
-      type_document: "EXTRAIT"
-    } as IExtraitCopieComposition;
+    composition =
+      ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
+        acteComplet,
+        choixDelivrance,
+        sousTypeRequete,
+        validation,
+        ChoixDelivrance.estChoixDelivranceAvecFiliation(choixDelivrance),
+        ChoixDelivrance.estChoixDelivranceCopie(choixDelivrance),
+        ChoixDelivrance.estChoixDelivranceCopieArchive(choixDelivrance)
+      );
   } else {
     /* istanbul ignore next */
     // TODO

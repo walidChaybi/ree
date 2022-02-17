@@ -28,4 +28,8 @@ export class NatureActe extends EnumWithLibelle {
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(NatureActe, false, false);
   }
+
+  public static getKey(obj: NatureActe) {
+    return EnumWithLibelle.getKey(NatureActe, obj);
+  }
 }
