@@ -206,6 +206,11 @@ export class DocumentDelivrance extends EnumNomemclature {
     return uuid ? uuid : "";
   }
 
+  public static getUuidFromCode(code: string): string {
+    const uuid = EnumNomemclature.getKeyForCode(DocumentDelivrance, code);
+    return uuid ? uuid : "";
+  }
+
   public static estDocumentDelivrance(typeDocumentUUID: string): boolean {
     const doc = DocumentDelivrance.getEnumFor(typeDocumentUUID);
     // _libelle_court correspond à la catégorie

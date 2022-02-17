@@ -32,13 +32,15 @@ export function useReponseSansDelivranceCS(
 
   // 2- Création du document réponse (après appel 'useCompositionReponseSansDelivranceCSMariageApi') pour stockage dans la BDD et Swift
   useEffect(() => {
-    if (compositionData) {
+    if (compositionData && reponseSansDelivranceCS?.fichier) {
       setStockerDocumentCreerActionMajStatutRequeteParams({
         documentReponsePourStockage: {
           contenu: compositionData.contenu,
           nom: reponseSansDelivranceCS?.fichier,
           mimeType: MimeType.APPLI_PDF,
-          typeDocument: DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID(),
+          typeDocument: DocumentDelivrance.getUuidFromCode(
+            reponseSansDelivranceCS.fichier
+          ),
           nbPages: compositionData.nbPages,
           orientation: Orientation.PORTRAIT
         } as IDocumentReponse,
