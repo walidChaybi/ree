@@ -11,12 +11,14 @@
   .gris {
     background-color: gray;
   }
-  h1 {
+  h2 {
     background-color: $title-application-color;
     padding: 0.5rem 1rem;
     margin: 0.5rem 0;
+    font-size: 1.0625em;
     color: white;
-  }
+}
+  
   div {
     padding: 0.5rem 1rem 0.5rem 1rem;
     border: 1px solid;

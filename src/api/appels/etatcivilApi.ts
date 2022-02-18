@@ -165,7 +165,7 @@ export function rechercheMultiCriteresAutoInscription(
 }
 
 export function getAlertesActe(idActe: string): Promise<any> {
-  return api.fetch({
+  return api.fetchCache({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${idActe}${URL_ALERTES_ACTE}`
   });

@@ -187,7 +187,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         history,
         getUrlWithParam(
           URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-          `${props.requete.id}&${props.idActe}`
+          `${props.requete.id}`
         ),
         props.idActe
       );

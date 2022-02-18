@@ -13,29 +13,27 @@ import {
 } from "../../../../model/requete/enum/DocumentDelivrance";
 import { Validation } from "../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
+import { IOnglet } from "../../../../model/requete/IOnglet";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import { IUuidRequeteParams } from "../../../../model/requete/IUuidRequeteParams";
+import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
+import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
 import {
   IActeApiHookParams,
   useInformationsActeApiHook
 } from "../../../common/hook/repertoires/ActeApiHook";
 import { getLibelle } from "../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
-import { VisionneuseDocument } from "../../../common/widget/document/VisionneuseDocument";
 import { receUrl } from "../../../router/ReceUrls";
+import { DetailRequetePage } from "../detailRequete/DetailRequetePage";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
-import { Onglet } from "./contenu/Onglet";
 import { OngletDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
+import { VisionneuseActeEdition } from "./contenu/VisionneuseActeEdition";
+import { VisionneuseEdition } from "./contenu/VisionneuseDocumentEdite";
 import { VoletAvecOnglet } from "./contenu/VoletAvecOnglet";
 import "./scss/EditionExtraitCopie.scss";
 
-interface EditionExtraitCopieProps {
-  documentPageTraitement: IDocumentReponse;
-}
-
-export const EditionExtraitCopiePage: React.FC<EditionExtraitCopieProps> = ({
-  documentPageTraitement
-}) => {
+export const EditionExtraitCopiePage: React.FC = () => {
   const history = useHistory();
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const { detailRequeteState } = useDetailRequeteApiHook(idRequeteParam);
@@ -96,24 +94,32 @@ export const EditionExtraitCopiePage: React.FC<EditionExtraitCopieProps> = ({
               <VoletAvecOnglet
                 onglets={[
                   {
-                    titre: "Acte registre",
+                    titre: getLibelle("Acte registre"),
                     component: (
-                      <VisionneuseDocument titre="Acte registre" contenu="" />
-                    ),
-                    data: acte
+                      <VisionneuseActeEdition
+                        acte={acte?.acte}
+                        detailRequete={requete}
+                      />
+                    )
                   },
                   {
-                    titre: "Requête",
-                    component: <> </>
+                    titre: getLibelle("Requête"),
+                    component: (
+                      <>
+                        <DetailRequetePage idRequeteAAfficher={requete.id} />
+                        <SuiviActionsRequete actions={requete.actions} />
+                        <SuiviObservationsRequete idRequete={requete.id} />
+                      </>
+                    )
                   }
                 ]}
                 titre="Visualisation"
               >
                 <BoutonOperationEnCours
-                  title="Retour aperçu traitement"
+                  title={getLibelle("Retour aperçu traitement")}
                   onClick={goBack}
                 >
-                  Retour aperçu traitement
+                  {getLibelle("Retour aperçu traitement")}
                 </BoutonOperationEnCours>
               </VoletAvecOnglet>
             </div>
@@ -125,19 +131,22 @@ export const EditionExtraitCopiePage: React.FC<EditionExtraitCopieProps> = ({
               >
                 {boutonModifierCopiePresent(acte?.acte, documentEdite) && (
                   <BoutonOperationEnCours
-                    title="Modifier la copie à délivrer"
+                    title={getLibelle("Modifier la copie à délivrer")}
                     onClick={goBack}
                   >
                     Modifier la copie à délivrer
                   </BoutonOperationEnCours>
                 )}
                 <BoutonOperationEnCours
-                  title="Terminer et signer"
+                  title={getLibelle("Terminer et signer")}
                   onClick={goBack}
                 >
                   Terminer et signer
                 </BoutonOperationEnCours>
-                <BoutonOperationEnCours title="Terminer" onClick={goBack}>
+                <BoutonOperationEnCours
+                  title={getLibelle("Terminer")}
+                  onClick={goBack}
+                >
                   Terminer
                 </BoutonOperationEnCours>
               </VoletAvecOnglet>
@@ -150,10 +159,10 @@ export const EditionExtraitCopiePage: React.FC<EditionExtraitCopieProps> = ({
 };
 
 const getOngletsEdition = (document?: IDocumentReponse, acte?: IFicheActe) => {
-  const res: Onglet[] = [
+  const res: IOnglet[] = [
     {
-      titre: "Document édité",
-      component: <VisionneuseDocument titre="Document édité" contenu="" />
+      titre: getLibelle("Document édité"),
+      component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
     }
   ];
   if (document && acte) {
@@ -167,10 +176,10 @@ const getOngletsEdition = (document?: IDocumentReponse, acte?: IFicheActe) => {
         break;
       case CODE_EXTRAIT_AVEC_FILIATION:
       case CODE_EXTRAIT_SANS_FILIATION:
-        caseExtraitFilliation(res, document);
+        ajoutOngletsExtraitFilliation(res, document);
         break;
       case CODE_EXTRAIT_PLURILINGUE:
-        caseExtraitPlurilingue(res, acte);
+        ajoutOngletsExtraitPlurilingue(res, acte);
         break;
       case CODE_COPIE_NON_SIGNEE:
         break;
@@ -179,18 +188,21 @@ const getOngletsEdition = (document?: IDocumentReponse, acte?: IFicheActe) => {
   return res;
 };
 
-const caseExtraitFilliation = (res: Onglet[], document: IDocumentReponse) => {
+const ajoutOngletsExtraitFilliation = (
+  res: IOnglet[],
+  document: IDocumentReponse
+) => {
   res.push(ongletSaisirExtrait);
   res.push(ongletMentions);
   if (document.validation !== Validation.E) {
     res.push({
-      titre: "Modifier le corps de l'extrait",
+      titre: getLibelle("Modifier le corps de l'extrait"),
       component: <></>
     });
   }
 };
 
-const caseExtraitPlurilingue = (res: Onglet[], acte: IFicheActe) => {
+const ajoutOngletsExtraitPlurilingue = (res: IOnglet[], acte: IFicheActe) => {
   res.push(ongletSaisirExtrait);
   if (
     acte.nature === NatureActe.NAISSANCE ||
@@ -213,5 +225,11 @@ const boutonModifierCopiePresent = (
   return false;
 };
 
-const ongletMentions = { titre: "Gérer les mentions", component: <></> };
-const ongletSaisirExtrait = { titre: "Saisir l'extrait", component: <></> };
+const ongletMentions = {
+  titre: getLibelle("Gérer les mentions"),
+  component: <></>
+};
+const ongletSaisirExtrait = {
+  titre: getLibelle("Saisir l'extrait"),
+  component: <></>
+};

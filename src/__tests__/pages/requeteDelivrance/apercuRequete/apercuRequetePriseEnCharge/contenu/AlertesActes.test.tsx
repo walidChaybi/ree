@@ -1,17 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { Alertes } from "../../../../../../mock/data/Alertes";
-import { AlertesActes } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/alertesActes/AlertesActes";
+import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
+import { AlertesActes } from "../../../../../../views/common/composant/alertesActe/AlertesActes";
 
 test("render texte du bouton d'ajout d'alerte", () => {
   render(
     <AlertesActes
-      alertes={new Map([["fakeId", Alertes]])}
-      ajoutAlertePossible={false}
-      ajouterAlerteCallBack={jest.fn()}
-      supprimerAlerteCallBack={jest.fn()}
+      detailRequete={requeteDelivrance}
+      idActes={["b41079a5-9e8d-478c-b04c-c4c4ey86537g"]}
+      setAlertesParent={jest.fn()}
+      ajoutAlertePossible={true}
     />
   );
-  const boutonElement = screen.queryByText("Ajouter une alerte");
-  expect(boutonElement).toBeInTheDocument();
+  const boutonElement = screen.getByText("Alertes et informations");
+  expect(boutonElement).toBeDefined();
 });

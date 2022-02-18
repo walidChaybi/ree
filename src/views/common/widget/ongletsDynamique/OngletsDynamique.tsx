@@ -13,34 +13,39 @@ interface OngletsDynamiqueProps {
 }
 
 export const OngletsDynamique: React.FC<OngletsDynamiqueProps> = props => {
-  return (
-    <div className="OngletsDynamique">
-      {props.listeOnglets && (
-        <>
-          {props.listeOnglets.map(onglet => {
-            return (
-              <button
-                key={onglet.id}
-                onClick={() => props.actionClick(onglet.id)}
-                className={`${
-                  onglet.id === props.ongletSelectionne ? "selected" : ""
-                }`}
-              >
-                {onglet.libelle}
-              </button>
-            );
-          })}
 
-          {props.listePlus.length !== props.nombreOngletsMax && (
-            <MenuAction
-              afficheChevron={false}
-              titre="+"
-              listeActions={props.listePlus}
-              onSelect={props.actionPlus}
-            ></MenuAction>
-          )}
-        </>
-      )}
-    </div>
-  );
+function handleClick(id: string) {
+  props.actionClick(id);
+}
+
+return (
+  <div className="OngletsDynamique">
+    {props.listeOnglets && (
+      <>
+        {props.listeOnglets.map(onglet => {
+          return (
+            <button
+              key={onglet.id}
+              onClick={() => handleClick(onglet.id)}
+              className={`${
+                onglet.id === props.ongletSelectionne ? "selected" : ""
+              }`}
+            >
+              {onglet.libelle}
+            </button>
+          );
+        })}
+
+        {props.listePlus.length !== props.nombreOngletsMax && (
+          <MenuAction
+            afficheChevron={false}
+            titre="+"
+            listeActions={props.listePlus}
+            onSelect={props.actionPlus}
+          ></MenuAction>
+        )}
+      </>
+    )}
+  </div>
+);
 };

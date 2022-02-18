@@ -22,9 +22,7 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
 }) => {
   const listePlus = [{ label: "Copie plurilingue", value: 0 }];
 
-  const handleSelect = (event: any) => {
-    ajouterDocument(event.current.target);
-  };
+  const handleSelect = (event: any) => {};
 
   const handleClick = (idDoc: string) => {
     if (idDoc !== idDocumentEdite) {

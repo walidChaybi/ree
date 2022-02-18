@@ -19,7 +19,7 @@ export const BandeauRequete: React.FC<BandeauRequeteProps> = props => {
   const styles = classNames(getClassName(statut));
   return (
     <div className="BandeauRequete">
-      <h1 className={styles}>{getStatutLibellePourRequete(props.requete)}</h1>
+      <h2 className={styles}>{getStatutLibellePourRequete(props.requete)}</h2>
     </div>
   );
 };

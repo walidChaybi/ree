@@ -1,12 +1,12 @@
 import { Tab } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import React, { useState } from "react";
+import { IOnglet } from "../../../../../model/requete/IOnglet";
 import { getLibelle } from "../../../../common/util/Utils";
-import { Onglet } from "./Onglet";
 
 interface VoletAvecOngletProps {
   titre: string;
-  onglets: Onglet[];
+  onglets: IOnglet[];
 
   children?: any;
 }

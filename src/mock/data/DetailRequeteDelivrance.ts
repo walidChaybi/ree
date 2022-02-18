@@ -1498,3 +1498,173 @@ export const ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ = {
     }
   }
 };
+
+export const requeteAvecDocs = {
+  id: "5f14ef25-d720-4c12-867f-d7fa6e3cb780",
+  numeroFonctionnel: "QNFH8F",
+  dateCreation: 1645103295461,
+  canal: "COURRIER",
+  type: "DELIVRANCE",
+  actions: [
+    {
+      id: "5f1441af-1617-42d9-95e6-b7e4cdcfbd5d",
+      numeroOrdre: 1,
+      libelle: "Saisie de la requête",
+      dateAction: 1645103295421,
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+    },
+    {
+      id: "5f14f4bb-5064-4fc2-a4cd-1c57f960c977",
+      numeroOrdre: 2,
+      libelle: "Prise en charge",
+      dateAction: 1645103295457,
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+    },
+    {
+      id: "5f43778c-101c-47d7-b9b3-c48d99415199",
+      numeroOrdre: 4,
+      libelle: "À signer",
+      dateAction: 1645106127997,
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+    },
+    {
+      id: "5f432efd-4b2d-451c-8962-6f7fc081f3a6",
+      numeroOrdre: 3,
+      libelle: "À signer",
+      dateAction: 1645106122907,
+      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+    }
+  ],
+  titulaires: [
+    {
+      id: "5f14f17b-7869-41e3-8abf-308bc627a0df",
+      position: 1,
+      nomNaissance: "PRODESK",
+      nomUsage: null,
+      anneeNaissance: 1990,
+      moisNaissance: 6,
+      jourNaissance: 25,
+      villeNaissance: "V",
+      paysNaissance: "V",
+      sexe: "INCONNU",
+      nationalite: "INCONNUE",
+      prenoms: [
+        {
+          id: "5f14904a-b650-4489-a770-38945d28b51c",
+          numeroOrdre: 1,
+          prenom: "Elodie"
+        }
+      ],
+      parentsTitulaire: []
+    }
+  ],
+  corbeilleAgent: {
+    id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
+    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+  },
+  corbeilleService: {
+    id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
+    idEntiteRattachement: "6737d2f8-f2af-450d-a376-f22f6df6ff1d"
+  },
+  piecesJustificatives: [],
+  requerant: {
+    id: "5f148033-dc34-46df-95b9-f0c62f70407c",
+    dateCreation: 1645103295461,
+    nomFamille: "PRODESK",
+    prenom: "Elodie",
+    courriel: null,
+    telephone: null,
+    adresse: {
+      id: "5f43017e-2e9a-4611-8bdb-1044ba081aff",
+      ligne2: "",
+      ligne3: "",
+      ligne4: "7 ALLÉE DES PLUVIERS",
+      ligne5: "",
+      codePostal: "44830",
+      ville: "BOUAYE",
+      pays: ""
+    },
+    qualite: "PARTICULIER",
+    detailQualiteRece: null,
+    detailQualiteParticulier: null,
+    detailQualiteMandataireHabilite: null,
+    detailQualiteInstitutionnel: null,
+    detailQualiteAutreProfessionnel: null,
+    lienRequerant: {
+      id: "5f144c30-b858-4c2f-8187-7b5dff26a88b",
+      typeLienRequerant: "TITULAIRE",
+      nature: null
+    }
+  },
+  mandant: null,
+  observations: [],
+  statut: {
+    id: "5f140855-548d-475c-a789-c7f7c7fdcf84",
+    statutRequete: "A_SIGNER",
+    dateEffet: 1645106128004,
+    raisonStatut: null
+  },
+  lienRequerant: {
+    id: "5f144c30-b858-4c2f-8187-7b5dff26a88b",
+    typeLienRequerant: "TITULAIRE",
+    nature: null
+  },
+  doublons: null,
+  origines: null,
+  sousType: "RDC",
+  motif: "CERTIFICAT_NATIONALITE_FRANCAISE",
+  complementMotif: null,
+  dateDelivranceDemat: null,
+  provenance: "COURRIER",
+  statutReponse: null,
+  documentDemande: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+  documentComplementaire: null,
+  nombreExemplairesDemandes: 1,
+  provenancePlanete: null,
+  provenanceRece: null,
+  provenanceServicePublic: null,
+  documentsReponses: [
+    {
+      id: "5f43b169-9a02-41eb-bc8f-a895084656ac",
+      nom: "Extrait copie sans filiation",
+      typeDocument: "318a2726-0d04-4558-8b36-8fe48780def5",
+      mimeType: "application/pdf",
+      taille: 28540,
+      avecCtv: false,
+      nbPages: 1,
+      orientation: "Portrait",
+      referenceSwift:
+        "5f14ef25-d720-4c12-867f-d7fa6e3cb780_5f439b2a-2f89-49a6-acca-043151cd9f3c.pdf",
+      conteneurSwift: "documents-delivres-2022-2",
+      validation: "N",
+      idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
+      optionsCourrier: [],
+      mentionsRetirees: []
+    },
+    {
+      id: "5f43dcf3-3388-487c-af06-f59b2f856bb2",
+      nom: "Délivrance d'acte (116)",
+      typeDocument: "cb1f3518-9457-471d-a31c-10bc8d34c9a2",
+      mimeType: "application/pdf",
+      taille: 54008,
+      avecCtv: false,
+      nbPages: 1,
+      orientation: "Portrait",
+      referenceSwift:
+        "5f14ef25-d720-4c12-867f-d7fa6e3cb780_5f43afc0-645f-4b20-8708-ff6e0c6afd95.pdf",
+      conteneurSwift: "documents-delivres-2022-2",
+      optionsCourrier: [],
+      mentionsRetirees: []
+    }
+  ],
+  evenement: {
+    id: "5f14a76b-bc9a-4207-9767-a9382d5f69ad",
+    natureActe: "NAISSANCE",
+    jour: 25,
+    mois: 6,
+    annee: 1990,
+    ville: "V",
+    pays: "V"
+  },
+  choixDelivrance: "DELIVRER_EC_EXTRAIT_SANS_FILIATION"
+};

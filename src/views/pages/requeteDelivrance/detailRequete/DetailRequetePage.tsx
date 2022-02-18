@@ -31,8 +31,10 @@ export const DetailRequetePage: React.FC<DetailRequetePageProps> = props => {
 
       {panels.length > 1 && (
         <div className="PanelsDetailRequete">
-          <SectionPanel {...panels[0]} />
-          <SectionPanel {...panels[1]} />
+          <SectionPanel
+            title="Détail requête"
+            panelAreas={[...panels[1].panelAreas, ...panels[0].panelAreas]}
+          />
         </div>
       )}
     </div>

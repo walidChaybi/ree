@@ -17,15 +17,19 @@
         .VoletAvecOnglet{
             .TitreVolet {
                 color: $application-color ;
-                line-height: 42px;
-                font-size: 28px;
+                font-size: 1rem;
                 text-align: left;
             }
-            .BarreOnglet{
-              margin-top: 1rem;
-            }
             .ContenuVolet{
-                height: 800px;
+                height: 820px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                iframe{
+                    height:800px;
+                }
+            }
+            .MuiTabPanel-root {
+                padding: 10px;
             }
         }
 

@@ -3,7 +3,8 @@ import {
   ReponseAppelDetailRequeteDelivranceASigner,
   ReponseAppelDetailRequeteDelivranceBrouillon,
   ReponseAppelDetailRequeteDelivrancePriseEnCharge,
-  ReponseAppelDetailRequeteDelivranceRDC
+  ReponseAppelDetailRequeteDelivranceRDC,
+  requeteAvecDocs
 } from "../data/DetailRequeteDelivrance";
 import {
   documentReponseCARN_CSPAC_01,
@@ -57,8 +58,7 @@ export const configRequetes = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-100/" + ReponseAppelMesRequetes.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -71,8 +71,7 @@ export const configRequetes = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-100/" + ReponseAppelMesRequetes.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -85,8 +84,7 @@ export const configRequetes = [
           data: ReponseAppelMesRequetes,
           headers: {
             "content-range": "0-100/" + ReponseAppelMesRequetes.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -100,8 +98,7 @@ export const configRequetes = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -114,8 +111,7 @@ export const configRequetes = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -128,8 +124,7 @@ export const configRequetes = [
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -183,8 +178,7 @@ export const configRequetes = [
           return {
             headers: {
               "content-range": "0-15/" + ReponseAppelRMCRequete.data.length,
-              link:
-                '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
+              link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCRequete.data
           };
@@ -209,6 +203,9 @@ export const configRequetes = [
       }
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d666") {
         return { data: ReponseAppelDetailRequeteDelivranceRDC.data };
+      }
+      if (match[1] === "/requetes/5f14ef25-d720-4c12-867f-d7fa6e3cb780") {
+        return { data: requeteAvecDocs };
       }
 
       // Compteurs requêtes A_SIGNER
@@ -343,8 +340,7 @@ export const configRequetes = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
         };
