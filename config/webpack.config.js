@@ -134,7 +134,7 @@ module.exports = function (webpackEnv) {
       ? shouldUseSourceMap
         ? "source-map"
         : false
-      : isEnvDevelopment && "eval-source-map",
+      : isEnvDevelopment && "eval-source-map", // incompatible avec les CSP: utiliser "cheap-module-source-map" avec les CSP (mais alors plus de source map pour debugger)
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [

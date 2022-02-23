@@ -54,7 +54,7 @@ function getTitulairesInfo(
     },
     {
       libelle: "Sexe",
-      value: <span>{TitulaireActe.getSexe(titulaire)}</span>
+      value: <span>{TitulaireActe.getSexeOuVide(titulaire)}</span>
     },
     {
       libelle: "Lieu de naissance",

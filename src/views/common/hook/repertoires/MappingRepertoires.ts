@@ -2,6 +2,7 @@ import { IAnalyseMarginale } from "../../../../model/etatcivil/acte/IAnalyseMarg
 import { ICorpsExtraitRectification } from "../../../../model/etatcivil/acte/ICorpsExtraitRectification";
 import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
 import { IRegistre } from "../../../../model/etatcivil/acte/IRegistre";
+import { ITitulaireActe } from "../../../../model/etatcivil/acte/ITitulaireActe";
 import { ITypeRegistre } from "../../../../model/etatcivil/acte/ITypeRegistre";
 import { IAutresNoms } from "../../../../model/etatcivil/commun/IAutresNoms";
 import { IFicheLien } from "../../../../model/etatcivil/commun/IFicheLien";
@@ -16,6 +17,7 @@ import { NatureRca } from "../../../../model/etatcivil/enum/NatureRca";
 import { Sexe } from "../../../../model/etatcivil/enum/Sexe";
 import { StatutFiche } from "../../../../model/etatcivil/enum/StatutFiche";
 import { TypeActe } from "../../../../model/etatcivil/enum/TypeActe";
+import { TypeDeclarationConjointe } from "../../../../model/etatcivil/enum/TypeDeclarationConjointe";
 import { TypeExtrait } from "../../../../model/etatcivil/enum/TypeExtrait";
 import { TypeVisibiliteArchiviste } from "../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { IFichePacs } from "../../../../model/etatcivil/pacs/IFichePacs";
@@ -127,7 +129,20 @@ function mapAnalysesMarginales(ams: any[]): IAnalyseMarginale[] | undefined {
   return ams?.map((am: any) => ({
     ...am,
     dateDebut: am.dateDebut ? getDateFromTimestamp(am.dateDebut) : undefined,
-    dateFin: am.dateFin ? getDateFromTimestamp(am.dateFin) : undefined
+    dateFin: am.dateFin ? getDateFromTimestamp(am.dateFin) : undefined,
+    titulaires: mapTitulairesAnalyseMarginale(am.titulaires)
+  }));
+}
+
+function mapTitulairesAnalyseMarginale(titulaires: any[]): ITitulaireActe[] {
+  return titulaires.map(titulaire => ({
+    ...titulaire,
+    typeDeclarationConjointe: titulaire.typeDeclarationConjointe
+      ? TypeDeclarationConjointe.getEnumFor(titulaire.typeDeclarationConjointe)
+      : TypeDeclarationConjointe.ABSENCE_DECLARATION,
+    dateDeclarationConjointe: titulaire.dateDeclarationConjointe
+      ? getDateFromTimestamp(titulaire.dateDeclarationConjointe)
+      : undefined
   }));
 }
 

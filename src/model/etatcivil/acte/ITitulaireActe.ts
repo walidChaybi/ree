@@ -7,6 +7,7 @@ import {
 import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
 import { LienParente } from "../enum/LienParente";
 import { Sexe } from "../enum/Sexe";
+import { TypeDeclarationConjointe } from "../enum/TypeDeclarationConjointe";
 import { IAdresse } from "./IAdresse";
 import { IEvenement } from "./IEvenement";
 import { IFiliation } from "./IFiliation";
@@ -27,6 +28,8 @@ export interface ITitulaireActe {
   nomApresMariage?: string;
   nomDernierConjoint?: string;
   prenomsDernierConjoint?: string;
+  typeDeclarationConjointe?: TypeDeclarationConjointe; // concerne les titulaires de l'analyse marginale
+  dateDeclarationConjointe?: Date; // concerne les titulaires de l'analyse marginale
 }
 
 export const TitulaireActe = {
@@ -64,10 +67,15 @@ export const TitulaireActe = {
         })
       : "";
   },
-  getSexe(titulaire?: ITitulaireActe): string {
+  getSexeOuVide(titulaire?: ITitulaireActe): string {
     return titulaire && titulaire.sexe
       ? Sexe.getEnumFor(titulaire.sexe).libelle
       : "";
+  },
+  getSexeOuInconnu(titulaire?: ITitulaireActe): Sexe {
+    return titulaire && titulaire.sexe
+      ? Sexe.getEnumFor(titulaire.sexe)
+      : Sexe.INCONNU;
   },
   getLieuNaissance(titulaire?: ITitulaireActe): string {
     return titulaire && titulaire.naissance
