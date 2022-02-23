@@ -4,9 +4,9 @@ import { ObjetRequete } from "./enum/ObjetRequete";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { TypeRequete } from "./enum/TypeRequete";
-import { IPieceComplementInformation } from "./IPieceComplementInformation";
 import { IReponseRequeteInfo } from "./IReponseRequeteInfo";
 import { IRequete } from "./IRequete";
+import { IPieceComplementInformation } from "./pieceJointe/IPieceComplementInformation";
 
 export interface IRequeteInformation extends IRequete {
   sousType: SousTypeInformation;
@@ -18,6 +18,6 @@ export interface IRequeteInformation extends IRequete {
   numeroRequeteLiee?: string;
   idRequeteLiee?: string;
   typeRequeteLiee?: TypeRequete;
-  piecesComplementInformation?: IPieceComplementInformation;
+  piecesComplementInformation?: IPieceComplementInformation[];
   besoinUsager: BesoinUsager;
 }

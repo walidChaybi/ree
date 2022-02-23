@@ -21,7 +21,6 @@ import { IAction } from "../../../../../model/requete/IActions";
 import { IEvenementReqDelivrance } from "../../../../../model/requete/IEvenementReqDelivrance";
 import { IMandant } from "../../../../../model/requete/IMandant";
 import { IObservation } from "../../../../../model/requete/IObservation";
-import { IPieceJustificative } from "../../../../../model/requete/IPieceJustificative";
 import { IProvenanceRequete } from "../../../../../model/requete/IProvenanceRequete";
 import { Requerant } from "../../../../../model/requete/IRequerant";
 import { TRequete } from "../../../../../model/requete/IRequete";
@@ -29,6 +28,7 @@ import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivra
 import { IRequeteInformation } from "../../../../../model/requete/IRequeteInformation";
 import { IStatutCourant } from "../../../../../model/requete/IStatutCourant";
 import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
+import { IPieceJustificative } from "../../../../../model/requete/pieceJointe/IPieceJustificative";
 import { logError } from "../../../../common/util/LogManager";
 import { storeRece } from "../../../../common/util/storeRece";
 

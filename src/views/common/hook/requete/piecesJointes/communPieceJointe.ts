@@ -1,0 +1,4 @@
+export enum TypePieceJointe {
+  PIECE_COMPLEMENT_INFORMATION,
+  PIECE_JUSTIFICATIVE
+}

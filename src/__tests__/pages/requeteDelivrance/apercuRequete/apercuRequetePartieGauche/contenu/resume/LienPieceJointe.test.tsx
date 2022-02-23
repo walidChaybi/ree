@@ -1,10 +1,10 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { imagePngVideBase64 } from "../../../../../../../mock/data/ImagePng";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { TypePieceJustificative } from "../../../../../../../model/requete/enum/TypePieceJustificative";
-import { LienPieceJustificative } from "../../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/contenu/piecesJustificatives/LienPieceJustificative";
+import { LienPieceJointe } from "../../../../../../../views/common/composant/piecesJointes/LienPieceJointe";
+import { TypePieceJointe } from "../../../../../../../views/common/hook/requete/piecesJointes/PostPiecesJointesHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -19,14 +19,17 @@ globalAny.open = () => {
 };
 globalAny.close = jest.fn();
 
-test("renders Lien Pièces Justificatives fonctionne correctement", async () => {
+test("renders Lien Pièces Jointes fonctionne correctement", async () => {
   const { getByText } = render(
-    <LienPieceJustificative
-      contenu={imagePngVideBase64}
-      idPiece="bbac2335-562c-4b14-96aa-4386814c02a2"
-      nom="CARN_CSPAC_01"
+    <LienPieceJointe
+      pieceJointe={{
+        id: "bbac2335-562c-4b14-96aa-4386814c02a2",
+        libelle: "Triste",
+        nom: "CARN_CSPAC_01",
+        typePiece: TypePieceJointe.PIECE_JUSTIFICATIVE
+      }}
       numRequete="69"
-      type="Triste"
+      index={1}
     />
   );
 

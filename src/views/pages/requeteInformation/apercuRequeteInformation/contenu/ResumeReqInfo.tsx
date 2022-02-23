@@ -4,7 +4,12 @@ import { Requerant } from "../../../../../model/requete/IRequerant";
 import { Requete } from "../../../../../model/requete/IRequete";
 import { IRequeteInformation } from "../../../../../model/requete/IRequeteInformation";
 import { TitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
+import { IPieceComplementInformation } from "../../../../../model/requete/pieceJointe/IPieceComplementInformation";
+import { IPieceJointe } from "../../../../../model/requete/pieceJointe/IPieceJointe";
+import { ListePiecesJointes } from "../../../../common/composant/piecesJointes/ListePiecesJointes";
+import { TypePieceJointe } from "../../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
 import { getLibelle, getValeurOuVide } from "../../../../common/util/Utils";
+import "../../../../common/widget/section/scss/SectionPanel.scss";
 import { SectionContentProps } from "../../../../common/widget/section/SectionContent";
 import {
   SectionPanel,
@@ -36,9 +41,30 @@ export const ResumeReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
       </div>
       <div className="PanelsResumeRequete">
         <SectionPanel {...panels} />
+        <hr className={"SectionPanelAreaSeparation"} />
+        <ListePiecesJointes
+          pieces={mapPiecesComplementInformation(
+            requete.piecesComplementInformation
+          )}
+          numRequete={requete.numero}
+          titre="Pièces Complémentaires"
+        />
       </div>
     </div>
   );
+};
+
+function mapPiecesComplementInformation(
+  pieces?: IPieceComplementInformation[]
+): IPieceJointe[] {
+  return pieces
+    ? pieces.map(piece => ({
+        id: piece.id,
+        libelle: piece.nom,
+        nom: piece.nom,
+        typePiece: TypePieceJointe.PIECE_COMPLEMENT_INFORMATION
+      }))
+    : [];
 };
 
 function getPanelResumeRequete(

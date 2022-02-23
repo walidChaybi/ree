@@ -6,7 +6,7 @@ import { IRequeteInformation } from "../../../../../../model/requete/IRequeteInf
 import {
   TypePieceJointe,
   usePostPiecesJointesApi
-} from "../../../../../common/hook/PiecesJointesHook";
+} from "../../../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
 import { PieceJointe } from "../../../../../common/util/FileUtils";
 import { getLibelle } from "../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";

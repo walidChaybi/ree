@@ -1,4 +1,5 @@
-import { ProvenancePiece } from "./enum/ProvenancePiece";
+import { MimeType } from "file-type";
+import { ProvenancePiece } from "../enum/ProvenancePiece";
 
 export interface IPieceComplementInformation {
   id: string;
@@ -6,4 +7,5 @@ export interface IPieceComplementInformation {
   nom?: string;
   cheminSwift?: string;
   contenu?: string;
+  mimeType: string | MimeType;
 }

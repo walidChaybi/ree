@@ -1,4 +1,5 @@
-import { TypePieceJustificative } from "./enum/TypePieceJustificative";
+import { MimeType } from "file-type";
+import { TypePieceJustificative } from "../enum/TypePieceJustificative";
 
 export interface IPieceJustificative {
   id: string;

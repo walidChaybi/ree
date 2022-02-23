@@ -6,9 +6,9 @@ import { StatutRequete } from "./enum/StatutRequete";
 import { DocumentReponse, IDocumentReponse } from "./IDocumentReponse";
 import { IEvenementReqDelivrance } from "./IEvenementReqDelivrance";
 import { IMandant } from "./IMandant";
-import { IPieceJustificative } from "./IPieceJustificative";
 import { IProvenanceRequete } from "./IProvenanceRequete";
 import { IRequete } from "./IRequete";
+import { IPieceJustificative } from "./pieceJointe/IPieceJustificative";
 
 export interface IRequeteDelivrance extends IRequete {
   sousType: SousTypeDelivrance;

@@ -1,5 +1,5 @@
 import { IPrenomOrdonnes } from "../../../../../model/requete/IPrenomOrdonnes";
-import { IPieceJustificative } from "../../../../common/types/RequeteType";
+import { IPieceJustificative } from "../../../../../model/requete/pieceJointe/IPieceJustificative";
 import { getValeurOuVide } from "../../../../common/util/Utils";
 
 export function getPrenoms(prenoms: any): IPrenomOrdonnes[] {

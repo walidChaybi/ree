@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import {
   postPieceComplementInformationApi,
   postPieceJustificative
-} from "../../../api/appels/requeteApi";
+} from "../../../../../api/appels/requeteApi";
 import {
   getPieceComplementInformation,
   getPieceJustificative
-} from "../../pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { PieceJointe } from "../util/FileUtils";
-import { logError } from "../util/LogManager";
+} from "../../../../pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
+import { PieceJointe } from "../../../util/FileUtils";
+import { logError } from "../../../util/LogManager";
 
 export enum TypePieceJointe {
   PIECE_COMPLEMENT_INFORMATION,
@@ -28,9 +28,8 @@ export function usePostPiecesJointesApi(
   const [resultat, setResultat] = useState<IPostPiecesJointesApiResultat>();
   const [uuidDocuments, setUuidDocuments] = useState<string[]>([]);
 
-  const [piecesJointesAEnvoyer, setPiecesJointesAEnvoyer] = useState<
-    PieceJointe[]
-  >();
+  const [piecesJointesAEnvoyer, setPiecesJointesAEnvoyer] =
+    useState<PieceJointe[]>();
 
   useEffect(() => {
     if (idRequete && piecesJointes && piecesJointes.length > 0) {

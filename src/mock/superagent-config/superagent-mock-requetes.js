@@ -22,6 +22,7 @@ import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
+import { pieceComplementInformation } from "../data/PieceComplementInformation";
 import { idRequeteRDCSC } from "../data/requeteDelivrance";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 import { CreationRDCSC, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
@@ -235,6 +236,11 @@ export const configRequetes = [
       // Post de Piece complement information
       if (match[1] === "/requetes/12345/piececomplementinformation") {
         return { data: "123456" };
+      }
+
+      // Get de Piece complement information
+      if (match[1] === "/requetes/piecescomplementinformations/c4306a3c-6bd4-422f-a56b-20760795ba61") {
+        return { data: pieceComplementInformation };
       }
 
       // Get nombre requête information

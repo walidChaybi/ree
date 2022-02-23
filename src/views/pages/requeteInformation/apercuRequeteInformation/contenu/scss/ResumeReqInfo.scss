@@ -1,3 +1,4 @@
+@import "../../../../../../scss/colors";
 .ResumeReqInfo {
   .ResumeRequeteTitle {
     display: flex;
@@ -9,5 +10,11 @@
   .NumeroReqLiee {
     text-decoration: underline !important;
     cursor: pointer;
+  }
+  .SectionPanelAreaSeparation {
+    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: $border;
   }
 }

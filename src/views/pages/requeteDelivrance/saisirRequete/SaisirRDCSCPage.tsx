@@ -13,13 +13,13 @@ import {
   useNavigationApercuRMCAuto
 } from "../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import {
-  TypePieceJointe,
-  usePostPiecesJointesApi
-} from "../../../common/hook/PiecesJointesHook";
-import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
+import {
+  TypePieceJointe,
+  usePostPiecesJointesApi
+} from "../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
 import { PieceJointe } from "../../../common/util/FileUtils";
 import messageManager from "../../../common/util/messageManager";
 import { ProtectionApercu } from "../../../common/util/route/Protection/ProtectionApercu";

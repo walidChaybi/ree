@@ -6,7 +6,7 @@ import { configRequetes } from "../../../../mock/superagent-config/superagent-mo
 import {
   TypePieceJointe,
   usePostPiecesJointesApi
-} from "../../../../views/common/hook/PiecesJointesHook";
+} from "../../../../views/common/hook/requete/piecesJointes/PostPiecesJointesHook";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsumerUsePostPiecesJointesApi: React.FC = () => {

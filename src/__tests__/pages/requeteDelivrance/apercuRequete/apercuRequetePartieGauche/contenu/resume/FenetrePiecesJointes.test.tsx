@@ -3,9 +3,10 @@ import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
 import {
-    FenetrePiecesJustificatives,
-    onClose
-} from "../../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/contenu/piecesJustificatives/FenetrePiecesJustificatives";
+  FenetrePiecesJointes,
+  onClose
+} from "../../../../../../../views/common/composant/piecesJointes/FenetrePiecesJointes";
+import { TypePieceJointe } from "../../../../../../../views/common/hook/requete/piecesJointes/PostPiecesJointesHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -20,11 +21,12 @@ test("renders Fenetre Pièces Justificatives fonctionne correctement", async () 
   const toggle = jest.fn();
 
   render(
-    <FenetrePiecesJustificatives
+    <FenetrePiecesJointes
       toggleFenetre={toggle}
       idPiece="bbac2335-562c-4b14-96aa-4386814c02a2"
       nom="Journal d'Anne Franck"
       numRequete="69"
+      typePiece={TypePieceJointe.PIECE_JUSTIFICATIVE}
     />
   );
 
@@ -39,6 +41,7 @@ test("onClose", () => {
     idPiece: "string",
     nom: "string",
     numRequete: "string",
+    typePiece: TypePieceJointe.PIECE_JUSTIFICATIVE,
     toggleFenetre
   });
   expect(toggleFenetre).toHaveBeenCalledTimes(1);

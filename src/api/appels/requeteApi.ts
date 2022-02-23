@@ -2,11 +2,8 @@ import { CLES } from "../../model/parametres/clesParametres";
 import { StatutRequete } from "../../model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../model/requete/IRequeteDelivrance";
+import { IPieceJustificative } from "../../model/requete/pieceJointe/IPieceJustificative";
 import { IRMCRequestRequete } from "../../model/rmc/requete/IRMCRequestRequete";
-import {
-  IDocumentDelivre,
-  IPieceJustificative
-} from "../../views/common/types/RequeteType";
 import { SortOrder } from "../../views/common/widget/tableau/TableUtils";
 import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
@@ -28,6 +25,8 @@ export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
 export const URL_COURRIER = "/courrier";
 export const URL_DOCUMENT = "/document";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
+export const URL_PIECES_COMPLEMENT_INFORMATION =
+  "/piecescomplementinformations";
 export const URL_PIECE_COMPLEMENT_INFORMATION = "/piececomplementinformation";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PIECE_JUSTIFICATIVE = "/piecejustificative";
@@ -42,11 +41,6 @@ export const URL_REPONSE_REQ_INFO = "/reponse";
 export const URL_NB_REQ_INFO = "/requetes/information/count";
 
 const URL_REPONSES = "/reponses";
-
-export interface IRequestDocumentApiResult {
-  documentDelivre: IDocumentDelivre;
-  mimeType: string;
-}
 
 export enum TypeAppelRequete {
   REQUETE_DELIVRANCE_SERVICE = "requeteService",
@@ -316,6 +310,14 @@ export function postDocumentReponseApi(
       idRequete,
       documentsReponse
     }
+  });
+}
+export function getPieceComplementInformationById(
+  idPiece: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_REQUETES}${URL_PIECES_COMPLEMENT_INFORMATION}/${idPiece}`
   });
 }
 
