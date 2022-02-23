@@ -27,6 +27,7 @@ import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOpe
 import { receUrl } from "../../../router/ReceUrls";
 import { DetailRequetePage } from "../detailRequete/DetailRequetePage";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
+import { AccordionRece } from "./../../../common/widget/accordion/AccordionRece";
 import { OngletDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
 import { VisionneuseActeEdition } from "./contenu/VisionneuseActeEdition";
 import { VisionneuseEdition } from "./contenu/VisionneuseDocumentEdite";
@@ -106,9 +107,15 @@ export const EditionExtraitCopiePage: React.FC = () => {
                     titre: getLibelle("Requête"),
                     component: (
                       <>
-                        <DetailRequetePage idRequeteAAfficher={requete.id} />
-                        <SuiviActionsRequete actions={requete.actions} />
+                        <AccordionRece
+                          titre={getLibelle(`Requête ${requete.numero}`)}
+                          disabled={false}
+                          expanded={true}
+                        >
+                          <DetailRequetePage idRequeteAAfficher={requete.id} />
+                        </AccordionRece>
                         <SuiviObservationsRequete idRequete={requete.id} />
+                        <SuiviActionsRequete actions={requete.actions} />
                       </>
                     )
                   }
@@ -159,12 +166,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
 };
 
 const getOngletsEdition = (document?: IDocumentReponse, acte?: IFicheActe) => {
-  const res: IOnglet[] = [
-    {
-      titre: getLibelle("Document édité"),
-      component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
-    }
-  ];
+  const res: IOnglet[] = [];
   if (document && acte) {
     switch (
       DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
@@ -185,6 +187,10 @@ const getOngletsEdition = (document?: IDocumentReponse, acte?: IFicheActe) => {
         break;
     }
   }
+  res.push({
+    titre: getLibelle("Document édité"),
+    component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
+  });
   return res;
 };
 

@@ -22,7 +22,7 @@ import "./scss/AlertesActes.scss";
 
 export interface AlertesActesProps {
   detailRequete: IRequeteDelivrance;
-  idActesInit?: string[];
+  idActeInit?: string;
   addActe?: GetAlertesActeApiHookParameters;
   ajoutAlerte?: (alerte: Map<string, IAlerte[]>) => void;
   ajoutAlertePossible: boolean;
@@ -30,7 +30,7 @@ export interface AlertesActesProps {
 
 export const AlertesActes: React.FC<AlertesActesProps> = ({
   detailRequete,
-  idActesInit,
+  idActeInit,
   addActe,
   ajoutAlerte,
   ajoutAlertePossible
@@ -60,12 +60,10 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
   );
 
   useEffect(() => {
-    if (idActesInit) {
-      idActesInit.forEach((idActe: string) => {
-        setAlertesActeApiHookParameters({ idActe, isChecked: true });
-      });
+    if (idActeInit) {
+      setAlertesActeApiHookParameters({ idActe: idActeInit, isChecked: true });
     }
-  }, [idActesInit]);
+  }, [idActeInit]);
 
   useEffect(() => {
     if (addActe) {
@@ -161,12 +159,20 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSuppressionAlerte]);
 
+  function estOuvert() {
+    if (idActeInit) {
+      return alertes.get(idActeInit)?.length !== 0;
+    } else {
+      return alertes.size > 0;
+    }
+  }
+
   return (
     <div className="AlertesActes">
       <AccordionRece
         titre={getLibelle("Alertes et informations")}
         disabled={false}
-        expanded={alertes.size > 0}
+        expanded={estOuvert()}
       >
         <div className="Liste">
           {Array.from(alertes.entries()).map(

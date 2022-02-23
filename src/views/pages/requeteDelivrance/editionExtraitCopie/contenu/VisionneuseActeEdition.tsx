@@ -32,7 +32,7 @@ export const VisionneuseActeEdition: React.FC<
     <>
       <ActeImage id={props.acte?.id} estReecrit={props.acte?.estReecrit} />
       <AlertesActes
-        idActesInit={props.acte?.id ? [props.acte?.id] : []}
+        idActeInit={props.acte?.id ? props.acte?.id : ""}
         detailRequete={props.detailRequete}
         ajoutAlertePossible={ajoutAlertePossible}
       />
