@@ -9,6 +9,8 @@ import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "../../../../../model/requete/IRequeteDelivrance";
+import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { MigratorV1V2 } from "../../../../common/util/migration/MigratorV1V2";
 import {
   getUrlPrecedente,
@@ -177,8 +179,9 @@ const documentsSontValides = (requete: IRequeteDelivrance) => {
 
 const boutonPresent = (sousType: SousTypeDelivrance) => {
   return (
-    sousType === SousTypeDelivrance.RDC ||
-    sousType === SousTypeDelivrance.RDD ||
-    sousType === SousTypeDelivrance.RDDP
+    gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) &&
+    (sousType === SousTypeDelivrance.RDC ||
+      sousType === SousTypeDelivrance.RDD ||
+      sousType === SousTypeDelivrance.RDDP)
   );
 };
