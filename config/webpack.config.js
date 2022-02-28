@@ -68,7 +68,14 @@ module.exports = function (webpackEnv) {
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-      isEnvDevelopment && require.resolve("style-loader"),
+      isEnvDevelopment && {
+        loader: require.resolve("style-loader"),
+        options: {
+          attributes: {
+            nonce: "ZDhhNWJjMTgtNDBmYi00OTQyLTgxYzUtMTc3YzZlZWFmOTk1"
+          }
+        }
+      },
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
         // css is located in `static/css`, use '../../' to locate index.html folder
@@ -134,7 +141,8 @@ module.exports = function (webpackEnv) {
       ? shouldUseSourceMap
         ? "source-map"
         : false
-      : isEnvDevelopment && "eval-source-map", // incompatible avec les CSP: utiliser "cheap-module-source-map" avec les CSP (mais alors plus de source map pour debugger)
+      : //: isEnvDevelopment && "eval-source-map", // incompatible avec les CSP: utiliser "cheap-module-source-map" avec les CSP (mais alors plus de source map pour debugger)
+        isEnvDevelopment && "cheap-module-source-map",
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
@@ -506,6 +514,10 @@ module.exports = function (webpackEnv) {
       ]
     },
     plugins: [
+      new webpack.DefinePlugin({
+        "global.__webpack_nonce__":
+          "ZDhhNWJjMTgtNDBmYi00OTQyLTgxYzUtMTc3YzZlZWFmOTk1"
+      }),
       new WebpackAutoInject({
         components: {
           AutoIncreaseVersion: false,

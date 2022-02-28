@@ -174,9 +174,13 @@ function copyStyles(sourceDoc: Document, targetDoc: Document) {
   Array.from(sourceDoc.styleSheets).forEach(styleSheet => {
     try {
       // pour sonar: as any as CSSStyleSheet
-      const cSSStyleSheet = styleSheet as any as CSSStyleSheet;
+      const cSSStyleSheet = (styleSheet as any) as CSSStyleSheet;
       if (cSSStyleSheet.cssRules) {
         const newStyleEl = sourceDoc.createElement("style");
+        newStyleEl.setAttribute(
+          "nonce",
+          "ZDhhNWJjMTgtNDBmYi00OTQyLTgxYzUtMTc3YzZlZWFmOTk1"
+        );
 
         Array.from(cSSStyleSheet.cssRules).forEach(cssRule => {
           newStyleEl.appendChild(sourceDoc.createTextNode(cssRule.cssText));
