@@ -77,7 +77,11 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <SeulementNavigateur navigateurs={[FIREFOX, CHROME]}>
+      <SeulementNavigateur
+        navigateurs={
+          process.env.NODE_ENV === "development" ? [FIREFOX, CHROME] : [FIREFOX]
+        }
+      >
         <ErrorManager>
           <Router>
             <div className="App">
