@@ -7,7 +7,10 @@ import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { ChoixDelivrance } from "../../../requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../requete/enum/Validation";
-import { CommunExtraitOuCopieActeTexteComposition } from "./CommunExtraitOuCopieActeTexteComposition";
+import {
+  CommunExtraitOuCopieActeTexteComposition,
+  ITitulaireCompositionEC
+} from "./CommunExtraitOuCopieActeTexteComposition";
 
 export class ExtraitCopieActeTexteNaissanceComposition {
   public static creerExtraitCopieActeTexteNaissance(
@@ -52,20 +55,25 @@ export class ExtraitCopieActeTexteNaissanceComposition {
     acteNaissance: IFicheActe,
     avecFiliation: boolean
   ) {
-    const {
-      ecTitulaire1
-    } = CommunExtraitOuCopieActeTexteComposition.getTitulaireCorpsText(
-      acteNaissance
-    );
+    const { ecTitulaire1 } =
+      CommunExtraitOuCopieActeTexteComposition.getTitulaireCorpsText(
+        acteNaissance
+      );
+
+    let parents = "";
 
     if (avecFiliation) {
-      //TODO
+      parents =
+        ExtraitCopieActeTexteNaissanceComposition.getPhrasesParents(
+          ecTitulaire1
+        );
     }
 
     // Création de l'événement pour le corps
-    const evtActe = CommunExtraitOuCopieActeTexteComposition.getEvenementActeCompositionEC(
-      acteNaissance
-    );
+    const evtActe =
+      CommunExtraitOuCopieActeTexteComposition.getEvenementActeCompositionEC(
+        acteNaissance
+      );
 
     const duOuDeSexe = EtatCivilUtil.formatGenreDetermineOuNon(
       ecTitulaire1.sexe
@@ -73,26 +81,51 @@ export class ExtraitCopieActeTexteNaissanceComposition {
 
     const neOuNeeTitulaire1 = EtatCivilUtil.formatNeOuNee(ecTitulaire1.sexe); //né(e) [accord selon genre du titulaire]
 
-    const declarationConjointe = ExtraitCopieActeTexteNaissanceComposition.getDeclarationConjointe(
-      acteNaissance
-    );
+    const declarationConjointe =
+      ExtraitCopieActeTexteNaissanceComposition.getDeclarationConjointe(
+        acteNaissance
+      );
 
     return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement} ${evtActe.heureEvenement}
 est ${neOuNeeTitulaire1} à ${evtActe.lieuEvenement}
   ${ecTitulaire1.prenoms}
   ${ecTitulaire1.nom} ${declarationConjointe}
 ${ecTitulaire1.partiesNom}
-${duOuDeSexe} sexe ${ecTitulaire1.sexe.libelle}`;
+${duOuDeSexe} sexe ${ecTitulaire1.sexe.libelle}${parents}`;
+  }
+
+  private static getPhrasesParents(ecTitulaire1: ITitulaireCompositionEC) {
+    //Construction phrase parents
+    const parents = ecTitulaire1.parentsTitulaire;
+
+    let resultatPhraseParents = "";
+
+    const parent1 = parents[0]
+      ? `
+${parents[0].filsOuFille} ${parents[0].prenoms} ${parents[0].nom} ${parents[0].dateNaissanceOuAgeParent}${parents[0].lieuNaissanceParent}`
+      : "";
+
+    const parent2 = parents[1]
+      ? `${parents[1].prenoms} ${parents[1].nom} ${parents[1].dateNaissanceOuAgeParent}${parents[1].lieuNaissanceParent}`
+      : "";
+
+    resultatPhraseParents = parent1;
+
+    if (parent2) {
+      resultatPhraseParents += `
+et de ${parent2}`;
+    }
+
+    return resultatPhraseParents;
   }
 
   private static getDeclarationConjointe(acte: IFicheActe) {
     let declarationConjointe = "";
     if (acte.analyseMarginales) {
-      const {
-        titulaireAMCompositionEC1
-      } = CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(
-        acte.analyseMarginales
-      );
+      const { titulaireAMCompositionEC1 } =
+        CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(
+          acte.analyseMarginales
+        );
       if (
         titulaireAMCompositionEC1?.typeDeclarationConjointe &&
         titulaireAMCompositionEC1.typeDeclarationConjointe !==

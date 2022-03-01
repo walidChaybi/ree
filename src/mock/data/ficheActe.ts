@@ -846,6 +846,66 @@ export const ficheActeNaissance = {
           pays: "États-Unis",
           lieuReprise: null
         },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: null,
+              mois: null,
+              annee: null,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null
+            },
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Jean", "Louis"]
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "DUPOND",
+            sexe: "FEMININ",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 26,
+              mois: 6,
+              annee: 1981,
+              voie: null,
+              ville: "Nantes",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "France",
+              lieuReprise: null
+            },
+            profession: "Dentiste",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
+            },
+            prenoms: ["Louise", "Jocelyne"]
+          }
+        ],
         profession: "DEVELOPPEUR",
         age: null,
         domicile: {
@@ -855,25 +915,6 @@ export const ficheActeNaissance = {
           region: null,
           pays: "DJIBOUTI"
         },
-        filiations: [
-          {
-            lienParente: "PARENT",
-            ordre: 752,
-            nom: "Rodriguez",
-            sexe: "FEMININ",
-            naissance: null,
-            profession: "Technicien",
-            age: null,
-            domicile: {
-              voie: "40placedelaRépublique",
-              ville: "Nantes",
-              arrondissement: null,
-              region: null,
-              pays: "France"
-            },
-            prenoms: ["Constance"]
-          }
-        ],
         typeDeclarationConjointe: "CHOIX_NOM",
         dateDeclarationConjointe: [1999, 2, 3],
         nomPartie1: "nom1",

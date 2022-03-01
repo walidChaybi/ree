@@ -11,26 +11,29 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const choixDelivrance = ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;
   const sousTypeRequete = SousTypeDelivrance.RDD;
   const validation = Validation.N;
-  const avecFiliation = false;
+  const avecFiliation = true;
   const copie = false;
   const archive = false;
 
-  const compositionCorps = ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
-    (acte as any) as IFicheActe,
-    choixDelivrance,
-    sousTypeRequete,
-    validation,
-    avecFiliation,
-    copie,
-    archive
-  );
+  const compositionCorps =
+    ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
+      acte as any as IFicheActe,
+      choixDelivrance,
+      sousTypeRequete,
+      validation,
+      avecFiliation,
+      copie,
+      archive
+    );
 
   const corpsTexteAttendu = `Le 10 octobre 1901 à 13h15
 est née à Paris, Paris (France)
   lolita
   Micheldelavandièredugrand-large suivant déclaration conjointe de changement de nom en date du 26 novembre 2000
 (1re partie : nom1  2nde partie : nom2)
-du sexe Féminin`;
+du sexe Féminin
+fille de Jean, Louis Sacken né à Barcelone, Catalogne (Espagne)
+et de Louise, Jocelyne DUPOND née le 26 juin 1981 à Nantes, Catalogne (France)`;
 
   expect(compositionCorps.corps_texte).toBe(corpsTexteAttendu);
 });

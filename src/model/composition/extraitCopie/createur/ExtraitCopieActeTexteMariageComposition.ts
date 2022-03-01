@@ -93,9 +93,9 @@ export class ExtraitCopieActeTexteMariageComposition {
 a été célébré à ${evtActe.lieuEvenement}
 le mariage
 de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}
-${ecTitulaire1.dateNaissanceOuAge} à ${ecTitulaire1.lieuNaissance}${parents1}${parentsAdoptants1}
+${ecTitulaire1.dateNaissanceOuAge}${ecTitulaire1.lieuNaissance}${parents1}${parentsAdoptants1}
 et de ${ecTitulaire2.prenoms} ${ecTitulaire2.nom} ${ecTitulaire2.partiesNom}
-${ecTitulaire2.dateNaissanceOuAge} à ${ecTitulaire2.lieuNaissance}${parents2}${parentsAdoptants2}
+${ecTitulaire2.dateNaissanceOuAge}${ecTitulaire2.lieuNaissance}${parents2}${parentsAdoptants2}
 
 Contrat de mariage : ${enonciationContratDeMariage}`;
   }

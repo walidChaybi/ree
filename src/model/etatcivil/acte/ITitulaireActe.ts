@@ -72,7 +72,7 @@ export const TitulaireActe = {
       ? Sexe.getEnumFor(titulaire.sexe).libelle
       : "";
   },
-  getSexeOuInconnu(titulaire?: ITitulaireActe): Sexe {
+  getSexeOuInconnu(titulaire?: ITitulaireActe | IFiliation): Sexe {
     return titulaire && titulaire.sexe
       ? Sexe.getEnumFor(titulaire.sexe)
       : Sexe.INCONNU;
