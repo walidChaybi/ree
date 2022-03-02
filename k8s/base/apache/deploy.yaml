@@ -13,7 +13,7 @@ spec:
   template:
     spec:
       containers:
-        - image: artifactory-registry.forge.diplomatie.gouv.fr/rece-images-docker-snapshot/rece-ui:REF
+        - image: artifactory-registry.forge.diplomatie.gouv.fr/rece-images-docker-snapshot/rece-ui:develop
           name: rece-ui
           imagePullPolicy: Always
           volumeMounts:
