@@ -80,7 +80,7 @@ const getRequeteDoublon = (requete: TRequete) => {
   if (requete.numero) {
     return getLibelle(
       `Requête en doublon, requête déjà en cours avec le N° suivant : ${
-        requete.numero
+        requete.numeroRequeteOrigine
       } - Le : ${getFormatDateFromTimestamp(requete.dateCreation)}`
     );
   } else {

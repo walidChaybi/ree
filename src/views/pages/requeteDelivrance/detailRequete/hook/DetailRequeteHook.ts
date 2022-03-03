@@ -86,6 +86,7 @@ export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {
       ? getObservations(data.observations)
       : undefined,
     piecesJustificatives: mapPiecesJustificatives(data.piecesJustificatives),
+    numeroRequeteOrigine: data.numeroRequeteOrigine,
 
     //Partie Requête Delivrance
     sousType: SousTypeDelivrance.getEnumFor(data?.sousType),
@@ -205,6 +206,7 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
       : undefined,
     canal: TypeCanal.getEnumFor(data.canal),
     actions: getActions(data?.actions),
+    numeroRequeteOrigine: data.numeroRequeteOrigine,
 
     //Partie Requête Delivrance
     sousType: SousTypeInformation.getEnumFor(data.sousType),

@@ -32,6 +32,7 @@ export interface IRequete {
   idEntite: string;
   observations?: IObservation[];
   actions?: IAction[];
+  numeroRequeteOrigine?: string;
 }
 
 export const Requete = {

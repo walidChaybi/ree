@@ -16,7 +16,8 @@ const requete = {
   numero: "1234",
   dateCreation: 1577836800000,
   statutCourant: statutCourantRequete,
-  idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+  idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
+  numeroRequeteOrigine: "56789"
 } as TRequete;
 
 beforeAll(() => {
@@ -90,7 +91,7 @@ test("récupérer le libellé d'une requête en Doublon", () => {
   requete.statutCourant.statut = StatutRequete.DOUBLON;
   render(<BandeauRequete requete={requete} />);
   const element = screen.getByText(
-    /Requête en doublon, requête déjà en cours avec le N° suivant : 1234 - Le : 01\/01\/2020/i
+    /Requête en doublon, requête déjà en cours avec le N° suivant : 56789 - Le : 01\/01\/2020/i
   );
   expect(element.className.indexOf("gris") > -1).toBeTruthy();
 });
