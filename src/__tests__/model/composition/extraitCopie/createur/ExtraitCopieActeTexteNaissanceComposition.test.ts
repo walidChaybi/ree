@@ -31,7 +31,7 @@ est née à Paris, Paris (France)
   lolita
   Micheldelavandièredugrand-large suivant déclaration conjointe de changement de nom en date du 26 novembre 2000
 (1re partie : nom1  2nde partie : nom2)
-du sexe Féminin
+du sexe féminin
 fille de Jean, Louis Sacken né à Barcelone, Catalogne (Espagne)
 et de Louise, Jocelyne DUPOND née le 26 juin 1981 à Nantes, Catalogne (France)`;
 

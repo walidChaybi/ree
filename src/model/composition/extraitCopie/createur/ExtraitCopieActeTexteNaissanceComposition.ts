@@ -86,12 +86,14 @@ export class ExtraitCopieActeTexteNaissanceComposition {
         acteNaissance
       );
 
-    return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement} ${evtActe.heureEvenement}
+    return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement} ${
+      evtActe.heureEvenement
+    }
 est ${neOuNeeTitulaire1} à ${evtActe.lieuEvenement}
   ${ecTitulaire1.prenoms}
   ${ecTitulaire1.nom} ${declarationConjointe}
 ${ecTitulaire1.partiesNom}
-${duOuDeSexe} sexe ${ecTitulaire1.sexe.libelle}${parents}`;
+${duOuDeSexe} sexe ${ecTitulaire1.sexe.libelle.toLowerCase()}${parents}`;
   }
 
   private static getPhrasesParents(ecTitulaire1: ITitulaireCompositionEC) {

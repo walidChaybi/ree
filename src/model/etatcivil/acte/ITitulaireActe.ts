@@ -89,12 +89,14 @@ export const TitulaireActe = {
   },
   getParents(titulaire?: ITitulaireActe): IFiliation[] {
     return titulaire && titulaire.filiations
-      ? titulaire.filiations.filter(
-          filiation =>
-            filiation.lienParente === LienParente.PARENT ||
-            LienParente.PARENT_ADOPTANT ||
-            LienParente.ADOPTANT_CONJOINT_DU_PARENT
-        )
+      ? titulaire.filiations
+          .filter(
+            filiation =>
+              filiation.lienParente === LienParente.PARENT ||
+              LienParente.PARENT_ADOPTANT ||
+              LienParente.ADOPTANT_CONJOINT_DU_PARENT
+          )
+          .sort((a, b) => a.ordre - b.ordre)
       : [];
   }
 };
