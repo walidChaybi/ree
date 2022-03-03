@@ -5,7 +5,7 @@ import { IExtraitCopieComposition } from "../../../../model/composition/extraitC
 import { logError, LogErrorMsg } from "../../util/LogManager";
 import { getLibelle } from "../../util/Utils";
 
-interface IExtraitCopieApiHookResultat {
+export interface IExtraitCopieApiHookResultat {
   donneesComposition?: IDonneesComposition;
   erreur?: LogErrorMsg;
 }
@@ -13,10 +13,8 @@ interface IExtraitCopieApiHookResultat {
 export function useExtraitCopieApiHook(
   extraitCopieComposition?: IExtraitCopieComposition
 ) {
-  const [
-    extraitCopieApiHookResultat,
-    setExtraitCopieApiHookResultat
-  ] = useState<IExtraitCopieApiHookResultat>();
+  const [extraitCopieApiHookResultat, setExtraitCopieApiHookResultat] =
+    useState<IExtraitCopieApiHookResultat>();
 
   useEffect(() => {
     if (extraitCopieComposition) {

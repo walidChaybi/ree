@@ -23,7 +23,7 @@ export class ExtraitCopieActeTexteNaissanceComposition {
     archive = false
   ) {
     const natureActe = NatureActe.getKey(NatureActe.NAISSANCE);
-    const getCorpsTexte =
+    const corpsTexte =
       Validation.E !== validation
         ? ExtraitCopieActeTexteNaissanceComposition.getCorpsTexte(
             acte,
@@ -46,7 +46,7 @@ export class ExtraitCopieActeTexteNaissanceComposition {
       avecFiliation,
       copie,
       archive,
-      getCorpsTexte,
+      corpsTexte,
       erreur
     });
   }

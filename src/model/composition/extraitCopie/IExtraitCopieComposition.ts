@@ -24,4 +24,5 @@ export interface IExtraitCopieComposition
   pas_de_nomPrenomAgent: boolean;
   code_CTV: string;
   erreur?: string;
+  mentions?: string;
 }

@@ -2,7 +2,9 @@ import request from "superagent";
 import { configParamsBaseRequete } from "../../../../../mock/superagent-config/superagent-mock-params";
 import { CommunExtraitOuCopieActeTexteComposition } from "../../../../../model/composition/extraitCopie/createur/CommunExtraitOuCopieActeTexteComposition";
 import { IExtraitCopieComposition } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
+import { IMention } from "../../../../../model/etatcivil/acte/mention/IMention";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { NatureMention } from "../../../../../model/etatcivil/enum/NatureMention";
 import { LIBELLE_FONCTION_AGENT_1 } from "../../../../../model/parametres/clesParametres";
 import { ParametreBaseRequete } from "../../../../../model/parametres/enum/ParametresBaseRequete";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
@@ -139,4 +141,71 @@ test("Attendu: creerBlocSignature fonctionne correctement", () => {
     archive
   );
   expect(composition.pas_de_bloc_signature).toBeTruthy();
+});
+
+test("Atttendu: getTexteMentions fonctionne correctement", () => {
+  const opposableAuTiers: NatureMention = {
+    opposableAuTiers: true
+  } as NatureMention;
+  const nonOpposableAuTiers: NatureMention = {
+    opposableAuTiers: false
+  } as NatureMention;
+  const mention1 = {
+    numeroOrdre: 1,
+    typeMention: {
+      nature: opposableAuTiers
+    },
+    textes: {
+      texteApposition: "texteApposition",
+      texteMentionDelivrance: "texteMentionDelivrance",
+      texteMention: "texteMention",
+      texteMentionPlurilingue: ""
+    }
+  } as IMention;
+  const mention2 = {
+    numeroOrdre: 2,
+    typeMention: {
+      nature: opposableAuTiers
+    },
+    textes: {
+      texteApposition: "texteApposition2",
+      texteMentionDelivrance: undefined,
+      texteMention: "texteMention2",
+      texteMentionPlurilingue: ""
+    }
+  } as IMention;
+  const mention3 = {
+    numeroOrdre: 3,
+    typeMention: {
+      nature: nonOpposableAuTiers
+    },
+    textes: {
+      texteApposition: "texteApposition3",
+      texteMentionDelivrance: undefined,
+      texteMention: "texteMention3",
+      texteMentionPlurilingue: ""
+    }
+  } as IMention;
+  const mention4 = {
+    numeroOrdre: 4,
+    typeMention: {
+      nature: opposableAuTiers
+    },
+    textes: {
+      texteApposition: undefined,
+      texteMentionDelivrance: undefined,
+      texteMention: "texteMention4",
+      texteMentionPlurilingue: ""
+    }
+  } as IMention;
+
+  const mentions = [mention3, mention4, mention2, mention1];
+  const texteMentions =
+    CommunExtraitOuCopieActeTexteComposition.getTexteMentions(mentions);
+  expect(texteMentions).toEqual([
+    "texteMentionDelivrance",
+    "texteMention2 texteApposition2",
+    "texteMention3",
+    "texteMention4"
+  ]);
 });

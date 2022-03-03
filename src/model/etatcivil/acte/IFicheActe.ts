@@ -1,6 +1,6 @@
 import {
   compactObject,
-  getValeurOuVide,
+  getValeurOuVide
 } from "../../../views/common/util/Utils";
 import { IPersonne } from "../commun/IPersonne";
 import { NatureActe } from "../enum/NatureActe";
@@ -14,6 +14,7 @@ import { IEvenement } from "./IEvenement";
 import { ICorpsImage } from "./imageActe/ICorpsImage";
 import { IRegistre } from "./IRegistre";
 import { ITitulaireActe } from "./ITitulaireActe";
+import { IMention } from "./mention/IMention";
 
 export interface IFicheActe {
   id: string;
@@ -34,6 +35,7 @@ export interface IFicheActe {
   corpsImage?: ICorpsImage;
   type: TypeActe;
   corpsExtraitRectifications: ICorpsExtraitRectification[];
+  mentions: IMention[];
 }
 
 export const FicheActe = {
@@ -49,7 +51,7 @@ export const FicheActe = {
       support1: getValeurOuVide(acte?.registre?.support1).toLocaleUpperCase(),
       support2: getValeurOuVide(acte?.registre?.support2).toLocaleUpperCase(),
       numeroActe: getValeurOuVide(acte?.numero),
-      numeroBisTer: getValeurOuVide(acte?.numeroBisTer),
+      numeroBisTer: getValeurOuVide(acte?.numeroBisTer)
     };
     return Object.values(compactObject(registre)).join(".");
   },
@@ -69,10 +71,10 @@ export const FicheActe = {
     typeExtrait: TypeExtrait
   ): string | undefined {
     const corpsExtraitRectification = acte.corpsExtraitRectifications.find(
-      (cer) => (cer.type = typeExtrait)
+      cer => (cer.type = typeExtrait)
     );
     return corpsExtraitRectification
       ? corpsExtraitRectification.texte
       : undefined;
-  },
+  }
 };

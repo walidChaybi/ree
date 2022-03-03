@@ -68,7 +68,8 @@ export function formatPremieresLettresMajusculesNomCompose(str?: string) {
     str = str.toLowerCase();
     // Selectionne les caractères de debut et ceux aprés un espace ou un tiret
     // mais qui ne sont pas des mots de liaison ou des lettres suivis d'une apostrophe
-    const reg = /(?![ -](de|du|la|le|sous|sur|en|des|les|et)[ -])(?! [a-z]')(^.|[' -].)/gi;
+    const reg =
+      /(?![ -](de|du|la|le|sous|sur|en|des|les|et)[ -])(?! [a-z]')(^.|[' -].)/gi;
     res = str.replace(reg, function (s) {
       return s.toUpperCase();
     });
@@ -171,6 +172,10 @@ export function joint(tab: string[]): string {
 
 export function jointAvecEspace(tab: string[]): string {
   return jointAvec(tab, " ");
+}
+
+export function jointAvecRetourALaLigne(tab: string[]): string {
+  return jointAvec(tab, "\n");
 }
 
 export function compareNombre(n1: number, n2: number): number {

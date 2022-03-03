@@ -5,6 +5,8 @@ import {
 import {
   DEUX,
   getValeurOuVide,
+  jointAvecRetourALaLigne,
+  triListeObjetsSurPropriete,
   TROIS,
   UN,
   ZERO
@@ -18,6 +20,7 @@ import {
   ITitulaireActe,
   TitulaireActe
 } from "../../../etatcivil/acte/ITitulaireActe";
+import { IMention, Mention } from "../../../etatcivil/acte/mention/IMention";
 import { LienParente } from "../../../etatcivil/enum/LienParente";
 import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { Sexe } from "../../../etatcivil/enum/Sexe";
@@ -74,7 +77,7 @@ interface ICreerExtraitCopieActeTexteParams {
   avecFiliation: boolean;
   copie: boolean;
   archive: boolean;
-  getCorpsTexte?: string;
+  corpsTexte?: string;
   erreur?: string;
 }
 
@@ -122,6 +125,15 @@ export class CommunExtraitOuCopieActeTexteComposition {
             : TypeExtrait.EXTRAIT_SANS_FILIATION
         );
 
+      const texteMentions =
+        CommunExtraitOuCopieActeTexteComposition.getTexteMentions(
+          params.acte.mentions
+        );
+
+      if (texteMentions.length > 0) {
+        composition.mentions = jointAvecRetourALaLigne(texteMentions);
+      }
+
       if (params.copie && params.acte.corpsText) {
         // Une copie est demandée (et non un extrait) pour un acte texte
         composition.corps_texte = params.acte.corpsText;
@@ -129,7 +141,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
         // L'acte comporte un corps d'extrait modifié correspondant au type d'extrait traité : extrait avec ou sans filiation
         composition.corps_texte = corpsExtraitRectification;
       } else {
-        composition.corps_texte = params.getCorpsTexte;
+        composition.corps_texte = params.corpsTexte;
       }
     }
 
@@ -345,13 +357,13 @@ export class CommunExtraitOuCopieActeTexteComposition {
     );
     if (lieuNaissance && individu.naissance?.annee) {
       //date renseignée : né.e *date* à *lieu*
-      lieuNaissanceFormate = ` à ${lieuNaissance}`
+      lieuNaissanceFormate = ` à ${lieuNaissance}`;
     } else if (lieuNaissance && individu.age) {
       //age renseigné : agé.e de *age* né.e à *lieu*
-      lieuNaissanceFormate = ` ${neOuNee} à ${lieuNaissance}`
+      lieuNaissanceFormate = ` ${neOuNee} à ${lieuNaissance}`;
     } else if (lieuNaissance) {
       //date et age non renseignés : suppression de l'espace
-      lieuNaissanceFormate = `${neOuNee} à ${lieuNaissance}`
+      lieuNaissanceFormate = `${neOuNee} à ${lieuNaissance}`;
     }
     return lieuNaissanceFormate;
   }
@@ -460,5 +472,29 @@ export class CommunExtraitOuCopieActeTexteComposition {
           DEUX
         ];
     }
+  }
+
+  public static getTexteMentions(mentions: IMention[]): string[] {
+    const texteMentions: string[] = [];
+
+    const mentionsAvecOrdreExtrait = mentions.map(mention => ({
+      ...mention,
+      numeroOrdreExtrait: mention.numeroOrdreExtrait
+        ? mention.numeroOrdreExtrait
+        : mention.numeroOrdre
+    }));
+
+    const mentionsTriees = triListeObjetsSurPropriete(
+      mentionsAvecOrdreExtrait,
+      "numeroOrdreExtrait"
+    );
+
+    mentionsTriees.forEach(mention => {
+      if (mention.textes) {
+        texteMentions.push(Mention.getTexte(mention));
+      }
+    });
+
+    return texteMentions;
   }
 }

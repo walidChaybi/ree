@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Orientation } from "../../../../../model/composition/enum/Orientation";
 import { IExtraitCopieComposition } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
@@ -6,7 +6,10 @@ import { Validation } from "../../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { MimeType } from "../../../../../ressources/MimeType";
-import { useExtraitCopieApiHook } from "../../composition/CompositionExtraitCopieHook";
+import {
+  IExtraitCopieApiHookResultat,
+  useExtraitCopieApiHook
+} from "../../composition/CompositionExtraitCopieHook";
 import {
   IActeApiHookParams,
   useInformationsActeApiHook
@@ -31,6 +34,7 @@ export interface IGenerationECParams {
   requete: IRequeteDelivrance;
   choixDelivrance: ChoixDelivrance;
   validation: Validation;
+  pasDeStockageDocument?: boolean;
 }
 
 export interface IGenerationECResultat {
@@ -53,8 +57,7 @@ export function useGenerationEC(
   const [acteApiHookParams, setActeApiHookParams] =
     useState<IActeApiHookParams>();
 
-  const [validation, setValidation] =
-  useState<Validation>();
+  const [validation, setValidation] = useState<Validation>();
 
   useEffect(() => {
     if (params && params.idActe) {
@@ -73,14 +76,15 @@ export function useGenerationEC(
 
       // Verification des données pour la génération d'extrait mariage/naissance
       // En cas de validation en erreur alors un etrait en erreur sera généré
-      const validationControle = controlerDonneesGenerationExtraitMariageOuNaissance(
-        // @ts-ignore NonNull
-        acte,
-        // @ts-ignore NonNull
-        params.choixDelivrance,
-        // @ts-ignore NonNull
-        params.validation
-      );
+      const validationControle =
+        controlerDonneesGenerationExtraitMariageOuNaissance(
+          // @ts-ignore NonNull
+          acte,
+          // @ts-ignore NonNull
+          params.choixDelivrance,
+          // @ts-ignore NonNull
+          params.validation
+        );
 
       composition = creationComposition(
         // @ts-ignore NonNull
@@ -101,25 +105,53 @@ export function useGenerationEC(
   const extraitCopieApiHookResultat = useExtraitCopieApiHook(paramECHook);
 
   // 4 - Création du document réponse pour stockage dans la BDD et Swift
+  const creationDocumentReponseOuResultat = useCallback(
+    (
+      requeteId: string,
+      contenu: string,
+      nbPages: number,
+      choixDelivrance: ChoixDelivrance,
+      pasDeStockageDocument = false
+    ) => {
+      if (pasDeStockageDocument) {
+        // Pas de stockage demandé, le résultat est retourné avec uniquement le document généré
+        setResultat({
+          resultGenerationUnDocument: {
+            contenuDocumentReponse: contenu
+          }
+        });
+      } else {
+        const statutRequete = getStatutRequete(choixDelivrance);
+        setStockerDocumentCreerActionMajStatutRequeteParams({
+          documentReponsePourStockage: {
+            contenu,
+            nom: getNomDocument(choixDelivrance),
+            typeDocument: getTypeDocument(choixDelivrance), // UUID du type de document demandé (nomenclature)
+            nbPages,
+            mimeType: MimeType.APPLI_PDF,
+            orientation: Orientation.PORTRAIT,
+            validation,
+            idActe: acteApiHookResultat?.acte?.id
+          } as IDocumentReponse,
+
+          libelleAction: statutRequete.libelle,
+          statutRequete,
+          requeteId
+        });
+      }
+    },
+    [acteApiHookResultat, validation]
+  );
+
   useEffect(() => {
     if (extraitCopieApiHookResultat?.donneesComposition && params) {
-      const statutRequete = getStatutRequete(params.choixDelivrance);
-      setStockerDocumentCreerActionMajStatutRequeteParams({
-        documentReponsePourStockage: {
-          contenu: extraitCopieApiHookResultat.donneesComposition.contenu,
-          nom: getNomDocument(params.choixDelivrance),
-          typeDocument: getTypeDocument(params.choixDelivrance), // UUID du type de document demandé (nomenclature)
-          nbPages: extraitCopieApiHookResultat.donneesComposition.nbPages,
-          mimeType: MimeType.APPLI_PDF,
-          orientation: Orientation.PORTRAIT,
-          validation,
-          idActe: acteApiHookResultat?.acte?.id
-        } as IDocumentReponse,
-
-        libelleAction: statutRequete.libelle,
-        statutRequete,
-        requeteId: params.requete.id
-      });
+      creationDocumentReponseOuResultat(
+        params.requete.id,
+        extraitCopieApiHookResultat.donneesComposition.contenu,
+        extraitCopieApiHookResultat.donneesComposition.nbPages,
+        params.choixDelivrance,
+        params.pasDeStockageDocument
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extraitCopieApiHookResultat]);
@@ -142,14 +174,16 @@ export function useGenerationEC(
   // 6- Maj du résultat
   useEffect(() => {
     if (
-      uuidDocumentReponse &&
-      extraitCopieApiHookResultat &&
-      extraitCopieApiHookResultat.donneesComposition
+      toutesLesDonneesSontPresentes(
+        uuidDocumentReponse,
+        extraitCopieApiHookResultat
+      )
     ) {
       setResultat({
         resultGenerationUnDocument: {
           idDocumentReponse: uuidDocumentReponse,
           contenuDocumentReponse:
+            //@ts-ignore
             extraitCopieApiHookResultat.donneesComposition.contenu
         }
       });
@@ -158,4 +192,14 @@ export function useGenerationEC(
   }, [uuidDocumentReponse]);
 
   return resultat;
+}
+function toutesLesDonneesSontPresentes(
+  uuidDocumentReponse: string | undefined,
+  extraitCopieApiHookResultat?: IExtraitCopieApiHookResultat
+) {
+  return (
+    uuidDocumentReponse &&
+    extraitCopieApiHookResultat &&
+    extraitCopieApiHookResultat.donneesComposition
+  );
 }

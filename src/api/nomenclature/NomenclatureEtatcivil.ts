@@ -1,4 +1,5 @@
 import { MandataireRc } from "../../model/etatcivil/enum/MandataireRc";
+import { NatureMention } from "../../model/etatcivil/enum/NatureMention";
 import { NatureRc } from "../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../model/etatcivil/enum/NatureRca";
 import { TypeAlerte } from "../../model/etatcivil/enum/TypeAlerte";
@@ -10,6 +11,7 @@ const NATURE_RC = "NATURE_RC";
 const NATURE_RCA = "NATURE_RCA";
 const MANDATAIRE = "MANDATAIRE";
 const TYPE_ALERTE = "TYPE_ALERTE";
+const NATURE_MENTION = "NATURE_MENTION";
 
 export async function peupleNatureRc() {
   if (!NatureRc.contientEnums()) {
@@ -67,6 +69,31 @@ export async function peupleMandataireRc() {
     } catch (error) {
       logError({
         messageUtilisateur: "Impossible de charger les mandataires RC",
+        error
+      });
+    }
+  }
+}
+
+export async function peupleNatureMention() {
+  if (!NatureMention.contientEnums()) {
+    try {
+      const natureMention = await getNomenclatureEtatCivil(NATURE_MENTION);
+      NatureMention.clean();
+      for (const data of natureMention.body.data) {
+        NatureMention.addEnum(
+          data.id,
+          new NatureMention(
+            data.code,
+            data.estActif,
+            data.opposableAuTiers,
+            data.libelle
+          )
+        );
+      }
+    } catch (error) {
+      logError({
+        messageUtilisateur: "Impossible de charger les natures des mentions",
         error
       });
     }
