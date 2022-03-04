@@ -326,3 +326,14 @@ export function supprimeElement(tableau: any[], fct: any) {
 export function getLibelle(msg: string) {
   return msg;
 }
+
+export function ecraseDonneeObjectAvec(obj1: any, obj2: any) {
+  // Les propriétés "undefined" ou "null" sont ignorées
+  const obj1EcraseParObj2SansProprieteNulle: any = { ...obj1 };
+  Object.entries(obj2).forEach(([k, v]) => {
+    if (v != null) {
+      obj1EcraseParObj2SansProprieteNulle[k] = v;
+    }
+  });
+  return obj1EcraseParObj2SansProprieteNulle;
+}

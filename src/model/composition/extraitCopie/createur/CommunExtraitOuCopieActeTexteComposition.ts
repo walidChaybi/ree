@@ -4,6 +4,7 @@ import {
 } from "../../../../model/etatcivil/acte/IAnalyseMarginale";
 import {
   DEUX,
+  ecraseDonneeObjectAvec,
   getValeurOuVide,
   jointAvecRetourALaLigne,
   triListeObjetsSurPropriete,
@@ -49,11 +50,14 @@ export interface ITitulaireCompositionEC {
   dateNaissanceOuAge: string;
   parentsTitulaire: IParentsTitulaireCompositionEC[];
   sexe: Sexe;
+  typeDeclarationConjointe?: TypeDeclarationConjointe;
+  dateDeclarationConjointe?: Date;
 }
 
 export interface ITitulaireAMCompositionEC {
   prenoms: string;
   nom: string;
+  partiesNom: string;
   typeDeclarationConjointe?: TypeDeclarationConjointe;
   dateDeclarationConjointe?: Date;
 }
@@ -156,30 +160,55 @@ export class CommunExtraitOuCopieActeTexteComposition {
     return composition;
   }
 
-  public static getTitulairesCorpsText(acte: IFicheActe) {
-    const titulaire1 = acte.titulaires[0];
-    const titulaire2 = acte.titulaires[1];
+  public static getTitulairesCorpsText(acte: IFicheActe): {
+    ecTitulaire1: ITitulaireCompositionEC;
+    ecTitulaire2: ITitulaireCompositionEC;
+  } {
+    const { titulaireActe1, titulaireActe2 } =
+      FicheActe.getTitulairesDansLeBonOrdre(acte);
 
-    const ecTitulaire1 =
+    let ecTitulaire1 =
       CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-        titulaire1
+        titulaireActe1
       );
 
-    const ecTitulaire2 =
+    let ecTitulaire2 =
       CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-        titulaire2
+        titulaireActe2
       );
+
+    if (acte.analyseMarginales) {
+      const { titulaireAMCompositionEC1, titulaireAMCompositionEC2 } =
+        CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(
+          acte.analyseMarginales
+        );
+
+      // Les données du titulaire de l'acte sont écrasées par celle du titulaire de l'analyse marginale
+      if (titulaireAMCompositionEC1) {
+        ecTitulaire1 = ecraseDonneeObjectAvec(
+          ecTitulaire1,
+          titulaireAMCompositionEC1
+        );
+      }
+
+      if (titulaireAMCompositionEC2) {
+        ecTitulaire2 = ecraseDonneeObjectAvec(
+          ecTitulaire2,
+          titulaireAMCompositionEC2
+        );
+      }
+    }
+
     return { ecTitulaire1, ecTitulaire2 };
   }
 
-  public static getTitulaireCorpsText(acte: IFicheActe) {
-    const titulaire = acte.titulaires[0];
-
-    const ecTitulaire1 =
-      CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-        titulaire
-      );
-    return { ecTitulaire1 };
+  public static getTitulaireCorpsText(
+    acte: IFicheActe
+  ): ITitulaireCompositionEC {
+    const { titulaireActe1 } = FicheActe.getTitulairesDansLeBonOrdre(acte);
+    return CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
+      titulaireActe1
+    );
   }
 
   public static creerAnalyseMarginale(
@@ -224,21 +253,36 @@ export class CommunExtraitOuCopieActeTexteComposition {
       AnalyseMarginale.getTitulairesDansLeBonOrdre(analyseMarginale);
 
     if (titulaireAM1) {
-      titulaireAMCompositionEC1 = {
-        nom: EtatCivilUtil.getNomOuVide(titulaireAM1.nom),
-        prenoms: EtatCivilUtil.getPrenomsOuVide(titulaireAM1.prenoms),
-        typeDeclarationConjointe: titulaireAM1.typeDeclarationConjointe,
-        dateDeclarationConjointe: titulaireAM1.dateDeclarationConjointe
-      };
+      titulaireAMCompositionEC1 =
+        CommunExtraitOuCopieActeTexteComposition.creerTitulaireAMCompositionEC(
+          titulaireAM1
+        );
     }
     if (titulaireAM2) {
-      titulaireAMCompositionEC2 = {
-        nom: EtatCivilUtil.getNomOuVide(titulaireAM2.nom),
-        prenoms: EtatCivilUtil.getPrenomsOuVide(titulaireAM2.prenoms)
-      };
+      titulaireAMCompositionEC2 =
+        CommunExtraitOuCopieActeTexteComposition.creerTitulaireAMCompositionEC(
+          titulaireAM2
+        );
     }
 
     return { titulaireAMCompositionEC1, titulaireAMCompositionEC2 };
+  }
+
+  private static creerTitulaireAMCompositionEC(
+    titulaireAM1: ITitulaireActe
+  ): ITitulaireAMCompositionEC {
+    const partiesNom = EtatCivilUtil.formatPartiesNomOuVide(
+      titulaireAM1.nomPartie1,
+      titulaireAM1.nomPartie2
+    ); //(1re partie : <Nom 1ère partie titulaire 1>  2nde partie : <Nom 2nde partie titulaire 1>)
+
+    return {
+      nom: EtatCivilUtil.getNomOuVide(titulaireAM1.nom),
+      prenoms: EtatCivilUtil.getPrenomsOuVide(titulaireAM1.prenoms),
+      typeDeclarationConjointe: titulaireAM1.typeDeclarationConjointe,
+      dateDeclarationConjointe: titulaireAM1.dateDeclarationConjointe,
+      partiesNom
+    };
   }
 
   public static creerDateNaissanceOuAgeDeTitulaireOuFiliation(
@@ -303,32 +347,34 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
     const parents = TitulaireActe.getParents(titulaire);
 
-    const parentsTitulaire = parents.map(parent => {
-      const prenomsParent = EtatCivilUtil.getPrenomsOuVide(parent.prenoms); //<Prénom(s) filiation)>
-      const nomParent = EtatCivilUtil.getNomOuVide(parent.nom); //<Nom filiation>
-      const lienParente = parent.lienParente;
-      const filsOuFille =
-        parent.lienParente === LienParente.PARENT
-          ? this.creerFilsOuFilleDeFiliationTitulaire(titulaire) //'fils de', 'fille de' ou 'de' [accord selon genre du titulaire]
-          : this.creerFilsOuFilleDeFiliationAdoptantTitulaire(titulaire); //'adopté par', 'adoptée par' [accord selon genre du titulaire]
-      const lieuNaissanceParent = this.formatLieuNaissance(
-        parent,
-        this.creerLieuNaissanceDeTitulaireOuFiliation(parent.naissance)
-      ); // <Lieu de naissance parent>
-      const dateNaissanceOuAgeParent =
-        this.creerDateNaissanceOuAgeDeTitulaireOuFiliation(parent);
-      const sexeParent = TitulaireActe.getSexeOuInconnu(parent);
+    const parentsTitulaire: IParentsTitulaireCompositionEC[] = parents.map(
+      (parent: IFiliation): IParentsTitulaireCompositionEC => {
+        const prenomsParent = EtatCivilUtil.getPrenomsOuVide(parent.prenoms); //<Prénom(s) filiation)>
+        const nomParent = EtatCivilUtil.getNomOuVide(parent.nom); //<Nom filiation>
+        const lienParente = parent.lienParente;
+        const filsOuFille =
+          parent.lienParente === LienParente.PARENT
+            ? this.creerFilsOuFilleDeFiliationTitulaire(titulaire) //'fils de', 'fille de' ou 'de' [accord selon genre du titulaire]
+            : this.creerFilsOuFilleDeFiliationAdoptantTitulaire(titulaire); //'adopté par', 'adoptée par' [accord selon genre du titulaire]
+        const lieuNaissanceParent = this.formatLieuNaissance(
+          parent,
+          this.creerLieuNaissanceDeTitulaireOuFiliation(parent.naissance)
+        ); // <Lieu de naissance parent>
+        const dateNaissanceOuAgeParent =
+          this.creerDateNaissanceOuAgeDeTitulaireOuFiliation(parent);
+        const sexeParent = TitulaireActe.getSexeOuInconnu(parent);
 
-      return {
-        prenoms: prenomsParent,
-        nom: nomParent,
-        lienParente,
-        filsOuFille,
-        lieuNaissanceParent,
-        dateNaissanceOuAgeParent,
-        sexeParent
-      };
-    });
+        return {
+          prenoms: prenomsParent,
+          nom: nomParent,
+          lienParente,
+          filsOuFille,
+          lieuNaissanceParent,
+          dateNaissanceOuAgeParent,
+          sexeParent
+        };
+      }
+    );
 
     const sexe = TitulaireActe.getSexeOuInconnu(titulaire);
 
@@ -339,7 +385,9 @@ export class CommunExtraitOuCopieActeTexteComposition {
       lieuNaissance,
       dateNaissanceOuAge,
       parentsTitulaire,
-      sexe
+      sexe,
+      typeDeclarationConjointe: titulaire.typeDeclarationConjointe,
+      dateDeclarationConjointe: titulaire.dateDeclarationConjointe
     };
   }
 

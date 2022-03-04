@@ -1,6 +1,7 @@
 import {
   compactObject,
-  getValeurOuVide
+  getValeurOuVide,
+  triListeObjetsSurPropriete
 } from "../../../views/common/util/Utils";
 import { IPersonne } from "../commun/IPersonne";
 import { NatureActe } from "../enum/NatureActe";
@@ -36,6 +37,11 @@ export interface IFicheActe {
   type: TypeActe;
   corpsExtraitRectifications: ICorpsExtraitRectification[];
   mentions: IMention[];
+}
+
+interface ITitulairesActe {
+  titulaireActe1: ITitulaireActe;
+  titulaireActe2: ITitulaireActe;
 }
 
 export const FicheActe = {
@@ -76,5 +82,20 @@ export const FicheActe = {
     return corpsExtraitRectification
       ? corpsExtraitRectification.texte
       : undefined;
+  },
+
+  getTitulairesDansLeBonOrdre(acte: IFicheActe): ITitulairesActe {
+    let resultatTitulairesActe: any = {};
+    if (acte) {
+      const titulaires = triListeObjetsSurPropriete(
+        [...acte.titulaires],
+        "ordre"
+      );
+      resultatTitulairesActe = {
+        titulaireActe1: titulaires[0],
+        titulaireActe2: titulaires[1]
+      };
+    }
+    return resultatTitulairesActe;
   }
 };

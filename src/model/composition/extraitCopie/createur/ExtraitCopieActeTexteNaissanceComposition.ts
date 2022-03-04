@@ -55,7 +55,7 @@ export class ExtraitCopieActeTexteNaissanceComposition {
     acteNaissance: IFicheActe,
     avecFiliation: boolean
   ) {
-    const { ecTitulaire1 } =
+    const ecTitulaire1 =
       CommunExtraitOuCopieActeTexteComposition.getTitulaireCorpsText(
         acteNaissance
       );
