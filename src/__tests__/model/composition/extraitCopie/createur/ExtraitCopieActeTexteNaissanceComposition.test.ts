@@ -28,8 +28,8 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
 
   const corpsTexteAttendu = `Le 10 octobre 1901 à 13h15
 est née à Paris, Paris (France)
-  lolita
-  Micheldelavandièredugrand-large suivant déclaration conjointe de changement de nom en date du 26 novembre 2000
+  Alphonse
+  Patamob suivant déclaration conjointe de changement de nom en date du 26 novembre 2000
 (1re partie : nom1  2nde partie : nom2)
 du sexe féminin
 fille de Jean, Louis Sacken né à Barcelone, Catalogne (Espagne)

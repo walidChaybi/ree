@@ -265,7 +265,7 @@ test("Attendu: ecraseDonneeObjectAvec fonctionne correctement", () => {
   };
 
   const o5 = {
-    nom: undefined,
+    nom: "",
     prenom: undefined,
     adr: undefined,
     tel: 123456

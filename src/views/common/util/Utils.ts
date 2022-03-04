@@ -328,10 +328,10 @@ export function getLibelle(msg: string) {
 }
 
 export function ecraseDonneeObjectAvec(obj1: any, obj2: any) {
-  // Les propriétés "undefined" ou "null" sont ignorées
+  // Les propriétés "undefined", "null" et vides sont ignorées
   const obj1EcraseParObj2SansProprieteNulle: any = { ...obj1 };
   Object.entries(obj2).forEach(([k, v]) => {
-    if (v != null) {
+    if (v != null && v !== "") {
       obj1EcraseParObj2SansProprieteNulle[k] = v;
     }
   });
