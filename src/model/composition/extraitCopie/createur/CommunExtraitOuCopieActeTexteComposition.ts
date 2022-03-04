@@ -162,7 +162,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
   public static getTitulairesCorpsText(acte: IFicheActe): {
     ecTitulaire1: ITitulaireCompositionEC;
-    ecTitulaire2: ITitulaireCompositionEC;
+    ecTitulaire2?: ITitulaireCompositionEC;
   } {
     const { titulaireActe1, titulaireActe2 } =
       FicheActe.getTitulairesDansLeBonOrdre(acte);
@@ -172,10 +172,13 @@ export class CommunExtraitOuCopieActeTexteComposition {
         titulaireActe1
       );
 
-    let ecTitulaire2 =
-      CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-        titulaireActe2
-      );
+    let ecTitulaire2;
+    if (titulaireActe2) {
+      ecTitulaire2 =
+        CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
+          titulaireActe2
+        );
+    }
 
     if (acte.analyseMarginales) {
       const { titulaireAMCompositionEC1, titulaireAMCompositionEC2 } =

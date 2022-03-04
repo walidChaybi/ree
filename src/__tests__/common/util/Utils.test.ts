@@ -283,4 +283,6 @@ test("Attendu: ecraseDonneeObjectAvec fonctionne correctement", () => {
     adr: "adr1"
   });
   expect(ecraseDonneeObjectAvec(o1, o5)).toEqual({ ...o1, tel: 123456 });
+
+  expect(ecraseDonneeObjectAvec(undefined, o1)).toEqual({ ...o1 });
 });

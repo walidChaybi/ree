@@ -94,15 +94,15 @@ a été célébré à ${evtActe.lieuEvenement}
 le mariage
 de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}
 ${ecTitulaire1.dateNaissanceOuAge}${ecTitulaire1.lieuNaissance}${parents1}${parentsAdoptants1}
-et de ${ecTitulaire2.prenoms} ${ecTitulaire2.nom} ${ecTitulaire2.partiesNom}
-${ecTitulaire2.dateNaissanceOuAge}${ecTitulaire2.lieuNaissance}${parents2}${parentsAdoptants2}
+et de ${ecTitulaire2?.prenoms} ${ecTitulaire2?.nom} ${ecTitulaire2?.partiesNom}
+${ecTitulaire2?.dateNaissanceOuAge}${ecTitulaire2?.lieuNaissance}${parents2}${parentsAdoptants2}
 
 Contrat de mariage : ${enonciationContratDeMariage}`;
   }
 
   private static getPhrasesParents(
     ecTitulaire1: ITitulaireCompositionEC,
-    ecTitulaire2: ITitulaireCompositionEC
+    ecTitulaire2?: ITitulaireCompositionEC
   ) {
     let parents1 = "";
     let parents2 = "";
@@ -123,18 +123,20 @@ Contrat de mariage : ${enonciationContratDeMariage}`;
     );
 
     //Construction phrase parents adoptants
-    parents2 = this.constructionPhraseParents(
-      ecTitulaire2.parentsTitulaire.filter(
-        parent => parent.lienParente === LienParente.PARENT
-      ),
-      LienParente.PARENT
-    );
-    parentsAdoptants2 = this.constructionPhraseParents(
-      ecTitulaire2.parentsTitulaire.filter(
-        parent => parent.lienParente !== LienParente.PARENT
-      ),
-      LienParente.PARENT_ADOPTANT
-    );
+    if (ecTitulaire2) {
+      parents2 = this.constructionPhraseParents(
+        ecTitulaire2.parentsTitulaire.filter(
+          parent => parent.lienParente === LienParente.PARENT
+        ),
+        LienParente.PARENT
+      );
+      parentsAdoptants2 = this.constructionPhraseParents(
+        ecTitulaire2.parentsTitulaire.filter(
+          parent => parent.lienParente !== LienParente.PARENT
+        ),
+        LienParente.PARENT_ADOPTANT
+      );
+    }
     return { parents1, parentsAdoptants1, parents2, parentsAdoptants2 };
   }
 

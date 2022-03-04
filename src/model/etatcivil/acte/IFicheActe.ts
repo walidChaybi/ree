@@ -41,7 +41,7 @@ export interface IFicheActe {
 
 interface ITitulairesActe {
   titulaireActe1: ITitulaireActe;
-  titulaireActe2: ITitulaireActe;
+  titulaireActe2?: ITitulaireActe;
 }
 
 export const FicheActe = {
