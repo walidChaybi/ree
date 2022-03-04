@@ -208,10 +208,8 @@ export class CommunExtraitOuCopieActeTexteComposition {
   public static getTitulaireCorpsText(
     acte: IFicheActe
   ): ITitulaireCompositionEC {
-    const { titulaireActe1 } = FicheActe.getTitulairesDansLeBonOrdre(acte);
-    return CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-      titulaireActe1
-    );
+    return CommunExtraitOuCopieActeTexteComposition.getTitulairesCorpsText(acte)
+      .ecTitulaire1;
   }
 
   public static creerAnalyseMarginale(
