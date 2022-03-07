@@ -41,7 +41,7 @@ import {
   PAYS,
   VOIE
 } from "../../../../saisirRequete/modelForm/ISaisirRequetePageModel";
-import { getStatutEnTraitement } from "../contenuForm/CourrierFonctions";
+import { getStatutApresChoixDelivrance } from "../contenuForm/CourrierFonctions";
 import {
   ADRESSE,
   REQUETE,
@@ -164,7 +164,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   // 6- Mise à jour du status de la requête + création d'une action
   const uuidDocumentsReponse =
     useSauvegarderCourrierCreerActionMajStatutRequete(
-      getStatutEnTraitement(params?.requete?.choixDelivrance),
+      getStatutApresChoixDelivrance(params?.requete?.choixDelivrance),
       libelleSelonMajStatut(params),
       requeteDelivrancePourSauvegarde,
       params?.requete?.id
@@ -195,7 +195,7 @@ function libelleSelonMajStatut(
   params: IGenerationCourrierParams | undefined
 ): string | undefined {
   return params?.mettreAJourStatut
-    ? getStatutEnTraitement(params?.requete?.choixDelivrance).libelle
+    ? getStatutApresChoixDelivrance(params?.requete?.choixDelivrance).libelle
     : undefined;
 }
 

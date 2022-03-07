@@ -107,7 +107,7 @@ export function useGenerationEC(
   // 4 - Création du document réponse pour stockage dans la BDD et Swift
   const creationDocumentReponseOuResultat = useCallback(
     (
-      requeteId: string,
+      requete: IRequeteDelivrance,
       contenu: string,
       nbPages: number,
       choixDelivrance: ChoixDelivrance,
@@ -121,7 +121,10 @@ export function useGenerationEC(
           }
         });
       } else {
-        const statutRequete = getStatutRequete(choixDelivrance);
+        const statutRequete = getStatutRequete(
+          choixDelivrance,
+          requete.sousType
+        );
         setStockerDocumentCreerActionMajStatutRequeteParams({
           documentReponsePourStockage: {
             contenu,
@@ -136,7 +139,7 @@ export function useGenerationEC(
 
           libelleAction: statutRequete.libelle,
           statutRequete,
-          requeteId
+          requeteId: requete.id
         });
       }
     },
@@ -146,7 +149,7 @@ export function useGenerationEC(
   useEffect(() => {
     if (extraitCopieApiHookResultat?.donneesComposition && params) {
       creationDocumentReponseOuResultat(
-        params.requete.id,
+        params.requete,
         extraitCopieApiHookResultat.donneesComposition.contenu,
         extraitCopieApiHookResultat.donneesComposition.nbPages,
         params.choixDelivrance,

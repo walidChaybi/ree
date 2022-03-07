@@ -21,9 +21,9 @@ export const creationCompositionExtraitCopieActeTexte = function (
         choixDelivrance,
         sousTypeRequete,
         validation,
-        ChoixDelivrance.estChoixDelivranceAvecFiliation(choixDelivrance),
-        ChoixDelivrance.estChoixDelivranceCopie(choixDelivrance),
-        ChoixDelivrance.estChoixDelivranceCopieArchive(choixDelivrance)
+        ChoixDelivrance.estAvecFiliation(choixDelivrance),
+        ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
+        ChoixDelivrance.estCopieArchive(choixDelivrance)
       );
   } else if (acteComplet.nature === NatureActe.DECES) {
     /* istanbul ignore next */
@@ -39,9 +39,9 @@ export const creationCompositionExtraitCopieActeTexte = function (
         choixDelivrance,
         sousTypeRequete,
         validation,
-        ChoixDelivrance.estChoixDelivranceAvecFiliation(choixDelivrance),
-        ChoixDelivrance.estChoixDelivranceCopie(choixDelivrance),
-        ChoixDelivrance.estChoixDelivranceCopieArchive(choixDelivrance)
+        ChoixDelivrance.estAvecFiliation(choixDelivrance),
+        ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
+        ChoixDelivrance.estCopieArchive(choixDelivrance)
       );
   } else {
     /* istanbul ignore next */

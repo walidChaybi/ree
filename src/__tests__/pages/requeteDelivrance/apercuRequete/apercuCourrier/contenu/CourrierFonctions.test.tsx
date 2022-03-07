@@ -1,6 +1,6 @@
 import request from "superagent";
 import requeteDelivrance, {
-    requeteDelivranceInstitutionnel
+  requeteDelivranceInstitutionnel
 } from "../../../../../../mock/data/requeteDelivrance";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
@@ -8,17 +8,17 @@ import { DocumentDelivrance } from "../../../../../../model/requete/enum/Documen
 import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
 import { OptionCourrier } from "../../../../../../model/requete/IOptionCourrier";
 import {
-    controleFormulaire,
-    getDefaultValuesCourrier,
-    getStatutEnTraitement,
-    getTypesCourrier
+  controleFormulaire,
+  getDefaultValuesCourrier,
+  getStatutApresChoixDelivrance,
+  getTypesCourrier
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import {
-    CHOIX_COURRIER,
-    COURRIER,
-    SaisieCourrier,
-    TEXTE,
-    TEXTE_LIBRE
+  CHOIX_COURRIER,
+  COURRIER,
+  SaisieCourrier,
+  TEXTE,
+  TEXTE_LIBRE
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -196,11 +196,13 @@ test("controle formulaire", () => {
 
 test("getStatutEnTraitement", () => {
   expect(
-    getStatutEnTraitement(ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION)
+    getStatutApresChoixDelivrance(
+      ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+    )
   ).toBe(StatutRequete.A_SIGNER);
-  expect(getStatutEnTraitement(ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE)).toBe(
-    StatutRequete.A_VALIDER
-  );
+  expect(
+    getStatutApresChoixDelivrance(ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE)
+  ).toBe(StatutRequete.A_VALIDER);
 });
 
 afterAll(() => {

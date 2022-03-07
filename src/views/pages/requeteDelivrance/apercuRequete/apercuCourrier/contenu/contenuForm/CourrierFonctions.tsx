@@ -245,21 +245,20 @@ function controleDivers(
   } else return true;
 }
 
-export function getStatutEnTraitement(
-  choixDelivrance: ChoixDelivrance | undefined
+export function getStatutApresChoixDelivrance(
+  choixDelivrance?: ChoixDelivrance
 ): StatutRequete {
-  switch (choixDelivrance) {
-    case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
-    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
-    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
-    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
-      return StatutRequete.A_SIGNER;
-    case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
-    case ChoixDelivrance.REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC:
-    case ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE:
-    case ChoixDelivrance.REP_SANS_DEL_EC_DIVERS:
-      return StatutRequete.A_VALIDER;
-    default:
-      return StatutRequete.A_TRAITER;
+  let statutRequete: StatutRequete;
+  if (ChoixDelivrance.estExtraitOuCopieIntegrale(choixDelivrance)) {
+    statutRequete = StatutRequete.A_SIGNER;
+  } else if (
+    ChoixDelivrance.estReponseSansDelivrance(choixDelivrance) ||
+    ChoixDelivrance.estCopieArchive(choixDelivrance)
+  ) {
+    statutRequete = StatutRequete.A_VALIDER;
+  } else {
+    statutRequete = StatutRequete.A_TRAITER;
   }
+
+  return statutRequete;
 }

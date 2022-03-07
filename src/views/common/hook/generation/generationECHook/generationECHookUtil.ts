@@ -3,7 +3,10 @@ import {
   NOM_DOCUMENT_EC_AVEC_FILIATION,
   NOM_DOCUMENT_EC_SANS_FILIATION
 } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
-import { AnalyseMarginale, IAnalyseMarginale } from "../../../../../model/etatcivil/acte/IAnalyseMarginale";
+import {
+  AnalyseMarginale,
+  IAnalyseMarginale
+} from "../../../../../model/etatcivil/acte/IAnalyseMarginale";
 import { ICorpsExtraitRectification } from "../../../../../model/etatcivil/acte/ICorpsExtraitRectification";
 import {
   FicheActe,
@@ -34,14 +37,14 @@ export function estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(
   choixDelivrance: ChoixDelivrance
 ) {
   return (
-    ChoixDelivrance.estChoixDelivranceAvecOuSansFiliation(choixDelivrance) ||
-    (ChoixDelivrance.estChoixDelivranceCopie(choixDelivrance) &&
+    ChoixDelivrance.estAvecOuSansFiliation(choixDelivrance) ||
+    (ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) &&
       FicheActe.estActeTexte(acte))
   );
 }
 
 export function estDemandeExtraitPlurilingue(choixDelivrance: ChoixDelivrance) {
-  return ChoixDelivrance.estChoixDelivrancePlurilingue(choixDelivrance);
+  return ChoixDelivrance.estPlurilingue(choixDelivrance);
 }
 
 export function estDemandeCopieActeImage(
@@ -49,7 +52,7 @@ export function estDemandeCopieActeImage(
   choixDelivrance: ChoixDelivrance
 ) {
   return (
-    ChoixDelivrance.estChoixDelivranceCopie(choixDelivrance) &&
+    ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) &&
     FicheActe.estActeImage(acte)
   );
 }
@@ -90,8 +93,12 @@ export function getNomDocument(choixDelivrance: ChoixDelivrance) {
   return nomDocument;
 }
 
-export function getStatutRequete(choixDelivrance: ChoixDelivrance) {
-  return choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
+export function getStatutRequete(
+  choixDelivrance: ChoixDelivrance,
+  sousType: SousTypeDelivrance
+) {
+  return ChoixDelivrance.estCopieArchive(choixDelivrance) ||
+    SousTypeDelivrance.estPlanete(sousType)
     ? StatutRequete.A_VALIDER
     : StatutRequete.A_SIGNER;
 }
@@ -138,37 +145,47 @@ export const controlerDonneesGenerationExtraitMariageOuNaissance = function (
   // ou que les noms et prenoms de l'analyse marginales sont absents
   // ou que le genre est d'un des titulaires est inconnu
   // ou que l'année ou le lieux de l'évenement ne sont absents
-  if (estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage(acte, choixDelivrance)
-    && aPasCorpsExtraitRectificationCorrespondant(acte.corpsExtraitRectifications, choixDelivrance)
-    && (aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte.analyseMarginales)
-    || aGenreTitulaireInconnu(acte.titulaires)
-    || aDonneesLieuOuAnneeEvenementAbsentes(acte))) {
+  if (
+    estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage(
+      acte,
+      choixDelivrance
+    ) &&
+    aPasCorpsExtraitRectificationCorrespondant(
+      acte.corpsExtraitRectifications,
+      choixDelivrance
+    ) &&
+    (aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte.analyseMarginales) ||
+      aGenreTitulaireInconnu(acte.titulaires) ||
+      aDonneesLieuOuAnneeEvenementAbsentes(acte))
+  ) {
     return Validation.E;
   }
   return validation;
 };
 
-export const estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage = function(
-  acte: IFicheActe,
-  choixDelivrance: ChoixDelivrance) {
-  return (acte.nature === NatureActe.NAISSANCE || acte.nature === NatureActe.MARIAGE)
-  && (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
-    || choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION);
-};
+export const estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage =
+  function (acte: IFicheActe, choixDelivrance: ChoixDelivrance) {
+    return (
+      (acte.nature === NatureActe.NAISSANCE ||
+        acte.nature === NatureActe.MARIAGE) &&
+      (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION ||
+        choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION)
+    );
+  };
 
 export const aDonneesLieuOuAnneeEvenementAbsentes = function (
   acte: IFicheActe
 ) {
-  return !acte.evenement?.annee
-  || (!acte.evenement?.lieuReprise
-  && !acte.evenement?.ville
-  && !acte.evenement?.region
-  && !acte.evenement?.pays);
+  return (
+    !acte.evenement?.annee ||
+    (!acte.evenement?.lieuReprise &&
+      !acte.evenement?.ville &&
+      !acte.evenement?.region &&
+      !acte.evenement?.pays)
+  );
 };
 
-export const aGenreTitulaireInconnu = function (
-  titulaires?: ITitulaireActe[]
-) {
+export const aGenreTitulaireInconnu = function (titulaires?: ITitulaireActe[]) {
   if (titulaires) {
     return titulaires?.find(titulaire => titulaire.sexe === "INCONNU");
   }
@@ -178,10 +195,14 @@ export const aGenreTitulaireInconnu = function (
 export const aNomEtPrenomTitulaireAbsentsAnalyseMarginale = function (
   analysesMarginales?: IAnalyseMarginale[]
 ) {
-  const analyseMarginale = AnalyseMarginale.getLaBonneAnalyseMarginale(analysesMarginales);
+  const analyseMarginale =
+    AnalyseMarginale.getLaBonneAnalyseMarginale(analysesMarginales);
   if (analyseMarginale) {
-    return analyseMarginale.titulaires?.find(titulaire => (!titulaire.nom && titulaire.prenoms?.length === 0)
-      || (titulaire.nom === SNP && titulaire.prenoms?.[0] === SPC));
+    return analyseMarginale.titulaires?.find(
+      titulaire =>
+        (!titulaire.nom && titulaire.prenoms?.length === 0) ||
+        (titulaire.nom === SNP && titulaire.prenoms?.[0] === SPC)
+    );
   }
   return true;
 };
@@ -190,12 +211,18 @@ export const aPasCorpsExtraitRectificationCorrespondant = function (
   corpsExtraitRectifications: ICorpsExtraitRectification[],
   choixDelivrance: ChoixDelivrance
 ) {
-  return corpsExtraitRectifications.filter(el => {
-    if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION) {
-      return el.type === TypeExtrait.EXTRAIT_AVEC_FILIATION;
-    } else if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION) {
-      return el.type === TypeExtrait.EXTRAIT_SANS_FILIATION;
-    }
-    return false;
-  }).length === 0;
+  return (
+    corpsExtraitRectifications.filter(el => {
+      if (
+        choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+      ) {
+        return el.type === TypeExtrait.EXTRAIT_AVEC_FILIATION;
+      } else if (
+        choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
+      ) {
+        return el.type === TypeExtrait.EXTRAIT_SANS_FILIATION;
+      }
+      return false;
+    }).length === 0
+  );
 };

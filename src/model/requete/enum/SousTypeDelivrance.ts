@@ -78,4 +78,8 @@ export class SousTypeDelivrance extends EnumWithComplete {
   public static getAllLibellesCourtAsOptions(): Options {
     return EnumWithComplete.getAllLibellesCourtAsOptions(SousTypeDelivrance);
   }
+
+  public static estPlanete(sousType?: SousTypeDelivrance): boolean {
+    return sousType === SousTypeDelivrance.RDDP;
+  }
 }

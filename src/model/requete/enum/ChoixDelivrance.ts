@@ -56,28 +56,46 @@ export class ChoixDelivrance extends EnumWithComplete {
     );
   }
 
-  public static estChoixDelivranceCopie(choix: ChoixDelivrance) {
+  public static estCopieIntegraleOuArchive(choix: ChoixDelivrance) {
     return (
-      choix === ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE ||
-      choix === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
+      ChoixDelivrance.estCopieIntegrale(choix) ||
+      ChoixDelivrance.estCopieArchive(choix)
     );
   }
 
-  public static estChoixDelivranceCopieArchive(choix: ChoixDelivrance) {
+  public static estCopieArchive(choix?: ChoixDelivrance) {
     return choix === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
   }
 
-  public static estChoixDelivranceAvecFiliation(choix: ChoixDelivrance) {
+  public static estCopieIntegrale(choix?: ChoixDelivrance) {
+    return choix === ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE;
+  }
+
+  public static estAvecFiliation(choix: ChoixDelivrance) {
     return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
   }
 
-  public static estChoixDelivranceAvecOuSansFiliation(choix: ChoixDelivrance) {
+  public static estAvecOuSansFiliation(choix?: ChoixDelivrance) {
     return (
       choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION ||
       choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
     );
   }
-  public static estChoixDelivrancePlurilingue(choix: ChoixDelivrance) {
+  public static estPlurilingue(choix?: ChoixDelivrance) {
     return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE;
+  }
+
+  public static estExtrait(choix?: ChoixDelivrance) {
+    return (
+      ChoixDelivrance.estAvecOuSansFiliation(choix) ||
+      ChoixDelivrance.estPlurilingue(choix)
+    );
+  }
+
+  public static estExtraitOuCopieIntegrale(choix?: ChoixDelivrance) {
+    return (
+      ChoixDelivrance.estCopieIntegrale(choix) ||
+      ChoixDelivrance.estExtrait(choix)
+    );
   }
 }
