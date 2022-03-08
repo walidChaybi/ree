@@ -1,4 +1,6 @@
+import { IExtraitCopieComposition } from "../../model/composition/extraitCopie/IExtraitCopieComposition";
 import { IContenuReponseSansDelivranceCS } from "../../model/composition/IReponseSansDelivranceCS";
+import { NatureActe } from "../../model/etatcivil/enum/NatureActe";
 import { TypePacsRcRca } from "../../model/etatcivil/enum/TypePacsRcRca";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
@@ -15,6 +17,12 @@ const URL_COMPOSITION_ATTESTATION_PACS = "/composition/ATTESTATION_PACS/1";
 const URL_COMPOSITION_EXTRAIT_COPIE_ACTE_TEXTE =
   "/composition/EXTAIT_COPIE_ACTE_TEXTE/1";
 
+const URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE =
+  "/composition/ACTE_NAISSANCE/4";
+const URL_COMPOSITION_EXTRAIT_PLURILINGUE_MARIAGE =
+  "/composition/ACTE_MARIAGE/4";
+const URL_COMPOSITION_EXTRAIT_PLURILINGUE_DECES = "/composition/ACTE_DECES/3";
+
 function getCompositionReponseSansDelivranceCS(
   document: string,
   reponseSansDelivranceCS: IContenuReponseSansDelivranceCS
@@ -30,25 +38,50 @@ function getCompositionCertificatPacsRcRca(
   obj: any,
   typeCertificat: TypePacsRcRca
 ): Promise<any> {
-  let foncionAAppeler: any;
+  let fonctionAAppeler: any;
   switch (typeCertificat) {
     case TypePacsRcRca.PACS:
-      foncionAAppeler = getCompositionCertificatPACS;
+      fonctionAAppeler = getCompositionCertificatPACS;
       break;
 
     case TypePacsRcRca.RC:
-      foncionAAppeler = getCompositionCertificatRC;
+      fonctionAAppeler = getCompositionCertificatRC;
       break;
 
     case TypePacsRcRca.RCA:
-      foncionAAppeler = getCompositionCertificatRCA;
+      fonctionAAppeler = getCompositionCertificatRCA;
       break;
 
     default:
       break;
   }
 
-  return foncionAAppeler(obj);
+  return fonctionAAppeler(obj);
+}
+
+function getCompositionExtraitPlurilingue(
+  obj: IExtraitCopieComposition
+): Promise<any> {
+  let fonctionAAppeler: any;
+
+  switch (NatureActe.getEnumFor(obj.nature_acte)) {
+    case NatureActe.NAISSANCE:
+      fonctionAAppeler = getCompositionExtraitPlurilingueNaissance;
+      break;
+
+    case NatureActe.MARIAGE:
+      fonctionAAppeler = getCompositionExtraitPlurilingueMariage;
+      break;
+
+    case NatureActe.DECES:
+      fonctionAAppeler = getCompositionExtraitPlurilingueDeces;
+      break;
+
+    default:
+      break;
+  }
+
+  return fonctionAAppeler(obj);
 }
 
 function getCompositionCertificatRCA(obj: any): Promise<any> {
@@ -75,6 +108,18 @@ function getCompositionCopieActeImage(obj: any): Promise<any> {
   return getComposition("/TODO", obj);
 }
 
+function getCompositionExtraitPlurilingueNaissance(obj: any): Promise<any> {
+  return getComposition(URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE, obj);
+}
+
+function getCompositionExtraitPlurilingueMariage(obj: any): Promise<any> {
+  return getComposition(URL_COMPOSITION_EXTRAIT_PLURILINGUE_MARIAGE, obj);
+}
+
+function getCompositionExtraitPlurilingueDeces(obj: any): Promise<any> {
+  return getComposition(URL_COMPOSITION_EXTRAIT_PLURILINGUE_DECES, obj);
+}
+
 function getComposition(
   uri: string,
   data: any
@@ -96,5 +141,6 @@ export const compositionApi = {
   getCompositionCertificatPacsRcRca,
   getCompositionCourrier,
   getCompositionExtraitOuCopieActeTexte,
-  getCompositionCopieActeImage
+  getCompositionCopieActeImage,
+  getCompositionExtraitPlurilingue
 };

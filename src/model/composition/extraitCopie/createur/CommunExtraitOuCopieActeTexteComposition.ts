@@ -72,7 +72,7 @@ export interface IParentsTitulaireCompositionEC {
   sexeParent?: Sexe;
 }
 
-interface ICreerExtraitCopieActeTexteParams {
+export interface ICreerExtraitCopieActeTexteParams {
   acte: IFicheActe;
   natureActe: string;
   choixDelivrance: ChoixDelivrance;

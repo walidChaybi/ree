@@ -26,7 +26,8 @@ export const configComposition = [
         match[1] === "/composition/CARN_CSPAC_02/1" ||
         match[1] === "/composition/CARN_EC_17/1" ||
         match[1] === "/composition/CAD_EC_116/1" ||
-        match[1] === "/composition/EXTAIT_COPIE_ACTE_TEXTE/1"
+        match[1] === "/composition/EXTAIT_COPIE_ACTE_TEXTE/1" ||
+        match[1] === "/composition/ACTE_NAISSANCE/4"
       ) {
         // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
         return { data: { contenu: imagePngVideBase64, nbPages: 2 } };

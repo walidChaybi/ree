@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { Orientation } from "../../../../../model/composition/enum/Orientation";
-import { IExtraitCopieComposition } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import { Validation } from "../../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { MimeType } from "../../../../../ressources/MimeType";
 import {
+  IExtraitCopieApiHookParams,
   IExtraitCopieApiHookResultat,
   useExtraitCopieApiHook
 } from "../../composition/CompositionExtraitCopieHook";
@@ -47,7 +47,8 @@ export function useGenerationEC(
 ): IGenerationECResultat | undefined {
   const [resultat, setResultat] = useState<IGenerationECResultat>();
 
-  const [paramECHook, setParamECHook] = useState<IExtraitCopieComposition>();
+  const [extraitCopieApiHookParams, setExtraitCopieApiHookParams] =
+    useState<IExtraitCopieApiHookParams>();
 
   const [
     stockerDocumentCreerActionMajStatutRequeteParams,
@@ -96,13 +97,19 @@ export function useGenerationEC(
         validationControle
       );
       setValidation(validationControle);
-      setParamECHook(composition);
+      setExtraitCopieApiHookParams({
+        // @ts-ignore NonNull
+        choixDelivrance: params.choixDelivrance,
+        extraitCopieComposition: composition
+      });
     }
   }, [acteApiHookResultat, params]);
 
   // 3 - Création de l'EC PDF pour un acte texte: appel api composition
   // récupération du document en base64
-  const extraitCopieApiHookResultat = useExtraitCopieApiHook(paramECHook);
+  const extraitCopieApiHookResultat = useExtraitCopieApiHook(
+    extraitCopieApiHookParams
+  );
 
   // 4 - Création du document réponse pour stockage dans la BDD et Swift
   const creationDocumentReponseOuResultat = useCallback(

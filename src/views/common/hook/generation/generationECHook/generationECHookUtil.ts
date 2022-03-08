@@ -1,6 +1,7 @@
 import {
   IExtraitCopieComposition,
   NOM_DOCUMENT_EC_AVEC_FILIATION,
+  NOM_DOCUMENT_EC_PLURILINGUE,
   NOM_DOCUMENT_EC_SANS_FILIATION
 } from "../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
 import {
@@ -18,6 +19,7 @@ import { TypeExtrait } from "../../../../../model/etatcivil/enum/TypeExtrait";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import {
   CODE_EXTRAIT_AVEC_FILIATION,
+  CODE_EXTRAIT_PLURILINGUE,
   CODE_EXTRAIT_SANS_FILIATION,
   DocumentDelivrance
 } from "../../../../../model/requete/enum/DocumentDelivrance";
@@ -26,6 +28,7 @@ import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { Validation } from "../../../../../model/requete/enum/Validation";
 import { SNP, SPC } from "../../../../common/util/Utils";
 import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/creationCompositionExtraitCopieActeTexte";
+import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
 import { IGenerationECParams } from "./generationECHook";
 
 export function nonNull(acte?: IFicheActe, params?: IGenerationECParams) {
@@ -70,6 +73,11 @@ export function getTypeDocument(choixDelivrance: ChoixDelivrance) {
         CODE_EXTRAIT_AVEC_FILIATION
       );
       break;
+    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
+      uuidTypeDocument = DocumentDelivrance.getKeyForCode(
+        CODE_EXTRAIT_PLURILINGUE
+      );
+      break;
     // FIXME A Complèter
     default:
       break;
@@ -85,6 +93,9 @@ export function getNomDocument(choixDelivrance: ChoixDelivrance) {
       break;
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
       nomDocument = NOM_DOCUMENT_EC_AVEC_FILIATION;
+      break;
+    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
+      nomDocument = NOM_DOCUMENT_EC_PLURILINGUE;
       break;
     // FIXME A Complèter
     default:
@@ -120,10 +131,7 @@ export function creationComposition(
       validation
     );
   } else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
-    composition = {
-      nature_acte: "TODO",
-      type_document: "TODO"
-    } as IExtraitCopieComposition;
+    composition = creationCompositionExtraitPlurilingue(acte);
   } else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
     composition = {
       nature_acte: "TODO2",

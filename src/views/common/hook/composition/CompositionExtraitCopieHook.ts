@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { compositionApi } from "../../../../api/appels/compositionApi";
 import { IDonneesComposition } from "../../../../model/composition/commun/retourApiComposition/IDonneesComposition";
 import { IExtraitCopieComposition } from "../../../../model/composition/extraitCopie/IExtraitCopieComposition";
+import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
 import { logError, LogErrorMsg } from "../../util/LogManager";
 import { getLibelle } from "../../util/Utils";
 
@@ -9,19 +10,24 @@ export interface IExtraitCopieApiHookResultat {
   donneesComposition?: IDonneesComposition;
   erreur?: LogErrorMsg;
 }
+export interface IExtraitCopieApiHookParams {
+  extraitCopieComposition?: IExtraitCopieComposition;
+  choixDelivrance: ChoixDelivrance;
+}
 
-export function useExtraitCopieApiHook(
-  extraitCopieComposition?: IExtraitCopieComposition
-) {
+export function useExtraitCopieApiHook(params?: IExtraitCopieApiHookParams) {
   const [extraitCopieApiHookResultat, setExtraitCopieApiHookResultat] =
     useState<IExtraitCopieApiHookResultat>();
 
   useEffect(() => {
-    if (extraitCopieComposition) {
+    if (params && params.extraitCopieComposition) {
       let apiCompositionAAppeler;
-      if (
-        extraitCopieComposition.corps_image &&
-        extraitCopieComposition.corps_image.length > 0
+      if (ChoixDelivrance.estPlurilingue(params.choixDelivrance)) {
+        apiCompositionAAppeler =
+          compositionApi.getCompositionExtraitPlurilingue;
+      } else if (
+        params.extraitCopieComposition.corps_image &&
+        params.extraitCopieComposition.corps_image.length > 0
       ) {
         apiCompositionAAppeler = compositionApi.getCompositionCopieActeImage;
       } else {
@@ -29,7 +35,7 @@ export function useExtraitCopieApiHook(
           compositionApi.getCompositionExtraitOuCopieActeTexte;
       }
 
-      apiCompositionAAppeler(extraitCopieComposition)
+      apiCompositionAAppeler(params.extraitCopieComposition)
         .then(result => {
           setExtraitCopieApiHookResultat({
             donneesComposition: result.body.data
@@ -46,7 +52,7 @@ export function useExtraitCopieApiHook(
           setExtraitCopieApiHookResultat({ erreur });
         });
     }
-  }, [extraitCopieComposition]);
+  }, [params]);
 
   return extraitCopieApiHookResultat;
 }

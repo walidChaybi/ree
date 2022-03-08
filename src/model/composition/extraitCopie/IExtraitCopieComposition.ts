@@ -3,6 +3,7 @@ import { IParametresComposition } from "../commun/IParametresComposition";
 
 export const NOM_DOCUMENT_EC_SANS_FILIATION = "Extrait copie sans filiation";
 export const NOM_DOCUMENT_EC_AVEC_FILIATION = "Extrait copie avec filiation";
+export const NOM_DOCUMENT_EC_PLURILINGUE = "Extrait copie plurilingue";
 
 // Même interface pour les extraits ou copie et actes images ou texte
 export interface IExtraitCopieComposition

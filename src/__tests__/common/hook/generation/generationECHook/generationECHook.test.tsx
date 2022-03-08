@@ -44,6 +44,13 @@ const ecNaissanceSansFiliationparams: IGenerationECParams = {
   validation: Validation.N
 };
 
+const ecNaissancePlurilingueparams: IGenerationECParams = {
+  idActe: idFicheActe1,
+  requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE,
+  validation: Validation.N
+};
+
 const HookConsumer: React.FC<IGenerationECParams> =
   ecMariageFiliationparams => {
     const resultat = useGenerationEC(ecMariageFiliationparams);
@@ -75,6 +82,17 @@ test("Attendu: un extrait de mariage avec filiation est généré via useGenerat
 
 test("Attendu: un extrait de naissance sans filiation est généré via useGenerationEC", async () => {
   render(<HookConsumer {...ecNaissanceSansFiliationparams} />);
+
+  await waitFor(() => {
+    // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
+    expect(
+      screen.getByText("bbac2335-562c-4b14-96aa-4386814c02a2")
+    ).toBeInTheDocument();
+  });
+});
+
+test("Attendu: un extrait de naissance plurilingue est généré via useGenerationEC", async () => {
+  render(<HookConsumer {...ecNaissancePlurilingueparams} />);
 
   await waitFor(() => {
     // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
