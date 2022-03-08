@@ -47,6 +47,8 @@ const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({
   useEffect(() => {
     if (reponse?.libelle) {
       formik.setFieldValue(libelleWithNamespace, reponse.libelle);
+    }
+    if (reponse?.corpsMail) {
       formik.setFieldValue(corpsMailWithNamespace, reponse.corpsMail);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

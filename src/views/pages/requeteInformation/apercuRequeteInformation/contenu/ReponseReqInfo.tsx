@@ -68,7 +68,15 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
   const { reponsesReqInfo } = useReponsesReqInfoApiHook();
 
   useEffect(() => {
-    if (requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS) {
+    if (requete.reponseChoisie) {
+      setReponseChoisie({
+        ...requete.reponseChoisie,
+        libelle: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId(
+          requete.reponseChoisie,
+          reponsesReqInfo
+        )
+      });
+    } else if (requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS) {
       const reponseLibre = ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
         {
           objet: ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom,
@@ -80,14 +88,6 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
       if (reponseLibre) {
         setReponseChoisie(reponseLibre);
       }
-    } else if (requete.reponseChoisie) {
-      setReponseChoisie({
-        ...requete.reponseChoisie,
-        libelle: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId(
-          requete.reponseChoisie,
-          reponsesReqInfo
-        )
-      });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
