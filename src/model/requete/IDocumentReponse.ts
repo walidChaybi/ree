@@ -1,6 +1,7 @@
 import { MimeType } from "file-type/core";
 import { Orientation } from "../composition/enum/Orientation";
 import { COURRIER, DocumentDelivrance } from "./enum/DocumentDelivrance";
+import { MentionsRetirees } from "./enum/MentionsRetirees";
 import { Validation } from "./enum/Validation";
 import { IOptionCourrierDocumentReponse } from "./IOptionCourrierDocumentReponse";
 import { ITexteLibreCourrier } from "./ITexteLibreCourrier";
@@ -22,11 +23,13 @@ export interface IDocumentReponse {
   idPacs?: string;
   avecCtv?: boolean;
   nbExemplaireImpression?: number;
+  referenceSwift?: string;
   conteneurSwift: string;
   documentASignerElec?: {
     dateSignatureElectronique?: number;
   };
   validation?: Validation;
+  mentionsRetirees?: MentionsRetirees[];
 }
 
 export const DocumentReponse = {

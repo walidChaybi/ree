@@ -4,6 +4,7 @@ import {
   acte2,
   acte3,
   acte4,
+  acte5,
   acteMariage
 } from "../../__tests__/pages/fiche/data/ficheActe";
 import { ActeAnalyseMarginales } from "../data/ActeAnalyseMarginales";
@@ -25,9 +26,11 @@ import {
   FicheRcaDecisionJuridictionEtrangere,
   idFicheRca
 } from "../data/ficheRCA";
+import { mentions } from "../data/mentions";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
   ReponseAppelNomenclatureMandataire,
+  ReponseAppelNomenclatureNatureMention,
   ReponseAppelNomenclatureNatureRC,
   ReponseAppelNomenclatureNatureRCA,
   ReponseAppelNomenclatureTypeAlerte
@@ -116,10 +119,18 @@ export const configEtatcivil = [
         return { data: acte3 };
       } else if (match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9") {
         return { data: acte4 };
+      } else if (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a") {
+        return { data: acte5 };
       } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348") {
         return { data: acteMariage };
       } else if (match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d") {
         return { data: ActeAnalyseMarginales };
+      }
+
+      /////////////////////////////////////////////////////////////////////
+      // Mention
+      if (match[1] === `/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions`) {
+        return { data: mentions };
       }
 
       /////////////////////////////////////////////////////////////////////
@@ -136,6 +147,7 @@ export const configEtatcivil = [
         match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c4ey86537g" ||
         match[1] === "/acte/corps/923a10fb-0b15-452d-83c0-d24c76d1de8d" ||
         match[1] === "/acte/corps/b41079a3-9e8d-478c-b04c-c4c2ac47134f" ||
+        match[1] === "/acte/corps/19c0d767-64e5-4376-aa1f-6d781a2a235a" ||
         // acte texte
         match[1] === "/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
       ) {
@@ -185,8 +197,7 @@ export const configEtatcivil = [
             headers: {
               "content-range":
                 "0-15/" + ReponseAppelRMCActe.data.registres.length,
-              link:
-                '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-100>;rel="next"'
+              link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCActe.data
           };
@@ -212,8 +223,7 @@ export const configEtatcivil = [
               "content-range":
                 "0-15/" +
                 ReponseAppelRMCInscription.data.repertoiresCiviles.length,
-              link:
-                '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
+              link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
             },
             data: ReponseAppelRMCInscription.data
           };
@@ -252,6 +262,10 @@ export const configEtatcivil = [
 
       if (match[1] === "/nomenclature/TYPE_ALERTE") {
         return { data: ReponseAppelNomenclatureTypeAlerte.data };
+      }
+
+      if (match[1] === "/nomenclature/NATURE_MENTION") {
+        return { data: ReponseAppelNomenclatureNatureMention.data };
       }
 
       if (
@@ -346,8 +360,7 @@ export const configEtatcivil = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCActe.data.registres.length,
-            link:
-              '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-100>;rel="next"'
           },
           data: ReponseAppelRMCActe.data
         };
@@ -359,8 +372,7 @@ export const configEtatcivil = [
             "content-range":
               "0-15/" +
               ReponseAppelRMCInscription.data.repertoiresCiviles.length,
-            link:
-              '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCInscription.data
         };
@@ -370,7 +382,10 @@ export const configEtatcivil = [
         return { data: decrets };
       }
 
-      if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/alertes") {
+      if (
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/alertes" ||
+        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/alertes"
+      ) {
         return { data: ReponseAppelGetAlertesActe.data };
       }
 

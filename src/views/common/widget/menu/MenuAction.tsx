@@ -59,10 +59,12 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
         getContentAnchorEl={null}
         open={Boolean(anchorEl)}
         onClose={handleClose}
-        onEnter={() => {
-          props.listeActions.forEach(el => {
-            DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
-          });
+        TransitionProps={{
+          onEnter: () => {
+            props.listeActions.forEach(el => {
+              DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+            });
+          }
         }}
         PaperProps={{
           style: {

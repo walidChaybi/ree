@@ -1,18 +1,29 @@
 import { Tab } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IOnglet } from "../../../../../model/requete/IOnglet";
-import { getLibelle } from "../../../../common/util/Utils";
 
 interface VoletAvecOngletProps {
   titre: string;
-  onglets: IOnglet[];
-
+  onglets: OngletProps;
   children?: any;
 }
 
+export interface OngletProps {
+  liste: IOnglet[];
+  ongletSelectionne: number;
+}
+
 export const VoletAvecOnglet: React.FC<VoletAvecOngletProps> = props => {
-  const [ongletSelectionne, setOngletSelectionne] = useState<string>("0");
+  const [ongletSelectionne, setOngletSelectionne] = useState<string>(
+    props.onglets.ongletSelectionne.toString()
+  );
+  const [onglets, setOnglets] = useState<IOnglet[]>(props.onglets.liste);
+
+  useEffect(() => {
+    setOngletSelectionne(props.onglets.ongletSelectionne.toString());
+    setOnglets(props.onglets.liste);
+  }, [props.onglets]);
 
   const handleChange = (event: any, newValue: string) => {
     setOngletSelectionne(newValue);
@@ -20,20 +31,19 @@ export const VoletAvecOnglet: React.FC<VoletAvecOngletProps> = props => {
 
   return (
     <div className="VoletAvecOnglet">
-      <div className="TitreVolet">{getLibelle(props.titre)}</div>
       <TabContext value={ongletSelectionne}>
         <TabList
           onChange={handleChange}
           className="BarreOnglet"
           indicatorColor="secondary"
         >
-          {props.onglets.map((onglet, index) => {
+          {onglets.map((onglet, index) => {
             return (
               <Tab key={index} label={onglet.titre} value={index.toString()} />
             );
           })}
         </TabList>
-        {props.onglets.map((onglet, index) => {
+        {onglets.map((onglet, index) => {
           return (
             <TabPanel
               key={index}

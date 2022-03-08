@@ -16,6 +16,7 @@ interface SelectProps {
   ariaLabel?: string;
   pasPremiereOptionVide?: boolean;
   placeholder?: string;
+  onBlur?: (e: any) => void;
 }
 
 export const SelectRece: React.FC<SelectProps> = props => {
@@ -40,6 +41,7 @@ export const SelectRece: React.FC<SelectProps> = props => {
         className="SelectField"
         disabled={props.disabled}
         native={true}
+        onBlur={props.onBlur}
         arial-label={props.ariaLabel}
         data-testid={props.componentName}
         placeholder={props.placeholder ? props.placeholder : props.label}
@@ -78,7 +80,8 @@ const _SelectField: React.FC<SelectFieldProps> = ({
   disabled,
   ariaLabel,
   formik,
-  onChange
+  onChange,
+  onBlur
 }) => {
   return (
     <div className="InputField">
@@ -92,6 +95,7 @@ const _SelectField: React.FC<SelectFieldProps> = ({
           value={formik.getFieldProps(name).value}
           ariaLabel={`${ariaLabel ? ariaLabel : label}`}
           componentName={name}
+          onBlur={onBlur}
           onChange={(e?: any) => {
             if (onChange) {
               onChange(e);

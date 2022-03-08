@@ -8,14 +8,22 @@ import "./scss/DetailRequetePage.scss";
 
 export const titreDetail = "Détails requête";
 interface DetailRequetePageProps {
+  requete?: IRequeteDelivrance;
   idRequeteAAfficher?: string;
 }
 
 export const DetailRequetePage: React.FC<DetailRequetePageProps> = props => {
-  const { detailRequeteState } = useDetailRequeteApiHook(
-    props.idRequeteAAfficher
-  );
+  const [idRequete, setIdRequete] = useState<string>();
+  const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
   const [requete, setRequete] = useState<IRequeteDelivrance>();
+
+  useEffect(() => {
+    if (props.requete) {
+      setRequete(props.requete);
+    } else if (props.idRequeteAAfficher) {
+      setIdRequete(props.idRequeteAAfficher);
+    }
+  }, [props.idRequeteAAfficher, props.requete]);
 
   useEffect(() => {
     if (detailRequeteState) {

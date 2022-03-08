@@ -11,9 +11,7 @@ import {
   CODE_EXTRAIT_SANS_FILIATION,
   DocumentDelivrance
 } from "../../../../model/requete/enum/DocumentDelivrance";
-import { Validation } from "../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
-import { IOnglet } from "../../../../model/requete/IOnglet";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import { IUuidRequeteParams } from "../../../../model/requete/IUuidRequeteParams";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
@@ -25,24 +23,27 @@ import {
 import { getLibelle } from "../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
 import { receUrl } from "../../../router/ReceUrls";
+import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { DetailRequetePage } from "../detailRequete/DetailRequetePage";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
 import { AccordionRece } from "./../../../common/widget/accordion/AccordionRece";
+import { GestionMentions } from "./contenu/onglets/Mentions/GestionMentions";
+import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
+import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { OngletDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
-import { VisionneuseActeEdition } from "./contenu/VisionneuseActeEdition";
-import { VisionneuseEdition } from "./contenu/VisionneuseDocumentEdite";
-import { VoletAvecOnglet } from "./contenu/VoletAvecOnglet";
+import { OngletProps, VoletAvecOnglet } from "./contenu/VoletAvecOnglet";
 import "./scss/EditionExtraitCopie.scss";
 
 export const EditionExtraitCopiePage: React.FC = () => {
   const history = useHistory();
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
-  const { detailRequeteState } = useDetailRequeteApiHook(idRequeteParam);
   const [requete, setRequete] = useState<IRequeteDelivrance>();
   const [documentEdite, setDocumentEdite] = useState<IDocumentReponse>();
   const [documents, setDocuments] = useState<IDocumentReponse[]>();
   const [hookParams, setHookParams] = useState<IActeApiHookParams>();
   const dataHistory = history.location.state;
+
+  const { detailRequeteState } = useDetailRequeteApiHook(idRequeteParam);
 
   const acte = useInformationsActeApiHook(hookParams);
 
@@ -93,70 +94,48 @@ export const EditionExtraitCopiePage: React.FC = () => {
           <div className="contenu-edition">
             <div className="side Visualisation">
               <VoletAvecOnglet
-                onglets={[
-                  {
-                    titre: getLibelle("Acte registre"),
-                    component: (
-                      <VisionneuseActeEdition
-                        acte={acte?.acte}
-                        detailRequete={requete}
-                      />
-                    )
-                  },
-                  {
-                    titre: getLibelle("Requête"),
-                    component: (
-                      <>
-                        <AccordionRece
-                          titre={getLibelle(`Requête ${requete.numero}`)}
-                          disabled={false}
-                          expanded={true}
-                        >
-                          <DetailRequetePage idRequeteAAfficher={requete.id} />
-                        </AccordionRece>
-                        <SuiviObservationsRequete idRequete={requete.id} />
-                        <SuiviActionsRequete actions={requete.actions} />
-                      </>
-                    )
-                  }
-                ]}
+                onglets={getOngletsVisu(requete, documentEdite, acte?.acte)}
                 titre="Visualisation"
-              >
-                <BoutonOperationEnCours
-                  title={getLibelle("Retour aperçu traitement")}
-                  onClick={goBack}
-                >
-                  {getLibelle("Retour aperçu traitement")}
-                </BoutonOperationEnCours>
-              </VoletAvecOnglet>
+              ></VoletAvecOnglet>
             </div>
             <div className="Separateur"></div>
             <div className="side Edition">
               <VoletAvecOnglet
                 onglets={getOngletsEdition(documentEdite, acte?.acte)}
                 titre="Édition"
+              />
+            </div>
+          </div>
+          <div className="BoutonsEdition">
+            <div className="Gauche">
+              <BoutonOperationEnCours
+                title={getLibelle("Retour aperçu traitement")}
+                onClick={goBack}
               >
-                {boutonModifierCopiePresent(acte?.acte, documentEdite) && (
-                  <BoutonOperationEnCours
-                    title={getLibelle("Modifier la copie à délivrer")}
-                    onClick={goBack}
-                  >
-                    Modifier la copie à délivrer
-                  </BoutonOperationEnCours>
-                )}
+                {getLibelle("Retour aperçu traitement")}
+              </BoutonOperationEnCours>
+            </div>
+            <div className="Droite">
+              {boutonModifierCopiePresent(acte?.acte, documentEdite) && (
                 <BoutonOperationEnCours
-                  title={getLibelle("Terminer et signer")}
+                  title={getLibelle("Modifier la copie à délivrer")}
                   onClick={goBack}
                 >
-                  Terminer et signer
+                  Modifier la copie à délivrer
                 </BoutonOperationEnCours>
-                <BoutonOperationEnCours
-                  title={getLibelle("Terminer")}
-                  onClick={goBack}
-                >
-                  Terminer
-                </BoutonOperationEnCours>
-              </VoletAvecOnglet>
+              )}
+              <BoutonOperationEnCours
+                title={getLibelle("Terminer et signer")}
+                onClick={goBack}
+              >
+                Terminer et signer
+              </BoutonOperationEnCours>
+              <BoutonOperationEnCours
+                title={getLibelle("Terminer")}
+                onClick={goBack}
+              >
+                Terminer
+              </BoutonOperationEnCours>
             </div>
           </div>
         </>
@@ -166,55 +145,114 @@ export const EditionExtraitCopiePage: React.FC = () => {
 };
 
 const getOngletsEdition = (document?: IDocumentReponse, acte?: IFicheActe) => {
-  const res: IOnglet[] = [];
+  const res: OngletProps = {
+    liste: [],
+    ongletSelectionne: -1
+  };
   if (document && acte) {
     switch (
       DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
     ) {
       case CODE_COPIE_INTEGRALE:
         if (acte.type === TypeActe.TEXTE) {
-          res.push(ongletMentions);
+          res.liste.push(ongletMentions(acte, document));
         }
         break;
       case CODE_EXTRAIT_AVEC_FILIATION:
       case CODE_EXTRAIT_SANS_FILIATION:
-        ajoutOngletsExtraitFilliation(res, document);
+        ajoutOngletsExtraitFilliation(res, document, acte);
         break;
       case CODE_EXTRAIT_PLURILINGUE:
-        ajoutOngletsExtraitPlurilingue(res, acte);
+        ajoutOngletsExtraitPlurilingue(res, document, acte);
         break;
       case CODE_COPIE_NON_SIGNEE:
         break;
     }
+    res.liste.push({
+      titre: getLibelle("Document édité"),
+      component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
+    });
   }
-  res.push({
-    titre: getLibelle("Document édité"),
-    component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
-  });
+  if (res.ongletSelectionne === -1) {
+    res.ongletSelectionne = res.liste.findIndex(
+      el => el.titre === "Document édité"
+    );
+  }
+  return res;
+};
+
+const getOngletsVisu = (
+  requete: IRequeteDelivrance,
+  document?: IDocumentReponse,
+  acte?: IFicheActe
+) => {
+  const res: OngletProps = { liste: [], ongletSelectionne: 0 };
+  if (document) {
+    if (DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument)) {
+      res.liste = [
+        {
+          titre: "Édition courrier",
+          component: <Courrier requete={requete} idActe={acte?.id}></Courrier>
+        }
+      ];
+    } else {
+      res.liste = [
+        {
+          titre: getLibelle("Acte registre"),
+          component: (
+            <VisionneuseActeEdition acte={acte} detailRequete={requete} />
+          )
+        },
+        {
+          titre: getLibelle("Requête"),
+          component: (
+            <>
+              <AccordionRece
+                titre={getLibelle(`Requête ${requete.numero}`)}
+                disabled={false}
+                expanded={true}
+              >
+                <DetailRequetePage requete={requete} />
+              </AccordionRece>
+              <SuiviActionsRequete actions={requete.actions} />
+              <SuiviObservationsRequete idRequete={requete.id} />
+            </>
+          )
+        }
+      ];
+      res.ongletSelectionne = 1;
+    }
+  }
   return res;
 };
 
 const ajoutOngletsExtraitFilliation = (
-  res: IOnglet[],
-  document: IDocumentReponse
+  res: OngletProps,
+  document: IDocumentReponse,
+  acte: IFicheActe
 ) => {
-  res.push(ongletSaisirExtrait);
-  res.push(ongletMentions);
-  if (document.validation !== Validation.E) {
-    res.push({
+  res.ongletSelectionne = 1;
+  res.liste.push(ongletSaisirExtrait);
+  res.liste.push(ongletMentions(acte, document));
+  if (document.validation !== "E") {
+    res.liste.push({
       titre: getLibelle("Modifier le corps de l'extrait"),
       component: <></>
     });
   }
 };
 
-const ajoutOngletsExtraitPlurilingue = (res: IOnglet[], acte: IFicheActe) => {
-  res.push(ongletSaisirExtrait);
+const ajoutOngletsExtraitPlurilingue = (
+  res: OngletProps,
+  document: IDocumentReponse,
+  acte: IFicheActe
+) => {
+  res.liste.push(ongletSaisirExtrait);
   if (
     acte.nature === NatureActe.NAISSANCE ||
     acte.nature === NatureActe.MARIAGE
   ) {
-    res.push(ongletMentions);
+    res.liste.push(ongletMentions(acte, document));
   }
 };
 
@@ -231,9 +269,11 @@ const boutonModifierCopiePresent = (
   return false;
 };
 
-const ongletMentions = {
-  titre: getLibelle("Gérer les mentions"),
-  component: <></>
+const ongletMentions = (acte: IFicheActe, doc: IDocumentReponse) => {
+  return {
+    titre: getLibelle("Gérer les mentions"),
+    component: <GestionMentions acte={acte} document={doc}></GestionMentions>
+  };
 };
 const ongletSaisirExtrait = {
   titre: getLibelle("Saisir l'extrait"),

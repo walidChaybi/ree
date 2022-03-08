@@ -10,6 +10,7 @@ import {
   documentReponseCARN_CSPAC_01,
   documentReponseCertificatRCA,
   documentReponseCopieIntegrale,
+  documentReponseExtraitAvecFiliation,
   idDocumentsReponse
 } from "../data/DocumentReponse";
 import {
@@ -205,7 +206,7 @@ export const configRequetes = [
       if (match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d666") {
         return { data: ReponseAppelDetailRequeteDelivranceRDC.data };
       }
-      if (match[1] === "/requetes/5f14ef25-d720-4c12-867f-d7fa6e3cb780") {
+      if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f683f0f") {
         return { data: requeteAvecDocs };
       }
 
@@ -228,7 +229,9 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance/85b32284-d3dd-4502-bfbd-5634ba52ba22/courrier?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
         match[1] ===
-          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
+          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+        match[1] ===
+          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d884/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d884&statutRequete=A_TRAITER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
       }
@@ -373,6 +376,11 @@ export const configRequetes = [
         match[1] === "/documentsreponses/f9279c00-5d2b-11ea-bc55-0242ac130004"
       ) {
         return { data: documentReponseCopieIntegrale };
+      }
+      if (
+        match[1] === "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db"
+      ) {
+        return { data: documentReponseExtraitAvecFiliation };
       }
 
       // Stockage d'un document (POST)

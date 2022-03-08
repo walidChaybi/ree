@@ -1,7 +1,7 @@
 import React from "react";
-import { useGetDocumentReponseApi } from "../../../../common/hook/DocumentReponseHook";
-import { getValeurOuVide } from "../../../../common/util/Utils";
-import { VisionneuseDocument } from "../../../../common/widget/document/VisionneuseDocument";
+import { useGetDocumentReponseApi } from "../../../../../common/hook/DocumentReponseHook";
+import { getValeurOuVide } from "../../../../../common/util/Utils";
+import { VisionneuseDocument } from "../../../../../common/widget/document/VisionneuseDocument";
 
 interface VisionneuseEditionProps {
   idDocumentAAfficher?: string;

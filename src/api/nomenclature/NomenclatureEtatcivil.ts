@@ -85,9 +85,10 @@ export async function peupleNatureMention() {
           data.id,
           new NatureMention(
             data.code,
+            data.libelle,
+            "",
             data.estActif,
-            data.opposableAuTiers,
-            data.libelle
+            data.opposableAuTiers
           )
         );
       }

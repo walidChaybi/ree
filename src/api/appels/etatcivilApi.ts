@@ -16,6 +16,7 @@ export const URL_ACTE_IMAGE = "/acte/corps";
 export const URL_ACTE_TEXTE = "/acte/texte";
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
+export const URL_MENTION = "/mentions";
 export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
 export const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
 export const URL_ALERTES_ACTE = "/alertes";
@@ -62,7 +63,7 @@ export function getInformationsFicheActe(identifiant: string): Promise<any> {
 /**
  * Récupération du nombre de titulaire d'un ACTE
  */
- export function getNbrTitulairesActe(identifiant: string): Promise<any> {
+export function getNbrTitulairesActe(identifiant: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${identifiant}${URL_COUNT_TITULAIRE}`
@@ -133,6 +134,13 @@ export async function getNomenclatureEtatCivil(nom: string): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
     uri: `${URL_NOMENCLATURE}/${nom}`
+  });
+}
+
+export async function getMentions(idActe: string): Promise<any> {
+  return api.fetchCache({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE}/${idActe}${URL_MENTION}`
   });
 }
 

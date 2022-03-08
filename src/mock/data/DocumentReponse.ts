@@ -1,4 +1,5 @@
 import { Orientation } from "../../model/composition/enum/Orientation";
+import { Validation } from "../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../model/requete/IDocumentReponse";
 import { imagePngVideBase64 } from "./ImagePng";
 
@@ -72,6 +73,25 @@ export const documentReponseCopieIntegrale: IDocumentReponse = {
   nbPages: 1,
   orientation: Orientation.PORTRAIT,
   conteneurSwift: "conteneurSwift"
+};
+
+export const documentReponseExtraitAvecFiliation: IDocumentReponse = {
+  id: "9bfa865e-6d7a-4d66-900e-b548178854db",
+  nom: "Extrait copie avec filiation",
+  typeDocument: "28580709-06dd-4df2-bf6e-70a9482940a1",
+  mimeType: "application/pdf",
+  taille: 28828,
+  contenu: imagePngVideBase64,
+  avecCtv: false,
+  nbPages: 1,
+  orientation: Orientation.PORTRAIT,
+  referenceSwift:
+    "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
+  conteneurSwift: "documents-delivres-2022-2",
+  validation: Validation.N,
+  idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
+  optionsCourrier: [],
+  mentionsRetirees: []
 };
 
 export const documentReponseCopieNonSigne: IDocumentReponse = {

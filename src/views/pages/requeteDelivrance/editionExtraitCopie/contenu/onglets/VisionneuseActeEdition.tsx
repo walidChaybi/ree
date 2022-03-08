@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../model/agent/IOfficier";
-import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { AlertesActes } from "../../../../common/composant/alertesActe/AlertesActes";
-import { ActeImage } from "../../../fiche/hook/constructionComposants/acte/ActeImage";
+import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../../model/agent/IOfficier";
+import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
+import { AlertesActes } from "../../../../../common/composant/alertesActe/AlertesActes";
+import { ActeImage } from "../../../../fiche/hook/constructionComposants/acte/ActeImage";
 
 interface VisionneuseActeEditionProps {
   acte?: IFicheActe;
@@ -30,12 +30,12 @@ export const VisionneuseActeEdition: React.FC<
 
   return (
     <>
-      <ActeImage id={props.acte?.id} estReecrit={props.acte?.estReecrit} />
       <AlertesActes
         idActeInit={props.acte?.id ? props.acte?.id : ""}
         detailRequete={props.detailRequete}
         ajoutAlertePossible={ajoutAlertePossible}
       />
+      <ActeImage id={props.acte?.id} estReecrit={props.acte?.estReecrit} />
     </>
   );
 };

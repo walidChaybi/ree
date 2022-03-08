@@ -3,6 +3,7 @@ import {
   DocumentReponse,
   IDocumentReponse
 } from "../../../../../model/requete/IDocumentReponse";
+import { getLibelle } from "../../../../common/util/Utils";
 import { OngletsDynamique } from "../../../../common/widget/ongletsDynamique/OngletsDynamique";
 
 interface OngletsDocumentsProps {
@@ -31,15 +32,18 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
   };
 
   return (
-    <OngletsDynamique
-      actionClick={handleClick}
-      actionPlus={handleSelect}
-      ongletSelectionne={idDocumentEdite}
-      listeOnglets={documents?.map(doc => {
-        return { id: doc.id, libelle: DocumentReponse.getLibelle(doc) };
-      })}
-      listePlus={listePlus}
-      nombreOngletsMax={NB_DOCUMENT_MAX}
-    />
+    <>
+      <span>{getLibelle("Document édité : ")}</span>
+      <OngletsDynamique
+        actionClick={handleClick}
+        actionPlus={handleSelect}
+        ongletSelectionne={idDocumentEdite}
+        listeOnglets={documents?.map(doc => {
+          return { id: doc.id, libelle: DocumentReponse.getLibelle(doc) };
+        })}
+        listePlus={listePlus}
+        nombreOngletsMax={NB_DOCUMENT_MAX}
+      />
+    </>
   );
 };

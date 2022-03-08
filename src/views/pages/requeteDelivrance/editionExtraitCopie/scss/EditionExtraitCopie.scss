@@ -2,6 +2,7 @@
 
 .EditionExtraitCopie{
     text-align: start;
+
     .contenu-edition {
         display: flex;
         .side {
@@ -10,7 +11,6 @@
             }
             &.Edition {
             width: 50%;
-            text-align: right;
             }
             display: inline-block;
         }
@@ -21,11 +21,10 @@
                 text-align: left;
             }
             .ContenuVolet{
-                height: 820px;
                 overflow-y: auto;
                 overflow-x: hidden;
                 iframe{
-                    height:800px;
+                    //height:800px;
                 }
             }
             .MuiTabPanel-root {
@@ -40,6 +39,24 @@
             margin: 10rem 1rem;
         }
     }
+    .BoutonsEdition {
+        position: sticky;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        left: 0px;
+        width: 100%;
+        bottom: 0px;
+        text-align: center;
+
+        .Gauche{
+            text-align: start;
+        }
+        .Droite{
+            text-align: end;
+        }
+        
+      }
+      
 
 
 }

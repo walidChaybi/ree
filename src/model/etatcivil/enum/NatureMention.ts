@@ -1,19 +1,18 @@
+/* istanbul ignore file */
 import { peupleNatureMention } from "../../../api/nomenclature/NomenclatureEtatcivil";
+import { EnumNomemclature } from "../../../views/common/util/enum/EnumNomenclature";
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../views/common/util/Type";
 
-export class NatureMention extends EnumWithLibelle {
+export class NatureMention extends EnumNomemclature {
   constructor(
-    private readonly _code: string,
-    private readonly _estActif: string,
-    private readonly _opposableAuTiers: boolean,
-    libelle: string
+    code: string,
+    libelle: string,
+    categorie: string,
+    private readonly _estActif: boolean,
+    private readonly _opposableAuTiers: boolean
   ) {
-    super(libelle);
-  }
-
-  get code() {
-    return this._code;
+    super(code, libelle, categorie);
   }
 
   get estActif() {
@@ -47,6 +46,22 @@ export class NatureMention extends EnumWithLibelle {
 
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(NatureMention);
+  }
+
+  public static getKey(nature?: NatureMention | string) {
+    if (nature) {
+      return EnumWithLibelle.getKey(NatureMention, nature);
+    } else {
+      return "";
+    }
+  }
+
+  public static getEnumOrEmpty(nature?: NatureMention) {
+    if (nature) {
+      return nature;
+    } else {
+      return NatureMention.getEnumFor("");
+    }
   }
 
   public static estOpposableAuTiers(natureMention: NatureMention) {

@@ -1,5 +1,5 @@
 export enum Validation {
-  O,
-  N,
-  E
+  O = "O",
+  N = "N",
+  E = "E"
 }
