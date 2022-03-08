@@ -182,7 +182,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
         page={
           pageState > 0 && paramsTableau.rowsNumberState === 0 ? 0 : pageState
         }
-        onChangePage={handleChangePage}
+        onPageChange={handleChangePage}
         backIconButtonText={getLibelle("Page précédente")}
         nextIconButtonText={getLibelle("Page suivante")}
       />
