@@ -3,7 +3,6 @@ import {
   DocumentReponse,
   IDocumentReponse
 } from "../../../../../model/requete/IDocumentReponse";
-import { getLibelle } from "../../../../common/util/Utils";
 import { OngletsDynamique } from "../../../../common/widget/ongletsDynamique/OngletsDynamique";
 
 interface OngletsDocumentsProps {
@@ -33,7 +32,6 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
 
   return (
     <>
-      <span>{getLibelle("Document édité : ")}</span>
       <OngletsDynamique
         actionClick={handleClick}
         actionPlus={handleSelect}

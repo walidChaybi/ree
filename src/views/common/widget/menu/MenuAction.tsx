@@ -17,6 +17,7 @@ interface IMenuActionProps {
   className?: string;
   widthMenuItem?: string;
   afficheChevron?: boolean;
+  infoBulle?: string;
 }
 
 export const MenuAction: React.FC<IMenuActionProps> = props => {
@@ -47,7 +48,7 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
   };
 
   return (
-    <div className={`MenuAction ${props.className}`}>
+    <div title={props.infoBulle} className={`MenuAction ${props.className}`}>
       <button onClick={handleClick}>
         <span>{props.titre}</span>
         {props.afficheChevron && afficheFleche()}

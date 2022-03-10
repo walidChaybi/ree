@@ -221,15 +221,16 @@ textarea {
 }
 
 .LinkFilAriane {
-  background-color: $button-application-color;
+  color: $title-application-color !important;
   &:hover {
-    background-color: $application-color;
+    background-color: $button-application-color;
     cursor: pointer;
+    color: white !important;
   }
 }
 
 .TextFilAriane {
-  background-color: $application-color;
+  color: $title-application-color !important;
   &:hover {
     cursor: default;
   }
@@ -299,4 +300,24 @@ th {
 .MuiMenuItem-root {
   padding-top: 4.5px !important;
   padding-bottom: 4.5px !important;
+}
+
+.BarreOnglet, .ongletDelivrance, .ongletInformation {
+  .MuiButtonBase-root {
+    background-color: $application-color !important;
+    color:white !important;
+    opacity: 1 !important;
+    padding: 0 1rem !important;
+    font-size: 13px !important;
+    &:hover {
+      opacity: 0.7 !important;
+    }
+    .MuiTab-wrapper {
+      font-family: "NotoSansUI-Bold", sans-serif;
+    }
+  }
+  
+  .MuiButtonBase-root.Mui-selected {
+    background-color: $button-application-color !important;
+  }
 }

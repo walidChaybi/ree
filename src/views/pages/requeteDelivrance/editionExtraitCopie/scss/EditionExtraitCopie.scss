@@ -5,6 +5,8 @@
 
     .contenu-edition {
         display: flex;
+        border: 0.1rem solid $button-application-color;
+        padding: 1rem;
         .side {
             &.Visualisation {
             width: 50%;
@@ -15,11 +17,6 @@
             display: inline-block;
         }
         .VoletAvecOnglet{
-            .TitreVolet {
-                color: $application-color ;
-                font-size: 1rem;
-                text-align: left;
-            }
             .ContenuVolet{
                 overflow-y: auto;
                 overflow-x: hidden;
@@ -28,7 +25,8 @@
                 }
             }
             .MuiTabPanel-root {
-                padding: 10px;
+                padding: 0 !important;
+                margin-top: 1rem;
             }
         }
 
