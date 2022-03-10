@@ -39,7 +39,7 @@ test("ajoutParagrapheEnregistrementPACS", () => {
 
   expect(temp).toStrictEqual({
     paragraphe_enregistrement: `Enregistrée par Maître dominique Ester, notaire à Paris arr.18, office notarial n°1235467890, le 19 janvier 1970.
-Date d'effet de la déclaration du PACS à l'égard des tiers : 1er décembre 2020`,
+Date d'effet de la déclaration du PACS à l'égard des tiers : 1er décembre 2020.`,
     paragraphe_modification: `Modifiée par Maître Martin De la plume dans le bec, notaire à Nantes (Loire-Atlantique), office notarial n°987563141, le 22 janvier 2021.
 Date d'effet de la modification du PACS à l'égard des tiers : 22 janvier 2021.`,
     paragraphe_dissolution: `Dissoute au tribunal judiciaire de Paris arr.18, le 26 novembre 2020.

@@ -24,7 +24,7 @@ export const ParagrapheComposition = {
 
     obj.paragraphe_enregistrement = `Enregistrée ${ParagrapheComposition.getAutoriteEtLocalisation(
       fiche.autorite
-    )}, le ${dateEnregistrement}.\nDate d'effet de la déclaration du PACS à l'égard des tiers : ${dateInscription}`;
+    )}, le ${dateEnregistrement}.\nDate d'effet de la déclaration du PACS à l'égard des tiers : ${dateInscription}.`;
   },
 
   ajoutParagrapheModificationPACS(
