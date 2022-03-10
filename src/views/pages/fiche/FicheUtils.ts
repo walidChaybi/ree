@@ -70,7 +70,7 @@ export function setFiche(dataFiche?: IDataFicheProps, data?: any): IFiche {
         fiche.panelsFiche = getPanelsActe(ficheActe);
         fiche.alertes = mapAlertesActe(data?.alerteActes);
         fiche.visuBoutonAlertes = getParamsAffichageFicheActe(
-          ficheActe.registre.type.id,
+          ficheActe.registre?.type?.id,
           ficheActe.visibiliteArchiviste
         ).visuBoutonAlertes;
         break;
