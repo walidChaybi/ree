@@ -186,7 +186,7 @@ const getOngletsVisu = (
   document?: IDocumentReponse,
   acte?: IFicheActe
 ) => {
-  const res: OngletProps = { liste: [], ongletSelectionne: 0 };
+  const res: OngletProps = { liste: [], ongletSelectionne: -1 };
   if (document) {
     if (DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument)) {
       res.liste = [
@@ -195,6 +195,7 @@ const getOngletsVisu = (
           component: <Courrier requete={requete} idActe={acte?.id}></Courrier>
         }
       ];
+      res.ongletSelectionne = 0;
     } else {
       res.liste = [
         {
@@ -220,7 +221,7 @@ const getOngletsVisu = (
           )
         }
       ];
-      res.ongletSelectionne = 1;
+      res.ongletSelectionne = 0;
     }
   }
   return res;
