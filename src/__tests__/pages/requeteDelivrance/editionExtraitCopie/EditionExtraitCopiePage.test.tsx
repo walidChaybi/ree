@@ -53,6 +53,12 @@ beforeEach(async () => {
 });
 
 test("Test affichage Edition Extrait copie", async () => {
+  await waitFor(() => {
+    expect(screen.getAllByText("Extrait avec filiation")).toBeDefined();
+    expect(screen.getAllByText("Requête")).toBeDefined();
+    expect(screen.getAllByText("Acte registre")).toBeDefined();
+  });
+
   act(() => {
     fireEvent.click(screen.getAllByText("Extrait avec filiation")[0]);
   });
