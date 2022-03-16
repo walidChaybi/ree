@@ -13,10 +13,10 @@ import { SectionContentProps } from "../../../../../common/widget/section/Sectio
 import { SectionPartProps } from "../../../../../common/widget/section/SectionPart";
 
 export function getTitulaires(acte: IFicheActe): SectionPartProps[] {
-  const sortedTitulaires = triListeObjetsSurPropriete(
+  const sortedTitulaires = acte.titulaires ? triListeObjetsSurPropriete(
     [...acte.titulaires],
     "numeroOrdreSaisi"
-  );
+  ) : [];
 
   return sortedTitulaires.map((titulaire, index) => {
     return {

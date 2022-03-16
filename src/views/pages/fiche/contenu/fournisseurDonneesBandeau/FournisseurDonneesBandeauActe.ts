@@ -47,7 +47,7 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   }
 
   getAnnee(): string {
-    return this.data ? this.data.evenement.annee : "";
+    return this.data ? this.data.evenement?.annee : "";
   }
 
   getRegistre(): string {
