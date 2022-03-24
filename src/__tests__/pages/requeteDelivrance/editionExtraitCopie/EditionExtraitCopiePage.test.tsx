@@ -99,6 +99,14 @@ test("Test affichage Edition Extrait copie", async () => {
   await waitFor(() => {
     expect(document).toBeDefined();
   });
+
+  // Afficher Courrier
+  act(() => {
+    fireEvent.click(screen.getByText("Courrier"));
+  });
+  await waitFor(() => {
+    expect(screen.getByText("Édition courrier")).toBeDefined();
+  });
 });
 
 test("Test édition mentions Edition Extrait copie", async () => {
@@ -139,11 +147,6 @@ test("Test édition mentions Edition Extrait copie", async () => {
   await waitFor(() => {
     expect(screen.getAllByText("Première mention")).toHaveLength(2);
   });
-
-  // Suppression d'une mention
-  act(() => {
-    fireEvent.click(screen.getAllByTitle("Supprimer la mention")[0]);
-  });
 });
 
 test("Ajout mention et réinitialisation", async () => {
@@ -152,10 +155,6 @@ test("Ajout mention et réinitialisation", async () => {
     expect(
       screen.getAllByText("Deuxième mention Nantes, le 25 juin 2012")
     ).toBeDefined();
-  });
-
-  act(() => {
-    fireEvent.click(screen.getAllByTitle("Supprimer la mention")[0]);
   });
 
   act(() => {
@@ -206,7 +205,10 @@ test("Ajout mention et réinitialisation", async () => {
   });
 
   act(() => {
-    fireEvent.click(screen.getAllByText("Troisième mention ajoutée")[0]);
+    fireEvent.click(screen.getAllByTitle("Supprimer la mention")[0]);
+  });
+
+  act(() => {
     fireEvent.click(screen.getByText("Réinitialiser"));
   });
 
@@ -217,7 +219,7 @@ test("Ajout mention et réinitialisation", async () => {
   });
 });
 
-test("clic sur mention et sur checkbox", async () => {
+test("clic sur mention et sur checkbox et valider", async () => {
   // Gestion des mentions
   act(() => {
     fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
@@ -263,6 +265,8 @@ test("clic sur mention et sur checkbox", async () => {
     expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
   });
 });
+
+
 
 afterAll(() => {
   superagentMock.unset();

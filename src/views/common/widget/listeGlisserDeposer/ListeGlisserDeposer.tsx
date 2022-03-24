@@ -24,6 +24,8 @@ export interface ListeItem {
   libelle: string;
   checkbox: boolean;
   id: string;
+  aPoubelle: boolean;
+  liste1Element?: boolean;
 }
 
 export const ListeGlisserDeposer: React.FC<
@@ -40,19 +42,23 @@ export const ListeGlisserDeposer: React.FC<
       onClick={() => onClickMention(item)}
       className={`${item.id === props.elementSelect ? "selected" : ""}`}
     >
-      <span title={getLibelle("Cliquer pour glisser/déposer")}>
-        <DragHandleElement />
-      </span>
+      {!item.liste1Element && (
+        <span title={getLibelle("Cliquer pour glisser/déposer")}>
+          <DragHandleElement />
+        </span>
+      )}
       <Checkbox
         checked={item.checkbox}
         onClick={() => props.handleCheckbox(item.id)}
       />
 
-      <DeleteOutlined
-        onClick={() => props.onClickSupprimer(item.id)}
-        className="IconeSupprimer"
-        titleAccess={getLibelle("Supprimer la mention")}
-      />
+      {item.aPoubelle && (
+        <DeleteOutlined
+          onClick={() => props.onClickSupprimer(item.id)}
+          className="IconeSupprimer"
+          titleAccess={getLibelle("Supprimer la mention")}
+        />
+      )}
       <p title={item.libelle}>
         {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
       </p>
@@ -70,6 +76,8 @@ export const ListeGlisserDeposer: React.FC<
               libelle={value.libelle}
               checkbox={value.checkbox}
               id={value.id}
+              aPoubelle={value.aPoubelle}
+              liste1Element={props.liste?.length === 1}
             />
           ))}
       </ul>

@@ -145,6 +145,17 @@ export async function getMentions(idActe: string): Promise<any> {
   });
 }
 
+export async function postMentions(
+  idActe: string,
+  mentions: any[]
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
+    data: mentions
+  });
+}
+
 export function rechercheMultiCriteresAutoActes(
   criteres: ICriteresRMCAuto,
   range?: string

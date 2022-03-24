@@ -9,7 +9,8 @@ import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentRe
 import messageManager from "../../../../../../common/util/messageManager";
 import {
   getLibelle,
-  getValeurOuVide
+  getValeurOuVide,
+  shallowEgalTableau
 } from "../../../../../../common/util/Utils";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
@@ -19,6 +20,7 @@ export interface IMentionAffichage {
   nature: NatureMention;
   id: string;
   numeroOrdre: number;
+  aPoubelle: boolean;
 }
 
 export function mappingVersMentionAffichage(
@@ -27,14 +29,15 @@ export function mappingVersMentionAffichage(
 ): IMentionAffichage[] {
   return mentionsApi
     .sort((a, b) => a.numeroOrdreExtrait - b.numeroOrdreExtrait)
-    .map(el => ({
-      nature: el.typeMention.nature,
-      texte: Mention.getTexte(el),
+    .map(mentionApi => ({
+      nature: mentionApi.typeMention.nature,
+      texte: Mention.getTexte(mentionApi),
       estPresent: !document.mentionsRetirees?.find(
-        mentionRetiree => mentionRetiree.idMention === el.id
+        mentionRetiree => mentionRetiree.idMention === mentionApi.id
       ),
-      id: el.id,
-      numeroOrdre: el.numeroOrdreExtrait
+      id: mentionApi.id,
+      numeroOrdre: mentionApi.numeroOrdreExtrait,
+      aPoubelle: mentionApi.textes.texteMention === ""
     }));
 }
 
@@ -45,7 +48,8 @@ export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
       return {
         libelle: el.texte,
         checkbox: el.estPresent,
-        id: el.id
+        id: el.id,
+        aPoubelle: el.aPoubelle
       };
     });
 }
@@ -56,6 +60,38 @@ export function getEnumNatureMentionOuAutre(id: string) {
   } else {
     return NatureMention.getEnumFromLibelle(NatureMention, "Autres");
   }
+}
+
+export function mappingVersMentionsApi(
+  mentionsApi: IMention[],
+  mentionsAffichage: IMentionAffichage[]
+) {
+  const mentionsRetirees: string[] = [];
+  const mentionsAEnvoyer: any[] = [];
+  mentionsAffichage.forEach(mA => {
+    const mention = mentionsApi.find(mApi => mA.id === mApi.id);
+    if (mention) {
+      if (mA.estPresent) {
+        const mentionFormater = mention as any;
+        mentionFormater.numeroOrdreExtrait = mA.numeroOrdre;
+        mentionFormater.textes.texteMentionDelivrance = mA.texte;
+        mentionFormater.typeMention.nature =
+          NatureMention.mappingNatureVersNomenclatureDto(mA.nature);
+        mentionsAEnvoyer.push(mentionFormater);
+      } else {
+        mentionsRetirees.push(mA.id);
+      }
+    } else {
+      mentionsAEnvoyer.push({
+        numeroOrdreExtrait: mA.numeroOrdre,
+        textes: { texteMentionDelivrance: mA.texte },
+        typeMention: {
+          nature: NatureMention.mappingNatureVersNomenclatureDto(mA.nature)
+        }
+      });
+    }
+  });
+  return { mentionsAEnvoyer, mentionsRetirees };
 }
 
 export function miseAJourMention(
@@ -86,16 +122,27 @@ export function miseAJourMention(
 }
 
 export function modificationEffectue(
+  setIsDirty: any,
   mentions?: IMentionAffichage[],
   mentionsApi?: IMention[],
   document?: IDocumentReponse
 ) {
   if (mentions && mentionsApi && document) {
-    return (
-      JSON.stringify(mentions) ===
-      JSON.stringify(mappingVersMentionAffichage(mentionsApi, document))
-    );
-  } else return false;
+    if (
+      !shallowEgalTableau(
+        mentions,
+        mappingVersMentionAffichage(mentionsApi, document)
+      )
+    ) {
+      setIsDirty(true);
+      return true;
+    } else {
+      setIsDirty(false);
+      return false;
+    }
+  } else {
+    return false;
+  }
 }
 
 export function handleReorga(
@@ -201,7 +248,6 @@ export function handleBlur(
       );
     }
   }
-
 }
 
 export function miseAjourEnFonctionNature(
@@ -265,4 +311,14 @@ export function getRegistreActe(acte: IFicheActe) {
   const fournisseurDonneesBandeau =
     fournisseurDonneesBandeauFactory.createFournisseur(TypeFiche.ACTE, acte);
   return fournisseurDonneesBandeau.getRegistre();
+}
+
+export function aucuneMentionsNationalite(mentions?: IMentionAffichage[]) {
+  return mentions
+    ?.filter(el => el.estPresent)
+    .every(
+      el =>
+        el.nature !==
+        NatureMention.getEnumFromLibelle(NatureMention, "Nationalité")
+    );
 }

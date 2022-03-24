@@ -17,7 +17,7 @@ import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
   UpdateChoixDelivranceProps,
   useUpdateChoixDelivrance
-} from "./hook/UpdateChoixDelivranceHook";
+} from "./hook/UpdateChoixDelivranceApiHook";
 
 const INDEX_REQUETE_INCOMPLETE = 0;
 const INDEX_ACTE_NON_DETENU = 1;

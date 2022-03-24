@@ -16,7 +16,7 @@ export interface IBoutonPopin {
 
 export interface ConfirmationPopinProps {
   isOpen: boolean;
-  messages: string[];
+  messages?: string[];
   boutons?: IBoutonPopin[];
   title?: string;
   disablePortal?: boolean;
@@ -38,7 +38,7 @@ export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
     >
       {title && <DialogTitle id="alert-dialog-title">title</DialogTitle>}
       <DialogContent>
-        {messages.map((msg: string, idx: number) => {
+        {messages?.map((msg: string, idx: number) => {
           return (
             <DialogContentText
               id="alert-dialog-description"

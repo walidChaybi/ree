@@ -1,12 +1,15 @@
 import { Tab } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IOnglet } from "../../../../../model/requete/IOnglet";
+import { checkDirty } from "../EditionExtraitCopieUtils";
 
 interface VoletAvecOngletProps {
   titre: string;
   onglets: OngletProps;
   children?: any;
+  isDirty?: boolean;
+  setIsDirty?: any;
 }
 
 export interface OngletProps {
@@ -15,23 +18,39 @@ export interface OngletProps {
 }
 
 export const VoletAvecOnglet: React.FC<VoletAvecOngletProps> = props => {
-  const [ongletSelectionne, setOngletSelectionne] = useState<string>(
-    props.onglets.ongletSelectionne.toString()
-  );
+  const [ongletSelectionne, setOngletSelectionne] = useState<number>();
   const [onglets, setOnglets] = useState<IOnglet[]>(props.onglets.liste);
 
   useEffect(() => {
-    setOngletSelectionne(props.onglets.ongletSelectionne.toString());
+    if (
+      ongletSelectionne === undefined &&
+      props.onglets.ongletSelectionne >= 0
+    ) {
+      setOngletSelectionne(props.onglets.ongletSelectionne);
+    }
     setOnglets(props.onglets.liste);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onglets]);
 
-  const handleChange = (event: any, newValue: string) => {
-    setOngletSelectionne(newValue);
-  };
+  const handleChange = useCallback(
+    (event: any, newValue: string) => {
+      if (props.isDirty !== undefined && props.setIsDirty) {
+        if (checkDirty(props.isDirty, props.setIsDirty)) {
+          setOngletSelectionne(parseInt(newValue));
+        }
+      } else {
+        setOngletSelectionne(parseInt(newValue));
+      }
+    },
+    [props]
+  );
 
   return (
     <div className="VoletAvecOnglet">
-      <TabContext value={ongletSelectionne}>
+      <TabContext
+        value={ongletSelectionne ? ongletSelectionne.toString() : "0"}
+      >
         <TabList
           onChange={handleChange}
           className="BarreOnglet"

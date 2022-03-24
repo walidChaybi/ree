@@ -242,7 +242,10 @@ export const configRequetes = [
       }
 
       // Get de Piece complement information
-      if (match[1] === "/requetes/piecescomplementinformations/c4306a3c-6bd4-422f-a56b-20760795ba61") {
+      if (
+        match[1] ===
+        "/requetes/piecescomplementinformations/c4306a3c-6bd4-422f-a56b-20760795ba61"
+      ) {
         return { data: pieceComplementInformation };
       }
 
@@ -317,6 +320,7 @@ export const configRequetes = [
       }
 
       // Update choix delivrance
+
       if (
         match[1] ===
           "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance=REP_SANS_DEL_EC_REQUETE_INCOMPLETE" ||
@@ -370,6 +374,15 @@ export const configRequetes = [
       // Récupération d'un document par son id
       if (match[1] === "/documentsreponses/" + idDocumentsReponse[1]) {
         return { data: documentReponseCertificatRCA };
+      }
+
+      if (
+        match[1] ===
+          "/documentsreponses/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions" ||
+        match[1] ===
+          "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db/mentions"
+      ) {
+        return { data: true };
       }
 
       if (

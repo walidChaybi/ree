@@ -16,10 +16,8 @@ export interface IUpdateChoixDelivranceResultat {
 export function useUpdateChoixDelivrance(
   params?: UpdateChoixDelivranceProps
 ): IUpdateChoixDelivranceResultat | undefined {
-  const [
-    updateChoixDelivranceResultat,
-    setUpdateChoixDelivranceResultat
-  ] = useState<IUpdateChoixDelivranceResultat>();
+  const [updateChoixDelivranceResultat, setUpdateChoixDelivranceResultat] =
+    useState<IUpdateChoixDelivranceResultat>();
 
   useEffect(() => {
     if (params && params.choixDelivrance) {
@@ -32,6 +30,7 @@ export function useUpdateChoixDelivrance(
           handleLogError(error);
         });
     } else if (params) {
+      // On enlève le choix délivrance en cas de "Modification du traitement"
       updateChoixDelivrance(params.requete.id, null)
         .then((result: any) => {
           setUpdateChoixDelivranceResultat({ idRequete: result.body.data });
@@ -45,6 +44,7 @@ export function useUpdateChoixDelivrance(
   return updateChoixDelivranceResultat;
 }
 
+/* istanbul ignore next */
 function handleLogError(error: any) {
   logError({
     messageUtilisateur:

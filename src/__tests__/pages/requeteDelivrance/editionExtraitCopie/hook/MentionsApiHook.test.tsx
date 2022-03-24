@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
-import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import {
   IMentionsParams,
   useMentionsApiHook
-} from "../../../../views/common/hook/acte/MentionsApiHook";
+} from "../../../../../views/common/hook/acte/mentions/MentionsApiHook";
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const params: IMentionsParams = {

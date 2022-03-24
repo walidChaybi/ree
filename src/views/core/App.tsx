@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import fr from "date-fns/locale/fr";
 import React, { useEffect, useState } from "react";
@@ -36,7 +36,7 @@ import { useLoginApi } from "./login/LoginHook";
 registerLocale("fr", fr);
 setDefaultLocale("fr");
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: "#03476e"

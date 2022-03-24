@@ -48,6 +48,16 @@ export const FicheActe = {
   getNature(acte?: IFicheActe): string {
     return acte && acte.nature ? acte.nature.libelle : "";
   },
+  estActeNaissance(acte?: IFicheActe) {
+    return acte?.nature === NatureActe.NAISSANCE;
+  },
+  acteEstACQouOP2ouOP3(acte?: IFicheActe) {
+    return (
+      acte?.registre.famille === "ACQ" ||
+      acte?.registre.famille === "OP2" ||
+      acte?.registre.famille === "OP3"
+    );
+  },
 
   getReference(acte?: IFicheActe): string {
     const registre: any = {

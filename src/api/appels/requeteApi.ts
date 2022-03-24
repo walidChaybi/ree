@@ -7,6 +7,7 @@ import { IRMCRequestRequete } from "../../model/rmc/requete/IRMCRequestRequete";
 import { SortOrder } from "../../views/common/widget/tableau/TableUtils";
 import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
+import { URL_MENTION } from "./etatcivilApi";
 
 export const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES_INFO_SERVICE =
@@ -453,7 +454,7 @@ export async function sauvegarderReponseReqInfo(
   return api.fetch({
     method: HttpMethod.POST,
     uri: `${URL_SAUVEGARDER_REPONSE_REQINFO}/${idRequete}`,
-    data: { corpsMail: corpsMailReponse, idReponse: `${idReponse}` }
+    data: { corpsMail: corpsMailReponse, idReponse }
   });
 }
 
@@ -513,6 +514,19 @@ export function deleteObservation(idObservation: string): Promise<any> {
     uri: URL_OBSERVATION,
     parameters: {
       idObservation
+    }
+  });
+}
+
+export function updateDocumentMention(
+  id: string,
+  mentionsRetirees?: string[]
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_DOCUMENT_REPONSE}/${id}${URL_MENTION}`,
+    data: {
+      mentionsRetirees
     }
   });
 }

@@ -12,7 +12,7 @@ import {
   modificationEffectue,
   texteEnFonctionOpposableAuTiers,
   texteNonModifieNatureChangePasDeTexteDelivrance
-} from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/Mentions/GestionMentionsUtil";
+} from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
@@ -165,7 +165,8 @@ test("mappingVersMentionAffichage", () => {
       texte: "texte mention",
       estPresent: true,
       id: "1",
-      numeroOrdre: 1
+      numeroOrdre: 1,
+      aPoubelle: false
     }
   ]);
 });

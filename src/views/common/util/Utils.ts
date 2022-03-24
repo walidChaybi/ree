@@ -337,3 +337,23 @@ export function ecraseDonneeObjectAvec(obj1: any, obj2: any) {
   });
   return obj1EcraseParObj2SansProprieteNulle;
 }
+
+export function shallowEgalTableau(tab1: Object[], tab2: Object[]) {
+  if (tab1.length !== tab2.length) return false;
+  let res = true;
+  tab1.forEach((elTab1, index) => {
+    if (!shallowEgal(elTab1, tab2[index])) {
+      res = false;
+    }
+  });
+  return res;
+}
+
+export function shallowEgal(obj1: Object, obj2: Object) {
+  return (
+    Object.keys(obj1).length === Object.keys(obj2).length &&
+    (Object.keys(obj1) as (keyof typeof obj1)[]).every(key => {
+      return obj2.hasOwnProperty(key) && obj1[key] === obj2[key];
+    })
+  );
+}

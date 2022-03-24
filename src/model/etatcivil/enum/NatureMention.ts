@@ -65,6 +65,25 @@ export class NatureMention extends EnumNomemclature {
   }
 
   public static estOpposableAuTiers(natureMention: NatureMention) {
-    return natureMention.opposableAuTiers;
+    return natureMention.opposableAuTiers; 
+  }
+
+  public static getUuidFromNature(nature: NatureMention): string {
+    const uuid = EnumNomemclature.getCodeForLibelle(
+      NatureMention,
+      nature.libelle
+    );
+    return uuid ? uuid : "";
+  }
+
+  public static mappingNatureVersNomenclatureDto(nature: NatureMention) {
+    return {
+      id: NatureMention.getUuidFromNature(nature),
+      code: nature.code,
+      estActif: nature.estActif,
+      libelle: nature.libelle,
+      nom: "NATURE_MENTION",
+      opposableAuTiers: nature.opposableAuTiers
+    };
   }
 }

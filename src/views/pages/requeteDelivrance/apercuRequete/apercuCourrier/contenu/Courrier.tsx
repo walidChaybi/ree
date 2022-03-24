@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
@@ -9,7 +8,6 @@ import {
 } from "../../../../../../model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import messageManager from "../../../../../common/util/messageManager";
-import { getUrlWithParam } from "../../../../../common/util/route/routeUtil";
 import { getLibelle } from "../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
 import {
@@ -18,10 +16,6 @@ import {
 } from "../../../../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "../../../../../common/widget/popin/ConfirmationPopin";
-import {
-  receUrl,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
-} from "../../../../../router/ReceUrls";
 import BoutonsCourrier, {
   BoutonsCourrierProps
 } from "./contenuForm/BoutonsCourrier";
@@ -57,6 +51,7 @@ import "./scss/Courrier.scss";
 interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
   idActe?: string;
+  handleCourrierEnregistre: () => void;
 }
 
 export const Courrier: React.FC<ModificationCourrierProps> = props => {
@@ -157,9 +152,6 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     setOperationEnCours(false);
   };
 
-  /** Saisie du courrier */
-  const history = useHistory();
-
   useEffect(() => {
     if (saisieCourrier && props.requete.choixDelivrance) {
       setGenerationCourrierHookParams({
@@ -183,14 +175,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
       messageManager.showSuccessAndClose(
         getLibelle("Le courrier a bien été enregistré")
       );
-      receUrl.replaceUrl(
-        history,
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-          `${props.requete.id}`
-        ),
-        props.idActe
-      );
+      props.handleCourrierEnregistre();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generationCourrier]);

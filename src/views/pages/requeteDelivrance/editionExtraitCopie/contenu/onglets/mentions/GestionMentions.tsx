@@ -1,12 +1,23 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
+import {
+  FicheActe,
+  IFicheActe
+} from "../../../../../../../model/etatcivil/acte/IFicheActe";
 import { NatureMention } from "../../../../../../../model/etatcivil/enum/NatureMention";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import {
   IMentionsParams,
   useMentionsApiHook
-} from "../../../../../../common/hook/acte/MentionsApiHook";
+} from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
+import {
+  IMiseAJourDocumentMentionParams,
+  useMiseAJourDocumentMentionApiHook
+} from "../../../../../../common/hook/acte/mentions/MiseAJourDocumentMentionApiHook";
+import {
+  IMiseAJourMentionsParams,
+  useMiseAJourMentionsApiHook
+} from "../../../../../../common/hook/acte/mentions/MiseAJourMentionsApiHook";
 import {
   getLibelle,
   getValeurOuVide
@@ -14,10 +25,12 @@ import {
 import { SelectRece } from "../../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { SectionModificationMention } from "./contenu/SectionModificationMention";
 import {
+  aucuneMentionsNationalite,
   getEnumNatureMentionOuAutre,
   getRegistreActe,
   IMentionAffichage,
   mappingVersMentionAffichage,
+  mappingVersMentionsApi,
   modificationEffectue
 } from "./GestionMentionsUtil";
 import "./scss/Mention.scss";
@@ -25,6 +38,7 @@ import "./scss/Mention.scss";
 interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
+  setIsDirty: any;
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
@@ -32,8 +46,14 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   const [mentionAjout, setMentionAjout] = useState<IMentionAffichage>();
   const [mentions, setMentions] = useState<IMentionAffichage[]>();
   const [mentionsParams, setMentionsParams] = useState<IMentionsParams>();
+  const [mentionsAEnvoyerParams, setMentionsAEnvoyerParams] =
+    useState<IMiseAJourMentionsParams>();
+  const [documentMajParams, setDocumentMajParams] =
+    useState<IMiseAJourDocumentMentionParams>();
 
   const mentionsApi = useMentionsApiHook(mentionsParams);
+  useMiseAJourMentionsApiHook(mentionsAEnvoyerParams);
+  useMiseAJourDocumentMentionApiHook(documentMajParams);
 
   useEffect(() => {
     if (props.acte) {
@@ -52,7 +72,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         setMentionSelect(mentionsNew[0]);
       }
     }
-  }, [mentionsApi, props]);
+  }, [mentionsApi, props.document]);
 
   useEffect(() => {
     reinitialisation();
@@ -70,7 +90,8 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           texte: "",
           nature: NatureMention.getEnumFor(event.target.value),
           numeroOrdre: mentions?.length,
-          estPresent: true
+          estPresent: true,
+          aPoubelle: true
         } as IMentionAffichage);
       }
     },
@@ -88,7 +109,8 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           texte: event.target.value,
           nature: NatureMention.getEnumFor(""),
           numeroOrdre: mentions?.length,
-          estPresent: true
+          estPresent: true,
+          aPoubelle: true
         } as IMentionAffichage);
       }
     },
@@ -107,6 +129,53 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
       setMentionAjout(undefined);
     }
   }, [mentionAjout, mentions]);
+
+  const sauvegarderMentions = useCallback(() => {
+    if (mentionsApi && mentionsApi.mentions && mentions && props.document) {
+      const { mentionsAEnvoyer, mentionsRetirees } = mappingVersMentionsApi(
+        mentionsApi.mentions,
+        mentions
+      );
+      if (
+        modificationEffectue(
+          props.setIsDirty,
+          mentions,
+          mentionsApi.mentions,
+          props.document
+        )
+      ) {
+        setMentionsAEnvoyerParams({
+          idActe: getValeurOuVide(props.acte?.id),
+          mentions: mentionsAEnvoyer
+        });
+        setDocumentMajParams({
+          idDocument: props.document.id,
+          mentionsRetirees,
+        });
+      } else {
+         setDocumentMajParams({
+          idDocument: props.document.id
+        });
+      }
+    }
+  }, [mentions, mentionsApi, props.acte, props.document, props.setIsDirty]);
+
+  const valider = useCallback(() => {
+    if (
+      FicheActe.acteEstACQouOP2ouOP3(props.acte) &&
+      FicheActe.estActeNaissance(props.acte) &&
+      aucuneMentionsNationalite(mentions)
+    ) {
+      if (
+        window.confirm(`Aucune mention de nationalité n'a été cochée. 
+      Voulez-vous continuer ?`)
+      ) {
+        sauvegarderMentions();
+      }
+    } else {
+      sauvegarderMentions();
+    }
+  }, [props.acte, mentions, sauvegarderMentions]);
 
   return (
     <div className="Mention">
@@ -128,6 +197,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         mentionsApi={mentionsApi}
         setMentionSelect={setMentionSelect}
         setMentions={setMentions}
+        setIsDirty={props.setIsDirty}
       />
       <div className="FormMention Ajout">
         <h3>{getLibelle("Ajout d'une mention")}</h3>
@@ -155,15 +225,18 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
       <div className="Boutons">
         <button
           onClick={reinitialisation}
-          disabled={modificationEffectue(
-            mentions,
-            mentionsApi?.mentions,
-            props.document
-          )}
+          disabled={
+            !modificationEffectue(
+              props.setIsDirty,
+              mentions,
+              mentionsApi?.mentions,
+              props.document
+            )
+          }
         >
           {getLibelle("Réinitialiser")}
         </button>
-        <button>{getLibelle("Valider")}</button>
+        <button onClick={valider}>{getLibelle("Valider")}</button>
       </div>
     </div>
   );

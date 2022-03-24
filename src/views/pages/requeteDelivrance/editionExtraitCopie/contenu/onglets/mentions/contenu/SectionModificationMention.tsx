@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { NatureMention } from "../../../../../../../../model/etatcivil/enum/NatureMention";
-import { IMentionsResultat } from "../../../../../../../common/hook/acte/MentionsApiHook";
+import { IMentionsResultat } from "../../../../../../../common/hook/acte/mentions/MentionsApiHook";
 import {
   getLibelle,
   getValeurOuVide
@@ -23,6 +23,7 @@ export interface SectionModificationMentionProps {
   mentionsApi?: IMentionsResultat;
   setMentionSelect: any;
   setMentions: any;
+  setIsDirty: any;
 }
 
 export const SectionModificationMention: React.FC<
@@ -32,7 +33,8 @@ export const SectionModificationMention: React.FC<
   mentionSelect,
   mentionsApi,
   setMentionSelect,
-  setMentions
+  setMentions,
+  setIsDirty
 }) => {
   function selectionneMention(id: string) {
     selectionneEtMiseAJour(mentions, mentionSelect, setMentionSelect, id);

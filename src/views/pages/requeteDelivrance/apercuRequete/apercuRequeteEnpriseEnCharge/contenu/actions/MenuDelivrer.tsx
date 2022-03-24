@@ -39,7 +39,7 @@ import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
   UpdateChoixDelivranceProps,
   useUpdateChoixDelivrance
-} from "./hook/UpdateChoixDelivranceHook";
+} from "./hook/UpdateChoixDelivranceApiHook";
 import {
   compositionCourrierAutomatique,
   estChoixExtraitAvecOuSansFiliation,

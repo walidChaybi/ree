@@ -4,12 +4,15 @@ import {
   IDocumentReponse
 } from "../../../../../model/requete/IDocumentReponse";
 import { OngletsDynamique } from "../../../../common/widget/ongletsDynamique/OngletsDynamique";
+import { checkDirty } from "../EditionExtraitCopieUtils";
 
 interface OngletsDocumentsProps {
   documents?: IDocumentReponse[];
   idDocumentEdite?: string;
   setDocumentEdite: (document: string) => void;
   ajouterDocument: (document: any) => void;
+  isDirty: boolean;
+  setIsDirty: any;
 }
 
 const NB_DOCUMENT_MAX = 3;
@@ -18,14 +21,16 @@ export const OngletDocumentsEdites: React.FC<OngletsDocumentsProps> = ({
   documents,
   idDocumentEdite,
   setDocumentEdite,
-  ajouterDocument
+  ajouterDocument,
+  isDirty,
+  setIsDirty
 }) => {
   const listePlus = [{ label: "Copie plurilingue", value: 0 }];
 
   const handleSelect = (event: any) => {};
 
   const handleClick = (idDoc: string) => {
-    if (idDoc !== idDocumentEdite) {
+    if (idDoc !== idDocumentEdite && checkDirty(isDirty, setIsDirty)) {
       setDocumentEdite(idDoc);
     }
   };

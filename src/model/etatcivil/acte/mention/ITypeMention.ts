@@ -1,3 +1,4 @@
+import { NatureActe } from "../../enum/NatureActe";
 import { NatureMention } from "../../enum/NatureMention";
 
 export interface ITypeMention {
@@ -14,4 +15,8 @@ export interface ITypeMention {
   modeInformatisation: string;
 
   nature: NatureMention;
+
+  sousTypeParDefaut?: boolean;
+
+  natureActe?: NatureActe;
 }

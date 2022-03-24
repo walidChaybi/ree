@@ -129,8 +129,19 @@ export const configEtatcivil = [
 
       /////////////////////////////////////////////////////////////////////
       // Mention
-      if (match[1] === `/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions`) {
+      if (
+        match[1] === `/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions` &&
+        context.method === "get"
+      ) {
         return { data: mentions };
+      }
+      if (
+        match[1] === `/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions` &&
+        context.method === "post"
+      ) {
+        let err = new Error(500);
+        err.status = 500;
+        throw err;
       }
 
       /////////////////////////////////////////////////////////////////////
