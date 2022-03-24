@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getMentions } from "../../../../../api/appels/etatcivilApi";
-import { IMention } from "../../../../../model/etatcivil/acte/mention/IMention";
-import { NatureMention } from "../../../../../model/etatcivil/enum/NatureMention";
-import { getDateFromTimestamp } from "../../../../common/util/DateUtils";
-import { logError } from "../../../../common/util/LogManager";
+import { getMentions } from "../../../../api/appels/etatcivilApi";
+import { IMention } from "../../../../model/etatcivil/acte/mention/IMention";
+import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
+import { getDateFromTimestamp } from "../../util/DateUtils";
+import { logError } from "../../util/LogManager";
 
 export interface IMentionsParams {
   idActe: string;

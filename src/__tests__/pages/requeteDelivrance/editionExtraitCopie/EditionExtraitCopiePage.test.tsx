@@ -9,13 +9,19 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
+import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
+import { storeRece } from "../../../../views/common/util/storeRece";
 import { EditionExtraitCopiePage } from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID } from "../../../../views/router/ReceUrls";
+import {
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
+} from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
@@ -29,6 +35,14 @@ globalAny.URL.createObjectURL = jest.fn();
 beforeEach(async () => {
   DocumentDelivrance.init();
   NatureMention.init();
+  storeRece.utilisateurCourant = userDroitCOMEDEC;
+  history.push(URL_MES_REQUETES_DELIVRANCE);
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
+      "9bfa282d-1e66-4538-b242-b9de4f683f0f"
+    )
+  );
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
@@ -112,6 +126,7 @@ test("Test édition mentions Edition Extrait copie", async () => {
       }
     });
   });
+
   await waitFor(() => {
     expect(screen.getByText("Deuxième mention changée")).toBeDefined();
     expect(screen.getByPlaceholderText("Nature sélectionnée")).toBeDefined();
@@ -202,7 +217,7 @@ test("Ajout mention et réinitialisation", async () => {
   });
 });
 
-test("clic sur mention et sur checkbox", () => {
+test("clic sur mention et sur checkbox", async () => {
   // Gestion des mentions
   act(() => {
     fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
@@ -233,12 +248,20 @@ test("clic sur mention et sur checkbox", () => {
     fireEvent.blur(textarea1);
   });
 
-  /*await waitFor(() => {
-      expect(screen.getByText("Ajout d'une mention")).toBeDefined();
-      expect(
-        screen.getAllByText("Deuxième mention Nantes, le 25 juin 2012")
-      ).toBeDefined();
-    });*/
+  await waitFor(() => {
+    expect(screen.getAllByText("Deuxième mention changée")).toBeDefined();
+    expect(
+      (screen.getByText("Terminer") as HTMLButtonElement).disabled
+    ).toBeFalsy();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Terminer"));
+  });
+
+  await waitFor(() => {
+    expect(history.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
+  });
 });
 
 afterAll(() => {

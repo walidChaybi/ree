@@ -22,6 +22,7 @@ export const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
 export const URL_ALERTES_ACTE = "/alertes";
 export const URL_ALERTE_ACTE = "/alerte";
 export const URL_DECRETS = "/repertoirecivil/decrets";
+export const URL_DERNIERE_DELIVRANCE = "/dernieredelivrance";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -214,3 +215,11 @@ export function getToutesLesDecrets(): Promise<any> {
     uri: `${URL_DECRETS}`
   });
 }
+
+export function updateDateDerniereDelivranceActe(idActe: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_DELIVRANCE}`
+  });
+}
+

@@ -7,12 +7,17 @@ import {
 import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
+import { TypeCanal } from "../../../../../model/requete/enum/TypeCanal";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import {
   ModeSignature,
   ModeSignatureUtil
 } from "../../../../../model/requete/ModeSignature";
 import parametres from "../../../../../ressources/parametres.json";
+import {
+  IDerniereDelivranceActeParams,
+  useDerniereDelivranceActeApiHook
+} from "../../../hook/acte/DerniereDelivranceActeApiHook";
 import { usePatchDocumentsReponseApi } from "../../../hook/DocumentReponseHook";
 import {
   CreationActionEtMiseAjourStatutParams,
@@ -22,7 +27,7 @@ import { FormatDate } from "../../../util/DateUtils";
 import messageManager from "../../../util/messageManager";
 import { gestionnaireSignatureFlag } from "../../../util/signatureFlag/gestionnaireSignatureFlag";
 import gestionnaireTimer from "../../../util/timer/GestionnaireTimer";
-import { getLibelle } from "../../../util/Utils";
+import { getLibelle, getValeurOuVide } from "../../../util/Utils";
 import { SignatureErrors } from "../messages/ErrorsSignature";
 import { SuccessSignatureType } from "../messages/SuccessSignature";
 
@@ -54,6 +59,8 @@ export interface DocumentsATraiter {
   documentsToSign: DocumentToSign[];
   documentsToSave: DocumentToSave[];
   sousTypeRequete: SousTypeDelivrance;
+  canal?: TypeCanal;
+  idActe?: string;
 }
 
 interface DocumentToSave {
@@ -83,10 +90,8 @@ export function useSignatureDocumentHook(
   documentsByRequete: DocumentsByRequete,
   pinCode?: string
 ) {
-  const [
-    documentsToSignWating,
-    setDocumentsToSignWating
-  ] = useState<DocumentsByRequete>(documentsByRequete);
+  const [documentsToSignWating, setDocumentsToSignWating] =
+    useState<DocumentsByRequete>(documentsByRequete);
 
   const [idRequetesToSign, setIdRequetesToSign] = useState<string[]>(
     documentsByRequete !== undefined ? Object.keys(documentsByRequete) : []
@@ -106,17 +111,24 @@ export function useSignatureDocumentHook(
     creationActionEtMiseAjourStatutParams,
     setCreationActionEtMiseAjourStatutParams
   ] = useState<CreationActionEtMiseAjourStatutParams>();
+  const [majDateDerniereDelivranceActe, setMajDateDerniereDelivranceActe] =
+    useState<IDerniereDelivranceActeParams>();
 
   const majStatusRequete = useCallback(() => {
     setMiseAJourDocumentParams([]);
 
     const currentRequeteProcessing = documentsToSignWating[idRequetesToSign[0]];
+    const nouveauStatut = getNewStatusRequete(
+      currentRequeteProcessing.sousTypeRequete,
+      currentRequeteProcessing.canal
+    );
     setCreationActionEtMiseAjourStatutParams({
       requeteId: idRequetesToSign[0],
-      statutRequete: getNewStatusRequete(
-        currentRequeteProcessing.sousTypeRequete
-      ),
-      libelleAction: "Signée"
+      statutRequete: nouveauStatut,
+      libelleAction: nouveauStatut?.libelle
+    });
+    setMajDateDerniereDelivranceActe({
+      idActe: getValeurOuVide(currentRequeteProcessing.idActe)
     });
 
     const newSuccesses: SuccessSignatureType[] = [
@@ -172,6 +184,7 @@ export function useSignatureDocumentHook(
   usePostCreationActionEtMiseAjourStatutApi(
     creationActionEtMiseAjourStatutParams
   );
+  useDerniereDelivranceActeApiHook(majDateDerniereDelivranceActe);
 
   useEffect(() => {
     setMiseAJourDocumentParams(
@@ -410,15 +423,24 @@ function estUnDocumentASigner(uuidTypeDocument: string): boolean {
   return DocumentDelivrance.estExtraitCopieAsigner(documentDelivrance.code);
 }
 
-function getNewStatusRequete(sousTypeRequete: SousTypeDelivrance) {
-  if (sousTypeRequete === SousTypeDelivrance.RDC) {
-    // TODO tester Canal courrier plutôt ?
-    return StatutRequete.TRAITE_A_IMPRIMER;
-  } else {
-    // TODO tester Canal internet plutôt ?
-    return StatutRequete.TRAITE_A_DELIVRER_DEMAT;
+function getNewStatusRequete(
+  sousTypeRequete: SousTypeDelivrance,
+  canal?: TypeCanal
+) {
+  switch (canal) {
+    case TypeCanal.COURRIER:
+      return StatutRequete.TRAITE_A_IMPRIMER;
+    case TypeCanal.INTERNET:
+      return StatutRequete.TRAITE_A_DELIVRER_DEMAT;
+    case TypeCanal.RECE:
+      return StatutRequete.TRAITE_REPONDU;
+    default:
+      if (sousTypeRequete === SousTypeDelivrance.RDC) {
+        return StatutRequete.TRAITE_A_IMPRIMER;
+      } else {
+        return StatutRequete.TRAITE_A_DELIVRER_DEMAT;
+      }
   }
-  // TODO cas du canal RECE => TRAITE_REPONDU
 }
 
 function getErrorsMock(): string[] {

@@ -288,6 +288,28 @@ export const userDroitCOMEDEC: IOfficier = {
         listePays: ["periPays"],
         listeIdTypeRegistre: []
       }
+    },
+    {
+      idHabilitation: "h12345",
+      profil: {
+        idProfil: "p12345",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
+        droits: [{ idDroit: "d12345", nom: Droit.SIGNER }]
+      },
+      perimetre: {
+        idPerimetre: "peri12345",
+        nom: "MEAE",
+        description: "peirDes",
+        estActif: true,
+        listePays: ["periPays"],
+        listeIdTypeRegistre: []
+      }
     }
   ],
   entite: {

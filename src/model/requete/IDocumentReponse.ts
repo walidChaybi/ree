@@ -68,6 +68,15 @@ export const DocumentReponse = {
     return libelle;
   },
 
+  verifierDocumentsValides(documents?: IDocumentReponse[]): boolean {
+    if (documents) {
+      return documents.every(
+        (el: IDocumentReponse) =>
+          el.validation === undefined || el.validation === Validation.O
+      );
+    } else return false;
+  },
+
   // Elimine les documents sans CTV qui existent déjà avec un CTV dans les documents réponse
   enleverDoublonSansCtv(documents: IDocumentReponse[]): IDocumentReponse[] {
     let resulatDocumentsSansDoublons: IDocumentReponse[];

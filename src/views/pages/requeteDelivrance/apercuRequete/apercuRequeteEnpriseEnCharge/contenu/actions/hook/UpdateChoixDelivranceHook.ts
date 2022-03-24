@@ -28,6 +28,7 @@ export function useUpdateChoixDelivrance(
           setUpdateChoixDelivranceResultat({ idRequete: result.body.data });
         })
         .catch((error: any) => {
+           /* istanbul ignore next */
           handleLogError(error);
         });
     } else if (params) {
@@ -36,6 +37,7 @@ export function useUpdateChoixDelivrance(
           setUpdateChoixDelivranceResultat({ idRequete: result.body.data });
         })
         .catch((error: any) => {
+           /* istanbul ignore next */
           handleLogError(error);
         });
     }

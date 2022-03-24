@@ -378,6 +378,21 @@ export const configEtatcivil = [
         };
       }
 
+      if (
+        match[1] ===
+        "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/dernieredelivrance"
+      ) {
+        return { data: true };
+      }
+      if (
+        match[1] ===
+        "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235b/dernieredelivrance"
+      ) {
+        let err = new Error(500);
+        err.status = 500;
+        throw err;
+      }
+
       if (match[1].startsWith("/repertoirecivil/decrets")) {
         return { data: decrets };
       }

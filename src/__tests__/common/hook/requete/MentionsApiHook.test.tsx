@@ -5,7 +5,7 @@ import { configEtatcivil } from "../../../../mock/superagent-config/superagent-m
 import {
   IMentionsParams,
   useMentionsApiHook
-} from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/hook/MentionsApiHook";
+} from "../../../../views/common/hook/acte/MentionsApiHook";
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const params: IMentionsParams = {

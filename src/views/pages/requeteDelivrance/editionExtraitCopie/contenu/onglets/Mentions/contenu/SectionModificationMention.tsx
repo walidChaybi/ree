@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
 import { NatureMention } from "../../../../../../../../model/etatcivil/enum/NatureMention";
+import { IMentionsResultat } from "../../../../../../../common/hook/acte/MentionsApiHook";
 import {
   getLibelle,
   getValeurOuVide
 } from "../../../../../../../common/util/Utils";
 import { SelectRece } from "../../../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { ListeGlisserDeposer } from "../../../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
-import { IMentionsResultat } from "../../../../hook/MentionsApiHook";
 import {
   getEnumNatureMentionOuAutre,
   handleBlur,

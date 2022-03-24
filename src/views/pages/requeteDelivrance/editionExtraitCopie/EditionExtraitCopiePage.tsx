@@ -24,6 +24,7 @@ import { getLibelle } from "../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
 import { receUrl } from "../../../router/ReceUrls";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
+import { BoutonsTerminer } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminer";
 import { DetailRequetePage } from "../detailRequete/DetailRequetePage";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
 import { AccordionRece } from "./../../../common/widget/accordion/AccordionRece";
@@ -124,18 +125,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
                   Modifier la copie à délivrer
                 </BoutonOperationEnCours>
               )}
-              <BoutonOperationEnCours
-                title={getLibelle("Terminer et signer")}
-                onClick={goBack}
-              >
-                Terminer et signer
-              </BoutonOperationEnCours>
-              <BoutonOperationEnCours
-                title={getLibelle("Terminer")}
-                onClick={goBack}
-              >
-                Terminer
-              </BoutonOperationEnCours>
+              <BoutonsTerminer requete={requete} />
             </div>
           </div>
         </>

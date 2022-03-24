@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../../model/agent/IOfficier";
 import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
 import { TypeCanal } from "../../../../../../model/requete/enum/TypeCanal";
+import { DocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import {
   CreationActionEtMiseAjourStatutParams,
@@ -17,7 +18,9 @@ interface BoutonValiderTerminerProps {
   requete: IRequeteDelivrance;
 }
 
-export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = props => {
+export const BoutonValiderTerminer: React.FC<
+  BoutonValiderTerminerProps
+> = props => {
   const requeteDelivrance = props.requete;
   const history = useHistory();
   const [estDisabled, setEstDisabled] = useState(true);
@@ -61,11 +64,11 @@ export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = props
     props.requete.idUtilisateur === storeRece.utilisateurCourant?.idUtilisateur;
 
   if (
-    estAValider &&
     mAppartient &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
       requeteDelivrance.provenanceRequete.provenance.libelle
     ) &&
+    DocumentReponse.verifierDocumentsValides(props.requete.documentsReponses) &&
     estDisabled
   ) {
     setEstDisabled(false);
@@ -73,12 +76,14 @@ export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = props
 
   return (
     <>
-      <BoutonOperationEnCours
-        onClick={setActionEtUpdateStatut}
-        estDesactive={estDisabled}
-      >
-        {getLibelle("Valider et terminer")}
-      </BoutonOperationEnCours>
+      {estAValider && (
+        <BoutonOperationEnCours
+          onClick={setActionEtUpdateStatut}
+          estDesactive={estDisabled}
+        >
+          {getLibelle("Valider et terminer")}
+        </BoutonOperationEnCours>
+      )}
     </>
   );
 };

@@ -3,12 +3,11 @@ import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { Validation } from "../../../../../model/requete/enum/Validation";
-import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import {
-  IRequeteDelivrance,
-  RequeteDelivrance
-} from "../../../../../model/requete/IRequeteDelivrance";
+  DocumentReponse,
+  IDocumentReponse
+} from "../../../../../model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { MigratorV1V2 } from "../../../../common/util/migration/MigratorV1V2";
@@ -16,22 +15,19 @@ import {
   getUrlPrecedente,
   getUrlWithoutIdParam
 } from "../../../../common/util/route/routeUtil";
-import { storeRece } from "../../../../common/util/storeRece";
 import { getLibelle } from "../../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../../common/widget/attente/BoutonOperationEnCours";
 import { VisionneuseAvecTitre } from "../../../../common/widget/document/VisionneuseAvecTitre";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
-import { BoutonSignature } from "../../../../common/widget/signature/BoutonSignature";
 import {
   PATH_APERCU_COURRIER,
   PATH_EDITION,
   receUrl
 } from "../../../../router/ReceUrls";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
-import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import { BoutonARetraiterSaga } from "./contenu/BoutonARetraiterSaga";
 import { BoutonModifierTraitement } from "./contenu/BoutonModifierTraitement";
-import { BoutonValiderTerminer } from "./contenu/BoutonValiderTerminer";
+import { BoutonsTerminer } from "./contenu/BoutonsTerminer";
 import "./scss/ApercuRequeteTraitementPage.scss";
 
 export const ApercuRequeteTraitementPage: React.FC = () => {
@@ -54,15 +50,6 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
       setDocumentAffiche(infoDoc);
     },
     [setDocumentAffiche]
-  );
-
-  const actionApresSignature = useCallback(
-    (allsigned: boolean) => {
-      if (allsigned === true) {
-        receUrl.goBack(history);
-      }
-    },
-    [history]
   );
 
   const modifierCourrier = () => {
@@ -105,24 +92,13 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
           <BoutonRetour />
           <div className="BoutonsAction">
             {MigratorV1V2.nEstPasRDDouRDCouEstEtape2Bis(requete) && (
-              <>
-                <BoutonModifierTraitement
-                  requete={requete}
-                  dataHistory={dataHistory}
-                />
-                <BoutonValiderTerminer requete={requete} />
-              </>
-            )}
-
-            {RequeteDelivrance.estAuStatutASigner(requete) && (
-              <BoutonSignature
-                libelle={getLibelle("Signer et terminer")}
-                requetes={[mappingRequeteDelivranceToRequeteTableau(requete)]}
-                reloadData={actionApresSignature}
-                uniqueSignature={true}
-                connectedUser={storeRece.utilisateurCourant}
+              <BoutonModifierTraitement
+                requete={requete}
+                dataHistory={dataHistory}
               />
             )}
+
+            <BoutonsTerminer requete={requete} />
 
             {MigratorV1V2.estARetraiterSaga(requete) &&
               !MigratorV1V2.possedeDocumentSigne(requete) && (
@@ -155,7 +131,9 @@ const afficherBoutonsActions = (
                 <BoutonOperationEnCours onClick={edition}>
                   {getLibelle("Valider le document à traiter")}
                 </BoutonOperationEnCours>
-                {!documentsSontValides(requete) && (
+                {!DocumentReponse.verifierDocumentsValides(
+                  requete.documentsReponses
+                ) && (
                   <span
                     className="Warning"
                     title="Le ou les documents à délivrer ne sont pas validés. Cliquez sur le bouton pour les valider"
@@ -168,12 +146,6 @@ const afficherBoutonsActions = (
         </div>
       )}
     </>
-  );
-};
-
-const documentsSontValides = (requete: IRequeteDelivrance) => {
-  return requete.documentsReponses.some(
-    el => el.validation === Validation.E || el.validation === Validation.N
   );
 };
 

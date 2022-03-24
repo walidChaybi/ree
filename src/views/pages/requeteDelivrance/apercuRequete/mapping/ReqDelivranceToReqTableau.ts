@@ -1,12 +1,8 @@
 import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IPrenomOrdonnes } from "../../../../../model/requete/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import {
-  IDocumentReponseTableau,
-  IRequeteTableauDelivrance
-} from "../../../../../model/requete/IRequeteTableauDelivrance";
+import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
 import { ITitulaireRequeteTableau } from "../../../../../model/requete/ITitulaireRequeteTableau";
 import { getValeurOuVide } from "../../../../common/util/Utils";
@@ -25,23 +21,9 @@ export function mappingRequeteDelivranceToRequeteTableau(
     statut: requete.statutCourant.statut.libelle,
     document: DocumentDelivrance.getKeyForCode(requete.documentDemande?.code), // getKey ?,
     sousType: getValeurOuVide(requete.sousType.libelleCourt),
-    documentsReponses: getDocumentsReponses(requete.documentsReponses)
+    documentsReponses: requete.documentsReponses
   };
 }
-
-const getDocumentsReponses = (
-  documentsReponses?: IDocumentReponse[]
-): IDocumentReponseTableau[] | undefined => {
-  return documentsReponses?.map(doc => ({
-    id: doc.id,
-    nom: doc.nom,
-    typeDocument: doc.typeDocument, // UUID nomenclature
-    taille: doc.taille,
-    avecCtv: doc.avecCtv || false,
-    conteneurSwift: doc.conteneurSwift,
-    mimeType: doc.mimeType
-  }));
-};
 
 const getTitulaires = (
   titulaires: ITitulaireRequete[]

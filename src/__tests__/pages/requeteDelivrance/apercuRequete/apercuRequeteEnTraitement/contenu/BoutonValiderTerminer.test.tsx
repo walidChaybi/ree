@@ -44,7 +44,8 @@ const requeteTestCOURRIER = {
       anneeNaissance: 1981,
       sexe: Sexe.MASCULIN.libelle
     }
-  ]
+  ],
+  documentsReponses: [{}]
 } as IRequeteDelivrance;
 
 test("est à A_VALIDER et provient de COURRIER", async () => {

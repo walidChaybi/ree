@@ -80,6 +80,12 @@ export const statutEstASignerAValider = (statut: string) =>
   statut === StatutRequete.A_VALIDER.libelle ||
   statut === StatutRequete.A_SIGNER.libelle;
 
+export const statutEstAValider = (statut: string) =>
+  statut === StatutRequete.A_VALIDER.libelle;
+
+export const statutEstASigner = (statut: string) =>
+  statut === StatutRequete.A_SIGNER.libelle;
+
 export const typeEstDelivrance = (type: string) =>
   type === TypeRequete.DELIVRANCE.libelle;
 
@@ -144,9 +150,8 @@ export function getIdDocumentReponseAAfficher(
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const requeteDelivrance = requete;
 
-    const documentsDeDelivrance = RequeteDelivrance.getDocumentsDeDelivrance(
-      requeteDelivrance
-    );
+    const documentsDeDelivrance =
+      RequeteDelivrance.getDocumentsDeDelivrance(requeteDelivrance);
     if (documentsDeDelivrance.length > 0) {
       idDocumentAAfficher = DocumentReponse.triDocumentsDelivrance(
         documentsDeDelivrance
@@ -159,6 +164,12 @@ export function getIdDocumentReponseAAfficher(
     }
   }
   return idDocumentAAfficher;
+}
+
+export function soustypeRDDouRDC(sousType: SousTypeRequete): boolean {
+  return (
+    sousType === SousTypeDelivrance.RDD || sousType === SousTypeDelivrance.RDC
+  );
 }
 
 export function soustypeRDDouRDCouRDDP(sousType: SousTypeRequete): boolean {

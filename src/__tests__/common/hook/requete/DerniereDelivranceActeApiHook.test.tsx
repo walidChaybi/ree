@@ -1,0 +1,28 @@
+import { render, screen, waitFor } from "@testing-library/react";
+import React from "react";
+import request from "superagent";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { useDerniereDelivranceActeApiHook } from "../../../../views/common/hook/acte/DerniereDelivranceActeApiHook";
+import { IMentionsParams } from "../../../../views/common/hook/acte/MentionsApiHook";
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
+
+const params2: IMentionsParams = {
+  idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b"
+};
+
+const HookConsumer2: React.FC = () => {
+  const res = useDerniereDelivranceActeApiHook(params2);
+
+  return <div>{res?.resultat?.toString()}</div>;
+};
+test("Attendu: DerniereDelivrance fonctionne pas", async () => {
+  render(<HookConsumer2 />);
+
+  await waitFor(() => {
+    expect(screen.getByText("false")).toBeDefined();
+  });
+});
+
+afterAll(() => {
+  superagentMock.unset();
+});

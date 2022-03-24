@@ -473,14 +473,16 @@ export const configRequetes = [
           match[1] ===
             "/requetes/action?idRequete=8ef11b8b-652c-4c6a-ad27-a544fce635d0&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
           match[1] ===
-            "/requetes/action?idRequete=id1&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+            "/requetes/action?idRequete=id1&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
           match[1] ===
             "/requetes/action?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
+          match[1] ===
+            "/requetes/action?idRequete=104b8563-c7f8-4748-9daa-f26558985894&libelleAction=Trait%C3%A9e%20-%20A%20d%C3%A9livrer%20D%C3%A9mat&statutRequete=TRAITE_A_DELIVRER_DEMAT" ||
           // Passage du statut la requête de "A_SIGNE" à "TRAITE_A_IMPRIMER"
           match[1] ===
-            "/requetes/action?idRequete=id1&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_IMPRIMER" ||
+            "/requetes/action?idRequete=id2&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
           match[1] ===
-            "/requetes/action?idRequete=id2&libelleAction=Sign%C3%A9e&statutRequete=TRAITE_A_IMPRIMER" ||
+            "/requetes/action?idRequete=id1&libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
           match[1] ===
             "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=%C3%80%20traiter&statutRequete=A_TRAITER" ||
           match[1] ===

@@ -1560,7 +1560,7 @@ export const requeteAvecDocs = {
   ],
   corbeilleAgent: {
     id: "8ef08da4-95c3-4425-961e-ff3d2fc4ad1e",
-    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56"
+    idUtilisateur: "idUtilisateurConnectedUser"
   },
   corbeilleService: {
     id: "78d8b293-d07b-4d15-9b16-f5f5575f2adc",
@@ -1651,7 +1651,7 @@ export const requeteAvecDocs = {
       referenceSwift:
         "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
       conteneurSwift: "documents-delivres-2022-2",
-      validation: "N",
+      validation: "O",
       idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
       optionsCourrier: [],
       mentionsRetirees: []

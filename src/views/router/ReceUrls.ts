@@ -151,6 +151,12 @@ function goBack(history: any) {
   history.goBack();
 }
 
+function goBackBack(history: any) {
+  gestionnaireNavigation.deleteLastUrl();
+  history.goBack();
+  history.goBack();
+}
+
 function getUrlCourante(history: any): string {
   return history.location.pathname; // history.location.pathname renvoie une url du type /rece/rece-ui/xxx
 }
@@ -162,5 +168,6 @@ export const receUrl = {
   estUrlSaisirCourrier,
   replaceUrl,
   goBack,
+  goBackBack,
   getUrlCourante
 };

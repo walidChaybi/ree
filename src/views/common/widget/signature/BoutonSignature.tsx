@@ -5,9 +5,10 @@ import { IOfficier } from "../../../../model/agent/IOfficier";
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import {
-  IDocumentReponseTableau,
-  IRequeteTableauDelivrance
-} from "../../../../model/requete/IRequeteTableauDelivrance";
+  DocumentReponse,
+  IDocumentReponse
+} from "../../../../model/requete/IDocumentReponse";
+import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import { getValeurOuVide } from "../../util/Utils";
 import { PopinSignature } from "../signature/PopinSignature";
 import {
@@ -36,10 +37,9 @@ export const BoutonSignature: React.FC<
   connectedUser
 }) => {
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
-  const [
-    documentsByRequeteToSign,
-    setDocumentsByRequeteToSign
-  ] = useState<DocumentsByRequete>({});
+  const [documentsByRequeteToSign, setDocumentsByRequeteToSign] =
+    useState<DocumentsByRequete>({});
+
   const closePopin = useCallback(
     (showPopin: boolean, canReload: boolean) => {
       if (showWaitState && showPopin === false) {
@@ -68,31 +68,32 @@ export const BoutonSignature: React.FC<
       if (
         requete.documentsReponses &&
         requete.documentsReponses.length > 0 &&
-        requete.statut === StatutRequete.A_SIGNER.libelle
+        requete.statut === StatutRequete.A_SIGNER.libelle &&
+        DocumentReponse.verifierDocumentsValides(requete.documentsReponses)
       ) {
         const documentsATraiter: DocumentsATraiter = {
           documentsToSign: [],
           documentsToSave: [],
           sousTypeRequete: SousTypeDelivrance.getEnumFromLibelleCourt(
             requete.sousType
-          )
+          ),
+          canal: requete.canal,
+          idActe: requete.documentsReponses.find(el => el.idActe)?.idActe
         };
 
-        requete.documentsReponses.forEach(
-          (document: IDocumentReponseTableau) => {
-            if (document.avecCtv === true) {
-              documentsATraiter.documentsToSign.push({
-                id: document.id,
-                mimeType: document.mimeType,
-                infos: [{ cle: "idRequete", valeur: document.id }],
-                nomDocument: document.nom,
-                conteneurSwift: document.conteneurSwift,
-                idRequete: requete.idRequete,
-                numeroRequete: getValeurOuVide(requete.numero)
-              });
-            }
+        requete.documentsReponses.forEach((document: IDocumentReponse) => {
+          if (document.avecCtv === true) {
+            documentsATraiter.documentsToSign.push({
+              id: document.id,
+              mimeType: document.mimeType,
+              infos: [{ cle: "idRequete", valeur: document.id }],
+              nomDocument: document.nom,
+              conteneurSwift: document.conteneurSwift,
+              idRequete: requete.idRequete,
+              numeroRequete: getValeurOuVide(requete.numero)
+            });
           }
-        );
+        });
         if (documentsATraiter.documentsToSign.length > 0) {
           newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;
         }
@@ -130,7 +131,8 @@ const signaturePossible = (
     return (
       requete.statut === StatutRequete.A_SIGNER.libelle &&
       connectedUser !== undefined &&
-      connectedUser.idUtilisateur === requete.idUtilisateur
+      connectedUser.idUtilisateur === requete.idUtilisateur &&
+      DocumentReponse.verifierDocumentsValides(requete.documentsReponses)
     );
   } else {
     return requetes.some(req => req.statut === StatutRequete.A_SIGNER.libelle);

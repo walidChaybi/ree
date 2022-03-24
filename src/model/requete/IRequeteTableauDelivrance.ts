@@ -16,6 +16,7 @@ import { SousTypeMiseAJour } from "./enum/SousTypeMiseAJour";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
+import { IDocumentReponse } from "./IDocumentReponse";
 import { IRequerant, Requerant } from "./IRequerant";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapTitulaires } from "./ITitulaireRequeteTableau";
@@ -36,17 +37,7 @@ export interface IRequeteTableauDelivrance extends IRequeteTableau {
   nomUtilisateurAttribueA?: string;
   idEntiteRattachement?: string;
   canal?: TypeCanal;
-  documentsReponses?: IDocumentReponseTableau[];
-}
-
-export interface IDocumentReponseTableau {
-  id: string;
-  nom: string;
-  typeDocument: string; // UUID nomenclature
-  taille: number;
-  avecCtv: boolean;
-  conteneurSwift: string;
-  mimeType: string;
+  documentsReponses?: IDocumentReponse[];
 }
 
 //////////////////////////////////////////

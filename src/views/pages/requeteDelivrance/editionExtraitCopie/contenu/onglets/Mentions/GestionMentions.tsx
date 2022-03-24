@@ -4,14 +4,14 @@ import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe
 import { NatureMention } from "../../../../../../../model/etatcivil/enum/NatureMention";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import {
+  IMentionsParams,
+  useMentionsApiHook
+} from "../../../../../../common/hook/acte/MentionsApiHook";
+import {
   getLibelle,
   getValeurOuVide
 } from "../../../../../../common/util/Utils";
 import { SelectRece } from "../../../../../../common/widget/formulaire/champsSaisie/SelectField";
-import {
-  IMentionsParams,
-  useMentionsApiHook
-} from "../../../hook/MentionsApiHook";
 import { SectionModificationMention } from "./contenu/SectionModificationMention";
 import {
   getEnumNatureMentionOuAutre,
