@@ -1,11 +1,18 @@
-import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
+import {
+  FicheActe,
+  IFicheActe
+} from "../../../../../../../model/etatcivil/acte/IFicheActe";
 import {
   IMention,
   Mention
 } from "../../../../../../../model/etatcivil/acte/mention/IMention";
 import { NatureMention } from "../../../../../../../model/etatcivil/enum/NatureMention";
 import { TypeFiche } from "../../../../../../../model/etatcivil/enum/TypeFiche";
+import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
+import { IMentionsResultat } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
+import { IMiseAJourDocumentMentionParams } from "../../../../../../common/hook/acte/mentions/MiseAJourDocumentMentionApiHook";
+import { IMiseAJourMentionsParams } from "../../../../../../common/hook/acte/mentions/MiseAJourMentionsApiHook";
 import messageManager from "../../../../../../common/util/messageManager";
 import {
   getLibelle,
@@ -13,6 +20,7 @@ import {
   shallowEgalTableau
 } from "../../../../../../common/util/Utils";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+import { GestionMentionsProps } from "./GestionMentions";
 
 export interface IMentionAffichage {
   texte: string;
@@ -27,16 +35,27 @@ export function mappingVersMentionAffichage(
   mentionsApi: IMention[],
   document: IDocumentReponse
 ): IMentionAffichage[] {
+  const estCopie = DocumentDelivrance.typeDocumentEstCopie(
+    document.typeDocument
+  );
   return mentionsApi
-    .sort((a, b) => a.numeroOrdreExtrait - b.numeroOrdreExtrait)
+    .sort((a, b) =>
+      estCopie
+        ? a.numeroOrdre - b.numeroOrdre
+        : a.numeroOrdreExtrait - b.numeroOrdreExtrait
+    )
     .map(mentionApi => ({
       nature: mentionApi.typeMention.nature,
-      texte: Mention.getTexte(mentionApi),
+      texte: estCopie
+        ? Mention.getTexteCopie(mentionApi)
+        : Mention.getTexteExtrait(mentionApi),
       estPresent: !document.mentionsRetirees?.find(
         mentionRetiree => mentionRetiree.idMention === mentionApi.id
       ),
       id: mentionApi.id,
-      numeroOrdre: mentionApi.numeroOrdreExtrait,
+      numeroOrdre: estCopie
+        ? mentionApi.numeroOrdre
+        : mentionApi.numeroOrdreExtrait,
       aPoubelle: mentionApi.textes.texteMention === ""
     }));
 }
@@ -122,10 +141,10 @@ export function miseAJourMention(
 }
 
 export function modificationEffectue(
-  setIsDirty: any,
   mentions?: IMentionAffichage[],
   mentionsApi?: IMention[],
-  document?: IDocumentReponse
+  document?: IDocumentReponse,
+  setIsDirty?: any
 ) {
   if (mentions && mentionsApi && document) {
     if (
@@ -134,10 +153,14 @@ export function modificationEffectue(
         mappingVersMentionAffichage(mentionsApi, document)
       )
     ) {
-      setIsDirty(true);
+      if (setIsDirty) {
+        setIsDirty(true);
+      }
       return true;
     } else {
-      setIsDirty(false);
+      if (setIsDirty) {
+        setIsDirty(false);
+      }
       return false;
     }
   } else {
@@ -301,7 +324,7 @@ export function texteNonModifieNatureChangePasDeTexteDelivrance(
     mention &&
     mentionApi &&
     mentionSelect &&
-    Mention.getTexte(mentionApi) === mentionSelect?.texte &&
+    Mention.getTexteExtrait(mentionApi) === mentionSelect?.texte &&
     mentionSelect?.nature !== mention.nature &&
     !mentionApi.textes.texteMentionDelivrance
   );
@@ -321,4 +344,103 @@ export function aucuneMentionsNationalite(mentions?: IMentionAffichage[]) {
         el.nature !==
         NatureMention.getEnumFromLibelle(NatureMention, "Nationalité")
     );
+}
+
+export function boutonReinitialiserEstDisabled(
+  estDeverouille: boolean,
+  setIsDirty: () => void,
+  mentionsApi?: IMention[],
+  mentions?: IMentionAffichage[],
+  document?: IDocumentReponse
+) {
+  if (DocumentDelivrance.typeDocumentEstCopie(document?.typeDocument)) {
+    return (
+      !estDeverouille ||
+      (estDeverouille &&
+        !modificationEffectue(mentions, mentionsApi, document, setIsDirty))
+    );
+  } else {
+    return !modificationEffectue(mentions, mentionsApi, document, setIsDirty);
+  }
+}
+
+export function getValeurEstDeverouillerCommencement(
+  document?: IDocumentReponse
+) {
+  if (document?.mentionsRetirees) {
+    return document.mentionsRetirees.length > 0;
+  } else {
+    return false;
+  }
+}
+
+export function saveMentions(
+  mentionsApi: IMentionsResultat | undefined,
+  mentions: IMentionAffichage[] | undefined,
+  props: React.PropsWithChildren<GestionMentionsProps>,
+  setMentionsAEnvoyerParams: React.Dispatch<
+    React.SetStateAction<IMiseAJourMentionsParams | undefined>
+  >,
+  setDocumentMajParams: React.Dispatch<
+    React.SetStateAction<IMiseAJourDocumentMentionParams | undefined>
+  >
+) {
+  if (mentionsApi && mentionsApi.mentions && mentions && props.document) {
+    const { mentionsAEnvoyer, mentionsRetirees } = mappingVersMentionsApi(
+      mentionsApi.mentions,
+      mentions
+    );
+    if (modificationEffectue(mentions, mentionsApi.mentions, props.document)) {
+      if (
+        DocumentDelivrance.typeDocumentEstCopie(props.document?.typeDocument)
+      ) {
+        // TODO generer la copie
+      } else {
+        setMentionsAEnvoyerParams({
+          idActe: getValeurOuVide(props.acte?.id),
+          mentions: mentionsAEnvoyer
+        });
+      }
+      setDocumentMajParams({
+        idDocument: props.document.id,
+        mentionsRetirees
+      });
+    } else {
+      setDocumentMajParams({
+        idDocument: props.document.id
+      });
+    }
+  }
+}
+
+export function validerMentions(
+  props: React.PropsWithChildren<GestionMentionsProps>,
+  mentions: IMentionAffichage[] | undefined,
+  sauvegarderMentions: () => void,
+  mentionsApi?: IMention[]
+) {
+  if (DocumentDelivrance.typeDocumentEstCopie(props.document?.typeDocument)) {
+    if (
+      modificationEffectue(mentions, mentionsApi, props.document) &&
+      window.confirm(`Vous avez choisi de décocher des mentions.
+        Celle-ci ne seront pas éditées sur la copie intégrale de l'acte choisi.`)
+    ) {
+      sauvegarderMentions();
+    }
+  } else {
+    if (
+      FicheActe.acteEstACQouOP2ouOP3(props.acte) &&
+      FicheActe.estActeNaissance(props.acte) &&
+      aucuneMentionsNationalite(mentions)
+    ) {
+      if (
+        window.confirm(`Aucune mention de nationalité n'a été cochée. 
+        Voulez-vous continuer ?`)
+      ) {
+        sauvegarderMentions();
+      }
+    } else {
+      sauvegarderMentions();
+    }
+  }
 }

@@ -233,6 +233,13 @@ export class DocumentDelivrance extends EnumNomemclature {
     return CodesExtraitCopie.includes(code);
   }
 
+  public static typeDocumentEstCopie(uuid?: string): boolean {
+    return uuid
+      ? DocumentDelivrance.getDocumentDelivrance(uuid).code ===
+          CODE_COPIE_INTEGRALE
+      : false;
+  }
+
   public static estExtraitCopieAsigner(code: string): boolean {
     return CodesExtraitCopieASigner.includes(code);
   }

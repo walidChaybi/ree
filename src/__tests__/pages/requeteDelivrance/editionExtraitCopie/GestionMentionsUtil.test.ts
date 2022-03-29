@@ -1,23 +1,36 @@
+import { waitFor } from "@testing-library/react";
 import request from "superagent";
 import { documentReponseExtraitAvecFiliation } from "../../../../mock/data/DocumentReponse";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { IMention } from "../../../../model/etatcivil/acte/mention/IMention";
 import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
+import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import {
+  aucuneMentionsNationalite,
   handleCheckBox,
   handleReorga,
   IMentionAffichage,
   mappingVersMentionAffichage,
+  mappingVersMentionsApi,
   miseAjourEnFonctionNature,
   modificationEffectue,
   texteEnFonctionOpposableAuTiers,
   texteNonModifieNatureChangePasDeTexteDelivrance
 } from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
+const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
+  configRequetes[0]
+]);
 
 beforeAll(async () => {
-  await NatureMention.init();
+  NatureMention.init();
+  DocumentDelivrance.init();
+
+  await waitFor(() => {
+    expect(DocumentDelivrance.length).toBeGreaterThan(0);
+  });
 });
 
 const mentionApi = {
@@ -81,7 +94,7 @@ test("modificationEffectue", () => {
       [mentionApi],
       documentReponseExtraitAvecFiliation
     )
-  ).toBeFalsy();
+  ).toBeTruthy();
 });
 
 test("miseAjourEnFonctionNature", () => {
@@ -169,6 +182,39 @@ test("mappingVersMentionAffichage", () => {
       aPoubelle: false
     }
   ]);
+});
+
+test("mappingVersMentionApi", () => {
+  expect(
+    mappingVersMentionsApi([mentionApi], [mentionOpposable])
+  ).toStrictEqual({
+    mentionsAEnvoyer: [
+      {
+        textes: {
+          texteApposition: "texte apposition",
+          texteMention: "texte mention",
+          texteMentionDelivrance: "texte mention"
+        },
+        typeMention: {
+          nature: {
+            code: undefined,
+            estActif: undefined,
+            id: "",
+            libelle: undefined,
+            nom: "NATURE_MENTION",
+            opposableAuTiers: true
+          }
+        },
+        numeroOrdreExtrait: 1,
+        id: "1"
+      }
+    ],
+    mentionsRetirees: []
+  });
+});
+
+test("aucuneMentionsNationalite", () => {
+  expect(aucuneMentionsNationalite([mentionOpposable])).toBeTruthy();
 });
 
 afterAll(() => {

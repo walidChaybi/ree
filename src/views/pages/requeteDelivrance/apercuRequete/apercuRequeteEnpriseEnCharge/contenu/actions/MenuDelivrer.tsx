@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { TypeActe } from "../../../../../../../model/etatcivil/enum/TypeActe";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../../../../../model/requete/enum/Validation";
 import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -13,9 +10,7 @@ import {
   IGenerationECParams,
   useGenerationEC
 } from "../../../../../../common/hook/generation/generationECHook/generationECHook";
-import { DoubleSubmitUtil } from "../../../../../../common/util/DoubleSubmitUtil";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
-import { getUrlPrecedente } from "../../../../../../common/util/route/routeUtil";
 import {
   getLibelle,
   supprimerNullEtUndefinedDuTableau
@@ -26,10 +21,6 @@ import {
   ConfirmationPopin,
   IBoutonPopin
 } from "../../../../../../common/widget/popin/ConfirmationPopin";
-import {
-  PATH_APERCU_COURRIER,
-  receUrl
-} from "../../../../../../router/ReceUrls";
 import {
   IGenerationCourrierParams,
   useGenerationCourrierHook
@@ -42,16 +33,12 @@ import {
 } from "./hook/UpdateChoixDelivranceApiHook";
 import {
   compositionCourrierAutomatique,
-  estChoixExtraitAvecOuSansFiliation,
-  estChoixExtraitAvecOuSansFiliationOuPlurilingue,
-  estNombreTitulairesIncoherent,
-  getBoutonOK,
-  getBoutonsOuiNon,
+  controleCoherenceEntreDocumentSelectionneEtActionDelivrer,
   getIdCourrierAuto,
   getOptionsMenuDelivrer,
   nonVide,
-  sousTypeCreationCourrierAutomatique,
-  unActeEtUnSeulSelectionne
+  redirection,
+  sousTypeCreationCourrierAutomatique
 } from "./MenuDelivrerUtil";
 
 export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
@@ -60,8 +47,9 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
-  const [inscriptions, setInscriptions] =
-    useState<IResultatRMCInscription[] | undefined>();
+  const [inscriptions, setInscriptions] = useState<
+    IResultatRMCInscription[] | undefined
+  >();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
@@ -142,104 +130,19 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     }
   }, [resultatGenerationEC]);
 
-  const resetDoubleSubmit = () => {
-    listeActions.forEach(el => {
-      DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
-    });
-  };
-
-  const boutonOK: IBoutonPopin[] = getBoutonOK(
-    setMessagesBloquant,
-    resetDoubleSubmit
-  );
-  const boutonsOuiNon: IBoutonPopin[] = getBoutonsOuiNon(
-    setMessagesBloquant,
-    resetDoubleSubmit
-  );
-
   const delivrerOptions: IActionOption[] =
     getOptionsMenuDelivrer(refDelivrerOptions0);
-
-  const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = (
-    indexMenu: number,
-    listeActes: IResultatRMCActe[] | undefined,
-    listeInscriptions: IResultatRMCInscription[] | undefined
-  ) => {
-    const sousType = props.requete?.sousType?.nom;
-    let message: string[] = [];
-    if (
-      sousType === SousTypeDelivrance.RDC.nom ||
-      sousType === SousTypeDelivrance.RDD.nom ||
-      sousType === SousTypeDelivrance.RDDP.nom
-    ) {
-      if (unActeEtUnSeulSelectionne(listeActes, listeInscriptions)) {
-        message = controleCoherenceUnActeSelectionne(indexMenu, listeActes);
-      } else {
-        message = [
-          getLibelle("Veuillez sélectionner un et un seul acte à délivrer.")
-        ];
-        setBoutonsPopin(boutonOK);
-      }
-    }
-    setMessagesBloquant(message);
-  };
-
-  const controleCoherenceUnActeSelectionne = (
-    indexMenu: number,
-    listeActes: IResultatRMCActe[] | undefined
-  ) => {
-    const requeteDelivrance = props.requete;
-    const nbrTitulaire = listeActes?.[0]
-      ? props.nbrTitulairesActe?.get(listeActes?.[0].idActe)
-      : undefined;
-    let message: string[] = [];
-    if (listeActes?.[0]?.type === TypeActe.INCONNU.libelle) {
-      message = [
-        getLibelle(
-          "Il n'y a pas de corps disponible pour l'acte sélectionné, sa délivrance n'est pas possible à ce jour."
-        )
-      ];
-      setBoutonsPopin(boutonOK);
-    } else if (
-      estChoixExtraitAvecOuSansFiliationOuPlurilingue(indexMenu) &&
-      estNombreTitulairesIncoherent(listeActes?.[0]?.nature, nbrTitulaire)
-    ) {
-      message = [
-        getLibelle(
-          "Pas de délivrance d'extrait sur la base d'un acte à titulaires multiples."
-        )
-      ];
-      setBoutonsPopin(boutonOK);
-    } else if (
-      estChoixExtraitAvecOuSansFiliation(indexMenu) &&
-      listeActes?.[0]?.nature === NatureActeRequete.DECES.libelle
-    ) {
-      message = [
-        getLibelle(
-          "Pas de délivrance d'extrait avec ou sans filiation pour un acte de décès."
-        )
-      ];
-      setBoutonsPopin(boutonOK);
-    } else if (
-      listeActes?.[0]?.nature !==
-      requeteDelivrance?.evenement?.natureActe?.libelle
-    ) {
-      message = [
-        getLibelle(
-          "La nature de l'acte sélectionné ne correspond pas à la nature de l'acte demandé. Voulez-vous continuer ?"
-        )
-      ];
-      setBoutonsPopin(boutonsOuiNon);
-    }
-    return message;
-  };
 
   const handleDelivrerMenu = (indexMenu: number) => {
     setChoixDelivrance(delivrerOptions[indexMenu].choixDelivrance);
     controleCoherenceEntreDocumentSelectionneEtActionDelivrer(
-      indexMenu,
+      props,
       actes,
-      inscriptions
+      inscriptions,
+      indexMenu,
+      setBoutonsPopin,
+      setMessagesBloquant,
+      listeActions
     );
     // La redirection (cf. useEffect) s'effectue uniquement s'il n'y a pas de
     // message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionDelivrer'
@@ -264,29 +167,14 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
 
   // La mise à jour du choix de délivrance et du statut ont été effectués (cf.)
   useEffect(() => {
-    if (
-      updateChoixDelivranceResultat?.idRequete &&
-      resultatGenerationEC?.resultGenerationUnDocument
-    ) {
-      if (props.requete.sousType === SousTypeDelivrance.RDC) {
-        receUrl.replaceUrl(
-          history,
-          `${getUrlPrecedente(
-            history.location.pathname
-          )}/${PATH_APERCU_COURRIER}/${props.requete.id}`,
-          actes?.[0].idActe
-        );
-      } else if (
-        sousTypeCreationCourrierAutomatique(props.requete.sousType) &&
-        generationCourrier
-      ) {
-        // Si la requete est une RDD et que l'action est enregistré
-        const url = receUrl.getUrlApercuTraitementAPartirDe(
-          history.location.pathname
-        );
-        receUrl.replaceUrl(history, url, actes?.[0].idActe);
-      }
-    }
+    redirection(
+      updateChoixDelivranceResultat,
+      resultatGenerationEC,
+      props,
+      history,
+      actes,
+      generationCourrier
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     updateChoixDelivranceResultat,
@@ -321,3 +209,5 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     </>
   );
 };
+
+

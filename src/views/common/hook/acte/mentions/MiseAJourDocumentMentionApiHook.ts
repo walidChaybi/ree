@@ -26,7 +26,7 @@ export function useMiseAJourDocumentMentionApiHook(
           setFait({ resultat: false });
           logError({
             messageUtilisateur:
-              "Impossible de récupérer les mentions pour cet acte",
+              "Impossible de mettre à jour les mentions retirées du document ",
             error
           });
         });

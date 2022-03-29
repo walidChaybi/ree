@@ -10,6 +10,7 @@ import {
   CODE_EXTRAIT_SANS_FILIATION,
   DocumentDelivrance
 } from "../../../../model/requete/enum/DocumentDelivrance";
+import { Validation } from "../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
@@ -37,9 +38,7 @@ export const getOngletsEdition = (
       DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
     ) {
       case CODE_COPIE_INTEGRALE:
-        if (acte.type === TypeActe.TEXTE) {
-          res.liste.push(ongletMentions(acte, document, setIsDirty));
-        }
+        ajoutOngletsCopie(res, document, acte, setIsDirty);
         break;
       case CODE_EXTRAIT_AVEC_FILIATION:
       case CODE_EXTRAIT_SANS_FILIATION:
@@ -116,13 +115,27 @@ export const getOngletsVisu = (
   return res;
 };
 
+function ajoutOngletsCopie(
+  res: OngletProps,
+  document: IDocumentReponse,
+  acte: IFicheActe,
+  setIsDirty: any
+) {
+  if (acte.type === TypeActe.TEXTE) {
+    res.liste.push(ongletMentions(acte, document, setIsDirty));
+    res.ongletSelectionne = document.validation === Validation.N ? 0 : 1;
+  } else {
+    res.ongletSelectionne = 0;
+  }
+}
+
 export const ajoutOngletsExtraitFilliation = (
   res: OngletProps,
   document: IDocumentReponse,
   acte: IFicheActe,
   setIsDirty: any
 ) => {
-  res.ongletSelectionne = 1;
+  res.ongletSelectionne = document.validation === Validation.N ? 0 : 1;
   res.liste.push(ongletSaisirExtrait);
   res.liste.push(ongletMentions(acte, document, setIsDirty));
   if (document.validation !== "E") {
@@ -177,6 +190,7 @@ export const ongletMentions = (
     )
   };
 };
+
 export const ongletSaisirExtrait = {
   titre: getLibelle("Saisir l'extrait"),
   component: <></>

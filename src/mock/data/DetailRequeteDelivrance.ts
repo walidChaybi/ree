@@ -1655,6 +1655,24 @@ export const requeteAvecDocs = {
       idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
       optionsCourrier: [],
       mentionsRetirees: []
+    },
+
+    {
+      id: "28bc3078-7e53-4b8b-8cf8-7f75a2502573",
+      nom: "Copie Intégral",
+      typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+      mimeType: "application/pdf",
+      taille: 30132,
+      avecCtv: false,
+      nbPages: 1,
+      orientation: "Portrait",
+      referenceSwift:
+        "1de62453-249b-43ae-acc4-116457842d3c_28bc92ab-3386-4ca7-9dcc-4b22e72cf204.pdf",
+      conteneurSwift: "documents-delivres-2022-3",
+      validation: "O",
+      idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
+      optionsCourrier: [],
+      mentionsRetirees: []
     }
   ],
   evenement: {

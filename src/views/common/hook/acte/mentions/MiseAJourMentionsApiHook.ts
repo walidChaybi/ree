@@ -12,24 +12,24 @@ export interface IMiseAJourMentionsResultat {
 }
 
 export function useMiseAJourMentionsApiHook(params?: IMiseAJourMentionsParams) {
-  const [fait, setFait] = useState<IMiseAJourMentionsResultat>();
+  const [fini, setFini] = useState<IMiseAJourMentionsResultat>();
 
   useEffect(() => {
     if (params && params.mentions) {
       postMentions(params.idActe, params.mentions)
         .then(result => {
-          setFait({ resultat: true });
+          setFini({ resultat: true });
         })
         .catch(error => {
-          setFait({ resultat: false });
+          setFini({ resultat: false });
           logError({
             messageUtilisateur:
-              "Impossible de récupérer les mentions pour cet acte",
+              "Impossible de récupérer mettre à jour les mentions de cet acte ",
             error
           });
         });
     }
   }, [params]);
 
-  return fait;
+  return fini;
 }

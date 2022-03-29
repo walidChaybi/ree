@@ -29,11 +29,11 @@ const mention = {
 } as IMention;
 
 test("test getTexte", () => {
-  expect(Mention.getTexte(mention)).toBe("texteMention texteApposition");
+  expect(Mention.getTexteExtrait(mention)).toBe("texteMention texteApposition");
 
   mention.textes.texteMentionDelivrance = "texteMentionDelivrance";
 
-  expect(Mention.getTexte(mention)).toBe("texteMentionDelivrance");
+  expect(Mention.getTexteExtrait(mention)).toBe("texteMentionDelivrance");
 });
 
 afterAll(() => {

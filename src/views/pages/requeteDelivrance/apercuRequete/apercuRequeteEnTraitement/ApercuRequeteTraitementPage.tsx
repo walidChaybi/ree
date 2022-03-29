@@ -3,8 +3,13 @@ import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import { DocumentReponse, IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import {
+  DocumentReponse,
+  IDocumentReponse
+} from "../../../../../model/requete/IDocumentReponse";
+import {
+  IRequeteDelivrance
+} from "../../../../../model/requete/IRequeteDelivrance";
 import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { MigratorV1V2 } from "../../../../common/util/migration/MigratorV1V2";

@@ -1376,7 +1376,7 @@ export const acte5 = {
       ]
     }
   ],
-  type: "INCONNU"
+  type: "TEXTE"
 };
 
 export const acteMariage: any = {

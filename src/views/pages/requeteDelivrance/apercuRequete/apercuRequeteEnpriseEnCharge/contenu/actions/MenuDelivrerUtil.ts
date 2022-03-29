@@ -1,4 +1,5 @@
 import React from "react";
+import { TypeActe } from "../../../../../../../model/etatcivil/enum/TypeActe";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
 import {
   DELIVRANCE_ACTE,
@@ -12,12 +13,23 @@ import { IActionOption } from "../../../../../../../model/requete/IActionOption"
 import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { IGenerationECResultat } from "../../../../../../common/hook/generation/generationECHook/generationECHook";
+import { IResultGenerationUnDocument } from "../../../../../../common/hook/generation/generationUtils";
+import { DoubleSubmitUtil } from "../../../../../../common/util/DoubleSubmitUtil";
+import { getUrlPrecedente } from "../../../../../../common/util/route/routeUtil";
 import {
   getLibelle,
   getValeurOuVide
 } from "../../../../../../common/util/Utils";
 import { IBoutonPopin } from "../../../../../../common/widget/popin/ConfirmationPopin";
+import {
+  PATH_APERCU_COURRIER,
+  receUrl
+} from "../../../../../../router/ReceUrls";
 import { SaisieCourrier } from "../../../apercuCourrier/contenu/modelForm/ISaisiePageModel";
+import { IChoixActionDelivranceProps } from "./ChoixAction";
+import { IUpdateChoixDelivranceResultat } from "./hook/UpdateChoixDelivranceApiHook";
 
 const ORDRE_OPTION_MAX = 900;
 const MAX_TITULAIRE_DELIVRANCE_NAISSANCE_DECES = 1;
@@ -27,14 +39,14 @@ export function getBoutonOK(
   setMessagesBloquant: React.Dispatch<
     React.SetStateAction<string[] | undefined>
   >,
-  resetDoubleSubmit: Function
+  listeActions: IActionOption[]
 ): IBoutonPopin[] {
   return [
     {
       label: getLibelle("OK"),
       action: () => {
         setMessagesBloquant(undefined);
-        resetDoubleSubmit();
+        resetDoubleSubmit(listeActions);
       }
     }
   ];
@@ -44,7 +56,7 @@ export function getBoutonsOuiNon(
   setMessagesBloquant: React.Dispatch<
     React.SetStateAction<string[] | undefined>
   >,
-  resetDoubleSubmit: Function
+  listeActions: IActionOption[]
 ): IBoutonPopin[] {
   return [
     {
@@ -57,7 +69,7 @@ export function getBoutonsOuiNon(
       label: getLibelle("Non"),
       action: () => {
         setMessagesBloquant(undefined);
-        resetDoubleSubmit();
+        resetDoubleSubmit(listeActions);
       }
     }
   ];
@@ -218,3 +230,147 @@ export const getIdCourrierAuto = (choixDelivrance?: ChoixDelivrance) => {
   }
   return res;
 };
+
+export function controleCoherenceUnActeSelectionne(
+  indexMenu: number,
+  listeActes: IResultatRMCActe[] | undefined,
+  props: React.PropsWithChildren<IChoixActionDelivranceProps>,
+  setBoutonsPopin: React.Dispatch<
+    React.SetStateAction<IBoutonPopin[] | undefined>
+  >,
+  boutonOK: IBoutonPopin[],
+  boutonsOuiNon: IBoutonPopin[]
+) {
+  const requeteDelivrance = props.requete;
+  const nbrTitulaire = listeActes?.[0]
+    ? props.nbrTitulairesActe?.get(listeActes?.[0].idActe)
+    : undefined;
+  let message: string[] = [];
+  if (listeActes?.[0]?.type === TypeActe.INCONNU.libelle) {
+    message = [
+      getLibelle(
+        "Il n'y a pas de corps disponible pour l'acte sélectionné, sa délivrance n'est pas possible à ce jour."
+      )
+    ];
+    setBoutonsPopin(boutonOK);
+  } else if (
+    estChoixExtraitAvecOuSansFiliationOuPlurilingue(indexMenu) &&
+    estNombreTitulairesIncoherent(listeActes?.[0]?.nature, nbrTitulaire)
+  ) {
+    message = [
+      getLibelle(
+        "Pas de délivrance d'extrait sur la base d'un acte à titulaires multiples."
+      )
+    ];
+    setBoutonsPopin(boutonOK);
+  } else if (
+    estChoixExtraitAvecOuSansFiliation(indexMenu) &&
+    listeActes?.[0]?.nature === NatureActeRequete.DECES.libelle
+  ) {
+    message = [
+      getLibelle(
+        "Pas de délivrance d'extrait avec ou sans filiation pour un acte de décès."
+      )
+    ];
+    setBoutonsPopin(boutonOK);
+  } else if (
+    listeActes?.[0]?.nature !==
+    requeteDelivrance?.evenement?.natureActe?.libelle
+  ) {
+    message = [
+      getLibelle(
+        "La nature de l'acte sélectionné ne correspond pas à la nature de l'acte demandé. Voulez-vous continuer ?"
+      )
+    ];
+    setBoutonsPopin(boutonsOuiNon);
+  }
+  return message;
+}
+
+export function redirection(
+  updateChoixDelivranceResultat: IUpdateChoixDelivranceResultat | undefined,
+  resultatGenerationEC: IGenerationECResultat | undefined,
+  props: React.PropsWithChildren<IChoixActionDelivranceProps>,
+  history: any,
+  actes: IResultatRMCActe[] | undefined,
+  generationCourrier: IResultGenerationUnDocument | undefined
+) {
+  if (
+    updateChoixDelivranceResultat?.idRequete &&
+    resultatGenerationEC?.resultGenerationUnDocument
+  ) {
+    if (props.requete.sousType === SousTypeDelivrance.RDC) {
+      receUrl.replaceUrl(
+        history,
+        `${getUrlPrecedente(
+          history.location.pathname
+        )}/${PATH_APERCU_COURRIER}/${props.requete.id}`,
+        actes?.[0].idActe
+      );
+    } else if (
+      sousTypeCreationCourrierAutomatique(props.requete.sousType) &&
+      generationCourrier
+    ) {
+      // Si la requete est une RDD et que l'action est enregistré
+      const url = receUrl.getUrlApercuTraitementAPartirDe(
+        history.location.pathname
+      );
+      receUrl.replaceUrl(history, url, actes?.[0].idActe);
+    }
+  }
+}
+
+export function controleCoherenceEntreDocumentSelectionneEtActionDelivrer(
+  props: React.PropsWithChildren<IChoixActionDelivranceProps>,
+  listeActes: IResultatRMCActe[] | undefined,
+  listeInscriptions: IResultatRMCInscription[] | undefined,
+  indexMenu: number,
+  setBoutonsPopin: React.Dispatch<
+    React.SetStateAction<IBoutonPopin[] | undefined>
+  >,
+  setMessagesBloquant: React.Dispatch<
+    React.SetStateAction<string[] | undefined>
+  >,
+  listeActions: IActionOption[]
+) {
+  const boutonOK: IBoutonPopin[] = getBoutonOK(
+    setMessagesBloquant,
+    listeActions
+  );
+  const boutonsOuiNon: IBoutonPopin[] = getBoutonsOuiNon(
+    setMessagesBloquant,
+    listeActions
+  );
+
+  const sousType = props.requete?.sousType?.nom;
+  let message: string[] = [];
+  if (
+    sousType === SousTypeDelivrance.RDC.nom ||
+    sousType === SousTypeDelivrance.RDD.nom ||
+    sousType === SousTypeDelivrance.RDDP.nom
+  ) {
+    if (unActeEtUnSeulSelectionne(listeActes, listeInscriptions)) {
+      message = controleCoherenceUnActeSelectionne(
+        indexMenu,
+        listeActes,
+        props,
+        setBoutonsPopin,
+        boutonOK,
+        boutonsOuiNon
+      );
+    } else {
+      message = [
+        getLibelle("Veuillez sélectionner un et un seul acte à délivrer.")
+      ];
+      setBoutonsPopin(boutonOK);
+    }
+  }
+  setMessagesBloquant(message);
+}
+
+function resetDoubleSubmit(listeActions: IActionOption[]) {
+  listeActions.forEach(el => {
+    DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+  });
+}
+

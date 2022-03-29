@@ -14,10 +14,11 @@ const MAX_CARACTERE = 120;
 interface ListeGlisserDeposerProps {
   liste?: ListeItem[];
   elementSelect?: string;
-  setElementSelect: (id: string) => void;
-  handleReorga: (oldIndex: number, newIndex: number) => void;
-  handleCheckbox: (id: string) => void;
-  onClickSupprimer: (id: string) => void;
+  setElementSelect?: (id: string) => void;
+  handleReorga?: (oldIndex: number, newIndex: number) => void;
+  handleCheckbox?: (id: string) => void;
+  onClickSupprimer?: (id: string) => void;
+  deverouille?: boolean;
 }
 
 export interface ListeItem {
@@ -32,7 +33,13 @@ export const ListeGlisserDeposer: React.FC<
   ListeGlisserDeposerProps
 > = props => {
   const onClickMention = (item: ListeItem) => {
-    props.setElementSelect(item.id);
+    if (props.deverouille) {
+      if (props.setElementSelect) {
+        props.setElementSelect(item.id);
+      } else if (props.handleCheckbox) {
+        props.handleCheckbox(item.id);
+      }
+    }
   };
 
   const DragHandleElement = SortableHandle(() => <DragHandle />);
@@ -42,19 +49,30 @@ export const ListeGlisserDeposer: React.FC<
       onClick={() => onClickMention(item)}
       className={`${item.id === props.elementSelect ? "selected" : ""}`}
     >
-      {!item.liste1Element && (
+      {props.handleReorga && !item.liste1Element && (
         <span title={getLibelle("Cliquer pour glisser/déposer")}>
           <DragHandleElement />
         </span>
       )}
-      <Checkbox
-        checked={item.checkbox}
-        onClick={() => props.handleCheckbox(item.id)}
-      />
+      {props.deverouille && props.handleCheckbox && (
+        <Checkbox
+          title={getLibelle("Cliquer pour sélectionner")}
+          checked={item.checkbox}
+          onClick={() => {
+            if (props.handleCheckbox) {
+              props.handleCheckbox(item.id);
+            }
+          }}
+        />
+      )}
 
-      {item.aPoubelle && (
+      {props.onClickSupprimer && item.aPoubelle && (
         <DeleteOutlined
-          onClick={() => props.onClickSupprimer(item.id)}
+          onClick={() => {
+            if (props.onClickSupprimer) {
+              props.onClickSupprimer(item.id);
+            }
+          }}
           className="IconeSupprimer"
           titleAccess={getLibelle("Supprimer la mention")}
         />
@@ -88,9 +106,11 @@ export const ListeGlisserDeposer: React.FC<
     <div className="ListeGlisserDeposer">
       {props.liste && (
         <SortableList
-          onSortEnd={sortEnd =>
-            props.handleReorga(sortEnd.oldIndex, sortEnd.newIndex)
-          }
+          onSortEnd={sortEnd => {
+            if (props.handleReorga) {
+              props.handleReorga(sortEnd.oldIndex, sortEnd.newIndex);
+            }
+          }}
           useDragHandle
         />
       )}

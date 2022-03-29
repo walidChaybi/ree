@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
 import {
-  FicheActe,
-  IFicheActe
-} from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import { NatureMention } from "../../../../../../../model/etatcivil/enum/NatureMention";
+  CODE_COPIE_INTEGRALE,
+  DocumentDelivrance
+} from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import {
   IMentionsParams,
@@ -22,20 +21,20 @@ import {
   getLibelle,
   getValeurOuVide
 } from "../../../../../../common/util/Utils";
-import { SelectRece } from "../../../../../../common/widget/formulaire/champsSaisie/SelectField";
-import { SectionModificationMention } from "./contenu/SectionModificationMention";
+import { MentionsCopie } from "./contenu/MentionsCopie";
+import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import {
-  aucuneMentionsNationalite,
-  getEnumNatureMentionOuAutre,
+  boutonReinitialiserEstDisabled,
   getRegistreActe,
+  getValeurEstDeverouillerCommencement,
   IMentionAffichage,
   mappingVersMentionAffichage,
-  mappingVersMentionsApi,
-  modificationEffectue
+  saveMentions,
+  validerMentions
 } from "./GestionMentionsUtil";
 import "./scss/Mention.scss";
 
-interface GestionMentionsProps {
+export interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
   setIsDirty: any;
@@ -46,6 +45,9 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   const [mentionAjout, setMentionAjout] = useState<IMentionAffichage>();
   const [mentions, setMentions] = useState<IMentionAffichage[]>();
   const [mentionsParams, setMentionsParams] = useState<IMentionsParams>();
+  const [estDeverouille, setEstDeverouille] = useState<boolean>(
+    getValeurEstDeverouillerCommencement(props.document)
+  );
   const [mentionsAEnvoyerParams, setMentionsAEnvoyerParams] =
     useState<IMiseAJourMentionsParams>();
   const [documentMajParams, setDocumentMajParams] =
@@ -78,104 +80,24 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
     reinitialisation();
   }, [reinitialisation]);
 
-  const handleAjoutSelect = useCallback(
-    (event: any) => {
-      if (mentionAjout) {
-        const temp = { ...mentionAjout };
-        temp.nature = getEnumNatureMentionOuAutre(event.target.value);
-        setMentionAjout(temp);
-      } else {
-        setMentionAjout({
-          id: uuidv4(),
-          texte: "",
-          nature: NatureMention.getEnumFor(event.target.value),
-          numeroOrdre: mentions?.length,
-          estPresent: true,
-          aPoubelle: true
-        } as IMentionAffichage);
-      }
-    },
-    [mentionAjout, mentions]
-  );
-  const handleAjoutTexte = useCallback(
-    (event: any) => {
-      if (mentionAjout) {
-        const temp = { ...mentionAjout };
-        temp.texte = event.target.value;
-        setMentionAjout(temp);
-      } else {
-        setMentionAjout({
-          id: uuidv4(),
-          texte: event.target.value,
-          nature: NatureMention.getEnumFor(""),
-          numeroOrdre: mentions?.length,
-          estPresent: true,
-          aPoubelle: true
-        } as IMentionAffichage);
-      }
-    },
-    [mentions, mentionAjout]
-  );
-
-  const ajoutMention = useCallback(() => {
-    if (mentionAjout) {
-      let temp: IMentionAffichage[] = [];
-      if (mentions) {
-        temp = [...mentions];
-      }
-      temp.push(mentionAjout);
-      setMentions(temp);
-      setMentionSelect(mentionAjout);
-      setMentionAjout(undefined);
-    }
-  }, [mentionAjout, mentions]);
-
   const sauvegarderMentions = useCallback(() => {
-    if (mentionsApi && mentionsApi.mentions && mentions && props.document) {
-      const { mentionsAEnvoyer, mentionsRetirees } = mappingVersMentionsApi(
-        mentionsApi.mentions,
-        mentions
-      );
-      if (
-        modificationEffectue(
-          props.setIsDirty,
-          mentions,
-          mentionsApi.mentions,
-          props.document
-        )
-      ) {
-        setMentionsAEnvoyerParams({
-          idActe: getValeurOuVide(props.acte?.id),
-          mentions: mentionsAEnvoyer
-        });
-        setDocumentMajParams({
-          idDocument: props.document.id,
-          mentionsRetirees,
-        });
-      } else {
-         setDocumentMajParams({
-          idDocument: props.document.id
-        });
-      }
-    }
-  }, [mentions, mentionsApi, props.acte, props.document, props.setIsDirty]);
+    saveMentions(
+      mentionsApi,
+      mentions,
+      props,
+      setMentionsAEnvoyerParams,
+      setDocumentMajParams
+    );
+  }, [mentions, mentionsApi, props]);
 
   const valider = useCallback(() => {
-    if (
-      FicheActe.acteEstACQouOP2ouOP3(props.acte) &&
-      FicheActe.estActeNaissance(props.acte) &&
-      aucuneMentionsNationalite(mentions)
-    ) {
-      if (
-        window.confirm(`Aucune mention de nationalité n'a été cochée. 
-      Voulez-vous continuer ?`)
-      ) {
-        sauvegarderMentions();
-      }
-    } else {
-      sauvegarderMentions();
-    }
-  }, [props.acte, mentions, sauvegarderMentions]);
+    validerMentions(
+      props,
+      mentions,
+      sauvegarderMentions,
+      mentionsApi?.mentions
+    );
+  }, [mentions, sauvegarderMentions, mentionsApi, props]);
 
   return (
     <div className="Mention">
@@ -191,48 +113,36 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           </div>
         </div>
       )}
-      <SectionModificationMention
-        mentions={mentions}
-        mentionSelect={mentionSelect}
-        mentionsApi={mentionsApi}
-        setMentionSelect={setMentionSelect}
-        setMentions={setMentions}
-        setIsDirty={props.setIsDirty}
-      />
-      <div className="FormMention Ajout">
-        <h3>{getLibelle("Ajout d'une mention")}</h3>
-        <textarea
-          value={getValeurOuVide(mentionAjout?.texte)}
-          onChange={handleAjoutTexte}
-          placeholder="Texte mention à ajouter"
+      {DocumentDelivrance.getEnumFor(
+        getValeurOuVide(props.document?.typeDocument)
+      ).code === CODE_COPIE_INTEGRALE ? (
+        <MentionsCopie
+          estDeverouille={estDeverouille}
+          setEstDeverouille={setEstDeverouille}
+          mentions={mentions}
+          setMentions={setMentions}
         />
-        <div className="SelectAjout">
-          <SelectRece
-            options={NatureMention.getAllEnumsAsOptions()}
-            label="Nature ajoutée"
-            value={NatureMention.getKey(mentionAjout?.nature)}
-            onChange={handleAjoutSelect}
-          />
-          <button
-            disabled={!mentionAjout || mentionAjout.texte === ""}
-            onClick={ajoutMention}
-            title="Ajouter la mention"
-          >
-            +
-          </button>
-        </div>
-      </div>
+      ) : (
+        <MentionsExtrait
+          mentions={mentions}
+          mentionSelect={mentionSelect}
+          mentionsApi={mentionsApi}
+          setMentionSelect={setMentionSelect}
+          setMentions={setMentions}
+          mentionAjout={mentionAjout}
+          setMentionAjout={setMentionAjout}
+        />
+      )}
       <div className="Boutons">
         <button
           onClick={reinitialisation}
-          disabled={
-            !modificationEffectue(
-              props.setIsDirty,
-              mentions,
-              mentionsApi?.mentions,
-              props.document
-            )
-          }
+          disabled={boutonReinitialiserEstDisabled(
+            estDeverouille,
+            props.setIsDirty,
+            mentionsApi?.mentions,
+            mentions,
+            props.document
+          )}
         >
           {getLibelle("Réinitialiser")}
         </button>

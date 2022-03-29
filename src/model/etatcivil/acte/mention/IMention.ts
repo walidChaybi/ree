@@ -25,7 +25,7 @@ export interface IMention {
 }
 
 export const Mention = {
-  getTexte(mention: IMention): string {
+  getTexteExtrait(mention: IMention): string {
     let texte = "";
     const texteMention = getValeurOuVide(mention.textes.texteMention);
 
@@ -44,6 +44,13 @@ export const Mention = {
       }
     }
 
+    return texte;
+  },
+  getTexteCopie(mention: IMention): string {
+    let texte = "";
+    if (mention.textes) {
+      texte = `${mention.textes.texteMention} ${mention.textes.texteApposition} ${mention.textes.texteOEC}}`;
+    }
     return texte;
   }
 };

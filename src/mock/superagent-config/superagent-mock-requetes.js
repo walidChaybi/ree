@@ -391,7 +391,9 @@ export const configRequetes = [
         return { data: documentReponseCopieIntegrale };
       }
       if (
-        match[1] === "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db"
+        match[1] ===
+          "/documentsreponses/9bfa865e-6d7a-4d66-900e-b548178854db" ||
+        match[1] === "/documentsreponses/28bc3078-7e53-4b8b-8cf8-7f75a2502573"
       ) {
         return { data: documentReponseExtraitAvecFiliation };
       }

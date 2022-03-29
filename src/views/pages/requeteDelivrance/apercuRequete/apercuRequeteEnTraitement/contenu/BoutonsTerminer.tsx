@@ -65,7 +65,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
       {aDroitSignerEtStatutSigner && (
         <>
           <BoutonSignature
-            libelle={getLibelle("Signer et terminer")}
+            libelle={getLibelle("Terminer et signer")}
             requetes={[mappingRequeteDelivranceToRequeteTableau(requete)]}
             reloadData={actionApresSignature}
             uniqueSignature={true}

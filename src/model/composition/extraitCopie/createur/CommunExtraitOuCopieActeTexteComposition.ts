@@ -540,7 +540,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
     mentionsTriees.forEach(mention => {
       if (mention.textes) {
-        texteMentions.push(Mention.getTexte(mention));
+        texteMentions.push(Mention.getTexteExtrait(mention));
       }
     });
 

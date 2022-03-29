@@ -1,50 +1,68 @@
 @import "../../../../../../../../scss/colors";
 
-.Mention{
-    .Header{
-        text-align: center;
-        display: flex;
-        justify-content: space-around;
-        span{margin-block-start: 1.09em;}
+.Mention {
+  .Deverouillage {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    p {
+      display: flex;
+      input{
+          margin-right: 10px;
+      }
     }
-    .FormMention{
-        textarea{
-            height: 100px !important;
-            width: 100%;
-            overflow-y: auto !important;
-            padding: 4px;
-            box-sizing: border-box;
-        }
-        &.Modification{
-            .MuiFormControl-root {
-                width: 100%;
-            }
-        }
+    svg {
+      vertical-align: middle;
+      color: red;
+      height: 100%;
+    }
+  }
 
-        &.Ajout{
-            .SelectAjout{
-                display: inline-grid;
-                grid-template-columns: 80% 20%;
-                width: 100%;
-                button{
-                    width: 50px;
-                    line-height: 20px;
-                    border-radius: 50px;
-                    background-color:$success-icon-color;
-                    font-size: 2rem;
-                    margin: 0 0 0 0;
-                    &:disabled{
-                        background-color: grey;
-                    }
-                }
-                .MuiFormControl-root{
-                    width :90%
-                }
-            }
-            
+  .Header {
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    span {
+      margin-block-start: 1.09em;
+    }
+  }
+  .FormMention {
+    textarea {
+      height: 100px !important;
+      width: 100%;
+      overflow-y: auto !important;
+      padding: 4px;
+      box-sizing: border-box;
+    }
+    &.Modification {
+      .MuiFormControl-root {
+        width: 100%;
+      }
+    }
+
+    &.Ajout {
+      .SelectAjout {
+        display: inline-grid;
+        grid-template-columns: 80% 20%;
+        width: 100%;
+        button {
+          width: 50px;
+          line-height: 20px;
+          border-radius: 50px;
+          background-color: $success-icon-color;
+          font-size: 2rem;
+          margin: 0 0 0 0;
+          &:disabled {
+            background-color: grey;
+          }
         }
+        .MuiFormControl-root {
+          width: 90%;
+        }
+      }
     }
-    .Boutons{
-        margin-top: 10px;
-    }
+  }
+  .Boutons {
+    margin-top: 10px;
+  }
 }

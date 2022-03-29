@@ -66,7 +66,7 @@ beforeEach(async () => {
   });
 });
 
-test("Test affichage Edition Extrait copie", async () => {
+test("Test affichage Edition Extrait", async () => {
   await waitFor(() => {
     expect(screen.getAllByText("Extrait avec filiation")).toBeDefined();
     expect(screen.getAllByText("Requête")).toBeDefined();
@@ -150,6 +150,11 @@ test("Test édition mentions Edition Extrait copie", async () => {
 });
 
 test("Ajout mention et réinitialisation", async () => {
+  // Gestion des mentions
+  act(() => {
+    fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
+  });
+
   // Ajout d'une mention
   await waitFor(() => {
     expect(
@@ -225,6 +230,12 @@ test("clic sur mention et sur checkbox et valider", async () => {
     fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
   });
 
+  await waitFor(() => {
+    expect(
+      (screen.getByText("Réinitialiser") as HTMLButtonElement).disabled
+    ).toBeTruthy();
+  });
+
   // Changement d'une mention
   const textarea1 = screen.getAllByText(
     "Deuxième mention Nantes, le 25 juin 2012"
@@ -258,6 +269,16 @@ test("clic sur mention et sur checkbox et valider", async () => {
   });
 
   act(() => {
+    fireEvent.click(screen.getAllByTitle("Cliquer pour sélectionner")[0]);
+  });
+
+  await waitFor(() => {
+    expect(
+      screen.getAllByTitle("Cliquer pour sélectionner")[0] as HTMLInputElement
+    ).not.toBeChecked();
+  });
+
+  act(() => {
     fireEvent.click(screen.getByText("Terminer"));
   });
 
@@ -266,6 +287,53 @@ test("clic sur mention et sur checkbox et valider", async () => {
   });
 });
 
+// Copie Intégral
+test("Test affichage Edition Copie", async () => {
+  await waitFor(() => {
+    expect(screen.getAllByText("Copie intégrale")).toBeDefined();
+    expect(screen.getAllByText("Requête")).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Copie intégrale"));
+  });
+
+  await waitFor(() => {
+    expect(screen.getAllByText("Acte registre")).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
+  });
+
+  await waitFor(() => {
+    expect(
+      screen.getByText("Déverouillage des mentions de la copie intégrale")
+    ).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByTitle("Cliquer pour déverouiller"));
+  });
+
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        /Désélectionner les mentions qui ne doivent pas être éditées/i
+      )
+    ).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByTitle("Première mention null null}"));
+  });
+
+  await waitFor(() => {
+    expect(
+      (screen.getByText("Réinitialiser") as HTMLButtonElement).disabled
+    ).toBeFalsy();
+  });
+});
 
 
 afterAll(() => {
