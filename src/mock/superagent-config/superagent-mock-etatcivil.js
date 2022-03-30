@@ -404,6 +404,10 @@ export const configEtatcivil = [
         throw err;
       }
 
+      if (match[1] === "/repertoirecivil/datedernieredelivrance") {
+        return { data: null };
+      }
+
       if (match[1].startsWith("/repertoirecivil/decrets")) {
         return { data: decrets };
       }

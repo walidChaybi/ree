@@ -20,6 +20,12 @@ export class FicheUtil {
   public static isFicheRca(fiche?: TypeFiche): boolean {
     return fiche === TypeFiche.RCA;
   }
+  public static isFicheRc(fiche?: TypeFiche): boolean {
+    return fiche === TypeFiche.RC;
+  }
+  public static isFichePacs(fiche?: TypeFiche): boolean {
+    return fiche === TypeFiche.PACS;
+  }
   public static isActe(type: string) {
     return FicheUtil.getTypeFicheFromString(type) === TypeFiche.ACTE;
   }

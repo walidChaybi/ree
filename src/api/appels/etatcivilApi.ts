@@ -2,6 +2,7 @@ import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
 import { IRMCRequestActesInscriptions } from "../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { AddAlerteActeApiHookParameters } from "../../views/common/hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters } from "../../views/common/hook/alertes/DeleteAlerteActeHookApi";
+import { IDerniereDelivranceRcRcaPacsParams } from "../../views/common/hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { ICriteresRMCAuto } from "../../views/pages/rechercheMultiCriteres/autoActesInscriptions/hook/RMCAutoActesInscriptionsUtils";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
@@ -23,6 +24,8 @@ export const URL_ALERTES_ACTE = "/alertes";
 export const URL_ALERTE_ACTE = "/alerte";
 export const URL_DECRETS = "/repertoirecivil/decrets";
 export const URL_DERNIERE_DELIVRANCE = "/dernieredelivrance";
+export const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS =
+  "/repertoirecivil/datedernieredelivrance";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -234,3 +237,12 @@ export function updateDateDerniereDelivranceActe(idActe: string): Promise<any> {
   });
 }
 
+export function updateDateDerniereDelivranceRcRcaPacs(
+  body: IDerniereDelivranceRcRcaPacsParams[]
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_DERNIERE_DELIVRANCE_RC_RCA_PACS}`,
+    data: body
+  });
+}

@@ -24,22 +24,18 @@ import {
   getTypeFiche
 } from "./GenerationCertificatGestionTypeCertificat";
 
+
 export function useGenerationCertificatPACSOuRCOuRCAHook(
   typeCertificat: TypePacsRcRca,
   requete?: IRequeteTableauDelivrance,
   listePacsRcRca?: IResultatRMCInscription[]
 ): IResultGenerationInscriptions | undefined {
-  const [
-    certificatComposition,
-    setCertificatComposition
-  ] = useState<TypeCertificatComposition>();
-  const [listePacsRcRcaATraiter, setListePacsRcRcaATraiter] = useState<
-    IResultatRMCInscription[]
-  >();
-  const [
-    documentsReponsePourStockage,
-    setDocumentsReponsePourStockage
-  ] = useState<IDocumentReponse[]>(); // Ne contiendra qu'un seul IDocumentReponse (on stock les doc un par un)
+  const [certificatComposition, setCertificatComposition] =
+    useState<TypeCertificatComposition>();
+  const [listePacsRcRcaATraiter, setListePacsRcRcaATraiter] =
+    useState<IResultatRMCInscription[]>();
+  const [documentsReponsePourStockage, setDocumentsReponsePourStockage] =
+    useState<IDocumentReponse[]>(); // Ne contiendra qu'un seul IDocumentReponse (on stock les doc un par un)
 
   const [fichePacsRcRcaTraiter, setFichePacsRcRcaTraiter] = useState<TFiche[]>(
     []
@@ -50,10 +46,8 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   );
 
   // Résultat du hook
-  const [
-    resultGenerationCertificat,
-    setResultGenerationCertificat
-  ] = useState<IResultGenerationInscriptions>();
+  const [resultGenerationCertificat, setResultGenerationCertificat] =
+    useState<IResultGenerationInscriptions>();
 
   // 0- récupération du pacs, rc ou rca à traiter
   const { pacsRcRcaCourant } = useGestionPacsRcRcaCourant(
@@ -109,7 +103,13 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
           mimeType: MimeType.APPLI_PDF,
           typeDocument: getTypeDocument(typeCertificat),
           nbPages: compositionData.nbPages,
-          orientation: Orientation.PORTRAIT
+          orientation: Orientation.PORTRAIT,
+          idPacs: recupererIdByTypeRcRcaPacs(
+            TypePacsRcRca.PACS,
+            pacsRcRcaCourant
+          ),
+          idRc: recupererIdByTypeRcRcaPacs(TypePacsRcRca.RC, pacsRcRcaCourant),
+          idRca: recupererIdByTypeRcRcaPacs(TypePacsRcRca.RCA, pacsRcRcaCourant)
         } as IDocumentReponse
       ]);
     }
@@ -143,4 +143,13 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   }, [uuidDocumentsReponseStockes]);
 
   return resultGenerationCertificat;
+}
+
+function recupererIdByTypeRcRcaPacs(
+  type: TypePacsRcRca,
+  pacsRcRcaCourant?: IResultatRMCInscription | undefined
+) {
+  return pacsRcRcaCourant?.categorie?.toUpperCase() === type
+    ? pacsRcRcaCourant.idInscription
+    : null;
 }

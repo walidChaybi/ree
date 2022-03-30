@@ -5,6 +5,7 @@ import { Router } from "react-router-dom";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../../mock/data/connectedUserAvecDroit";
 import { idRequeteRDCSC } from "../../../../../../mock/data/requeteDelivrance";
+import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { Nationalite } from "../../../../../../model/etatcivil/enum/Nationalite";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
@@ -15,7 +16,10 @@ import { storeRece } from "../../../../../../views/common/util/storeRece";
 import { BoutonValiderTerminer } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonValiderTerminer";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "../../../../../../views/router/ReceUrls";
 
-const superagentMock = require("superagent-mock")(request, configRequetes);
+const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
+  configRequetes[0]
+]);
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -45,7 +49,11 @@ const requeteTestCOURRIER = {
       sexe: Sexe.MASCULIN.libelle
     }
   ],
-  documentsReponses: [{}]
+  documentsReponses: [
+    { idRc: "123456789" },
+    { idRca: "123456789" },
+    { idPacs: "123456789" }
+  ]
 } as IRequeteDelivrance;
 
 test("est à A_VALIDER et provient de COURRIER", async () => {
@@ -61,14 +69,14 @@ test("est à A_VALIDER et provient de COURRIER", async () => {
     </Router>
   );
 
-  const bouttonµSigner = getByText(/Valider et terminer/i) as HTMLButtonElement;
+  const bouttonSigner = getByText(/Valider et terminer/i) as HTMLButtonElement;
 
   await waitFor(() => {
-    expect(bouttonµSigner.disabled).toBeFalsy();
+    expect(bouttonSigner.disabled).toBeFalsy();
   });
 
   await act(async () => {
-    fireEvent.click(bouttonµSigner);
+    fireEvent.click(bouttonSigner);
   });
 });
 
