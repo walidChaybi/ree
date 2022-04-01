@@ -11,7 +11,7 @@ import {
   autorisePrendreEnChargeReqTableauDelivrance,
   typeEstDelivrance
 } from "../../util/RequetesUtils";
-import { getUrlWithParam } from "../../util/route/routeUtil";
+import { getUrlPrecedente, getUrlWithParam } from "../../util/route/routeUtil";
 import { storeRece } from "../../util/storeRece";
 
 export interface INavigationApercuDelivrance {
@@ -20,7 +20,7 @@ export interface INavigationApercuDelivrance {
 }
 
 export function useNavigationApercuDelivrance(
-  urlWithParam?: string,
+  urlWithoutParam?: string,
   requete?: IRequeteTableauDelivrance
 ): INavigationApercuDelivrance | undefined {
   const [redirection, setRedirection] = useState<
@@ -28,7 +28,7 @@ export function useNavigationApercuDelivrance(
   >();
 
   useEffect(() => {
-    if (requete && urlWithParam) {
+    if (requete && urlWithoutParam) {
       const officier = storeRece.utilisateurCourant;
 
       // Si la requete est dans sa corbeille
@@ -40,7 +40,11 @@ export function useNavigationApercuDelivrance(
       ) {
         // US 207 et de type RDC au statut "Traité - A imprimer" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
         // US 207 et de type RDD au statut "Traiter - A Délivrer démat" (jusqu'à Et2 R2), redirection vers "Aperçu du traitement"
-        redirectionEnFonctionMaRequete(requete, setRedirection, urlWithParam);
+        redirectionEnFonctionMaRequete(
+          requete,
+          setRedirection,
+          urlWithoutParam
+        );
       } else if (
         !requete.idUtilisateur &&
         requete.statut === StatutRequete.PRISE_EN_CHARGE.libelle
@@ -49,10 +53,10 @@ export function useNavigationApercuDelivrance(
         setRedirection({ isRmcAuto: true });
       } else {
         // Si la requête N'EST PAS dans sa corbeille agent-> redirection vers "Aperçu de requête"
-        redirectionApercuRequete(setRedirection, urlWithParam, requete);
+        redirectionApercuRequete(setRedirection, urlWithoutParam, requete);
       }
     }
-  }, [urlWithParam, requete]);
+  }, [urlWithoutParam, requete]);
 
   return redirection;
 }
@@ -62,14 +66,14 @@ const redirectionEnFonctionMaRequete = (
   setRedirection: (
     value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
-  urlWithParam: string
+  urlWithoutParam: string
 ) => {
   if (estUneRequeteDeDelivranceAvecUnStatut(requete)) {
     switch (requete.statut) {
       case StatutRequete.TRANSFEREE.libelle:
       case StatutRequete.A_TRAITER.libelle:
         // US 210 et au statut "À traiter" ou "Transférée", on lance la "RMC Auto" et redirection suivant le résultat
-        redirectionATraiterTransferee(requete, setRedirection, urlWithParam);
+        redirectionATraiterTransferee(requete, setRedirection, urlWithoutParam);
         break;
       case StatutRequete.PRISE_EN_CHARGE.libelle:
         // US 211 ... et au statut "Prise en charge", on lance la "RMC Auto" et redirection suivant le résultat
@@ -78,16 +82,26 @@ const redirectionEnFonctionMaRequete = (
       case StatutRequete.A_SIGNER.libelle:
       case StatutRequete.A_VALIDER.libelle:
         // US 207 et au statut "À signer" ou "À valider", redirection vers "Aperçu du traitement"
-        redirectionApercuTraitement(setRedirection, urlWithParam, requete);
+        redirectionApercuTraitement(setRedirection, urlWithoutParam, requete);
         break;
       case StatutRequete.BROUILLON.libelle:
-        redirectionBrouillon(requete, setRedirection, urlWithParam);
+        redirectionBrouillon(requete, setRedirection, urlWithoutParam);
+        break;
+      case StatutRequete.DOUBLON.libelle:
+        setRedirection({
+          url: getUrlWithParam(
+            `${getUrlPrecedente(
+              urlWithoutParam
+            )}/${PATH_APERCU_REQ_DEL}/:idRequete`,
+            requete.idRequete
+          )
+        });
         break;
       default:
         if (MigratorV1V2.estARetraiterSagaRequeteTableau(requete)) {
-          redirectionApercuTraitement(setRedirection, urlWithParam, requete);
+          redirectionApercuTraitement(setRedirection, urlWithoutParam, requete);
         } else {
-          redirectionApercuRequete(setRedirection, urlWithParam, requete);
+          redirectionApercuRequete(setRedirection, urlWithoutParam, requete);
         }
         break;
     }
@@ -104,12 +118,12 @@ function redirectionApercuTraitement(
   setRedirection: (
     value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
-  urlWithParam: string,
+  urlWithoutParam: string,
   requete: IRequeteTableauDelivrance
 ) {
   setRedirection({
     url: getUrlWithParam(
-      `${urlWithParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
+      `${urlWithoutParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
       requete.idRequete
     )
   });
@@ -119,12 +133,12 @@ function redirectionApercuRequete(
   setRedirection: (
     value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
-  urlWithParam: string,
+  urlWithoutParam: string,
   requete: IRequeteTableauDelivrance
 ) {
   setRedirection({
     url: getUrlWithParam(
-      `${urlWithParam}/${PATH_APERCU_REQ_DEL}/:idRequete`,
+      `${urlWithoutParam}/${PATH_APERCU_REQ_DEL}/:idRequete`,
       requete.idRequete
     )
   });
@@ -135,12 +149,12 @@ function redirectionATraiterTransferee(
   setRedirection: (
     value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
-  urlWithParam: string
+  urlWithoutParam: string
 ) {
   if (autorisePrendreEnChargeReqTableauDelivrance(requete)) {
     setRedirection({ isRmcAuto: true });
   } else {
-    redirectionApercuRequete(setRedirection, urlWithParam, requete);
+    redirectionApercuRequete(setRedirection, urlWithoutParam, requete);
   }
 }
 
@@ -149,7 +163,7 @@ function redirectionBrouillon(
   setRedirection: (
     value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
-  urlWithParam: string
+  urlWithoutParam: string
 ) {
   if (
     requete.sousType &&
@@ -157,7 +171,7 @@ function redirectionBrouillon(
   ) {
     setRedirection({
       url: getUrlWithParam(
-        `${urlWithParam}/saisircertificatsituation/:idRequete`,
+        `${urlWithoutParam}/saisircertificatsituation/:idRequete`,
         requete.idRequete
       )
     });
