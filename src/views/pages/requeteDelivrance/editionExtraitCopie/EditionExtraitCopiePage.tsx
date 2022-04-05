@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { Validation } from "../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import { IUuidRequeteParams } from "../../../../model/requete/IUuidRequeteParams";
@@ -56,7 +57,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
   }, [documents, dataHistory]);
 
   useEffect(() => {
-    if (documentEdite) {
+    if (documentEdite && documentEdite.idActe) {
       setHookParams({ idActe: documentEdite.idActe });
     }
   }, [documentEdite]);
@@ -74,6 +75,19 @@ export const EditionExtraitCopiePage: React.FC = () => {
       receUrl.goBack(history);
     }
   };
+
+  function passerDocumentValider(idDocument: string) {
+    if (requete) {
+      const temp = { ...requete };
+      if (temp.documentsReponses) {
+        const index = temp.documentsReponses.findIndex(
+          el => el.id === idDocument
+        );
+        temp.documentsReponses[index].validation = Validation.O;
+      }
+      setRequete(temp);
+    }
+  }
 
   return (
     <div className="EditionExtraitCopie">
@@ -100,6 +114,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
               <VoletAvecOnglet
                 onglets={getOngletsEdition(
                   setIsDirty,
+                  passerDocumentValider,
                   documentEdite,
                   acte?.acte
                 )}

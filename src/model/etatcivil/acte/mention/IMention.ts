@@ -49,7 +49,16 @@ export const Mention = {
   getTexteCopie(mention: IMention): string {
     let texte = "";
     if (mention.textes) {
-      texte = `${mention.textes.texteMention} ${mention.textes.texteApposition} ${mention.textes.texteOEC}}`;
+      const texteMention = mention.textes.texteMention
+        ? `${mention.textes.texteMention} `
+        : "";
+      const texteApposition = mention.textes.texteApposition
+        ? `${mention.textes.texteApposition} `
+        : "";
+      const texteOEC = mention.textes.texteOEC
+        ? `${mention.textes.texteOEC} `
+        : "";
+      texte = `${texteMention}${texteApposition}${texteOEC}`;
     }
     return texte;
   }

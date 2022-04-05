@@ -525,8 +525,6 @@ export function updateDocumentMention(
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_DOCUMENT_REPONSE}/${id}${URL_MENTION}`,
-    data: {
-      mentionsRetirees
-    }
+    data: mentionsRetirees
   });
 }

@@ -33,7 +33,8 @@ import {
   ReponseAppelNomenclatureNatureMention,
   ReponseAppelNomenclatureNatureRC,
   ReponseAppelNomenclatureNatureRCA,
-  ReponseAppelNomenclatureTypeAlerte
+  ReponseAppelNomenclatureTypeAlerte,
+  ReponseAppelNomenclatureTypeMention
 } from "../data/nomenclatures";
 import { pacsModificationNotaire } from "../data/PACS";
 import mockRC from "../data/RC.json";
@@ -277,6 +278,10 @@ export const configEtatcivil = [
 
       if (match[1] === "/nomenclature/NATURE_MENTION") {
         return { data: ReponseAppelNomenclatureNatureMention.data };
+      }
+
+      if (match[1] === "/nomenclature/typemention") {
+        return { data: ReponseAppelNomenclatureTypeMention.data };
       }
 
       if (

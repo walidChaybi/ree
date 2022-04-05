@@ -5,10 +5,7 @@ import {
   DocumentDelivrance
 } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
-import {
-  IMentionsParams,
-  useMentionsApiHook
-} from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
+import { useMentionsApiHook } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
 import {
   IMiseAJourDocumentMentionParams,
   useMiseAJourDocumentMentionApiHook
@@ -26,7 +23,7 @@ import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import {
   boutonReinitialiserEstDisabled,
   getRegistreActe,
-  getValeurEstDeverouillerCommencement,
+  getValeurEstdeverrouillerCommencement,
   IMentionAffichage,
   mappingVersMentionAffichage,
   saveMentions,
@@ -37,6 +34,7 @@ import "./scss/Mention.scss";
 export interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
+  passerDocumentValider: (idDocument: string) => void;
   setIsDirty: any;
 }
 
@@ -44,9 +42,9 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   const [mentionSelect, setMentionSelect] = useState<IMentionAffichage>();
   const [mentionAjout, setMentionAjout] = useState<IMentionAffichage>();
   const [mentions, setMentions] = useState<IMentionAffichage[]>();
-  const [mentionsParams, setMentionsParams] = useState<IMentionsParams>();
-  const [estDeverouille, setEstDeverouille] = useState<boolean>(
-    getValeurEstDeverouillerCommencement(props.document)
+  const [mentionsParams, setMentionsParams] = useState<string>();
+  const [estDeverrouille, setEstdeverrouille] = useState<boolean>(
+    getValeurEstdeverrouillerCommencement(props.document)
   );
   const [mentionsAEnvoyerParams, setMentionsAEnvoyerParams] =
     useState<IMiseAJourMentionsParams>();
@@ -55,11 +53,19 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   const mentionsApi = useMentionsApiHook(mentionsParams);
   useMiseAJourMentionsApiHook(mentionsAEnvoyerParams);
-  useMiseAJourDocumentMentionApiHook(documentMajParams);
+  const documentEstMisAJour =
+    useMiseAJourDocumentMentionApiHook(documentMajParams);
+
+  useEffect(() => {
+    if (props.document && documentEstMisAJour?.resultat) {
+      props.passerDocumentValider(props.document.id);
+      setDocumentMajParams(undefined);
+    }
+  }, [props, documentEstMisAJour]);
 
   useEffect(() => {
     if (props.acte) {
-      setMentionsParams({ idActe: props.acte.id });
+      setMentionsParams(props.acte.id);
     }
   }, [props.acte]);
 
@@ -117,8 +123,8 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         getValeurOuVide(props.document?.typeDocument)
       ).code === CODE_COPIE_INTEGRALE ? (
         <MentionsCopie
-          estDeverouille={estDeverouille}
-          setEstDeverouille={setEstDeverouille}
+          estDeverrouille={estDeverrouille}
+          setEstdeverrouille={setEstdeverrouille}
           mentions={mentions}
           setMentions={setMentions}
         />
@@ -131,13 +137,14 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           setMentions={setMentions}
           mentionAjout={mentionAjout}
           setMentionAjout={setMentionAjout}
+          natureActe={props.acte?.nature}
         />
       )}
       <div className="Boutons">
         <button
           onClick={reinitialisation}
           disabled={boutonReinitialiserEstDisabled(
-            estDeverouille,
+            estDeverrouille,
             props.setIsDirty,
             mentionsApi?.mentions,
             mentions,

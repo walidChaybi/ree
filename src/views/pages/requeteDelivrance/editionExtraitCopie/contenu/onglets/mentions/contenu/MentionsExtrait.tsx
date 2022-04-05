@@ -1,5 +1,7 @@
 import React, { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { TypeMention } from "../../../../../../../../model/etatcivil/acte/mention/ITypeMention";
+import { NatureActe } from "../../../../../../../../model/etatcivil/enum/NatureActe";
 import { NatureMention } from "../../../../../../../../model/etatcivil/enum/NatureMention";
 import { IMentionsResultat } from "../../../../../../../common/hook/acte/mentions/MentionsApiHook";
 import {
@@ -26,6 +28,7 @@ export interface SectionModificationMentionProps {
   setMentions: any;
   setMentionAjout: any;
   mentionAjout?: IMentionAffichage;
+  natureActe?: NatureActe;
 }
 
 export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
@@ -35,7 +38,8 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   setMentionSelect,
   setMentions,
   setMentionAjout,
-  mentionAjout
+  mentionAjout,
+  natureActe
 }) => {
   function selectionneMention(id: string) {
     selectionneEtMiseAJour(mentions, mentionSelect, setMentionSelect, id);
@@ -131,6 +135,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
         temp = [...mentions];
       }
       temp.push(mentionAjout);
+      temp.forEach((mention, index) => (mention.numeroOrdre = index));
       setMentions(temp);
       setMentionSelect(mentionAjout);
       setMentionAjout(undefined);
@@ -162,7 +167,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
             handleReorga={handleSort}
             handleCheckbox={handleCheck}
             onClickSupprimer={onClickSupprimer}
-            deverouille={true}
+            deverrouille={true}
           />
           <div className="FormMention Modification">
             <h3>{getLibelle("Modification d'une mention")}</h3>
@@ -175,7 +180,14 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
             <span>
               <label>{getLibelle("Nature mention")}</label>
               <SelectRece
-                options={NatureMention.getAllEnumsAsOptions()}
+                options={
+                  // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
+                  natureActe
+                    ? NatureMention.getEnumsAsOptions(
+                        TypeMention.getNaturesMentionPourActe(natureActe)
+                      )
+                    : NatureMention.getAllEnumsAsOptions()
+                }
                 label="Nature sélectionnée"
                 value={NatureMention.getKey(mentionSelect?.nature)}
                 onChange={handleChangeSelect}
@@ -195,7 +207,14 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
               <span>
                 <label>{getLibelle("Nature mention")}</label>
                 <SelectRece
-                  options={NatureMention.getAllEnumsAsOptions()}
+                  options={
+                    // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
+                    natureActe
+                      ? NatureMention.getEnumsAsOptions(
+                          TypeMention.getNaturesMentionPourActe(natureActe)
+                        )
+                      : NatureMention.getAllEnumsAsOptions()
+                  }
                   label="Nature ajoutée"
                   value={NatureMention.getKey(mentionAjout?.nature)}
                   onChange={handleAjoutSelect}

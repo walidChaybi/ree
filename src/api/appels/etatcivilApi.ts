@@ -21,6 +21,7 @@ export const URL_MENTION = "/mentions";
 export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
 export const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
 export const URL_ALERTES_ACTE = "/alertes";
+export const URL_TYPE_MENTION = "/typemention";
 export const URL_ALERTE_ACTE = "/alerte";
 export const URL_DECRETS = "/repertoirecivil/decrets";
 export const URL_DERNIERE_DELIVRANCE = "/dernieredelivrance";
@@ -58,7 +59,7 @@ export function getInformationsFicheRepertoire(
  * Récupération des informations des Fiches ACTE
  */
 export function getInformationsFicheActe(identifiant: string): Promise<any> {
-  return api.fetch({
+  return api.fetchCache({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${identifiant}`
   });
@@ -138,6 +139,13 @@ export async function getNomenclatureEtatCivil(nom: string): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
     uri: `${URL_NOMENCLATURE}/${nom}`
+  });
+}
+
+export async function getTypesMention(): Promise<any> {
+  return api.fetchCache({
+    method: HttpMethod.GET,
+    uri: `${URL_NOMENCLATURE}${URL_TYPE_MENTION}`
   });
 }
 

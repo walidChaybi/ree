@@ -18,7 +18,7 @@ interface ListeGlisserDeposerProps {
   handleReorga?: (oldIndex: number, newIndex: number) => void;
   handleCheckbox?: (id: string) => void;
   onClickSupprimer?: (id: string) => void;
-  deverouille?: boolean;
+  deverrouille?: boolean;
 }
 
 export interface ListeItem {
@@ -33,12 +33,8 @@ export const ListeGlisserDeposer: React.FC<
   ListeGlisserDeposerProps
 > = props => {
   const onClickMention = (item: ListeItem) => {
-    if (props.deverouille) {
-      if (props.setElementSelect) {
-        props.setElementSelect(item.id);
-      } else if (props.handleCheckbox) {
-        props.handleCheckbox(item.id);
-      }
+    if (props.setElementSelect) {
+      props.setElementSelect(item.id);
     }
   };
 
@@ -54,7 +50,7 @@ export const ListeGlisserDeposer: React.FC<
           <DragHandleElement />
         </span>
       )}
-      {props.deverouille && props.handleCheckbox && (
+      {props.deverrouille && props.handleCheckbox && (
         <Checkbox
           title={getLibelle("Cliquer pour sélectionner")}
           checked={item.checkbox}

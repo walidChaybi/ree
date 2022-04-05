@@ -2,18 +2,11 @@ import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
-import {
-  IMentionsParams,
-  useMentionsApiHook
-} from "../../../../../views/common/hook/acte/mentions/MentionsApiHook";
+import { useMentionsApiHook } from "../../../../../views/common/hook/acte/mentions/MentionsApiHook";
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
-const params: IMentionsParams = {
-  idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
-};
-
 const HookConsumer: React.FC = () => {
-  const mentions = useMentionsApiHook(params);
+  const mentions = useMentionsApiHook("19c0d767-64e5-4376-aa1f-6d781a2a235a");
 
   return (
     <div>

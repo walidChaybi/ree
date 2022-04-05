@@ -48,6 +48,17 @@ export class NatureMention extends EnumNomemclature {
     return EnumWithLibelle.getAllLibellesAsOptions(NatureMention);
   }
 
+  public static getEnumsAsOptions(natureMention: NatureMention[]) {
+    const options: Options = [];
+    natureMention.forEach(nature => {
+      options.push({
+        value: NatureMention.getUuidFromNature(nature),
+        str: nature.libelle
+      });
+    });
+    return options;
+  }
+
   public static getKey(nature?: NatureMention | string) {
     if (nature) {
       return EnumWithLibelle.getKey(NatureMention, nature);
@@ -65,7 +76,7 @@ export class NatureMention extends EnumNomemclature {
   }
 
   public static estOpposableAuTiers(natureMention: NatureMention) {
-    return natureMention.opposableAuTiers; 
+    return natureMention.opposableAuTiers;
   }
 
   public static getUuidFromNature(nature: NatureMention): string {
@@ -74,16 +85,5 @@ export class NatureMention extends EnumNomemclature {
       nature.libelle
     );
     return uuid ? uuid : "";
-  }
-
-  public static mappingNatureVersNomenclatureDto(nature: NatureMention) {
-    return {
-      id: NatureMention.getUuidFromNature(nature),
-      code: nature.code,
-      estActif: nature.estActif,
-      libelle: nature.libelle,
-      nom: "NATURE_MENTION",
-      opposableAuTiers: nature.opposableAuTiers
-    };
   }
 }

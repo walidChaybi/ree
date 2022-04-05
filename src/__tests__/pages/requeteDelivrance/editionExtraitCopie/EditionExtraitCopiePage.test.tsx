@@ -12,6 +12,7 @@ import request from "superagent";
 import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { TypeMention } from "../../../../model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
@@ -35,6 +36,7 @@ globalAny.URL.createObjectURL = jest.fn();
 beforeEach(async () => {
   DocumentDelivrance.init();
   NatureMention.init();
+  TypeMention.init();
   storeRece.utilisateurCourant = userDroitCOMEDEC;
   history.push(URL_MES_REQUETES_DELIVRANCE);
   history.push(
@@ -308,12 +310,12 @@ test("Test affichage Edition Copie", async () => {
 
   await waitFor(() => {
     expect(
-      screen.getByText("Déverouillage des mentions de la copie intégrale")
+      screen.getByText("Déverrouillage des mentions de la copie intégrale")
     ).toBeDefined();
   });
 
   act(() => {
-    fireEvent.click(screen.getByTitle("Cliquer pour déverouiller"));
+    fireEvent.click(screen.getByTitle("Cliquer pour déverrouiller"));
   });
 
   await waitFor(() => {
@@ -325,7 +327,7 @@ test("Test affichage Edition Copie", async () => {
   });
 
   act(() => {
-    fireEvent.click(screen.getByTitle("Première mention null null}"));
+    fireEvent.click(screen.getAllByTitle("Cliquer pour sélectionner")[0]);
   });
 
   await waitFor(() => {

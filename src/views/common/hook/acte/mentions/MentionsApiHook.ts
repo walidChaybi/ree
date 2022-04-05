@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
 import { getMentions } from "../../../../../api/appels/etatcivilApi";
 import { IMention } from "../../../../../model/etatcivil/acte/mention/IMention";
+import { ITypeMention } from "../../../../../model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { NatureMention } from "../../../../../model/etatcivil/enum/NatureMention";
 import { getDateFromTimestamp } from "../../../util/DateUtils";
 import { logError } from "../../../util/LogManager";
 
-export interface IMentionsParams {
-  idActe: string;
-}
-
 export interface IMentionsResultat {
   mentions?: IMention[];
 }
 
-export function useMentionsApiHook(params?: IMentionsParams) {
+export function useMentionsApiHook(idActe?: string) {
   const [mentions, setMentions] = useState<IMentionsResultat>();
 
   useEffect(() => {
-    if (params) {
-      getMentions(params.idActe)
+    if (idActe) {
+      getMentions(idActe)
         .then(result => {
           setMentions({ mentions: mappingMentions(result.body.data) });
         })
@@ -32,7 +29,7 @@ export function useMentionsApiHook(params?: IMentionsParams) {
           });
         });
     }
-  }, [params]);
+  }, [idActe]);
 
   return mentions;
 }
@@ -68,7 +65,7 @@ function mappingMention(mention: any): IMention {
   };
 }
 
-function mappingTypeMention(typeMention: any) {
+export function mappingTypeMention(typeMention: any): ITypeMention {
   return {
     codeType: typeMention.codeType,
     libelleType: typeMention.libelleTyp,
@@ -78,7 +75,7 @@ function mappingTypeMention(typeMention: any) {
     modeInformatisation: typeMention.modeInformatisation,
     nature: NatureMention.getEnumFor(typeMention.nature.id),
     sousTypeParDefaut: typeMention.sousTypeParDefaut,
-    natureActe: NatureActe.getEnumFor(typeMention.natureActe?.id)
+    natureActe: NatureActe.getEnumFor(typeMention.natureActe)
   };
 }
 

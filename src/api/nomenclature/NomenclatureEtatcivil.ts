@@ -1,11 +1,16 @@
+import { TypeMention } from "../../model/etatcivil/acte/mention/ITypeMention";
 import { MandataireRc } from "../../model/etatcivil/enum/MandataireRc";
 import { NatureMention } from "../../model/etatcivil/enum/NatureMention";
 import { NatureRc } from "../../model/etatcivil/enum/NatureRc";
 import { NatureRca } from "../../model/etatcivil/enum/NatureRca";
 import { TypeAlerte } from "../../model/etatcivil/enum/TypeAlerte";
+import { mappingTypeMention } from "../../views/common/hook/acte/mentions/MentionsApiHook";
 import { logError } from "../../views/common/util/LogManager";
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "../../views/common/util/Utils";
-import { getNomenclatureEtatCivil } from "../appels/etatcivilApi";
+import {
+  getNomenclatureEtatCivil,
+  getTypesMention
+} from "../appels/etatcivilApi";
 
 const NATURE_RC = "NATURE_RC";
 const NATURE_RCA = "NATURE_RCA";
@@ -120,6 +125,23 @@ export async function peupleTypeAlerte() {
     } catch (error) {
       logError({
         messageUtilisateur: "Impossible de charger les types alerte",
+        error
+      });
+    }
+  }
+}
+
+export async function peupleTypeMention() {
+  if (!TypeMention.contientEnums()) {
+    try {
+      const typesMention = await getTypesMention();
+      TypeMention.clean();
+      for (const data of typesMention.body.data) {
+        TypeMention.ajouteTypeMention(mappingTypeMention(data));
+      }
+    } catch (error) {
+      logError({
+        messageUtilisateur: "Impossible de charger les types mention",
         error
       });
     }

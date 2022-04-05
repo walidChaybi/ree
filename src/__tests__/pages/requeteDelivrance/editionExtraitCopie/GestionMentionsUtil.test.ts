@@ -190,23 +190,16 @@ test("mappingVersMentionApi", () => {
   ).toStrictEqual({
     mentionsAEnvoyer: [
       {
+        id: "1",
         textes: {
-          texteApposition: "texte apposition",
-          texteMention: "texte mention",
           texteMentionDelivrance: "texte mention"
         },
         typeMention: {
           nature: {
-            code: undefined,
-            estActif: undefined,
-            id: "",
-            libelle: undefined,
-            nom: "NATURE_MENTION",
-            opposableAuTiers: true
+            id: ""
           }
         },
-        numeroOrdreExtrait: 1,
-        id: "1"
+        numeroOrdreExtrait: 0
       }
     ],
     mentionsRetirees: []

@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+import { TypeMention } from "../../model/etatcivil/acte/mention/ITypeMention";
 import { MandataireRc } from "../../model/etatcivil/enum/MandataireRc";
 import { NatureMention } from "../../model/etatcivil/enum/NatureMention";
 import { NatureRc } from "../../model/etatcivil/enum/NatureRc";
@@ -16,6 +17,7 @@ export class GestionnaireNomenclature {
     await MandataireRc.init();
     await NatureMention.init();
     await TypeAlerte.init();
+    await TypeMention.init();
     // Nomenclatures Requete
     await DocumentDelivrance.init();
     await TypePieceJustificative.init();

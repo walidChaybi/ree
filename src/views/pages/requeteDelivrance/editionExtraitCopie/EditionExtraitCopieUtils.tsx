@@ -26,6 +26,7 @@ import { OngletProps } from "./contenu/VoletAvecOnglet";
 
 export const getOngletsEdition = (
   setIsDirty: any,
+  passerDocumentValider: (id: string) => void,
   document?: IDocumentReponse,
   acte?: IFicheActe
 ) => {
@@ -38,14 +39,32 @@ export const getOngletsEdition = (
       DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
     ) {
       case CODE_COPIE_INTEGRALE:
-        ajoutOngletsCopie(res, document, acte, setIsDirty);
+        ajoutOngletsCopie(
+          res,
+          document,
+          passerDocumentValider,
+          acte,
+          setIsDirty
+        );
         break;
       case CODE_EXTRAIT_AVEC_FILIATION:
       case CODE_EXTRAIT_SANS_FILIATION:
-        ajoutOngletsExtraitFilliation(res, document, acte, setIsDirty);
+        ajoutOngletsExtraitFilliation(
+          res,
+          document,
+          passerDocumentValider,
+          acte,
+          setIsDirty
+        );
         break;
       case CODE_EXTRAIT_PLURILINGUE:
-        ajoutOngletsExtraitPlurilingue(res, document, acte, setIsDirty);
+        ajoutOngletsExtraitPlurilingue(
+          res,
+          document,
+          passerDocumentValider,
+          acte,
+          setIsDirty
+        );
         break;
       case CODE_COPIE_NON_SIGNEE:
         break;
@@ -118,11 +137,14 @@ export const getOngletsVisu = (
 function ajoutOngletsCopie(
   res: OngletProps,
   document: IDocumentReponse,
+  passerDocumentValider: (id: string) => void,
   acte: IFicheActe,
   setIsDirty: any
 ) {
   if (acte.type === TypeActe.TEXTE) {
-    res.liste.push(ongletMentions(acte, document, setIsDirty));
+    res.liste.push(
+      ongletMentions(acte, document, passerDocumentValider, setIsDirty)
+    );
     res.ongletSelectionne = document.validation === Validation.N ? 0 : 1;
   } else {
     res.ongletSelectionne = 0;
@@ -132,12 +154,15 @@ function ajoutOngletsCopie(
 export const ajoutOngletsExtraitFilliation = (
   res: OngletProps,
   document: IDocumentReponse,
+  passerDocumentValider: (id: string) => void,
   acte: IFicheActe,
   setIsDirty: any
 ) => {
   res.ongletSelectionne = document.validation === Validation.N ? 0 : 1;
   res.liste.push(ongletSaisirExtrait);
-  res.liste.push(ongletMentions(acte, document, setIsDirty));
+  res.liste.push(
+    ongletMentions(acte, document, passerDocumentValider, setIsDirty)
+  );
   if (document.validation !== "E") {
     res.liste.push({
       titre: getLibelle("Modifier le corps de l'extrait"),
@@ -149,6 +174,7 @@ export const ajoutOngletsExtraitFilliation = (
 export const ajoutOngletsExtraitPlurilingue = (
   res: OngletProps,
   document: IDocumentReponse,
+  passerDocumentValider: (document: string) => void,
   acte: IFicheActe,
   setIsDirty: any
 ) => {
@@ -157,7 +183,9 @@ export const ajoutOngletsExtraitPlurilingue = (
     acte.nature === NatureActe.NAISSANCE ||
     acte.nature === NatureActe.MARIAGE
   ) {
-    res.liste.push(ongletMentions(acte, document, setIsDirty));
+    res.liste.push(
+      ongletMentions(acte, document, passerDocumentValider, setIsDirty)
+    );
   }
 };
 
@@ -177,6 +205,7 @@ export const boutonModifierCopiePresent = (
 export const ongletMentions = (
   acte: IFicheActe,
   doc: IDocumentReponse,
+  passerDocumentValider: (iddocument: string) => void,
   setIsDirty: any
 ) => {
   return {
@@ -186,6 +215,7 @@ export const ongletMentions = (
         acte={acte}
         document={doc}
         setIsDirty={setIsDirty}
+        passerDocumentValider={passerDocumentValider}
       ></GestionMentions>
     )
   };

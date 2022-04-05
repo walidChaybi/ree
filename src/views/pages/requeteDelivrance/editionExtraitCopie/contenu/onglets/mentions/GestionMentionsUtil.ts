@@ -91,12 +91,16 @@ export function mappingVersMentionsApi(
     const mention = mentionsApi.find(mApi => mA.id === mApi.id);
     if (mention) {
       if (mA.estPresent) {
-        const mentionFormater = mention as any;
-        mentionFormater.numeroOrdreExtrait = mA.numeroOrdre;
-        mentionFormater.textes.texteMentionDelivrance = mA.texte;
-        mentionFormater.typeMention.nature =
-          NatureMention.mappingNatureVersNomenclatureDto(mA.nature);
-        mentionsAEnvoyer.push(mentionFormater);
+        mentionsAEnvoyer.push({
+          numeroOrdreExtrait: mA.numeroOrdre,
+          textes: { texteMentionDelivrance: mA.texte },
+          typeMention: {
+            nature: {
+              id: NatureMention.getUuidFromNature(mA.nature)
+            }
+          },
+          id: mA.id
+        });
       } else {
         mentionsRetirees.push(mA.id);
       }
@@ -105,7 +109,9 @@ export function mappingVersMentionsApi(
         numeroOrdreExtrait: mA.numeroOrdre,
         textes: { texteMentionDelivrance: mA.texte },
         typeMention: {
-          nature: NatureMention.mappingNatureVersNomenclatureDto(mA.nature)
+          nature: {
+            id: NatureMention.getUuidFromNature(mA.nature)
+          }
         }
       });
     }
@@ -180,7 +186,7 @@ export function handleReorga(
     newList.splice(oldIndex, 1);
     newList.splice(newIndex, 0, item);
     newList.forEach((el, index) => {
-      el.numeroOrdre = index + 1;
+      el.numeroOrdre = index;
     });
     setMentions(newList);
   }
@@ -347,7 +353,7 @@ export function aucuneMentionsNationalite(mentions?: IMentionAffichage[]) {
 }
 
 export function boutonReinitialiserEstDisabled(
-  estDeverouille: boolean,
+  estdeverrouille: boolean,
   setIsDirty: () => void,
   mentionsApi?: IMention[],
   mentions?: IMentionAffichage[],
@@ -355,8 +361,8 @@ export function boutonReinitialiserEstDisabled(
 ) {
   if (DocumentDelivrance.typeDocumentEstCopie(document?.typeDocument)) {
     return (
-      !estDeverouille ||
-      (estDeverouille &&
+      !estdeverrouille ||
+      (estdeverrouille &&
         !modificationEffectue(mentions, mentionsApi, document, setIsDirty))
     );
   } else {
@@ -364,7 +370,7 @@ export function boutonReinitialiserEstDisabled(
   }
 }
 
-export function getValeurEstDeverouillerCommencement(
+export function getValeurEstdeverrouillerCommencement(
   document?: IDocumentReponse
 ) {
   if (document?.mentionsRetirees) {
