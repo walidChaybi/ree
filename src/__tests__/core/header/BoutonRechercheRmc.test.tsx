@@ -15,7 +15,7 @@ let history: MemoryHistory;
 let boutonElement: HTMLElement;
 const globalAny: any = global;
 globalAny.open = () => {
-  return { ...window };
+  return { ...window, addEventListener: jest.fn() };
 };
 globalAny.close = jest.fn();
 

@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
 import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock-etatcivil";
@@ -9,7 +9,12 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const globalAny: any = global;
 globalAny.open = () => {
-  return { ...window };
+  return {
+    ...window,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn()
+  };
 };
 globalAny.close = jest.fn();
 
@@ -38,15 +43,6 @@ test("renders Lien fiche fonctionne correctement", async () => {
 
     const vueRc = screen.getByText("Visualisation du RC");
     expect(vueRc).toBeDefined();
-  });
-
-  act(() => {
-    const event = new CustomEvent("beforeunload");
-    window.top.dispatchEvent(event);
-  });
-
-  await waitFor(() => {
-    expect(onClose).toBeCalled();
   });
 });
 

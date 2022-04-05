@@ -5,7 +5,6 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { mount } from "enzyme";
 import React from "react";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
@@ -47,25 +46,6 @@ test("renders suivi des observations requete", async () => {
     expect(elem2.innerHTML).toBe(
       "Je fais pas 30 charactères - 02/01/1970 - BTC"
     );
-  });
-});
-
-test("renders suivi actions hidding", async () => {
-  const suiviActionsRequete = mount(
-    <SuiviObservationsRequete
-      observations={DONNEES_REQUETE.observations}
-      idRequete="123"
-    />
-  );
-  await waitFor(() => {
-    expect(suiviActionsRequete.find(".Mui-expanded")).toBeDefined();
-  });
-  suiviActionsRequete
-    .find(".MuiAccordionSummary-expandIcon")
-    .first()
-    .simulate("click");
-  await waitFor(() => {
-    expect(suiviActionsRequete.find(".Mui-expanded")).toHaveLength(0);
   });
 });
 

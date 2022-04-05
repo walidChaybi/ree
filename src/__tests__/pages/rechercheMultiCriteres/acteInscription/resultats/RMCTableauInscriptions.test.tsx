@@ -27,7 +27,7 @@ const globalAny: any = global;
 
 globalAny.URL.createObjectURL = jest.fn();
 globalAny.open = () => {
-  return { ...window };
+  return { ...window, addEventListener: jest.fn() };
 };
 globalAny.close = jest.fn();
 
@@ -94,19 +94,6 @@ test("Ouverture d'une inscription", async () => {
 
     const vue = screen.getByText(titreAccordeaon);
     expect(vue).toBeDefined();
-  });
-
-  act(() => {
-    const event = new CustomEvent("beforeunload");
-    window.top.dispatchEvent(event);
-  });
-
-  await waitFor(() => {
-    const numero = screen.queryByText(titreBandeau);
-    expect(numero).toBeNull();
-
-    const vue = screen.queryByText(titreAccordeaon);
-    expect(vue).toBeNull();
   });
 });
 

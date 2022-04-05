@@ -1,7 +1,7 @@
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import React from "react";
-import { MemoryRouter, Route } from "react-router";
+import { Route } from "react-router";
 import { useHistory } from "react-router-dom";
 import { URL_ACCUEIL, URL_CONTEXT_APP } from "../../../router/ReceUrls";
 import { IRoute } from "../../util/route/IRoute";
@@ -52,17 +52,14 @@ export const gestionnaireNavigation = new GestionnaireNavigation();
 
 /******** Fil d'ariane *******/
 interface FilArianeProps {
-  setRetourState?: (retourUrl: string) => void;
   routes: IRoute[];
 }
 
 export const fildarianeLabel = getLibelle("Navigation par fil d'ariane");
 
-export const FilAriane: React.FC<FilArianeProps> = ({
-  setRetourState,
-  routes
-}) => {
+export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
   const history = useHistory();
+
   const locationPathName = history.location.pathname;
   gestionnaireNavigation.addUrl(locationPathName);
   const pagesInfos = buildPagesInfos(
@@ -70,39 +67,34 @@ export const FilAriane: React.FC<FilArianeProps> = ({
     routes,
     gestionnaireNavigation
   );
-  if (setRetourState !== undefined) {
-    setRetourContextValue(pagesInfos, setRetourState);
-  }
   const routeAccueil = getRoute(URL_ACCUEIL, routes);
   return (
-    <MemoryRouter initialEntries={[URL_SEPARATEUR]} initialIndex={0}>
-      <Route>
-        {estUnCheminReceUi(history.location.pathname) && (
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label={fildarianeLabel}
-          >
-            <Categorie
-              url={URL_ACCUEIL}
-              message={routeAccueil ? routeAccueil.libelle : "Accueil"}
-              last={pagesInfos.length === 0}
-              key={URL_ACCUEIL}
-            />
+    <Route>
+      {estUnCheminReceUi(history.location.pathname) && (
+        <Breadcrumbs
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label={fildarianeLabel}
+        >
+          <Categorie
+            url={URL_ACCUEIL}
+            message={routeAccueil ? routeAccueil.libelle : "Accueil"}
+            last={pagesInfos.length === 0}
+            key={URL_ACCUEIL}
+          />
 
-            {pagesInfos.map((pageInfo: IPageInfo, index: number) => {
-              return (
-                <Categorie
-                  url={pageInfo.url}
-                  message={pageInfo.libelle}
-                  last={pageInfo.derniere}
-                  key={pageInfo.url}
-                />
-              );
-            })}
-          </Breadcrumbs>
-        )}
-      </Route>
-    </MemoryRouter>
+          {pagesInfos.map((pageInfo: IPageInfo, index: number) => {
+            return (
+              <Categorie
+                url={pageInfo.url}
+                message={pageInfo.libelle}
+                last={pageInfo.derniere}
+                key={pageInfo.url}
+              />
+            );
+          })}
+        </Breadcrumbs>
+      )}
+    </Route>
   );
 };
 

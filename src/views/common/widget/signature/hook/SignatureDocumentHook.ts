@@ -18,7 +18,10 @@ import {
   IDerniereDelivranceActeParams,
   useDerniereDelivranceActeApiHook
 } from "../../../hook/acte/DerniereDelivranceActeApiHook";
-import { usePatchDocumentsReponseApi } from "../../../hook/DocumentReponseHook";
+import {
+  IResultatPatchDocumentReponse,
+  usePatchDocumentsReponseApi
+} from "../../../hook/DocumentReponseHook";
 import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
@@ -156,24 +159,13 @@ export function useSignatureDocumentHook(
   );
 
   useEffect(() => {
-    if (resultatPatchDocumentReponse) {
-      if (resultatPatchDocumentReponse.erreur) {
-        setErrorsSignature({
-          erreurs: [
-            {
-              code: "UPDATE_DOC",
-              libelle: "",
-              detail: ""
-            }
-          ],
-          numeroRequete:
-            documentsByRequete[idRequetesToSign[0]].documentsToSave[0]
-              ?.numeroRequete
-        });
-      } else {
-        majStatusRequete();
-      }
-    }
+    handleResultatPatch(
+      resultatPatchDocumentReponse,
+      setErrorsSignature,
+      documentsByRequete,
+      idRequetesToSign,
+      majStatusRequete
+    );
     // Attention ne pas dépendre de "documentsByRequete" ni de "idRequetesToSign" car si une erreur ce produit (plantage API maj)
     //   alors "documentsByRequete" et "idRequetesToSign" sont remis à jour donc on repasse dans ce code
     //   alors que updateDocumentQueryParamState et errorUpdateDocument n'ont pas bougés et documentsByRequete[idRequetesToSign[0]].documentsToSave = [].
@@ -268,16 +260,20 @@ export function useSignatureDocumentHook(
 
   useEffect(() => {
     // Ajout du listener pour communiquer avec la webextension
-    window.top.addEventListener(
-      "signWebextResponse",
-      handleBackFromWebExtension
-    );
-
-    return () => {
-      window.top.removeEventListener(
+    if (window.top) {
+      window.top.addEventListener(
         "signWebextResponse",
         handleBackFromWebExtension
       );
+    }
+
+    return () => {
+      if (window.top) {
+        window.top.removeEventListener(
+          "signWebextResponse",
+          handleBackFromWebExtension
+        );
+      }
     };
   }, [handleBackFromWebExtension]);
 
@@ -349,7 +345,9 @@ function sendDocumentToSignature(
     handleBackFromWebExtension,
     EVENT_NON_DISPO
   );
-  window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
+  if (window.top) {
+    window.top.dispatchEvent(new CustomEvent("signWebextCall", { detail }));
+  }
 }
 
 // Etape 2.1
@@ -471,5 +469,32 @@ function processResultWebExtension(
 ) {
   if (currentRequeteProcessing.documentsToSign.length === 0) {
     setDocumentsToSave(currentRequeteProcessing.documentsToSave);
+  }
+}
+
+function handleResultatPatch(
+  resultatPatchDocumentReponse: IResultatPatchDocumentReponse | undefined,
+  setErrorsSignature: (el: any) => void,
+  documentsByRequete: DocumentsByRequete,
+  idRequetesToSign: string[],
+  majStatusRequete: () => void
+) {
+  if (resultatPatchDocumentReponse) {
+    if (resultatPatchDocumentReponse.erreur) {
+      setErrorsSignature({
+        erreurs: [
+          {
+            code: "UPDATE_DOC",
+            libelle: "",
+            detail: ""
+          }
+        ],
+        numeroRequete:
+          documentsByRequete[idRequetesToSign[0]].documentsToSave[0]
+            ?.numeroRequete
+      });
+    } else {
+      majStatusRequete();
+    }
   }
 }

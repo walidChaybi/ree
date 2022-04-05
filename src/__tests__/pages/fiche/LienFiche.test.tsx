@@ -9,7 +9,7 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const globalAny: any = global;
 globalAny.open = () => {
-  return { ...window };
+  return { ...window, addEventListener: jest.fn() };
 };
 globalAny.close = jest.fn();
 

@@ -117,6 +117,73 @@ test("test Brouillon", async () => {
   });
 });
 
+const requete4: IRequeteTableauDelivrance = {
+  idRequete: "0",
+  type: TypeRequete.DELIVRANCE.libelle,
+  statut: StatutRequete.DOUBLON.libelle,
+  idUtilisateur: "idUtilisateurConnectedUser",
+  provenance: Provenance.COURRIER.libelle,
+  idEntiteRattachement: "1",
+  sousType: SousTypeDelivrance.RDCSC.libelleCourt
+};
+
+const HookConsummerNavigation4: React.FC = () => {
+  const res = useNavigationApercuDelivrance(
+    "/rece/rece-ui/mesrequetes/saisirextraitcopie",
+    requete4
+  );
+  return (
+    <>
+      <div data-testid="url">{res?.url}</div>
+      <div data-testid="isRmcAuto">{res?.isRmcAuto}</div>
+    </>
+  );
+};
+
+test("test Doublon", async () => {
+  await act(async () => {
+    const { getByTestId } = render(<HookConsummerNavigation4 />);
+    await waitFor(() =>
+      expect(getByTestId("url").textContent).toBe(
+        "/rece/rece-ui/mesrequetes/apercurequetedelivrance/0"
+      )
+    );
+  });
+});
+const requete5: IRequeteTableauDelivrance = {
+  idRequete: "0",
+  type: TypeRequete.DELIVRANCE.libelle,
+  statut: StatutRequete.A_VALIDER.libelle,
+  idUtilisateur: "idUtilisateurConnectedUser",
+  provenance: Provenance.COURRIER.libelle,
+  idEntiteRattachement: "1",
+  sousType: SousTypeDelivrance.RDCSC.libelleCourt
+};
+
+const HookConsummerNavigation5: React.FC = () => {
+  const res = useNavigationApercuDelivrance(
+    "/rece/rece-ui/mesrequetes",
+    requete5
+  );
+  return (
+    <>
+      <div data-testid="url">{res?.url}</div>
+      <div data-testid="isRmcAuto">{res?.isRmcAuto}</div>
+    </>
+  );
+};
+
+test("test A valider", async () => {
+  await act(async () => {
+    const { getByTestId } = render(<HookConsummerNavigation5 />);
+    await waitFor(() =>
+      expect(getByTestId("url").textContent).toBe(
+        "/rece/rece-ui/mesrequetes/apercurequetetraitement/0"
+      )
+    );
+  });
+});
+
 afterAll(() => {
   superagentMock.unset();
 });

@@ -148,7 +148,9 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
   // Obligatoire pour les styles qui sont chargés dynamiquement lorsque le tableau est dans une fenetre externe
   useEffect(() => {
     const event = new CustomEvent("refreshStyles");
-    window.top.dispatchEvent(event);
+    if (window.top) {
+      window.top.dispatchEvent(event);
+    }
   }, []);
 
   return (

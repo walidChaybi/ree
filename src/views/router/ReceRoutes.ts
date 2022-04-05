@@ -37,6 +37,7 @@ import {
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC_ID,
+  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC_ID,
   URL_MES_REQUETES_INFORMATION,
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
@@ -44,20 +45,24 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE_COURRIER_ID,
   URL_REQUETES_DELIVRANCE_SERVICE,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+  URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_COURRIER_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC_ID,
+  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC_ID,
   URL_REQUETES_INFORMATION_SERVICE,
   URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-  URL_SAISIR_RDCSC_RMC
+  URL_SAISIR_RDCSC_RMC,
+  URL_SAISIR_RDC_RMC
 } from "./ReceUrls";
 
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
@@ -144,6 +149,14 @@ export const routesRece: IRoute[] = [
     )
   },
   {
+    url: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC_ID,
+    component: SaisirRDCSCPage,
+    droits: [Droit.CONSULTER, Droit.SAISIR_REQUETE],
+    libelle: getLibelle(
+      "Modifier un brouillon d'une requête de délivrance extrait/copie depuis mes requêtes"
+    )
+  },
+  {
     url: URL_MES_REQUETES_DELIVRANCE_COURRIER_ID,
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
@@ -219,11 +232,26 @@ export const routesRece: IRoute[] = [
     )
   },
   {
+    url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC_ID,
+    component: SaisirRDCSCPage,
+    droits: [Droit.CONSULTER, Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    libelle: getLibelle(
+      "Modifier un brouillon d'une requête de délivrance extrait/copie depuis mes requêtes de service"
+    )
+  },
+  {
     url: URL_REQUETES_DELIVRANCE_SERVICE_COURRIER_ID,
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
     libelle: getLibelle(LIBELLE_COURRIER)
+  },
+  {
+    url: URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
+    component: EditionExtraitCopiePage,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
+    libelle: getLibelle("Édition")
   },
   //////////////////////////////////////////
   ///// RECHERCHE MULTI-CRITERES (RMC) /////
@@ -274,11 +302,26 @@ export const routesRece: IRoute[] = [
     )
   },
   {
+    url: URL_SAISIR_RDC_RMC,
+    component: SaisirRDCSCPage,
+    droits: [Droit.CONSULTER, Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
+    libelle: getLibelle(
+      "Modifier un brouillon d'une requête de délivrance certificat de situation depuis la RMC"
+    )
+  },
+  {
     url: URL_RECHERCHE_REQUETE_COURRIER_ID,
     component: ApercuCourrier,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
     libelle: getLibelle(LIBELLE_COURRIER)
+  },
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
+    component: EditionExtraitCopiePage,
+    droits: [Droit.DELIVRER],
+    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
+    libelle: getLibelle("Édition")
   },
   //////////////////////////////////////////////
   ///////// REQUETE D'INFORMATION (RI) /////////

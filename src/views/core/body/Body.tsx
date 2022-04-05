@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { logError } from "../../common/util/LogManager";
-import { storeRece } from "../../common/util/storeRece";
 import { getLibelle } from "../../common/util/Utils";
 import { FilAriane } from "../../common/widget/filAriane/FilAriane";
 import { routesRece } from "../../router/ReceRoutes";
-import { URL_ACCUEIL } from "../../router/ReceUrls";
 import { RouterComponent } from "../../router/RouteComponent";
 import {
   OfficierContext,
@@ -13,11 +11,8 @@ import {
 } from "../contexts/OfficierContext";
 import { PageMessage } from "../login/PageMessage";
 
-export const RetourContext = React.createContext(URL_ACCUEIL);
 export const Body: React.FC = () => {
-  const [retourState, setRetourState] = useState<string>(URL_ACCUEIL);
   const [appliDejaOuverte, setAppliDejaOuverte] = useState<boolean>(false);
-  storeRece.retourUrl = retourState;
 
   useEffect(() => {
     gestionnaireDoubleOuverture.lancerVerification(() => {
@@ -38,13 +33,10 @@ export const Body: React.FC = () => {
                   )}
                 />
               ) : (
-                <RetourContext.Provider value={retourState}>
-                  <FilAriane
-                    setRetourState={setRetourState}
-                    routes={routesRece}
-                  />
+                <>
+                  <FilAriane routes={routesRece} />
                   <RouterComponent />
-                </RetourContext.Provider>
+                </>
               )
             ) : (
               <PageMessage message={getMessageLogin(officier)} />

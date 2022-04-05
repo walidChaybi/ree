@@ -35,7 +35,7 @@ const superagentMock = require("superagent-mock")(request, [
 let history: any;
 const globalAny: any = global;
 globalAny.open = () => {
-  return { ...window };
+  return { ...window, addEventListener: jest.fn() };
 };
 globalAny.close = jest.fn();
 URL.createObjectURL = jest.fn();

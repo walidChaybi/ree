@@ -52,10 +52,14 @@ export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> =
           delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
         }
       };
-      window.top.addEventListener("beforeunload", handleBackBeforUnload);
+      if (window.top) {
+        window.top.addEventListener("beforeunload", handleBackBeforUnload);
+      }
 
       return () => {
-        window.top.removeEventListener("beforeunload", handleBackBeforUnload);
+        if (window.top) {
+          window.top.removeEventListener("beforeunload", handleBackBeforUnload);
+        }
       };
     }, [props, history]);
 

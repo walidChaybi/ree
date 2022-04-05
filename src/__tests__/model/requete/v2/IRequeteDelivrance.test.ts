@@ -2,10 +2,11 @@ import { waitFor } from "@testing-library/react";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
 import {
-    IRequeteDelivrance,
-    RequeteDelivrance
+  IRequeteDelivrance,
+  RequeteDelivrance
 } from "../../../../model/requete/IRequeteDelivrance";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -34,6 +35,26 @@ test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctemen
       documentDelivrance
     ]);
   });
+});
+
+test("estAuStatut", () => {
+  const requete = {
+    statutCourant: {
+      statut: StatutRequete.A_TRAITER
+    }
+  } as IRequeteDelivrance;
+  expect(
+    RequeteDelivrance.estAuStatut(requete, StatutRequete.A_TRAITER)
+  ).toBeTruthy();
+});
+
+test("estAuStatutASigner", () => {
+  const requete = {
+    statutCourant: {
+      statut: StatutRequete.A_TRAITER
+    }
+  } as IRequeteDelivrance;
+  expect(RequeteDelivrance.estAuStatutASigner(requete)).toBeFalsy();
 });
 
 afterAll(() => {

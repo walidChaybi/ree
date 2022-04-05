@@ -29,7 +29,9 @@ export const SelectRece: React.FC<SelectProps> = props => {
   // Obligatoire pour les styles qui sont chargés dynamiquement lorsque le select est dans une fenetre externe
   useEffect(() => {
     const event = new CustomEvent("refreshStyles");
-    window.top.dispatchEvent(event);
+    if (window.top) {
+      window.top.dispatchEvent(event);
+    }
   }, [props]);
 
   return (

@@ -6,6 +6,7 @@ import {
   PATH_APERCU_REQ_DEL,
   PATH_APERCU_REQ_TRAITEMENT
 } from "../../../router/ReceUrls";
+import messageManager from "../../util/messageManager";
 import { MigratorV1V2 } from "../../util/migration/MigratorV1V2";
 import {
   autorisePrendreEnChargeReqTableauDelivrance,
@@ -13,6 +14,7 @@ import {
 } from "../../util/RequetesUtils";
 import { getUrlPrecedente, getUrlWithParam } from "../../util/route/routeUtil";
 import { storeRece } from "../../util/storeRece";
+import { getLibelle } from "../../util/Utils";
 
 export interface INavigationApercuDelivrance {
   isRmcAuto?: boolean;
@@ -88,14 +90,7 @@ const redirectionEnFonctionMaRequete = (
         redirectionBrouillon(requete, setRedirection, urlWithoutParam);
         break;
       case StatutRequete.DOUBLON.libelle:
-        setRedirection({
-          url: getUrlWithParam(
-            `${getUrlPrecedente(
-              urlWithoutParam
-            )}/${PATH_APERCU_REQ_DEL}/:idRequete`,
-            requete.idRequete
-          )
-        });
+        redirectionRequeteDoublon(setRedirection, urlWithoutParam, requete);
         break;
       default:
         if (MigratorV1V2.estARetraiterSagaRequeteTableau(requete)) {
@@ -176,4 +171,22 @@ function redirectionBrouillon(
       )
     });
   }
+}
+
+function redirectionRequeteDoublon(
+  setRedirection: (
+    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
+  ) => void,
+  urlWithoutParam: string,
+  requete: IRequeteTableauDelivrance
+) {
+  setRedirection({
+    url: getUrlWithParam(
+      `${getUrlPrecedente(urlWithoutParam)}/${PATH_APERCU_REQ_DEL}/:idRequete`,
+      requete.idRequete
+    )
+  });
+  messageManager.showSuccessAndClose(
+    getLibelle("La requête a bien été enregistrée")
+  );
 }

@@ -39,7 +39,9 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
     this.htmlDivElement.classList.add("App"); // Ajout de la classe CSS de l'application principale
     this.eventCopyStyles = this.eventCopyStyles.bind(this);
 
-    window.top.addEventListener("refreshStyles", this.eventCopyStyles);
+    if (window.top) {
+      window.top.addEventListener("refreshStyles", this.eventCopyStyles);
+    }
   }
   componentDidMount() {
     this.openWindow();
@@ -50,8 +52,8 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
     if (this.fenetreExterne) {
       this.fenetreExterne.close();
     }
-
-    window.top.removeEventListener("refreshStyles", this.eventCopyStyles);
+    if (window.top) {
+    window.top.removeEventListener("refreshStyles", this.eventCopyStyles);}
   }
 
   eventCopyStyles() {

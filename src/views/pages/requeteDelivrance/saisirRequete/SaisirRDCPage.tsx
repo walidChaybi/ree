@@ -215,9 +215,9 @@ export const SaisirRDCPage: React.FC = () => {
     async (requeteSauvegardee: IRequeteDelivrance) => {
       // Si l'appel c'est terminé sans erreur
       if (requeteSauvegardee) {
-        messageManager.showSuccessAndClose(
-          getLibelle("La requête a bien été enregistrée")
-        );
+          messageManager.showSuccessAndClose(
+            getLibelle("La requête a bien été enregistrée")
+          );
         setParamsRMCAuto({
           requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
           urlCourante: history.location.pathname

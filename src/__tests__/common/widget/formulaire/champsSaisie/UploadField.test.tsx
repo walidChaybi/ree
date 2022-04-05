@@ -6,7 +6,6 @@ import {
   screen,
   waitFor
 } from "@testing-library/react";
-import { mount } from "enzyme";
 import React from "react";
 import { ExtensionDocumentTypeMime } from "../../../../../views/common/util/FileUtils";
 import UploadFileField from "../../../../../views/common/widget/formulaire/champsSaisie/UploadFileField";
@@ -33,7 +32,7 @@ test("Attendu: le composant UploadFileField déclanche la fonction onFileChange 
     { value: "k2", str: "str2" }
   ];
 
-  const wrapper = mount(
+  render(
     <UploadFileField
       name="piecesJointes"
       libelleBouton={"Ajouter"}
@@ -46,10 +45,11 @@ test("Attendu: le composant UploadFileField déclanche la fonction onFileChange 
     />
   );
 
-  // Utilisation d'enzyme car avec "testing library" pas de déclanchement de l'événement "change" (pourtant ça fonctionne dans PiecesJointesForm.test.tsx #prisedetete)
-  const inputUploadFieldWrapper = wrapper.find("input");
+  const inputUploadFieldWrapper = screen.getByTestId(
+    "piecesJointes"
+  ) as HTMLInputElement;
   act(() => {
-    inputUploadFieldWrapper.simulate("change", {
+    fireEvent.change(inputUploadFieldWrapper, {
       target: {
         files: inputPngFiles
       }
@@ -58,7 +58,6 @@ test("Attendu: le composant UploadFileField déclanche la fonction onFileChange 
   await waitFor(() => {
     expect(onFileChange).toBeCalledTimes(1);
   });
-  wrapper.unmount();
 });
 
 test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFileChange lorsqu'un fichier du mauvais type est choisi", async () => {
@@ -68,7 +67,7 @@ test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFile
     { value: "k2", str: "str2" }
   ];
 
-  const wrapper = mount(
+  render(
     <UploadFileField
       name="piecesJointes"
       libelleBouton={"Ajouter"}
@@ -81,10 +80,11 @@ test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFile
     />
   );
 
-  // Utilisation d'enzyme car avec "testing library" pas de déclanchement de l'événement "change" (pourtant ça fonctionne dans PiecesJointesForm.test.tsx #prisedetete)
-  const inputUploadFieldWrapper = wrapper.find("input");
+  const inputUploadFieldWrapper = screen.getByTestId(
+    "piecesJointes"
+  ) as HTMLInputElement;
   act(() => {
-    inputUploadFieldWrapper.simulate("change", {
+    fireEvent.change(inputUploadFieldWrapper, {
       target: {
         files: inputPngFiles
       }
@@ -93,8 +93,6 @@ test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFile
   await waitFor(() => {
     expect(onFileChange).not.toBeCalled();
   });
-
-  wrapper.unmount();
 });
 
 test("Attendu: le composant UploadFileField affiche un menu lorsq'un click sur le bouton principal est effectué", async () => {

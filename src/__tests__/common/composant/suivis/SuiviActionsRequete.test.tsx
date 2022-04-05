@@ -1,5 +1,4 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { mount } from "enzyme";
 import React from "react";
 import request from "superagent";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
@@ -22,22 +21,6 @@ test("renders suivi des actions requete", async () => {
     elem2 = screen.getByText(/APP/i);
     expect(elem2).toBeDefined();
     expect(elem2.innerHTML).toBe("À traiter - 10/03/2020 - APP");
-  });
-});
-
-test("renders suivi actions hidding", async () => {
-  const suiviActionsRequete = mount(
-    <SuiviActionsRequete actions={DONNEES_REQUETE.actions} />
-  );
-  await waitFor(() => {
-    expect(suiviActionsRequete.find(".Mui-expanded")).toBeDefined();
-  });
-  suiviActionsRequete
-    .find(".MuiAccordionSummary-expandIcon")
-    .first()
-    .simulate("click");
-  await waitFor(() => {
-    expect(suiviActionsRequete.find(".Mui-expanded")).toHaveLength(0);
   });
 });
 

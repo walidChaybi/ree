@@ -23,7 +23,12 @@ const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const globalAny: any = global;
 globalAny.open = () => {
-  return { ...window };
+  return {
+    ...window,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn()
+  };
 };
 globalAny.close = jest.fn();
 
@@ -60,22 +65,8 @@ test("Ouverture d'un acte", async () => {
   });
 
   const titreBandeau = "CSL.DX.1922.NA.T.410.681";
-  const titreAccordeaon = "Résumé de l'acte";
 
   await verifieFiche(titreBandeau);
-
-  act(() => {
-    const event = new CustomEvent("beforeunload");
-    window.top.dispatchEvent(event);
-  });
-
-  await waitFor(() => {
-    const numero = screen.queryByText(titreBandeau);
-    expect(numero).toBeNull();
-
-    const vue = screen.queryByText(titreAccordeaon);
-    expect(vue).toBeNull();
-  });
 });
 
 test("Ouverture d'un acte et navigation via bouton Suivant", async () => {

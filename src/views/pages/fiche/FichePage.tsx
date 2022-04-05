@@ -108,7 +108,9 @@ export const FichePage: React.FC<FichePageProps> = ({
     ) {
       if (dataFicheState.data != null) {
         const event = new CustomEvent("refreshStyles");
-        window.top.dispatchEvent(event);
+        if (window.top) {
+          window.top.dispatchEvent(event);
+        }
       }
       if (fenetreExterneUtil && bandeauFiche) {
         fenetreExterneUtil.ref.document.title = bandeauFiche.titreFenetre;

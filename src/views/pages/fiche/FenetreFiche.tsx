@@ -40,18 +40,16 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
     FenetreExterneUtil
   >();
 
-  const closeFenetre = (id: string, idx: number) => {
+  function closeFenetre() {
     setFenetreOuverteState(!fenetreOuverteState);
-    onClose(id, idx);
-  };
+    onClose(identifiant, index.value);
+  }
 
   return (
     <>
       {fenetreOuverteState && (
         <FenetreExterne
-          onCloseHandler={() => {
-            closeFenetre(identifiant, index.value);
-          }}
+          onCloseHandler={closeFenetre}
           setFenetreExterneUtil={setFenetreExterneUtil}
         >
           <FichePage
