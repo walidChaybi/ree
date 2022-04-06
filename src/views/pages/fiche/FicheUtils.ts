@@ -20,13 +20,17 @@ export function getFicheTitle(
   categorie: string,
   annee: string,
   numero: string,
-  personnes: SimplePersonne[]
+  personnes: SimplePersonne[],
+  typeFiche: TypeFiche
 ) {
   const noms = jointAvec(
     personnes.map(p => `${p.nom} ${p.prenom}`),
     " et "
   );
-  return `${categorie.toLocaleUpperCase()} - ${noms} - N° ${annee} - ${numero}`;
+  const title = `${categorie.toLocaleUpperCase()} - ${noms}`;
+  return typeFiche === TypeFiche.ACTE
+    ? title
+    : title + ` - N° ${annee} - ${numero}`;
 }
 
 export interface IAccordionReceSection {

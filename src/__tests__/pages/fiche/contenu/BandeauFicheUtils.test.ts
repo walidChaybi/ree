@@ -61,7 +61,7 @@ test("bandeauFicheUtils setDataBandeau works Acte", async () => {
   const bandeauFiche = setDataBandeau(dataFiche, data);
 
   expect(bandeauFiche.titreFenetre).toBe(
-    "ABSENCE - GREENWALD Paulita et DUPE Laurent - N° 1921 - 410"
+    "ABSENCE - GREENWALD Paulita et DUPE Laurent"
   );
   expect(bandeauFiche.personnes[0].prenom).toBe("Paulita");
   expect(bandeauFiche.registre).toBe("CSL.DX.1922.NA.T.410.681");

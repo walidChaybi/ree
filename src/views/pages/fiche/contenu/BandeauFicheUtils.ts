@@ -28,7 +28,8 @@ export function setDataBandeau(
         fournisseurDonneesBandeau.getTypeAbrege(),
         annee,
         dataBandeau.numero,
-        fournisseurDonneesBandeau.getSimplePersonnes()
+        fournisseurDonneesBandeau.getSimplePersonnes(),
+        dataFiche.categorie
       ),
       categorie: fournisseurDonneesBandeau.getType(),
       identifiant: dataBandeau.id,
