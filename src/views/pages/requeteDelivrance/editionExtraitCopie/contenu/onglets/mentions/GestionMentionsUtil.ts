@@ -56,7 +56,7 @@ export function mappingVersMentionAffichage(
       numeroOrdre: estCopie
         ? mentionApi.numeroOrdre
         : mentionApi.numeroOrdreExtrait,
-      aPoubelle: mentionApi.textes.texteMention === ""
+      aPoubelle: mentionApi.textes.texteMention === null
     }));
 }
 
@@ -398,10 +398,8 @@ export function saveMentions(
     );
     if (modificationEffectue(mentions, mentionsApi.mentions, props.document)) {
       if (
-        DocumentDelivrance.typeDocumentEstCopie(props.document?.typeDocument)
+        !DocumentDelivrance.typeDocumentEstCopie(props.document?.typeDocument)
       ) {
-        // TODO generer la copie
-      } else {
         setMentionsAEnvoyerParams({
           idActe: getValeurOuVide(props.acte?.id),
           mentions: mentionsAEnvoyer

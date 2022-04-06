@@ -51,7 +51,9 @@ function mappingMention(mention: any): IMention {
     dateCreation: getDateFromTimestamp(mention.dateCreation),
     statut: mention.StatutMention,
     dateStatut: getDateFromTimestamp(mention.dateStatut),
-    titulaires: mappingTitulairesMention(mention.titulaires),
+    titulaires: mention.titulaires
+      ? mappingTitulairesMention(mention.titulaires)
+      : [],
     typeMention: mappingTypeMention(mention.typeMention),
     autoriteEtatCivil: {
       libelleTypeAutoriteEtatCivil:

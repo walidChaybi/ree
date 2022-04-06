@@ -5,11 +5,16 @@ import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import { IUuidRequeteParams } from "../../../../model/requete/IUuidRequeteParams";
 import {
+  IGenerationECParams,
+  useGenerationEC
+} from "../../../common/hook/generation/generationECHook/generationECHook";
+import {
   IActeApiHookParams,
   useInformationsActeApiHook
 } from "../../../common/hook/repertoires/ActeApiHook";
-import { getLibelle } from "../../../common/util/Utils";
+import { getLibelle, getValeurOuVide } from "../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
+import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { receUrl } from "../../../router/ReceUrls";
 import { BoutonsTerminer } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminer";
 import { useDetailRequeteApiHook } from "../detailRequete/hook/DetailRequeteHook";
@@ -27,8 +32,10 @@ export const EditionExtraitCopiePage: React.FC = () => {
   const history = useHistory();
   const { idRequeteParam } = useParams<IUuidRequeteParams>();
   const [requete, setRequete] = useState<IRequeteDelivrance>();
+  const [generationEC, setGenerationEC] = useState<IGenerationECParams>();
   const [documentEdite, setDocumentEdite] = useState<IDocumentReponse>();
   const [documents, setDocuments] = useState<IDocumentReponse[]>();
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [hookParams, setHookParams] = useState<IActeApiHookParams>();
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const dataHistory = history.location.state;
@@ -36,6 +43,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
   const { detailRequeteState } = useDetailRequeteApiHook(idRequeteParam);
 
   const acte = useInformationsActeApiHook(hookParams);
+  const nouveauDoc = useGenerationEC(generationEC);
 
   const ajouteDocument = (typeDocument: any) => {
     if (checkDirty(isDirty, setIsDirty)) {
@@ -77,23 +85,50 @@ export const EditionExtraitCopiePage: React.FC = () => {
   };
 
   function passerDocumentValider(idDocument: string) {
-    if (requete) {
+    if (
+      acte?.acte &&
+      requete &&
+      documentEdite?.validation &&
+      requete.choixDelivrance
+    ) {
+      setOperationEnCours(true);
+      setGenerationEC({
+        idActe: acte?.acte.id,
+        requete,
+        choixDelivrance: requete?.choixDelivrance,
+        validation: documentEdite?.validation,
+        pasDeStockageDocument: false
+      });
+    }
+  }
+
+  useEffect(() => {
+    if (nouveauDoc && documentEdite && requete) {
       const temp = { ...requete };
       if (temp.documentsReponses) {
         const index = temp.documentsReponses.findIndex(
-          el => el.id === idDocument
+          el => el.id === documentEdite.id
         );
         temp.documentsReponses[index].validation = Validation.O;
+        temp.documentsReponses[index].id = getValeurOuVide(
+          nouveauDoc.resultGenerationUnDocument?.idDocumentReponse
+        );
+        temp.documentsReponses[index].contenu = getValeurOuVide(
+          nouveauDoc.resultGenerationUnDocument?.contenuDocumentReponse
+        );
       }
+      setOperationEnCours(false);
       setRequete(temp);
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nouveauDoc]);
 
   return (
     <div className="EditionExtraitCopie">
       <title>{getLibelle("Édition extrait copie")}</title>
       {requete && (
         <>
+          <OperationEnCours visible={operationEnCours} />
           <OngletDocumentsEdites
             setIsDirty={setIsDirty}
             documents={documents}

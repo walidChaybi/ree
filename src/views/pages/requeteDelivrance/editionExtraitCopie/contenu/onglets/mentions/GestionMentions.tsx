@@ -7,13 +7,9 @@ import {
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import { useMentionsApiHook } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
 import {
-  IMiseAJourDocumentMentionParams,
-  useMiseAJourDocumentMentionApiHook
-} from "../../../../../../common/hook/acte/mentions/MiseAJourDocumentMentionApiHook";
-import {
-  IMiseAJourMentionsParams,
-  useMiseAJourMentionsApiHook
-} from "../../../../../../common/hook/acte/mentions/MiseAJourMentionsApiHook";
+  SauvegarderMentionsParam,
+  useSauvegarderMentions
+} from "../../../../../../common/hook/acte/mentions/SauvegarderMentionsHook";
 import {
   getLibelle,
   getValeurOuVide
@@ -26,7 +22,6 @@ import {
   getValeurEstdeverrouillerCommencement,
   IMentionAffichage,
   mappingVersMentionAffichage,
-  saveMentions,
   validerMentions
 } from "./GestionMentionsUtil";
 import "./scss/Mention.scss";
@@ -43,25 +38,21 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   const [mentionAjout, setMentionAjout] = useState<IMentionAffichage>();
   const [mentions, setMentions] = useState<IMentionAffichage[]>();
   const [mentionsParams, setMentionsParams] = useState<string>();
+  const [sauvegarderMentionsParams, setSauvegarderMentionsParams] =
+    useState<SauvegarderMentionsParam>();
   const [estDeverrouille, setEstdeverrouille] = useState<boolean>(
     getValeurEstdeverrouillerCommencement(props.document)
   );
-  const [mentionsAEnvoyerParams, setMentionsAEnvoyerParams] =
-    useState<IMiseAJourMentionsParams>();
-  const [documentMajParams, setDocumentMajParams] =
-    useState<IMiseAJourDocumentMentionParams>();
 
   const mentionsApi = useMentionsApiHook(mentionsParams);
-  useMiseAJourMentionsApiHook(mentionsAEnvoyerParams);
-  const documentEstMisAJour =
-    useMiseAJourDocumentMentionApiHook(documentMajParams);
+  const mentionsSauvegarde = useSauvegarderMentions(sauvegarderMentionsParams);
 
   useEffect(() => {
-    if (props.document && documentEstMisAJour?.resultat) {
+    if (props.document && mentionsSauvegarde) {
       props.passerDocumentValider(props.document.id);
-      setDocumentMajParams(undefined);
     }
-  }, [props, documentEstMisAJour]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mentionsSauvegarde]);
 
   useEffect(() => {
     if (props.acte) {
@@ -87,13 +78,12 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   }, [reinitialisation]);
 
   const sauvegarderMentions = useCallback(() => {
-    saveMentions(
+    setSauvegarderMentionsParams({
       mentionsApi,
       mentions,
-      props,
-      setMentionsAEnvoyerParams,
-      setDocumentMajParams
-    );
+      idActe: props.acte?.id,
+      document: props.document
+    });
   }, [mentions, mentionsApi, props]);
 
   const valider = useCallback(() => {

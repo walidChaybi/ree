@@ -189,7 +189,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
                     : NatureMention.getAllEnumsAsOptions()
                 }
                 label="Nature sélectionnée"
-                value={NatureMention.getKey(mentionSelect?.nature)}
+                value={NatureMention.getUuidFromNature(mentionSelect?.nature)}
                 onChange={handleChangeSelect}
                 aria-label="Nature sélectionnée"
                 onBlur={handleOnBlur}
@@ -216,7 +216,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
                       : NatureMention.getAllEnumsAsOptions()
                   }
                   label="Nature ajoutée"
-                  value={NatureMention.getKey(mentionAjout?.nature)}
+                  value={NatureMention.getUuidFromNature(mentionAjout?.nature)}
                   onChange={handleAjoutSelect}
                 />
               </span>

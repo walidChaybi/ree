@@ -294,7 +294,7 @@ export async function postSauvDocumentCreerActionMajStatutRequete(
 }
 
 export function getDocumentReponseById(idDcumentReponse: string): Promise<any> {
-  return api.fetchCache({
+  return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_DOCUMENT_REPONSE}/${idDcumentReponse}`
   });
@@ -525,6 +525,6 @@ export function updateDocumentMention(
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_DOCUMENT_REPONSE}/${id}${URL_MENTION}`,
-    data: mentionsRetirees
+    data: mentionsRetirees ? mentionsRetirees : []
   });
 }

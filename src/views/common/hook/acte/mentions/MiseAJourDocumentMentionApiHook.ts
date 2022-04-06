@@ -30,8 +30,8 @@ export function useMiseAJourDocumentMentionApiHook(
             error
           });
         });
-    }else {
-      return setFait(undefined)
+    } else {
+      return setFait(undefined);
     }
   }, [params]);
 

@@ -59,7 +59,7 @@ export class NatureMention extends EnumNomemclature {
     return options;
   }
 
-  public static getKey(nature?: NatureMention | string) {
+  public static getKey(nature?: NatureMention) {
     if (nature) {
       return EnumWithLibelle.getKey(NatureMention, nature);
     } else {
@@ -79,11 +79,11 @@ export class NatureMention extends EnumNomemclature {
     return natureMention.opposableAuTiers;
   }
 
-  public static getUuidFromNature(nature: NatureMention): string {
-    const uuid = EnumNomemclature.getCodeForLibelle(
-      NatureMention,
-      nature.libelle
-    );
+  public static getUuidFromNature(nature?: NatureMention): string {
+    let uuid = "";
+    if (nature) {
+      uuid = EnumNomemclature.getCodeForLibelle(NatureMention, nature.libelle);
+    }
     return uuid ? uuid : "";
   }
 }

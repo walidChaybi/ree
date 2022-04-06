@@ -61,16 +61,21 @@ export function getInformationsFicheRepertoire(
 /**
  * Récupération des informations des Fiches ACTE
  */
-export function getInformationsFicheActe(identifiant: string, recupereImagesEtTexte?: boolean): Promise<any> {
-  let config : any = {
+export function getInformationsFicheActe(
+  identifiant: string,
+  recupereImagesEtTexte?: boolean
+): Promise<any> {
+  let config: any = {
     method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}`,
-   
-  }
-  if(recupereImagesEtTexte){
-    config = {...config,  parameters: {
-      recupereImagesEtTexte
-    }}
+    uri: `${URL_ACTE}/${identifiant}`
+  };
+  if (recupereImagesEtTexte) {
+    config = {
+      ...config,
+      parameters: {
+        recupereImagesEtTexte
+      }
+    };
   }
 
   return api.fetch(config);
@@ -127,7 +132,7 @@ export function getImagesActe(identifiant: string): Promise<any> {
 export function getImagesDeLActe(identifiantActe: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_ACTE_IMAGES}/${identifiantActe}`,
+    uri: `${URL_ACTE_IMAGES}/${identifiantActe}`
   });
 }
 
