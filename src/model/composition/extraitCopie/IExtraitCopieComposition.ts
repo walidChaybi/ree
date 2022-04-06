@@ -4,6 +4,8 @@ import { IParametresComposition } from "../commun/IParametresComposition";
 export const NOM_DOCUMENT_EC_SANS_FILIATION = "Extrait copie sans filiation";
 export const NOM_DOCUMENT_EC_AVEC_FILIATION = "Extrait copie avec filiation";
 export const NOM_DOCUMENT_EC_PLURILINGUE = "Extrait copie plurilingue";
+export const NOM_DOCUMENT_COPIE_INTEGRALE = "Copie intégrale";
+export const NOM_DOCUMENT_COPIE_ARCHIVE = "Copie archive";
 
 // Même interface pour les extraits ou copie et actes images ou texte
 export interface IExtraitCopieComposition
@@ -17,7 +19,7 @@ export interface IExtraitCopieComposition
   prenoms_titulaire2: string;
   nom_titulaire2: string;
   corps_texte?: string;
-  corps_image: string[];
+  corps_image?: { images: string }[];
   filigrane_archive: boolean;
   formule_signature_delivrance: string;
   pas_de_bloc_signature: boolean;

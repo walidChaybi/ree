@@ -10,6 +10,7 @@ import { TypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
 import { TypeExtrait } from "./../enum/TypeExtrait";
 import { IAnalyseMarginale } from "./IAnalyseMarginale";
 import { ICorpsExtraitRectification } from "./ICorpsExtraitRectification";
+import { ICorpsText } from "./ICorpsText";
 import { IDetailMariage } from "./IDetailMariage";
 import { IEvenement } from "./IEvenement";
 import { ICorpsImage } from "./imageActe/ICorpsImage";
@@ -32,7 +33,7 @@ export interface IFicheActe {
   visibiliteArchiviste: TypeVisibiliteArchiviste;
   analyseMarginales?: IAnalyseMarginale[];
   detailMariage?: IDetailMariage;
-  corpsText?: string;
+  corpsText?: ICorpsText;
   corpsImage?: ICorpsImage;
   type: TypeActe;
   corpsExtraitRectifications: ICorpsExtraitRectification[];

@@ -62,11 +62,16 @@ export function useGenerationEC(
 
   useEffect(() => {
     if (params && params.idActe) {
-      setActeApiHookParams({ idActe: params.idActe });
+      setActeApiHookParams({
+        idActe: params.idActe,
+        recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(
+          params.choixDelivrance
+        )
+      });
     }
   }, [params]);
 
-  // 1- Récupération de l'acte complet pour la génération du document
+  // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
   const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
 
   // 2- Création du bon EC composition suivant le choix de délivrance
@@ -105,7 +110,7 @@ export function useGenerationEC(
     }
   }, [acteApiHookResultat, params]);
 
-  // 3 - Création de l'EC PDF pour un acte texte: appel api composition
+  // 3 - Création de l'EC PDF pour un acte: appel api composition
   // récupération du document en base64
   const extraitCopieApiHookResultat = useExtraitCopieApiHook(
     extraitCopieApiHookParams

@@ -763,23 +763,12 @@ export const ficheActeMariage = {
     numeroProjet: "a11",
     corpsExtraitRectifications: [],
     corpsImage: {
-      id: "c41b59e3-a5bf-45dd-aeec-34d0eed12ddb",
-      idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
-      dateCreationActe: 1256986800000,
-      numeroActe: "8012",
-      images: [
+      "images": [
         {
-          idActeImage: "6bd6dd86-1b40-4af1-b885-67163dceae1b",
-          pathFichier: "actes\\L2_I00009_2.tif",
-          conteneur: "actes_image",
-          fichier: "L2_I00009_2.tif",
-          noPage: 1,
-          statutRepriseImageActe: "A_REPRENDRE",
-          dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
+          "contenu": "base64",
+          "noPage": 1
         }
-      ],
-      natureActe: "MARIAGE"
+      ]
     },
     analyseMarginales: [],
     type: "IMAGE",

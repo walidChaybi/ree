@@ -1,5 +1,7 @@
 import {
   IExtraitCopieComposition,
+  NOM_DOCUMENT_COPIE_ARCHIVE,
+  NOM_DOCUMENT_COPIE_INTEGRALE,
   NOM_DOCUMENT_EC_AVEC_FILIATION,
   NOM_DOCUMENT_EC_PLURILINGUE,
   NOM_DOCUMENT_EC_SANS_FILIATION
@@ -18,6 +20,8 @@ import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { TypeExtrait } from "../../../../../model/etatcivil/enum/TypeExtrait";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import {
+  CODE_COPIE_INTEGRALE,
+  CODE_COPIE_NON_SIGNEE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
   CODE_EXTRAIT_SANS_FILIATION,
@@ -27,6 +31,7 @@ import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDe
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { Validation } from "../../../../../model/requete/enum/Validation";
 import { SNP, SPC } from "../../../../common/util/Utils";
+import { creationCompositionCopieActeImage } from "./creationComposition/creationCompositionCopieActeImage";
 import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/creationCompositionExtraitCopieActeTexte";
 import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
 import { IGenerationECParams } from "./generationECHook";
@@ -78,6 +83,14 @@ export function getTypeDocument(choixDelivrance: ChoixDelivrance) {
         CODE_EXTRAIT_PLURILINGUE
       );
       break;
+    case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
+      uuidTypeDocument = DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE);
+      break;
+    case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
+      uuidTypeDocument = DocumentDelivrance.getKeyForCode(
+        CODE_COPIE_NON_SIGNEE
+      );
+      break;
     // FIXME A Complèter
     default:
       break;
@@ -96,6 +109,12 @@ export function getNomDocument(choixDelivrance: ChoixDelivrance) {
       break;
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
       nomDocument = NOM_DOCUMENT_EC_PLURILINGUE;
+      break;
+    case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
+      nomDocument = NOM_DOCUMENT_COPIE_INTEGRALE;
+      break;
+    case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
+      nomDocument = NOM_DOCUMENT_COPIE_ARCHIVE;
       break;
     // FIXME A Complèter
     default:
@@ -133,11 +152,12 @@ export function creationComposition(
   } else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
     composition = creationCompositionExtraitPlurilingue(acte);
   } else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
-    composition = {
-      nature_acte: "TODO2",
-      type_document: "TODO2",
-      corps_image: ["image"]
-    } as IExtraitCopieComposition;
+    composition = creationCompositionCopieActeImage(
+      acte,
+      choixDelivrance,
+      sousTypeRequete,
+      validation
+    );
   }
 
   return composition;

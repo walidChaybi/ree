@@ -13,7 +13,10 @@ export const URL_COUNT_TITULAIRE = "/count/titulaire";
 export const URL_ETAT_CIVIL = "/repertoirecivil";
 export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
 export const URL_ACTE_RMC = "/acte/rmc";
-export const URL_ACTE_IMAGE = "/acte/corps";
+// Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")
+export const URL_ACTE_CORPS_IMAGE = "/acte/corps";
+// NON UTILISE POUR L'INSTANT: Récupère les images d'un acte sous forme de tableau d'images base64
+export const URL_ACTE_IMAGES = "acteimage/images";
 export const URL_ACTE_TEXTE = "/acte/texte";
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";
@@ -58,11 +61,19 @@ export function getInformationsFicheRepertoire(
 /**
  * Récupération des informations des Fiches ACTE
  */
-export function getInformationsFicheActe(identifiant: string): Promise<any> {
-  return api.fetchCache({
+export function getInformationsFicheActe(identifiant: string, recupereImagesEtTexte?: boolean): Promise<any> {
+  let config : any = {
     method: HttpMethod.GET,
-    uri: `${URL_ACTE}/${identifiant}`
-  });
+    uri: `${URL_ACTE}/${identifiant}`,
+   
+  }
+  if(recupereImagesEtTexte){
+    config = {...config,  parameters: {
+      recupereImagesEtTexte
+    }}
+  }
+
+  return api.fetch(config);
 }
 
 /**
@@ -103,11 +114,20 @@ export function rechercheMultiCriteresInscriptions(
   });
 }
 
+/** Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")*/
 export function getImagesActe(identifiant: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_ACTE_IMAGE}/${identifiant}`,
+    uri: `${URL_ACTE_CORPS_IMAGE}/${identifiant}`,
     responseType: "blob"
+  });
+}
+
+/** NON UTILISE POUR L'INSTANT Récupère les images d'un acte sous forme de tableau d'images base64 */
+export function getImagesDeLActe(identifiantActe: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: `${URL_ACTE_IMAGES}/${identifiantActe}`,
   });
 }
 

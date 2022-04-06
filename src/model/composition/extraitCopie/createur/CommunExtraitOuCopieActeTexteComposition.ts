@@ -140,7 +140,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
       if (params.copie && params.acte.corpsText) {
         // Une copie est demandée (et non un extrait) pour un acte texte
-        composition.corps_texte = params.acte.corpsText;
+        composition.corps_texte = params.acte.corpsText.texte;
       } else if (corpsExtraitRectification) {
         // L'acte comporte un corps d'extrait modifié correspondant au type d'extrait traité : extrait avec ou sans filiation
         composition.corps_texte = corpsExtraitRectification;

@@ -17,6 +17,8 @@ const URL_COMPOSITION_ATTESTATION_PACS = "/composition/ATTESTATION_PACS/1";
 const URL_COMPOSITION_EXTRAIT_COPIE_ACTE_TEXTE =
   "/composition/EXTAIT_COPIE_ACTE_TEXTE/1";
 
+const URL_COMPOSITION_COPIE_ACTE_IMAGE = "/composition/ACTE_IMAGE/1";
+
 const URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE =
   "/composition/ACTE_NAISSANCE/4";
 const URL_COMPOSITION_EXTRAIT_PLURILINGUE_MARIAGE =
@@ -105,7 +107,7 @@ function getCompositionExtraitOuCopieActeTexte(obj: any): Promise<any> {
 }
 
 function getCompositionCopieActeImage(obj: any): Promise<any> {
-  return getComposition("/TODO", obj);
+  return getComposition(URL_COMPOSITION_COPIE_ACTE_IMAGE, obj);
 }
 
 function getCompositionExtraitPlurilingueNaissance(obj: any): Promise<any> {

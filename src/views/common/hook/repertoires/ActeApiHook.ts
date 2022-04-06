@@ -5,7 +5,8 @@ import { logError } from "../../util/LogManager";
 import { mapActe } from "./MappingRepertoires";
 
 export interface IActeApiHookParams {
-  idActe: string;
+  idActe?: string;
+  recupereImagesEtTexte?: boolean;
 }
 
 export interface IActeApiHookResultat {
@@ -13,16 +14,14 @@ export interface IActeApiHookResultat {
 }
 
 export function useInformationsActeApiHook(
-  params?: IActeApiHookParams | string
+  params?: IActeApiHookParams 
 ): IActeApiHookResultat | undefined {
   const [acteApiHookResultat, setActeApiHookResultat] =
     useState<IActeApiHookResultat>();
 
   useEffect(() => {
-    if (params) {
-      const idActe: string =
-        typeof params === "string" ? (params as string) : params.idActe;
-      getInformationsFicheActe(idActe)
+    if (params?.idActe) {
+      getInformationsFicheActe(params.idActe, params.recupereImagesEtTexte)
         .then((result: any) => {
           const acte: IFicheActe = mapActe(result.body.data);
           setActeApiHookResultat({ acte });

@@ -109,6 +109,8 @@ export const configEtatcivil = [
         return { data: pacsModificationNotaire.data };
       } else if (
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f?recupereImagesEtTexte=true" ||
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da"
       ) {
         return { data: acte };
@@ -187,7 +189,10 @@ export const configEtatcivil = [
       }
       /////////////////////////////////////////////////////////////////////
 
-      if (match[1] === `/acte/${idFicheActeMariage}`) {
+      if (
+        match[1] === `/acte/${idFicheActeMariage}` ||
+        match[1] === `/acte/${idFicheActeMariage}?recupereImagesEtTexte=true`
+      ) {
         return ficheActeMariage;
       }
 
