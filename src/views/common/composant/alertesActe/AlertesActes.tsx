@@ -166,6 +166,29 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
       return alertes.size > 0;
     }
   }
+  const entries = Array.from(alertes.entries());
+  const elements: JSX.Element[] = [];
+  entries.forEach((entry, index) => {
+    elements.push(
+      <div
+        key={`alertes-${index}`}
+        className={`Alertes ${index === 0 ? "" : "SeparateurAlertes"}`}
+      >
+        <BoutonAjouterAlerte
+          key={`bouton-ajouter-alerte-${index}`}
+          ajoutAlertePossible={ajoutAlertePossible}
+          ajouterAlerteCallBack={ajouterAlerteCallBack.bind(null, entry?.[0])}
+        />
+        <ListeAlertes
+          key={`liste-alertes-${index}`}
+          ajoutAlertePossible={ajoutAlertePossible}
+          alertes={entry?.[1]}
+          displayReference={true}
+          supprimerAlerteCallBack={supprimerAlerteCallBack}
+        />
+      </div>
+    );
+  });
 
   return (
     <div className="AlertesActes">
@@ -174,32 +197,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
         disabled={false}
         expanded={estOuvert()}
       >
-        <div className="Liste">
-          {Array.from(alertes.entries()).map(
-            (entry: [string, IAlerte[]], index: number) => (
-              <div
-                key={`alertes-${index}`}
-                className={`Alertes ${index === 0 ? "" : "SeparateurAlertes"}`}
-              >
-                <BoutonAjouterAlerte
-                  key={`bouton-ajouter-alerte-${index}`}
-                  ajoutAlertePossible={ajoutAlertePossible}
-                  ajouterAlerteCallBack={ajouterAlerteCallBack.bind(
-                    null,
-                    entry?.[0]
-                  )}
-                />
-                <ListeAlertes
-                  key={`liste-alertes-${index}`}
-                  ajoutAlertePossible={ajoutAlertePossible}
-                  alertes={entry?.[1]}
-                  displayReference={true}
-                  supprimerAlerteCallBack={supprimerAlerteCallBack}
-                />
-              </div>
-            )
-          )}
-        </div>
+        <div className="Liste">{elements}</div>
       </AccordionRece>
     </div>
   );
