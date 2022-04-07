@@ -26,7 +26,7 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
       archive
     );
 
-  const corpsTexteAttendu = `Le 10 octobre 1901 à 13h15
+  const corpsTexteAttendu = `Le 10 octobre 1901 à 13 heures 15 minutes
 est née à Paris, Paris (France)
   Alphonse
   Patamob suivant déclaration conjointe de changement de nom en date du 26 novembre 2000

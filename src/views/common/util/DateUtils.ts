@@ -248,6 +248,29 @@ export function getDateFormatJasperFromCompose(date?: IDateCompose) {
 
 /**
  *
+ * 12 04 => à 12 heures 4 minutes
+ * 00 04 => à zéro heure 4 minutes
+ * 10 00 => à 10 heures
+ */
+export function formatAHeureExtrait(heure?: number, minute?: number) {
+  if (heure != null) {
+    const minuteConvert = minute
+      ? minute > 1
+        ? ` ${minute} minutes`
+        : ` ${minute} minute`
+      : "";
+    if (heure === 0) {
+      return `à zéro heure${minuteConvert}`;
+    } else {
+      const heureConvert = heure > 1 ? `${heure} heures` : `${heure} heure`;
+      return `à ${heureConvert}${minuteConvert}`;
+    }
+  }
+  return "";
+}
+
+/**
+ *
  * 12 04 => à 12h04
  * 00 04 => à zéro heure 04
  * 10 00 => à 10h

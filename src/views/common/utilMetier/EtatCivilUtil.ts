@@ -1,7 +1,7 @@
 import { IEvenement } from "../../../model/etatcivil/acte/IEvenement";
 import { Sexe } from "../../../model/etatcivil/enum/Sexe";
 import {
-  formatAHeure,
+  formatAHeureExtrait,
   getDateFormatJasperFromCompose,
   IDateCompose
 } from "../util/DateUtils";
@@ -53,7 +53,9 @@ export class EtatCivilUtil {
   }
 
   public static formatHeureEvenement(evenement?: IEvenement) {
-    return getValeurOuVide(formatAHeure(evenement?.heure, evenement?.minute));
+    return getValeurOuVide(
+      formatAHeureExtrait(evenement?.heure, evenement?.minute)
+    );
   }
 
   public static getPrenomsOuVide(prenoms?: string[]) {

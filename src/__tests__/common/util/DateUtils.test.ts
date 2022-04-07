@@ -6,6 +6,8 @@ import {
   estDateReceValide,
   estDateValide,
   estDateVide,
+  formatAHeure,
+  formatAHeureExtrait,
   formatJour,
   formatMois,
   getDateComposeFromDate,
@@ -394,4 +396,20 @@ test("estDateAtteinte()", () => {
     today.getDate() + 1
   );
   expect(estDateAtteinte(d2)).toBeFalsy();
+});
+
+test("formatAHeureExtrait()", () => {
+  expect(formatAHeureExtrait(12, 20)).toEqual("à 12 heures 20 minutes");
+  expect(formatAHeureExtrait(0, 20)).toEqual("à zéro heure 20 minutes");
+  expect(formatAHeureExtrait(12, 0)).toEqual("à 12 heures");
+  expect(formatAHeureExtrait(2, 3)).toEqual("à 2 heures 3 minutes");
+  expect(formatAHeureExtrait(1, 1)).toEqual("à 1 heure 1 minute");
+});
+
+test("formatAHeure()", () => {
+  expect(formatAHeure(12, 20)).toEqual("à 12h20");
+  expect(formatAHeure(0, 20)).toEqual("à zéro heure 20");
+  expect(formatAHeure(12, 0)).toEqual("à 12h");
+  expect(formatAHeure(2, 3)).toEqual("à 2h3");
+  expect(formatAHeure(1, 1)).toEqual("à 1h1");
 });
