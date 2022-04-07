@@ -5,14 +5,14 @@ import { getLibelle } from "../../../common/util/Utils";
 import { DocumentsByRequete } from "./hook/SignatureDocumentHook";
 import "./scss/PopinSignature.scss";
 
-interface ProgressSignature {
+interface ProgressSignatureProps {
   onClose: (isOpen: boolean, hasErrors: boolean) => void;
   documentsByRequete: DocumentsByRequete;
   idsRequetesToSign: string[];
   errors: boolean;
 }
 
-export const ProgressSignature: React.FC<ProgressSignature> = ({
+export const ProgressSignature: React.FC<ProgressSignatureProps> = ({
   onClose,
   documentsByRequete,
   idsRequetesToSign,

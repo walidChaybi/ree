@@ -37,18 +37,6 @@ type ApisAutorisees =
   | "rece-composition-api"
   | "rece-mail-api";
 
-interface IApi {
-  url: string;
-  ports: number;
-  domain: string;
-  name: string;
-  usedVersions: string[];
-}
-
-interface IApis {
-  apis: IApi[];
-}
-
 export enum HttpMethod {
   GET,
   DELETE,

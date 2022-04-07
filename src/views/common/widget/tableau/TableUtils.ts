@@ -54,18 +54,13 @@ export function stableSort<T>(
   array: T[],
   comparator: (a: T, b: T) => number
 ): T[] {
-  const stabilizedThis: any[] = [];
-
-  array.forEach((el, index) => {
-    stabilizedThis.push([el, index]);
-  });
-
-  stabilizedThis.sort((a: any, b: any) => {
+  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+  stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el: any) => el[0]);
+  return stabilizedThis.map(el => el[0]);
 }
 
 export function processDataStorting<Key extends keyof any>(

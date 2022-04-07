@@ -16,11 +16,6 @@ import { RMCAuto } from "../../../../rechercheMultiCriteres/autoActesInscription
 import { DataRMCAuto } from "../ApercuRequetePriseEnChargePage";
 import { ChoixAction } from "./actions/ChoixAction";
 
-interface RMCAutoParams {
-  requete: IRequeteDelivrance;
-  range: string;
-}
-
 interface ApercuRequetePriseEnChargePartieDroiteProps {
   detailRequete: IRequeteDelivrance;
   dataHistory?: DataRMCAuto;

@@ -16,11 +16,11 @@ import { goToLinkRMC } from "./resultats/RMCTableauCommun";
 import { RMCActeInscriptionForm } from "./RMCActeInscriptionForm";
 import "./scss/RMCActeInscriptionPage.scss";
 
-interface RMCActeInscriptionPage {
+interface RMCActeInscriptionPageProps {
   noAutoScroll: boolean;
 }
 
-export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPage> = ({
+export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
   noAutoScroll
 }) => {
   const [valuesRMCActeInscription, setValuesRMCActeInscription] =
