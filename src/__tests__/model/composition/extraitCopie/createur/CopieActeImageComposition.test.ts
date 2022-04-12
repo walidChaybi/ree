@@ -30,11 +30,7 @@ test("Attendu: corps image correct", () => {
     erreur
   });
 
-  const corpsImageAttendu = [
-    {
-      images: "base64"
-    }
-  ];
+  const corpsImageAttendu = ["base64"];
 
   expect(compositionCorps.corps_image).toEqual(corpsImageAttendu);
 });

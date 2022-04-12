@@ -19,7 +19,7 @@ export interface IExtraitCopieComposition
   prenoms_titulaire2: string;
   nom_titulaire2: string;
   corps_texte?: string;
-  corps_image?: { images: string }[];
+  corps_image?: string[];
   filigrane_archive: boolean;
   formule_signature_delivrance: string;
   pas_de_bloc_signature: boolean;

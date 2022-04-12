@@ -33,7 +33,7 @@ export interface IFicheActe {
   visibiliteArchiviste: TypeVisibiliteArchiviste;
   analyseMarginales?: IAnalyseMarginale[];
   detailMariage?: IDetailMariage;
-  corpsText?: ICorpsText;
+  corpsTexte?: ICorpsText;
   corpsImage?: ICorpsImage;
   type: TypeActe;
   corpsExtraitRectifications: ICorpsExtraitRectification[];

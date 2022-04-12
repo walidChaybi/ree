@@ -138,9 +138,9 @@ export class CommunExtraitOuCopieActeTexteComposition {
         composition.mentions = jointAvecRetourALaLigne(texteMentions);
       }
 
-      if (params.copie && params.acte.corpsText) {
+      if (params.copie && params.acte.corpsTexte) {
         // Une copie est demandée (et non un extrait) pour un acte texte
-        composition.corps_texte = params.acte.corpsText.texte;
+        composition.corps_texte = params.acte.corpsTexte.texte;
       } else if (corpsExtraitRectification) {
         // L'acte comporte un corps d'extrait modifié correspondant au type d'extrait traité : extrait avec ou sans filiation
         composition.corps_texte = corpsExtraitRectification;

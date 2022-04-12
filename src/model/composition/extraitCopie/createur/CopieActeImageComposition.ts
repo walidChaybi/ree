@@ -39,7 +39,9 @@ export class CopieActeImageComposition {
     // Erreur (Dans le cas d'un manque d'information pour la génération du document)
     composition.erreur = params.erreur;
 
-    composition.corps_image = CopieActeImageComposition.mapCorpsImage(params.corpsImage);
+    composition.corps_image = CopieActeImageComposition.mapCorpsImage(
+      params.corpsImage
+    );
 
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
       composition,
@@ -52,8 +54,9 @@ export class CopieActeImageComposition {
     return composition;
   }
 
-  private static mapCorpsImage(corpsImage? : ICorpsImage) : { images: string }[] | undefined{
-    return corpsImage?.images.sort((image1, image2) => image1.noPage - image2.noPage)
-    .map((image)=> ({images : image.contenu}))
+  private static mapCorpsImage(corpsImage?: ICorpsImage): string[] | undefined {
+    return corpsImage?.images
+      .sort((image1, image2) => image1.noPage - image2.noPage)
+      .map(image => image.contenu);
   }
 }
