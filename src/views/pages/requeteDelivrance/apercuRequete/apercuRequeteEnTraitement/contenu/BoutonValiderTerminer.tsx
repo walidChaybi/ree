@@ -14,6 +14,7 @@ import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "../../../../../common/hook/requete/ActionHook";
+import { getUrlPrecedente } from "../../../../../common/util/route/routeUtil";
 import { storeRece } from "../../../../../common/util/storeRece";
 import { getLibelle } from "../../../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../../../common/widget/attente/BoutonOperationEnCours";
@@ -80,7 +81,7 @@ export const BoutonValiderTerminer: React.FC<
   // 3 - Navigation après le traitement
   useEffect(() => {
     if (majDateDerniereDelivrance || pasDeMajDateDerniereDelivrance) {
-      receUrl.replaceUrl(history, storeRece.retourUrl);
+      receUrl.replaceUrl(history, getUrlPrecedente(history.location.pathname));
     }
   }, [majDateDerniereDelivrance, pasDeMajDateDerniereDelivrance, history]);
 
