@@ -1,16 +1,15 @@
+import { getValeurOuVide } from "../../../../views/common/util/Utils";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { ICorpsImage } from "../../../etatcivil/acte/imageActe/ICorpsImage";
-import { ChoixDelivrance } from "../../../requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../requete/enum/Validation";
+import { IRequeteDelivrance } from "../../../requete/IRequeteDelivrance";
 import { IExtraitCopieComposition } from "../IExtraitCopieComposition";
 import { CommunExtraitOuCopieActeTexteComposition } from "./CommunExtraitOuCopieActeTexteComposition";
 
 export interface ICreerExtraitCopieActeImageParams {
   acte: IFicheActe;
   natureActe: string;
-  choixDelivrance: ChoixDelivrance;
-  sousTypeRequete: SousTypeDelivrance;
+  requete: IRequeteDelivrance;
   validation: Validation;
   avecFiliation: boolean;
   copie: boolean;
@@ -45,8 +44,8 @@ export class CopieActeImageComposition {
 
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
       composition,
-      params.choixDelivrance,
-      params.sousTypeRequete,
+      getValeurOuVide(params.requete.choixDelivrance),
+      params.requete.sousType,
       params.acte.nature,
       params.validation,
       params.archive

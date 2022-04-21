@@ -10,6 +10,7 @@ import {
   documentReponseCARN_CSPAC_01,
   documentReponseCertificatRCA,
   documentReponseCopieIntegrale,
+  documentReponseCourrier117,
   documentReponseExtraitAvecFiliation,
   idDocumentsReponse
 } from "../data/DocumentReponse";
@@ -142,7 +143,9 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d404/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
         match[1] ===
-          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
+          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+        match[1] ===
+          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f0f/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
       }
@@ -367,6 +370,14 @@ export const configRequetes = [
         return { data: documentReponseCARN_CSPAC_01 };
       }
 
+      // update mentions retiré et validé document
+      if (
+        match[1] ===
+        "/documentsreponses/bbac2335-562c-4b14-96aa-4386814c02a2/mentions"
+      ) {
+        return { data: true };
+      }
+
       // Récupération d'un document par son id
       if (match[1] === "/documentsreponses/" + idDocumentsReponse[0]) {
         return { data: documentReponseCARN_CSPAC_01 };
@@ -389,6 +400,11 @@ export const configRequetes = [
         match[1] === "/documentsreponses/f9279c00-5d2b-11ea-bc55-0242ac130004"
       ) {
         return { data: documentReponseCopieIntegrale };
+      }
+      if (
+        match[1] === "/documentsreponses/9c099809-951e-4b05-a27a-01d1344f479f"
+      ) {
+        return { data: documentReponseCourrier117 };
       }
       if (
         match[1] ===

@@ -6,9 +6,8 @@ import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { ExistenceContratMariage } from "../../../etatcivil/enum/ExistenceContratMariage";
 import { LienParente } from "../../../etatcivil/enum/LienParente";
 import { NatureActe } from "../../../etatcivil/enum/NatureActe";
-import { ChoixDelivrance } from "../../../requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../requete/enum/Validation";
+import { IRequeteDelivrance } from "../../../requete/IRequeteDelivrance";
 import {
   CommunExtraitOuCopieActeTexteComposition,
   IParentsTitulaireCompositionEC,
@@ -18,9 +17,9 @@ import {
 export class ExtraitCopieActeTexteMariageComposition {
   public static creerExtraitCopieActeTexteMariage(
     acte: IFicheActe,
-    choixDelivrance: ChoixDelivrance,
-    sousTypeRequete: SousTypeDelivrance,
+    requete: IRequeteDelivrance,
     validation: Validation,
+    mentionsRetirees: string[],
     avecFiliation = false,
     copie = false,
     archive = false
@@ -43,14 +42,15 @@ export class ExtraitCopieActeTexteMariageComposition {
     return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
       acte,
       natureActe,
-      choixDelivrance,
-      sousTypeRequete,
+      choixDelivrance: getValeurOuVide(requete.choixDelivrance),
+      sousTypeRequete: requete.sousType,
       validation,
       avecFiliation,
       copie,
       archive,
       corpsTexte,
-      erreur
+      erreur,
+      mentionsRetirees
     });
   }
 

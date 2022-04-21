@@ -90,7 +90,8 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
         idActe: actes[0].idActe,
         requete: props.requete,
         choixDelivrance,
-        validation: Validation.N
+        validation: Validation.N,
+        mentionsRetirees: []
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

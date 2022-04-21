@@ -4,23 +4,25 @@ import { IExtraitCopieComposition } from "../../../../../../model/composition/ex
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
 import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../../../../model/requete/enum/Validation";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
+import { getValeurOuVide } from "../../../../util/Utils";
 
 export const creationCompositionExtraitCopieActeTexte = function (
   acteComplet: IFicheActe,
-  choixDelivrance: ChoixDelivrance,
-  sousTypeRequete: SousTypeDelivrance,
-  validation: Validation
+  requete: IRequeteDelivrance,
+  validation: Validation,
+  mentionsRetirees: string[]
 ) {
   let composition;
+  const choixDelivrance = getValeurOuVide(requete.choixDelivrance);
   if (acteComplet.nature === NatureActe.MARIAGE) {
     composition =
       ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage(
         acteComplet,
-        choixDelivrance,
-        sousTypeRequete,
+        requete,
         validation,
+        mentionsRetirees,
         ChoixDelivrance.estAvecFiliation(choixDelivrance),
         ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
         ChoixDelivrance.estCopieArchive(choixDelivrance)
@@ -36,9 +38,9 @@ export const creationCompositionExtraitCopieActeTexte = function (
     composition =
       ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
         acteComplet,
-        choixDelivrance,
-        sousTypeRequete,
+        requete,
         validation,
+        mentionsRetirees,
         ChoixDelivrance.estAvecFiliation(choixDelivrance),
         ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
         ChoixDelivrance.estCopieArchive(choixDelivrance)

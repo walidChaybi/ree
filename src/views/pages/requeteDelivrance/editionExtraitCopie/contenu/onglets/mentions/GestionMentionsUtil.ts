@@ -10,9 +10,6 @@ import { NatureMention } from "../../../../../../../model/etatcivil/enum/NatureM
 import { TypeFiche } from "../../../../../../../model/etatcivil/enum/TypeFiche";
 import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
-import { IMentionsResultat } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
-import { IMiseAJourDocumentMentionParams } from "../../../../../../common/hook/acte/mentions/MiseAJourDocumentMentionApiHook";
-import { IMiseAJourMentionsParams } from "../../../../../../common/hook/acte/mentions/MiseAJourMentionsApiHook";
 import messageManager from "../../../../../../common/util/messageManager";
 import {
   getLibelle,
@@ -235,7 +232,8 @@ export function handleBlur(
   >,
   setMentions: React.Dispatch<
     React.SetStateAction<IMentionAffichage[] | undefined>
-  >
+  >,
+  setIsDirty: any
 ) {
   if (mentions && mentionsApi && mentionSelect) {
     const indexMentions = mentions.findIndex(el => el.id === mentionSelect?.id);
@@ -251,6 +249,7 @@ export function handleBlur(
         mentionsApi[indexMentionsApi]
       )
     ) {
+      setIsDirty(true);
       miseAjourEnFonctionNature(
         mentions,
         indexMentions,
@@ -268,6 +267,7 @@ export function handleBlur(
       (mentions[indexMentions].texte !== mentionSelect?.texte ||
         mentionSelect?.nature !== mentions[indexMentions].nature)
     ) {
+      setIsDirty(true);
       miseAJourMention(
         mentionSelect,
         mentions,
@@ -354,7 +354,6 @@ export function aucuneMentionsNationalite(mentions?: IMentionAffichage[]) {
 
 export function boutonReinitialiserEstDisabled(
   estdeverrouille: boolean,
-  setIsDirty: () => void,
   mentionsApi?: IMention[],
   mentions?: IMentionAffichage[],
   document?: IDocumentReponse
@@ -363,10 +362,10 @@ export function boutonReinitialiserEstDisabled(
     return (
       !estdeverrouille ||
       (estdeverrouille &&
-        !modificationEffectue(mentions, mentionsApi, document, setIsDirty))
+        !modificationEffectue(mentions, mentionsApi, document))
     );
   } else {
-    return !modificationEffectue(mentions, mentionsApi, document, setIsDirty);
+    return !modificationEffectue(mentions, mentionsApi, document);
   }
 }
 
@@ -377,43 +376,6 @@ export function getValeurEstdeverrouillerCommencement(
     return document.mentionsRetirees.length > 0;
   } else {
     return false;
-  }
-}
-
-export function saveMentions(
-  mentionsApi: IMentionsResultat | undefined,
-  mentions: IMentionAffichage[] | undefined,
-  props: React.PropsWithChildren<GestionMentionsProps>,
-  setMentionsAEnvoyerParams: React.Dispatch<
-    React.SetStateAction<IMiseAJourMentionsParams | undefined>
-  >,
-  setDocumentMajParams: React.Dispatch<
-    React.SetStateAction<IMiseAJourDocumentMentionParams | undefined>
-  >
-) {
-  if (mentionsApi && mentionsApi.mentions && mentions && props.document) {
-    const { mentionsAEnvoyer, mentionsRetirees } = mappingVersMentionsApi(
-      mentionsApi.mentions,
-      mentions
-    );
-    if (modificationEffectue(mentions, mentionsApi.mentions, props.document)) {
-      if (
-        !DocumentDelivrance.typeDocumentEstCopie(props.document?.typeDocument)
-      ) {
-        setMentionsAEnvoyerParams({
-          idActe: getValeurOuVide(props.acte?.id),
-          mentions: mentionsAEnvoyer
-        });
-      }
-      setDocumentMajParams({
-        idDocument: props.document.id,
-        mentionsRetirees
-      });
-    } else {
-      setDocumentMajParams({
-        idDocument: props.document.id
-      });
-    }
   }
 }
 

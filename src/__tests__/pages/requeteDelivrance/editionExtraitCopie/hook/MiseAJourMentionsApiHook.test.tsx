@@ -10,7 +10,7 @@ import {
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
 const params: IMiseAJourMentionsParams = {
-  idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
+  idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235b",
   mentions: [{} as IMention]
 };
 

@@ -2,18 +2,17 @@ import { CopieActeImageComposition } from "../../../../../../model/composition/e
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { TypeActe } from "../../../../../../model/etatcivil/enum/TypeActe";
 import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../../../../model/requete/enum/Validation";
-import { getLibelle } from "../../../../util/Utils";
+import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
+import { getLibelle, getValeurOuVide } from "../../../../util/Utils";
 
 export const creationCompositionCopieActeImage = function (
   acte: IFicheActe,
-  choixDelivrance: ChoixDelivrance,
-  sousTypeRequete: SousTypeDelivrance,
+  requete: IRequeteDelivrance,
   validation: Validation
 ) {
   let composition;
-
+  const choixDelivrance = getValeurOuVide(ChoixDelivrance);
   if (acte.type === TypeActe.IMAGE) {
     const natureActe = acte.nature.libelle;
     const avecFiliation = ChoixDelivrance.estAvecFiliation(choixDelivrance);
@@ -29,8 +28,7 @@ export const creationCompositionCopieActeImage = function (
     composition = CopieActeImageComposition.creerCopieActeImage({
       acte,
       natureActe,
-      choixDelivrance,
-      sousTypeRequete,
+      requete,
       validation,
       avecFiliation,
       copie,

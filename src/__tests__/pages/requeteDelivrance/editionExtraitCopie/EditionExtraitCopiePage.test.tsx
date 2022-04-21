@@ -10,6 +10,7 @@ import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
 import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
+import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { TypeMention } from "../../../../model/etatcivil/acte/mention/ITypeMention";
@@ -26,7 +27,8 @@ import {
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
-  configRequetes[0]
+  configRequetes[0],
+  configComposition[0]
 ]);
 
 const history = createMemoryHistory();
@@ -281,6 +283,16 @@ test("clic sur mention et sur checkbox et valider", async () => {
   });
 
   act(() => {
+    fireEvent.click(screen.getByText("Valider"));
+  });
+
+  await waitFor(() => {
+    expect(
+      (screen.getByText("Terminer") as HTMLButtonElement).disabled
+    ).toBeFalsy();
+  });
+
+  act(() => {
     fireEvent.click(screen.getByText("Terminer"));
   });
 
@@ -293,7 +305,6 @@ test("clic sur mention et sur checkbox et valider", async () => {
 test("Test affichage Edition Copie", async () => {
   await waitFor(() => {
     expect(screen.getAllByText("Copie intégrale")).toBeDefined();
-    expect(screen.getAllByText("Requête")).toBeDefined();
   });
 
   act(() => {

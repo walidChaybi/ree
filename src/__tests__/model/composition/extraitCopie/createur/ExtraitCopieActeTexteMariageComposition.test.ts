@@ -20,6 +20,7 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
       choixDelivrance,
       sousTypeRequete,
       validation,
+      [],
       avecFiliation,
       copie,
       archive

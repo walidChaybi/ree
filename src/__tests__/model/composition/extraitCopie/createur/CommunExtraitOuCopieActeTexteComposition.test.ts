@@ -151,49 +151,57 @@ test("Atttendu: getTexteMentions fonctionne correctement", () => {
     opposableAuTiers: false
   } as NatureMention;
   const mention1 = {
+    id: "1",
     numeroOrdre: 1,
+    numeroOrdreExtrait: 1,
     typeMention: {
       nature: opposableAuTiers
     },
     textes: {
       texteApposition: "texteApposition",
-      texteMentionDelivrance: "texteMentionDelivrance",
+      texteMentionDelivrance: "texteMention",
       texteMention: "texteMention",
       texteMentionPlurilingue: ""
     }
   } as IMention;
   const mention2 = {
+    id: "2",
     numeroOrdre: 2,
+    numeroOrdreExtrait: 2,
     typeMention: {
       nature: opposableAuTiers
     },
     textes: {
       texteApposition: "texteApposition2",
-      texteMentionDelivrance: undefined,
+      texteMentionDelivrance: "texteMention2",
       texteMention: "texteMention2",
       texteMentionPlurilingue: ""
     }
   } as IMention;
   const mention3 = {
+    id: "3",
     numeroOrdre: 3,
+    numeroOrdreExtrait: 3,
     typeMention: {
       nature: nonOpposableAuTiers
     },
     textes: {
       texteApposition: "texteApposition3",
-      texteMentionDelivrance: undefined,
+      texteMentionDelivrance: "texteMention3",
       texteMention: "texteMention3",
       texteMentionPlurilingue: ""
     }
   } as IMention;
   const mention4 = {
+    id: "4",
     numeroOrdre: 4,
+    numeroOrdreExtrait: 4,
     typeMention: {
       nature: opposableAuTiers
     },
     textes: {
       texteApposition: undefined,
-      texteMentionDelivrance: undefined,
+      texteMentionDelivrance: "texteMention4",
       texteMention: "texteMention4",
       texteMentionPlurilingue: ""
     }
@@ -201,10 +209,11 @@ test("Atttendu: getTexteMentions fonctionne correctement", () => {
 
   const mentions = [mention3, mention4, mention2, mention1];
   const texteMentions =
-    CommunExtraitOuCopieActeTexteComposition.getTexteMentions(mentions);
+    CommunExtraitOuCopieActeTexteComposition.getTexteMentions(mentions, false, [
+      "1"
+    ]);
   expect(texteMentions).toEqual([
-    "texteMentionDelivrance",
-    "texteMention2 texteApposition2",
+    "texteMention2",
     "texteMention3",
     "texteMention4"
   ]);

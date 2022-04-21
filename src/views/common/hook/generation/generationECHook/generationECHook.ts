@@ -7,7 +7,6 @@ import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivra
 import { MimeType } from "../../../../../ressources/MimeType";
 import {
   IExtraitCopieApiHookParams,
-  IExtraitCopieApiHookResultat,
   useExtraitCopieApiHook
 } from "../../composition/CompositionExtraitCopieHook";
 import {
@@ -20,12 +19,11 @@ import {
 } from "../../requete/StockerDocumentCreerActionMajStatutRequete";
 import { IResultGenerationUnDocument } from "../generationUtils";
 import {
-  controlerDonneesGenerationExtraitMariageOuNaissance,
-  creationComposition,
+  creationEC,
   getNomDocument,
   getStatutRequete,
   getTypeDocument,
-  nonNull
+  toutesLesDonneesSontPresentes
 } from "./generationECHookUtil";
 
 // Paramètre du hook useGenerationEC
@@ -35,6 +33,7 @@ export interface IGenerationECParams {
   choixDelivrance: ChoixDelivrance;
   validation: Validation;
   pasDeStockageDocument?: boolean;
+  mentionsRetirees: string[];
 }
 
 export interface IGenerationECResultat {
@@ -76,38 +75,12 @@ export function useGenerationEC(
 
   // 2- Création du bon EC composition suivant le choix de délivrance
   useEffect(() => {
-    if (nonNull(acteApiHookResultat?.acte, params)) {
-      let composition;
-      const acte = acteApiHookResultat?.acte;
-
-      // Verification des données pour la génération d'extrait mariage/naissance
-      // En cas de validation en erreur alors un etrait en erreur sera généré
-      const validationControle =
-        controlerDonneesGenerationExtraitMariageOuNaissance(
-          // @ts-ignore NonNull
-          acte,
-          // @ts-ignore NonNull
-          params.choixDelivrance,
-          // @ts-ignore NonNull
-          params.validation
-        );
-
-      composition = creationComposition(
-        // @ts-ignore NonNull
-        acte,
-        // @ts-ignore NonNull
-        params.choixDelivrance,
-        // @ts-ignore NonNull
-        params.requete.sousType,
-        validationControle
-      );
-      setValidation(validationControle);
-      setExtraitCopieApiHookParams({
-        // @ts-ignore NonNull
-        choixDelivrance: params.choixDelivrance,
-        extraitCopieComposition: composition
-      });
-    }
+    creationEC(
+      acteApiHookResultat,
+      params,
+      setValidation,
+      setExtraitCopieApiHookParams
+    );
   }, [acteApiHookResultat, params]);
 
   // 3 - Création de l'EC PDF pour un acte: appel api composition
@@ -208,13 +181,4 @@ export function useGenerationEC(
 
   return resultat;
 }
-function toutesLesDonneesSontPresentes(
-  uuidDocumentReponse: string | undefined,
-  extraitCopieApiHookResultat?: IExtraitCopieApiHookResultat
-) {
-  return (
-    uuidDocumentReponse &&
-    extraitCopieApiHookResultat &&
-    extraitCopieApiHookResultat.donneesComposition
-  );
-}
+

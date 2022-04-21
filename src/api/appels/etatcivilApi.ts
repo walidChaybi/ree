@@ -175,7 +175,7 @@ export async function getTypesMention(): Promise<any> {
 }
 
 export async function getMentions(idActe: string): Promise<any> {
-  return api.fetchCache({
+  return api.fetch({
     method: HttpMethod.GET,
     uri: `${URL_ACTE}/${idActe}${URL_MENTION}`
   });
@@ -191,6 +191,7 @@ export async function postMentions(
     data: mentions
   });
 }
+
 
 export function rechercheMultiCriteresAutoActes(
   criteres: ICriteresRMCAuto,

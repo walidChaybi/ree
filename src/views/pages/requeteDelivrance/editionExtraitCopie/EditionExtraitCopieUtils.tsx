@@ -24,9 +24,11 @@ import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition
 import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { OngletProps } from "./contenu/VoletAvecOnglet";
 
+const TROIS = 3;
+
 export const getOngletsEdition = (
-  setIsDirty: any,
   passerDocumentValider: (id: string) => void,
+  requete: IRequeteDelivrance,
   document?: IDocumentReponse,
   acte?: IFicheActe
 ) => {
@@ -39,13 +41,7 @@ export const getOngletsEdition = (
       DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
     ) {
       case CODE_COPIE_INTEGRALE:
-        ajoutOngletsCopie(
-          res,
-          document,
-          passerDocumentValider,
-          acte,
-          setIsDirty
-        );
+        ajoutOngletsCopie(res, document, passerDocumentValider, acte, requete);
         break;
       case CODE_EXTRAIT_AVEC_FILIATION:
       case CODE_EXTRAIT_SANS_FILIATION:
@@ -54,7 +50,7 @@ export const getOngletsEdition = (
           document,
           passerDocumentValider,
           acte,
-          setIsDirty
+          requete
         );
         break;
       case CODE_EXTRAIT_PLURILINGUE:
@@ -63,7 +59,7 @@ export const getOngletsEdition = (
           document,
           passerDocumentValider,
           acte,
-          setIsDirty
+          requete
         );
         break;
       case CODE_COPIE_NON_SIGNEE:
@@ -139,13 +135,13 @@ function ajoutOngletsCopie(
   document: IDocumentReponse,
   passerDocumentValider: (id: string) => void,
   acte: IFicheActe,
-  setIsDirty: any
+  requete: IRequeteDelivrance
 ) {
   if (acte.type === TypeActe.TEXTE) {
     res.liste.push(
-      ongletMentions(acte, document, passerDocumentValider, setIsDirty)
+      ongletMentions(acte, document, passerDocumentValider, requete)
     );
-    res.ongletSelectionne = document.validation === Validation.N ? 0 : 1;
+    res.ongletSelectionne = document.validation === Validation.O ? 1 : 0;
   } else {
     res.ongletSelectionne = 0;
   }
@@ -156,12 +152,22 @@ export const ajoutOngletsExtraitFilliation = (
   document: IDocumentReponse,
   passerDocumentValider: (id: string) => void,
   acte: IFicheActe,
-  setIsDirty: any
+  requete: IRequeteDelivrance
 ) => {
-  res.ongletSelectionne = document.validation === Validation.N ? 0 : 1;
+  switch (document.validation) {
+    case Validation.N:
+      res.ongletSelectionne = 0;
+      break;
+    case Validation.O:
+      res.ongletSelectionne = TROIS;
+      break;
+    case Validation.E:
+      res.ongletSelectionne = 1;
+      break;
+  }
   res.liste.push(ongletSaisirExtrait);
   res.liste.push(
-    ongletMentions(acte, document, passerDocumentValider, setIsDirty)
+    ongletMentions(acte, document, passerDocumentValider, requete)
   );
   if (document.validation !== "E") {
     res.liste.push({
@@ -176,7 +182,7 @@ export const ajoutOngletsExtraitPlurilingue = (
   document: IDocumentReponse,
   passerDocumentValider: (document: string) => void,
   acte: IFicheActe,
-  setIsDirty: any
+  requete: IRequeteDelivrance
 ) => {
   res.liste.push(ongletSaisirExtrait);
   if (
@@ -184,10 +190,11 @@ export const ajoutOngletsExtraitPlurilingue = (
     acte.nature === NatureActe.MARIAGE
   ) {
     res.liste.push(
-      ongletMentions(acte, document, passerDocumentValider, setIsDirty)
+      ongletMentions(acte, document, passerDocumentValider, requete)
     );
   }
 };
+
 
 export const boutonModifierCopiePresent = (
   acte?: IFicheActe,
@@ -206,7 +213,7 @@ export const ongletMentions = (
   acte: IFicheActe,
   doc: IDocumentReponse,
   passerDocumentValider: (iddocument: string) => void,
-  setIsDirty: any
+  requete: IRequeteDelivrance
 ) => {
   return {
     titre: getLibelle("Gérer les mentions"),
@@ -214,8 +221,8 @@ export const ongletMentions = (
       <GestionMentions
         acte={acte}
         document={doc}
-        setIsDirty={setIsDirty}
         passerDocumentValider={passerDocumentValider}
+        requete={requete}
       ></GestionMentions>
     )
   };

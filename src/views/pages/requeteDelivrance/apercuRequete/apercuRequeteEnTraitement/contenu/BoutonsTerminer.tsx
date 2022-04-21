@@ -18,9 +18,7 @@ interface BoutonsTerminerProps {
   requete: IRequeteDelivrance;
 }
 
-export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
-  requete
-}) => {
+export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete }) => {
   const history = useHistory();
   const [estDisabled, setEstDisabled] = useState(true);
 

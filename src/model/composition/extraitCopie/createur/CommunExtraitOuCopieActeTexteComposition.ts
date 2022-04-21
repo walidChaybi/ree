@@ -83,6 +83,7 @@ export interface ICreerExtraitCopieActeTexteParams {
   archive: boolean;
   corpsTexte?: string;
   erreur?: string;
+  mentionsRetirees: string[];
 }
 
 export class CommunExtraitOuCopieActeTexteComposition {
@@ -131,7 +132,9 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
       const texteMentions =
         CommunExtraitOuCopieActeTexteComposition.getTexteMentions(
-          params.acte.mentions
+          params.acte.mentions,
+          params.copie,
+          params.mentionsRetirees
         );
 
       if (texteMentions.length > 0) {
@@ -523,24 +526,29 @@ export class CommunExtraitOuCopieActeTexteComposition {
     }
   }
 
-  public static getTexteMentions(mentions: IMention[]): string[] {
+  public static getTexteMentions(
+    mentions: IMention[],
+    copie: boolean,
+    mentionsRetirees: string[]
+  ): string[] {
     const texteMentions: string[] = [];
 
-    const mentionsAvecOrdreExtrait = mentions.map(mention => ({
-      ...mention,
-      numeroOrdreExtrait: mention.numeroOrdreExtrait
-        ? mention.numeroOrdreExtrait
-        : mention.numeroOrdre
-    }));
+    const mentionsFiltrees = mentions.filter(mention => {
+      return !mentionsRetirees.some(m => m === mention.id);
+    });
 
     const mentionsTriees = triListeObjetsSurPropriete(
-      mentionsAvecOrdreExtrait,
-      "numeroOrdreExtrait"
+      mentionsFiltrees,
+      copie ? "numeroOrdre" : "numeroOrdreExtrait"
     );
 
     mentionsTriees.forEach(mention => {
       if (mention.textes) {
-        texteMentions.push(Mention.getTexteExtrait(mention));
+        texteMentions.push(
+          copie
+            ? Mention.getTexteCopie(mention)
+            : Mention.getTexteExtrait(mention)
+        );
       }
     });
 

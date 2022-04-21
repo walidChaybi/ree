@@ -30,7 +30,10 @@ import {
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { Validation } from "../../../../../model/requete/enum/Validation";
-import { SNP, SPC } from "../../../../common/util/Utils";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { getValeurOuVide, SNP, SPC } from "../../../../common/util/Utils";
+import { IExtraitCopieApiHookResultat } from "../../composition/CompositionExtraitCopieHook";
+import { IActeApiHookResultat } from "../../repertoires/ActeApiHook";
 import { creationCompositionCopieActeImage } from "./creationComposition/creationCompositionCopieActeImage";
 import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/creationCompositionExtraitCopieActeTexte";
 import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
@@ -135,29 +138,25 @@ export function getStatutRequete(
 
 export function creationComposition(
   acte: IFicheActe,
-  choixDelivrance: ChoixDelivrance,
-  sousTypeRequete: SousTypeDelivrance,
-  validation: Validation
+  requete: IRequeteDelivrance,
+  validation: Validation,
+  mentionsRetirees: string[]
 ): IExtraitCopieComposition | undefined {
   let composition;
+  const choixDelivrance = getValeurOuVide(requete.choixDelivrance);
   if (
     estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte, choixDelivrance)
   ) {
     composition = creationCompositionExtraitCopieActeTexte(
       acte,
-      choixDelivrance,
-      sousTypeRequete,
-      validation
+      requete,
+      validation,
+      mentionsRetirees
     );
   } else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
     composition = creationCompositionExtraitPlurilingue(acte);
   } else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
-    composition = creationCompositionCopieActeImage(
-      acte,
-      choixDelivrance,
-      sousTypeRequete,
-      validation
-    );
+    composition = creationCompositionCopieActeImage(acte, requete, validation);
   }
 
   return composition;
@@ -254,3 +253,57 @@ export const aPasCorpsExtraitRectificationCorrespondant = function (
     }).length === 0
   );
 };
+
+export function creationEC(
+  acteApiHookResultat: IActeApiHookResultat | undefined,
+  params: IGenerationECParams | undefined,
+  setValidation: any,
+  setExtraitCopieApiHookParams: any
+) {
+  if (nonNull(acteApiHookResultat?.acte, params)) {
+    if (params?.choixDelivrance) {
+      params.requete.choixDelivrance = params.choixDelivrance;
+    }
+    let composition;
+    const acte = acteApiHookResultat?.acte;
+
+    // Verification des données pour la génération d'extrait mariage/naissance
+    // En cas de validation en erreur alors un extrait en erreur sera généré
+    const validationControle =
+      controlerDonneesGenerationExtraitMariageOuNaissance(
+        // @ts-ignore NonNull
+        acte,
+        // @ts-ignore NonNull
+        params.choixDelivrance,
+        // @ts-ignore NonNull
+        params.validation
+      );
+
+    composition = creationComposition(
+      // @ts-ignore NonNull
+      acte,
+      // @ts-ignore NonNull
+      params.requete,
+      validationControle,
+      // @ts-ignore NonNull
+      params.mentionsRetirees
+    );
+    setValidation(validationControle);
+    setExtraitCopieApiHookParams({
+      // @ts-ignore NonNull
+      choixDelivrance: params.choixDelivrance,
+      extraitCopieComposition: composition
+    });
+  }
+}
+
+export function toutesLesDonneesSontPresentes(
+  uuidDocumentReponse: string | undefined,
+  extraitCopieApiHookResultat?: IExtraitCopieApiHookResultat
+) {
+  return (
+    uuidDocumentReponse &&
+    extraitCopieApiHookResultat &&
+    extraitCopieApiHookResultat.donneesComposition
+  );
+}

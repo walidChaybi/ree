@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
 import {
   CODE_COPIE_INTEGRALE,
   DocumentDelivrance
 } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { useMentionsApiHook } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
 import {
   SauvegarderMentionsParam,
@@ -14,6 +15,7 @@ import {
   getLibelle,
   getValeurOuVide
 } from "../../../../../../common/util/Utils";
+import { EditionECContext } from "../../../EditionExtraitCopiePage";
 import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import {
@@ -29,13 +31,14 @@ import "./scss/Mention.scss";
 export interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
+  requete: IRequeteDelivrance;
   passerDocumentValider: (idDocument: string) => void;
-  setIsDirty: any;
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   const [mentionSelect, setMentionSelect] = useState<IMentionAffichage>();
   const [mentionAjout, setMentionAjout] = useState<IMentionAffichage>();
+  const { setOperationEnCours } = useContext(EditionECContext);
   const [mentions, setMentions] = useState<IMentionAffichage[]>();
   const [mentionsParams, setMentionsParams] = useState<string>();
   const [sauvegarderMentionsParams, setSauvegarderMentionsParams] =
@@ -45,14 +48,16 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   );
 
   const mentionsApi = useMentionsApiHook(mentionsParams);
-  const mentionsSauvegarde = useSauvegarderMentions(sauvegarderMentionsParams);
+  const idDocumentSauvegarde = useSauvegarderMentions(
+    sauvegarderMentionsParams
+  );
 
   useEffect(() => {
-    if (props.document && mentionsSauvegarde) {
-      props.passerDocumentValider(props.document.id);
+    if (props.document && idDocumentSauvegarde) {
+      props.passerDocumentValider(idDocumentSauvegarde);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mentionsSauvegarde]);
+  }, [idDocumentSauvegarde]);
 
   useEffect(() => {
     if (props.acte) {
@@ -78,13 +83,17 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   }, [reinitialisation]);
 
   const sauvegarderMentions = useCallback(() => {
-    setSauvegarderMentionsParams({
-      mentionsApi,
-      mentions,
-      idActe: props.acte?.id,
-      document: props.document
-    });
-  }, [mentions, mentionsApi, props]);
+    if (mentionsApi && mentions && props.acte?.id && props.document) {
+      setOperationEnCours(true);
+      setSauvegarderMentionsParams({
+        mentionsApi,
+        mentions,
+        idActe: props.acte?.id,
+        document: props.document,
+        requete: props.requete
+      });
+    }
+  }, [mentions, mentionsApi, props, setOperationEnCours]);
 
   const valider = useCallback(() => {
     validerMentions(
@@ -135,7 +144,6 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           onClick={reinitialisation}
           disabled={boutonReinitialiserEstDisabled(
             estDeverrouille,
-            props.setIsDirty,
             mentionsApi?.mentions,
             mentions,
             props.document

@@ -4,12 +4,15 @@ import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../../../model/requete/enum/Validation";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { mapActe } from "../../../../../views/common/hook/repertoires/MappingRepertoires";
 
 test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const acte = mapActe(ficheActeNaissance.data);
-  const choixDelivrance = ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;
-  const sousTypeRequete = SousTypeDelivrance.RDD;
+  const requete = {
+    choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION,
+    sousType: SousTypeDelivrance.RDD
+  } as IRequeteDelivrance;
   const validation = Validation.N;
   const avecFiliation = true;
   const copie = false;
@@ -18,9 +21,9 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const compositionCorps =
     ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
       acte as any as IFicheActe,
-      choixDelivrance,
-      sousTypeRequete,
+      requete,
       validation,
+      [],
       avecFiliation,
       copie,
       archive

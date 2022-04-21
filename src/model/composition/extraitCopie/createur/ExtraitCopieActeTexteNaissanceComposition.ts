@@ -1,12 +1,14 @@
 import { TypeDeclarationConjointe } from "../../../../model/etatcivil/enum/TypeDeclarationConjointe";
 import { getDateFormatJasper } from "../../../../views/common/util/DateUtils";
-import { getLibelle } from "../../../../views/common/util/Utils";
+import {
+  getLibelle,
+  getValeurOuVide
+} from "../../../../views/common/util/Utils";
 import { EtatCivilUtil } from "../../../../views/common/utilMetier/EtatCivilUtil";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../etatcivil/enum/NatureActe";
-import { ChoixDelivrance } from "../../../requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../requete/enum/Validation";
+import { IRequeteDelivrance } from "../../../requete/IRequeteDelivrance";
 import {
   CommunExtraitOuCopieActeTexteComposition,
   ITitulaireCompositionEC
@@ -15,9 +17,9 @@ import {
 export class ExtraitCopieActeTexteNaissanceComposition {
   public static creerExtraitCopieActeTexteNaissance(
     acte: IFicheActe,
-    choixDelivrance: ChoixDelivrance,
-    sousTypeRequete: SousTypeDelivrance,
+    requete: IRequeteDelivrance,
     validation: Validation,
+    mentionsRetirees: string[],
     avecFiliation = false,
     copie = false,
     archive = false
@@ -40,14 +42,15 @@ export class ExtraitCopieActeTexteNaissanceComposition {
     return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
       acte,
       natureActe,
-      choixDelivrance,
-      sousTypeRequete,
+      choixDelivrance: getValeurOuVide(requete.choixDelivrance),
+      sousTypeRequete: requete.sousType,
       validation,
       avecFiliation,
       copie,
       archive,
       corpsTexte,
-      erreur
+      erreur,
+      mentionsRetirees
     });
   }
 

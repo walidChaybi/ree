@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { TypeMention } from "../../../../../../../../model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "../../../../../../../../model/etatcivil/enum/NatureActe";
@@ -10,6 +10,7 @@ import {
 } from "../../../../../../../common/util/Utils";
 import { SelectRece } from "../../../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { ListeGlisserDeposer } from "../../../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
+import { EditionECContext } from "../../../../EditionExtraitCopiePage";
 import {
   getEnumNatureMentionOuAutre,
   handleBlur,
@@ -41,20 +42,27 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   mentionAjout,
   natureActe
 }) => {
+  const { setIsDirty } = useContext(EditionECContext);
   function selectionneMention(id: string) {
     selectionneEtMiseAJour(mentions, mentionSelect, setMentionSelect, id);
   }
-
   const handleOnBlur = useCallback(() => {
     handleBlur(
       mentions,
       mentionSelect,
       mentionsApi?.mentions,
       setMentionSelect,
-      setMentions
+      setMentions,
+      setIsDirty
     );
-  }, [mentions, mentionSelect, mentionsApi, setMentionSelect, setMentions]);
-
+  }, [
+    mentions,
+    mentionSelect,
+    mentionsApi,
+    setMentionSelect,
+    setMentions,
+    setIsDirty
+  ]);
   const handleChangeSelect = useCallback(
     (event: any) => {
       if (mentionSelect) {

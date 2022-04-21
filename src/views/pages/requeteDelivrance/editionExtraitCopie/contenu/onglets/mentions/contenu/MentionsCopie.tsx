@@ -26,7 +26,9 @@ export const MentionsCopie: React.FC<MentionsCopieProps> = props => {
   return (
     <>
       <ListeGlisserDeposer
-        liste={mappingVersListe(props.mentions ? props.mentions : [])}
+        liste={mappingVersListe(
+          props.mentions ? props.mentions.filter(el => !el.aPoubelle) : []
+        )}
         handleCheckbox={handleCheck}
         deverrouille={props.estDeverrouille}
       />
