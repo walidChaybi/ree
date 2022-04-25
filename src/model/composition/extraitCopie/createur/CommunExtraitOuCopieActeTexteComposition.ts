@@ -4,7 +4,7 @@ import {
 } from "../../../../model/etatcivil/acte/IAnalyseMarginale";
 import {
   DEUX,
-  ecraseDonneeObjectAvec,
+  ecraseDonneeObjetAvec,
   getValeurOuVide,
   jointAvecRetourALaLigne,
   triListeObjetsSurPropriete,
@@ -168,7 +168,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     ecTitulaire2?: ITitulaireCompositionEC;
   } {
     const { titulaireActe1, titulaireActe2 } =
-      FicheActe.getTitulairesDansLeBonOrdre(acte);
+      FicheActe.getTitulairesDansLOrdre(acte);
 
     let ecTitulaire1 =
       CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
@@ -191,14 +191,14 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
       // Les données du titulaire de l'acte sont écrasées par celle du titulaire de l'analyse marginale
       if (titulaireAMCompositionEC1) {
-        ecTitulaire1 = ecraseDonneeObjectAvec(
+        ecTitulaire1 = ecraseDonneeObjetAvec(
           ecTitulaire1,
           titulaireAMCompositionEC1
         );
       }
 
       if (titulaireAMCompositionEC2) {
-        ecTitulaire2 = ecraseDonneeObjectAvec(
+        ecTitulaire2 = ecraseDonneeObjetAvec(
           ecTitulaire2,
           titulaireAMCompositionEC2
         );
@@ -251,10 +251,10 @@ export class CommunExtraitOuCopieActeTexteComposition {
     let titulaireAMCompositionEC1: ITitulaireAMCompositionEC | undefined;
     let titulaireAMCompositionEC2: ITitulaireAMCompositionEC | undefined;
     const analyseMarginale =
-      AnalyseMarginale.getLaBonneAnalyseMarginale(analyseMarginales);
+      AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(analyseMarginales);
 
     const { titulaireAM1, titulaireAM2 } =
-      AnalyseMarginale.getTitulairesDansLeBonOrdre(analyseMarginale);
+      AnalyseMarginale.getTitulairesDansLOrdre(analyseMarginale);
 
     if (titulaireAM1) {
       titulaireAMCompositionEC1 =
@@ -401,7 +401,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
   ): string {
     let lieuNaissanceFormate = "";
     const neOuNee = EtatCivilUtil.formatNeOuNee(
-      individu.sexe?.localeCompare(Sexe.FEMININ.libelle, undefined, {
+      individu.sexe?.libelle?.localeCompare(Sexe.FEMININ.libelle, undefined, {
         sensitivity: "base"
       })
         ? Sexe.INDETERMINE
@@ -436,18 +436,14 @@ export class CommunExtraitOuCopieActeTexteComposition {
   public static creerFilsOuFilleDeFiliationTitulaire(
     titulaire: ITitulaireActe
   ): string {
-    const sexeTitulaire = titulaire.sexe
-      ? Sexe.getEnumFor(titulaire.sexe)
-      : Sexe.INCONNU;
+    const sexeTitulaire = titulaire.sexe ? titulaire.sexe : Sexe.INCONNU;
     return EtatCivilUtil.formatFilsOuFille(sexeTitulaire); //fils ou fille [accord selon genre du titulaire]
   }
 
   public static creerFilsOuFilleDeFiliationAdoptantTitulaire(
     titulaire: ITitulaireActe
   ): string {
-    const sexeTitulaire = titulaire.sexe
-      ? Sexe.getEnumFor(titulaire.sexe)
-      : Sexe.INCONNU;
+    const sexeTitulaire = titulaire.sexe ? titulaire.sexe : Sexe.INCONNU;
     return EtatCivilUtil.formatFilsOuFilleAdoptant(sexeTitulaire); //adopté ou adoptée [accord selon genre du titulaire]
   }
 

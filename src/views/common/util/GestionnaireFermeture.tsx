@@ -19,52 +19,53 @@ interface GestionnaireFermetureProps {
   urlRedirection?: string;
 }
 
-export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> =
-  props => {
-    const history = useHistory();
-    useEffect(() => {
-      const handleBackBeforUnload = (event: any) => {
-        let resTraitement: any = true;
-        if (props.fctAAppeler) {
-          const res = props.fctAAppeler(props.paramsFctAAppler);
+export const GestionnaireFermeture: React.FC<
+  GestionnaireFermetureProps
+> = props => {
+  const history = useHistory();
+  useEffect(() => {
+    const handleBackBeforUnload = (event: any) => {
+      let resTraitement: any = true;
+      if (props.fctAAppeler) {
+        const res = props.fctAAppeler(props.paramsFctAAppler);
 
-          if (props.fctTraitementResultat) {
-            resTraitement = props.fctTraitementResultat(res);
-          }
+        if (props.fctTraitementResultat) {
+          resTraitement = props.fctTraitementResultat(res);
         }
-        // Direction la page d'accueil afin de fermer toutes les fenêtres externes ouvertes et de ne pas empecher la deconnexion
-        if (history.location.pathname !== URL_DECONNEXION) {
-          history.push(URL_ACCUEIL);
-        }
-        if (resTraitement) {
-          // Cancel the default event
-          event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-          // Older browsers supported custom message
-          event.returnValue = "Are you sur to close this window";
-          if (props.urlRedirection) {
-            executeEnDiffere(function () {
-              if (props.urlRedirection) {
-                history.push(props.urlRedirection);
-              }
-            });
-          }
-        } else {
-          delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
-        }
-      };
-      if (window.top) {
-        window.top.addEventListener("beforeunload", handleBackBeforUnload);
       }
-
-      return () => {
-        if (window.top) {
-          window.top.removeEventListener("beforeunload", handleBackBeforUnload);
+      // Direction la page d'accueil afin de fermer toutes les fenêtres externes ouvertes et de ne pas empecher la deconnexion
+      if (history.location.pathname !== URL_DECONNEXION) {
+        history.push(URL_ACCUEIL);
+      }
+      if (resTraitement) {
+        // Cancel the default event
+        event.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+        // Older browsers supported custom message
+        event.returnValue = "Are you sur to close this window";
+        if (props.urlRedirection) {
+          executeEnDiffere(function () {
+            if (props.urlRedirection) {
+              history.push(props.urlRedirection);
+            }
+          });
         }
-      };
-    }, [props, history]);
+      } else {
+        delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
+      }
+    };
+    if (window.top) {
+      window.top.addEventListener("beforeunload", handleBackBeforUnload);
+    }
 
-    return null;
-  };
+    return () => {
+      if (window.top) {
+        window.top.removeEventListener("beforeunload", handleBackBeforUnload);
+      }
+    };
+  }, [props, history]);
+
+  return null;
+};
 
 export const appelRequetesASigner = (officier: OfficierContextProps) => {
   const officierPayload = officier?.officierDataState;

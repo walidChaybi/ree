@@ -21,19 +21,35 @@ export const Formulaire: React.FC<FomulaireProps> = ({
   className,
   disabled
 }) => {
+  const form = getForm(
+    onSubmit,
+    formDefaultValues,
+    formValidationSchema,
+    disabled,
+    children
+  );
   return (
     <div className={className ? `${className} Formulaire` : "Formulaire"}>
-      <Fieldset titre={titre}>
-        <Formik
-          onSubmit={onSubmit}
-          initialValues={formDefaultValues}
-          validationSchema={formValidationSchema}
-          enableReinitialize={true}
-          disabled={disabled}
-        >
-          <Form>{children}</Form>
-        </Formik>
-      </Fieldset>
+      {titre ? <Fieldset titre={titre}>{form}</Fieldset> : form}
     </div>
   );
 };
+function getForm(
+  onSubmit: (values: any, errors?: any) => void,
+  formDefaultValues: any,
+  formValidationSchema: any,
+  disabled = false,
+  children: any
+) {
+  return (
+    <Formik
+      onSubmit={onSubmit}
+      initialValues={formDefaultValues}
+      validationSchema={formValidationSchema}
+      enableReinitialize={true}
+      disabled={disabled}
+    >
+      <Form>{children}</Form>
+    </Formik>
+  );
+}

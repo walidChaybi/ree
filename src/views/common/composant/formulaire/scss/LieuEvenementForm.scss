@@ -1,0 +1,18 @@
+.LieuEvenementForm {
+  .LieuComplet {
+    display: grid;
+    grid-template-columns: 65% 20%;
+
+    .BlockInput {
+      grid-template-columns: 31% 69%;
+    }
+    .BlockErreur {
+      margin-left: 31%;
+    }
+
+    button {
+      max-height: 2rem;
+      margin-left: 1rem;
+    }
+  }
+}

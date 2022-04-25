@@ -1,0 +1,12 @@
+@import "../../../../../../scss/_colors.scss";
+
+.StaticField {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+
+  .Libelle {
+    color: $button-application-color;
+    margin-right: 1rem;
+  }
+}

@@ -1,9 +1,9 @@
 import request, * as superagent from "superagent";
-import { v4 as uuidv4 } from "uuid";
 import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
 import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
 import { getCsrfHeader } from "../views/common/util/CsrfUtil";
+import { Generateur } from "../views/common/util/generateur/Generateur";
 import {
   GestionnaireCache,
   ReceCache
@@ -234,7 +234,7 @@ export class ApiManager {
     }
     config.headers[config.headers.length] = {
       header: ID_CORRELATION_HEADER_NAME,
-      value: uuidv4()
+      value: Generateur.genereCleUnique()
     };
   }
 

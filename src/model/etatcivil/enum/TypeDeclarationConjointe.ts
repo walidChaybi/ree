@@ -1,4 +1,5 @@
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { Option } from "../../../views/common/util/Type";
 
 export class TypeDeclarationConjointe extends EnumWithLibelle {
   public static readonly INDETERMINE = new TypeDeclarationConjointe(
@@ -16,8 +17,59 @@ export class TypeDeclarationConjointe extends EnumWithLibelle {
   public static readonly ABSENCE_DECLARATION = new TypeDeclarationConjointe(
     "abscence déclaration conjointe"
   );
+  public static readonly ABSENCE_DECLARATION_VALIDEE =
+    new TypeDeclarationConjointe("abscence déclaration conjointe");
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TypeDeclarationConjointe);
+  }
+
+  public static getKey(
+    typeDeclarationConjointe: TypeDeclarationConjointe
+  ): string {
+    return EnumWithLibelle.getKey(
+      TypeDeclarationConjointe,
+      typeDeclarationConjointe
+    );
+  }
+
+  public static getAllEnumsAsOptions(
+    type?: TypeDeclarationConjointe
+  ): Option[] {
+    let options;
+    if (type === TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE) {
+      options = [
+        {
+          value: TypeDeclarationConjointe.getKey(
+            TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE
+          ),
+          str: TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE.libelle
+        }
+      ];
+    } else if (type === TypeDeclarationConjointe.ABSENCE_DECLARATION) {
+      options = EnumWithLibelle.getAllLibellesAsOptions(
+        TypeDeclarationConjointe,
+        false,
+        false,
+        false,
+        [TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE]
+      );
+    } else if (type) {
+      options = EnumWithLibelle.getAllLibellesAsOptions(
+        TypeDeclarationConjointe,
+        false,
+        false,
+        false,
+        [
+          TypeDeclarationConjointe.ABSENCE_DECLARATION,
+          TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE
+        ]
+      );
+    } else {
+      options = EnumWithLibelle.getAllLibellesAsOptions(
+        TypeDeclarationConjointe
+      );
+    }
+    return options;
   }
 }

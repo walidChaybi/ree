@@ -3,6 +3,11 @@ import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Nationalite } from "../../../../../../model/etatcivil/enum/Nationalite";
 import { Sexe } from "../../../../../../model/etatcivil/enum/Sexe";
+import ParentForm, {
+  ParentFormDefaultValues,
+  ParentFormValidationSchema,
+  ParentSubFormProps
+} from "../../../../../common/composant/formulaire/ParentForm";
 import { getLibelle } from "../../../../../common/util/Utils";
 import { RadioField } from "../../../../../common/widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "../../../../../common/widget/formulaire/SousFormulaire";
@@ -30,13 +35,9 @@ import NomsForm, {
 } from "./nomsPrenoms/NomsForm";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
+  PrenomsFormProps,
   PrenomsFormValidationSchema
 } from "./nomsPrenoms/PrenomsForm";
-import ParentForm, {
-  ParentFormDefaultValues,
-  ParentFormValidationSchema,
-  ParentSubFormProps
-} from "./parent/ParentForm";
 import "./scss/IdentiteForm.scss";
 
 // Valeurs par défaut des champs pour RDAPC et RDC
@@ -53,7 +54,7 @@ export const IdentiteFormDefaultValues = {
 // La valeur par défaut de la nationalité est ETRANGERE uniquement pour la saisie de RDCSC
 export const IdentiteFormDefaultValuesRDCSC = {
   ...IdentiteFormDefaultValues,
-  nationalite:"ETRANGERE"
+  nationalite: "ETRANGERE"
 };
 
 // Schéma de validation des champs
@@ -83,8 +84,10 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
 
   const prenomsFormProps = {
     nom: withNamespace(props.nom, PRENOMS),
-    requete: props.requete
-  } as SubFormProps;
+    prenoms: props.requete?.titulaires
+      ? props.requete?.titulaires[0].prenoms
+      : undefined
+  } as PrenomsFormProps;
 
   const naissanceFormProps = {
     nom: withNamespace(props.nom, NAISSANCE),

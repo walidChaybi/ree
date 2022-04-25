@@ -1,63 +1,52 @@
 @import "../../../../../scss/colors";
 
-.EditionExtraitCopie{
-    text-align: start;
+.EditionExtraitCopie {
+  text-align: start;
 
-    .contenu-edition {
-        display: flex;
-        border: 0.1rem solid $button-application-color;
-        padding: 1rem;
-        .side {
-            &.Visualisation {
-            width: 50%;
-            }
-            &.Edition {
-            width: 50%;
-            }
-            display: inline-block;
-        }
-        .VoletAvecOnglet{
-            .ContenuVolet{
-                overflow-y: auto;
-                overflow-x: hidden;
-                iframe{
-                    //height:800px;
-                }
-            }
-            .MuiTabPanel-root {
-                padding: 0 !important;
-                margin-top: 1rem;
-            }
-            .MuiTab-root {
-                max-width: 170px !important;
-            }
-        }
-
-        .Separateur{
-            background-color: grey;
-            width: 1px;
-            height: 40rem;
-            margin: 10rem 1rem;
-        }
-    }
-    .BoutonsEdition {
-        position: sticky;
-        display: grid;
-        grid-template-columns: 50% 50%;
-        left: 0px;
-        width: 100%;
-        bottom: 0px;
-        text-align: center;
-
-        .Gauche{
-            text-align: start;
-        }
-        .Droite{
-            text-align: end;
-        }
-        
+  .contenu-edition {
+    display: flex;
+    border: 0.1rem solid $button-application-color;
+    padding: 1rem;
+    .side {
+      &.Visualisation {
+        width: 50%;
       }
-      
+      &.Edition {
+        width: 50%;
+      }
+      display: inline-block;
+    }
+    .VoletAvecOnglet {
+      .MuiTabPanel-root {
+        padding: 0 !important;
+        margin-top: 1rem;
+      }
+      .MuiTab-root {
+        max-width: 170px !important;
+      }
+    }
 
+    .Separateur {
+      background-color: grey;
+      width: 1px;
+      height: 40rem;
+      margin: 10rem 1rem;
+    }
+  }
+  .BoutonsEdition {
+    position: sticky;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    left: 0px;
+    width: 100%;
+    bottom: 0px;
+    text-align: center;
 
+    .Gauche {
+      text-align: start;
+    }
+    .Droite {
+      text-align: end;
+    }
+  }
 }

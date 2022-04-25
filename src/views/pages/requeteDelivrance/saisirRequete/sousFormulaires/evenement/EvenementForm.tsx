@@ -3,12 +3,12 @@ import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../ressources/Regex";
 import { getLibelle } from "../../../../../common/util/Utils";
-import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
   DateComposeFormProps,
-  DateDefaultValues,
-  DateValidationSchemaSansTestFormat
-} from "../../../../../common/widget/formulaire/DateComposeForm";
+  DateDefaultValues
+} from "../../../../../common/widget/formulaire/champsDate/DateComposeForm";
+import { DateValidationSchemaSansTestFormat } from "../../../../../common/widget/formulaire/champsDate/DateComposeFormValidation";
+import { InputField } from "../../../../../common/widget/formulaire/champsSaisie/InputField";
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../../common/widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "../../../../../common/widget/formulaire/utils/ControlesUtil";
 import {

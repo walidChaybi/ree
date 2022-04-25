@@ -19,4 +19,4 @@ if (window.document) {
 const TIME_OUT_MS = 30000;
 jest.setTimeout(TIME_OUT_MS);
 
-// process.env.DEBUG_PRINT_LIMIT = "1000000"; // Pour debug
+process.env.DEBUG_PRINT_LIMIT = "1000000"; // Pour debug

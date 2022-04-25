@@ -54,7 +54,7 @@ async function ajoutInfosTitulaire(
   let analyseMarginale: IAnalyseMarginale | undefined;
 
   if (acte?.id && acte?.analyseMarginales) {
-    analyseMarginale = AnalyseMarginale.getLaBonneAnalyseMarginale(
+    analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(
       acte?.analyseMarginales
     );
   }

@@ -1,0 +1,15 @@
+.ParentNaissanceForm {
+  padding-left: 1rem;
+  padding-top: 1rem;
+
+  .BlockInput {
+    grid-template-columns: 20% 45%;
+  }
+  .BlockErreur {
+    margin-left: 20%;
+  }
+
+  .DateComposeForm {
+    grid-template-columns: 20% 8% 21px 8% 21px 23.6% 2%;
+  }
+}

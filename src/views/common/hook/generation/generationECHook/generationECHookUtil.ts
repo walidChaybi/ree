@@ -17,6 +17,7 @@ import {
 } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { ITitulaireActe } from "../../../../../model/etatcivil/acte/ITitulaireActe";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
+import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
 import { TypeExtrait } from "../../../../../model/etatcivil/enum/TypeExtrait";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import {
@@ -214,7 +215,7 @@ export const aDonneesLieuOuAnneeEvenementAbsentes = function (
 
 export const aGenreTitulaireInconnu = function (titulaires?: ITitulaireActe[]) {
   if (titulaires) {
-    return titulaires?.find(titulaire => titulaire.sexe === "INCONNU");
+    return titulaires?.find(titulaire => titulaire.sexe === Sexe.INCONNU);
   }
   return true;
 };
@@ -223,7 +224,7 @@ export const aNomEtPrenomTitulaireAbsentsAnalyseMarginale = function (
   analysesMarginales?: IAnalyseMarginale[]
 ) {
   const analyseMarginale =
-    AnalyseMarginale.getLaBonneAnalyseMarginale(analysesMarginales);
+    AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(analysesMarginales);
   if (analyseMarginale) {
     return analyseMarginale.titulaires?.find(
       titulaire =>

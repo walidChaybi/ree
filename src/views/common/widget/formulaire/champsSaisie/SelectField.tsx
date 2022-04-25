@@ -2,6 +2,7 @@ import { FormControl, Select } from "@material-ui/core";
 import { connect, ErrorMessage, Field } from "formik";
 import React, { useEffect } from "react";
 import { Option } from "../../../util/Type";
+import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 import { FormikComponentProps } from "../utils/FormUtil";
 import "./scss/SelectField.scss";
 
@@ -83,7 +84,8 @@ const _SelectField: React.FC<SelectFieldProps> = ({
   ariaLabel,
   formik,
   onChange,
-  onBlur
+  onBlur,
+  pasPremiereOptionVide
 }) => {
   return (
     <div className="InputField">
@@ -108,10 +110,11 @@ const _SelectField: React.FC<SelectFieldProps> = ({
               formik.setFieldValue(name, "");
             }
           }}
+          pasPremiereOptionVide={pasPremiereOptionVide}
         />
       </div>
       <div className="BlockErreur">
-        <ErrorMessage name={name} />
+        <ErrorMessage component={IconErrorMessage} name={name} />
       </div>
     </div>
   );

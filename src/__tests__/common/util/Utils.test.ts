@@ -2,7 +2,7 @@ import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 import {
   changeLaPlaceDunElement,
   compareNombre,
-  ecraseDonneeObjectAvec,
+  ecraseDonneeObjetAvec,
   enMajuscule,
   estTableauNonVide,
   finirAvec3petitsPoints,
@@ -271,18 +271,18 @@ test("Attendu: ecraseDonneeObjectAvec fonctionne correctement", () => {
     tel: 123456
   };
 
-  expect(ecraseDonneeObjectAvec(o1, o2)).toEqual(o2);
-  expect(ecraseDonneeObjectAvec(o1, o3)).toEqual({
+  expect(ecraseDonneeObjetAvec(o1, o2)).toEqual(o2);
+  expect(ecraseDonneeObjetAvec(o1, o3)).toEqual({
     nom: "no3",
     prenom: "p1",
     adr: "adr1"
   });
-  expect(ecraseDonneeObjectAvec(o1, o4)).toEqual({
+  expect(ecraseDonneeObjetAvec(o1, o4)).toEqual({
     nom: "no4",
     prenom: "p1",
     adr: "adr1"
   });
-  expect(ecraseDonneeObjectAvec(o1, o5)).toEqual({ ...o1, tel: 123456 });
+  expect(ecraseDonneeObjetAvec(o1, o5)).toEqual({ ...o1, tel: 123456 });
 
-  expect(ecraseDonneeObjectAvec(undefined, o1)).toEqual({ ...o1 });
+  expect(ecraseDonneeObjetAvec(undefined, o1)).toEqual({ ...o1 });
 });

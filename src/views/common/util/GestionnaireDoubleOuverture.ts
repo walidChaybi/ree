@@ -1,7 +1,7 @@
-import { v4 as uuidv4 } from "uuid";
+import { Generateur } from "./generateur/Generateur";
 
 export class GestionnaireDoubleOuverture {
-  private readonly uuidAppli = uuidv4();
+  private readonly uuidAppli = Generateur.genereCleUnique();
   private readonly DELAIS = 1000;
   private interval: any = 0;
 

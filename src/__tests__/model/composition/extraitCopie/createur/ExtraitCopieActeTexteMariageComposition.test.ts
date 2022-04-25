@@ -1,12 +1,13 @@
 import { ficheActeMariage } from "../../../../../mock/data/ficheActe";
 import { ExtraitCopieActeTexteMariageComposition } from "../../../../../model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
-import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../../../model/requete/enum/Validation";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { mapActe } from "../../../../../views/common/hook/repertoires/MappingRepertoires";
 
 test("Attendu: getCorpsTexte fonctionne correctement", () => {
-  const acte = ficheActeMariage.data;
+  const acte = mapActe(ficheActeMariage.data);
   const choixDelivrance = ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;
   const sousTypeRequete = SousTypeDelivrance.RDD;
   const validation = Validation.N;
@@ -16,9 +17,8 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
 
   const compositionCorps =
     ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage(
-      acte as any as IFicheActe,
-      choixDelivrance,
-      sousTypeRequete,
+      acte,
+      { choixDelivrance, sousType: sousTypeRequete } as IRequeteDelivrance,
       validation,
       [],
       avecFiliation,
@@ -38,7 +38,7 @@ et de Elodie, Marie-Charlotte, Pauline PRODESK
 née le 25 juin 1990 à Barcelone, Catalogne (Espagne)
   adoptée par Carmela, Linzy Sacken
 
-Contrat de mariage : --`;
+Contrat de mariage : Sans contrat préalable`;
 
   expect(compositionCorps.corps_texte).toBe(corpsTexteAttendu);
 });

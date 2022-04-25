@@ -24,7 +24,6 @@ import {
   getTypeFiche
 } from "./GenerationCertificatGestionTypeCertificat";
 
-
 export function useGenerationCertificatPACSOuRCOuRCAHook(
   typeCertificat: TypePacsRcRca,
   requete?: IRequeteTableauDelivrance,

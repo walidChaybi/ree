@@ -39,16 +39,19 @@ export class EnumWithLibelle {
     clazz: any,
     inclureCodeDansLibelle = false,
     tri = true,
-    libelleAutreALaFin = true
+    libelleAutreALaFin = true,
+    exclusions: any[] = []
   ): Options {
     const options: Options = [];
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key)) {
         const libelle = premiereLettreEnMajuscule(`${clazz[key]._libelle}`);
-        options.push({
-          value: key,
-          str: inclureCodeDansLibelle ? `(${key}) ${libelle}` : libelle
-        });
+        if (!exclusions.find(exclusion => exclusion === clazz[key])) {
+          options.push({
+            value: key,
+            str: inclureCodeDansLibelle ? `(${key}) ${libelle}` : libelle
+          });
+        }
       }
     }
 
@@ -73,7 +76,7 @@ export class EnumWithLibelle {
 
   public static getKey(clazz: any, obj: any) {
     for (const key in clazz) {
-      if (clazz.hasOwnProperty(key) && clazz[key]._libelle === obj._libelle) {
+      if (clazz.hasOwnProperty(key) && clazz[key] === obj) {
         return key;
       }
     }

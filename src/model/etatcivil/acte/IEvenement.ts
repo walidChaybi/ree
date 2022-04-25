@@ -2,7 +2,7 @@ import {
   formatAHeure,
   getDateStringFromDateCompose
 } from "../../../views/common/util/DateUtils";
-import { numberToString } from "../../../views/common/util/Utils";
+import { estRenseigne, numberToString } from "../../../views/common/util/Utils";
 import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
 
 export interface IEvenement {
@@ -10,7 +10,7 @@ export interface IEvenement {
   minute?: number;
   jour?: number;
   mois?: number;
-  annee: number;
+  annee?: number;
   voie?: string;
   ville?: string;
   arrondissement?: string;
@@ -38,5 +38,8 @@ export const Evenement = {
           evenement.arrondissement
         )
       : "";
+  },
+  estRenseigne(evenement?: IEvenement) {
+    return estRenseigne(evenement?.annee);
   }
 };

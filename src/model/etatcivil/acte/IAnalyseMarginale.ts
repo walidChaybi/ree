@@ -14,13 +14,13 @@ export interface IAnalyseMarginale {
   titulaires: ITitulaireActe[];
 }
 
-interface ITitulairesAM {
+export interface ITitulairesAM {
   titulaireAM1?: ITitulaireActe;
   titulaireAM2?: ITitulaireActe;
 }
 
 export const AnalyseMarginale = {
-  getTitulairesDansLeBonOrdre(am?: IAnalyseMarginale): ITitulairesAM {
+  getTitulairesDansLOrdre(am?: IAnalyseMarginale): ITitulairesAM {
     let resultatTitulairesAM: ITitulairesAM = {};
     if (am) {
       const titulaires = triListeObjetsSurPropriete(
@@ -39,7 +39,7 @@ export const AnalyseMarginale = {
   /**
    * Retourne l'AM la plus récente. ie: la ate de début est la plus récente et la date de fin est vide ou non atteinte
    */
-  getLaBonneAnalyseMarginale(
+  getAnalyseMarginaleLaPlusRecente(
     analyseMarginales?: IAnalyseMarginale[]
   ): IAnalyseMarginale | undefined {
     let analyseMarginaleLaPlusRecente: IAnalyseMarginale | undefined;

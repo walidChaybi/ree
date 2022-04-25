@@ -9,12 +9,12 @@ import {
 } from "../../../../../ressources/Regex";
 import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
   DateComposeFormProps,
-  DateDefaultValues,
-  DateValidationSchema
-} from "../../../../common/widget/formulaire/DateComposeForm";
+  DateDefaultValues
+} from "../../../../common/widget/formulaire/champsDate/DateComposeForm";
+import { DateValidationSchema } from "../../../../common/widget/formulaire/champsDate/DateComposeFormValidation";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import {
   ASTERISQUE_MESSAGE,
   CARATERES_AUTORISES_MESSAGE

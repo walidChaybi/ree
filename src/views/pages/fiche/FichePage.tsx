@@ -59,10 +59,8 @@ export const FichePage: React.FC<FichePageProps> = ({
   nbLignesParAppel,
   getLignesSuivantesOuPrecedentes
 }) => {
-  const [
-    actualisationInfosFiche,
-    setActualisationInfosFiche
-  ] = useState<boolean>(false);
+  const [actualisationInfosFiche, setActualisationInfosFiche] =
+    useState<boolean>(false);
   const [dataFicheCourante, setDataFicheCourante] = useState<
     IDataFicheProps | undefined
   >(datasFiches[getIndexLocal(index.value, nbLignesParAppel)]);

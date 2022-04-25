@@ -5,12 +5,12 @@ import { CarateresAutoriseRecherche } from "../../../../../ressources/Regex";
 import { MIN_YEAR } from "../../../../common/util/DateUtils";
 import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
-import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import DateComposeForm, {
   DateComposeFormProps,
-  DateDefaultValues,
-  DateValidationSchema
-} from "../../../../common/widget/formulaire/DateComposeForm";
+  DateDefaultValues
+} from "../../../../common/widget/formulaire/champsDate/DateComposeForm";
+import { DateValidationSchema } from "../../../../common/widget/formulaire/champsDate/DateComposeFormValidation";
+import { InputField } from "../../../../common/widget/formulaire/champsSaisie/InputField";
 import { CARATERES_AUTORISES_MESSAGE } from "../../../../common/widget/formulaire/FormulaireMessages";
 import { traiteEspace } from "../../../../common/widget/formulaire/utils/ControlesUtil";
 import {

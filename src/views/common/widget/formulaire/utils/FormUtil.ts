@@ -24,7 +24,7 @@ export interface ComponentFiltreProps {
 
 export interface ISubForm {
   nom: string;
-  options: Options;
+  options?: Options;
   titre?: string;
   reset?: boolean;
   onChange?: (value: string) => void;
@@ -32,6 +32,12 @@ export interface ISubForm {
   formulaireReduit?: boolean;
   disabled?: boolean;
   visible?: boolean;
+}
+
+// Pour le typage des "connect" formik
+export interface INomForm {
+  nom: string;
+  disabled?: boolean;
 }
 
 export type SubFormProps = ISubForm & FormikComponentProps;

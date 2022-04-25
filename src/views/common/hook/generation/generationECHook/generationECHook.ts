@@ -181,4 +181,3 @@ export function useGenerationEC(
 
   return resultat;
 }
-

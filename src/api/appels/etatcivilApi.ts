@@ -63,7 +63,7 @@ export function getInformationsFicheRepertoire(
  */
 export function getInformationsFicheActe(
   identifiant: string,
-  recupereImagesEtTexte?: boolean
+  recupereImagesEtTexte = false
 ): Promise<any> {
   let config: any = {
     method: HttpMethod.GET,
@@ -191,7 +191,6 @@ export async function postMentions(
     data: mentions
   });
 }
-
 
 export function rechercheMultiCriteresAutoActes(
   criteres: ICriteresRMCAuto,

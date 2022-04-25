@@ -121,6 +121,7 @@ export function mapActe(data: any): IFicheActe {
   );
 
   dataActe.analyseMarginales = mapAnalysesMarginales(data.analyseMarginales);
+  dataActe.titulaires = mapTitulaires(data.titulaires);
 
   return dataActe;
 }
@@ -130,20 +131,31 @@ function mapAnalysesMarginales(ams: any[]): IAnalyseMarginale[] | undefined {
     ...am,
     dateDebut: am.dateDebut ? getDateFromTimestamp(am.dateDebut) : undefined,
     dateFin: am.dateFin ? getDateFromTimestamp(am.dateFin) : undefined,
-    titulaires: mapTitulairesAnalyseMarginale(am.titulaires)
+    titulaires: mapTitulaires(am.titulaires)
   }));
 }
 
-function mapTitulairesAnalyseMarginale(titulaires: any[]): ITitulaireActe[] {
+function mapTitulaires(titulaires: any[]): ITitulaireActe[] {
   return titulaires.map(titulaire => ({
     ...titulaire,
+    sexe: titulaire.sexe ? Sexe.getEnumFor(titulaire.sexe) : Sexe.INCONNU,
     typeDeclarationConjointe: titulaire.typeDeclarationConjointe
       ? TypeDeclarationConjointe.getEnumFor(titulaire.typeDeclarationConjointe)
       : TypeDeclarationConjointe.ABSENCE_DECLARATION,
     dateDeclarationConjointe: titulaire.dateDeclarationConjointe
       ? getDateFromTimestamp(titulaire.dateDeclarationConjointe)
-      : undefined
+      : undefined,
+    filiations: mapFiliation(titulaire.filiations)
   }));
+}
+
+function mapFiliation(filiations?: any[]) {
+  return filiations
+    ? filiations.map(filiation => ({
+        ...filiation,
+        sexe: Sexe.getEnumFor(filiation.sexe)
+      }))
+    : [];
 }
 
 function mapDetailMariage(dm: any): IDetailMariage | undefined {

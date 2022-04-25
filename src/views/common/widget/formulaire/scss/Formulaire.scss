@@ -1,4 +1,4 @@
-@import "../../../../../scss/colors";
+@import "../../../../../scss/_colors.scss";
 
 .Formulaire {
   margin: 1.5rem 7rem;
@@ -8,8 +8,8 @@
     grid-template-columns: 50% 50%;
   }
 
-  input:disabled {
-    background-color: $form-input-disabled;
+  input:not([type="checkbox"]):not([type="radio"]):disabled {
+    background-color: $form-input-disabled-bg;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -17,11 +17,10 @@
     height: 30px;
     border-radius: 0.2rem;
     padding: 1px 8px;
+    color: $form-input-disabled-color;
   }
 
   .BlockInput {
-    margin-top: 0.5rem;
-    padding-bottom: 0.5rem;
     display: grid;
 
     label {
@@ -34,18 +33,24 @@
   }
 
   .BlockErreur {
-    color: $error;
+    color: $error-formulaire;
     margin-bottom: 0.5rem;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     .Warning {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       margin-right: 0.5em;
     }
   }
 
   .RadioInput {
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
     input {
-      margin: 0 1rem;
+      margin: 0;
+    }
+    label {
+      margin-left: 0.5rem;
+      margin-right: 1rem;
     }
   }
 }

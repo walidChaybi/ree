@@ -2,9 +2,11 @@ import { getDateStringFromDateCompose } from "../../../views/common/util/DateUti
 import {
   formatNom,
   formatPrenom,
+  mapPrenomsVersPrenomsOrdonnes,
   numberToString
 } from "../../../views/common/util/Utils";
 import { LieuxUtils } from "../../../views/common/utilMetier/LieuxUtils";
+import { IPrenomOrdonnes } from "../../requete/IPrenomOrdonnes";
 import { LienParente } from "../enum/LienParente";
 import { Sexe } from "../enum/Sexe";
 import { TypeDeclarationConjointe } from "../enum/TypeDeclarationConjointe";
@@ -16,7 +18,7 @@ export interface ITitulaireActe {
   nom?: string;
   ordre: number;
   prenoms?: string[];
-  sexe?: string;
+  sexe?: Sexe;
   naissance?: IEvenement;
   age?: number;
   profession?: string;
@@ -30,6 +32,8 @@ export interface ITitulaireActe {
   prenomsDernierConjoint?: string;
   typeDeclarationConjointe?: TypeDeclarationConjointe; // concerne les titulaires de l'analyse marginale
   dateDeclarationConjointe?: Date; // concerne les titulaires de l'analyse marginale
+  origineDeclarationConjointeTitulaireActe?: boolean;
+  origineNomPartiesTitulaireActe?: boolean;
 }
 
 export const TitulaireActe = {
@@ -68,14 +72,10 @@ export const TitulaireActe = {
       : "";
   },
   getSexeOuVide(titulaire?: ITitulaireActe): string {
-    return titulaire && titulaire.sexe
-      ? Sexe.getEnumFor(titulaire.sexe).libelle
-      : "";
+    return titulaire && titulaire.sexe ? titulaire.sexe.libelle : "";
   },
   getSexeOuInconnu(titulaire?: ITitulaireActe | IFiliation): Sexe {
-    return titulaire && titulaire.sexe
-      ? Sexe.getEnumFor(titulaire.sexe)
-      : Sexe.INCONNU;
+    return titulaire && titulaire.sexe ? titulaire.sexe : Sexe.INCONNU;
   },
   getLieuNaissance(titulaire?: ITitulaireActe): string {
     return titulaire && titulaire.naissance
@@ -98,5 +98,8 @@ export const TitulaireActe = {
           )
           .sort((a, b) => a.ordre - b.ordre)
       : [];
+  },
+  mapPrenomsVersPrenomsOrdonnes(titulaire?: ITitulaireActe): IPrenomOrdonnes[] {
+    return mapPrenomsVersPrenomsOrdonnes(titulaire?.prenoms);
   }
 };

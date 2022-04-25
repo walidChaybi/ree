@@ -10,9 +10,9 @@ import { getLibelle } from "../../../../common/util/Utils";
 import { Fieldset } from "../../../../common/widget/fieldset/Fieldset";
 import DateComposeForm, {
   DateComposeFormProps,
-  DateDefaultValues,
-  DateValidationSchema
-} from "../../../../common/widget/formulaire/DateComposeForm";
+  DateDefaultValues
+} from "../../../../common/widget/formulaire/champsDate/DateComposeForm";
+import { DateValidationSchema } from "../../../../common/widget/formulaire/champsDate/DateComposeFormValidation";
 import {
   ComponentFiltreProps,
   FormikComponentProps,
@@ -40,8 +40,8 @@ export const DatesDebutFinAnneeValidationSchema = Yup.object()
   })
   .test("dateFinInferieur", function (value, error) {
     const res = compareDatesCompose(
-      (value[DATE_FIN] as any) as IDateCompose,
-      (value[DATE_DEBUT] as any) as IDateCompose
+      value[DATE_FIN] as any as IDateCompose,
+      value[DATE_DEBUT] as any as IDateCompose
     );
 
     const paramsError = {
@@ -55,8 +55,8 @@ export const DatesDebutFinAnneeValidationSchema = Yup.object()
   })
   .test("dateDebutnonRenseignee", function (value, error) {
     const res =
-      !estDateVide((value[DATE_DEBUT] as any) as IDateCompose) ||
-      estDateVide((value[DATE_FIN] as any) as IDateCompose);
+      !estDateVide(value[DATE_DEBUT] as any as IDateCompose) ||
+      estDateVide(value[DATE_FIN] as any as IDateCompose);
 
     const paramsError = {
       path: `${error.path}.dateDebut`,
@@ -74,7 +74,9 @@ export type DatesDebutFinAnneeFiltreProps = AnneeInputProps &
   ComponentFiltreProps &
   FormikComponentProps;
 
-const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props => {
+const DatesDebutFinAnneeFiltre: React.FC<
+  DatesDebutFinAnneeFiltreProps
+> = props => {
   const dateDebutComposeFormProps = {
     labelDate: getLibelle("De "),
     nomDate: withNamespace(props.nomFiltre, DATE_DEBUT),

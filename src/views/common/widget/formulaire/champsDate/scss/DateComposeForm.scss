@@ -1,4 +1,4 @@
-@import "../../../../../scss/colors";
+@import "../../../../../../scss/_colors.scss";
 
 .DateComposeForm {
   grid-template-columns: 35% 15.5% 21px 15.5% 21px 23% 2%;
@@ -9,8 +9,6 @@
 }
 
 .DateComposeForm-common {
-  margin-top: 0.5rem;
-  padding-bottom: 0.5rem;
   display: grid;
   label {
     align-self: center;
@@ -24,6 +22,10 @@
 
   .Sep {
     margin: auto;
+  }
+
+  .SepFin {
+    margin-left: 0.3rem;
   }
 
   button {

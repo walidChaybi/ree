@@ -7,12 +7,12 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { PARENT1 } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import ParentForm, {
   ParentFormDefaultValues,
   ParentFormValidationSchema,
   ParentSubFormProps
-} from "../../../../../../views/pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/parent/ParentForm";
+} from "../../../../../../views/common/composant/formulaire/ParentForm";
+import { PARENT1 } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 
 const HookParentForm: React.FC = () => {
   const [result, setResult] = useState("");

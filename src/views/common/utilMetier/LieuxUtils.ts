@@ -1,17 +1,31 @@
+import { Option } from "../util/Type";
 import {
   formatMajusculesMinusculesMotCompose,
   formatPremieresLettresMajusculesNomCompose,
   getValeurOuVide,
-  premiereLettreEnMajuscule
+  NEUF,
+  premiereLettreEnMajuscule,
+  SEIZE,
+  VINGT
 } from "../util/Utils";
 
-const FRANCE = "FRANCE";
+export const FRANCE = "FRANCE";
 const PARIS = "PARIS";
 const MARSEILLE = "MARSEILLE";
 const LYON = "LYON";
 const villesMarseilleLyonParis = [MARSEILLE, LYON, PARIS];
 
 export class LieuxUtils {
+  public static isVilleFranceAvecArrondissement(
+    pays?: string,
+    ville?: string
+  ): boolean {
+    return (
+      LieuxUtils.isPaysFrance(pays) &&
+      LieuxUtils.isVilleMarseilleLyonParis(ville)
+    );
+  }
+
   public static isVilleAvecArrondissement(ville?: string): boolean {
     return LieuxUtils.isVilleMarseilleLyonParis(ville);
   }
@@ -22,6 +36,14 @@ export class LieuxUtils {
 
   public static isVilleParis(ville?: string): boolean {
     return ville != null && ville.toUpperCase() === PARIS;
+  }
+
+  public static isVilleMarseille(ville?: string): boolean {
+    return ville != null && ville.toUpperCase() === MARSEILLE;
+  }
+
+  public static isVilleLyon(ville?: string): boolean {
+    return ville != null && ville.toUpperCase() === LYON;
   }
 
   public static isVilleMarseilleLyonParis(ville?: string): boolean {
@@ -126,11 +148,11 @@ export class LieuxUtils {
     ville?: string,
     region?: string,
     pays?: string,
-    arrondissement?: string
+    arrondissement?: string,
+    formateElements = true
   ): string {
-    const villeString = formatPremieresLettresMajusculesNomCompose(ville);
-    const regionString = formatPremieresLettresMajusculesNomCompose(region);
-    const paysString = formatPremieresLettresMajusculesNomCompose(pays);
+    const { paysString, regionString, villeString } =
+      LieuxUtils.getVilleRegionPays(formateElements, ville, region, pays);
     const arrondissementString = arrondissement ? ` ${arrondissement}` : "";
 
     if (!ville && !region && !pays) {
@@ -147,6 +169,24 @@ export class LieuxUtils {
     return `${villeString}${arrondissementString}, ${regionString} (${paysString})`;
   }
 
+  private static getVilleRegionPays(
+    formateElements: boolean,
+    ville?: string,
+    region?: string,
+    pays?: string
+  ) {
+    const villeString = formateElements
+      ? formatPremieresLettresMajusculesNomCompose(ville)
+      : ville;
+    const regionString = formateElements
+      ? formatPremieresLettresMajusculesNomCompose(region)
+      : region;
+    const paysString = formateElements
+      ? formatPremieresLettresMajusculesNomCompose(pays)
+      : pays;
+    return { paysString, regionString, villeString };
+  }
+
   private static getLieuEntreParentheses(lieu: string) {
     return lieu ? ` (${lieu})` : "";
   }
@@ -156,7 +196,8 @@ export class LieuxUtils {
     libelleDepartement?: string,
     region?: string,
     pays?: string,
-    arrondissement?: string
+    arrondissement?: string,
+    formatArrondissementVerbeux = false
   ): string {
     const villeString = ville
       ? formatPremieresLettresMajusculesNomCompose(ville)
@@ -180,9 +221,15 @@ export class LieuxUtils {
       ) {
         return `${villeString}${libelleDepartementString}`;
       } else if (!LieuxUtils.isVilleParis(villeString)) {
-        return `${villeString} arr.${arrondissement}${libelleDepartementString}`;
+        return `${villeString} ${LieuxUtils.formateArrondissement(
+          arrondissement,
+          formatArrondissementVerbeux
+        )}${libelleDepartementString}`;
       } else {
-        return `${villeString} arr.${arrondissement}`;
+        return `${villeString} ${LieuxUtils.formateArrondissement(
+          arrondissement,
+          formatArrondissementVerbeux
+        )}`;
       }
     } else {
       return LieuxUtils.formatAdresseEtrangere(
@@ -193,7 +240,40 @@ export class LieuxUtils {
     }
   }
 
-  public static formatAdresseEtrangere(
+  private static formateArrondissement(
+    arrondissement?: string,
+    formatVerbeux = false
+  ) {
+    let arrondissementFormate = "";
+    if (formatVerbeux) {
+      if (arrondissement === "1") {
+        arrondissementFormate = "1er arrondissement";
+      } else if (arrondissement) {
+        arrondissementFormate = `${arrondissement}ème arrondissement`;
+      }
+    } else {
+      arrondissementFormate = `arr.${arrondissement}`;
+    }
+    return arrondissementFormate;
+  }
+
+  public static getLocalisationEtrangerOuFrance(
+    ville?: string,
+    region?: string,
+    pays?: string,
+    arrondissement?: string
+  ): string {
+    return LieuxUtils.getLocalisationAutorite(
+      ville,
+      region,
+      region,
+      pays,
+      arrondissement,
+      true
+    );
+  }
+
+  private static formatAdresseEtrangere(
     pays: string,
     region: string,
     ville: string
@@ -205,5 +285,28 @@ export class LieuxUtils {
 
   public static affichagePaysCourrier(pays: string) {
     return this.isPaysFrance(pays) ? "" : pays;
+  }
+
+  public static getNumeros(debut: number, finComprise: number): string[] {
+    return Array.from({ length: finComprise }, (_, i) => String(i + debut));
+  }
+
+  public static getNumerosArrondissement(ville?: string) {
+    let numeros: string[] = [];
+
+    if (LieuxUtils.isVilleParis(ville)) {
+      numeros = LieuxUtils.getNumeros(1, VINGT);
+    } else if (LieuxUtils.isVilleMarseille(ville)) {
+      numeros = LieuxUtils.getNumeros(1, SEIZE);
+    } else if (LieuxUtils.isVilleLyon(ville)) {
+      numeros = LieuxUtils.getNumeros(1, NEUF);
+    }
+
+    return numeros;
+  }
+
+  public static getOptionsArrondissement(ville?: string): Option[] {
+    const villeNumeros: string[] = LieuxUtils.getNumerosArrondissement(ville);
+    return villeNumeros.map(numero => ({ value: numero, str: numero }));
   }
 }

@@ -30,9 +30,9 @@ export const ficheActe1 = {
       voie: null,
       ville: "Paris",
       arrondissement: "16",
-      region: "Paris",
+      region: "Ile de France",
       pays: "France",
-      lieuReprise: null
+      lieuReprise: "paris île de france"
     },
     mentions: [],
     titulaires: [
@@ -67,7 +67,7 @@ export const ficheActe1 = {
         },
         filiations: [
           {
-            type: null,
+            lienParente: "PARENT",
             ordre: 752,
             nom: "Rodriguez",
             sexe: "FEMININ",
@@ -242,14 +242,14 @@ export const ficheActe1 = {
     },
     analyseMarginales: [
       {
-        dateDebut: null,
+        dateDebut: 1612782000000,
         dateFin: null,
         nomOec: null,
         prenomOec: null,
-        motif: null,
+        motif: "FRANCISATION_PRENOM",
         titulaires: [
           {
-            nom: "Patamob",
+            nom: "Patamod eler",
             prenoms: ["Alphonse"],
             autresNoms: null,
             autresPrenoms: null,
@@ -259,13 +259,21 @@ export const ficheActe1 = {
             profession: null,
             age: null,
             domicile: null,
-            filiations: null
+            filiations: null,
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
           }
         ]
       },
       {
-        dateDebutEffet: null,
-        dateFinEffet: null,
+        dateDebut: 1577358000000,
+        dateFin: 1612781000000,
         nomOec: "Lens",
         prenomOec: "Alexis",
         motif: null,
@@ -763,10 +771,10 @@ export const ficheActeMariage = {
     numeroProjet: "a11",
     corpsExtraitRectifications: [],
     corpsImage: {
-      "images": [
+      images: [
         {
-          "contenu": "base64",
-          "noPage": 1
+          contenu: "base64",
+          noPage: 1
         }
       ]
     },

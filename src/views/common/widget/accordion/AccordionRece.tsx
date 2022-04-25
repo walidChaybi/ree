@@ -9,7 +9,7 @@ export interface AccordionReceProps {
   panel?: SectionPanelProps;
   index?: number;
   expanded: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   titre: string;
 }
 

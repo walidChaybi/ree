@@ -53,7 +53,8 @@ export class FenetreExterne extends React.PureComponent<FenetreExterneProps> {
       this.fenetreExterne.close();
     }
     if (window.top) {
-    window.top.removeEventListener("refreshStyles", this.eventCopyStyles);}
+      window.top.removeEventListener("refreshStyles", this.eventCopyStyles);
+    }
   }
 
   eventCopyStyles() {
@@ -176,7 +177,7 @@ function copyStyles(sourceDoc: Document, targetDoc: Document) {
   Array.from(sourceDoc.styleSheets).forEach(styleSheet => {
     try {
       // pour sonar: as any as CSSStyleSheet
-      const cSSStyleSheet = (styleSheet as any) as CSSStyleSheet;
+      const cSSStyleSheet = styleSheet as any as CSSStyleSheet;
       if (cSSStyleSheet.cssRules) {
         const newStyleEl = sourceDoc.createElement("style");
 

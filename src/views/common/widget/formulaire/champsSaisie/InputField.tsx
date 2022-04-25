@@ -1,7 +1,6 @@
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field } from "formik";
 import React from "react";
+import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 
 const NB_LIGNE = 5;
 interface InputFieldProps {
@@ -20,6 +19,7 @@ interface InputFieldProps {
   component?: "input" | "select" | "textarea";
   rows?: number;
   className?: string;
+  validate?: any;
 }
 
 interface TypeInput {
@@ -43,7 +43,8 @@ export const InputField: React.FC<InputFieldProps> = ({
   typeInput,
   component = "input",
   rows = NB_LIGNE,
-  className
+  className,
+  validate
 }) => {
   const otherProps = {} as any;
   if (maxLength) {
@@ -58,17 +59,6 @@ export const InputField: React.FC<InputFieldProps> = ({
   if (onChange) {
     otherProps.onChange = onChange;
   }
-
-  const iconErrorMessage = ({ ...props }) => (
-    <span>
-      <FontAwesomeIcon
-        icon={faExclamationTriangle}
-        size="xs"
-        className="Warning"
-      />
-      {props.children}
-    </span>
-  );
 
   return (
     <div className="InputField">
@@ -88,11 +78,12 @@ export const InputField: React.FC<InputFieldProps> = ({
           placeholder={placeholder ? placeholder : label}
           {...(component === "textarea" ? { rows } : {})}
           className={className}
+          validate={validate}
         />
       </div>
       {!noErrorMessage && (
         <div className="BlockErreur">
-          <ErrorMessage component={iconErrorMessage} name={name} />
+          <ErrorMessage component={IconErrorMessage} name={name} />
         </div>
       )}
     </div>

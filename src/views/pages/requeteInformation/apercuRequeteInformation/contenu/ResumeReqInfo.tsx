@@ -65,7 +65,7 @@ function mapPiecesComplementInformation(
         typePiece: TypePieceJointe.PIECE_COMPLEMENT_INFORMATION
       }))
     : [];
-};
+}
 
 function getPanelResumeRequete(
   detailRequete: IRequeteInformation

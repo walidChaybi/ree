@@ -17,6 +17,9 @@ import {
 
 export const MIN_YEAR = 1900;
 export const MEP_YEAR = 2021;
+export const MES_YEAR = 2023;
+export const DATE_MES = new Date(MES_YEAR, 0, 1);
+
 export const MIN_LENGTH_ANNEE = 4;
 
 const MAX_MONTH = 12;
@@ -203,12 +206,20 @@ export function estDateVide(date?: IDateCompose): boolean {
   return !date || (!date.jour && !date.mois && !date.annee);
 }
 
-export function getDateComposeFromDate(date: Date): IDateCompose {
-  return {
-    jour: rempliAGaucheAvecZero(date.getDate()),
-    mois: rempliAGaucheAvecZero(date.getMonth() + 1),
-    annee: String(date.getFullYear())
-  };
+export function getDateComposeFromDate(date?: Date): IDateCompose {
+  let dateCompose;
+  if (date) {
+    dateCompose = {
+      jour: rempliAGaucheAvecZero(date.getDate()),
+      mois: rempliAGaucheAvecZero(date.getMonth() + 1),
+      annee: String(date.getFullYear())
+    };
+  } else {
+    dateCompose = {
+      annee: ""
+    };
+  }
+  return dateCompose;
 }
 
 export function getFormatDateFromTimestamp(timestamp: number): string {

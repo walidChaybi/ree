@@ -14,13 +14,14 @@ $application-font-family: "NotoSansUI-Regular";
   font-style: normal;
 }*/
 
-body{
+body {
   li {
     list-style: none;
-    svg{
-      vertical-align: middle
+    svg {
+      vertical-align: middle;
     }
-}}
+  }
+}
 
 html {
   font-size: 13.5px;
@@ -152,7 +153,7 @@ textarea {
 
   &:disabled {
     border-color: $form-border-input-disabled;
-    background-color: $form-input-disabled;
+    background-color: $form-input-disabled-bg;
     cursor: default;
   }
 }
@@ -302,10 +303,12 @@ th {
   padding-bottom: 4.5px !important;
 }
 
-.BarreOnglet, .ongletDelivrance, .ongletInformation {
+.BarreOnglet,
+.ongletDelivrance,
+.ongletInformation {
   .MuiButtonBase-root {
     background-color: $application-color !important;
-    color:white !important;
+    color: white !important;
     opacity: 1 !important;
     padding: 0 1rem !important;
     font-size: 13px !important;
@@ -316,7 +319,7 @@ th {
       font-family: "NotoSansUI-Bold", sans-serif;
     }
   }
-  
+
   .MuiButtonBase-root.Mui-selected {
     background-color: $button-application-color !important;
   }

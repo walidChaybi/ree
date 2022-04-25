@@ -9,6 +9,9 @@ export class Sexe extends EnumWithLibelle {
   public static readonly INDETERMINE = new Sexe("Indéterminé");
   public static readonly INCONNU = new Sexe("Non renseigné");
 
+  public static getKey(obj: Sexe): string {
+    return EnumWithLibelle.getKey(Sexe, obj);
+  }
   public static getEnumFor(str: string): Sexe {
     return EnumWithLibelle.getEnumFor(str, Sexe);
   }
@@ -19,5 +22,11 @@ export class Sexe extends EnumWithLibelle {
 
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(Sexe, false, false);
+  }
+
+  public static getAllEnumsAsOptionsSansInconnu(): Options {
+    return EnumWithLibelle.getAllLibellesAsOptions(Sexe, false, false, false, [
+      Sexe.INCONNU
+    ]);
   }
 }

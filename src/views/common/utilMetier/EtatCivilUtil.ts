@@ -74,4 +74,15 @@ export class EtatCivilUtil {
       ? `(1re partie : ${nomPartie1}  2nde partie : ${nomPartie2})`
       : "";
   }
+
+  public static getVocables(nom?: string) {
+    let vocables: string[] = [];
+
+    if (nom) {
+      const nomTrim = nom.trim();
+      vocables = nomTrim.split(/\s+/);
+    }
+
+    return vocables;
+  }
 }

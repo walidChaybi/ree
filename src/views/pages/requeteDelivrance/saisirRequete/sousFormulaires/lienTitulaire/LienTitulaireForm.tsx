@@ -64,7 +64,7 @@ const LienTitulaireForm: React.FC<SubFormProps> = props => {
 
   useEffect(() => {
     const seulementTitulaire =
-      props.options.length === 1 && props.options[0].value === "TITULAIRE";
+      props.options?.length === 1 && props.options[0].value === "TITULAIRE";
     if (seulementTitulaire) {
       props.formik.setFieldValue(
         withNamespace(props.nom, LIEN),
@@ -82,7 +82,7 @@ const LienTitulaireForm: React.FC<SubFormProps> = props => {
           <SelectField
             name={withNamespace(props.nom, LIEN)}
             label={getLibelle("Lien avec le titulaire")}
-            options={props.options}
+            options={props.options ? props.options : []}
             onChange={e => {
               onChangeLienTitulaire(e);
             }}

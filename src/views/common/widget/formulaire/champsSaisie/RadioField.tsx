@@ -1,8 +1,10 @@
+import { ErrorMessage, Field } from "formik";
 import React from "react";
-import { Field, ErrorMessage } from "formik";
 import { Option, Options } from "../../../../../views/common/util/Type";
+import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 
 interface RadioFieldProps {
+  type?: "checkbox" | "radio";
   name: string;
   label: string;
   values: Options;
@@ -15,6 +17,7 @@ interface RadioFieldProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export const RadioField: React.FC<RadioFieldProps> = ({
+  type,
   name,
   label,
   values,
@@ -26,6 +29,7 @@ export const RadioField: React.FC<RadioFieldProps> = ({
   onBlur,
   onChange
 }) => {
+  type = type || "radio";
   const otherProps = {} as any;
   if (onInput) {
     otherProps.onInput = onInput;
@@ -49,7 +53,7 @@ export const RadioField: React.FC<RadioFieldProps> = ({
             return (
               <span key={nameValue}>
                 <Field
-                  type="radio"
+                  type={type}
                   id={nameValue}
                   value={option.value}
                   name={name}
@@ -66,7 +70,7 @@ export const RadioField: React.FC<RadioFieldProps> = ({
       </div>
       {!noErrorMessage && (
         <div className="BlockErreur">
-          <ErrorMessage name={name} />
+          <ErrorMessage component={IconErrorMessage} name={name} />
         </div>
       )}
     </div>

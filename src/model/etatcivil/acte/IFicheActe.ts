@@ -1,14 +1,17 @@
+import { DATE_MES } from "../../../views/common/util/DateUtils";
 import {
   compactObject,
   getValeurOuVide,
   triListeObjetsSurPropriete
 } from "../../../views/common/util/Utils";
+import { EtatCivilUtil } from "../../../views/common/utilMetier/EtatCivilUtil";
 import { IPersonne } from "../commun/IPersonne";
 import { NatureActe } from "../enum/NatureActe";
 import { TypeActe } from "../enum/TypeActe";
+import { TypeDeclarationConjointe } from "../enum/TypeDeclarationConjointe";
 import { TypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
 import { TypeExtrait } from "./../enum/TypeExtrait";
-import { IAnalyseMarginale } from "./IAnalyseMarginale";
+import { AnalyseMarginale, IAnalyseMarginale } from "./IAnalyseMarginale";
 import { ICorpsExtraitRectification } from "./ICorpsExtraitRectification";
 import { ICorpsText } from "./ICorpsText";
 import { IDetailMariage } from "./IDetailMariage";
@@ -95,7 +98,7 @@ export const FicheActe = {
       : undefined;
   },
 
-  getTitulairesDansLeBonOrdre(acte: IFicheActe): ITitulairesActe {
+  getTitulairesDansLOrdre(acte: IFicheActe): ITitulairesActe {
     let resultatTitulairesActe: any = {};
     if (acte) {
       const titulaires = triListeObjetsSurPropriete(
@@ -108,5 +111,81 @@ export const FicheActe = {
       };
     }
     return resultatTitulairesActe;
+  },
+
+  getAnalyseMarginaleLaPlusRecente(acte: IFicheActe) {
+    return AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(
+      acte.analyseMarginales
+    );
+  },
+
+  getTitulairesAMDansLeBonOrdre(acte: IFicheActe) {
+    const titulairesAMs: (ITitulaireActe | undefined)[] = [];
+    const titulairesActe = this.getTitulairesDansLOrdre(acte);
+
+    const analyseMarginale = this.getAnalyseMarginaleLaPlusRecente(acte);
+    if (analyseMarginale) {
+      const titulairesAM =
+        AnalyseMarginale.getTitulairesDansLOrdre(analyseMarginale);
+
+      if (titulairesAM.titulaireAM1) {
+        titulairesAMs[0] = { ...titulairesAM.titulaireAM1 };
+
+        majDeclarationConjointe(
+          titulairesAMs[0],
+          titulairesActe.titulaireActe1
+        );
+
+        majNomSequable(titulairesAMs[0], titulairesActe.titulaireActe1);
+        majNomSequable(titulairesAMs[1], titulairesActe.titulaireActe1);
+      }
+    }
+    return titulairesAMs;
+  },
+
+  estPremiereDelivrance(acte: IFicheActe) {
+    return (
+      !acte.dateDerniereDelivrance ||
+      acte.dateDerniereDelivrance.getTime() < DATE_MES.getTime()
+    );
   }
 };
+
+/** Mise à jour des informations de "déclaration conjointe" à partir du titulaire de l'acte si besoin */
+function majDeclarationConjointe(
+  titulaireAM: ITitulaireActe,
+  titulaireActe: ITitulaireActe
+) {
+  if (
+    titulaireAM.typeDeclarationConjointe ===
+    TypeDeclarationConjointe.ABSENCE_DECLARATION
+  ) {
+    titulaireAM.typeDeclarationConjointe =
+      titulaireActe.typeDeclarationConjointe;
+    titulaireAM.dateDeclarationConjointe =
+      titulaireActe.dateDeclarationConjointe;
+    titulaireAM.origineDeclarationConjointeTitulaireActe = true;
+  }
+}
+
+/** Mise à jour des informations de "nom sécable" à partir du titulaire de l'acte si besoin */
+function majNomSequable(
+  titulaireAM?: ITitulaireActe,
+  titulaireActe?: ITitulaireActe
+) {
+  if (titulaireAM && !titulaireAM.nomPartie1 && titulaireActe) {
+    titulaireAM.origineNomPartiesTitulaireActe = true;
+
+    titulaireAM.nomPartie1 = titulaireActe.nomPartie1;
+    titulaireAM.nomPartie2 = titulaireActe.nomPartie2;
+
+    // Décompositon du nom du titulaire AM lorsqu'il n'y a pas de nom 1ere partie
+    if (!titulaireAM.nomPartie1) {
+      const vocables = EtatCivilUtil.getVocables(titulaireAM.nom);
+      if (vocables.length > 1) {
+        titulaireAM.nomPartie1 = vocables[0];
+        titulaireAM.nomPartie2 = vocables[1];
+      }
+    }
+  }
+}

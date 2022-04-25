@@ -12,18 +12,18 @@ import DateComposeForm, {
   DateComposeFormProps,
   DateDefaultValues,
   onDatePickerValueChange
-} from "../../../../views/common/widget/formulaire/DateComposeForm";
+} from "../../../../views/common/widget/formulaire/champsDate/DateComposeForm";
 
 const HookConsummerDateComposeForm: React.FC = () => {
   const [result, setResult] = useState("");
   const onDateDebutChange = jest.fn();
 
-  const dateDebutComposeFormProps = ({
+  const dateDebutComposeFormProps = {
     labelDate: "De: ",
     nomDate: "dateDebut",
     showDatePicker: true,
     onChange: onDateDebutChange
-  } as any) as DateComposeFormProps;
+  } as any as DateComposeFormProps;
   const handleClickButton = (values: any) => {
     setResult(JSON.stringify(values));
   };

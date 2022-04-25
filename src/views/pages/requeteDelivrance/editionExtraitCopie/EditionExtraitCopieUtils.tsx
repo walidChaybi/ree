@@ -1,5 +1,8 @@
 import React from "react";
-import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
+import {
+  FicheActe,
+  IFicheActe
+} from "../../../../model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
 import { TypeActe } from "../../../../model/etatcivil/enum/TypeActe";
 import {
@@ -15,16 +18,15 @@ import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
-import { getLibelle } from "../../../common/util/Utils";
+import { getLibelle, TROIS, UN, ZERO } from "../../../common/util/Utils";
 import { AccordionRece } from "../../../common/widget/accordion/AccordionRece";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { DetailRequetePage } from "../detailRequete/DetailRequetePage";
 import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
+import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
 import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { OngletProps } from "./contenu/VoletAvecOnglet";
-
-const TROIS = 3;
 
 export const getOngletsEdition = (
   passerDocumentValider: (id: string) => void,
@@ -147,6 +149,7 @@ function ajoutOngletsCopie(
   }
 }
 
+/** Création des sous onglets à l'intérieur de l'onglet principal extrait (avec ou sans filiation) */
 export const ajoutOngletsExtraitFilliation = (
   res: OngletProps,
   document: IDocumentReponse,
@@ -156,20 +159,36 @@ export const ajoutOngletsExtraitFilliation = (
 ) => {
   switch (document.validation) {
     case Validation.N:
-      res.ongletSelectionne = 0;
+      res.ongletSelectionne = UN;
       break;
     case Validation.O:
       res.ongletSelectionne = TROIS;
       break;
     case Validation.E:
-      res.ongletSelectionne = 1;
+      res.ongletSelectionne = ZERO;
       break;
   }
-  res.liste.push(ongletSaisirExtrait);
+
+  // Si l'extrait n'est pas en erreur (DOCUMENT REPONSE.validation différent de "E")
+  //  et si l'acte est de type image (Acte.type = "image"),
+  //  et si Acte.date dernière délivrance non renseignée ou renseignée et antérieure à la date de mise en service de la délivrance RECE Et2R3
+  // Alors afficher le sous onglet 0 "saisir l'extrait"
+  if (
+    document.validation !== Validation.E &&
+    FicheActe.estActeImage(acte) &&
+    FicheActe.estPremiereDelivrance(acte)
+  ) {
+    res.ongletSelectionne = ZERO;
+  }
+
+  // Sous-onglet 0
+  res.liste.push(ongletSaisirExtrait(acte));
+  // Sous-onglet 1
   res.liste.push(
     ongletMentions(acte, document, passerDocumentValider, requete)
   );
   if (document.validation !== "E") {
+    // Sous-onglet 2
     res.liste.push({
       titre: getLibelle("Modifier le corps de l'extrait"),
       component: <></>
@@ -184,7 +203,7 @@ export const ajoutOngletsExtraitPlurilingue = (
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
-  res.liste.push(ongletSaisirExtrait);
+  res.liste.push(ongletSaisirExtrait(acte));
   if (
     acte.nature === NatureActe.NAISSANCE ||
     acte.nature === NatureActe.MARIAGE
@@ -194,7 +213,6 @@ export const ajoutOngletsExtraitPlurilingue = (
     );
   }
 };
-
 
 export const boutonModifierCopiePresent = (
   acte?: IFicheActe,
@@ -228,9 +246,11 @@ export const ongletMentions = (
   };
 };
 
-export const ongletSaisirExtrait = {
-  titre: getLibelle("Saisir l'extrait"),
-  component: <></>
+const ongletSaisirExtrait = (acte: IFicheActe) => {
+  return {
+    titre: getLibelle("Saisir l'extrait"),
+    component: <SaisirExtraitForm acte={acte}></SaisirExtraitForm>
+  };
 };
 
 export function checkDirty(isDirty: boolean, setIsDirty: any) {

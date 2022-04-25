@@ -6,6 +6,7 @@ import {
 } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
+import { ReinitialiserValiderBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import { useMentionsApiHook } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
 import {
   SauvegarderMentionsParam,
@@ -139,20 +140,16 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           natureActe={props.acte?.nature}
         />
       )}
-      <div className="Boutons">
-        <button
-          onClick={reinitialisation}
-          disabled={boutonReinitialiserEstDisabled(
-            estDeverrouille,
-            mentionsApi?.mentions,
-            mentions,
-            props.document
-          )}
-        >
-          {getLibelle("Réinitialiser")}
-        </button>
-        <button onClick={valider}>{getLibelle("Valider")}</button>
-      </div>
+      <ReinitialiserValiderBoutons
+        onClickReInitialiser={reinitialisation}
+        reInitialiserDisabled={boutonReinitialiserEstDisabled(
+          estDeverrouille,
+          mentionsApi?.mentions,
+          mentions,
+          props.document
+        )}
+        onClickValider={valider}
+      />
     </div>
   );
 };

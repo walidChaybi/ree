@@ -1,13 +1,18 @@
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import { IPrenomOrdonnes } from "../../../../../../../model/requete/IPrenomOrdonnes";
 import { CarateresAutorise } from "../../../../../../../ressources/Regex";
 import { getLibelle } from "../../../../../../common/util/Utils";
 import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../../common/widget/formulaire/FormulaireMessages";
+import {
+  CARATERES_AUTORISES_MESSAGE,
+  CHAMP_OBLIGATOIRE
+} from "../../../../../../common/widget/formulaire/FormulaireMessages";
 import { sortieChampPremiereLettreEnMajuscule } from "../../../../../../common/widget/formulaire/utils/ControlesUtil";
 import {
   IGNORER_TABULATION,
+  INomForm,
   NB_CARACT_MAX_SAISIE,
   SubFormProps,
   withNamespace
@@ -72,7 +77,14 @@ export const PrenomsFormValidationSchema = Yup.object()
     return prenom2 == null && prenom3 != null ? this.createError(params) : true;
   });
 
-const PrenomsForm: React.FC<SubFormProps> = props => {
+interface IPrenomsFormProps {
+  prenoms?: IPrenomOrdonnes[];
+  prenom1Obligatoire?: boolean;
+}
+
+export type PrenomsFormProps = IPrenomsFormProps & SubFormProps;
+
+const PrenomsForm: React.FC<PrenomsFormProps> = props => {
   const prenomWithNamespace1 = withNamespace(props.nom, PRENOM_1);
   const prenomWithNamespace2 = withNamespace(props.nom, PRENOM_2);
   const prenomWithNamespace3 = withNamespace(props.nom, PRENOM_3);
@@ -95,15 +107,10 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
   };
 
   useEffect(() => {
-    if (
-      props.requete &&
-      props.requete.titulaires &&
-      props.requete.titulaires[0] &&
-      props.requete.titulaires[0].prenoms
-    ) {
-      setNbPrenom(props.requete.titulaires[0].prenoms?.length);
+    if (props.prenoms && props.prenoms.length > 1) {
+      setNbPrenom(props.prenoms.length);
     }
-  }, [props.requete]);
+  }, [props.prenoms]);
 
   useEffect(() => {
     setBtnAjouterInactif(nbPrenom === NB_MAX_PRENOMS);
@@ -114,7 +121,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
     return (
       <button
         type="button"
-        disabled={btnAjouterInactif}
+        disabled={btnAjouterInactif || props.disabled}
         onClick={ajouterPrenom}
       >
         {getLibelle("Ajouter un prénom")}
@@ -128,14 +135,13 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
         type="button"
         tabIndex={IGNORER_TABULATION}
         className="BoutonDanger"
-        disabled={btnSupprimerInactif}
+        disabled={btnSupprimerInactif || props.disabled}
         onClick={() => supprimerPrenom(champ)}
       >
         {getLibelle("Supprimer un prénom")}
       </button>
     );
   }
-
   return (
     <>
       <div className="PrenomsForm">
@@ -143,6 +149,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
           name={prenomWithNamespace1}
           label={getLibelle("Prénom 1")}
           maxLength={NB_CARACT_MAX_SAISIE}
+          disabled={props.disabled}
           onBlur={e =>
             sortieChampPremiereLettreEnMajuscule(
               e,
@@ -150,6 +157,11 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
               prenomWithNamespace1
             )
           }
+          validate={(value: string) => {
+            return !value && props.prenom1Obligatoire === true
+              ? CHAMP_OBLIGATOIRE
+              : undefined;
+          }}
         />
         {nbPrenom === NB_MIN_PRENOMS && <div>{getBoutonAjouter()}</div>}
       </div>
@@ -159,6 +171,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
             name={prenomWithNamespace2}
             label={getLibelle("Prénom 2")}
             maxLength={NB_CARACT_MAX_SAISIE}
+            disabled={props.disabled}
             onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
                 e,
@@ -181,6 +194,7 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
             name={prenomWithNamespace3}
             label={getLibelle("Prénom 3")}
             maxLength={NB_CARACT_MAX_SAISIE}
+            disabled={props.disabled}
             onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
                 e,
@@ -196,4 +210,4 @@ const PrenomsForm: React.FC<SubFormProps> = props => {
   );
 };
 
-export default connect(PrenomsForm);
+export default connect<IPrenomsFormProps & INomForm>(PrenomsForm);

@@ -1,9 +1,9 @@
 import React, { useCallback, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { TypeMention } from "../../../../../../../../model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "../../../../../../../../model/etatcivil/enum/NatureActe";
 import { NatureMention } from "../../../../../../../../model/etatcivil/enum/NatureMention";
 import { IMentionsResultat } from "../../../../../../../common/hook/acte/mentions/MentionsApiHook";
+import { Generateur } from "../../../../../../../common/util/generateur/Generateur";
 import {
   getLibelle,
   getValeurOuVide
@@ -105,7 +105,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
         setMentionAjout(temp);
       } else {
         setMentionAjout({
-          id: uuidv4(),
+          id: Generateur.genereCleUnique(),
           texte: "",
           nature: NatureMention.getEnumFor(event.target.value),
           numeroOrdre: mentions?.length,
@@ -124,7 +124,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
         setMentionAjout(temp);
       } else {
         setMentionAjout({
-          id: uuidv4(),
+          id: Generateur.genereCleUnique(),
           texte: event.target.value,
           nature: NatureMention.getEnumFor(""),
           numeroOrdre: mentions?.length,

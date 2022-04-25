@@ -14,42 +14,43 @@ interface FenetreApercuRequeteLieeProps {
   typeRequeteLiee: TypeRequete;
 }
 
-export const FenetreApercuRequeteLiee: React.FC<FenetreApercuRequeteLieeProps> =
-  props => {
-    const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
+export const FenetreApercuRequeteLiee: React.FC<
+  FenetreApercuRequeteLieeProps
+> = props => {
+  const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
 
-    const onClickNumero = () => {
-      setFenetreExterne(true);
-    };
-
-    const onClose = () => {
-      setFenetreExterne(false);
-    };
-
-    const navigationRequeteLiee = (type: TypeRequete, id: string) => {
-      if (type === TypeRequete.INFORMATION) {
-        return <ApercuReqInfoPage idRequeteAAfficher={props.idRequeteLiee} />;
-      }else {
-          return <ApercuRequetePage idRequeteAAfficher={props.idRequeteLiee}/>
-      }
-    };
-
-    return (
-      <>
-        <Link className={"lienFiche"} href={"#"} onClick={onClickNumero}>
-          {props.numeroRequeteLiee}
-        </Link>
-
-        {fenetreExterne && (
-          <FenetreExterne
-            titre={`Aperçu requête : N°${props.numeroRequeteLiee}`}
-            onCloseHandler={onClose}
-            height={height}
-            width={width}
-          >
-            {navigationRequeteLiee(props.typeRequeteLiee, props.idRequeteLiee)}
-          </FenetreExterne>
-        )}
-      </>
-    );
+  const onClickNumero = () => {
+    setFenetreExterne(true);
   };
+
+  const onClose = () => {
+    setFenetreExterne(false);
+  };
+
+  const navigationRequeteLiee = (type: TypeRequete, id: string) => {
+    if (type === TypeRequete.INFORMATION) {
+      return <ApercuReqInfoPage idRequeteAAfficher={props.idRequeteLiee} />;
+    } else {
+      return <ApercuRequetePage idRequeteAAfficher={props.idRequeteLiee} />;
+    }
+  };
+
+  return (
+    <>
+      <Link className={"lienFiche"} href={"#"} onClick={onClickNumero}>
+        {props.numeroRequeteLiee}
+      </Link>
+
+      {fenetreExterne && (
+        <FenetreExterne
+          titre={`Aperçu requête : N°${props.numeroRequeteLiee}`}
+          onCloseHandler={onClose}
+          height={height}
+          width={width}
+        >
+          {navigationRequeteLiee(props.typeRequeteLiee, props.idRequeteLiee)}
+        </FenetreExterne>
+      )}
+    </>
+  );
+};

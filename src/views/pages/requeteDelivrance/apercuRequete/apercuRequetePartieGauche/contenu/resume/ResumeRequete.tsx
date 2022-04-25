@@ -88,4 +88,4 @@ function mapPiecesJustificatives(
         typePiece: TypePieceJointe.PIECE_JUSTIFICATIVE
       }))
     : [];
-};
+}

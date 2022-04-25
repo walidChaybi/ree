@@ -1,24 +1,25 @@
 import { connect } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
-import { CarateresAutorise } from "../../../../../../../ressources/Regex";
-import { getLibelle } from "../../../../../../common/util/Utils";
-import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
-import { CARATERES_AUTORISES_MESSAGE } from "../../../../../../common/widget/formulaire/FormulaireMessages";
-import { sortieChampEnMajuscule } from "../../../../../../common/widget/formulaire/utils/ControlesUtil";
-import {
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "../../../../../../common/widget/formulaire/utils/FormUtil";
+import { CarateresAutorise } from "../../../../ressources/Regex";
 import {
   NOM_NAISSANCE,
   PRENOMS
-} from "../../../modelForm/ISaisirRequetePageModel";
+} from "../../../pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRequetePageModel";
 import PrenomsForm, {
   PrenomsFormDefaultValues,
   PrenomsFormValidationSchema
-} from "../nomsPrenoms/PrenomsForm";
+} from "../../../pages/requeteDelivrance/saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
+import { getLibelle } from "../../util/Utils";
+import { InputField } from "../../widget/formulaire/champsSaisie/InputField";
+import { CARATERES_AUTORISES_MESSAGE } from "../../widget/formulaire/FormulaireMessages";
+import { sortieChampEnMajuscule } from "../../widget/formulaire/utils/ControlesUtil";
+import {
+  INomForm,
+  NB_CARACT_MAX_SAISIE,
+  SubFormProps,
+  withNamespace
+} from "../../widget/formulaire/utils/FormUtil";
 import "./scss/ParentForm.scss";
 
 // Valeurs par défaut des champs
@@ -37,7 +38,8 @@ export const ParentFormValidationSchema = Yup.object().shape({
 });
 
 interface ParentFormProps {
-  index: number;
+  index?: number;
+  nePasAfficherTitre?: boolean;
 }
 
 export type ParentSubFormProps = SubFormProps & ParentFormProps;
@@ -58,7 +60,9 @@ const ParentForm: React.FC<ParentSubFormProps> = props => {
 
   return (
     <>
-      <div className="TitreParent">Parent {props.index}</div>
+      {!props.nePasAfficherTitre && (
+        <div className="TitreParent">Parent {props.index}</div>
+      )}
       <InputField
         name={nomWithNamespace}
         label={getLibelle("Nom de naissance")}
@@ -70,4 +74,4 @@ const ParentForm: React.FC<ParentSubFormProps> = props => {
   );
 };
 
-export default connect(ParentForm);
+export default connect<ParentFormProps & INomForm>(ParentForm);

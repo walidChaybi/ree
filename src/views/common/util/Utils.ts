@@ -1,9 +1,11 @@
 import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
+import { IPrenomOrdonnes } from "../../../model/requete/IPrenomOrdonnes";
 
 export const SPC = "SPC";
 export const SANS_PRENOM_CONNU = "Sans prénom connu";
 export const SNP = "SNP";
 export const SANS_NOM_PATRONYMIQUE = "Sans nom patronymique";
+export const ABSENCE_VALIDEE = "ABSENCE_VALIDEE";
 
 export const ZERO = 0;
 export const UN = 1;
@@ -18,6 +20,10 @@ export const NEUF = 9;
 export const DIX = 10;
 export const ONZE = 11;
 export const DOUZE = 12;
+export const SEIZE = 16;
+export const VINGT = 20;
+export const VINGT_QUATRE = 24;
+export const SOIXANTE = 60;
 
 function triObjetsSurPropriete(o1: any, o2: any, propertyName: string) {
   if (o1[propertyName] < o2[propertyName]) {
@@ -327,7 +333,7 @@ export function getLibelle(msg: string) {
   return msg;
 }
 
-export function ecraseDonneeObjectAvec(obj1: any, obj2: any) {
+export function ecraseDonneeObjetAvec(obj1: any, obj2: any) {
   // Les propriétés "undefined", "null" et vides sont ignorées
   const obj1EcraseParObj2SansProprieteNulle: any = { ...obj1 };
   Object.entries(obj2).forEach(([k, v]) => {
@@ -355,5 +361,31 @@ export function shallowEgal(obj1: Object, obj2: Object) {
     (Object.keys(obj1) as (keyof typeof obj1)[]).every(key => {
       return obj2.hasOwnProperty(key) && obj1[key] === obj2[key];
     })
+  );
+}
+
+export function estRenseigne(valeur: any) {
+  if (valeur instanceof Array) {
+    return valeur != null && valeur.length > 0;
+  }
+  return valeur != null && valeur !== "" && valeur !== 0;
+}
+
+export function mapPrenomsVersPrenomsOrdonnes(prenoms?: string[]) {
+  const prenomsOrdonnes: IPrenomOrdonnes[] = [];
+  prenoms?.forEach((prenom, idx) =>
+    prenomsOrdonnes.push({ prenom, numeroOrdre: idx })
+  );
+  return prenomsOrdonnes;
+}
+
+export function estHeureValide(nbHeure: number, nbMinute: number) {
+  return (
+    !Number.isNaN(nbHeure) &&
+    !Number.isNaN(nbMinute) &&
+    nbHeure >= ZERO &&
+    nbHeure < VINGT_QUATRE &&
+    nbMinute >= ZERO &&
+    nbMinute < SOIXANTE
   );
 }
