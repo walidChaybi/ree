@@ -157,7 +157,11 @@ export function creationComposition(
   } else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
     composition = creationCompositionExtraitPlurilingue(acte);
   } else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
-    composition = creationCompositionCopieActeImage(acte, requete, validation);
+    composition = creationCompositionCopieActeImage(
+      acte,
+      requete,
+      Validation.O
+    );
   }
 
   return composition;

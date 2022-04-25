@@ -4,6 +4,7 @@ import {
 } from "../../../../model/etatcivil/acte/IAnalyseMarginale";
 import {
   DEUX,
+  getLibelle,
   getValeurOuVide,
   jointAvecRetourALaLigne,
   triListeObjetsSurPropriete,
@@ -81,7 +82,6 @@ export interface ICreerExtraitCopieActeTexteParams {
   copie: boolean;
   archive: boolean;
   corpsTexte?: string;
-  erreur?: string;
   mentionsRetirees: string[];
 }
 
@@ -117,9 +117,14 @@ export class CommunExtraitOuCopieActeTexteComposition {
     );
 
     // Erreur (Dans le cas d'un manque d'information pour la génération du document)
-    composition.erreur = params.erreur;
+    composition.erreur =
+      Validation.E === params.validation
+        ? getLibelle(
+            "L'absence d'informations ne permet pas de générer l'extrait."
+          )
+        : undefined;
 
-    if (!params.erreur) {
+    if (!composition.erreur) {
       // Récupération de l'éventuelle rectification qui remplacera le corps
       const corpsExtraitRectification =
         FicheActe.getCorpsExtraitRectificationTexte(

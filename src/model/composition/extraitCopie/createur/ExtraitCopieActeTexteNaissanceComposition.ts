@@ -1,9 +1,6 @@
 import { TypeDeclarationConjointe } from "../../../../model/etatcivil/enum/TypeDeclarationConjointe";
 import { getDateFormatJasper } from "../../../../views/common/util/DateUtils";
-import {
-  getLibelle,
-  getValeurOuVide
-} from "../../../../views/common/util/Utils";
+import { getValeurOuVide } from "../../../../views/common/util/Utils";
 import { EtatCivilUtil } from "../../../../views/common/utilMetier/EtatCivilUtil";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../etatcivil/enum/NatureActe";
@@ -32,12 +29,6 @@ export class ExtraitCopieActeTexteNaissanceComposition {
             avecFiliation
           )
         : undefined;
-    const erreur =
-      Validation.E === validation
-        ? getLibelle(
-            "L'absence d'informations ne permet pas de générer l'extrait."
-          )
-        : undefined;
 
     return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
       acte,
@@ -49,7 +40,6 @@ export class ExtraitCopieActeTexteNaissanceComposition {
       copie,
       archive,
       corpsTexte,
-      erreur,
       mentionsRetirees
     });
   }

@@ -1,7 +1,4 @@
-import {
-  getLibelle,
-  getValeurOuVide
-} from "../../../../views/common/util/Utils";
+import { getValeurOuVide } from "../../../../views/common/util/Utils";
 import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
 import { ExistenceContratMariage } from "../../../etatcivil/enum/ExistenceContratMariage";
 import { LienParente } from "../../../etatcivil/enum/LienParente";
@@ -32,12 +29,6 @@ export class ExtraitCopieActeTexteMariageComposition {
             avecFiliation
           )
         : undefined;
-    const erreur =
-      Validation.E === validation
-        ? getLibelle(
-            "L'absence d'informations ne permet pas de générer l'extrait."
-          )
-        : undefined;
 
     return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
       acte,
@@ -49,7 +40,6 @@ export class ExtraitCopieActeTexteMariageComposition {
       copie,
       archive,
       corpsTexte,
-      erreur,
       mentionsRetirees
     });
   }

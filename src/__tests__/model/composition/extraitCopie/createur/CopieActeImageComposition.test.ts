@@ -13,7 +13,7 @@ test("Attendu: corps image correct", () => {
     choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE,
     sousType: SousTypeDelivrance.RDD
   } as IRequeteDelivrance;
-  const validation = Validation.N;
+  const validation = Validation.O;
   const avecFiliation = true;
   const copie = true;
   const archive = false;

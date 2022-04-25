@@ -1,3 +1,4 @@
+import { CopieActeTexteDecesComposition } from "../../../../../../model/composition/extraitCopie/createur/CopieActeTexteDecesComposition";
 import { ExtraitCopieActeTexteMariageComposition } from "../../../../../../model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
 import { ExtraitCopieActeTexteNaissanceComposition } from "../../../../../../model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
 import { IExtraitCopieComposition } from "../../../../../../model/composition/extraitCopie/IExtraitCopieComposition";
@@ -28,12 +29,15 @@ export const creationCompositionExtraitCopieActeTexte = function (
         ChoixDelivrance.estCopieArchive(choixDelivrance)
       );
   } else if (acteComplet.nature === NatureActe.DECES) {
-    /* istanbul ignore next */
-    // TODO ExtraitCopieActeTexteDecesComposition.creerExtraitCopieActeTexte
-    composition = {
-      nature_acte: "DECES",
-      type_document: "EXTRAIT"
-    } as IExtraitCopieComposition;
+    composition = CopieActeTexteDecesComposition.creerCopieActeTexteDeces(
+      acteComplet,
+      requete,
+      validation,
+      mentionsRetirees,
+      ChoixDelivrance.estAvecFiliation(choixDelivrance),
+      ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance),
+      ChoixDelivrance.estCopieArchive(choixDelivrance)
+    );
   } else if (acteComplet.nature === NatureActe.NAISSANCE) {
     composition =
       ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
