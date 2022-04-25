@@ -4,7 +4,6 @@ import {
 } from "../../../../model/etatcivil/acte/IAnalyseMarginale";
 import {
   DEUX,
-  ecraseDonneeObjetAvec,
   getValeurOuVide,
   jointAvecRetourALaLigne,
   triListeObjetsSurPropriete,
@@ -167,42 +166,29 @@ export class CommunExtraitOuCopieActeTexteComposition {
     ecTitulaire1: ITitulaireCompositionEC;
     ecTitulaire2?: ITitulaireCompositionEC;
   } {
+    // Récupération des titulaires AM
+    const [titulaireAM1, titulaireAM2] =
+      FicheActe.getTitulairesAMDansLOrdre(acte);
+
+    // Récupération des titulaires de l'Acte pour la filiation
     const { titulaireActe1, titulaireActe2 } =
       FicheActe.getTitulairesDansLOrdre(acte);
 
-    let ecTitulaire1 =
+    titulaireAM1.filiations = titulaireActe1.filiations;
+    const ecTitulaire1 =
       CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-        titulaireActe1
+        titulaireAM1
       );
 
     let ecTitulaire2;
-    if (titulaireActe2) {
+    if (titulaireAM2) {
+      if (titulaireActe2) {
+        titulaireAM2.filiations = titulaireActe2.filiations;
+      }
       ecTitulaire2 =
         CommunExtraitOuCopieActeTexteComposition.creerTitulaireCompositionEC(
-          titulaireActe2
+          titulaireAM2
         );
-    }
-
-    if (acte.analyseMarginales) {
-      const { titulaireAMCompositionEC1, titulaireAMCompositionEC2 } =
-        CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(
-          acte.analyseMarginales
-        );
-
-      // Les données du titulaire de l'acte sont écrasées par celle du titulaire de l'analyse marginale
-      if (titulaireAMCompositionEC1) {
-        ecTitulaire1 = ecraseDonneeObjetAvec(
-          ecTitulaire1,
-          titulaireAMCompositionEC1
-        );
-      }
-
-      if (titulaireAMCompositionEC2) {
-        ecTitulaire2 = ecraseDonneeObjetAvec(
-          ecTitulaire2,
-          titulaireAMCompositionEC2
-        );
-      }
     }
 
     return { ecTitulaire1, ecTitulaire2 };

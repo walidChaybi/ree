@@ -333,17 +333,6 @@ export function getLibelle(msg: string) {
   return msg;
 }
 
-export function ecraseDonneeObjetAvec(obj1: any, obj2: any) {
-  // Les propriétés "undefined", "null" et vides sont ignorées
-  const obj1EcraseParObj2SansProprieteNulle: any = { ...obj1 };
-  Object.entries(obj2).forEach(([k, v]) => {
-    if (v != null && v !== "") {
-      obj1EcraseParObj2SansProprieteNulle[k] = v;
-    }
-  });
-  return obj1EcraseParObj2SansProprieteNulle;
-}
-
 export function shallowEgalTableau(tab1: Object[], tab2: Object[]) {
   if (tab1.length !== tab2.length) return false;
   let res = true;

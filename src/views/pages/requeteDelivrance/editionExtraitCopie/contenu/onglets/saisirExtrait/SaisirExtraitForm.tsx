@@ -50,7 +50,7 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
     /*TODO*/
   }, []);
 
-  const titulairesAMs = FicheActe.getTitulairesAMDansLeBonOrdre(props.acte);
+  const titulairesAMs = FicheActe.getTitulairesAMDansLOrdre(props.acte);
   const evenement = props.acte.evenement;
   const titulaire1Parents = TitulaireActe.getParents(props.acte.titulaires[0]);
   const titulaire2Parents = TitulaireActe.getParents(props.acte.titulaires[1]);

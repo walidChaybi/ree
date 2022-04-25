@@ -119,25 +119,34 @@ export const FicheActe = {
     );
   },
 
-  getTitulairesAMDansLeBonOrdre(acte: IFicheActe) {
-    const titulairesAMs: (ITitulaireActe | undefined)[] = [];
-    const titulairesActe = this.getTitulairesDansLOrdre(acte);
+  getTitulairesAMDansLOrdre(acte: IFicheActe) {
+    const titulairesAMs: ITitulaireActe[] = [];
+    const titulairesActeDansLOrdre = this.getTitulairesDansLOrdre(acte);
 
     const analyseMarginale = this.getAnalyseMarginaleLaPlusRecente(acte);
     if (analyseMarginale) {
-      const titulairesAM =
+      const titulairesAMDansLOrdre =
         AnalyseMarginale.getTitulairesDansLOrdre(analyseMarginale);
 
-      if (titulairesAM.titulaireAM1) {
-        titulairesAMs[0] = { ...titulairesAM.titulaireAM1 };
+      if (titulairesAMDansLOrdre.titulaireAM1) {
+        titulairesAMs[0] = { ...titulairesAMDansLOrdre.titulaireAM1 };
 
         majDeclarationConjointe(
           titulairesAMs[0],
-          titulairesActe.titulaireActe1
+          titulairesActeDansLOrdre.titulaireActe1
         );
+        majNomSequable(
+          titulairesAMs[0],
+          titulairesActeDansLOrdre.titulaireActe1
+        );
+      }
 
-        majNomSequable(titulairesAMs[0], titulairesActe.titulaireActe1);
-        majNomSequable(titulairesAMs[1], titulairesActe.titulaireActe1);
+      if (titulairesAMDansLOrdre.titulaireAM2) {
+        titulairesAMs[1] = { ...titulairesAMDansLOrdre.titulaireAM2 };
+        majNomSequable(
+          titulairesAMs[1],
+          titulairesActeDansLOrdre.titulaireActe1
+        );
       }
     }
     return titulairesAMs;
@@ -157,6 +166,12 @@ function majDeclarationConjointe(
   titulaireActe: ITitulaireActe
 ) {
   if (
+    titulaireAM.typeDeclarationConjointe ===
+    TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE
+  ) {
+    titulaireAM.dateDeclarationConjointe = undefined;
+    // Remarque on ne change pas le type ABSENCE_DECLARATION_VALIDEE en ABSENCE_DECLARATION car ils ont tous les deux le même libellé
+  } else if (
     titulaireAM.typeDeclarationConjointe ===
     TypeDeclarationConjointe.ABSENCE_DECLARATION
   ) {

@@ -778,7 +778,186 @@ export const ficheActeMariage = {
         }
       ]
     },
-    analyseMarginales: [],
+    analyseMarginales: [
+      {
+        dateDebut: 1612782000000,
+        dateFin: null,
+        nomOec: null,
+        prenomOec: null,
+        motifModification: "FRANCISATION_PRENOM",
+        titulaires: [
+          {
+            nom: "MARTIN",
+            prenoms: ["Jean-Louis", "Alphonse", "Raoül"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 29,
+              mois: 11,
+              annee: 1989,
+              voie: null,
+              ville: "Paris",
+              arrondissement: null,
+              region: "",
+              pays: "Fance",
+              lieuReprise: null
+            },
+            profession: "Enseignante",
+            age: null,
+            domicile: {
+              voie: "7 Rue du Noyer",
+              ville: "Bruxelles",
+              arrondissement: null,
+              region: "Flandre",
+              pays: "BELGIQUE"
+            },
+            filiations: [
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmela", "Linzy"]
+              },
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmelaa", "Linzy"]
+              },
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT_ADOPTANT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmelaaa", "Linzy"]
+              },
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT_ADOPTANT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmelaaaa", "Linzy"]
+              }
+            ],
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          },
+          {
+            nom: "PRODESK",
+            prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 2,
+            sexe: "FEMININ",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 25,
+              mois: 6,
+              annee: 1990,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null
+            },
+            profession: "Enseignante",
+            age: null,
+            domicile: {
+              voie: "7 Rue du Noyer",
+              ville: "Bruxelles",
+              arrondissement: null,
+              region: "Flandre",
+              pays: "BELGIQUE"
+            },
+            filiations: [
+              {
+                type: null,
+                ordre: 752,
+                nom: "Sacken",
+                sexe: "MASCULIN",
+                naissance: null,
+                profession: "Informaticien",
+                age: null,
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI"
+                },
+                prenoms: ["Carmela", "Linzy"]
+              }
+            ],
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null
+          }
+        ]
+      }
+    ],
     type: "IMAGE",
     detailMariage: {
       existenceContrat: "NON"
@@ -1108,7 +1287,7 @@ export const ficheActeNaissance = {
             autresNoms: null,
             autresPrenoms: null,
             ordre: 1,
-            sexe: null,
+            sexe: "FEMININ",
             naissance: null,
             profession: null,
             age: null,

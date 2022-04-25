@@ -2,7 +2,6 @@ import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 import {
   changeLaPlaceDunElement,
   compareNombre,
-  ecraseDonneeObjetAvec,
   enMajuscule,
   estTableauNonVide,
   finirAvec3petitsPoints,
@@ -240,49 +239,4 @@ test("Attendu: supprimeElement fonctionne correctement", () => {
     { a: 2 }
   ]);
   expect(supprimeElement(tableau, (elt: any) => elt.a === 4)).toEqual(tableau);
-});
-
-test("Attendu: ecraseDonneeObjectAvec fonctionne correctement", () => {
-  const o1 = {
-    nom: "no1",
-    prenom: "p1",
-    adr: "adr1"
-  };
-  const o2 = {
-    nom: "no2",
-    prenom: "p2",
-    adr: "adr2"
-  };
-
-  const o3 = {
-    nom: "no3"
-  };
-
-  const o4 = {
-    nom: "no4",
-    prenom: null,
-    adr: undefined
-  };
-
-  const o5 = {
-    nom: "",
-    prenom: undefined,
-    adr: undefined,
-    tel: 123456
-  };
-
-  expect(ecraseDonneeObjetAvec(o1, o2)).toEqual(o2);
-  expect(ecraseDonneeObjetAvec(o1, o3)).toEqual({
-    nom: "no3",
-    prenom: "p1",
-    adr: "adr1"
-  });
-  expect(ecraseDonneeObjetAvec(o1, o4)).toEqual({
-    nom: "no4",
-    prenom: "p1",
-    adr: "adr1"
-  });
-  expect(ecraseDonneeObjetAvec(o1, o5)).toEqual({ ...o1, tel: 123456 });
-
-  expect(ecraseDonneeObjetAvec(undefined, o1)).toEqual({ ...o1 });
 });
