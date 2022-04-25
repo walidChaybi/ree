@@ -81,7 +81,16 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
         {gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) && (
           <MenuAutre requete={props.requete} />
         )}
-        {checkSiMenuTransferer() && <MenuTransfert requete={props.requete} />}
+        {checkSiMenuTransferer() && (
+          <MenuTransfert
+            idRequete={props.requete.id}
+            sousTypeRequete={props.requete.sousType}
+            typeRequete={props.requete.type}
+            estTransfert={true}
+            provenance={props.requete.provenanceRequete}
+            idUtilisateurRequete={props.requete.idUtilisateur}
+          />
+        )}
       </div>
     </Fieldset>
   );

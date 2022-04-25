@@ -457,7 +457,7 @@ export const configRequetes = [
       if (
         (match[1] === "/requetes/action/transfert" ||
           match[1] ===
-            "/requetes/action/transfert?idRequete=12345&idEntite=12345&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=libelleAction") &&
+            "/requetes/action/transfert?idRequete=12345&idEntite=12345&idUtilisateur=12345&statutRequete=TRANSFEREE&libelleAction=libelleAction&attribuer=false") &&
         context.method === "post"
       ) {
         return { data: "123456789" };

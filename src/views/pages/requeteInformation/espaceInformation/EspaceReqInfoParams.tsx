@@ -5,6 +5,7 @@ import { TableauTypeColumn } from "../../../common/widget/tableau/TableauRece/Ta
 
 export const StatutsRequetesInformation = [
   StatutRequete.PRISE_EN_CHARGE.nom,
+  StatutRequete.A_TRAITER.nom,
   StatutRequete.TRANSFEREE.nom
 ];
 
@@ -16,14 +17,16 @@ export enum HeaderTableauRequeteInformation {
   DateCreation = "dateCreation",
   Statut = "statut",
   Titulaire = "nomsTitulaires",
-  Objet = "objet"
+  Objet = "objet",
+  AttribueA = "attribueA",
+  IconeAssigne = "iconeAssigne"
 }
 
 const style = {
   width: "7.6em"
 };
 
-export const requeteInformationColumnHeaders = [
+export const requeteInformationMesRequetesColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Numero],
     title: getLibelle("N° requête"),
@@ -43,6 +46,62 @@ export const requeteInformationColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.DateCreation],
     title: getLibelle("Date requête"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Statut],
+    title: getLibelle("Statut"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: ["typeRequerant"],
+    title: getLibelle("Type requérant"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.NomRequerant],
+    title: getLibelle("Prénom / Nom requérant"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Titulaire],
+    title: getLibelle("Prénom / Nom de naissance titulaire"),
+    align: "center",
+    dataIsArray: true,
+    getElement: getCellTitulaires
+  })
+];
+
+export const requeteInformationRequetesServiceColumnHeaders = [
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Numero],
+    title: getLibelle("N° requête"),
+    align: "center",
+    style
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.SousType],
+    title: getLibelle("Sous-type"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.Objet],
+    title: getLibelle("Objet"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.DateCreation],
+    title: getLibelle("Date requête"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.AttribueA],
+    title: getLibelle("Attribuée à"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequeteInformation.IconeAssigne],
+    title: "",
     align: "center"
   }),
   new TableauTypeColumn({

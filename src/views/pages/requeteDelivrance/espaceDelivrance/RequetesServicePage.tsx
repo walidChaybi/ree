@@ -3,8 +3,11 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
+import { MenuTransfert } from "../../../common/composant/menuTransfert/MenuTransfert";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
@@ -36,7 +39,12 @@ const columnsRequestesService = [
   ...requeteColumnHeaders,
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.AttribueA],
-    title: getLibelle("Attribué à"),
+    title: getLibelle("Attribuée à"),
+    align: "center"
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.IconeAssigne],
+    title: "",
     align: "center"
   }),
   ...dateStatutColumnHeaders
@@ -49,21 +57,22 @@ interface MesRequetesServicePageProps {
   ) => void;
 }
 
-export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
+export const RequetesServicePage: React.FC<
+  MesRequetesServicePageProps
+> = props => {
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
 
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
     CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
 
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetes
-  >({
-    statuts: StatutsRequetesEspaceDelivrance,
-    tri: "dateStatut",
-    sens: "ASC",
-    range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
-  });
+  const [linkParameters, setLinkParameters] =
+    React.useState<IQueryParametersPourRequetes>({
+      statuts: StatutsRequetesEspaceDelivrance,
+      tri: "dateStatut",
+      sens: "ASC",
+      range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+    });
   const [enChargement, setEnChargement] = React.useState(true);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
@@ -81,6 +90,15 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }
+  }
+
+  function rafraichirParent() {
+    setLinkParameters({
+      statuts: StatutsRequetesEspaceDelivrance,
+      tri: "dateStatut",
+      sens: "ASC",
+      range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+    });
   }
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
@@ -128,6 +146,26 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     setOperationEnCours(false);
   };
 
+  const getIcone = (
+    idRequete: string,
+    sousType: string,
+    idUtilisateur: string
+  ) => {
+    return (
+      <MenuTransfert
+        idRequete={idRequete}
+        typeRequete={TypeRequete.DELIVRANCE}
+        sousTypeRequete={SousTypeDelivrance.getEnumFor(sousType)}
+        estTransfert={false}
+        menuFermer={true}
+        icone={true}
+        pasAbandon={true}
+        idUtilisateurRequete={idUtilisateur}
+        rafraichirParent={rafraichirParent}
+      />
+    );
+  };
+
   return (
     <>
       <OperationEnCours
@@ -142,6 +180,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
         onClickOnLine={onClickOnLine}
         columnHeaders={columnsRequestesService}
         dataState={dataState}
+        icone={{ keyColonne: "iconeAssigne", getIcone }}
         paramsTableau={paramsTableau}
         goToLink={goToLink}
         handleChangeSort={handleChangeSort}

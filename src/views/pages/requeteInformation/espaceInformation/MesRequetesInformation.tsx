@@ -24,7 +24,7 @@ import {
 import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
 import { receUrl } from "../../../router/ReceUrls";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
-import { requeteInformationColumnHeaders } from "./EspaceReqInfoParams";
+import { requeteInformationMesRequetesColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationHook";
 import "./scss/RequeteTableau.scss";
 
@@ -49,9 +49,8 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
   useNavigationApercuInformation(paramsNavReqInfo);
 
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetes
-  >(parametresReqInfo);
+  const [linkParameters, setLinkParameters] =
+    React.useState<IQueryParametersPourRequetes>(parametresReqInfo);
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
@@ -118,7 +117,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
         onClickOnLine={onClickOnLine}
-        columnHeaders={requeteInformationColumnHeaders}
+        columnHeaders={requeteInformationMesRequetesColumnHeaders}
         dataState={dataState}
         paramsTableau={paramsTableau}
         goToLink={goToLink}

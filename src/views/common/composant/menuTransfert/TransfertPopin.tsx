@@ -51,6 +51,11 @@ export const TransfertPopin: React.FC<TransfertPopinProps> = ({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         className="PopinTransfert"
+        onClick={(e: any) => {
+          if (e) {
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle>{getLibelle(titre)}</DialogTitle>
         <DialogContent>

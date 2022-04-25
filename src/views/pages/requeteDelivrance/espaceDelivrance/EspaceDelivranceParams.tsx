@@ -29,7 +29,8 @@ export enum HeaderTableauRequete {
   DateCreation = "dateCreation",
   DateDerniereMaj = "dateDerniereMaj",
   Statut = "statut",
-  PrioriteRequete = "prioriteRequete"
+  PrioriteRequete = "prioriteRequete",
+  IconeAssigne = "iconeAssigne"
 }
 
 const style = {

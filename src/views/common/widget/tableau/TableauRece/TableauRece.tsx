@@ -17,6 +17,15 @@ import { TableauBody } from "./TableauBody";
 import { TableauHeader } from "./TableauHeader";
 import { TableauTypeColumn } from "./TableauTypeColumn";
 
+export interface IconeParams {
+  keyColonne: string;
+  getIcone: (
+    id: string,
+    sousType: string,
+    idUtilisateur: string
+  ) => JSX.Element;
+}
+
 export interface TableauReceProps {
   idKey: string;
   sortOrderByState?: string;
@@ -25,6 +34,7 @@ export interface TableauReceProps {
   dataState: any[];
   paramsTableau: IParamsTableau;
   canUseSignature?: boolean;
+  icone?: IconeParams;
   handleChangeSort?: (tri: string, sens: SortOrder) => void;
   onClickOnLine: (id: string, data: any[], idxGlobal: number) => void;
   goToLink: (value: string) => void;
@@ -170,6 +180,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
             onClickOnLine={onClickOnLine}
             noRows={props.noRows}
             enChargement={props.enChargement}
+            icone={props.icone}
           />
         </Box>
       </TableContainer>

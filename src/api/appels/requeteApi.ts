@@ -379,7 +379,8 @@ export function postTransfertRequete(
   idEntite: string,
   idUtilisateur: string,
   libelleAction: string,
-  statutRequete: StatutRequete
+  statutRequete: StatutRequete,
+  estTransfert: boolean
 ) {
   return api.fetch({
     method: HttpMethod.POST,
@@ -389,7 +390,8 @@ export function postTransfertRequete(
       idEntite,
       idUtilisateur,
       statutRequete: StatutRequete.getKey(statutRequete),
-      libelleAction
+      libelleAction,
+      attribuer: !estTransfert
     }
   });
 }

@@ -8,11 +8,13 @@ import { TableauTypeColumn } from "./TableauTypeColumn";
 interface TableauBodyCellProps {
   column: TableauTypeColumn;
   valueAtKey?: any;
+  children?: JSX.Element;
 }
 
 export const TableauBodyCell: React.FC<TableauBodyCellProps> = ({
   column,
-  valueAtKey
+  valueAtKey,
+  children
 }) => {
   const dataTitle = column.dataIsArray ? formaterData(valueAtKey) : valueAtKey;
 
@@ -33,9 +35,12 @@ export const TableauBodyCell: React.FC<TableauBodyCellProps> = ({
           : undefined
       }
     >
-      {column.dataIsArray
-        ? getValeursCellule(valueAtKey)
-        : getValeurOuVide(valueAtKey)}
+      <span>
+        {column.dataIsArray
+          ? getValeursCellule(valueAtKey)
+          : getValeurOuVide(valueAtKey)}
+      </span>
+      {children}
     </TableCell>
   );
 };

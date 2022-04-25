@@ -65,7 +65,7 @@ test("renders delivrancePage", async () => {
     fireEvent.click(requetesService);
   });
 
-  const attribueA = screen.getByText(/Attribué à/i);
+  const attribueA = screen.getByText(/Attribuée à/i);
 
   await waitFor(() => {
     expect(title).toBeDefined();

@@ -4,8 +4,8 @@ import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import {
-    TransfertParams,
-    useTransfertApi
+  TransfertParams,
+  useTransfertApi
 } from "../../../../views/common/hook/requete/TransfertHook";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -14,7 +14,8 @@ const params: TransfertParams = {
   statutRequete: StatutRequete.TRANSFEREE,
   idRequete: "12345",
   idEntite: "12345",
-  idUtilisateur: "12345"
+  idUtilisateur: "12345",
+  estTransfert: true
 };
 
 const HookConsumer: React.FC = () => {

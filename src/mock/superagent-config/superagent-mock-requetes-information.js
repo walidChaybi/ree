@@ -30,14 +30,13 @@ export const configRequetesInformation = [
       // Mes requetes d'information (espace information)
       if (
         match[1] ===
-        "/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
+        "/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseMesRequetesInformation,
           headers: {
             "content-range": "0-15/" + ReponseMesRequetesInformation.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -45,14 +44,13 @@ export const configRequetesInformation = [
       // Requetes d'information de mon service (espace information)
       if (
         match[1] ===
-        "/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
+        "/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseRequetesInfoService,
           headers: {
             "content-range": "0-15/" + ReponseRequetesInfoService.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }

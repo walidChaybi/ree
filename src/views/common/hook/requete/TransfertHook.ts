@@ -5,29 +5,25 @@ import { logError } from "../../util/LogManager";
 import { getValeurOuVide } from "../../util/Utils";
 
 export interface TransfertParams {
-  idRequete?: string;
+  idRequete: string;
   idEntite?: string;
   idUtilisateur?: string;
-  statutRequete?: StatutRequete;
-  libelleAction?: string;
+  statutRequete: StatutRequete;
+  libelleAction: string;
+  estTransfert: boolean;
 }
 
 export function useTransfertApi(params?: TransfertParams) {
   const [res, setRes] = useState<string | undefined>();
   useEffect(() => {
-    if (
-      params &&
-      params.idRequete &&
-      (params.idEntite || params.idUtilisateur) &&
-      params.statutRequete &&
-      params.libelleAction
-    ) {
+    if (params && (params.idEntite || params.idUtilisateur)) {
       postTransfertRequete(
         params.idRequete,
         getValeurOuVide(params.idEntite),
         getValeurOuVide(params.idUtilisateur),
         params.libelleAction,
-        params.statutRequete
+        params.statutRequete,
+        params.estTransfert
       )
         .then(result => {
           setRes(result.body.data);

@@ -9,6 +9,7 @@ import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TypeMandataireReq } from "./enum/TypeMandataireReq";
 import { IRequeteTableau } from "./IRequeteTableau";
+import { mapAttribueA } from "./IRequeteTableauDelivrance";
 import {
   ITitulaireRequeteTableau,
   mapTitulaires
@@ -18,6 +19,7 @@ export interface IRequeteTableauInformation extends IRequeteTableau {
   objet?: string;
   typeRequerant?: string;
   nomsTitulaires?: string;
+  attribueA?: string;
 }
 
 //////////////////////////////////////////
@@ -51,7 +53,8 @@ export function mappingUneRequeteTableauInformation(
     ),
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     nomsTitulaires: getNomsTitulaires(requete?.titulaires),
-    idUtilisateur: valeurOuUndefined(requete?.idUtilisateur)
+    idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
+    attribueA: mapAttribueA(requete)
   } as IRequeteTableauInformation;
 }
 

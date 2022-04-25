@@ -1,17 +1,11 @@
 import { Menu, MenuItem } from "@material-ui/core";
+import { AssignmentInd } from "@material-ui/icons";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  IUtilisateur,
-  utilisateurADroit
-} from "../../../../model/agent/IUtilisateur";
-import { Droit } from "../../../../model/Droit";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { SousTypeRequete } from "../../../../model/requete/enum/SousTypeRequete";
 import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import { IActionOption } from "../../../../model/requete/IActionOption";
-import { TRequete } from "../../../../model/requete/IRequete";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
+import { IProvenanceRequete } from "../../../../model/requete/IProvenanceRequete";
 import {
   receUrl,
   URL_MES_REQUETES_DELIVRANCE,
@@ -21,14 +15,19 @@ import {
   TransfertParams,
   useTransfertApi
 } from "../../hook/requete/TransfertHook";
-import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
 import { FeatureFlag } from "../../util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeatureFlag";
-import { storeRece } from "../../util/storeRece";
-import { Option, Options } from "../../util/Type";
+import { Option } from "../../util/Type";
 import { getLibelle } from "../../util/Utils";
 import { OperationEnCours } from "../../widget/attente/OperationEnCours";
 import { GroupeBouton } from "../../widget/menu/GroupeBouton";
+import {
+  listeEntiteToOptions,
+  listeUtilisateursToOptionsBis,
+  onValidateAgent,
+  onValidateService,
+  resetDoubleSubmit
+} from "./MenuTransfertUtil";
 import { TransfertPopin } from "./TransfertPopin";
 
 const INDEX_ACTION_TRANSFERT_SERVICE = 0;
@@ -36,9 +35,17 @@ const INDEX_ACTION_TRANSFERT_OFFICIER = 1;
 const INDEX_ACTION_TRANSFERT_ABANDON = 2;
 
 export interface IMenuTransfertProps {
-  requete: TRequete;
+  idRequete: string;
+  typeRequete: TypeRequete;
+  idUtilisateurRequete: string;
+  sousTypeRequete: SousTypeRequete;
+  provenance?: IProvenanceRequete;
   menuFermer?: boolean;
   disabled?: boolean;
+  estTransfert: boolean;
+  icone?: boolean;
+  pasAbandon?: boolean;
+  rafraichirParent?: () => void;
 }
 
 export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
@@ -64,8 +71,9 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   useEffect(() => {
     const opts = reponseSansDelivranceCSOptions;
     if (
-      props.requete.type === TypeRequete.DELIVRANCE &&
-      gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS)
+      props.typeRequete === TypeRequete.DELIVRANCE &&
+      gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) &&
+      !props.pasAbandon
     ) {
       opts.push({
         value: INDEX_ACTION_TRANSFERT_ABANDON,
@@ -75,9 +83,12 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
     }
     setOptions(opts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.requete]);
+  }, [props.typeRequete]);
 
-  const handleTransfertMenu = async (indexMenu: number) => {
+  const handleTransfertMenu = async (indexMenu: number, e: any) => {
+    if (e) {
+      e.stopPropagation();
+    }
     switch (indexMenu) {
       case INDEX_ACTION_TRANSFERT_SERVICE:
         setServicePopinOpen(true);
@@ -91,19 +102,14 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
     }
   };
 
-  const resetDoubleSubmit = () => {
-    reponseSansDelivranceCSOptions.forEach(el => {
-      DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
-    });
-  };
-
   /* Gestion du Menu */
-  const [
-    menuReponsesProposees,
-    setMenuReponsesProposees
-  ] = React.useState<null | HTMLElement>(null);
+  const [menuReponsesProposees, setMenuReponsesProposees] =
+    React.useState<null | HTMLElement>(null);
 
-  const handleClickBoutonReponse = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickBoutonReponse = (e: any) => {
+    if (e) {
+      e.stopPropagation();
+    }
     setMenuReponsesProposees(e.currentTarget);
   };
 
@@ -114,56 +120,32 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   /* Gestion des pop-in de transfère */
   const [servicePopinOpen, setServicePopinOpen] = useState<boolean>(false);
   const [agentPopinOpen, setAgentPopinOpen] = useState<boolean>(false);
-  const [param, setParam] = useState<TransfertParams>({});
+  const [param, setParam] = useState<TransfertParams>();
 
   const onCloseService = () => {
     setServicePopinOpen(false);
-    resetDoubleSubmit();
+    resetDoubleSubmit(reponseSansDelivranceCSOptions);
   };
   const onCloseAgent = () => {
     setAgentPopinOpen(false);
-    resetDoubleSubmit();
-  };
-
-  const onValidateService = (entite: Option | undefined) => {
-    if (entite) {
-      setParam({
-        idRequete: props.requete.id,
-        idEntite: entite.value,
-        idUtilisateur: "",
-        statutRequete: StatutRequete.TRANSFEREE,
-        libelleAction: `Requête attribuée à ${entite.str}`
-      });
-      setServicePopinOpen(false);
-    }
-  };
-
-  const onValidateAgent = (agent: Option | undefined) => {
-    if (agent) {
-      setParam({
-        idRequete: props.requete.id,
-        idEntite: storeRece.listeUtilisateurs.find(
-          utilisateur => utilisateur.idUtilisateur === agent.value
-        )?.entite?.idEntite,
-        idUtilisateur: agent.value,
-        statutRequete: StatutRequete.TRANSFEREE,
-        libelleAction: `Requête attribuée à ${agent.str}`
-      });
-      setAgentPopinOpen(false);
-    }
+    resetDoubleSubmit(reponseSansDelivranceCSOptions);
   };
 
   const idAction = useTransfertApi(param);
 
   useEffect(() => {
     if (idAction) {
-      if (props.requete.type === TypeRequete.DELIVRANCE) {
-        receUrl.replaceUrl(history, URL_MES_REQUETES_DELIVRANCE);
-      } else {
-        receUrl.replaceUrl(history, URL_MES_REQUETES_INFORMATION);
+      if (props.estTransfert) {
+        if (props.typeRequete === TypeRequete.DELIVRANCE) {
+          receUrl.replaceUrl(history, URL_MES_REQUETES_DELIVRANCE);
+        } else {
+          receUrl.replaceUrl(history, URL_MES_REQUETES_INFORMATION);
+        }
+      } else if (props.rafraichirParent) {
+        props.rafraichirParent();
       }
     }
-  }, [idAction, history, props.requete]);
+  }, [idAction, history, props.typeRequete, props]);
 
   return (
     <>
@@ -174,12 +156,16 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       />
       {props.menuFermer ? (
         <div>
-          <button
-            disabled={props.disabled}
-            onClick={e => handleClickBoutonReponse(e)}
-          >
-            {getLibelle("Transférer")}
-          </button>
+          {props.icone ? (
+            <AssignmentInd onClick={e => handleClickBoutonReponse(e)} />
+          ) : (
+            <button
+              disabled={props.disabled}
+              onClick={e => handleClickBoutonReponse(e)}
+            >
+              {getLibelle("Transférer")}
+            </button>
+          )}
 
           <Menu
             className="Menu"
@@ -201,7 +187,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
             {options.map((action: IActionOption) => {
               return (
                 <MenuItem
-                  onClick={() => handleTransfertMenu(action.value)}
+                  onClick={e => handleTransfertMenu(action.value, e)}
                   key={`action${action.value}`}
                 >
                   {action.label}
@@ -221,73 +207,41 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       <TransfertPopin
         open={servicePopinOpen}
         onClose={onCloseService}
-        onValidate={onValidateService}
+        onValidate={(entite?: Option) =>
+          onValidateService(
+            setOperationEnCours,
+            setParam,
+            props,
+            setServicePopinOpen,
+            entite
+          )
+        }
         options={listeEntiteToOptions()}
-        titre="Transfert à un service"
+        titre={`${props.estTransfert ? "Transfert" : "Assigner"} à un service`}
       ></TransfertPopin>
       <TransfertPopin
         open={agentPopinOpen}
         onClose={onCloseAgent}
-        onValidate={onValidateAgent}
-        options={listeUtilisateursToOptionsBis(props.requete)}
-        titre="Transfert à un officier d'état civil"
+        onValidate={(agent?: Option) =>
+          onValidateAgent(
+            setParam,
+            props,
+            setAgentPopinOpen,
+            setOperationEnCours,
+            agent
+          )
+        }
+        options={listeUtilisateursToOptionsBis(
+          props.typeRequete,
+          props.sousTypeRequete,
+          props.idUtilisateurRequete,
+          props.estTransfert
+        )}
+        titre={`${
+          props.estTransfert ? "Transfert" : "Assigner"
+        } à un officier d'état civil`}
       ></TransfertPopin>
     </>
   );
 };
 
-function listeEntiteToOptions(): Options {
-  return [
-    { value: "", str: "" },
-    ...storeRece.listeEntite
-      .filter(entite => entite.estDansSCEC)
-      .map(entite => {
-        return { value: entite.idEntite, str: entite.libelleEntite };
-      })
-  ];
-}
-
-function listeUtilisateursToOptionsBis(requete: TRequete): Options {
-  return [
-    { value: "", str: "" },
-    ...storeRece.listeUtilisateurs
-      .filter(utilisateur => filterUtilisateur(utilisateur, requete))
-      .map(utilisateur => {
-        return {
-          value: utilisateur.idUtilisateur,
-          str: `${utilisateur.nom} ${utilisateur.prenom}`
-        };
-      })
-  ];
-}
-
-function filterUtilisateur(utilisateur: IUtilisateur, requete: TRequete) {
-  if (requete.type === TypeRequete.DELIVRANCE) {
-    return filtreUtilisateurRequeteDelivrance(
-      utilisateur,
-      requete as IRequeteDelivrance
-    );
-  } else {
-    return filtreUtilisateurRequeteInformation(utilisateur);
-  }
-}
-
-function filtreUtilisateurRequeteInformation(
-  utilisateur: IUtilisateur
-): boolean {
-  const estDuSCEC = utilisateur.entite?.estDansSCEC;
-  const aDroit = utilisateurADroit(Droit.INFORMER_USAGER, utilisateur);
-  return Boolean(estDuSCEC && aDroit);
-}
-
-function filtreUtilisateurRequeteDelivrance(
-  utilisateur: IUtilisateur,
-  requete: IRequeteDelivrance
-): boolean {
-  const estDuSCEC = utilisateur.entite?.estDansSCEC;
-  const aDroit =
-    requete.sousType === SousTypeDelivrance.RDDCO
-      ? utilisateurADroit(Droit.DELIVRER_COMEDEC, utilisateur)
-      : utilisateurADroit(Droit.DELIVRER, utilisateur);
-  return Boolean(estDuSCEC && aDroit);
-}

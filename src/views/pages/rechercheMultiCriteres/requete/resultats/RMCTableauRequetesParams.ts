@@ -81,7 +81,7 @@ export const columnsTableauRequete = [
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.AttribueA],
-    title: "Attribué à",
+    title: "Attribuée à",
     align: "center"
   }),
   new TableauTypeColumn({

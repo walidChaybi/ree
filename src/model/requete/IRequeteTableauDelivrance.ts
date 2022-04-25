@@ -108,7 +108,7 @@ function getSousType(type: string, sousType: string) {
   }
 }
 
-function mapAttribueA(requete: any): string | undefined {
+export function mapAttribueA(requete: any): string | undefined {
   let attribueA: string | undefined;
   if (requete?.idUtilisateur) {
     attribueA = `${formatPrenom(

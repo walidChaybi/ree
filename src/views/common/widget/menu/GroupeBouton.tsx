@@ -6,7 +6,7 @@ import "./scss/GroupeBouton.scss";
 
 interface IGroupeBoutonProps {
   titre: string;
-  onSelect: (indexMenu: number) => any;
+  onSelect: (indexMenu: number, e?: any) => any;
   listeActions: IActionOption[];
 }
 

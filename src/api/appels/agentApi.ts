@@ -6,6 +6,7 @@ const URL_UTILISATEURS = "/utilisateurs";
 const URL_UTILISATEURS_TOUS = "/utilisateurs/all";
 const URL_UTILISATEURS_INFOS = "/utilisateurs/infos";
 const URL_ENTITE_RATTACHEMENT_TOUTES = "/entiterattachement/all";
+const URL_ENTITE_RATTACHEMENT_FILLES = "/entiterattachement";
 
 const api = ApiManager.getInstance("rece-agent-api", "v1");
 
@@ -47,6 +48,16 @@ export function getToutesLesEntiteRattachement(plage?: string): Promise<any> {
     uri: URL_ENTITE_RATTACHEMENT_TOUTES,
     parameters: {
       range: plage
+    }
+  });
+}
+
+export function getToutesLesEntitesFilles(idEntite?: string): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: URL_ENTITE_RATTACHEMENT_FILLES,
+    parameters: {
+      idEntite
     }
   });
 }

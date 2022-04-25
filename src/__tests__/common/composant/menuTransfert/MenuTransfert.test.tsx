@@ -92,7 +92,13 @@ const HookConsummerMenuOuvert: React.FC = () => {
 
   return (
     <Router history={history}>
-      <MenuTransfert requete={requeteRDCSC} />
+      <MenuTransfert
+        idRequete={requeteRDCSC.id}
+        typeRequete={requeteRDCSC.type}
+        idUtilisateurRequete="111"
+        sousTypeRequete={requeteRDCSC.sousType}
+        estTransfert={true}
+      />
     </Router>
   );
 };
@@ -292,7 +298,14 @@ const HookConsummerMenuFermer: React.FC = () => {
 
   return (
     <Router history={history}>
-      <MenuTransfert requete={requeteInformation} menuFermer={false} />
+      <MenuTransfert
+        idRequete={requeteInformation.id}
+        typeRequete={requeteInformation.type}
+        idUtilisateurRequete="111"
+        sousTypeRequete={requeteInformation.sousType}
+        estTransfert={true}
+        menuFermer={false}
+      />
     </Router>
   );
 };

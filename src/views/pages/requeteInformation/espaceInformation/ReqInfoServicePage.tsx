@@ -4,8 +4,11 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
+import { SousTypeInformation } from "../../../../model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauInformation } from "../../../../model/requete/IRequeteTableauInformation";
+import { MenuTransfert } from "../../../common/composant/menuTransfert/MenuTransfert";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -21,7 +24,7 @@ import {
 import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
 import { URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID } from "../../../router/ReceUrls";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
-import { requeteInformationColumnHeaders } from "./EspaceReqInfoParams";
+import { requeteInformationRequetesServiceColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationHook";
 import "./scss/RequeteTableau.scss";
 
@@ -34,16 +37,14 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
 }) => {
   const history = useHistory();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
-  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<
-    CreationActionMiseAjourStatutHookParams
-  >();
+  const [paramsMAJReqInfo, setParamsMAJReqInfo] =
+    useState<CreationActionMiseAjourStatutHookParams>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
 
-  const [linkParameters, setLinkParameters] = React.useState<
-    IQueryParametersPourRequetes
-  >(parametresReqInfo);
+  const [linkParameters, setLinkParameters] =
+    React.useState<IQueryParametersPourRequetes>(parametresReqInfo);
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
@@ -60,6 +61,10 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
       setLinkParameters(queryParametersPourRequetes);
     }
   }, []);
+
+  const rafraichirParent = useCallback(() => {
+    setLinkParameters({ ...parametresReqInfo });
+  }, [parametresReqInfo]);
 
   const redirectionVersApercu = useCallback(
     (idRequete: string) => {
@@ -102,6 +107,25 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     setOperationEnCours(false);
   };
 
+  const getIcone = (
+    idRequete: string,
+    sousType: string,
+    idUtilisateur: string
+  ) => {
+    return (
+      <MenuTransfert
+        idRequete={idRequete}
+        typeRequete={TypeRequete.INFORMATION}
+        sousTypeRequete={SousTypeInformation.getEnumFor(sousType)}
+        estTransfert={false}
+        menuFermer={true}
+        icone={true}
+        idUtilisateurRequete={idUtilisateur}
+        rafraichirParent={rafraichirParent}
+      />
+    );
+  };
+
   return (
     <>
       <OperationEnCours
@@ -114,8 +138,9 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
         onClickOnLine={onClickOnLine}
-        columnHeaders={requeteInformationColumnHeaders}
+        columnHeaders={requeteInformationRequetesServiceColumnHeaders}
         dataState={dataState}
+        icone={{ keyColonne: "iconeAssigne", getIcone }}
         paramsTableau={paramsTableau}
         goToLink={goToLink}
         noRows={zeroRequete}

@@ -130,9 +130,13 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
                 </>
               )}
               <MenuTransfert
-                requete={requete}
+                idRequete={requete.id}
+                sousTypeRequete={requete.sousType}
+                typeRequete={requete.type}
+                estTransfert={true}
                 menuFermer={true}
                 disabled={lesBoutonsDisabled}
+                idUtilisateurRequete={requete.idUtilisateur}
               />
             </div>
           )}

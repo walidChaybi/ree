@@ -6,6 +6,7 @@ import { OperationLocaleEnCours } from "../../attente/OperationLocaleEnCours";
 import "./scss/Tableau.scss";
 import "./scss/TableauBody.scss";
 import { TableauBodyCell } from "./TableauBodyCell";
+import { IconeParams } from "./TableauRece";
 import { TableauTypeColumn } from "./TableauTypeColumn";
 
 interface TableauBodyProps {
@@ -15,6 +16,7 @@ interface TableauBodyProps {
   onClickOnLine: (identifiant: string, idx: number) => void;
   noRows?: JSX.Element;
   enChargement?: boolean;
+  icone?: IconeParams;
 }
 
 export const TableauBody: React.FC<TableauBodyProps> = ({
@@ -23,7 +25,8 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   columnHeaders,
   onClickOnLine,
   noRows,
-  enChargement
+  enChargement,
+  icone
 }) => {
   function onClickRowHandler(identifiant: string, idx: number) {
     onClickOnLine(identifiant, idx);
@@ -37,10 +40,18 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
             return (
               <TableRow
                 key={`${row[idKey]}${idx}`}
-                onClick={() => onClickRowHandler(row[idKey], idx)}
+                onClick={(e: any) => {
+                  onClickRowHandler(row[idKey], idx);
+                }}
                 data-testid={row[idKey]}
               >
-                {getRowRender(columnHeaders, row, idx)}
+                {getRowRender(
+                  columnHeaders,
+                  row,
+                  idx,
+
+                  icone
+                )}
               </TableRow>
             );
           })
@@ -65,7 +76,8 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
 function getRowRender(
   columnHeaders: TableauTypeColumn[],
   row: any,
-  idx: number
+  idx: number,
+  icone?: IconeParams
 ): JSX.Element[] {
   const tableauBodyCellList = [];
 
@@ -83,12 +95,23 @@ function getRowRender(
         </TableCell>
       );
     } else {
+      let iconeAAfficher = <></>;
+      if (column.keys[0] === icone?.keyColonne) {
+        iconeAAfficher = icone.getIcone(
+          row.idRequete,
+          row.sousType,
+          row.idUtilisateur
+        );
+      }
+
       tableauBodyCellList.push(
         <TableauBodyCell
           key={`row-${idx}-${column.keys[0]}`}
           valueAtKey={valueAtKey}
           column={column}
-        />
+        >
+          {iconeAAfficher}
+        </TableauBodyCell>
       );
     }
   }
