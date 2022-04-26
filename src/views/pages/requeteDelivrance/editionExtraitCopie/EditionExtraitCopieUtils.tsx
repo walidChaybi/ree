@@ -18,6 +18,7 @@ import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
+import { IResultatSauvegarderMentions } from "../../../common/hook/acte/mentions/SauvegarderMentionsHook";
 import { getLibelle, TROIS, UN, ZERO } from "../../../common/util/Utils";
 import { AccordionRece } from "../../../common/widget/accordion/AccordionRece";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
@@ -29,7 +30,7 @@ import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { OngletProps } from "./contenu/VoletAvecOnglet";
 
 export const getOngletsEdition = (
-  passerDocumentValider: (id: string) => void,
+  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
   acte?: IFicheActe
@@ -135,7 +136,7 @@ export const getOngletsVisu = (
 function ajoutOngletsCopie(
   res: OngletProps,
   document: IDocumentReponse,
-  passerDocumentValider: (id: string) => void,
+  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) {
@@ -153,7 +154,7 @@ function ajoutOngletsCopie(
 export const ajoutOngletsExtraitFilliation = (
   res: OngletProps,
   document: IDocumentReponse,
-  passerDocumentValider: (id: string) => void,
+  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
@@ -199,7 +200,7 @@ export const ajoutOngletsExtraitFilliation = (
 export const ajoutOngletsExtraitPlurilingue = (
   res: OngletProps,
   document: IDocumentReponse,
-  passerDocumentValider: (document: string) => void,
+  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
@@ -230,7 +231,7 @@ export const boutonModifierCopiePresent = (
 export const ongletMentions = (
   acte: IFicheActe,
   doc: IDocumentReponse,
-  passerDocumentValider: (iddocument: string) => void,
+  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
   requete: IRequeteDelivrance
 ) => {
   return {

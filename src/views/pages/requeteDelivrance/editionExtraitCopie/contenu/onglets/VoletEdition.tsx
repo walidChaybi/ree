@@ -1,8 +1,10 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
+import { MentionsRetirees } from "../../../../../../model/requete/enum/MentionsRetirees";
 import { Validation } from "../../../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
+import { IResultatSauvegarderMentions } from "../../../../../common/hook/acte/mentions/SauvegarderMentionsHook";
 import { EditionECContext } from "../../EditionExtraitCopiePage";
 import { checkDirty, getOngletsEdition } from "../../EditionExtraitCopieUtils";
 import { OngletProps, VoletAvecOnglet } from "../VoletAvecOnglet";
@@ -18,12 +20,15 @@ export const VoletEdition: React.FC<VoletEditionProps> = props => {
   const { isDirty, setIsDirty } = useContext(EditionECContext);
 
   const afficherDocument = useCallback(
-    (idDocument: string) => {
-      const futureDoc = { ...props.document };
-      futureDoc.id = idDocument;
-      futureDoc.validation = Validation.O;
-      props.sauvegarderDocument(futureDoc);
-      setIsDirty(false);
+    (resultat: IResultatSauvegarderMentions) => {
+        const futureDoc = { ...props.document };
+        futureDoc.id = resultat.idDoc;
+        futureDoc.mentionsRetirees = resultat.mentionsRetirees.map(el => {
+          return { idMention: el } as MentionsRetirees;
+        });
+        futureDoc.validation = Validation.O;
+        props.sauvegarderDocument(futureDoc);
+        setIsDirty(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.document, setIsDirty]

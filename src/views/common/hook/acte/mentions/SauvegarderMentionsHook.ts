@@ -31,12 +31,17 @@ export interface SauvegarderMentionsParam {
   requete: IRequeteDelivrance;
 }
 
+export interface IResultatSauvegarderMentions {
+  mentionsRetirees: string[];
+  idDoc: string;
+}
+
 export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
   const [mentionsAEnvoyerParams, setMentionsAEnvoyerParams] =
     useState<IMiseAJourMentionsParams>();
   const [documentMajParams, setDocumentMajParams] =
     useState<IMiseAJourDocumentMentionParams>();
-  const [resultat, setResultat] = useState<string>();
+  const [resultat, setResultat] = useState<IResultatSauvegarderMentions>();
   const [generationEC, setGenerationEC] = useState<IGenerationECParams>();
   const [mentionsRetireesSaved, setMentionsRetireesSaved] =
     useState<string[]>();
@@ -67,7 +72,8 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
       mentionsMisAJour &&
       params &&
       params.document.validation &&
-      params.requete.choixDelivrance
+      params.requete.choixDelivrance &&
+      mentionsRetireesSaved
     ) {
       setGenerationEC({
         idActe: params.idActe,
@@ -75,12 +81,10 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
         choixDelivrance: params.requete.choixDelivrance,
         validation: params.document.validation,
         pasDeStockageDocument: false,
-        mentionsRetirees: params.document.mentionsRetirees
-          ? params.document.mentionsRetirees.map(el => el.idMention)
-          : []
+        mentionsRetirees: mentionsRetireesSaved
       });
     }
-  }, [mentionsMisAJour, params]);
+  }, [mentionsMisAJour, params, mentionsRetireesSaved]);
 
   // 3 - Sauvegarder les mentions retirées et valider le document dans requete-api
   useEffect(() => {
@@ -100,19 +104,31 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
   useEffect(() => {
     if (
       mentionsMisAJour?.resultat &&
-      nouveauDoc &&
-      documentEstMisAJour?.resultat
+      nouveauDoc?.resultGenerationUnDocument?.idDocumentReponse &&
+      documentEstMisAJour?.resultat &&
+      mentionsRetireesSaved
     ) {
-      setResultat(nouveauDoc.resultGenerationUnDocument?.idDocumentReponse);
-    } else if (documentEstMisAJour?.resultat) {
-      setResultat(params?.document.id);
+      setResultat({
+        idDoc: nouveauDoc.resultGenerationUnDocument?.idDocumentReponse,
+        mentionsRetirees: mentionsRetireesSaved
+      });
+    } else if (
+      documentEstMisAJour?.resultat &&
+      params?.document &&
+      mentionsRetireesSaved
+    ) {
+      setResultat({
+        idDoc: params?.document.id,
+        mentionsRetirees: mentionsRetireesSaved
+      });
     }
   }, [
     mentionsMisAJour,
     documentEstMisAJour,
     mentionsAEnvoyerParams,
     nouveauDoc,
-    params
+    params,
+    mentionsRetireesSaved
   ]);
 
   return resultat;
@@ -138,7 +154,7 @@ function sauvegarderEnFonctionTypeDocument(
         idActe: getValeurOuVide(idActe),
         mentions: mentionsAEnvoyer
       });
-    }else {
+    } else {
       setDocumentMajParams({
         idDocument: document?.id,
         mentionsRetirees

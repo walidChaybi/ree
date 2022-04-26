@@ -9,6 +9,7 @@ import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteD
 import { ReinitialiserValiderBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import { useMentionsApiHook } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
 import {
+  IResultatSauvegarderMentions,
   SauvegarderMentionsParam,
   useSauvegarderMentions
 } from "../../../../../../common/hook/acte/mentions/SauvegarderMentionsHook";
@@ -33,7 +34,7 @@ export interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
   requete: IRequeteDelivrance;
-  passerDocumentValider: (idDocument: string) => void;
+  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void;
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
@@ -49,16 +50,14 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   );
 
   const mentionsApi = useMentionsApiHook(mentionsParams);
-  const idDocumentSauvegarde = useSauvegarderMentions(
-    sauvegarderMentionsParams
-  );
+  const resultatSauvegarde = useSauvegarderMentions(sauvegarderMentionsParams);
 
   useEffect(() => {
-    if (props.document && idDocumentSauvegarde) {
-      props.passerDocumentValider(idDocumentSauvegarde);
+    if (props.document && resultatSauvegarde) {
+      props.passerDocumentValider(resultatSauvegarde);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idDocumentSauvegarde]);
+  }, [resultatSauvegarde]);
 
   useEffect(() => {
     if (props.acte) {
