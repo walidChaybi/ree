@@ -145,7 +145,8 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
         props.rafraichirParent();
       }
     }
-  }, [idAction, history, props.typeRequete, props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idAction]);
 
   return (
     <>

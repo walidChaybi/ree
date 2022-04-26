@@ -27,7 +27,9 @@ export function onValidateService(
       idRequete: props.idRequete,
       idEntite: entite.value,
       idUtilisateur: "",
-      statutRequete: StatutRequete.TRANSFEREE,
+      statutRequete: props.estTransfert
+        ? StatutRequete.TRANSFEREE
+        : StatutRequete.A_TRAITER,
       libelleAction: `Requête ${
         props.estTransfert ? "transférée" : "attribuée"
       } à ${entite.str}`,
