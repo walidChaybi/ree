@@ -192,6 +192,10 @@ export const controlerDonneesGenerationExtraitMariageOuNaissance = function (
   ) {
     return Validation.E;
   }
+  // La validation doit être à O pour une copie d'un acte de type IMAGE
+  else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
+    return Validation.O;
+  }
   return validation;
 };
 

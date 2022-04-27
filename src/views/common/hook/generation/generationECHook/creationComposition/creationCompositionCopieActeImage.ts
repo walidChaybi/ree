@@ -12,7 +12,7 @@ export const creationCompositionCopieActeImage = function (
   validation: Validation
 ) {
   let composition;
-  const choixDelivrance = getValeurOuVide(ChoixDelivrance);
+  const choixDelivrance = getValeurOuVide(requete.choixDelivrance);
   if (acte.type === TypeActe.IMAGE) {
     const natureActe = acte.nature.libelle;
     const avecFiliation = ChoixDelivrance.estAvecFiliation(choixDelivrance);
