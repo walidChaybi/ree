@@ -82,11 +82,31 @@ export class ExtraitCopieActeTexteNaissanceComposition {
     return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement} ${
       evtActe.heureEvenement
     }
-est ${neOuNeeTitulaire1} à ${evtActe.lieuEvenement}
-  ${ecTitulaire1.prenoms}
-  ${ecTitulaire1.nom} ${declarationConjointe}
-${ecTitulaire1.partiesNom}
-${duOuDeSexe} sexe ${ecTitulaire1.sexe.libelle.toLowerCase()}${parents}`;
+est ${neOuNeeTitulaire1} à ${evtActe.lieuEvenement}${this.getLigneAvecRetourChariot(true, ecTitulaire1.prenoms)}${this.getLigneAvecRetourChariot(true, ecTitulaire1.nom, declarationConjointe)}${this.getLigneAvecRetourChariot(false, ecTitulaire1.partiesNom)}${this.getSexe(duOuDeSexe, ecTitulaire1.sexe.libelle.toLowerCase())}${parents}`;
+  }
+
+  //Gestion du retour chariot
+  private static getLigneAvecRetourChariot(tabulation: boolean, element1: string, element2?: string){
+    let texte = "";
+    const tab = tabulation ? "  " : "";
+    if(element1 || element2){
+      texte = `
+${tab}${element1}`
+    }
+    if(element2){
+      texte += ` ${getValeurOuVide(element2)}`;
+    }
+    return texte;
+  }
+
+  //Gestion du retour chariot pour la ligne à propos du sexe
+  private static getSexe(duOuDeSexe: string | undefined, sexeTitulaire: string | undefined){
+    let sexe = "";
+    if(sexeTitulaire){
+      sexe = `
+${duOuDeSexe} sexe ${sexeTitulaire}`
+    }
+    return sexe;
   }
 
   private static getPhrasesParents(ecTitulaire1: ITitulaireCompositionEC) {

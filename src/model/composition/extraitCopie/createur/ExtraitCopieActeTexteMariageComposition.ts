@@ -82,12 +82,20 @@ export class ExtraitCopieActeTexteMariageComposition {
     return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement}
 a été célébré à ${evtActe.lieuEvenement}
 le mariage
-de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}
-${ecTitulaire1.dateNaissanceOuAge}${ecTitulaire1.lieuNaissance}${parents1}${parentsAdoptants1}
-et de ${ecTitulaire2?.prenoms} ${ecTitulaire2?.nom} ${ecTitulaire2?.partiesNom}
-${ecTitulaire2?.dateNaissanceOuAge}${ecTitulaire2?.lieuNaissance}${parents2}${parentsAdoptants2}
+de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}${this.getNaissance(ecTitulaire1.dateNaissanceOuAge, ecTitulaire1.lieuNaissance)}${parents1}${parentsAdoptants1}
+et de ${ecTitulaire2?.prenoms} ${ecTitulaire2?.nom} ${ecTitulaire2?.partiesNom}${this.getNaissance(ecTitulaire2?.dateNaissanceOuAge, ecTitulaire2?.lieuNaissance)}${parents2}${parentsAdoptants2}
 
 Contrat de mariage : ${enonciationContratDeMariage}`;
+  }
+
+  //Gestion du retour chariot pour la ligne à propos de la naissance
+  private static getNaissance(dateAge: string | undefined, lieu: string | undefined){
+    let naissance = "";
+    if(dateAge || lieu){
+      naissance = `
+${dateAge}${lieu}`
+    }
+    return naissance;
   }
 
   private static getPhrasesParents(
