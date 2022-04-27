@@ -63,7 +63,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
     },
     {
       value: INDEX_ACTION_TRANSFERT_OFFICIER,
-      label: getLibelle("À un officier d'état civil"),
+      label: getLibelle("À un officier de l'état civil"),
       ref: refReponseTransfertOptions0
     }
   ];
@@ -218,7 +218,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
           )
         }
         options={listeEntiteToOptions()}
-        titre={`${props.estTransfert ? "Transfert" : "Assigner"} à un service`}
+        titre={`${props.estTransfert ? "Transfert" : "Attribuer"} à un service`}
       ></TransfertPopin>
       <TransfertPopin
         open={agentPopinOpen}
@@ -239,8 +239,8 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
           props.estTransfert
         )}
         titre={`${
-          props.estTransfert ? "Transfert" : "Assigner"
-        } à un officier d'état civil`}
+          props.estTransfert ? "Transfert" : "Attribuer"
+        } à un officier de l'état civil`}
       ></TransfertPopin>
     </>
   );

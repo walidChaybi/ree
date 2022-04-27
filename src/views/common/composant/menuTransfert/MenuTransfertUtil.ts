@@ -30,9 +30,9 @@ export function onValidateService(
       statutRequete: props.estTransfert
         ? StatutRequete.TRANSFEREE
         : StatutRequete.A_TRAITER,
-      libelleAction: `Requête ${
-        props.estTransfert ? "transférée" : "attribuée"
-      } à ${entite.str}`,
+      libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${
+        entite.str
+      }`,
       estTransfert: props.estTransfert
     });
     setServicePopinOpen(false);
@@ -65,9 +65,9 @@ export function onValidateAgent(
       statutRequete: props.estTransfert
         ? StatutRequete.TRANSFEREE
         : StatutRequete.A_TRAITER,
-      libelleAction: `Requête ${
-        props.estTransfert ? "transférée" : "attribuée"
-      } à ${agent.str}`,
+      libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${
+        agent.str
+      }`,
       estTransfert: props.estTransfert
     });
     setAgentPopinOpen(false);
