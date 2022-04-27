@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { IMention } from "../../../../../model/etatcivil/acte/mention/IMention";
 import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
@@ -53,15 +52,13 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
 
   // 1 - Sauvegarder les mentions dans etatcivil-api
   useEffect(() => {
-    if (params?.mentionsApi.mentions) {
+    if (params) {
       sauvegarderEnFonctionTypeDocument(
-        params.mentionsApi.mentions,
-        params.mentions,
-        params.document,
+        params,
         setMentionsAEnvoyerParams,
         setDocumentMajParams,
         setMentionsRetireesSaved,
-        params.idActe
+        setGenerationEC
       );
     }
   }, [params]);
@@ -103,7 +100,6 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
 
   useEffect(() => {
     if (
-      mentionsMisAJour?.resultat &&
       nouveauDoc?.resultGenerationUnDocument?.idDocumentReponse &&
       documentEstMisAJour?.resultat &&
       mentionsRetireesSaved
@@ -118,12 +114,11 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
       mentionsRetireesSaved
     ) {
       setResultat({
-        idDoc: params?.document.id,
+        idDoc: params.document.id,
         mentionsRetirees: mentionsRetireesSaved
       });
     }
   }, [
-    mentionsMisAJour,
     documentEstMisAJour,
     mentionsAEnvoyerParams,
     nouveauDoc,
@@ -135,35 +130,47 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
 }
 
 function sauvegarderEnFonctionTypeDocument(
-  mentionsApi: IMention[],
-  mentions: IMentionAffichage[],
-  document: IDocumentReponse,
+  params: SauvegarderMentionsParam,
   setMentionsAEnvoyerParams: any,
   setDocumentMajParams: any,
   setMentionsRetireesSaved: any,
-  idActe?: string
+  setGenerationEC: any
 ) {
-  const { mentionsAEnvoyer, mentionsRetirees } = mappingVersMentionsApi(
-    mentionsApi,
-    mentions
-  );
-  setMentionsRetireesSaved(mentionsRetirees);
-  if (modificationEffectue(mentions, mentionsApi, document)) {
-    if (!DocumentDelivrance.typeDocumentEstCopie(document?.typeDocument)) {
-      setMentionsAEnvoyerParams({
-        idActe: getValeurOuVide(idActe),
-        mentions: mentionsAEnvoyer
-      });
+  if (params.mentionsApi.mentions && params.idActe) {
+    const { mentionsAEnvoyer, mentionsRetirees } = mappingVersMentionsApi(
+      params.mentionsApi.mentions,
+      params.mentions
+    );
+    setMentionsRetireesSaved(mentionsRetirees);
+    if (
+      modificationEffectue(
+        params.mentions,
+        params.mentionsApi.mentions,
+        params.document
+      )
+    ) {
+      if (
+        !DocumentDelivrance.typeDocumentEstCopie(params.document?.typeDocument)
+      ) {
+        setMentionsAEnvoyerParams({
+          idActe: getValeurOuVide(params.idActe),
+          mentions: mentionsAEnvoyer
+        });
+      } else {
+        setGenerationEC({
+          idActe: params.idActe,
+          requete: params.requete,
+          choixDelivrance: params.requete.choixDelivrance,
+          validation: params.document.validation,
+          pasDeStockageDocument: false,
+          mentionsRetirees
+        });
+      }
     } else {
       setDocumentMajParams({
-        idDocument: document?.id,
+        idDocument: params.document?.id,
         mentionsRetirees
       });
     }
-  } else {
-    setDocumentMajParams({
-      idDocument: document?.id,
-      mentionsRetirees
-    });
   }
 }

@@ -204,41 +204,41 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
               />
             </span>
           </div>
-          <div className="FormMention Ajout">
-            <h3>{getLibelle("Ajout d'une mention")}</h3>
-            <textarea
-              value={getValeurOuVide(mentionAjout?.texte)}
-              onChange={handleAjoutTexte}
-              placeholder="Texte mention à ajouter"
-            />
-            <div className="SelectAjout">
-              <span>
-                <label>{getLibelle("Nature mention")}</label>
-                <SelectRece
-                  options={
-                    // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
-                    natureActe
-                      ? NatureMention.getEnumsAsOptions(
-                          TypeMention.getNaturesMentionPourActe(natureActe)
-                        )
-                      : NatureMention.getAllEnumsAsOptions()
-                  }
-                  label="Nature ajoutée"
-                  value={NatureMention.getUuidFromNature(mentionAjout?.nature)}
-                  onChange={handleAjoutSelect}
-                />
-              </span>
-              <button
-                disabled={!mentionAjout || mentionAjout.texte === ""}
-                onClick={ajoutMention}
-                title="Ajouter la mention"
-              >
-                +
-              </button>
-            </div>
-          </div>
         </>
       )}
+      <div className="FormMention Ajout">
+        <h3>{getLibelle("Ajout d'une mention")}</h3>
+        <textarea
+          value={getValeurOuVide(mentionAjout?.texte)}
+          onChange={handleAjoutTexte}
+          placeholder="Texte mention à ajouter"
+        />
+        <div className="SelectAjout">
+          <span>
+            <label>{getLibelle("Nature mention")}</label>
+            <SelectRece
+              options={
+                // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
+                natureActe
+                  ? NatureMention.getEnumsAsOptions(
+                      TypeMention.getNaturesMentionPourActe(natureActe)
+                    )
+                  : NatureMention.getAllEnumsAsOptions()
+              }
+              label="Nature ajoutée"
+              value={NatureMention.getUuidFromNature(mentionAjout?.nature)}
+              onChange={handleAjoutSelect}
+            />
+          </span>
+          <button
+            disabled={!mentionAjout || mentionAjout.texte === ""}
+            onClick={ajoutMention}
+            title="Ajouter la mention"
+          >
+            +
+          </button>
+        </div>
+      </div>
     </>
   );
 };
