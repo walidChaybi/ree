@@ -69,6 +69,16 @@ export function estDemandeCopieActeImage(
   );
 }
 
+export function estDemandeCopieArchiveActeTexte(
+  acte: IFicheActe,
+  choixDelivrance: ChoixDelivrance
+) {
+  return (
+    ChoixDelivrance.estCopieArchive(choixDelivrance) &&
+    FicheActe.estActeTexte(acte)
+  );
+}
+
 export function getTypeDocument(choixDelivrance: ChoixDelivrance) {
   let uuidTypeDocument = "";
   switch (choixDelivrance) {
@@ -192,8 +202,11 @@ export const controlerDonneesGenerationExtraitMariageOuNaissance = function (
   ) {
     return Validation.E;
   }
-  // La validation doit être à O pour une copie d'un acte de type IMAGE
-  else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
+  // La validation doit être à O pour une copie d'un acte de type IMAGE ou pour une copie archive acte TEXTE
+  else if (
+    estDemandeCopieActeImage(acte, choixDelivrance) ||
+    estDemandeCopieArchiveActeTexte(acte, choixDelivrance)
+  ) {
     return Validation.O;
   }
   return validation;
