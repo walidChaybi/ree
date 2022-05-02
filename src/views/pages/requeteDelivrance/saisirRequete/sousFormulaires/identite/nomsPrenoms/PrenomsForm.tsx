@@ -3,7 +3,13 @@ import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { IPrenomOrdonnes } from "../../../../../../../model/requete/IPrenomOrdonnes";
 import { CarateresAutorise } from "../../../../../../../ressources/Regex";
-import { getLibelle } from "../../../../../../common/util/Utils";
+import {
+  DEUX,
+  estRenseigne,
+  getLibelle,
+  UN,
+  ZERO
+} from "../../../../../../common/util/Utils";
 import { InputField } from "../../../../../../common/widget/formulaire/champsSaisie/InputField";
 import {
   CARATERES_AUTORISES_MESSAGE,
@@ -121,7 +127,7 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
     return (
       <button
         type="button"
-        disabled={btnAjouterInactif || props.disabled}
+        disabled={btnAjouterInactif}
         onClick={ajouterPrenom}
       >
         {getLibelle("Ajouter un prénom")}
@@ -135,13 +141,20 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
         type="button"
         tabIndex={IGNORER_TABULATION}
         className="BoutonDanger"
-        disabled={btnSupprimerInactif || props.disabled}
+        disabled={btnSupprimerInactif}
         onClick={() => supprimerPrenom(champ)}
       >
         {getLibelle("Supprimer un prénom")}
       </button>
     );
   }
+
+  function estPrenomDisabled(index: number) {
+    return (
+      props.prenoms && estRenseigne(props.prenoms[index]) && props.disabled
+    );
+  }
+
   return (
     <>
       <div className="PrenomsForm">
@@ -149,7 +162,7 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
           name={prenomWithNamespace1}
           label={getLibelle("Prénom 1")}
           maxLength={NB_CARACT_MAX_SAISIE}
-          disabled={props.disabled}
+          disabled={estPrenomDisabled(ZERO)}
           onBlur={e =>
             sortieChampPremiereLettreEnMajuscule(
               e,
@@ -171,7 +184,7 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
             name={prenomWithNamespace2}
             label={getLibelle("Prénom 2")}
             maxLength={NB_CARACT_MAX_SAISIE}
-            disabled={props.disabled}
+            disabled={estPrenomDisabled(UN)}
             onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
                 e,
@@ -183,7 +196,9 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
           {nbPrenom > NB_MIN_PRENOMS && nbPrenom < NB_MAX_PRENOMS && (
             <div>
               {getBoutonAjouter()}
-              {getBoutonSupprimer(PRENOM_2)}
+              {
+                !estPrenomDisabled(UN) && getBoutonSupprimer(PRENOM_2) // pas d'affichage du bouton "supprimer" si le champs prénom est disabled
+              }
             </div>
           )}
         </div>
@@ -194,7 +209,7 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
             name={prenomWithNamespace3}
             label={getLibelle("Prénom 3")}
             maxLength={NB_CARACT_MAX_SAISIE}
-            disabled={props.disabled}
+            disabled={estPrenomDisabled(DEUX)}
             onBlur={e =>
               sortieChampPremiereLettreEnMajuscule(
                 e,
@@ -203,7 +218,11 @@ const PrenomsForm: React.FC<PrenomsFormProps> = props => {
               )
             }
           />
-          <div>{getBoutonSupprimer(PRENOM_3)}</div>
+          <div>
+            {
+              !estPrenomDisabled(DEUX) && getBoutonSupprimer(PRENOM_3) // pas d'affichage du bouton "supprimer" si le champs prénom est disabled
+            }
+          </div>
         </div>
       )}
     </>

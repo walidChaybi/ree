@@ -1,26 +1,20 @@
 import { connect } from "formik";
 import React, { useCallback, useState } from "react";
-import * as Yup from "yup";
 import {
   Evenement,
   IEvenement
 } from "../../../../model/etatcivil/acte/IEvenement";
 import { estRenseigne, getLibelle } from "../../util/Utils";
 import DateComposeForm, {
-  ChampDateModifie,
-  IDateComposeForm
+  ChampDateModifie
 } from "../../widget/formulaire/champsDate/DateComposeForm";
-import { DateValidationSchema } from "../../widget/formulaire/champsDate/DateComposeFormValidation";
+import { IDateComposeForm } from "../../widget/formulaire/champsDate/DateComposeFormUtil";
 import { InputField } from "../../widget/formulaire/champsSaisie/InputField";
 import {
   FormikComponentProps,
   withNamespace
 } from "../../widget/formulaire/utils/FormUtil";
 import { AGE, ANNEE, DATE, JOUR, MOIS } from "./ConstantesNomsForm";
-
-export const DateNaissanceOuAgeDeValidationSchema = Yup.object({
-  [DATE]: DateValidationSchema
-});
 
 interface ComponentProps {
   nom: string;
@@ -33,12 +27,15 @@ type DateNaissanceOuAgeDeFormProps = ComponentProps & FormikComponentProps;
 const DateNaissanceOuAgeDeForm: React.FC<
   DateNaissanceOuAgeDeFormProps
 > = props => {
+  const estRenseigneAgeOuNaissance =
+    estRenseigne(props.age) || Evenement.estRenseigne(props.naissance);
+
   const [disabledAgeDe, setDisabledAgeDe] = useState<boolean>(
-    estRenseigne(props.age)
+    estRenseigneAgeOuNaissance
   );
 
   const [disabledDate, setDisabledDate] = useState<boolean>(
-    Evenement.estRenseigne(props.naissance)
+    estRenseigneAgeOuNaissance
   );
 
   const onChangeDate = useCallback(
@@ -85,7 +82,7 @@ const DateNaissanceOuAgeDeForm: React.FC<
           labelDate="Date de naissance"
           disabled={disabledDate}
           onChange={onChangeDate}
-          showCroixSuppression={false}
+          showCroixSuppression={true}
         />
       }
       {

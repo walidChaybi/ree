@@ -41,5 +41,9 @@ export const Evenement = {
   },
   estRenseigne(evenement?: IEvenement) {
     return estRenseigne(evenement?.annee);
+  },
+
+  estHeureRenseignee(evenement?: IEvenement) {
+    return evenement?.heure != null && evenement.minute != null;
   }
 };

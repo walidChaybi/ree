@@ -66,6 +66,7 @@ export const TitulaireEvenementForm: React.FC<
           <DeclarationConjointeForm
             nom={withNamespace(props.nom, DECLARATION_CONJOINTE)}
             type={props.titulaire.typeDeclarationConjointe}
+            date={props.titulaire.dateDeclarationConjointe}
             origineTitulaireActe={
               props.titulaire.origineDeclarationConjointeTitulaireActe
             }
@@ -87,6 +88,7 @@ export const TitulaireEvenementForm: React.FC<
           nomDate={withNamespace(props.nom, DATE_EVENEMENT)}
           labelDate={labels.dateEvenement}
           disabled={Evenement.estRenseigne(props.evenement)}
+          disabledHeure={Evenement.estHeureRenseignee(props.evenement)}
           afficheHeure={true}
           showCroixSuppression={false}
           anneeObligatoire={true}

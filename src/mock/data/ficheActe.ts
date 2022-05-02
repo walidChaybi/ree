@@ -639,6 +639,7 @@ export const ficheActeMariage = {
         },
         filiations: [
           {
+            lienParente: "PARENT_ADOPTANT",
             type: null,
             ordre: 752,
             nom: "Sacken",
@@ -929,6 +930,7 @@ export const ficheActeMariage = {
             },
             filiations: [
               {
+                lienParente: "PARENT_ADOPTANT",
                 type: null,
                 ordre: 752,
                 nom: "Sacken",
@@ -1341,209 +1343,209 @@ export const ficheActeNaissance = {
 
 export const idFicheActeDeces = "b41079a6-9e8d-478c-b04c-c4c2ac87134f";
 export const ficheActeDeces = {
-  "errors": [],
-  "hasTechnicalError": false,
-  "hasBusinessError": false,
-  "status": 200,
-  "url": "/rece-etatcivil-api/v1/acte/b41079a6-9e8d-478c-b04c-c4c2ac87134f",
-  "data": {
-    "id": "b41079a6-9e8d-478c-b04c-c4c2ac87134f",
-    "dateInitialisation": null,
-    "dateCreation": 812458800000,
-    "modeCreation": "DRESSE",
-    "statut": "VALIDE",
-    "dateStatut": 1045652400000,
-    "nature": "DECES",
-    "numero": "8413",
-    "numeroBisTer": null,
-    "nomOec": "MARTIN",
-    "prenomOec": "JULIE",
-    "dateDerniereDelivrance": 1413972000000,
-    "dateDerniereMaj": 1536400800000,
-    "visibiliteArchiviste": "NON",
-    "evenement": {
-      "minute": 34,
-      "heure": 12,
-      "jour": 11,
-      "mois": 3,
-      "annee": 1995,
-      "voie": null,
-      "ville": "Lille",
-      "arrondissement": null,
-      "region": "Loire-Atlantique",
-      "pays": "France",
-      "lieuReprise": null
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b41079a6-9e8d-478c-b04c-c4c2ac87134f",
+  data: {
+    id: "b41079a6-9e8d-478c-b04c-c4c2ac87134f",
+    dateInitialisation: null,
+    dateCreation: 812458800000,
+    modeCreation: "DRESSE",
+    statut: "VALIDE",
+    dateStatut: 1045652400000,
+    nature: "DECES",
+    numero: "8413",
+    numeroBisTer: null,
+    nomOec: "MARTIN",
+    prenomOec: "JULIE",
+    dateDerniereDelivrance: 1413972000000,
+    dateDerniereMaj: 1536400800000,
+    visibiliteArchiviste: "NON",
+    evenement: {
+      minute: 34,
+      heure: 12,
+      jour: 11,
+      mois: 3,
+      annee: 1995,
+      voie: null,
+      ville: "Lille",
+      arrondissement: null,
+      region: "Loire-Atlantique",
+      pays: "France",
+      lieuReprise: null
     },
-    "mentions": [],
-    "titulaires": [
+    mentions: [],
+    titulaires: [
       {
-        "nom": "GREENWALD",
-        "prenoms": ["marie-paulita", "zaria", "léna"],
-        "autresNoms": null,
-        "autresPrenoms": null,
-        "ordre": 729,
-        "sexe": "FEMININ",
-        "naissance": {
-          "minute": null,
-          "heure": null,
-          "jour": null,
-          "mois": 3,
-          "annee": 1948,
-          "voie": null,
-          "ville": "Milan",
-          "arrondissement": null,
-          "region": "Lombardie",
-          "pays": "Italie",
-          "lieuReprise": null
+        nom: "GREENWALD",
+        prenoms: ["marie-paulita", "zaria", "léna"],
+        autresNoms: null,
+        autresPrenoms: null,
+        ordre: 729,
+        sexe: "FEMININ",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: null,
+          mois: 3,
+          annee: 1948,
+          voie: null,
+          ville: "Milan",
+          arrondissement: null,
+          region: "Lombardie",
+          pays: "Italie",
+          lieuReprise: null
         },
-        "profession": "POMPIER",
-        "age": null,
-        "domicile": {
-          "voie": "7 Rue du Noyer",
-          "ville": "Bruxelles",
-          "arrondissement": null,
-          "region": "Flandre",
-          "pays": "BELGIQUE"
+        profession: "POMPIER",
+        age: null,
+        domicile: {
+          voie: "7 Rue du Noyer",
+          ville: "Bruxelles",
+          arrondissement: null,
+          region: "Flandre",
+          pays: "BELGIQUE"
         },
-        "filiations": [
+        filiations: [
           {
-            "lienParente": "PARENT",
-            "ordre": 752,
-            "nom": "Sacken",
-            "sexe": "MASCULIN",
-            "naissance": null,
-            "profession": "Informaticien",
-            "age": null,
-            "domicile": {
-              "voie": "16 avenue des Palmiers",
-              "ville": "Djibouti",
-              "arrondissement": null,
-              "region": null,
-              "pays": "DJIBOUTI"
+            lienParente: "PARENT",
+            ordre: 752,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: null,
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI"
             },
-            "prenoms": ["Carmela", "Linzy"]
+            prenoms: ["Carmela", "Linzy"]
           }
         ],
-        "typeDeclarationConjointe": null,
-        "dateDeclarationConjointe": null,
-        "nomPartie1": null,
-        "nomPartie2": null,
-        "nomAvantMariage": null,
-        "nomApresMariage": null,
-        "nomDernierConjoint": null,
-        "prenomsDernierConjoint": null
+        typeDeclarationConjointe: null,
+        dateDeclarationConjointe: null,
+        nomPartie1: null,
+        nomPartie2: null,
+        nomAvantMariage: null,
+        nomApresMariage: null,
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null
       }
     ],
-    "piecesAnnexes": [],
-    "alerteActes": [],
-    "personnes": [
+    piecesAnnexes: [],
+    alerteActes: [],
+    personnes: [
       {
-        "id": "e7114c58-d00d-48ad-bbee-af2b01e2da74",
-        "nom": "Jones",
-        "sexe": "MASCULIN",
-        "nationalite": "ETRANGERE",
-        "naissance": {
-          "minute": null,
-          "heure": null,
-          "jour": 7,
-          "mois": 8,
-          "annee": 1975,
-          "voie": null,
-          "ville": "Seoul",
-          "arrondissement": null,
-          "region": "",
-          "pays": "Corée du Sud",
-          "lieuReprise": null
+        id: "e7114c58-d00d-48ad-bbee-af2b01e2da74",
+        nom: "Jones",
+        sexe: "MASCULIN",
+        nationalite: "ETRANGERE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 7,
+          mois: 8,
+          annee: 1975,
+          voie: null,
+          ville: "Seoul",
+          arrondissement: null,
+          region: "",
+          pays: "Corée du Sud",
+          lieuReprise: null
         },
-        "autresNoms": [],
-        "prenoms": ["Charlie"],
-        "autresPrenoms": [],
-        "parents": [],
-        "enfants": [],
-        "rcs": [],
-        "rcas": [],
-        "pacss": [],
-        "actes": [
+        autresNoms: [],
+        prenoms: ["Charlie"],
+        autresPrenoms: [],
+        parents: [],
+        enfants: [],
+        rcs: [],
+        rcas: [],
+        pacss: [],
+        actes: [
           {
-            "id": "b41079a6-9e8d-478c-b04c-c4c2ac87134f",
-            "numero": "8413",
-            "statut": null,
-            "nature": "DECES"
+            id: "b41079a6-9e8d-478c-b04c-c4c2ac87134f",
+            numero: "8413",
+            statut: null,
+            nature: "DECES"
           }
         ]
       },
       {
-        "id": "e7114c54-d00d-48ad-bbee-af2b01e2da77",
-        "nom": "HU'TIL",
-        "sexe": "MASCULIN",
-        "nationalite": "FRANCAISE",
-        "naissance": {
-          "minute": null,
-          "heure": null,
-          "jour": 6,
-          "mois": 8,
-          "annee": 1975,
-          "voie": null,
-          "ville": "Béthune",
-          "arrondissement": null,
-          "region": "Pas-de-Calais",
-          "pays": "France",
-          "lieuReprise": null
+        id: "e7114c54-d00d-48ad-bbee-af2b01e2da77",
+        nom: "HU'TIL",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 6,
+          mois: 8,
+          annee: 1975,
+          voie: null,
+          ville: "Béthune",
+          arrondissement: null,
+          region: "Pas-de-Calais",
+          pays: "France",
+          lieuReprise: null
         },
-        "autresNoms": [],
-        "prenoms": ["Juan"],
-        "autresPrenoms": [],
-        "parents": [],
-        "enfants": [],
-        "rcs": [],
-        "rcas": [],
-        "pacss": [],
-        "actes": [
+        autresNoms: [],
+        prenoms: ["Juan"],
+        autresPrenoms: [],
+        parents: [],
+        enfants: [],
+        rcs: [],
+        rcas: [],
+        pacss: [],
+        actes: [
           {
-            "id": "b41079a6-9e8d-478c-b04c-c4c2ac87134f",
-            "numero": "8413",
-            "statut": null,
-            "nature": "DECES"
+            id: "b41079a6-9e8d-478c-b04c-c4c2ac87134f",
+            numero: "8413",
+            statut: null,
+            nature: "DECES"
           }
         ]
       }
     ],
-    "estReecrit": null,
-    "detailMariage": null,
-    "registre": {
-      "id": "e60432a7-7fb1-41d9-b6ad-a01fffbd223b",
-      "famille": "ACQ",
-      "pocopa": "X",
-      "annee": 1951,
-      "support1": "1",
-      "support2": null,
-      "numeroDernierActe": "4564",
-      "pvOuverture": "pv_ouverture",
-      "dateOuverture": [1995, 12, 25],
-      "pvFermeture": "pv_fermeture",
-      "dateFermeture": [1990, 1, 20],
-      "decret2017": null,
-      "type": {
-        "id": "d5f36d96-f1f8-437e-8371-86dba9837339",
-        "famille": "ACQ",
-        "pocopa": "TUNIS",
-        "paysPocopa": "TUNISIE",
-        "dateRattachement": [1993, 6, 6],
-        "dateTransfertScec": [1969, 2, 16],
-        "gereScec": true,
-        "estOuvert": true,
-        "description": ""
+    estReecrit: null,
+    detailMariage: null,
+    registre: {
+      id: "e60432a7-7fb1-41d9-b6ad-a01fffbd223b",
+      famille: "ACQ",
+      pocopa: "X",
+      annee: 1951,
+      support1: "1",
+      support2: null,
+      numeroDernierActe: "4564",
+      pvOuverture: "pv_ouverture",
+      dateOuverture: [1995, 12, 25],
+      pvFermeture: "pv_fermeture",
+      dateFermeture: [1990, 1, 20],
+      decret2017: null,
+      type: {
+        id: "d5f36d96-f1f8-437e-8371-86dba9837339",
+        famille: "ACQ",
+        pocopa: "TUNIS",
+        paysPocopa: "TUNISIE",
+        dateRattachement: [1993, 6, 6],
+        dateTransfertScec: [1969, 2, 16],
+        gereScec: true,
+        estOuvert: true,
+        description: ""
       }
     },
-    "motifAnnulation": "motif annulation",
-    "dateInitialisationprojet": null,
-    "numeroProjet": "b3",
-    "corpsExtraitRectifications": [],
-    "corpsImage": null,
-    "corpsTexte": {
+    motifAnnulation: "motif annulation",
+    dateInitialisationprojet: null,
+    numeroProjet: "b3",
+    corpsExtraitRectifications: [],
+    corpsImage: null,
+    corpsTexte: {
       texte: `Acte décès`
     },
-    "analyseMarginales": [],
-    "type": "TEXTE"
+    analyseMarginales: [],
+    type: "TEXTE"
   }
 };

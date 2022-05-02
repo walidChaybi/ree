@@ -47,14 +47,14 @@ const NomSecableForm: React.FC<NomSecableFormProps> = props => {
       {afficheNomSecable && (
         <InputField
           name={withNamespace(props.nom, NOM_PARTIE1)}
-          label={getLibelle("1ère partie")}
+          label={getLibelle("1re partie")}
           disabled={disabled}
         />
       )}
       {afficheNomSecable && (
         <InputField
           name={withNamespace(props.nom, NOM_PARTIE2)}
-          label={getLibelle("2ème partie")}
+          label={getLibelle("2nde partie")}
           disabled={disabled}
         />
       )}

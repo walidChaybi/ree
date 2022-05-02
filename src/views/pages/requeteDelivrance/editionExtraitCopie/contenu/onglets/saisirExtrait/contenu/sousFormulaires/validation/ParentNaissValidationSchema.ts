@@ -3,7 +3,7 @@ import {
   DATE_NAISSANCE_OU_AGE_DE,
   SEXE
 } from "../../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
-import { DateNaissanceOuAgeDeValidationSchema } from "../../../../../../../../../common/composant/formulaire/DateNaissanceOuAgeDeForm";
+import { DateNaissanceOuAgeDeValidationSchema } from "../../../../../../../../../common/composant/formulaire/validation/DateNaissanceOuAgeDeFormValidation";
 import { sexeObligatoireValidation } from "../../../../../../../../../common/composant/formulaire/validation/SexeObligatoireValidation";
 export const ParentNaissValidationSchema = Yup.object({
   [DATE_NAISSANCE_OU_AGE_DE]: DateNaissanceOuAgeDeValidationSchema,

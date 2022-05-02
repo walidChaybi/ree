@@ -1,7 +1,7 @@
 import { connect } from "formik";
 import React, { useCallback, useState } from "react";
 import { TypeDeclarationConjointe } from "../../../../model/etatcivil/enum/TypeDeclarationConjointe";
-import { getLibelle } from "../../util/Utils";
+import { estRenseigne, getLibelle } from "../../util/Utils";
 import DateComposeForm, {
   DateComposeFormProps
 } from "../../widget/formulaire/champsDate/DateComposeForm";
@@ -18,6 +18,7 @@ import { DATE, TYPE } from "./ConstantesNomsForm";
 interface ComponentFormProps {
   nom: string;
   type?: TypeDeclarationConjointe;
+  date?: Date;
   origineTitulaireActe?: boolean;
 }
 
@@ -52,7 +53,9 @@ const DeclarationConjointeForm: React.FC<
     labelDate: "Date de déclaration",
     nomDate: withNamespace(props.nom, DATE),
     showDatePicker: false,
-    disabled: estDisabled(props.type, props.origineTitulaireActe)
+    disabled:
+      estDisabled(props.type, props.origineTitulaireActe) &&
+      estRenseigne(props.date)
   } as DateComposeFormProps;
 
   return (

@@ -340,7 +340,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     const dateNaissanceOuAge =
       this.creerDateNaissanceOuAgeDeTitulaireOuFiliation(titulaire);
 
-    const parents = TitulaireActe.getParents(titulaire);
+    const parents = TitulaireActe.getTousLesParents(titulaire);
 
     const parentsTitulaire: IParentsTitulaireCompositionEC[] = parents.map(
       (parent: IFiliation): IParentsTitulaireCompositionEC => {

@@ -8,7 +8,6 @@ import {
   ITitulaireActe,
   TitulaireActe
 } from "../../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { EtrangerFrance } from "../../../../../../../model/etatcivil/enum/EtrangerFrance";
 import { Sexe } from "../../../../../../../model/etatcivil/enum/Sexe";
 import { TypeDeclarationConjointe } from "../../../../../../../model/etatcivil/enum/TypeDeclarationConjointe";
 import {
@@ -140,13 +139,13 @@ export function mappingActeVerFormulaireSaisirExtrait(
   };
   const titulairesActes = FicheActe.getTitulairesDansLOrdre(acte);
   if (titulairesActes.titulaireActe1) {
-    TitulaireActe.getParents(titulairesActes.titulaireActe1).forEach(
-      (parent: IFiliation, index: number) => {
-        //@ts-ignore
-        saisieForm[TITULAIRE_EVT_1][`${PARENT_NAISS}${index + 1}`] =
-          saisieParentForm(parent);
-      }
-    );
+    TitulaireActe.getAuMoinsDeuxParentsDirects(
+      titulairesActes.titulaireActe1
+    ).forEach((parent: IFiliation, index: number) => {
+      //@ts-ignore
+      saisieForm[TITULAIRE_EVT_1][`${PARENT_NAISS}${index + 1}`] =
+        saisieParentForm(parent);
+    });
   }
   // TODO Parent du titulaire 2
   return saisieForm;
@@ -161,7 +160,7 @@ function saisieParentForm(parent: IFiliation): IParentNaissanceForm {
       [DATE]: saisieDateEvt(parent?.naissance)
     },
     [SEXE]: parent?.sexe ? Sexe.getKey(parent.sexe) : Sexe.getKey(Sexe.INCONNU),
-    [LIEU_NAISSANCE]: saisieLieuEvt(parent.naissance)
+    [LIEU_NAISSANCE]: saisieLieuEvt(parent.naissance, false) // Pour les parents le lieu de naissance est france par défaut
   };
 }
 
@@ -244,7 +243,10 @@ function saisieDateForm(date?: IDateCompose) {
   };
 }
 
-function saisieLieuEvt(evenement?: IEvenement): ILieuEvenementForm {
+function saisieLieuEvt(
+  evenement?: IEvenement,
+  etrangerParDefaut = true
+): ILieuEvenementForm {
   return {
     [LIEU_COMPLET]: evenement?.lieuReprise
       ? getValeurOuVide(evenement?.lieuReprise)
@@ -258,8 +260,15 @@ function saisieLieuEvt(evenement?: IEvenement): ILieuEvenementForm {
     [ARRONDISSEMENT]: getValeurOuVide(evenement?.arrondissement),
     [REGION_DEPARTEMENT]: getValeurOuVide(evenement?.region),
     [PAYS]: getValeurOuVide(evenement?.pays),
-    [ETRANGER_FRANCE]: LieuxUtils.isPaysFrance(evenement?.pays)
-      ? EtrangerFrance.getKey(EtrangerFrance.FRANCE)
-      : EtrangerFrance.getKey(EtrangerFrance.ETRANGER)
+    [ETRANGER_FRANCE]: getEtrangerOuFrance(evenement, etrangerParDefaut)
   };
+}
+function getEtrangerOuFrance(
+  evenement?: IEvenement,
+  etrangerParDefaut = true
+): string {
+  return LieuxUtils.getEtrangerOuFranceEnMajuscule(
+    evenement?.pays,
+    etrangerParDefaut
+  );
 }

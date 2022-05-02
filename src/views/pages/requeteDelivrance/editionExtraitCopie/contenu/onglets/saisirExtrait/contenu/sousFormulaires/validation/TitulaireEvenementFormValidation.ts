@@ -1,12 +1,14 @@
 import * as Yup from "yup";
 import { CarateresAutorise } from "../../../../../../../../../../ressources/Regex";
 import {
+  DECLARATION_CONJOINTE,
   NOM_NAISSANCE,
   PARENT_NAISS1,
   PARENT_NAISS2,
   PRENOMS,
   SEXE
 } from "../../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import { DeclarationConjointeValidationSchema } from "../../../../../../../../../common/composant/formulaire/validation/DeclarationConjointeFormValidation";
 import { sexeObligatoireValidation } from "../../../../../../../../../common/composant/formulaire/validation/SexeObligatoireValidation";
 import { DateValidationSchema } from "../../../../../../../../../common/widget/formulaire/champsDate/DateComposeFormValidation";
 import {
@@ -21,6 +23,7 @@ export const TitulaireEvtValidationSchema = Yup.object({
   [NOM_NAISSANCE]: Yup.string()
     .required(CHAMP_OBLIGATOIRE)
     .matches(CarateresAutorise, CARATERES_AUTORISES_MESSAGE),
+  [DECLARATION_CONJOINTE]: DeclarationConjointeValidationSchema,
   [PRENOMS]: PrenomsFormValidationSchema,
   [SEXE]: Yup.string().required(),
   [DATE_EVENEMENT]: DateValidationSchema,

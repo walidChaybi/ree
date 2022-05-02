@@ -29,6 +29,7 @@ interface ComponentFormProps {
   evenement?: IEvenement;
   gestionEtrangerFrance?: boolean;
   validation?: boolean;
+  etrangerParDefaut?: boolean; // true par défaut (par défaut le pays des parents est FRANCE et celui du titulaire est ETRANGER)
 }
 
 type LieuEvenementFormProps = ComponentFormProps & FormikComponentProps;
@@ -41,7 +42,7 @@ type LieuEvenementFormProps = ComponentFormProps & FormikComponentProps;
 const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
   const [decomposerLieu, setDecomposerLieu] = useState(false);
   const [modeSaisieFrance, setModeSaisieFrance] = useState<boolean>(
-    LieuxUtils.isPaysFrance(props.evenement?.pays)
+    getModeSaisieFrance(props.evenement, props.etrangerParDefaut)
   );
 
   const lieuCompletRenseigne = estRenseigne(props.evenement?.lieuReprise);
@@ -51,9 +52,14 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
   const nomPays = withNamespace(props.nom, PAYS);
   const nomArrondissement = withNamespace(props.nom, ARRONDISSEMENT);
   const nomLieuComplet = withNamespace(props.nom, LIEU_COMPLET);
+  const nomEtrangerFrance = withNamespace(props.nom, ETRANGER_FRANCE);
 
   const majLieuComplet = useCallback(
     (lieu: ILieuEvenement) => {
+      // Si le pays n'est pas renseigné ont détermine si le pays par défaut est FRANCE (cas des parents) (pour le titulaire par défaut la localisation est étrangère)
+      if (!lieu.pays && !props.etrangerParDefaut) {
+        lieu.pays = FRANCE;
+      }
       props.formik.setFieldValue(
         nomLieuComplet,
         LieuxUtils.getLocalisationEtrangerOuFrance(
@@ -64,13 +70,8 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
         )
       );
     },
-    [nomLieuComplet, props.formik]
+    [nomLieuComplet, props.etrangerParDefaut, props.formik]
   );
-
-  const onClickDecomposer = useCallback(() => {
-    setDecomposerLieu(true);
-    props.formik.setFieldValue(nomLieuComplet, "");
-  }, [nomLieuComplet, props.formik]);
 
   const creerEvenementAPartirDeLaSaisie = useCallback(() => {
     return {
@@ -84,6 +85,32 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     nomPays,
     nomRegionDepartement,
     nomVille,
+    props.formik
+  ]);
+
+  const onClickDecomposer = useCallback(() => {
+    setDecomposerLieu(true);
+    const evt = creerEvenementAPartirDeLaSaisie();
+    if (props.evenement) {
+      majLieuComplet(evt);
+    } else {
+      props.formik.setFieldValue(nomLieuComplet, "");
+    }
+
+    props.formik.setFieldValue(
+      nomEtrangerFrance,
+      LieuxUtils.getEtrangerOuFranceEnMajuscule(
+        evt.pays,
+        props.etrangerParDefaut
+      )
+    );
+  }, [
+    creerEvenementAPartirDeLaSaisie,
+    majLieuComplet,
+    nomEtrangerFrance,
+    nomLieuComplet,
+    props.etrangerParDefaut,
+    props.evenement,
     props.formik
   ]);
 
@@ -177,7 +204,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
 
       {props.gestionEtrangerFrance && (
         <RadioField
-          name={withNamespace(props.nom, ETRANGER_FRANCE)}
+          name={nomEtrangerFrance}
           label={getLibelle("")}
           values={EtrangerFrance.getAllEnumsAsOptions()}
           onChange={onChangeRadioEtrangerFrance}
@@ -239,6 +266,17 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     </div>
   );
 };
+
+function getModeSaisieFrance(
+  evenement?: IEvenement,
+  etrangerParDefaut = true
+): boolean {
+  if (etrangerParDefaut) {
+    return LieuxUtils.isPaysFrance(evenement?.pays);
+  } else {
+    return evenement?.pays == null || LieuxUtils.isPaysFrance(evenement?.pays);
+  }
+}
 
 function getLabelOuDepartement(modeSaisieFrance: boolean) {
   let label = getLibelle("Région");

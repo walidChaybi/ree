@@ -53,7 +53,9 @@ export const ParentNaissanceForm: React.FC<
         name={withNamespace(props.nom, SEXE)}
         label={getLibelle("Sexe")}
         values={Sexe.getAllEnumsAsOptionsSansInconnu()}
-        disabled={props.parent.sexe !== Sexe.INCONNU}
+        disabled={
+          estRenseigne(props.parent.sexe) && props.parent.sexe !== Sexe.INCONNU
+        }
       />
 
       <DateNaissanceOuAgeDeForm
@@ -67,6 +69,7 @@ export const ParentNaissanceForm: React.FC<
         label={getLibelle("Lieu de naissance")}
         evenement={props.parent.naissance}
         gestionEtrangerFrance={true}
+        etrangerParDefaut={false}
       />
     </div>
   );

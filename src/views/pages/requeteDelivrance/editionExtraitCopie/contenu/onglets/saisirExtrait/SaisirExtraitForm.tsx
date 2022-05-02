@@ -52,8 +52,13 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
 
   const titulairesAMs = FicheActe.getTitulairesAMDansLOrdre(props.acte);
   const evenement = props.acte.evenement;
-  const titulaire1Parents = TitulaireActe.getParents(props.acte.titulaires[0]);
-  const titulaire2Parents = TitulaireActe.getParents(props.acte.titulaires[1]);
+
+  const titulaire1Parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
+    props.acte.titulaires[0]
+  );
+  const titulaire2Parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
+    props.acte.titulaires[1]
+  );
   const natureActe = props.acte.nature;
 
   const formDefaultValues = mappingActeVerFormulaireSaisirExtrait(
@@ -113,7 +118,8 @@ function getTitulairesEvenementsEtParentsForm(
           natureActe
         )}
       {/* Parents titulaire 1 */}
-      {getTitulaireParentsForm(TITULAIRE_EVT_1, titulaire1Parents)}
+      {titulairesAMs[0] &&
+        getTitulaireParentsForm(TITULAIRE_EVT_1, titulaire1Parents)}
 
       {/* Deuxième titulaire avec accordéon */}
       {titulairesAMs[1] &&
@@ -124,7 +130,8 @@ function getTitulairesEvenementsEtParentsForm(
           natureActe
         )}
       {/* Parents titulaire 2 */}
-      {getTitulaireParentsForm(TITULAIRE_EVT_2, titulaire2Parents)}
+      {titulairesAMs[1] &&
+        getTitulaireParentsForm(TITULAIRE_EVT_2, titulaire2Parents)}
     </>
   );
 }

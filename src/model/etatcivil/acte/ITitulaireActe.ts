@@ -87,17 +87,46 @@ export const TitulaireActe = {
         )
       : "";
   },
-  getParents(titulaire?: ITitulaireActe): IFiliation[] {
+  getParentsDirects(titulaire?: ITitulaireActe): IFiliation[] {
+    return this.getParents(
+      (filiation: IFiliation) => filiation.lienParente === LienParente.PARENT,
+      titulaire
+    );
+  },
+
+  getTousLesParents(titulaire?: ITitulaireActe): IFiliation[] {
+    const res = this.getParents(
+      (filiation: IFiliation) =>
+        [
+          LienParente.PARENT,
+          LienParente.PARENT_ADOPTANT,
+          LienParente.ADOPTANT_CONJOINT_DU_PARENT
+        ].includes(filiation.lienParente),
+
+      titulaire
+    );
+
+    return res;
+  },
+
+  getParents(
+    filtre: (filiation: IFiliation) => boolean,
+    titulaire?: ITitulaireActe
+  ): IFiliation[] {
     return titulaire && titulaire.filiations
       ? titulaire.filiations
-          .filter(
-            filiation =>
-              filiation.lienParente === LienParente.PARENT ||
-              LienParente.PARENT_ADOPTANT ||
-              LienParente.ADOPTANT_CONJOINT_DU_PARENT
-          )
+          .filter(filiation => filtre(filiation))
           .sort((a, b) => a.ordre - b.ordre)
       : [];
+  },
+  getAuMoinsDeuxParentsDirects(titulaire?: ITitulaireActe): IFiliation[] {
+    let parents = this.getParentsDirects(titulaire);
+    if (parents.length === 0) {
+      parents = [{} as IFiliation, {} as IFiliation];
+    } else if (parents.length === 1) {
+      parents = [parents[0], {} as IFiliation];
+    }
+    return parents;
   },
   mapPrenomsVersPrenomsOrdonnes(titulaire?: ITitulaireActe): IPrenomOrdonnes[] {
     return mapPrenomsVersPrenomsOrdonnes(titulaire?.prenoms);

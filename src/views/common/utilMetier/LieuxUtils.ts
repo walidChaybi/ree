@@ -1,5 +1,7 @@
+import { EtrangerFrance } from "../../../model/etatcivil/enum/EtrangerFrance";
 import { Option } from "../util/Type";
 import {
+  estRenseigne,
   formatMajusculesMinusculesMotCompose,
   formatPremieresLettresMajusculesNomCompose,
   getValeurOuVide,
@@ -187,7 +189,7 @@ export class LieuxUtils {
     return { paysString, regionString, villeString };
   }
 
-  private static getLieuEntreParentheses(lieu: string) {
+  private static getLieuEntreParentheses(lieu?: string) {
     return lieu ? ` (${lieu})` : "";
   }
 
@@ -196,8 +198,7 @@ export class LieuxUtils {
     libelleDepartement?: string,
     region?: string,
     pays?: string,
-    arrondissement?: string,
-    formatArrondissementVerbeux = false
+    arrondissement?: string
   ): string {
     const villeString = ville
       ? formatPremieresLettresMajusculesNomCompose(ville)
@@ -223,12 +224,12 @@ export class LieuxUtils {
       } else if (!LieuxUtils.isVilleParis(villeString)) {
         return `${villeString} ${LieuxUtils.formateArrondissement(
           arrondissement,
-          formatArrondissementVerbeux
+          false
         )}${libelleDepartementString}`;
       } else {
         return `${villeString} ${LieuxUtils.formateArrondissement(
           arrondissement,
-          formatArrondissementVerbeux
+          false
         )}`;
       }
     } else {
@@ -255,22 +256,6 @@ export class LieuxUtils {
       arrondissementFormate = `arr.${arrondissement}`;
     }
     return arrondissementFormate;
-  }
-
-  public static getLocalisationEtrangerOuFrance(
-    ville?: string,
-    region?: string,
-    pays?: string,
-    arrondissement?: string
-  ): string {
-    return LieuxUtils.getLocalisationAutorite(
-      ville,
-      region,
-      region,
-      pays,
-      arrondissement,
-      true
-    );
   }
 
   private static formatAdresseEtrangere(
@@ -308,5 +293,136 @@ export class LieuxUtils {
   public static getOptionsArrondissement(ville?: string): Option[] {
     const villeNumeros: string[] = LieuxUtils.getNumerosArrondissement(ville);
     return villeNumeros.map(numero => ({ value: numero, str: numero }));
+  }
+
+  /**
+   *  Utilisé pour le formulaire de saisi d'un extrait de la page édition du document réponse
+   *  Si le pays n'est pas renseigné alors on considère que la localisation est étrangère
+   */
+  public static getLocalisationEtrangerOuFrance(
+    ville?: string,
+    regionOuDepartement?: string,
+    pays?: string,
+    arrondissement?: string
+  ): string {
+    if (LieuxUtils.isPaysFrance(pays)) {
+      return LieuxUtils.getLocalisationFrance(
+        ville,
+        regionOuDepartement,
+        arrondissement
+      );
+    } else {
+      return LieuxUtils.getLocalisationEtrangere(
+        ville,
+        regionOuDepartement,
+        pays
+      );
+    }
+  }
+
+  /**
+   * Utilisé pour le formulaire de saisi d'un extrait de la page édition du document réponse
+   *
+   * Libellé par défaut: <Ville naissance>, <Région naissance> (<Pays naissance>)
+   *
+   *    - Si pas de ville : <Région> (<Pays>)
+   *    - Si pas de région : <Ville> (<Pays>)
+   *    - Si pas de pays, ne pas éditer les parenthèses : <Ville>, <Région>
+   *    - Si pays seul : -- (<Pays>)
+   *      Exemple : -- (Canada)
+   */
+  public static getLocalisationEtrangere(
+    ville?: string,
+    region?: string,
+    pays?: string
+  ): string {
+    let libelleLocalisationEtrangere = "";
+    const villeString = ville || "";
+    const libelleRegion = getValeurOuVide(region);
+    const libelleRegionAvecVirgule = region ? `, ${region}` : "";
+    const libellePays = LieuxUtils.getLieuEntreParentheses(pays);
+
+    if (ville) {
+      libelleLocalisationEtrangere = `${villeString}${libelleRegionAvecVirgule}${libellePays}`;
+    } else {
+      if (region) {
+        libelleLocalisationEtrangere = `${libelleRegion}${libellePays}`;
+      } else if (pays) {
+        libelleLocalisationEtrangere = `--${libellePays}`;
+      }
+    }
+
+    return libelleLocalisationEtrangere;
+  }
+
+  /**
+   * Utiliser pour le formulaire de saisi d'un extrait de la page édition du document réponse (cf. getLocalisationEtrangerOuFrance)
+   *
+   * Libellé par défaut: <Ville naissance> <Intitulé arrondissement naissance> (<Département naissance>)
+   *    - Si pas d'arrondissement : <Ville> (<Département>)
+   *    - Si pas de département : <Ville> <Intitulé arrondissement>
+   *    - Si pas de département, ni d'arrondissement : <Ville>
+   *    - Si département seul : -- (<Département>)
+   *      Exemple : -- (Meuse)
+   * */
+  public static getLocalisationFrance(
+    ville?: string,
+    departement?: string,
+    arrondissement?: string
+  ): string {
+    let libelleLocalisationFrance = "";
+    const villeString = ville || "";
+    const libelleDepartement = LieuxUtils.getLieuEntreParentheses(departement);
+
+    const libelleArrondissement =
+      estRenseigne(arrondissement) &&
+      LieuxUtils.isVilleAvecArrondissement(ville)
+        ? LieuxUtils.formateArrondissement(arrondissement, true)
+        : "";
+
+    const libelleArrondissementAvecEspace =
+      estRenseigne(arrondissement) &&
+      LieuxUtils.isVilleAvecArrondissement(ville)
+        ? ` ${libelleArrondissement}`
+        : "";
+
+    if (ville) {
+      libelleLocalisationFrance = `${villeString}${libelleArrondissementAvecEspace}${libelleDepartement}`;
+    } else {
+      if (departement) {
+        libelleLocalisationFrance = `--${libelleDepartement}`;
+      }
+    }
+
+    return libelleLocalisationFrance;
+  }
+
+  public static getEtrangerOuFrance(
+    pays?: string,
+    etrangerParDefaut = true
+  ): EtrangerFrance {
+    let etrangerOuFrance: EtrangerFrance;
+    if (pays) {
+      etrangerOuFrance = LieuxUtils.isPaysFrance(pays)
+        ? EtrangerFrance.FRANCE
+        : EtrangerFrance.ETRANGER;
+    } else {
+      if (etrangerParDefaut) {
+        etrangerOuFrance = EtrangerFrance.ETRANGER;
+      } else {
+        etrangerOuFrance = EtrangerFrance.FRANCE;
+      }
+    }
+
+    return etrangerOuFrance;
+  }
+
+  public static getEtrangerOuFranceEnMajuscule(
+    pays?: string,
+    etrangerParDefaut = true
+  ): string {
+    return EtrangerFrance.getKey(
+      LieuxUtils.getEtrangerOuFrance(pays, etrangerParDefaut)
+    );
   }
 }

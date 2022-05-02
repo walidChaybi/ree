@@ -139,14 +139,20 @@ export const FicheActe = {
           titulairesAMs[0],
           titulairesActeDansLOrdre.titulaireActe1
         );
+
+        titulairesAMs[0].sexe = titulairesActeDansLOrdre.titulaireActe1.sexe;
       }
 
       if (titulairesAMDansLOrdre.titulaireAM2) {
         titulairesAMs[1] = { ...titulairesAMDansLOrdre.titulaireAM2 };
         majNomSequable(
           titulairesAMs[1],
-          titulairesActeDansLOrdre.titulaireActe1
+          titulairesActeDansLOrdre.titulaireActe2
         );
+
+        if (titulairesActeDansLOrdre.titulaireActe2) {
+          titulairesAMs[1].sexe = titulairesActeDansLOrdre.titulaireActe2.sexe;
+        }
       }
     }
     return titulairesAMs;

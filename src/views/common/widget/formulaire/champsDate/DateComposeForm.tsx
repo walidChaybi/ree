@@ -9,12 +9,7 @@ import {
   NB_HEURE,
   NB_MINUTE
 } from "../../../composant/formulaire/ConstantesNomsForm";
-import {
-  estDateValide,
-  getDateComposeFromDate,
-  getIsoStringFromDateCompose,
-  IDateCompose
-} from "../../../util/DateUtils";
+import { getDateComposeFromDate } from "../../../util/DateUtils";
 import { IconeCroix } from "../../icones/IconeCroix";
 import ReceDatePicker from "../datePicker/ReceDatePicker";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
@@ -27,6 +22,7 @@ import {
   traiteZeroAGauche
 } from "../utils/ControlesUtil";
 import { FormikComponentProps, withNamespace } from "../utils/FormUtil";
+import { buildDatePickerValue, IDateComposeForm } from "./DateComposeFormUtil";
 import { validateAnnee } from "./DateComposeFormValidation";
 import "./scss/DateComposeForm.scss";
 
@@ -50,6 +46,7 @@ interface ComponentProps {
   showCroixSuppression?: boolean;
   onChange?: (date: IDateComposeForm, type?: ChampDateModifie) => void;
   disabled?: boolean;
+  disabledHeure?: boolean; // Permet de surcharger le disabled global (dans le cas où il n'est pas renseigné c'est le disabled global qui fait foi)
   anneeMin?: number;
   anneeMax?: number;
   anneeObligatoire?: boolean;
@@ -57,12 +54,6 @@ interface ComponentProps {
 }
 
 export type DateComposeFormProps = ComponentProps & FormikComponentProps;
-
-export interface IDateComposeForm {
-  jour?: string;
-  mois?: string;
-  annee?: string;
-}
 
 const DateComposeForm: React.FC<DateComposeFormProps> = props => {
   const [dateSaisie, setDateSaisie] = useState<IDateComposeForm>({});
@@ -74,30 +65,6 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
   const dateMaxi = props.anneeMax
     ? new Date(`${props.anneeMax}-12-31`)
     : undefined;
-
-  function buildDatePickerValue(): Date {
-    let datePickerValue = new Date();
-    const dateSaisieComplete = { ...dateSaisie };
-
-    const date = getDateComposeFromDate(new Date());
-    if (!dateSaisie.jour) {
-      dateSaisieComplete.jour = date.jour;
-    }
-    if (!dateSaisie.mois) {
-      dateSaisieComplete.mois = date.mois;
-    }
-    if (!dateSaisie.annee) {
-      dateSaisieComplete.annee = date.annee;
-    }
-
-    if (estDateValide(dateSaisieComplete as IDateCompose)) {
-      datePickerValue = new Date(
-        getIsoStringFromDateCompose(dateSaisieComplete as IDateCompose)
-      );
-    }
-
-    return datePickerValue;
-  }
 
   function buildDateSaisie(type: ChampDateModifie, value: string) {
     const newDate = { ...dateSaisie };
@@ -162,6 +129,9 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
   const showCroixSuppression =
     props.showCroixSuppression != null ? props.showCroixSuppression : true;
 
+  const disabledHeure =
+    props.disabledHeure == null ? props.disabled : props.disabledHeure;
+
   return (
     <>
       <div
@@ -217,7 +187,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
         )}
         {props.showDatePicker && (
           <ReceDatePicker
-            dateValue={buildDatePickerValue()}
+            dateValue={buildDatePickerValue(dateSaisie)}
             disabled={props.disabled}
             onChange={date => {
               onDatePickerValueChange(props, date, setDateSaisie);
@@ -234,7 +204,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
               name={withNamespace(props.nomDate, NB_HEURE)}
               maxLength="2"
               onInput={heureMinuteChange}
-              disabled={props.disabled}
+              disabled={disabledHeure}
               aria-label={withNamespace(props.nomDate, NB_HEURE)}
               placeholder="hh"
             />
@@ -244,7 +214,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
               name={withNamespace(props.nomDate, NB_MINUTE)}
               maxLength="2"
               onInput={heureMinuteChange}
-              disabled={props.disabled}
+              disabled={disabledHeure}
               aria-label={withNamespace(props.nomDate, NB_MINUTE)}
               placeholder="mm"
             />
