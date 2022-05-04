@@ -9,7 +9,7 @@ export const useReinitialisationComposant = () => {
   return {
     cleReinitialisation,
     reinitialisation: () => {
-      setCleReinitialisation(Generateur.genereCleUnique);
+      setCleReinitialisation(Generateur.genereCleUnique());
     }
   };
 };

@@ -1,5 +1,6 @@
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { Option } from "../../../views/common/util/Type";
+import { premiereLettreEnMajuscule } from "../../../views/common/util/Utils";
 
 export class TypeDeclarationConjointe extends EnumWithLibelle {
   public static readonly INDETERMINE = new TypeDeclarationConjointe(
@@ -43,7 +44,9 @@ export class TypeDeclarationConjointe extends EnumWithLibelle {
           value: TypeDeclarationConjointe.getKey(
             TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE
           ),
-          str: TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE.libelle
+          str: premiereLettreEnMajuscule(
+            TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE.libelle
+          )
         }
       ];
     } else if (type === TypeDeclarationConjointe.ABSENCE_DECLARATION) {
@@ -67,7 +70,9 @@ export class TypeDeclarationConjointe extends EnumWithLibelle {
       );
     } else {
       options = EnumWithLibelle.getAllLibellesAsOptions(
-        TypeDeclarationConjointe
+        TypeDeclarationConjointe,
+        false,
+        false
       );
     }
     return options;

@@ -21,6 +21,7 @@ export const ReinitialiserValiderBoutons: React.FC<
         type="reset"
         onClick={props.onClickReInitialiser}
         disabled={props.reInitialiserDisabled}
+        aria-label="Réinitialiser"
       >
         {getLibelle("Réinitialiser")}
       </button>
@@ -30,6 +31,7 @@ export const ReinitialiserValiderBoutons: React.FC<
         disabled={
           props.validerDisabled || !officierHabiliterPourLeDroit(Droit.DELIVRER)
         }
+        aria-label="Valider"
       >
         {getLibelle("Valider")}
       </button>

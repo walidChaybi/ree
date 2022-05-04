@@ -196,6 +196,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
             type="button"
             onClick={onClickDecomposer}
             disabled={decomposerLieu}
+            aria-label="décomposer le lieu"
           >
             {getLibelle("Décomposer")}
           </button>

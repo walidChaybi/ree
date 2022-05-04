@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 
 export class TypeExtrait extends EnumWithLibelle {

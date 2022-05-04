@@ -32,6 +32,7 @@ import { withNamespace } from "../../../../../../../../common/widget/formulaire/
 import { DATE_EVENEMENT } from "../../../../../../saisirRequete/modelForm/ISaisirRequetePageModel";
 import PrenomsForm from "../../../../../../saisirRequete/sousFormulaires/identite/nomsPrenoms/PrenomsForm";
 import "./scss/TitulaireEvenementForm.scss";
+import { getLabels } from "./TitulaireEvenementFormUtil";
 
 interface TitulaireEvenementFormPops {
   nom: string;
@@ -103,31 +104,3 @@ export const TitulaireEvenementForm: React.FC<
     </>
   );
 };
-
-interface ILabel {
-  dateEvenement: string;
-  lieuEvenement: string;
-}
-function getLabels(natureActe: NatureActe) {
-  const label: ILabel = { dateEvenement: "", lieuEvenement: "" };
-
-  switch (natureActe) {
-    case NatureActe.NAISSANCE:
-      label.dateEvenement = getLibelle("Date de naissance");
-      label.lieuEvenement = getLibelle("Lieu de naissance");
-      break;
-    case NatureActe.DECES:
-      label.dateEvenement = getLibelle("Date de déces");
-      label.lieuEvenement = getLibelle("Lieu de déces");
-      break;
-
-    case NatureActe.MARIAGE:
-      label.dateEvenement = getLibelle("Date de mariage");
-      label.lieuEvenement = getLibelle("Lieu de mariage");
-      break;
-    default:
-      break;
-  }
-
-  return label;
-}

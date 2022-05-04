@@ -18,6 +18,7 @@ import {
 import { estHeureValide, getLibelle } from "../../../util/Utils";
 import {
   ANNEE_OBLIGATOIRE,
+  MIN_LENGTH_ANNEE_MESSAGE,
   MSG_CURRENT_YEAR_MAX,
   MSG_DATE_MEP_MIN,
   MSG_MIN_YEAR
@@ -46,7 +47,7 @@ function valideBornesAnnee(
 ) {
   let messageErreur;
   if (value.toString().length < MIN_LENGTH_ANNEE) {
-    messageErreur = MSG_MIN_YEAR;
+    messageErreur = MIN_LENGTH_ANNEE_MESSAGE;
   }
   if (anneeMin && value < anneeMin) {
     if (anneeMin === MIN_YEAR) {
