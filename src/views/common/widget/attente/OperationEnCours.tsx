@@ -45,7 +45,12 @@ export const OperationEnCours: React.FC<OperationEnCoursProps> = props => {
     <Backdrop
       className={classes.backdrop}
       open={props.visible}
-      onClick={props.onClick}
+      onClick={(e: any) => {
+        e.stopPropagation();
+        if (props.onClick) {
+          props.onClick(e);
+        }
+      }}
     >
       <CircularProgress color="inherit" />
     </Backdrop>

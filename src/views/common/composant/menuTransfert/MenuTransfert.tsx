@@ -135,6 +135,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
 
   useEffect(() => {
     if (idAction) {
+      setOperationEnCours(false);
       if (props.estTransfert) {
         if (props.typeRequete === TypeRequete.DELIVRANCE) {
           receUrl.replaceUrl(history, URL_MES_REQUETES_DELIVRANCE);
@@ -245,4 +246,3 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
     </>
   );
 };
-

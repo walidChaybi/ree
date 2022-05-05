@@ -15,7 +15,6 @@ import {
 } from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
-import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
@@ -39,7 +38,6 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [paramsMAJReqInfo, setParamsMAJReqInfo] =
     useState<CreationActionMiseAjourStatutHookParams>();
-  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   useCreationActionMiseAjourStatut(paramsMAJReqInfo);
 
@@ -103,10 +101,6 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     }
   }, [dataState]);
 
-  const finOperationEnCours = () => {
-    setOperationEnCours(false);
-  };
-
   const getIcone = (
     idRequete: string,
     sousType: string,
@@ -128,11 +122,6 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
 
   return (
     <>
-      <OperationEnCours
-        visible={operationEnCours}
-        onTimeoutEnd={finOperationEnCours}
-        onClick={finOperationEnCours}
-      />
       <TableauRece
         idKey={"idRequete"}
         sortOrderByState={linkParameters.tri}
