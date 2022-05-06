@@ -178,8 +178,9 @@ function majDeclarationConjointe(
     titulaireAM.dateDeclarationConjointe = undefined;
     // Remarque on ne change pas le type ABSENCE_DECLARATION_VALIDEE en ABSENCE_DECLARATION car ils ont tous les deux le même libellé
   } else if (
+    !titulaireAM.typeDeclarationConjointe ||
     titulaireAM.typeDeclarationConjointe ===
-    TypeDeclarationConjointe.ABSENCE_DECLARATION
+      TypeDeclarationConjointe.ABSENCE_DECLARATION
   ) {
     titulaireAM.typeDeclarationConjointe =
       titulaireActe.typeDeclarationConjointe;
