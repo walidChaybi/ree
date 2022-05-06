@@ -6,8 +6,8 @@ import { Options } from "../../../views/common/util/Type";
 export class SousTypeCreation extends EnumWithComplete {
   public static readonly RCEDXR = new SousTypeCreation(
     "RCEDXR",
-    "Création Etablissement par déclaration (DX) RIE",
-    "Acte Etab DX RIE"
+    "Création Etablissement par déclaration (DX) Démat",
+    "Acte Etab DX (d)"
   );
   public static readonly RCEDXC = new SousTypeCreation(
     "RCEDXC",
@@ -19,15 +19,10 @@ export class SousTypeCreation extends EnumWithComplete {
     "Création Etablissement pour régularisation (Y) Courrier",
     "Acte Etab Y (c)"
   );
-  public static readonly RCEADMC = new SousTypeCreation(
-    "RCEADMC",
-    "Création Etablissement suite Acte Dressé en Mer Courrier",
-    "Acte Dressé en Mer (c)"
-  );
   public static readonly RCEXR = new SousTypeCreation(
     "RCEXR",
-    "Création Etablissement par décret (X) RIE",
-    "Acte Etab X RIE"
+    "Création Etablissement par décret (X) Démat",
+    "Acte Etab X (d)"
   );
   public static readonly RCETJC = new SousTypeCreation(
     "RCETJC",
@@ -39,15 +34,25 @@ export class SousTypeCreation extends EnumWithComplete {
     "Création suite Transcription Courrier",
     "Acte Transcrit (c)"
   );
-  public static readonly RCADR = new SousTypeCreation(
-    "RCADR",
-    "Création suite Acte Dressé RECE",
-    "Acte Dressé RECE"
-  );
   public static readonly RCTD = new SousTypeCreation(
     "RCTD",
     "Création suite Transcription Démat",
     "Acte Transcrit (d)"
+  );
+  public static readonly RCEOPC = new SousTypeCreation(
+    "RCEOPC",
+    "Création Etablissement pour optants (OPT) Courrier",
+    "Acte Etab OPT (c)"
+  );
+  public static readonly RCEARC = new SousTypeCreation(
+    "RCEARC",
+    "Création Etablissement pour reconstitution (AR) Courrier",
+    "Acte Etab AR (c)"
+  );
+  public static readonly RCEADC = new SousTypeCreation(
+    "RCEADC",
+    "Création Acte Dressé Courrier",
+    "Acte Dressé (c)"
   );
 
   public static getEnumFor(str: string) {

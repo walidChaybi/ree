@@ -12,7 +12,7 @@ export class Provenance extends EnumWithComplete {
   );
   public static readonly COMEDEC = new Provenance("COMEDEC", "Comedec");
   public static readonly PLANETE = new Provenance("PLANETE", "Planète");
-  public static readonly SIANF = new Provenance("SIANF", "SIANF");
+  public static readonly NATALI = new Provenance("NATALI", "Natali");
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, Provenance);
