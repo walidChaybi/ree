@@ -138,9 +138,7 @@ et de ${parent2}`;
     let declarationConjointe = "";
     if (acte.analyseMarginales) {
       const { titulaireAMCompositionEC1 } =
-        CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(
-          acte.analyseMarginales
-        );
+        CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(acte);
       if (
         titulaireAMCompositionEC1?.typeDeclarationConjointe &&
         titulaireAMCompositionEC1.typeDeclarationConjointe !==

@@ -119,7 +119,7 @@ export const FicheActe = {
     );
   },
 
-  getTitulairesAMDansLOrdre(acte: IFicheActe) {
+  getTitulairesAMDansLOrdreAvecMajDeclConj(acte: IFicheActe) {
     const titulairesAMs: ITitulaireActe[] = [];
     const titulairesActeDansLOrdre = this.getTitulairesDansLOrdre(acte);
 

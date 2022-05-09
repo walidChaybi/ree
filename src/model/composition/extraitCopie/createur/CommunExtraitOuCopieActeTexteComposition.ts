@@ -1,8 +1,4 @@
 import {
-  AnalyseMarginale,
-  IAnalyseMarginale
-} from "../../../../model/etatcivil/acte/IAnalyseMarginale";
-import {
   DEUX,
   getLibelle,
   getValeurOuVide,
@@ -173,7 +169,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
   } {
     // Récupération des titulaires AM
     const [titulaireAM1, titulaireAM2] =
-      FicheActe.getTitulairesAMDansLOrdre(acte);
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConj(acte);
 
     // Récupération des titulaires de l'Acte pour la filiation
     const { titulaireActe1, titulaireActe2 } =
@@ -214,7 +210,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     if (acte.analyseMarginales) {
       const { titulaireAMCompositionEC1, titulaireAMCompositionEC2 } =
         CommunExtraitOuCopieActeTexteComposition.getTitulairesAnalayseMarginaleCompositionEC(
-          acte.analyseMarginales
+          acte
         );
 
       if (titulaireAMCompositionEC1) {
@@ -236,27 +232,23 @@ export class CommunExtraitOuCopieActeTexteComposition {
     composition.reference_acte = FicheActe.getReference(acte);
   }
 
-  public static getTitulairesAnalayseMarginaleCompositionEC(
-    analyseMarginales: IAnalyseMarginale[]
-  ) {
+  public static getTitulairesAnalayseMarginaleCompositionEC(acte: IFicheActe) {
     let titulaireAMCompositionEC1: ITitulaireAMCompositionEC | undefined;
     let titulaireAMCompositionEC2: ITitulaireAMCompositionEC | undefined;
-    const analyseMarginale =
-      AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(analyseMarginales);
 
-    const { titulaireAM1, titulaireAM2 } =
-      AnalyseMarginale.getTitulairesDansLOrdre(analyseMarginale);
+    const titulairesAMs =
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConj(acte);
 
-    if (titulaireAM1) {
+    if (titulairesAMs[0]) {
       titulaireAMCompositionEC1 =
         CommunExtraitOuCopieActeTexteComposition.creerTitulaireAMCompositionEC(
-          titulaireAM1
+          titulairesAMs[0]
         );
     }
-    if (titulaireAM2) {
+    if (titulairesAMs[1]) {
       titulaireAMCompositionEC2 =
         CommunExtraitOuCopieActeTexteComposition.creerTitulaireAMCompositionEC(
-          titulaireAM2
+          titulairesAMs[1]
         );
     }
 
