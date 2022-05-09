@@ -141,7 +141,7 @@ test("renders Body 403", () => {
     );
   });
   const titre = screen.getByText(
-    /Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BAG/i
+    /Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO/i
   );
   expect(titre).toBeDefined();
 });
