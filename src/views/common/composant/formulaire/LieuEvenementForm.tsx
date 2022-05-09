@@ -29,7 +29,8 @@ interface ComponentFormProps {
   evenement?: IEvenement;
   gestionEtrangerFrance?: boolean;
   validation?: boolean;
-  etrangerParDefaut?: boolean; // true par défaut (par défaut le pays des parents est FRANCE et celui du titulaire est ETRANGER)
+  etrangerParDefaut?: boolean; // on considère que c'est true par défaut via la fonction 'estModeSaisieFrance'
+  //  (par défaut le pays des parents est FRANCE et celui du titulaire est ETRANGER)
 }
 
 type LieuEvenementFormProps = ComponentFormProps & FormikComponentProps;
@@ -42,7 +43,7 @@ type LieuEvenementFormProps = ComponentFormProps & FormikComponentProps;
 const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
   const [decomposerLieu, setDecomposerLieu] = useState(false);
   const [modeSaisieFrance, setModeSaisieFrance] = useState<boolean>(
-    getModeSaisieFrance(props.evenement, props.etrangerParDefaut)
+    estModeSaisieFrance(props.evenement?.pays, props.etrangerParDefaut)
   );
 
   const lieuCompletRenseigne = estRenseigne(props.evenement?.lieuReprise);
@@ -57,7 +58,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
   const majLieuComplet = useCallback(
     (lieu: ILieuEvenement) => {
       // Si le pays n'est pas renseigné ont détermine si le pays par défaut est FRANCE (cas des parents) (pour le titulaire par défaut la localisation est étrangère)
-      if (!lieu.pays && !props.etrangerParDefaut) {
+      if (estModeSaisieFrance(lieu.pays, props.etrangerParDefaut)) {
         lieu.pays = FRANCE;
       }
       props.formik.setFieldValue(
@@ -268,14 +269,11 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
   );
 };
 
-function getModeSaisieFrance(
-  evenement?: IEvenement,
-  etrangerParDefaut = true
-): boolean {
+function estModeSaisieFrance(pays?: string, etrangerParDefaut = true): boolean {
   if (etrangerParDefaut) {
-    return LieuxUtils.isPaysFrance(evenement?.pays);
+    return LieuxUtils.isPaysFrance(pays);
   } else {
-    return evenement?.pays == null || LieuxUtils.isPaysFrance(evenement?.pays);
+    return pays == null || LieuxUtils.isPaysFrance(pays);
   }
 }
 
