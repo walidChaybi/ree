@@ -56,7 +56,7 @@ function getMessageLogin(officier: OfficierContextProps) {
     officier.erreurState.status === codeErreurForbidden
   ) {
     return getLibelle(
-      "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BAG."
+      "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO."
     );
   } else if (officier !== undefined && officier.erreurState !== undefined) {
     logError({
