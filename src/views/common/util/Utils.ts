@@ -378,3 +378,22 @@ export function estHeureValide(nbHeure: number, nbMinute: number) {
     nbMinute < SOIXANTE
   );
 }
+
+export function checkDirty(isDirty: boolean, setIsDirty: any) {
+  if (isDirty) {
+    if (
+      window.confirm(
+        getLibelle(`Vous n'avez pas validé vos modifications !
+  Si vous continuez, celles-ci seront perdues et les données réinitialisées. 
+   Voulez-vous continuer ?`)
+      )
+    ) {
+      setIsDirty(false);
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return true;
+  }
+}

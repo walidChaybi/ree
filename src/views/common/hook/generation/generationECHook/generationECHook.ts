@@ -30,7 +30,6 @@ import {
 export interface IGenerationECParams {
   idActe: string;
   requete: IRequeteDelivrance;
-  choixDelivrance: ChoixDelivrance;
   validation: Validation;
   pasDeStockageDocument?: boolean;
   mentionsRetirees: string[];
@@ -60,11 +59,11 @@ export function useGenerationEC(
   const [validation, setValidation] = useState<Validation>();
 
   useEffect(() => {
-    if (params && params.idActe) {
+    if (params && params.idActe && params.requete.choixDelivrance) {
       setActeApiHookParams({
         idActe: params.idActe,
         recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(
-          params.choixDelivrance
+          params.requete.choixDelivrance
         )
       });
     }
@@ -95,7 +94,6 @@ export function useGenerationEC(
       requete: IRequeteDelivrance,
       contenu: string,
       nbPages: number,
-      choixDelivrance: ChoixDelivrance,
       pasDeStockageDocument = false
     ) => {
       if (pasDeStockageDocument) {
@@ -105,16 +103,16 @@ export function useGenerationEC(
             contenuDocumentReponse: contenu
           }
         });
-      } else {
+      } else if (requete.choixDelivrance) {
         const statutRequete = getStatutRequete(
-          choixDelivrance,
+          requete.choixDelivrance,
           requete.sousType
         );
         setStockerDocumentCreerActionMajStatutRequeteParams({
           documentReponsePourStockage: {
             contenu,
-            nom: getNomDocument(choixDelivrance),
-            typeDocument: getTypeDocument(choixDelivrance), // UUID du type de document demandé (nomenclature)
+            nom: getNomDocument(requete.choixDelivrance),
+            typeDocument: getTypeDocument(requete.choixDelivrance), // UUID du type de document demandé (nomenclature)
             nbPages,
             mimeType: MimeType.APPLI_PDF,
             orientation: Orientation.PORTRAIT,
@@ -137,7 +135,6 @@ export function useGenerationEC(
         params.requete,
         extraitCopieApiHookResultat.donneesComposition.contenu,
         extraitCopieApiHookResultat.donneesComposition.nbPages,
-        params.choixDelivrance,
         params.pasDeStockageDocument
       );
     }

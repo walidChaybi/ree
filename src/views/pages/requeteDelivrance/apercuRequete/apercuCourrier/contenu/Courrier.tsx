@@ -1,14 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
+import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
+import { Validation } from "../../../../../../model/requete/enum/Validation";
 import {
   OptionCourrier,
   OptionsCourrier
 } from "../../../../../../model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import messageManager from "../../../../../common/util/messageManager";
-import { getLibelle } from "../../../../../common/util/Utils";
+import { ReinitialiserValiderFormBoutons } from "../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import {
+  IGenerationECParams,
+  useGenerationEC
+} from "../../../../../common/hook/generation/generationECHook/generationECHook";
+import { useReinitialisationComposant } from "../../../../../common/util/form/useReinitialisation";
+import { DEUX, getLibelle } from "../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
 import {
   AdresseFormValidationSchema,
@@ -16,9 +23,6 @@ import {
 } from "../../../../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "../../../../../common/widget/popin/ConfirmationPopin";
-import BoutonsCourrier, {
-  BoutonsCourrierProps
-} from "./contenuForm/BoutonsCourrier";
 import {
   controleFormulaire,
   courrierExiste,
@@ -65,10 +69,16 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
   const [messagesBloquant, setMessagesBloquant] = useState<string>();
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
+  const [optionsChoisiesFinales, setOptionsChoisiesFinales] =
+    useState<OptionsCourrier>([]);
+  const [generationDocumentECParams, setGenerationDocumentECParams] =
+    useState<IGenerationECParams>();
   const [documentDelivranceChoisi, setDocumentDelivranceChoisi] =
     useState<DocumentDelivrance>();
   const [generationCourrierHookParams, setGenerationCourrierHookParams] =
     useState<IGenerationCourrierParams>();
+  const { cleReinitialisation, reinitialisation } =
+    useReinitialisationComposant();
 
   // Schéma de validation en sortie de champs
   const ValidationSchemaCourrier = Yup.object({
@@ -95,10 +105,6 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const [optionsToutesValides, setOptionsToutesValides] = useState<boolean>(
     checkOptionsToutesValides()
   );
-  const boutonsProps = {
-    requete: props.requete,
-    optionsValides: optionsToutesValides
-  } as BoutonsCourrierProps;
 
   const setCheckOptions = () => {
     setOptionsToutesValides(checkOptionsToutesValides());
@@ -107,6 +113,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const onSubmit = (values: SaisieCourrier) => {
     if (controleFormulaire(values, optionsChoisies, setMessagesBloquant)) {
       setOperationEnCours(true);
+      setOptionsChoisiesFinales(optionsChoisies);
       setSaisieCourrier({ ...values });
     }
   };
@@ -153,32 +160,59 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   };
 
   useEffect(() => {
-    if (saisieCourrier && props.requete.choixDelivrance) {
+    if (
+      saisieCourrier &&
+      props.requete.choixDelivrance &&
+      optionsChoisiesFinales
+    ) {
       setGenerationCourrierHookParams({
         saisieCourrier,
         optionsChoisies,
         requete: props.requete,
         idActe: props.idActe,
-        mettreAJourStatut: true
+        // On ne change le statut que lorsqu'on a aucun documents
+        mettreAJourStatut: props.requete.documentsReponses.length === 0
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [saisieCourrier]);
+  }, [saisieCourrier, optionsChoisiesFinales]);
 
   const generationCourrier = useGenerationCourrierHook(
     generationCourrierHookParams
   );
 
+  // 2 - Création des paramètre pour la génération du document demandé
   useEffect(() => {
-    if (generationCourrier) {
-      setOperationEnCours(false);
-      messageManager.showSuccessAndClose(
-        getLibelle("Le courrier a bien été enregistré")
-      );
-      props.handleCourrierEnregistre();
+    if (
+      props.idActe &&
+      generationCourrier &&
+      ChoixDelivrance.estReponseAvecDelivrance(props.requete.choixDelivrance) &&
+      props.requete.documentsReponses.length < DEUX
+    ) {
+      setGenerationDocumentECParams({
+        idActe: props.idActe,
+        requete: props.requete,
+        validation: Validation.N,
+        mentionsRetirees: []
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generationCourrier]);
+
+  // Génération du document demandé
+  const resultatGenerationEC = useGenerationEC(generationDocumentECParams);
+
+  useEffect(() => {
+    if (
+      resultatGenerationEC ||
+      (generationCourrier &&
+        ChoixDelivrance.estReponseSansDelivrance(props.requete.choixDelivrance))
+    ) {
+      setOperationEnCours(false);
+      props.handleCourrierEnregistre();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatGenerationEC, generationCourrier]);
 
   return (
     <>
@@ -189,6 +223,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
       />
       <title>{titre}</title>
       <Formulaire
+        key={cleReinitialisation}
         titre={titre}
         formDefaultValues={getDefaultValuesCourrier(props.requete)}
         formValidationSchema={ValidationSchemaCourrier}
@@ -196,7 +231,10 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         className="FormulaireCourrier"
       >
         <div>{blocsForm}</div>
-        <BoutonsCourrier {...boutonsProps} />
+        <ReinitialiserValiderFormBoutons
+          onClickReInitialiser={reinitialisation}
+          validerDisabled={!optionsToutesValides}
+        />
       </Formulaire>
       {messagesBloquant && (
         <ConfirmationPopin

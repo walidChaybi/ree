@@ -1,5 +1,7 @@
 import { MimeType } from "file-type/core";
+import { DEUX } from "../../views/common/util/Utils";
 import { Orientation } from "../composition/enum/Orientation";
+import { ChoixDelivrance } from "./enum/ChoixDelivrance";
 import { COURRIER, DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { MentionsRetirees } from "./enum/MentionsRetirees";
 import { Validation } from "./enum/Validation";
@@ -30,6 +32,7 @@ export interface IDocumentReponse {
   };
   validation?: Validation;
   mentionsRetirees?: MentionsRetirees[];
+  ordre?: number;
 }
 
 export const DocumentReponse = {
@@ -103,6 +106,30 @@ export const DocumentReponse = {
     });
 
     return resulatDocumentsSansDoublons;
+  },
+
+  attribuerOrdreDocuments(
+    documents: IDocumentReponse[],
+    choixDelivrance: ChoixDelivrance
+  ) {
+    documents.forEach(doc => {
+      const docDelivrance = DocumentDelivrance.getEnumFor(doc.typeDocument);
+      if (DocumentDelivrance.estCourrierDAccompagnement(docDelivrance)) {
+        doc.ordre = 0;
+      } else if (
+        docDelivrance ===
+        DocumentDelivrance.getEnumFromCode(
+          ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
+            choixDelivrance
+          )
+        )
+      ) {
+        doc.ordre = 1;
+      } else {
+        doc.ordre = DEUX;
+      }
+    });
+    return documents;
   }
 };
 
@@ -117,3 +144,5 @@ function documentSansCtvExisteDejaAvecCtv(
     ) !== undefined
   );
 }
+
+

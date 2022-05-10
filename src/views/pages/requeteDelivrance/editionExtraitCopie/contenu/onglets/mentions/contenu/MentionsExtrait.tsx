@@ -10,7 +10,7 @@ import {
 } from "../../../../../../../common/util/Utils";
 import { SelectRece } from "../../../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { ListeGlisserDeposer } from "../../../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
-import { EditionECContext } from "../../../../EditionExtraitCopiePage";
+import { RECEContext } from "../../../../../../../core/body/Body";
 import {
   getEnumNatureMentionOuAutre,
   handleBlur,
@@ -42,7 +42,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   mentionAjout,
   natureActe
 }) => {
-  const { setIsDirty } = useContext(EditionECContext);
+  const { setIsDirty } = useContext(RECEContext);
   function selectionneMention(id: string) {
     selectionneEtMiseAJour(mentions, mentionSelect, setMentionSelect, id);
   }

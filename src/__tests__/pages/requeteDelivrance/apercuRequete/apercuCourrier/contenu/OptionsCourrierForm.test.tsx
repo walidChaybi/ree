@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React, { useState } from "react";
@@ -13,9 +13,9 @@ import { configRequetes } from "../../../../../../mock/superagent-config/superag
 import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
 import { OptionsCourrier } from "../../../../../../model/requete/IOptionCourrier";
 import OptionsCourrierForm, {
-    OptionCourrierFormDefaultValues,
-    OptionsCourrierSubFormProps,
-    ValidationSchemaOptionCourrier
+  OptionCourrierFormDefaultValues,
+  OptionsCourrierSubFormProps,
+  ValidationSchemaOptionCourrier
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/OptionsCourrierForm";
 import { OPTION } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 
@@ -152,7 +152,7 @@ test("renders OptionsCourrierForm modifier le contenu d'une option libre", async
     expect(iconeValider).toBeDefined();
   });
 
-  const boutonReinitialiser = screen.getByText("Réinitialiser");
+  const boutonReinitialiser = screen.getByTitle("Rappel du modèle de l'option");
 
   await act(async () => {
     fireEvent.click(boutonReinitialiser);

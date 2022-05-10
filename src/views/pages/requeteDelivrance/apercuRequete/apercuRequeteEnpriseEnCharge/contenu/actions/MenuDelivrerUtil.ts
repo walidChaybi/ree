@@ -1,11 +1,11 @@
 import React from "react";
 import { TypeActe } from "../../../../../../../model/etatcivil/enum/TypeActe";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import {
   DELIVRANCE_ACTE,
-  DELIVRANCE_ACTE_NON_ANTHENTIQUE,
-  DocumentDelivrance
-} from "../../../../../../../model/requete/enum/DocumentDelivrance";
+  DELIVRANCE_ACTE_NON_ANTHENTIQUE
+} from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
 import { MotifDelivrance } from "../../../../../../../model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
@@ -14,7 +14,6 @@ import { OptionsCourrier } from "../../../../../../../model/requete/IOptionCourr
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IGenerationECResultat } from "../../../../../../common/hook/generation/generationECHook/generationECHook";
 import { IResultGenerationUnDocument } from "../../../../../../common/hook/generation/generationUtils";
 import { DoubleSubmitUtil } from "../../../../../../common/util/DoubleSubmitUtil";
 import { getUrlPrecedente } from "../../../../../../common/util/route/routeUtil";
@@ -23,10 +22,7 @@ import {
   getValeurOuVide
 } from "../../../../../../common/util/Utils";
 import { IBoutonPopin } from "../../../../../../common/widget/popin/ConfirmationPopin";
-import {
-  PATH_APERCU_COURRIER,
-  receUrl
-} from "../../../../../../router/ReceUrls";
+import { PATH_EDITION, receUrl } from "../../../../../../router/ReceUrls";
 import { SaisieCourrier } from "../../../apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import { IUpdateChoixDelivranceResultat } from "./hook/UpdateChoixDelivranceApiHook";
@@ -289,23 +285,18 @@ export function controleCoherenceUnActeSelectionne(
 
 export function redirection(
   updateChoixDelivranceResultat: IUpdateChoixDelivranceResultat | undefined,
-  resultatGenerationEC: IGenerationECResultat | undefined,
   props: React.PropsWithChildren<IChoixActionDelivranceProps>,
   history: any,
   actes: IResultatRMCActe[] | undefined,
   generationCourrier: IResultGenerationUnDocument | undefined
 ) {
-  if (
-    updateChoixDelivranceResultat?.idRequete &&
-    resultatGenerationEC?.resultGenerationUnDocument
-  ) {
+  if (updateChoixDelivranceResultat?.idRequete) {
     if (props.requete.sousType === SousTypeDelivrance.RDC) {
       receUrl.replaceUrl(
         history,
-        `${getUrlPrecedente(
-          history.location.pathname
-        )}/${PATH_APERCU_COURRIER}/${props.requete.id}`,
-        actes?.[0].idActe
+        `${getUrlPrecedente(history.location.pathname)}/${PATH_EDITION}/${
+          props.requete.id
+        }/${actes?.[0].idActe}`
       );
     } else if (
       sousTypeCreationCourrierAutomatique(props.requete.sousType) &&

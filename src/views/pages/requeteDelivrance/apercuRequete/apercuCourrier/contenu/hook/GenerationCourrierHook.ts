@@ -70,7 +70,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   const [courrierParams, setCourrierParams] = useState<ICourrierParams>();
 
-  const [courrier, setCourrier] = useState<DocumentDelivrance | undefined>();
+  const [courrier, setCourrier] = useState<{ doc?: DocumentDelivrance }>();
 
   const [acteApiHookParams, setActeApiHookParams] =
     useState<IActeApiHookParams>();
@@ -85,14 +85,15 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
     if (uuidCourrierPresent(params)) {
       // @ts-ignore params.saisieCourrier n'est pas null
       const uuidCourrier = params.saisieCourrier.choixCourrier.courrier;
-      setCourrier(DocumentDelivrance.getDocumentDelivrance(uuidCourrier));
+      setCourrier({
+        doc: DocumentDelivrance.getDocumentDelivrance(uuidCourrier)
+      });
       setActApiHookParamsOuBasculerConstructionCourrier(
         setActeApiHookParams,
         setBasculerConstructionCourrier,
         params?.idActe
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
   const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
@@ -112,7 +113,8 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
         basculerConstructionCourrier
       )
     ) {
-      if (presenceDesElementsPourLaGeneration(params, courrier)) {
+      setBasculerConstructionCourrier(false);
+      if (presenceDesElementsPourLaGeneration(params, courrier?.doc)) {
         const elements: IElementsJasperCourrier =
           specificationCourrier.getElementsJasper(
             // @ts-ignore presenceDesElementsPourLaGeneration
@@ -130,7 +132,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
           setCourrierParams,
           setResultatGenerationCourrier,
           // @ts-ignore presenceDesElementsPourLaGeneration
-          courrier
+          courrier?.doc
         );
       } else {
         setResultatGenerationCourrier(RESULTAT_VIDE);
@@ -152,7 +154,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
           params?.saisieCourrier,
           donneesComposition,
           params?.optionsChoisies,
-          courrier
+          courrier.doc
         )
       );
     }

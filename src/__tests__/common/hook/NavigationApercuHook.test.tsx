@@ -178,7 +178,7 @@ test("test A valider", async () => {
     const { getByTestId } = render(<HookConsummerNavigation5 />);
     await waitFor(() =>
       expect(getByTestId("url").textContent).toBe(
-        "/rece/rece-ui/mesrequetes/apercurequetetraitement/0"
+        "/rece/rece-ui/mesrequetes/edition/0"
       )
     );
   });

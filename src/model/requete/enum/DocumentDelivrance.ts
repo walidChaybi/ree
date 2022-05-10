@@ -4,44 +4,27 @@ import { EnumNomemclature } from "../../../views/common/util/enum/EnumNomenclatu
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../views/common/util/Type";
 import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
+import {
+  CODE_ATTESTATION_PACS,
+  CODE_CERTIFICAT_INSCRIPTION_RC,
+  CODE_CERTIFICAT_INSCRIPTION_RCA,
+  CODE_CERTIFICAT_SITUATION_PACS,
+  CODE_CERTIFICAT_SITUATION_PACS_RC,
+  CODE_CERTIFICAT_SITUATION_PACS_RCA,
+  CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
+  CODE_CERTIFICAT_SITUATION_RC,
+  CODE_CERTIFICAT_SITUATION_RCA,
+  CODE_CERTIFICAT_SITUATION_RC_RCA,
+  CODE_COPIE_INTEGRALE,
+  CODE_COPIE_NON_SIGNEE,
+  CODE_EXTRAIT_AVEC_FILIATION,
+  CODE_EXTRAIT_PLURILINGUE,
+  CODE_EXTRAIT_SANS_FILIATION
+} from "./DocumentDelivranceConstante";
 
 const CARN_PAC_01 = "CARN_PAC_01";
 const CATEGORIE_DOCUMENT_DELIVRANCE = "DOCUMENT_DELIVRANCE";
 const CERTIFICAT_SITUATION_PREFIX = "CERTIFICAT_SITUATION";
-
-export const CODE_CERTIFICAT_SITUATION_PACS = "CERTIFICAT_SITUATION_PACS";
-export const CODE_CERTIFICAT_SITUATION_PACS_RC = "CERTIFICAT_SITUATION_PACS_RC";
-export const CODE_CERTIFICAT_SITUATION_PACS_RCA =
-  "CERTIFICAT_SITUATION_PACS_RCA";
-export const CODE_CERTIFICAT_SITUATION_PACS_RC_RCA =
-  "CERTIFICAT_SITUATION_PACS_RC_RCA";
-export const CODE_CERTIFICAT_SITUATION_RC = "CERTIFICAT_SITUATION_RC";
-export const CODE_CERTIFICAT_SITUATION_RCA = "CERTIFICAT_SITUATION_RCA";
-export const CODE_CERTIFICAT_SITUATION_RC_RCA = "CERTIFICAT_SITUATION_RC_RCA";
-export const CODE_ATTESTATION_PACS = "ATTESTATION_PACS";
-export const CODE_CERTIFICAT_INSCRIPTION_RC = "CERTIFICAT_INSCRIPTION_RC";
-export const CODE_CERTIFICAT_INSCRIPTION_RCA = "CERTIFICAT_INSCRIPTION_RCA";
-
-export const INFORMATION_DIVERSES_MANQUANTE = "CARN_EC_117";
-export const MANDAT_GENEALOGIQUE = "CARN_EC_18";
-export const JUSTIFICATIF_REPRESENTANT_MANQUANT = "CARN_EC_19";
-export const ACTE_NON_TROUVE = "CARN_EC_115";
-export const ACTE_NON_TROUVE_ALGERIE = "CARN_EC_64";
-export const ACTE_NAISSANCE_NON_TROUVE_MARIAGE = "CARN_EC_24";
-export const ATTESTATION_PENSION = "CARN_EC_APR";
-export const PROPOSITION_TRANSCRIPTION = "CARN_EC_PTA";
-export const DIVERS = "CARN_EC_17";
-export const REFUS_DELIVRANCE_MARIAGE = "CARN_EC_RDM";
-export const DELIVRANCE_ACTE_NON_ANTHENTIQUE = "CAD_ARCH_118";
-export const DELIVRANCE_ACTE = "CAD_EC_116";
-export const DELIVRANCE_ACTE_INCOMPLET = "CAD_EC_50";
-
-export const CODE_COPIE_INTEGRALE = "COPIE_INTEGRALE";
-export const CODE_COPIE_NON_SIGNEE = "COPIE_NON_SIGNEE";
-export const CODE_DECISION_PROTECTION = "DECISION_PROTECTION";
-export const CODE_EXTRAIT_AVEC_FILIATION = "EXTRAIT_AVEC_FILIATION";
-export const CODE_EXTRAIT_PLURILINGUE = "EXTRAIT_PLURILINGUE";
-export const CODE_EXTRAIT_SANS_FILIATION = "EXTRAIT_SANS_FILIATION";
 
 const CodesExtraitCopieASigner = [
   CODE_COPIE_INTEGRALE,
@@ -144,8 +127,8 @@ export class DocumentDelivrance extends EnumNomemclature {
     return EnumWithLibelle.contientEnums(DocumentDelivrance);
   }
 
-  public static getEnumFor(str: string): DocumentDelivrance {
-    return EnumWithLibelle.getEnumFor(str, DocumentDelivrance);
+  public static getEnumFor(key: string): DocumentDelivrance {
+    return EnumWithLibelle.getEnumFor(key, DocumentDelivrance);
   }
 
   public static getKeyForCode(code: string) {
@@ -314,6 +297,12 @@ export class DocumentDelivrance extends EnumNomemclature {
     return (
       documentDelivrance.categorieDocumentDelivrance &&
       documentDelivrance.categorieDocumentDelivrance.startsWith(COURRIER)
+    );
+  }
+
+  public static getEnumFromCode(code: string) {
+    return DocumentDelivrance.getEnumFor(
+      DocumentDelivrance.getKeyForCode(code)
     );
   }
 }

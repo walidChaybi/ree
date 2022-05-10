@@ -20,14 +20,14 @@ import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
 import { Sexe } from "../../../../../model/etatcivil/enum/Sexe";
 import { TypeExtrait } from "../../../../../model/etatcivil/enum/TypeExtrait";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import {
   CODE_COPIE_INTEGRALE,
   CODE_COPIE_NON_SIGNEE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION,
-  DocumentDelivrance
-} from "../../../../../model/requete/enum/DocumentDelivrance";
+  CODE_EXTRAIT_SANS_FILIATION
+} from "../../../../../model/requete/enum/DocumentDelivranceConstante";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { Validation } from "../../../../../model/requete/enum/Validation";
@@ -283,9 +283,6 @@ export function creationEC(
   setExtraitCopieApiHookParams: any
 ) {
   if (nonNull(acteApiHookResultat?.acte, params)) {
-    if (params?.choixDelivrance) {
-      params.requete.choixDelivrance = params.choixDelivrance;
-    }
     let composition;
     const acte = acteApiHookResultat?.acte;
 

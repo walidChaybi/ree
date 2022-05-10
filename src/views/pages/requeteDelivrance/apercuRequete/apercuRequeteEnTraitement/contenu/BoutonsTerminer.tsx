@@ -39,11 +39,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete }) => 
   }
 
   const goBack = useCallback(() => {
-    if (history.location.pathname.includes("edition")) {
-      receUrl.goBackBack(history);
-    } else {
-      receUrl.goBack(history);
-    }
+    receUrl.goBack(history);
   }, [history]);
 
   const actionApresSignature = useCallback(
@@ -73,6 +69,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete }) => 
             title={getLibelle("Terminer")}
             onClick={goBack}
             estDesactive={estDisabled}
+            checkDirtyActive={true}
           >
             Terminer
           </BoutonOperationEnCours>

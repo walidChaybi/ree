@@ -1,4 +1,5 @@
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import {
   ACTE_NAISSANCE_NON_TROUVE_MARIAGE,
   ACTE_NON_TROUVE,
@@ -8,13 +9,12 @@ import {
   DELIVRANCE_ACTE_INCOMPLET,
   DELIVRANCE_ACTE_NON_ANTHENTIQUE,
   DIVERS,
-  DocumentDelivrance,
   INFORMATION_DIVERSES_MANQUANTE,
   JUSTIFICATIF_REPRESENTANT_MANQUANT,
   MANDAT_GENEALOGIQUE,
   PROPOSITION_TRANSCRIPTION,
   REFUS_DELIVRANCE_MARIAGE
-} from "../../../../../../../model/requete/enum/DocumentDelivrance";
+} from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
 import { MotifDelivrance } from "../../../../../../../model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "../../../../../../../model/requete/enum/NatureActeRequete";
 import { StatutRequete } from "../../../../../../../model/requete/enum/StatutRequete";
@@ -26,14 +26,18 @@ import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription
 import { Options } from "../../../../../../common/util/Type";
 import { getValeurOuVide } from "../../../../../../common/util/Utils";
 import {
+  ADRESSE_COURRIEL,
   CODE_POSTAL,
   COMMUNE,
   COMPLEMENT_DESTINATAIRE,
   COMPLEMENT_MOTIF,
   COMPLEMENT_POINT_GEO,
+  DOCUMENT_DEMANDE,
   LIEU_DIT,
   MOTIF,
+  NATURE_ACTE,
   NB_EXEMPLAIRE,
+  NUMERO_TELEPHONE,
   PAYS,
   VOIE
 } from "../../../../saisirRequete/modelForm/ISaisirRequetePageModel";
@@ -106,13 +110,15 @@ export const getTypesCourrier = (
   return typesCourrier;
 };
 
-export const getDefaultValuesCourrier = (requete: IRequeteDelivrance) => {
+export const getDefaultValuesCourrier = (
+  requete: IRequeteDelivrance
+): SaisieCourrier => {
   const documentReponse = getDocumentReponseAModifier(requete);
   const identiteRequerant = Requerant.organiserIdentite(requete.requerant);
 
   return {
     [CHOIX_COURRIER]: {
-      [DELIVRANCE]: requete.choixDelivrance?.libelle,
+      [DELIVRANCE]: getValeurOuVide(requete.choixDelivrance?.libelle),
       [COURRIER]: documentReponse?.typeDocument
         ? documentReponse?.typeDocument
         : getTypesCourrier(requete)[0].value
@@ -138,12 +144,16 @@ export const getDefaultValuesCourrier = (requete: IRequeteDelivrance) => {
       ),
       [CODE_POSTAL]: getValeurOuVide(requete.requerant.adresse?.codePostal),
       [COMMUNE]: getValeurOuVide(requete.requerant.adresse?.ville),
-      [PAYS]: getValeurOuVide(requete.requerant.adresse?.pays)
+      [PAYS]: getValeurOuVide(requete.requerant.adresse?.pays),
+      [ADRESSE_COURRIEL]: "",
+      [NUMERO_TELEPHONE]: ""
     },
     [REQUETE]: {
       [MOTIF]: requete.motif ? MotifDelivrance.getKey(requete.motif) : "",
       [COMPLEMENT_MOTIF]: getValeurOuVide(requete.complementMotif),
-      [NB_EXEMPLAIRE]: getValeurOuVide(requete.nbExemplaireImpression)
+      [NB_EXEMPLAIRE]: getValeurOuVide(requete.nbExemplaireImpression),
+      [NATURE_ACTE]: "",
+      [DOCUMENT_DEMANDE]: ""
     }
   };
 };

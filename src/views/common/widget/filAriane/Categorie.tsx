@@ -1,16 +1,27 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { checkDirty } from "../../util/Utils";
 
 interface CategorieProps {
   url: string;
   message: string;
   last: boolean;
+  isDirty: boolean;
+  setIsDirty: (isDirty: boolean) => void;
 }
 
-export const Categorie: React.FC<CategorieProps> = ({ url, message, last }) => {
+export const Categorie: React.FC<CategorieProps> = ({
+  url,
+  message,
+  last,
+  isDirty,
+  setIsDirty
+}) => {
   const history = useHistory();
   const onClickLink = () => {
-    history.push(url);
+    if (checkDirty(isDirty, setIsDirty)) {
+      history.push(url);
+    }
   };
 
   return (

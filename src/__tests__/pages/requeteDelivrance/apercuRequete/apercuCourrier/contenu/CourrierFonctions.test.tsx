@@ -45,15 +45,23 @@ test("getDefaultValues", () => {
       requerantLigne2: ""
     },
     adresse: {
+      adresseCourriel: "",
       codePostal: "310 GL24",
       commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
       complementDestinataire: "Appartement 258",
       complementPointGeo: "Batiment Z",
       lieuDit: "lieu dit la martinière",
+      numeroTelephone: "",
       pays: "France",
       voie: "61 avenue Foch"
     },
-    requete: { motif: "MARIAGE_PACS", complementMotif: "", nbExemplaire: 2 }
+    requete: {
+      documentDemande: "",
+      motif: "MARIAGE_PACS",
+      natureActe: "",
+      complementMotif: "",
+      nbExemplaire: 2
+    }
   });
 
   expect(
@@ -75,15 +83,23 @@ test("getDefaultValues", () => {
       requerantLigne2: "PAUL RUIZ"
     },
     adresse: {
+      adresseCourriel: "",
       codePostal: "310 GL24",
       commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
       complementDestinataire: "Appartement 258",
       complementPointGeo: "Batiment Z",
       lieuDit: "lieu dit la martinière",
+      numeroTelephone: "",
       pays: "Rwanda",
       voie: "61 avenue Foch"
     },
-    requete: { motif: "MARIAGE_PACS", complementMotif: "", nbExemplaire: 2 }
+    requete: {
+      documentDemande: "",
+      motif: "MARIAGE_PACS",
+      natureActe: "",
+      complementMotif: "",
+      nbExemplaire: 2
+    }
   });
 });
 

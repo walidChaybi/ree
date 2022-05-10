@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import {
   CodesExtraitCopie,
-  CODE_COPIE_INTEGRALE,
-  CODE_EXTRAIT_PLURILINGUE,
   DocumentDelivrance
 } from "../../../../../model/requete/enum/DocumentDelivrance";
+import {
+  CODE_COPIE_INTEGRALE,
+  CODE_EXTRAIT_PLURILINGUE
+} from "../../../../../model/requete/enum/DocumentDelivranceConstante";
 import { MotifDelivrance } from "../../../../../model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "../../../../../model/requete/enum/NatureActeRequete";
 import {

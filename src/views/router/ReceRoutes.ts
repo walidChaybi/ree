@@ -11,7 +11,6 @@ import { AccueilPage } from "../pages/accueil/AccueilPage";
 import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
-import { ApercuCourrier } from "../pages/requeteDelivrance/apercuRequete/apercuCourrier/ApercuCourrier";
 import { ApercuRequetePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuRequetePriseEnChargePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
@@ -30,9 +29,8 @@ import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_MES_REQUETES_DELIVRANCE_COURRIER_ID,
+  URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
@@ -45,15 +43,13 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_RECHERCHE_REQUETE_COURRIER_ID,
+  URL_RECHERCHE_REQUETE_EDITION_ID,
   URL_REQUETES_DELIVRANCE_SERVICE,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
-  URL_REQUETES_DELIVRANCE_SERVICE_COURRIER_ID,
+  URL_REQUETES_DELIVRANCE_SERVICE_EDITION_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
@@ -68,7 +64,6 @@ import {
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête";
 const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
-const LIBELLE_COURRIER = "Gestion du courrier";
 
 export const routesRece: IRoute[] = [
   {
@@ -157,14 +152,7 @@ export const routesRece: IRoute[] = [
     )
   },
   {
-    url: URL_MES_REQUETES_DELIVRANCE_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_COURRIER)
-  },
-  {
-    url: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
+    url: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
     component: EditionExtraitCopiePage,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
@@ -240,14 +228,7 @@ export const routesRece: IRoute[] = [
     )
   },
   {
-    url: URL_REQUETES_DELIVRANCE_SERVICE_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_COURRIER)
-  },
-  {
-    url: URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
+    url: URL_REQUETES_DELIVRANCE_SERVICE_EDITION_ID,
     component: EditionExtraitCopiePage,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
@@ -310,14 +291,7 @@ export const routesRece: IRoute[] = [
     )
   },
   {
-    url: URL_RECHERCHE_REQUETE_COURRIER_ID,
-    component: ApercuCourrier,
-    droits: [Droit.DELIVRER],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle(LIBELLE_COURRIER)
-  },
-  {
-    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
+    url: URL_RECHERCHE_REQUETE_EDITION_ID,
     component: EditionExtraitCopiePage,
     droits: [Droit.DELIVRER],
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),

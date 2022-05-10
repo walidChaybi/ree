@@ -4,7 +4,8 @@ import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import {
   PATH_APERCU_REQ_DEL,
-  PATH_APERCU_REQ_TRAITEMENT
+  PATH_APERCU_REQ_TRAITEMENT,
+  PATH_EDITION
 } from "../../../router/ReceUrls";
 import messageManager from "../../util/messageManager";
 import { MigratorV1V2 } from "../../util/migration/MigratorV1V2";
@@ -84,7 +85,7 @@ const redirectionEnFonctionMaRequete = (
       case StatutRequete.A_SIGNER.libelle:
       case StatutRequete.A_VALIDER.libelle:
         // US 207 et au statut "À signer" ou "À valider", redirection vers "Aperçu du traitement"
-        redirectionApercuTraitement(setRedirection, urlWithoutParam, requete);
+        redirectionAValider(setRedirection, urlWithoutParam, requete);
         break;
       case StatutRequete.BROUILLON.libelle:
         redirectionBrouillon(requete, setRedirection, urlWithoutParam);
@@ -94,7 +95,7 @@ const redirectionEnFonctionMaRequete = (
         break;
       default:
         if (MigratorV1V2.estARetraiterSagaRequeteTableau(requete)) {
-          redirectionApercuTraitement(setRedirection, urlWithoutParam, requete);
+          redirectionAValider(setRedirection, urlWithoutParam, requete);
         } else {
           redirectionApercuRequete(setRedirection, urlWithoutParam, requete);
         }
@@ -109,19 +110,33 @@ function estUneRequeteDeDelivranceAvecUnStatut(
   return requete.statut && requete.type && typeEstDelivrance(requete.type);
 }
 
-function redirectionApercuTraitement(
+function redirectionAValider(
   setRedirection: (
     value: React.SetStateAction<INavigationApercuDelivrance | undefined>
   ) => void,
   urlWithoutParam: string,
   requete: IRequeteTableauDelivrance
 ) {
-  setRedirection({
-    url: getUrlWithParam(
-      `${urlWithoutParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
-      requete.idRequete
-    )
-  });
+  const sousType = SousTypeDelivrance.getEnumFor(requete.sousType);
+  if (
+    sousType === SousTypeDelivrance.RDDP ||
+    sousType === SousTypeDelivrance.RDD ||
+    sousType === SousTypeDelivrance.RDC
+  ) {
+    setRedirection({
+      url: getUrlWithParam(
+        `${urlWithoutParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
+        requete.idRequete
+      )
+    });
+  } else {
+    setRedirection({
+      url: getUrlWithParam(
+        `${urlWithoutParam}/${PATH_EDITION}/:idRequete`,
+        requete.idRequete
+      )
+    });
+  }
 }
 
 function redirectionApercuRequete(

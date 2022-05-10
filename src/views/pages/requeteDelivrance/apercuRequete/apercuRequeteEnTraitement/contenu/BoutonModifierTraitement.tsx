@@ -15,10 +15,11 @@ import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDeliv
 
 interface BoutonModifierTraitementProps {
   requete: IRequeteDelivrance;
-  dataHistory: any;
 }
 
-export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> = props => {
+export const BoutonModifierTraitement: React.FC<
+  BoutonModifierTraitementProps
+> = props => {
   const requeteDelivrance = props.requete;
   const history = useHistory();
   const [estDisabled, setEstDisabled] = useState(true);
@@ -63,6 +64,7 @@ export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> =
     <BoutonOperationEnCours
       onClick={setActionEtUpdateStatut}
       estDesactive={estDisabled}
+      checkDirtyActive={true}
       title={getLibelle(
         "Retour à la prise en charge de la requête, les documents constitués seront supprimés"
       )}

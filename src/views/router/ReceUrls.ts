@@ -17,7 +17,6 @@ export const PATH_APERCU_REQ_DEL = "apercurequetedelivrance";
 export const PATH_APERCU_REQ_PRISE = "apercurequetepriseencharge";
 export const PATH_APERCU_REQ_TRAITEMENT = "apercurequetetraitement";
 export const PATH_APERCU_REQ_INFO = "apercurequeteinformation";
-export const PATH_APERCU_COURRIER = "apercucourrier";
 export const PATH_EDITION = "edition";
 export const PATH_SAISIR_RDCSC = "saisircertificatsituation";
 export const PATH_SAISIR_RDAPC = "saisirattestationpacs";
@@ -40,7 +39,7 @@ export const URL_MES_REQUETES_DELIVRANCE = `${URL_CONTEXT_APP}/mesrequetes`;
 export const URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_APERCU_REQ_DEL}/${ID}`;
 export const URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_APERCU_REQ_PRISE}/${ID}`;
 export const URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_APERCU_REQ_TRAITEMENT}/${ID}`;
-export const URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_APERCU_REQ_TRAITEMENT}/${PATH_EDITION}/${ID}`;
+export const URL_MES_REQUETES_DELIVRANCE_EDITION_ID = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${ID}/:idActeParam?`;
 
 // Saisie requête ... depuis Mes Requêtes de DELIVRANCE
 export const URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_SAISIR_RDCSC}`;
@@ -54,9 +53,6 @@ export const URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC_ID = `${URL_MES_REQUETES_DEL
 export const URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC_ID = `${URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC}/:idRequete`;
 export const URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC_ID = `${URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC}/:idRequete`;
 
-// Modification courrier depuis apercu
-export const URL_MES_REQUETES_DELIVRANCE_COURRIER_ID = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_APERCU_COURRIER}/${ID}`;
-
 /////////////////////////////////////////////////////
 ///// REQUETES DE DELIVRANCE MON SERVICE (RDMS) /////
 /////////////////////////////////////////////////////
@@ -66,7 +62,7 @@ export const URL_REQUETES_DELIVRANCE_SERVICE = `${URL_CONTEXT_APP}/requetesservi
 export const URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_ID = `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_DEL}/${ID}`;
 export const URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_PRISE}/${ID}`;
 export const URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_TRAITEMENT}/${ID}`;
-export const URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_EDITION_ID = `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_TRAITEMENT}/${PATH_EDITION}/${ID}`;
+export const URL_REQUETES_DELIVRANCE_SERVICE_EDITION_ID = `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_EDITION}/${ID}/:idActeParam?`;
 
 // Saisie requête ... depuis Mes Requêtes de SERVICE
 export const URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC = `${URL_REQUETES_DELIVRANCE_SERVICE}/saisircertificatsituation`;
@@ -80,9 +76,6 @@ export const URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC_ID = `${URL_REQUETES_DEL
 export const URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC_ID = `${URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC}/:idRequete`;
 export const URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC_ID = `${URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC}/:idRequete`;
 
-// Modification courrier depuis apercu
-export const URL_REQUETES_DELIVRANCE_SERVICE_COURRIER_ID = `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_PRISE}/${PATH_APERCU_COURRIER}/${ID}`;
-
 //////////////////////////////////////////
 ///// RECHERCHE MULTI-CRITERES (RMC) /////
 //////////////////////////////////////////
@@ -94,16 +87,13 @@ export const URL_RECHERCHE_REQUETE = `${URL_CONTEXT_APP}/rechercherequete`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_DEL}/${ID}`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_PRISE}/${ID}`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_TRAITEMENT}/${ID}`;
-export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_EDITION_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_TRAITEMENT}/${PATH_EDITION}/${ID}`;
+export const URL_RECHERCHE_REQUETE_EDITION_ID = `${URL_RECHERCHE_REQUETE}/${PATH_EDITION}/${ID}/:idActeParam?`;
 
 // Modification Brouillon dans Saisie RDCSC depuis RMC de DELIVRANCE
 export const URL_SAISIR_RDCSC_RMC = `${URL_RECHERCHE_REQUETE}/${PATH_SAISIR_RDCSC}/${ID}`;
 export const URL_SAISIR_RDC_RMC = `${URL_RECHERCHE_REQUETE}/${PATH_SAISIR_RDC}/${ID}`;
 export const URL_SAISIR_RDAPC_RMC = `${URL_RECHERCHE_REQUETE}/${PATH_SAISIR_RDAPC}/${ID}`;
 export const URL_SAISIR_RDLFC_RMC = `${URL_RECHERCHE_REQUETE}/${PATH_SAISIR_RDLFC}/${ID}`;
-
-// Modification courrier depuis apercu
-export const URL_RECHERCHE_REQUETE_COURRIER_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_TRAITEMENT}/${PATH_APERCU_COURRIER}/${ID}`;
 
 /////////////////////////////////////////
 ///////// REQUETE D'INFORMATION (RI)) /////////
@@ -143,6 +133,10 @@ function estUrlSaisirCourrier(url: string) {
   );
 }
 
+function estUrlEdition(url: string) {
+  return url.indexOf(`/${PATH_EDITION}`) > 0;
+}
+
 function getUrlApercuTraitementAPartirDe(url: string, idRequeteParam?: string) {
   const id = idRequeteParam || getUrlParamId(url);
   return `${getUrlPrecedente(
@@ -175,6 +169,7 @@ export const receUrl = {
   estUrlApercuTraitementRequete,
   getUrlApercuTraitementAPartirDe,
   estUrlSaisirCourrier,
+  estUrlEdition,
   replaceUrl,
   goBack,
   goBackBack,

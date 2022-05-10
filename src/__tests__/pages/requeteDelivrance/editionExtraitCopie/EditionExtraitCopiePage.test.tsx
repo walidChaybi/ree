@@ -16,13 +16,12 @@ import { configRequetes } from "../../../../mock/superagent-config/superagent-mo
 import { TypeMention } from "../../../../model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
-import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { EditionExtraitCopiePage } from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
+  PATH_EDITION,
   URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID
+  URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, [
@@ -42,27 +41,13 @@ beforeEach(async () => {
   storeRece.utilisateurCourant = userDroitCOMEDEC;
   history.push(URL_MES_REQUETES_DELIVRANCE);
   history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
-      "9bfa282d-1e66-4538-b242-b9de4f683f0f"
-    )
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
   );
-  history.push(
-    getUrlWithParam(
-      URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID,
-      "9bfa282d-1e66-4538-b242-b9de4f683f0f"
-    ),
-    "9bfa865e-6d7a-4d66-900e-b548178854db"
-  );
+
   await act(async () => {
     render(
       <Router history={history}>
-        <Route
-          exact={true}
-          path={
-            URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_EDITION_ID
-          }
-        >
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
           <EditionExtraitCopiePage />
         </Route>
       </Router>

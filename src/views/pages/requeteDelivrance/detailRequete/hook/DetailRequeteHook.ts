@@ -32,38 +32,62 @@ import { IPieceJustificative } from "../../../../../model/requete/pieceJointe/IP
 import { logError } from "../../../../common/util/LogManager";
 import { storeRece } from "../../../../common/util/storeRece";
 
+export interface IDetailRequeteParams {
+  idRequete: string;
+}
+
 export function useDetailRequeteApiHook(idRequete: string | undefined) {
   const [detailRequeteState, setDetailRequeteState] = useState<
     TRequete | undefined
   >();
 
   useEffect(() => {
-    async function fetchDetailRequete() {
-      try {
-        if (idRequete) {
-          const result = await getDetailRequete(idRequete);
-          const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
-          if (typeRequete === TypeRequete.DELIVRANCE) {
-            const detailRequete = mappingRequeteDelivrance(result?.body?.data);
-            setDetailRequeteState(detailRequete);
-          } else if (typeRequete === TypeRequete.INFORMATION) {
-            const detailRequete = mappingRequeteInformation(result?.body?.data);
-            setDetailRequeteState(detailRequete);
-          }
-        }
-      } catch (error) {
-        logError({
-          messageUtilisateur: "Impossible de récupérer le détail de la requête",
-          error
-        });
-      }
-    }
-    fetchDetailRequete();
+    fetchDetailRequete(setDetailRequeteState, idRequete);
   }, [idRequete]);
 
   return {
     detailRequeteState
   };
+}
+
+export function useAvecRejeuDetailRequeteApiHook(
+  params?: IDetailRequeteParams
+) {
+  const [detailRequeteState, setDetailRequeteState] = useState<
+    TRequete | undefined
+  >();
+
+  useEffect(() => {
+    fetchDetailRequete(setDetailRequeteState, params?.idRequete);
+  }, [params]);
+
+  return {
+    detailRequeteState
+  };
+}
+
+async function fetchDetailRequete(
+  setDetailRequeteState: any,
+  idRequete?: string
+) {
+  try {
+    if (idRequete) {
+      const result = await getDetailRequete(idRequete);
+      const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
+      if (typeRequete === TypeRequete.DELIVRANCE) {
+        const detailRequete = mappingRequeteDelivrance(result?.body?.data);
+        setDetailRequeteState(detailRequete);
+      } else if (typeRequete === TypeRequete.INFORMATION) {
+        const detailRequete = mappingRequeteInformation(result?.body?.data);
+        setDetailRequeteState(detailRequete);
+      }
+    }
+  } catch (error) {
+    logError({
+      messageUtilisateur: "Impossible de récupérer le détail de la requête",
+      error
+    });
+  }
 }
 
 export function mappingRequeteDelivrance(data: any): IRequeteDelivrance {

@@ -26,12 +26,11 @@ export function useNavigationApercuRMCAuto(
 
   const rmcAutoUrlData: IUrlData | undefined = useRMCAutoHook(paramsRMCAuto);
 
-  const navigation:
-    | INavigationApercuDelivrance
-    | undefined = useNavigationApercuDelivrance(
-    rmcAutoNavigationParams?.urlCourante,
-    rmcAutoNavigationParams?.requete
-  );
+  const navigation: INavigationApercuDelivrance | undefined =
+    useNavigationApercuDelivrance(
+      rmcAutoNavigationParams?.urlCourante,
+      rmcAutoNavigationParams?.requete
+    );
 
   useEffect(() => {
     if (navigation) {
@@ -74,6 +73,7 @@ function estUrlSaisirOuApercuOuTraitementRequete(url: string) {
   return (
     receUrl.estUrlApercuRequete(url) ||
     receUrl.estUrlApercuTraitementRequete(url) ||
-    receUrl.estUrlSaisirCourrier(url)
+    receUrl.estUrlSaisirCourrier(url) ||
+    receUrl.estUrlEdition(url)
   );
 }

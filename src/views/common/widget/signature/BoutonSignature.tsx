@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { IOfficier } from "../../../../model/agent/IOfficier";
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
@@ -10,6 +9,7 @@ import {
 } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import { getValeurOuVide } from "../../util/Utils";
+import { BoutonOperationEnCours } from "../attente/BoutonOperationEnCours";
 import { PopinSignature } from "../signature/PopinSignature";
 import {
   DocumentsATraiter,
@@ -105,12 +105,15 @@ export const BoutonSignature: React.FC<
 
   return (
     <>
-      <Button
-        disabled={!signaturePossible(requetes, uniqueSignature, connectedUser)}
+      <BoutonOperationEnCours
+        estDesactive={
+          !signaturePossible(requetes, uniqueSignature, connectedUser)
+        }
         onClick={handleClickSignature}
+        checkDirtyActive={true}
       >
         {libelle}
-      </Button>
+      </BoutonOperationEnCours>
 
       <PopinSignature
         documentsByRequete={documentsByRequeteToSign}

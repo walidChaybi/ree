@@ -43,10 +43,11 @@ export function redirectionRMCAuto(
   } else if (receUrl.estUrlApercuRequete(urlCourante)) {
     url = getUrlApercuTraitement(urlCourante, requete);
   } else if (
-    receUrl.estUrlApercuTraitementRequete(urlCourante) &&
-    requete.statut &&
-    StatutRequete.getEnumFromLibelle(requete.statut) ===
-      StatutRequete.PRISE_EN_CHARGE
+    receUrl.estUrlEdition(urlCourante) ||
+    (receUrl.estUrlApercuTraitementRequete(urlCourante) &&
+      requete.statut &&
+      StatutRequete.getEnumFromLibelle(requete.statut) ===
+        StatutRequete.PRISE_EN_CHARGE)
   ) {
     url = getUrlApercuTraitement(urlCourante, requete);
   }

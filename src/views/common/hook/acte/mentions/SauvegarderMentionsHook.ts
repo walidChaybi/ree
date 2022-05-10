@@ -75,7 +75,6 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
       setGenerationEC({
         idActe: params.idActe,
         requete: params.requete,
-        choixDelivrance: params.requete.choixDelivrance,
         validation: params.document.validation,
         pasDeStockageDocument: false,
         mentionsRetirees: mentionsRetireesSaved

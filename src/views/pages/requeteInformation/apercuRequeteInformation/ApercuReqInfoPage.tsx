@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { IUuidRequeteParams } from "../../../../model/params/IUuidRequeteParams";
 import { IRequeteInformation } from "../../../../model/requete/IRequeteInformation";
-import { IUuidRequeteParams } from "../../../../model/requete/IUuidRequeteParams";
 import { BandeauRequete } from "../../../common/composant/bandeauApercuRequete/BandeauApercuRequete";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";

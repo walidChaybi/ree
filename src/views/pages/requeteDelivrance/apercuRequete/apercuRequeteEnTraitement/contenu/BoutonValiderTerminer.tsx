@@ -108,6 +108,7 @@ export const BoutonValiderTerminer: React.FC<
         <BoutonOperationEnCours
           onClick={setActionEtUpdateStatut}
           estDesactive={estDisabled}
+          checkDirtyActive={true}
         >
           {getLibelle("Valider et terminer")}
         </BoutonOperationEnCours>

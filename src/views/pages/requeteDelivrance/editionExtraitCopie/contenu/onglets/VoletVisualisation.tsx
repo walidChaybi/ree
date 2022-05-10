@@ -8,7 +8,7 @@ import { OngletProps, VoletAvecOnglet } from "../VoletAvecOnglet";
 interface VoletVisualisationProps {
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
-  acte: IFicheActe;
+  acte?: IFicheActe;
 }
 
 export const VoletVisualisation: React.FC<VoletVisualisationProps> = props => {

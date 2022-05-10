@@ -1,3 +1,4 @@
+import { SettingsBackupRestore } from "@material-ui/icons";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
@@ -216,8 +217,9 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
                 optionSelectionne,
                 props.optionsChoisies
               )}
+              title={getLibelle("Rappel du modèle de l'option")}
             >
-              {getLibelle("Réinitialiser")}
+              <SettingsBackupRestore />
             </button>
           </div>
         </>

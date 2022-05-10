@@ -15,7 +15,7 @@ import {
   IGenerationECParams,
   useGenerationEC
 } from "../../../../../views/common/hook/generation/generationECHook/generationECHook";
-import { mappingRequeteDelivrance } from "../../../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
+import { getRequeteWithChoixDelivrance } from "../../../../testsUtil";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],
@@ -25,45 +25,61 @@ const superagentMock = require("superagent-mock")(request, [
 
 const ecMariageSansFiliationparams: IGenerationECParams = {
   idActe: idFicheActeMariage,
-  requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION,
-  validation: Validation.N
+  requete: getRequeteWithChoixDelivrance(
+    ReponseAppelDetailRequeteDelivrance.data,
+    ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
+  ),
+  validation: Validation.N,
+  mentionsRetirees: []
 };
 
 const ecMariageAvecFiliationparams: IGenerationECParams = {
   idActe: idFicheActeMariage,
-  requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION,
+  requete: getRequeteWithChoixDelivrance(
+    ReponseAppelDetailRequeteDelivrance.data,
+    ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+  ),
+  mentionsRetirees: [],
   validation: Validation.N
 };
 
 const ecNaissanceSansFiliationparams: IGenerationECParams = {
   idActe: idFicheActe1,
-  requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION,
+  requete: getRequeteWithChoixDelivrance(
+    ReponseAppelDetailRequeteDelivrance.data,
+    ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
+  ),
+  mentionsRetirees: [],
   validation: Validation.N
 };
 
 const ecNaissancePlurilingueparams: IGenerationECParams = {
   idActe: idFicheActe1,
-  requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE,
+  requete: getRequeteWithChoixDelivrance(
+    ReponseAppelDetailRequeteDelivrance.data,
+    ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
+  ),
+  mentionsRetirees: [],
   validation: Validation.N
 };
 
 const ecCopieActeImageMariageparams: IGenerationECParams = {
   idActe: idFicheActeMariage,
-  requete: mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data),
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE,
+  requete: getRequeteWithChoixDelivrance(
+    ReponseAppelDetailRequeteDelivrance.data,
+    ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE
+  ),
+  mentionsRetirees: [],
   validation: Validation.N
 };
 
-const HookConsumer: React.FC<IGenerationECParams> =
-  ecMariageFiliationparams => {
-    const resultat = useGenerationEC(ecMariageFiliationparams);
+const HookConsumer: React.FC<
+  IGenerationECParams
+> = ecMariageFiliationparams => {
+  const resultat = useGenerationEC(ecMariageFiliationparams);
 
-    return <div>{resultat?.resultGenerationUnDocument?.idDocumentReponse}</div>;
-  };
+  return <div>{resultat?.resultGenerationUnDocument?.idDocumentReponse}</div>;
+};
 
 test("Attendu: un extrait de mariage sans filiation est généré via useGenerationEC", async () => {
   render(<HookConsumer {...ecMariageSansFiliationparams} />);

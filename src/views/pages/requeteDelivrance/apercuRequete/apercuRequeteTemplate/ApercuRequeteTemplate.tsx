@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { IUuidRequeteParams } from "../../../../../model/params/IUuidRequeteParams";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { IUuidRequeteParams } from "../../../../../model/requete/IUuidRequeteParams";
 import { BandeauRequete } from "../../../../common/composant/bandeauApercuRequete/BandeauApercuRequete";
 import { ProtectionApercu } from "../../../../common/util/route/Protection/ProtectionApercu";
 import { useDetailRequeteApiHook } from "../../detailRequete/hook/DetailRequeteHook";

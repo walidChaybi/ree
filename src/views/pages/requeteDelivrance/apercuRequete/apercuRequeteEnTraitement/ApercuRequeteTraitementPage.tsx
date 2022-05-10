@@ -1,31 +1,11 @@
-import { Warning } from "@material-ui/icons";
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
-import {
-  DocumentReponse,
-  IDocumentReponse
-} from "../../../../../model/requete/IDocumentReponse";
-import {
-  IRequeteDelivrance
-} from "../../../../../model/requete/IRequeteDelivrance";
-import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag";
+import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { MigratorV1V2 } from "../../../../common/util/migration/MigratorV1V2";
-import {
-  getUrlPrecedente,
-  getUrlWithoutIdParam
-} from "../../../../common/util/route/routeUtil";
 import { getLibelle } from "../../../../common/util/Utils";
-import { BoutonOperationEnCours } from "../../../../common/widget/attente/BoutonOperationEnCours";
 import { VisionneuseAvecTitre } from "../../../../common/widget/document/VisionneuseAvecTitre";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
-import {
-  PATH_APERCU_COURRIER,
-  PATH_EDITION,
-  receUrl
-} from "../../../../router/ReceUrls";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { BoutonARetraiterSaga } from "./contenu/BoutonARetraiterSaga";
 import { BoutonModifierTraitement } from "./contenu/BoutonModifierTraitement";
@@ -54,25 +34,6 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
     [setDocumentAffiche]
   );
 
-  const modifierCourrier = () => {
-    receUrl.replaceUrl(
-      history,
-      `${getUrlPrecedente(history.location.pathname)}/${PATH_APERCU_COURRIER}/${
-        requete?.id
-      }`,
-      documentAffiche?.idActe
-    );
-  };
-
-  const edition = () => {
-    history.push(
-      `${getUrlWithoutIdParam(history.location.pathname)}/${PATH_EDITION}/${
-        requete?.id
-      }`,
-      documentAffiche?.id
-    );
-  };
-
   return (
     <ApercuRequeteTemplate
       title={getLibelle("Aperçu de la requête en traitement")}
@@ -88,16 +49,11 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
             titre="Aperçu des documents"
             contenu={documentAffiche?.contenu}
             typeMime={documentAffiche?.mimeType}
-          >
-            {afficherBoutonsActions(requete, modifierCourrier, edition)}
-          </VisionneuseAvecTitre>
+          ></VisionneuseAvecTitre>
           <BoutonRetour />
           <div className="BoutonsAction">
             {MigratorV1V2.nEstPasRDDouRDCouEstEtape2Bis(requete) && (
-              <BoutonModifierTraitement
-                requete={requete}
-                dataHistory={dataHistory}
-              />
+              <BoutonModifierTraitement requete={requete} />
             )}
 
             <BoutonsTerminer requete={requete} />
@@ -113,7 +69,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
   );
 };
 
-const afficherBoutonsActions = (
+/*const afficherBoutonsActions = (
   requete: IRequeteDelivrance,
   modifierCourrier: () => void,
   edition: () => void
@@ -158,4 +114,4 @@ const boutonPresent = (sousType: SousTypeDelivrance) => {
       sousType === SousTypeDelivrance.RDD ||
       sousType === SousTypeDelivrance.RDDP)
   );
-};
+};*/

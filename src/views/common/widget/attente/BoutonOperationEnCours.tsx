@@ -1,4 +1,6 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
+import { RECEContext } from "../../../core/body/Body";
+import { checkDirty } from "../../util/Utils";
 import { OperationEnCours } from "./OperationEnCours";
 
 interface BoutonOperationEnCoursProps {
@@ -8,14 +10,23 @@ interface BoutonOperationEnCoursProps {
   children: ReactNode;
   visible?: boolean;
   title?: string;
+  checkDirtyActive?: boolean;
 }
 
-export const BoutonOperationEnCours: React.FC<BoutonOperationEnCoursProps> = props => {
+export const BoutonOperationEnCours: React.FC<
+  BoutonOperationEnCoursProps
+> = props => {
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
+  const { isDirty, setIsDirty } = useContext(RECEContext);
 
   const handleClick = () => {
-    setOpEnCours(true);
-    props.onClick();
+    if (
+      !props.checkDirtyActive ||
+      (props.checkDirtyActive && checkDirty(isDirty, setIsDirty))
+    ) {
+      setOpEnCours(true);
+      props.onClick();
+    }
   };
 
   useEffect(() => {

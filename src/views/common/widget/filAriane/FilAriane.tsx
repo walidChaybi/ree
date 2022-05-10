@@ -53,11 +53,17 @@ export const gestionnaireNavigation = new GestionnaireNavigation();
 /******** Fil d'ariane *******/
 interface FilArianeProps {
   routes: IRoute[];
+  isDirty: boolean;
+  setIsDirty: (isDirty: boolean) => void;
 }
 
 export const fildarianeLabel = getLibelle("Navigation par fil d'ariane");
 
-export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
+export const FilAriane: React.FC<FilArianeProps> = ({
+  routes,
+  isDirty,
+  setIsDirty
+}) => {
   const history = useHistory();
 
   const locationPathName = history.location.pathname;
@@ -80,6 +86,8 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
             message={routeAccueil ? routeAccueil.libelle : "Accueil"}
             last={pagesInfos.length === 0}
             key={URL_ACCUEIL}
+            isDirty={isDirty}
+            setIsDirty={setIsDirty}
           />
 
           {pagesInfos.map((pageInfo: IPageInfo, index: number) => {
@@ -89,6 +97,8 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
                 message={pageInfo.libelle}
                 last={pageInfo.derniere}
                 key={pageInfo.url}
+                isDirty={isDirty}
+                setIsDirty={setIsDirty}
               />
             );
           })}
@@ -187,8 +197,8 @@ export function getPathElements(path: string) {
   let pathElements = cleanPath.split(URL_SEPARATEUR);
   // suppression des éléments vides dûs aux "/" de début et de fin potentiels
   pathElements = pathElements.filter(x => x);
-  // Suppression de l'éventuel Nombre ou UUID de fin
-  if (
+  // Suppression des éventuel Nombre ou UUID de fin
+  while (
     pathElements.length > 0 &&
     isPathElemId(pathElements[pathElements.length - 1])
   ) {

@@ -11,8 +11,9 @@ import { configRequetes } from "../../../../../../mock/superagent-config/superag
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
 import { MenuReponseSansDelivrance } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivrance";
 import {
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_DELIVRANCE_COURRIER_ID
+  PATH_EDITION,
+  URL_MES_REQUETES_DELIVRANCE,
+  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
 } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -46,7 +47,7 @@ test("Réponse requête incomplète", async () => {
   });
 
   expect(history.location.pathname).toBe(
-    getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_COURRIER_ID, idRequeteRDC)
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
   );
 });
 test("Réponse acte non détenu", async () => {
@@ -55,7 +56,7 @@ test("Réponse acte non détenu", async () => {
   });
 
   expect(history.location.pathname).toBe(
-    getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_COURRIER_ID, idRequeteRDC)
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
   );
 });
 test("Réponse divers", async () => {
@@ -64,7 +65,7 @@ test("Réponse divers", async () => {
   });
 
   expect(history.location.pathname).toBe(
-    getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_COURRIER_ID, idRequeteRDC)
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
   );
 });
 test("Réponse ignorer", async () => {

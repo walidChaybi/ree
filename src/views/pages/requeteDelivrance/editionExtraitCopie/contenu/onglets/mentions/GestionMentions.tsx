@@ -1,9 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import {
-  CODE_COPIE_INTEGRALE,
-  DocumentDelivrance
-} from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { CODE_COPIE_INTEGRALE } from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { ReinitialiserValiderBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
@@ -17,7 +15,7 @@ import {
   getLibelle,
   getValeurOuVide
 } from "../../../../../../common/util/Utils";
-import { EditionECContext } from "../../../EditionExtraitCopiePage";
+import { RECEContext } from "../../../../../../core/body/Body";
 import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import {
@@ -40,7 +38,7 @@ export interface GestionMentionsProps {
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   const [mentionSelect, setMentionSelect] = useState<IMentionAffichage>();
   const [mentionAjout, setMentionAjout] = useState<IMentionAffichage>();
-  const { setOperationEnCours } = useContext(EditionECContext);
+  const { setOperationEnCours } = useContext(RECEContext);
   const [mentions, setMentions] = useState<IMentionAffichage[]>();
   const [mentionsParams, setMentionsParams] = useState<string>();
   const [sauvegarderMentionsParams, setSauvegarderMentionsParams] =

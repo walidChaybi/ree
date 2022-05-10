@@ -4,11 +4,11 @@ import { SousTypeRequete } from "../../../../../model/requete/enum/SousTypeReque
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import {
-  PATH_APERCU_COURRIER,
   PATH_APERCU_REQ_DEL,
   PATH_APERCU_REQ_INFO,
   PATH_APERCU_REQ_PRISE,
   PATH_APERCU_REQ_TRAITEMENT,
+  PATH_EDITION,
   PATH_SAISIR_RDCSC,
   receUrl
 } from "../../../../router/ReceUrls";
@@ -83,10 +83,7 @@ function checkURLDelivrance(
     case StatutRequete.BROUILLON:
       return receUrl.getUrlCourante(history).includes(PATH_SAISIR_RDCSC);
     case StatutRequete.PRISE_EN_CHARGE:
-      return (
-        receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE) ||
-        receUrl.getUrlCourante(history).includes(PATH_APERCU_COURRIER)
-      );
+      return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_PRISE);
     case StatutRequete.TRANSFEREE:
     case StatutRequete.A_TRAITER:
       return receUrl
@@ -96,7 +93,7 @@ function checkURLDelivrance(
     case StatutRequete.A_SIGNER:
       return (
         receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_TRAITEMENT) ||
-        receUrl.getUrlCourante(history).includes(PATH_APERCU_COURRIER)
+        receUrl.getUrlCourante(history).includes(PATH_EDITION)
       );
     default:
       if (

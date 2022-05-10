@@ -23,13 +23,14 @@ export function isLastPathElemIsId(url: string): boolean {
 }
 
 /**
- * Renvoie une url sans le dernier élément si c'est un ID (UUID ou un nombre)
+ * Renvoie une url sans les derniers éléments si ils sont des ID (UUID ou un nombre)
  */
 export function getUrlWithoutIdParam(url: string): string {
-  const validUrl = cleanUrl(url);
-  return isLastPathElemIsId(validUrl)
-    ? validUrl.substring(0, validUrl.lastIndexOf(URL_SEPARATEUR))
-    : validUrl;
+  let validUrl = cleanUrl(url);
+  while (isLastPathElemIsId(validUrl)) {
+    validUrl = validUrl.substring(0, validUrl.lastIndexOf(URL_SEPARATEUR));
+  }
+  return validUrl;
 }
 
 export function getUrlParamId(url: string): string | undefined {

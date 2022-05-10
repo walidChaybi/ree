@@ -24,6 +24,7 @@ export const configComposition = [
         match[1] === "/composition/CARN_CSPAC_01/1" ||
         match[1] === "/composition/CARN_CS_01/1" ||
         match[1] === "/composition/CARN_CSPAC_02/1" ||
+        match[1] === "/composition/CARN_EC_117/1" ||
         match[1] === "/composition/CARN_EC_17/1" ||
         match[1] === "/composition/CAD_EC_116/1" ||
         match[1] === "/composition/EXTAIT_COPIE_ACTE_TEXTE/1" ||

@@ -1,4 +1,6 @@
 import { urlImagePngVideBase64 } from "../mock/data/ImagePng";
+import { ChoixDelivrance } from "../model/requete/enum/ChoixDelivrance";
+import { mappingRequeteDelivrance } from "../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 
 function dataURLtoFile(dataurl: string, filename: string): File {
   const arr = dataurl.split(",");
@@ -21,3 +23,13 @@ export const inputPngFiles = {
   item: (index: number) => pngFiles[index],
   ...pngFiles
 };
+
+export function getRequeteWithChoixDelivrance(
+  requete: any,
+  choixDelivrance: ChoixDelivrance
+) {
+  return {
+    ...mappingRequeteDelivrance(requete),
+    choixDelivrance
+  };
+}

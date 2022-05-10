@@ -1,4 +1,3 @@
-import { ChoixDelivrance } from "../../model/requete/enum/ChoixDelivrance";
 import {
   documentReponseCARN_CSPAC_01,
   documentReponseCertificatRCA
@@ -13,6 +12,7 @@ export const ReponseAppelDetailRequeteDelivrance = {
   data: {
     id: "a4cefb71-8457-4f6b-937e-34b49335d404",
     numeroFonctionnel: "54j654j4jyfjtj456j4",
+
     idSagaDila: 45,
     dateCreation: 1612342296,
     canal: "COURRIER",
@@ -495,7 +495,7 @@ export const ReponseAppelDetailRequeteDelivranceASigner = {
     motif: "RETRAITE",
     complementMotif: "",
     dateDelivranceDemat: null,
-    choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE.nom,
+    choixDelivrance: "DELIVRER_EC_COPIE_INTEGRALE",
     provenance: "PLANETE",
     documentDemande: "Attestation de PACS",
     nombreExemplairesDemandes: null,
@@ -800,7 +800,7 @@ export const ReponseAppelDetailRequeteDelivranceRDC = {
     dateCreation: 1612342296,
     canal: "COURRIER",
     type: "DELIVRANCE",
-    choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION,
+    choixDelivrance: "DELIVRER_EC_EXTRAIT_SANS_FILIATION",
     idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
     actions: [
       {

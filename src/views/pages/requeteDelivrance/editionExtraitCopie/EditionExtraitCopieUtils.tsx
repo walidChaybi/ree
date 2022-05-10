@@ -5,14 +5,14 @@ import {
 } from "../../../../model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
 import { TypeActe } from "../../../../model/etatcivil/enum/TypeActe";
+import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import {
   CODE_COPIE_INTEGRALE,
   CODE_COPIE_NON_SIGNEE,
   CODE_EXTRAIT_AVEC_FILIATION,
   CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION,
-  DocumentDelivrance
-} from "../../../../model/requete/enum/DocumentDelivrance";
+  CODE_EXTRAIT_SANS_FILIATION
+} from "../../../../model/requete/enum/DocumentDelivranceConstante";
 import { Validation } from "../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
@@ -31,6 +31,7 @@ import { OngletProps } from "./contenu/VoletAvecOnglet";
 
 export const getOngletsEdition = (
   passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
+  handleCourrierEnregistre: () => void,
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
   acte?: IFicheActe
@@ -39,39 +40,61 @@ export const getOngletsEdition = (
     liste: [],
     ongletSelectionne: -1
   };
-  if (document && acte) {
-    switch (
-      DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
-    ) {
-      case CODE_COPIE_INTEGRALE:
-        ajoutOngletsCopie(res, document, passerDocumentValider, acte, requete);
-        break;
-      case CODE_EXTRAIT_AVEC_FILIATION:
-      case CODE_EXTRAIT_SANS_FILIATION:
-        ajoutOngletsExtraitFilliation(
-          res,
-          document,
-          passerDocumentValider,
-          acte,
-          requete
-        );
-        break;
-      case CODE_EXTRAIT_PLURILINGUE:
-        ajoutOngletsExtraitPlurilingue(
-          res,
-          document,
-          passerDocumentValider,
-          acte,
-          requete
-        );
-        break;
-      case CODE_COPIE_NON_SIGNEE:
-        break;
+  if (document) {
+    if (acte) {
+      switch (
+        DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
+      ) {
+        case CODE_COPIE_INTEGRALE:
+          ajoutOngletsCopie(
+            res,
+            document,
+            passerDocumentValider,
+            acte,
+            requete
+          );
+          break;
+        case CODE_EXTRAIT_AVEC_FILIATION:
+        case CODE_EXTRAIT_SANS_FILIATION:
+          ajoutOngletsExtraitFilliation(
+            res,
+            document,
+            passerDocumentValider,
+            acte,
+            requete
+          );
+          break;
+        case CODE_EXTRAIT_PLURILINGUE:
+          ajoutOngletsExtraitPlurilingue(
+            res,
+            document,
+            passerDocumentValider,
+            acte,
+            requete
+          );
+          break;
+        case CODE_COPIE_NON_SIGNEE:
+          break;
+      }
     }
-    res.liste.push({
-      titre: getLibelle("Document édité"),
-      component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
-    });
+    if (DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument)) {
+      res.liste.push({
+        titre: "Édition courrier",
+        component: (
+          <Courrier
+            requete={requete}
+            idActe={acte?.id}
+            handleCourrierEnregistre={handleCourrierEnregistre}
+          ></Courrier>
+        )
+      });
+      res.ongletSelectionne = 0;
+    } else {
+      res.liste.push({
+        titre: getLibelle("Document édité"),
+        component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
+      });
+    }
     if (res.ongletSelectionne === -1) {
       res.ongletSelectionne = res.liste.findIndex(
         el => el.titre === "Document édité"
@@ -88,48 +111,43 @@ export const getOngletsVisu = (
 ) => {
   const res: OngletProps = { liste: [], ongletSelectionne: -1 };
   if (document) {
-    if (DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument)) {
-      res.liste = [
-        {
-          titre: "Édition courrier",
-          component: (
-            <Courrier
-              requete={requete}
-              idActe={acte?.id}
-              handleCourrierEnregistre={() => {}}
-            ></Courrier>
-          )
-        }
-      ];
-      res.ongletSelectionne = 0;
-    } else {
-      res.liste = [
-        {
-          titre: getLibelle("Acte registre"),
-          component: (
-            <VisionneuseActeEdition acte={acte} detailRequete={requete} />
-          )
-        },
-        {
-          titre: getLibelle("Requête"),
-          component: (
-            <>
-              <AccordionRece
-                titre={getLibelle(`Requête ${requete.numero}`)}
-                disabled={false}
-                expanded={true}
-              >
-                <DetailRequetePage requete={requete} />
-              </AccordionRece>
-              <SuiviObservationsRequete idRequete={requete.id} />
-              <SuiviActionsRequete actions={requete.actions} />
-            </>
-          )
-        }
-      ];
-      res.ongletSelectionne = 0;
+    if (acte) {
+      res.liste.push({
+        titre: getLibelle("Acte registre"),
+        component: (
+          <VisionneuseActeEdition acte={acte} detailRequete={requete} />
+        )
+      });
+    }
+    res.liste.push({
+      titre: getLibelle("Requête"),
+      component: (
+        <>
+          <AccordionRece
+            titre={getLibelle(`Requête ${requete.numero}`)}
+            disabled={false}
+            expanded={true}
+          >
+            <DetailRequetePage requete={requete} />
+          </AccordionRece>
+          <SuiviObservationsRequete idRequete={requete.id} />
+          <SuiviActionsRequete actions={requete.actions} />
+        </>
+      )
+    });
+    res.ongletSelectionne = 0;
+    if (
+      DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument) &&
+      document.nbPages !== 0
+    ) {
+      res.liste.push({
+        titre: getLibelle("Courrier édité"),
+        component: <VisionneuseEdition idDocumentAAfficher={document?.id} />
+      });
+      res.ongletSelectionne = res.liste.length - 1;
     }
   }
+
   return res;
 };
 
@@ -254,21 +272,4 @@ const ongletSaisirExtrait = (acte: IFicheActe) => {
   };
 };
 
-export function checkDirty(isDirty: boolean, setIsDirty: any) {
-  if (isDirty) {
-    if (
-      window.confirm(
-        getLibelle(`Vous n'avez pas validé vos modifications !
-  Si vous continuez, celles-ci seront perdues et les données réinitialisées. 
-   Voulez-vous continuer ?`)
-      )
-    ) {
-      setIsDirty(false);
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return true;
-  }
-}
+

@@ -1,7 +1,8 @@
 import { connect } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import { officierHabiliterPourLeDroit } from "../../../../../model/agent/IOfficier";
 import { Droit } from "../../../../../model/Droit";
+import { RECEContext } from "../../../../core/body/Body";
 import { getLibelle } from "../../../util/Utils";
 import { FormikComponentProps } from "../../../widget/formulaire/utils/FormUtil";
 import "./scss/ReinitialiserValiderBoutons.scss";
@@ -45,14 +46,21 @@ type ReinitialiserValiderFormBoutonsProps = ReinitialiserValiderBoutonsProps &
 const _ReinitialiserValiderFormBoutons: React.FC<
   ReinitialiserValiderFormBoutonsProps
 > = props => {
+  const { setIsDirty } = useContext(RECEContext);
+
+  function getReinitialiserDisabled() {
+    const res =
+      props.reInitialiserDisabled !== undefined
+        ? props.reInitialiserDisabled
+        : !props.formik.dirty;
+    setIsDirty(!res);
+    return res;
+  }
+
   return (
     <ReinitialiserValiderBoutons
       onClickReInitialiser={props.onClickReInitialiser}
-      reInitialiserDisabled={
-        props.reInitialiserDisabled !== undefined
-          ? props.reInitialiserDisabled
-          : !props.formik.dirty
-      }
+      reInitialiserDisabled={getReinitialiserDisabled()}
       onClickValider={
         props.onClickValider !== undefined
           ? props.onClickValider

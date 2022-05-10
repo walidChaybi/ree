@@ -1,6 +1,7 @@
 import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 import {
   changeLaPlaceDunElement,
+  checkDirty,
   compareNombre,
   enMajuscule,
   estTableauNonVide,
@@ -239,4 +240,11 @@ test("Attendu: supprimeElement fonctionne correctement", () => {
     { a: 2 }
   ]);
   expect(supprimeElement(tableau, (elt: any) => elt.a === 4)).toEqual(tableau);
+});
+
+test("checkDirty", () => {
+  window.confirm = () => true;
+  expect(checkDirty(true, jest.fn())).toBeTruthy();
+  window.confirm = () => false;
+  expect(checkDirty(true, jest.fn())).toBeFalsy();
 });

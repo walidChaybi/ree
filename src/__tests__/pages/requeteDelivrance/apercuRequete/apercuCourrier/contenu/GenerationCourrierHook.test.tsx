@@ -23,13 +23,15 @@ const saisieCourrier = SaisieCourrier17;
 const requete = RequeteRDDCourrier17;
 const optionsChoisies = OptionsChoisiesCourrier17;
 
+const params = {
+  saisieCourrier,
+  optionsChoisies,
+  requete,
+  mettreAJourStatut: true
+};
+
 const HookConsummer: React.FC = () => {
-  const res = useGenerationCourrierHook({
-    saisieCourrier,
-    optionsChoisies,
-    requete,
-    mettreAJourStatut: true
-  });
+  const res = useGenerationCourrierHook(params);
 
   return (
     <>

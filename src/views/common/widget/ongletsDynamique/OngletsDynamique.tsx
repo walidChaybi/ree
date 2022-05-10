@@ -11,6 +11,7 @@ interface OngletsDynamiqueProps {
   actionClick: (document: string) => void;
   actionPlus: (event: any) => void;
   nombreOngletsMax: number;
+  afficherPlus: boolean;
 }
 
 export const OngletsDynamique: React.FC<OngletsDynamiqueProps> = props => {
@@ -36,16 +37,17 @@ export const OngletsDynamique: React.FC<OngletsDynamiqueProps> = props => {
             );
           })}
 
-          {props.listePlus.length !== props.nombreOngletsMax && (
-            <MenuAction
-              afficheChevron={false}
-              titre="+"
-              listeActions={props.listePlus}
-              onSelect={props.actionPlus}
-              widthMenuItem="auto"
-              infoBulle={getLibelle("Ajout d'un document")}
-            ></MenuAction>
-          )}
+          {props.listeOnglets.length !== props.nombreOngletsMax &&
+            props.afficherPlus && (
+              <MenuAction
+                afficheChevron={false}
+                titre="+"
+                listeActions={props.listePlus}
+                onSelect={props.actionPlus}
+                widthMenuItem="auto"
+                infoBulle={getLibelle("Ajout d'un document")}
+              ></MenuAction>
+            )}
         </>
       )}
     </div>

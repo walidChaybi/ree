@@ -2,14 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import { Validation } from "../../../../../../../model/requete/enum/Validation";
 import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import {
-  IGenerationECParams,
-  useGenerationEC
-} from "../../../../../../common/hook/generation/generationECHook/generationECHook";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
 import {
   getLibelle,
@@ -58,8 +53,6 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const [creationCourrierParams, setCreationCourrierParams] =
     useState<IGenerationCourrierParams>();
 
-  const [generationDocumentECParams, setGenerationDocumentECParams] =
-    useState<IGenerationECParams>();
   useEffect(() => {
     setInscriptions(
       props.inscriptions
@@ -82,20 +75,6 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     ),
     props.requete
   );
-
-  // 2 - Création des paramètre pour la génération du document demandé
-  useEffect(() => {
-    if (actes && updateChoixDelivranceResultat?.idRequete && choixDelivrance) {
-      setGenerationDocumentECParams({
-        idActe: actes[0].idActe,
-        requete: props.requete,
-        choixDelivrance,
-        validation: Validation.N,
-        mentionsRetirees: []
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateChoixDelivranceResultat]);
 
   // 2bis - Création des paramètre pour la génération du courrier auto
   useEffect(() => {
@@ -120,16 +99,6 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   }, [updateChoixDelivranceResultat, options]);
 
   const generationCourrier = useGenerationCourrierHook(creationCourrierParams);
-
-  // 3 - Génération du document demandé
-  const resultatGenerationEC = useGenerationEC(generationDocumentECParams);
-
-  // Gestion de l'erreur éventuelle après appel du hook
-  useEffect(() => {
-    if (resultatGenerationEC?.erreur) {
-      setOperationEnCours(false);
-    }
-  }, [resultatGenerationEC]);
 
   const delivrerOptions: IActionOption[] =
     getOptionsMenuDelivrer(refDelivrerOptions0);
@@ -170,7 +139,6 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   useEffect(() => {
     redirection(
       updateChoixDelivranceResultat,
-      resultatGenerationEC,
       props,
       history,
       actes,
@@ -179,7 +147,6 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     updateChoixDelivranceResultat,
-    resultatGenerationEC,
     generationCourrier,
     history,
     props.requete

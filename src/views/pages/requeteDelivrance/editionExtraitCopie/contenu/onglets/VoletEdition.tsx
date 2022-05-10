@@ -5,30 +5,32 @@ import { Validation } from "../../../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatSauvegarderMentions } from "../../../../../common/hook/acte/mentions/SauvegarderMentionsHook";
-import { EditionECContext } from "../../EditionExtraitCopiePage";
-import { checkDirty, getOngletsEdition } from "../../EditionExtraitCopieUtils";
+import { checkDirty } from "../../../../../common/util/Utils";
+import { RECEContext } from "../../../../../core/body/Body";
+import { getOngletsEdition } from "../../EditionExtraitCopieUtils";
 import { OngletProps, VoletAvecOnglet } from "../VoletAvecOnglet";
 
 interface VoletEditionProps {
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
-  acte: IFicheActe;
+  acte?: IFicheActe;
+  handleCourrierEnregistre: () => void;
   sauvegarderDocument: (document: IDocumentReponse) => void;
 }
 
 export const VoletEdition: React.FC<VoletEditionProps> = props => {
-  const { isDirty, setIsDirty } = useContext(EditionECContext);
+  const { isDirty, setIsDirty } = useContext(RECEContext);
 
   const afficherDocument = useCallback(
     (resultat: IResultatSauvegarderMentions) => {
-        const futureDoc = { ...props.document };
-        futureDoc.id = resultat.idDoc;
-        futureDoc.mentionsRetirees = resultat.mentionsRetirees.map(el => {
-          return { idMention: el } as MentionsRetirees;
-        });
-        futureDoc.validation = Validation.O;
-        props.sauvegarderDocument(futureDoc);
-        setIsDirty(false);
+      const futureDoc = { ...props.document };
+      futureDoc.id = resultat.idDoc;
+      futureDoc.mentionsRetirees = resultat.mentionsRetirees.map(el => {
+        return { idMention: el } as MentionsRetirees;
+      });
+      futureDoc.validation = Validation.O;
+      props.sauvegarderDocument(futureDoc);
+      setIsDirty(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.document, setIsDirty]
@@ -37,6 +39,7 @@ export const VoletEdition: React.FC<VoletEditionProps> = props => {
   const [{ liste, ongletSelectionne }, setOnglets] = useState<OngletProps>(
     getOngletsEdition(
       afficherDocument,
+      props.handleCourrierEnregistre,
       props.requete,
       props.document,
       props.acte
@@ -47,13 +50,14 @@ export const VoletEdition: React.FC<VoletEditionProps> = props => {
     setOnglets(
       getOngletsEdition(
         afficherDocument,
+        props.handleCourrierEnregistre,
         props.requete,
         props.document,
         props.acte
       )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [afficherDocument, props.document]);
+  }, [afficherDocument, props.document, props.acte]);
 
   const handleChange = useCallback(
     (event: any, newValue: string) => {
