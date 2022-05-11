@@ -137,7 +137,7 @@ export function mappingActeVerFormulaireSaisirExtrait(
       ? saisieTitulaireEvtForm(titulairesAMs[1], acte.evenement)
       : undefined
   };
-  const titulairesActes = FicheActe.getTitulairesDansLOrdre(acte);
+  const titulairesActes = FicheActe.getTitulairesActeDansLOrdre(acte);
   if (titulairesActes.titulaireActe1) {
     TitulaireActe.getAuMoinsDeuxParentsDirects(
       titulairesActes.titulaireActe1

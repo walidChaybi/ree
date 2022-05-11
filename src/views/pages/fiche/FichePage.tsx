@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { officierAutoriserSurLeTypeRegistre } from "../../../model/agent/IOfficier";
+import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
 import {
@@ -16,6 +18,7 @@ import { OperationLocaleEnCours } from "../../common/widget/attente/OperationLoc
 import { BarreNavigationSuivPrec } from "../../common/widget/navigation/barreNavigationSuivPrec/BarreNavigationSuivPrec";
 import { SectionPanelProps } from "../../common/widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "../../common/widget/section/SectionPanelArea";
+import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
 import { BandeauFiche } from "./contenu/BandeauFiche";
 import { BandeauFicheActeNumero } from "./contenu/BandeauFicheActeNumero";
@@ -30,6 +33,7 @@ export interface FichePageProps {
   dataFicheIdentifiant: string;
   datasFiches: IDataFicheProps[];
   index: IIndex;
+  numeroRequete?: string;
   fenetreExterneUtil?: FenetreExterneUtil;
   provenanceRequete?: string;
   ajoutAlertePossible?: boolean;
@@ -51,6 +55,7 @@ export interface IDataFicheProps {
 export const FichePage: React.FC<FichePageProps> = ({
   dataFicheIdentifiant,
   datasFiches,
+  numeroRequete,
   index,
   fenetreExterneUtil,
   provenanceRequete = "",
@@ -252,6 +257,10 @@ export const FichePage: React.FC<FichePageProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSuppressionAlerte]);
 
+  const acte = dataFicheState?.data
+    ? (dataFicheState.data as IFicheActe)
+    : undefined;
+
   return (
     <>
       {bandeauFiche && panelsFiche && dataFicheState && dataFicheCourante ? (
@@ -269,13 +278,26 @@ export const FichePage: React.FC<FichePageProps> = ({
             setIndex={setIndexFiche}
           />
           {dataFicheCourante.categorie === TypeFiche.ACTE && (
-            <BandeauAlertesActe
-              alertes={alertes}
-              ajoutAlertePossible={ajoutAlertePossible}
-              ajouterAlerteCallBack={ajouterAlerteCallBack}
-              supprimerAlerteCallBack={supprimerAlerteCallBack}
-              afficherBouton={visuBoutonAlertes}
-            />
+            <>
+              <BandeauAlertesActe
+                alertes={alertes}
+                ajoutAlertePossible={ajoutAlertePossible}
+                ajouterAlerteCallBack={ajouterAlerteCallBack}
+                supprimerAlerteCallBack={supprimerAlerteCallBack}
+                afficherBouton={visuBoutonAlertes}
+              />
+              {acte &&
+                !officierAutoriserSurLeTypeRegistre(
+                  acte.registre?.type?.id
+                ) && (
+                  <BoutonCreationRDD
+                    label="Demander la délivrance"
+                    labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}
+                    acte={acte}
+                    numeroFonctionnel={numeroRequete}
+                  />
+                )}
+            </>
           )}
           {panelsFiche?.panels?.map((panel: SectionPanelProps, idx: number) => (
             <AccordionRece

@@ -363,7 +363,7 @@ export function estRenseigne(valeur: any) {
 export function mapPrenomsVersPrenomsOrdonnes(prenoms?: string[]) {
   const prenomsOrdonnes: IPrenomOrdonnes[] = [];
   prenoms?.forEach((prenom, idx) =>
-    prenomsOrdonnes.push({ prenom, numeroOrdre: idx })
+    prenomsOrdonnes.push({ prenom, numeroOrdre: idx + 1 })
   );
   return prenomsOrdonnes;
 }

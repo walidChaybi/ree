@@ -98,7 +98,20 @@ export const FicheActe = {
       : undefined;
   },
 
-  getTitulairesDansLOrdre(acte: IFicheActe): ITitulairesActe {
+  getTitulairesActeTabDansLOrdre(acte: IFicheActe): ITitulaireActe[] {
+    const titulairesActeTab: ITitulaireActe[] = [];
+
+    const titulairesActe = this.getTitulairesActeDansLOrdre(acte);
+    titulairesActeTab.push(titulairesActe.titulaireActe1);
+
+    if (titulairesActe.titulaireActe2) {
+      titulairesActeTab.push(titulairesActe.titulaireActe2);
+    }
+
+    return titulairesActeTab;
+  },
+
+  getTitulairesActeDansLOrdre(acte: IFicheActe): ITitulairesActe {
     let resultatTitulairesActe: any = {};
     if (acte) {
       const titulaires = triListeObjetsSurPropriete(
@@ -121,7 +134,7 @@ export const FicheActe = {
 
   getTitulairesAMDansLOrdreAvecMajDeclConj(acte: IFicheActe) {
     const titulairesAMs: ITitulaireActe[] = [];
-    const titulairesActeDansLOrdre = this.getTitulairesDansLOrdre(acte);
+    const titulairesActeDansLOrdre = this.getTitulairesActeDansLOrdre(acte);
 
     const analyseMarginale = this.getAnalyseMarginaleLaPlusRecente(acte);
     if (analyseMarginale) {

@@ -194,7 +194,7 @@ export const ficheActe1 = {
       dateFermeture: [1969, 2, 16],
       decret2017: true,
       type: {
-        id: "d5f36d96-f1f8-437e-8371-86dba9837341",
+        id: "b66a9304-48b4-4aa3-920d-6cb27dd76c83",
         famille: "DEP",
         pocopa: "TUNIS",
         paysPocopa: "TUNISIE",

@@ -7,7 +7,7 @@ import {
 import { NatureActeRequete } from "./enum/NatureActeRequete";
 
 export interface IEvenementReqDelivrance {
-  id: string;
+  id?: string;
   natureActe: NatureActeRequete;
   jour?: number;
   mois?: number;

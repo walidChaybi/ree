@@ -264,7 +264,10 @@ export const configRequetes = [
 
       // Creation Requete Delivrance
       // Certificat de Situation Courrier
-      if (match[1] === "/requetes/delivrance?refus=false&brouillon=false") {
+      if (
+        match[1] === "/requetes/delivrance?refus=false&brouillon=false" ||
+        match[1] === "/requetes/delivrance?refus=false&futurStatut=A_TRAITER"
+      ) {
         return {
           data: {
             id: "1072bc37-f889-4365-8f75-912166b767dd",

@@ -173,7 +173,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
 
     // Récupération des titulaires de l'Acte pour la filiation
     const { titulaireActe1, titulaireActe2 } =
-      FicheActe.getTitulairesDansLOrdre(acte);
+      FicheActe.getTitulairesActeDansLOrdre(acte);
 
     titulaireAM1.filiations = titulaireActe1.filiations;
     const ecTitulaire1 =

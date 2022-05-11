@@ -19,6 +19,10 @@ export class TypeLienRequerant extends EnumWithLibelle {
     return EnumWithLibelle.getEnumFor(str, TypeLienRequerant);
   }
 
+  public static getKey(typeLienRequerant: TypeLienRequerant): string {
+    return EnumWithLibelle.getKey(TypeLienRequerant, typeLienRequerant);
+  }
+
   public static getAllEnumsAsOptions(): Options {
     return EnumWithLibelle.getAllLibellesAsOptions(TypeLienRequerant);
   }

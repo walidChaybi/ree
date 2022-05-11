@@ -3,6 +3,7 @@ import { peupleDocumentDelivrance } from "../../../api/nomenclature/Nomenclature
 import { EnumNomemclature } from "../../../views/common/util/enum/EnumNomenclature";
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../views/common/util/Type";
+import { getValeurOuVide } from "../../../views/common/util/Utils";
 import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
 import {
   CODE_ATTESTATION_PACS,
@@ -149,12 +150,20 @@ export class DocumentDelivrance extends EnumNomemclature {
     );
   }
 
+  public static getCopieIntegraleUUID(): string {
+    const uuid = EnumNomemclature.getKeyForCode(
+      DocumentDelivrance,
+      CODE_COPIE_INTEGRALE
+    );
+    return getValeurOuVide(uuid);
+  }
+
   public static getCourrierNonDelivranceAttestationPacsUUID(): string {
     const uuid = EnumNomemclature.getKeyForCode(
       DocumentDelivrance,
       CARN_PAC_01
     );
-    return uuid ? uuid : "";
+    return getValeurOuVide(uuid);
   }
 
   public static getAttestationPacsUUID(): string {
@@ -162,7 +171,7 @@ export class DocumentDelivrance extends EnumNomemclature {
       DocumentDelivrance,
       CODE_ATTESTATION_PACS
     );
-    return uuid ? uuid : "";
+    return getValeurOuVide(uuid);
   }
 
   public static getCertificatInscriptionRcUUID(): string {
@@ -170,7 +179,7 @@ export class DocumentDelivrance extends EnumNomemclature {
       DocumentDelivrance,
       CODE_CERTIFICAT_INSCRIPTION_RC
     );
-    return uuid ? uuid : "";
+    return getValeurOuVide(uuid);
   }
 
   public static getCertificatInscriptionRcaUUID(): string {
@@ -178,7 +187,7 @@ export class DocumentDelivrance extends EnumNomemclature {
       DocumentDelivrance,
       CODE_CERTIFICAT_INSCRIPTION_RCA
     );
-    return uuid ? uuid : "";
+    return getValeurOuVide(uuid);
   }
 
   public static getUuidFromDocument(document: DocumentDelivrance): string {
@@ -186,12 +195,12 @@ export class DocumentDelivrance extends EnumNomemclature {
       DocumentDelivrance,
       document.code
     );
-    return uuid ? uuid : "";
+    return getValeurOuVide(uuid);
   }
 
   public static getUuidFromCode(code: string): string {
     const uuid = EnumNomemclature.getKeyForCode(DocumentDelivrance, code);
-    return uuid ? uuid : "";
+    return getValeurOuVide(uuid);
   }
 
   public static estDocumentDelivrance(typeDocumentUUID: string): boolean {

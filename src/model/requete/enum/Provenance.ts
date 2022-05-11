@@ -17,4 +17,8 @@ export class Provenance extends EnumWithComplete {
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, Provenance);
   }
+
+  public static getKey(provenance?: Provenance): string {
+    return EnumWithLibelle.getKey(Provenance, provenance);
+  }
 }

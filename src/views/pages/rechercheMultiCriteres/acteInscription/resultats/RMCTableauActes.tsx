@@ -24,6 +24,7 @@ interface IFenetreFicheActe {
   idActe: string;
   datasFiches: IDataFicheProps[];
   index: IIndex;
+  numeroRequete?: TRequete["numero"];
 }
 export interface RMCResultatActeProps {
   typeRMC: TypeRMC;
@@ -92,9 +93,8 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheActe[]>([]);
 
   // Plage de fiche courante dans le tableau de résultat (suite à une RMC Acte)
-  const [datasFichesCourantes, setDatasFichesCourante] = useState<
-    IDataFicheProps[]
-  >();
+  const [datasFichesCourantes, setDatasFichesCourante] =
+    useState<IDataFicheProps[]>();
 
   const closeFenetre = (idActe: string, idx: number) => {
     const nouvelEtatFenetres = supprimeElement(
@@ -113,7 +113,8 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         const nouvelEtatFenetre: IFenetreFicheActe = {
           index: { value: index },
           idActe,
-          datasFiches: datasFichesCourantes
+          datasFiches: datasFichesCourantes,
+          numeroRequete: dataRequete?.numero
         };
         setEtatFenetres([...etatFenetres, nouvelEtatFenetre]);
       } else {
@@ -234,6 +235,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
                   identifiant={fenetreFicheActe.idActe}
                   categorie={TypeFiche.ACTE}
                   datasFiches={fenetreFicheActe.datasFiches}
+                  numeroRequete={fenetreFicheActe.numeroRequete}
                   onClose={closeFenetre}
                   provenanceRequete={
                     (dataRequete as IRequeteDelivrance)?.provenanceRequete

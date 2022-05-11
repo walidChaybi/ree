@@ -12,6 +12,7 @@ interface IFenetreFicheProps {
   categorie: TypeFiche;
   onClose: (id: string, index: number) => void;
   datasFiches: IDataFicheProps[];
+  numeroRequete?: string;
   index: IIndex;
   provenanceRequete?: string;
   ajoutAlertePossible?: boolean;
@@ -28,6 +29,7 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
   categorie,
   onClose,
   datasFiches,
+  numeroRequete,
   index,
   provenanceRequete = "",
   ajoutAlertePossible = false,
@@ -36,9 +38,8 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
   getLignesSuivantesOuPrecedentes
 }) => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(true);
-  const [fenetreExterneUtil, setFenetreExterneUtil] = useState<
-    FenetreExterneUtil
-  >();
+  const [fenetreExterneUtil, setFenetreExterneUtil] =
+    useState<FenetreExterneUtil>();
 
   function closeFenetre() {
     setFenetreOuverteState(!fenetreOuverteState);
@@ -53,6 +54,7 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
           setFenetreExterneUtil={setFenetreExterneUtil}
         >
           <FichePage
+            numeroRequete={numeroRequete}
             datasFiches={datasFiches}
             dataFicheIdentifiant={identifiant}
             fenetreExterneUtil={fenetreExterneUtil}
