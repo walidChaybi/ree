@@ -123,7 +123,9 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
             params.requete,
             // @ts-ignore presenceDesElementsPourLaGeneration
             params.optionsChoisies,
-            acteApiHookResultat?.acte
+            acteApiHookResultat?.acte,
+            // @ts-ignore presenceDesElementsPourLaGeneration
+            courrier.doc
           );
         construitCourrier(
           elements,

@@ -7,6 +7,7 @@ import {
   IFicheActe
 } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { TitulaireActe } from "../../../../../model/etatcivil/acte/ITitulaireActe";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "../../../../../model/requete/enum/SousTypeRequete";
 import {
@@ -43,6 +44,7 @@ export interface IElementsJasperCourrier {
   natureActe: string;
   texte_variable_RDD?: string;
   texte_variable_RDC?: string;
+  typeDocumentDelivre?: DocumentDelivrance;
 }
 
 async function ajoutInfosTitulaire(
@@ -196,7 +198,8 @@ class SpecificationCourrier {
     saisieCourrier: SaisieCourrier,
     requete: IRequeteDelivrance,
     optionsChoisies?: OptionsCourrier,
-    acte?: IFicheActe
+    acte?: IFicheActe,
+    typeDocumentDelivre?: DocumentDelivrance
   ) {
     const elementsJasper = {} as IElementsJasperCourrier;
 
@@ -208,6 +211,8 @@ class SpecificationCourrier {
       ajoutOptions(elementsJasper, optionsChoisies);
       elementsJasper.texteLibre = saisieCourrier.texteLibre.texte;
       ajoutTexteVariable(elementsJasper, requete.sousType);
+
+      elementsJasper.typeDocumentDelivre = typeDocumentDelivre;
     }
     return elementsJasper;
   }
