@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { ExtensionDocumentTypeMime } from "../../../../../views/common/util/FileUtils";
 import UploadFileField from "../../../../../views/common/widget/formulaire/champsSaisie/UploadFileField";
-import { inputPngFiles } from "../../../../testsUtil";
+import { inputPngFiles } from "../../../../__tests__utils__/testsUtil";
 
 const AJOUT_PIECE_JOINTE = "Ajout d'une pièce jointe";
 

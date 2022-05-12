@@ -1,11 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
 import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import {
+  ICreerCourrierECParam,
+  useCreerCourrierEC
+} from "../../../../../../common/hook/requete/creerCourrierECHook";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
+import { getUrlPrecedente } from "../../../../../../common/util/route/routeUtil";
 import {
   getLibelle,
   supprimerNullEtUndefinedDuTableau
@@ -16,10 +22,7 @@ import {
   ConfirmationPopin,
   IBoutonPopin
 } from "../../../../../../common/widget/popin/ConfirmationPopin";
-import {
-  IGenerationCourrierParams,
-  useGenerationCourrierHook
-} from "../../../apercuCourrier/contenu/hook/GenerationCourrierHook";
+import { PATH_EDITION, receUrl } from "../../../../../../router/ReceUrls";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
@@ -32,7 +35,6 @@ import {
   getIdCourrierAuto,
   getOptionsMenuDelivrer,
   nonVide,
-  redirection,
   sousTypeCreationCourrierAutomatique
 } from "./MenuDelivrerUtil";
 
@@ -48,10 +50,22 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
+  const [courrierEcParams, setCourrierEcParamss] =
+    useState<ICreerCourrierECParam>();
+
   const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
     useState<UpdateChoixDelivranceProps>();
-  const [creationCourrierParams, setCreationCourrierParams] =
-    useState<IGenerationCourrierParams>();
+
+  useCreerCourrierEC(courrierEcParams);
+
+  const redirection = useCallback(() => {
+    receUrl.replaceUrl(
+      history,
+      `${getUrlPrecedente(history.location.pathname)}/${PATH_EDITION}/${
+        props.requete.id
+      }/${actes?.[0].idActe}`
+    );
+  }, [actes, history, props.requete.id]);
 
   useEffect(() => {
     setInscriptions(
@@ -85,20 +99,21 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       options &&
       sousTypeCreationCourrierAutomatique(props.requete.sousType)
     ) {
-      setCreationCourrierParams({
+      setOperationEnCours(true);
+      setCourrierEcParamss({
         ...compositionCourrierAutomatique(
           choixDelivrance,
           options,
-          props.requete,
-          actes[0]
+          props.requete
         ),
-        mettreAJourStatut: false
+        requete: props.requete,
+        idActe: actes[0]?.idActe,
+        handleCourrierEnregistre: redirection,
+        setOperationEnCours
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateChoixDelivranceResultat, options]);
-
-  const generationCourrier = useGenerationCourrierHook(creationCourrierParams);
 
   const delivrerOptions: IActionOption[] =
     getOptionsMenuDelivrer(refDelivrerOptions0);
@@ -118,10 +133,6 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     // message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionDelivrer'
   };
 
-  /////////////////////////////////////
-  // DELIVRANCE CI,EC, Extraits (avec/sans fil., plurilingue), (Copie archive)
-  /////////////////////////////////////
-
   // Le contrôle de cohérence a eu lieu
   useEffect(() => {
     if (choixDelivrance && messagesBloquant && messagesBloquant.length === 0) {
@@ -137,20 +148,13 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
 
   // La mise à jour du choix de délivrance et du statut ont été effectués (cf.)
   useEffect(() => {
-    redirection(
-      updateChoixDelivranceResultat,
-      props,
-      history,
-      actes,
-      generationCourrier
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    updateChoixDelivranceResultat,
-    generationCourrier,
-    history,
-    props.requete
-  ]);
+    if (
+      updateChoixDelivranceResultat?.idRequete &&
+      props.requete.sousType === SousTypeDelivrance.RDC
+    ) {
+      redirection();
+    }
+  }, [updateChoixDelivranceResultat, redirection, props.requete.sousType]);
 
   const listeActions = filtrerListeActions(props.requete, delivrerOptions);
 
@@ -177,5 +181,3 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     </>
   );
 };
-
-

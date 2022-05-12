@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
-import { ChoixDelivrance } from "../../../../../../model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
-import { Validation } from "../../../../../../model/requete/enum/Validation";
 import {
   OptionCourrier,
   OptionsCourrier
@@ -11,11 +9,11 @@ import {
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { ReinitialiserValiderFormBoutons } from "../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
-  IGenerationECParams,
-  useGenerationEC
-} from "../../../../../common/hook/generation/generationECHook/generationECHook";
+  ICreerCourrierECParam,
+  useCreerCourrierEC
+} from "../../../../../common/hook/requete/creerCourrierECHook";
 import { useReinitialisationComposant } from "../../../../../common/util/form/useReinitialisation";
-import { DEUX, getLibelle } from "../../../../../common/util/Utils";
+import { getLibelle } from "../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../common/widget/attente/OperationEnCours";
 import {
   AdresseFormValidationSchema,
@@ -41,16 +39,13 @@ import {
 import { ValidationSchemaChoixCourrier } from "./contenuForm/sousFormulaires/ChoixCourrierForm";
 import { ValidationSchemaOptionCourrier } from "./contenuForm/sousFormulaires/OptionsCourrierForm";
 import {
-  IGenerationCourrierParams,
-  useGenerationCourrierHook
-} from "./hook/GenerationCourrierHook";
-import {
   ADRESSE,
   CHOIX_COURRIER,
   OPTION,
   SaisieCourrier
 } from "./modelForm/ISaisiePageModel";
 import "./scss/Courrier.scss";
+ 
 
 interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
@@ -64,19 +59,14 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     ? getLibelle("Modification du courrier")
     : getLibelle("Création du courrier");
 
-  const [saisieCourrier, setSaisieCourrier] = useState<SaisieCourrier>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
   const [messagesBloquant, setMessagesBloquant] = useState<string>();
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
-  const [optionsChoisiesFinales, setOptionsChoisiesFinales] =
-    useState<OptionsCourrier>([]);
-  const [generationDocumentECParams, setGenerationDocumentECParams] =
-    useState<IGenerationECParams>();
+  const [courrierEcParams, setCourrierEcParamss] =
+    useState<ICreerCourrierECParam>();
   const [documentDelivranceChoisi, setDocumentDelivranceChoisi] =
     useState<DocumentDelivrance>();
-  const [generationCourrierHookParams, setGenerationCourrierHookParams] =
-    useState<IGenerationCourrierParams>();
   const { cleReinitialisation, reinitialisation } =
     useReinitialisationComposant();
 
@@ -113,8 +103,14 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const onSubmit = (values: SaisieCourrier) => {
     if (controleFormulaire(values, optionsChoisies, setMessagesBloquant)) {
       setOperationEnCours(true);
-      setOptionsChoisiesFinales(optionsChoisies);
-      setSaisieCourrier({ ...values });
+      setCourrierEcParamss({
+        optionsChoisies,
+        requete: props.requete,
+        idActe: props.idActe,
+        handleCourrierEnregistre: props.handleCourrierEnregistre,
+        saisieCourrier: { ...values },
+        setOperationEnCours
+      });
     }
   };
 
@@ -159,60 +155,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
     setOperationEnCours(false);
   };
 
-  useEffect(() => {
-    if (
-      saisieCourrier &&
-      props.requete.choixDelivrance &&
-      optionsChoisiesFinales
-    ) {
-      setGenerationCourrierHookParams({
-        saisieCourrier,
-        optionsChoisies,
-        requete: props.requete,
-        idActe: props.idActe,
-        // On ne change le statut que lorsqu'on a aucun documents
-        mettreAJourStatut: props.requete.documentsReponses.length === 0
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [saisieCourrier, optionsChoisiesFinales]);
-
-  const generationCourrier = useGenerationCourrierHook(
-    generationCourrierHookParams
-  );
-
-  // 2 - Création des paramètre pour la génération du document demandé
-  useEffect(() => {
-    if (
-      props.idActe &&
-      generationCourrier &&
-      ChoixDelivrance.estReponseAvecDelivrance(props.requete.choixDelivrance) &&
-      props.requete.documentsReponses.length < DEUX
-    ) {
-      setGenerationDocumentECParams({
-        idActe: props.idActe,
-        requete: props.requete,
-        validation: Validation.N,
-        mentionsRetirees: []
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [generationCourrier]);
-
-  // Génération du document demandé
-  const resultatGenerationEC = useGenerationEC(generationDocumentECParams);
-
-  useEffect(() => {
-    if (
-      resultatGenerationEC ||
-      (generationCourrier &&
-        ChoixDelivrance.estReponseSansDelivrance(props.requete.choixDelivrance))
-    ) {
-      setOperationEnCours(false);
-      props.handleCourrierEnregistre();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultatGenerationEC, generationCourrier]);
+  useCreerCourrierEC(courrierEcParams);
 
   return (
     <>

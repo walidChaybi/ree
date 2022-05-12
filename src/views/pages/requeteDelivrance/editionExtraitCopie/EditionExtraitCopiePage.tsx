@@ -41,9 +41,9 @@ export const EditionExtraitCopiePage: React.FC = () => {
 
   const acte = useInformationsActeApiHook(hookParams);
 
-  const ajouteDocument = (typeDocument: any) => {
+  const ajouteDocument = (typeDocument: string) => {
     if (checkDirty(isDirty, setIsDirty)) {
-      // TODO
+      // TODO ajout d'un document complémentaire
     }
   };
 
@@ -82,11 +82,14 @@ export const EditionExtraitCopiePage: React.FC = () => {
         typeDocument: DocumentDelivrance.getUuidFromCode(ACTE_NON_TROUVE),
         nbPages: 0
       } as IDocumentReponse);
+    } else if (
+      ChoixDelivrance.estReponseAvecDelivrance(requete?.choixDelivrance)
+    ) {
+      setDocumentEdite(documents?.[1]);
     } else {
-      if (ChoixDelivrance.estReponseAvecDelivrance(requete?.choixDelivrance)) {
-        setDocumentEdite(documents?.[1]);
-      }
+      setDocumentEdite(documents?.[documents.length - 1]);
     }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documents, idActeParam]);
 

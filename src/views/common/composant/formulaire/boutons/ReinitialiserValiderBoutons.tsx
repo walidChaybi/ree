@@ -65,6 +65,7 @@ const _ReinitialiserValiderFormBoutons: React.FC<
         props.onClickValider !== undefined
           ? props.onClickValider
           : () => {
+              setIsDirty(false);
               props.formik.submitForm();
             }
       }

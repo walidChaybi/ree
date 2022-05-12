@@ -1,4 +1,5 @@
 import {
+  getRequeteSansDoc,
   ReponseAppelDetailRequeteDelivrance,
   ReponseAppelDetailRequeteDelivranceASigner,
   ReponseAppelDetailRequeteDelivranceBrouillon,
@@ -30,6 +31,7 @@ import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 import { CreationRDCSC, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
 
 export const NORESULT = "NORESULT";
+let compteur = 0;
 
 export const configRequetes = [
   {
@@ -163,6 +165,13 @@ export const configRequetes = [
         return { data: NOMENCLATURE_OPTION_COURRIER };
       }
 
+      if (
+        match[1] ===
+        "/requetes/action/transfert?idRequete=54ddf213-d9b7-4747-8e92-68c220f66de3&idEntite=12345&idUtilisateur=&statutRequete=A_TRAITER&libelleAction=Attribu%C3%A9e%20%C3%A0%20str2&attribuer=true"
+      ) {
+        return { data: "12345" };
+      }
+
       // RMC Requete
       if (
         match[1] === "/requetes/rmc?range=0-100" ||
@@ -213,6 +222,16 @@ export const configRequetes = [
         return { data: requeteAvecDocs };
       }
 
+      if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f693f0e") {
+        if (compteur === 0) {
+          compteur++;
+          return { data: getRequeteSansDoc(requeteAvecDocs) };
+        } else {
+          compteur = 0;
+          return { data: requeteAvecDocs };
+        }
+      }
+
       // Compteurs requêtes A_SIGNER
       if (match[1] === "/requetes/count?statuts=A_SIGNER") {
         return { data: 20 };
@@ -236,7 +255,9 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d884/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d884&statutRequete=A_TRAITER" ||
         match[1] ===
-          "/requetes/delivrance/0ad85c1f-57cf-45cc-ab66-6a17f31247df/courrier?idRequete=0ad85c1f-57cf-45cc-ab66-6a17f31247df&statutRequete=A_SIGNER"
+          "/requetes/delivrance/0ad85c1f-57cf-45cc-ab66-6a17f31247df/courrier?idRequete=0ad85c1f-57cf-45cc-ab66-6a17f31247df&statutRequete=A_SIGNER" ||
+        match[1] ===
+          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f0f/courrier?idRequete=9bfa282d-1e66-4538-b242-b9de4f683f0f&libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
       }

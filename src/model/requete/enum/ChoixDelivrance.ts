@@ -1,6 +1,13 @@
 /* istanbul ignore file */
 import { EnumWithComplete } from "../../../views/common/util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import {
+  CODE_COPIE_INTEGRALE,
+  CODE_COPIE_NON_SIGNEE,
+  CODE_EXTRAIT_AVEC_FILIATION,
+  CODE_EXTRAIT_PLURILINGUE,
+  CODE_EXTRAIT_SANS_FILIATION
+} from "./DocumentDelivranceConstante";
 
 export class ChoixDelivrance extends EnumWithComplete {
   public static readonly DELIVRER_EC_COPIE_INTEGRALE = new ChoixDelivrance(
@@ -104,15 +111,15 @@ export class ChoixDelivrance extends EnumWithComplete {
   ) {
     switch (choixDelivrance) {
       case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
-        return "CODE_COPIE_INTEGRALE";
+        return CODE_COPIE_INTEGRALE;
       case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
-        return "CODE_EXTRAIT_AVEC_FILIATION";
+        return CODE_EXTRAIT_AVEC_FILIATION;
       case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
-        return "CODE_EXTRAIT_PLURILINGUE";
+        return CODE_EXTRAIT_PLURILINGUE;
       case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
-        return "CODE_EXTRAIT_SANS_FILIATION";
+        return CODE_EXTRAIT_SANS_FILIATION;
       case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
-        return "CODE_COPIE_NON_SIGNEE";
+        return CODE_COPIE_NON_SIGNEE;
       default:
         return "";
     }

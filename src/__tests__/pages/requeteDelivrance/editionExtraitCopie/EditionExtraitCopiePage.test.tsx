@@ -9,7 +9,9 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
-import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
+import {
+  userDroitCOMEDEC
+} from "../../../../mock/data/connectedUserAvecDroit";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
@@ -94,7 +96,7 @@ test("Test affichage Edition Extrait", async () => {
     fireEvent.click(screen.getByText("Courrier"));
   });
   await waitFor(() => {
-    expect(screen.getByText("Édition courrier")).toBeDefined();
+    expect(screen.getByText("Modifier le courrier")).toBeDefined();
   });
 });
 
@@ -332,6 +334,31 @@ test("Test affichage Edition Copie", async () => {
     ).toBeFalsy();
   });
 });
+
+/*
+// Courrier
+test("Test création courrier", async () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  history.push(
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f693f0e/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  );
+
+  await waitFor(() => {
+    expect(screen.getByText("Option(s) disponibles(s)")).toBeDefined();
+    expect(
+      (screen.getByText("Valider") as HTMLButtonElement).disabled
+    ).toBeFalsy();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Valider"));
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Copie intégrale")).toBeDefined();
+    expect(screen.getByText("Extrait avec filiation")).toBeDefined();
+  });
+});*/
 
 
 afterAll(() => {

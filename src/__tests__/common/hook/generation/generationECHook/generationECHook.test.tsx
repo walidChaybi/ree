@@ -15,7 +15,7 @@ import {
   IGenerationECParams,
   useGenerationEC
 } from "../../../../../views/common/hook/generation/generationECHook/generationECHook";
-import { getRequeteWithChoixDelivrance } from "../../../../testsUtil";
+import { getRequeteWithChoixDelivrance } from "../../../../__tests__utils__/testsUtil";
 
 const superagentMock = require("superagent-mock")(request, [
   configRequetes[0],

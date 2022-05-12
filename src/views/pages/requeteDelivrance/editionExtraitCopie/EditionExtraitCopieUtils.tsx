@@ -79,7 +79,7 @@ export const getOngletsEdition = (
     }
     if (DocumentDelivrance.estCourrierDelivranceEC(document.typeDocument)) {
       res.liste.push({
-        titre: "Édition courrier",
+        titre: "Modifier le courrier",
         component: (
           <Courrier
             requete={requete}

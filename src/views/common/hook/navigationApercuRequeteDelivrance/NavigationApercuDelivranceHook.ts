@@ -95,7 +95,11 @@ const redirectionEnFonctionMaRequete = (
         break;
       default:
         if (MigratorV1V2.estARetraiterSagaRequeteTableau(requete)) {
-          redirectionAValider(setRedirection, urlWithoutParam, requete);
+          redirectionVersApercuTraitement(
+            setRedirection,
+            urlWithoutParam,
+            requete
+          );
         } else {
           redirectionApercuRequete(setRedirection, urlWithoutParam, requete);
         }
@@ -110,6 +114,21 @@ function estUneRequeteDeDelivranceAvecUnStatut(
   return requete.statut && requete.type && typeEstDelivrance(requete.type);
 }
 
+function redirectionVersApercuTraitement(
+  setRedirection: (
+    value: React.SetStateAction<INavigationApercuDelivrance | undefined>
+  ) => void,
+  urlWithoutParam: string,
+  requete: IRequeteTableauDelivrance
+) {
+  setRedirection({
+    url: getUrlWithParam(
+      `${urlWithoutParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
+      requete.idRequete
+    )
+  });
+}
+
 function redirectionAValider(
   setRedirection: (
     value: React.SetStateAction<INavigationApercuDelivrance | undefined>
@@ -117,25 +136,20 @@ function redirectionAValider(
   urlWithoutParam: string,
   requete: IRequeteTableauDelivrance
 ) {
-  const sousType = SousTypeDelivrance.getEnumFor(requete.sousType);
+  const sousType = requete.sousType;
   if (
-    sousType === SousTypeDelivrance.RDDP ||
-    sousType === SousTypeDelivrance.RDD ||
-    sousType === SousTypeDelivrance.RDC
+    sousType === SousTypeDelivrance.RDDP.libelleCourt ||
+    sousType === SousTypeDelivrance.RDD.libelleCourt ||
+    sousType === SousTypeDelivrance.RDC.libelleCourt
   ) {
-    setRedirection({
-      url: getUrlWithParam(
-        `${urlWithoutParam}/${PATH_APERCU_REQ_TRAITEMENT}/:idRequete`,
-        requete.idRequete
-      )
-    });
-  } else {
     setRedirection({
       url: getUrlWithParam(
         `${urlWithoutParam}/${PATH_EDITION}/:idRequete`,
         requete.idRequete
       )
     });
+  } else {
+    redirectionVersApercuTraitement(setRedirection, urlWithoutParam, requete);
   }
 }
 

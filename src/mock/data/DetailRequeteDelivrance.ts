@@ -1686,3 +1686,10 @@ export const requeteAvecDocs = {
   },
   choixDelivrance: "DELIVRER_EC_EXTRAIT_AVEC_FILIATION"
 };
+
+export function getRequeteSansDoc(requete: any) {
+  const requeteSansDoc = { ...requete };
+
+  requeteSansDoc.documentsReponses = [];
+  return requeteSansDoc;
+}
