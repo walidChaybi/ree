@@ -1,18 +1,23 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
+import { FenetreExterne } from "../../../../common/util/FenetreExterne";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import {
   NB_LIGNES_PAR_APPEL_REQUETE_ASSOCIEES,
   NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES
 } from "../../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "../../../../common/widget/tableau/TableauRece/TableauRece";
+import { DetailRequetePage } from "../../../requeteDelivrance/detailRequete/DetailRequetePage";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { BoutonNouvelleRMCRequete } from "../contenu/BoutonNouvelleRMCRequete";
 import { getMessageZeroRequete } from "../hook/RMCAutoRequetesUtils";
 import { columnsTableauRequeteAssociees } from "./RMCTableauRequetesAssocieesParams";
 
+const width = 1100;
+const height = 600;
 export interface RMCTableauRequetesAssocieesProps {
   dataRMCRequete: IRequeteTableauDelivrance[];
   dataTableauRMCRequete: IParamsTableau;
@@ -25,7 +30,14 @@ export interface RMCTableauRequetesAssocieesProps {
   resetTableauRequete: boolean;
 }
 
-export const RMCTableauRequetesAssociees: React.FC<RMCTableauRequetesAssocieesProps> = ({
+interface IInfoRequeteSelectionnee {
+  idRequete: string;
+  numeroFonctionnel?: string;
+}
+
+export const RMCTableauRequetesAssociees: React.FC<
+  RMCTableauRequetesAssocieesProps
+> = ({
   dataRMCRequete,
   dataTableauRMCRequete,
   setRangeRequete,
@@ -36,6 +48,8 @@ export const RMCTableauRequetesAssociees: React.FC<RMCTableauRequetesAssocieesPr
 }) => {
   // Gestion du tableau
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
+  const [requeteSelectionnee, setRequeteSelectionnee] =
+    useState<IInfoRequeteSelectionnee>();
 
   useEffect(() => {
     if (dataRMCRequete?.length === 0) {
@@ -53,11 +67,29 @@ export const RMCTableauRequetesAssociees: React.FC<RMCTableauRequetesAssocieesPr
     [setRangeRequete]
   );
 
+  const onClose = () => {
+    setRequeteSelectionnee(undefined);
+  };
+
+  const onClickOnLine = (
+    idRequete: string,
+    data: IRequeteTableauDelivrance[],
+    idx: number
+  ) => {
+    const requeteCliquee = data[idx];
+    if (requeteCliquee.type === TypeRequete.DELIVRANCE.libelle) {
+      setRequeteSelectionnee({
+        idRequete: requeteCliquee.idRequete,
+        numeroFonctionnel: requeteCliquee.numero
+      });
+    }
+  };
+
   return (
     <>
       <TableauRece
         idKey={"idRequete"}
-        onClickOnLine={() => {}} //TODO: US-220
+        onClickOnLine={onClickOnLine}
         columnHeaders={columnsTableauRequeteAssociees}
         dataState={dataRMCRequete}
         paramsTableau={dataTableauRMCRequete}
@@ -73,6 +105,18 @@ export const RMCTableauRequetesAssociees: React.FC<RMCTableauRequetesAssocieesPr
           setCriteresRechercheRequete={setCriteresRechercheRequete}
         />
       </TableauRece>
+      {requeteSelectionnee && (
+        <FenetreExterne
+          titre={`Détails requête : N°${requeteSelectionnee.numeroFonctionnel}`}
+          onCloseHandler={onClose}
+          height={height}
+          width={width}
+        >
+          <DetailRequetePage
+            idRequeteAAfficher={requeteSelectionnee.idRequete}
+          />
+        </FenetreExterne>
+      )}
     </>
   );
 };

@@ -5,6 +5,7 @@ import { IPieceJustificative } from "../../../../../../../model/requete/pieceJoi
 import { ListePiecesJointes } from "../../../../../../common/composant/piecesJointes/ListePiecesJointes";
 import { TypePieceJointe } from "../../../../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
 import { FenetreExterne } from "../../../../../../common/util/FenetreExterne";
+import { DEUX, TROIS, UN, ZERO } from "../../../../../../common/util/Utils";
 import { SectionPanel } from "../../../../../../common/widget/section/SectionPanel";
 import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
 import { getPanelsResumeRequete } from "./ResumeRequeteUtils";
@@ -15,10 +16,6 @@ interface ResumeRequeteProps {
   requete: IRequeteDelivrance;
 }
 
-const ZERO = 0;
-const UN = 1;
-const DEUX = 2;
-const TROIS = 3;
 const width = 1100;
 const height = 600;
 
