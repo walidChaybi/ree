@@ -2,8 +2,6 @@ import {
   IElementsJasperCourrier,
   OptionsJasper
 } from "../../views/common/hook/generation/generationCourrierHook/specificationCourrier";
-import { DocumentDelivrance } from "../requete/enum/DocumentDelivrance";
-import { MANDAT_GENEALOGIQUE } from "../requete/enum/DocumentDelivranceConstante";
 import { IRequeteDelivrance } from "../requete/IRequeteDelivrance";
 import {
   CommunComposition,
@@ -17,7 +15,6 @@ import {
   IRequerantComposition,
   RequerantComposition
 } from "./commun/IRequerantComposition";
-import { OBJET_COURRIER_18 } from "./ObjetsComposition";
 
 export interface ICourrierComposition
   extends IParametresComposition,
@@ -42,15 +39,13 @@ export const CourrierComposition = {
     elementsJasper: IElementsJasperCourrier
   ) {
     const courrier = {} as ICourrierComposition;
-
     if (requete.choixDelivrance) {
       ParametresComposition.ajoutParametres(courrier, true);
     } else {
       ParametresComposition.ajoutParametres(courrier);
     }
 
-    const objet = getObjet(elementsJasper);
-    CommunComposition.ajoutParamCommuns(courrier, requete.numero, objet);
+    CommunComposition.ajoutParamCommuns(courrier, requete.numero);
 
     RequerantComposition.ajoutInfosRequerant(
       courrier,
@@ -85,13 +80,3 @@ export const CourrierComposition = {
     return courrier;
   }
 };
-function getObjet(elementsJasper: IElementsJasperCourrier) {
-  let objet = "";
-  if (
-    elementsJasper.typeDocumentDelivre ===
-    DocumentDelivrance.getEnumFromCode(MANDAT_GENEALOGIQUE)
-  ) {
-    objet = OBJET_COURRIER_18;
-  }
-  return objet;
-}
