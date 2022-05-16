@@ -1,13 +1,12 @@
 import React from "react";
 import {
-  officierALeDroitSurLePerimetre,
   officierAutoriserSurLeTypeRegistre,
+  officierAutoriserSurLeTypeRegistreOuDroitMEAE,
   officierHabiliterPourLeDroit
 } from "../../../../../../model/agent/IOfficier";
 import { Droit } from "../../../../../../model/Droit";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
-import { PERIMETRE_MEAE } from "../../../../../../model/IPerimetre";
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "../../../../../common/widget/section/SectionPanelArea";
 import { IAccordionReceSection } from "../../../FicheUtils";
@@ -95,8 +94,7 @@ export function getParamsAffichageFicheActe(
   // ou
   // S'il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
   if (
-    officierALeDroitSurLePerimetre(Droit.CONSULTER, PERIMETRE_MEAE) ||
-    officierAutoriserSurLeTypeRegistre(idTypeRegistre) ||
+    officierAutoriserSurLeTypeRegistreOuDroitMEAE(idTypeRegistre) ||
     officierHabiliterPourLeDroit(Droit.DELIVRER_COMEDEC)
   ) {
     params.visuBoutonAlertes = true;

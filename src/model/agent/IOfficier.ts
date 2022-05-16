@@ -1,5 +1,6 @@
 import { storeRece } from "../../views/common/util/storeRece";
 import { Droit } from "../Droit";
+import { PERIMETRE_MEAE } from "../IPerimetre";
 import { Provenance } from "../requete/enum/Provenance";
 import { IEntite } from "./IEntiteRattachement";
 import { IUtilisateur, utilisateurADroit } from "./IUtilisateur";
@@ -67,7 +68,6 @@ export function officierHabiliterUniquementPourLeDroit(droit: Droit): boolean {
 
 // Vérification que l'officier à le droit de consulter la visualisation de l'acte
 // Soit il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
-// Soit il a le droit CONSULTER sur le périmètre MEAE
 // Soit il a le droit CONSULTER_ARCHIVE
 export function officierAutoriserSurLeTypeRegistre(idTypeRegistre: string) {
   const officier = storeRece.utilisateurCourant;
@@ -90,6 +90,19 @@ export function officierAutoriserSurLeTypeRegistre(idTypeRegistre: string) {
   }
 
   return res;
+}
+
+// Vérification que l'officier à le droit de consulter la visualisation de l'acte
+// Soit il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
+// Soit il a le droit CONSULTER sur le périmètre MEAE
+// Soit il a le droit CONSULTER_ARCHIVE
+export function officierAutoriserSurLeTypeRegistreOuDroitMEAE(
+  idTypeRegistre: string
+) {
+  return (
+    officierAutoriserSurLeTypeRegistre(idTypeRegistre) ||
+    officierALeDroitSurLePerimetre(Droit.CONSULTER, PERIMETRE_MEAE)
+  );
 }
 
 export function officierALeDroitSurLePerimetre(

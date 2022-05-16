@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { officierAutoriserSurLeTypeRegistre } from "../../../model/agent/IOfficier";
+import { officierAutoriserSurLeTypeRegistreOuDroitMEAE } from "../../../model/agent/IOfficier";
 import { IFicheActe } from "../../../model/etatcivil/acte/IFicheActe";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { IBandeauFiche } from "../../../model/etatcivil/fiche/IBandeauFiche";
@@ -287,7 +287,7 @@ export const FichePage: React.FC<FichePageProps> = ({
                 afficherBouton={visuBoutonAlertes}
               />
               {acte &&
-                !officierAutoriserSurLeTypeRegistre(
+                !officierAutoriserSurLeTypeRegistreOuDroitMEAE(
                   acte.registre?.type?.id
                 ) && (
                   <BoutonCreationRDD
