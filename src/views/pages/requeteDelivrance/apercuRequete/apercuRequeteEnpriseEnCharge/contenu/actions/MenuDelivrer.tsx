@@ -99,6 +99,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       options &&
       sousTypeCreationCourrierAutomatique(props.requete.sousType)
     ) {
+      const requeteAvecChoixDelivrance = { ...props.requete, choixDelivrance };
       setOperationEnCours(true);
       setCourrierEcParamss({
         ...compositionCourrierAutomatique(
@@ -106,7 +107,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
           options,
           props.requete
         ),
-        requete: props.requete,
+        requete: requeteAvecChoixDelivrance,
         idActe: actes[0]?.idActe,
         handleCourrierEnregistre: redirection,
         setOperationEnCours

@@ -102,6 +102,15 @@ test("Test affichage Edition Extrait", async () => {
 
 test("Test édition mentions Edition Extrait copie", async () => {
   // Gestion des mentions
+
+  act(() => {
+    fireEvent.click(screen.getAllByText("Extrait avec filiation")[0]);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Gérer les mentions")).toBeDefined();
+  });
+
   act(() => {
     fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
   });
@@ -142,6 +151,14 @@ test("Test édition mentions Edition Extrait copie", async () => {
 
 test("Ajout mention et réinitialisation", async () => {
   // Gestion des mentions
+  act(() => {
+    fireEvent.click(screen.getAllByText("Extrait avec filiation")[0]);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Gérer les mentions")).toBeDefined();
+  });
+
   act(() => {
     fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
   });
@@ -217,6 +234,14 @@ test("Ajout mention et réinitialisation", async () => {
 
 test("clic sur mention et sur checkbox et valider", async () => {
   // Gestion des mentions
+  act(() => {
+    fireEvent.click(screen.getAllByText("Extrait avec filiation")[0]);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Gérer les mentions")).toBeDefined();
+  });
+
   act(() => {
     fireEvent.click(screen.getAllByText("Gérer les mentions")[0]);
   });
@@ -332,6 +357,16 @@ test("Test affichage Edition Copie", async () => {
     expect(
       (screen.getByText("Réinitialiser") as HTMLButtonElement).disabled
     ).toBeFalsy();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Valider"));
+  });
+
+  await waitFor(() => {
+    expect(history.location.pathname).toBe(
+      `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+    );
   });
 });
 

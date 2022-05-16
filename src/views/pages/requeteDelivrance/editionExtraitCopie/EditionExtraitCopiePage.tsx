@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IUuidEditionParams } from "../../../../model/params/IUuidEditionParams";
-import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { ACTE_NON_TROUVE } from "../../../../model/requete/enum/DocumentDelivranceConstante";
 import {
@@ -26,6 +25,7 @@ import { VoletEdition } from "./contenu/onglets/VoletEdition";
 import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
 import { OngletDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
 import { boutonModifierCopiePresent } from "./EditionExtraitCopieUtils";
+import { DocumentEC } from "./enum/DocumentEC";
 import "./scss/EditionExtraitCopie.scss";
 
 export const EditionExtraitCopiePage: React.FC = () => {
@@ -35,6 +35,9 @@ export const EditionExtraitCopiePage: React.FC = () => {
   const [documents, setDocuments] = useState<IDocumentReponse[]>();
   const [documentEdite, setDocumentEdite] = useState<IDocumentReponse>();
   const [hookParams, setHookParams] = useState<IActeApiHookParams>();
+  const [indexDocEdite, setIndexDocEdite] = useState<DocumentEC>(
+    DocumentEC.Courrier
+  );
   const { isDirty, setIsDirty, setOperationEnCours } = useContext(RECEContext);
 
   const { detailRequeteState } = useAvecRejeuDetailRequeteApiHook(idRequete);
@@ -47,8 +50,9 @@ export const EditionExtraitCopiePage: React.FC = () => {
     }
   };
 
-  function rafraichirRequete() {
+  function rafraichirRequete(index: DocumentEC) {
     setIdRequete({ idRequete: idRequeteParam });
+    setIndexDocEdite(index);
   }
 
   useEffect(() => {
@@ -82,14 +86,10 @@ export const EditionExtraitCopiePage: React.FC = () => {
         typeDocument: DocumentDelivrance.getUuidFromCode(ACTE_NON_TROUVE),
         nbPages: 0
       } as IDocumentReponse);
-    } else if (
-      ChoixDelivrance.estReponseAvecDelivrance(requete?.choixDelivrance)
-    ) {
-      setDocumentEdite(documents?.[1]);
     } else {
-      setDocumentEdite(documents?.[documents.length - 1]);
+      setDocumentEdite(documents?.[indexDocEdite]);
     }
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documents, idActeParam]);
 

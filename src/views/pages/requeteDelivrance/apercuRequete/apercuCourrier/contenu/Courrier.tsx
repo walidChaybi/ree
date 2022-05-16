@@ -21,6 +21,7 @@ import {
 } from "../../../../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../../../../common/widget/formulaire/Formulaire";
 import { ConfirmationPopin } from "../../../../../common/widget/popin/ConfirmationPopin";
+import { DocumentEC } from "../../../editionExtraitCopie/enum/DocumentEC";
 import {
   controleFormulaire,
   courrierExiste,
@@ -45,12 +46,11 @@ import {
   SaisieCourrier
 } from "./modelForm/ISaisiePageModel";
 import "./scss/Courrier.scss";
- 
 
 interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
   idActe?: string;
-  handleCourrierEnregistre: () => void;
+  handleCourrierEnregistre: (index: DocumentEC) => void;
 }
 
 export const Courrier: React.FC<ModificationCourrierProps> = props => {

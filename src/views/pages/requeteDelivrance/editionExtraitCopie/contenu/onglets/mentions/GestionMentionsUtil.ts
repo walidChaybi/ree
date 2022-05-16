@@ -386,11 +386,14 @@ export function validerMentions(
   mentionsApi?: IMention[]
 ) {
   if (DocumentDelivrance.typeDocumentEstCopie(props.document?.typeDocument)) {
-    if (
-      modificationEffectue(mentions, mentionsApi, props.document) &&
-      window.confirm(`Vous avez choisi de décocher des mentions.
-        Celle-ci ne seront pas éditées sur la copie intégrale de l'acte choisi.`)
-    ) {
+    if (modificationEffectue(mentions, mentionsApi, props.document)) {
+      if (
+        window.confirm(`Vous avez choisi de décocher des mentions.
+          Celle-ci ne seront pas éditées sur la copie intégrale de l'acte choisi.`)
+      ) {
+        sauvegarderMentions();
+      }
+    } else {
       sauvegarderMentions();
     }
   } else {

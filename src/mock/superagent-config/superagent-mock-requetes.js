@@ -257,7 +257,9 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance/0ad85c1f-57cf-45cc-ab66-6a17f31247df/courrier?idRequete=0ad85c1f-57cf-45cc-ab66-6a17f31247df&statutRequete=A_SIGNER" ||
         match[1] ===
-          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f0f/courrier?idRequete=9bfa282d-1e66-4538-b242-b9de4f683f0f&libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
+          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f0f/courrier?idRequete=9bfa282d-1e66-4538-b242-b9de4f683f0f&libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+        match[1] ===
+          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f0f/courrier?idRequete=9bfa282d-1e66-4538-b242-b9de4f683f0f&statutRequete=A_SIGNER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
       }

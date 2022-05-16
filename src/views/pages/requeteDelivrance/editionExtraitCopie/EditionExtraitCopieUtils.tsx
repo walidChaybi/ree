@@ -28,10 +28,11 @@ import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtrait
 import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
 import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { OngletProps } from "./contenu/VoletAvecOnglet";
+import { DocumentEC } from "./enum/DocumentEC";
 
 export const getOngletsEdition = (
   passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
-  handleCourrierEnregistre: () => void,
+  handleCourrierEnregistre: (index: DocumentEC) => void,
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
   acte?: IFicheActe
@@ -46,6 +47,7 @@ export const getOngletsEdition = (
         DocumentDelivrance.getDocumentDelivrance(document.typeDocument).code
       ) {
         case CODE_COPIE_INTEGRALE:
+        case CODE_COPIE_NON_SIGNEE:
           ajoutOngletsCopie(
             res,
             document,
@@ -72,8 +74,6 @@ export const getOngletsEdition = (
             acte,
             requete
           );
-          break;
-        case CODE_COPIE_NON_SIGNEE:
           break;
       }
     }

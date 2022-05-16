@@ -8,13 +8,14 @@ import { IResultatSauvegarderMentions } from "../../../../../common/hook/acte/me
 import { checkDirty } from "../../../../../common/util/Utils";
 import { RECEContext } from "../../../../../core/body/Body";
 import { getOngletsEdition } from "../../EditionExtraitCopieUtils";
+import { DocumentEC } from "../../enum/DocumentEC";
 import { OngletProps, VoletAvecOnglet } from "../VoletAvecOnglet";
 
 interface VoletEditionProps {
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
   acte?: IFicheActe;
-  handleCourrierEnregistre: () => void;
+  handleCourrierEnregistre: (index: DocumentEC) => void;
   sauvegarderDocument: (document: IDocumentReponse) => void;
 }
 
