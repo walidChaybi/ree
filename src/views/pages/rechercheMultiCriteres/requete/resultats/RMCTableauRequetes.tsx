@@ -16,15 +16,8 @@ import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import {
-  CreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "../../../../common/hook/requete/CreationActionMiseAjourStatutHook";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
-import {
-  autorisePrendreEnChargeReqTableauDelivrance,
-  autorisePrendreEnChargeReqTableauInformation
-} from "../../../../common/util/RequetesUtils";
+import { autorisePrendreEnChargeReqTableauDelivrance } from "../../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import {
@@ -54,21 +47,21 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   //**** RMC AUTO ****//
-  const [paramsMAJReqDelivrance, setParamsMAJReqDelivrance] =
-    useState<CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
-  const [paramsRMCAuto, setParamsRMCAuto] =
-    useState<INavigationApercuRMCAutoParams | undefined>();
+  const [paramsMAJReqDelivrance, setParamsMAJReqDelivrance] = useState<
+    CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
+  >();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<
+    INavigationApercuRMCAutoParams | undefined
+  >();
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMAJReqDelivrance);
   useNavigationApercuRMCAuto(paramsRMCAuto);
 
   /**** Navigation vers Apercu Information ****/
-  const [paramsMAJReqInfo, setParamsMAJReqInfo] =
-    useState<CreationActionMiseAjourStatutHookParams | undefined>();
-  const [paramsNavReqInfo, setParamsNavReqInfo] =
-    useState<INavigationApercuReqInfoParams | undefined>();
+  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
+    INavigationApercuReqInfoParams | undefined
+  >();
 
-  useCreationActionMiseAjourStatut(paramsMAJReqInfo);
   useNavigationApercuInformation(paramsNavReqInfo);
 
   useEffect(() => {
@@ -129,26 +122,11 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
 
   const onClickReqInformation = (requete: IRequeteTableauInformation) => {
     setOperationEnCours(true);
-    if (autorisePrendreEnChargeReqTableauInformation(requete)) {
-      setParamsMAJReqInfo({
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
-        requete,
-        callback: () => {
-          setParamsNavReqInfo({
-            requete,
-            callback: finOperationEnCours,
-            urlCourante
-          });
-        }
-      });
-    } else {
-      setParamsNavReqInfo({
-        requete,
-        callback: finOperationEnCours,
-        urlCourante
-      });
-    }
+    setParamsNavReqInfo({
+      requete,
+      callback: finOperationEnCours,
+      urlCourante
+    });
   };
 
   return (

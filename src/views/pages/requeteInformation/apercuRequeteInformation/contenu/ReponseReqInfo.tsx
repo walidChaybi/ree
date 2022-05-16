@@ -22,7 +22,9 @@ import "./scss/ReponseReqInfo.scss";
 
 export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
   requete,
-  disabled
+  disabled,
+  affichageBoutonPrendreEnCharge,
+  onclickPrendreEnCharge
 }) => {
   const SAISIE_LIBRE_REPONSE = {
     id: "",
@@ -32,17 +34,15 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
     corpsMail: ""
   };
 
-  const [reponseChoisie, setReponseChoisie] = useState<IReponseRequeteInfo>(
-    SAISIE_LIBRE_REPONSE
-  );
+  const [reponseChoisie, setReponseChoisie] =
+    useState<IReponseRequeteInfo>(SAISIE_LIBRE_REPONSE);
 
   const [lesBoutonsDisabled, setLesBoutonsDisabled] = useState(false);
   const [formulaireDisabled, setFormulaireDisabled] = useState(false);
   const [retourVisible, setRetourVisible] = useState(false);
   const [tousLesBoutonsVisibles, setTousLesBoutonsVisibles] = useState(true);
-  const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] = useState(
-    true
-  );
+  const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] =
+    useState(true);
 
   useEffect(() => {
     const mauvaisUtilisateur =
@@ -71,19 +71,23 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
     if (requete.reponseChoisie) {
       setReponseChoisie({
         ...requete.reponseChoisie,
-        libelle: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId(
-          requete.reponseChoisie,
-          reponsesReqInfo
-        )
+        libelle:
+          ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId(
+            requete.reponseChoisie,
+            reponsesReqInfo
+          )
       });
-    } else if (requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS) {
-      const reponseLibre = ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
-        {
-          objet: ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom,
-          complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
-        },
-        reponsesReqInfo
-      );
+    } else if (
+      requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS
+    ) {
+      const reponseLibre =
+        ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
+          {
+            objet: ObjetRequete.COMPLETION_REQUETE_EN_COURS.nom,
+            complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
+          },
+          reponsesReqInfo
+        );
 
       if (reponseLibre) {
         setReponseChoisie(reponseLibre);
@@ -107,7 +111,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
     <>
       <Fieldset titre={getLibelle("Choix de la réponse")}>
         <div>
-          {tousLesBoutonsVisibles && (
+          {!affichageBoutonPrendreEnCharge && tousLesBoutonsVisibles && (
             <div className="BoutonsReponse">
               {lesBoutonsReponsesVisibles && (
                 <>
@@ -146,6 +150,8 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
             formulaireDisabled={formulaireDisabled}
             boutonVisible={tousLesBoutonsVisibles}
             retourVisible={retourVisible}
+            affichageBoutonPrendreEnCharge={affichageBoutonPrendreEnCharge}
+            onclickPrendreEnCharge={onclickPrendreEnCharge}
           />
         </div>
       </Fieldset>

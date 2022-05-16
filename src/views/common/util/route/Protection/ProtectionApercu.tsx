@@ -68,7 +68,7 @@ export function checkURL(
     case TypeRequete.DELIVRANCE:
       return checkURLDelivrance(history, statut, sousType);
     case TypeRequete.INFORMATION:
-      return checkURLInformation(history, statut);
+      return checkURLInformation(history);
     default:
       return true;
   }
@@ -109,14 +109,6 @@ function checkURLDelivrance(
   }
 }
 
-function checkURLInformation(history: any, statut?: StatutRequete) {
-  switch (statut) {
-    case StatutRequete.PRISE_EN_CHARGE:
-    case StatutRequete.TRANSFEREE:
-    case StatutRequete.REJET:
-    case StatutRequete.TRAITE_REPONDU:
-      return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_INFO);
-    default:
-      return false;
-  }
+function checkURLInformation(history: any) {
+  return receUrl.getUrlCourante(history).includes(PATH_APERCU_REQ_INFO);
 }

@@ -27,6 +27,8 @@ import "./scss/ResumeReqInfo.scss";
 export interface RequeteInfoProps {
   requete: IRequeteInformation;
   disabled?: boolean;
+  affichageBoutonPrendreEnCharge?: boolean;
+  onclickPrendreEnCharge?: () => void;
 }
 
 export const ResumeReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {

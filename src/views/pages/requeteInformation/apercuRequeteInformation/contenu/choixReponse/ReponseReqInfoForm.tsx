@@ -27,9 +27,7 @@ import {
 } from "../hook/SauvegarderReponseReqInfoHook";
 import "../scss/ReponseReqInfo.scss";
 import PiecesJointesReqInfoForm from "./PiecesJointesReqInfoForm";
-import ReponseReqInfoBoutons, {
-  BoutonsReponseReqInfoProps
-} from "./ReponseReqInfoBoutons";
+import ReponseReqInfoBoutons from "./ReponseReqInfoBoutons";
 import ReponseReqInfoSubForm, {
   DefaultValuesReponseInfoSubForm,
   IReponseInfoSubFormValue,
@@ -43,6 +41,8 @@ export interface ReponseReqInfoProps {
   boutonVisible: boolean;
   reponse?: IReponseRequeteInfo;
   retourVisible?: boolean;
+  affichageBoutonPrendreEnCharge?: boolean;
+  onclickPrendreEnCharge?: () => void;
 }
 
 export type ReponseReqInfoFormProps = FormikComponentProps &
@@ -70,13 +70,16 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   formulaireDisabled,
   boutonVisible,
   reponse,
-  retourVisible
+  retourVisible,
+  affichageBoutonPrendreEnCharge,
+  onclickPrendreEnCharge
 }) => {
   const history = useHistory();
-  const blocsForm: JSX.Element[] = getReponseForm(
+  const blocsForm: JSX.Element = getReponseForm(
     formulaireDisabled,
     boutonVisible,
-    reponse
+    reponse,
+    affichageBoutonPrendreEnCharge
   );
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
@@ -89,9 +92,8 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   const [reponseAEnvoyer, setReponseAEnvoyer] = useState<
     IEnvoyerReponseReqInfoParams | undefined
   >();
-  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] = useState<
-    boolean
-  >(false);
+  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] =
+    useState<boolean>(false);
   const [piecesAEnvoyer, setPiecesAEnvoyer] = useState<
     PieceJointe[] | undefined
   >();
@@ -154,10 +156,6 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
     }
   }, [idReponse, history]);
 
-  const boutonsProps = {
-    formulaireDisabled
-  } as BoutonsReponseReqInfoProps;
-
   return (
     <div className="ReponseReqInfo">
       <OperationEnCours
@@ -177,9 +175,10 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
         >
           <div>{blocsForm}</div>
           <ReponseReqInfoBoutons
-            {...boutonsProps}
+            onclickPrendreEnCharge={onclickPrendreEnCharge}
             formulaireDisabled={formulaireDisabled}
             retourVisible={retourVisible}
+            affichageBoutonPrendreEnCharge={affichageBoutonPrendreEnCharge}
           />
         </Formulaire>
       </Fieldset>
@@ -190,8 +189,9 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
 export function getReponseForm(
   formulaireDisabled: boolean,
   boutonVisible: boolean,
-  reponse?: IReponseRequeteInfo
-): JSX.Element[] {
+  reponse?: IReponseRequeteInfo,
+  affichageBoutonPrendreEnCharge = false
+): JSX.Element {
   const piecesJointesFormProps = {
     nom: PIECES_JOINTES,
     titre: getLibelle("Pièces justificatives"),
@@ -204,11 +204,15 @@ export function getReponseForm(
     formulaireDisabled
   } as ReponseReqInfoSubFormProps;
 
-  return [
-    <PiecesJointesReqInfoForm
-      key={PIECES_JOINTES}
-      {...piecesJointesFormProps}
-    />,
-    <ReponseReqInfoSubForm key={REPONSE} {...reponseReqInfoFromProps} />
-  ];
+  return (
+    <>
+      {!affichageBoutonPrendreEnCharge && (
+        <PiecesJointesReqInfoForm
+          key={PIECES_JOINTES}
+          {...piecesJointesFormProps}
+        />
+      )}
+      <ReponseReqInfoSubForm key={REPONSE} {...reponseReqInfoFromProps} />
+    </>
+  );
 }

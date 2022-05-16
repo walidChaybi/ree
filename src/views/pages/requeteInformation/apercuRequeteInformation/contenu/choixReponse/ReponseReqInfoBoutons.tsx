@@ -6,10 +6,14 @@ import { FormikComponentProps } from "../../../../../common/widget/formulaire/ut
 import { receUrl, URL_RECHERCHE_REQUETE } from "../../../../../router/ReceUrls";
 import "../scss/ReponseReqInfo.scss";
 
-export type BoutonsReponseReqInfoProps = {
+export type ComponentProps = {
   formulaireDisabled: boolean;
   retourVisible?: boolean;
-} & FormikComponentProps;
+  affichageBoutonPrendreEnCharge?: boolean;
+  onclickPrendreEnCharge?: () => void;
+};
+
+type BoutonsReponseReqInfoProps = ComponentProps & FormikComponentProps;
 
 const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
   const history = useHistory();
@@ -33,6 +37,7 @@ const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
         {props.retourVisible && (
           <button
             type="button"
+            aria-label={libelleRetour}
             id="boutonAnnuler"
             onClick={() => {
               handleAnnuler();
@@ -41,19 +46,32 @@ const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
             {libelleRetour}
           </button>
         )}
-        <button
-          disabled={props.formulaireDisabled || !props.formik.isValid}
-          type="button"
-          id="boutonEnvoyer"
-          onClick={() => {
-            props.formik.submitForm();
-          }}
-        >
-          {getLibelle("Envoyer la réponse")}
-        </button>
+        {!props.affichageBoutonPrendreEnCharge && (
+          <button
+            disabled={props.formulaireDisabled || !props.formik.isValid}
+            aria-label={getLibelle("Envoyer la réponse")}
+            type="button"
+            id="boutonEnvoyer"
+            onClick={() => {
+              props.formik.submitForm();
+            }}
+          >
+            {getLibelle("Envoyer la réponse")}
+          </button>
+        )}
+        {props.affichageBoutonPrendreEnCharge && (
+          <button
+            type="button"
+            id="boutonPrendreEnCharge"
+            aria-label={getLibelle("Prendre en charge")}
+            onClick={props.onclickPrendreEnCharge}
+          >
+            {getLibelle("Prendre en charge")}
+          </button>
+        )}
       </div>
     </>
   );
 };
 
-export default connect(ReponseReqInfoBoutons);
+export default connect<ComponentProps>(ReponseReqInfoBoutons);

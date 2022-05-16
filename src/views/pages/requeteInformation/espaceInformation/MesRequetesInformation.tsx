@@ -4,16 +4,11 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
 } from "../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
-import {
-  CreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
@@ -39,14 +34,10 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<
-    CreationActionMiseAjourStatutHookParams | undefined
-  >();
   const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
     INavigationApercuReqInfoParams | undefined
   >();
 
-  useCreationActionMiseAjourStatut(paramsMAJReqInfo);
   useNavigationApercuInformation(paramsNavReqInfo);
 
   const [linkParameters, setLinkParameters] =
@@ -72,27 +63,12 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
   ) {
     const requete = data[idx];
     const urlCourante = receUrl.getUrlCourante(history);
-
-    if (requete.statut === StatutRequete.TRANSFEREE.libelle) {
-      setParamsMAJReqInfo({
-        requete,
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
-        callback: () => {
-          setParamsNavReqInfo({
-            requete,
-            callback: finOperationEnCours,
-            urlCourante
-          });
-        }
-      });
-    } else {
-      setParamsNavReqInfo({
-        requete,
-        callback: finOperationEnCours,
-        urlCourante
-      });
-    }
+    setOperationEnCours(true);
+    setParamsNavReqInfo({
+      requete,
+      callback: finOperationEnCours,
+      urlCourante
+    });
   }
 
   useEffect(() => {

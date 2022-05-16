@@ -8,6 +8,7 @@ import { Qualite } from "./enum/Qualite";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TypeMandataireReq } from "./enum/TypeMandataireReq";
+import { TypeRequete } from "./enum/TypeRequete";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapAttribueA } from "./IRequeteTableauDelivrance";
 import {
@@ -41,6 +42,7 @@ export function mappingUneRequeteTableauInformation(
 ): IRequeteTableauInformation {
   return {
     idRequete: valeurOuUndefined(requete?.id),
+    type: TypeRequete.INFORMATION.libelle,
     numero: getValeurOuVide(requete?.numero),
     sousType: SousTypeInformation.getEnumFor(requete?.sousType).libelle,
     objet: ObjetRequete.getEnumFor(getValeurOuVide(requete.objet)).libelle,

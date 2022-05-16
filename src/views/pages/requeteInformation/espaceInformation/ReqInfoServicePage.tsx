@@ -5,23 +5,22 @@ import {
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
 import { SousTypeInformation } from "../../../../model/requete/enum/SousTypeInformation";
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauInformation } from "../../../../model/requete/IRequeteTableauInformation";
 import { MenuTransfert } from "../../../common/composant/menuTransfert/MenuTransfert";
 import {
-  CreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "../../../common/hook/requete/CreationActionMiseAjourStatutHook";
-import { getUrlWithParam } from "../../../common/util/route/routeUtil";
+  INavigationApercuReqInfoParams,
+  useNavigationApercuInformation
+} from "../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
+import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import {
   NB_LIGNES_PAR_APPEL_DEFAUT,
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
-import { URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID } from "../../../router/ReceUrls";
+import { receUrl } from "../../../router/ReceUrls";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { requeteInformationRequetesServiceColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationHook";
@@ -36,10 +35,10 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
 }) => {
   const history = useHistory();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
-  const [paramsMAJReqInfo, setParamsMAJReqInfo] =
-    useState<CreationActionMiseAjourStatutHookParams>();
-
-  useCreationActionMiseAjourStatut(paramsMAJReqInfo);
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
+    INavigationApercuReqInfoParams | undefined
+  >();
 
   const [linkParameters, setLinkParameters] =
     React.useState<IQueryParametersPourRequetes>(parametresReqInfo);
@@ -49,6 +48,8 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     TypeAppelRequete.REQUETE_INFO_SERVICE,
     setEnChargement
   );
+
+  useNavigationApercuInformation(paramsNavReqInfo);
 
   const goToLink = useCallback((link: string) => {
     const queryParametersPourRequetes = goToLinkRequete(
@@ -64,35 +65,19 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     setLinkParameters({ ...parametresReqInfo });
   }, [parametresReqInfo]);
 
-  const redirectionVersApercu = useCallback(
-    (idRequete: string) => {
-      history.push(
-        getUrlWithParam(
-          URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-          idRequete
-        )
-      );
-    },
-    [history]
-  );
-
   function onClickOnLine(
     idRequete: string,
     data: IRequeteTableauInformation[],
     idx: number
   ) {
-    if (data[idx].statut === StatutRequete.TRANSFEREE.libelle) {
-      setParamsMAJReqInfo({
-        requete: data[idx],
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
-        callback: () => {
-          redirectionVersApercu(idRequete);
-        }
-      });
-    } else {
-      redirectionVersApercu(idRequete);
-    }
+    const requete = data[idx];
+    const urlCourante = receUrl.getUrlCourante(history);
+    setOperationEnCours(true);
+    setParamsNavReqInfo({
+      requete,
+      callback: finOperationEnCours,
+      urlCourante
+    });
   }
 
   useEffect(() => {
@@ -120,8 +105,17 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     );
   };
 
+  const finOperationEnCours = () => {
+    setOperationEnCours(false);
+  };
+
   return (
     <>
+      <OperationEnCours
+        visible={operationEnCours}
+        onTimeoutEnd={finOperationEnCours}
+        onClick={finOperationEnCours}
+      />
       <TableauRece
         idKey={"idRequete"}
         sortOrderByState={linkParameters.tri}

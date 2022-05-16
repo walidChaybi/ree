@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 
 import { getFormatDateFromTimestamp } from "../../views/common/util/DateUtils";
+import { StatutRequete } from "./enum/StatutRequete";
 import { TypeCanal } from "./enum/TypeCanal";
 import { TypeRequete } from "./enum/TypeRequete";
 import { IAction } from "./IActions";
@@ -38,5 +39,20 @@ export interface IRequete {
 export const Requete = {
   getDateCreation(requete?: IRequete): string {
     return requete ? getFormatDateFromTimestamp(requete.dateCreation) : "";
+  },
+  nAppartientAPersonne(requete?: IRequete) {
+    return requete?.idUtilisateur == null;
+  },
+  estDeTypeInformation(requete?: IRequete) {
+    return requete?.type === TypeRequete.INFORMATION;
+  },
+  estATraiter(requete?: IRequete) {
+    return requete?.statutCourant?.statut === StatutRequete.A_TRAITER;
+  },
+  estATransferer(requete?: IRequete) {
+    return requete?.statutCourant?.statut === StatutRequete.TRANSFEREE;
+  },
+  estATraiterOuEstATransferer(requete?: IRequete) {
+    return this.estATraiter(requete) || this.estATransferer(requete);
   }
 };

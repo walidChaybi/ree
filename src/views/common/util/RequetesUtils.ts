@@ -89,8 +89,9 @@ export const statutEstASigner = (statut: string) =>
 export const typeEstDelivrance = (type: string) =>
   type === TypeRequete.DELIVRANCE.libelle;
 
-export const typeEstInformation = (type: string) =>
-  type === TypeRequete.INFORMATION.libelle;
+export const typeEstInformation = (type: string) => {
+  return type === TypeRequete.INFORMATION.libelle;
+};
 
 export const autorisePrendreEnChargeDelivrance = (
   requete: IRequeteDelivrance
@@ -127,10 +128,19 @@ const estAutorisePrendreEnChargeReqTableauDelivrance = (
 
 export const autorisePrendreEnChargeReqTableauInformation = (
   requete: IRequeteTableauInformation
-) =>
-  mAppartient(requete.idUtilisateur ? requete.idUtilisateur : "") &&
-  requete.statut === StatutRequete.TRANSFEREE.libelle &&
-  typeEstInformation(requete.type ? requete.type : "");
+) => {
+  const amoi = mAppartient(requete.idUtilisateur ? requete.idUtilisateur : "");
+  const statutTransfereeOuTraite =
+    requete.statut === StatutRequete.TRANSFEREE.libelle ||
+    requete.statut === StatutRequete.A_TRAITER.libelle;
+
+  return (
+    amoi &&
+    statutTransfereeOuTraite /*||
+    requete.statut === StatutRequete.A_TRAITER.libelle */ &&
+    typeEstInformation(requete.type ? requete.type : "")
+  );
+};
 
 export const filtrerListeActions = (
   requete: IRequeteDelivrance,
