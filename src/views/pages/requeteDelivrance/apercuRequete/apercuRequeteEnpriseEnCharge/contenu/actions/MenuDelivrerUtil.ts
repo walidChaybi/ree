@@ -331,4 +331,3 @@ function resetDoubleSubmit(listeActions: IActionOption[]) {
     DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
   });
 }
-

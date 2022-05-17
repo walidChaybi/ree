@@ -173,7 +173,6 @@ export function creationComposition(
       Validation.O
     );
   }
-
   return composition;
 }
 
@@ -293,7 +292,7 @@ export function creationEC(
         // @ts-ignore NonNull
         acte,
         // @ts-ignore NonNull
-        params.choixDelivrance,
+        params.requete.choixDelivrance,
         // @ts-ignore NonNull
         params.validation
       );

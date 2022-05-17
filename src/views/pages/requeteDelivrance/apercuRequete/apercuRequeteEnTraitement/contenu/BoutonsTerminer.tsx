@@ -10,7 +10,6 @@ import { storeRece } from "../../../../../common/util/storeRece";
 import { getLibelle } from "../../../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../../../common/widget/attente/BoutonOperationEnCours";
 import { BoutonSignature } from "../../../../../common/widget/signature/BoutonSignature";
-import { receUrl } from "../../../../../router/ReceUrls";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { BoutonValiderTerminer } from "./BoutonValiderTerminer";
 
@@ -18,7 +17,9 @@ interface BoutonsTerminerProps {
   requete: IRequeteDelivrance;
 }
 
-export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete }) => {
+export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
+  requete
+}) => {
   const history = useHistory();
   const [estDisabled, setEstDisabled] = useState(true);
 
@@ -39,7 +40,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete }) => 
   }
 
   const goBack = useCallback(() => {
-    receUrl.goBack(history);
+    history.goBack();
   }, [history]);
 
   const actionApresSignature = useCallback(

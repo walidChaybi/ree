@@ -23,6 +23,7 @@ import {
   IBoutonPopin
 } from "../../../../../../common/widget/popin/ConfirmationPopin";
 import { PATH_EDITION, receUrl } from "../../../../../../router/ReceUrls";
+import { DocumentEC } from "../../../../editionExtraitCopie/enum/DocumentEC";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
@@ -58,14 +59,18 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
 
   useCreerCourrierEC(courrierEcParams);
 
-  const redirection = useCallback(() => {
-    receUrl.replaceUrl(
-      history,
-      `${getUrlPrecedente(history.location.pathname)}/${PATH_EDITION}/${
-        props.requete.id
-      }/${actes?.[0].idActe}`
-    );
-  }, [actes, history, props.requete.id]);
+  const redirection = useCallback(
+    (index: DocumentEC) => {
+      receUrl.replaceUrl(
+        history,
+        `${getUrlPrecedente(history.location.pathname)}/${PATH_EDITION}/${
+          props.requete.id
+        }/${actes?.[0].idActe}`,
+        index
+      );
+    },
+    [actes, history, props.requete.id]
+  );
 
   useEffect(() => {
     setInscriptions(
@@ -153,7 +158,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       updateChoixDelivranceResultat?.idRequete &&
       props.requete.sousType === SousTypeDelivrance.RDC
     ) {
-      redirection();
+      redirection(DocumentEC.Courrier);
     }
   }, [updateChoixDelivranceResultat, redirection, props.requete.sousType]);
 

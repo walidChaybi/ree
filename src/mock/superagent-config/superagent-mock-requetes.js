@@ -147,7 +147,9 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
         match[1] ===
-          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f0f/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
+          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f0f/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+        match[1] ===
+          "/requetes/delivrance/0ad85c1f-57cf-45cc-ab66-6a17f31247df/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
       }
@@ -223,6 +225,7 @@ export const configRequetes = [
       }
 
       if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f693f0e") {
+        console.log("salut", compteur);
         if (compteur === 0) {
           compteur++;
           return { data: getRequeteSansDoc(requeteAvecDocs) };

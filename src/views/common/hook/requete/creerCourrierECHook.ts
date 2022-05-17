@@ -10,6 +10,7 @@ import {
 } from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/hook/GenerationCourrierHook";
 import { SaisieCourrier } from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
 import { sousTypeCreationCourrierAutomatique } from "../../../pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
+import { getOngletSelectVenantDePriseEnCharge } from "../../../pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import { DocumentEC } from "../../../pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
 import { DEUX } from "../../util/Utils";
 import {
@@ -52,7 +53,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
-  const generationCourrier = useGenerationCourrierHook(
+  const resultatGenerationCourrier = useGenerationCourrierHook(
     generationCourrierHookParams
   );
 
@@ -61,7 +62,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
     if (
       params &&
       params.idActe &&
-      generationCourrier &&
+      resultatGenerationCourrier &&
       ChoixDelivrance.estReponseAvecDelivrance(
         params.requete.choixDelivrance
       ) &&
@@ -78,7 +79,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [generationCourrier]);
+  }, [resultatGenerationCourrier]);
 
   // Génération du document demandé
   const resultatGenerationEC = useGenerationEC(generationDocumentECParams);
@@ -87,27 +88,43 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
     if (
       params &&
       (resultatGenerationEC ||
-        (generationCourrier &&
+        (resultatGenerationCourrier &&
           ChoixDelivrance.estReponseSansDelivrance(
             params?.requete.choixDelivrance
           )) ||
-        (generationCourrier && params.requete.documentsReponses.length > 1))
+        (resultatGenerationCourrier &&
+          params.requete.documentsReponses.length > 1))
     ) {
       params.setOperationEnCours(false);
       params.handleCourrierEnregistre(
-        getIndexDocument(resultatGenerationEC, generationCourrier)
+        getIndexDocument(
+          params.requete,
+          resultatGenerationEC,
+          resultatGenerationCourrier
+        )
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultatGenerationEC, generationCourrier]);
+  }, [resultatGenerationEC, resultatGenerationCourrier]);
 }
 
 function getIndexDocument(
+  requete: IRequeteDelivrance,
   resultatGenerationEC?: IGenerationECResultat,
-  generationCourrier?: IResultGenerationUnDocument
+  resultatGenerationCourrier?: IResultGenerationUnDocument
 ) {
   let res = DocumentEC.Courrier;
-  if (!generationCourrier && resultatGenerationEC) {
+  if (
+    // Si un EC est crée mais pas de courrier
+    (!resultatGenerationCourrier && resultatGenerationEC) ||
+    // Si on a créé deux documents et que c'est une RDD avec délivrance
+    (resultatGenerationCourrier &&
+      resultatGenerationEC &&
+      getOngletSelectVenantDePriseEnCharge(
+        requete.sousType,
+        requete.choixDelivrance
+      ) === DocumentEC.Principal)
+  ) {
     res = DocumentEC.Principal;
   }
   return res;

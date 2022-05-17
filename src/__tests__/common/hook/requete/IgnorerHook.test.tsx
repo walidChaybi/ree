@@ -3,8 +3,8 @@ import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import {
-    IgnorerParams,
-    useIgnorerApi
+  IgnorerParams,
+  useIgnorerApi
 } from "../../../../views/common/hook/requete/IgnorerHook";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
@@ -19,7 +19,7 @@ const HookConsumer: React.FC = () => {
   return <div>{idAction}</div>;
 };
 
-test("Attendu: usePostCreationActionEtMiseAjourStatutApi fonctionne correctement", async () => {
+test("Attendu: useIgnorerApi fonctionne correctement", async () => {
   render(<HookConsumer />);
 
   await waitFor(() => {

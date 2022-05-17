@@ -7,7 +7,6 @@ import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteD
 import { ReinitialiserValiderBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import { useMentionsApiHook } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
 import {
-  IResultatSauvegarderMentions,
   SauvegarderMentionsParam,
   useSauvegarderMentions
 } from "../../../../../../common/hook/acte/mentions/SauvegarderMentionsHook";
@@ -16,6 +15,7 @@ import {
   getValeurOuVide
 } from "../../../../../../common/util/Utils";
 import { RECEContext } from "../../../../../../core/body/Body";
+import { DocumentEC } from "../../../enum/DocumentEC";
 import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import {
@@ -32,7 +32,7 @@ export interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
   requete: IRequeteDelivrance;
-  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void;
+  handleCourrierEnregistre: (index: DocumentEC) => void;
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
@@ -52,7 +52,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   useEffect(() => {
     if (props.document && resultatSauvegarde) {
-      props.passerDocumentValider(resultatSauvegarde);
+      props.handleCourrierEnregistre(DocumentEC.Principal);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSauvegarde]);

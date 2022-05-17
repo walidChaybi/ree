@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { IUuidEditionParams } from "../../../../model/params/IUuidEditionParams";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { ACTE_NON_TROUVE } from "../../../../model/requete/enum/DocumentDelivranceConstante";
@@ -29,6 +29,7 @@ import { DocumentEC } from "./enum/DocumentEC";
 import "./scss/EditionExtraitCopie.scss";
 
 export const EditionExtraitCopiePage: React.FC = () => {
+  const history = useHistory();
   const { idRequeteParam, idActeParam } = useParams<IUuidEditionParams>();
   const [idRequete, setIdRequete] = useState<IDetailRequeteParams>();
   const [requete, setRequete] = useState<IRequeteDelivrance>();
@@ -36,10 +37,11 @@ export const EditionExtraitCopiePage: React.FC = () => {
   const [documentEdite, setDocumentEdite] = useState<IDocumentReponse>();
   const [hookParams, setHookParams] = useState<IActeApiHookParams>();
   const [indexDocEdite, setIndexDocEdite] = useState<DocumentEC>(
-    DocumentEC.Courrier
+    history.location.state
+      ? (history.location.state as DocumentEC)
+      : DocumentEC.Courrier
   );
   const { isDirty, setIsDirty, setOperationEnCours } = useContext(RECEContext);
-
   const { detailRequeteState } = useAvecRejeuDetailRequeteApiHook(idRequete);
 
   const acte = useInformationsActeApiHook(hookParams);
@@ -51,6 +53,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
   };
 
   function rafraichirRequete(index: DocumentEC) {
+    setOperationEnCours(false);
     setIdRequete({ idRequete: idRequeteParam });
     setIndexDocEdite(index);
   }
@@ -113,19 +116,6 @@ export const EditionExtraitCopiePage: React.FC = () => {
     }
   };
 
-  function sauvegarderDocument(document: IDocumentReponse) {
-    if (requete && documentEdite) {
-      const temp = { ...requete };
-      const index = temp.documentsReponses.findIndex(
-        el => el.id === documentEdite.id
-      );
-      temp.documentsReponses[index] = document;
-      setRequete(temp);
-      setDocumentEdite(document);
-      setOperationEnCours(false);
-    }
-  }
-
   return (
     <div className="EditionExtraitCopie">
       <title>{getLibelle("Édition extrait copie")}</title>
@@ -151,7 +141,6 @@ export const EditionExtraitCopiePage: React.FC = () => {
                   requete={requete}
                   document={documentEdite}
                   acte={acte?.acte}
-                  sauvegarderDocument={sauvegarderDocument}
                   handleCourrierEnregistre={rafraichirRequete}
                 />
               </>

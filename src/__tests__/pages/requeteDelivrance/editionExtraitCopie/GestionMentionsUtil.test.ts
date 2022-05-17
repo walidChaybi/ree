@@ -33,7 +33,7 @@ beforeAll(async () => {
   });
 });
 
-const mentionApi = {
+export const mentionApi = {
   textes: {
     texteMention: "texte mention",
     texteApposition: "texte apposition"
@@ -45,19 +45,21 @@ const mentionApi = {
   id: "1"
 } as IMention;
 
-const mentionOpposable = {
+export const mentionOpposable = {
   texte: "texte mention",
   estPresent: true,
   nature: { opposableAuTiers: true } as NatureMention,
   id: "1",
-  numeroOrdre: 0
+  numeroOrdre: 0,
+  aPoubelle: true
 };
-const mentionNonOpposable = {
+export const mentionNonOpposable = {
   texte: "texte mention",
   estPresent: true,
   nature: { opposableAuTiers: false } as NatureMention,
   id: "1",
-  numeroOrdre: 0
+  numeroOrdre: 0,
+  aPoubelle: true
 };
 
 test("texteEnFonctionOpposableAuTiers", () => {
@@ -118,6 +120,7 @@ test("miseAjourEnFonctionNature", () => {
   );
 
   expect(mentionSelectTest).toStrictEqual({
+    aPoubelle: true,
     texte: "texte mention texte apposition",
     estPresent: true,
     nature: { opposableAuTiers: true },
@@ -127,6 +130,7 @@ test("miseAjourEnFonctionNature", () => {
 
   expect(mentionsTest).toStrictEqual([
     {
+      aPoubelle: true,
       texte: "texte mention texte apposition",
       estPresent: true,
       nature: { opposableAuTiers: false },
@@ -146,6 +150,7 @@ test("handleCheckBox", () => {
 
   expect(mentionsTest).toStrictEqual([
     {
+      aPoubelle: true,
       texte: "texte mention texte apposition",
       estPresent: false,
       nature: { opposableAuTiers: false },

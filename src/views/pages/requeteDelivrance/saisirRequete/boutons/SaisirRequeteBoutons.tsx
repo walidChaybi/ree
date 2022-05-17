@@ -3,6 +3,7 @@ import React from "react";
 import { officierHabiliterPourLeDroit } from "../../../../../model/agent/IOfficier";
 import { Droit } from "../../../../../model/Droit";
 import { getLibelle } from "../../../../common/util/Utils";
+import { BoutonOperationEnCours } from "../../../../common/widget/attente/BoutonOperationEnCours";
 import { FormikComponentProps } from "../../../../common/widget/formulaire/utils/FormUtil";
 import "./scss/SaisirRequeteBoutons.scss";
 
@@ -15,11 +16,10 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   return (
     <>
       <div className="Boutons">
-        <button
-          disabled={
+        <BoutonOperationEnCours
+          estDesactive={
             !props.formik.dirty || !officierHabiliterPourLeDroit(Droit.DELIVRER)
           }
-          type="button"
           id="boutonSauvegarder"
           onClick={() => {
             props.setIsBrouillon(true);
@@ -27,13 +27,12 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
           }}
         >
           {getLibelle("Sauvegarder")}
-        </button>
-        <button
-          disabled={
+        </BoutonOperationEnCours>
+        <BoutonOperationEnCours
+          estDesactive={
             !officierHabiliterPourLeDroit(Droit.DELIVRER) ||
             (!props.formik.dirty && props.desactiverPrendreEnCharge)
           }
-          type="button"
           id="boutonPrendreEnCharge"
           onClick={() => {
             props.setIsBrouillon(false);
@@ -41,7 +40,7 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
           }}
         >
           {getLibelle("Prendre en charge")}
-        </button>
+        </BoutonOperationEnCours>
       </div>
     </>
   );

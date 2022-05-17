@@ -5,6 +5,7 @@ import {
 } from "../../../../model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../../model/etatcivil/enum/NatureActe";
 import { TypeActe } from "../../../../model/etatcivil/enum/TypeActe";
+import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import {
   CODE_COPIE_INTEGRALE,
@@ -13,15 +14,16 @@ import {
   CODE_EXTRAIT_PLURILINGUE,
   CODE_EXTRAIT_SANS_FILIATION
 } from "../../../../model/requete/enum/DocumentDelivranceConstante";
+import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
-import { IResultatSauvegarderMentions } from "../../../common/hook/acte/mentions/SauvegarderMentionsHook";
 import { getLibelle, TROIS, UN, ZERO } from "../../../common/util/Utils";
 import { AccordionRece } from "../../../common/widget/accordion/AccordionRece";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
+import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
 import { DetailRequetePage } from "../detailRequete/DetailRequetePage";
 import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
 import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
@@ -31,7 +33,6 @@ import { OngletProps } from "./contenu/VoletAvecOnglet";
 import { DocumentEC } from "./enum/DocumentEC";
 
 export const getOngletsEdition = (
-  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
   handleCourrierEnregistre: (index: DocumentEC) => void,
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
@@ -51,7 +52,7 @@ export const getOngletsEdition = (
           ajoutOngletsCopie(
             res,
             document,
-            passerDocumentValider,
+            handleCourrierEnregistre,
             acte,
             requete
           );
@@ -61,7 +62,7 @@ export const getOngletsEdition = (
           ajoutOngletsExtraitFilliation(
             res,
             document,
-            passerDocumentValider,
+            handleCourrierEnregistre,
             acte,
             requete
           );
@@ -70,7 +71,7 @@ export const getOngletsEdition = (
           ajoutOngletsExtraitPlurilingue(
             res,
             document,
-            passerDocumentValider,
+            handleCourrierEnregistre,
             acte,
             requete
           );
@@ -154,13 +155,13 @@ export const getOngletsVisu = (
 function ajoutOngletsCopie(
   res: OngletProps,
   document: IDocumentReponse,
-  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
+  handleCourrierEnregistre: (index: DocumentEC) => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) {
   if (acte.type === TypeActe.TEXTE) {
     res.liste.push(
-      ongletMentions(acte, document, passerDocumentValider, requete)
+      ongletMentions(acte, document, handleCourrierEnregistre, requete)
     );
     res.ongletSelectionne = document.validation === Validation.O ? 1 : 0;
   } else {
@@ -172,7 +173,7 @@ function ajoutOngletsCopie(
 export const ajoutOngletsExtraitFilliation = (
   res: OngletProps,
   document: IDocumentReponse,
-  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
+  handleCourrierEnregistre: (index: DocumentEC) => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
@@ -204,7 +205,7 @@ export const ajoutOngletsExtraitFilliation = (
   res.liste.push(ongletSaisirExtrait(acte));
   // Sous-onglet 1
   res.liste.push(
-    ongletMentions(acte, document, passerDocumentValider, requete)
+    ongletMentions(acte, document, handleCourrierEnregistre, requete)
   );
   if (document.validation !== "E") {
     // Sous-onglet 2
@@ -218,7 +219,7 @@ export const ajoutOngletsExtraitFilliation = (
 export const ajoutOngletsExtraitPlurilingue = (
   res: OngletProps,
   document: IDocumentReponse,
-  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
+  handleCourrierEnregistre: (index: DocumentEC) => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
@@ -228,7 +229,7 @@ export const ajoutOngletsExtraitPlurilingue = (
     acte.nature === NatureActe.MARIAGE
   ) {
     res.liste.push(
-      ongletMentions(acte, document, passerDocumentValider, requete)
+      ongletMentions(acte, document, handleCourrierEnregistre, requete)
     );
   }
 };
@@ -249,7 +250,7 @@ export const boutonModifierCopiePresent = (
 export const ongletMentions = (
   acte: IFicheActe,
   doc: IDocumentReponse,
-  passerDocumentValider: (resultat: IResultatSauvegarderMentions) => void,
+  handleCourrierEnregistre: (index: DocumentEC) => void,
   requete: IRequeteDelivrance
 ) => {
   return {
@@ -258,7 +259,7 @@ export const ongletMentions = (
       <GestionMentions
         acte={acte}
         document={doc}
-        passerDocumentValider={passerDocumentValider}
+        handleCourrierEnregistre={handleCourrierEnregistre}
         requete={requete}
       ></GestionMentions>
     )
@@ -272,4 +273,15 @@ const ongletSaisirExtrait = (acte: IFicheActe) => {
   };
 };
 
-
+export function getOngletSelectVenantDePriseEnCharge(
+  sousType: SousTypeDelivrance,
+  choixDelivrance?: ChoixDelivrance
+) {
+  if (
+    choixDelivrance &&
+    ChoixDelivrance.estReponseAvecDelivrance(choixDelivrance) &&
+    sousTypeCreationCourrierAutomatique(sousType)
+  ) {
+    return DocumentEC.Principal;
+  } else return DocumentEC.Courrier;
+}

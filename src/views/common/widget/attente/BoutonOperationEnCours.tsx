@@ -11,6 +11,7 @@ interface BoutonOperationEnCoursProps {
   visible?: boolean;
   title?: string;
   checkDirtyActive?: boolean;
+  id?: string;
 }
 
 export const BoutonOperationEnCours: React.FC<
@@ -43,6 +44,7 @@ export const BoutonOperationEnCours: React.FC<
       ></OperationEnCours>
       <button
         title={props.title}
+        id={props.id}
         className={props.class}
         type="button"
         disabled={props.estDesactive}
