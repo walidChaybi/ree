@@ -7,6 +7,8 @@ import {
   PATH_APERCU_REQ_TRAITEMENT,
   PATH_EDITION
 } from "../../../router/ReceUrls";
+import { FeatureFlag } from "../../util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "../../util/messageManager";
 import { MigratorV1V2 } from "../../util/migration/MigratorV1V2";
 import {
@@ -138,9 +140,10 @@ function redirectionAValider(
 ) {
   const sousType = requete.sousType;
   if (
-    sousType === SousTypeDelivrance.RDDP.libelleCourt ||
-    sousType === SousTypeDelivrance.RDD.libelleCourt ||
-    sousType === SousTypeDelivrance.RDC.libelleCourt
+    gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) &&
+    (sousType === SousTypeDelivrance.RDDP.libelleCourt ||
+      sousType === SousTypeDelivrance.RDD.libelleCourt ||
+      sousType === SousTypeDelivrance.RDC.libelleCourt)
   ) {
     setRedirection({
       url: getUrlWithParam(
