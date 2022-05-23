@@ -8,8 +8,11 @@ import { configEtatcivil } from "../../../mock/superagent-config/superagent-mock
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 import { TypeAlerte } from "../../../model/etatcivil/enum/TypeAlerte";
 import { TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
+import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "../../../views/common/util/storeRece";
 import { FichePage } from "../../../views/pages/fiche/FichePage";
+import { localStorageFeatureFlagMock } from "../../common/util/featureFlag/gestionnaireFeatureFlag.test";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
@@ -18,8 +21,12 @@ const superagentMock = require("superagent-mock")(request, [
 
 const fct = jest.fn();
 
-beforeEach(() => {
+beforeAll(() => {
   window.addEventListener("refreshStyles", fct);
+  Object.defineProperty(window, "localStorage", {
+    value: localStorageFeatureFlagMock
+  });
+  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS)).toBeTruthy();
 });
 
 test("rendersFichePage render RC correcty", async () => {

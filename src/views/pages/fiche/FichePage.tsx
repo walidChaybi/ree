@@ -11,6 +11,8 @@ import {
   DeleteAlerteActeApiHookParameters,
   useDeleteAlerteActeApiHook
 } from "../../common/hook/alertes/DeleteAlerteActeHookApi";
+import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { FenetreExterneUtil } from "../../common/util/FenetreExterne";
 import { AccordionRece } from "../../common/widget/accordion/AccordionRece";
 import { IAjouterAlerteFormValue } from "../../common/widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
@@ -289,7 +291,8 @@ export const FichePage: React.FC<FichePageProps> = ({
               {acte &&
                 !officierAutoriserSurLeTypeRegistreOuDroitMEAE(
                   acte.registre?.type?.id
-                ) && (
+                ) &&
+                gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) && (
                   <BoutonCreationRDD
                     label="Demander la délivrance"
                     labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}
