@@ -225,7 +225,6 @@ export const configRequetes = [
       }
 
       if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f693f0e") {
-        console.log("salut", compteur);
         if (compteur === 0) {
           compteur++;
           return { data: getRequeteSansDoc(requeteAvecDocs) };

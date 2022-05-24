@@ -1,6 +1,7 @@
 import {
   ReponseAppelDetailRequeteCompletion,
-  ReponseAppelDetailRequeteInformation
+  ReponseAppelDetailRequeteInformation,
+  ReponseAppelDetailRequeteInformationSansCorbeilleAgent
 } from "../data/DetailRequeteInformation";
 import {
   ReponseMesRequetesInformation,
@@ -13,6 +14,7 @@ export const NORESULT = "NORESULT";
 
 export const configRequetesInformation = [
   {
+    compteurRequeteInformation: 0,
     /**
      * regular expression of URL
      */
@@ -60,6 +62,27 @@ export const configRequetesInformation = [
         return { data: ReponseAppelDetailRequeteInformation.data };
       }
       if (
+        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10857" &&
+        this.compteurRequeteInformation === 0
+      ) {
+        this.compteurRequeteInformation++;
+        return {
+          data: ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data
+        };
+      }
+      if (
+        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10857" &&
+        this.compteurRequeteInformation === 1
+      ) {
+        this.compteurRequeteInformation = 0;
+        return {
+          data: {
+            ...ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data,
+            statut: "PRISE_EN_CHARGE"
+          }
+        };
+      }
+      if (
         match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10557" ||
         match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10555"
       ) {
@@ -86,6 +109,12 @@ export const configRequetesInformation = [
       ) {
         return { data: ["0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"] };
       }
+      if (
+        match[1] ===
+        "/requetes/action?idRequete=bbd05aed-8ea9-45ba-a7d7-b8d55ad10857&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
+      ) {
+        return { data: ["bbd05aed-8ea9-45ba-a7d7-b8d55ad10857"] };
+      }
 
       // Prise en charge aléatoire
       if (match[1] === "/requetes/requetealeatoire?type=INFORMATION") {
@@ -109,8 +138,7 @@ export const configRequetesInformation = [
           headers: {
             "content-range":
               "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-            link:
-              '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data
         };

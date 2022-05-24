@@ -9,6 +9,8 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
+import { userDroitConsulterPerimetreMEAE } from "../../../../mock/data/connectedUserAvecDroit";
+import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "../../../../mock/data/DetailRequeteInformation";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "../../../../mock/data/NomenclatureReponse";
 import {
@@ -40,14 +42,25 @@ globalAny.open = () => {
 globalAny.close = jest.fn();
 URL.createObjectURL = jest.fn();
 
-beforeAll(() => {
+beforeEach(() => {
   history = createMemoryHistory();
   history.push(URL_MES_REQUETES_INFORMATION);
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
   storeRece.utilisateurCourant = {
     idUtilisateur: LISTE_UTILISATEURS[3].idUtilisateur
   } as IOfficier;
+  configRequetesInformation[0].compteurRequeteInformation = 0;
 });
+
+afterAll(() => {
+  superagentMock.unset();
+});
+
+afterEach(() => {
+  storeRece.utilisateurCourant = undefined;
+});
+
+////////////////////// DEBUT DES TESTS //////////////////////////////////////////
 
 test("renders ApercuReqInfoPage", async () => {
   history.push(
@@ -464,6 +477,107 @@ test("render ApercuReqInfoPage : RMC état civil manuelle ", async () => {
   });
 });
 
-afterAll(() => {
-  superagentMock.unset();
+/////////////////////// Tests concernant la prise en charge //////////////////////////////////////
+
+const Labels = {
+  prendreEnCharge: "Prendre en charge",
+  autresRequetesAssocieesAuTitulaire: "Autres requêtes associées au titulaire",
+  nouvelleRMC: "Nouvelle recherche multi-critères",
+  ajouterUnePieceJointe: "Ajouter une pièce jointe"
+};
+const renduApercuReqInfoPage = async () => {
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+      ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id
+    )
+  );
+
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route exact={true} path={URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID}>
+            <ApercuReqInfoPage />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+};
+
+test("Attendu: le bouton 'prendre en charge' est affiché, si la requête n'appartient pas à l'utilisateur, mais se trouve dans sa corbeille Service", async () => {
+  await renduApercuReqInfoPage();
+
+  const boutonPrendreEnCharge = screen.queryByLabelText(
+    Labels.prendreEnCharge
+  ) as HTMLButtonElement;
+
+  await waitFor(() => expect(boutonPrendreEnCharge).toBeInTheDocument());
+});
+
+test("Attendu: le bouton 'prendre en charge' disparait une fois qu'on a cliqué dessus", async () => {
+  await renduApercuReqInfoPage();
+
+  let boutonPrendreEnCharge = screen.queryByLabelText(
+    Labels.prendreEnCharge
+  ) as HTMLButtonElement;
+
+  await act(async () => {
+    fireEvent.click(boutonPrendreEnCharge);
+  });
+
+  await waitFor(() => expect(boutonPrendreEnCharge).not.toBeInTheDocument());
+});
+
+test("Attendu: les blocs non présents sur l'aperçu de requête sont bien absents si la requête n'appartient pas à l'utilisateur, mais se trouve dans sa corbeille Service", async () => {
+  await renduApercuReqInfoPage();
+
+  const titreAutresRequetesAssocieesAuTitulaire = screen.queryByText(
+    Labels.autresRequetesAssocieesAuTitulaire
+  ) as HTMLDivElement;
+
+  const BoutonNouvelleRMC = screen.queryByText(
+    Labels.nouvelleRMC
+  ) as HTMLButtonElement;
+
+  const BoutonAjouterUnePieceJointe = screen.queryByText(
+    Labels.ajouterUnePieceJointe
+  ) as HTMLButtonElement;
+
+  await waitFor(() => {
+    expect(titreAutresRequetesAssocieesAuTitulaire).not.toBeInTheDocument();
+    expect(BoutonNouvelleRMC).not.toBeInTheDocument();
+    expect(BoutonAjouterUnePieceJointe).not.toBeInTheDocument();
+  });
+});
+
+test("Attendu: le bouton 'prendre en charge' ne s'affiche pas lorsqu'on se trouve sur une fenêtre externe", async () => {
+  storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
+
+  await act(async () => {
+    render(
+      <>
+        <Router history={history}>
+          <Route>
+            <ApercuReqInfoPage
+              idRequeteAAfficher={
+                ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id
+              }
+            />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  const boutonPrendreEnCharge = screen.queryByLabelText(
+    Labels.prendreEnCharge
+  ) as HTMLButtonElement;
+
+  await waitFor(() => {
+    expect(boutonPrendreEnCharge).not.toBeInTheDocument();
+  });
 });
