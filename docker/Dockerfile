@@ -1,2 +1,3 @@
-FROM gitlab-registry.forge.diplomatie.gouv.fr/rece/ci-cd/images_docker/frontal-apache-sp:master
+FROM artifactory-registry.forge.diplomatie.gouv.fr/rece-images-docker/frontal-apache-sp:1.0.3
+
 COPY /app/ /var/www/rece/rece-ui/
