@@ -1,18 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 import { Orientation } from "../../../../../model/composition/enum/Orientation";
+import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
 import { Validation } from "../../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { MimeType } from "../../../../../ressources/MimeType";
 import {
+  IActeApiHookParams,
+  useInformationsActeApiHook
+} from "../../acte/ActeApiHook";
+import {
   IExtraitCopieApiHookParams,
   useExtraitCopieApiHook
 } from "../../composition/CompositionExtraitCopieHook";
-import {
-  IActeApiHookParams,
-  useInformationsActeApiHook
-} from "../../repertoires/ActeApiHook";
 import {
   IStockerDocumentCreerActionMajStatutRequeteParams,
   useStockerDocumentCreerActionMajStatutRequete
@@ -20,6 +21,8 @@ import {
 import { IResultGenerationUnDocument } from "../generationUtils";
 import {
   creationEC,
+  estPresentActeEtChoixDelivrance,
+  estPresentIdActeEtChoixDelivrance,
   getNomDocument,
   getStatutRequete,
   getTypeDocument,
@@ -28,7 +31,8 @@ import {
 
 // Paramètre du hook useGenerationEC
 export interface IGenerationECParams {
-  idActe: string;
+  idActe?: string;
+  acte?: IFicheActe;
   requete: IRequeteDelivrance;
   validation: Validation;
   pasDeStockageDocument?: boolean;
@@ -58,14 +62,19 @@ export function useGenerationEC(
 
   const [validation, setValidation] = useState<Validation>();
 
+  const [acteDejaPresent, setActeDejaPresent] = useState<IFicheActe>();
+
   useEffect(() => {
-    if (params && params.idActe && params.requete.choixDelivrance) {
+    if (estPresentIdActeEtChoixDelivrance(params)) {
       setActeApiHookParams({
-        idActe: params.idActe,
+        idActe: params?.idActe,
         recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(
+          //@ts-ignore params.requete.choixDelivrance non null
           params.requete.choixDelivrance
         )
       });
+    } else if (estPresentActeEtChoixDelivrance(params)) {
+      setActeDejaPresent(params?.acte);
     }
   }, [params]);
 
@@ -75,12 +84,13 @@ export function useGenerationEC(
   // 2- Création du bon EC composition suivant le choix de délivrance
   useEffect(() => {
     creationEC(
-      acteApiHookResultat,
+      acteApiHookResultat?.acte || acteDejaPresent,
       params,
       setValidation,
       setExtraitCopieApiHookParams
     );
-  }, [acteApiHookResultat, params]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acteApiHookResultat, acteDejaPresent]);
 
   // 3 - Création de l'EC PDF pour un acte: appel api composition
   // récupération du document en base64
@@ -117,7 +127,7 @@ export function useGenerationEC(
             mimeType: MimeType.APPLI_PDF,
             orientation: Orientation.PORTRAIT,
             validation,
-            idActe: acteApiHookResultat?.acte?.id
+            idActe: acteApiHookResultat?.acte?.id || acteDejaPresent?.id
           } as IDocumentReponse,
 
           libelleAction: statutRequete.libelle,
@@ -126,7 +136,7 @@ export function useGenerationEC(
         });
       }
     },
-    [acteApiHookResultat, validation]
+    [acteApiHookResultat, acteDejaPresent, validation]
   );
 
   useEffect(() => {

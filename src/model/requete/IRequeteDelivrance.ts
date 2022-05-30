@@ -36,5 +36,9 @@ export const RequeteDelivrance = {
 
   estAuStatutASigner(requete: IRequeteDelivrance) {
     return this.estAuStatut(requete, StatutRequete.A_SIGNER);
+  },
+
+  getDocumentReponseCopieIntegrale(requete?: IRequeteDelivrance) {
+    return DocumentReponse.getCopieIntegrale(requete?.documentsReponses);
   }
 };

@@ -1,19 +1,37 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { FicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
 import { IUuidEditionParams } from "../../../../model/params/IUuidEditionParams";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { ACTE_NON_TROUVE } from "../../../../model/requete/enum/DocumentDelivranceConstante";
+import { Validation } from "../../../../model/requete/enum/Validation";
 import {
   DocumentReponse,
   IDocumentReponse
 } from "../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
+import {
+  IRequeteDelivrance,
+  RequeteDelivrance
+} from "../../../../model/requete/IRequeteDelivrance";
+import { RetoucheImage } from "../../../common/composant/retoucheImage/RetoucheImage";
 import {
   IActeApiHookParams,
   useInformationsActeApiHook
-} from "../../../common/hook/repertoires/ActeApiHook";
-import { checkDirty, getLibelle } from "../../../common/util/Utils";
-import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
+} from "../../../common/hook/acte/ActeApiHook";
+import {
+  IGetImagesDeLActeParams,
+  useGetImagesDeLActe
+} from "../../../common/hook/acte/GetImagesDeLActeApiHook";
+import {
+  IGenerationECParams,
+  useGenerationEC
+} from "../../../common/hook/generation/generationECHook/generationECHook";
+import {
+  checkDirty,
+  estTableauNonVide,
+  getLibelle
+} from "../../../common/util/Utils";
+import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { RECEContext } from "../../../core/body/Body";
 import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
 import { BoutonsTerminer } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminer";
@@ -28,23 +46,49 @@ import { boutonModifierCopiePresent } from "./EditionExtraitCopieUtils";
 import { DocumentEC } from "./enum/DocumentEC";
 import "./scss/EditionExtraitCopie.scss";
 
+export const EditionExtraitCopiePageContext = React.createContext({
+  setOperationEnCours: (operationEnCours: boolean) => {}
+});
+
 export const EditionExtraitCopiePage: React.FC = () => {
+  const { isDirty, setIsDirty } = useContext(RECEContext);
+
   const history = useHistory();
+
+  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+
   const { idRequeteParam, idActeParam } = useParams<IUuidEditionParams>();
   const [idRequete, setIdRequete] = useState<IDetailRequeteParams>();
   const [requete, setRequete] = useState<IRequeteDelivrance>();
   const [documents, setDocuments] = useState<IDocumentReponse[]>();
   const [documentEdite, setDocumentEdite] = useState<IDocumentReponse>();
-  const [hookParams, setHookParams] = useState<IActeApiHookParams>();
+  const [informationsActeApiHookParams, setInformationsActeApiHookParams] =
+    useState<IActeApiHookParams>();
   const [indexDocEdite, setIndexDocEdite] = useState<DocumentEC>(
     history.location.state
       ? (history.location.state as DocumentEC)
       : DocumentEC.Courrier
   );
-  const { isDirty, setIsDirty, setOperationEnCours } = useContext(RECEContext);
+  const [generationEcParams, setGenerationEcParams] =
+    useState<IGenerationECParams>();
+  const [imagesDeLActe, setImagesDeLActe] = useState<string[]>([]);
+  const [imagesDeLActeModifiees, setImagesDeLActeModifiees] = useState<
+    string[]
+  >([]);
+  const [recuperationImagesDeLActeParams, setRecuperationImagesDeLActeParams] =
+    useState<IGetImagesDeLActeParams>();
+
   const { detailRequeteState } = useAvecRejeuDetailRequeteApiHook(idRequete);
 
-  const acte = useInformationsActeApiHook(hookParams);
+  const resultatInformationsActeApiHook = useInformationsActeApiHook(
+    informationsActeApiHookParams
+  );
+
+  // Pour la retouche d'image
+  const resultatGenerationEC = useGenerationEC(generationEcParams);
+  const resultatGetImagesDeLActe = useGetImagesDeLActe(
+    recuperationImagesDeLActeParams
+  );
 
   const ajouteDocument = (typeDocument: string) => {
     if (checkDirty(isDirty, setIsDirty)) {
@@ -99,9 +143,9 @@ export const EditionExtraitCopiePage: React.FC = () => {
   useEffect(() => {
     if (documentEdite) {
       if (documentEdite.idActe) {
-        setHookParams({ idActe: documentEdite.idActe });
+        setInformationsActeApiHookParams({ idActe: documentEdite.idActe });
       } else if (idActeParam) {
-        setHookParams({ idActe: idActeParam });
+        setInformationsActeApiHookParams({ idActe: idActeParam });
       }
     }
   }, [documentEdite, idActeParam]);
@@ -116,54 +160,127 @@ export const EditionExtraitCopiePage: React.FC = () => {
     }
   };
 
+  const onRetoucheTerminee = useCallback(
+    (imagesModifieesBase64?: string[]) => {
+      if (
+        estTableauNonVide(imagesModifieesBase64) &&
+        requete &&
+        resultatInformationsActeApiHook?.acte &&
+        documentEdite
+      ) {
+        // Maj images de l'acte avec les images modifiées
+        FicheActe.setImages(
+          resultatInformationsActeApiHook.acte,
+          // @ts-ignore imagesModifieesBase64 non null
+          imagesModifieesBase64
+        );
+
+        // @ts-ignore imagesModifieesBase64 non null
+        setImagesDeLActeModifiees(imagesModifieesBase64);
+
+        // Regénération du document copie intégrale
+        const documentReponseCopieIntegrale =
+          RequeteDelivrance.getDocumentReponseCopieIntegrale(requete);
+        setGenerationEcParams({
+          acte: { ...resultatInformationsActeApiHook?.acte },
+          requete,
+          validation: documentReponseCopieIntegrale?.validation || Validation.O,
+          mentionsRetirees: []
+        });
+      } else {
+        setOperationEnCours(false);
+      }
+    },
+    [
+      documentEdite,
+      requete,
+      resultatInformationsActeApiHook,
+      setOperationEnCours
+    ]
+  );
+
+  useEffect(() => {
+    if (resultatGenerationEC) {
+      rafraichirRequete(DocumentEC.Principal);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatGenerationEC]);
+
+  useEffect(() => {
+    if (resultatGetImagesDeLActe) {
+      setImagesDeLActe(resultatGetImagesDeLActe.imagesBase64);
+    }
+  }, [resultatGetImagesDeLActe]);
+
   return (
-    <div className="EditionExtraitCopie">
-      <title>{getLibelle("Édition extrait copie")}</title>
-      {requete && (
-        <>
-          <OngletDocumentsEdites
-            documents={requete.documentsReponses}
-            idDocumentEdite={documentEdite?.id}
-            ajouterDocument={ajouteDocument}
-            setDocumentEdite={changementDocEdite}
-            requete={requete}
-          />
-          <div className="contenu-edition">
-            {documentEdite && (
-              <>
-                <VoletVisualisation
-                  requete={requete}
-                  document={documentEdite}
-                  acte={acte?.acte}
-                ></VoletVisualisation>
-                <div className="Separateur"></div>
-                <VoletEdition
-                  requete={requete}
-                  document={documentEdite}
-                  acte={acte?.acte}
-                  handleCourrierEnregistre={rafraichirRequete}
-                />
-              </>
-            )}
-          </div>
-          <div className="BoutonsEdition">
-            <div className="Gauche">
-              <BoutonModifierTraitement requete={requete} />
-            </div>
-            <div className="Droite">
-              {boutonModifierCopiePresent(acte?.acte, documentEdite) && (
-                <BoutonOperationEnCours
-                  title={getLibelle("Modifier la copie à délivrer")}
-                  onClick={() => {}}
-                >
-                  Modifier la copie à délivrer
-                </BoutonOperationEnCours>
-              )}
-              <BoutonsTerminer requete={requete} />
-            </div>
-          </div>
-        </>
-      )}
-    </div>
+    <>
+      <OperationEnCours visible={operationEnCours} />
+      <RetoucheImage
+        images={imagesDeLActe}
+        onRetoucheTerminee={onRetoucheTerminee}
+      />
+      <EditionExtraitCopiePageContext.Provider value={{ setOperationEnCours }}>
+        <div className="EditionExtraitCopie">
+          <title>{getLibelle("Édition extrait copie")}</title>
+          {requete && (
+            <>
+              <OngletDocumentsEdites
+                documents={requete.documentsReponses}
+                idDocumentEdite={documentEdite?.id}
+                ajouterDocument={ajouteDocument}
+                setDocumentEdite={changementDocEdite}
+                requete={requete}
+              />
+              <div className="contenu-edition">
+                {documentEdite && (
+                  <>
+                    <VoletVisualisation
+                      requete={requete}
+                      document={documentEdite}
+                      acte={resultatInformationsActeApiHook?.acte}
+                    ></VoletVisualisation>
+                    <div className="Separateur"></div>
+                    <VoletEdition
+                      requete={requete}
+                      document={documentEdite}
+                      acte={resultatInformationsActeApiHook?.acte}
+                      handleCourrierEnregistre={rafraichirRequete}
+                    />
+                  </>
+                )}
+              </div>
+              <div className="BoutonsEdition">
+                <div className="Gauche">
+                  <BoutonModifierTraitement requete={requete} />
+                </div>
+                <div className="Droite">
+                  {boutonModifierCopiePresent(
+                    resultatInformationsActeApiHook?.acte,
+                    documentEdite
+                  ) && (
+                    <button
+                      title={getLibelle("Modifier la copie à délivrer")}
+                      onClick={() => {
+                        setOperationEnCours(true);
+                        if (estTableauNonVide(imagesDeLActeModifiees)) {
+                          setImagesDeLActe(imagesDeLActeModifiees);
+                        } else {
+                          setRecuperationImagesDeLActeParams({
+                            idActe: resultatInformationsActeApiHook?.acte?.id
+                          });
+                        }
+                      }}
+                    >
+                      Modifier la copie à délivrer
+                    </button>
+                  )}
+                  <BoutonsTerminer requete={requete} />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </EditionExtraitCopiePageContext.Provider>
+    </>
   );
 };

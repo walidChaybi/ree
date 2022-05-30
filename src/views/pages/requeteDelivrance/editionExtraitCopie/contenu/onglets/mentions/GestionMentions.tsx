@@ -14,7 +14,7 @@ import {
   getLibelle,
   getValeurOuVide
 } from "../../../../../../common/util/Utils";
-import { RECEContext } from "../../../../../../core/body/Body";
+import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { DocumentEC } from "../../../enum/DocumentEC";
 import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";
@@ -36,9 +36,10 @@ export interface GestionMentionsProps {
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
+  const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
+
   const [mentionSelect, setMentionSelect] = useState<IMentionAffichage>();
   const [mentionAjout, setMentionAjout] = useState<IMentionAffichage>();
-  const { setOperationEnCours } = useContext(RECEContext);
   const [mentions, setMentions] = useState<IMentionAffichage[]>();
   const [mentionsParams, setMentionsParams] = useState<string>();
   const [sauvegarderMentionsParams, setSauvegarderMentionsParams] =

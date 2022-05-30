@@ -44,6 +44,14 @@ export const DocumentReponse = {
     );
   },
 
+  getCopieIntegrale(
+    documentsReponse?: IDocumentReponse[]
+  ): IDocumentReponse | undefined {
+    return documentsReponse?.find(d =>
+      DocumentDelivrance.typeDocumentEstCopieIntegrale(d.typeDocument)
+    );
+  },
+
   estExtraitCopie(document: IDocumentReponse) {
     return DocumentDelivrance.estExtraitCopie(document.nom);
   },
@@ -144,5 +152,3 @@ function documentSansCtvExisteDejaAvecCtv(
     ) !== undefined
   );
 }
-
-

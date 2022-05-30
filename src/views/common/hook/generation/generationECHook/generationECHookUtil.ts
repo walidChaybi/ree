@@ -32,9 +32,13 @@ import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDe
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { Validation } from "../../../../../model/requete/enum/Validation";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { getValeurOuVide, SNP, SPC } from "../../../../common/util/Utils";
+import {
+  getValeurOuVide,
+  SNP,
+  SPC,
+  tousNonNullsNonZeroEtNonVides
+} from "../../../../common/util/Utils";
 import { IExtraitCopieApiHookResultat } from "../../composition/CompositionExtraitCopieHook";
-import { IActeApiHookResultat } from "../../repertoires/ActeApiHook";
 import { creationCompositionCopieActeImage } from "./creationComposition/creationCompositionCopieActeImage";
 import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/creationCompositionExtraitCopieActeTexte";
 import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
@@ -276,14 +280,13 @@ export const aPasCorpsExtraitRectificationCorrespondant = function (
 };
 
 export function creationEC(
-  acteApiHookResultat: IActeApiHookResultat | undefined,
+  acte: IFicheActe | undefined,
   params: IGenerationECParams | undefined,
   setValidation: any,
   setExtraitCopieApiHookParams: any
 ) {
-  if (nonNull(acteApiHookResultat?.acte, params)) {
+  if (nonNull(acte, params)) {
     let composition;
-    const acte = acteApiHookResultat?.acte;
 
     // Verification des données pour la génération d'extrait mariage/naissance
     // En cas de validation en erreur alors un extrait en erreur sera généré
@@ -323,5 +326,23 @@ export function toutesLesDonneesSontPresentes(
     uuidDocumentReponse &&
     extraitCopieApiHookResultat &&
     extraitCopieApiHookResultat.donneesComposition
+  );
+}
+
+export function estPresentIdActeEtChoixDelivrance(
+  params?: IGenerationECParams
+): boolean {
+  return tousNonNullsNonZeroEtNonVides(
+    params?.idActe,
+    params?.requete?.choixDelivrance
+  );
+}
+
+export function estPresentActeEtChoixDelivrance(
+  params?: IGenerationECParams
+): boolean {
+  return tousNonNullsNonZeroEtNonVides(
+    params?.acte,
+    params?.requete?.choixDelivrance
   );
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { logError } from "../../common/util/LogManager";
 import { getLibelle } from "../../common/util/Utils";
-import { OperationEnCours } from "../../common/widget/attente/OperationEnCours";
 import { FilAriane } from "../../common/widget/filAriane/FilAriane";
 import { routesRece } from "../../router/ReceRoutes";
 import { RouterComponent } from "../../router/RouteComponent";
@@ -14,14 +13,12 @@ import { PageMessage } from "../login/PageMessage";
 
 export const RECEContext = React.createContext({
   isDirty: false,
-  setIsDirty: (isDirty: boolean) => {},
-  setOperationEnCours: (operationEnCours: boolean) => {}
+  setIsDirty: (isDirty: boolean) => {}
 });
 
 export const Body: React.FC = () => {
   const [appliDejaOuverte, setAppliDejaOuverte] = useState<boolean>(false);
   const [isDirty, setIsDirty] = useState<boolean>(false);
-  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   useEffect(() => {
     gestionnaireDoubleOuverture.lancerVerification(() => {
@@ -42,10 +39,7 @@ export const Body: React.FC = () => {
                   )}
                 />
               ) : (
-                <RECEContext.Provider
-                  value={{ isDirty, setIsDirty, setOperationEnCours }}
-                >
-                  <OperationEnCours visible={operationEnCours} />
+                <RECEContext.Provider value={{ isDirty, setIsDirty }}>
                   <FilAriane
                     routes={routesRece}
                     isDirty={isDirty}

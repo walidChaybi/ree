@@ -26,6 +26,7 @@ import {
   FicheRcaDecisionJuridictionEtrangere,
   idFicheRca
 } from "../data/ficheRCA";
+import { imagePngVideBase64 } from "../data/ImagePng";
 import { mentions } from "../data/mentions";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import {
@@ -168,6 +169,7 @@ export const configEtatcivil = [
         match[1] === "/acte/corps/923a10fb-0b15-452d-83c0-d24c76d1de8d" ||
         match[1] === "/acte/corps/b41079a3-9e8d-478c-b04c-c4c2ac47134f" ||
         match[1] === "/acte/corps/19c0d767-64e5-4376-aa1f-6d781a2a235a" ||
+        match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c2ac67134b" ||
         // acte texte
         match[1] === "/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
       ) {
@@ -430,7 +432,8 @@ export const configEtatcivil = [
 
       if (
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/alertes" ||
-        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/alertes"
+        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/alertes" ||
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/alertes"
       ) {
         return { data: ReponseAppelGetAlertesActe.data };
       }
@@ -444,6 +447,16 @@ export const configEtatcivil = [
         "/acte/alerte/a0adc2b2-03b6-4b80-a90d-7f96e780df15?provenanceRequete=Service%20Public"
       ) {
         return { data: null };
+      }
+
+      // Récupération des images d'un acte
+      if (
+        match[1] === "/acteimage/images/abcdc2b2-03b6-4b80-a90d-7f96e7807788"
+      ) {
+        return { data: ["imgBase64_1", "imgBase64_2"] };
+      }
+      if (match[1] === `/acteimage/images/${idFicheActeMariage}`) {
+        return { data: [imagePngVideBase64] };
       }
 
       const error = { msg: "url api etat civil non mockée", url: match[1] };

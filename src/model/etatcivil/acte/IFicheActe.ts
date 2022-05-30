@@ -176,6 +176,27 @@ export const FicheActe = {
       !acte.dateDerniereDelivrance ||
       acte.dateDerniereDelivrance.getTime() < DATE_MES.getTime()
     );
+  },
+
+  getImages(acte?: IFicheActe): string[] {
+    const imagesDeLActe: string[] = [];
+
+    acte?.corpsImage?.images.forEach(image =>
+      imagesDeLActe.push(image.contenu)
+    );
+
+    return imagesDeLActe;
+  },
+
+  setImages(acte: IFicheActe, images: string[]): void {
+    acte.corpsImage = { images: [] };
+    images.forEach((image: string, index: number) => {
+      //@ts-ignore acte non null
+      acte.corpsImage.images.push({
+        contenu: image,
+        noPage: index
+      });
+    });
   }
 };
 

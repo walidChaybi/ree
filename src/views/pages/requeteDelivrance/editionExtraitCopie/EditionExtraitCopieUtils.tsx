@@ -242,7 +242,7 @@ export const boutonModifierCopiePresent = (
     const codeDoc = DocumentDelivrance.getDocumentDelivrance(
       documentEdite.typeDocument
     ).code;
-    return codeDoc === CODE_COPIE_INTEGRALE && acte.type === TypeActe.IMAGE;
+    return codeDoc === CODE_COPIE_INTEGRALE && FicheActe.estActeImage(acte);
   }
   return false;
 };

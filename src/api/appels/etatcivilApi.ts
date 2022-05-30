@@ -15,8 +15,7 @@ export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
 export const URL_ACTE_RMC = "/acte/rmc";
 // Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")
 export const URL_ACTE_CORPS_IMAGE = "/acte/corps";
-// NON UTILISE POUR L'INSTANT: Récupère les images d'un acte sous forme de tableau d'images base64
-export const URL_ACTE_IMAGES = "acteimage/images";
+export const URL_ACTE_IMAGES = "/acteimage/images";
 export const URL_ACTE_TEXTE = "/acte/texte";
 export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_NOMENCLATURE = "/nomenclature";

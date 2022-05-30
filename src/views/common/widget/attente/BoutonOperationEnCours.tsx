@@ -41,6 +41,7 @@ export const BoutonOperationEnCours: React.FC<
       <OperationEnCours
         visible={opEnCours}
         onTimeoutEnd={() => setOpEnCours(false)}
+        onClick={() => setOpEnCours(false)}
       ></OperationEnCours>
       <button
         title={props.title}

@@ -13,6 +13,10 @@ import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteD
 import { ISauvegardeCourrier } from "../../../../../../../model/requete/ISauvegardeCourrier";
 import { MimeType } from "../../../../../../../ressources/MimeType";
 import {
+  IActeApiHookParams,
+  useInformationsActeApiHook
+} from "../../../../../../common/hook/acte/ActeApiHook";
+import {
   ICourrierParams,
   useCourrierApiHook
 } from "../../../../../../common/hook/composition/CompositionCourrierHook";
@@ -24,10 +28,6 @@ import {
   IResultGenerationUnDocument,
   RESULTAT_VIDE
 } from "../../../../../../common/hook/generation/generationUtils";
-import {
-  IActeApiHookParams,
-  useInformationsActeApiHook
-} from "../../../../../../common/hook/repertoires/ActeApiHook";
 import { useSauvegarderCourrierCreerActionMajStatutRequete } from "../../../../../../common/hook/requete/sauvegardeCourrierCreerActionMajStatut";
 import { getValeurOuVide } from "../../../../../../common/util/Utils";
 import {

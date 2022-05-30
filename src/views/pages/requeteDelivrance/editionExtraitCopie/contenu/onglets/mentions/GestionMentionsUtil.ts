@@ -32,7 +32,7 @@ export function mappingVersMentionAffichage(
   mentionsApi: IMention[],
   document: IDocumentReponse
 ): IMentionAffichage[] {
-  const estCopie = DocumentDelivrance.typeDocumentEstCopie(
+  const estCopie = DocumentDelivrance.typeDocumentEstCopieIntegrale(
     document.typeDocument
   );
   return mentionsApi
@@ -358,7 +358,9 @@ export function boutonReinitialiserEstDisabled(
   mentions?: IMentionAffichage[],
   document?: IDocumentReponse
 ) {
-  if (DocumentDelivrance.typeDocumentEstCopie(document?.typeDocument)) {
+  if (
+    DocumentDelivrance.typeDocumentEstCopieIntegrale(document?.typeDocument)
+  ) {
     return (
       !estdeverrouille ||
       (estdeverrouille &&
@@ -385,7 +387,11 @@ export function validerMentions(
   sauvegarderMentions: () => void,
   mentionsApi?: IMention[]
 ) {
-  if (DocumentDelivrance.typeDocumentEstCopie(props.document?.typeDocument)) {
+  if (
+    DocumentDelivrance.typeDocumentEstCopieIntegrale(
+      props.document?.typeDocument
+    )
+  ) {
     if (modificationEffectue(mentions, mentionsApi, props.document)) {
       if (
         window.confirm(`Vous avez choisi de décocher des mentions.

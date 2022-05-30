@@ -1,23 +1,26 @@
 import {
   act,
+  createEvent,
   fireEvent,
   render,
   screen,
   waitFor
 } from "@testing-library/react";
-import { createMemoryHistory } from "history";
+import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
-import {
-  userDroitCOMEDEC
-} from "../../../../mock/data/connectedUserAvecDroit";
+import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
+import { requeteAvecCopieIntegraleActeImage } from "../../../../mock/data/DetailRequeteDelivrance";
+import { idFicheActeMariage } from "../../../../mock/data/ficheActe";
+import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { TypeMention } from "../../../../model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
+import { MimeType } from "../../../../ressources/MimeType";
 import { storeRece } from "../../../../views/common/util/storeRece";
 import { EditionExtraitCopiePage } from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
@@ -32,7 +35,7 @@ const superagentMock = require("superagent-mock")(request, [
   configComposition[0]
 ]);
 
-const history = createMemoryHistory();
+let history: MemoryHistory;
 const globalAny: any = global;
 globalAny.URL.createObjectURL = jest.fn();
 
@@ -41,6 +44,8 @@ beforeEach(async () => {
   NatureMention.init();
   TypeMention.init();
   storeRece.utilisateurCourant = userDroitCOMEDEC;
+
+  history = createMemoryHistory();
   history.push(URL_MES_REQUETES_DELIVRANCE);
 });
 
@@ -482,6 +487,64 @@ test("Test création courrier", async () => {
     expect(screen.getByText("Valider")).toBeDefined();
   });
 });*/
+
+test("Attendu: la modification d'une copie acte image s'effectue correctement", async () => {
+  history.push(
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${requeteAvecCopieIntegraleActeImage.id}/${idFicheActeMariage}`
+  );
+
+  await act(async () => {
+    render(
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+          <EditionExtraitCopiePage />
+        </Route>
+      </Router>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Modifier la copie à délivrer")).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Modifier la copie à délivrer"));
+  });
+
+  const detail = {
+    fichiersModifies: [
+      {
+        contenuBase64: imagePngVideBase64,
+        typeMime: MimeType.IMAGE_TIFF
+      }
+    ]
+  };
+
+  // Simulation du retour de l'application native retouche d'image (web extension)
+  await fireCustomEvent(detail);
+
+  await waitFor(() => {
+    expect(screen.getByText("Modifier la copie à délivrer")).toBeDefined();
+  });
+});
+
+async function fireCustomEvent(detail: any) {
+  await act(async () => {
+    fireEvent(
+      window,
+      //@ts-ignore
+      createEvent(
+        "retoucheimageWebextResponse",
+        window,
+        {
+          detail,
+          erreurs: []
+        },
+        { EventType: "CustomEvent" }
+      )
+    );
+  });
+}
 
 afterAll(() => {
   superagentMock.unset();

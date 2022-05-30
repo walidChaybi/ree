@@ -63,7 +63,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
   const [messagesBloquant, setMessagesBloquant] = useState<string>();
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
-  const [courrierEcParams, setCourrierEcParamss] =
+  const [courrierEcParams, setCourrierEcParams] =
     useState<ICreerCourrierECParam>();
   const [documentDelivranceChoisi, setDocumentDelivranceChoisi] =
     useState<DocumentDelivrance>();
@@ -103,7 +103,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const onSubmit = (values: SaisieCourrier) => {
     if (controleFormulaire(values, optionsChoisies, setMessagesBloquant)) {
       setOperationEnCours(true);
-      setCourrierEcParamss({
+      setCourrierEcParams({
         optionsChoisies,
         requete: props.requete,
         idActe: props.idActe,

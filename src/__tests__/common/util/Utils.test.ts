@@ -20,7 +20,7 @@ import {
   premiereLettreEnMajusculeLeResteEnMinuscule,
   supprimeElement,
   supprimerNullEtUndefinedDuTableau,
-  tousNonVides,
+  tousNonNullsNonZeroEtNonVides,
   triListeObjetsSurPropriete,
   valeurOuUndefined
 } from "../../../views/common/util/Utils";
@@ -218,11 +218,13 @@ test("Attendu: supprimerNullEtUndefinedDuTableau fonctionne correctement", () =>
 });
 
 test("Attendu: tousNonVides fonctionne correctement", () => {
-  expect(tousNonVides(undefined)).toBeFalsy();
-  expect(tousNonVides("a", "b", null)).toBeFalsy();
-  expect(tousNonVides("a", "b", undefined)).toBeFalsy();
-  expect(tousNonVides("a", "b", "")).toBeFalsy();
-  expect(tousNonVides("a", "b", "c")).toBeTruthy();
+  expect(tousNonNullsNonZeroEtNonVides(undefined)).toBeFalsy();
+  expect(tousNonNullsNonZeroEtNonVides("a", "b", null)).toBeFalsy();
+  expect(tousNonNullsNonZeroEtNonVides("a", "b", undefined)).toBeFalsy();
+  expect(tousNonNullsNonZeroEtNonVides("a", "b", "")).toBeFalsy();
+  expect(tousNonNullsNonZeroEtNonVides("a", "b", "c")).toBeTruthy();
+  expect(tousNonNullsNonZeroEtNonVides("a", "b", 1)).toBeTruthy();
+  expect(tousNonNullsNonZeroEtNonVides("a", "b", 0)).toBeFalsy();
 });
 
 test("Attendu: supprimeElement fonctionne correctement", () => {
@@ -242,7 +244,7 @@ test("Attendu: supprimeElement fonctionne correctement", () => {
   expect(supprimeElement(tableau, (elt: any) => elt.a === 4)).toEqual(tableau);
 });
 
-test("checkDirty", () => {
+test("Attendu: checkDirty fonctionne correctement", () => {
   window.confirm = () => true;
   expect(checkDirty(true, jest.fn())).toBeTruthy();
   window.confirm = () => false;
