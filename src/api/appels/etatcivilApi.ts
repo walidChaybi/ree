@@ -127,7 +127,7 @@ export function getImagesActe(identifiant: string): Promise<any> {
   });
 }
 
-/** NON UTILISE POUR L'INSTANT Récupère les images d'un acte sous forme de tableau d'images base64 */
+/** Récupère les images d'un acte sous forme de tableau d'images base64 */
 export function getImagesDeLActe(identifiantActe: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,

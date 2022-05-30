@@ -263,7 +263,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
                       onClick={() => {
                         setOperationEnCours(true);
                         if (estTableauNonVide(imagesDeLActeModifiees)) {
-                          setImagesDeLActe(imagesDeLActeModifiees);
+                          setImagesDeLActe([...imagesDeLActeModifiees]);
                         } else {
                           setRecuperationImagesDeLActeParams({
                             idActe: resultatInformationsActeApiHook?.acte?.id
