@@ -5,6 +5,8 @@ import { Droit } from "../../../../../../model/Droit";
 import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
 import { DocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
+import { FeatureFlag } from "../../../../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { MigratorV1V2 } from "../../../../../common/util/migration/MigratorV1V2";
 import { storeRece } from "../../../../../common/util/storeRece";
 import { getLibelle } from "../../../../../common/util/Utils";
@@ -66,14 +68,16 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
             uniqueSignature={true}
             connectedUser={storeRece.utilisateurCourant}
           />
-          <BoutonOperationEnCours
-            title={getLibelle("Terminer")}
-            onClick={goBack}
-            estDesactive={estDisabled}
-            checkDirtyActive={true}
-          >
-            Terminer
-          </BoutonOperationEnCours>
+          {gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) && (
+            <BoutonOperationEnCours
+              title={getLibelle("Terminer")}
+              onClick={goBack}
+              estDesactive={estDisabled}
+              checkDirtyActive={true}
+            >
+              Terminer
+            </BoutonOperationEnCours>
+          )}
         </>
       )}
     </>
