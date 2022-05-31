@@ -9,7 +9,6 @@ import {
   useGenerationCourrierHook
 } from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/hook/GenerationCourrierHook";
 import { SaisieCourrier } from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
-import { sousTypeCreationCourrierAutomatique } from "../../../pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
 import { getOngletSelectVenantDePriseEnCharge } from "../../../pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import { DocumentEC } from "../../../pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
 import { DEUX } from "../../util/Utils";
@@ -135,9 +134,8 @@ function getValidation(
   choixDelivrance?: ChoixDelivrance
 ) {
   if (
-    sousTypeCreationCourrierAutomatique(sousType) ||
-    (choixDelivrance &&
-      choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE)
+    choixDelivrance &&
+    choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
   ) {
     return Validation.O;
   } else {
