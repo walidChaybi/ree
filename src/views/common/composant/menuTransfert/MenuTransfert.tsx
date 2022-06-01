@@ -159,7 +159,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       {props.menuFermer ? (
         <div>
           {props.icone ? (
-            <span title={getLibelle("Attribué requête")}>
+            <span title={getLibelle("Attribuer requête")}>
               <AssignmentInd onClick={e => handleClickBoutonReponse(e)} />
             </span>
           ) : (

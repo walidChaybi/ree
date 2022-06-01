@@ -94,11 +94,11 @@ test("Test Attribué à", async () => {
   await waitFor(() => {
     const numero = screen.getByText("1234");
     expect(numero).toBeDefined();
-    expect(screen.getAllByTitle("Attribué requête")[0]).toBeDefined();
+    expect(screen.getAllByTitle("Attribuer requête")[0]).toBeDefined();
   });
 
   act(() => {
-    fireEvent.click(screen.getAllByTitle("Attribué requête")[0]);
+    fireEvent.click(screen.getAllByTitle("Attribuer requête")[0]);
   });
 
   await waitFor(() => {
