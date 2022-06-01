@@ -24,7 +24,7 @@ export function useMiseAJourMentionsApiHook(params?: IMiseAJourMentionsParams) {
           setFini({ resultat: false });
           logError({
             messageUtilisateur:
-              "Impossible de récupérer mettre à jour les mentions de cet acte ",
+              "Impossible de mettre à jour les mentions de cet acte ",
             error
           });
         });

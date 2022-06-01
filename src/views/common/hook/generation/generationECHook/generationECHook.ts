@@ -127,6 +127,9 @@ export function useGenerationEC(
             mimeType: MimeType.APPLI_PDF,
             orientation: Orientation.PORTRAIT,
             validation,
+            mentionsRetirees: params?.mentionsRetirees.map(idMention => ({
+              idMention
+            })),
             idActe: acteApiHookResultat?.acte?.id || acteDejaPresent?.id
           } as IDocumentReponse,
 
@@ -136,7 +139,7 @@ export function useGenerationEC(
         });
       }
     },
-    [acteApiHookResultat, acteDejaPresent, validation]
+    [acteApiHookResultat, acteDejaPresent, validation, params]
   );
 
   useEffect(() => {

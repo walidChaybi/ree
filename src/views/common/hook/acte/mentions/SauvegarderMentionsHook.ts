@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
+import { Validation } from "../../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import {
@@ -7,7 +8,10 @@ import {
   mappingVersMentionsApi,
   modificationEffectue
 } from "../../../../pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import { getValeurOuVide } from "../../../util/Utils";
+import {
+  getValeurOuVide,
+  tousNonNullsNonZeroEtNonVides
+} from "../../../util/Utils";
 import {
   IGenerationECParams,
   useGenerationEC
@@ -45,10 +49,17 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
   const [mentionsRetireesSaved, setMentionsRetireesSaved] =
     useState<string[]>();
 
-  const mentionsMisAJour = useMiseAJourMentionsApiHook(mentionsAEnvoyerParams);
-  const documentEstMisAJour =
+  // Maj mentions dans etatcivil-api
+  const resultatMiseAjourMentions = useMiseAJourMentionsApiHook(
+    mentionsAEnvoyerParams
+  );
+
+  // Maj des mentions retirées dans requete-api
+  const resultatMajDocReponseAvecMentionRetirees =
     useMiseAJourDocumentMentionApiHook(documentMajParams);
-  const nouveauDoc = useGenerationEC(generationEC);
+
+  // Génération du document réponse dans requete-api
+  const resultatGenerationEC = useGenerationEC(generationEC);
 
   // 1 - Sauvegarder les mentions dans etatcivil-api
   useEffect(() => {
@@ -63,10 +74,10 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
     }
   }, [params]);
 
-  // 2 - Générer le document et changer le statut de la requête
+  // 2 - Générer le document et changer le statut de la requête si des mentions ont été modifiées
   useEffect(() => {
     if (
-      mentionsMisAJour &&
+      resultatMiseAjourMentions &&
       params &&
       params.document.validation &&
       params.requete.choixDelivrance &&
@@ -75,55 +86,38 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
       setGenerationEC({
         idActe: params.idActe,
         requete: params.requete,
-        validation: params.document.validation,
+        validation: Validation.O,
         pasDeStockageDocument: false,
         mentionsRetirees: mentionsRetireesSaved
       });
     }
-  }, [mentionsMisAJour, params, mentionsRetireesSaved]);
+  }, [resultatMiseAjourMentions, params, mentionsRetireesSaved]);
 
-  // 3 - Sauvegarder les mentions retirées et valider le document dans requete-api
+  // Maj du résultat retourné par le hook
   useEffect(() => {
     if (
-      nouveauDoc &&
-      nouveauDoc.resultGenerationUnDocument?.idDocumentReponse &&
-      params &&
-      mentionsRetireesSaved
+      tousNonNullsNonZeroEtNonVides(
+        params,
+        mentionsRetireesSaved,
+        resultatMajDocReponseAvecMentionRetirees || resultatGenerationEC
+      )
     ) {
-      setDocumentMajParams({
-        idDocument: nouveauDoc.resultGenerationUnDocument?.idDocumentReponse,
+      // @ts-ignore params non null
+      let idDoc = params.document.id;
+      if (resultatGenerationEC?.resultGenerationUnDocument?.idDocumentReponse) {
+        idDoc =
+          resultatGenerationEC.resultGenerationUnDocument?.idDocumentReponse;
+      }
+
+      setResultat({
+        idDoc,
+        // @ts-ignore mentionsRetirees non null
         mentionsRetirees: mentionsRetireesSaved
       });
     }
-  }, [nouveauDoc, mentionsRetireesSaved, params]);
 
-  useEffect(() => {
-    if (
-      nouveauDoc?.resultGenerationUnDocument?.idDocumentReponse &&
-      documentEstMisAJour?.resultat &&
-      mentionsRetireesSaved
-    ) {
-      setResultat({
-        idDoc: nouveauDoc.resultGenerationUnDocument?.idDocumentReponse,
-        mentionsRetirees: mentionsRetireesSaved
-      });
-    } else if (
-      documentEstMisAJour?.resultat &&
-      params?.document &&
-      mentionsRetireesSaved
-    ) {
-      setResultat({
-        idDoc: params.document.id,
-        mentionsRetirees: mentionsRetireesSaved
-      });
-    }
-  }, [
-    documentEstMisAJour,
-    mentionsAEnvoyerParams,
-    nouveauDoc,
-    params,
-    mentionsRetireesSaved
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatMajDocReponseAvecMentionRetirees, resultatGenerationEC]);
 
   return resultat;
 }
@@ -161,8 +155,7 @@ function sauvegarderEnFonctionTypeDocument(
         setGenerationEC({
           idActe: params.idActe,
           requete: params.requete,
-          choixDelivrance: params.requete.choixDelivrance,
-          validation: params.document.validation,
+          validation: Validation.O,
           pasDeStockageDocument: false,
           mentionsRetirees
         });
