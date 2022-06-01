@@ -51,12 +51,13 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
   const [pageState, setPageState] = React.useState(0);
   const [multiplicateur, setMultiplicateur] = React.useState(1);
 
+  const nbPages = props.nbLignesParAppel / props.nbLignesParPage;
+
   const processData = useCallback(
     (data: any[], page: number) => {
-      const nbPages = props.nbLignesParAppel / props.nbLignesParPage;
       return getPaginatedData(data, page, props.nbLignesParPage, nbPages);
     },
-    [props.nbLignesParPage, props.nbLignesParAppel]
+    [props.nbLignesParPage, nbPages]
   );
 
   // Contenu réellement affiché par ex: 15 lignes (contrairement à props.dataState qui contient toutes les données récupérées du serveur par ex 105 lignes)
@@ -151,7 +152,8 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
   );
 
   function onClickOnLine(identifiant: string, idxOnePage: number) {
-    const idxDataState = pageState * props.nbLignesParPage + idxOnePage;
+    const idxDataState =
+      (pageState % nbPages) * props.nbLignesParPage + idxOnePage;
     props.onClickOnLine(identifiant, props.dataState, idxDataState);
   }
 
