@@ -21,6 +21,7 @@ export function useMentionsApiHook(idActe?: string) {
           setMentions({ mentions: mappingMentions(result.body.data) });
         })
         .catch(error => {
+          /* istanbul ignore next */
           setMentions({ mentions: undefined });
           logError({
             messageUtilisateur:

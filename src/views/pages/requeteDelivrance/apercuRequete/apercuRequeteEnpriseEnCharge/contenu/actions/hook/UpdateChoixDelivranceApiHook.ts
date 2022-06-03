@@ -21,34 +21,23 @@ export function useUpdateChoixDelivrance(
 
   useEffect(() => {
     if (params && params.choixDelivrance) {
-      updateChoixDelivrance(params.requete.id, params.choixDelivrance.nom)
+      updateChoixDelivrance(
+        params.requete.id,
+        // On enlève le choix délivrance en cas de "Modification du traitement"
+        params.choixDelivrance ? params.choixDelivrance.nom : null
+      )
         .then((result: any) => {
           setUpdateChoixDelivranceResultat({ idRequete: result.body.data });
         })
         .catch((error: any) => {
-           /* istanbul ignore next */
-          handleLogError(error);
-        });
-    } else if (params) {
-      // On enlève le choix délivrance en cas de "Modification du traitement"
-      updateChoixDelivrance(params.requete.id, null)
-        .then((result: any) => {
-          setUpdateChoixDelivranceResultat({ idRequete: result.body.data });
-        })
-        .catch((error: any) => {
-           /* istanbul ignore next */
-          handleLogError(error);
+          /* istanbul ignore next */
+          logError({
+            messageUtilisateur:
+              "Une erreur est survenu lors de la mise à jour de la requête",
+            error
+          });
         });
     }
   }, [params]);
   return updateChoixDelivranceResultat;
-}
-
-/* istanbul ignore next */
-function handleLogError(error: any) {
-  logError({
-    messageUtilisateur:
-      "Une erreur est survenu lors de la mise à jour de la requête",
-    error
-  });
 }

@@ -18,7 +18,7 @@ const HookConsumer: React.FC = () => {
   return <div>{res?.resultat?.toString()}</div>;
 };
 
-test("Attendu: useMentionsApiHook fonctionne correctement", async () => {
+test("Attendu: useMiseAJourDocumentMentionApiHook fonctionne correctement", async () => {
   render(<HookConsumer />);
 
   await waitFor(() => {

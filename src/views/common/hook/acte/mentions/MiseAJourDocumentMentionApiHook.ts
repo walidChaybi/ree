@@ -23,6 +23,7 @@ export function useMiseAJourDocumentMentionApiHook(
           setFait({ resultat: true });
         })
         .catch(error => {
+          /* istanbul ignore next */
           setFait({ resultat: false });
           logError({
             messageUtilisateur:

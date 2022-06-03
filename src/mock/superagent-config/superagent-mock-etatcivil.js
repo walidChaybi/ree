@@ -140,19 +140,14 @@ export const configEtatcivil = [
         return { data: mentions };
       }
       if (
-        match[1] === `/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions` &&
+        (match[1] === `/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions` ||
+          match[1] ===
+            "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/corpstexte?type=EXTRAIT_AVEC_FILIATION") &&
         context.method === "post"
       ) {
         return { data: true };
       }
-      if (
-        match[1] === `/acte/19c0d767-64e5-4376-aa1f-6d781a2a235b/mentions` &&
-        context.method === "post"
-      ) {
-        let err = new Error(500);
-        err.status = 500;
-        throw err;
-      }
+    
 
       /////////////////////////////////////////////////////////////////////
       // nombre de titulaires utilisé pour les sur l'apercu en prise en chage
@@ -413,14 +408,7 @@ export const configEtatcivil = [
       ) {
         return { data: true };
       }
-      if (
-        match[1] ===
-        "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235b/dernieredelivrance"
-      ) {
-        let err = new Error(500);
-        err.status = 500;
-        throw err;
-      }
+  
 
       if (match[1] === "/repertoirecivil/datedernieredelivrance") {
         return { data: null };

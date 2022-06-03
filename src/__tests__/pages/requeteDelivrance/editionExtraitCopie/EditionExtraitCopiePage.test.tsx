@@ -10,7 +10,7 @@ import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
-import { userDroitCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
+import { userDroitCOMEDEC, userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
 import { requeteAvecCopieIntegraleActeImage } from "../../../../mock/data/DetailRequeteDelivrance";
 import { idFicheActeMariage } from "../../../../mock/data/ficheActe";
 import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
@@ -451,7 +451,7 @@ test("Test création courrier", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Option(s) disponibles(s)")).toBeDefined();
+    expect(screen.getByText("Option(s) disponiblalut toies(s)")).toBeDefined();
     expect(
       (screen.getByText("Valider") as HTMLButtonElement).disabled
     ).toBeFalsy();
@@ -492,8 +492,7 @@ test("Test création courrier", async () => {
 
 test("Attendu: la modification d'une copie acte image s'effectue correctement", async () => {
   history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${requeteAvecCopieIntegraleActeImage.id}/${idFicheActeMariage}`
-  );
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${requeteAvecCopieIntegraleActeImage.id}/${idFicheActeMariage}`)
 
   await act(async () => {
     render(
@@ -530,6 +529,7 @@ test("Attendu: la modification d'une copie acte image s'effectue correctement", 
   });
 });
 
+
 async function fireCustomEvent(detail: any) {
   await act(async () => {
     fireEvent(
@@ -547,6 +547,69 @@ async function fireCustomEvent(detail: any) {
     );
   });
 }
+
+// Modifier Corps extrait
+test("Test modifier corps extrait", async () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  history.push(
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
+  );
+
+  await act(async () => {
+    render(
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+          <EditionExtraitCopiePage />
+        </Route>
+      </Router>
+    );
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getAllByText("Extrait avec filiation")[0]);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Modifier le corps de l'extrait")).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getAllByText("Modifier le corps de l'extrait")[0]);
+  });
+
+  const textarea = screen.getByPlaceholderText("Corps de l'extrait");
+
+  await waitFor(() => {
+    expect(
+      (screen.getByText("Réinitialiser") as HTMLButtonElement).disabled
+    ).toBeTruthy();
+    expect(textarea).toBeDefined();
+  });
+
+  await act(async () => {
+    fireEvent.change(textarea, { target: { value: "salut toi" } });
+  });
+  await waitFor(() => {
+    expect(screen.getByText("salut toi")).toBeDefined();
+    expect(
+      (screen.getByText("Réinitialiser") as HTMLButtonElement).disabled
+    ).toBeFalsy();
+  });
+
+  await waitFor(() => {
+    expect(
+      (screen.getByText("Valider") as HTMLButtonElement).disabled
+    ).toBeFalsy();
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByLabelText("Valider"));
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("salut toi")).toBeDefined();
+  });
+});
 
 afterAll(() => {
   superagentMock.unset();

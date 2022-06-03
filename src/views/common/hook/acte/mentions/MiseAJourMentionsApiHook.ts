@@ -21,6 +21,7 @@ export function useMiseAJourMentionsApiHook(params?: IMiseAJourMentionsParams) {
           setFini({ resultat: true });
         })
         .catch(error => {
+          /* istanbul ignore next */
           setFini({ resultat: false });
           logError({
             messageUtilisateur:

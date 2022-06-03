@@ -158,6 +158,16 @@ export class DocumentDelivrance extends EnumNomemclature {
     return getValeurOuVide(uuid);
   }
 
+  public static typeDocumentCorrespondACode(
+    typeDocument: string,
+    code: string
+  ) {
+    return (
+      DocumentDelivrance.getEnumFor(typeDocument) ===
+      DocumentDelivrance.getEnumFromCode(code)
+    );
+  }
+
   public static getCourrierNonDelivranceAttestationPacsUUID(): string {
     const uuid = EnumNomemclature.getKeyForCode(
       DocumentDelivrance,

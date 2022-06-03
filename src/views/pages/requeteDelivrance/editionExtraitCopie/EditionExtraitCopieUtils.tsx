@@ -26,6 +26,7 @@ import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
 import { DetailRequetePage } from "../detailRequete/DetailRequetePage";
 import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
+import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
 import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
 import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
@@ -211,7 +212,14 @@ export const ajoutOngletsExtraitFilliation = (
     // Sous-onglet 2
     res.liste.push({
       titre: getLibelle("Modifier le corps de l'extrait"),
-      component: <></>
+      component: (
+        <ModifierCorpsExtrait
+          acte={acte}
+          requete={requete}
+          document={document}
+          handleDocumentSauvegarder={handleCourrierEnregistre}
+        />
+      )
     });
   }
 };
