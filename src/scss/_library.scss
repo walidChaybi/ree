@@ -76,7 +76,7 @@ Button,
     pointer-events: none;
     &:focus,
     &:hover {
-      background-color: $disabled-button;
+      // background-color: $disabled-button; => provoque un entourage gris persistant sur les boutons précédents et suivants dans la navigation tableau lorsqu'on arrive en début ou en fin de pagination
       box-shadow: none;
     }
     cursor: default;
