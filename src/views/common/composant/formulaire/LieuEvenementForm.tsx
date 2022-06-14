@@ -236,7 +236,6 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
                 options={LieuxUtils.getOptionsArrondissement(
                   props.formik.getFieldProps(nomVille).value
                 )}
-                formik={props.formik}
                 pasPremiereOptionVide={true}
                 onChange={onChangeArrondissement}
               />

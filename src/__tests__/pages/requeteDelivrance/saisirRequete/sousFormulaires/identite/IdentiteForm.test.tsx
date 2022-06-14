@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
-import { INTERESSE } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
+import { TITULAIRES } from "../../../../../../views/pages/requeteDelivrance/saisirRequete/modelForm/ISaisirRDCSCPageModel";
 import IdentiteForm, {
   IdentiteFormDefaultValues,
   IdentiteFormValidationSchema,
@@ -18,7 +18,7 @@ const HookIdentiteForm: React.FC = () => {
   const [result, setResult] = useState("");
 
   const identiteFormProps = {
-    nom: INTERESSE,
+    nom: TITULAIRES + ".titulaire1",
     filiation: true
   } as IdentiteSubFormProps;
 
@@ -29,7 +29,7 @@ const HookIdentiteForm: React.FC = () => {
   return (
     <Formik
       initialValues={{
-        [INTERESSE]: { ...IdentiteFormDefaultValues }
+        [TITULAIRES]: { titulaire1: { ...IdentiteFormDefaultValues } }
       }}
       validationSchema={IdentiteFormValidationSchema}
       onSubmit={handleClickButton}
@@ -49,13 +49,13 @@ test("render composant Identite Formulaire", async () => {
   });
 
   const inputNomNaissance = screen.getByLabelText(
-    "interesse.noms.nomNaissance"
+    "titulaires.titulaire1.noms.nomNaissance"
   ) as HTMLInputElement;
   const radioMasculin = screen.getByLabelText(
-    "interesse.sexe.masculin"
+    "titulaires.titulaire1.sexe.masculin"
   ) as HTMLInputElement;
   const radioFrancaise = screen.getByLabelText(
-    "interesse.nationalite.francaise"
+    "titulaires.titulaire1.nationalite.francaise"
   ) as HTMLInputElement;
 
   act(() => {
@@ -75,7 +75,7 @@ test("render composant Identite Formulaire", async () => {
   });
 
   const inputNomUsage = screen.getByLabelText(
-    "interesse.noms.nomUsage"
+    "titulaires.titulaire1.noms.nomUsage"
   ) as HTMLInputElement;
 
   await act(async () => {
@@ -99,7 +99,7 @@ test("render composant Identite Formulaire", async () => {
   await waitFor(() => {
     expect(ajouterFiliation).toBeDefined();
     expect(result.innerHTML).toBe(
-      '{"interesse":{"noms":{"nomNaissance":"MOCKNOMNAISSANCE","nomUsage":"MOCKNOMUSAGE"},"prenoms":{"prenom1":"","prenom2":"","prenom3":""},"sexe":"MASCULIN","naissance":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"","paysEvenement":""},"nationalite":"FRANCAISE"}}'
+      '{"titulaires":{"titulaire1":{"noms":{"nomNaissance":"MOCKNOMNAISSANCE","nomUsage":"MOCKNOMUSAGE"},"prenoms":{"prenom1":"","prenom2":"","prenom3":""},"sexe":"MASCULIN","naissance":{"dateEvenement":{"jour":"","mois":"","annee":""},"villeEvenement":"","paysEvenement":""},"nationalite":"FRANCAISE"}}}'
     );
   });
 

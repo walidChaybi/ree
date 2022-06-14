@@ -50,7 +50,7 @@ test("Le champ Type Requerant", async () => {
   });
 
   const typeRequerantInteresse = screen.getByLabelText(
-    "requerant.typerequerant.interesse"
+    "requerant.typerequerant.titulaire1"
   ) as HTMLInputElement;
   const typeRequerantMandataire = screen.getByLabelText(
     "requerant.typerequerant.mandataire"
@@ -107,7 +107,7 @@ test("retour du formulaire Requerant", async () => {
   });
 
   const typeRequerantInteresse = screen.getByLabelText(
-    "requerant.typerequerant.interesse"
+    "requerant.typerequerant.titulaire1"
   ) as HTMLInputElement;
   const typeRequerantParticulier = screen.getByLabelText(
     "requerant.typerequerant.particulier"

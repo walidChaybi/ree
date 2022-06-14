@@ -137,20 +137,17 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
             onChange={e => {
               onChangeTypeRequete(e);
             }}
-            formik={props.formik}
           />
           <SelectField
             name={sousTypeRequeteWithNamespace}
             label={getLibelle("Sous-type de requête")}
             options={sousTypeRequeteOptions}
             disabled={sousTypeRequeteInactif}
-            formik={props.formik}
           />
           <SelectField
             name={statutRequeteWithNamespace}
             label={getLibelle("Statut de requête")}
             options={StatutRequete.getAllEnumsAsOptions()}
-            formik={props.formik}
           />
         </div>
       </Fieldset>

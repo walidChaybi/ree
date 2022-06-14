@@ -6,27 +6,29 @@ export const RequeteRDCSCInteresse = {
   refus: false,
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
-    interesse: {
-      noms:{
-        nomNaissance: "",
-        nomUsage: "",
-      },
-      prenoms: {
-        prenom1: "",
-        prenom2: "",
-        prenom3: ""
-      },
-      sexe: "INCONNU",
-      naissance: {
-        dateEvenement: {
-          jour: "",
-          mois: "",
-          annee: "1990"
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "",
+          nomUsage: ""
         },
-        villeEvenement: "Nantes",
-        paysEvenement: "France"
-      },
-      nationalite: "INCONNUE"
+        prenoms: {
+          prenom1: "",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "INCONNU",
+        naissance: {
+          dateEvenement: {
+            jour: "",
+            mois: "",
+            annee: "1990"
+          },
+          villeEvenement: "Nantes",
+          paysEvenement: "France"
+        },
+        nationalite: "INCONNUE"
+      }
     },
     requerant: {
       typeRequerant: "INTERESSE",
@@ -80,27 +82,29 @@ export const RequeteRDCSCMandataire = {
   refus: false,
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
-    interesse: {
-      noms:{
-        nomNaissance: "",
-        nomUsage: "",
-      },
-      prenoms: {
-        prenom1: "",
-        prenom2: "",
-        prenom3: ""
-      },
-      sexe: "INCONNU",
-      naissance: {
-        dateEvenement: {
-          jour: "",
-          mois: "",
-          annee: "1990"
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "",
+          nomUsage: ""
         },
-        villeEvenement: "Nantes",
-        paysEvenement: "France"
-      },
-      nationalite: "INCONNUE"
+        prenoms: {
+          prenom1: "",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "INCONNU",
+        naissance: {
+          dateEvenement: {
+            jour: "",
+            mois: "",
+            annee: "1990"
+          },
+          villeEvenement: "Nantes",
+          paysEvenement: "France"
+        },
+        nationalite: "INCONNUE"
+      }
     },
     requerant: {
       typeRequerant: "MANDATAIRE",
@@ -154,27 +158,29 @@ export const RequeteRDCSCInstitutionnel = {
   refus: true,
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
-    interesse: {
-      noms:{
-        nomNaissance: "",
-        nomUsage: "",
-      },
-      prenoms: {
-        prenom1: "",
-        prenom2: "",
-        prenom3: ""
-      },
-      sexe: "INCONNU",
-      naissance: {
-        dateEvenement: {
-          jour: "",
-          mois: "",
-          annee: "1990"
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "",
+          nomUsage: ""
         },
-        villeEvenement: "Nantes",
-        paysEvenement: "France"
-      },
-      nationalite: "INCONNUE"
+        prenoms: {
+          prenom1: "",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "INCONNU",
+        naissance: {
+          dateEvenement: {
+            jour: "",
+            mois: "",
+            annee: "1990"
+          },
+          villeEvenement: "Nantes",
+          paysEvenement: "France"
+        },
+        nationalite: "INCONNUE"
+      }
     },
     requerant: {
       typeRequerant: "INSTITUTIONNEL",
@@ -228,27 +234,29 @@ export const RequeteRDCSCParticulier = {
   refus: false,
   saisie: {
     document: "34da88e2-c5c7-4324-ac8e-b35193352e64",
-    interesse: {
-      noms:{
-        nomNaissance: "",
-        nomUsage: "",
-      },
-      prenoms: {
-        prenom1: "",
-        prenom2: "",
-        prenom3: ""
-      },
-      sexe: "INCONNU",
-      naissance: {
-        dateEvenement: {
-          jour: "",
-          mois: "",
-          annee: "1990"
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "",
+          nomUsage: ""
         },
-        villeEvenement: "Nantes",
-        paysEvenement: "France"
-      },
-      nationalite: "INCONNUE"
+        prenoms: {
+          prenom1: "",
+          prenom2: "",
+          prenom3: ""
+        },
+        sexe: "INCONNU",
+        naissance: {
+          dateEvenement: {
+            jour: "",
+            mois: "",
+            annee: "1990"
+          },
+          villeEvenement: "Nantes",
+          paysEvenement: "France"
+        },
+        nationalite: "INCONNUE"
+      }
     },
     requerant: {
       typeRequerant: "PARTICULIER",

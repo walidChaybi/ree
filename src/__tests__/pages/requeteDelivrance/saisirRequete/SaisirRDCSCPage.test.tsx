@@ -61,13 +61,13 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   const inputDocumentDemande = screen.getByTestId("document")
     .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
-    "interesse.naissance.paysEvenement"
+    "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
   const inputVilleNaissance = screen.getByLabelText(
-    "interesse.naissance.villeEvenement"
+    "titulaires.titulaire1.naissance.villeEvenement"
   ) as HTMLInputElement;
   const inputAnneeNaissance = screen.getByLabelText(
-    "interesse.naissance.dateEvenement.annee"
+    "titulaires.titulaire1.naissance.dateEvenement.annee"
   ) as HTMLInputElement;
 
   act(() => {
@@ -125,7 +125,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   const inputDocumentDemande = screen.getByTestId("document")
     .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
-    "interesse.naissance.paysEvenement"
+    "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
 
   act(() => {
@@ -178,7 +178,7 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
   const inputDocumentDemande = screen.getByTestId("document")
     .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
-    "interesse.naissance.paysEvenement"
+    "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
 
   act(() => {
@@ -236,13 +236,13 @@ test("test du Sauvegarder du formulaire de saisie d'une Requête de Délivrance 
   const inputDocumentDemande = screen.getByTestId("document")
     .childNodes[0] as HTMLSelectElement;
   const inputPaysNaissance = screen.getByLabelText(
-    "interesse.naissance.paysEvenement"
+    "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
   const inputVilleNaissance = screen.getByLabelText(
-    "interesse.naissance.villeEvenement"
+    "titulaires.titulaire1.naissance.villeEvenement"
   ) as HTMLInputElement;
   const inputAnneeNaissance = screen.getByLabelText(
-    "interesse.naissance.dateEvenement.annee"
+    "titulaires.titulaire1.naissance.dateEvenement.annee"
   ) as HTMLInputElement;
 
   act(() => {
@@ -314,21 +314,21 @@ test("Remplissage du formulaire avec requete", () => {
   });
 
   const inputPaysNaissance = screen.getByLabelText(
-    "interesse.naissance.paysEvenement"
+    "titulaires.titulaire1.naissance.paysEvenement"
   ) as HTMLInputElement;
   waitFor(() => {
     expect(inputPaysNaissance.value).toEqual("Samoa");
   });
 
   const inputVilleNaissance = screen.getByLabelText(
-    "interesse.naissance.villeEvenement"
+    "titulaires.titulaire1.naissance.villeEvenement"
   ) as HTMLInputElement;
   waitFor(() => {
     expect(inputVilleNaissance.value).toEqual("Guangzhou");
   });
 
   const inputAnneeNaissance = screen.getByLabelText(
-    "interesse.naissance.dateEvenement.annee"
+    "titulaires.titulaire1.naissance.dateEvenement.annee"
   ) as HTMLInputElement;
   waitFor(() => {
     expect(inputAnneeNaissance.value).toEqual("1963");
@@ -351,6 +351,213 @@ test("Remplissage du formulaire avec requete", () => {
   ) as HTMLInputElement;
   waitFor(() => {
     expect(requerantParticulier.value).toBeTruthy();
+  });
+});
+
+const Labels = {
+  documentDemande: "document",
+  idAttestationPACS: "d08e2228-1a02-478f-939e-db5dd5ac6999",
+  titulaire: {
+    ajout: "Ajouter un titulaire",
+    suppr: "Supprimer un titulaire"
+  },
+  titulaire2: {
+    nom: "titulaires.titulaire2.noms.nomNaissance"
+  },
+  requerant: {
+    titulaire2: "requerant.typerequerant.titulaire2"
+  }
+};
+
+test(`Document demandé = "Attestation PACS" => bouton "ajouter un titulaire" visible, bouton "supprimer un titulaire" non visible`, async () => {
+  render(
+    <Router history={history}>
+      <SaisirRDCSCPage />
+    </Router>
+  );
+
+  const inputDocumentDemande: ChildNode = screen.getByTestId(
+    Labels.documentDemande
+  ).childNodes[0];
+  let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire.ajout
+  );
+  let boutonSupprimerTitulaire: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire.suppr
+  );
+
+  expect(boutonAjoutTitulaire).not.toBeInTheDocument();
+  expect(boutonSupprimerTitulaire).not.toBeInTheDocument();
+
+  await act(async () => {
+    fireEvent.change(inputDocumentDemande, {
+      target: {
+        value: Labels.idAttestationPACS
+      }
+    });
+  });
+
+  await waitFor(() => {
+    boutonAjoutTitulaire = screen.getByLabelText(Labels.titulaire.ajout);
+    expect(boutonAjoutTitulaire).toBeInTheDocument();
+    expect(boutonSupprimerTitulaire).not.toBeInTheDocument();
+  });
+});
+
+test(`Document demandé != "Attestation PACS" => bouton "ajouter un titulaire" & "supprimer titulaire" non visibles"`, async () => {
+  render(
+    <Router history={history}>
+      <SaisirRDCSCPage />
+    </Router>
+  );
+
+  const inputDocumentDemande: ChildNode = screen.getByTestId(
+    Labels.documentDemande
+  ).childNodes[0];
+  let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire.ajout
+  );
+  let boutonSupprimerTitulaire: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire.suppr
+  );
+
+  expect(boutonAjoutTitulaire).not.toBeInTheDocument();
+  expect(boutonSupprimerTitulaire).not.toBeInTheDocument();
+
+  await act(async () => {
+    fireEvent.change(inputDocumentDemande, {
+      target: {
+        value: Labels.idAttestationPACS
+      }
+    });
+  });
+
+  await act(async () => {
+    fireEvent.change(inputDocumentDemande, {
+      target: {
+        value: ""
+      }
+    });
+  });
+
+  await waitFor(() => {
+    expect(boutonAjoutTitulaire).not.toBeInTheDocument();
+    expect(boutonSupprimerTitulaire).not.toBeInTheDocument();
+  });
+});
+
+test(`Clic sur "ajouter un titulaire" => bloc titulaire2 & bouton "supprimer un titulaire" & requérant titulaire2 visibles"`, async () => {
+  render(
+    <Router history={history}>
+      <SaisirRDCSCPage />
+    </Router>
+  );
+
+  const inputDocumentDemande: ChildNode = screen.getByTestId(
+    Labels.documentDemande
+  ).childNodes[0];
+  let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire.ajout
+  );
+  let boutonSupprimerTitulaire: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire.suppr
+  );
+  let nomNaissanceTitulaire2: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire2.nom
+  );
+  let requerantTitulaire2: HTMLElement | null = screen.queryByLabelText(
+    Labels.requerant.titulaire2
+  );
+
+  await act(async () => {
+    fireEvent.change(inputDocumentDemande, {
+      target: {
+        value: Labels.idAttestationPACS
+      }
+    });
+  });
+
+  await waitFor(() => {
+    boutonAjoutTitulaire = screen.getByLabelText(Labels.titulaire.ajout);
+    expect(boutonAjoutTitulaire).toBeInTheDocument();
+  });
+
+  await act(async () => {
+    if (boutonAjoutTitulaire) fireEvent.click(boutonAjoutTitulaire);
+  });
+
+  await waitFor(() => {
+    boutonAjoutTitulaire = screen.queryByLabelText(Labels.titulaire.ajout);
+    boutonSupprimerTitulaire = screen.getByLabelText(Labels.titulaire.suppr);
+    nomNaissanceTitulaire2 = screen.getByLabelText(Labels.titulaire2.nom);
+    requerantTitulaire2 = screen.getByLabelText(Labels.requerant.titulaire2);
+
+    expect(boutonAjoutTitulaire).not.toBeInTheDocument();
+    expect(nomNaissanceTitulaire2).toBeInTheDocument();
+    expect(boutonSupprimerTitulaire).toBeInTheDocument();
+    expect(requerantTitulaire2).toBeInTheDocument();
+  });
+});
+
+test(`Clic sur "supprimer un titulaire" => bloc titulaire2 & bouton "supprimer un titulaire" & requérant titulaire2 non visibles & requerant === titulaire2 ? -> requerant = titulaire1"`, async () => {
+  render(
+    <Router history={history}>
+      <SaisirRDCSCPage />
+    </Router>
+  );
+
+  const inputDocumentDemande: ChildNode = screen.getByTestId(
+    Labels.documentDemande
+  ).childNodes[0];
+  let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire.ajout
+  );
+  let boutonSupprimerTitulaire: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire.suppr
+  );
+  let nomNaissanceTitulaire2: HTMLElement | null = screen.queryByLabelText(
+    Labels.titulaire2.nom
+  );
+  let requerantTitulaire2: HTMLElement | null = screen.queryByLabelText(
+    Labels.requerant.titulaire2
+  );
+
+  await act(async () => {
+    fireEvent.change(inputDocumentDemande, {
+      target: {
+        value: Labels.idAttestationPACS
+      }
+    });
+  });
+
+  await waitFor(() => {
+    boutonAjoutTitulaire = screen.getByLabelText(Labels.titulaire.ajout);
+    expect(boutonAjoutTitulaire).toBeInTheDocument();
+  });
+
+  await act(async () => {
+    if (boutonAjoutTitulaire) fireEvent.click(boutonAjoutTitulaire);
+  });
+
+  await waitFor(() => {
+    boutonSupprimerTitulaire = screen.getByLabelText(Labels.titulaire.suppr);
+    expect(boutonSupprimerTitulaire).toBeInTheDocument();
+  });
+
+  await act(async () => {
+    if (boutonSupprimerTitulaire) fireEvent.click(boutonSupprimerTitulaire);
+  });
+
+  await waitFor(() => {
+    boutonAjoutTitulaire = screen.getByLabelText(Labels.titulaire.ajout);
+    boutonSupprimerTitulaire = screen.queryByLabelText(Labels.titulaire.suppr);
+    nomNaissanceTitulaire2 = screen.queryByLabelText(Labels.titulaire2.nom);
+    requerantTitulaire2 = screen.queryByLabelText(Labels.requerant.titulaire2);
+
+    expect(boutonAjoutTitulaire).toBeInTheDocument();
+    expect(nomNaissanceTitulaire2).not.toBeInTheDocument();
+    expect(boutonSupprimerTitulaire).not.toBeInTheDocument();
+    expect(requerantTitulaire2).not.toBeInTheDocument();
   });
 });
 

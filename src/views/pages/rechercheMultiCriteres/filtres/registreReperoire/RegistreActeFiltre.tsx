@@ -161,7 +161,6 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
           label={getLibelle("Nature de l'acte")}
           options={NatureActe.getAllEnumsAsOptions()}
           disabled={props.filtreInactif}
-          formik={props.formik}
         />
         <SelectField
           name={familleRegistreWithNamespace}
@@ -169,7 +168,6 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
           options={TypeFamille.getAllEnumsAsOptions()}
           disabled={props.filtreInactif}
           onChange={onFamilleRegistreChange}
-          formik={props.formik}
         />
 
         <InputField

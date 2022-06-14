@@ -246,6 +246,13 @@ export class DocumentDelivrance extends EnumNomemclature {
     return CodesExtraitCopieASigner.includes(code);
   }
 
+  public static estAttestationPacs(uuid?: string): boolean {
+    return uuid
+      ? DocumentDelivrance.getDocumentDelivrance(uuid).code ===
+          CODE_ATTESTATION_PACS
+      : false;
+  }
+
   public static getCodesAsOptions(codes: string[]) {
     const res = [];
     for (const document of codes) {
@@ -283,6 +290,17 @@ export class DocumentDelivrance extends EnumNomemclature {
       opt =>
         DocumentDelivrance.getEnumFor(opt.value).categorieDocumentDelivrance ===
         "Certificat de situation demandé"
+    );
+  }
+
+  public static getAllCertificatSituationDemandeEtAttestationAsOptions(): Options {
+    const options = DocumentDelivrance.getAllEnumsAsOptions();
+    return options.filter(
+      opt =>
+        DocumentDelivrance.getEnumFor(opt.value).categorieDocumentDelivrance ===
+          "Certificat de situation demandé" ||
+        DocumentDelivrance.getEnumFor(opt.value).categorieDocumentDelivrance ===
+          "Attestation"
     );
   }
 

@@ -37,7 +37,7 @@ import "./scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
 export const RequerantFormDefaultValues = {
-  [TYPE_REQUERANT]: "INTERESSE",
+  [TYPE_REQUERANT]: "TITULAIRE1",
   [MANDATAIRE]: MandataireFormDefaultValues,
   [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
   [PARTICULIER]: ParticulierFormDefaultValues
@@ -121,11 +121,10 @@ const RequerantForm: React.FC<SubFormProps> = props => {
           break;
         case Qualite.PARTICULIER:
           if (
-            props.requete.titulaires &&
-            !Requerant.estInteresse(
-              props.requete.requerant,
-              props.requete.titulaires[0]
-            )
+            !Requerant.estUnTitulaire({
+              requerant: props.requete.requerant,
+              titulaires: props.requete.titulaires
+            })
           ) {
             setRequerantSousForm("PARTICULIER");
           }

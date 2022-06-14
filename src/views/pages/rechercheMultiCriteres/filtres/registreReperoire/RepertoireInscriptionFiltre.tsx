@@ -134,7 +134,6 @@ const RepertoireInscriptionFiltre: React.FC<RepertoireInscriptionFiltreProps> =
               onChangeTypeRepertoire(e);
             }}
             disabled={props.filtreInactif}
-            formik={props.formik}
           />
           <InputField
             name={numeroInscriptionWithNamespace}
@@ -148,7 +147,6 @@ const RepertoireInscriptionFiltre: React.FC<RepertoireInscriptionFiltreProps> =
             label={getLibelle("Nature de l'inscription")}
             options={natureOptions}
             disabled={natureInactif || props.filtreInactif}
-            formik={props.formik}
           />
         </div>
       </Fieldset>

@@ -14,14 +14,18 @@ export interface IUpdateRequeteDelivranceRDCSCResultat {
 }
 
 export function useUpdateRequeteDelivranceRDCSC(
-  requeteRDCSC?: UpdateRequeteRDCSC
+  requeteRDCSC?: UpdateRequeteRDCSC,
+  nbTitulaires?: number
 ): IUpdateRequeteDelivranceRDCSCResultat | undefined {
   const [resultat, setResultat] = useState<
     IUpdateRequeteDelivranceRDCSCResultat | undefined
   >();
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
-      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(requeteRDCSC);
+      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(
+        requeteRDCSC,
+        nbTitulaires
+      );
       updateRequeteDelivrance({
         idRequete: requeteRDCSC.idRequete,
         requete,
@@ -43,6 +47,7 @@ export function useUpdateRequeteDelivranceRDCSC(
           });
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requeteRDCSC]);
   return resultat;
 }

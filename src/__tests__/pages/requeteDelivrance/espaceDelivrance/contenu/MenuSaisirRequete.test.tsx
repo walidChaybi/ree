@@ -13,12 +13,10 @@ import { gestionnaireFeatureFlag } from "../../../../../views/common/util/featur
 import MenuSaisirRequete from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/contenu/MenuSaisirRequete";
 import {
   URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC,
   URL_REQUETES_DELIVRANCE_SERVICE,
-  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
@@ -67,7 +65,9 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance"
     fireEvent.click(boutonMenu);
   });
 
-  const RDCSC = screen.getByText("Délivrance Certificat de Situation courrier");
+  const RDCSC = screen.getByText(
+    "Délivrance Certificat & Attestation RC/RCA/PACS courrier"
+  );
 
   await waitFor(() => {
     expect(RDCSC).toBeDefined();
@@ -81,34 +81,6 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance"
   await waitFor(() => {
     expect(history.location.pathname).toEqual(
       URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC
-    );
-  });
-});
-
-test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Délivrance", async () => {
-  render(<HookConsummerSaisirRequeteMesRequete />);
-
-  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
-
-  // Open menu
-  await act(async () => {
-    fireEvent.click(boutonMenu);
-  });
-
-  const RDAPC = screen.getByText("Délivrance Attestation de PACS courrier");
-
-  await waitFor(() => {
-    expect(RDAPC).toBeDefined();
-  });
-
-  // Click sur RDAPC
-  await act(async () => {
-    fireEvent.click(RDAPC);
-  });
-
-  await waitFor(() => {
-    expect(history.location.pathname).toEqual(
-      URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC
     );
   });
 });
@@ -179,7 +151,7 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", as
     fireEvent.click(boutonMenu);
   });
 
-  const RDCSC = screen.getByText("Délivrance Certificat de Situation courrier");
+  const RDCSC = screen.getByText("Délivrance Certificat & Attestation RC/RCA/PACS courrier");
 
   await waitFor(() => {
     expect(RDCSC).toBeDefined();
@@ -193,34 +165,6 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", as
   await waitFor(() => {
     expect(history.location.pathname).toEqual(
       URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC
-    );
-  });
-});
-
-test("renders menu 'Saisir une requête' RDAPC dans Mes requetes de Service", async () => {
-  render(<HookConsummerSaisirRequeteMesRequeteDeService />);
-
-  const boutonMenu = screen.getByText(/Saisir requête courrier/i);
-
-  // Open menu
-  await act(async () => {
-    fireEvent.click(boutonMenu);
-  });
-
-  const RDAPC = screen.getByText("Délivrance Attestation de PACS courrier");
-
-  await waitFor(() => {
-    expect(RDAPC).toBeDefined();
-  });
-
-  // Click sur RDAPC
-  await act(async () => {
-    fireEvent.click(RDAPC);
-  });
-
-  await waitFor(() => {
-    expect(history.location.pathname).toEqual(
-      URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC
     );
   });
 });

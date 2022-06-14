@@ -12,66 +12,98 @@ import {
   UpdateRequeteRDCSC
 } from "../modelForm/ISaisirRDCSCPageModel";
 import { Adresse, Identite } from "../modelForm/ISaisirRequetePageModel";
+import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { getPrenoms } from "./mappingCommun";
 
 export function mappingFormulaireRDCSCVersRequeteDelivrance(
-  requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC
+  requeteRDCSC: CreationRequeteRDCSC | UpdateRequeteRDCSC,
+  nbTitulaires?: number
 ): IRequeteDelivrance {
-  const requete = ({
+  const requete = {
     type: TypeRequete.DELIVRANCE.nom,
     sousType: SousTypeDelivrance.RDCSC.nom,
     canal: TypeCanal.COURRIER.nom,
     provenance: Provenance.COURRIER.nom,
     documentDemande: requeteRDCSC.saisie.document,
-    titulaires: [getInteresseRequete(requeteRDCSC.saisie.interesse)],
+    titulaires: [
+      getTitulaireRequete(requeteRDCSC.saisie.titulaires.titulaire1),
+      nbTitulaires === limitesTitulaires.MAX
+        ? getTitulaireRequete(
+            requeteRDCSC.saisie.titulaires.titulaire2,
+            limitesTitulaires.MAX
+          )
+        : {}
+    ],
     requerant: getRequerant(requeteRDCSC.saisie)
-  } as any) as IRequeteDelivrance;
+  } as any as IRequeteDelivrance;
   return supprimeProprietesVides(requete);
 }
 
-function getInteresseRequete(interesse: Identite) {
-  return interesse
+function getTitulaireRequete(titulaire: Identite, position: number = 1) {
+  return titulaire
     ? {
-        position: 1,
-        nomNaissance: interesse.noms?.nomNaissance
-          ? interesse.noms.nomNaissance
+        position,
+        nomNaissance: titulaire.noms?.nomNaissance
+          ? titulaire.noms.nomNaissance
           : SNP,
-        nomUsage: interesse.noms?.nomUsage,
-        prenoms: getPrenoms(interesse.prenoms),
-        jourNaissance: parseInt(interesse.naissance.dateEvenement.jour, 10),
-        moisNaissance: parseInt(interesse.naissance.dateEvenement.mois, 10),
-        anneeNaissance: parseInt(interesse.naissance.dateEvenement.annee, 10),
-        villeNaissance: interesse.naissance.villeEvenement,
-        paysNaissance: interesse.naissance.paysEvenement,
-        sexe: interesse.sexe,
-        nationalite: interesse.nationalite,
+        nomUsage: titulaire.noms?.nomUsage,
+        prenoms: getPrenoms(titulaire.prenoms),
+        jourNaissance: parseInt(titulaire.naissance.dateEvenement.jour, 10),
+        moisNaissance: parseInt(titulaire.naissance.dateEvenement.mois, 10),
+        anneeNaissance: parseInt(titulaire.naissance.dateEvenement.annee, 10),
+        villeNaissance: titulaire.naissance.villeEvenement,
+        paysNaissance: titulaire.naissance.paysEvenement,
+        sexe: titulaire.sexe,
+        nationalite: titulaire.nationalite,
         parentsTitulaire: []
       }
     : {};
 }
 
-export function getRequerant(saisie: SaisieRequeteRDCSC) {
-  if (saisie.requerant.typeRequerant === "MANDATAIRE") {
-    return getMandataire(saisie);
-  } else if (saisie.requerant.typeRequerant === "INSTITUTIONNEL") {
-    return getInstitutionnel(saisie);
-  } else if (saisie.requerant.typeRequerant === "PARTICULIER") {
-    return getParticulier(saisie);
-  } else if (saisie.requerant.typeRequerant === "INTERESSE") {
-    return getInteresse(saisie);
-  } else {
-    return {};
-  }
-}
+const Requerant = {
+  MANDATAIRE: "MANDATAIRE",
+  INSTITUTIONNEL: "INSTITUTIONNEL",
+  PARTICULIER: "PARTICULIER",
+  TITULAIRE1: "TITULAIRE1",
+  TITULAIRE2: "TITULAIRE2"
+};
 
-function getMandataire(saisie: SaisieRequeteRDCSC) {
-  const requerant = saisie.requerant;
+export const getRequerant = (saisie: SaisieRequeteRDCSC) => {
+  const {
+    requerant,
+    adresse,
+    titulaires: { titulaire1, titulaire2 }
+  } = saisie;
+
+  switch (requerant.typeRequerant) {
+    case Requerant.MANDATAIRE:
+      return getMandataire(saisie);
+    case Requerant.INSTITUTIONNEL:
+      return getInstitutionnel(saisie);
+    case Requerant.PARTICULIER:
+      return getParticulier(saisie);
+    case Requerant.TITULAIRE1:
+      return getTitulaire({
+        adresse,
+        titulaire: titulaire1
+      });
+    case Requerant.TITULAIRE2:
+      return getTitulaire({
+        adresse,
+        titulaire: titulaire2
+      });
+    default:
+      return {};
+  }
+};
+
+const getMandataire = ({ requerant, adresse }: SaisieRequeteRDCSC) => {
   return {
     nomFamille: requerant.mandataire.nom ? requerant.mandataire.nom : SNP,
     prenom: getValeurOuVide(requerant.mandataire.prenom),
-    courriel: saisie.adresse.adresseCourriel,
-    telephone: saisie.adresse.numeroTelephone,
-    adresse: getAdresse(saisie.adresse),
+    courriel: adresse.adresseCourriel,
+    telephone: adresse.numeroTelephone,
+    adresse: getAdresse(adresse),
     qualite: Qualite.MANDATAIRE_HABILITE.nom,
     detailQualiteMandataireHabilite: {
       type: requerant.mandataire.type,
@@ -79,18 +111,17 @@ function getMandataire(saisie: SaisieRequeteRDCSC) {
       raisonSociale: requerant.mandataire.raisonSociale
     }
   };
-}
+};
 
-function getInstitutionnel(saisie: SaisieRequeteRDCSC) {
-  const requerant = saisie.requerant;
+const getInstitutionnel = ({ requerant, adresse }: SaisieRequeteRDCSC) => {
   return {
     nomFamille: requerant.institutionnel.nom
       ? requerant.institutionnel.nom
       : SNP,
     prenom: getValeurOuVide(requerant.institutionnel.prenom),
-    courriel: saisie.adresse.adresseCourriel,
-    telephone: saisie.adresse.numeroTelephone,
-    adresse: getAdresse(saisie.adresse),
+    courriel: adresse.adresseCourriel,
+    telephone: adresse.numeroTelephone,
+    adresse: getAdresse(adresse),
     qualite: Qualite.INSTITUTIONNEL.nom,
     detailQualiteInstitutionnel: {
       type: requerant.institutionnel.type,
@@ -98,37 +129,42 @@ function getInstitutionnel(saisie: SaisieRequeteRDCSC) {
       nomInstitution: requerant.institutionnel.nomInstitution
     }
   };
-}
+};
 
-function getParticulier(saisie: SaisieRequeteRDCSC) {
-  const requerant = saisie.requerant;
+const getParticulier = ({ requerant, adresse }: SaisieRequeteRDCSC) => {
   return {
     nomFamille: requerant.particulier.nomNaissance
       ? requerant.particulier.nomNaissance
       : SNP,
     prenom: getValeurOuVide(requerant.particulier.prenom),
-    courriel: saisie.adresse.adresseCourriel,
-    telephone: saisie.adresse.numeroTelephone,
-    adresse: getAdresse(saisie.adresse),
+    courriel: adresse.adresseCourriel,
+    telephone: adresse.numeroTelephone,
+    adresse: getAdresse(adresse),
     qualite: Qualite.PARTICULIER.nom,
     detailQualiteParticulier: {
       nomUsage: requerant.particulier.nomUsage
     }
   };
-}
+};
 
-function getInteresse(saisie: SaisieRequeteRDCSC) {
+const getTitulaire = ({
+  titulaire,
+  adresse
+}: {
+  titulaire: Identite;
+  adresse: Adresse;
+}) => {
   return {
-    nomFamille: saisie.interesse.noms?.nomNaissance,
-    prenom: saisie.interesse.prenoms.prenom1,
-    courriel: saisie.adresse.adresseCourriel,
-    telephone: saisie.adresse.numeroTelephone,
-    adresse: getAdresse(saisie.adresse),
+    nomFamille: titulaire.noms?.nomNaissance,
+    prenom: titulaire.prenoms.prenom1,
+    courriel: adresse.adresseCourriel,
+    telephone: adresse.numeroTelephone,
+    adresse: getAdresse(adresse),
     qualite: Qualite.PARTICULIER.nom
   };
-}
+};
 
-export function getAdresse(adresse: Adresse) {
+export const getAdresse = (adresse: Adresse) => {
   return adresse
     ? {
         ligne2: adresse.complementDestinataire,
@@ -140,4 +176,4 @@ export function getAdresse(adresse: Adresse) {
         pays: adresse.pays
       }
     : {};
-}
+};

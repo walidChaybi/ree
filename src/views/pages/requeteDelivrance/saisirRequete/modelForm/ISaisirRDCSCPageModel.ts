@@ -4,7 +4,7 @@ import { Adresse, Identite, Requerant } from "./ISaisirRequetePageModel";
 
 // Nom des sous-formulaires
 export const DOCUMENT = "document";
-export const INTERESSE = "interesse";
+export const TITULAIRES = "titulaires";
 export const REQUERANT = "requerant";
 export const ADRESSE = "adresse";
 export const PIECES_JOINTES = "piecesJointes";
@@ -24,8 +24,13 @@ export interface UpdateRequeteRDCSC {
 }
 export interface SaisieRequeteRDCSC {
   [DOCUMENT]: string;
-  [INTERESSE]: Identite;
+  [TITULAIRES]: Titulaires;
   [REQUERANT]: Requerant;
   [ADRESSE]: Adresse;
   [PIECES_JOINTES]?: PieceJointe[];
 }
+
+type Titulaires = {
+  titulaire1: Identite;
+  titulaire2: Identite;
+};

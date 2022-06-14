@@ -14,14 +14,18 @@ export interface ICreationRequeteDelivranceRDCSCResultat {
 }
 
 export function useCreationRequeteDelivranceRDCSC(
-  requeteRDCSC?: CreationRequeteRDCSC
+  requeteRDCSC?: CreationRequeteRDCSC,
+  nbTitulaires?: number
 ): ICreationRequeteDelivranceRDCSCResultat | undefined {
   const [resultat, setResultat] = useState<
     ICreationRequeteDelivranceRDCSCResultat | undefined
   >();
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
-      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(requeteRDCSC);
+      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(
+        requeteRDCSC,
+        nbTitulaires
+      );
       creationRequeteDelivrance({
         requete,
         futurStatut: requeteRDCSC.futurStatut,
@@ -42,6 +46,7 @@ export function useCreationRequeteDelivranceRDCSC(
           });
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requeteRDCSC]);
   return resultat;
 }

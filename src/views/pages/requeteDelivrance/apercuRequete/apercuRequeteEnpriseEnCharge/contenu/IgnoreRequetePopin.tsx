@@ -144,7 +144,6 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
               name={MOTIF_IGNORE}
               label={getLibelle("Motif:")}
               options={motif}
-              formik={boutonsProps.formik}
             />
             <InputField
               name={COMPLEMENT_IGNORE}

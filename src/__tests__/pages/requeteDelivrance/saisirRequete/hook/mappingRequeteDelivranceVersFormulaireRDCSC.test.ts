@@ -7,23 +7,41 @@ test("test du mapping Particulier", () => {
   const res = mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
   expect(res).toStrictEqual({
     document: "",
-    interesse: {
-      noms: {
-        nomNaissance: "Prodesk",
-        nomUsage: ""
-      },
-      prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
-      sexe: "FEMININ",
-      naissance: {
-        dateEvenement: {
-          annee: 1990,
-          jour: 25,
-          mois: 6
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "Prodesk",
+          nomUsage: ""
         },
-        villeEvenement: "Barcelone",
-        paysEvenement: "Espagne"
+        prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
+        sexe: "FEMININ",
+        naissance: {
+          dateEvenement: {
+            annee: 1990,
+            jour: 25,
+            mois: 6
+          },
+          villeEvenement: "Barcelone",
+          paysEvenement: "Espagne"
+        },
+        nationalite: "ETRANGERE"
       },
-      nationalite: "ETRANGERE"
+      titulaire2: {
+        nomNaissance: "",
+        nomUsage: "",
+        prenoms: { prenom1: "", prenom2: "", prenom3: "" },
+        sexe: "",
+        naissance: {
+          dateEvenement: {
+            annee: "",
+            jour: "",
+            mois: ""
+          },
+          villeEvenement: "",
+          paysEvenement: ""
+        },
+        nationalite: ""
+      }
     },
     requerant: {
       typeRequerant: "PARTICULIER",
@@ -77,23 +95,41 @@ test("test du mapping Institutionnel", () => {
   );
   expect(res).toStrictEqual({
     document: "",
-    interesse: {
-      noms: {
-        nomNaissance: "Prodesk",
-        nomUsage: ""
-      },
-      prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
-      sexe: "FEMININ",
-      naissance: {
-        dateEvenement: {
-          annee: 1990,
-          jour: 25,
-          mois: 6
+    titulaires: {
+      titulaire1: {
+        noms: {
+          nomNaissance: "Prodesk",
+          nomUsage: ""
         },
-        villeEvenement: "Barcelone",
-        paysEvenement: "Espagne"
+        prenoms: { prenom1: "Elodie", prenom2: "", prenom3: "" },
+        sexe: "FEMININ",
+        naissance: {
+          dateEvenement: {
+            annee: 1990,
+            jour: 25,
+            mois: 6
+          },
+          villeEvenement: "Barcelone",
+          paysEvenement: "Espagne"
+        },
+        nationalite: "ETRANGERE"
       },
-      nationalite: "ETRANGERE"
+      titulaire2: {
+        nomNaissance: "",
+        nomUsage: "",
+        prenoms: { prenom1: "", prenom2: "", prenom3: "" },
+        sexe: "",
+        naissance: {
+          dateEvenement: {
+            annee: "",
+            jour: "",
+            mois: ""
+          },
+          villeEvenement: "",
+          paysEvenement: ""
+        },
+        nationalite: ""
+      }
     },
     requerant: {
       typeRequerant: "INSTITUTIONNEL",

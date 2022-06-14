@@ -87,7 +87,6 @@ const LienTitulaireForm: React.FC<SubFormProps> = props => {
               onChangeLienTitulaire(e);
             }}
             disabled={lienInactif}
-            formik={props.formik}
           />
           {!natureInactif && (
             <InputField

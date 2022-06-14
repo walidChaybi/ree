@@ -1,5 +1,11 @@
 import { FormControl, Select } from "@material-ui/core";
-import { connect, ErrorMessage, Field } from "formik";
+import {
+  connect,
+  ErrorMessage,
+  Field,
+  FormikProps,
+  FormikValues
+} from "formik";
 import React, { useEffect } from "react";
 import { Option } from "../../../util/Type";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
@@ -13,7 +19,7 @@ interface SelectProps {
   disabled?: boolean;
   value?: any;
   description?: string;
-  onChange?: (e: any) => void;
+  onChange?: (e: any, formik?: FormikProps<FormikValues>) => void;
   ariaLabel?: string;
   pasPremiereOptionVide?: boolean;
   placeholder?: string;
@@ -69,7 +75,6 @@ export const SelectRece: React.FC<SelectProps> = props => {
 interface ComponentProps {
   name: string;
   label: string;
-  onChange?: (e: any) => void;
 }
 
 export type SelectFieldProps = ComponentProps &
@@ -102,7 +107,7 @@ const _SelectField: React.FC<SelectFieldProps> = ({
           onBlur={onBlur}
           onChange={(e?: any) => {
             if (onChange) {
-              onChange(e);
+              onChange(e, formik);
             }
             if (e.target.value != null) {
               formik.setFieldValue(name, e.target.value);
@@ -120,4 +125,4 @@ const _SelectField: React.FC<SelectFieldProps> = ({
   );
 };
 
-export const SelectField = connect(_SelectField);
+export const SelectField = connect<ComponentProps & SelectProps>(_SelectField);

@@ -88,7 +88,6 @@ export const MenuReponseSansDelivrance: React.FC<
       label: getLibelle("Ignorer la requête"),
       sousTypes: [
         SousTypeDelivrance.RDC,
-        SousTypeDelivrance.RDAPC,
         SousTypeDelivrance.RDCSC,
         SousTypeDelivrance.RDDP
       ],

@@ -1,9 +1,11 @@
+import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { IReponseSansDelivranceCS } from "../../../../model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "../../../../model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
+import { CODE_ATTESTATION_PACS } from "../../../../model/requete/enum/DocumentDelivranceConstante";
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
@@ -31,6 +33,7 @@ import {
 } from "../../../common/widget/formulaire/adresse/AdresseForm";
 import { Formulaire } from "../../../common/widget/formulaire/Formulaire";
 import { DOCUMENT_OBLIGATOIRE } from "../../../common/widget/formulaire/FormulaireMessages";
+import { withNamespace } from "../../../common/widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "../../../common/widget/popin/ConfirmationPopin";
 import { useReponseSansDelivranceCS } from "../../requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/hook/ChoixReponseSansDelivranceCSHook";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
@@ -42,7 +45,14 @@ import {
   createReponseSansDelivranceCS,
   getMessagesPopin
 } from "./contenu/SaisirRDCSCPageFonctions";
-import { getBlocsForm, getBoutonsPopin } from "./contenu/SaisirRDCSCPageForms";
+import {
+  getAdresseForm,
+  getBoutonsPopin,
+  getDocumentDemandeForm,
+  getPiecesJointesForm,
+  getRequerantForm,
+  getTitulairesForm
+} from "./contenu/SaisirRDCSCPageForms";
 import { useCreationRequeteDelivranceRDCSC } from "./hook/CreerRDCSCApiHook";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "./hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { useUpdateRequeteDelivranceRDCSC } from "./hook/UpdateRDCSCApiHook";
@@ -50,16 +60,17 @@ import {
   ADRESSE,
   CreationRequeteRDCSC,
   DOCUMENT,
-  INTERESSE,
   PIECES_JOINTES,
   REQUERANT,
   SaisieRequeteRDCSC,
+  TITULAIRES,
   UpdateRequeteRDCSC
 } from "./modelForm/ISaisirRDCSCPageModel";
 import "./scss/SaisirRequetePage.scss";
 import {
   IdentiteFormDefaultValuesRDCSC,
-  IdentiteFormValidationSchema
+  IdentiteFormValidationSchema,
+  IdentiteSubFormProps
 } from "./sousFormulaires/identite/IdentiteForm";
 import {
   RequerantFormDefaultValues,
@@ -69,7 +80,10 @@ import {
 // Valeurs par défaut des champs
 const DefaultValuesSaisirRDCSC = {
   [DOCUMENT]: "",
-  [INTERESSE]: IdentiteFormDefaultValuesRDCSC,
+  [TITULAIRES]: {
+    titulaire1: IdentiteFormDefaultValuesRDCSC,
+    titulaire2: IdentiteFormDefaultValuesRDCSC
+  },
   [REQUERANT]: RequerantFormDefaultValues,
   [ADRESSE]: AdresseFormDefaultValues,
   [PIECES_JOINTES]: null
@@ -78,7 +92,7 @@ const DefaultValuesSaisirRDCSC = {
 // Schéma de validation en sortie de champs
 const ValidationSchemaSaisirRDCSC = Yup.object({
   [DOCUMENT]: Yup.string().required(DOCUMENT_OBLIGATOIRE),
-  [INTERESSE]: IdentiteFormValidationSchema,
+  [TITULAIRES]: IdentiteFormValidationSchema,
   [REQUERANT]: RequerantFormValidationSchema,
   [ADRESSE]: AdresseFormValidationSchema
 });
@@ -92,6 +106,16 @@ interface IComplementCreationUpdateRequete {
 }
 
 export const titreForm = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
+
+export type TitulairesStateType = {
+  titulaires: IdentiteSubFormProps[];
+  maxTitulaires: number;
+};
+
+export const enum limitesTitulaires {
+  MIN = 1,
+  MAX = 2
+}
 
 export const SaisirRDCSCPage: React.FC = () => {
   /** Formulaire */
@@ -109,14 +133,11 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [
-    donneesNaissanceIncomplete,
-    setDonneesNaissanceIncomplete
-  ] = React.useState<boolean>(false);
+  const [donneesNaissanceIncomplete, setDonneesNaissanceIncomplete] =
+    React.useState<boolean>(false);
 
-  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] = useState<
-    SaisieRequeteRDCSC
-  >();
+  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] =
+    useState<SaisieRequeteRDCSC>();
 
   const [creationRequeteRDCSC, setCreationRequeteRDCSC] = useState<
     CreationRequeteRDCSC & IComplementCreationUpdateRequete
@@ -129,9 +150,8 @@ export const SaisirRDCSCPage: React.FC = () => {
     INavigationApercuRMCAutoParams | undefined
   >();
 
-  const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] = useState<
-    PieceJointe[]
-  >();
+  const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] =
+    useState<PieceJointe[]>();
 
   const [
     metAJourStatutRequeteApresMajPiecesJointes,
@@ -140,11 +160,35 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const { detailRequeteState } = useDetailRequeteApiHook(idRequete);
 
-  const creationRequeteDelivranceRDCSCResultat = useCreationRequeteDelivranceRDCSC(
-    creationRequeteRDCSC
-  );
+  const [titulairesState, setTitulairesState] = useState<TitulairesStateType>({
+    titulaires: [creerTitulaire()],
+    maxTitulaires: limitesTitulaires.MIN // Le nb max de titulaires autorisés à l'instant T, en fonction du type de document demandé
+  });
+
+  // ↴ Initialiser titulairesState lorsque detailRequeteState a été rempli par l'API
+  useEffect(() => {
+    if (detailRequeteState && detailRequeteState.titulaires) {
+      const { titulaires, documentDemande } =
+        detailRequeteState as IRequeteDelivrance;
+
+      setTitulairesState({
+        titulaires: initialiserTitulaires(titulaires?.length),
+        maxTitulaires:
+          documentDemande.code === CODE_ATTESTATION_PACS
+            ? limitesTitulaires.MAX
+            : limitesTitulaires.MIN
+      });
+    }
+  }, [detailRequeteState]);
+
+  const creationRequeteDelivranceRDCSCResultat =
+    useCreationRequeteDelivranceRDCSC(
+      creationRequeteRDCSC,
+      titulairesState.titulaires.length
+    );
   const updateRequeteDelivranceRDCSCResultat = useUpdateRequeteDelivranceRDCSC(
-    updateRequeteRDCSC
+    updateRequeteRDCSC,
+    titulairesState.titulaires.length
   );
 
   const getIdRequeteCreee = useCallback(() => {
@@ -176,7 +220,8 @@ export const SaisirRDCSCPage: React.FC = () => {
     reponseSansDelivranceCS
   );
 
-  const documentDemandeOptions = DocumentDelivrance.getAllCertificatSituationDemandeAsOptions();
+  const documentDemandeOptions =
+    DocumentDelivrance.getAllCertificatSituationDemandeEtAttestationAsOptions();
 
   const boutonsProps = { setIsBrouillon } as SaisirRequeteBoutonsProps;
 
@@ -213,9 +258,8 @@ export const SaisirRDCSCPage: React.FC = () => {
             getLibelle("La requête a bien été enregistrée")
           );
           setParamsRMCAuto({
-            requete: mappingRequeteDelivranceToRequeteTableau(
-              requeteSauvegardee
-            ),
+            requete:
+              mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
             urlCourante: history.location.pathname
           });
         }
@@ -231,7 +275,8 @@ export const SaisirRDCSCPage: React.FC = () => {
       if (updateRequeteDelivranceRDCSCResultat && updateRequeteRDCSC) {
         // Maj du statut de la requête suite à l'appel d'api de mise à jour de statut de la requête
         //   pour éviter de faire un nouvelle appel d'api pour recharger la requête avec le bon statut
-        updateRequeteDelivranceRDCSCResultat.requete.statutCourant.statut = statutFinal;
+        updateRequeteDelivranceRDCSCResultat.requete.statutCourant.statut =
+          statutFinal;
         redirectionPage(
           updateRequeteDelivranceRDCSCResultat.requete,
           statutFinal,
@@ -243,7 +288,8 @@ export const SaisirRDCSCPage: React.FC = () => {
       ) {
         // Maj du statut de la requête suite à l'appel d'api de mise à jour de statut de la requête
         //   pour éviter de faire un nouvelle appel d'api pour recharger la requête avec le bon statut
-        creationRequeteDelivranceRDCSCResultat.requete.statutCourant.statut = statutFinal;
+        creationRequeteDelivranceRDCSCResultat.requete.statutCourant.statut =
+          statutFinal;
         redirectionPage(
           creationRequeteDelivranceRDCSCResultat.requete,
           statutFinal,
@@ -337,9 +383,11 @@ export const SaisirRDCSCPage: React.FC = () => {
   }, [resultatReponseSansDelivranceCS, history]);
 
   const onSubmitSaisirRDCSC = (values: SaisieRequeteRDCSC) => {
-    const villeNaissance = values.interesse.naissance.villeEvenement;
-    const paysNaissance = values.interesse.naissance.paysEvenement;
-    const anneeNaissance = values.interesse.naissance.dateEvenement.annee;
+    const villeNaissance =
+      values.titulaires.titulaire1.naissance.villeEvenement;
+    const paysNaissance = values.titulaires.titulaire1.naissance.paysEvenement;
+    const anneeNaissance =
+      values.titulaires.titulaire1.naissance.dateEvenement.annee;
     setSaisieRequeteRDCSC(values);
     if (
       (villeNaissance !== "" &&
@@ -406,6 +454,61 @@ export const SaisirRDCSCPage: React.FC = () => {
     }
   };
 
+  const onChangeTitulaires = (
+    titulaires: IdentiteSubFormProps[],
+    formik: FormikProps<FormikValues>
+  ) => {
+    const nomTitulaire2 = withNamespace(TITULAIRES, "titulaire2");
+    const nomTypeRequerant = withNamespace(REQUERANT, "typeRequerant");
+    const defautTitulaire2 = DefaultValuesSaisirRDCSC[TITULAIRES].titulaire2;
+    const defautTypeRequerant =
+      DefaultValuesSaisirRDCSC[REQUERANT].typeRequerant;
+    const futurNbTitulaires =
+      titulairesState.titulaires.length === limitesTitulaires.MAX
+        ? limitesTitulaires.MIN
+        : limitesTitulaires.MAX;
+
+    if (futurNbTitulaires === limitesTitulaires.MIN) {
+      formik.setFieldValue(nomTitulaire2, defautTitulaire2);
+      if (formik.getFieldProps(nomTypeRequerant).value === "TITULAIRE2") {
+        formik.setFieldValue(nomTypeRequerant, defautTypeRequerant);
+      }
+    }
+
+    setTitulairesState(precTitulaires => ({
+      ...precTitulaires,
+      titulaires
+    }));
+  };
+
+  const onAjoutTitulaire = (formik: FormikProps<FormikValues>) => {
+    onChangeTitulaires(
+      [
+        ...titulairesState.titulaires,
+        creerTitulaire(titulairesState.titulaires.length + 1)
+      ],
+      formik
+    );
+  };
+
+  const onRetraitTitulaire = (formik: FormikProps<FormikValues>) => {
+    onChangeTitulaires(titulairesState.titulaires.slice(0, -1), formik);
+  };
+
+  const onChangeMaxTitulaires = (
+    maxTitulaires: number,
+    formik: FormikProps<FormikValues>
+  ) => {
+    setTitulairesState(precTitulaires => ({
+      ...precTitulaires,
+      maxTitulaires
+    }));
+
+    if (formik && titulairesState.titulaires.length > maxTitulaires) {
+      onRetraitTitulaire(formik);
+    }
+  };
+
   return (
     <ProtectionApercu
       statut={detailRequeteState?.statutCourant.statut}
@@ -425,11 +528,28 @@ export const SaisirRDCSCPage: React.FC = () => {
         className="FormulaireSaisirRDCSC"
       >
         <div>
-          {getBlocsForm(
-            documentDemandeOptions,
-            detailRequeteState,
-            boutonsProps
-          )}
+          {
+            // Eléments du formulaire:
+            [
+              getDocumentDemandeForm(
+                documentDemandeOptions,
+                onChangeMaxTitulaires
+              ),
+              getTitulairesForm({
+                requete: detailRequeteState,
+                titulaires: titulairesState.titulaires,
+                maxTitulaires: titulairesState.maxTitulaires,
+                onAjoutTitulaire,
+                onRetraitTitulaire
+              }),
+              getRequerantForm({
+                requete: detailRequeteState,
+                nbTitulaires: titulairesState.titulaires.length
+              }),
+              getAdresseForm(),
+              getPiecesJointesForm()
+            ]
+          }
         </div>
         <SaisirRequeteBoutons {...boutonsProps} />
       </Formulaire>
@@ -440,7 +560,7 @@ export const SaisirRDCSCPage: React.FC = () => {
       />
     </ProtectionApercu>
   );
-};
+};;;;
 
 function getPiecesJointesAMettreAJour(formulairePiecesJointes?: PieceJointe[]) {
   // On ne prend que les pjs dont le contenu est renseigné,
@@ -449,3 +569,20 @@ function getPiecesJointesAMettreAJour(formulairePiecesJointes?: PieceJointe[]) {
     formulairePj => formulairePj.base64File.base64String
   );
 }
+
+const initialiserTitulaires = (nbTitulaires: number = 1) => {
+  const titulaires = [];
+
+  for (let i = 1; i <= nbTitulaires; i++) {
+    titulaires.push(creerTitulaire(i));
+  }
+
+  return titulaires;
+};
+
+export const creerTitulaire = (numTitulaire: number = 1) => {
+  return {
+    nom: withNamespace(TITULAIRES, `titulaire${numTitulaire}`),
+    titre: getLibelle(`Titulaire ${numTitulaire}`)
+  } as IdentiteSubFormProps;
+};

@@ -2,10 +2,15 @@
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../views/common/util/Type";
 
+
+type getAllEnumsAsOptionsProps = {
+  exclusions?: TypeRequerant[];
+};
 export class TypeRequerant extends EnumWithLibelle {
-  public static readonly INTERESSE = new TypeRequerant("Intéressé");
+  public static readonly TITULAIRE1 = new TypeRequerant("Titulaire 1");
+  public static readonly TITULAIRE2 = new TypeRequerant("Titulaire 2");
   public static readonly PARTICULIER = new TypeRequerant(
-    "Particulier (autre que intéressé)"
+    "Particulier (autre que titulaire)"
   );
   public static readonly MANDATAIRE = new TypeRequerant("Mandataire");
   public static readonly INSTITUTIONNEL = new TypeRequerant("Institutionnel");
@@ -14,7 +19,15 @@ export class TypeRequerant extends EnumWithLibelle {
     return EnumWithLibelle.getEnumFor(str, TypeRequerant);
   }
 
-  public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(TypeRequerant, false, false);
+  public static getAllEnumsAsOptions({
+    exclusions
+  }: getAllEnumsAsOptionsProps = {}): Options {
+    return EnumWithLibelle.getAllLibellesAsOptions(
+      TypeRequerant,
+      false,
+      false,
+      false,
+      exclusions ? exclusions : undefined
+    );
   }
 }

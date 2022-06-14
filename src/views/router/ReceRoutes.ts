@@ -64,6 +64,9 @@ import {
 const LIBELLE_APERCU_REQUETE_TRAITEMENT = "Aperçu requête (traitement)";
 const LIBELLE_APERCU_REQUETE = "Aperçu de requête";
 const LIBELLE_APERCU_PRISE_EN_CHARGE = "Aperçu requête (prise en charge)";
+const Labels = {
+  RDCSC: "certificat & attestation RC/RCA/PACS courrier"
+};
 
 export const routesRece: IRoute[] = [
   {
@@ -116,9 +119,7 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
     component: SaisirRDCSCPage,
     droits: [Droit.SAISIR_REQUETE],
-    libelle: getLibelle(
-      "Saisir une requête de délivrance certificat de situation courrier"
-    )
+    libelle: getLibelle(`Saisir une requête de délivrance ${Labels.RDCSC}`)
   },
   {
     url: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC,
@@ -192,9 +193,7 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
     component: SaisirRDCSCPage,
     droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
-    libelle: getLibelle(
-      "Saisir une requête de délivrance certificat de situation courrier"
-    )
+    libelle: getLibelle(`Saisir une requête de délivrance ${Labels.RDCSC}`)
   },
   {
     url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC,

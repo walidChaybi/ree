@@ -97,5 +97,18 @@ export const TitulaireRequete = {
     }
 
     return lieuNissance;
+  },
+  getTitulaireByPosition({
+    titulaires,
+    position
+  }: {
+    titulaires?: ITitulaireRequete[];
+    position: number;
+  }): ITitulaireRequete | undefined {
+    return titulaires
+      ? titulaires.find(titulaire => {
+          return titulaire.position === position;
+        })
+      : undefined;
   }
 };

@@ -39,11 +39,48 @@ export const Requerant = {
   getPrenom(requerant?: IRequerant): string {
     return requerant && requerant.prenom ? formatPrenom(requerant.prenom) : "";
   },
-  estInteresse(requerant: IRequerant, titulaire: ITitulaireRequete) {
-    return (
-      titulaire.nomNaissance === requerant.nomFamille &&
-      TitulaireRequete.getPrenom1(titulaire) === requerant.prenom
-    );
+  estTitulaireX({
+    requerant,
+    titulaire
+  }: {
+    requerant: IRequerant;
+    titulaire?: ITitulaireRequete;
+  }) {
+    const nomTitulaire =
+      titulaire?.nomNaissance === SNP ? "" : titulaire?.nomNaissance;
+
+    return titulaire && requerant.prenom
+      ? nomTitulaire === requerant.nomFamille &&
+          TitulaireRequete.getPrenom1(titulaire).localeCompare(
+            requerant.prenom,
+            undefined,
+            { sensitivity: "accent" }
+          ) === 0
+      : false;
+  },
+  estUnTitulaire({
+    requerant,
+    titulaires
+  }: {
+    requerant?: IRequerant;
+    titulaires?: ITitulaireRequete[];
+  }) {
+    return requerant
+      ? Requerant.estTitulaireX({
+          titulaire: TitulaireRequete.getTitulaireByPosition({
+            titulaires,
+            position: 1
+          }),
+          requerant
+        }) ||
+          Requerant.estTitulaireX({
+            titulaire: TitulaireRequete.getTitulaireByPosition({
+              titulaires,
+              position: 2
+            }),
+            requerant
+          })
+      : false;
   },
   isParticulierOuUtilisateur(requerant: IRequerant): requerant is IRequerant {
     return (

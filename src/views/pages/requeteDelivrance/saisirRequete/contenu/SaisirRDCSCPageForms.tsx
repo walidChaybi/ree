@@ -1,4 +1,6 @@
+import { FormikProps, FormikValues } from "formik";
 import React from "react";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { TypeRequerant } from "../../../../../model/requete/enum/TypeRequerant";
 import { TRequete } from "../../../../../model/requete/IRequete";
 import { Options } from "../../../../common/util/Type";
@@ -7,34 +9,34 @@ import AdresseForm from "../../../../common/widget/formulaire/adresse/AdresseFor
 import { SelectField } from "../../../../common/widget/formulaire/champsSaisie/SelectField";
 import PiecesJointesForm from "../../../../common/widget/formulaire/piecesJointes/PiecesJointesForm";
 import { SubFormProps } from "../../../../common/widget/formulaire/utils/FormUtil";
-import { SaisirRequeteBoutonsProps } from "../boutons/SaisirRequeteBoutons";
 import {
   ADRESSE,
   DOCUMENT,
-  INTERESSE,
   PIECES_JOINTES,
-  REQUERANT
+  REQUERANT,
+  TITULAIRES
 } from "../modelForm/ISaisirRDCSCPageModel";
-import IdentiteForm, {
-  IdentiteSubFormProps
-} from "../sousFormulaires/identite/IdentiteForm";
+import { limitesTitulaires } from "../SaisirRDCSCPage";
+import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";
+import IdentitesForm from "../sousFormulaires/identite/IdentitesForm";
 import RequerantForm from "../sousFormulaires/requerant/RequerantForm";
 
-export const getBlocsForm = (
-  documentDemandeOptions: any,
-  detailRequeteState: TRequete | undefined,
-  boutonsProps: SaisirRequeteBoutonsProps
-): JSX.Element[] => [
-  getDocumentDemande(documentDemandeOptions, boutonsProps),
-  getInteresseForm(detailRequeteState),
-  getRequerantForm(detailRequeteState),
-  getAdresseForm(),
-  getPiecesJointesForm()
-];
+type TitulaireFormType = {
+  requete?: TRequete;
+  titulaires: IdentiteSubFormProps[];
+  maxTitulaires: number;
+  onAjoutTitulaire: (formik: FormikProps<FormikValues>) => void;
+  onRetraitTitulaire: (formik: FormikProps<FormikValues>) => void;
+};
 
-export function getDocumentDemande(
+type RequerantFormType = {
+  requete?: TRequete;
+  nbTitulaires: number;
+};
+
+export function getDocumentDemandeForm(
   documentDemandeOptions: Options,
-  boutonsProps: SaisirRequeteBoutonsProps
+  onChangeMaxTitulaires: (nb: number, formik: FormikProps<FormikValues>) => void
 ): JSX.Element {
   return (
     <div className="DocumentInput" key={DOCUMENT}>
@@ -42,31 +44,33 @@ export function getDocumentDemande(
         name={DOCUMENT}
         label={getLibelle("Document demandé")}
         options={documentDemandeOptions}
-        formik={boutonsProps.formik}
+        onChange={(e: any, formik?: FormikProps<FormikValues>) => {
+          if (formik) {
+            DocumentDelivrance.estAttestationPacs(e.target.value)
+              ? onChangeMaxTitulaires(limitesTitulaires.MAX, formik)
+              : onChangeMaxTitulaires(limitesTitulaires.MIN, formik);
+          }
+        }}
       />
     </div>
   );
 }
 
-export function getInteresseForm(
-  detailRequeteState: TRequete | undefined
-): JSX.Element {
-  const interesseFormProps = {
-    nom: INTERESSE,
-    titre: getLibelle("Intéressé"),
-    requete: detailRequeteState
-  } as IdentiteSubFormProps;
-  return <IdentiteForm key={INTERESSE} {...interesseFormProps} />;
-}
+export const getTitulairesForm = (props: TitulaireFormType): JSX.Element => (
+  <IdentitesForm key={TITULAIRES} {...props} />
+);
 
-export function getRequerantForm(
-  detailRequeteState: TRequete | undefined
-): JSX.Element {
+export function getRequerantForm(props: RequerantFormType): JSX.Element {
   const requerantFromProps = {
     nom: REQUERANT,
     titre: getLibelle("Identité du requérant"),
-    options: TypeRequerant.getAllEnumsAsOptions(),
-    requete: detailRequeteState
+    options: TypeRequerant.getAllEnumsAsOptions({
+      exclusions:
+        props.nbTitulaires < limitesTitulaires.MAX
+          ? [TypeRequerant.TITULAIRE2]
+          : undefined
+    }),
+    requete: props.requete
   } as SubFormProps;
   return <RequerantForm key={REQUERANT} {...requerantFromProps} />;
 }

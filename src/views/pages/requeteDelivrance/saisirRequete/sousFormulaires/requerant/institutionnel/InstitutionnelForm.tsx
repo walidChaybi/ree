@@ -63,7 +63,6 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
         onChange={e => {
           onChangeTypeInstitutionnel(e);
         }}
-        formik={props.formik}
       />
       {!natureInactif && (
         <InputField

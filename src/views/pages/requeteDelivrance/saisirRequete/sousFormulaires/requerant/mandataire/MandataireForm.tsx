@@ -58,7 +58,6 @@ const MandataireForm: React.FC<SubFormProps> = props => {
         onChange={e => {
           onChangeTypeMandataire(e);
         }}
-        formik={props.formik}
       />
       {!natureInactif && (
         <InputField

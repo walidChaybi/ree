@@ -133,13 +133,11 @@ const RequeteForm: React.FC<SubFormProps> = props => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onChangeNatureActeRequete(e);
                 }}
-                formik={props.formik}
               />
               <SelectField
                 name={withNamespace(props.nom, DOCUMENT_DEMANDE)}
                 label={getLibelle("Document demandé")}
                 options={documentDemandeOptions}
-                formik={props.formik}
               />
             </>
           )}
@@ -156,7 +154,6 @@ const RequeteForm: React.FC<SubFormProps> = props => {
               onChangeMotif(e);
             }}
             pasPremiereOptionVide={props.formulaireReduit}
-            formik={props.formik}
           />
           {!complementMotifInactif && (
             <InputField

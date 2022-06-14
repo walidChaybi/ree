@@ -3,7 +3,7 @@ import { EnumWithComplete } from "../../../views/common/util/enum/EnumWithComple
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../views/common/util/Type";
 
-export const LISTE_DES_REQUETES_COURRIER = ["RDAPC", "RDCSC", "RDC", "RDLFC"];
+export const LISTE_DES_REQUETES_COURRIER = ["RDCSC", "RDC", "RDLFC"];
 
 export class SousTypeDelivrance extends EnumWithComplete {
   public static readonly RDD = new SousTypeDelivrance(
@@ -16,25 +16,15 @@ export class SousTypeDelivrance extends EnumWithComplete {
     "Délivrance Extrait/Copie courrier",
     "Délivrance E/C (c)"
   );
-  public static readonly RDAPD = new SousTypeDelivrance(
-    "RDAPD",
-    "Délivrance Attestation de PACS dématérialisée",
-    "Délivrance AP (d)"
-  );
-  public static readonly RDAPC = new SousTypeDelivrance(
-    "RDAPC",
-    "Délivrance Attestation de PACS courrier",
-    "Délivrance AP (c)"
-  );
   public static readonly RDCSD = new SousTypeDelivrance(
     "RDCSD",
-    "Délivrance Certificat de Situation dématérialisée",
-    "Délivrance CS (d)"
+    "Délivrance Certificat & Attestation RC/RCA/PACS dématérialisé",
+    "Délivrance C&A (d)"
   );
   public static readonly RDCSC = new SousTypeDelivrance(
     "RDCSC",
-    "Délivrance Certificat de Situation courrier",
-    "Délivrance CS (c)"
+    "Délivrance Certificat & Attestation RC/RCA/PACS courrier",
+    "Délivrance C&A (c)"
   );
   public static readonly RDDP = new SousTypeDelivrance(
     "RDDP",
