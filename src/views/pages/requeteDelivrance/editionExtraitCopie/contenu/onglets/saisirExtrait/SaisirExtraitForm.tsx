@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import * as Yup from "yup";
 import {
   FicheActe,
@@ -9,46 +9,98 @@ import {
   ITitulaireActe,
   TitulaireActe
 } from "../../../../../../../model/etatcivil/acte/ITitulaireActe";
+import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
+import { CODE_EXTRAIT_PLURILINGUE } from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { ReinitialiserValiderFormBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
   PARENT_NAISS,
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2
 } from "../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import { IExtraitSaisiAEnvoyer } from "../../../../../../common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import {
+  ISauvegardeValidationSaisieExtraitParams,
+  useSauvegardeValidationSaisieExtrait
+} from "../../../../../../common/hook/requete/ValidationSaisieExtraitHook";
 import { useReinitialisationComposant } from "../../../../../../common/util/form/useReinitialisation";
 import { getLibelle } from "../../../../../../common/util/Utils";
 import { AccordionRece } from "../../../../../../common/widget/accordion/AccordionRece";
 import { StaticField } from "../../../../../../common/widget/formulaire/champFixe/StaticField";
 import { Formulaire } from "../../../../../../common/widget/formulaire/Formulaire";
 import { withNamespace } from "../../../../../../common/widget/formulaire/utils/FormUtil";
+import { ConfirmationPopin } from "../../../../../../common/widget/popin/ConfirmationPopin";
+import { DocumentEC } from "../../../enum/DocumentEC";
 import { IEvenement } from "./../../../../../../../model/etatcivil/acte/IEvenement";
 import { NatureActe } from "./../../../../../../../model/etatcivil/enum/NatureActe";
 import { ParentNaissanceForm } from "./contenu/sousFormulaires/ParentNaissanceForm";
 import { TitulaireEvenementForm } from "./contenu/sousFormulaires/TitulaireEvenementForm";
 import { TitulaireEvtValidationSchema } from "./contenu/sousFormulaires/validation/TitulaireEvenementFormValidation";
-import { mappingActeVerFormulaireSaisirExtrait } from "./mappingActeVerFormulaireSaisirExtrait";
+import {
+  ISaisieExtraitForm,
+  mappingActeVerFormulaireSaisirExtrait
+} from "./mapping/mappingActeVerFormulaireSaisirExtrait";
+import { mappingFormulaireSaisirExtraitNaissanceVersExtraitAEnvoyer } from "./mapping/mappingFormulaireSaisirExtraitNaissanceVersExtraitAEnvoyer";
 import "./scss/FormulaireSaisirExtrait.scss";
 
 // Schéma de validation en sortie de champs
-const ExtraitValidationSchema = Yup.object({
+const ExtraitValidationUnTitulaireSchema = Yup.object({
+  [TITULAIRE_EVT_1]: TitulaireEvtValidationSchema
+});
+
+const ExtraitValidationDeuxTitulairesSchema = Yup.object({
   [TITULAIRE_EVT_1]: TitulaireEvtValidationSchema,
-  // FIXME: verififer que la validation s'effectue bien si un seul titulaire (à mon avis non). Idem dans le cas de un ou deux parents
   [TITULAIRE_EVT_2]: TitulaireEvtValidationSchema
 });
 
 interface ComponentFormProps {
   acte: IFicheActe;
+  requete: IRequeteDelivrance;
+  handleDocumentEnregistre: (index: DocumentEC) => void;
 }
 
 type SaisirExtraitFormProps = ComponentFormProps;
 
 export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
+  const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
+  const [sauvegarderSaisieParams, setSauvegarderSaisieParams] =
+    useState<ISauvegardeValidationSaisieExtraitParams>();
   const { cleReinitialisation, reinitialisation } =
     useReinitialisationComposant();
+  const [extraitSaisiAEnvoyer, setExtraitSaisiAEnvoyer] =
+    useState<IExtraitSaisiAEnvoyer>();
 
-  const onSubmitValiderExtraitSaisi = useCallback(() => {
-    /*TODO*/
-  }, []);
+  useSauvegardeValidationSaisieExtrait(sauvegarderSaisieParams);
+
+  const onSubmitValiderExtraitSaisi = (extraitSaisi: ISaisieExtraitForm) => {
+    const extraitAEnvoyer =
+      mappingFormulaireSaisirExtraitNaissanceVersExtraitAEnvoyer(
+        extraitSaisi,
+        props.acte
+      );
+    setExtraitSaisiAEnvoyer(extraitAEnvoyer);
+    if (parentMemeSexeOuExtraitPlurilingue(props.acte, props.requete)) {
+      setPopinOuverte(true);
+    } else {
+      setSauvegarderSaisieParams({
+        requete: props.requete,
+        acte: props.acte,
+        extraitSaisiAEnvoyer: extraitAEnvoyer,
+        callBack: props.handleDocumentEnregistre
+      });
+    }
+  };
+
+  const handlePopinOui = useCallback(() => {
+    if (extraitSaisiAEnvoyer) {
+      setSauvegarderSaisieParams({
+        requete: props.requete,
+        acte: props.acte,
+        extraitSaisiAEnvoyer,
+        callBack: props.handleDocumentEnregistre
+      });
+    }
+  }, [extraitSaisiAEnvoyer, props]);
 
   const titulairesAMs = FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConj(
     props.acte
@@ -69,36 +121,70 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   );
 
   return (
-    <Formulaire
-      key={cleReinitialisation}
-      className="FormulaireSaisirExtrait"
-      formDefaultValues={formDefaultValues}
-      formValidationSchema={ExtraitValidationSchema}
-      onSubmit={onSubmitValiderExtraitSaisi}
-    >
-      <div className="DeuxColonnes">
-        <StaticField
-          libelle={getLibelle("Nature")}
-          valeur={props.acte.nature.libelle}
-        ></StaticField>
-        <StaticField
-          libelle={getLibelle("Référence")}
-          valeur={FicheActe.getReference(props.acte)}
-        ></StaticField>
-      </div>
+    <>
+      <Formulaire
+        key={cleReinitialisation}
+        className="FormulaireSaisirExtrait"
+        formDefaultValues={formDefaultValues}
+        formValidationSchema={
+          titulairesAMs.length > 1
+            ? ExtraitValidationDeuxTitulairesSchema
+            : ExtraitValidationUnTitulaireSchema
+        }
+        onSubmit={onSubmitValiderExtraitSaisi}
+      >
+        <div className="DeuxColonnes">
+          <StaticField
+            libelle={getLibelle("Nature")}
+            valeur={props.acte.nature.libelle}
+          ></StaticField>
+          <StaticField
+            libelle={getLibelle("Référence")}
+            valeur={FicheActe.getReference(props.acte)}
+          ></StaticField>
+        </div>
 
-      {getTitulairesEvenementsEtParentsForm(
-        titulairesAMs,
-        natureActe,
-        titulaire1Parents,
-        titulaire2Parents,
-        evenement
-      )}
+        {getTitulairesEvenementsEtParentsForm(
+          titulairesAMs,
+          natureActe,
+          titulaire1Parents,
+          titulaire2Parents,
+          evenement
+        )}
 
-      <ReinitialiserValiderFormBoutons
-        onClickReInitialiser={reinitialisation}
+        <ReinitialiserValiderFormBoutons
+          onClickReInitialiser={reinitialisation}
+          validerDisabled={false}
+        />
+      </Formulaire>
+      <ConfirmationPopin
+        isOpen={popinOuverte}
+        messages={[
+          getLibelle(
+            "Au moins une personne (le titulaire ou les parents) est de genre indéterminé ou les parents sont de même sexe."
+          ),
+          getLibelle(
+            "Si vous continuez, l'extrait plurilingue généré sera en erreur."
+          ),
+          getLibelle("Voulez-vous continuer ?")
+        ]}
+        boutons={[
+          {
+            label: getLibelle("Oui"),
+            action: () => {
+              handlePopinOui();
+              setPopinOuverte(false);
+            }
+          },
+          {
+            label: getLibelle("Non"),
+            action: () => {
+              setPopinOuverte(false);
+            }
+          }
+        ]}
       />
-    </Formulaire>
+    </>
   );
 };
 
@@ -174,5 +260,21 @@ function getTitulaireEvenementForm(
         natureActe={natureActe}
       ></TitulaireEvenementForm>
     </AccordionRece>
+  );
+}
+
+function parentMemeSexeOuExtraitPlurilingue(
+  acte: IFicheActe,
+  requete: IRequeteDelivrance
+) {
+  return (
+    acte.titulaires.some(el =>
+      TitulaireActe.genreIndetermineOuParentHomo(el)
+    ) &&
+    requete.documentsReponses.some(
+      el =>
+        el.typeDocument ===
+        DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE)
+    )
   );
 }

@@ -320,10 +320,11 @@ export function creationEC(
 
 export function toutesLesDonneesSontPresentes(
   uuidDocumentReponse: string | undefined,
+  uuidDocumentReponseSansAction: string | undefined,
   extraitCopieApiHookResultat?: IExtraitCopieApiHookResultat
 ) {
   return (
-    uuidDocumentReponse &&
+    (uuidDocumentReponse || uuidDocumentReponseSansAction) &&
     extraitCopieApiHookResultat &&
     extraitCopieApiHookResultat.donneesComposition
   );
@@ -341,8 +342,5 @@ export function estPresentIdActeEtChoixDelivrance(
 export function estPresentActeEtChoixDelivrance(
   params?: IGenerationECParams
 ): boolean {
-  return tousNonNullsNonZeroEtNonVides(
-    params?.acte,
-    params?.requete?.choixDelivrance
-  );
+  return tousNonNullsNonZeroEtNonVides(params?.acte, params?.choixDelivrance);
 }

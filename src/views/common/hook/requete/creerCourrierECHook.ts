@@ -24,7 +24,7 @@ export interface ICreerCourrierECParam {
   requete: IRequeteDelivrance;
   saisieCourrier: SaisieCourrier;
   optionsChoisies: OptionCourrier[];
-  handleCourrierEnregistre: (index: DocumentEC) => void;
+  handleDocumentEnregistre: (index: DocumentEC) => void;
   setOperationEnCours: (op: boolean) => void;
 }
 
@@ -62,6 +62,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
       params &&
       params.idActe &&
       resultatGenerationCourrier &&
+      params.requete.choixDelivrance &&
       ChoixDelivrance.estReponseAvecDelivrance(
         params.requete.choixDelivrance
       ) &&
@@ -74,7 +75,8 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
           params.requete.sousType,
           params.requete.choixDelivrance
         ),
-        mentionsRetirees: []
+        mentionsRetirees: [],
+        choixDelivrance: params.requete.choixDelivrance
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,7 +97,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
           params.requete.documentsReponses.length > 1))
     ) {
       params.setOperationEnCours(false);
-      params.handleCourrierEnregistre(
+      params.handleDocumentEnregistre(
         getIndexDocument(
           params.requete,
           resultatGenerationEC,

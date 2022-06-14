@@ -560,7 +560,7 @@ export const SaisirRDCSCPage: React.FC = () => {
       />
     </ProtectionApercu>
   );
-};;;;
+};
 
 function getPiecesJointesAMettreAJour(formulairePiecesJointes?: PieceJointe[]) {
   // On ne prend que les pjs dont le contenu est renseigné,
@@ -570,7 +570,7 @@ function getPiecesJointesAMettreAJour(formulairePiecesJointes?: PieceJointe[]) {
   );
 }
 
-const initialiserTitulaires = (nbTitulaires: number = 1) => {
+const initialiserTitulaires = (nbTitulaires = 1) => {
   const titulaires = [];
 
   for (let i = 1; i <= nbTitulaires; i++) {
@@ -580,7 +580,7 @@ const initialiserTitulaires = (nbTitulaires: number = 1) => {
   return titulaires;
 };
 
-export const creerTitulaire = (numTitulaire: number = 1) => {
+export const creerTitulaire = (numTitulaire = 1) => {
   return {
     nom: withNamespace(TITULAIRES, `titulaire${numTitulaire}`),
     titre: getLibelle(`Titulaire ${numTitulaire}`)

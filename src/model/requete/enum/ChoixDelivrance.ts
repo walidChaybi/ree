@@ -107,7 +107,7 @@ export class ChoixDelivrance extends EnumWithComplete {
   }
 
   public static getCodeDocumentDelivranceFromChoixDelivrance(
-    choixDelivrance: ChoixDelivrance
+    choixDelivrance?: ChoixDelivrance
   ) {
     switch (choixDelivrance) {
       case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
@@ -123,5 +123,17 @@ export class ChoixDelivrance extends EnumWithComplete {
       default:
         return "";
     }
+  }
+
+  public static choixDelivranceCoherentAvecCode(
+    choixDelivrance: ChoixDelivrance,
+    code: string
+  ) {
+    return (
+      code ===
+      ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
+        choixDelivrance
+      )
+    );
   }
 }

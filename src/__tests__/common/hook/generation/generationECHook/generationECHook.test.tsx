@@ -30,7 +30,8 @@ const ecMariageSansFiliationparams: IGenerationECParams = {
     ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
   ),
   validation: Validation.N,
-  mentionsRetirees: []
+  mentionsRetirees: [],
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
 };
 
 const ecMariageAvecFiliationparams: IGenerationECParams = {
@@ -40,7 +41,8 @@ const ecMariageAvecFiliationparams: IGenerationECParams = {
     ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
   ),
   mentionsRetirees: [],
-  validation: Validation.N
+  validation: Validation.N,
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
 };
 
 const ecNaissanceSansFiliationparams: IGenerationECParams = {
@@ -50,7 +52,8 @@ const ecNaissanceSansFiliationparams: IGenerationECParams = {
     ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
   ),
   mentionsRetirees: [],
-  validation: Validation.N
+  validation: Validation.N,
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
 };
 
 const ecNaissancePlurilingueparams: IGenerationECParams = {
@@ -60,7 +63,8 @@ const ecNaissancePlurilingueparams: IGenerationECParams = {
     ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
   ),
   mentionsRetirees: [],
-  validation: Validation.N
+  validation: Validation.N,
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
 };
 
 const ecCopieActeImageMariageparams: IGenerationECParams = {
@@ -70,7 +74,8 @@ const ecCopieActeImageMariageparams: IGenerationECParams = {
     ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE
   ),
   mentionsRetirees: [],
-  validation: Validation.N
+  validation: Validation.N,
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE
 };
 
 const HookConsumer: React.FC<

@@ -95,7 +95,7 @@ export const TitulaireActe = {
   },
 
   getTousLesParents(titulaire?: ITitulaireActe): IFiliation[] {
-    const res = this.getParents(
+    return this.getParents(
       (filiation: IFiliation) =>
         [
           LienParente.PARENT,
@@ -105,8 +105,6 @@ export const TitulaireActe = {
 
       titulaire
     );
-
-    return res;
   },
 
   getParents(
@@ -119,6 +117,7 @@ export const TitulaireActe = {
           .sort((a, b) => a.ordre - b.ordre)
       : [];
   },
+  
   getAuMoinsDeuxParentsDirects(titulaire?: ITitulaireActe): IFiliation[] {
     let parents = this.getParentsDirects(titulaire);
     if (parents.length === 0) {
@@ -128,7 +127,24 @@ export const TitulaireActe = {
     }
     return parents;
   },
+
   mapPrenomsVersPrenomsOrdonnes(titulaire?: ITitulaireActe): IPrenomOrdonnes[] {
     return mapPrenomsVersPrenomsOrdonnes(titulaire?.prenoms);
+  },
+
+  genreIndetermineOuParentHomo(titulaire: ITitulaireActe) {
+    return (
+      titulaire.sexe === Sexe.INDETERMINE ||
+      TitulaireActe.parentsSontDeMemeSexe(titulaire) ||
+      TitulaireActe.getParentsDirects(titulaire).some(
+        el => el.sexe === Sexe.INDETERMINE
+      )
+    );
+  },
+
+  parentsSontDeMemeSexe(titulaire: ITitulaireActe) {
+    const parents = TitulaireActe.getParentsDirects(titulaire);
+    const sexe = parents[0].sexe;
+    return parents.every(el => el.sexe === sexe);
   }
 };

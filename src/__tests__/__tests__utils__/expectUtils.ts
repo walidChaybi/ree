@@ -49,6 +49,14 @@ export function expectEstPresentEtChecked(ariaLabel: string) {
   return widget;
 }
 
+export function expectEstPresentEtNonChecked(ariaLabel: string) {
+  const widget = screen.getByLabelText(ariaLabel) as HTMLInputElement;
+  expect(widget).toBeInTheDocument();
+  expect(widget.checked).toBeFalsy();
+
+  return widget;
+}
+
 export function expectEstSelectPresentAvecValeur(
   testId: string,
   value: string

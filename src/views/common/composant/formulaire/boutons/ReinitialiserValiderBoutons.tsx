@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { officierHabiliterPourLeDroit } from "../../../../../model/agent/IOfficier";
 import { Droit } from "../../../../../model/Droit";
 import { RECEContext } from "../../../../core/body/Body";
-import { getLibelle } from "../../../util/Utils";
+import { executeEnDiffere, getLibelle } from "../../../util/Utils";
 import { FormikComponentProps } from "../../../widget/formulaire/utils/FormUtil";
 import "./scss/ReinitialiserValiderBoutons.scss";
 interface ReinitialiserValiderBoutonsProps {
@@ -12,6 +12,8 @@ interface ReinitialiserValiderBoutonsProps {
   onClickValider?: any;
   validerDisabled?: boolean;
 }
+
+const TIMEOUT = 10;
 
 export const ReinitialiserValiderBoutons: React.FC<
   ReinitialiserValiderBoutonsProps
@@ -53,7 +55,9 @@ const _ReinitialiserValiderFormBoutons: React.FC<
       props.reInitialiserDisabled !== undefined
         ? props.reInitialiserDisabled
         : !props.formik.dirty;
-    setIsDirty(!res);
+    executeEnDiffere(() => {
+      setIsDirty(!res);
+    }, TIMEOUT);
     return res;
   }
 

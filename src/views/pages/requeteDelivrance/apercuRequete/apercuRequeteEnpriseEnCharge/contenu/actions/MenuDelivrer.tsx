@@ -51,7 +51,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [courrierEcParams, setCourrierEcParamss] =
+  const [courrierEcParams, setCourrierEcParams] =
     useState<ICreerCourrierECParam>();
 
   const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
@@ -106,7 +106,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     ) {
       const requeteAvecChoixDelivrance = { ...props.requete, choixDelivrance };
       setOperationEnCours(true);
-      setCourrierEcParamss({
+      setCourrierEcParams({
         ...compositionCourrierAutomatique(
           choixDelivrance,
           options,
@@ -114,7 +114,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
         ),
         requete: requeteAvecChoixDelivrance,
         idActe: actes[0]?.idActe,
-        handleCourrierEnregistre: redirection,
+        handleDocumentEnregistre: redirection,
         setOperationEnCours
       });
     }

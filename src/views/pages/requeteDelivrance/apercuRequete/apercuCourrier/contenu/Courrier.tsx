@@ -50,7 +50,7 @@ import "./scss/Courrier.scss";
 interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
   idActe?: string;
-  handleCourrierEnregistre: (index: DocumentEC) => void;
+  handleDocumentEnregistre: (index: DocumentEC) => void;
 }
 
 export const Courrier: React.FC<ModificationCourrierProps> = props => {
@@ -107,7 +107,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
         optionsChoisies,
         requete: props.requete,
         idActe: props.idActe,
-        handleCourrierEnregistre: props.handleCourrierEnregistre,
+        handleDocumentEnregistre: props.handleDocumentEnregistre,
         saisieCourrier: { ...values },
         setOperationEnCours
       });

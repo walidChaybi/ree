@@ -34,7 +34,7 @@ import { OngletProps } from "./contenu/VoletAvecOnglet";
 import { DocumentEC } from "./enum/DocumentEC";
 
 export const getOngletsEdition = (
-  handleCourrierEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: (index: DocumentEC) => void,
   requete: IRequeteDelivrance,
   document?: IDocumentReponse,
   acte?: IFicheActe
@@ -53,7 +53,7 @@ export const getOngletsEdition = (
           ajoutOngletsCopie(
             res,
             document,
-            handleCourrierEnregistre,
+            handleDocumentEnregistre,
             acte,
             requete
           );
@@ -63,7 +63,7 @@ export const getOngletsEdition = (
           ajoutOngletsExtraitFilliation(
             res,
             document,
-            handleCourrierEnregistre,
+            handleDocumentEnregistre,
             acte,
             requete
           );
@@ -72,7 +72,7 @@ export const getOngletsEdition = (
           ajoutOngletsExtraitPlurilingue(
             res,
             document,
-            handleCourrierEnregistre,
+            handleDocumentEnregistre,
             acte,
             requete
           );
@@ -86,7 +86,7 @@ export const getOngletsEdition = (
           <Courrier
             requete={requete}
             idActe={acte?.id}
-            handleCourrierEnregistre={handleCourrierEnregistre}
+            handleDocumentEnregistre={handleDocumentEnregistre}
           ></Courrier>
         )
       });
@@ -156,13 +156,13 @@ export const getOngletsVisu = (
 function ajoutOngletsCopie(
   res: OngletProps,
   document: IDocumentReponse,
-  handleCourrierEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: (index: DocumentEC) => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) {
   if (acte.type === TypeActe.TEXTE) {
     res.liste.push(
-      ongletMentions(acte, document, handleCourrierEnregistre, requete)
+      ongletMentions(acte, document, handleDocumentEnregistre, requete)
     );
     res.ongletSelectionne = document.validation === Validation.O ? 1 : 0;
   } else {
@@ -174,7 +174,7 @@ function ajoutOngletsCopie(
 export const ajoutOngletsExtraitFilliation = (
   res: OngletProps,
   document: IDocumentReponse,
-  handleCourrierEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: (index: DocumentEC) => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
@@ -203,10 +203,10 @@ export const ajoutOngletsExtraitFilliation = (
   }
 
   // Sous-onglet 0
-  res.liste.push(ongletSaisirExtrait(acte));
+  res.liste.push(ongletSaisirExtrait(acte, requete, handleDocumentEnregistre));
   // Sous-onglet 1
   res.liste.push(
-    ongletMentions(acte, document, handleCourrierEnregistre, requete)
+    ongletMentions(acte, document, handleDocumentEnregistre, requete)
   );
   if (document.validation !== "E") {
     // Sous-onglet 2
@@ -217,7 +217,7 @@ export const ajoutOngletsExtraitFilliation = (
           acte={acte}
           requete={requete}
           document={document}
-          handleDocumentSauvegarder={handleCourrierEnregistre}
+          handleDocumentEnregistre={handleDocumentEnregistre}
         />
       )
     });
@@ -227,17 +227,17 @@ export const ajoutOngletsExtraitFilliation = (
 export const ajoutOngletsExtraitPlurilingue = (
   res: OngletProps,
   document: IDocumentReponse,
-  handleCourrierEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: (index: DocumentEC) => void,
   acte: IFicheActe,
   requete: IRequeteDelivrance
 ) => {
-  res.liste.push(ongletSaisirExtrait(acte));
+  res.liste.push(ongletSaisirExtrait(acte, requete, handleDocumentEnregistre));
   if (
     acte.nature === NatureActe.NAISSANCE ||
     acte.nature === NatureActe.MARIAGE
   ) {
     res.liste.push(
-      ongletMentions(acte, document, handleCourrierEnregistre, requete)
+      ongletMentions(acte, document, handleDocumentEnregistre, requete)
     );
   }
 };
@@ -258,7 +258,7 @@ export const boutonModifierCopiePresent = (
 export const ongletMentions = (
   acte: IFicheActe,
   doc: IDocumentReponse,
-  handleCourrierEnregistre: (index: DocumentEC) => void,
+  handleDocumentEnregistre: (index: DocumentEC) => void,
   requete: IRequeteDelivrance
 ) => {
   return {
@@ -267,17 +267,27 @@ export const ongletMentions = (
       <GestionMentions
         acte={acte}
         document={doc}
-        handleCourrierEnregistre={handleCourrierEnregistre}
+        handleDocumentEnregistre={handleDocumentEnregistre}
         requete={requete}
       ></GestionMentions>
     )
   };
 };
 
-const ongletSaisirExtrait = (acte: IFicheActe) => {
+const ongletSaisirExtrait = (
+  acte: IFicheActe,
+  requete: IRequeteDelivrance,
+  handleDocumentEnregistre: (index: DocumentEC) => void
+) => {
   return {
     titre: getLibelle("Saisir l'extrait"),
-    component: <SaisirExtraitForm acte={acte}></SaisirExtraitForm>
+    component: (
+      <SaisirExtraitForm
+        acte={acte}
+        requete={requete}
+        handleDocumentEnregistre={handleDocumentEnregistre}
+      ></SaisirExtraitForm>
+    )
   };
 };
 

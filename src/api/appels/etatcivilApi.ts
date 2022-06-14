@@ -1,6 +1,7 @@
 import { TypeExtrait } from "../../model/etatcivil/enum/TypeExtrait";
 import { TypeFiche } from "../../model/etatcivil/enum/TypeFiche";
 import { IRMCRequestActesInscriptions } from "../../model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import { IExtraitSaisiAEnvoyer } from "../../views/common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import { AddAlerteActeApiHookParameters } from "../../views/common/hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters } from "../../views/common/hook/alertes/DeleteAlerteActeHookApi";
 import { IDerniereDelivranceRcRcaPacsParams } from "../../views/common/hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
@@ -31,6 +32,7 @@ export const URL_DECRETS = "/repertoirecivil/decrets";
 export const URL_DERNIERE_DELIVRANCE = "/dernieredelivrance";
 export const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS =
   "/repertoirecivil/datedernieredelivrance";
+export const URL_SAISIE_EXTRAIT = "/saisieExtrait";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -122,7 +124,7 @@ export function rechercheMultiCriteresInscriptions(
 
 /** Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")*/
 export function getImagesActe(identifiant: string): Promise<any> {
-  return api.fetch({
+  return api.fetchCache({
     method: HttpMethod.GET,
     uri: `${URL_ACTE_CORPS_IMAGE}/${identifiant}`,
     responseType: "blob"
@@ -291,5 +293,16 @@ export function updateDateDerniereDelivranceRcRcaPacs(
     method: HttpMethod.PATCH,
     uri: `${URL_DERNIERE_DELIVRANCE_RC_RCA_PACS}`,
     data: body
+  });
+}
+
+export function majEtatCivilSuiteSaisieExtrait(
+  idActe: string,
+  extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer
+) {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_ACTE}/${idActe}${URL_SAISIE_EXTRAIT}`,
+    data: extraitSaisiAEnvoyer
   });
 }

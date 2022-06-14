@@ -4,7 +4,6 @@ import {
   getValeurOuVide,
   triListeObjetsSurPropriete
 } from "../../../views/common/util/Utils";
-import { EtatCivilUtil } from "../../../views/common/utilMetier/EtatCivilUtil";
 import { IPersonne } from "../commun/IPersonne";
 import { NatureActe } from "../enum/NatureActe";
 import { TypeActe } from "../enum/TypeActe";
@@ -234,14 +233,5 @@ function majNomSequable(
 
     titulaireAM.nomPartie1 = titulaireActe.nomPartie1;
     titulaireAM.nomPartie2 = titulaireActe.nomPartie2;
-
-    // Décompositon du nom du titulaire AM lorsqu'il n'y a pas de nom 1ere partie
-    if (!titulaireAM.nomPartie1) {
-      const vocables = EtatCivilUtil.getVocables(titulaireAM.nom);
-      if (vocables.length > 1) {
-        titulaireAM.nomPartie1 = vocables[0];
-        titulaireAM.nomPartie2 = vocables[1];
-      }
-    }
   }
 }

@@ -43,12 +43,12 @@ export class EnumNomemclature extends EnumWithLibelle {
   }
 
   public static getCodeForLibelle(clazz: any, libelle: string) {
-    let keyResult = "";
+    let codeResult = "";
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key) && clazz[key].libelle === libelle) {
-        keyResult = key;
+        codeResult = clazz[key].code;
       }
     }
-    return keyResult;
+    return codeResult;
   }
 }

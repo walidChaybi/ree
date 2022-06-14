@@ -1,5 +1,7 @@
 import { Form, Formik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
+import { RECEContext } from "../../../core/body/Body";
+import { executeEnDiffere } from "../../util/Utils";
 import { Fieldset } from "../fieldset/Fieldset";
 import "./scss/Formulaire.scss";
 
@@ -12,6 +14,8 @@ interface FomulaireProps {
   disabled?: boolean;
 }
 
+const TIMEOUT = 800;
+
 export const Formulaire: React.FC<FomulaireProps> = ({
   children,
   titre = "",
@@ -21,12 +25,14 @@ export const Formulaire: React.FC<FomulaireProps> = ({
   className,
   disabled
 }) => {
+  const { setIsDirty } = useContext(RECEContext);
   const form = getForm(
     onSubmit,
     formDefaultValues,
     formValidationSchema,
     disabled,
-    children
+    children,
+    setIsDirty
   );
   return (
     <div className={className ? `${className} Formulaire` : "Formulaire"}>
@@ -39,11 +45,17 @@ function getForm(
   formDefaultValues: any,
   formValidationSchema: any,
   disabled = false,
-  children: any
+  children: any,
+  setIsDirty: (dirty: boolean) => void
 ) {
   return (
     <Formik
-      onSubmit={onSubmit}
+      onSubmit={(e: any) => {
+        executeEnDiffere(() => {
+          setIsDirty(false);
+        }, TIMEOUT);
+        onSubmit(e);
+      }}
       initialValues={formDefaultValues}
       validationSchema={formValidationSchema}
       enableReinitialize={true}

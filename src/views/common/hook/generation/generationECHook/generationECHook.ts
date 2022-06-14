@@ -15,6 +15,10 @@ import {
   useExtraitCopieApiHook
 } from "../../composition/CompositionExtraitCopieHook";
 import {
+  ISauvegarderDocumentsParams,
+  useSauvegarderDocument
+} from "../../requete/SauvegarderDocumentApiHook";
+import {
   IStockerDocumentCreerActionMajStatutRequeteParams,
   useStockerDocumentCreerActionMajStatutRequete
 } from "../../requete/StockerDocumentCreerActionMajStatutRequete";
@@ -35,8 +39,9 @@ export interface IGenerationECParams {
   acte?: IFicheActe;
   requete: IRequeteDelivrance;
   validation: Validation;
-  pasDeStockageDocument?: boolean;
+  pasDAction?: boolean;
   mentionsRetirees: string[];
+  choixDelivrance?: ChoixDelivrance;
 }
 
 export interface IGenerationECResultat {
@@ -52,6 +57,9 @@ export function useGenerationEC(
   const [extraitCopieApiHookParams, setExtraitCopieApiHookParams] =
     useState<IExtraitCopieApiHookParams>();
 
+  const [sauvegarderDocumentParams, setSauvegarderDocumentParams] =
+    useState<ISauvegarderDocumentsParams>();
+
   const [
     stockerDocumentCreerActionMajStatutRequeteParams,
     setStockerDocumentCreerActionMajStatutRequeteParams
@@ -59,10 +67,8 @@ export function useGenerationEC(
 
   const [acteApiHookParams, setActeApiHookParams] =
     useState<IActeApiHookParams>();
-
-  const [validation, setValidation] = useState<Validation>();
-
   const [acteDejaPresent, setActeDejaPresent] = useState<IFicheActe>();
+  const [validation, setValidation] = useState<Validation>();
 
   useEffect(() => {
     if (estPresentIdActeEtChoixDelivrance(params)) {
@@ -70,7 +76,7 @@ export function useGenerationEC(
         idActe: params?.idActe,
         recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(
           //@ts-ignore params.requete.choixDelivrance non null
-          params.requete.choixDelivrance
+          params.choixDelivrance
         )
       });
     } else if (estPresentActeEtChoixDelivrance(params)) {
@@ -100,43 +106,40 @@ export function useGenerationEC(
 
   // 4 - Création du document réponse pour stockage dans la BDD et Swift
   const creationDocumentReponseOuResultat = useCallback(
-    (
-      requete: IRequeteDelivrance,
-      contenu: string,
-      nbPages: number,
-      pasDeStockageDocument = false
-    ) => {
-      if (pasDeStockageDocument) {
-        // Pas de stockage demandé, le résultat est retourné avec uniquement le document généré
-        setResultat({
-          resultGenerationUnDocument: {
-            contenuDocumentReponse: contenu
-          }
-        });
-      } else if (requete.choixDelivrance) {
+    (requete: IRequeteDelivrance, contenu: string, nbPages: number) => {
+      if (requete.choixDelivrance && params?.choixDelivrance) {
         const statutRequete = getStatutRequete(
           requete.choixDelivrance,
           requete.sousType
         );
-        setStockerDocumentCreerActionMajStatutRequeteParams({
-          documentReponsePourStockage: {
-            contenu,
-            nom: getNomDocument(requete.choixDelivrance),
-            typeDocument: getTypeDocument(requete.choixDelivrance), // UUID du type de document demandé (nomenclature)
-            nbPages,
-            mimeType: MimeType.APPLI_PDF,
-            orientation: Orientation.PORTRAIT,
-            validation,
-            mentionsRetirees: params?.mentionsRetirees.map(idMention => ({
-              idMention
-            })),
-            idActe: acteApiHookResultat?.acte?.id || acteDejaPresent?.id
-          } as IDocumentReponse,
 
-          libelleAction: statutRequete.libelle,
-          statutRequete,
-          requeteId: requete.id
-        });
+        const documentReponsePourStockage = {
+          contenu,
+          nom: getNomDocument(params.choixDelivrance),
+          typeDocument: getTypeDocument(params.choixDelivrance), // UUID du type de document demandé (nomenclature)
+          nbPages,
+          mimeType: MimeType.APPLI_PDF,
+          orientation: Orientation.PORTRAIT,
+          validation,
+          mentionsRetirees: params?.mentionsRetirees.map(idMention => ({
+            idMention
+          })),
+          idActe: acteApiHookResultat?.acte?.id || acteDejaPresent?.id
+        } as IDocumentReponse;
+
+        if (params?.pasDAction) {
+          setSauvegarderDocumentParams({
+            documentsReponsePourStockage: [documentReponsePourStockage],
+            requeteId: requete.id
+          });
+        } else {
+          setStockerDocumentCreerActionMajStatutRequeteParams({
+            documentReponsePourStockage,
+            libelleAction: statutRequete.libelle,
+            statutRequete,
+            requeteId: requete.id
+          });
+        }
       }
     },
     [acteApiHookResultat, acteDejaPresent, validation, params]
@@ -147,8 +150,7 @@ export function useGenerationEC(
       creationDocumentReponseOuResultat(
         params.requete,
         extraitCopieApiHookResultat.donneesComposition.contenu,
-        extraitCopieApiHookResultat.donneesComposition.nbPages,
-        params.pasDeStockageDocument
+        extraitCopieApiHookResultat.donneesComposition.nbPages
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -169,17 +171,25 @@ export function useGenerationEC(
     stockerDocumentCreerActionMajStatutRequeteParams
   );
 
+  // 5bis - Stockage du document sans Maj statut
+  const uuidDocumentReponseSansAction = useSauvegarderDocument(
+    sauvegarderDocumentParams
+  );
+
   // 6- Maj du résultat
   useEffect(() => {
     if (
       toutesLesDonneesSontPresentes(
         uuidDocumentReponse,
+        uuidDocumentReponseSansAction,
         extraitCopieApiHookResultat
       )
     ) {
       setResultat({
         resultGenerationUnDocument: {
-          idDocumentReponse: uuidDocumentReponse,
+          idDocumentReponse: uuidDocumentReponse
+            ? uuidDocumentReponse
+            : uuidDocumentReponseSansAction,
           contenuDocumentReponse:
             //@ts-ignore
             extraitCopieApiHookResultat.donneesComposition.contenu
@@ -187,7 +197,7 @@ export function useGenerationEC(
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uuidDocumentReponse]);
+  }, [uuidDocumentReponse, uuidDocumentReponseSansAction]);
 
   return resultat;
 }

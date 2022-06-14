@@ -82,7 +82,7 @@ export class NatureMention extends EnumNomemclature {
   public static getUuidFromNature(nature?: NatureMention): string {
     let uuid = "";
     if (nature) {
-      uuid = EnumNomemclature.getCodeForLibelle(NatureMention, nature.libelle);
+      uuid = EnumNomemclature.getKeyForCode(NatureMention, nature.code);
     }
     return uuid ? uuid : "";
   }

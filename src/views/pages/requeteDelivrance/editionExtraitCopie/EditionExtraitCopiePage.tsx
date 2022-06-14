@@ -165,6 +165,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
       if (
         estTableauNonVide(imagesModifieesBase64) &&
         requete &&
+        requete.choixDelivrance &&
         resultatInformationsActeApiHook?.acte &&
         documentEdite
       ) {
@@ -181,11 +182,13 @@ export const EditionExtraitCopiePage: React.FC = () => {
         // Regénération du document copie intégrale
         const documentReponseCopieIntegrale =
           RequeteDelivrance.getDocumentReponseCopieIntegrale(requete);
+
         setGenerationEcParams({
           acte: { ...resultatInformationsActeApiHook?.acte },
           requete,
           validation: documentReponseCopieIntegrale?.validation || Validation.O,
-          mentionsRetirees: []
+          mentionsRetirees: [],
+          choixDelivrance: requete.choixDelivrance
         });
       } else {
         setOperationEnCours(false);
@@ -244,7 +247,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
                       requete={requete}
                       document={documentEdite}
                       acte={resultatInformationsActeApiHook?.acte}
-                      handleCourrierEnregistre={rafraichirRequete}
+                      handleDocumentEnregistre={rafraichirRequete}
                     />
                   </>
                 )}

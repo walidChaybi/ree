@@ -5,6 +5,7 @@ import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle
 import { Options } from "../../../views/common/util/Type";
 import { getValeurOuVide } from "../../../views/common/util/Utils";
 import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
+import { ChoixDelivrance } from "./ChoixDelivrance";
 import {
   CODE_ATTESTATION_PACS,
   CODE_CERTIFICAT_INSCRIPTION_RC,
@@ -128,8 +129,14 @@ export class DocumentDelivrance extends EnumNomemclature {
     return EnumWithLibelle.contientEnums(DocumentDelivrance);
   }
 
-  public static getEnumFor(key: string): DocumentDelivrance {
+  public static getEnumForUUID(key: string): DocumentDelivrance {
     return EnumWithLibelle.getEnumFor(key, DocumentDelivrance);
+  }
+
+  public static getEnumForCode(code: string): DocumentDelivrance {
+    return DocumentDelivrance.getEnumForUUID(
+      DocumentDelivrance.getKeyForCode(code)
+    );
   }
 
   public static getKeyForCode(code: string) {
@@ -144,7 +151,7 @@ export class DocumentDelivrance extends EnumNomemclature {
     const options = DocumentDelivrance.getAllEnumsAsOptions();
 
     return options.filter(opt =>
-      DocumentDelivrance.getEnumFor(opt.value).code.startsWith(
+      DocumentDelivrance.getEnumForUUID(opt.value).code.startsWith(
         CERTIFICAT_SITUATION_PREFIX
       )
     );
@@ -163,8 +170,8 @@ export class DocumentDelivrance extends EnumNomemclature {
     code: string
   ) {
     return (
-      DocumentDelivrance.getEnumFor(typeDocument) ===
-      DocumentDelivrance.getEnumFromCode(code)
+      DocumentDelivrance.getEnumForUUID(typeDocument) ===
+      DocumentDelivrance.getEnumForCode(code)
     );
   }
 
@@ -213,8 +220,25 @@ export class DocumentDelivrance extends EnumNomemclature {
     return getValeurOuVide(uuid);
   }
 
+  public static getChoixDelivranceFromUUID(uuid: string) {
+    switch (uuid) {
+      case DocumentDelivrance.getUuidFromCode(CODE_COPIE_INTEGRALE):
+        return ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE;
+      case DocumentDelivrance.getUuidFromCode(CODE_EXTRAIT_AVEC_FILIATION):
+        return ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
+      case DocumentDelivrance.getUuidFromCode(CODE_EXTRAIT_SANS_FILIATION):
+        return ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;
+      case DocumentDelivrance.getUuidFromCode(CODE_EXTRAIT_PLURILINGUE):
+        return ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE;
+      case DocumentDelivrance.getUuidFromCode(CODE_COPIE_NON_SIGNEE):
+        return ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
+      default:
+        return ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
+    }
+  }
+
   public static estDocumentDelivrance(typeDocumentUUID: string): boolean {
-    const doc = DocumentDelivrance.getEnumFor(typeDocumentUUID);
+    const doc = DocumentDelivrance.getEnumForUUID(typeDocumentUUID);
     // _libelle_court correspond à la catégorie
     return doc.categorie === CATEGORIE_DOCUMENT_DELIVRANCE;
   }
@@ -233,6 +257,21 @@ export class DocumentDelivrance extends EnumNomemclature {
 
   public static estExtraitCopie(code: string): boolean {
     return CodesExtraitCopie.includes(code);
+  }
+
+  public static getCodeForKey(key: string): string {
+    return DocumentDelivrance.getCodeForLibelle(
+      DocumentDelivrance,
+      DocumentDelivrance.getEnumForUUID(key).libelle
+    );
+  }
+
+  public static estExtraitAvecOuSansFilliation(key: string): boolean {
+    const code = DocumentDelivrance.getCodeForKey(key);
+    return (
+      code === CODE_EXTRAIT_SANS_FILIATION ||
+      code === CODE_EXTRAIT_AVEC_FILIATION
+    );
   }
 
   public static typeDocumentEstCopieIntegrale(uuid?: string): boolean {
@@ -264,19 +303,19 @@ export class DocumentDelivrance extends EnumNomemclature {
   public static getDocumentDelivrance(
     documentDemandeUUID: string
   ): DocumentDelivrance {
-    return DocumentDelivrance.getEnumFor(documentDemandeUUID);
+    return DocumentDelivrance.getEnumForUUID(documentDemandeUUID);
   }
 
   public static getOptionFromCode(code: string) {
     const key = this.getKeyForCode(code);
     return {
       value: this.getKeyForCode(code),
-      str: this.getEnumFor(key).libelle
+      str: this.getEnumForUUID(key).libelle
     };
   }
 
   public static estCourrierDelivranceEC(typeDocumentUUID: string): boolean {
-    const doc = DocumentDelivrance.getEnumFor(typeDocumentUUID);
+    const doc = DocumentDelivrance.getEnumForUUID(typeDocumentUUID);
     return (
       doc.categorieDocumentDelivrance != null &&
       doc.categorieDocumentDelivrance.startsWith("Courrier") &&
@@ -288,8 +327,8 @@ export class DocumentDelivrance extends EnumNomemclature {
     const options = DocumentDelivrance.getAllEnumsAsOptions();
     return options.filter(
       opt =>
-        DocumentDelivrance.getEnumFor(opt.value).categorieDocumentDelivrance ===
-        "Certificat de situation demandé"
+        DocumentDelivrance.getEnumForUUID(opt.value)
+          .categorieDocumentDelivrance === "Certificat de situation demandé"
     );
   }
 
@@ -297,16 +336,17 @@ export class DocumentDelivrance extends EnumNomemclature {
     const options = DocumentDelivrance.getAllEnumsAsOptions();
     return options.filter(
       opt =>
-        DocumentDelivrance.getEnumFor(opt.value).categorieDocumentDelivrance ===
-          "Certificat de situation demandé" ||
-        DocumentDelivrance.getEnumFor(opt.value).categorieDocumentDelivrance ===
-          "Attestation"
+        DocumentDelivrance.getEnumForUUID(opt.value)
+          .categorieDocumentDelivrance === "Certificat de situation demandé" ||
+        DocumentDelivrance.getEnumForUUID(opt.value)
+          .categorieDocumentDelivrance === "Attestation"
     );
   }
 
   public static getNumeroOrdre(uuidTypeDocument: string) {
     let ordre;
-    const documentDelivrance = DocumentDelivrance.getEnumFor(uuidTypeDocument);
+    const documentDelivrance =
+      DocumentDelivrance.getEnumForUUID(uuidTypeDocument);
 
     if (DocumentDelivrance.estCourrierDAccompagnement(documentDelivrance)) {
       //@ts-ignore
@@ -334,12 +374,6 @@ export class DocumentDelivrance extends EnumNomemclature {
     return (
       documentDelivrance.categorieDocumentDelivrance &&
       documentDelivrance.categorieDocumentDelivrance.startsWith(COURRIER)
-    );
-  }
-
-  public static getEnumFromCode(code: string) {
-    return DocumentDelivrance.getEnumFor(
-      DocumentDelivrance.getKeyForCode(code)
     );
   }
 }

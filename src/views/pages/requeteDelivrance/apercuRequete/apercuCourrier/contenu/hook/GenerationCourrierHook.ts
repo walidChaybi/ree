@@ -28,7 +28,7 @@ import {
   IResultGenerationUnDocument,
   RESULTAT_VIDE
 } from "../../../../../../common/hook/generation/generationUtils";
-import { useSauvegarderCourrierCreerActionMajStatutRequete } from "../../../../../../common/hook/requete/sauvegardeCourrierCreerActionMajStatut";
+import { useSauvegarderCourrierCreerActionMajStatutRequete } from "../../../../../../common/hook/requete/SauvegardeCourrierCreerActionMajStatut";
 import { getValeurOuVide } from "../../../../../../common/util/Utils";
 import {
   CODE_POSTAL,

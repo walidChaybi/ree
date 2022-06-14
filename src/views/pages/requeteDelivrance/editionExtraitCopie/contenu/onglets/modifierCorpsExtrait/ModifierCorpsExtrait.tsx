@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FicheActe,
   IFicheActe
@@ -18,9 +18,12 @@ import {
   useModifierCorpsExtrait
 } from "../../../../../../common/hook/acte/ModifierCorpsExtraitApiHook";
 import { creationCompositionExtraitCopieActeTexte } from "../../../../../../common/hook/generation/generationECHook/creationComposition/creationCompositionExtraitCopieActeTexte";
+import {
+  IGenerationECParams,
+  useGenerationEC
+} from "../../../../../../common/hook/generation/generationECHook/generationECHook";
 import { getLibelle } from "../../../../../../common/util/Utils";
 import { StaticField } from "../../../../../../common/widget/formulaire/champFixe/StaticField";
-import { RECEContext } from "../../../../../../core/body/Body";
 import { DocumentEC } from "../../../enum/DocumentEC";
 import "./scss/ModifierCorpsExtrait.scss";
 
@@ -28,7 +31,7 @@ export interface ModifierCorpsExtraitProps {
   acte: IFicheActe;
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
-  handleDocumentSauvegarder: (document: DocumentEC) => void;
+  handleDocumentEnregistre: (document: DocumentEC) => void;
 }
 
 export const ModifierCorpsExtrait: React.FC<
@@ -40,14 +43,19 @@ export const ModifierCorpsExtrait: React.FC<
   const [corpsTexteNew, setCorpsTexteNew] = useState<string>(
     corpsTexte ? corpsTexte : ""
   );
-  const [hookParams, setHookParams] = useState<IModifierCorpsExtraitParams>();
-  const { setIsDirty } = useContext(RECEContext);
+  const [modifierCorpsExtraitParams, setModifierCorpsExtraitParams] =
+    useState<IModifierCorpsExtraitParams>();
+  const [generationECParams, setGenerationECParams] =
+    useState<IGenerationECParams>();
 
-  const resultatModifierCorpsExtrait = useModifierCorpsExtrait(hookParams);
+  const resultatModifierCorpsExtrait = useModifierCorpsExtrait(
+    modifierCorpsExtraitParams
+  );
+
+  const resultatGenerationEC = useGenerationEC(generationECParams);
 
   function handleChangeText(e: any) {
     setCorpsTexteNew(e.target.value);
-    setIsDirty(corpsModifie(corpsTexteNew, corpsTexte));
   }
 
   function reinitialisation() {
@@ -55,7 +63,7 @@ export const ModifierCorpsExtrait: React.FC<
   }
 
   function valider() {
-    setHookParams({
+    setModifierCorpsExtraitParams({
       idActe: props.acte.id,
       corpsTexteModifie: corpsTexteNew,
       type: getTypeExtrait(props.document.typeDocument)
@@ -64,9 +72,30 @@ export const ModifierCorpsExtrait: React.FC<
 
   useEffect(() => {
     if (resultatModifierCorpsExtrait && resultatModifierCorpsExtrait.resultat) {
-      props.handleDocumentSauvegarder(DocumentEC.Principal);
+      setGenerationECParams({
+        idActe: props.acte.id,
+        requete: props.requete,
+        validation: props.document.validation
+          ? props.document.validation
+          : Validation.O,
+        mentionsRetirees: props.document.mentionsRetirees
+          ? props.document.mentionsRetirees.map(el => el.idMention)
+          : [],
+        pasDAction: true,
+        choixDelivrance: props.requete.choixDelivrance
+      });
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatModifierCorpsExtrait]);
+
+  useEffect(() => {
+    if (
+      resultatGenerationEC &&
+      resultatGenerationEC.resultGenerationUnDocument
+    ) {
+      props.handleDocumentEnregistre(DocumentEC.Principal);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultatGenerationEC]);
 
   return (
     <div className="ModifierCorpsExtrait">

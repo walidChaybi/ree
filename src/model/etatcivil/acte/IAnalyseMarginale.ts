@@ -6,6 +6,7 @@ import {
 import { ITitulaireActe } from "./ITitulaireActe";
 
 export interface IAnalyseMarginale {
+  id: string;
   dateDebut: Date;
   dateFin?: Date;
   nomOec: string;

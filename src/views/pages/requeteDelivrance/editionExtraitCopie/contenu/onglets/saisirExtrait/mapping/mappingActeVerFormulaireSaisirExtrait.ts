@@ -1,15 +1,15 @@
-import { IEvenement } from "../../../../../../../model/etatcivil/acte/IEvenement";
+import { IEvenement } from "../../../../../../../../model/etatcivil/acte/IEvenement";
 import {
   FicheActe,
   IFicheActe
-} from "../../../../../../../model/etatcivil/acte/IFicheActe";
-import { IFiliation } from "../../../../../../../model/etatcivil/acte/IFiliation";
+} from "../../../../../../../../model/etatcivil/acte/IFicheActe";
+import { IFiliation } from "../../../../../../../../model/etatcivil/acte/IFiliation";
 import {
   ITitulaireActe,
   TitulaireActe
-} from "../../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { Sexe } from "../../../../../../../model/etatcivil/enum/Sexe";
-import { TypeDeclarationConjointe } from "../../../../../../../model/etatcivil/enum/TypeDeclarationConjointe";
+} from "../../../../../../../../model/etatcivil/acte/ITitulaireActe";
+import { Sexe } from "../../../../../../../../model/etatcivil/enum/Sexe";
+import { TypeDeclarationConjointe } from "../../../../../../../../model/etatcivil/enum/TypeDeclarationConjointe";
 import {
   AGE,
   ANNEE,
@@ -31,6 +31,8 @@ import {
   NOM_PARTIE2,
   NOM_SECABLE,
   PARENT_NAISS,
+  PARENT_NAISS1,
+  PARENT_NAISS2,
   PAYS,
   PRENOMS,
   PRENOM_1,
@@ -43,11 +45,11 @@ import {
   TITULAIRE_EVT_2,
   TYPE,
   VILLE
-} from "../../../../../../common/composant/formulaire/ConstantesNomsForm";
+} from "../../../../../../../common/composant/formulaire/ConstantesNomsForm";
 import {
   getDateComposeFromDate,
   IDateCompose
-} from "../../../../../../common/util/DateUtils";
+} from "../../../../../../../common/util/DateUtils";
 import {
   ABSENCE_VALIDEE,
   DEUX,
@@ -56,8 +58,8 @@ import {
   rempliAGaucheAvecZero,
   UN,
   ZERO
-} from "../../../../../../common/util/Utils";
-import { LieuxUtils } from "../../../../../../common/utilMetier/LieuxUtils";
+} from "../../../../../../../common/util/Utils";
+import { LieuxUtils } from "../../../../../../../common/utilMetier/LieuxUtils";
 
 export interface ISaisieExtraitForm {
   [TITULAIRE_EVT_1]: ITitulaireEvtForm;
@@ -72,6 +74,8 @@ export interface ITitulaireEvtForm {
   [SEXE]?: string;
   [DATE_EVENEMENT]: IDateCompleteForm;
   [LIEU_EVENEMENT]: ILieuEvenementForm;
+  [PARENT_NAISS1]: IParentNaissanceForm;
+  [PARENT_NAISS2]: IParentNaissanceForm;
 }
 
 export interface INomSecableForm {
@@ -179,7 +183,7 @@ function saisieTitulaireEvtForm(
     [DATE_EVENEMENT]: saisieDateHeureEvt(evenement),
 
     [LIEU_EVENEMENT]: saisieLieuEvt(evenement)
-  };
+  } as ITitulaireEvtForm;
 }
 
 function saisiePrenomForm(prenoms?: string[]) {

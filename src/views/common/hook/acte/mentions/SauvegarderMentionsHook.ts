@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { Validation } from "../../../../../model/requete/enum/Validation";
-import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
+import {
+  documentDejaCreer,
+  IDocumentReponse
+} from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import {
   IMentionAffichage,
@@ -87,8 +90,12 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
         idActe: params.idActe,
         requete: params.requete,
         validation: Validation.O,
-        pasDeStockageDocument: false,
-        mentionsRetirees: mentionsRetireesSaved
+        pasDAction: documentDejaCreer(
+          params.requete.documentsReponses,
+          params.requete.choixDelivrance
+        ),
+        mentionsRetirees: mentionsRetireesSaved,
+        choixDelivrance: params.requete.choixDelivrance
       });
     }
   }, [resultatMiseAjourMentions, params, mentionsRetireesSaved]);
@@ -156,7 +163,10 @@ function sauvegarderEnFonctionTypeDocument(
           idActe: params.idActe,
           requete: params.requete,
           validation: Validation.O,
-          pasDeStockageDocument: false,
+          pasDAction: documentDejaCreer(
+            params.requete.documentsReponses,
+            params.requete.choixDelivrance
+          ),
           mentionsRetirees
         });
       }

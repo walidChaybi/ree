@@ -6,7 +6,7 @@ import { IOfficier } from "../../../model/agent/IOfficier";
 import apiResources from "../../../ressources/api.json";
 import { OfficierContextProps } from "../../core/contexts/OfficierContext";
 import { URL_ACCUEIL, URL_DECONNEXION } from "../../router/ReceUrls";
-import { getLibelle } from "../util/Utils";
+import { executeEnDiffere, getLibelle } from "../util/Utils";
 import { getCsrfHeader } from "./CsrfUtil";
 import messageManager from "./messageManager";
 
@@ -47,7 +47,7 @@ export const GestionnaireFermeture: React.FC<
             if (props.urlRedirection) {
               history.push(props.urlRedirection);
             }
-          });
+          }, TIME_OUT_MS);
         }
       } else {
         delete event["returnValue"]; // the absence of a returnValue property on the event will guarantee the browser unload happens
@@ -106,11 +106,7 @@ export const traiteAppelRequeteASigner = (nbRequeteASigner: number) => {
         `Il reste ${nbRequeteASigner} requête(s) à signer`
       );
       messageManager.showWarningAndClose(msg);
-    });
+    }, TIME_OUT_MS);
   }
   return nbRequeteASigner > 0;
-};
-
-const executeEnDiffere = (fct: any) => {
-  setTimeout(fct, TIME_OUT_MS);
 };

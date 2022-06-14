@@ -77,4 +77,11 @@ export class TypeDeclarationConjointe extends EnumWithLibelle {
     }
     return options;
   }
+
+  public static estAbsenceDeclaration(type: TypeDeclarationConjointe): boolean {
+    return (
+      type === TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE ||
+      type === TypeDeclarationConjointe.ABSENCE_DECLARATION
+    );
+  }
 }

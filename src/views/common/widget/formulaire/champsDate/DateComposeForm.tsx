@@ -10,6 +10,7 @@ import {
   NB_MINUTE
 } from "../../../composant/formulaire/ConstantesNomsForm";
 import { getDateComposeFromDate } from "../../../util/DateUtils";
+import { executeEnDiffere } from "../../../util/Utils";
 import { IconeCroix } from "../../icones/IconeCroix";
 import ReceDatePicker from "../datePicker/ReceDatePicker";
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
@@ -261,10 +262,6 @@ export const onDatePickerValueChange = (
       props.onChange(dateCompose);
     }
   });
-};
-const TIME_OUT_MS = 100;
-export const executeEnDiffere = (fct: any) => {
-  setTimeout(fct, TIME_OUT_MS);
 };
 
 export default connect<ComponentProps>(DateComposeForm);

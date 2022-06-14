@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { ficheActe1 } from "../../../../../../../mock/data/ficheActe";
+import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { mapActe } from "../../../../../../../views/common/hook/repertoires/MappingRepertoires";
 import { SaisirExtraitForm } from "../../../../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
@@ -10,14 +11,23 @@ import {
   expectEstPresentAvecValeur,
   expectEstPresentAvecValeurEtDisabled,
   expectEstPresentAvecValeurVide,
-  expectEstPresentEtChecked,
+  expectEstPresentEtNonChecked,
   expectEstSelectPresentAvecValeur,
   expectSelectEstAbsent
 } from "../../../../../../__tests__utils__/expectUtils";
 
 const acte = mapActe(ficheActe1.data);
+const requete = {} as IRequeteDelivrance;
+const handleDocumentEnregistre = jest.fn();
+
 test("Attendu: le formulaire SaisirExtraitForm s'affiche correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   await waitFor(() => {
     const widget = screen.getByLabelText(
@@ -33,8 +43,12 @@ test("Attendu: le formulaire SaisirExtraitForm s'affiche correctement", async ()
       "titulaireevt1.nomsequable.secable.true"
     ) as HTMLInputElement;
     expect(widget).toBeInTheDocument();
-    expect(widget.checked).toBeTruthy();
+    expect(widget.checked).toBeFalsy();
   });
+
+  fireEvent.click(
+    screen.getByLabelText("titulaireevt1.nomsequable.secable.true")
+  );
 
   await waitFor(() => {
     const widget = screen.getByLabelText(
@@ -114,7 +128,13 @@ test("Attendu: le formulaire SaisirExtraitForm s'affiche correctement", async ()
 });
 
 test("Attendu: le sous formulaire DateNaissanceOuAgeDeForm se comporte correctement ", async () => {
-  render(<SaisirExtraitForm acte={acte} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
   const widgetAnnee = expectEstPresentAvecValeur(
     "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee",
     ""
@@ -157,7 +177,13 @@ test("Attendu: le sous formulaire DateNaissanceOuAgeDeForm se comporte correctem
 });
 
 test("Attendu: l'alimentation du lieu complet en France s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   const widgetDecomposer = screen.getByLabelText(
     "décomposer le lieu"
@@ -228,7 +254,13 @@ test("Attendu: l'alimentation du lieu complet en France s'effectue correctement"
 });
 
 test("Attendu: l'alimentation du lieu complet à l'étranger s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   const widgetEtranger = screen.getByLabelText(
     "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger"
@@ -286,22 +318,42 @@ test("Attendu: l'alimentation du lieu complet à l'étranger s'effectue correcte
 });
 
 test("Attendu: la case à cocher 'nom sécable' se comporte correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} />);
-
-  const caseACocherNomSecable = expectEstPresentEtChecked(
-    "titulaireevt1.nomsequable.secable.true"
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
   );
 
-  fireEvent.click(caseACocherNomSecable!);
+  const caseACocherNomSecable = expectEstPresentEtNonChecked(
+    "titulaireevt1.nomsequable.secable.true"
+  );
 
   await waitFor(() => {
     expectEstAbsent("titulaireEvt1.nomSequable.nomPartie1");
     expectEstAbsent("titulaireEvt1.nomSequable.nomPartie2");
   });
+
+  fireEvent.click(caseACocherNomSecable!);
+
+  await waitFor(() => {
+    expectEstPresentAvecValeur(
+      "titulaireEvt1.nomSequable.nomPartie1",
+      "Patamod"
+    );
+    expectEstPresentAvecValeur("titulaireEvt1.nomSequable.nomPartie2", "eler");
+  });
 });
 
 test("Attendu: le changement de type de déclaration conjointe s'effectue correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
 
   const typeDeclConjointe = expectEstSelectPresentAvecValeur(
     "titulaireEvt1.declarationConjointe.type",
@@ -322,7 +374,13 @@ test("Attendu: le changement de type de déclaration conjointe s'effectue correc
 });
 
 test("Attendu: la réinitialisation du formulaire fonctionne correctement", async () => {
-  render(<SaisirExtraitForm acte={acte} />);
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
   const boutonReinitialiser = expectEstBoutonDisabled("Réinitialiser");
 
   // On effectue un changement dans le formulaire

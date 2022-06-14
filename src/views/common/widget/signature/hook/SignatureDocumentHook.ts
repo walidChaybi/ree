@@ -417,7 +417,8 @@ function getDocumentAndSendToSignature(
 }
 
 function estUnDocumentASigner(uuidTypeDocument: string): boolean {
-  const documentDelivrance = DocumentDelivrance.getEnumFor(uuidTypeDocument);
+  const documentDelivrance =
+    DocumentDelivrance.getEnumForUUID(uuidTypeDocument);
   return DocumentDelivrance.estExtraitCopieAsigner(documentDelivrance.code);
 }
 

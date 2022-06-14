@@ -13,7 +13,7 @@ import {
   FormikComponentProps,
   withNamespace
 } from "../../widget/formulaire/utils/FormUtil";
-import { DATE, TYPE } from "./ConstantesNomsForm";
+import { ANNEE, DATE, JOUR, MOIS, TYPE } from "./ConstantesNomsForm";
 
 interface ComponentFormProps {
   nom: string;
@@ -34,10 +34,16 @@ const DeclarationConjointeForm: React.FC<
   const onTypeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
-      setTypeSelectionne(TypeDeclarationConjointe.getEnumFor(e.target.value));
+      const typeDeclaration = TypeDeclarationConjointe.getEnumFor(
+        e.target.value
+      );
+      setTypeSelectionne(TypeDeclarationConjointe.getEnumFor(typeDeclaration));
+      if (TypeDeclarationConjointe.estAbsenceDeclaration(typeDeclaration)) {
+        initDateDeclaration(props);
+      }
       props.formik.handleChange(e);
     },
-    [props.formik]
+    [props]
   );
 
   const selectFieldProps = {
@@ -68,12 +74,25 @@ const DeclarationConjointeForm: React.FC<
   );
 };
 
-function afficheDate(type?: TypeDeclarationConjointe) {
-  return (
-    type != null &&
-    type !== TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE &&
-    type !== TypeDeclarationConjointe.ABSENCE_DECLARATION
+function initDateDeclaration(
+  props: React.PropsWithChildren<DeclarationConjointeFormProps>
+) {
+  props.formik.setFieldValue(
+    withNamespace(withNamespace(props.nom, DATE), JOUR),
+    ""
   );
+  props.formik.setFieldValue(
+    withNamespace(withNamespace(props.nom, DATE), MOIS),
+    ""
+  );
+  props.formik.setFieldValue(
+    withNamespace(withNamespace(props.nom, DATE), ANNEE),
+    ""
+  );
+}
+
+function afficheDate(type?: TypeDeclarationConjointe) {
+  return type != null && !TypeDeclarationConjointe.estAbsenceDeclaration(type);
 }
 
 function estDisabled(

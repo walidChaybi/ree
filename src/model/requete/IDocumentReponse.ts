@@ -6,6 +6,7 @@ import { COURRIER, DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { MentionsRetirees } from "./enum/MentionsRetirees";
 import { Validation } from "./enum/Validation";
 import { IOptionCourrierDocumentReponse } from "./IOptionCourrierDocumentReponse";
+import { IRequeteDelivrance } from "./IRequeteDelivrance";
 import { ITexteLibreCourrier } from "./ITexteLibreCourrier";
 
 export interface IDocumentReponse {
@@ -67,7 +68,7 @@ export const DocumentReponse = {
 
   getLibelle(document: IDocumentReponse) {
     let libelle: string;
-    const documentDelivrance = DocumentDelivrance.getEnumFor(
+    const documentDelivrance = DocumentDelivrance.getEnumForUUID(
       document.typeDocument
     );
     if (DocumentDelivrance.estCourrierDAccompagnement(documentDelivrance)) {
@@ -121,12 +122,12 @@ export const DocumentReponse = {
     choixDelivrance: ChoixDelivrance
   ) {
     documents.forEach(doc => {
-      const docDelivrance = DocumentDelivrance.getEnumFor(doc.typeDocument);
+      const docDelivrance = DocumentDelivrance.getEnumForUUID(doc.typeDocument);
       if (DocumentDelivrance.estCourrierDAccompagnement(docDelivrance)) {
         doc.ordre = 0;
       } else if (
         docDelivrance ===
-        DocumentDelivrance.getEnumFromCode(
+        DocumentDelivrance.getEnumForCode(
           ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
             choixDelivrance
           )
@@ -150,5 +151,54 @@ function documentSansCtvExisteDejaAvecCtv(
       documentAvecCtv =>
         documentSansCtv.typeDocument === documentAvecCtv.typeDocument
     ) !== undefined
+  );
+}
+
+export function documentDejaCreer(
+  documents: IDocumentReponse[],
+  choixDelivrance?: ChoixDelivrance
+) {
+  return documents.some(
+    el =>
+      DocumentDelivrance.getEnumForCode(
+        ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
+          choixDelivrance
+        )
+      ) === DocumentDelivrance.getEnumForUUID(el.typeDocument)
+  );
+}
+
+export function getDocumentPrincipal(requete: IRequeteDelivrance) {
+  return requete.documentsReponses.find(
+    el =>
+      DocumentDelivrance.getEnumForCode(
+        ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
+          requete.choixDelivrance
+        )
+      ) === DocumentDelivrance.getEnumForUUID(el.typeDocument)
+  );
+}
+
+export function getDocumentComplementaire(requete: IRequeteDelivrance) {
+  return requete.documentsReponses.find(
+    el =>
+      DocumentDelivrance.getEnumForCode(
+        ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
+          requete.choixDelivrance
+        )
+      ) !== DocumentDelivrance.getEnumForUUID(el.typeDocument) &&
+      DocumentDelivrance.estExtraitCopie(
+        DocumentDelivrance.getCodeForKey(el.typeDocument)
+      )
+  );
+}
+
+export function getExtraitsCopies(
+  requete: IRequeteDelivrance
+): IDocumentReponse[] {
+  return requete.documentsReponses.filter(el =>
+    DocumentDelivrance.estExtraitCopie(
+      DocumentDelivrance.getCodeForKey(el.typeDocument)
+    )
   );
 }

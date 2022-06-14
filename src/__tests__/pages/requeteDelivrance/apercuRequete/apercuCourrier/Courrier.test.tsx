@@ -32,7 +32,7 @@ test("renders courrier", async () => {
     render(
       <Courrier
         requete={requeteDelivranceRDC}
-        handleCourrierEnregistre={jest.fn()}
+        handleDocumentEnregistre={jest.fn()}
       />
     );
   });
@@ -72,7 +72,7 @@ test("créer courrier", async () => {
     render(
       <Courrier
         requete={requeteDelivranceRDC}
-        handleCourrierEnregistre={jest.fn()}
+        handleDocumentEnregistre={jest.fn()}
       />
     );
   });

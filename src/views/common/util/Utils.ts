@@ -6,6 +6,7 @@ export const SANS_PRENOM_CONNU = "Sans prénom connu";
 export const SNP = "SNP";
 export const SANS_NOM_PATRONYMIQUE = "Sans nom patronymique";
 export const ABSENCE_VALIDEE = "ABSENCE_VALIDEE";
+const TIME_OUT_MS = 100;
 
 export const ZERO = 0;
 export const UN = 1;
@@ -397,3 +398,26 @@ export function checkDirty(isDirty: boolean, setIsDirty: any) {
     return true;
   }
 }
+
+export function getNombreOuUndefined(nombreStr?: string): number | undefined {
+  const nombre = parseInt(nombreStr || "", 10);
+  return isNaN(nombre) ? undefined : nombre;
+}
+
+export function getValeurOuUndefined(valeur?: any): string | undefined {
+  return valeur ? valeur : undefined;
+}
+
+export function getTableauAPartirElementsNonVides(...args: any[]) {
+  const tableau: any[] = [];
+  args.forEach((element: any) => {
+    if (element) {
+      tableau.push(element);
+    }
+  });
+  return tableau;
+}
+
+export const executeEnDiffere = (fct: any, tempsMs?: number) => {
+  setTimeout(fct, tempsMs ? tempsMs : TIME_OUT_MS);
+};

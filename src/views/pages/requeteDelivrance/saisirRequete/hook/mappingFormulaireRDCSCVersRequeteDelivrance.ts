@@ -39,7 +39,7 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
   return supprimeProprietesVides(requete);
 }
 
-function getTitulaireRequete(titulaire: Identite, position: number = 1) {
+function getTitulaireRequete(titulaire: Identite, position = 1) {
   return titulaire
     ? {
         position,

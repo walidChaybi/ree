@@ -32,7 +32,7 @@ export interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
   requete: IRequeteDelivrance;
-  handleCourrierEnregistre: (index: DocumentEC) => void;
+  handleDocumentEnregistre: (index: DocumentEC) => void;
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
@@ -53,7 +53,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   useEffect(() => {
     if (props.document && resultatSauvegarde) {
-      props.handleCourrierEnregistre(DocumentEC.Principal);
+      props.handleDocumentEnregistre(DocumentEC.Principal);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatSauvegarde]);
@@ -117,7 +117,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           </div>
         </div>
       )}
-      {DocumentDelivrance.getEnumFor(
+      {DocumentDelivrance.getEnumForUUID(
         getValeurOuVide(props.document?.typeDocument)
       ).code === CODE_COPIE_INTEGRALE ? (
         <MentionsCopie

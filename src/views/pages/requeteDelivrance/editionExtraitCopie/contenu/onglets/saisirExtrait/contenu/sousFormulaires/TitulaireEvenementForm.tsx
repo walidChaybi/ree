@@ -58,7 +58,8 @@ export const TitulaireEvenementForm: React.FC<
           disabled={estRenseigne(props.titulaire.nom)}
         />
         <NomSecableForm
-          nom={withNamespace(props.nom, NOM_SECABLE)}
+          nomComposant={withNamespace(props.nom, NOM_SECABLE)}
+          nomTitulaire={props.titulaire.nom}
           nomPartie1={props.titulaire.nomPartie1}
           nomPartie2={props.titulaire.nomPartie2}
           origineTitulaireActe={props.titulaire.origineNomPartiesTitulaireActe}

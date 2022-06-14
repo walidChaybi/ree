@@ -273,7 +273,7 @@ export async function updateChoixDelivrance(
   });
 }
 
-export async function postSauvegarderDocument(
+export async function patchSauvegarderDocument(
   idRequete: string,
   requete: Object
 ) {
@@ -318,6 +318,17 @@ export async function postSauvDocumentCreerActionMajStatutRequete(
       statutRequete: StatutRequete.getKey(statutRequete)
     },
     data: document
+  });
+}
+
+export async function postSauvegarderDocument(
+  idRequete: string,
+  documents: IDocumentReponse[]
+) {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_DOCUMENT_REPONSE}/update/${idRequete}`,
+    data: documents
   });
 }
 

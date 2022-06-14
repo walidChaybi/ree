@@ -5,8 +5,8 @@
 
   .contenu-edition {
     display: flex;
-    border: 0.1rem solid $button-application-color;
-    padding-top: 1rem;
+    border-top: 0.1rem solid $button-application-color;
+    padding-top: 0.5rem;
     .side {
       &.Visualisation {
         width: 50%;

@@ -12,7 +12,7 @@ interface VoletEditionProps {
   requete: IRequeteDelivrance;
   document: IDocumentReponse;
   acte?: IFicheActe;
-  handleCourrierEnregistre: (index: DocumentEC) => void;
+  handleDocumentEnregistre: (index: DocumentEC) => void;
 }
 
 export const VoletEdition: React.FC<VoletEditionProps> = props => {
@@ -20,7 +20,7 @@ export const VoletEdition: React.FC<VoletEditionProps> = props => {
 
   const [{ liste, ongletSelectionne }, setOnglets] = useState<OngletProps>(
     getOngletsEdition(
-      props.handleCourrierEnregistre,
+      props.handleDocumentEnregistre,
       props.requete,
       props.document,
       props.acte
@@ -30,7 +30,7 @@ export const VoletEdition: React.FC<VoletEditionProps> = props => {
   useEffect(() => {
     setOnglets(
       getOngletsEdition(
-        props.handleCourrierEnregistre,
+        props.handleDocumentEnregistre,
         props.requete,
         props.document,
         props.acte
