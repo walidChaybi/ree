@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  getMesRequetesDelivrance,
+  getRequetesDelivrance,
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../../../api/appels/requeteApi";
@@ -26,7 +26,7 @@ export function useRequeteDelivranceApi(
     async function fetchMesRequetes() {
       try {
         const listeStatuts = queryParameters?.statuts?.join(",");
-        const result = await getMesRequetesDelivrance(
+        const result = await getRequetesDelivrance(
           typeRequete,
           listeStatuts,
           queryParameters

@@ -70,7 +70,7 @@ export const AccueilPage: React.FC = () => {
         ></BoutonAccueilEspaceMiseAjour>
         <BoutonAccueilEspaceCreation
           libelle={getLibelle("Espace création")}
-          pageUrl="creation"
+          pageUrl="mesrequetescreation"
           iconFA={faPlusCircle}
           title={getLibelle("Bouton pour accèder à l'espace création")}
         ></BoutonAccueilEspaceCreation>

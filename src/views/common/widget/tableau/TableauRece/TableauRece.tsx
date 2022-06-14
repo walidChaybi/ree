@@ -105,7 +105,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
       ) &&
       paramsTableau.nextDataLinkState
     ) {
-      setMultiplicateur(multiplicateur + 1);
+      setMultiplicateur(Number(multiplicateur) + 1);
       props.goToLink(paramsTableau.nextDataLinkState);
     } else if (
       laPageDAvantEstEnDehors(
@@ -117,7 +117,7 @@ export const TableauRece: React.FC<TableauReceProps> = props => {
       ) &&
       paramsTableau.previousDataLinkState
     ) {
-      setMultiplicateur(multiplicateur - 1);
+      setMultiplicateur(Number(multiplicateur) - 1);
       props.goToLink(paramsTableau.previousDataLinkState);
     }
     setPageState(newPage);

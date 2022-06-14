@@ -12,9 +12,12 @@ import { URL_MENTION } from "./etatcivilApi";
 export const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES_INFO_SERVICE =
   "/requetes/information/requetesService";
+export const URL_REQUETES_CREATION_SERVICE =
+  "/requetes/creation/requetesService";
 export const URL_REQUETES = "/requetes";
 export const URL_MES_REQUETES_DELIVRANCE = "/requetes/mesrequetes";
 export const URL_MES_REQUETES_INFO = "/requetes/information/mesrequetes";
+export const URL_MES_REQUETES_CREATION = "/requetes/creation/mesrequetes";
 export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_INFORMATION_STATUT = "/requetes/information/statut";
 export const URL_REQUETES_COUNT = "/requetes/count";
@@ -47,7 +50,9 @@ export enum TypeAppelRequete {
   REQUETE_DELIVRANCE_SERVICE = "requeteService",
   REQUETE_INFO_SERVICE = "requeteInfoService",
   MES_REQUETES_DELIVRANCE = "mesRequetes",
-  MES_REQUETES_INFO = "mesRequetesInfo"
+  MES_REQUETES_INFO = "mesRequetesInfo",
+  MES_REQUETES_CREATION = "mesRequetesCreation",
+  REQUETE_CREATION_SERVICE = "requeteCreationService"
 }
 
 export interface IQueryParametersPourRequetes {
@@ -94,7 +99,7 @@ export function getParametresBaseRequete(): Promise<any> {
 /*** API REQUETE V2 ***/
 ////////////////////////
 
-export function getMesRequetesDelivrance(
+export function getRequetesDelivrance(
   typeRequete: TypeAppelRequete,
   listeStatuts: string,
   queryParameters: IQueryParametersPourRequetes
@@ -117,7 +122,7 @@ export function getMesRequetesDelivrance(
   });
 }
 
-export function getMesRequetesInformation(
+export function getRequetesInformation(
   listeStatuts: string,
   typeRequete: TypeAppelRequete,
   queryParameters: IQueryParametersPourRequetes
@@ -128,6 +133,29 @@ export function getMesRequetesInformation(
       typeRequete === TypeAppelRequete.REQUETE_INFO_SERVICE
         ? URL_REQUETES_INFO_SERVICE
         : URL_MES_REQUETES_INFO,
+    parameters: {
+      statuts: listeStatuts,
+      tri:
+        queryParameters.tri !== "prioriteRequete"
+          ? queryParameters.tri
+          : "dateStatut",
+      sens: queryParameters.sens,
+      range: queryParameters.range
+    }
+  });
+}
+
+export function getRequetesCreation(
+  listeStatuts: string,
+  typeRequete: TypeAppelRequete,
+  queryParameters: IQueryParametersPourRequetes
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri:
+      typeRequete === TypeAppelRequete.REQUETE_CREATION_SERVICE
+        ? URL_REQUETES_CREATION_SERVICE
+        : URL_MES_REQUETES_CREATION,
     parameters: {
       statuts: listeStatuts,
       tri:

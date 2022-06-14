@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  getMesRequetesInformation,
+  getRequetesInformation,
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../../../api/appels/requeteApi";
@@ -26,7 +26,7 @@ export function useRequeteInformationApi(
     async function fetchMesRequetes() {
       try {
         const listeStatuts = queryParameters?.statuts?.join(",");
-        const result = await getMesRequetesInformation(
+        const result = await getRequetesInformation(
           listeStatuts,
           typeRequete,
           queryParameters

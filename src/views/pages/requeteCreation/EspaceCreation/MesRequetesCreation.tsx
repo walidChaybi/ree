@@ -1,14 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
-import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import {
-  INavigationApercuReqInfoParams,
-  useNavigationApercuInformation
-} from "../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
@@ -17,33 +11,28 @@ import {
   NB_LIGNES_PAR_PAGE_DEFAUT
 } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
-import { receUrl } from "../../../router/ReceUrls";
+import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
-import { requeteInformationMesRequetesColumnHeaders } from "./EspaceReqInfoParams";
-import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
-import "./scss/RequeteTableau.scss";
+import { useRequeteCreationApi } from "../hook/DonneesRequeteCreationApiHook";
+import {
+  requeteCreationMesRequetesColumnHeaders,
+  StatutsRequetesCreation
+} from "./EspaceCreationParams";
 
 interface LocalProps {
-  parametresReqInfo: IQueryParametersPourRequetes;
+  parametresCreation: IQueryParametersPourRequetes;
 }
 
-export const MesRequetesInformationPage: React.FC<LocalProps> = ({
-  parametresReqInfo
+export const MesRequetesCreationPage: React.FC<LocalProps> = ({
+  parametresCreation
 }) => {
-  const history = useHistory();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
-    INavigationApercuReqInfoParams | undefined
-  >();
-
-  useNavigationApercuInformation(paramsNavReqInfo);
-
   const [linkParameters, setLinkParameters] =
-    React.useState<IQueryParametersPourRequetes>(parametresReqInfo);
+    React.useState<IQueryParametersPourRequetes>(parametresCreation);
   const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState, paramsTableau } = useRequeteInformationApi(
+  const { dataState, paramsTableau } = useRequeteCreationApi(
     linkParameters,
     TypeAppelRequete.MES_REQUETES_INFO,
     setEnChargement
@@ -56,20 +45,16 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
     }
   }, []);
 
-  function onClickOnLine(
-    idRequete: string,
-    data: IRequeteTableauDelivrance[],
-    idx: number
-  ) {
-    const requete = data[idx];
-    const urlCourante = receUrl.getUrlCourante(history);
-    setOperationEnCours(true);
-    setParamsNavReqInfo({
-      requete,
-      callback: finOperationEnCours,
-      urlCourante
-    });
-  }
+  const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
+    const queryParameters = {
+      statuts: StatutsRequetesCreation,
+      tri,
+      sens,
+      range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+    };
+
+    setLinkParameters(queryParameters);
+  }, []);
 
   useEffect(() => {
     if (dataState && dataState.length === 0) {
@@ -92,10 +77,11 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
         idKey={"idRequete"}
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
-        onClickOnLine={onClickOnLine}
-        columnHeaders={requeteInformationMesRequetesColumnHeaders}
+        onClickOnLine={() => {}}
+        columnHeaders={requeteCreationMesRequetesColumnHeaders}
         dataState={dataState}
         paramsTableau={paramsTableau}
+        handleChangeSort={handleChangeSort}
         goToLink={goToLink}
         noRows={zeroRequete}
         enChargement={enChargement}

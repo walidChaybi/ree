@@ -52,7 +52,32 @@ export class StatutRequete extends EnumWithComplete {
     "REJET_IMPRESSION",
     "Traité - Rejet impression"
   );
-  
+  // Statut création
+  public static readonly PROJET_VALIDE = new StatutRequete(
+    "PROJET_VALIDE",
+    "Projet validé"
+  );
+  public static readonly RETOUR_SDANF = new StatutRequete(
+    "RETOUR_SDANF",
+    "Retour SDANF"
+  );
+  public static readonly EN_ATTENTE = new StatutRequete(
+    "EN_ATTENTE",
+    "En attente"
+  );
+  public static readonly EN_ATTENTE_JURIDIQUE = new StatutRequete(
+    "EN_ATTENTE_JURIDIQUE",
+    "En attente - Juridique"
+  );
+  public static readonly EN_ATTENTE_POSTULANT = new StatutRequete(
+    "EN_ATTENTE_POSTULANT",
+    "En attente - Postulant"
+  );
+  public static readonly ALERTE_SDANF = new StatutRequete(
+    "ALERTE_SDANF",
+    "Alerte SDANF"
+  );
+
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, StatutRequete);
   }

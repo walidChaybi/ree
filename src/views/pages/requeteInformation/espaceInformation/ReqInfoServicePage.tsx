@@ -23,7 +23,7 @@ import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauR
 import { receUrl } from "../../../router/ReceUrls";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { requeteInformationRequetesServiceColumnHeaders } from "./EspaceReqInfoParams";
-import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationHook";
+import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
 import "./scss/RequeteTableau.scss";
 
 interface LocalProps {

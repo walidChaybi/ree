@@ -11,6 +11,7 @@ import { AccueilPage } from "../pages/accueil/AccueilPage";
 import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
+import EspaceCreationPage from "../pages/requeteCreation/EspaceCreation/EspaceCreationPage";
 import { ApercuRequetePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuRequetePriseEnChargePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequeteTraitementPage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
@@ -26,6 +27,7 @@ import {
   URL_CONTEXT_APP,
   URL_DECONNEXION,
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -45,6 +47,7 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE_EDITION_ID,
+  URL_REQUETES_CREATION_SERVICE,
   URL_REQUETES_DELIVRANCE_SERVICE,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -335,5 +338,33 @@ export const routesRece: IRoute[] = [
     component: ApercuReqInfoPage,
     droits: [Droit.ATTRIBUER],
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
+  ////////////////////////////////////////////////////////
+  ///////////// MES REQUETES DE CRÉATION /////////////////
+  ////////////////////////////////////////////////////////
+  {
+    url: URL_MES_REQUETES_CREATION,
+    component: EspaceCreationPage,
+    props: { selectedTab: 0 },
+    droits: [
+      Droit.CREER_ACTE_DRESSE,
+      Droit.CREER_ACTE_ETABLI,
+      Droit.CREER_ACTE_TRANSCRIT
+    ],
+    libelle: getLibelle("Mes requêtes de création")
+  },
+  ////////////////////////////////////////////////////////
+  ///////// REQUETES DE CRÉATION DE MON SERVICE //////////
+  ////////////////////////////////////////////////////////
+  {
+    url: URL_REQUETES_CREATION_SERVICE,
+    component: EspaceCreationPage,
+    props: { selectedTab: 1 },
+    droits: [
+      Droit.CREER_ACTE_DRESSE,
+      Droit.CREER_ACTE_ETABLI,
+      Droit.CREER_ACTE_TRANSCRIT
+    ],
+    libelle: getLibelle("Les requêtes de création de mon service")
   }
 ];

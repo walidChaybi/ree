@@ -10,7 +10,7 @@ import { configRequetesInformation } from "../../../../../mock/superagent-config
 import { IRequeteTableauInformation } from "../../../../../model/requete/IRequeteTableauInformation";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { StatutsRequetesInformation } from "../../../../../views/pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
-import { useRequeteInformationApi } from "../../../../../views/pages/requeteInformation/espaceInformation/hook/DonneesRequeteInformationHook";
+import { useRequeteInformationApi } from "../../../../../views/pages/requeteInformation/espaceInformation/hook/DonneesRequeteInformationApiHook";
 
 const superagentMock = require("superagent-mock")(
   request,

@@ -95,8 +95,7 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     unDesDroits: etape2Bis([
       Droit.CREER_ACTE_TRANSCRIT,
       Droit.CREER_ACTE_DRESSE,
-      Droit.CREER_ACTE_ETABLI,
-      Droit.CREER_PACS
+      Droit.CREER_ACTE_ETABLI
     ]),
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives

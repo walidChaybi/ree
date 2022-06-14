@@ -149,12 +149,12 @@ export class ApiManager {
       );
     }
 
-    if (httpRequestConfig.headers) {
+    
       httpRequete = this.processRequestHeaders(
+        httpRequete,
         httpRequestConfig.headers,
-        httpRequete
       );
-    }
+    
     if (httpRequestConfig.responseType) {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
     }
@@ -246,13 +246,14 @@ export class ApiManager {
   }
 
   public processRequestHeaders(
-    headers: HttpRequestHeader[],
-    httpRequest: superagent.SuperAgentRequest
+    httpRequest: superagent.SuperAgentRequest,
+    headers?: HttpRequestHeader[],
   ): superagent.SuperAgentRequest {
     let res = httpRequest;
-    headers.forEach(element => {
+    headers?.forEach(element => {
       res = httpRequest.set(element.header, element.value);
     });
+    res = httpRequest.set("Content-Type", "application/json");
     return res;
   }
 

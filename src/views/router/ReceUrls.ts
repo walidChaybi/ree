@@ -112,9 +112,19 @@ export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID = `${URL_RECHER
 ///////////////////////////////////////////////////////////////
 // Espace requête d'information
 export const URL_REQUETES_INFORMATION_SERVICE = `${URL_CONTEXT_APP}/requetesinformationservice`;
-
 // Aperçu d'une requête d'information
 export const URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID = `${URL_REQUETES_INFORMATION_SERVICE}/${PATH_APERCU_REQ_INFO}/${ID}`;
+
+////////////////////////////////////////////////////////
+///////////// MES REQUETES DE CRÉATION /////////////////
+////////////////////////////////////////////////////////
+export const URL_MES_REQUETES_CREATION = `${URL_CONTEXT_APP}/mesrequetescreation`;
+
+////////////////////////////////////////////////////////
+///////// REQUETES DE CRÉATION DE MON SERVICE //////////
+////////////////////////////////////////////////////////
+export const URL_REQUETES_CREATION_SERVICE = `${URL_CONTEXT_APP}/requetescreationservice`;
+
 
 function estUrlApercuRequete(url: string) {
   return url.indexOf(`/${PATH_APERCU_REQ_DEL}/`) > 0;
