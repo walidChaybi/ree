@@ -119,40 +119,42 @@ const _ChampRechercheField: React.FC<ChampRechercheFieldProps> = ({
   disabledPortal
 }) => {
   return (
-    <div className="BlockInput">
+    <div className="BlockInput ChampRecherche">
       {label && <label htmlFor={name}>{label}</label>}
-      <Field
-        name={name}
-        componentName={name}
-        onInput={(newInputValue: string | null) => {
-          if (onInput) {
-            onInput(newInputValue);
-          }
-          if (!newInputValue) {
+      <div className="FieldContainer">
+        <Field
+          name={name}
+          componentName={name}
+          onInput={(newInputValue: string | null) => {
+            if (onInput) {
+              onInput(newInputValue);
+            }
+            if (!newInputValue) {
+              formik.setFieldValue(name, null);
+            }
+          }}
+          onChange={(newValue?: Option) => {
+            if (onChange) {
+              onChange(newValue);
+            }
+            if (newValue != null) {
+              formik.setFieldValue(name, newValue);
+            } else {
+              formik.setFieldValue(name, null);
+            }
+          }}
+          onClickClear={function videChamp(e: any) {
+            e.preventDefault();
             formik.setFieldValue(name, null);
-          }
-        }}
-        onChange={(newValue?: Option) => {
-          if (onChange) {
-            onChange(newValue);
-          }
-          if (newValue != null) {
-            formik.setFieldValue(name, newValue);
-          } else {
-            formik.setFieldValue(name, null);
-          }
-        }}
-        onClickClear={function videChamp(e: any) {
-          e.preventDefault();
-          formik.setFieldValue(name, null);
-        }}
-        options={options}
-        component={ChampRecherche}
-        disabled={disabled}
-        noOptionsText={noOptionsText}
-        value={formik.getFieldProps(name).value}
-        disabledPortal={disabledPortal}
-      />
+          }}
+          options={options}
+          component={ChampRecherche}
+          disabled={disabled}
+          noOptionsText={noOptionsText}
+          value={formik.getFieldProps(name).value}
+          disabledPortal={disabledPortal}
+        />
+      </div>
     </div>
   );
 };
