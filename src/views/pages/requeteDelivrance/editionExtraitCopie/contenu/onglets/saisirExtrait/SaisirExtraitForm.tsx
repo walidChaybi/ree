@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import * as Yup from "yup";
 import {
   FicheActe,
@@ -30,6 +30,7 @@ import { StaticField } from "../../../../../../common/widget/formulaire/champFix
 import { Formulaire } from "../../../../../../common/widget/formulaire/Formulaire";
 import { withNamespace } from "../../../../../../common/widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "../../../../../../common/widget/popin/ConfirmationPopin";
+import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { DocumentEC } from "../../../enum/DocumentEC";
 import { IEvenement } from "./../../../../../../../model/etatcivil/acte/IEvenement";
 import { NatureActe } from "./../../../../../../../model/etatcivil/enum/NatureActe";
@@ -62,6 +63,8 @@ interface ComponentFormProps {
 type SaisirExtraitFormProps = ComponentFormProps;
 
 export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
+  const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
+
   const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
   const [sauvegarderSaisieParams, setSauvegarderSaisieParams] =
     useState<ISauvegardeValidationSaisieExtraitParams>();
@@ -82,11 +85,15 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
     if (parentMemeSexeOuExtraitPlurilingue(props.acte, props.requete)) {
       setPopinOuverte(true);
     } else {
+      setOperationEnCours(true);
       setSauvegarderSaisieParams({
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer: extraitAEnvoyer,
-        callBack: props.handleDocumentEnregistre
+        callBack: (documentEC: DocumentEC) => {
+          setOperationEnCours(false);
+          props.handleDocumentEnregistre(documentEC);
+        }
       });
     }
   };
