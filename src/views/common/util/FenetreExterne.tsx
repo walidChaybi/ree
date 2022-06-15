@@ -196,7 +196,7 @@ function copyStyles(sourceDoc: Document, targetDoc: Document) {
       }
     } catch (e) {
       messageManager.showError(
-        "Une erreur est survenue lors de la recopie des syles"
+        "Une erreur est survenue lors de la recopie des styles"
       );
     }
   });

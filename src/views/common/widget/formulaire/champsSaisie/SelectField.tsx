@@ -39,7 +39,7 @@ export const SelectRece: React.FC<SelectProps> = props => {
     if (window.top) {
       window.top.dispatchEvent(event);
     }
-  }, [props]);
+  }, []);
 
   return (
     <FormControl variant="outlined">
