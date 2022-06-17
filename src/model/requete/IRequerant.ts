@@ -46,17 +46,27 @@ export const Requerant = {
     requerant: IRequerant;
     titulaire?: ITitulaireRequete;
   }) {
-    const nomTitulaire =
-      titulaire?.nomNaissance === SNP ? "" : titulaire?.nomNaissance;
+    const equalsIgnoreCase = (str1 = "", str2 = "") => {
+      return (
+        str1.localeCompare(str2, undefined, {
+          sensitivity: "accent"
+        }) === 0
+      );
+    };
+    let titulaireResultat = { nom: "", prenom: "" };
 
-    return titulaire && requerant.prenom
-      ? nomTitulaire === requerant.nomFamille &&
-          TitulaireRequete.getPrenom1(titulaire).localeCompare(
-            requerant.prenom,
-            undefined,
-            { sensitivity: "accent" }
-          ) === 0
-      : false;
+    if (titulaire) {
+      const { nomNaissance } = titulaire;
+      titulaireResultat = {
+        nom: nomNaissance === SNP ? "" : nomNaissance,
+        prenom: TitulaireRequete.getPrenom1(titulaire)
+      };
+    }
+
+    return (
+      titulaireResultat.nom === requerant.nomFamille &&
+      equalsIgnoreCase(titulaireResultat.prenom, requerant.prenom)
+    );
   },
   estUnTitulaire({
     requerant,
