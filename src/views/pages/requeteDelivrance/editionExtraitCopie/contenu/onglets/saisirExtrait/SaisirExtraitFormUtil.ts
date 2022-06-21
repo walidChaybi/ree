@@ -11,8 +11,8 @@ export function parentMemeSexeOuExtraitPlurilingue(
   documentsReponses: IDocumentReponse[]
 ) {
   return (
-    titulaires.some(el =>
-      TitulaireActe.genreIndetermineOuParentDeMemeSexe(el)
+    titulaires.some(
+      el => el != null && TitulaireActe.genreIndetermineOuParentDeMemeSexe(el)
     ) &&
     documentsReponses.some(
       el =>
