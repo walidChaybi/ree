@@ -117,7 +117,7 @@ export const TitulaireActe = {
           .sort((a, b) => a.ordre - b.ordre)
       : [];
   },
-  
+
   getAuMoinsDeuxParentsDirects(titulaire?: ITitulaireActe): IFiliation[] {
     let parents = this.getParentsDirects(titulaire);
     if (parents.length === 0) {
@@ -132,7 +132,7 @@ export const TitulaireActe = {
     return mapPrenomsVersPrenomsOrdonnes(titulaire?.prenoms);
   },
 
-  genreIndetermineOuParentHomo(titulaire: ITitulaireActe) {
+  genreIndetermineOuParentDeMemeSexe(titulaire: ITitulaireActe) {
     return (
       titulaire.sexe === Sexe.INDETERMINE ||
       TitulaireActe.parentsSontDeMemeSexe(titulaire) ||

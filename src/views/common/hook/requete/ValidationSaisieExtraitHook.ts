@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { IFicheActe } from "../../../../model/etatcivil/acte/IFicheActe";
-import { TitulaireActe } from "../../../../model/etatcivil/acte/ITitulaireActe";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { CODE_EXTRAIT_PLURILINGUE } from "../../../../model/requete/enum/DocumentDelivranceConstante";
 import { Validation } from "../../../../model/requete/enum/Validation";
@@ -26,6 +25,7 @@ export interface ISauvegardeValidationSaisieExtraitParams {
   acte: IFicheActe;
   extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer;
   callBack?: (arg: any) => void;
+  problemePlurilingue: boolean;
 }
 
 interface IRegenerationParams {
@@ -52,7 +52,7 @@ export function useSauvegardeValidationSaisieExtrait(
   useEffect(() => {
     if (params) {
       setRegenerationParams({
-        documentsARegenerer: getExtraitsCopies(params.requete),
+        documentsARegenerer: getExtraitsCopies(params.requete), // FIXME JLB : à revoir avec Benoit
         majEtatCivilSuiteSaisieExtraitParams: {
           idActe: params.acte.id,
           extraitSaisiAEnvoyer: params.extraitSaisiAEnvoyer
@@ -80,7 +80,7 @@ export function useSauvegardeValidationSaisieExtrait(
       setGenerationECParams({
         idActe: params.acte.id,
         requete: params.requete,
-        validation: getValidation(document, params.acte),
+        validation: getValidation(document, params.problemePlurilingue),
         mentionsRetirees: document.mentionsRetirees
           ? document.mentionsRetirees?.map(el => el.idMention)
           : [],
@@ -108,11 +108,14 @@ export function useSauvegardeValidationSaisieExtrait(
   }, [regenerationParams, resultatGenerationEC]);
 }
 
-function getValidation(document: IDocumentReponse, acte: IFicheActe) {
+function getValidation(
+  document: IDocumentReponse,
+  problemePlurilingue: boolean
+) {
   if (
     document.typeDocument ===
       DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE) &&
-    acte.titulaires.some(el => TitulaireActe.genreIndetermineOuParentHomo(el))
+    problemePlurilingue
   ) {
     return Validation.E;
   } else if (

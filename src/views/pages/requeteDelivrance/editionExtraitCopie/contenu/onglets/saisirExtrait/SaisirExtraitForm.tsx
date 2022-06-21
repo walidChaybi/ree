@@ -9,8 +9,6 @@ import {
   ITitulaireActe,
   TitulaireActe
 } from "../../../../../../../model/etatcivil/acte/ITitulaireActe";
-import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import { CODE_EXTRAIT_PLURILINGUE } from "../../../../../../../model/requete/enum/DocumentDelivranceConstante";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { ReinitialiserValiderFormBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
@@ -42,6 +40,7 @@ import {
   mappingActeVerFormulaireSaisirExtrait
 } from "./mapping/mappingActeVerFormulaireSaisirExtrait";
 import { mappingFormulaireSaisirExtraitNaissanceVersExtraitAEnvoyer } from "./mapping/mappingFormulaireSaisirExtraitNaissanceVersExtraitAEnvoyer";
+import { parentMemeSexeOuExtraitPlurilingue } from "./SaisirExtraitFormUtil";
 import "./scss/FormulaireSaisirExtrait.scss";
 
 // Schéma de validation en sortie de champs
@@ -82,7 +81,11 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         props.acte
       );
     setExtraitSaisiAEnvoyer(extraitAEnvoyer);
-    if (parentMemeSexeOuExtraitPlurilingue(props.acte, props.requete)) {
+    const problemePlurilingue = parentMemeSexeOuExtraitPlurilingue(
+      [extraitAEnvoyer.titulaire1, extraitAEnvoyer.titulaire2],
+      props.requete.documentsReponses
+    );
+    if (problemePlurilingue) {
       setPopinOuverte(true);
     } else {
       setOperationEnCours(true);
@@ -93,18 +96,24 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         callBack: (documentEC: DocumentEC) => {
           setOperationEnCours(false);
           props.handleDocumentEnregistre(documentEC);
-        }
+        },
+        problemePlurilingue
       });
     }
   };
 
   const handlePopinOui = useCallback(() => {
     if (extraitSaisiAEnvoyer) {
+      const problemePlurilingue = parentMemeSexeOuExtraitPlurilingue(
+        [extraitSaisiAEnvoyer.titulaire1, extraitSaisiAEnvoyer.titulaire2],
+        props.requete.documentsReponses
+      );
       setSauvegarderSaisieParams({
         requete: props.requete,
         acte: props.acte,
         extraitSaisiAEnvoyer,
-        callBack: props.handleDocumentEnregistre
+        callBack: props.handleDocumentEnregistre,
+        problemePlurilingue
       });
     }
   }, [extraitSaisiAEnvoyer, props]);
@@ -267,21 +276,5 @@ function getTitulaireEvenementForm(
         natureActe={natureActe}
       ></TitulaireEvenementForm>
     </AccordionRece>
-  );
-}
-
-function parentMemeSexeOuExtraitPlurilingue(
-  acte: IFicheActe,
-  requete: IRequeteDelivrance
-) {
-  return (
-    acte.titulaires.some(el =>
-      TitulaireActe.genreIndetermineOuParentHomo(el)
-    ) &&
-    requete.documentsReponses.some(
-      el =>
-        el.typeDocument ===
-        DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE)
-    )
   );
 }
