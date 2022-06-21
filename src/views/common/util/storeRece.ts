@@ -15,6 +15,19 @@ class StoreRece {
   private _listeUtilisateurs: IUtilisateur[] = [];
   private _listeEntite: IEntite[] = [];
   private _decrets: IDecret[] = [];
+  private _logErrorOff = false;
+
+  set logErrorOff(estOff: boolean) {
+    if (process.env.NODE_ENV === "test") {
+      this._logErrorOff = estOff;
+    } else {
+      throw new Error("Pas de désactivation de la log en dehors des tests");
+    }
+  }
+
+  get logErrorOff() {
+    return this._logErrorOff;
+  }
 
   set retourUrl(ru: string) {
     this._retourUrl = ru;

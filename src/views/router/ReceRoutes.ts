@@ -17,7 +17,6 @@ import { ApercuRequetePriseEnChargePage } from "../pages/requeteDelivrance/aperc
 import { ApercuRequeteTraitementPage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { EditionExtraitCopiePage } from "../pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import EspaceDelivrancePage from "../pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
-import { SaisirRDAPCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDAPCPage";
 import { SaisirRDCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import { SaisirRDCSCPage } from "../pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { ApercuReqInfoPage } from "../pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
@@ -33,7 +32,6 @@ import {
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC_ID,
@@ -53,7 +51,6 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_EDITION_ID,
-  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC_ID,
@@ -125,13 +122,6 @@ export const routesRece: IRoute[] = [
     libelle: getLibelle(`Saisir une requête de délivrance ${Labels.RDCSC}`)
   },
   {
-    url: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDAPC,
-    component: SaisirRDAPCPage,
-    droits: [Droit.SAISIR_REQUETE],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle("Saisir une requête de délivrance d'attestation PACS")
-  },
-  {
     url: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
     component: SaisirRDCPage,
     droits: [Droit.SAISIR_REQUETE],
@@ -197,13 +187,6 @@ export const routesRece: IRoute[] = [
     component: SaisirRDCSCPage,
     droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
     libelle: getLibelle(`Saisir une requête de délivrance ${Labels.RDCSC}`)
-  },
-  {
-    url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDAPC,
-    component: SaisirRDAPCPage,
-    droits: [Droit.ATTRIBUER, Droit.SAISIR_REQUETE],
-    canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS),
-    libelle: getLibelle("Saisir une requête de délivrance d'attestation PACS")
   },
   {
     url: URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,

@@ -1,8 +1,23 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import React from "react";
-import { ficheActe1 } from "../../../../../../../mock/data/ficheActe";
+import request from "superagent";
+import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/connectedUserAvecDroit";
+import { requeteAvecDocs } from "../../../../../../../mock/data/DetailRequeteDelivrance";
+import {
+  ficheActe1,
+  ficheActe1_avecTitulaireAyantDeuxParents
+} from "../../../../../../../mock/data/ficheActe";
+import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { mapActe } from "../../../../../../../views/common/hook/repertoires/MappingRepertoires";
+import { storeRece } from "../../../../../../../views/common/util/storeRece";
+import { mappingRequeteDelivrance } from "../../../../../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import { SaisirExtraitForm } from "../../../../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import {
   changeInput,
@@ -16,9 +31,19 @@ import {
   expectSelectEstAbsent
 } from "../../../../../../__tests__utils__/expectUtils";
 
+const superagentMock = require("superagent-mock")(request, configEtatcivil);
+
 const acte = mapActe(ficheActe1.data);
 const requete = {} as IRequeteDelivrance;
 const handleDocumentEnregistre = jest.fn();
+
+beforeAll(() => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
+});
+
+afterAll(() => {
+  superagentMock.unset();
+});
 
 test("Attendu: le formulaire SaisirExtraitForm s'affiche correctement", async () => {
   render(
@@ -399,5 +424,22 @@ test("Attendu: la réinitialisation du formulaire fonctionne correctement", asyn
     expectEstPresentAvecValeurVide(
       "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee"
     );
+  });
+});
+
+test("Attendu: la validation du formulaire fonctionne correctement", async () => {
+  render(
+    <SaisirExtraitForm
+      acte={mapActe(ficheActe1_avecTitulaireAyantDeuxParents.data)}
+      requete={mappingRequeteDelivrance(requeteAvecDocs)}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
+
+  await act(async () => {
+    fireEvent.click(screen.getByLabelText("Valider"));
+  });
+  await waitFor(() => {
+    expect(screen.getByLabelText("Valider")).toBeInTheDocument();
   });
 });

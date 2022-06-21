@@ -1,8 +1,8 @@
 import {
-    createEvent,
-    fireEvent,
-    render,
-    waitFor
+  createEvent,
+  fireEvent,
+  render,
+  waitFor
 } from "@testing-library/react";
 import React from "react";
 import request from "superagent";
@@ -74,6 +74,8 @@ test("renders PopinSignature, signature event is received and success displayed"
 });
 
 test("renders PopinSignature, signature event is received and error displayed", async () => {
+  // Désactivation de la log car l'erreur loguée est normale
+  storeRece.logErrorOff = true;
   const { getByText } = render(
     <PopinSignature
       documentsByRequete={{
@@ -125,9 +127,12 @@ test("renders PopinSignature, signature event is received and error displayed", 
     expect(errorCode).toBeDefined();
     expect(errorMsg).toBeDefined();
   });
+  storeRece.logErrorOff = false;
 });
 
 test("renders PopinSignature, code erroné", async () => {
+  // Désactivation de la log car l'erreur loguée est normale
+  storeRece.logErrorOff = true;
   storeRece.codePin = "0121";
   const { getByText } = render(
     <PopinSignature
@@ -177,6 +182,7 @@ test("renders PopinSignature, code erroné", async () => {
   await waitFor(() => {
     expect(storeRece.codePin).toBeUndefined();
   });
+  storeRece.logErrorOff = false;
 });
 
 afterAll(() => {

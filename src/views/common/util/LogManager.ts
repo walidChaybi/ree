@@ -7,6 +7,7 @@ import {
 import { FeatureFlag } from "./featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "./featureFlag/gestionnaireFeatureFlag";
 import messageManager from "./messageManager";
+import { storeRece } from "./storeRece";
 
 const TIME_OUT_MS = 2000;
 
@@ -41,13 +42,15 @@ function logErrorOnScreen(errorMessage: string) {
 
 /* istanbul ignore next */
 export function logErrorOnConsole(logErrorMgs: LogErrorMsg) {
-  if (logErrorMgs) {
-    console.error("Erreur inattendue: ", logErrorMgs.error);
-    if (logErrorMgs.errorInfo) {
-      console.error("Info erreur: ", logErrorMgs.errorInfo);
+  if (!storeRece.logErrorOff) {
+    if (logErrorMgs) {
+      console.error("Erreur inattendue: ", logErrorMgs.error);
+      if (logErrorMgs.errorInfo) {
+        console.error("Info erreur: ", logErrorMgs.errorInfo);
+      }
+    } else {
+      console.error("Une erreur s'est produite");
     }
-  } else {
-    console.error("Une erreur s'est produite");
   }
 }
 
@@ -73,8 +76,8 @@ function sendToServer() {
   isWaiting = false;
 
   postLog(listLog)
-    .then(result => {})
-    .catch(error => {});
+    .then((result) => {})
+    .catch((error) => {});
 
   listLog = [];
 }

@@ -134,26 +134,26 @@ export const configEtatcivil = [
       /////////////////////////////////////////////////////////////////////
       // Mention
       if (
-        match[1] === `/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions` &&
+        match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions" &&
         context.method === "get"
       ) {
         return { data: mentions };
       }
       if (
-        (match[1] === `/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions` ||
+        (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions" ||
+          match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235b/mentions" ||
           match[1] ===
             "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/corpstexte?type=EXTRAIT_AVEC_FILIATION") &&
         context.method === "post"
       ) {
         return { data: true };
       }
-    
 
       /////////////////////////////////////////////////////////////////////
       // nombre de titulaires utilisé pour les sur l'apercu en prise en chage
       if (
         match[1] ===
-        `/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/count/titulaire`
+        "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/count/titulaire"
       ) {
         return ficheActe1;
       }
@@ -408,7 +408,6 @@ export const configEtatcivil = [
       ) {
         return { data: true };
       }
-  
 
       if (match[1] === "/repertoirecivil/datedernieredelivrance") {
         return { data: null };
@@ -447,7 +446,26 @@ export const configEtatcivil = [
         return { data: [imagePngVideBase64] };
       }
 
-      const error = { msg: "url api etat civil non mockée", url: match[1] };
+      // Validation de la saisie d'un extrait
+      if (
+        match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/saisieExtrait"
+      ) {
+        return { data: {} };
+      }
+
+      // Maj de la date de derhière délivrance
+      if (
+        match[1] ===
+        "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235b/dernieredelivrance"
+      ) {
+        return { data: {} };
+      }
+
+      const error = {
+        msg: "url api etat civil non mockée",
+        url: match[1],
+        method: context.method
+      };
       console.log("Erreur mock api etat civil: ", error);
       return {
         data: error
@@ -480,6 +498,12 @@ export const configEtatcivil = [
       };
     },
 
+    patch: function (match, data) {
+      return {
+        body: data,
+        header: data.headers
+      };
+    },
     delete: function (match, data) {
       return {
         body: data,

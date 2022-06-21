@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { logError } from "../../../views/common/util/LogManager";
+import { storeRece } from "../../../views/common/util/storeRece";
 
 beforeAll(() => {
   const localStorageMock = (function () {
@@ -30,6 +31,8 @@ beforeAll(() => {
 });
 
 test("renders error msg", async () => {
+  // Désactivation de la log car l'erreur loguée est normale
+  storeRece.logErrorOff = true;
   render(
     <div>
       <ToastContainer
@@ -52,4 +55,5 @@ test("renders error msg", async () => {
   await waitFor(() => {
     expect(screen.getByText(/testmessageUtilisateur/)).toBeDefined();
   });
+  storeRece.logErrorOff = false;
 });

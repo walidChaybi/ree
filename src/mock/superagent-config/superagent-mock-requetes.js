@@ -592,6 +592,14 @@ export const configRequetes = [
         return true;
       }
 
+      // Sauvegarde document réponse suite modifier corps extrait
+      if (
+        match[1] ===
+        "/documentsreponses/update/9bfa282d-1e66-4538-b242-b9de4f683f0f"
+      ) {
+        return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
+      }
+
       const error = {
         msg: "url api requete non mockée",
         url: match[1],

@@ -19,11 +19,11 @@ const HookConsumer2: React.FC = () => {
   return <div>{res?.resultat?.toString()}</div>;
 };
 
-test("Attendu: DerniereDelivrance fonctionne pas", async () => {
+test("Attendu: DerniereDelivrance fonctionne correctement", async () => {
   render(<HookConsumer2 />);
 
   await waitFor(() => {
-    expect(screen.getByText("false")).toBeDefined();
+    expect(screen.getByText("true")).toBeDefined();
   });
 });
 

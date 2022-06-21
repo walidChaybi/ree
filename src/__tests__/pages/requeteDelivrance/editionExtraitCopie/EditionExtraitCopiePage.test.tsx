@@ -10,7 +10,10 @@ import { createMemoryHistory, MemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
-import { userDroitCOMEDEC, userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
+import {
+  userDroitCOMEDEC,
+  userDroitnonCOMEDEC
+} from "../../../../mock/data/connectedUserAvecDroit";
 import { requeteAvecCopieIntegraleActeImage } from "../../../../mock/data/DetailRequeteDelivrance";
 import { idFicheActeMariage } from "../../../../mock/data/ficheActe";
 import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
@@ -492,7 +495,8 @@ test("Test création courrier", async () => {
 
 test("Attendu: la modification d'une copie acte image s'effectue correctement", async () => {
   history.push(
-    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${requeteAvecCopieIntegraleActeImage.id}/${idFicheActeMariage}`)
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${requeteAvecCopieIntegraleActeImage.id}/${idFicheActeMariage}`
+  );
 
   await act(async () => {
     render(
@@ -528,7 +532,6 @@ test("Attendu: la modification d'une copie acte image s'effectue correctement", 
     expect(screen.getByText("Modifier la copie à délivrer")).toBeDefined();
   });
 });
-
 
 async function fireCustomEvent(detail: any) {
   await act(async () => {

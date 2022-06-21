@@ -5,6 +5,7 @@ import { Router } from "react-router-dom";
 import request from "superagent";
 import officier from "../../../mock/data/connectedUser.json";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
+import { storeRece } from "../../../views/common/util/storeRece";
 import { Body } from "../../../views/core/body/Body";
 import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
 import { URL_ACCUEIL } from "../../../views/router/ReceUrls";
@@ -90,6 +91,7 @@ test("renders Body Connexion en cours", () => {
 });
 
 test("renders Body erreurSysteme", () => {
+  storeRece.logErrorOff = true;
   const history = createMemoryHistory();
   history.push(URL_ACCUEIL);
   const off = { ...officier };
@@ -115,6 +117,7 @@ test("renders Body erreurSysteme", () => {
   });
   const titre = screen.getByText(/Erreur Système/i);
   expect(titre).toBeDefined();
+  storeRece.logErrorOff = false;
 });
 
 test("renders Body 403", () => {

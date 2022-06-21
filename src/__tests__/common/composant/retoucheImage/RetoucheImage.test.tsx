@@ -8,6 +8,7 @@ import React from "react";
 import { act } from "react-test-renderer";
 import { MimeType } from "../../../../ressources/MimeType";
 import { RetoucheImage } from "../../../../views/common/composant/retoucheImage/RetoucheImage";
+import { storeRece } from "./../../../../views/common/util/storeRece";
 
 test("Attendu: Le retour de l'appel à la retouche d'image s'effectue correctement", async () => {
   const onRetoucheTerminee = jest.fn();
@@ -49,6 +50,8 @@ test("Attendu: Le retour de l'appel à la retouche d'image s'effectue correcteme
 });
 
 test("Attendu: l'appel à la retouche d'image renvoie des erreurs", async () => {
+  // Désactivation de la log d'erreur car l'erreur logguée est normale
+  storeRece.logErrorOff = true;
   const onRetoucheTerminee = jest.fn();
 
   // Rendu du composant avec une image: un évenement est lancé pour démarrer l'application native de retouche d'image (via la web extension)
@@ -78,6 +81,8 @@ test("Attendu: l'appel à la retouche d'image renvoie des erreurs", async () => 
     expect(onRetoucheTerminee).toBeCalledTimes(1);
     expect(onRetoucheTerminee).toHaveBeenCalledWith(undefined);
   });
+
+  storeRece.logErrorOff = false;
 });
 
 function fireCustomEvent(detail: any) {
