@@ -16,7 +16,6 @@ import {
   getValeurOuUndefined,
   UN
 } from "../../../../../../../common/util/Utils";
-import { FRANCE } from "../../../../../../../common/utilMetier/LieuxUtils";
 import {
   IDateCompleteForm,
   ILieuEvenementForm,
@@ -116,9 +115,7 @@ function mapEvenement(saisie: {
     ville: saisie.lieuEvenement.ville,
     arrondissement: saisie.lieuEvenement.arrondissement,
     region: saisie.lieuEvenement.regionDepartement,
-    pays:
-      saisie.lieuEvenement.pays ||
-      (saisie.lieuEvenement.EtrangerFrance === FRANCE ? FRANCE : ""),
+    pays: saisie.lieuEvenement.pays,
 
     annee: getNombreOuUndefined(saisie.dateEvenement?.annee),
     mois: getNombreOuUndefined(saisie.dateEvenement?.mois),

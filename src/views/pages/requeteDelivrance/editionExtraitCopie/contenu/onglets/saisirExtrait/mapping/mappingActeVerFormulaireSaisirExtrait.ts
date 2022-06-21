@@ -59,7 +59,10 @@ import {
   UN,
   ZERO
 } from "../../../../../../../common/util/Utils";
-import { LieuxUtils } from "../../../../../../../common/utilMetier/LieuxUtils";
+import {
+  FRANCE,
+  LieuxUtils
+} from "../../../../../../../common/utilMetier/LieuxUtils";
 
 export interface ISaisieExtraitForm {
   [TITULAIRE_EVT_1]: ITitulaireEvtForm;
@@ -251,13 +254,14 @@ function saisieLieuEvt(
   evenement?: IEvenement,
   etrangerParDefaut = true
 ): ILieuEvenementForm {
+  const pays = evenement?.pays || (etrangerParDefaut ? "" : FRANCE);
   return {
     [LIEU_COMPLET]: evenement?.lieuReprise
       ? getValeurOuVide(evenement?.lieuReprise)
       : LieuxUtils.getLocalisationEtrangerOuFrance(
           evenement?.ville,
           evenement?.region,
-          evenement?.pays,
+          pays,
           evenement?.arrondissement
         ),
     [VILLE]: getValeurOuVide(evenement?.ville),
