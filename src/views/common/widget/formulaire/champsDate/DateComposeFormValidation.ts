@@ -110,6 +110,21 @@ export const DateValidationSchema = Yup.object()
     };
 
     return this.createError(paramsError);
+  })
+  .test("heureSaisieEtJourNonSaisi", function (value: any, error: any) {
+    const nbHeureStr = value[NB_HEURE] as string;
+    const nbMinuteStr = value[NB_MINUTE] as string;
+    const jour = value[JOUR] as string;
+
+    if (jour || (!nbHeureStr && !nbMinuteStr)) {
+      return true;
+    }
+
+    const paramsError = {
+      path: `${error.path}.nbHeure`,
+      message: getLibelle("Le jour n'est pas renseigné")
+    };
+    return this.createError(paramsError);
   });
 
 export const DateValidationSchemaSansTestFormat = Yup.object().shape({

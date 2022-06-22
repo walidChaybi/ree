@@ -44,9 +44,12 @@ interface ComponentProps {
   labelDate: string;
   nomDate: string;
   showDatePicker?: boolean;
-  showCroixSuppression?: boolean;
+  showCroixSuppression?: boolean; // Par défaut la crois de suppression est affichée
   onChange?: (date: IDateComposeForm, type?: ChampDateModifie) => void;
   disabled?: boolean;
+  disabledJour?: boolean;
+  disabledMois?: boolean;
+  disabledAnnee?: boolean;
   disabledHeure?: boolean; // Permet de surcharger le disabled global (dans le cas où il n'est pas renseigné c'est le disabled global qui fait foi)
   anneeMin?: number;
   anneeMax?: number;
@@ -57,15 +60,11 @@ interface ComponentProps {
 export type DateComposeFormProps = ComponentProps & FormikComponentProps;
 
 const DateComposeForm: React.FC<DateComposeFormProps> = props => {
-  const [dateSaisie, setDateSaisie] = useState<IDateComposeForm>({});
+  const [dateSaisie, setDateSaisie] = useState<IDateComposeForm>(
+    props.formik.getFieldProps(props.nomDate).value
+  );
 
-  const dateMini = props.anneeMin
-    ? new Date(`${props.anneeMin}-01-01`)
-    : undefined;
-
-  const dateMaxi = props.anneeMax
-    ? new Date(`${props.anneeMax}-12-31`)
-    : undefined;
+  const { dateMini, dateMaxi } = getBornesDates(props);
 
   function buildDateSaisie(type: ChampDateModifie, value: string) {
     const newDate = { ...dateSaisie };
@@ -108,11 +107,16 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
     buildDateSaisie(ChampDateModifie.ANNEE, e.target.value);
   }
 
-  function heureMinuteChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function heureChange(e: React.ChangeEvent<HTMLInputElement>) {
+    traiteCarAutorises(e.target, digitSeulement);
+    focusApresProchainChamps(e);
+  }
+
+  function minuteChange(e: React.ChangeEvent<HTMLInputElement>) {
     traiteCarAutorises(e.target, digitSeulement);
   }
 
-  function videChamps(e: any) {
+  function videChamps(e: any): void {
     e.preventDefault();
     executeEnDiffere(() => {
       setDateSaisie({});
@@ -127,8 +131,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
   }
 
   // Par défaut la crois de suppression est affichée
-  const showCroixSuppression =
-    props.showCroixSuppression != null ? props.showCroixSuppression : true;
+  const showCroixSuppression = estCroixSuppressionAffichee(props);
 
   const disabledHeure =
     props.disabledHeure == null ? props.disabled : props.disabledHeure;
@@ -149,7 +152,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           maxLength="2"
           onInput={jourChange}
           onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
-          disabled={props.disabled}
+          disabled={props.disabled || props.disabledJour}
           aria-label={`${props.nomDate}.jour`}
           placeholder="JJ"
         />
@@ -160,7 +163,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           maxLength="2"
           onInput={moisChange}
           onBlur={(e: any) => traiteZeroAGauche(e, props.formik)}
-          disabled={props.disabled}
+          disabled={props.disabled || props.disabledMois}
           aria-label={`${props.nomDate}.mois`}
           placeholder="MM"
         />
@@ -171,7 +174,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
           name={withNamespace(props.nomDate, ANNEE)}
           maxLength="4"
           onInput={anneeChange}
-          disabled={props.disabled}
+          disabled={props.disabled || props.disabledAnnee}
           aria-label={`${props.nomDate}.annee`}
           validate={(value: any) =>
             validateAnnee(
@@ -204,7 +207,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
               component="input"
               name={withNamespace(props.nomDate, NB_HEURE)}
               maxLength="2"
-              onInput={heureMinuteChange}
+              onInput={heureChange}
               disabled={disabledHeure}
               aria-label={withNamespace(props.nomDate, NB_HEURE)}
               placeholder="hh"
@@ -214,7 +217,7 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
               component="input"
               name={withNamespace(props.nomDate, NB_MINUTE)}
               maxLength="2"
-              onInput={heureMinuteChange}
+              onInput={minuteChange}
               disabled={disabledHeure}
               aria-label={withNamespace(props.nomDate, NB_MINUTE)}
               placeholder="mm"
@@ -263,5 +266,22 @@ export const onDatePickerValueChange = (
     }
   });
 };
+
+function estCroixSuppressionAffichee(
+  props: React.PropsWithChildren<DateComposeFormProps>
+) {
+  return props.showCroixSuppression != null ? props.showCroixSuppression : true;
+}
+
+function getBornesDates(props: React.PropsWithChildren<DateComposeFormProps>) {
+  const dateMini = props.anneeMin
+    ? new Date(`${props.anneeMin}-01-01`)
+    : undefined;
+
+  const dateMaxi = props.anneeMax
+    ? new Date(`${props.anneeMax}-12-31`)
+    : undefined;
+  return { dateMini, dateMaxi };
+}
 
 export default connect<ComponentProps>(DateComposeForm);

@@ -354,14 +354,14 @@ export function shallowEgal(obj1: Object, obj2: Object) {
   );
 }
 
-export function estRenseigne(valeur: any) {
+export function estRenseigne(valeur: any): boolean {
   if (valeur instanceof Array) {
     return valeur != null && valeur.length > 0;
   }
   return valeur != null && valeur !== "" && valeur !== 0;
 }
 
-export function estNonRenseigne(valeur: any) {
+export function estNonRenseigne(valeur: any): boolean {
   return !estRenseigne(valeur);
 }
 

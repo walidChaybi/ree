@@ -39,11 +39,20 @@ export const Evenement = {
         )
       : "";
   },
-  estRenseigne(evenement?: IEvenement) {
+  estRenseigne(evenement?: IEvenement): boolean {
     return estRenseigne(evenement?.annee);
   },
 
-  estHeureRenseignee(evenement?: IEvenement) {
+  estHeureRenseignee(evenement?: IEvenement): boolean {
     return evenement?.heure != null && evenement.minute != null;
+  },
+  estJourRenseigne(evenement?: IEvenement): boolean {
+    return evenement?.jour != null;
+  },
+  estMoisRenseigne(evenement?: IEvenement): boolean {
+    return evenement?.mois != null;
+  },
+  estAnneeRenseignee(evenement?: IEvenement): boolean {
+    return evenement?.annee != null;
   }
 };

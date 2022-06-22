@@ -34,9 +34,7 @@ const DateNaissanceOuAgeDeForm: React.FC<
     estRenseigneAgeOuNaissance
   );
 
-  const [disabledDate, setDisabledDate] = useState<boolean>(
-    estRenseigneAgeOuNaissance
-  );
+  const [disabledDate, setDisabledDate] = useState<boolean>(false);
 
   const onChangeDate = useCallback(
     (date: IDateComposeForm, type?: ChampDateModifie) => {
@@ -78,9 +76,23 @@ const DateNaissanceOuAgeDeForm: React.FC<
         <DateComposeForm
           nomDate={withNamespace(props.nom, DATE)}
           labelDate="Date de naissance"
-          disabled={disabledDate}
+          disabledJour={
+            disabledDate ||
+            estRenseigne(props.age) ||
+            Evenement.estJourRenseigne(props.naissance)
+          }
+          disabledMois={
+            disabledDate ||
+            estRenseigne(props.age) ||
+            Evenement.estMoisRenseigne(props.naissance)
+          }
+          disabledAnnee={
+            disabledDate ||
+            estRenseigne(props.age) ||
+            Evenement.estAnneeRenseignee(props.naissance)
+          }
           onChange={onChangeDate}
-          showCroixSuppression={true}
+          showCroixSuppression={false}
         />
       }
       {
