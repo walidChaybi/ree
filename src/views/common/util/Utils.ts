@@ -425,3 +425,26 @@ export function getTableauAPartirElementsNonVides(...args: any[]) {
 export const executeEnDiffere = (fct: any, tempsMs?: number) => {
   setTimeout(fct, tempsMs ? tempsMs : TIME_OUT_MS);
 };
+
+export function auMoinsUneProprieteEstRenseigne(objet: Object): boolean {
+  let res = false;
+  const proprietes = Object.getOwnPropertyNames(objet);
+  for (const propriete of proprietes) {
+    //@ts-ignore
+    const valeur = objet[propriete];
+    if (estUnObjet(valeur)) {
+      res = auMoinsUneProprieteEstRenseigne(valeur);
+      if (res) {
+        break;
+      }
+    } else if (estRenseigne(valeur)) {
+      res = true;
+      break;
+    }
+  }
+  return res;
+}
+
+export function estUnObjet(objet: any): boolean {
+  return typeof objet === "object" && !Array.isArray(objet);
+}

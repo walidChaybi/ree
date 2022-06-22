@@ -1,5 +1,6 @@
 import { IPrenom } from "../../../model/etatcivil/fiche/IPrenom";
 import {
+  auMoinsUneProprieteEstRenseigne,
   changeLaPlaceDunElement,
   checkDirty,
   compareNombre,
@@ -249,4 +250,41 @@ test("Attendu: checkDirty fonctionne correctement", () => {
   expect(checkDirty(true, jest.fn())).toBeTruthy();
   window.confirm = () => false;
   expect(checkDirty(true, jest.fn())).toBeFalsy();
+});
+
+test("Attendu: auMoinsUneProprieteEstRenseigne fonctionne correctement", () => {
+  const objet1 = {
+    a: "",
+    b: 0,
+    c: {
+      c1: "",
+      c2: [],
+      c3: {
+        c3a: [],
+        c3b: {}
+      }
+    },
+    d: {
+      d1: "",
+      d2: [],
+      d3: {
+        d3a: [],
+        d3b: { d31: "test" }
+      }
+    }
+  };
+  expect(auMoinsUneProprieteEstRenseigne(objet1)).toBeTruthy();
+
+  objet1.d.d3.d3b.d31 = "";
+  expect(auMoinsUneProprieteEstRenseigne(objet1)).toBeFalsy();
+
+  objet1.c.c3.c3b = { c3b1: "test" };
+  expect(auMoinsUneProprieteEstRenseigne(objet1)).toBeTruthy();
+
+  objet1.c.c3.c3b = { c3b1: "" };
+  expect(auMoinsUneProprieteEstRenseigne(objet1)).toBeFalsy();
+
+  //@ts-ignore
+  objet1.c.c3.c3a = ["test"];
+  expect(auMoinsUneProprieteEstRenseigne(objet1)).toBeTruthy();
 });
