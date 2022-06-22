@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { IEvenement } from "../../../../model/etatcivil/acte/IEvenement";
 import { ILieuEvenement } from "../../../../model/etatcivil/commun/ILieuEvenement";
 import { EtrangerFrance } from "../../../../model/etatcivil/enum/EtrangerFrance";
-import { estRenseigne, getLibelle } from "../../util/Utils";
+import { estNonRenseigne, estRenseigne, getLibelle } from "../../util/Utils";
 import { FRANCE, LieuxUtils } from "../../utilMetier/LieuxUtils";
 import { InputField } from "../../widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "../../widget/formulaire/champsSaisie/RadioField";
@@ -272,7 +272,7 @@ function estModeSaisieFrance(pays?: string, etrangerParDefaut = true): boolean {
   if (etrangerParDefaut) {
     return LieuxUtils.isPaysFrance(pays);
   } else {
-    return pays == null || LieuxUtils.isPaysFrance(pays);
+    return estNonRenseigne(pays) || LieuxUtils.isPaysFrance(pays);
   }
 }
 

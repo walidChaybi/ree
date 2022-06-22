@@ -361,6 +361,10 @@ export function estRenseigne(valeur: any) {
   return valeur != null && valeur !== "" && valeur !== 0;
 }
 
+export function estNonRenseigne(valeur: any) {
+  return !estRenseigne(valeur);
+}
+
 export function mapPrenomsVersPrenomsOrdonnes(prenoms?: string[]) {
   const prenomsOrdonnes: IPrenomOrdonnes[] = [];
   prenoms?.forEach((prenom, idx) =>
