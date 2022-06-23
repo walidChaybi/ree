@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Orientation } from "../../../../../model/composition/enum/Orientation";
 import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
@@ -105,46 +105,45 @@ export function useGenerationEC(
   );
 
   // 4 - Création du document réponse pour stockage dans la BDD et Swift
-  const creationDocumentReponseOuResultat = (
-    requete: IRequeteDelivrance,
-    contenu: string,
-    nbPages: number
-  ) => {
-    if (requete.choixDelivrance && params?.choixDelivrance) {
-      const statutRequete = getStatutRequete(
-        requete.choixDelivrance,
-        requete.sousType
-      );
+  const creationDocumentReponseOuResultat = useCallback(
+    (requete: IRequeteDelivrance, contenu: string, nbPages: number) => {
+      if (requete.choixDelivrance && params?.choixDelivrance) {
+        const statutRequete = getStatutRequete(
+          requete.choixDelivrance,
+          requete.sousType
+        );
 
-      const documentReponsePourStockage = {
-        contenu,
-        nom: getNomDocument(params.choixDelivrance),
-        typeDocument: getTypeDocument(params.choixDelivrance), // UUID du type de document demandé (nomenclature)
-        nbPages,
-        mimeType: MimeType.APPLI_PDF,
-        orientation: Orientation.PORTRAIT,
-        validation,
-        mentionsRetirees: params?.mentionsRetirees.map(idMention => ({
-          idMention
-        })),
-        idActe: acteApiHookResultat?.acte?.id || acteDejaPresent?.id
-      } as IDocumentReponse;
+        const documentReponsePourStockage = {
+          contenu,
+          nom: getNomDocument(params.choixDelivrance),
+          typeDocument: getTypeDocument(params.choixDelivrance), // UUID du type de document demandé (nomenclature)
+          nbPages,
+          mimeType: MimeType.APPLI_PDF,
+          orientation: Orientation.PORTRAIT,
+          validation,
+          mentionsRetirees: params?.mentionsRetirees.map(idMention => ({
+            idMention
+          })),
+          idActe: acteApiHookResultat?.acte?.id || acteDejaPresent?.id
+        } as IDocumentReponse;
 
-      if (params?.pasDAction) {
-        setSauvegarderDocumentParams({
-          documentsReponsePourStockage: [documentReponsePourStockage],
-          requeteId: requete.id
-        });
-      } else {
-        setStockerDocumentCreerActionMajStatutRequeteParams({
-          documentReponsePourStockage,
-          libelleAction: statutRequete.libelle,
-          statutRequete,
-          requeteId: requete.id
-        });
+        if (params?.pasDAction) {
+          setSauvegarderDocumentParams({
+            documentsReponsePourStockage: [documentReponsePourStockage],
+            requeteId: requete.id
+          });
+        } else {
+          setStockerDocumentCreerActionMajStatutRequeteParams({
+            documentReponsePourStockage,
+            libelleAction: statutRequete.libelle,
+            statutRequete,
+            requeteId: requete.id
+          });
+        }
       }
-    }
-  };
+    },
+    [acteApiHookResultat, acteDejaPresent, validation, params]
+  );
 
   useEffect(() => {
     if (extraitCopieApiHookResultat?.donneesComposition && params) {
