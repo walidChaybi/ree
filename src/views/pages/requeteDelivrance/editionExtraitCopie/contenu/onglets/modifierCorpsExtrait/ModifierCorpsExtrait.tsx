@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   FicheActe,
   IFicheActe
@@ -22,8 +22,12 @@ import {
   IGenerationECParams,
   useGenerationEC
 } from "../../../../../../common/hook/generation/generationECHook/generationECHook";
-import { getLibelle } from "../../../../../../common/util/Utils";
+import {
+  executeEnDiffere,
+  getLibelle
+} from "../../../../../../common/util/Utils";
 import { StaticField } from "../../../../../../common/widget/formulaire/champFixe/StaticField";
+import { RECEContext } from "../../../../../../core/body/Body";
 import { DocumentEC } from "../../../enum/DocumentEC";
 import "./scss/ModifierCorpsExtrait.scss";
 
@@ -33,6 +37,8 @@ export interface ModifierCorpsExtraitProps {
   document: IDocumentReponse;
   handleDocumentEnregistre: (document: DocumentEC) => void;
 }
+
+const TIMEOUT = 20;
 
 export const ModifierCorpsExtrait: React.FC<
   ModifierCorpsExtraitProps
@@ -47,6 +53,7 @@ export const ModifierCorpsExtrait: React.FC<
     useState<IModifierCorpsExtraitParams>();
   const [generationECParams, setGenerationECParams] =
     useState<IGenerationECParams>();
+  const { setIsDirty } = useContext(RECEContext);
 
   const resultatModifierCorpsExtrait = useModifierCorpsExtrait(
     modifierCorpsExtraitParams
@@ -102,7 +109,7 @@ export const ModifierCorpsExtrait: React.FC<
       <div className="DeuxColonnes">
         <StaticField
           libelle={getLibelle("Délivrance")}
-          valeur={getTypeExtrait(props.document.nom).libelle}
+          valeur={getTypeExtrait(props.document.typeDocument).libelle}
         ></StaticField>
         <StaticField
           libelle={getLibelle("Nature")}
@@ -119,8 +126,14 @@ export const ModifierCorpsExtrait: React.FC<
         value={corpsTexteNew}
       ></textarea>
       <ReinitialiserValiderBoutons
-        reInitialiserDisabled={!corpsModifie(corpsTexteNew, corpsTexte)}
-        validerDisabled={corpsNonModifierOuCorpsVide(corpsTexteNew, corpsTexte)}
+        reInitialiserDisabled={
+          !corpsModifie(corpsTexteNew, setIsDirty, corpsTexte)
+        }
+        validerDisabled={corpsNonModifierOuCorpsVide(
+          corpsTexteNew,
+          setIsDirty,
+          corpsTexte
+        )}
         onClickReInitialiser={reinitialisation}
         onClickValider={valider}
       />
@@ -155,11 +168,28 @@ export function getCorpsTexte(
 
 export function corpsNonModifierOuCorpsVide(
   corpsTexteNew: string,
+  setIsDirty: (isDirty: boolean) => void,
   corpsTexte?: string
 ) {
-  return !corpsModifie(corpsTexteNew, corpsTexte) || corpsTexteNew === "";
+  return (
+    !corpsModifie(corpsTexteNew, setIsDirty, corpsTexte) || corpsTexteNew === ""
+  );
 }
 
-export function corpsModifie(corpsTexteNew: string, corpsTexte?: string) {
-  return corpsTexte !== corpsTexteNew;
+export function corpsModifie(
+  corpsTexteNew: string,
+  setIsDirty: (isDirty: boolean) => void,
+  corpsTexte?: string
+) {
+  if (corpsTexte !== corpsTexteNew) {
+    executeEnDiffere(() => {
+      setIsDirty(true);
+    }, TIMEOUT);
+    return true;
+  } else {
+    executeEnDiffere(() => {
+      setIsDirty(false);
+    }, TIMEOUT);
+    return false;
+  }
 }

@@ -105,7 +105,7 @@ export function useSauvegardeValidationSaisieExtrait(
       params.callBack(DocumentEC.Principal);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [regenerationParams, resultatGenerationEC]);
+  }, [resultatGenerationEC]);
 }
 
 function getValidation(

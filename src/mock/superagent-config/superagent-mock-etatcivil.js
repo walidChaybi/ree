@@ -12,6 +12,7 @@ import {
   ReponseAppelAddAlerteActe,
   ReponseAppelGetAlertesActe
 } from "../data/Alertes";
+import { acteExtraitSaisie } from "../data/DonneesSaisieExtrait";
 import {
   ficheActe1,
   ficheActe2,
@@ -102,6 +103,12 @@ export const configEtatcivil = [
       }
 
       if (
+        match[1] === "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f/saisieExtrait"
+      ) {
+        return { data: null };
+      }
+
+      if (
         match[1] ===
           "/repertoirecivil/pacs/89c9d030-26c3-41d3-bdde-8b4dcc0420e0" ||
         match[1] ===
@@ -117,6 +124,8 @@ export const configEtatcivil = [
         return { data: acte };
       } else if (match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc") {
         return { data: acte1 };
+      } else if (match[1] === "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f") {
+        return { data: acteExtraitSaisie };
       } else if (match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8") {
         return { data: acte2 };
       } else if (match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db") {
@@ -498,6 +507,12 @@ export const configEtatcivil = [
       };
     },
 
+    /**
+     * returns the result of the PATCH request
+     *
+     * @param match array Result of the resolution of the regular expression
+     * @param data  mixed Data returns by `fixtures` attribute
+     */
     patch: function (match, data) {
       return {
         body: data,

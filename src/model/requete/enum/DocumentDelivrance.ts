@@ -169,9 +169,10 @@ export class DocumentDelivrance extends EnumNomemclature {
     typeDocument: string,
     code: string
   ) {
+    
     return (
-      DocumentDelivrance.getEnumForUUID(typeDocument) ===
-      DocumentDelivrance.getEnumForCode(code)
+      DocumentDelivrance.getEnumForUUID(typeDocument).code ===
+      DocumentDelivrance.getEnumForCode(code).code
     );
   }
 

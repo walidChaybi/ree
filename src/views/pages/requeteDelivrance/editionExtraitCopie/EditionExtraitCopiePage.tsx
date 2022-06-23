@@ -47,6 +47,7 @@ import { DocumentEC } from "./enum/DocumentEC";
 import "./scss/EditionExtraitCopie.scss";
 
 export const EditionExtraitCopiePageContext = React.createContext({
+  operationEnCours: false,
   setOperationEnCours: (operationEnCours: boolean) => {}
 });
 
@@ -100,6 +101,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
     setOperationEnCours(false);
     setIdRequete({ idRequete: idRequeteParam });
     setIndexDocEdite(index);
+    setIsDirty(false);
   }
 
   useEffect(() => {
@@ -222,7 +224,9 @@ export const EditionExtraitCopiePage: React.FC = () => {
         images={imagesDeLActe}
         onRetoucheTerminee={onRetoucheTerminee}
       />
-      <EditionExtraitCopiePageContext.Provider value={{ setOperationEnCours }}>
+      <EditionExtraitCopiePageContext.Provider
+        value={{ operationEnCours, setOperationEnCours }}
+      >
         <div className="EditionExtraitCopie">
           <title>{getLibelle("Édition extrait copie")}</title>
           {requete && (

@@ -94,7 +94,6 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         acte: props.acte,
         extraitSaisiAEnvoyer: extraitAEnvoyer,
         callBack: (documentEC: DocumentEC) => {
-          setOperationEnCours(false);
           props.handleDocumentEnregistre(documentEC);
         },
         problemePlurilingue

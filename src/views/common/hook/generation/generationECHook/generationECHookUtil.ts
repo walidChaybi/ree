@@ -33,7 +33,6 @@ import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { Validation } from "../../../../../model/requete/enum/Validation";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import {
-  getValeurOuVide,
   SNP,
   SPC,
   tousNonNullsNonZeroEtNonVides
@@ -155,10 +154,10 @@ export function creationComposition(
   acte: IFicheActe,
   requete: IRequeteDelivrance,
   validation: Validation,
-  mentionsRetirees: string[]
+  mentionsRetirees: string[],
+  choixDelivrance: ChoixDelivrance
 ): IExtraitCopieComposition | undefined {
   let composition;
-  const choixDelivrance = getValeurOuVide(requete.choixDelivrance);
   if (
     estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte, choixDelivrance)
   ) {
@@ -286,6 +285,9 @@ export function creationEC(
   setExtraitCopieApiHookParams: any
 ) {
   if (nonNull(acte, params)) {
+    const choixDelivrance = params?.choixDelivrance
+      ? params.choixDelivrance
+      : params?.requete.choixDelivrance;
     let composition;
 
     // Verification des données pour la génération d'extrait mariage/naissance
@@ -307,7 +309,9 @@ export function creationEC(
       params.requete,
       validationControle,
       // @ts-ignore NonNull
-      params.mentionsRetirees
+      params.mentionsRetirees,
+      // @ts-ignore NonNull
+      choixDelivrance
     );
     setValidation(validationControle);
     setExtraitCopieApiHookParams({

@@ -12,6 +12,7 @@ import { DocumentDelivrance } from "../../../../../../../model/requete/enum/Docu
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import messageManager from "../../../../../../common/util/messageManager";
 import {
+  executeEnDiffere,
   getLibelle,
   getValeurOuVide,
   shallowEgalTableau
@@ -27,6 +28,8 @@ export interface IMentionAffichage {
   numeroOrdre: number;
   aPoubelle: boolean;
 }
+
+const TIMEOUT = 20;
 
 export function mappingVersMentionAffichage(
   mentionsApi: IMention[],
@@ -147,7 +150,7 @@ export function modificationEffectue(
   mentions?: IMentionAffichage[],
   mentionsApi?: IMention[],
   document?: IDocumentReponse,
-  setIsDirty?: any
+  setIsDirty?: (isDirty: boolean) => void
 ) {
   if (mentions && mentionsApi && document) {
     if (
@@ -157,12 +160,16 @@ export function modificationEffectue(
       )
     ) {
       if (setIsDirty) {
-        setIsDirty(true);
+        executeEnDiffere(() => {
+          setIsDirty(true);
+        }, TIMEOUT);
       }
       return true;
     } else {
       if (setIsDirty) {
-        setIsDirty(false);
+        executeEnDiffere(() => {
+          setIsDirty(false);
+        }, TIMEOUT);
       }
       return false;
     }
@@ -249,7 +256,6 @@ export function handleBlur(
         mentionsApi[indexMentionsApi]
       )
     ) {
-      setIsDirty(true);
       miseAjourEnFonctionNature(
         mentions,
         indexMentions,
@@ -267,7 +273,6 @@ export function handleBlur(
       (mentions[indexMentions].texte !== mentionSelect?.texte ||
         mentionSelect?.nature !== mentions[indexMentions].nature)
     ) {
-      setIsDirty(true);
       miseAJourMention(
         mentionSelect,
         mentions,
@@ -356,7 +361,8 @@ export function boutonReinitialiserEstDisabled(
   estdeverrouille: boolean,
   mentionsApi?: IMention[],
   mentions?: IMentionAffichage[],
-  document?: IDocumentReponse
+  document?: IDocumentReponse,
+  setIsDirty?: any
 ) {
   if (
     DocumentDelivrance.typeDocumentEstCopieIntegrale(document?.typeDocument)
@@ -364,10 +370,10 @@ export function boutonReinitialiserEstDisabled(
     return (
       !estdeverrouille ||
       (estdeverrouille &&
-        !modificationEffectue(mentions, mentionsApi, document))
+        !modificationEffectue(mentions, mentionsApi, document, setIsDirty))
     );
   } else {
-    return !modificationEffectue(mentions, mentionsApi, document);
+    return !modificationEffectue(mentions, mentionsApi, document, setIsDirty);
   }
 }
 
