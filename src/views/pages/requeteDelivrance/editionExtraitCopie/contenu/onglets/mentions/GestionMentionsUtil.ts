@@ -12,7 +12,6 @@ import { DocumentDelivrance } from "../../../../../../../model/requete/enum/Docu
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
 import messageManager from "../../../../../../common/util/messageManager";
 import {
-  executeEnDiffere,
   getLibelle,
   getValeurOuVide,
   shallowEgalTableau
@@ -28,8 +27,6 @@ export interface IMentionAffichage {
   numeroOrdre: number;
   aPoubelle: boolean;
 }
-
-const TIMEOUT = 20;
 
 export function mappingVersMentionAffichage(
   mentionsApi: IMention[],
@@ -149,8 +146,7 @@ export function miseAJourMention(
 export function modificationEffectue(
   mentions?: IMentionAffichage[],
   mentionsApi?: IMention[],
-  document?: IDocumentReponse,
-  setIsDirty?: (isDirty: boolean) => void
+  document?: IDocumentReponse
 ) {
   if (mentions && mentionsApi && document) {
     if (
@@ -159,18 +155,8 @@ export function modificationEffectue(
         mappingVersMentionAffichage(mentionsApi, document)
       )
     ) {
-      if (setIsDirty) {
-        executeEnDiffere(() => {
-          setIsDirty(true);
-        }, TIMEOUT);
-      }
       return true;
     } else {
-      if (setIsDirty) {
-        executeEnDiffere(() => {
-          setIsDirty(false);
-        }, TIMEOUT);
-      }
       return false;
     }
   } else {
@@ -239,8 +225,7 @@ export function handleBlur(
   >,
   setMentions: React.Dispatch<
     React.SetStateAction<IMentionAffichage[] | undefined>
-  >,
-  setIsDirty: any
+  >
 ) {
   if (mentions && mentionsApi && mentionSelect) {
     const indexMentions = mentions.findIndex(el => el.id === mentionSelect?.id);
@@ -361,8 +346,7 @@ export function boutonReinitialiserEstDisabled(
   estdeverrouille: boolean,
   mentionsApi?: IMention[],
   mentions?: IMentionAffichage[],
-  document?: IDocumentReponse,
-  setIsDirty?: any
+  document?: IDocumentReponse
 ) {
   if (
     DocumentDelivrance.typeDocumentEstCopieIntegrale(document?.typeDocument)
@@ -370,10 +354,10 @@ export function boutonReinitialiserEstDisabled(
     return (
       !estdeverrouille ||
       (estdeverrouille &&
-        !modificationEffectue(mentions, mentionsApi, document, setIsDirty))
+        !modificationEffectue(mentions, mentionsApi, document))
     );
   } else {
-    return !modificationEffectue(mentions, mentionsApi, document, setIsDirty);
+    return !modificationEffectue(mentions, mentionsApi, document);
   }
 }
 

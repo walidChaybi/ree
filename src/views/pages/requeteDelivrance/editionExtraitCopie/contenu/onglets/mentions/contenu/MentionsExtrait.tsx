@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback } from "react";
 import { TypeMention } from "../../../../../../../../model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "../../../../../../../../model/etatcivil/enum/NatureActe";
 import { NatureMention } from "../../../../../../../../model/etatcivil/enum/NatureMention";
@@ -10,7 +10,6 @@ import {
 } from "../../../../../../../common/util/Utils";
 import { SelectRece } from "../../../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { ListeGlisserDeposer } from "../../../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
-import { RECEContext } from "../../../../../../../core/body/Body";
 import {
   getEnumNatureMentionOuAutre,
   handleBlur,
@@ -42,7 +41,6 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   mentionAjout,
   natureActe
 }) => {
-  const { setIsDirty } = useContext(RECEContext);
   function selectionneMention(id: string) {
     selectionneEtMiseAJour(mentions, mentionSelect, setMentionSelect, id);
   }
@@ -52,17 +50,10 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
       mentionSelect,
       mentionsApi?.mentions,
       setMentionSelect,
-      setMentions,
-      setIsDirty
+      setMentions
     );
-  }, [
-    mentions,
-    mentionSelect,
-    mentionsApi,
-    setMentionSelect,
-    setMentions,
-    setIsDirty
-  ]);
+  }, [mentions, mentionSelect, mentionsApi, setMentionSelect, setMentions]);
+
   const handleChangeSelect = useCallback(
     (event: any) => {
       if (mentionSelect) {
@@ -136,15 +127,17 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
     [mentions, mentionAjout, setMentionAjout]
   );
 
-  const ajoutMention = useCallback(() => {
+  const handleAjoutMention = useCallback(() => {
     if (mentionAjout) {
-      let temp: IMentionAffichage[] = [];
+      let nouvellesMentions: IMentionAffichage[] = [];
       if (mentions) {
-        temp = [...mentions];
+        nouvellesMentions = [...mentions];
       }
-      temp.push(mentionAjout);
-      temp.forEach((mention, index) => (mention.numeroOrdre = index));
-      setMentions(temp);
+      nouvellesMentions.push(mentionAjout);
+      nouvellesMentions.forEach(
+        (mention, index) => (mention.numeroOrdre = index)
+      );
+      setMentions(nouvellesMentions);
       setMentionSelect(mentionAjout);
       setMentionAjout(undefined);
     }
@@ -232,7 +225,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
           </span>
           <button
             disabled={!mentionAjout || mentionAjout.texte === ""}
-            onClick={ajoutMention}
+            onClick={handleAjoutMention}
             title="Ajouter la mention"
           >
             +

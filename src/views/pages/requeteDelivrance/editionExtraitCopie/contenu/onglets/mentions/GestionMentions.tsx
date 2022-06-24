@@ -14,6 +14,7 @@ import {
   getLibelle,
   getValeurOuVide
 } from "../../../../../../common/util/Utils";
+import { RECEContext } from "../../../../../../core/body/Body";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { DocumentEC } from "../../../enum/DocumentEC";
 import { MentionsCopie } from "./contenu/MentionsCopie";
@@ -24,6 +25,7 @@ import {
   getValeurEstdeverrouillerCommencement,
   IMentionAffichage,
   mappingVersMentionAffichage,
+  modificationEffectue,
   validerMentions
 } from "./GestionMentionsUtil";
 import "./scss/Mention.scss";
@@ -36,6 +38,8 @@ export interface GestionMentionsProps {
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
+  const { setIsDirty } = useContext(RECEContext);
+
   const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
 
   const [mentionSelect, setMentionSelect] = useState<IMentionAffichage>();
@@ -63,6 +67,26 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
       setMentionsParams(props.acte.id);
     }
   }, [props.acte]);
+
+  useEffect(() => {
+    if (mentions) {
+      setIsDirtySiModificationEffectuee(mentions);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mentions]);
+
+  const setIsDirtySiModificationEffectuee = useCallback(
+    (nouvellesMentions: IMentionAffichage[] | undefined) => {
+      setIsDirty(
+        modificationEffectue(
+          nouvellesMentions,
+          mentionsApi?.mentions,
+          props.document
+        )
+      );
+    },
+    [mentionsApi, props.document, setIsDirty]
+  );
 
   const reinitialisation = useCallback(() => {
     if (mentionsApi?.mentions && props.document) {

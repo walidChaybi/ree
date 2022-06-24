@@ -1,9 +1,7 @@
 import { connect } from "formik";
-import React, { useContext } from "react";
+import React from "react";
 import { officierHabiliterPourLeDroit } from "../../../../../model/agent/IOfficier";
 import { Droit } from "../../../../../model/Droit";
-import { RECEContext } from "../../../../core/body/Body";
-import { EditionExtraitCopiePageContext } from "../../../../pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { getLibelle } from "../../../util/Utils";
 import { FormikComponentProps } from "../../../widget/formulaire/utils/FormUtil";
 import "./scss/ReinitialiserValiderBoutons.scss";
@@ -48,18 +46,10 @@ type ReinitialiserValiderFormBoutonsProps = ReinitialiserValiderBoutonsProps &
 const _ReinitialiserValiderFormBoutons: React.FC<
   ReinitialiserValiderFormBoutonsProps
 > = props => {
-  const { setIsDirty } = useContext(RECEContext);
-  const { operationEnCours } = useContext(EditionExtraitCopiePageContext);
-
   function getReinitialiserDisabled() {
-    const res =
-      props.reInitialiserDisabled !== undefined
-        ? props.reInitialiserDisabled
-        : !props.formik.dirty;
-    if (!operationEnCours) {
-      setIsDirty(!res);
-    }
-    return res;
+    return props.reInitialiserDisabled !== undefined
+      ? props.reInitialiserDisabled
+      : !props.formik.dirty;
   }
 
   return (

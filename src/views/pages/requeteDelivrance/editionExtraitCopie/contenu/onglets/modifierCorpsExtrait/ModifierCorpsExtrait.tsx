@@ -22,10 +22,7 @@ import {
   IGenerationECParams,
   useGenerationEC
 } from "../../../../../../common/hook/generation/generationECHook/generationECHook";
-import {
-  executeEnDiffere,
-  getLibelle
-} from "../../../../../../common/util/Utils";
+import { getLibelle } from "../../../../../../common/util/Utils";
 import { StaticField } from "../../../../../../common/widget/formulaire/champFixe/StaticField";
 import { RECEContext } from "../../../../../../core/body/Body";
 import { DocumentEC } from "../../../enum/DocumentEC";
@@ -38,11 +35,11 @@ export interface ModifierCorpsExtraitProps {
   handleDocumentEnregistre: (document: DocumentEC) => void;
 }
 
-const TIMEOUT = 20;
-
 export const ModifierCorpsExtrait: React.FC<
   ModifierCorpsExtraitProps
 > = props => {
+  const { setIsDirty } = useContext(RECEContext);
+
   const [corpsTexte] = useState<string | undefined>(
     getCorpsTexte(props.acte, props.requete, props.document)
   );
@@ -53,7 +50,6 @@ export const ModifierCorpsExtrait: React.FC<
     useState<IModifierCorpsExtraitParams>();
   const [generationECParams, setGenerationECParams] =
     useState<IGenerationECParams>();
-  const { setIsDirty } = useContext(RECEContext);
 
   const resultatModifierCorpsExtrait = useModifierCorpsExtrait(
     modifierCorpsExtraitParams
@@ -62,6 +58,7 @@ export const ModifierCorpsExtrait: React.FC<
   const resultatGenerationEC = useGenerationEC(generationECParams);
 
   function handleChangeText(e: any) {
+    setIsDirty(corpsTexte !== corpsTexteNew);
     setCorpsTexteNew(e.target.value);
   }
 
@@ -126,9 +123,7 @@ export const ModifierCorpsExtrait: React.FC<
         value={corpsTexteNew}
       ></textarea>
       <ReinitialiserValiderBoutons
-        reInitialiserDisabled={
-          !corpsModifie(corpsTexteNew, setIsDirty, corpsTexte)
-        }
+        reInitialiserDisabled={!corpsModifie(corpsTexteNew, corpsTexte)}
         validerDisabled={corpsNonModifierOuCorpsVide(
           corpsTexteNew,
           setIsDirty,
@@ -171,25 +166,9 @@ export function corpsNonModifierOuCorpsVide(
   setIsDirty: (isDirty: boolean) => void,
   corpsTexte?: string
 ) {
-  return (
-    !corpsModifie(corpsTexteNew, setIsDirty, corpsTexte) || corpsTexteNew === ""
-  );
+  return !corpsModifie(corpsTexteNew, corpsTexte) || corpsTexteNew === "";
 }
 
-export function corpsModifie(
-  corpsTexteNew: string,
-  setIsDirty: (isDirty: boolean) => void,
-  corpsTexte?: string
-) {
-  if (corpsTexte !== corpsTexteNew) {
-    executeEnDiffere(() => {
-      setIsDirty(true);
-    }, TIMEOUT);
-    return true;
-  } else {
-    executeEnDiffere(() => {
-      setIsDirty(false);
-    }, TIMEOUT);
-    return false;
-  }
+export function corpsModifie(corpsTexteNew: string, corpsTexte?: string) {
+  return corpsTexte !== corpsTexteNew;
 }

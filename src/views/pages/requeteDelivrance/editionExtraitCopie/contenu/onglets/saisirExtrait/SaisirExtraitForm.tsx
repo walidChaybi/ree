@@ -26,8 +26,10 @@ import { getLibelle } from "../../../../../../common/util/Utils";
 import { AccordionRece } from "../../../../../../common/widget/accordion/AccordionRece";
 import { StaticField } from "../../../../../../common/widget/formulaire/champFixe/StaticField";
 import { Formulaire } from "../../../../../../common/widget/formulaire/Formulaire";
+import FormikEffect from "../../../../../../common/widget/formulaire/utils/FormikEffect";
 import { withNamespace } from "../../../../../../common/widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "../../../../../../common/widget/popin/ConfirmationPopin";
+import { RECEContext } from "../../../../../../core/body/Body";
 import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { DocumentEC } from "../../../enum/DocumentEC";
 import { IEvenement } from "./../../../../../../../model/etatcivil/acte/IEvenement";
@@ -63,6 +65,7 @@ type SaisirExtraitFormProps = ComponentFormProps;
 
 export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
   const { setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
+  const { setIsDirty } = useContext(RECEContext);
 
   const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
   const [sauvegarderSaisieParams, setSauvegarderSaisieParams] =
@@ -148,6 +151,11 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
         }
         onSubmit={onSubmitValiderExtraitSaisi}
       >
+        <FormikEffect
+          onChange={dirty => {
+            setIsDirty(dirty);
+          }}
+        />
         <div className="DeuxColonnes">
           <StaticField
             libelle={getLibelle("Nature")}

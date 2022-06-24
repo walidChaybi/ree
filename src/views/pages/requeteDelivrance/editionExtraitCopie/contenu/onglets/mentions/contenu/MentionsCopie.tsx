@@ -20,6 +20,7 @@ export const MentionsCopie: React.FC<MentionsCopieProps> = props => {
     (id: string) => {
       handleCheckBox(props.mentions, props.setMentions, id);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.mentions, props.setMentions]
   );
 
