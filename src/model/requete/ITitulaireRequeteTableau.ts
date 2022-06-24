@@ -1,5 +1,6 @@
 import { formatNom, formatPrenom } from "../../views/common/util/Utils";
 import { Sexe } from "../etatcivil/enum/Sexe";
+import { QualiteFamille } from "./enum/QualiteFamille";
 import { SEPARATOR_NUMERO_ELEMENT } from "./IRequeteTableauDelivrance";
 
 export interface ITitulaireRequeteTableau {
@@ -11,6 +12,7 @@ export interface ITitulaireRequeteTableau {
   villeNaissance?: string;
   paysNaissance?: string;
   sexe: Sexe;
+  qualite?: QualiteFamille;
 }
 
 export function mapTitulaires(
@@ -31,6 +33,7 @@ export function mapTitulaires(
     titulaire.sexe = Sexe.getEnumFor(t?.sexe);
     titulaire.villeNaissance = t?.villeNaissance;
     titulaire.paysNaissance = t?.paysNaissance;
+    titulaire.qualite = t?.qualite;
     return titulaire;
   });
 }

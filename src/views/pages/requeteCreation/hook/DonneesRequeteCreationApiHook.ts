@@ -4,6 +4,7 @@ import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
+import { QualiteFamille } from "../../../../model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "../../../../model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
@@ -97,6 +98,7 @@ function mappingUneRequeteTableauCreation(
 
 function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
   return titulaires
+    .filter(el => el.qualite !== QualiteFamille.PARENT)
     .map(el => `${el.nom} ${getValeurOuVide(el.prenoms[0])}`)
     .reduce(function (accumulateur, valeurCourante) {
       return `${accumulateur}, ${valeurCourante}`;
