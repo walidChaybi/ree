@@ -58,7 +58,7 @@ export const ModifierCorpsExtrait: React.FC<
   const resultatGenerationEC = useGenerationEC(generationECParams);
 
   function handleChangeText(e: any) {
-    setIsDirty(corpsTexte !== corpsTexteNew);
+    setIsDirty(corpsTexte !== e.target.value);
     setCorpsTexteNew(e.target.value);
   }
 
