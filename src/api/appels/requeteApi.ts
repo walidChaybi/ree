@@ -80,24 +80,18 @@ export interface IQueryParametersPourRequete {
   idRequete: string;
 }
 
-const apiV1 = ApiManager.getInstance("rece-requete-api", "v1");
 const api = ApiManager.getInstance("rece-requete-api", "v2");
 
 ////////////////////////
-// Paramètres (utilisé aussi en V2)
+/*** API REQUETE V2 ***/
 ////////////////////////
-/** Récupération des paramètres de l'api requête */
 export function getParametresBaseRequete(): Promise<any> {
-  return apiV1.fetchCache({
+  return api.fetchCache({
     method: HttpMethod.POST,
     uri: `${URL_PARAMETRE}`,
     data: CLES
   });
 }
-
-////////////////////////
-/*** API REQUETE V2 ***/
-////////////////////////
 
 export function getRequetesDelivrance(
   typeRequete: TypeAppelRequete,
