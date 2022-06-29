@@ -10,7 +10,7 @@ import {
 import { FeatureFlag } from "../../util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "../../util/messageManager";
-import { MigratorV1V2 } from "../../util/migration/MigratorV1V2";
+import { GestionnaireARetraiterDansSaga } from "../../util/migration/GestionnaireARetraiterDansSaga";
 import {
   autorisePrendreEnChargeReqTableauDelivrance,
   typeEstDelivrance
@@ -96,7 +96,11 @@ const redirectionEnFonctionMaRequete = (
         redirectionRequeteDoublon(setRedirection, urlWithoutParam, requete);
         break;
       default:
-        if (MigratorV1V2.estARetraiterSagaRequeteTableau(requete)) {
+        if (
+          GestionnaireARetraiterDansSaga.estARetraiterSagaRequeteTableau(
+            requete
+          )
+        ) {
           redirectionVersApercuTraitement(
             setRedirection,
             urlWithoutParam,
@@ -140,7 +144,7 @@ function redirectionAValider(
 ) {
   const sousType = requete.sousType;
   if (
-    gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) &&
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
     (sousType === SousTypeDelivrance.RDDP.libelleCourt ||
       sousType === SousTypeDelivrance.RDD.libelleCourt ||
       sousType === SousTypeDelivrance.RDC.libelleCourt)

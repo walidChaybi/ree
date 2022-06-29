@@ -1,9 +1,12 @@
 /* istanbul ignore file */
 import { EnumWithComplete } from "../../../views/common/util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { Options } from "../../../views/common/util/Type";
 
-export const LISTE_DES_REQUETES_COURRIER = ["RDCSC", "RDC", "RDLFC"];
+export const LISTE_DES_REQUETES_COURRIER_EC_LF = ["RDC", "RDLFC"];
+export const LISTE_DES_REQUETES_COURRIER_CS = ["RDCSC"];
 
 export class SousTypeDelivrance extends EnumWithComplete {
   public static readonly RDD = new SousTypeDelivrance(
@@ -71,5 +74,50 @@ export class SousTypeDelivrance extends EnumWithComplete {
 
   public static estPlanete(sousType?: SousTypeDelivrance): boolean {
     return sousType === SousTypeDelivrance.RDDP;
+  }
+
+  public static soustypeRDD(sousType?: SousTypeDelivrance): boolean {
+    return sousType === SousTypeDelivrance.RDD;
+  }
+
+  public static estRDC(sousType?: SousTypeDelivrance): boolean {
+    return sousType === SousTypeDelivrance.RDC;
+  }
+
+  public static estRDDP(sousType?: SousTypeDelivrance): boolean {
+    return sousType === SousTypeDelivrance.RDDP;
+  }
+
+  public static estRDDouRDC(sousType?: SousTypeDelivrance): boolean {
+    return (
+      SousTypeDelivrance.soustypeRDD(sousType) ||
+      SousTypeDelivrance.estRDC(sousType)
+    );
+  }
+
+  public static estRDDouRDCouRDDP(sousType?: SousTypeDelivrance): boolean {
+    return (
+      SousTypeDelivrance.soustypeRDD(sousType) ||
+      SousTypeDelivrance.estRDC(sousType) ||
+      SousTypeDelivrance.estRDDP(sousType)
+    );
+  }
+
+  public static estRDCSDouRDCSC(sousType?: SousTypeDelivrance): boolean {
+    return (
+      sousType === SousTypeDelivrance.RDCSD ||
+      sousType === SousTypeDelivrance.RDCSC
+    );
+  }
+
+  public static possibleAPrendreEnCharge(
+    sousType?: SousTypeDelivrance
+  ): boolean {
+    return (
+      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
+        SousTypeDelivrance.estRDDouRDCouRDDP(sousType)) ||
+      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
+        SousTypeDelivrance.estRDCSDouRDCSC(sousType))
+    );
   }
 }

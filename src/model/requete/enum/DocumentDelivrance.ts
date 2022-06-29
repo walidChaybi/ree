@@ -2,6 +2,8 @@
 import { peupleDocumentDelivrance } from "../../../api/nomenclature/NomenclatureRequete";
 import { EnumNomemclature } from "../../../views/common/util/enum/EnumNomenclature";
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { Options } from "../../../views/common/util/Type";
 import { getValeurOuVide } from "../../../views/common/util/Utils";
 import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
@@ -169,7 +171,6 @@ export class DocumentDelivrance extends EnumNomemclature {
     typeDocument: string,
     code: string
   ) {
-    
     return (
       DocumentDelivrance.getEnumForUUID(typeDocument).code ===
       DocumentDelivrance.getEnumForCode(code).code
@@ -339,8 +340,9 @@ export class DocumentDelivrance extends EnumNomemclature {
       opt =>
         DocumentDelivrance.getEnumForUUID(opt.value)
           .categorieDocumentDelivrance === "Certificat de situation demandé" ||
-        DocumentDelivrance.getEnumForUUID(opt.value)
-          .categorieDocumentDelivrance === "Attestation"
+        (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
+          DocumentDelivrance.getEnumForUUID(opt.value)
+            .categorieDocumentDelivrance === "Attestation")
     );
   }
 

@@ -1,19 +1,9 @@
-import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import {
   getCellTitulaires,
   getIconPrioriteRequete
 } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { getLibelle } from "../../../common/util/Utils";
 import { TableauTypeColumn } from "../../../common/widget/tableau/TableauRece/TableauTypeColumn";
-
-export const StatutsRequetesEspaceDelivrance = [
-  StatutRequete.BROUILLON.nom,
-  StatutRequete.PRISE_EN_CHARGE.nom,
-  StatutRequete.TRANSFEREE.nom,
-  StatutRequete.A_SIGNER.nom,
-  StatutRequete.A_VALIDER.nom
-  // A_TRAITER est ramené par le back (en effet en ETAPE2 R1,2,7, il ne faut pas ramener les RDD A_TRAITER)
-];
 
 export enum HeaderTableauRequete {
   Numero = "numero",

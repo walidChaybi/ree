@@ -21,15 +21,10 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
   URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
 } from "../../../../../views/router/ReceUrls";
-import { localStorageFeatureFlagMock } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag.test";
 
 const history = createMemoryHistory();
 
 const HookConsummerSaisirRequeteMesRequete: React.FC = () => {
-  Object.defineProperty(window, "localStorage", {
-    value: localStorageFeatureFlagMock
-  });
-
   history.push(URL_MES_REQUETES_DELIVRANCE);
 
   return (
@@ -40,10 +35,6 @@ const HookConsummerSaisirRequeteMesRequete: React.FC = () => {
 };
 
 const HookConsummerSaisirRequeteMesRequeteDeService: React.FC = () => {
-  Object.defineProperty(window, "localStorage", {
-    value: localStorageFeatureFlagMock
-  });
-
   history.push(URL_REQUETES_DELIVRANCE_SERVICE);
 
   return (
@@ -56,7 +47,9 @@ const HookConsummerSaisirRequeteMesRequeteDeService: React.FC = () => {
 test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Délivrance", async () => {
   render(<HookConsummerSaisirRequeteMesRequete />);
 
-  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS)).toBeTruthy();
+  expect(
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+  ).toBeTruthy();
 
   const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
@@ -151,7 +144,9 @@ test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", as
     fireEvent.click(boutonMenu);
   });
 
-  const RDCSC = screen.getByText("Délivrance Certificat & Attestation RC/RCA/PACS courrier");
+  const RDCSC = screen.getByText(
+    "Délivrance Certificat & Attestation RC/RCA/PACS courrier"
+  );
 
   await waitFor(() => {
     expect(RDCSC).toBeDefined();

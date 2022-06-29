@@ -7,7 +7,6 @@ import {
   provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
 } from "../../../model/agent/IOfficier";
 import { SousTypeDelivrance } from "../../../model/requete/enum/SousTypeDelivrance";
-import { SousTypeRequete } from "../../../model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
 import { TypeRequete } from "../../../model/requete/enum/TypeRequete";
 import { IActionOption } from "../../../model/requete/IActionOption";
@@ -27,7 +26,6 @@ import {
 } from "../../../model/requete/IRequeteTableauInformation";
 import { getLibelle } from "../../common/util/Utils";
 import { FormatDate } from "./DateUtils";
-import { MigratorV1V2 } from "./migration/MigratorV1V2";
 
 export const indexParamsReq = {
   Statut: 0,
@@ -109,9 +107,13 @@ export const autorisePrendreEnChargeDelivrance = (
 
 export const autorisePrendreEnChargeReqTableauDelivrance = (
   requete: IRequeteTableauDelivrance
-) =>
-  !MigratorV1V2.estSousTypeRDDouRDCouRDDP(requete.sousType) &&
-  estAutorisePrendreEnChargeReqTableauDelivrance(requete);
+): boolean => {
+  const sousType = SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType);
+  return (
+    SousTypeDelivrance.possibleAPrendreEnCharge(sousType) &&
+    estAutorisePrendreEnChargeReqTableauDelivrance(requete)
+  );
+};
 
 const estAutorisePrendreEnChargeReqTableauDelivrance = (
   requete: IRequeteTableauDelivrance
@@ -174,27 +176,6 @@ export function getIdDocumentReponseAAfficher(
     }
   }
   return idDocumentAAfficher;
-}
-
-export function soustypeRDDouRDC(sousType: SousTypeRequete): boolean {
-  return (
-    sousType === SousTypeDelivrance.RDD || sousType === SousTypeDelivrance.RDC
-  );
-}
-
-export function soustypeRDDouRDCouRDDP(sousType: SousTypeRequete): boolean {
-  return (
-    sousType === SousTypeDelivrance.RDD ||
-    sousType === SousTypeDelivrance.RDC ||
-    sousType === SousTypeDelivrance.RDDP
-  );
-}
-
-export function soustypeRDCSDouRDCSC(sousType: SousTypeRequete): boolean {
-  return (
-    sousType === SousTypeDelivrance.RDCSD ||
-    sousType === SousTypeDelivrance.RDCSC
-  );
 }
 
 export function mappingRequetesTableau(

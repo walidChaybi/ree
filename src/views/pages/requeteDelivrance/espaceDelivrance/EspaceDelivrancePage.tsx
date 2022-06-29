@@ -6,6 +6,8 @@ import {
   INavigationApercuRMCAutoParams,
   useNavigationApercuRMCAuto
 } from "../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { FeatureFlag } from "../../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { NomComposant } from "../../../common/util/habilitation/habilitationsDescription";
 import { getLibelle } from "../../../common/util/Utils";
 import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";
@@ -25,12 +27,21 @@ interface LocalProps {
   selectedTab?: number;
 }
 
-const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => (
-  <div className="BlocBoutons">
-    <MenuSaisirRequete indexTabPanel={selectedTabState} />
-    <BoutonPrendreEnChargeAleatoirement />
-  </div>
-);
+const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => {
+  return (
+    <>
+      {gestionnaireFeatureFlag.auMoinUnEstActif(
+        FeatureFlag.FF_DELIV_EC_PAC,
+        FeatureFlag.FF_DELIV_CS
+      ) && (
+        <div className="BlocBoutons">
+          <MenuSaisirRequete indexTabPanel={selectedTabState} />
+          <BoutonPrendreEnChargeAleatoirement />
+        </div>
+      )}
+    </>
+  );
+};
 
 const getOnglets = (
   miseAJourCompteur: () => void,

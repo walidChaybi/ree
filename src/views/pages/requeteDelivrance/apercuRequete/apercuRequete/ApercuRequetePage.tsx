@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from "react";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { MigratorV1V2 } from "../../../../common/util/migration/MigratorV1V2";
 import { getLibelle } from "../../../../common/util/Utils";
 import { VisionneuseAvecTitre } from "../../../../common/widget/document/VisionneuseAvecTitre";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
@@ -32,7 +33,10 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
     },
     [setDocumentAffiche]
   );
-
+  const estPresentBoutonPriseEnCharge =
+    StatutRequete.estAuStatutATraiterOuTransferee(
+      requete?.statutCourant?.statut
+    ) && SousTypeDelivrance.possibleAPrendreEnCharge(requete?.sousType);
   return (
     <ApercuRequeteTemplate
       title={getLibelle("Aperçu de la requête")}
@@ -48,7 +52,7 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
             typeMime={documentAffiche?.mimeType}
           />
           {!idRequeteAAfficher && <BoutonRetour />}
-          {MigratorV1V2.nEstPasRDDouRDCouEstEtape2Bis(requete) && (
+          {estPresentBoutonPriseEnCharge && (
             <BoutonPrendreEnCharge
               requete={requete}
               disabled={idRequeteAAfficher !== undefined}

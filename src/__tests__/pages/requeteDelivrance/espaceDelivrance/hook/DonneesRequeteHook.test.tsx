@@ -7,14 +7,14 @@ import {
   TypeAppelRequete
 } from "../../../../../api/appels/requeteApi";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "../../../../../views/common/widget/tableau/TableauRece/TableauPaginationConstantes";
-import { StatutsRequetesEspaceDelivrance } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceParams";
 import { useRequeteDelivranceApi } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/hook/DonneesRequeteDelivranceHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const queryParam: IQueryParametersPourRequetes = {
-  statuts: StatutsRequetesEspaceDelivrance,
+  statuts: StatutRequete.getStatutsMesRequetes(),
   tri: "dateStatut",
   sens: "ASC",
   range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`

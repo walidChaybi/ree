@@ -12,7 +12,6 @@ import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag"
 import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { storeRece } from "../../../views/common/util/storeRece";
 import { FichePage } from "../../../views/pages/fiche/FichePage";
-import { localStorageFeatureFlagMock } from "../../common/util/featureFlag/gestionnaireFeatureFlag.test";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
@@ -23,10 +22,12 @@ const fct = jest.fn();
 
 beforeAll(() => {
   window.addEventListener("refreshStyles", fct);
-  Object.defineProperty(window, "localStorage", {
-    value: localStorageFeatureFlagMock
-  });
-  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS)).toBeTruthy();
+});
+
+beforeEach(() => {
+  expect(
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+  ).toBeTruthy();
 });
 
 test("rendersFichePage render RC correcty", async () => {

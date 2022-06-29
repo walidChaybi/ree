@@ -28,8 +28,7 @@ import { URL_REQUETES_DELIVRANCE_SERVICE } from "../../../router/ReceUrls";
 import {
   dateStatutColumnHeaders,
   HeaderTableauRequete,
-  requeteColumnHeaders,
-  StatutsRequetesEspaceDelivrance
+  requeteColumnHeaders
 } from "./EspaceDelivranceParams";
 import { goToLinkRequete } from "./EspaceDelivranceUtils";
 import { useRequeteDelivranceApi } from "./hook/DonneesRequeteDelivranceHook";
@@ -68,7 +67,7 @@ export const RequetesServicePage: React.FC<
 
   const [linkParameters, setLinkParameters] =
     React.useState<IQueryParametersPourRequetes>({
-      statuts: StatutsRequetesEspaceDelivrance,
+      statuts: StatutRequete.getStatutsRequetesService(),
       tri: "dateStatut",
       sens: "ASC",
       range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
@@ -94,7 +93,7 @@ export const RequetesServicePage: React.FC<
 
   function rafraichirParent() {
     setLinkParameters({
-      statuts: StatutsRequetesEspaceDelivrance,
+      statuts: StatutRequete.getStatutsRequetesService(),
       tri: "dateStatut",
       sens: "ASC",
       range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
@@ -105,7 +104,7 @@ export const RequetesServicePage: React.FC<
 
   const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
     const queryParameters = {
-      statuts: StatutsRequetesEspaceDelivrance,
+      statuts: StatutRequete.getStatutsRequetesService(),
       tri,
       sens,
       range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`

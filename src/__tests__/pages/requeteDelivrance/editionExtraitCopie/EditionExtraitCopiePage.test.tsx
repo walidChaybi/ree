@@ -31,7 +31,6 @@ import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_EDITION_ID
 } from "../../../../views/router/ReceUrls";
-import { ajouterFeatureFlag } from "../../../__tests__utils__/testsUtil";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
@@ -47,7 +46,6 @@ beforeEach(async () => {
   DocumentDelivrance.init();
   NatureMention.init();
   TypeMention.init();
-  ajouterFeatureFlag();
   storeRece.utilisateurCourant = userDroitCOMEDEC;
 
   history = createMemoryHistory();

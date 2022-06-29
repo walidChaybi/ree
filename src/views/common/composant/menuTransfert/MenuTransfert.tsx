@@ -72,7 +72,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
     const opts = reponseSansDelivranceCSOptions;
     if (
       props.typeRequete === TypeRequete.DELIVRANCE &&
-      gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) &&
+      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
       !props.pasAbandon
     ) {
       opts.push({

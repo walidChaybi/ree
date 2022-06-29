@@ -24,8 +24,7 @@ import { SortOrder } from "../../../common/widget/tableau/TableUtils";
 import { URL_MES_REQUETES_DELIVRANCE } from "../../../router/ReceUrls";
 import {
   dateStatutColumnHeaders,
-  requeteColumnHeaders,
-  StatutsRequetesEspaceDelivrance
+  requeteColumnHeaders
 } from "./EspaceDelivranceParams";
 import { goToLinkRequete } from "./EspaceDelivranceUtils";
 import { useRequeteDelivranceApi } from "./hook/DonneesRequeteDelivranceHook";
@@ -54,7 +53,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
 
   const [linkParameters, setLinkParameters] =
     React.useState<IQueryParametersPourRequetes>({
-      statuts: StatutsRequetesEspaceDelivrance,
+      statuts: StatutRequete.getStatutsMesRequetes(),
       tri: "dateStatut",
       sens: "ASC",
       range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
@@ -77,7 +76,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
 
   const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
     const queryParameters = {
-      statuts: StatutsRequetesEspaceDelivrance,
+      statuts: StatutRequete.getStatutsMesRequetes(),
       tri,
       sens,
       range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`

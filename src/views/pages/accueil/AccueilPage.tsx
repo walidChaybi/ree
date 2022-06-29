@@ -10,6 +10,8 @@ import React, { useEffect, useState } from "react";
 import logoRece from "../../../img/logo-rece.svg";
 import { IOfficier } from "../../../model/agent/IOfficier";
 import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
+import { FeatureFlag } from "../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { getLibelle } from "../../common/util/Utils";
 import {
   OfficierContext,
@@ -68,35 +70,46 @@ export const AccueilPage: React.FC = () => {
           iconFA={faSync}
           title={getLibelle("Bouton pour accèder à l'espace mise à jour")}
         ></BoutonAccueilEspaceMiseAjour>
-        <BoutonAccueilEspaceCreation
-          libelle={getLibelle("Espace création")}
-          pageUrl="mesrequetescreation"
-          iconFA={faPlusCircle}
-          title={getLibelle("Bouton pour accèder à l'espace création")}
-        ></BoutonAccueilEspaceCreation>
-        <BoutonAccueilCommunication
-          libelle={getLibelle("Communication avec les usagers")}
-          pageUrl="mesrequetesinformation"
-          iconFA={faEnvelope}
-          title={getLibelle(
-            "Bouton pour accèder à la communication avec les usagers"
-          )}
-          badge={nbReqInfo}
-        ></BoutonAccueilCommunication>
-        <BoutonAccueilRechercheRequete
-          libelle={getLibelle("Rechercher une requête")}
-          pageUrl="rechercherequete"
-          iconFA={faSearch}
-          title={getLibelle("Bouton pour accèder à la recherche d'une requête")}
-        ></BoutonAccueilRechercheRequete>
-        <BoutonAccueilRechercheActeOuInscription
-          libelle={getLibelle("Rechercher un acte et une inscription")}
-          pageUrl="rechercheacteinscription"
-          iconFA={faSearch}
-          title={getLibelle(
-            "Bouton pour accèder à la recherche d'un acte et d'une inscription"
-          )}
-        ></BoutonAccueilRechercheActeOuInscription>
+        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI) && (
+          <BoutonAccueilEspaceCreation
+            libelle={getLibelle("Espace création")}
+            pageUrl="mesrequetescreation"
+            iconFA={faPlusCircle}
+            title={getLibelle("Bouton pour accèder à l'espace création")}
+          ></BoutonAccueilEspaceCreation>
+        )}
+        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION) && (
+          <BoutonAccueilCommunication
+            libelle={getLibelle("Communication avec les usagers")}
+            pageUrl="mesrequetesinformation"
+            iconFA={faEnvelope}
+            title={getLibelle(
+              "Bouton pour accèder à la communication avec les usagers"
+            )}
+            badge={nbReqInfo}
+          ></BoutonAccueilCommunication>
+        )}
+        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT) && (
+          <>
+            <BoutonAccueilRechercheRequete
+              libelle={getLibelle("Rechercher une requête")}
+              pageUrl="rechercherequete"
+              iconFA={faSearch}
+              title={getLibelle(
+                "Bouton pour accèder à la recherche d'une requête"
+              )}
+            ></BoutonAccueilRechercheRequete>
+
+            <BoutonAccueilRechercheActeOuInscription
+              libelle={getLibelle("Rechercher un acte et une inscription")}
+              pageUrl="rechercheacteinscription"
+              iconFA={faSearch}
+              title={getLibelle(
+                "Bouton pour accèder à la recherche d'un acte et d'une inscription"
+              )}
+            ></BoutonAccueilRechercheActeOuInscription>
+          </>
+        )}
         <BoutonAccueilRechercheActe
           libelle={getLibelle("Rechercher un acte")}
           pageUrl="rechercheacte"

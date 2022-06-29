@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getLogin } from "../../../api/appels/agentApi";
 import { IOfficier } from "../../../model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "../../../model/agent/IUtilisateur";
+import { gestionnaireFeatureFlag } from "../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { formatNom, formatPrenom } from "../../common/util/Utils";
 
@@ -18,6 +19,7 @@ export function useLoginApi() {
     getLogin()
       .then(result => {
         const officier = mappingOfficier(result.headers, result.body.data);
+        gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(result.headers);
         officier.habilitations = mapHabilitationsUtilisateur(
           result.body.data.habilitations
         );

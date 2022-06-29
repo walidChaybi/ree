@@ -6,25 +6,7 @@ import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/
 import { logError } from "../../../views/common/util/LogManager";
 import { storeRece } from "../../../views/common/util/storeRece";
 
-beforeAll(() => {
-  const localStorageMock = (function () {
-    let store: any = { featureFlag: "LOG_SERVEUR" };
-    return {
-      getItem: function (key: string) {
-        return store[key];
-      },
-      setItem: function (key: string, value: string) {
-        store[key] = value.toString();
-      },
-      clear: function () {
-        store = {};
-      },
-      removeItem: function (key: string) {
-        delete store[key];
-      }
-    };
-  })();
-  Object.defineProperty(window, "localStorage", { value: localStorageMock });
+beforeEach(() => {
   expect(
     gestionnaireFeatureFlag.estActif(FeatureFlag.LOG_SERVEUR)
   ).toBeTruthy();

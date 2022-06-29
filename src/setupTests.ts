@@ -5,6 +5,38 @@
 import "@testing-library/jest-dom/extend-expect";
 import { storeRece } from "./views/common/util/storeRece";
 
+export const localStorageFeatureFlagMock = (function () {
+  let store: any = {
+    FF_CONSULT_ACTE_RQT: "true",
+    FF_DELIV_CS: "true",
+    FF_RQT_INFORMATION: "true",
+    FF_DELIV_EC_PAC: "true",
+    FF_NATALI: "true",
+    LOG_SERVEUR: "1"
+  };
+  return {
+    getItem(key: string) {
+      return store[key];
+    },
+    setItem(key: string, value: string) {
+      store[key] = value.toString();
+    },
+    clear() {
+      store = {};
+    },
+    removeItem(key: string) {
+      delete store[key];
+    }
+  };
+})();
+
+beforeEach(() => {
+  Object.defineProperty(window, "localStorage", {
+    value: localStorageFeatureFlagMock,
+    writable: true
+  });
+});
+
 afterEach(() => {
   // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
   storeRece.logErrorOff = false;

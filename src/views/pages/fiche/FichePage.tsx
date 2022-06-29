@@ -292,7 +292,9 @@ export const FichePage: React.FC<FichePageProps> = ({
                 !officierAutoriserSurLeTypeRegistreOuDroitMEAE(
                   acte.registre?.type?.id
                 ) &&
-                gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) && (
+                gestionnaireFeatureFlag.estActif(
+                  FeatureFlag.FF_DELIV_EC_PAC
+                ) && (
                   <BoutonCreationRDD
                     label="Demander la délivrance"
                     labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}

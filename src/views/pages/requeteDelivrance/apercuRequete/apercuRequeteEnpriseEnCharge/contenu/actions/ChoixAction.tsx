@@ -1,4 +1,5 @@
 import React from "react";
+import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../../../model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -6,10 +7,6 @@ import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInsc
 import { MenuTransfert } from "../../../../../../common/composant/menuTransfert/MenuTransfert";
 import { FeatureFlag } from "../../../../../../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../../../../../common/util/featureFlag/gestionnaireFeatureFlag";
-import {
-  soustypeRDCSDouRDCSC,
-  soustypeRDDouRDCouRDDP
-} from "../../../../../../common/util/RequetesUtils";
 import { storeRece } from "../../../../../../common/util/storeRece";
 import { getLibelle } from "../../../../../../common/util/Utils";
 import { Fieldset } from "../../../../../../common/widget/fieldset/Fieldset";
@@ -47,7 +44,7 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
   return (
     <Fieldset titre={getLibelle("Actions")}>
       <div className="ChoixAction">
-        {soustypeRDDouRDCouRDDP(sousType) && (
+        {SousTypeDelivrance.estRDDouRDCouRDDP(sousType) && (
           <>
             <MenuDelivrer
               requete={props.requete}
@@ -63,7 +60,7 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
             />
           </>
         )}
-        {soustypeRDCSDouRDCSC(sousType) && (
+        {SousTypeDelivrance.estRDCSDouRDCSC(sousType) && (
           <>
             <MenuDelivrerCS
               requete={props.requete}
@@ -78,7 +75,7 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
             />
           </>
         )}
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) && (
+        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) && (
           <MenuAutre requete={props.requete} />
         )}
         {checkSiMenuTransferer() && (

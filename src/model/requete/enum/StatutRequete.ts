@@ -1,6 +1,8 @@
 /* istanbul ignore file */
 import { EnumWithComplete } from "../../../views/common/util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
+import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { Options } from "../../../views/common/util/Type";
 
 export class StatutRequete extends EnumWithComplete {
@@ -90,7 +92,46 @@ export class StatutRequete extends EnumWithComplete {
     return EnumWithLibelle.getKey(StatutRequete, obj);
   }
 
-  public static getEnumFromLibelle(libelle: string) {
+  public static getEnumFromLibelle(libelle?: string) {
     return EnumWithLibelle.getEnumFromLibelle(StatutRequete, libelle);
+  }
+
+  public static estAuStatutTraiteADelivrerDematOuASigner(
+    statut?: StatutRequete
+  ) {
+    return (
+      statut === StatutRequete.TRAITE_A_DELIVRER_DEMAT ||
+      statut === StatutRequete.A_SIGNER
+    );
+  }
+
+  public static estAuStatutTraiteAImprimer(statut?: StatutRequete) {
+    return statut === StatutRequete.TRAITE_A_IMPRIMER;
+  }
+
+  public static estAuStatutATraiterOuTransferee(statut?: StatutRequete) {
+    return (
+      statut === StatutRequete.A_TRAITER || statut === StatutRequete.TRANSFEREE
+    );
+  }
+
+  public static getStatutsMesRequetes() {
+    return [
+      StatutRequete.BROUILLON.nom,
+      StatutRequete.PRISE_EN_CHARGE.nom,
+      StatutRequete.TRANSFEREE.nom,
+      StatutRequete.A_SIGNER.nom,
+      StatutRequete.A_VALIDER.nom
+    ];
+  }
+
+  public static getStatutsRequetesService() {
+    const statuts = StatutRequete.getStatutsMesRequetes();
+    // A_TRAITER est ramené par le back si FF_DELIV_EC_PAC n'est pas positionné (étape 1)
+    if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)) {
+      statuts.push(StatutRequete.A_TRAITER.nom);
+    }
+
+    return statuts;
   }
 }

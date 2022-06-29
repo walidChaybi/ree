@@ -40,7 +40,7 @@ export type NomComposantOuFonction = NomComposant | NomFonction;
 
 ///// ETAPE2 ////////////////////////////////////////////////////////////////
 const etape2BisActive = gestionnaireFeatureFlag.estActif(
-  FeatureFlag.ETAPE2_BIS
+  FeatureFlag.FF_DELIV_EC_PAC
 );
 const etape2Bis = function (obj: Droit[]) {
   if (etape2BisActive) {

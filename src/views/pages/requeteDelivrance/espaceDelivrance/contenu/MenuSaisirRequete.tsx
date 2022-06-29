@@ -3,7 +3,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import {
-  LISTE_DES_REQUETES_COURRIER,
+  LISTE_DES_REQUETES_COURRIER_CS,
+  LISTE_DES_REQUETES_COURRIER_EC_LF,
   SousTypeDelivrance
 } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
@@ -76,11 +77,7 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
     }
   };
 
-  const listeRequeteCourrier = gestionnaireFeatureFlag.estActif(
-    FeatureFlag.ETAPE2_BIS
-  )
-    ? LISTE_DES_REQUETES_COURRIER
-    : ["RDCSC"];
+  const listeRequeteCourrier: string[] = getListeDesRequetesCourrier();
 
   return (
     <div className="MenuSaisirRequete">
@@ -118,5 +115,22 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
     </div>
   );
 };
+
+function getListeDesRequetesCourrier() {
+  let listeRequeteCourrier: string[] = [];
+
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)) {
+    listeRequeteCourrier = listeRequeteCourrier.concat(
+      LISTE_DES_REQUETES_COURRIER_EC_LF
+    );
+  }
+
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)) {
+    listeRequeteCourrier = listeRequeteCourrier.concat(
+      LISTE_DES_REQUETES_COURRIER_CS
+    );
+  }
+  return listeRequeteCourrier;
+}
 
 export default WithHabilitation(MenuSaisirRequete, "MenuSaisirRequete");

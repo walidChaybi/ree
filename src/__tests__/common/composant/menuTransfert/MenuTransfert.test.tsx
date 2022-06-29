@@ -27,7 +27,6 @@ import {
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_INFORMATION
 } from "../../../../views/router/ReceUrls";
-import { localStorageFeatureFlagMock } from "../../util/featureFlag/gestionnaireFeatureFlag.test";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 const superagentMock3 = require("superagent-mock")(request, configEtatcivil);
@@ -77,10 +76,6 @@ const listeUtilisateurs = [
 ];
 
 const HookConsummerMenuOuvert: React.FC = () => {
-  Object.defineProperty(window, "localStorage", {
-    value: localStorageFeatureFlagMock
-  });
-
   history.push(
     getUrlWithParam(
       URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -106,7 +101,9 @@ const HookConsummerMenuOuvert: React.FC = () => {
 test("renders du bloc Menu Transfert ouvert ", async () => {
   render(<HookConsummerMenuOuvert />);
 
-  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS)).toBeTruthy();
+  expect(
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+  ).toBeTruthy();
 
   const menuTransfert = screen.getByText("Transférer");
   const choixService = screen.getByText(/À un service+/);

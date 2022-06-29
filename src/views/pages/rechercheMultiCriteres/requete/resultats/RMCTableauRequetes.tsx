@@ -16,6 +16,8 @@ import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { autorisePrendreEnChargeReqTableauDelivrance } from "../../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
@@ -92,8 +94,16 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     const requeteSelect = data[idx];
     if (requeteSelect.type === TypeRequete.DELIVRANCE.libelle) {
       onClickReqDelivrance(requeteSelect);
-    } else if (requeteSelect.type === TypeRequete.INFORMATION.libelle) {
+    } else if (
+      requeteSelect.type === TypeRequete.INFORMATION.libelle &&
+      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    ) {
       onClickReqInformation(requeteSelect);
+    } else if (
+      requeteSelect.type === TypeRequete.CREATION.libelle &&
+      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI)
+    ) {
+      //TODO onClickReqCreation(requeteSelect);
     }
   };
 

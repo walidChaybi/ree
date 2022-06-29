@@ -83,7 +83,7 @@ export class EnumWithLibelle {
     return "";
   }
 
-  public static getEnumFromLibelle(clazz: any, libelle: string) {
+  public static getEnumFromLibelle(clazz: any, libelle?: string) {
     for (const key in clazz) {
       if (clazz.hasOwnProperty(key) && clazz[key]._libelle === libelle) {
         return clazz[key];

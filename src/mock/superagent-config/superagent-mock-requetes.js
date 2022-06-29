@@ -136,6 +136,44 @@ export const configRequetes = [
         };
       }
 
+      if (
+        match[1] ===
+        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=dateStatut&sens=ASC&range=0-100"
+      ) {
+        return {
+          data: ReponseAppelRequetesService,
+          headers: {
+            "content-range": "0-100/" + ReponseAppelRequetesService.length,
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
+          }
+        };
+      }
+      if (
+        match[1] ===
+        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=idSagaDila&sens=ASC&range=0-100"
+      ) {
+        return {
+          data: ReponseAppelRequetesService,
+          headers: {
+            "content-range": "0-100/" + ReponseAppelRequetesService.length,
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
+          }
+        };
+      }
+
+      if (
+        match[1] ===
+        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=numero&sens=ASC&range=0-100"
+      ) {
+        return {
+          data: ReponseAppelRequetesService,
+          headers: {
+            "content-range": "0-100/" + ReponseAppelRequetesService.length,
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+          }
+        };
+      }
+
       // Stockage Document Maj Statut
       if (
         match[1] ===

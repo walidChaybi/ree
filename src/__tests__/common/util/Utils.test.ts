@@ -6,6 +6,7 @@ import {
   compareNombre,
   enMajuscule,
   estTableauNonVide,
+  estUnNombre,
   finirAvec3petitsPoints,
   formatDe,
   formatNom,
@@ -287,4 +288,14 @@ test("Attendu: auMoinsUneProprieteEstRenseigne fonctionne correctement", () => {
   //@ts-ignore
   objet1.c.c3.c3a = ["test"];
   expect(auMoinsUneProprieteEstRenseigne(objet1)).toBeTruthy();
+});
+
+test("Attendu: estUnNombre fonctionne correctement", () => {
+  expect(estUnNombre("1")).toBeTruthy();
+  expect(estUnNombre("0")).toBeTruthy();
+  expect(estUnNombre("999")).toBeTruthy();
+  //@ts-ignore
+  expect(estUnNombre(null)).toBeFalsy();
+  expect(estUnNombre("")).toBeFalsy();
+  expect(estUnNombre(undefined)).toBeFalsy();
 });

@@ -1,8 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { MigratorV1V2 } from "../../../../common/util/migration/MigratorV1V2";
+import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag";
+import { GestionnaireARetraiterDansSaga } from "../../../../common/util/migration/GestionnaireARetraiterDansSaga";
 import { getLibelle } from "../../../../common/util/Utils";
 import { VisionneuseAvecTitre } from "../../../../common/widget/document/VisionneuseAvecTitre";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
@@ -52,14 +55,15 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
           ></VisionneuseAvecTitre>
           <BoutonRetour />
           <div className="BoutonsAction">
-            {MigratorV1V2.nEstPasRDDouRDCouEstEtape2Bis(requete) && (
-              <BoutonModifierTraitement requete={requete} />
-            )}
+            {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
+              SousTypeDelivrance.estRDCSDouRDCSC(requete?.sousType) && (
+                <BoutonModifierTraitement requete={requete} />
+              )}
 
             <BoutonsTerminer requete={requete} />
 
-            {MigratorV1V2.estARetraiterSaga(requete) &&
-              !MigratorV1V2.possedeDocumentSigne(requete) && (
+            {GestionnaireARetraiterDansSaga.estARetraiterSaga(requete) &&
+              !GestionnaireARetraiterDansSaga.possedeDocumentSigne(requete) && (
                 <BoutonARetraiterSaga idRequete={requete.id} />
               )}
           </div>

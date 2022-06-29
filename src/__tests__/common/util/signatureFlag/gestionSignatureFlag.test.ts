@@ -18,6 +18,9 @@ test("gestion signature flag works ", async () => {
       }
     };
   })();
-  Object.defineProperty(window, "localStorage", { value: localStorageMock });
+  Object.defineProperty(window, "localStorage", {
+    value: localStorageMock,
+    writable: true
+  });
   expect(gestionnaireSignatureFlag.getSignatureMode()).toBe("DRY_RUN");
 });

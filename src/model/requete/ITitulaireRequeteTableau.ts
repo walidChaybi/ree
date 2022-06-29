@@ -11,7 +11,7 @@ export interface ITitulaireRequeteTableau {
   anneeNaissance: number;
   villeNaissance?: string;
   paysNaissance?: string;
-  sexe: Sexe;
+  sexe?: Sexe;
   qualite?: QualiteFamille;
 }
 

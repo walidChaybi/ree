@@ -448,3 +448,7 @@ export function auMoinsUneProprieteEstRenseigne(objet: Object): boolean {
 export function estUnObjet(objet: any): boolean {
   return typeof objet === "object" && !Array.isArray(objet);
 }
+
+export function estUnNombre(str?: string): boolean {
+  return str != null && str !== "" && Number.isInteger(+str);
+}

@@ -2,12 +2,12 @@ import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { officierHabiliterPourLeDroit } from "../../../../../../model/agent/IOfficier";
 import { Droit } from "../../../../../../model/Droit";
+import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
 import { DocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { FeatureFlag } from "../../../../../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../../../../common/util/featureFlag/gestionnaireFeatureFlag";
-import { MigratorV1V2 } from "../../../../../common/util/migration/MigratorV1V2";
 import { storeRece } from "../../../../../common/util/storeRece";
 import { getLibelle } from "../../../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../../../common/widget/attente/BoutonOperationEnCours";
@@ -56,9 +56,10 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
 
   return (
     <>
-      {MigratorV1V2.nEstPasRDDouRDCouEstEtape2Bis(requete) && (
-        <BoutonValiderTerminer requete={requete} />
-      )}
+      {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
+        SousTypeDelivrance.estRDCSDouRDCSC(requete?.sousType) && (
+          <BoutonValiderTerminer requete={requete} />
+        )}
       {aDroitSignerEtStatutSigner && (
         <>
           <BoutonSignature
@@ -68,7 +69,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
             uniqueSignature={true}
             connectedUser={storeRece.utilisateurCourant}
           />
-          {gestionnaireFeatureFlag.estActif(FeatureFlag.ETAPE2_BIS) && (
+          {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) && (
             <BoutonOperationEnCours
               title={getLibelle("Terminer")}
               onClick={goBack}

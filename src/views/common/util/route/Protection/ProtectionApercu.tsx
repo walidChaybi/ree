@@ -13,7 +13,7 @@ import {
   receUrl
 } from "../../../../router/ReceUrls";
 import { getLibelle } from "../../../util/Utils";
-import { MigratorV1V2 } from "../../migration/MigratorV1V2";
+import { GestionnaireARetraiterDansSaga } from "../../migration/GestionnaireARetraiterDansSaga";
 import { Protection } from "./Protection";
 
 interface ProtectionApercuProps {
@@ -98,7 +98,10 @@ function checkURLDelivrance(
     default:
       if (
         sousType &&
-        MigratorV1V2.estARetraiterSagaStatutSousType(statut, sousType)
+        GestionnaireARetraiterDansSaga.estARetraiterSagaStatutSousType(
+          statut,
+          sousType
+        )
       ) {
         return receUrl
           .getUrlCourante(history)

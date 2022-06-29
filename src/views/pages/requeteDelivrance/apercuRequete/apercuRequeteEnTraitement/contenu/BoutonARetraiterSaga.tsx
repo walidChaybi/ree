@@ -9,7 +9,7 @@ import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
 } from "../../../../../common/hook/requete/ActionHook";
-import { MigratorV1V2 } from "../../../../../common/util/migration/MigratorV1V2";
+import { GestionnaireARetraiterDansSaga } from "../../../../../common/util/migration/GestionnaireARetraiterDansSaga";
 import { getLibelle } from "../../../../../common/util/Utils";
 import { receUrl } from "../../../../../router/ReceUrls";
 import "./scss/BoutonARetraiterSaga.scss";
@@ -41,7 +41,7 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
   const handleClickARetraiterSaga = () => {
     setCreationActionEtMiseAjourStatutParams({
       requeteId: idRequete,
-      statutRequete: MigratorV1V2.getStatutARetraiter(),
+      statutRequete: GestionnaireARetraiterDansSaga.getStatutARetraiter(),
       libelleAction: "À retraiter dans Saga"
     });
   };
