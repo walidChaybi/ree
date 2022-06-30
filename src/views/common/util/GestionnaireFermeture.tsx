@@ -70,7 +70,12 @@ export const GestionnaireFermeture: React.FC<
 export const appelRequetesASigner = (officier: OfficierContextProps) => {
   const officierPayload = officier?.officierDataState;
   const req = appelApi(officierPayload);
-  const response = JSON.parse(req.response !== undefined ? req.response : null);
+  let response;
+  try {
+    response = JSON.parse(req.response ? req.response : null);
+  } catch (error) {
+    return 0;
+  }
   return req.status === HTTP_STATUS_OK && response && response.data
     ? response.data
     : 0;
