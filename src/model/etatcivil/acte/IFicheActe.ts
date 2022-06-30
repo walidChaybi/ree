@@ -90,7 +90,7 @@ export const FicheActe = {
     typeExtrait: TypeExtrait
   ): string | undefined {
     const corpsExtraitRectification = acte.corpsExtraitRectifications.find(
-      cer => (cer.type = typeExtrait)
+      cer => cer.type === typeExtrait
     );
     return corpsExtraitRectification
       ? corpsExtraitRectification.texte
