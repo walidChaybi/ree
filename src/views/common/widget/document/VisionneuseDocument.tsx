@@ -1,6 +1,6 @@
 import { LinearProgress } from "@material-ui/core";
 import { MimeType } from "file-type";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { base64toBlob } from "../../util/FileUtils";
 import { getLibelle } from "../../util/Utils";
 import "./scss/VisionneuseDocument.scss";
@@ -17,6 +17,7 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
   typeMime
 }) => {
   const [url, setUrl] = useState<string>();
+  const iframe = useRef<any>();
 
   useEffect(() => {
     if (contenu && typeMime) {
@@ -24,17 +25,29 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
     }
   }, [contenu, typeMime]);
 
+  function addStyle() {
+    const styleLink = document.createElement("style");
+    styleLink.textContent = "img{width:100%}";
+    iframe.current.contentWindow?.document.head.appendChild(styleLink);
+  }
+
   return (
     <div className={"VisionneuseDocument"}>
-        {url ? (
-          <iframe title={titre} src={url}></iframe>
-        ) : contenu === "" ? (
-          <p className="messagePasDoc">
-            {getLibelle("Aucun document à afficher")}
-          </p>
-        ) : (
-          <LinearProgress className="ProgressBar" />
-        )}
+      {url ? (
+        <iframe
+          title={titre}
+          src={url}
+          id="iframe"
+          ref={iframe}
+          onLoad={addStyle}
+        ></iframe>
+      ) : contenu === "" ? (
+        <p className="messagePasDoc">
+          {getLibelle("Aucun document à afficher")}
+        </p>
+      ) : (
+        <LinearProgress className="ProgressBar" />
+      )}
     </div>
   );
 };

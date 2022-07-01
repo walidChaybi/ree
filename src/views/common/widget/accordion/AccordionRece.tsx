@@ -10,7 +10,13 @@ export interface AccordionReceProps {
   index?: number;
   expanded: boolean;
   disabled?: boolean;
-  titre: string;
+  titre?: string;
+  className?: AccordionReceClassNameProps;
+}
+export interface AccordionReceClassNameProps {
+  container?: string;
+  content?: string;
+  title?: string;
 }
 
 export const AccordionRece: React.FC<AccordionReceProps> = ({
@@ -19,6 +25,7 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({
   index,
   expanded,
   disabled,
+  className,
   titre
 }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -32,7 +39,7 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({
   };
 
   return (
-    <>
+    <div className={className?.container}>
       <Accordion
         key={`rece-accordion-${index}`}
         className="accordionRece"
@@ -41,12 +48,12 @@ export const AccordionRece: React.FC<AccordionReceProps> = ({
         onChange={handleChange}
         TransitionProps={{ timeout: 0 }}
       >
-        <AccordionTitle title={titre} />
+        <AccordionTitle title={titre} className={className?.title}/>
         <AccordionDetails>
           {panel && <SectionPanel {...panel} id={`${index}`} />}
-          {children}
+          <div className={className?.content}>{children}</div>
         </AccordionDetails>
       </Accordion>
-    </>
+    </div>
   );
 };

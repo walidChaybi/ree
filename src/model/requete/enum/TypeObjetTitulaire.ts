@@ -1,0 +1,4 @@
+export enum TypeObjetTitulaire {
+  FAMILLE = "FAMILLE",
+  POSTULANT_NATIONALITE = "POSTULANT_NATIONALITE"
+}

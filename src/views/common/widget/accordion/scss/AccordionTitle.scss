@@ -1,4 +1,4 @@
-@import "../../../../../scss/colors";
+@import "../../../../../scss/_colors.scss";
 
 div.accordionTitle {
   text-align: center;
@@ -8,6 +8,10 @@ div.accordionTitle {
   background-color: $application-color;
   border-radius: 0.25em;
   min-height: 35px;
+
+  &.bg-clair {
+    background-color: $application-contener;
+  }
 
   .MuiAccordionSummary-content {
     display: block;

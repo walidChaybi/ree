@@ -452,7 +452,9 @@ export const configRequetes = [
       // Récupération d'un document par son id
       if (
         match[1] ===
-        "/requetes/piecesjustificatives/" + idDocumentsReponse[0]
+          "/requetes/piecesjustificatives/" + idDocumentsReponse[0] ||
+        match[1] ===
+          "/requetes/piecesjustificatives/3ed9ad41-ca61-416a-91df-448690804363"
       ) {
         return { data: documentReponseCARN_CSPAC_01 };
       }

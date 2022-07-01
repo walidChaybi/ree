@@ -4,13 +4,17 @@ import React from "react";
 import "./scss/AccordionTitle.scss";
 
 export interface AccordionTitleProps {
-  title: string;
+  title?: string;
+  className?: string;
 }
 
-export const AccordionTitle: React.FC<AccordionTitleProps> = ({ title }) => {
+export const AccordionTitle: React.FC<AccordionTitleProps> = ({
+  title,
+  className
+}) => {
   return (
     <AccordionSummary
-      className="accordionTitle"
+      className={["accordionTitle", className].join(" ")}
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel1bh-content"
     >

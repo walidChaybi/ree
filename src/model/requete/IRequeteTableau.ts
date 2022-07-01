@@ -1,12 +1,14 @@
 /* istanbul ignore file */
 
+import { IRequeteTableauCreation } from "./IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "./IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "./IRequeteTableauInformation";
 import { ITitulaireRequeteTableau } from "./ITitulaireRequeteTableau";
 
 export type TRequeteTableau =
   | IRequeteTableauDelivrance
-  | IRequeteTableauInformation;
+  | IRequeteTableauInformation
+  | IRequeteTableauCreation;
 
 export interface IRequeteTableau {
   idRequete: string;

@@ -18,11 +18,14 @@
       &.selected{
         background-color: #9bcbe7 !important;
       }
-      
-      svg{
+      &.sansHandler{
         cursor: grab;
-        vertical-align: middle
       }
+      .handler{
+        cursor: grab;
+        &svg{
+        vertical-align: middle
+      }}
       .IconeSupprimer{
         width: 1em;
         cursor: pointer;

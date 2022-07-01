@@ -9,6 +9,7 @@ import { MotifDelivrance } from "../../../../../model/requete/enum/MotifDelivran
 import { NatureActeRequete } from "../../../../../model/requete/enum/NatureActeRequete";
 import { ObjetRequete } from "../../../../../model/requete/enum/ObjetRequete";
 import { Provenance } from "../../../../../model/requete/enum/Provenance";
+import { SousTypeCreation } from "../../../../../model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { SousTypeInformation } from "../../../../../model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
@@ -24,11 +25,13 @@ import { IObservation } from "../../../../../model/requete/IObservation";
 import { IProvenanceRequete } from "../../../../../model/requete/IProvenanceRequete";
 import { Requerant } from "../../../../../model/requete/IRequerant";
 import { TRequete } from "../../../../../model/requete/IRequete";
+import { IRequeteCreation } from "../../../../../model/requete/IRequeteCreation";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
 import { IRequeteInformation } from "../../../../../model/requete/IRequeteInformation";
 import { IStatutCourant } from "../../../../../model/requete/IStatutCourant";
 import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
 import { IPieceJustificative } from "../../../../../model/requete/pieceJointe/IPieceJustificative";
+import { IPieceJustificativeCreation } from "../../../../../model/requete/pieceJointe/IPieceJustificativeCreation";
 import { logError } from "../../../../common/util/LogManager";
 import { storeRece } from "../../../../common/util/storeRece";
 
@@ -74,12 +77,25 @@ async function fetchDetailRequete(
     if (idRequete) {
       const result = await getDetailRequete(idRequete);
       const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
-      if (typeRequete === TypeRequete.DELIVRANCE) {
-        const detailRequete = mappingRequeteDelivrance(result?.body?.data);
-        setDetailRequeteState(detailRequete);
-      } else if (typeRequete === TypeRequete.INFORMATION) {
-        const detailRequete = mappingRequeteInformation(result?.body?.data);
-        setDetailRequeteState(detailRequete);
+      switch (typeRequete) {
+        case TypeRequete.DELIVRANCE:
+          const detailRequeteDelivrance = mappingRequeteDelivrance(
+            result?.body?.data
+          );
+          setDetailRequeteState(detailRequeteDelivrance);
+          break;
+        case TypeRequete.INFORMATION:
+          const detailRequeteInformation = mappingRequeteInformation(
+            result?.body?.data
+          );
+          setDetailRequeteState(detailRequeteInformation);
+          break;
+        case TypeRequete.CREATION:
+          const detailRequeteCreation = mappingRequeteCreation(
+            result.body.data
+          );
+          setDetailRequeteState(detailRequeteCreation);
+          break;
       }
     }
   } catch (error) {
@@ -167,6 +183,7 @@ function getTitulaires(titulaires: any): ITitulaireRequete[] {
   titulaires.forEach((t: any) => {
     const titulaire = t as ITitulaireRequete;
     titulaire.nationalite = Nationalite.getEnumFor(t.nationalite);
+    titulaire.situationFamiliale = t.situationFamilliale;
     titulairesRequetes.push(titulaire);
   });
   return titulairesRequetes;
@@ -213,7 +230,7 @@ function getEvenement(evenement: any): IEvenementReqDelivrance {
   };
 }
 
-export function mappingRequeteInformation(data: any): IRequeteInformation {
+function mappingRequete(data: any) {
   return {
     // Partie Requête
     id: data.id,
@@ -230,8 +247,13 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
       : undefined,
     canal: TypeCanal.getEnumFor(data.canal),
     actions: getActions(data?.actions),
-    numeroRequeteOrigine: data.numeroRequeteOrigine,
+    numeroRequeteOrigine: data.numeroRequeteOrigine
+  };
+}
 
+export function mappingRequeteInformation(data: any): IRequeteInformation {
+  return {
+    ...mappingRequete(data),
     //Partie Requête Delivrance
     sousType: SousTypeInformation.getEnumFor(data.sousType),
     objet: ObjetRequete.getEnumFor(data.objet),
@@ -247,5 +269,35 @@ export function mappingRequeteInformation(data: any): IRequeteInformation {
     typeRequeteLiee: TypeRequete.getEnumFor(data.typeRequeteLiee),
     piecesComplementInformation: data.piecesComplementInformation,
     besoinUsager: BesoinUsager.getEnumFor(data.besoinUsager)
+  };
+}
+
+function mapPiecesJustificativesCreation(
+  pieces?: any
+): IPieceJustificativeCreation[] {
+  const piecesJustificatives: IPieceJustificativeCreation[] = [];
+  pieces?.forEach((pj: any) => {
+    const piece = pj as IPieceJustificativeCreation;
+    piece.typePieceJustificative = TypePieceJustificative?.getEnumFor(
+      pj.typePieceJustificative
+    ); // pj.typePieceJustificative est un UUID car il vient du back
+    piecesJustificatives.push(piece);
+  });
+
+  return piecesJustificatives;
+}
+
+export function mappingRequeteCreation(data: any): IRequeteCreation {
+  return {
+    ...data,
+    ...mappingRequete(data),
+
+    // Partie requête création
+    sousType: SousTypeCreation.getEnumFor(data.sousType),
+    numeroAncien: data.numeroAncienSI,
+    piecesJustificatives: mapPiecesJustificativesCreation(
+      data.piecesJustificatives
+    ),
+    mandant: data.mandant ? getMandant(data.mandant) : undefined
   };
 }

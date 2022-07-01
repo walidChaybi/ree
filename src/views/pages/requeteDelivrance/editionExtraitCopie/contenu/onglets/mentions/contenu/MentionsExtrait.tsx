@@ -169,6 +169,9 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
             handleCheckbox={handleCheck}
             onClickSupprimer={onClickSupprimer}
             deverrouille={true}
+            afficheDragHandle={true}
+            useDragHandle={true}
+            libellesSontTitres={false}
           />
           <div className="FormMention Modification">
             <h3>{getLibelle("Modification d'une mention")}</h3>

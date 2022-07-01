@@ -11,6 +11,7 @@ import { AccueilPage } from "../pages/accueil/AccueilPage";
 import { RMCArchivePage } from "../pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "../pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "../pages/rechercheMultiCriteres/requete/RMCRequetePage";
+import ApercuReqCreationPage from "../pages/requeteCreation/EspaceCreation/apercuReqCreation/ApercuReqCreationPage";
 import EspaceCreationPage from "../pages/requeteCreation/EspaceCreation/EspaceCreationPage";
 import { ApercuRequetePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuRequetePriseEnChargePage } from "../pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
@@ -27,6 +28,7 @@ import {
   URL_DECONNEXION,
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CREATION,
+  URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -40,12 +42,14 @@ import {
   URL_RECHERCHE_ACTE,
   URL_RECHERCHE_ACTE_INSCRIPTION,
   URL_RECHERCHE_REQUETE,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE_EDITION_ID,
   URL_REQUETES_CREATION_SERVICE,
+  URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_ID,
   URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -282,6 +286,12 @@ export const routesRece: IRoute[] = [
     canAccess: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC),
     libelle: getLibelle("Édition")
   },
+  {
+    url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
+    component: ApercuReqCreationPage,
+    droits: [Droit.CREER_ACTE_ETABLI],
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
   //////////////////////////////////////////////
   ///////// REQUETE D'INFORMATION (RI) /////////
   //////////////////////////////////////////////
@@ -336,6 +346,12 @@ export const routesRece: IRoute[] = [
     ],
     libelle: getLibelle("Mes requêtes de création")
   },
+  {
+    url: URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+    component: ApercuReqCreationPage,
+    droits: [Droit.CREER_ACTE_ETABLI],
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
+  },
   ////////////////////////////////////////////////////////
   ///////// REQUETES DE CRÉATION DE MON SERVICE //////////
   ////////////////////////////////////////////////////////
@@ -349,5 +365,11 @@ export const routesRece: IRoute[] = [
       Droit.CREER_ACTE_TRANSCRIT
     ],
     libelle: getLibelle("Les requêtes de création de mon service")
+  },
+  {
+    url: URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID,
+    component: ApercuReqCreationPage,
+    droits: [Droit.CREER_ACTE_ETABLI],
+    libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   }
 ];

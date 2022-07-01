@@ -455,6 +455,13 @@ export const configEtatcivil = [
         return { data: [imagePngVideBase64] };
       }
 
+      if (
+        match[1] ===
+        `/requetes/piecesjustificatives/3ed9ad41-ca61-416a-91df-448690804363`
+      ) {
+        return { data: [imagePngVideBase64] };
+      }
+
       // Validation de la saisie d'un extrait
       if (
         match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/saisieExtrait"

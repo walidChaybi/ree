@@ -100,7 +100,7 @@ function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
   return titulaires
     .filter(el => el.qualite !== QualiteFamille.PARENT)
     .map(el => `${el.nom} ${getValeurOuVide(el.prenoms[0])}`)
-    .reduce(function (accumulateur, valeurCourante) {
+    .reduce((accumulateur, valeurCourante) => {
       return `${accumulateur}, ${valeurCourante}`;
     });
 }

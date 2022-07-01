@@ -1,0 +1,36 @@
+.PiecesJustificatives {
+  width: 100%;
+
+  .ListeGlisserDeposer {
+    li {
+      border-radius: 10px;
+      border-color: grey;
+      margin-bottom: 7px;
+      .MuiAccordion-root {
+        margin-bottom: 3px;
+      }
+      .enTete {
+        display: flex;
+        .handler {
+          display: flex;
+          align-items: center;
+          margin-right: 5px;
+        }
+
+        .handler > svg {
+          display: block;
+          margin: 0 auto;
+          text-align: center;
+        }
+      }
+      .VisionneuseDocument {
+        img {
+          width: 100%;
+        }
+      }
+    }
+    li:hover {
+      background-color: white !important;
+    }
+  }
+}

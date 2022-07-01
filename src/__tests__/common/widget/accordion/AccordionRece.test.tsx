@@ -109,7 +109,9 @@ test("render composant AccordionRece can close", async () => {
       expanded={true}
     />
   );
-  const button = container.firstChild?.firstChild?.childNodes[1].firstChild;
+  const button = container.querySelector(
+    ".MuiIconButton-label"
+  ) as HTMLButtonElement;
 
   fireEvent.click(
     button,

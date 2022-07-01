@@ -17,6 +17,7 @@ export const PATH_APERCU_REQ_DEL = "apercurequetedelivrance";
 export const PATH_APERCU_REQ_PRISE = "apercurequetepriseencharge";
 export const PATH_APERCU_REQ_TRAITEMENT = "apercurequetetraitement";
 export const PATH_APERCU_REQ_INFO = "apercurequeteinformation";
+export const PATH_APERCU_REQ_CREATION = "apercurequetecreation";
 export const PATH_EDITION = "edition";
 export const PATH_SAISIR_RDCSC = "saisircertificatsituation";
 export const PATH_SAISIR_RDC = "saisirextraitcopie";
@@ -83,6 +84,7 @@ export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID = `${URL_RECHERCHE_REQUETE}
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_PRISE}/${ID}`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_TRAITEMENT}/${ID}`;
 export const URL_RECHERCHE_REQUETE_EDITION_ID = `${URL_RECHERCHE_REQUETE}/${PATH_EDITION}/${ID}/:idActeParam?`;
+export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_CREATION}/${ID}`;
 
 // Modification Brouillon dans Saisie RDCSC depuis RMC de DELIVRANCE
 export const URL_SAISIR_RDCSC_RMC = `${URL_RECHERCHE_REQUETE}/${PATH_SAISIR_RDCSC}/${ID}`;
@@ -113,11 +115,13 @@ export const URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID = `${URL_REQUETE
 ///////////// MES REQUETES DE CRÉATION /////////////////
 ////////////////////////////////////////////////////////
 export const URL_MES_REQUETES_CREATION = `${URL_CONTEXT_APP}/mesrequetescreation`;
+export const URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_CREATION}/${ID}`;
 
 ////////////////////////////////////////////////////////
 ///////// REQUETES DE CRÉATION DE MON SERVICE //////////
 ////////////////////////////////////////////////////////
 export const URL_REQUETES_CREATION_SERVICE = `${URL_CONTEXT_APP}/requetescreationservice`;
+export const URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID = `${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_CREATION}/${ID}`;
 
 function estUrlApercuRequete(url: string) {
   return url.indexOf(`/${PATH_APERCU_REQ_DEL}/`) > 0;

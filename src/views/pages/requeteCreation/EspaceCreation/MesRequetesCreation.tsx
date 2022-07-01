@@ -1,8 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import {
   IQueryParametersPourRequetes,
   TypeAppelRequete
 } from "../../../../api/appels/requeteApi";
+import { IRequeteTableauCreation } from "../../../../model/requete/IRequeteTableauCreation";
+import { getUrlWithParam } from "../../../common/util/route/routeUtil";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
@@ -12,6 +15,7 @@ import {
 } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "../../../common/widget/tableau/TableauRece/TableauRece";
 import { SortOrder } from "../../../common/widget/tableau/TableUtils";
+import { URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID } from "../../../router/ReceUrls";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { useRequeteCreationApi } from "../hook/DonneesRequeteCreationApiHook";
 import {
@@ -26,6 +30,7 @@ interface LocalProps {
 export const MesRequetesCreationPage: React.FC<LocalProps> = ({
   parametresCreation
 }) => {
+  const history = useHistory();
   const [zeroRequete, setZeroRequete] = useState<JSX.Element>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
@@ -66,6 +71,16 @@ export const MesRequetesCreationPage: React.FC<LocalProps> = ({
     setOperationEnCours(false);
   };
 
+  function onClickOnLine(
+    idRequete: string,
+    data: IRequeteTableauCreation[],
+    idx: number
+  ) {
+    history.push(
+      getUrlWithParam(URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID, idRequete)
+    );
+  }
+
   return (
     <>
       <OperationEnCours
@@ -77,7 +92,7 @@ export const MesRequetesCreationPage: React.FC<LocalProps> = ({
         idKey={"idRequete"}
         sortOrderByState={linkParameters.tri}
         sortOrderState={linkParameters.sens}
-        onClickOnLine={() => {}}
+        onClickOnLine={onClickOnLine}
         columnHeaders={requeteCreationMesRequetesColumnHeaders}
         dataState={dataState}
         paramsTableau={paramsTableau}

@@ -26,6 +26,51 @@ export interface ITitulaireRequete {
   sexe: string;
   nationalite: Nationalite;
   parentsTitulaire?: IParent[];
+
+  // Nouveaux champs création
+  situationFamiliale?: string;
+  villeEtrangereNaissance?: string;
+  arrondissementNaissance?: string;
+  regionNaissance?: string;
+  nationalites?: INationalite[];
+  domiciliation?: IDomiciliation;
+  prenomsDemande?: IPrenomOrdonnes[];
+  nomDemandeFrancisation?: string;
+  nomDemandeIdentification?: string;
+  nomActuel?: string;
+  nombreEnfantMineur?: number;
+  typeObjetTitulaire?: string;
+  qualite?: string;
+  courriel?: string;
+  telephone?: string;
+
+  // Titulaire creation Effet collectif
+  parent2Enfant?: ITitulaireRequete;
+  valideEffetCollectif?: string;
+  demandeEffetCollectif?: boolean;
+
+  // Titulaire creation Parent
+  numeroDossierNational?: string;
+  domiciliationEnfant?: string;
+}
+
+interface INationalite {
+  id: string;
+  nationalite: string;
+}
+
+interface IDomiciliation {
+  id: string;
+  ligne2?: string;
+  ligne3?: string;
+  ligne4?: string;
+  ligne5?: string;
+  codePostal?: string;
+  ville?: string;
+  villeEtrangere?: string;
+  arrondissement?: string;
+  region?: string;
+  pays?: string;
 }
 
 export const TitulaireRequete = {

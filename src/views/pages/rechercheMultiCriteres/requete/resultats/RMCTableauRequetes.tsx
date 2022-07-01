@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
+import { TRequeteTableau } from "../../../../../model/requete/IRequeteTableau";
+import { IRequeteTableauCreation } from "../../../../../model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "../../../../../model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "../../../../../model/requete/IRequeteTableauInformation";
 import {
@@ -16,10 +19,9 @@ import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "../../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { IParamsTableau } from "../../../../common/util/GestionDesLiensApi";
 import { autorisePrendreEnChargeReqTableauDelivrance } from "../../../../common/util/RequetesUtils";
+import { getUrlWithParam } from "../../../../common/util/route/routeUtil";
 import { getMessageZeroRequete } from "../../../../common/util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "../../../../common/widget/attente/OperationEnCours";
 import {
@@ -27,7 +29,10 @@ import {
   NB_LIGNES_PAR_PAGE_REQUETE
 } from "../../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "../../../../common/widget/tableau/TableauRece/TableauRece";
-import { URL_RECHERCHE_REQUETE } from "../../../../router/ReceUrls";
+import {
+  URL_RECHERCHE_REQUETE,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID
+} from "../../../../router/ReceUrls";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
@@ -88,26 +93,25 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
 
   const onClickOnLine = (
     idRequete: string,
-    data: IRequeteTableauDelivrance[],
+    data: TRequeteTableau[],
     idx: number
   ) => {
     const requeteSelect = data[idx];
-    if (requeteSelect.type === TypeRequete.DELIVRANCE.libelle) {
-      onClickReqDelivrance(requeteSelect);
-    } else if (
-      requeteSelect.type === TypeRequete.INFORMATION.libelle &&
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
-    ) {
-      onClickReqInformation(requeteSelect);
-    } else if (
-      requeteSelect.type === TypeRequete.CREATION.libelle &&
-      gestionnaireFeatureFlag.estActif(FeatureFlag.FF_NATALI)
-    ) {
-      //TODO onClickReqCreation(requeteSelect);
+    switch (requeteSelect.type) {
+      case TypeRequete.DELIVRANCE.libelle:
+        onClickReqDelivrance(requeteSelect);
+        break;
+      case TypeRequete.INFORMATION.libelle:
+        onClickReqInformation(requeteSelect);
+        break;
+      case TypeRequete.CREATION.libelle:
+        onClickReqCreation(requeteSelect as IRequeteTableauCreation);
+        break;
     }
   };
 
   const urlCourante = URL_RECHERCHE_REQUETE;
+  const history = useHistory();
 
   const onClickReqDelivrance = (requete: IRequeteTableauDelivrance) => {
     setOperationEnCours(true);
@@ -137,6 +141,15 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
       callback: finOperationEnCours,
       urlCourante
     });
+  };
+
+  const onClickReqCreation = (requete: IRequeteTableauCreation) => {
+    history.push(
+      getUrlWithParam(
+        URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
+        requete.idRequete
+      )
+    );
   };
 
   return (

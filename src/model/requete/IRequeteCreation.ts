@@ -1,7 +1,30 @@
-/* istanbul ignore file */
-
+import { Provenance } from "./enum/Provenance";
+import { SousTypeCreation } from "./enum/SousTypeCreation";
+import { IDocumentPJ } from "./IDocumentPj";
+import { IMandant } from "./IMandant";
+import { IProvenanceNatali } from "./IProvenanceNatali";
+import { IProvenanceServicePublic } from "./IProvenanceServicePublic";
 import { IRequete } from "./IRequete";
+import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCreation";
 
 export interface IRequeteCreation extends IRequete {
-  // TODO IRequeteMiseAjour n'est pas encore définie, supprimer le "istanbul ignore file" une fois l'interface implémenté
+  piecesJustificatives: IPieceJustificativeCreation[];
+  idEntiteRattachement?: string;
+  sousType: SousTypeCreation;
+  dossierSignale?: boolean;
+  documentsPj?: IDocumentPJ[];
+  provenanceNatali?: IProvenanceNatali;
+  provenanceRECE?: {
+    id: string;
+    numeroFonctionnel: string;
+  };
+  provenanceServicePublic?: IProvenanceServicePublic;
+  commentaire?: string;
+  demandeIdentification?: boolean;
+  demandeFrancisation?: boolean;
+  provenance?: Provenance;
+  numeroAncien?: string;
+  mandant?: IMandant;
+  nature?: string;
+  campagne?: string;
 }

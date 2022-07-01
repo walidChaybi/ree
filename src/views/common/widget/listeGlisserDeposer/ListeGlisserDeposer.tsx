@@ -19,20 +19,24 @@ interface ListeGlisserDeposerProps {
   handleCheckbox?: (id: string) => void;
   onClickSupprimer?: (id: string) => void;
   deverrouille?: boolean;
+  afficheDragHandle: boolean;
+  useDragHandle: boolean;
+  liste1Element?: boolean;
+  libellesSontTitres: boolean;
 }
 
 export interface ListeItem {
-  libelle: string;
   checkbox: boolean;
+  libelle: string;
   id: string;
   aPoubelle: boolean;
-  liste1Element?: boolean;
+  sousElement?: any;
 }
 
 export const ListeGlisserDeposer: React.FC<
   ListeGlisserDeposerProps
 > = props => {
-  const onClickMention = (item: ListeItem) => {
+  const onClickItem = (item: ListeItem) => {
     if (props.setElementSelect) {
       props.setElementSelect(item.id);
     }
@@ -42,40 +46,55 @@ export const ListeGlisserDeposer: React.FC<
 
   const SortableItem = SortableElement((item: ListeItem) => (
     <li
-      onClick={() => onClickMention(item)}
-      className={`${item.id === props.elementSelect ? "selected" : ""}`}
+      onClick={() => onClickItem(item)}
+      className={`${item.id === props.elementSelect ? "selected" : ""} ${
+        !props.useDragHandle && props.afficheDragHandle ? "sansHandler" : ""
+      }`}
     >
-      {props.handleReorga && !item.liste1Element && (
-        <span title={getLibelle("Cliquer pour glisser/déposer")}>
-          <DragHandleElement />
-        </span>
-      )}
-      {props.deverrouille && props.handleCheckbox && (
-        <Checkbox
-          title={getLibelle("Cliquer pour sélectionner")}
-          checked={item.checkbox}
-          onClick={() => {
-            if (props.handleCheckbox) {
-              props.handleCheckbox(item.id);
-            }
-          }}
-        />
-      )}
+      <span className="enTete">
+        {afficherHandle(props) && (
+          <span
+            title={getLibelle("Cliquer pour glisser/déposer")}
+            className="handler"
+          >
+            <DragHandleElement />
+          </span>
+        )}
+        {props.deverrouille && props.handleCheckbox && (
+          <Checkbox
+            title={getLibelle("Cliquer pour sélectionner")}
+            checked={item.checkbox}
+            onClick={() => {
+              if (props.handleCheckbox) {
+                props.handleCheckbox(item.id);
+              }
+            }}
+          />
+        )}
 
-      {props.onClickSupprimer && item.aPoubelle && (
-        <DeleteOutlined
-          onClick={() => {
-            if (props.onClickSupprimer) {
-              props.onClickSupprimer(item.id);
-            }
-          }}
-          className="IconeSupprimer"
-          titleAccess={getLibelle("Supprimer la mention")}
-        />
-      )}
-      <p title={item.libelle}>
-        {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
-      </p>
+        {props.onClickSupprimer && item.aPoubelle && (
+          <DeleteOutlined
+            onClick={() => {
+              if (props.onClickSupprimer) {
+                props.onClickSupprimer(item.id);
+              }
+            }}
+            className="IconeSupprimer"
+            titleAccess={getLibelle("Supprimer la mention")}
+          />
+        )}
+
+        {props.libellesSontTitres ? (
+          <h2 title={item.libelle}>
+            {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
+          </h2>
+        ) : (
+          <p title={item.libelle}>
+            {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
+          </p>
+        )}
+      </span>
+      {item.sousElement}
     </li>
   ));
 
@@ -91,7 +110,7 @@ export const ListeGlisserDeposer: React.FC<
               checkbox={value.checkbox}
               id={value.id}
               aPoubelle={value.aPoubelle}
-              liste1Element={props.liste?.length === 1}
+              sousElement={value.sousElement}
             />
           ))}
       </ul>
@@ -107,9 +126,17 @@ export const ListeGlisserDeposer: React.FC<
               props.handleReorga(sortEnd.oldIndex, sortEnd.newIndex);
             }
           }}
-          useDragHandle
+          useDragHandle={props.useDragHandle}
         />
       )}
     </div>
   );
 };
+function afficherHandle(
+  props: React.PropsWithChildren<ListeGlisserDeposerProps>
+) {
+  return (
+    props.handleReorga && props.liste?.length !== 1 && props.afficheDragHandle
+  );
+}
+
