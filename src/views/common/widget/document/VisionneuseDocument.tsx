@@ -26,9 +26,11 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
   }, [contenu, typeMime]);
 
   function addStyle() {
-    const styleLink = document.createElement("style");
-    styleLink.textContent = "img{width:100%}";
-    iframe.current.contentWindow?.document.head.appendChild(styleLink);
+    if (typeMime !== "application/pdf") {
+      const styleLink = document.createElement("style");
+      styleLink.textContent = "img{width:100%}";
+      iframe.current.contentWindow?.document.head.appendChild(styleLink);
+    }
   }
 
   return (
@@ -51,4 +53,3 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = ({
     </div>
   );
 };
-
