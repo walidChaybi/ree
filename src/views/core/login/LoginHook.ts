@@ -37,7 +37,7 @@ export function useLoginApi() {
   };
 }
 
-function mappingOfficier(headers: any, body: any): IOfficier {
+export function mappingOfficier(headers: any, body: any): IOfficier {
   return {
     idUtilisateur: body.idUtilisateur,
     idSSO: headers.id_sso,

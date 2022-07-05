@@ -1,5 +1,7 @@
 import mockConnectedUser from "../../mock/data/connectedUser.json";
 import {
+  resultatHeaderUtilistateurLaurenceBourdeau,
+  resultatRequeteUtilistateurLaurenceBourdeau,
   userDroitConsulterArchive,
   userDroitConsulterConsulterArchive,
   userDroitConsulterPerimetreMEAE,
@@ -10,12 +12,15 @@ import {
   appartientAMonServiceOuServicesMeresOuServicesFilles,
   contientEntiteMere,
   estOfficierHabiliterPourTousLesDroits,
+  estOfficierHabiliterPourUnDesDroits,
   IOfficier,
   officierAutoriserSurLeTypeRegistre,
   officierHabiliterUniquementPourLeDroit
 } from "../../model/agent/IOfficier";
+import { mapHabilitationsUtilisateur } from "../../model/agent/IUtilisateur";
 import { Droit } from "../../model/Droit";
 import { storeRece } from "../../views/common/util/storeRece";
+import { mappingOfficier } from "../../views/core/login/LoginHook";
 
 const u: any = mockConnectedUser;
 
@@ -51,9 +56,8 @@ test("Attendu: officierHabiliterUniquementPourLeDroit fonctionne correctement", 
 test("Utilisateur autoriser à consulter l'acte dont l'idTypeRegistre est passé", () => {
   storeRece.utilisateurCourant = userDroitConsulterPerimetreTUNIS;
   const idTypeRegistre = "b66a9304-48b4-4aa3-920d-6cb27dd76c83";
-  let autoriserAConsulterActe = officierAutoriserSurLeTypeRegistre(
-    idTypeRegistre
-  );
+  let autoriserAConsulterActe =
+    officierAutoriserSurLeTypeRegistre(idTypeRegistre);
   expect(autoriserAConsulterActe).toBe(true);
 
   storeRece.utilisateurCourant = userDroitConsulterPerimetreMEAE;
@@ -103,4 +107,33 @@ test("L'entité rattachée à la requete n'est pas une entité mère de celle de
   storeRece.utilisateurCourant = userDroitnonCOMEDEC;
   const idEntiteRequete = "9999";
   expect(contientEntiteMere(idEntiteRequete)).toBeFalsy();
+});
+
+test("Attendu: estOfficierHabiliterPourUnDesDroits fonctionne correctement", () => {
+  storeRece.utilisateurCourant = mappingOfficier(
+    resultatHeaderUtilistateurLaurenceBourdeau,
+    resultatRequeteUtilistateurLaurenceBourdeau.data
+  );
+  storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
+    resultatRequeteUtilistateurLaurenceBourdeau.data.habilitations
+  );
+
+  expect(estOfficierHabiliterPourUnDesDroits([])).toBeTruthy();
+
+  expect(estOfficierHabiliterPourUnDesDroits(undefined!)).toBeTruthy();
+
+  expect(
+    estOfficierHabiliterPourUnDesDroits([Droit.CREER_ACTE_ETABLI])
+  ).toBeTruthy();
+
+  expect(
+    estOfficierHabiliterPourUnDesDroits([
+      Droit.ATTRIBUER,
+      Droit.CREER_ACTE_ETABLI
+    ])
+  ).toBeTruthy();
+
+  expect(
+    estOfficierHabiliterPourUnDesDroits([Droit.METTRE_A_JOUR_ACTE])
+  ).toBeFalsy();
 });
