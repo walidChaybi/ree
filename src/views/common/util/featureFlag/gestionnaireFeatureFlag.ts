@@ -22,7 +22,14 @@ class GestionnaireFeatureFlag {
   }
 
   private getValeurFlagHeader(header: any, prop: string) {
-    return header[prop.toLocaleLowerCase()] || header[prop];
+    let valeurFlag = "";
+    const headerProps = Object.getOwnPropertyNames(header);
+    headerProps.forEach((headerProp: string) => {
+      if (headerProp.toLocaleLowerCase() === prop.toLocaleLowerCase()) {
+        valeurFlag = header[headerProp];
+      }
+    });
+    return valeurFlag;
   }
 
   private supprimeTousLesFlags(): void {
