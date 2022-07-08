@@ -12,6 +12,7 @@ interface BoutonOperationEnCoursProps {
   title?: string;
   checkDirtyActive?: boolean;
   id?: string;
+  type?: "button" | "reset" | "submit";
 }
 
 export const BoutonOperationEnCours: React.FC<
@@ -47,7 +48,7 @@ export const BoutonOperationEnCours: React.FC<
         title={props.title}
         id={props.id}
         className={props.class}
-        type="button"
+        type={props.type ? props.type : "button"}
         disabled={props.estDesactive}
         onClick={handleClick}
       >

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
-import { Validation } from "../../../../model/requete/enum/Validation";
 import { OptionCourrier } from "../../../../model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
 import {
@@ -71,10 +69,6 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
       setGenerationDocumentECParams({
         idActe: params.idActe,
         requete: params.requete,
-        validation: getValidation(
-          params.requete.sousType,
-          params.requete.choixDelivrance
-        ),
         mentionsRetirees: [],
         choixDelivrance: params.requete.choixDelivrance
       });
@@ -129,18 +123,4 @@ function getIndexDocument(
     res = DocumentEC.Principal;
   }
   return res;
-}
-
-function getValidation(
-  sousType: SousTypeDelivrance,
-  choixDelivrance?: ChoixDelivrance
-) {
-  if (
-    choixDelivrance &&
-    choixDelivrance === ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE
-  ) {
-    return Validation.O;
-  } else {
-    return Validation.N;
-  }
 }

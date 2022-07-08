@@ -179,7 +179,26 @@ export function creationComposition(
   return composition;
 }
 
-export const controlerDonneesGenerationExtraitMariageOuNaissance = function (
+export const getValidationEC = (
+  acte: IFicheActe,
+  choixDelivrance: ChoixDelivrance,
+  validation = Validation.O
+) => {
+  switch (choixDelivrance) {
+    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
+    case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
+      return getValidationExtrait(acte, choixDelivrance, validation);
+    case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
+    case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
+      if (!acte.corpsTexte && !acte.corpsImage) {
+        return Validation.E;
+      }
+      break;
+  }
+  return validation;
+};
+
+function getValidationExtrait(
   acte: IFicheActe,
   choixDelivrance: ChoixDelivrance,
   validation: Validation
@@ -190,10 +209,6 @@ export const controlerDonneesGenerationExtraitMariageOuNaissance = function (
   // ou que le genre est d'un des titulaires est inconnu
   // ou que l'année ou le lieux de l'évenement ne sont absents
   if (
-    estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage(
-      acte,
-      choixDelivrance
-    ) &&
     aPasCorpsExtraitRectificationCorrespondant(
       acte.corpsExtraitRectifications,
       choixDelivrance
@@ -204,15 +219,8 @@ export const controlerDonneesGenerationExtraitMariageOuNaissance = function (
   ) {
     return Validation.E;
   }
-  // La validation doit être à O pour une copie d'un acte de type IMAGE ou pour une copie archive acte TEXTE
-  else if (
-    estDemandeCopieActeImage(acte, choixDelivrance) ||
-    estDemandeCopieArchiveActeTexte(acte, choixDelivrance)
-  ) {
-    return Validation.O;
-  }
   return validation;
-};
+}
 
 export const estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage =
   function (acte: IFicheActe, choixDelivrance: ChoixDelivrance) {
@@ -292,15 +300,14 @@ export function creationEC(
 
     // Verification des données pour la génération d'extrait mariage/naissance
     // En cas de validation en erreur alors un extrait en erreur sera généré
-    const validationControle =
-      controlerDonneesGenerationExtraitMariageOuNaissance(
-        // @ts-ignore NonNull
-        acte,
-        // @ts-ignore NonNull
-        params.requete.choixDelivrance,
-        // @ts-ignore NonNull
-        params.validation
-      );
+    const validationControle = getValidationEC(
+      // @ts-ignore NonNull
+      acte,
+      // @ts-ignore NonNull
+      params.requete.choixDelivrance,
+      // @ts-ignore NonNull
+      params.validation
+    );
 
     composition = creationComposition(
       // @ts-ignore NonNull

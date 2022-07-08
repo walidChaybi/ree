@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ICriteresRMCRequete } from "../../../../model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "../../../../model/rmc/requete/IRMCRequete";
+import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { AutoScroll } from "../../../common/widget/autoScroll/autoScroll";
 import { useRMCRequeteApiHook } from "./hook/RMCRequeteApiHook";
 import { RMCRequeteResultats } from "./resultats/RMCRequeteResultats";
@@ -10,10 +11,9 @@ import "./scss/RMCRequetePage.scss";
 export const RMCRequetePage: React.FC = () => {
   const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
-  const [
-    criteresRechercheRequete,
-    setCriteresRechercheRequete
-  ] = useState<ICriteresRMCRequete>();
+  const [opEnCours, setOpEnCours] = useState<boolean>(false);
+  const [criteresRechercheRequete, setCriteresRechercheRequete] =
+    useState<ICriteresRMCRequete>();
 
   const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(
     criteresRechercheRequete
@@ -28,14 +28,26 @@ export const RMCRequetePage: React.FC = () => {
     }
   };
 
+  const lancerRercherche = useCallback((criteres: ICriteresRMCRequete) => {
+    setOpEnCours(true);
+    setCriteresRechercheRequete(criteres);
+  }, []);
+
+  useEffect(() => {
+    if (dataRMCRequete) {
+      setOpEnCours(false);
+    }
+  }, [dataRMCRequete]);
+
   const RMCRequeteRef = useRef();
 
   return (
     <>
+      <OperationEnCours visible={opEnCours}></OperationEnCours>
       <RMCRequeteForm
         setNouvelleRMCRequete={setNouvelleRMCRequete}
         setValuesRMCRequete={setValuesRMCRequete}
-        setCriteresRechercheRequete={setCriteresRechercheRequete}
+        setCriteresRechercheRequete={lancerRercherche}
       />
       <AutoScroll autoScroll={nouvelleRMCRequete} baliseRef={RMCRequeteRef} />
       {dataRMCRequete && dataTableauRMCRequete && (

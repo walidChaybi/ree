@@ -1,6 +1,7 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { IRMCActeInscription } from "../../../../model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { stockageDonnees } from "../../../common/util/stockageDonnees";
+import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
 import { AutoScroll } from "../../../common/widget/autoScroll/autoScroll";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
@@ -23,6 +24,8 @@ interface RMCActeInscriptionPageProps {
 export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
   noAutoScroll
 }) => {
+  const [opEnCours, setOpEnCours] = useState<boolean>(false);
+
   const [valuesRMCActeInscription, setValuesRMCActeInscription] =
     useState<IRMCActeInscription>({});
 
@@ -59,6 +62,12 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
   const resultatRMCFicheInscription = useRMCInscriptionApiHook(
     criteresRechercheFicheInscription
   );
+
+  useEffect(() => {
+    if (dataRMCActe || dataRMCInscription) {
+      setOpEnCours(false);
+    }
+  }, [dataRMCActe, dataRMCInscription]);
 
   const setRangeActe = useCallback(
     (range: string) => {
@@ -110,6 +119,7 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
   );
 
   const onSubmitRMCActeInscription = useCallback((values: any) => {
+    setOpEnCours(true);
     setNouvelleRMCActeInscription(true);
     setValuesRMCActeInscription(values);
     setCriteresRechercheActe({
@@ -127,6 +137,7 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({
   const RMCActeInscriptionRef = useRef();
   return (
     <>
+      <OperationEnCours visible={opEnCours}></OperationEnCours>
       <RMCActeInscriptionForm onSubmit={onSubmitRMCActeInscription} />
       {!noAutoScroll && (
         <AutoScroll

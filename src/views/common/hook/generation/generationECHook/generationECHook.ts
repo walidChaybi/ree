@@ -38,7 +38,7 @@ export interface IGenerationECParams {
   idActe?: string;
   acte?: IFicheActe;
   requete: IRequeteDelivrance;
-  validation: Validation;
+  validation?: Validation;
   pasDAction?: boolean;
   mentionsRetirees: string[];
   choixDelivrance?: ChoixDelivrance;

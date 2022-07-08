@@ -89,7 +89,6 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
       setGenerationEC({
         idActe: params.idActe,
         requete: params.requete,
-        validation: Validation.O,
         pasDAction: documentDejaCreer(
           params.requete.documentsReponses,
           params.requete.choixDelivrance

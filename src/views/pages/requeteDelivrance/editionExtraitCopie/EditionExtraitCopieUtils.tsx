@@ -17,13 +17,28 @@ import {
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { Validation } from "../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
+import {
+  IRequeteDelivrance,
+  RequeteDelivrance
+} from "../../../../model/requete/IRequeteDelivrance";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
-import { getLibelle, TROIS, UN, ZERO } from "../../../common/util/Utils";
+import { IActeApiHookResultat } from "../../../common/hook/acte/ActeApiHook";
+import { IGetImagesDeLActeParams } from "../../../common/hook/acte/GetImagesDeLActeApiHook";
+import { IGenerationECParams } from "../../../common/hook/generation/generationECHook/generationECHook";
+import {
+  DEUX,
+  estTableauNonVide,
+  getLibelle,
+  TROIS,
+  UN,
+  ZERO
+} from "../../../common/util/Utils";
 import { AccordionRece } from "../../../common/widget/accordion/AccordionRece";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
+import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
+import { BoutonsTerminer } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminer";
 import { DetailRequetePage } from "../detailRequete/DetailRequetePage";
 import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
 import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
@@ -190,18 +205,6 @@ export const ajoutOngletsExtraitFilliation = (
       break;
   }
 
-  // Si l'extrait n'est pas en erreur (DOCUMENT REPONSE.validation différent de "E")
-  //  et si l'acte est de type image (Acte.type = "image"),
-  //  et si Acte.date dernière délivrance non renseignée ou renseignée et antérieure à la date de mise en service de la délivrance RECE Et2R3
-  // Alors afficher le sous onglet 0 "saisir l'extrait"
-  if (
-    document.validation !== Validation.E &&
-    FicheActe.estActeImage(acte) &&
-    FicheActe.estPremiereDelivrance(acte)
-  ) {
-    res.ongletSelectionne = ZERO;
-  }
-
   // Sous-onglet 0
   res.liste.push(ongletSaisirExtrait(acte, requete, handleDocumentEnregistre));
   // Sous-onglet 1
@@ -303,3 +306,106 @@ export function getOngletSelectVenantDePriseEnCharge(
     return DocumentEC.Principal;
   } else return DocumentEC.Courrier;
 }
+
+export function choisirDocumentEdite(
+  indexDocEditeDemande: DocumentEC | undefined,
+  setIndexDocEdite: React.Dispatch<React.SetStateAction<DocumentEC>>,
+  requete: IRequeteDelivrance | undefined
+) {
+  if (indexDocEditeDemande !== undefined) {
+    setIndexDocEdite(indexDocEditeDemande);
+  } else if (
+    requete?.documentsReponses &&
+    requete.documentsReponses.length >= DEUX
+  ) {
+    setIndexDocEdite(DocumentEC.Principal);
+  }
+}
+
+export function retoucheImage(
+  imagesModifieesBase64: string[] | undefined,
+  requete: IRequeteDelivrance | undefined,
+  resultatInformationsActeApiHook: IActeApiHookResultat | undefined,
+  documentEdite: IDocumentReponse | undefined,
+  setImagesDeLActeModifiees: React.Dispatch<React.SetStateAction<string[]>>,
+  setGenerationEcParams: React.Dispatch<
+    React.SetStateAction<IGenerationECParams | undefined>
+  >,
+  setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>
+) {
+  if (
+    estTableauNonVide(imagesModifieesBase64) &&
+    requete &&
+    requete.choixDelivrance &&
+    resultatInformationsActeApiHook?.acte &&
+    documentEdite
+  ) {
+    // Maj images de l'acte avec les images modifiées
+    FicheActe.setImages(
+      resultatInformationsActeApiHook.acte,
+      // @ts-ignore imagesModifieesBase64 non null
+      imagesModifieesBase64
+    );
+
+    // @ts-ignore imagesModifieesBase64 non null
+    setImagesDeLActeModifiees(imagesModifieesBase64);
+
+    // Regénération du document copie intégrale
+    const documentReponseCopieIntegrale =
+      RequeteDelivrance.getDocumentReponseCopieIntegrale(requete);
+
+    setGenerationEcParams({
+      acte: { ...resultatInformationsActeApiHook?.acte },
+      requete,
+      validation: documentReponseCopieIntegrale?.validation || Validation.O,
+      mentionsRetirees: [],
+      choixDelivrance: requete.choixDelivrance
+    });
+  } else {
+    setOperationEnCours(false);
+  }
+}
+
+export function getBoutonsEdition(
+  requete: IRequeteDelivrance,
+  resultatInformationsActeApiHook: IActeApiHookResultat | undefined,
+  documentEdite: IDocumentReponse | undefined,
+  setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
+  imagesDeLActeModifiees: string[],
+  setImagesDeLActe: React.Dispatch<React.SetStateAction<string[]>>,
+  setRecuperationImagesDeLActeParams: React.Dispatch<
+    React.SetStateAction<IGetImagesDeLActeParams | undefined>
+  >
+) {
+  return (
+    <div className="BoutonsEdition">
+      <div className="Gauche">
+        <BoutonModifierTraitement requete={requete} />
+      </div>
+      <div className="Droite">
+        {boutonModifierCopiePresent(
+          resultatInformationsActeApiHook?.acte,
+          documentEdite
+        ) && (
+          <button
+            title={getLibelle("Modifier la copie à délivrer")}
+            onClick={() => {
+              setOperationEnCours(true);
+              if (estTableauNonVide(imagesDeLActeModifiees)) {
+                setImagesDeLActe([...imagesDeLActeModifiees]);
+              } else {
+                setRecuperationImagesDeLActeParams({
+                  idActe: resultatInformationsActeApiHook?.acte?.id
+                });
+              }
+            }}
+          >
+            Modifier la copie à délivrer
+          </button>
+        )}
+        <BoutonsTerminer requete={requete} />
+      </div>
+    </div>
+  );
+}
+

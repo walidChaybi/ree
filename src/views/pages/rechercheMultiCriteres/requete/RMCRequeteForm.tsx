@@ -57,9 +57,7 @@ interface RMCRequeteFormProps {
   closePopIn?: () => void;
   setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
   setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequete>>;
-  setCriteresRechercheRequete: React.Dispatch<
-    React.SetStateAction<ICriteresRMCRequete | undefined>
-  >;
+  setCriteresRechercheRequete: (criteres: ICriteresRMCRequete) => void;
 }
 
 export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({
