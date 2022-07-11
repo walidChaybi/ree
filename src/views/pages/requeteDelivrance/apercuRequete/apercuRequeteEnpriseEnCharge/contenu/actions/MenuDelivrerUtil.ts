@@ -328,6 +328,6 @@ export function controleCoherenceEntreDocumentSelectionneEtActionDelivrer(
 
 function resetDoubleSubmit(listeActions: IActionOption[]) {
   listeActions.forEach(el => {
-    DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+    DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
   });
 }

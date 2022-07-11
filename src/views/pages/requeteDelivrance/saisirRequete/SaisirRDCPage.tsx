@@ -118,9 +118,8 @@ export const SaisirRDCPage: React.FC = () => {
   const [evenementVisible, setEvenementVisible] = useState<boolean>(false);
   const [titulaire2Visible, setTitulaire2Visible] = useState<boolean>(false);
   const [mandantVisible, setMandantVisible] = useState<boolean>(false);
-  const [lienTitulaireVisible, setLienTitulaireVisible] = useState<boolean>(
-    true
-  );
+  const [lienTitulaireVisible, setLienTitulaireVisible] =
+    useState<boolean>(true);
 
   const [optionsRequerant, setOptionsRequerant] = useState<Options>(
     TypeRequerantRDC.getListEnumsAsOptions(UN_TITULAIRE)
@@ -130,16 +129,13 @@ export const SaisirRDCPage: React.FC = () => {
     TypeLienRequerant.getListEnumsAsOptions(TYPE_LIEN_REQUERANT_POUR_TITULAIRE)
   );
 
-  const [donneesIncompletes, setDonneesIncompletes] = React.useState<boolean>(
-    false
-  );
+  const [donneesIncompletes, setDonneesIncompletes] =
+    React.useState<boolean>(false);
   const [isBrouillon, setIsBrouillon] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [saisieRequeteRDC, setSaisieRequeteRDC] = useState<SaisieRequeteRDC>();
-  const [
-    creationRequeteRDC,
-    setCreationRequeteRDC
-  ] = useState<CreationRequeteRDC>();
+  const [creationRequeteRDC, setCreationRequeteRDC] =
+    useState<CreationRequeteRDC>();
   const [paramsRMCAuto, setParamsRMCAuto] = useState<
     INavigationApercuRMCAutoParams | undefined
   >();
@@ -207,17 +203,16 @@ export const SaisirRDCPage: React.FC = () => {
     getAdresseForm()
   ];
 
-  const creationRequeteDelivranceRDCResultat = useCreationRequeteDelivranceRDC(
-    creationRequeteRDC
-  );
+  const creationRequeteDelivranceRDCResultat =
+    useCreationRequeteDelivranceRDC(creationRequeteRDC);
 
   const redirectionPage = useCallback(
     async (requeteSauvegardee: IRequeteDelivrance) => {
       // Si l'appel c'est terminé sans erreur
       if (requeteSauvegardee) {
-          messageManager.showSuccessAndClose(
-            getLibelle("La requête a bien été enregistrée")
-          );
+        messageManager.showSuccessAndClose(
+          getLibelle("La requête a bien été enregistrée")
+        );
         setParamsRMCAuto({
           requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
           urlCourante: history.location.pathname

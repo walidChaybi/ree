@@ -1,5 +1,6 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { RECEContext } from "../../../core/body/Body";
+import { Bouton } from "../../composant/boutonAntiDoubleSubmit/Bouton";
 import { checkDirty } from "../../util/Utils";
 import { OperationEnCours } from "./OperationEnCours";
 
@@ -8,7 +9,7 @@ interface BoutonOperationEnCoursProps {
   class?: string;
   estDesactive?: boolean;
   children: ReactNode;
-  visible?: boolean;
+  toileDeFondVisible?: boolean;
   title?: string;
   checkDirtyActive?: boolean;
   id?: string;
@@ -32,10 +33,10 @@ export const BoutonOperationEnCours: React.FC<
   };
 
   useEffect(() => {
-    if (props.visible !== undefined) {
-      setOpEnCours(props.visible);
+    if (props.toileDeFondVisible !== undefined) {
+      setOpEnCours(props.toileDeFondVisible);
     }
-  }, [props.visible]);
+  }, [props.toileDeFondVisible]);
 
   return (
     <>
@@ -44,7 +45,7 @@ export const BoutonOperationEnCours: React.FC<
         onTimeoutEnd={() => setOpEnCours(false)}
         onClick={() => setOpEnCours(false)}
       ></OperationEnCours>
-      <button
+      <Bouton
         title={props.title}
         id={props.id}
         className={props.class}
@@ -53,7 +54,7 @@ export const BoutonOperationEnCours: React.FC<
         onClick={handleClick}
       >
         {props.children}
-      </button>
+      </Bouton>
     </>
   );
 };

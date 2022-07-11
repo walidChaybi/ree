@@ -21,6 +21,7 @@ import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "../../../../model/requete/IRequeteDelivrance";
+import { Bouton } from "../../../common/composant/boutonAntiDoubleSubmit/Bouton";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
 import { IActeApiHookResultat } from "../../../common/hook/acte/ActeApiHook";
@@ -387,7 +388,7 @@ export function getBoutonsEdition(
           resultatInformationsActeApiHook?.acte,
           documentEdite
         ) && (
-          <button
+          <Bouton
             title={getLibelle("Modifier la copie à délivrer")}
             onClick={() => {
               setOperationEnCours(true);
@@ -401,11 +402,10 @@ export function getBoutonsEdition(
             }}
           >
             Modifier la copie à délivrer
-          </button>
+          </Bouton>
         )}
         <BoutonsTerminer requete={requete} />
       </div>
     </div>
   );
 }
-

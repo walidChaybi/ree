@@ -21,6 +21,7 @@ import { Option } from "../../util/Type";
 import { getLibelle } from "../../util/Utils";
 import { OperationEnCours } from "../../widget/attente/OperationEnCours";
 import { GroupeBouton } from "../../widget/menu/GroupeBouton";
+import { Bouton } from "../boutonAntiDoubleSubmit/Bouton";
 import {
   listeEntiteToOptions,
   listeUtilisateursToOptionsBis,
@@ -163,12 +164,12 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
               <AssignmentInd onClick={e => handleClickBoutonReponse(e)} />
             </span>
           ) : (
-            <button
+            <Bouton
               disabled={props.disabled}
               onClick={e => handleClickBoutonReponse(e)}
             >
               {getLibelle("Transférer")}
-            </button>
+            </Bouton>
           )}
 
           <Menu

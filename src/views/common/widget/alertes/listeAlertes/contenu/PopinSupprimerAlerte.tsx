@@ -1,5 +1,6 @@
 import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import React from "react";
+import { Bouton } from "../../../../composant/boutonAntiDoubleSubmit/Bouton";
 import { getLibelle } from "../../../../util/Utils";
 
 export interface PopinSupprimerAlerteProps {
@@ -28,12 +29,12 @@ export const PopinSupprimerAlerte: React.FC<PopinSupprimerAlerteProps> = ({
         {getLibelle("Etes-vous sur de vouloir supprimer cette alerte ?")}
       </DialogContent>
       <DialogActions>
-        <button type="button" onClick={onCancelClick}>
+        <Bouton type="button" onClick={onCancelClick}>
           {getLibelle("Annuler")}
-        </button>
-        <button type="button" onClick={onSubmit}>
+        </Bouton>
+        <Bouton type="button" onClick={onSubmit}>
           {getLibelle("Valider")}
-        </button>
+        </Bouton>
       </DialogActions>
     </Dialog>
   );

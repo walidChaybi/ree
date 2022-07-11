@@ -1,11 +1,11 @@
 export class DoubleSubmitUtil {
-  public static remetPossibiliteDoubleSubmit(element: any) {
+  public static reactiveOnClick(element: any) {
     if (element) {
       element.onclick = null;
     }
   }
 
-  public static eviteDoubleSubmit(element: any) {
+  public static desactiveOnClick(element: any) {
     if (element) {
       element.onclick = function (event: any) {
         event.stopPropagation();

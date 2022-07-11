@@ -43,7 +43,6 @@ export const MenuReponseSansDelivrance: React.FC<
         props.actes?.[0] ? props.actes?.[0].idActe : ""
       }`;
 
-
       receUrl.replaceUrl(history, url);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,7 +113,7 @@ export const MenuReponseSansDelivrance: React.FC<
 
   const resetDoubleSubmit = () => {
     listeActions.forEach(el => {
-      DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+      DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
     });
   };
 

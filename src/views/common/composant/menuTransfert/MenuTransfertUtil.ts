@@ -43,7 +43,7 @@ export function resetDoubleSubmit(
   reponseSansDelivranceCSOptions: IActionOption[]
 ) {
   reponseSansDelivranceCSOptions.forEach(el => {
-    DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+    DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
   });
 }
 

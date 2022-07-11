@@ -27,7 +27,9 @@ import {
   estSeulementActeMariage
 } from "./ReponseSansDelivranceCSFonctions";
 
-export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> = props => {
+export const MenuReponseSansDelivranceCS: React.FC<
+  IChoixActionDelivranceProps
+> = props => {
   const history = useHistory();
 
   const refReponseSansDelivranceCSOptions0 = useRef(null);
@@ -100,9 +102,10 @@ export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> 
     switch (indexMenu) {
       case INDEX_ACTION_REQUETE_INCOMPLETE_ILLISIBLE:
         setOperationEnCours(true);
-        const contenuReponseSansDelivranceCSDemandeIncomplete = await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
-          props.requete
-        );
+        const contenuReponseSansDelivranceCSDemandeIncomplete =
+          await createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+            props.requete
+          );
         setReponseSansDelivranceCS({
           contenu: contenuReponseSansDelivranceCSDemandeIncomplete,
           fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
@@ -117,10 +120,11 @@ export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> 
           setHasMessageBloquant(true);
         } else {
           setOperationEnCours(true);
-          const newReponseSansDelivranceCSMariage = await createReponseSansDelivranceCSPourCompositionApiMariage(
-            props.requete,
-            actes?.[0]
-          );
+          const newReponseSansDelivranceCSMariage =
+            await createReponseSansDelivranceCSPourCompositionApiMariage(
+              props.requete,
+              actes?.[0]
+            );
           setReponseSansDelivranceCS({
             contenu: newReponseSansDelivranceCSMariage,
             fichier: NOM_DOCUMENT_REFUS_MARIAGE
@@ -129,9 +133,10 @@ export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> 
         break;
       case INDEX_ACTION_RESSORTISSANT_FRANCAIS:
         setOperationEnCours(true);
-        const newReponseSansDelivranceCSFrancais = await createReponseSansDelivranceCSPourCompositionApiFrancais(
-          props.requete
-        );
+        const newReponseSansDelivranceCSFrancais =
+          await createReponseSansDelivranceCSPourCompositionApiFrancais(
+            props.requete
+          );
         setReponseSansDelivranceCS({
           contenu: newReponseSansDelivranceCSFrancais,
           fichier: NOM_DOCUMENT_REFUS_FRANCAIS
@@ -145,7 +150,7 @@ export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> 
 
   const resetDoubleSubmit = () => {
     listeActions.forEach(el => {
-      DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+      DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
     });
   };
 

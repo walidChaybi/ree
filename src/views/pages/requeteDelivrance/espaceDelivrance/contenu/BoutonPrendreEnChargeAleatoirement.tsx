@@ -24,12 +24,8 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
   const [paramsDelivrance, setParamsDelivrance] = useState<
     CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
-  const requeteAleatoireResultat:
-    | IRequeteAleatoireResultat
-    | undefined = useGetRequeteAleatoire(
-    TypeRequete.DELIVRANCE,
-    prendreEnCharge
-  );
+  const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined =
+    useGetRequeteAleatoire(TypeRequete.DELIVRANCE, prendreEnCharge);
 
   useEffect(() => {
     if (requeteAleatoireResultat) {
@@ -63,7 +59,7 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
     <BoutonOperationEnCours
       onClick={onClickPrendreEnCharge}
       estDesactive={props.disabled}
-      visible={operationEnCours}
+      toileDeFondVisible={operationEnCours}
     >
       {getLibelle("Prendre en charge requête suivante")}
     </BoutonOperationEnCours>

@@ -4,6 +4,7 @@ import { officierHabiliterPourLeDroit } from "../../../../../model/agent/IOffici
 import { Droit } from "../../../../../model/Droit";
 import { getLibelle } from "../../../util/Utils";
 import { FormikComponentProps } from "../../../widget/formulaire/utils/FormUtil";
+import { Bouton } from "../../boutonAntiDoubleSubmit/Bouton";
 import "./scss/ReinitialiserValiderBoutons.scss";
 interface ReinitialiserValiderBoutonsProps {
   onClickReInitialiser?: any;
@@ -18,15 +19,15 @@ export const ReinitialiserValiderBoutons: React.FC<
 > = props => {
   return (
     <div className="ReinitialiserValiderBoutons">
-      <button
+      <Bouton
         type="reset"
         onClick={props.onClickReInitialiser}
         disabled={props.reInitialiserDisabled}
         aria-label="Réinitialiser"
       >
         {getLibelle("Réinitialiser")}
-      </button>
-      <button
+      </Bouton>
+      <Bouton
         type="button"
         onClick={props.onClickValider}
         disabled={
@@ -35,7 +36,7 @@ export const ReinitialiserValiderBoutons: React.FC<
         aria-label="Valider"
       >
         {getLibelle("Valider")}
-      </button>
+      </Bouton>
     </div>
   );
 };

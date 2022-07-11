@@ -6,6 +6,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import React from "react";
 import { IActionOption } from "../../../../model/requete/IActionOption";
+import { Bouton } from "../../composant/boutonAntiDoubleSubmit/Bouton";
 import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
 import "./scss/MenuAction.scss";
 
@@ -49,10 +50,10 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
 
   return (
     <div title={props.infoBulle} className={`MenuAction ${props.className}`}>
-      <button onClick={handleClick}>
+      <Bouton onClick={handleClick}>
         <span>{props.titre}</span>
         {props.afficheChevron && afficheFleche()}
-      </button>
+      </Bouton>
       <Menu
         className="Menu"
         anchorEl={anchorEl}
@@ -63,7 +64,7 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
         TransitionProps={{
           onEnter: () => {
             props.listeActions.forEach(el => {
-              DoubleSubmitUtil.remetPossibiliteDoubleSubmit(el.ref?.current);
+              DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
             });
           }
         }}
@@ -85,7 +86,7 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
           <MenuItem
             ref={el.ref}
             onClick={event => {
-              DoubleSubmitUtil.eviteDoubleSubmit(el.ref?.current);
+              DoubleSubmitUtil.desactiveOnClick(el.ref?.current);
               handleClose();
               props.onSelect(el.value);
             }}

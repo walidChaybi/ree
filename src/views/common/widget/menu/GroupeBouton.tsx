@@ -25,7 +25,7 @@ export const GroupeBouton: React.FC<IGroupeBoutonProps> = props => {
                 el.eviterAntiDoubleClic === undefined ||
                 el.eviterAntiDoubleClic === false
               ) {
-                DoubleSubmitUtil.eviteDoubleSubmit(el.ref?.current);
+                DoubleSubmitUtil.desactiveOnClick(el.ref?.current);
               }
               props.onSelect(el.value);
             }}

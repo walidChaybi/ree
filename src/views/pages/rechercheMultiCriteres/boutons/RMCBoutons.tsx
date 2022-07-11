@@ -1,5 +1,6 @@
 import { connect } from "formik";
 import React from "react";
+import { Bouton } from "../../../common/composant/boutonAntiDoubleSubmit/Bouton";
 import { getLibelle } from "../../../common/util/Utils";
 import { FormikComponentProps } from "../../../common/widget/formulaire/utils/FormUtil";
 import RMCBoutonRappelCriteres, {
@@ -36,13 +37,13 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
           {getLibelle("Réinitialiser les critères")}
         </button>
 
-        <button
+        <Bouton
           disabled={!props.formik.isValid || !props.formik.dirty}
           type="submit"
           onClick={closePopIn}
         >
           {getLibelle("Rechercher")}
-        </button>
+        </Bouton>
       </div>
     </>
   );
