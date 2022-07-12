@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Droit } from "../../../../../../model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "../../../../../../model/agent/IOfficier";
-import { Droit } from "../../../../../../model/Droit";
 import { SousTypeDelivrance } from "../../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../../model/requete/enum/StatutRequete";
 import { DocumentReponse } from "../../../../../../model/requete/IDocumentReponse";

@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import mockConnectedUser from "../../../../mock/data/connectedUser.json";
+import { Droit } from "../../../../model/agent/enum/Droit";
 import { IOfficier } from "../../../../model/agent/IOfficier";
-import { Droit } from "../../../../model/Droit";
 import { IHabiliationDescription } from "../../../../views/common/util/habilitation/habilitationsDescription";
 import WithHabilitation from "../../../../views/common/util/habilitation/WithHabilitation";
 import { storeRece } from "../../../../views/common/util/storeRece";

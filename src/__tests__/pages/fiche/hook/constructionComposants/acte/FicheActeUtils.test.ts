@@ -3,14 +3,15 @@ import {
   userDroitConsulterPerimetreMEAE,
   userDroitConsulterPerimetreTUNIS
 } from "../../../../../../mock/data/connectedUserAvecDroit";
+import { Droit } from "../../../../../../model/agent/enum/Droit";
+import { Perimetre } from "../../../../../../model/agent/enum/Perimetre";
+import { IDroit, IProfil } from "../../../../../../model/agent/Habilitation";
 import { IOfficier } from "../../../../../../model/agent/IOfficier";
-import { Droit } from "../../../../../../model/Droit";
+import { IPerimetre } from "../../../../../../model/agent/IPerimetre";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { IRegistre } from "../../../../../../model/etatcivil/acte/IRegistre";
 import { ITypeRegistre } from "../../../../../../model/etatcivil/acte/ITypeRegistre";
 import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
-import { IDroit, IProfil } from "../../../../../../model/Habilitation";
-import { IPerimetre, PERIMETRE_MEAE } from "../../../../../../model/IPerimetre";
 import { storeRece } from "../../../../../../views/common/util/storeRece";
 import {
   getPanelsActe,
@@ -104,7 +105,7 @@ const perimetreTUNIS: IPerimetre = {
 } as IPerimetre;
 
 const perimetreMEAE: IPerimetre = {
-  nom: PERIMETRE_MEAE,
+  nom: Perimetre.MEAE,
   listeIdTypeRegistre: ["meae"]
 } as IPerimetre;
 

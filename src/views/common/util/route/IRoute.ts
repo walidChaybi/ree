@@ -1,6 +1,11 @@
 import { RouteComponentProps } from "react-router";
-import { Droit } from "../../../../model/Droit";
+import { Droit } from "../../../../model/agent/enum/Droit";
+import { Perimetre } from "../../../../model/agent/enum/Perimetre";
 
+export interface IDroitPerimetre {
+  droit: Droit;
+  perimetres: Perimetre[];
+}
 export interface IRoute {
   component?: any;
   url: string;
@@ -10,4 +15,5 @@ export interface IRoute {
   uniquementLesdroits?: Droit[];
   canAccess?: boolean;
   libelle: string;
+  droitPerimetres?: IDroitPerimetre;
 }

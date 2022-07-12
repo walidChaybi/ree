@@ -1,6 +1,6 @@
-import { IDroit } from "../../model/Habilitation";
-import { INomenclatureAgentApi } from "../../model/INomenclatureAgentApi";
-import { IPerimetre } from "../../model/IPerimetre";
+import { IDroit } from "../../model/agent/Habilitation";
+import { INomenclatureAgentApi } from "../../model/agent/INomenclatureAgentApi";
+import { IPerimetre } from "../../model/agent/IPerimetre";
 
 export const MockMappedHabilitation = {
   habilitations: [

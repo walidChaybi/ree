@@ -1,4 +1,3 @@
-export const PERIMETRE_MEAE = "MEAE";
 export interface IPerimetre {
   idPerimetre: string;
   nom: string;

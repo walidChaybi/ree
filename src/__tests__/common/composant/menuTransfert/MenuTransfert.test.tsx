@@ -11,11 +11,15 @@ import {
 import { requeteInformation } from "../../../../mock/data/requeteInformation";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { Droit } from "../../../../model/agent/enum/Droit";
 import { TypeEntite } from "../../../../model/agent/enum/TypeEntite";
+import {
+  IDroit,
+  IHabilitation,
+  IProfil
+} from "../../../../model/agent/Habilitation";
 import { IEntite } from "../../../../model/agent/IEntiteRattachement";
 import { IUtilisateur } from "../../../../model/agent/IUtilisateur";
-import { Droit } from "../../../../model/Droit";
-import { IDroit, IHabilitation, IProfil } from "../../../../model/Habilitation";
 import { MenuTransfert } from "../../../../views/common/composant/menuTransfert/MenuTransfert";
 import { FeatureFlag } from "../../../../views/common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../../../views/common/util/featureFlag/gestionnaireFeatureFlag";

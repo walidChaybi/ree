@@ -1,7 +1,7 @@
 import { connect } from "formik";
 import React from "react";
+import { Droit } from "../../../../../model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "../../../../../model/agent/IOfficier";
-import { Droit } from "../../../../../model/Droit";
 import { getLibelle } from "../../../util/Utils";
 import { FormikComponentProps } from "../../../widget/formulaire/utils/FormUtil";
 import { Bouton } from "../../boutonAntiDoubleSubmit/Bouton";

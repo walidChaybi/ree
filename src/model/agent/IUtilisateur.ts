@@ -1,8 +1,8 @@
-import { Droit } from "../Droit";
-import { IDroit, IHabilitation, IProfil } from "../Habilitation";
-import { IPerimetre } from "../IPerimetre";
+import { Droit } from "./enum/Droit";
+import { IDroit, IHabilitation, IProfil } from "./Habilitation";
 import { IEntite } from "./IEntiteRattachement";
 import { IOfficier } from "./IOfficier";
+import { IPerimetre } from "./IPerimetre";
 
 export interface IUtilisateur {
   actif?: boolean;

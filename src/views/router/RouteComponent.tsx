@@ -1,12 +1,13 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { Droit } from "../../model/agent/enum/Droit";
 import {
   estOfficierHabiliterPourSeulementLesDroits,
-  estOfficierHabiliterPourUnDesDroits
+  estOfficierHabiliterPourUnDesDroits,
+  officierALeDroitSurUnDesPerimetres
 } from "../../model/agent/IOfficier";
-import { Droit } from "../../model/Droit";
 import messageManager from "../common/util/messageManager";
-import { IRoute } from "../common/util/route/IRoute";
+import { IDroitPerimetre, IRoute } from "../common/util/route/IRoute";
 import { storeRece } from "../common/util/storeRece";
 import { getLibelle } from "../common/util/Utils";
 import { routesRece } from "./ReceRoutes";
@@ -25,7 +26,8 @@ export const RouterComponent: React.FC = () => {
               if (
                 route.canAccess === false ||
                 !estAutorise(route.droits) ||
-                !estAutoriseDroitsStricts(route.uniquementLesdroits)
+                !estAutoriseDroitsStricts(route.uniquementLesdroits) ||
+                !estAutoriseDroitPerimetres(route.droitPerimetres)
               ) {
                 messageManager.showWarningAndClose(
                   getLibelle(
@@ -33,11 +35,8 @@ export const RouterComponent: React.FC = () => {
                   )
                 );
                 return <Redirect to={URL_ACCUEIL} />;
-              } else {
-                if (route.render) {
-                  return route.render(props);
-                }
               }
+
               return <route.component {...route.props} />;
             }}
           ></Route>
@@ -70,5 +69,16 @@ function estAutoriseDroitsStricts(droits: Droit[] | undefined) {
     !droits ||
     (storeRece.utilisateurCourant &&
       estOfficierHabiliterPourSeulementLesDroits(droits))
+  );
+}
+
+function estAutoriseDroitPerimetres(droitPerimetres?: IDroitPerimetre) {
+  return (
+    !droitPerimetres ||
+    (storeRece.utilisateurCourant != null &&
+      officierALeDroitSurUnDesPerimetres(
+        droitPerimetres.droit,
+        droitPerimetres.perimetres
+      ))
   );
 }

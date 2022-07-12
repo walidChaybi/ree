@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Droit } from "../../../../../model/agent/enum/Droit";
+import { Perimetre } from "../../../../../model/agent/enum/Perimetre";
 import { officierALeDroitSurLePerimetre } from "../../../../../model/agent/IOfficier";
-import { Droit } from "../../../../../model/Droit";
 import { StatutFiche } from "../../../../../model/etatcivil/enum/StatutFiche";
 import {
   FicheUtil,
@@ -97,9 +98,8 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   );
 
   // Plage de fiche courante dans le tableau de résultat (suite à une RMC Inscription)
-  const [datasFichesCourantes, setDatasFichesCourante] = useState<
-    IDataFicheProps[]
-  >();
+  const [datasFichesCourantes, setDatasFichesCourante] =
+    useState<IDataFicheProps[]>();
 
   const closeFenetre = (idInscription: string, idx: number) => {
     const nouvelEtatFenetres = supprimeElement(
@@ -111,7 +111,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   };
 
   const onClickOnLine = (idInscription: string, data: any, index: number) => {
-    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, "MEAE")) {
+    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.MEAE)) {
       const etatFenetreTrouve = etatFenetres.find(
         etatFenetre => etatFenetre.idInscription === idInscription
       );

@@ -8,17 +8,20 @@ import {
   userDroitConsulterPerimetreTUNIS,
   userDroitnonCOMEDEC
 } from "../../mock/data/connectedUserAvecDroit";
+import { Droit } from "../../model/agent/enum/Droit";
+import { Perimetre } from "../../model/agent/enum/Perimetre";
 import {
   appartientAMonServiceOuServicesMeresOuServicesFilles,
   contientEntiteMere,
   estOfficierHabiliterPourTousLesDroits,
   estOfficierHabiliterPourUnDesDroits,
   IOfficier,
+  officierALeDroitSurLePerimetre,
+  officierALeDroitSurUnDesPerimetres,
   officierAutoriserSurLeTypeRegistre,
   officierHabiliterUniquementPourLeDroit
 } from "../../model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "../../model/agent/IUtilisateur";
-import { Droit } from "../../model/Droit";
 import { storeRece } from "../../views/common/util/storeRece";
 import { mappingOfficier } from "../../views/core/login/LoginHook";
 
@@ -136,4 +139,35 @@ test("Attendu: estOfficierHabiliterPourUnDesDroits fonctionne correctement", () 
   expect(
     estOfficierHabiliterPourUnDesDroits([Droit.METTRE_A_JOUR_ACTE])
   ).toBeFalsy();
+});
+
+test("Attendu: officierALeDroitSurUnDesPerimetres/officierALeDroitSurLePerimetre fonctionnent correctement", () => {
+  storeRece.utilisateurCourant = mappingOfficier(
+    resultatHeaderUtilistateurLaurenceBourdeau,
+    resultatRequeteUtilistateurLaurenceBourdeau.data
+  );
+  storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
+    resultatRequeteUtilistateurLaurenceBourdeau.data.habilitations
+  );
+
+  expect(
+    officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [
+      Perimetre.MEAE
+    ])
+  ).toBeTruthy();
+
+  expect(
+    officierALeDroitSurLePerimetre(Droit.CREER_ACTE_ETABLI, Perimetre.ETAX)
+  ).toBeFalsy();
+
+  expect(
+    officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [
+      Perimetre.MEAE,
+      Perimetre.ETAX
+    ])
+  ).toBeTruthy();
+
+  expect(
+    officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [])
+  ).toBeTruthy();
 });

@@ -1,10 +1,10 @@
 import React from "react";
+import { Droit } from "../../../../../../model/agent/enum/Droit";
 import {
   officierAutoriserSurLeTypeRegistre,
   officierAutoriserSurLeTypeRegistreOuDroitMEAE,
   officierHabiliterPourLeDroit
 } from "../../../../../../model/agent/IOfficier";
-import { Droit } from "../../../../../../model/Droit";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { TypeVisibiliteArchiviste } from "../../../../../../model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { SectionPanelProps } from "../../../../../common/widget/section/SectionPanel";

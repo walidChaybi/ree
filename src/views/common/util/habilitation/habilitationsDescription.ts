@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { Droit } from "../../../../model/Droit";
+import { Droit } from "../../../../model/agent/enum/Droit";
 import { FeatureFlag } from "../featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../featureFlag/gestionnaireFeatureFlag";
 

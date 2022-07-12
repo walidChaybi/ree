@@ -1,8 +1,8 @@
+import { Droit } from "../../../../model/agent/enum/Droit";
 import {
   IUtilisateur,
   utilisateurADroit
 } from "../../../../model/agent/IUtilisateur";
-import { Droit } from "../../../../model/Droit";
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "../../../../model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";

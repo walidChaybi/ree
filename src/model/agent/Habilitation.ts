@@ -1,4 +1,4 @@
-import { Droit } from "./Droit";
+import { Droit } from "./enum/Droit";
 import { INomenclatureAgentApi } from "./INomenclatureAgentApi";
 import { IPerimetre } from "./IPerimetre";
 

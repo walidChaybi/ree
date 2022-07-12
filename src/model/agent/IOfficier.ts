@@ -1,7 +1,8 @@
 import { storeRece } from "../../views/common/util/storeRece";
-import { Droit } from "../Droit";
-import { PERIMETRE_MEAE } from "../IPerimetre";
+import { estTableauNonVide } from "../../views/common/util/Utils";
 import { Provenance } from "../requete/enum/Provenance";
+import { Droit } from "./enum/Droit";
+import { Perimetre, PerimetreEnum } from "./enum/Perimetre";
 import { IEntite } from "./IEntiteRattachement";
 import { IUtilisateur, utilisateurADroit } from "./IUtilisateur";
 
@@ -101,26 +102,40 @@ export function officierAutoriserSurLeTypeRegistreOuDroitMEAE(
 ) {
   return (
     officierAutoriserSurLeTypeRegistre(idTypeRegistre) ||
-    officierALeDroitSurLePerimetre(Droit.CONSULTER, PERIMETRE_MEAE)
+    officierALeDroitSurUnDesPerimetres(Droit.CONSULTER, [Perimetre.MEAE])
   );
 }
 
 export function officierALeDroitSurLePerimetre(
   droit: Droit,
-  refPerimetre: string
+  refPerimetre: Perimetre
+) {
+  return officierALeDroitSurUnDesPerimetres(droit, [refPerimetre]);
+}
+
+export function officierALeDroitSurUnDesPerimetres(
+  droit: Droit,
+  refPerimetres: Perimetre[]
 ) {
   const officier = storeRece.utilisateurCourant;
   let res = false;
 
-  officier?.habilitations?.forEach(h => {
-    if (
-      h.perimetre &&
-      h.profil.droits.find(d => d.nom === droit) &&
-      h.perimetre.nom === refPerimetre
-    ) {
-      res = true;
-    }
-  });
+  if (estTableauNonVide(refPerimetres)) {
+    officier?.habilitations?.forEach(h => {
+      if (
+        h.perimetre &&
+        h.profil.droits.find(d => d.nom === droit) &&
+        refPerimetres.find(
+          refPerimetre =>
+            PerimetreEnum.getEnum(h.perimetre.nom) === refPerimetre
+        )
+      ) {
+        res = true;
+      }
+    });
+  } else {
+    res = true;
+  }
 
   return res;
 }

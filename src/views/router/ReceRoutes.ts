@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 
-import { Droit } from "../../model/Droit";
+import { Droit } from "../../model/agent/enum/Droit";
+import { Perimetre } from "../../model/agent/enum/Perimetre";
 import { FeatureFlag } from "../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../common/util/featureFlag/gestionnaireFeatureFlag";
 import { droitsSaufConsulterArchives } from "../common/util/habilitation/habilitationsDescription";
@@ -289,7 +290,10 @@ export const routesRece: IRoute[] = [
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ID,
     component: ApercuReqCreationPage,
-    droits: [Droit.CREER_ACTE_ETABLI],
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_ETABLI,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   //////////////////////////////////////////////
@@ -349,7 +353,10 @@ export const routesRece: IRoute[] = [
   {
     url: URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
     component: ApercuReqCreationPage,
-    droits: [Droit.CREER_ACTE_ETABLI],
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_ETABLI,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   },
   ////////////////////////////////////////////////////////
@@ -369,7 +376,10 @@ export const routesRece: IRoute[] = [
   {
     url: URL_REQUETES_CREATION_SERVICE_APERCU_REQUETE_ID,
     component: ApercuReqCreationPage,
-    droits: [Droit.CREER_ACTE_ETABLI],
+    droitPerimetres: {
+      droit: Droit.CREER_ACTE_ETABLI,
+      perimetres: [Perimetre.ETAX, Perimetre.MEAE]
+    },
     libelle: getLibelle(LIBELLE_APERCU_REQUETE)
   }
 ];
