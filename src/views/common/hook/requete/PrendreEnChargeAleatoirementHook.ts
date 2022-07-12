@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import { HTTP_NOT_FOUND } from "../../../../api/ApiManager";
-import { getRequeteAleatoire } from "../../../../api/appels/requeteApi";
+import {
+  getRequeteAleatoire,
+  getRequetePlusAncienne
+} from "../../../../api/appels/requeteApi";
 import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
-import {
-  IRequeteTableauDelivrance,
-  mappingUneRequeteTableauDelivrance
-} from "../../../../model/requete/IRequeteTableauDelivrance";
-import {
-  IRequeteTableauInformation,
-  mappingUneRequeteTableauInformation
-} from "../../../../model/requete/IRequeteTableauInformation";
+import { TRequeteTableau } from "../../../../model/requete/IRequeteTableau";
+import { mappingUneRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
+import { mappingUneRequeteTableauInformation } from "../../../../model/requete/IRequeteTableauInformation";
+import { mappingUneRequeteTableauCreation } from "../../../pages/requeteCreation/hook/DonneesRequeteCreationApiHook";
 import { logError } from "../../util/LogManager";
 
 export interface IRequeteAleatoireResultat {
-  requeteDelivrance?: IRequeteTableauDelivrance;
-  requeteInformation?: IRequeteTableauInformation;
+  requete: TRequeteTableau;
 }
 
 export function useGetRequeteAleatoire(
@@ -28,28 +26,46 @@ export function useGetRequeteAleatoire(
     async function fetchRequeteAleatoire() {
       try {
         if (prendreEnCharge) {
-          if (type === TypeRequete.DELIVRANCE) {
-            const resultat = await getRequeteAleatoire(
-              TypeRequete.DELIVRANCE.nom
-            );
-            const requeteResultatMappee = mappingUneRequeteTableauDelivrance(
-              resultat.body.data,
-              false
-            );
-            setRequeteAleatoireResultat({
-              requeteDelivrance: requeteResultatMappee
-            });
-          } else if (type === TypeRequete.INFORMATION) {
-            const resultat = await getRequeteAleatoire(
-              TypeRequete.INFORMATION.nom
-            );
-            const requeteResultatMappee = mappingUneRequeteTableauInformation(
-              resultat.body.data,
-              false
-            );
-            setRequeteAleatoireResultat({
-              requeteInformation: requeteResultatMappee
-            });
+          switch (type) {
+            case TypeRequete.DELIVRANCE:
+              const resultatDel = await getRequeteAleatoire(
+                TypeRequete.DELIVRANCE.nom
+              );
+              const requeteResultatDelMappee =
+                mappingUneRequeteTableauDelivrance(
+                  resultatDel.body.data,
+                  false
+                );
+              setRequeteAleatoireResultat({
+                requete: requeteResultatDelMappee
+              });
+              break;
+            case TypeRequete.INFORMATION:
+              const resultatInfo = await getRequeteAleatoire(
+                TypeRequete.INFORMATION.nom
+              );
+              const requeteResultatInfoMappee =
+                mappingUneRequeteTableauInformation(
+                  resultatInfo.body.data,
+                  false
+                );
+              setRequeteAleatoireResultat({
+                requete: requeteResultatInfoMappee
+              });
+              break;
+            case TypeRequete.CREATION:
+              const resultatCreation = await getRequetePlusAncienne(
+                TypeRequete.CREATION.nom
+              );
+              const requeteResultatCreationMappee =
+                mappingUneRequeteTableauCreation(
+                  resultatCreation.body.data,
+                  false
+                );
+              setRequeteAleatoireResultat({
+                requete: requeteResultatCreationMappee
+              });
+              break;
           }
         }
       } catch (error) {

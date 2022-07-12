@@ -8,7 +8,7 @@ import { ReponseMesRequetesInformation } from "../../../../mock/data/EspaceInfor
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
 import { getUrlWithParam } from "../../../../views/common/util/route/routeUtil";
-import BoutonPrendreEnChargeAleatoirementRequeteInformation from "../../../../views/pages/requeteInformation/espaceInformation/BoutonPrendreEnChargeAleatoirementRequeteInformation";
+import { BoutonPrendreEnChargeAleatoirementInformation } from "../../../../views/pages/requeteInformation/espaceInformation/BoutonPrendreEnChargeAleatoirementInformation";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_INFORMATION
@@ -24,7 +24,7 @@ test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l
   history.push(URL_MES_REQUETES_INFORMATION);
   render(
     <Router history={history}>
-      <BoutonPrendreEnChargeAleatoirementRequeteInformation />
+      <BoutonPrendreEnChargeAleatoirementInformation />
     </Router>
   );
 

@@ -18,6 +18,7 @@ export const URL_REQUETES = "/requetes";
 export const URL_MES_REQUETES_DELIVRANCE = "/requetes/mesrequetes";
 export const URL_MES_REQUETES_INFO = "/requetes/information/mesrequetes";
 export const URL_MES_REQUETES_CREATION = "/requetes/creation/mesrequetes";
+export const URL_CREATION = "/requetes/creation/";
 export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_INFORMATION_STATUT = "/requetes/information/statut";
 export const URL_REQUETES_COUNT = "/requetes/count";
@@ -40,6 +41,7 @@ export const URL_TRANSFERT = "/requetes/action/transfert";
 export const URL_OBSERVATION = "/requetes/observation";
 export const URL_IGNORER = "/requetes/action/ignorer";
 export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
+export const URL_REQUETE_PLUS_ANCIENNE = "/requetes/requeteplusancienne";
 export const URL_OPTION_COURRIER = "/optioncourrier";
 export const URL_REPONSE_REQ_INFO = "/reponse";
 export const URL_NB_REQ_INFO = "/requetes/information/count";
@@ -467,6 +469,16 @@ export function getRequeteAleatoire(type: string) {
   });
 }
 
+export function getRequetePlusAncienne(type: string) {
+  return api.fetch({
+    method: HttpMethod.GET,
+    uri: URL_REQUETE_PLUS_ANCIENNE,
+    parameters: {
+      type
+    }
+  });
+}
+
 export async function getOptionsCourriers(): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
@@ -500,6 +512,19 @@ export async function updateStatutRequeteInformation(
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_INFORMATION_STATUT}/${idRequete}`,
+    parameters: {
+      statut: statutDemande.nom
+    }
+  });
+}
+
+export async function updateStatutRequeteCreation(
+  idRequete: string,
+  statutDemande: StatutRequete
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.PATCH,
+    uri: `${URL_CREATION}${idRequete}/statut`,
     parameters: {
       statut: statutDemande.nom
     }

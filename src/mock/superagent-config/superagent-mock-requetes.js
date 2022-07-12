@@ -614,7 +614,9 @@ export const configRequetes = [
           match[1] ===
             "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
           match[1] ===
-            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Brouillon&statutRequete=BROUILLON") &&
+            "/requetes/action?idRequete=1072bc37-f889-4365-8f75-912166b767dd&libelleAction=Brouillon&statutRequete=BROUILLON" ||
+          match[1] ===
+            "/requetes/action?idRequete=4578e56c-421c-4e6a-b587-a238a665daf8&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE") &&
         context.method === "post"
       ) {
         return { data: "123456789" };
@@ -629,6 +631,11 @@ export const configRequetes = [
       if (match[1] === "/requetes/requetealeatoire?type=INFORMATION") {
         return {
           data: ReponseAppelMesRequetes[2]
+        };
+      }
+      if (match[1] === "/requetes/requetealeatoire?type=CREATION") {
+        return {
+          data: reponseMesRequeteCreation
         };
       }
 

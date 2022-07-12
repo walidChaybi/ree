@@ -2,11 +2,13 @@ import React from "react";
 import { IQueryParametersPourRequetes } from "../../../../api/appels/requeteApi";
 import { IOfficier } from "../../../../model/agent/IOfficier";
 import { IOngletProps } from "../../../../model/IOnglet";
+import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import { getLibelle } from "../../../common/util/Utils";
 import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { OfficierContext } from "../../../core/contexts/OfficierContext";
 import { URL_MES_REQUETES_CREATION } from "../../../router/ReceUrls";
+import BoutonPrendreEnChargePlusAncienneCreation from "./BoutonPrendreEnChargePlusAncienneCreation";
 import { StatutsRequetesCreation } from "./EspaceCreationParams";
 import { MesRequetesCreationPage } from "./MesRequetesCreation";
 import "./scss/EspaceCreationPage.scss";
@@ -16,7 +18,11 @@ interface LocalProps {
 }
 
 const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => (
-  <div className="BlocBoutons"></div>
+  <div className="BlocBoutons">
+    <BoutonPrendreEnChargePlusAncienneCreation
+      typeRequete={TypeRequete.CREATION}
+    />
+  </div>
 );
 
 const parametresCreation = {

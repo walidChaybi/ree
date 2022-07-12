@@ -34,7 +34,8 @@ export type NomComposant =
   | "TabPanelRequetesDelivranceService"
   | "TabPanelRequetesInfoService"
   | "BoutonPrendreEnChargeAleatoirement"
-  | "BoutonPrendreEnChargeAleatoirementRequeteInformation";
+  | "BoutonPrendreEnChargeAleatoirementInformation"
+  | "BoutonPrendreEnChargePlusAncienneCreation";
 
 export type NomComposantOuFonction = NomComposant | NomFonction;
 
@@ -147,5 +148,20 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
+  },
+  {
+    nomComposant: "BoutonPrendreEnChargeAleatoirementInformation",
+    unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
+    comportementSiNonAutorise: { disabled: true },
+    visiblePourLesDroits: droitsSaufConsulterArchives
+  },
+  {
+    nomComposant: "BoutonPrendreEnChargePlusAncienneCreation",
+    unDesDroits: [
+      Droit.CREER_ACTE_DRESSE,
+      Droit.CREER_ACTE_TRANSCRIT,
+      Droit.CREER_ACTE_ETABLI
+    ],
+    comportementSiNonAutorise: { disabled: true }
   }
 ];

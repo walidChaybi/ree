@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { IOfficier } from "../../../../model/agent/IOfficier";
 import { IOngletProps } from "../../../../model/IOnglet";
+import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import {
   INavigationApercuRMCAutoParams,
@@ -36,7 +37,9 @@ const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => {
       ) && (
         <div className="BlocBoutons">
           <MenuSaisirRequete indexTabPanel={selectedTabState} />
-          <BoutonPrendreEnChargeAleatoirement />
+          <BoutonPrendreEnChargeAleatoirement
+            typeRequete={TypeRequete.DELIVRANCE}
+          />
         </div>
       )}
     </>

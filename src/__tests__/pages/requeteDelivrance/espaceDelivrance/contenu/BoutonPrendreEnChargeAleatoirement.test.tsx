@@ -1,7 +1,12 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 import request from "superagent";
 import { ReponseAppelMesRequetes } from "../../../../../mock/data/EspaceDelivrance";

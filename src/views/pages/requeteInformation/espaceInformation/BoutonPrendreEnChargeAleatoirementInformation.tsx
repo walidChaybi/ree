@@ -17,13 +17,13 @@ import { getLibelle } from "../../../common/util/Utils";
 import { BoutonOperationEnCours } from "../../../common/widget/attente/BoutonOperationEnCours";
 import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID } from "../../../router/ReceUrls";
 
-export const BoutonPrendreEnChargeAleatoirementRequeteInformation: React.FC = (
+export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
   props: any
 ) => {
   const history = useHistory();
 
-  const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
   const [paramsInformation, setParamsInformation] = useState<
     CreationActionMiseAjourStatutHookParams | undefined
   >();
@@ -32,22 +32,22 @@ export const BoutonPrendreEnChargeAleatoirementRequeteInformation: React.FC = (
 
   useEffect(() => {
     if (requeteAleatoireResultat) {
-      if (requeteAleatoireResultat.requeteInformation) {
+      if (requeteAleatoireResultat.requete) {
         setParamsInformation({
-          requete: requeteAleatoireResultat.requeteInformation,
+          requete: requeteAleatoireResultat.requete,
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
           callback: redirectApercuRequeteInfo
         });
-      } else if (!requeteAleatoireResultat.requeteInformation) {
+      } else if (!requeteAleatoireResultat.requete) {
         messageManager.showInfoAndClose(
           getLibelle(
             "Il n'existe plus de requête disponibles à la prise en charge"
           )
         );
       }
-      setPrendreEnCharge(false);
       setOperationEnCours(false);
+      setPrendreEnCharge(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requeteAleatoireResultat, history]);
@@ -55,11 +55,11 @@ export const BoutonPrendreEnChargeAleatoirementRequeteInformation: React.FC = (
   useCreationActionMiseAjourStatut(paramsInformation);
 
   const redirectApercuRequeteInfo = useCallback(() => {
-    if (requeteAleatoireResultat?.requeteInformation) {
+    if (requeteAleatoireResultat?.requete) {
       history.push(
         getUrlWithParam(
           URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-          requeteAleatoireResultat.requeteInformation.idRequete
+          requeteAleatoireResultat.requete.idRequete
         )
       );
     }
@@ -82,6 +82,6 @@ export const BoutonPrendreEnChargeAleatoirementRequeteInformation: React.FC = (
 };
 
 export default WithHabilitation(
-  BoutonPrendreEnChargeAleatoirementRequeteInformation,
-  "BoutonPrendreEnChargeAleatoirementRequeteInformation"
+  BoutonPrendreEnChargeAleatoirementInformation,
+  "BoutonPrendreEnChargeAleatoirementInformation"
 );

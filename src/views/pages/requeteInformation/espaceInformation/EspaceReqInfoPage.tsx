@@ -10,7 +10,7 @@ import {
   URL_MES_REQUETES_INFORMATION,
   URL_REQUETES_INFORMATION_SERVICE
 } from "../../../router/ReceUrls";
-import { BoutonPrendreEnChargeAleatoirementRequeteInformation } from "./BoutonPrendreEnChargeAleatoirementRequeteInformation";
+import { BoutonPrendreEnChargeAleatoirementInformation } from "./BoutonPrendreEnChargeAleatoirementInformation";
 import { StatutsRequetesInformation } from "./EspaceReqInfoParams";
 import { MesRequetesInformationPage } from "./MesRequetesInformation";
 import { ReqInfoServicePage } from "./ReqInfoServicePage";
@@ -71,7 +71,7 @@ const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
                     elementEntreTitreEtContenu={
                       <div className="EspaceInformationPage">
                         <div className="BoutonPrendreEnChargeAleatoirementRequeteInformation">
-                          <BoutonPrendreEnChargeAleatoirementRequeteInformation />
+                          <BoutonPrendreEnChargeAleatoirementInformation />
                         </div>
                       </div>
                     }

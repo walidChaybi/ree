@@ -29,14 +29,14 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
 
   useEffect(() => {
     if (requeteAleatoireResultat) {
-      if (requeteAleatoireResultat.requeteDelivrance) {
+      if (requeteAleatoireResultat.requete) {
         setParamsDelivrance({
-          requete: requeteAleatoireResultat.requeteDelivrance,
+          requete: requeteAleatoireResultat.requete,
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
           urlCourante: receUrl.getUrlCourante(history)
         });
-      } else if (!requeteAleatoireResultat.requeteDelivrance) {
+      } else if (!requeteAleatoireResultat.requete) {
         messageManager.showInfoAndClose(
           getLibelle(
             "Il n'existe plus de requête disponibles à la prise en charge"

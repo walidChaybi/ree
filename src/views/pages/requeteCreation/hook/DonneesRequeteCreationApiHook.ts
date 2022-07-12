@@ -71,7 +71,7 @@ function mappingRequetesTableauCreation(
   });
 }
 
-function mappingUneRequeteTableauCreation(
+export function mappingUneRequeteTableauCreation(
   requete: any,
   mappingSupplementaire: boolean
 ): IRequeteTableauCreation {

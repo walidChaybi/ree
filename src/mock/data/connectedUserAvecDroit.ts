@@ -138,6 +138,55 @@ export const userDroitConsulterPerimetreMEAE: IOfficier = {
   }
 };
 
+export const userDroitCreerActeEtabliPerimetreMEAE: IOfficier = {
+  idSSO: "idSSOConnectedUser",
+  idUtilisateur: "idUtilisateurConnectedUser",
+  nom: "nomConnectedUser",
+  prenom: "prenomConnectedUser",
+  trigramme: "trigrammeConnectedUser",
+  mail: "mailConnectedUser",
+  profils: ["profilConnectedUser"],
+  telephone: "telephoneConnectedUser",
+  section: "sectionConnectedUser",
+  bureau: "bureauConnectedUser",
+  departement: "departementConnectedUser",
+  sectionConsulaire: "sectionConsulaireConnectedUser",
+  service: "serviceConnectedUser",
+  poste: "posteConnectedUser",
+  ministere: "ministereConnectedUser",
+  habilitations: [
+    {
+      idHabilitation: "h12345",
+      profil: {
+        idProfil: "p12345",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
+        droits: [{ idDroit: "d12345", nom: Droit.CREER_ACTE_ETABLI }]
+      },
+      perimetre: {
+        idPerimetre: "peri12345",
+        nom: "MEAE",
+        description: "peirDes",
+        estActif: true,
+        listePays: ["periPays"],
+        listeIdTypeRegistre: []
+      }
+    }
+  ],
+  entite: {
+    code: "E 1/3",
+    idEntite: "6737e047-16cc-4731-9a2e-d2e228f7d75f",
+    libelleEntite: "Exploitation 1 Section 3",
+    type: TypeEntite.SECTION,
+    utilisateur: null
+  }
+};
+
 export const userDroitConsulterPerimetreTUNIS: IOfficier = {
   idSSO: "idSSOConnectedUser",
   idUtilisateur: "idUtilisateurConnectedUser",

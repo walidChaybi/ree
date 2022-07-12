@@ -6,15 +6,15 @@ import { ReponseAppelMesRequetes } from "../../../../../mock/data/EspaceDelivran
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import {
-    gereErreur,
-    useGetRequeteAleatoire
+  gereErreur,
+  useGetRequeteAleatoire
 } from "../../../../../views/common/hook/requete/PrendreEnChargeAleatoirementHook";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsumerUseGetRequeteDelivranceAleatoire: React.FC = () => {
   const res = useGetRequeteAleatoire(TypeRequete.DELIVRANCE, true);
 
-  return <div>{res?.requeteDelivrance?.idRequete}</div>;
+  return <div>{res?.requete?.idRequete}</div>;
 };
 
 test("Attendu: PrendreEnChargeAleatoirementHook fonctionne correctement dans l'espace délivrance", async () => {
@@ -29,7 +29,7 @@ test("Attendu: PrendreEnChargeAleatoirementHook fonctionne correctement dans l'e
 const HookConsumerUseGetRequeteInformationAleatoire: React.FC = () => {
   const res = useGetRequeteAleatoire(TypeRequete.INFORMATION, true);
 
-  return <div>{res?.requeteInformation?.idRequete}</div>;
+  return <div>{res?.requete?.idRequete}</div>;
 };
 
 test("Attendu: PrendreEnChargeAleatoirementHook fonctionne correctement dans l'espace information", async () => {
