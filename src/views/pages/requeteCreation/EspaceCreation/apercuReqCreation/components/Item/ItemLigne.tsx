@@ -1,4 +1,5 @@
 import React from "react";
+import { estRenseigne } from "../../../../../../common/util/Utils";
 import { formatLigne } from "../Formatages";
 
 interface ItemLigneInfosProps {
@@ -11,7 +12,7 @@ interface ItemLigneInfosProps {
 
 export const ItemLigne: React.FC<ItemLigneInfosProps> = ({
   texte,
-  visible = texte !== undefined,
+  visible = estRenseigne(texte),
   ...props
 }) => {
   props.classNameTexte = formatLigne(

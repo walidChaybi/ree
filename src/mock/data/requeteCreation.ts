@@ -588,4 +588,810 @@ export const requeteCreation = {
   dossierNouveaux: null,
   dossierOrigines: null,
   decret: null
-} as unknown as IRequeteCreation;
+} as any as IRequeteCreation;
+
+export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitulaireEtUnEnfantMajeur =
+  {
+    id: "6ccc9d0d-0895-48cb-8a9b-f56ee0beb85b",
+    numeroFonctionnel: "FVWM1E",
+    dateCreation: 1657110493196,
+    canal: "RIE",
+    type: "CREATION",
+    actions: [
+      {
+        id: "6ccc49a8-1f63-427d-a6f1-59f4c29a494c",
+        numeroOrdre: 1,
+        libelle: "A traiter",
+        dateAction: 1657110493196,
+        idUtilisateur: "c4b37383-54c8-4f65-afdf-be1355a90ee2"
+      }
+    ],
+    titulaires: [
+      {
+        id: "6ccc5c15-629e-4371-977a-b8cb8d90e99a",
+        position: 3,
+        nomNaissance: "nomNaissance",
+        nomUsage: "nomUsage",
+        anneeNaissance: 2000,
+        moisNaissance: 2,
+        jourNaissance: 1,
+        villeNaissance: "villeNaissance",
+        codePostalNaissance: "codePostalNaissance",
+        arrondissementNaissance: "arrondissementNaissance",
+        villeEtrangereNaissance: "villeEtrangereNaissance",
+        regionNaissance: "regionNaissance",
+        paysNaissance: "paysNaissance",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        prenoms: [
+          {
+            id: "6cccb9d4-369c-45a7-982f-6ecdc1006969",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: [],
+        deces: {
+          id: "6ccc6d55-3c03-470a-8dd1-df941fca9624",
+          jour: 1,
+          mois: 2,
+          annee: 2000,
+          ville: "ville",
+          arrondissement: "arrondissement",
+          region: "region",
+          pays: "pays"
+        },
+        domiciliation: {
+          id: "6ccc026c-9a6e-4dd6-888a-9107d5e5af84",
+          ligne2: "ligne2",
+          ligne3: "ligne3",
+          ligne4: "ligne4",
+          ligne5: "ligne5",
+          codePostal: "codePostal",
+          ville: "ville",
+          villeEtrangere: "villeEtrangere",
+          arrondissement: "arrondissement",
+          region: "region",
+          pays: "pays"
+        },
+        evenementUnions: [],
+        typeObjetTitulaire: "FAMILLE",
+        nomDemandeFrancisation: "nomDemandeFrancisation",
+        nomDemandeIdentification: "nomDemandeIdentification",
+        nomSecable: true,
+        nomPremierePartie: "nomPremierePartie",
+        nomSecondePartie: "nomSecondePartie",
+        courriel: "courriel",
+        telephone: "telephone",
+        situationFamilliale: "CELIBATAIRE",
+        nationalites: [
+          {
+            id: "6cccd86a-535b-4ee1-9805-5e146e09718d",
+            nationalite: "nationalite"
+          }
+        ],
+        prenomsDemande: [
+          {
+            id: "6ccc59cc-afb6-4506-9b19-af580a332d5d",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        lienEtatCivil: [],
+        retenueSdanf: {
+          id: "6ccc98eb-632f-48b2-b898-6fae9066e734",
+          nomNaissance: "nomNaissance",
+          nomUsage: "nomUsage",
+          nomActuel: "nomActuel",
+          nomDemandeFrancisation: null,
+          nomDemandeIdentification: null,
+          jourNaissance: 1,
+          moisNaissance: 2,
+          anneeNaissance: 2000,
+          codePostalNaissance: "codePostalNaissance",
+          villeNaissance: "villeNaissance",
+          villeEtrangereNaissance: "villeEtrangereNaissance",
+          arrondissementNaissance: "arrondissementNaissance",
+          regionNaissance: "regionNaissance",
+          paysNaissance: "paysNaissance",
+          prenomsRetenu: [
+            {
+              id: "6cccd80a-ff7a-4e49-856a-173932ee15b0",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        },
+        qualite: "PARENT2ENFANT",
+        numeroDossierNational: "numeroDossierNational",
+        demandeEffetCollectif: true,
+        valideEffetCollectif: "valideEffetCollectif",
+        residence: "IDENTIQUE_TITULAIRE_REQUETE",
+        domiciliationEnfant: "domiciliationEnfant",
+        parent2Enfant: null
+      },
+      {
+        id: "6ccc7855-569c-4ed4-b5e5-206191d46cdc",
+        position: 1,
+        nomNaissance: "dupont",
+        nomUsage: "dupont",
+        anneeNaissance: 1963,
+        moisNaissance: 3,
+        jourNaissance: 4,
+        villeNaissance: "nantes",
+        codePostalNaissance: "44000",
+        arrondissementNaissance: "arrondissementNaissance",
+        villeEtrangereNaissance: "villeEtrangereNaissance",
+        regionNaissance: "regionNaissance",
+        paysNaissance: "paysNaissance",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        prenoms: [
+          {
+            id: "6ccc6cee-1a41-48c2-b6b8-378be40d4af9",
+            numeroOrdre: 1,
+            prenom: "paul",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: [
+          {
+            id: "6ccc821f-5575-4cd1-8333-c867b2d2cbd2",
+            position: 1,
+            nomNaissance: "dupont",
+            prenoms: [
+              {
+                id: "6cccff75-4a37-41e0-80b5-307ada9672b8",
+                numeroOrdre: 1,
+                prenom: "luc",
+                estPrenomFrRetenuSdanf: null
+              }
+            ]
+          }
+        ],
+        deces: {
+          id: "6cccb8c3-d733-41ea-acb9-9a39ac43770d",
+          jour: 1,
+          mois: 2,
+          annee: 2000,
+          ville: "ville",
+          arrondissement: "arrondissement",
+          region: "region",
+          pays: "pays"
+        },
+        domiciliation: {
+          id: "6cccea7d-d1e2-466f-9e60-6f88d89d2312",
+          ligne2: "ligne2",
+          ligne3: "ligne3",
+          ligne4: "ligne4",
+          ligne5: "ligne5",
+          codePostal: "44000",
+          ville: "ville",
+          villeEtrangere: "villeEtrangere",
+          arrondissement: "arrondissement",
+          region: "region",
+          pays: "pays"
+        },
+        evenementUnions: [],
+        typeObjetTitulaire: "POSTULANT_NATIONALITE",
+        nomDemandeFrancisation: "nomDemandeFrancisation",
+        nomDemandeIdentification: "nomDemandeIdentification",
+        nomSecable: true,
+        nomPremierePartie: "nomPremierePartie",
+        nomSecondePartie: "nomSecondePartie",
+        courriel: "courriel",
+        telephone: "telephone",
+        situationFamilliale: "CELIBATAIRE",
+        nationalites: [
+          {
+            id: "6ccc914d-6cf1-4a16-8628-21cc27811663",
+            nationalite: "francaise"
+          }
+        ],
+        prenomsDemande: [
+          {
+            id: "6ccc4028-7422-4e7a-b733-a43b8114c6c6",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        lienEtatCivil: [],
+        retenueSdanf: {
+          id: "6ccc9d4a-fbbe-4d39-9eca-bbc1ef7d9eff",
+          nomNaissance: "nomNaissance",
+          nomUsage: "nomUsage",
+          nomActuel: "nomActuel",
+          nomDemandeFrancisation: null,
+          nomDemandeIdentification: null,
+          jourNaissance: 1,
+          moisNaissance: 2,
+          anneeNaissance: 2000,
+          codePostalNaissance: "codePostalNaissance",
+          villeNaissance: "villeNaissance",
+          villeEtrangereNaissance: "villeEtrangereNaissance",
+          arrondissementNaissance: "arrondissementNaissance",
+          regionNaissance: "regionNaissance",
+          paysNaissance: "paysNaissance",
+          prenomsRetenu: [
+            {
+              id: "6cccd039-e349-4194-821b-73a7f794a2e1",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        },
+        nomActuel: "nomActuel",
+        nombreEnfantMineur: 0,
+        nombreEnfantEffetCollectif: 0
+      },
+      {
+        id: "6ccc6706-a3d8-4fc9-b2fc-2f26338519f4",
+        position: 2,
+        nomNaissance: "toto",
+        nomUsage: "nomUsage",
+        anneeNaissance: 2000,
+        moisNaissance: 2,
+        jourNaissance: 1,
+        villeNaissance: "villeNaissance",
+        codePostalNaissance: "codePostalNaissance",
+        arrondissementNaissance: "arrondissementNaissance",
+        villeEtrangereNaissance: "villeEtrangereNaissance",
+        regionNaissance: "regionNaissance",
+        paysNaissance: "paysNaissance",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        prenoms: [
+          {
+            id: "6ccc6e6d-d4a7-48ad-a378-83815b1fef88",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: [],
+        deces: null,
+        domiciliation: {
+          id: "6cccd4a8-fd10-4387-b772-b6955038a851",
+          ligne2: "ligne2",
+          ligne3: "ligne3",
+          ligne4: "ligne4",
+          ligne5: "ligne5",
+          codePostal: "codePostal",
+          ville: "ville",
+          villeEtrangere: "villeEtrangere",
+          arrondissement: "arrondissement",
+          region: "region",
+          pays: "pays"
+        },
+        evenementUnions: [],
+        typeObjetTitulaire: "FAMILLE",
+        nomDemandeFrancisation: "nomDemandeFrancisation",
+        nomDemandeIdentification: "nomDemandeIdentification",
+        nomSecable: true,
+        nomPremierePartie: "nomPremierePartie",
+        nomSecondePartie: "nomSecondePartie",
+        courriel: "courriel",
+        telephone: "telephone",
+        situationFamilliale: "CELIBATAIRE",
+        nationalites: [],
+        prenomsDemande: [
+          {
+            id: "6cccb308-8372-42ed-9609-783af08d76dd",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        lienEtatCivil: [],
+        retenueSdanf: {
+          id: "6ccce804-d0af-44ae-b8ed-4241707a22d9",
+          nomNaissance: "nomNaissance",
+          nomUsage: "nomUsage",
+          nomActuel: "nomActuel",
+          nomDemandeFrancisation: null,
+          nomDemandeIdentification: null,
+          jourNaissance: 1,
+          moisNaissance: 2,
+          anneeNaissance: 2000,
+          codePostalNaissance: "codePostalNaissance",
+          villeNaissance: "villeNaissance",
+          villeEtrangereNaissance: "villeEtrangereNaissance",
+          arrondissementNaissance: "arrondissementNaissance",
+          regionNaissance: "regionNaissance",
+          paysNaissance: "paysNaissance",
+          prenomsRetenu: [
+            {
+              id: "6ccc8f99-76b1-4a74-b9b8-7bc5edb33216",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        },
+        qualite: "ENFANT_MINEUR",
+        numeroDossierNational: "numeroDossierNational",
+        demandeEffetCollectif: true,
+        valideEffetCollectif: "valideEffetCollectif",
+        residence: "IDENTIQUE_TITULAIRE_REQUETE",
+        domiciliationEnfant: "domiciliationEnfant",
+        parent2Enfant: {
+          id: "6ccc5c15-629e-4371-977a-b8cb8d90e99a",
+          position: 3,
+          nomNaissance: "nomNaissance",
+          nomUsage: "nomUsage",
+          anneeNaissance: 2000,
+          moisNaissance: 2,
+          jourNaissance: 1,
+          villeNaissance: "villeNaissance",
+          codePostalNaissance: "codePostalNaissance",
+          arrondissementNaissance: "arrondissementNaissance",
+          villeEtrangereNaissance: "villeEtrangereNaissance",
+          regionNaissance: "regionNaissance",
+          paysNaissance: "paysNaissance",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: [
+            {
+              id: "6cccb9d4-369c-45a7-982f-6ecdc1006969",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ],
+          parentsTitulaire: [],
+          deces: {
+            id: "6ccc6d55-3c03-470a-8dd1-df941fca9624",
+            jour: 1,
+            mois: 2,
+            annee: 2000,
+            ville: "ville",
+            arrondissement: "arrondissement",
+            region: "region",
+            pays: "pays"
+          },
+          domiciliation: {
+            id: "6ccc026c-9a6e-4dd6-888a-9107d5e5af84",
+            ligne2: "ligne2",
+            ligne3: "ligne3",
+            ligne4: "ligne4",
+            ligne5: "ligne5",
+            codePostal: "codePostal",
+            ville: "ville",
+            villeEtrangere: "villeEtrangere",
+            arrondissement: "arrondissement",
+            region: "region",
+            pays: "pays"
+          },
+          evenementUnions: [],
+          typeObjetTitulaire: "FAMILLE",
+          nomDemandeFrancisation: "nomDemandeFrancisation",
+          nomDemandeIdentification: "nomDemandeIdentification",
+          nomSecable: true,
+          nomPremierePartie: "nomPremierePartie",
+          nomSecondePartie: "nomSecondePartie",
+          courriel: "courriel",
+          telephone: "telephone",
+          situationFamilliale: "CELIBATAIRE",
+          nationalites: [
+            {
+              id: "6cccd86a-535b-4ee1-9805-5e146e09718d",
+              nationalite: "nationalite"
+            }
+          ],
+          prenomsDemande: [
+            {
+              id: "6ccc59cc-afb6-4506-9b19-af580a332d5d",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ],
+          lienEtatCivil: [],
+          retenueSdanf: {
+            id: "6ccc98eb-632f-48b2-b898-6fae9066e734",
+            nomNaissance: "nomNaissance",
+            nomUsage: "nomUsage",
+            nomActuel: "nomActuel",
+            nomDemandeFrancisation: null,
+            nomDemandeIdentification: null,
+            jourNaissance: 1,
+            moisNaissance: 2,
+            anneeNaissance: 2000,
+            codePostalNaissance: "codePostalNaissance",
+            villeNaissance: "villeNaissance",
+            villeEtrangereNaissance: "villeEtrangereNaissance",
+            arrondissementNaissance: "arrondissementNaissance",
+            regionNaissance: "regionNaissance",
+            paysNaissance: "paysNaissance",
+            prenomsRetenu: [
+              {
+                id: "6cccd80a-ff7a-4e49-856a-173932ee15b0",
+                numeroOrdre: 1,
+                prenom: "prenom",
+                estPrenomFrRetenuSdanf: null
+              }
+            ]
+          },
+          qualite: "PARENT2ENFANT",
+          numeroDossierNational: "numeroDossierNational",
+          demandeEffetCollectif: true,
+          valideEffetCollectif: "valideEffetCollectif",
+          residence: "IDENTIQUE_TITULAIRE_REQUETE",
+          domiciliationEnfant: "domiciliationEnfant",
+          parent2Enfant: null
+        }
+      },
+      {
+        id: "6ccc6706-a3d8-4fc9-b2fc-2f26338519f4",
+        position: 4,
+        nomNaissance: "toto",
+        nomUsage: "nomUsage",
+        anneeNaissance: 2000,
+        moisNaissance: 2,
+        jourNaissance: 1,
+        villeNaissance: "villeNaissance",
+        codePostalNaissance: "codePostalNaissance",
+        arrondissementNaissance: "arrondissementNaissance",
+        villeEtrangereNaissance: "villeEtrangereNaissance",
+        regionNaissance: "regionNaissance",
+        paysNaissance: "paysNaissance",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        prenoms: [
+          {
+            id: "6ccc6e6d-d4a7-48ad-a378-83815b1fef88",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: [],
+        deces: null,
+        domiciliation: {
+          id: "6cccd4a8-fd10-4387-b772-b6955038a851",
+          ligne2: "ligne2",
+          ligne3: "ligne3",
+          ligne4: "ligne4",
+          ligne5: "ligne5",
+          codePostal: "codePostal",
+          ville: "ville",
+          villeEtrangere: "villeEtrangere",
+          arrondissement: "arrondissement",
+          region: "region",
+          pays: "pays"
+        },
+        evenementUnions: [],
+        typeObjetTitulaire: "FAMILLE",
+        nomDemandeFrancisation: "nomDemandeFrancisation",
+        nomDemandeIdentification: "nomDemandeIdentification",
+        nomSecable: true,
+        nomPremierePartie: "nomPremierePartie",
+        nomSecondePartie: "nomSecondePartie",
+        courriel: "courriel",
+        telephone: "telephone",
+        situationFamilliale: "CELIBATAIRE",
+        nationalites: [],
+        prenomsDemande: [
+          {
+            id: "6cccb308-8372-42ed-9609-783af08d76dd",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        lienEtatCivil: [],
+        retenueSdanf: {
+          id: "6ccce804-d0af-44ae-b8ed-4241707a22d9",
+          nomNaissance: "nomNaissance",
+          nomUsage: "nomUsage",
+          nomActuel: "nomActuel",
+          nomDemandeFrancisation: null,
+          nomDemandeIdentification: null,
+          jourNaissance: 1,
+          moisNaissance: 2,
+          anneeNaissance: 2000,
+          codePostalNaissance: "codePostalNaissance",
+          villeNaissance: "villeNaissance",
+          villeEtrangereNaissance: "villeEtrangereNaissance",
+          arrondissementNaissance: "arrondissementNaissance",
+          regionNaissance: "regionNaissance",
+          paysNaissance: "paysNaissance",
+          prenomsRetenu: [
+            {
+              id: "6ccc8f99-76b1-4a74-b9b8-7bc5edb33216",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        },
+        qualite: "ENFANT_MINEUR",
+        numeroDossierNational: "numeroDossierNational",
+        demandeEffetCollectif: true,
+        valideEffetCollectif: "valideEffetCollectif",
+        residence: "IDENTIQUE_TITULAIRE_REQUETE",
+        domiciliationEnfant: "domiciliationEnfant",
+        parent2Enfant: {
+          id: "6ccc5c15-629e-4371-977a-b8cb8d90e99a",
+          position: 3,
+          nomNaissance: "nomNaissance",
+          nomUsage: "nomUsage",
+          anneeNaissance: 2000,
+          moisNaissance: 2,
+          jourNaissance: 1,
+          villeNaissance: "villeNaissance",
+          codePostalNaissance: "codePostalNaissance",
+          arrondissementNaissance: "arrondissementNaissance",
+          villeEtrangereNaissance: "villeEtrangereNaissance",
+          regionNaissance: "regionNaissance",
+          paysNaissance: "paysNaissance",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: [
+            {
+              id: "6cccb9d4-369c-45a7-982f-6ecdc1006969",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ],
+          parentsTitulaire: [],
+          deces: {
+            id: "6ccc6d55-3c03-470a-8dd1-df941fca9624",
+            jour: 1,
+            mois: 2,
+            annee: 2000,
+            ville: "ville",
+            arrondissement: "arrondissement",
+            region: "region",
+            pays: "pays"
+          },
+          domiciliation: {
+            id: "6ccc026c-9a6e-4dd6-888a-9107d5e5af84",
+            ligne2: "ligne2",
+            ligne3: "ligne3",
+            ligne4: "ligne4",
+            ligne5: "ligne5",
+            codePostal: "codePostal",
+            ville: "ville",
+            villeEtrangere: "villeEtrangere",
+            arrondissement: "arrondissement",
+            region: "region",
+            pays: "pays"
+          },
+          evenementUnions: [],
+          typeObjetTitulaire: "FAMILLE",
+          nomDemandeFrancisation: "nomDemandeFrancisation",
+          nomDemandeIdentification: "nomDemandeIdentification",
+          nomSecable: true,
+          nomPremierePartie: "nomPremierePartie",
+          nomSecondePartie: "nomSecondePartie",
+          courriel: "courriel",
+          telephone: "telephone",
+          situationFamilliale: "CELIBATAIRE",
+          nationalites: [
+            {
+              id: "6cccd86a-535b-4ee1-9805-5e146e09718d",
+              nationalite: "nationalite"
+            }
+          ],
+          prenomsDemande: [
+            {
+              id: "6ccc59cc-afb6-4506-9b19-af580a332d5d",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ],
+          lienEtatCivil: [],
+          retenueSdanf: {
+            id: "6ccc98eb-632f-48b2-b898-6fae9066e734",
+            nomNaissance: "nomNaissance",
+            nomUsage: "nomUsage",
+            nomActuel: "nomActuel",
+            nomDemandeFrancisation: null,
+            nomDemandeIdentification: null,
+            jourNaissance: 1,
+            moisNaissance: 2,
+            anneeNaissance: 2000,
+            codePostalNaissance: "codePostalNaissance",
+            villeNaissance: "villeNaissance",
+            villeEtrangereNaissance: "villeEtrangereNaissance",
+            arrondissementNaissance: "arrondissementNaissance",
+            regionNaissance: "regionNaissance",
+            paysNaissance: "paysNaissance",
+            prenomsRetenu: [
+              {
+                id: "6cccd80a-ff7a-4e49-856a-173932ee15b0",
+                numeroOrdre: 1,
+                prenom: "prenom",
+                estPrenomFrRetenuSdanf: null
+              }
+            ]
+          },
+          qualite: "PARENT2ENFANT",
+          numeroDossierNational: "numeroDossierNational",
+          demandeEffetCollectif: true,
+          valideEffetCollectif: "valideEffetCollectif",
+          residence: "IDENTIQUE_TITULAIRE_REQUETE",
+          domiciliationEnfant: "domiciliationEnfant",
+          parent2Enfant: null
+        }
+      },
+      {
+        id: "6ccc6706-a3d8-4fc9-b2fc-2f26338519f4",
+        position: 5,
+        nomNaissance: "toto",
+        nomUsage: "nomUsage",
+        anneeNaissance: 2000,
+        moisNaissance: 2,
+        jourNaissance: 1,
+        villeNaissance: "villeNaissance",
+        codePostalNaissance: "codePostalNaissance",
+        arrondissementNaissance: "arrondissementNaissance",
+        villeEtrangereNaissance: "villeEtrangereNaissance",
+        regionNaissance: "regionNaissance",
+        paysNaissance: "paysNaissance",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        prenoms: [
+          {
+            id: "6ccc6e6d-d4a7-48ad-a378-83815b1fef88",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: [],
+        deces: null,
+        domiciliation: {
+          id: "6cccd4a8-fd10-4387-b772-b6955038a851",
+          ligne2: "ligne2",
+          ligne3: "ligne3",
+          ligne4: "ligne4",
+          ligne5: "ligne5",
+          codePostal: "codePostal",
+          ville: "ville",
+          villeEtrangere: "villeEtrangere",
+          arrondissement: "arrondissement",
+          region: "region",
+          pays: "pays"
+        },
+        evenementUnions: [],
+        typeObjetTitulaire: "FAMILLE",
+        nomDemandeFrancisation: "nomDemandeFrancisation",
+        nomDemandeIdentification: "nomDemandeIdentification",
+        nomSecable: true,
+        nomPremierePartie: "nomPremierePartie",
+        nomSecondePartie: "nomSecondePartie",
+        courriel: "courriel",
+        telephone: "telephone",
+        situationFamilliale: "CELIBATAIRE",
+        nationalites: [],
+        prenomsDemande: [
+          {
+            id: "6cccb308-8372-42ed-9609-783af08d76dd",
+            numeroOrdre: 1,
+            prenom: "prenom",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        lienEtatCivil: [],
+        retenueSdanf: {
+          id: "6ccce804-d0af-44ae-b8ed-4241707a22d9",
+          nomNaissance: "nomNaissance",
+          nomUsage: "nomUsage",
+          nomActuel: "nomActuel",
+          nomDemandeFrancisation: null,
+          nomDemandeIdentification: null,
+          jourNaissance: 1,
+          moisNaissance: 2,
+          anneeNaissance: 2000,
+          codePostalNaissance: "codePostalNaissance",
+          villeNaissance: "villeNaissance",
+          villeEtrangereNaissance: "villeEtrangereNaissance",
+          arrondissementNaissance: "arrondissementNaissance",
+          regionNaissance: "regionNaissance",
+          paysNaissance: "paysNaissance",
+          prenomsRetenu: [
+            {
+              id: "6ccc8f99-76b1-4a74-b9b8-7bc5edb33216",
+              numeroOrdre: 1,
+              prenom: "prenom",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        },
+        qualite: "ENFANT_MAJEUR",
+        numeroDossierNational: "numeroDossierNational"
+      }
+    ],
+    corbeilleAgent: null,
+    corbeilleService: {
+      id: "8035fb6c-df33-11eb-ba80-0242ac130004",
+      idEntiteRattachement: "6737566d-0f25-45dc-8443-97b444e6753a"
+    },
+    piecesJustificatives: [],
+    requerant: {
+      id: "6ccccf51-2777-42a5-a37b-5c2e19457a5b",
+      dateCreation: 1,
+      nomFamille: "nomFamille",
+      prenom: "prenom",
+      courriel: "courriel",
+      telephone: "telephone",
+      adresse: {
+        id: "6ccc1b20-73c8-4ae6-929d-b22fa393b755",
+        ligne2: "ligne2",
+        ligne3: "ligne3",
+        ligne4: "ligne4",
+        ligne5: "ligne5",
+        codePostal: "codePostal",
+        ville: "ville",
+        pays: "pays"
+      },
+      qualite: "PARTICULIER",
+      detailQualiteRece: null,
+      detailQualiteParticulier: null,
+      detailQualiteMandataireHabilite: null,
+      detailQualiteInstitutionnel: null,
+      detailQualiteAutreProfessionnel: null,
+      lienRequerant: {
+        id: "6ccc2e39-07cd-42d1-934e-c7898809f7ec",
+        typeLienRequerant: "TITULAIRE",
+        nature: "nature"
+      }
+    },
+    mandant: null,
+    observations: [],
+    statut: {
+      id: "6ccc6eaa-4fc6-4252-88a2-f2ce1d27c947",
+      statutRequete: "A_TRAITER",
+      dateEffet: 1657110493196,
+      raisonStatut: null
+    },
+    lienRequerant: {
+      id: "6ccc2e39-07cd-42d1-934e-c7898809f7ec",
+      typeLienRequerant: "TITULAIRE",
+      nature: "nature"
+    },
+    doublons: [],
+    origines: null,
+    numeroRequeteOrigine: null,
+    sousType: "RCEXR",
+    numeroAncienSI: "numeroAncienSI",
+    dossierSignale: true,
+    commentaire: "commentaire",
+    demandeIdentification: null,
+    demandeFrancisation: true,
+    provenance: "COURRIER",
+    provenanceServicePublic: null,
+    provenanceNatali: {
+      id: "6ccc27a3-42bd-4a50-a7fc-5c79ff8c9995",
+      numeroDossierNational: "numeroDossierNational2",
+      statutNatali: "statutNatali",
+      provenanceNaturalisation: "NATALI",
+      numeroDossierLocal: "numeroDossierLocal",
+      dateDepot: 0,
+      datePriseEnChargeSdanf: 0,
+      decisionSdanf: "decisionSdanf",
+      tagPriorisation: "SCEC",
+      agentSdanf: {
+        id: "6ccc4c18-115e-406f-9a99-241888fc6394",
+        nom: "nom",
+        prenom: "prenom",
+        courriel: "courriel"
+      }
+    },
+    provenanceRece: null,
+    documentsPj: [],
+    campagne: "campagne",
+    nature: "NATURALISATION",
+    dossierNouveaux: null,
+    dossierOrigines: null,
+    decret: null
+  } as any as IRequeteCreation;

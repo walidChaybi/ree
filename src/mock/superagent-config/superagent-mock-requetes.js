@@ -216,7 +216,13 @@ export const configRequetes = [
         match[1] ===
         "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=dateCreation&sens=ASC&range=0-105"
       ) {
-        return { data: reponseMesRequeteCreation };
+        return {
+          headers: {
+            "content-range": "0-100/0",
+            link: ""
+          },
+          data: reponseMesRequeteCreation
+        };
       }
 
       if (

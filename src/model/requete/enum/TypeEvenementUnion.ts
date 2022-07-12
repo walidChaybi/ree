@@ -1,0 +1,7 @@
+export enum TypeEvenementUnion {
+  MARIAGE = "MARIAGE",
+  PACS = "PACS",
+  UNION = "UNION",
+  DISSOLUTION_DIVORCE = "DISSOLUTION_DIVORCE",
+  DECES = "DECES"
+}

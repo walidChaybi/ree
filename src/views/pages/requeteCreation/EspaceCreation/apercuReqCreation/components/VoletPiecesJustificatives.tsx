@@ -7,7 +7,10 @@ import {
   ListeGlisserDeposer,
   ListeItem
 } from "../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
+import Labels from "../Labels";
+import ConteneurRetractable from "./ConteneurRetractable";
 import "./scss/VoletPiecesJustificatives.scss";
+
 interface VoletPiecesJustificativesProps {
   requete: IRequeteCreation;
 }
@@ -16,6 +19,7 @@ export const VoletPiecesJustificatives: React.FC<
   VoletPiecesJustificativesProps
 > = props => {
   const [liste, setListe] = useState<ListeItem[]>([]);
+  const [pleinEcran, setPleinEcran] = useState<boolean>(false);
 
   useEffect(() => {
     if (props.requete?.documentsPj) {
@@ -57,7 +61,12 @@ export const VoletPiecesJustificatives: React.FC<
   );
 
   return (
-    <div className={`PiecesJustificatives`}>
+    <ConteneurRetractable
+      titre={Labels.PJ.description}
+      pleinEcran={pleinEcran}
+      setPleinEcran={setPleinEcran}
+      className="PiecesJustificatives"
+    >
       {props.requete && liste && (
         <ListeGlisserDeposer
           liste={liste}
@@ -68,6 +77,6 @@ export const VoletPiecesJustificatives: React.FC<
           libellesSontTitres={true}
         />
       )}
-    </div>
+    </ConteneurRetractable>
   );
 };

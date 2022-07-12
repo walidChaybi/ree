@@ -1,46 +1,6 @@
 @import "../../../../../../../scss/_colors.scss";
 
 .ResumeRequeteCreation {
-  width: 100%;
-  transition: width 0.1s ease-in-out 0.1s;
-  padding: 0.5em;
-  .ResumerACacherEnPleinEcran {
-    visibility: visible;
-  }
-
-  &.pleinEcran {
-    width: 50px;
-    .ResumerACacherEnPleinEcran {
-      visibility: hidden;
-    }
-  }
-
-  .titrePartie {
-    cursor: pointer;
-    background-color: $title-application-color;
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: white;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
-    border-radius: 0.5rem;
-    span {
-      writing-mode: horizontal-tb;
-      &.vertical {
-        transform: rotate(180deg);
-        writing-mode: vertical-lr;
-      }
-    }
-
-    .pasPleinEcran {
-      float: right;
-    }
-    .pleinEcran {
-      margin-bottom: 5px;
-    }
-  }
-
   .ligne {
     display: flex;
     padding-top: 0.5rem;

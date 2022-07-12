@@ -1,4 +1,5 @@
 import React from "react";
+import { estRenseigne } from "../../../../../../common/util/Utils";
 import Labels, { UNION } from "../../Labels";
 import {
   formatLigneDateCoordonnees,
@@ -27,24 +28,24 @@ const ItemUnion: React.FC<ItemUnionProps & ItemProps> = props => {
   return (
     <Item {...props}>
       <ItemLigne
-        label={Labels.requete.liee}
+        label={Labels.resume.requete.liee}
         texte={`N° ${props.numeros?.requeteLiee}`}
-        visible={props.numeros?.requeteLiee !== undefined}
+        visible={estRenseigne(props.numeros?.requeteLiee)}
       />
       <ItemLigne texte={formatLigneNomsPrenomsGenre(props.identite)} />
       <ItemLigne texte={formatLigneDateCoordonnees(props.naissance)} />
       <ItemLigne
         texte={
           formatLigneNationalites(props.nationalites) ??
-          Labels.nationalite.defaut
+          Labels.resume.nationalite.defaut
         }
       />
       <ItemLigne
-        label={Labels.union.mariage}
+        label={Labels.resume.union.mariage}
         texte={formatLigneDateCoordonnees(props.mariage)}
       />
       <ItemLigne
-        label={Labels.union.PACS}
+        label={Labels.resume.union.PACS}
         texte={formatLigneDateCoordonnees(props.PACS)}
       />
       <ItemLigne
@@ -52,11 +53,11 @@ const ItemUnion: React.FC<ItemUnionProps & ItemProps> = props => {
         texte={formatLigneDateCoordonnees(props.union)}
       />
       <ItemLigne
-        label={Labels.union.dissolution}
+        label={Labels.resume.union.dissolution}
         texte={formatLigneDateCoordonnees(props.dissolution)}
       />
       <ItemLigne
-        label={Labels.union.deces}
+        label={Labels.resume.union.deces}
         texte={formatLigneDateCoordonnees(props.deces)}
       />
     </Item>

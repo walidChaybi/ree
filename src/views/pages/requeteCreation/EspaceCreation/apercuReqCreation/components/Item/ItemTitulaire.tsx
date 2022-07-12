@@ -14,7 +14,7 @@ import {
   IdentiteType,
   NationaliteType
 } from "../Types";
-import Item, { AccordeonInfos, ItemProps } from "./Item";
+import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import ItemParent, { ItemParentProps } from "./ItemParent";
 
@@ -46,20 +46,20 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
         texte={formatLigneFrancisationIdentification(props.identite)}
       />
       <ItemLigne texte={formatLigneDateCoordonnees(props.naissance)} />
-      <AccordeonInfos titre={INFOS} etendu={false}>
+      <Item titre={INFOS} className={{ title: "bg-clair" }} etendu={false}>
         <ItemLigne
-          label={Labels.union.anterieurs}
+          label={Labels.resume.union.anterieurs}
           texte={props.nbUnionsAnterieurs.toString()}
         />
         <ItemLigne texte={props.situationFamiliale} />
         <ItemLigne
-          label={Labels.enfant.mineurs}
+          label={Labels.resume.enfant.mineurs}
           texte={props.nbMineurs?.toString()}
         />
         <ItemLigne
           texte={
             formatLigneNationalites(props.nationalites) ??
-            Labels.nationalite.defaut
+            Labels.resume.nationalite.defaut
           }
         />
         {props.domiciliation.lignes.map((ligne, id) => (
@@ -67,17 +67,16 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
         ))}
         <ItemLigne texte={formatLigneAdresse(props.domiciliation)} />
         <ItemLigne texte={texteContacts} />
-      </AccordeonInfos>
+      </Item>
       {props.parents.map(
         (parent, id) =>
           parent && (
             <ItemParent
               {...parent}
-              key={Labels.parent + String(id + 1)}
-              titre={Labels.parent}
+              key={Labels.resume.parent + String(id + 1)}
+              titre={Labels.resume.parent}
               numeroItem={id + 1}
               totalItems={props.parents.length}
-              etendu={false}
             />
           )
       )}

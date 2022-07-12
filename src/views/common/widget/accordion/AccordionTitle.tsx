@@ -16,7 +16,7 @@ export const AccordionTitle: React.FC<AccordionTitleProps> = ({
     <AccordionSummary
       className={["accordionTitle", className].join(" ")}
       expandIcon={<ExpandMoreIcon />}
-      aria-controls="panel1bh-content"
+      title={title}
     >
       {title}
     </AccordionSummary>

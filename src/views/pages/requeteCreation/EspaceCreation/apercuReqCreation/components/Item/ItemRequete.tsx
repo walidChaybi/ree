@@ -1,7 +1,8 @@
 import React from "react";
+import { estRenseigne } from "../../../../../../common/util/Utils";
 import Labels, { REQUETE, SDANF } from "../../Labels";
 import { formatLigne } from "../Formatages";
-import Item, { AccordeonInfos } from "./Item";
+import Item from "./Item";
 import { ItemLigne } from "./ItemLigne";
 
 export interface ItemRequeteProps {
@@ -15,8 +16,8 @@ export interface ItemRequeteProps {
   natureDANF?: string;
   SDANF: {
     statut?: string;
-    dateDepot?: number;
-    datePriseEnCharge?: number;
+    dateDepot?: string;
+    datePriseEnCharge?: string;
     mailAgent?: string;
     decision?: string;
   };
@@ -37,49 +38,68 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
   ]);
 
   const specificite = formatLigne([
-    props.demandes.identification && Labels.identification,
-    props.demandes.francisation && Labels.francisation,
-    props.dossierSignaleInfos && Labels.signale,
-    props.campagneInfos && Labels.campagne
+    props.demandes.identification && Labels.resume.identification,
+    props.demandes.francisation && Labels.resume.francisation,
+    props.dossierSignaleInfos && Labels.resume.signale,
+    props.campagneInfos && Labels.resume.campagne
   ]);
 
-  const specificitePoint = `  •  ${specificite}`;
-  const texteSpecificite = `${props.natureDANF}${
-    specificite ? specificitePoint : ""
-  }`;
+  const texteSpecificite = formatLigne([props.natureDANF, specificite], " • ");
 
   return (
     <Item
       titre={`${REQUETE} ${numerosRequete}`}
-      visible={numerosRequete !== undefined}
+      visible={estRenseigne(numerosRequete)}
+      etendu={estRenseigne(props.numeros.requeteLiee)}
     >
-      <ItemLigne label={Labels.requete.sousType} texte={props.sousType} />
       <ItemLigne
-        label={Labels.requete.liee}
-        texte={`N° ${props.numeros.requeteLiee}`}
-        visible={props.numeros.requeteLiee !== undefined}
+        label={Labels.resume.requete.sousType}
+        texte={props.sousType}
       />
-      <AccordeonInfos titre={Labels.infos.specifiques} etendu={false}>
+      <ItemLigne
+        label={Labels.resume.requete.liee}
+        texte={`N° ${props.numeros.requeteLiee}`}
+        visible={estRenseigne(props.numeros.requeteLiee)}
+      />
+      <Item
+        titre={Labels.resume.infos.specifiques}
+        className={{ title: "bg-clair" }}
+        etendu={false}
+      >
         <ItemLigne
           classNameTexte="bold"
           texte={texteSpecificite}
-          visible={props.natureDANF !== undefined}
+          visible={estRenseigne(props.natureDANF)}
         />
-        <ItemLigne label={Labels.SDANF.statut} texte={props.SDANF.statut} />
+        <ItemLigne
+          label={Labels.resume.SDANF.statut}
+          texte={props.SDANF.statut}
+        />
         <ItemLigne
           texte={`Déposée le ${props.SDANF.dateDepot}`}
-          visible={props.SDANF.dateDepot !== undefined}
+          visible={estRenseigne(props.SDANF.dateDepot)}
         />
         <ItemLigne
           texte={`Prise en charge ${SDANF} le ${props.SDANF.datePriseEnCharge}`}
-          visible={props.SDANF.datePriseEnCharge !== undefined}
+          visible={estRenseigne(props.SDANF.datePriseEnCharge)}
         />
         <ItemLigne texte={props.SDANF.mailAgent} />
-        <ItemLigne label={Labels.SDANF.decision} texte={props.SDANF.decision} />
-      </AccordeonInfos>
-      <AccordeonInfos titre={Labels.requerant} etendu={false}>
-        <ItemLigne label={Labels.institutionnel} texte={props.nomInstitution} />
-      </AccordeonInfos>
+        <ItemLigne
+          label={Labels.resume.SDANF.decision}
+          texte={props.SDANF.decision}
+        />
+      </Item>
+      <Item
+        titre={Labels.resume.requerant}
+        className={{ title: "bg-clair" }}
+        etendu={false}
+        visible={estRenseigne(props.nomInstitution)}
+      >
+        <ItemLigne
+          label={Labels.resume.institutionnel}
+          texte={props.nomInstitution}
+        />
+      </Item>
     </Item>
   );
 };

@@ -44,16 +44,4 @@ const Item: React.FC<ItemProps> = ({
   );
 };
 
-export const AccordeonInfos: React.FC<ItemProps> = props => {
-  props = {
-    className: {
-      title: "bg-clair",
-      ...props.className
-    },
-    ...props
-  };
-
-  return <Item {...props} />;
-};
-
 export default Item;

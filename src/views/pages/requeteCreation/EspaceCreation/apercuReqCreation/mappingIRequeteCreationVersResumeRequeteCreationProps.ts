@@ -1,9 +1,14 @@
 import { QualiteFamille } from "../../../../../model/requete/enum/QualiteFamille";
+import { TypeEvenementUnion } from "../../../../../model/requete/enum/TypeEvenementUnion";
 import { TypeObjetTitulaire } from "../../../../../model/requete/enum/TypeObjetTitulaire";
+import { IEvenementUnion } from "../../../../../model/requete/IEvenementUnion";
 import { IPrenomOrdonnes } from "../../../../../model/requete/IPrenomOrdonnes";
 import { IRequeteCreation } from "../../../../../model/requete/IRequeteCreation";
 import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
-import { getDateStringFromDateCompose } from "../../../../common/util/DateUtils";
+import {
+  getDateStringFromDateCompose,
+  getFormatDateFromTimestamp
+} from "../../../../common/util/DateUtils";
 import { ItemEffetCollectifProps } from "./components/Item/ItemEffetCollectif";
 import {
   ItemEnfantMajeurProps,
@@ -14,6 +19,7 @@ import { ItemRequeteProps } from "./components/Item/ItemRequete";
 import { ItemTitulaireProps } from "./components/Item/ItemTitulaire";
 import { ItemUnionProps } from "./components/Item/ItemUnion";
 import { ResumeRequeteCreationProps } from "./components/ResumeRequeteCreation";
+import { DateCoordonneesType } from "./components/Types";
 
 const mappingIRequeteCreationVersResumeRequeteCreationProps = (
   requeteCreation: IRequeteCreation
@@ -23,16 +29,24 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
       rece: requeteCreation.numero,
       dila: requeteCreation.provenanceServicePublic?.referenceDila,
       ancienSI: requeteCreation.numeroAncien,
-      requeteLiee: requeteCreation.idEntiteRattachement //TODO: -> requete information
+      requeteLiee: undefined //TODO: -> requete information
     },
     sousType: requeteCreation.sousType.libelle,
     natureDANF: requeteCreation.nature,
     SDANF: {
       statut: requeteCreation.provenanceNatali?.statutNatali,
-      mailAgent: requeteCreation.provenanceNatali?.agentSdanf.courriel,
-      dateDepot: requeteCreation.provenanceNatali?.dateDepot,
-      datePriseEnCharge:
-        requeteCreation.provenanceNatali?.dataPriseEnChargeSdanf,
+      mailAgent: requeteCreation.provenanceNatali?.agentSdanf?.courriel,
+      dateDepot: requeteCreation.provenanceNatali?.dateDepot
+        ? getFormatDateFromTimestamp(
+            requeteCreation.provenanceNatali?.dateDepot
+          )
+        : undefined,
+      datePriseEnCharge: requeteCreation.provenanceNatali
+        ?.datePriseEnChargeSdanf
+        ? getFormatDateFromTimestamp(
+            requeteCreation.provenanceNatali?.datePriseEnChargeSdanf
+          )
+        : undefined,
       decision: requeteCreation.provenanceNatali?.decisionSdanf
     },
     demandes: {
@@ -49,20 +63,30 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
 
   const {
     postulant,
-    parentsPostulant,
-    unions,
+    parentsPostulant = [],
+    union,
+    unionsAnterieurs,
     effetsCollectifs,
     enfantsMajeurs,
     frateries
   } = triTitulaires(requeteCreation.titulaires);
 
+  const nbUnionsAnterieurs = unionsAnterieurs?.length;
+
   return {
     requete,
-    postulant: mappingITitulaireRequeteVersItemTitulaireProps(
-      postulant,
-      parentsPostulant
+    postulant:
+      postulant &&
+      mappingITitulaireRequeteVersItemTitulaireProps(
+        postulant,
+        parentsPostulant,
+        nbUnionsAnterieurs
+      ),
+    union: union && mappingITitulaireRequeteVersItemUnionProps(union),
+    unionsAnterieurs: mappingTableau(
+      mappingITitulaireRequeteVersItemUnionProps,
+      unionsAnterieurs
     ),
-    unions: mappingTableau(mappingITitulaireRequeteVersItemUnionProps, unions),
     effetsCollectifs: mappingTableau(
       mappingITitulaireRequeteVersItemEffetCollectifProps,
       effetsCollectifs
@@ -79,95 +103,90 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
 };
 
 const mappingITitulaireRequeteVersItemTitulaireProps = (
-  titulaire?: ITitulaireRequete,
-  parents?: ITitulaireRequete[]
-): ItemTitulaireProps | undefined => {
-  return titulaire
-    ? {
-        identite: {
-          noms: {
-            naissance: titulaire.nomNaissance,
-            actuel: titulaire.nomActuel,
-            francisation: titulaire.nomDemandeFrancisation,
-            identification: titulaire.nomDemandeIdentification
-          },
-          prenoms: {
-            naissance: mappingPrenoms(titulaire.prenoms),
-            francisation: mappingPrenoms(titulaire.prenomsDemande)
-          },
-          genre: titulaire.sexe
-        },
-        naissance: {
-          date: mappingDateNaissance(titulaire),
-          ville: titulaire.villeNaissance || titulaire.villeEtrangereNaissance,
-          arrondissement: titulaire.arrondissementNaissance,
-          regionDeptEtat: titulaire.regionNaissance,
-          pays: titulaire.paysNaissance
-        },
-        nbUnionsAnterieurs: 0, //TODO: recupérer le nombre d'unions antérieurs ? evenementUnion - (celui avec situationactuel = faux)
-        situationFamiliale: titulaire.situationFamiliale,
-        nbMineurs: titulaire.nombreEnfantMineur,
-        nationalites: titulaire.nationalites || [],
-        domiciliation: {
-          lignes: [
-            titulaire.domiciliation?.ligne2,
-            titulaire.domiciliation?.ligne3,
-            titulaire.domiciliation?.ligne4,
-            titulaire.domiciliation?.ligne5
-          ],
-          codePostal: titulaire.domiciliation?.codePostal,
-          ville: titulaire.domiciliation?.ville,
-          lieuVilleEtranger: titulaire.domiciliation?.villeEtrangere,
-          arrondissement: titulaire.domiciliation?.arrondissement,
-          regionDeptEtat: titulaire.domiciliation?.region,
-          pays: titulaire.domiciliation?.pays
-        },
-        contacts: {
-          mail: titulaire.courriel,
-          telephone: titulaire.telephone
-        },
-        parents: mappingTableau(
-          mappingITitulaireRequeteVersItemParentProps,
-          parents
-        )
-      }
-    : undefined;
+  titulaire: ITitulaireRequete,
+  parents: ITitulaireRequete[],
+  nbUnionsAnterieurs = 0
+): ItemTitulaireProps => {
+  return {
+    identite: {
+      noms: {
+        naissance: titulaire.nomNaissance,
+        actuel: titulaire.nomActuel,
+        francisation: titulaire.nomDemandeFrancisation,
+        identification: titulaire.nomDemandeIdentification
+      },
+      prenoms: {
+        naissance: mappingPrenoms(titulaire.prenoms),
+        francisation: mappingPrenoms(titulaire.prenomsDemande)
+      },
+      genre: titulaire.sexe
+    },
+    naissance: {
+      date: mappingDateNaissance(titulaire),
+      ville: titulaire.villeNaissance || titulaire.villeEtrangereNaissance,
+      arrondissement: titulaire.arrondissementNaissance,
+      regionDeptEtat: titulaire.regionNaissance,
+      pays: titulaire.paysNaissance
+    },
+    nbUnionsAnterieurs,
+    situationFamiliale: titulaire.situationFamiliale,
+    nbMineurs: titulaire.nombreEnfantMineur,
+    nationalites: titulaire.nationalites || [],
+    domiciliation: {
+      lignes: [
+        titulaire.domiciliation?.ligne2,
+        titulaire.domiciliation?.ligne3,
+        titulaire.domiciliation?.ligne4,
+        titulaire.domiciliation?.ligne5
+      ],
+      codePostal: titulaire.domiciliation?.codePostal,
+      ville: titulaire.domiciliation?.ville,
+      lieuVilleEtranger: titulaire.domiciliation?.villeEtrangere,
+      arrondissement: titulaire.domiciliation?.arrondissement,
+      regionDeptEtat: titulaire.domiciliation?.region,
+      pays: titulaire.domiciliation?.pays
+    },
+    contacts: {
+      mail: titulaire.courriel,
+      telephone: titulaire.telephone
+    },
+    parents: mappingTableau(
+      mappingITitulaireRequeteVersItemParentProps,
+      parents
+    )
+  };
 };
 
 const mappingITitulaireRequeteVersItemParentProps = (
-  parent?: ITitulaireRequete
-): ItemParentProps | undefined => {
-  return parent
-    ? {
-        numeros: {
-          requeteLiee: parent.numeroDossierNational
-        },
-        identite: {
-          noms: {
-            naissance: parent.nomNaissance
-          },
-          prenoms: {
-            naissance: mappingPrenoms(parent.prenoms)
-          },
-          genre: parent.sexe
-        },
-        naissance: {
-          date: mappingDateNaissance(parent),
-          ville: parent.villeNaissance || parent.villeEtrangereNaissance,
-          arrondissement: parent.arrondissementNaissance,
-          regionDeptEtat: parent.regionNaissance,
-          pays: parent.paysNaissance
-        },
-        nationalites: parent.nationalites || []
-      }
-    : undefined;
+  parent: ITitulaireRequete
+): ItemParentProps => {
+  return {
+    numeros: {
+      requeteLiee: parent.numeroDossierNational
+    },
+    identite: {
+      noms: {
+        naissance: parent.nomNaissance
+      },
+      prenoms: {
+        naissance: mappingPrenoms(parent.prenoms)
+      },
+      genre: parent.sexe
+    },
+    naissance: {
+      date: mappingDateNaissance(parent),
+      ville: parent.villeNaissance || parent.villeEtrangereNaissance,
+      arrondissement: parent.arrondissementNaissance,
+      regionDeptEtat: parent.regionNaissance,
+      pays: parent.paysNaissance
+    },
+    nationalites: parent.nationalites || []
+  };
 };
 
 const mappingITitulaireRequeteVersItemUnionProps = (
   union: ITitulaireRequete
 ): ItemUnionProps => {
-  const A_REMPLACER = "Non Trouvé";
-
   return {
     numeros: {
       requeteLiee: union.numeroDossierNational
@@ -189,41 +208,23 @@ const mappingITitulaireRequeteVersItemUnionProps = (
       pays: union.paysNaissance
     },
     nationalites: union.nationalites || [],
-    mariage: {
-      date: A_REMPLACER,
-      ville: A_REMPLACER,
-      arrondissement: A_REMPLACER,
-      regionDeptEtat: A_REMPLACER,
-      pays: A_REMPLACER
-    },
-    PACS: {
-      date: A_REMPLACER,
-      ville: A_REMPLACER,
-      arrondissement: A_REMPLACER,
-      regionDeptEtat: A_REMPLACER,
-      pays: A_REMPLACER
-    },
-    union: {
-      date: A_REMPLACER,
-      ville: A_REMPLACER,
-      arrondissement: A_REMPLACER,
-      regionDeptEtat: A_REMPLACER,
-      pays: A_REMPLACER
-    },
-    dissolution: {
-      date: A_REMPLACER,
-      ville: A_REMPLACER,
-      arrondissement: A_REMPLACER,
-      regionDeptEtat: A_REMPLACER,
-      pays: A_REMPLACER
-    },
-    deces: {
-      date: A_REMPLACER,
-      ville: A_REMPLACER,
-      arrondissement: A_REMPLACER,
-      regionDeptEtat: A_REMPLACER,
-      pays: A_REMPLACER
-    }
+    mariage: mappingEvenementUnion(
+      union.evenementUnions,
+      TypeEvenementUnion.MARIAGE
+    ),
+    PACS: mappingEvenementUnion(union.evenementUnions, TypeEvenementUnion.PACS),
+    union: mappingEvenementUnion(
+      union.evenementUnions,
+      TypeEvenementUnion.UNION
+    ),
+    dissolution: mappingEvenementUnion(
+      union.evenementUnions,
+      TypeEvenementUnion.DISSOLUTION_DIVORCE
+    ),
+    deces: mappingEvenementUnion(
+      union.evenementUnions,
+      TypeEvenementUnion.DECES
+    )
   };
 };
 
@@ -276,9 +277,9 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
       lieuVilleEtranger: effetCollectif.domiciliation?.villeEtrangere,
       pays: effetCollectif.domiciliation?.pays
     },
-    parent: mappingITitulaireRequeteVersItemParentProps(
-      effetCollectif.parent2Enfant
-    )
+    parent:
+      effetCollectif.parent2Enfant &&
+      mappingITitulaireRequeteVersItemParentProps(effetCollectif.parent2Enfant)
   };
 };
 
@@ -337,11 +338,15 @@ const triTitulaires = (titulaires?: ITitulaireRequete[]) => {
       titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
       titulaire.qualite === QualiteFamille.PARENT
   );
-  const unions = titulaires?.filter(
+  const union = titulaires?.find(
     titulaire =>
       titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-      (titulaire.qualite === QualiteFamille.CONJOINT_ACTUEL ||
-        titulaire.qualite === QualiteFamille.ANCIEN_CONJOINT)
+      titulaire.qualite === QualiteFamille.CONJOINT_ACTUEL
+  );
+  const unionsAnterieurs = titulaires?.filter(
+    titulaire =>
+      titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
+      titulaire.qualite === QualiteFamille.ANCIEN_CONJOINT
   );
   const effetsCollectifs = titulaires?.filter(
     titulaire =>
@@ -358,15 +363,16 @@ const triTitulaires = (titulaires?: ITitulaireRequete[]) => {
       titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
       titulaire.qualite === QualiteFamille.FRATRIE
   );
-  const postulant = titulaires?.filter(
+  const postulant = titulaires?.find(
     titulaire =>
       titulaire.typeObjetTitulaire === TypeObjetTitulaire.POSTULANT_NATIONALITE
-  )[0];
+  );
 
   return {
     postulant,
     parentsPostulant,
-    unions,
+    union,
+    unionsAnterieurs,
     effetsCollectifs,
     enfantsMajeurs,
     frateries
@@ -395,6 +401,29 @@ const mappingDateNaissance = ({
         }
       : undefined
   );
+
+const mappingEvenementUnion = (
+  evenementUnions: IEvenementUnion[] | undefined,
+  type: TypeEvenementUnion
+): DateCoordonneesType => {
+  const evenementUnion = evenementUnions?.find(evt => evt.type === type);
+
+  return {
+    date: getDateStringFromDateCompose(
+      evenementUnion?.annee
+        ? {
+            jour: evenementUnion.jour?.toString(),
+            mois: evenementUnion.mois?.toString(),
+            annee: evenementUnion.annee?.toString()
+          }
+        : undefined
+    ),
+    ville: evenementUnion?.ville,
+    arrondissement: evenementUnion?.arrondissement,
+    regionDeptEtat: evenementUnion?.region,
+    pays: evenementUnion?.pays
+  };
+};
 
 // Map chaque enfants de "tab" avec "mapper", ou retourne "[]" si "tab" est vide
 const mappingTableau = <IObject, ObjectType>(

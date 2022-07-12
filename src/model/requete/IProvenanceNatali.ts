@@ -9,8 +9,8 @@ export interface IProvenanceNatali {
   provenanceNaturalisation: ProvenanceNaturalisation;
   numeroDossierLocal: string;
   dateDepot: number;
-  dataPriseEnChargeSdanf: number;
+  datePriseEnChargeSdanf: number;
   decisionSdanf: string;
   tagPriorisation: TagPriorisation;
-  agentSdanf: IAgentSdanf;
+  agentSdanf?: IAgentSdanf;
 }

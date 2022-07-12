@@ -1,4 +1,5 @@
 import React from "react";
+import { estRenseigne } from "../../../../../../common/util/Utils";
 import Labels from "../../Labels";
 import {
   formatLigneDateCoordonnees,
@@ -6,7 +7,7 @@ import {
   formatLigneNomsPrenomsGenre
 } from "../Formatages";
 import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
-import { AccordeonInfos, ItemProps } from "./Item";
+import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 
 export interface ItemParentProps {
@@ -20,21 +21,21 @@ export interface ItemParentProps {
 
 const ItemParent: React.FC<ItemParentProps & ItemProps> = props => {
   return (
-    <AccordeonInfos {...props}>
+    <Item className={{ title: "bg-clair" }} {...props}>
       <ItemLigne
-        label={Labels.requete.liee}
+        label={Labels.resume.requete.liee}
         texte={`N° ${props.numeros.requeteLiee}`}
-        visible={props.numeros.requeteLiee !== undefined}
+        visible={estRenseigne(props.numeros.requeteLiee)}
       />
       <ItemLigne texte={formatLigneNomsPrenomsGenre(props.identite)} />
       <ItemLigne texte={formatLigneDateCoordonnees(props.naissance)} />
       <ItemLigne
         texte={
           formatLigneNationalites(props.nationalites) ??
-          Labels.nationalite.defaut
+          Labels.resume.nationalite.defaut
         }
       />
-    </AccordeonInfos>
+    </Item>
   );
 };
 

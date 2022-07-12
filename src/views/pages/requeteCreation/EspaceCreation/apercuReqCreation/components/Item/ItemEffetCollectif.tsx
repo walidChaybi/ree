@@ -1,5 +1,5 @@
 import React from "react";
-import { DEUX } from "../../../../../../common/util/Utils";
+import { estRenseigne } from "../../../../../../common/util/Utils";
 import Labels from "../../Labels";
 import {
   formatLigneAdresse,
@@ -34,12 +34,14 @@ export interface ItemEffetCollectifProps {
 const ItemEffetCollectif: React.FC<
   ItemEffetCollectifProps & ItemProps
 > = props => {
+  const idDeuxiemeParent = 2;
+
   return (
     <Item {...props}>
       <ItemLigne
-        label={Labels.requete.liee}
+        label={Labels.resume.requete.liee}
         texte={`N° ${props.numeros.requeteLiee}`}
-        visible={props.numeros.requeteLiee !== undefined}
+        visible={estRenseigne(props.numeros.requeteLiee)}
       />
       <ItemLigne texte={formatLigneNomsPrenomsGenre(props.identite)} />
       <ItemLigne
@@ -49,11 +51,11 @@ const ItemEffetCollectif: React.FC<
       <ItemLigne
         texte={
           formatLigneNationalites(props.nationalites) ??
-          Labels.nationalite.defaut
+          Labels.resume.nationalite.defaut
         }
       />
-      <ItemLigne label={Labels.effetCollectif} texte={props.statut} />
-      <ItemLigne label={Labels.residence} texte={props.residence} />
+      <ItemLigne label={Labels.resume.effetCollectif} texte={props.statut} />
+      <ItemLigne label={Labels.resume.residence} texte={props.residence} />
       {props.domiciliation.lignes.map((ligne, id) => (
         <ItemLigne key={`ligne${id}`} texte={ligne} />
       ))}
@@ -61,9 +63,8 @@ const ItemEffetCollectif: React.FC<
       {props.parent && (
         <ItemParent
           {...props.parent}
-          titre={Labels.parent}
-          numeroItem={DEUX}
-          etendu={false}
+          titre={Labels.resume.parent}
+          numeroItem={idDeuxiemeParent}
         />
       )}
     </Item>

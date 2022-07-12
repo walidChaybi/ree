@@ -23,7 +23,7 @@ const ItemEnfantMajeur: React.FC<ItemEnfantMajeurProps & ItemProps> = props => {
       <ItemLigne
         texte={
           formatLigneNationalites(props.nationalites) ??
-          Labels.nationalite.defaut
+          Labels.resume.nationalite.defaut
         }
       />
     </Item>

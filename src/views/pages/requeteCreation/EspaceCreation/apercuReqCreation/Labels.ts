@@ -39,7 +39,7 @@ const nationalite = {
   defaut: getLibelle("FR/ETR")
 };
 
-const Labels = {
+export const resume = {
   requete,
   infos,
   identification: getLibelle("Identification"),
@@ -57,6 +57,15 @@ const Labels = {
   effetCollectif: getLibelle("Effet collectif"),
   residence: getLibelle("Résidence"),
   fraterie: getLibelle("Fraterie")
+};
+
+export const PJ = {
+  description: getLibelle("Pièces justificatives / annexes")
+};
+
+const Labels = {
+  resume,
+  PJ
 };
 
 export default Labels;

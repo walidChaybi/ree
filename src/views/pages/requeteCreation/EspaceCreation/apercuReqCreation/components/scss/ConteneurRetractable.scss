@@ -1,0 +1,59 @@
+@import "../../../../../../../scss/_colors.scss";
+
+$spacing: 0.4rem;
+$radius: $spacing;
+$min-width: $spacing * 10;
+
+.component {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  transition: flex 0.1s ease-in-out 0.1s;
+  min-width: $min-width;
+  padding: $spacing;
+
+  &.is-closed {
+    flex: 0;
+
+    .header {
+      flex-direction: column-reverse;
+    }
+
+    .body {
+      visibility: hidden;
+    }
+  }
+
+  .header {
+    display: flex;
+    cursor: pointer;
+    background-color: $title-application-color;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: white;
+    padding: $spacing * 1.5;
+    margin-bottom: $spacing;
+    margin-top: $spacing;
+    border-radius: $radius;
+
+    span {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      padding: $spacing;
+
+      &.vertical {
+        transform: rotate(180deg);
+        writing-mode: vertical-lr;
+        white-space: nowrap;
+      }
+    }
+
+    .icon {
+      display: flex;
+      justify-content: center;
+      padding: $spacing;
+    }
+  }
+}

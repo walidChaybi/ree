@@ -1,4 +1,4 @@
-import Labels from "../Labels";
+import { resume as Labels } from "../Labels";
 import {
   DateCoordonneesType,
   DomiciliationType,
@@ -34,7 +34,9 @@ export const formatLigneFrancisationIdentification = ({
   noms,
   prenoms
 }: IdentiteType) => {
-  const francisationOK = noms.francisation || prenoms.francisation;
+  const francisationOK =
+    noms.francisation ||
+    (prenoms.francisation && prenoms.francisation.length > 0);
   const texteFrancisationNomsPrenoms = formatLigne(
     [noms.francisation, formatLigne(prenoms.francisation)],
     " ; "
@@ -50,19 +52,14 @@ export const formatLigneFrancisationIdentification = ({
   );
 };
 
-export const formatLigneDateCoordonnees = (
-  dateCoordonnees?: DateCoordonneesType
-) =>
-  formatLigne(
-    [
-      dateCoordonnees?.date,
-      dateCoordonnees?.ville,
-      dateCoordonnees?.arrondissement,
-      dateCoordonnees?.regionDeptEtat,
-      dateCoordonnees?.pays
-    ],
-    " ; "
-  );
+export const formatLigneDateCoordonnees = (dateCoordonnees?: DateCoordonneesType) =>
+  formatLigne([
+    dateCoordonnees?.date,
+    dateCoordonnees?.ville,
+    dateCoordonnees?.arrondissement,
+    dateCoordonnees?.regionDeptEtat,
+    dateCoordonnees?.pays
+  ]);
 
 export const formatLigneAdresse = (adresse?: DomiciliationType) =>
   formatLigne([
