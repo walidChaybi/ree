@@ -15,14 +15,11 @@ export const formatLigne = (
   return resultat !== "" ? resultat : undefined;
 };
 
-export const formatLigneNomsPrenomsGenre = ({
-  noms,
-  prenoms,
-  genre
-}: IdentiteType) =>
+export const formatLigneNomsPrenomsGenre = ({ noms, prenoms, genre }: IdentiteType) =>
   formatLigne(
     [
       noms.naissance,
+      noms.usage && `(Usage : ${noms.usage})`,
       noms.actuel && `(Actuel : ${noms.actuel})`,
       formatLigne(prenoms.naissance),
       genre

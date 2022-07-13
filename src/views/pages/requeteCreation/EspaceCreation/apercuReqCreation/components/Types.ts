@@ -1,6 +1,7 @@
 export type IdentiteType = {
   noms: {
     naissance: string;
+    usage?: string;
     actuel?: string;
     francisation?: string;
     identification?: string;

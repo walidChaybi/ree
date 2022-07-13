@@ -27,9 +27,10 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
   const requete: ItemRequeteProps = {
     numeros: {
       rece: requeteCreation.numero,
+      sdanf: requeteCreation.provenanceNatali?.numeroDossierNational,
       dila: requeteCreation.provenanceServicePublic?.referenceDila,
       ancienSI: requeteCreation.numeroAncien,
-      requeteLiee: undefined //TODO: -> requete information
+      requeteLiee: undefined // Selon Alice, ne concerne que les requêtes information
     },
     sousType: requeteCreation.sousType.libelle,
     natureDANF: requeteCreation.nature,
@@ -111,6 +112,7 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
     identite: {
       noms: {
         naissance: titulaire.nomNaissance,
+        usage: titulaire.nomUsage,
         actuel: titulaire.nomActuel,
         francisation: titulaire.nomDemandeFrancisation,
         identification: titulaire.nomDemandeIdentification
@@ -245,6 +247,7 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
     identite: {
       noms: {
         naissance: effetCollectif.nomNaissance,
+        usage: effetCollectif.nomUsage,
         actuel: effetCollectif.nomActuel,
         francisation: effetCollectif.nomDemandeFrancisation
       },

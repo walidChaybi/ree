@@ -8,6 +8,7 @@ import { ItemLigne } from "./ItemLigne";
 export interface ItemRequeteProps {
   numeros: {
     rece?: string;
+    sdanf?: string;
     dila?: string;
     ancienSI?: string;
     requeteLiee?: string;
@@ -33,6 +34,7 @@ export interface ItemRequeteProps {
 const ItemRequete: React.FC<ItemRequeteProps> = props => {
   const numerosRequete = formatLigne([
     props.numeros.rece && `n° ${props.numeros.rece}`,
+    props.numeros.sdanf && `n° ${props.numeros.sdanf}`,
     props.numeros.dila && `n° ${props.numeros.dila}`,
     props.numeros.ancienSI && `n° ${props.numeros.ancienSI}`
   ]);
