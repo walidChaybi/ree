@@ -9,10 +9,16 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
+import {
+  resultatHeaderUtilistateurLaurenceBourdeau,
+  resultatRequeteUtilistateurLaurenceBourdeau
+} from "../../../../../mock/data/connectedUserAvecDroit";
 import { ReponseAppelMesRequetes } from "../../../../../mock/data/EspaceDelivrance";
 import { configEtatcivil } from "../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../mock/superagent-config/superagent-mock-requetes";
 import { getUrlWithParam } from "../../../../../views/common/util/route/routeUtil";
+import { storeRece } from "../../../../../views/common/util/storeRece";
+import { mappingOfficier } from "../../../../../views/core/login/LoginHook";
 import { BoutonPrendreEnChargeAleatoirement } from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/contenu/BoutonPrendreEnChargeAleatoirement";
 import {
   URL_MES_REQUETES_DELIVRANCE,
@@ -24,6 +30,11 @@ const superagentMock = require("superagent-mock")(request, [
 ]);
 
 test("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace Délivrance", async () => {
+  storeRece.utilisateurCourant = mappingOfficier(
+    resultatHeaderUtilistateurLaurenceBourdeau,
+    resultatRequeteUtilistateurLaurenceBourdeau.data
+  );
+
   const history = createMemoryHistory();
   history.push(URL_MES_REQUETES_DELIVRANCE);
   render(
