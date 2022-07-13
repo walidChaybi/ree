@@ -38,11 +38,11 @@ export function contenuDisabled(
 export function contenuOptionNonModifier(
   option: OptionCourrier | undefined
 ): boolean {
-  return (
-    option !== undefined &&
-    option.texteOptionCourrier === option.texteOptionCourrierModifier
-  );
+  return option !== undefined && !texteOptionCourrierModifie(option);
 }
+
+export const texteOptionCourrierModifie = (option: OptionCourrier): boolean =>
+  option.texteOptionCourrier !== option.texteOptionCourrierModifier;
 
 export function classNameContenu(
   option: OptionCourrier | undefined,

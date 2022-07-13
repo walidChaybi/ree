@@ -13,6 +13,7 @@ import {
   TableauSimple,
   TableauSimpleProps
 } from "../../../../../../../common/widget/tableau/TableauSimple/TableauSimple";
+import { texteOptionCourrierModifie } from "./GestionOptionsCourrier";
 import "./scss/OptionsCourrierForm.scss";
 
 /** Construction du tableau des Options Disponibles */
@@ -158,7 +159,7 @@ function getColonneModifierOption(opt: OptionCourrier): JSX.Element {
     <>
       {(opt.presenceVariables || opt.optionLibre) && (
         <div className="BoutonOption">
-          {opt.texteOptionCourrierModifier !== opt.texteOptionCourrier ? (
+          {texteOptionCourrierModifie(opt) ? (
             <IconeValider title={getLibelle("Option modifié")} />
           ) : (
             <IconeDanger title={getLibelle("Option non modifié")} />

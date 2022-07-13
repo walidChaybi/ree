@@ -1,5 +1,5 @@
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import {
   CodesExtraitCopie,
@@ -42,7 +42,7 @@ export const RequeteFormDefaultValues = {
   [NATURE_ACTE]: "NAISSANCE",
   [DOCUMENT_DEMANDE]: "",
   [NB_EXEMPLAIRE]: "1",
-  [MOTIF]: "",
+  [MOTIF]: MotifDelivrance.getKey(MotifDelivrance.NON_PRECISE_PAR_REQUERANT),
   [COMPLEMENT_MOTIF]: ""
 };
 
@@ -120,6 +120,15 @@ const RequeteForm: React.FC<SubFormProps> = props => {
     props.formik.handleChange(e);
   };
 
+  // initialiser dynamiquement le document demandé par défaut
+  useEffect(() => {
+    props.formik.setFieldValue(
+      withNamespace(props.nom, DOCUMENT_DEMANDE),
+      DocumentDelivrance.getCopieIntegraleUUID()
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <SousFormulaire titre={props.titre}>
@@ -133,11 +142,13 @@ const RequeteForm: React.FC<SubFormProps> = props => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onChangeNatureActeRequete(e);
                 }}
+                pasPremiereOptionVide={true}
               />
               <SelectField
                 name={withNamespace(props.nom, DOCUMENT_DEMANDE)}
                 label={getLibelle("Document demandé")}
                 options={documentDemandeOptions}
+                pasPremiereOptionVide={true}
               />
             </>
           )}
@@ -153,7 +164,7 @@ const RequeteForm: React.FC<SubFormProps> = props => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onChangeMotif(e);
             }}
-            pasPremiereOptionVide={props.formulaireReduit}
+            pasPremiereOptionVide={true}
           />
           {!complementMotifInactif && (
             <InputField

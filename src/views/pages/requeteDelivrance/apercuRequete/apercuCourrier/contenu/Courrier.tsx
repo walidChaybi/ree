@@ -38,6 +38,7 @@ import {
   getTexteLibre
 } from "./contenuForm/CourrierForms";
 import { ValidationSchemaChoixCourrier } from "./contenuForm/sousFormulaires/ChoixCourrierForm";
+import { texteOptionCourrierModifie } from "./contenuForm/sousFormulaires/GestionOptionsCourrier";
 import { ValidationSchemaOptionCourrier } from "./contenuForm/sousFormulaires/OptionsCourrierForm";
 import {
   ADRESSE,
@@ -87,7 +88,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const checkOptionsToutesValides = useCallback(() => {
     return optionsChoisies.every((opt: OptionCourrier) => {
       if (opt.presenceVariables || opt.optionLibre) {
-        return opt.texteOptionCourrierModifier !== opt.texteOptionCourrier;
+        return texteOptionCourrierModifie(opt);
       } else return true;
     });
   }, [optionsChoisies]);

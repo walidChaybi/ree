@@ -27,7 +27,8 @@ import {
   optionPresenceVariables,
   recupererLesOptionsDuCourrier,
   reinitialiserDisabled,
-  switchOption
+  switchOption,
+  texteOptionCourrierModifie
 } from "./GestionOptionsCourrier";
 import {
   getTableauOptionsChoisies,
@@ -89,6 +90,20 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [optionsCourrierDisponibles]);
+
+  // Auto-focus sur la 1ere option choisie ayant des variables non-modifiés
+  useEffect(() => {
+    if (props.optionsChoisies) {
+      const optSelectParDefaut = props.optionsChoisies.filter(
+        opt => opt.presenceVariables && !texteOptionCourrierModifie(opt)
+      );
+
+      if (optSelectParDefaut[0]) {
+        modifierUneOption(optSelectParDefaut[0]);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.optionsChoisies]);
 
   const ajouterUneOption = (opt: OptionCourrier) => {
     const { optionsAvecAjout, optionsAvecSuppression } = switchOption(
