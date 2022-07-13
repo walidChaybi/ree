@@ -50,12 +50,6 @@ export function useNavigationApercuDelivrance(
           setRedirection,
           urlWithoutParam
         );
-      } else if (
-        !requete.idUtilisateur &&
-        requete.statut === StatutRequete.PRISE_EN_CHARGE.libelle
-      ) {
-        // Lors de la prise en charge aléatoire, on doit lancer la RMC
-        setRedirection({ isRmcAuto: true });
       } else {
         // Si la requête N'EST PAS dans sa corbeille agent-> redirection vers "Aperçu de requête"
         redirectionApercuRequete(setRedirection, urlWithoutParam, requete);
