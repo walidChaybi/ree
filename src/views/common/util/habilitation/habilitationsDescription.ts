@@ -1,8 +1,6 @@
 /* istanbul ignore file */
 
 import { Droit } from "../../../../model/agent/enum/Droit";
-import { FeatureFlag } from "../featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "../featureFlag/gestionnaireFeatureFlag";
 
 export interface IHabiliationDescription {
   nomComposant: NomComposantOuFonction;
@@ -39,18 +37,6 @@ export type NomComposant =
 
 export type NomComposantOuFonction = NomComposant | NomFonction;
 
-///// ETAPE2 ////////////////////////////////////////////////////////////////
-const etape2BisActive = gestionnaireFeatureFlag.estActif(
-  FeatureFlag.FF_DELIV_EC_PAC
-);
-const etape2Bis = function (obj: Droit[]) {
-  if (etape2BisActive) {
-    return obj;
-  }
-  return [Droit.AUCUN];
-};
-///// ETAPE2 ////////////////////////////////////////////////////////////////
-
 export const droitsSaufConsulterArchives = [
   Droit.CREER_ACTE_DRESSE,
   Droit.CREER_ACTE_ETABLI,
@@ -84,20 +70,17 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilEspaceMiseAjour",
-    unDesDroits: etape2Bis([
-      Droit.METTRE_A_JOUR_ACTE,
-      Droit.METTRE_A_JOUR_RC_RCA_PACS
-    ]),
+    unDesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.METTRE_A_JOUR_RC_RCA_PACS],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
   {
     nomComposant: "BoutonAccueilEspaceCreation",
-    unDesDroits: etape2Bis([
+    unDesDroits: [
       Droit.CREER_ACTE_TRANSCRIT,
       Droit.CREER_ACTE_DRESSE,
       Droit.CREER_ACTE_ETABLI
-    ]),
+    ],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
@@ -127,7 +110,7 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilTableau",
-    tousLesDroits: etape2Bis([]),
+    tousLesDroits: [],
     comportementSiNonAutorise: { disabled: true }
   },
   {

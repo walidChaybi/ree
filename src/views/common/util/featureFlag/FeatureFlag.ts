@@ -1,6 +1,5 @@
 // ID          | Fonction                                                 |  Statut | Date peremption
 // ------------|----------------------------------------------------------|---------|-------------------------------------------------
-// ETAPE2_BIS  | Conditionne les features de l'étape2 Release 3, 4,5 et 6 | ACTIF   | Lorsque les Release 3, 4, 5 et 6 de l'étape 2 seront terminées
 // LOG_SERVEUR | Conditionne l'envoi des logs au serveur                  | ACTIF   | Après MES
 // FF_CONSULT_ACTE_RQT | Conditionne RMC Acte/Inscription et requete      | ACTIF   | Après MES RMC dans RECE
 // FF_DELIV_CS | Conditionne Certificat situation                         | ACTIF   | Après MES Délivrance CS dans RECE
