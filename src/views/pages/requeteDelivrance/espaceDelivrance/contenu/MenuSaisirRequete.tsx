@@ -2,11 +2,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import {
-  LISTE_DES_REQUETES_COURRIER_CS,
-  LISTE_DES_REQUETES_COURRIER_EC_LF,
-  SousTypeDelivrance
-} from "../../../../../model/requete/enum/SousTypeDelivrance";
+import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { FeatureFlag } from "../../../../common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import WithHabilitation from "../../../../common/util/habilitation/WithHabilitation";
@@ -29,7 +25,7 @@ interface MenuSaisirRequeteProps {
 const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
 
-  const handleClickBoutonSaisir = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpenMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     setMenu(e.currentTarget);
   };
 
@@ -77,14 +73,11 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
     }
   };
 
-  const listeRequeteCourrier: string[] = getListeDesRequetesCourrier();
+  const listeRequeteCourrier = getListeDesRequetesCourrier();
 
   return (
     <div className="MenuSaisirRequete">
-      <button
-        onClick={e => handleClickBoutonSaisir(e)}
-        disabled={props.disabled}
-      >
+      <button onMouseEnter={handleOpenMenu} disabled={props.disabled}>
         {getLibelle("Saisir requête courrier")}
       </button>
 
@@ -103,11 +96,17 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
           vertical: "top",
           horizontal: "right"
         }}
+        MenuListProps={{
+          onMouseLeave: handleCloseMenu
+        }}
       >
-        {listeRequeteCourrier.map((nom: string) => {
+        {listeRequeteCourrier.map((sousTypeDelivrance: SousTypeDelivrance) => {
           return (
-            <MenuItem onClick={() => clickMenuItem(nom)} key={nom}>
-              {SousTypeDelivrance.getEnumFor(nom).libelle}
+            <MenuItem
+              onClick={() => clickMenuItem(sousTypeDelivrance.nom)}
+              key={sousTypeDelivrance.nom}
+            >
+              {sousTypeDelivrance.libelle}
             </MenuItem>
           );
         })}
@@ -116,20 +115,25 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
   );
 };
 
-function getListeDesRequetesCourrier() {
-  let listeRequeteCourrier: string[] = [];
+function getListeDesRequetesCourrier(): SousTypeDelivrance[] {
+  let listeRequeteCourrier: SousTypeDelivrance[] = [];
 
   if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)) {
-    listeRequeteCourrier = listeRequeteCourrier.concat(
-      LISTE_DES_REQUETES_COURRIER_EC_LF
-    );
+    listeRequeteCourrier = listeRequeteCourrier.concat(SousTypeDelivrance.RDC);
   }
 
   if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)) {
     listeRequeteCourrier = listeRequeteCourrier.concat(
-      LISTE_DES_REQUETES_COURRIER_CS
+      SousTypeDelivrance.RDCSC
     );
   }
+
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)) {
+    listeRequeteCourrier = listeRequeteCourrier.concat(
+      SousTypeDelivrance.RDLFC
+    );
+  }
+
   return listeRequeteCourrier;
 }
 

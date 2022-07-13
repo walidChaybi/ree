@@ -5,9 +5,6 @@ import { FeatureFlag } from "../../../views/common/util/featureFlag/FeatureFlag"
 import { gestionnaireFeatureFlag } from "../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
 import { Options } from "../../../views/common/util/Type";
 
-export const LISTE_DES_REQUETES_COURRIER_EC_LF = ["RDC", "RDLFC"];
-export const LISTE_DES_REQUETES_COURRIER_CS = ["RDCSC"];
-
 export class SousTypeDelivrance extends EnumWithComplete {
   public static readonly RDD = new SousTypeDelivrance(
     "RDD",

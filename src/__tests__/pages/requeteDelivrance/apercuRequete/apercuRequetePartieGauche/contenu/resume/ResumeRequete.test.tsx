@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
 import { act } from "react-dom/test-utils";
@@ -61,8 +61,10 @@ test("renders Page requete with all elements", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
-    expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
+    expect(
+      screen.getByText("Détail requête 54j654j4jyfjtj456j4")
+    ).toBeDefined();
+
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
@@ -82,7 +84,6 @@ test("renders Page requete with all elements", async () => {
     expect(screen.getByText("Lien avec le titulaire")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
     expect(screen.getByText("Pièces Justificatives")).toBeDefined();
-    fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));
   });
 });
 
@@ -117,8 +118,9 @@ test("renders Page requete with 1 titulaire", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
-    expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
+    expect(
+      screen.getByText("Détail requête 54j654j4jyfjtj456j4")
+    ).toBeDefined();
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
@@ -135,7 +137,6 @@ test("renders Page requete with 1 titulaire", async () => {
     expect(screen.getByText("Nom requérant")).toBeDefined();
     expect(screen.getByText("Cabinet WandC")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
-    fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));
   });
 });
 
@@ -170,8 +171,9 @@ test("renders Page requete without titulaire", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
-    expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
+    expect(
+      screen.getByText("Détail requête 54j654j4jyfjtj456j4")
+    ).toBeDefined();
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
@@ -188,7 +190,6 @@ test("renders Page requete without titulaire", async () => {
     expect(screen.getByText("Lien avec le titulaire")).toBeDefined();
     expect(screen.getByText("Titulaire")).toBeDefined();
     expect(screen.getByText("Pièces Justificatives")).toBeDefined();
-    fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));
   });
 });
 
@@ -223,13 +224,13 @@ test("renders Page requete type creation", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
-    expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
+    expect(
+      screen.getByText("Détail requête 54j654j4jyfjtj456j4")
+    ).toBeDefined();
     expect(screen.getByText("Canal")).toBeDefined();
     expect(screen.getByText("Nom requérant")).toBeDefined();
     expect(screen.getByText("Lien avec le titulaire")).toBeDefined();
     expect(screen.getByText("Pièces Justificatives")).toBeDefined();
-    fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));
   });
 });
 
@@ -237,12 +238,13 @@ test("renders Page requete with mandataire hablité without raison sociale", asy
   const reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale =
     ReponseAppelDetailRequeteDelivranceUnTitulaire.data;
 
-  reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale.requerant.detailQualiteMandataireHabilite = {
-    id: "94cb55b0-7cb1-4d65-9aae-e6c972e29ed9",
-    type: "AVOCAT",
-    nature: "",
-    crpcen: ""
-  } as any;
+  reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale.requerant.detailQualiteMandataireHabilite =
+    {
+      id: "94cb55b0-7cb1-4d65-9aae-e6c972e29ed9",
+      type: "AVOCAT",
+      nature: "",
+      crpcen: ""
+    } as any;
 
   await act(async () => {
     const history = createMemoryHistory();
@@ -274,8 +276,10 @@ test("renders Page requete with mandataire hablité without raison sociale", asy
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Résumé requête")).toBeDefined();
-    expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
+    expect(
+      screen.getByText("Détail requête 54j654j4jyfjtj456j4")
+    ).toBeDefined();
+
     expect(
       screen.getByText("Délivrance Extrait/Copie dématérialisée")
     ).toBeDefined();
@@ -292,7 +296,6 @@ test("renders Page requete with mandataire hablité without raison sociale", asy
     expect(screen.getByText("Nom requérant")).toBeDefined();
     expect(screen.getByText("JACQUES Charles")).toBeDefined();
     expect(screen.getByText("Père/mère")).toBeDefined();
-    fireEvent.click(screen.getByText("54j654j4jyfjtj456j4"));
   });
 });
 

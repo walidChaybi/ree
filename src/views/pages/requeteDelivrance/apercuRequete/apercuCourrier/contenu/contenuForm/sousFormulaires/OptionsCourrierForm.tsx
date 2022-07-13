@@ -192,7 +192,7 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
               disabled={true}
             />
             {optionAPuce(optionSelectionne) && (
-              <div className="OptionPuce">{getLibelle("Option à puce(s)")}</div>
+              <div className="OptionPuce">{getLibelle("Option à tiret")}</div>
             )}
           </div>
           <div className="ContenuOptionForm">

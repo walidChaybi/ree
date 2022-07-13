@@ -15,7 +15,7 @@ const columnsTableauRmc = [
   ...natureHeadersTableauRMC,
   new TableauTypeColumn({
     keys: [HeaderTableauRMCActe.Registre],
-    title: "Registre",
+    title: "Réf. acte",
     className: "ColOverflow",
     style: { width: "200px" }
   })
