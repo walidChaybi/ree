@@ -120,9 +120,10 @@ export const SaisirExtraitForm: React.FC<SaisirExtraitFormProps> = props => {
     }
   }, [extraitSaisiAEnvoyer, props]);
 
-  const titulairesAMs = FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConj(
-    props.acte
-  );
+  const titulairesAMs =
+    FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(
+      props.acte
+    );
   const evenement = props.acte.evenement;
 
   const titulaire1Parents = TitulaireActe.getAuMoinsDeuxParentsDirects(

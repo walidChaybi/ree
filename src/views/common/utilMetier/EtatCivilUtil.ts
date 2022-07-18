@@ -5,7 +5,12 @@ import {
   getDateFormatJasperFromCompose,
   IDateCompose
 } from "../util/DateUtils";
-import { formatNom, formatPrenoms, getValeurOuVide } from "../util/Utils";
+import {
+  ABSENCE_VALIDEE,
+  formatNom,
+  formatPrenoms,
+  getValeurOuVide
+} from "../util/Utils";
 
 export class EtatCivilUtil {
   public static formatLeOuEn(jour?: string | number) {
@@ -70,7 +75,7 @@ export class EtatCivilUtil {
     nomPartie1?: string,
     nomPartie2?: string
   ) {
-    return nomPartie1 && nomPartie2
+    return nomPartie1 && nomPartie1 !== ABSENCE_VALIDEE && nomPartie2
       ? `(1re partie : ${nomPartie1}  2nde partie : ${nomPartie2})`
       : "";
   }

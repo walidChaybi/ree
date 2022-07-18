@@ -131,7 +131,7 @@ export const FicheActe = {
     );
   },
 
-  getTitulairesAMDansLOrdreAvecMajDeclConj(acte: IFicheActe) {
+  getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(acte: IFicheActe) {
     const titulairesAMs: ITitulaireActe[] = [];
     const titulairesActeDansLOrdre = this.getTitulairesActeDansLOrdre(acte);
 
@@ -228,6 +228,7 @@ function majNomSequable(
   titulaireAM?: ITitulaireActe,
   titulaireActe?: ITitulaireActe
 ) {
+  // Si titulaireAM.nomPartie1 est égal à "ABSENCE_VALIDEE" alors il reste à "ABSENCE_VALIDEE" (c'est le code par la suite qui gère cette valeur)
   if (titulaireAM && !titulaireAM.nomPartie1 && titulaireActe) {
     titulaireAM.origineNomPartiesTitulaireActe = true;
 

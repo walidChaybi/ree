@@ -169,7 +169,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
   } {
     // Récupération des titulaires AM
     const [titulaireAM1, titulaireAM2] =
-      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConj(acte);
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(acte);
 
     // Récupération des titulaires de l'Acte pour la filiation
     const { titulaireActe1, titulaireActe2 } =
@@ -237,7 +237,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
     let titulaireAMCompositionEC2: ITitulaireAMCompositionEC | undefined;
 
     const titulairesAMs =
-      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConj(acte);
+      FicheActe.getTitulairesAMDansLOrdreAvecMajDeclConjEtMajPartiesNom(acte);
 
     if (titulairesAMs[0]) {
       titulaireAMCompositionEC1 =

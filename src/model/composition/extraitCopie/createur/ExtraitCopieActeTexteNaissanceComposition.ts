@@ -91,7 +91,7 @@ est ${neOuNeeTitulaire1} à ${evtActe.lieuEvenement}${this.getLigneAvecRetourCha
     const tab = tabulation ? "  " : "";
     if(element1 || element2){
       texte = `
-${tab}${element1}`
+${tab}${element1}`;
     }
     if(element2){
       texte += ` ${getValeurOuVide(element2)}`;
@@ -104,7 +104,7 @@ ${tab}${element1}`
     let sexe = "";
     if(sexeTitulaire){
       sexe = `
-${duOuDeSexe} sexe ${sexeTitulaire}`
+${duOuDeSexe} sexe ${sexeTitulaire}`;
     }
     return sexe;
   }
