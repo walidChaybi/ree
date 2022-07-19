@@ -135,7 +135,7 @@ function mapAnalysesMarginales(ams: any[]): IAnalyseMarginale[] | undefined {
   }));
 }
 
-function mapTitulaires(titulaires: any[]): ITitulaireActe[] {
+export function mapTitulaires(titulaires: any[]): ITitulaireActe[] {
   return titulaires.map(titulaire => ({
     ...titulaire,
     sexe: titulaire.sexe ? Sexe.getEnumFor(titulaire.sexe) : Sexe.INCONNU,

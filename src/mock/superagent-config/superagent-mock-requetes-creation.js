@@ -35,6 +35,21 @@ export const configRequetesCreation = [
         };
       }
 
+      if (
+        match[1] ===
+          "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=numeroAffichage&sens=ASC&range=0-105" ||
+        match[1] ===
+          "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=dateCreation&sens=ASC&range=0-105"
+      ) {
+        return {
+          headers: {
+            "content-range": "",
+            link: ""
+          },
+          data: []
+        };
+      }
+
       const error = { msg: "url params non mockée", url: match[1] };
       console.log("Erreur mock api requ info: ", error);
       return {

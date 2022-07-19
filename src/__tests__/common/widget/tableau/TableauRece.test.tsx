@@ -13,11 +13,11 @@ import { TableauTypeColumn } from "../../../../views/common/widget/tableau/Table
 import { URL_MES_REQUETES_DELIVRANCE } from "../../../../views/router/ReceUrls";
 
 const HookConsummer: React.FC = (props: any) => {
-  return <button onClick={props.reloadData()}>{"BoutonTest"}</button>;
+  return <button onClick={() => props.reloadData()}>{"BoutonTest"}</button>;
 };
 
 const HookConsummer2: React.FC = (props: any) => {
-  return <button onClick={props.reloadData(true)}>{"BoutonTest"}</button>;
+  return <button onClick={() => props.reloadData(true)}>{"BoutonTest"}</button>;
 };
 const paramsTableau = {
   previousDataLinkState: "",

@@ -31,7 +31,8 @@ const params: ISauvegardeValidationSaisieExtraitParams = {
   callBack,
   extraitSaisiAEnvoyer,
   acte: acteExtraitSaisie,
-  requete: requeteExtraitSaisie
+  requete: requeteExtraitSaisie,
+  problemePlurilingue: false
 };
 
 const HookConsumer: React.FC = () => {

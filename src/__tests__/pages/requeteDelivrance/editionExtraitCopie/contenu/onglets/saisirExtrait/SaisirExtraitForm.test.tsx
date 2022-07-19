@@ -8,12 +8,17 @@ import {
 import React from "react";
 import request from "superagent";
 import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/connectedUserAvecDroit";
-import { requeteAvecDocs } from "../../../../../../../mock/data/DetailRequeteDelivrance";
+import {
+  requeteAvecDocs,
+  requeteAvecDocsPlurilingue
+} from "../../../../../../../mock/data/DetailRequeteDelivrance";
 import {
   ficheActe1,
-  ficheActe1_avecTitulaireAyantDeuxParents
+  ficheActe1_avecTitulaireAyantDeuxParents,
+  ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe
 } from "../../../../../../../mock/data/ficheActe";
 import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
+import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { mapActe } from "../../../../../../../views/common/hook/repertoires/MappingRepertoires";
 import { storeRece } from "../../../../../../../views/common/util/storeRece";
@@ -30,15 +35,22 @@ import {
   expectEstSelectPresentAvecValeur,
   expectSelectEstAbsent
 } from "../../../../../../__tests__utils__/expectUtils";
+import { configComposition } from "./../../../../../../../mock/superagent-config/superagent-mock-composition";
+import { DocumentDelivrance } from "./../../../../../../../model/requete/enum/DocumentDelivrance";
 
-const superagentMock = require("superagent-mock")(request, configEtatcivil);
+const superagentMock = require("superagent-mock")(request, [
+  configEtatcivil[0],
+  configRequetes[0],
+  configComposition[0]
+]);
 
 const acte = mapActe(ficheActe1.data);
 const requete = {} as IRequeteDelivrance;
 const handleDocumentEnregistre = jest.fn();
 
-beforeAll(() => {
+beforeAll(async () => {
   storeRece.utilisateurCourant = userDroitnonCOMEDEC; // Droit DELIVRER
+  await DocumentDelivrance.init();
 });
 
 afterAll(() => {
@@ -441,5 +453,40 @@ test("Attendu: la validation du formulaire fonctionne correctement", async () =>
   });
   await waitFor(() => {
     expect(screen.getByLabelText("Valider")).toBeInTheDocument();
+  });
+});
+
+test("Attendu: controle sexe titulaire et parent de même sexe dans le cas plurilingue fonctionne correctement", async () => {
+  render(
+    <SaisirExtraitForm
+      acte={mapActe(ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe.data)}
+      requete={mappingRequeteDelivrance(requeteAvecDocsPlurilingue)}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
+  await act(async () => {
+    fireEvent.click(screen.getByLabelText("Valider"));
+  });
+
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        "Si vous continuez, l'extrait plurilingue généré sera en erreur."
+      )
+    ).toBeInTheDocument();
+  });
+
+  const boutonNon = screen.getByLabelText("confirmation Non");
+
+  await act(async () => {
+    fireEvent.click(boutonNon);
+  });
+
+  await waitFor(() => {
+    expect(
+      screen.queryByText(
+        "Si vous continuez, l'extrait plurilingue généré sera en erreur."
+      )
+    ).not.toBeInTheDocument();
   });
 });

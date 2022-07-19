@@ -46,11 +46,13 @@ import {
   ReponseAppelRMCActe4DernierResultats,
   ReponseAppelRMCActe4PremiersResultats
 } from "../data/RMCActe";
+
 import {
   ReponseAppelRMCInscription,
   ReponseAppelRMCInscription4DernierResultats,
   ReponseAppelRMCInscription4PremiersResultats
 } from "../data/RMCInscription";
+import { ficheActeAvecImage } from "./../data/ficheActe";
 
 export const NORESULT = "NORESULT";
 
@@ -138,6 +140,13 @@ export const configEtatcivil = [
         return { data: acteMariage };
       } else if (match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d") {
         return { data: ActeAnalyseMarginales };
+      }
+
+      if (
+        match[1] ===
+        "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d?recupereImagesEtTexte=true"
+      ) {
+        return ficheActeAvecImage;
       }
 
       /////////////////////////////////////////////////////////////////////
