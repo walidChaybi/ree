@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { IPieceJointe } from "../../../../../../../model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificative } from "../../../../../../../model/requete/pieceJointe/IPieceJustificative";
 import { ListePiecesJointes } from "../../../../../../common/composant/piecesJointes/ListePiecesJointes";
 import { TypePieceJointe } from "../../../../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
+import { FenetreExterne } from "../../../../../../common/util/FenetreExterne";
 import { DEUX, TROIS, UN, ZERO } from "../../../../../../common/util/Utils";
 import { SectionPanel } from "../../../../../../common/widget/section/SectionPanel";
+import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
 import { getPanelsResumeRequete } from "./ResumeRequeteUtils";
 
 export const titreDetail = "Détails de requête";
@@ -14,14 +16,31 @@ interface ResumeRequeteProps {
   requete: IRequeteDelivrance;
 }
 
+const width = 1100;
+const height = 600;
+
 export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
+  const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
   const panels = getPanelsResumeRequete(props.requete);
+
+  const onClickNumero = () => {
+    setFenetreExterne(true);
+  };
+
+  const onClose = () => {
+    setFenetreExterne(false);
+  };
 
   return (
     <>
       <div className="ResumeRequete Fieldset">
         <div className="ResumeRequeteTitle">
-          <span>{`Détail requête ${props.requete.numero}`}</span>
+          <span>
+            {`Résumé requête `}
+            <span className="LinkNumeroRequete" onClick={onClickNumero}>
+              {props.requete.numero}
+            </span>
+          </span>
         </div>
         {panels.length > 1 && (
           <div className="PanelsResumeRequete">
@@ -41,6 +60,16 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
           </div>
         )}
       </div>
+      {fenetreExterne && (
+        <FenetreExterne
+          titre={`Détails requête : N°${props.requete.numero}`}
+          onCloseHandler={onClose}
+          height={height}
+          width={width}
+        >
+          <DetailRequetePage idRequeteAAfficher={props.requete.id} />
+        </FenetreExterne>
+      )}
     </>
   );
 };
