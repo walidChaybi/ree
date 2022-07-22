@@ -61,5 +61,24 @@ export const Mention = {
       texte = `${texteMention}${texteApposition}${texteOEC}`;
     }
     return texte;
+  },
+  trierMentions(mentions: IMention[]) {
+    mentions.sort((mention1, mentions2) =>
+      mention1.numeroOrdreExtrait
+        ? mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait
+        : mention1.numeroOrdre - mentions2.numeroOrdre
+    );
+  },
+  trierMentionsNumeroOrdre(mentions: IMention[]) {
+    mentions.sort(
+      (mention1, mentions2) => mention1.numeroOrdre - mentions2.numeroOrdre
+    );
+  },
+  trierMentionsNumeroOrdreExtrait(mentions: IMention[]) {
+    mentions.sort((mention1, mentions2) =>
+      mention1.numeroOrdreExtrait && mentions2.numeroOrdreExtrait
+        ? mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait
+        : mention1.numeroOrdre - mentions2.numeroOrdre
+    );
   }
 };

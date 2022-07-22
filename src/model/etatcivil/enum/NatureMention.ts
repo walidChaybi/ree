@@ -4,6 +4,52 @@ import { EnumNomemclature } from "../../../views/common/util/enum/EnumNomenclatu
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../views/common/util/Type";
 
+export const CODE_RC = "21";
+export const CODE_RC_RADIE = "22";
+export const DISSOLUTION_PACS = "28";
+export const MODIFICATION_PACS = "29";
+export const REGIME_MATRIMONIAL = "6";
+export const MARIAGE = "27";
+export const PACS = "2";
+export const LIEN_FILIATION_HORS_ADOPTION = "12";
+export const PUPILLE = "14";
+export const ANNULATION_MARIAGE = "15";
+export const ANNULATION_PACS = " 16";
+export const CONTRAT_MARIAGE = "7";
+export const DECES = "1";
+export const REPRISE_VIE_COMMUNE = "4";
+export const NATIONALITE = "8";
+export const EXTRANEITE = "9";
+export const CHANGEMENT_SEXE = "11";
+export const CHANGEMENT_NOM = "10";
+export const ADOPTION = "13";
+export const SEPARATION_CORPS = "3";
+export const ANNULATION_DECISION = "17";
+export const ANNULATION_EVENEMENT = "18";
+export const MORT_POUR_LA_FRANCE = "25";
+export const ACTE_HERITIER = "26";
+export const AUTRES = "99";
+export const ANNULATION_MENTION = "19";
+export const DIVORCE = "5";
+export const DECISION_ACTE = "24";
+export const RECTIFICATION = "20";
+
+export const natureRetireesNaissance = [
+  REPRISE_VIE_COMMUNE,
+  NATIONALITE,
+  ADOPTION,
+  ANNULATION_MARIAGE,
+  ANNULATION_PACS,
+  ANNULATION_DECISION,
+  ANNULATION_EVENEMENT,
+  ANNULATION_MENTION,
+  RECTIFICATION,
+  CODE_RC_RADIE,
+  CHANGEMENT_NOM,
+  CHANGEMENT_SEXE,
+  LIEN_FILIATION_HORS_ADOPTION
+];
+
 export class NatureMention extends EnumNomemclature {
   constructor(
     code: string,

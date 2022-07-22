@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "../../../../model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";

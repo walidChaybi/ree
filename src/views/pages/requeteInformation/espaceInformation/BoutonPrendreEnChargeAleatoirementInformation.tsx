@@ -9,7 +9,7 @@ import {
 import {
   IRequeteAleatoireResultat,
   useGetRequeteAleatoire
-} from "../../../common/hook/requete/PrendreEnChargeAleatoirementHook";
+} from "../../../common/hook/requete/PrendreEnChargeAleatoirementApiHook";
 import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
 import messageManager from "../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";

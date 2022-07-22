@@ -9,7 +9,7 @@ import {
 import {
   IRequetePlusAncienneResultat,
   useGetRequetePlusAncienne
-} from "../../../common/hook/requete/PrendreEnChargePlusAncienneHook";
+} from "../../../common/hook/requete/PrendreEnChargePlusAncienneApiHook";
 import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
 import messageManager from "../../../common/util/messageManager";
 import { getUrlWithParam } from "../../../common/util/route/routeUtil";

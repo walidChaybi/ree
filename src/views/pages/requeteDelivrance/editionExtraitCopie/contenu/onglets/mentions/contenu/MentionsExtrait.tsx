@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
+import { IMention } from "../../../../../../../../model/etatcivil/acte/mention/IMention";
 import { TypeMention } from "../../../../../../../../model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "../../../../../../../../model/etatcivil/enum/NatureActe";
 import { NatureMention } from "../../../../../../../../model/etatcivil/enum/NatureMention";
-import { IMentionsResultat } from "../../../../../../../common/hook/acte/mentions/MentionsApiHook";
 import { Generateur } from "../../../../../../../common/util/generateur/Generateur";
 import {
   getLibelle,
@@ -23,7 +23,7 @@ import {
 export interface SectionModificationMentionProps {
   mentions?: IMentionAffichage[];
   mentionSelect?: IMentionAffichage;
-  mentionsApi?: IMentionsResultat;
+  mentionsApi?: IMention[];
   setMentionSelect: any;
   setMentions: any;
   setMentionAjout: any;
@@ -48,7 +48,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
     handleBlur(
       mentions,
       mentionSelect,
-      mentionsApi?.mentions,
+      mentionsApi,
       setMentionSelect,
       setMentions
     );

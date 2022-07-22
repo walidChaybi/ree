@@ -8,7 +8,7 @@ import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import {
   gereErreur,
   useGetRequeteAleatoire
-} from "../../../../../views/common/hook/requete/PrendreEnChargeAleatoirementHook";
+} from "../../../../../views/common/hook/requete/PrendreEnChargeAleatoirementApiHook";
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 const HookConsumerUseGetRequeteDelivranceAleatoire: React.FC = () => {

@@ -7,17 +7,23 @@ import {
   useGenerationCourrierHook
 } from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/hook/GenerationCourrierHook";
 import { SaisieCourrier } from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+import { gestionnaireMentionsRetireesAuto } from "../../../pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
 import { getOngletSelectVenantDePriseEnCharge } from "../../../pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import { DocumentEC } from "../../../pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
 import { DEUX } from "../../util/Utils";
+import {
+  IActeApiHookParams,
+  useInformationsActeApiHook
+} from "../acte/ActeApiHook";
 import {
   IGenerationECParams,
   IGenerationECResultat,
   useGenerationEC
 } from "../generation/generationECHook/generationECHook";
+import { estPresentIdActeEtChoixDelivrance } from "../generation/generationECHook/generationECHookUtil";
 import { IResultGenerationUnDocument } from "../generation/generationUtils";
 
-export interface ICreerCourrierECParam {
+export interface ICreerCourrierECParams {
   idActe?: string;
   requete: IRequeteDelivrance;
   saisieCourrier: SaisieCourrier;
@@ -26,12 +32,16 @@ export interface ICreerCourrierECParam {
   setOperationEnCours: (op: boolean) => void;
 }
 
-export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
+export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   const [generationCourrierHookParams, setGenerationCourrierHookParams] =
     useState<IGenerationCourrierParams>();
   const [generationDocumentECParams, setGenerationDocumentECParams] =
     useState<IGenerationECParams>();
+  const [mentionsRetirees, setMentionsRetirees] = useState<string[]>();
+  const [acteApiHookParams, setActeApiHookParams] =
+    useState<IActeApiHookParams>();
 
+  // 1 - Création des paramètres pour la création du courrier
   useEffect(() => {
     if (params) {
       setGenerationCourrierHookParams({
@@ -54,45 +64,65 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParam) {
     generationCourrierHookParams
   );
 
-  // 2 - Création des paramètre pour la génération du document demandé
+  useEffect(() => {
+    if (estPresentIdActeEtChoixDelivrance(params)) {
+      setActeApiHookParams({
+        idActe: params?.idActe
+      });
+    }
+  }, [params]);
+
+  // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
+  const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
+
+  // 2 - Ajout des mentions retirées auto
+  useEffect(() => {
+    if (acteApiHookResultat?.acte?.mentions && acteApiHookResultat?.acte) {
+      setMentionsRetirees(
+        gestionnaireMentionsRetireesAuto.getMentionsRetirees(
+          acteApiHookResultat?.acte?.mentions,
+          acteApiHookResultat?.acte?.nature
+        )
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acteApiHookResultat?.acte?.mentions, acteApiHookResultat]);
+
+  // 3 - Création des paramètre pour la génération du document demandé
   useEffect(() => {
     if (
       params &&
       params.idActe &&
       resultatGenerationCourrier &&
-      params.requete.choixDelivrance &&
       ChoixDelivrance.estReponseAvecDelivrance(
         params.requete.choixDelivrance
       ) &&
-      params.requete.documentsReponses.length < DEUX
+      params.requete.documentsReponses.length < DEUX &&
+      mentionsRetirees
     ) {
       setGenerationDocumentECParams({
-        idActe: params.idActe,
+        acte: acteApiHookResultat?.acte,
         requete: params.requete,
-        mentionsRetirees: [],
+        mentionsRetirees,
         choixDelivrance: params.requete.choixDelivrance
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultatGenerationCourrier]);
+  }, [mentionsRetirees]);
 
   // Génération du document demandé
   const resultatGenerationEC = useGenerationEC(generationDocumentECParams);
 
   useEffect(() => {
     if (
-      params &&
-      (resultatGenerationEC ||
-        (resultatGenerationCourrier &&
-          ChoixDelivrance.estReponseSansDelivrance(
-            params?.requete.choixDelivrance
-          )) ||
-        (resultatGenerationCourrier &&
-          params.requete.documentsReponses.length > 1))
+      traitementFini(params, resultatGenerationCourrier, resultatGenerationEC)
     ) {
+      //@ts-ignore params non null
       params.setOperationEnCours(false);
+      //@ts-ignore params non null
       params.handleDocumentEnregistre(
         getIndexDocument(
+          //@ts-ignore params non null
           params.requete,
           resultatGenerationEC,
           resultatGenerationCourrier
@@ -123,4 +153,21 @@ function getIndexDocument(
     res = DocumentEC.Principal;
   }
   return res;
+}
+
+function traitementFini(
+  params?: ICreerCourrierECParams,
+  resultatGenerationCourrier?: IResultGenerationUnDocument,
+  resultatGenerationEC?: IGenerationECResultat
+) {
+  return (
+    params &&
+    (resultatGenerationEC ||
+      (resultatGenerationCourrier &&
+        ChoixDelivrance.estReponseSansDelivrance(
+          params?.requete.choixDelivrance
+        )) ||
+      (resultatGenerationCourrier &&
+        params.requete.documentsReponses.length > 1))
+  );
 }

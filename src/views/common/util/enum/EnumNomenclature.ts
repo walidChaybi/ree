@@ -51,4 +51,14 @@ export class EnumNomemclature extends EnumWithLibelle {
     }
     return codeResult;
   }
+
+  public static getEnumFromCode(clazz: any, code: string) {
+    let keyResult = "";
+    for (const key in clazz) {
+      if (clazz.hasOwnProperty(key) && clazz[key]._code === code) {
+        keyResult = key;
+      }
+    }
+    return clazz[keyResult];
+  }
 }

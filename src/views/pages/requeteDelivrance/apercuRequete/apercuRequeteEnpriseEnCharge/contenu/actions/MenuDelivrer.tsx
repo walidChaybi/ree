@@ -7,7 +7,7 @@ import { IActionOption } from "../../../../../../../model/requete/IActionOption"
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import {
-  ICreerCourrierECParam,
+  ICreerCourrierECParams,
   useCreerCourrierEC
 } from "../../../../../../common/hook/requete/creerCourrierECHook";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
@@ -52,7 +52,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
   const [courrierEcParams, setCourrierEcParams] =
-    useState<ICreerCourrierECParam>();
+    useState<ICreerCourrierECParams>();
 
   const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
     useState<UpdateChoixDelivranceProps>();

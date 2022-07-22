@@ -38,6 +38,7 @@ import {
   tousNonNullsNonZeroEtNonVides
 } from "../../../../common/util/Utils";
 import { IExtraitCopieApiHookResultat } from "../../composition/CompositionExtraitCopieHook";
+import { ICreerCourrierECParams } from "../../requete/creerCourrierECHook";
 import { creationCompositionCopieActeImage } from "./creationComposition/creationCompositionCopieActeImage";
 import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/creationCompositionExtraitCopieActeTexte";
 import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
@@ -69,16 +70,6 @@ export function estDemandeCopieActeImage(
   return (
     ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) &&
     FicheActe.estActeImage(acte)
-  );
-}
-
-export function estDemandeCopieArchiveActeTexte(
-  acte: IFicheActe,
-  choixDelivrance: ChoixDelivrance
-) {
-  return (
-    ChoixDelivrance.estCopieArchive(choixDelivrance) &&
-    FicheActe.estActeTexte(acte)
   );
 }
 
@@ -342,7 +333,7 @@ export function toutesLesDonneesSontPresentes(
 }
 
 export function estPresentIdActeEtChoixDelivrance(
-  params?: IGenerationECParams
+  params?: IGenerationECParams | ICreerCourrierECParams
 ): boolean {
   return tousNonNullsNonZeroEtNonVides(
     params?.idActe,

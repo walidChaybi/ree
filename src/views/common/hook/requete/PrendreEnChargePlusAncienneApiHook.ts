@@ -31,7 +31,8 @@ export function useGetRequetePlusAncienne(
           });
         }
       } catch (error) {
-        gereErreur(error, setRequetePlusAncienneResultat);
+        /* istanbul ignore next */
+        gererErreur(error, setRequetePlusAncienneResultat);
       }
     }
 
@@ -41,7 +42,8 @@ export function useGetRequetePlusAncienne(
   return requetePlusAncienneResultat;
 }
 
-export function gereErreur(error: any, setRequetePlusAncienneResultat: any) {
+/* istanbul ignore next */
+export function gererErreur(error: any, setRequetePlusAncienneResultat: any) {
   if (error.response && error.response.status === HTTP_NOT_FOUND) {
     setRequetePlusAncienneResultat({ requete: undefined });
   } else {

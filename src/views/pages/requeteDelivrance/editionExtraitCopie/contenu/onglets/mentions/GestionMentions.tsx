@@ -154,7 +154,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         <MentionsExtrait
           mentions={mentions}
           mentionSelect={mentionSelect}
-          mentionsApi={mentionsApi}
+          mentionsApi={mentionsApi?.mentions}
           setMentionSelect={setMentionSelect}
           setMentions={setMentions}
           mentionAjout={mentionAjout}

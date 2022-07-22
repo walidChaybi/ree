@@ -10,12 +10,17 @@ import request from "superagent";
 import { requeteCreation } from "../../../mock/data/requeteCreation";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 import { VoletPiecesJustificatives } from "../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/components/VoletPiecesJustificatives";
+import { mappingRequeteCreation } from "../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
 
 test("renders VoletPiecesJustificatives", async () => {
   await act(async () => {
-    render(<VoletPiecesJustificatives requete={requeteCreation} />);
+    render(
+      <VoletPiecesJustificatives
+        requete={mappingRequeteCreation(requeteCreation)}
+      />
+    );
   });
 
   await waitFor(() => {

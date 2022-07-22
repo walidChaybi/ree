@@ -42,6 +42,7 @@ export function useExtraitCopieApiHook(params?: IExtraitCopieApiHookParams) {
           });
         })
         .catch(error => {
+          /* istanbul ignore next */
           const erreur = {
             error,
             messageUtilisateur: getLibelle(

@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { HTTP_NOT_FOUND } from "../../../../api/ApiManager";
-import {
-  getRequeteAleatoire,
-  getRequetePlusAncienne
-} from "../../../../api/appels/requeteApi";
+import { getRequeteAleatoire } from "../../../../api/appels/requeteApi";
 import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import { TRequeteTableau } from "../../../../model/requete/IRequeteTableau";
 import { mappingUneRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import { mappingUneRequeteTableauInformation } from "../../../../model/requete/IRequeteTableauInformation";
-import { mappingUneRequeteTableauCreation } from "../../../pages/requeteCreation/hook/DonneesRequeteCreationApiHook";
 import { logError } from "../../util/LogManager";
 
 export interface IRequeteAleatoireResultat {
@@ -51,19 +47,6 @@ export function useGetRequeteAleatoire(
                 );
               setRequeteAleatoireResultat({
                 requete: requeteResultatInfoMappee
-              });
-              break;
-            case TypeRequete.CREATION:
-              const resultatCreation = await getRequetePlusAncienne(
-                TypeRequete.CREATION.nom
-              );
-              const requeteResultatCreationMappee =
-                mappingUneRequeteTableauCreation(
-                  resultatCreation.body.data,
-                  false
-                );
-              setRequeteAleatoireResultat({
-                requete: requeteResultatCreationMappee
               });
               break;
           }

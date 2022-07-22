@@ -35,27 +35,27 @@ export function mappingVersMentionAffichage(
   const estCopie = DocumentDelivrance.typeDocumentEstCopieIntegrale(
     document.typeDocument
   );
-  return mentionsApi
-    .sort((a, b) =>
-      estCopie
-        ? a.numeroOrdre - b.numeroOrdre
-        : a.numeroOrdreExtrait - b.numeroOrdreExtrait
-    )
-    .map(mentionApi => ({
-      nature: mentionApi.typeMention.nature,
-      texte: estCopie
-        ? Mention.getTexteCopie(mentionApi)
-        : Mention.getTexteExtrait(mentionApi),
-      estPresent: !document.mentionsRetirees?.find(
-        mentionRetiree => mentionRetiree.idMention === mentionApi.id
-      ),
-      id: mentionApi.id,
-      numeroOrdre: estCopie
-        ? mentionApi.numeroOrdre
-        : mentionApi.numeroOrdreExtrait,
-      aPoubelle: mentionApi.textes.texteMention === null
-    }));
+
+  !estCopie
+    ? Mention.trierMentionsNumeroOrdreExtrait(mentionsApi)
+    : Mention.trierMentionsNumeroOrdre(mentionsApi);
+
+  return mentionsApi.map((mentionApi: IMention) => ({
+    nature: mentionApi.typeMention.nature,
+    texte: estCopie
+      ? Mention.getTexteCopie(mentionApi)
+      : Mention.getTexteExtrait(mentionApi),
+    estPresent: !document.mentionsRetirees?.find(
+      mentionRetiree => mentionRetiree.idMention === mentionApi.id
+    ),
+    id: mentionApi.id,
+    numeroOrdre: estCopie
+      ? mentionApi.numeroOrdre
+      : mentionApi.numeroOrdreExtrait,
+    aPoubelle: mentionApi.textes.texteMention === null
+  }));
 }
+
 
 export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
   return mentionsAffichage

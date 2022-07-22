@@ -9,7 +9,7 @@ import {
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { ReinitialiserValiderFormBoutons } from "../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import {
-  ICreerCourrierECParam,
+  ICreerCourrierECParams,
   useCreerCourrierEC
 } from "../../../../../common/hook/requete/creerCourrierECHook";
 import { useReinitialisationComposant } from "../../../../../common/util/form/useReinitialisation";
@@ -65,7 +65,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string>();
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
   const [courrierEcParams, setCourrierEcParams] =
-    useState<ICreerCourrierECParam>();
+    useState<ICreerCourrierECParams>();
   const [documentDelivranceChoisi, setDocumentDelivranceChoisi] =
     useState<DocumentDelivrance>();
   const { cleReinitialisation, reinitialisation } =
