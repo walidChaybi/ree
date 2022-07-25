@@ -41,29 +41,6 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   const [acteApiHookParams, setActeApiHookParams] =
     useState<IActeApiHookParams>();
 
-  // 1 - Création des paramètres pour la création du courrier
-  useEffect(() => {
-    if (params) {
-      setGenerationCourrierHookParams({
-        saisieCourrier: params.saisieCourrier,
-        optionsChoisies: params.optionsChoisies,
-        requete: params.requete,
-        idActe: params.idActe,
-        // On ne change le statut que lorsqu'on a aucun documents
-        mettreAJourStatut:
-          params.requete.documentsReponses.length === 0 &&
-          ChoixDelivrance.estReponseSansDelivrance(
-            params.requete.choixDelivrance
-          )
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
-
-  const resultatGenerationCourrier = useGenerationCourrierHook(
-    generationCourrierHookParams
-  );
-
   useEffect(() => {
     if (estPresentIdActeEtChoixDelivrance(params)) {
       setActeApiHookParams({
@@ -75,7 +52,30 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
   const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
 
-  // 2 - Ajout des mentions retirées auto
+  // 2 - Création des paramètres pour la création du courrier
+  useEffect(() => {
+    if (params && acteApiHookResultat) {
+      setGenerationCourrierHookParams({
+        saisieCourrier: params.saisieCourrier,
+        optionsChoisies: params.optionsChoisies,
+        requete: params.requete,
+        acte: acteApiHookResultat.acte,
+        // On ne change le statut que lorsqu'on a aucun documents
+        mettreAJourStatut:
+          params.requete.documentsReponses.length === 0 &&
+          ChoixDelivrance.estReponseSansDelivrance(
+            params.requete.choixDelivrance
+          )
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params, acteApiHookResultat]);
+
+  const resultatGenerationCourrier = useGenerationCourrierHook(
+    generationCourrierHookParams
+  );
+
+  // 3 - Ajout des mentions retirées auto
   useEffect(() => {
     if (acteApiHookResultat?.acte?.mentions && acteApiHookResultat?.acte) {
       setMentionsRetirees(
@@ -88,7 +88,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [acteApiHookResultat?.acte?.mentions, acteApiHookResultat]);
 
-  // 3 - Création des paramètre pour la génération du document demandé
+  // 4 - Création des paramètre pour la génération du document demandé
   useEffect(() => {
     if (
       params &&
@@ -108,7 +108,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mentionsRetirees]);
+  }, [mentionsRetirees, resultatGenerationCourrier]);
 
   // Génération du document demandé
   const resultatGenerationEC = useGenerationEC(generationDocumentECParams);

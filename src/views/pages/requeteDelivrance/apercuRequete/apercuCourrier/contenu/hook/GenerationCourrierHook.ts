@@ -5,6 +5,7 @@ import {
   CourrierComposition,
   ICourrierComposition
 } from "../../../../../../../model/composition/ICourrierComposition";
+import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
 import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
 import { IAdresseRequerant } from "../../../../../../../model/requete/IAdresseRequerant";
 import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
@@ -61,6 +62,7 @@ export interface IGenerationCourrierParams {
   optionsChoisies?: OptionsCourrier;
   requete?: IRequeteDelivrance;
   idActe?: string;
+  acte?: IFicheActe;
   mettreAJourStatut: boolean;
 }
 
@@ -81,6 +83,8 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
   const [basculerConstructionCourrier, setBasculerConstructionCourrier] =
     useState<boolean>(false);
 
+  const [acte, setActe] = useState<IFicheActe>();
+
   useEffect(() => {
     if (uuidCourrierPresent(params)) {
       // @ts-ignore params.saisieCourrier n'est pas null
@@ -91,7 +95,9 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
       setActApiHookParamsOuBasculerConstructionCourrier(
         setActeApiHookParams,
         setBasculerConstructionCourrier,
-        params?.idActe
+        setActe,
+        params?.idActe,
+        params?.acte
       );
     }
   }, [params]);
@@ -100,6 +106,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   useEffect(() => {
     if (acteApiHookResultat) {
+      setActe(acteApiHookResultat.acte);
       setBasculerConstructionCourrier(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,7 +130,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
             params.requete,
             // @ts-ignore presenceDesElementsPourLaGeneration
             params.optionsChoisies,
-            acteApiHookResultat?.acte
+            acte
           );
         construitCourrier(
           elements,
@@ -139,7 +146,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [basculerConstructionCourrier, courrier]);
+  }, [basculerConstructionCourrier, courrier, acte]);
 
   // 2 - Création du courrier: appel api composition
   // récupération du document en base64
@@ -204,9 +211,14 @@ function libelleSelonMajStatut(
 function setActApiHookParamsOuBasculerConstructionCourrier(
   setActeApiHookParams: any,
   setBasculerConstructionCourrier: any,
-  idActe?: string
+  setActe: any,
+  idActe?: string,
+  acte?: IFicheActe
 ) {
-  if (idActe) {
+  if (acte) {
+    setActe(acte);
+    setBasculerConstructionCourrier(true);
+  } else if (idActe) {
     setActeApiHookParams({ idActe });
   } else {
     setBasculerConstructionCourrier(true);
