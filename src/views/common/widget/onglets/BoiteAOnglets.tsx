@@ -28,6 +28,16 @@ const LinkTabRequetesInfoServiceWithHabilitation = WithHabilitation(
   "LinkTabRequetesInfoService"
 );
 
+const TabPanelRequetesCreationServiceWithHabilitation = WithHabilitation(
+  TabPanel,
+  "TabPanelRequetesCreationService"
+);
+
+const LinkTabRequetesCreationServiceWithHabilitation = WithHabilitation(
+  LinkTab,
+  "LinkTabRequetesCreationService"
+);
+
 export interface IBoiteAOngletsProps {
   onglets: IOngletProps[];
   elementEntreTitreEtContenu?: JSX.Element;
@@ -90,6 +100,16 @@ export const BoiteAOnglet: React.FC<IBoiteAOngletsProps> = props => {
                     {...a11yProps(index)}
                   />
                 );
+
+              case "LinkTabRequetesCreationService":
+                return (
+                  <LinkTabRequetesCreationServiceWithHabilitation
+                    key={index}
+                    label={getLibelle(onglet.enTete.titre)}
+                    href={onglet.enTete.url}
+                    {...a11yProps(index)}
+                  />
+                );
               default:
                 return (
                   <LinkTab
@@ -130,6 +150,17 @@ export const BoiteAOnglet: React.FC<IBoiteAOngletsProps> = props => {
               >
                 {onglet.corps.composant}
               </TabPanelRequetesInfoServiceWithHabilitation>
+            );
+
+          case "TabPanelRequetesCreationService":
+            return (
+              <TabPanelRequetesCreationServiceWithHabilitation
+                value={selectedTabState}
+                index={index}
+                key={index}
+              >
+                {onglet.corps.composant}
+              </TabPanelRequetesCreationServiceWithHabilitation>
             );
           default:
             return (

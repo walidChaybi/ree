@@ -76,8 +76,8 @@ const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
                       </div>
                     }
                     titre="Menu espace requête d'information"
-                    classOnglet="ongletInformation"
-                    classOngletPrincipale="headerOngletInformation"
+                    classOnglet="ongletPageEspace"
+                    classOngletPrincipale="headerOngletPageEspace"
                   />
                 </>
               )}

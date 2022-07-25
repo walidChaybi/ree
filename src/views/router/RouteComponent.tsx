@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { Droit } from "../../model/agent/enum/Droit";
 import {
   estOfficierHabiliterPourSeulementLesDroits,
+  estOfficierHabiliterPourTousLesDroits,
   estOfficierHabiliterPourUnDesDroits,
   officierALeDroitSurUnDesPerimetres
 } from "../../model/agent/IOfficier";
@@ -25,7 +26,7 @@ export const RouterComponent: React.FC = () => {
             render={props => {
               if (
                 route.canAccess === false ||
-                !estAutorise(route.droits) ||
+                !estAutorise(route.droits, route.auMoinsUnDesDroits) ||
                 !estAutoriseDroitsStricts(route.uniquementLesdroits) ||
                 !estAutoriseDroitPerimetres(route.droitPerimetres)
               ) {
@@ -56,20 +57,15 @@ export const RouterComponent: React.FC = () => {
   );
 };
 
-function estAutorise(droits: Droit[] | undefined) {
+function estAutorise(droits?: Droit[], auMoinsUnDesDroits?: Droit[]) {
   return (
-    !droits ||
-    (storeRece.utilisateurCourant &&
-      estOfficierHabiliterPourUnDesDroits(droits))
+    estOfficierHabiliterPourTousLesDroits(droits) &&
+    estOfficierHabiliterPourUnDesDroits(auMoinsUnDesDroits)
   );
 }
 
 function estAutoriseDroitsStricts(droits: Droit[] | undefined) {
-  return (
-    !droits ||
-    (storeRece.utilisateurCourant &&
-      estOfficierHabiliterPourSeulementLesDroits(droits))
-  );
+  return estOfficierHabiliterPourSeulementLesDroits(droits);
 }
 
 function estAutoriseDroitPerimetres(droitPerimetres?: IDroitPerimetre) {

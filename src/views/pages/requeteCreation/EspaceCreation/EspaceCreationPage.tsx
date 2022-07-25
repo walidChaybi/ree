@@ -7,15 +7,25 @@ import { getLibelle } from "../../../common/util/Utils";
 import { BoiteAOnglet } from "../../../common/widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "../../../common/widget/tableau/TableauRece/TableauPaginationConstantes";
 import { OfficierContext } from "../../../core/contexts/OfficierContext";
-import { URL_MES_REQUETES_CREATION } from "../../../router/ReceUrls";
+import {
+  URL_MES_REQUETES_CREATION,
+  URL_REQUETES_CREATION_SERVICE
+} from "../../../router/ReceUrls";
 import BoutonPrendreEnChargePlusAncienneCreation from "./BoutonPrendreEnChargePlusAncienneCreation";
-import { StatutsRequetesCreation } from "./EspaceCreationParams";
-import { MesRequetesCreationPage } from "./MesRequetesCreation";
-import "./scss/EspaceCreationPage.scss";
+import { MesRequetesCreation } from "./MesRequetesCreation";
+import { statutsRequetesCreation } from "./params/EspaceCreationParams";
+import { RequetesServiceCreation } from "./RequetesServiceCreation";
 
 interface LocalProps {
   selectedTab?: number;
 }
+
+const queryParametersPourRequetes = {
+  statuts: statutsRequetesCreation,
+  tri: "dateCreation",
+  sens: "ASC",
+  range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+} as IQueryParametersPourRequetes;
 
 const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => (
   <div className="BlocBoutons">
@@ -24,13 +34,6 @@ const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => (
     />
   </div>
 );
-
-const parametresCreation = {
-  statuts: StatutsRequetesCreation,
-  tri: "dateCreation",
-  sens: "ASC",
-  range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-} as IQueryParametersPourRequetes;
 
 const getOnglets = (): IOngletProps[] => {
   return [
@@ -41,23 +44,27 @@ const getOnglets = (): IOngletProps[] => {
       },
       corps: {
         composant: (
-          <MesRequetesCreationPage parametresCreation={parametresCreation} />
+          <MesRequetesCreation
+            queryParametersPourRequetes={queryParametersPourRequetes}
+          />
         )
       }
-    }
-    /*{
+    },
+    {
       enTete: {
         titre: "Les requêtes de création de mon service",
         url: URL_REQUETES_CREATION_SERVICE,
-        nomHabilitation: "LinkTabRequetesCreationService" as NomComposant
+        nomHabilitation: "LinkTabRequetesCreationService"
       },
       corps: {
         composant: (
-          <RequetesServicePage setParamsRMCAuto={recuperationParamsRMCAuto} />
+          <RequetesServiceCreation
+            queryParametersPourRequetes={queryParametersPourRequetes}
+          />
         ),
-        nomHabilitation: "TabPanelRequetesCreationService" as NomComposant
+        nomHabilitation: "TabPanelRequetesCreationService"
       }
-    }*/
+    }
   ];
 };
 
@@ -81,8 +88,8 @@ const EspaceCreationPage: React.FC<LocalProps> = ({ selectedTab }) => {
                       officier.officierDataState
                     )}
                     titre="Menu espace création"
-                    classOnglet="ongletCreation"
-                    classOngletPrincipale="headerOngletCreation"
+                    classOnglet="ongletPageEspace"
+                    classOngletPrincipale="headerOngletPageEspace"
                   />
                 </>
               )}

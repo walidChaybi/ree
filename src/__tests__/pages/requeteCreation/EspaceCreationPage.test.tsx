@@ -3,13 +3,29 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import request from "superagent";
-import { leBiannic } from "../../../mock/data/connectedUserAvecDroit";
+import {
+  resultatHeaderUtilistateurLeBiannic,
+  resultatRequeteUtilistateurLeBiannic
+} from "../../../mock/data/connectedUserAvecDroit";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
+import { mapHabilitationsUtilisateur } from "../../../model/agent/IUtilisateur";
+import { storeRece } from "../../../views/common/util/storeRece";
 import { OfficierContext } from "../../../views/core/contexts/OfficierContext";
+import { mappingOfficier } from "../../../views/core/login/LoginHook";
 import EspaceCreationPage from "../../../views/pages/requeteCreation/EspaceCreation/EspaceCreationPage";
 import { URL_ACCUEIL } from "../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
+
+beforeAll(() => {
+  storeRece.utilisateurCourant = mappingOfficier(
+    resultatHeaderUtilistateurLeBiannic,
+    resultatRequeteUtilistateurLeBiannic.data
+  );
+  storeRece.utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
+    resultatRequeteUtilistateurLeBiannic.data.habilitations
+  );
+});
 
 test("renders creationPage", async () => {
   const history = createMemoryHistory();
@@ -21,7 +37,7 @@ test("renders creationPage", async () => {
         <Router history={history}>
           <OfficierContext.Provider
             value={{
-              officierDataState: { idSSO: leBiannic.id_sso, ...leBiannic }
+              officierDataState: storeRece.utilisateurCourant
             }}
           >
             <EspaceCreationPage selectedTab={0} />

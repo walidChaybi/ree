@@ -1,0 +1,17 @@
+import { CINQ, getLibelle } from "../../../../common/util/Utils";
+import { TableauTypeColumn } from "../../../../common/widget/tableau/TableauRece/TableauTypeColumn";
+import { colonnesTableauMesRequetesCreation } from "./MesRequetesCreationParams";
+
+export enum HeaderTableauRequetesServiceCreation {
+  AttribueA = "attribueA"
+}
+
+export const colonnesTableauRequetesServiceCreation = [
+  ...colonnesTableauMesRequetesCreation.slice(0, CINQ),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequetesServiceCreation.AttribueA],
+    title: getLibelle("Attribué à"),
+    align: "center"
+  }),
+  ...colonnesTableauMesRequetesCreation.slice(CINQ)
+];

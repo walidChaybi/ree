@@ -9,4 +9,5 @@ export interface IRequeteTableauCreation extends IRequeteTableau {
   postulant: string;
   numeroAffichage: string;
   idEntiteRattachement?: string;
+  attribueA?: string;
 }

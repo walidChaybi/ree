@@ -19,6 +19,7 @@ export type NomFonction = "";
 export type NomComposant =
   | "LinkTabRequetesDelivranceService"
   | "LinkTabRequetesInfoService"
+  | "LinkTabRequetesCreationService"
   | "BoutonAccueilEspaceMiseAjour"
   | "BoutonAccueilEspaceCreation"
   | "BoutonAccueilCommunication"
@@ -31,6 +32,7 @@ export type NomComposant =
   | "MenuSaisirRequete"
   | "TabPanelRequetesDelivranceService"
   | "TabPanelRequetesInfoService"
+  | "TabPanelRequetesCreationService"
   | "BoutonPrendreEnChargeAleatoirement"
   | "BoutonPrendreEnChargeAleatoirementInformation"
   | "BoutonPrendreEnChargePlusAncienneCreation";
@@ -59,6 +61,11 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "LinkTabRequetesInfoService",
+    unDesDroits: [Droit.ATTRIBUER],
+    comportementSiNonAutorise: { disabled: true }
+  },
+  {
+    nomComposant: "LinkTabRequetesCreationService",
     unDesDroits: [Droit.ATTRIBUER],
     comportementSiNonAutorise: { disabled: true }
   },
@@ -124,6 +131,10 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "TabPanelRequetesInfoService",
+    visiblePourLesDroits: [Droit.ATTRIBUER]
+  },
+  {
+    nomComposant: "TabPanelRequetesCreationService",
     visiblePourLesDroits: [Droit.ATTRIBUER]
   },
   {

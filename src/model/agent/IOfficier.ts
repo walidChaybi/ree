@@ -26,21 +26,21 @@ export function officierHabiliterPourLeDroit(droit: Droit) {
     : false;
 }
 
-export function estOfficierHabiliterPourTousLesDroits(droits: Droit[]) {
+export function estOfficierHabiliterPourTousLesDroits(droits?: Droit[]) {
   if (!droits || droits.length === 0) {
     return true;
   }
   return droits.every(droit => officierHabiliterPourLeDroit(droit));
 }
 
-export function estOfficierHabiliterPourUnDesDroits(droits: Droit[]) {
+export function estOfficierHabiliterPourUnDesDroits(droits?: Droit[]) {
   if (!droits || droits.length === 0) {
     return true;
   }
   return droits.some(droit => officierHabiliterPourLeDroit(droit));
 }
 
-export function estOfficierHabiliterPourSeulementLesDroits(droits: Droit[]) {
+export function estOfficierHabiliterPourSeulementLesDroits(droits?: Droit[]) {
   const officier = storeRece.utilisateurCourant;
 
   if (!droits || droits.length === 0) {

@@ -304,8 +304,7 @@ th {
 }
 
 .BarreOnglet,
-.ongletDelivrance,
-.ongletInformation {
+.ongletPageEspace {
   .MuiButtonBase-root {
     background-color: $application-color !important;
     color: white !important;
@@ -322,5 +321,28 @@ th {
 
   .MuiButtonBase-root.Mui-selected {
     background-color: $button-application-color !important;
+  }
+}
+
+.headerOngletPageEspace {
+  margin-top: 1em;
+  background: none !important;
+
+  .ongletPageEspace {
+    a {
+      background-color: $application-color;
+      opacity: 1 !important;
+    }
+    a.Mui-selected {
+      cursor: pointer !important;
+    }
+    a.Mui-disabled {
+      background-color: $disabled-button;
+      cursor: not-allowed !important;
+    }
+    .MuiTabs-indicator {
+      width: 50% !important;
+      background-color: $title-application-color !important;
+    }
   }
 }

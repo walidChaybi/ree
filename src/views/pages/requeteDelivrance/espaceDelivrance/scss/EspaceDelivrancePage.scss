@@ -1,28 +1,3 @@
-@import "../../../../../scss/colors";
-
-.headerOngletDelivrance {
-  margin-top: 1em;
-  background: none !important;
-
-  .ongletDelivrance {
-    a {
-      background-color: $application-color;
-      opacity: 1 !important;
-    }
-    a.Mui-selected {
-      cursor: default;
-    }
-    a.Mui-disabled {
-      background-color: $disabled-button;
-      cursor: not-allowed;
-    }
-    .MuiTabs-indicator {
-      width: 50% !important;
-      background-color: $title-application-color !important;
-    }
-  }
-}
-
 .TabPanel {
   > div {
     padding: 0 0.5rem;

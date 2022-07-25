@@ -51,10 +51,10 @@ const URL_REPONSES = "/reponses";
 export enum TypeAppelRequete {
   REQUETE_DELIVRANCE_SERVICE = "requeteService",
   REQUETE_INFO_SERVICE = "requeteInfoService",
+  REQUETE_CREATION_SERVICE = "requeteCreationService",
   MES_REQUETES_DELIVRANCE = "mesRequetes",
   MES_REQUETES_INFO = "mesRequetesInfo",
-  MES_REQUETES_CREATION = "mesRequetesCreation",
-  REQUETE_CREATION_SERVICE = "requeteCreationService"
+  MES_REQUETES_CREATION = "mesRequetesCreation"
 }
 
 export interface IQueryParametersPourRequetes {

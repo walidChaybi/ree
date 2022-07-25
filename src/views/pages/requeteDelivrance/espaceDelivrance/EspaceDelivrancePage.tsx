@@ -135,8 +135,8 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
                       officier.officierDataState
                     )}
                     titre="Menu espace délivrance"
-                    classOnglet="ongletDelivrance"
-                    classOngletPrincipale="headerOngletDelivrance"
+                    classOnglet="ongletPageEspace"
+                    classOngletPrincipale="headerOngletPageEspace"
                   />
                 </>
               )}

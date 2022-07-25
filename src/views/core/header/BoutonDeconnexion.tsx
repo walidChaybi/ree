@@ -50,6 +50,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   function deconnexion() {
     gestionnaireDoubleOuverture.arreterVerification();
     history.push(URL_DECONNEXION);
+    history.go(0);
   }
 
   const handleClickDeconnexion = () => {

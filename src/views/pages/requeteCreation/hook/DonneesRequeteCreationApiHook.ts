@@ -9,6 +9,7 @@ import { SousTypeCreation } from "../../../../model/requete/enum/SousTypeCreatio
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauCreation } from "../../../../model/requete/IRequeteTableauCreation";
+import { mapAttribueA } from "../../../../model/requete/IRequeteTableauDelivrance";
 import {
   ITitulaireRequeteTableau,
   mapTitulaires
@@ -92,7 +93,8 @@ export function mappingUneRequeteTableauCreation(
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
     idUtilisateur: valeurOuUndefined(requete?.idUtilisateur),
     idEntiteRattachement: valeurOuUndefined(requete?.idEntiteRattachement),
-    postulant: getPostulant(titulaires)
+    postulant: getPostulant(titulaires),
+    attribueA: mapAttribueA(requete)
   };
 }
 
@@ -104,4 +106,3 @@ function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
       return `${accumulateur}, ${valeurCourante}`;
     });
 }
-

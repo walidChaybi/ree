@@ -1,3 +1,4 @@
+import { requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
 import { requeteTableauCreation } from "../data/requeteTableauCreation";
 
 export const NORESULT = "NORESULT";
@@ -19,15 +20,17 @@ export const configRequetesCreation = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match, params, headers, context) {
+      const url = match[1];
+
       // Requête plus ancienne
-      if (match[1] === "/requetes/requeteplusancienne?type=CREATION") {
+      if (url === "/requetes/requeteplusancienne?type=CREATION") {
         return {
           data: requeteTableauCreation
         };
       }
 
       if (
-        match[1] ===
+        url ===
         "/requetes/creation/54ddf213-d9b7-4747-8e92-68c220f66de3/statut?statut=PRISE_EN_CHARGE"
       ) {
         return {
@@ -35,10 +38,13 @@ export const configRequetesCreation = [
         };
       }
 
+      ////////////////////////////
+      // Mes requêtes
+      ////////////////////////////
       if (
-        match[1] ===
+        url ===
           "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=numeroAffichage&sens=ASC&range=0-105" ||
-        match[1] ===
+        url ===
           "/requetes/creation/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
@@ -50,7 +56,19 @@ export const configRequetesCreation = [
         };
       }
 
-      const error = { msg: "url params non mockée", url: match[1] };
+      ////////////////////////////
+      // Requêtes de mon service
+      ////////////////////////////
+      if (
+        url ===
+          "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=dateCreation&sens=ASC&range=0-105" ||
+        url ===
+          "/requetes/creation/requetesService?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CPROJET_VALIDE%2CRETOUR_SDANF%2CA_SIGNER&tri=statut&sens=ASC&range=0-105"
+      ) {
+        return requetesServiceCreationTableauResultatQuery;
+      }
+
+      const error = { msg: "url params non mockée", url };
       console.log("Erreur mock api requ info: ", error);
       return {
         data: error
