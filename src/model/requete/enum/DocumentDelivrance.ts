@@ -268,15 +268,15 @@ export class DocumentDelivrance extends EnumNomemclature {
     );
   }
 
-  public static estExtraitAvecOuSansFilliation(key?: string): boolean {
-    const code = key ? DocumentDelivrance.getCodeForKey(key) : undefined;
+  public static estExtraitAvecOuSansFilliation(key: string): boolean {
+    const code = DocumentDelivrance.getCodeForKey(key);
     return (
       code === CODE_EXTRAIT_SANS_FILIATION ||
       code === CODE_EXTRAIT_AVEC_FILIATION
     );
   }
 
-  public static estCopieIntegrale(uuid?: string): boolean {
+  public static typeDocumentEstCopieIntegrale(uuid?: string): boolean {
     return uuid
       ? DocumentDelivrance.getDocumentDelivrance(uuid).code ===
           CODE_COPIE_INTEGRALE

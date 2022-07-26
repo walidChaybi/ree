@@ -15,7 +15,6 @@ export const LIEN_FILIATION_HORS_ADOPTION = "12";
 export const PUPILLE = "14";
 export const ANNULATION_MARIAGE = "15";
 export const ANNULATION_PACS = " 16";
-export const ANNULATION_ACTE = " 23";
 export const CONTRAT_MARIAGE = "7";
 export const DECES = "1";
 export const REPRISE_VIE_COMMUNE = "4";
