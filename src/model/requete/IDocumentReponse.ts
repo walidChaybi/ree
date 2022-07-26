@@ -49,7 +49,7 @@ export const DocumentReponse = {
     documentsReponse?: IDocumentReponse[]
   ): IDocumentReponse | undefined {
     return documentsReponse?.find(d =>
-      DocumentDelivrance.typeDocumentEstCopieIntegrale(d.typeDocument)
+      DocumentDelivrance.estCopieIntegrale(d.typeDocument)
     );
   },
 

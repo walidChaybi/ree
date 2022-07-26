@@ -17,7 +17,6 @@ import {
   shallowEgalTableau
 } from "../../../../../../common/util/Utils";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
-import { GestionMentionsProps } from "./GestionMentions";
 
 export interface IMentionAffichage {
   texte: string;
@@ -32,9 +31,7 @@ export function mappingVersMentionAffichage(
   mentionsApi: IMention[],
   document: IDocumentReponse
 ): IMentionAffichage[] {
-  const estCopie = DocumentDelivrance.typeDocumentEstCopieIntegrale(
-    document.typeDocument
-  );
+  const estCopie = DocumentDelivrance.estCopieIntegrale(document.typeDocument);
 
   !estCopie
     ? Mention.trierMentionsNumeroOrdreExtrait(mentionsApi)
@@ -55,7 +52,6 @@ export function mappingVersMentionAffichage(
     aPoubelle: mentionApi.textes.texteMention === null
   }));
 }
-
 
 export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
   return mentionsAffichage
@@ -348,9 +344,7 @@ export function boutonReinitialiserEstDisabled(
   mentions?: IMentionAffichage[],
   document?: IDocumentReponse
 ) {
-  if (
-    DocumentDelivrance.typeDocumentEstCopieIntegrale(document?.typeDocument)
-  ) {
+  if (DocumentDelivrance.estCopieIntegrale(document?.typeDocument)) {
     return (
       !estdeverrouille ||
       (estdeverrouille &&
@@ -372,40 +366,68 @@ export function getValeurEstdeverrouillerCommencement(
 }
 
 export function validerMentions(
-  props: React.PropsWithChildren<GestionMentionsProps>,
   mentions: IMentionAffichage[] | undefined,
   sauvegarderMentions: () => void,
-  mentionsApi?: IMention[]
+  mentionsApi?: IMention[],
+  acte?: IFicheActe,
+  document?: IDocumentReponse
 ) {
+  const estDocumentCopieIntegrale = DocumentDelivrance.estCopieIntegrale(
+    document?.typeDocument
+  );
+
+  const estDocumentExtrait = DocumentDelivrance.estExtraitAvecOuSansFilliation(
+    document?.typeDocument
+  );
+
   if (
-    DocumentDelivrance.typeDocumentEstCopieIntegrale(
-      props.document?.typeDocument
+    estDocumentCopieIntegrale &&
+    modificationEffectue(mentions, mentionsApi, document)
+  ) {
+    confirmation(
+      `Vous avez choisi de décocher des mentions.
+        Celle-ci ne seront pas éditées sur la copie intégrale de l'acte choisi.`,
+      sauvegarderMentions
+    );
+  } else if (
+    !estDocumentCopieIntegrale &&
+    FicheActe.acteEstACQouOP2ouOP3(acte) &&
+    FicheActe.estActeNaissance(acte) &&
+    aucuneMentionsNationalite(mentions)
+  ) {
+    confirmation(
+      `Aucune mention de nationalité n'a été cochée. 
+        Voulez-vous continuer ?`,
+      sauvegarderMentions
+    );
+  } else if (
+    document?.typeDocument &&
+    estDocumentExtrait &&
+    Mention.ilExisteUneMentionInterdite(
+      getMentionSelectionnees(mentions, mentionsApi),
+      acte?.nature,
+      DocumentDelivrance.getEnumForUUID(document.typeDocument)
     )
   ) {
-    if (modificationEffectue(mentions, mentionsApi, props.document)) {
-      if (
-        window.confirm(`Vous avez choisi de décocher des mentions.
-          Celle-ci ne seront pas éditées sur la copie intégrale de l'acte choisi.`)
-      ) {
-        sauvegarderMentions();
-      }
-    } else {
-      sauvegarderMentions();
-    }
+    confirmation(
+      `Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter. 
+        Voulez-vous continuer ?`,
+      sauvegarderMentions
+    );
   } else {
-    if (
-      FicheActe.acteEstACQouOP2ouOP3(props.acte) &&
-      FicheActe.estActeNaissance(props.acte) &&
-      aucuneMentionsNationalite(mentions)
-    ) {
-      if (
-        window.confirm(`Aucune mention de nationalité n'a été cochée. 
-        Voulez-vous continuer ?`)
-      ) {
-        sauvegarderMentions();
-      }
-    } else {
-      sauvegarderMentions();
-    }
+    sauvegarderMentions();
   }
+}
+
+function confirmation(message: string, fonction: any) {
+  if (window.confirm(message)) {
+    fonction();
+  }
+}
+
+export function getMentionSelectionnees(
+  mentionsAffichage?: IMentionAffichage[],
+  mentionsApi?: IMention[]
+): IMention[] {
+  return mentionsApi ? mentionsApi.filter(mentionApi => mentionApi) : []; // TODO
 }
