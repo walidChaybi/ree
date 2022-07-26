@@ -56,7 +56,7 @@ export const resume = {
   nationalite,
   effetCollectif: getLibelle("Effet collectif"),
   residence: getLibelle("Résidence"),
-  fraterie: getLibelle("Fraterie")
+  fraterie: getLibelle("Fratrie")
 };
 
 export const PJ = {
