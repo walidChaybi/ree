@@ -154,7 +154,7 @@ test("handleCheckBox", () => {
     mentionsTest = arg;
   }
 
-  handleCheckBox([mentionNonOpposable], setMentions, "1");
+  handleCheckBox([mentionNonOpposable], setMentions, 0);
 
   expect(mentionsTest!).toStrictEqual([
     {

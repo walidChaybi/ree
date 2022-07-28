@@ -1,41 +1,49 @@
 @import "../../../../../scss/colors";
 
-
-
 .ListeGlisserDeposer {
-  ul{  
-    width: 100%;
-    list-style: none;
-    padding: 0;
-    
-    li {
-      color: black !important;
-      background-color: white;
-      padding: 5px 10px;
-      text-align: left;
-      transition: all 0.1s;
-      border: 1px solid grey;
-      &.selected{
-        background-color: #9bcbe7 !important;
-      }
-      &.sansHandler{
-        cursor: grab;
-      }
-      .handler{
-        cursor: grab;
-        &svg{
-        vertical-align: middle
-      }}
-      .IconeSupprimer{
-        width: 1em;
-        cursor: pointer;
-        height: 1em;
-        float:right;
-        padding: 9px;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+
+  li {
+    color: black !important;
+    background-color: white;
+    padding: 5px 10px;
+    text-align: left;
+    transition: all 0.1s;
+    border: 1px solid grey;
+    &.selected {
+      background-color: #9bcbe7 !important;
+    }
+    &.sansHandler {
+      cursor: grab;
+    }
+    .handler {
+      cursor: grab;
+      &svg {
+        vertical-align: middle;
       }
     }
-    li:hover {
-      background-color: $application-hoover!important;
-    }}
-    
+    .IconeSupprimer {
+      width: 1em;
+      cursor: pointer;
+      height: 1em;
+      float: right;
+      padding: 9px;
+    }
+    svg {
+      cursor: grab;
+      vertical-align: middle;
+    }
+    .IconeSupprimer {
+      width: 1em;
+      cursor: pointer;
+      height: 1em;
+      float: right;
+      padding: 9px;
+    }
   }
+  li:hover {
+    background-color: $application-hoover !important;
+  }
+}

@@ -17,7 +17,7 @@ interface MentionsCopieProps {
 
 export const MentionsCopie: React.FC<MentionsCopieProps> = props => {
   const handleCheck = useCallback(
-    (id: string) => {
+    (id: number) => {
       handleCheckBox(props.mentions, props.setMentions, id);
     },
     [props.mentions, props.setMentions]

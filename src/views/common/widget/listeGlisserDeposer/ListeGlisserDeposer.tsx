@@ -1,27 +1,36 @@
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { Checkbox } from "@material-ui/core";
 import { DeleteOutlined, DragHandle } from "@material-ui/icons";
-import React from "react";
-import {
-  SortableContainer,
-  SortableElement,
-  SortableHandle
-} from "react-sortable-hoc";
+import React, { useCallback } from "react";
 import { finirAvec3petitsPoints, getLibelle } from "../../util/Utils";
 import "./scss/ListeGlisserDeposer.scss";
 
 const MAX_CARACTERE = 120;
 
 interface ListeGlisserDeposerProps {
-  liste?: ListeItem[];
+  liste: ListeItem[];
   elementSelect?: string;
-  setElementSelect?: (id: string) => void;
+  setElementSelect?: (id: number) => void;
   handleReorga?: (oldIndex: number, newIndex: number) => void;
-  handleCheckbox?: (id: string) => void;
-  onClickSupprimer?: (id: string) => void;
+  handleCheckbox?: (id: number) => void;
+  onClickSupprimer?: (id: number) => void;
   deverrouille?: boolean;
   afficheDragHandle: boolean;
   useDragHandle: boolean;
-  liste1Element?: boolean;
   libellesSontTitres: boolean;
 }
 
@@ -33,103 +42,142 @@ export interface ListeItem {
   sousElement?: any;
 }
 
+type ListeItemAvecIndex = ListeItem & { index: number };
+
 export const ListeGlisserDeposer: React.FC<
   ListeGlisserDeposerProps
 > = props => {
-  const onClickItem = (item: ListeItem) => {
-    if (props.setElementSelect) {
-      props.setElementSelect(item.id);
-    }
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates
+    })
+  );
+
+  const SortableItem: React.FC<ListeItemAvecIndex> = item => {
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+      setActivatorNodeRef
+    } = useSortable({
+      id: item.id
+    });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition
+    };
+
+    const onClickItem = (itemClique: ListeItemAvecIndex) => {
+      if (props.setElementSelect) {
+        props.setElementSelect(itemClique.index);
+      }
+    };
+
+    return (
+      <li
+        ref={setNodeRef}
+        style={style}
+        onClick={() => onClickItem(item)}
+        className={`${item.id === props.elementSelect ? "selected" : ""}`}
+      >
+        <span className="enTete">
+          {afficherHandle(props) && (
+            <span
+              ref={props.useDragHandle ? setActivatorNodeRef : null}
+              title={getLibelle("Cliquer pour glisser/déposer")}
+              className="handler"
+              {...attributes}
+              {...listeners}
+            >
+              <DragHandle />
+            </span>
+          )}
+          {props.deverrouille && props.handleCheckbox && (
+            <Checkbox
+              title={getLibelle("Cliquer pour sélectionner")}
+              checked={item.checkbox}
+              onClick={e => {
+                if (props.handleCheckbox) {
+                  props.handleCheckbox(item.index);
+                  e.stopPropagation();
+                }
+              }}
+            />
+          )}
+
+          {props.onClickSupprimer && item.aPoubelle && (
+            <DeleteOutlined
+              onClick={() => {
+                if (props.onClickSupprimer) {
+                  props.onClickSupprimer(item.index);
+                }
+              }}
+              className="IconeSupprimer"
+              titleAccess={getLibelle("Supprimer la mention")}
+            />
+          )}
+          {props.libellesSontTitres ? (
+            <h2 title={item.libelle}>
+              {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
+            </h2>
+          ) : (
+            <p title={item.libelle}>
+              {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
+            </p>
+          )}
+        </span>
+        {item.sousElement}
+      </li>
+    );
   };
 
-  const DragHandleElement = SortableHandle(() => <DragHandle />);
+  const handleSort = useCallback(
+    event => {
+      const { active, over } = event;
 
-  const SortableItem = SortableElement((item: ListeItem) => (
-    <li
-      onClick={() => onClickItem(item)}
-      className={`${item.id === props.elementSelect ? "selected" : ""} ${
-        !props.useDragHandle && props.afficheDragHandle ? "sansHandler" : ""
-      }`}
-    >
-      <span className="enTete">
-        {afficherHandle(props) && (
-          <span
-            title={getLibelle("Cliquer pour glisser/déposer")}
-            className="handler"
-          >
-            <DragHandleElement />
-          </span>
-        )}
-        {props.deverrouille && props.handleCheckbox && (
-          <Checkbox
-            title={getLibelle("Cliquer pour sélectionner")}
-            checked={item.checkbox}
-            onClick={() => {
-              if (props.handleCheckbox) {
-                props.handleCheckbox(item.id);
-              }
-            }}
-          />
-        )}
-
-        {props.onClickSupprimer && item.aPoubelle && (
-          <DeleteOutlined
-            onClick={() => {
-              if (props.onClickSupprimer) {
-                props.onClickSupprimer(item.id);
-              }
-            }}
-            className="IconeSupprimer"
-            titleAccess={getLibelle("Supprimer la mention")}
-          />
-        )}
-
-        {props.libellesSontTitres ? (
-          <h2 title={item.libelle}>
-            {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
-          </h2>
-        ) : (
-          <p title={item.libelle}>
-            {finirAvec3petitsPoints(item.libelle, MAX_CARACTERE)}
-          </p>
-        )}
-      </span>
-      {item.sousElement}
-    </li>
-  ));
-
-  const SortableList = SortableContainer(() => {
-    return (
-      <ul>
-        {props.liste &&
-          props.liste.map((value: ListeItem, index: number) => (
-            <SortableItem
-              key={`item-${index}`}
-              index={index}
-              libelle={value.libelle}
-              checkbox={value.checkbox}
-              id={value.id}
-              aPoubelle={value.aPoubelle}
-              sousElement={value.sousElement}
-            />
-          ))}
-      </ul>
-    );
-  });
+      if (
+        active.data.current.sortable.index !==
+          over.data.current.sortable.index &&
+        props.handleReorga
+      ) {
+        props.handleReorga(
+          active.data.current.sortable.index,
+          over.data.current.sortable.index
+        );
+      }
+    },
+    [props]
+  );
 
   return (
-    <div className="ListeGlisserDeposer">
-      {props.liste && (
-        <SortableList
-          onSortEnd={sortEnd => {
-            if (props.handleReorga) {
-              props.handleReorga(sortEnd.oldIndex, sortEnd.newIndex);
-            }
-          }}
-          useDragHandle={props.useDragHandle}
-        />
-      )}
-    </div>
+    <ul className="ListeGlisserDeposer">
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleSort}
+      >
+        <SortableContext
+          items={props.liste}
+          strategy={verticalListSortingStrategy}
+        >
+          {props.liste.map((el, index) => (
+            <SortableItem
+              key={`item-${el.id}`}
+              libelle={el.libelle}
+              checkbox={el.checkbox}
+              index={index}
+              id={el.id}
+              aPoubelle={el.aPoubelle}
+              sousElement={el.sousElement}
+            />
+          ))}
+        </SortableContext>
+      </DndContext>
+    </ul>
   );
 };
 function afficherHandle(
@@ -139,4 +187,3 @@ function afficherHandle(
     props.handleReorga && props.liste?.length !== 1 && props.afficheDragHandle
   );
 }
-

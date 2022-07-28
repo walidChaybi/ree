@@ -41,9 +41,10 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   mentionAjout,
   natureActe
 }) => {
-  function selectionneMention(id: string) {
+  function selectionneMention(id: number) {
     selectionneEtMiseAJour(mentions, mentionSelect, setMentionSelect, id);
   }
+
   const handleOnBlur = useCallback(() => {
     handleBlur(
       mentions,
@@ -77,9 +78,8 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   );
 
   const onClickSupprimer = useCallback(
-    (id: string) => {
+    (index: number) => {
       if (mentions) {
-        const index = mentions.findIndex(el => el.id === id);
         const temp = [...mentions];
         temp.splice(index, 1);
         setMentions(temp);
@@ -151,7 +151,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   );
 
   const handleCheck = useCallback(
-    (id: string) => {
+    (id: number) => {
       handleCheckBox(mentions, setMentions, id);
     },
     [mentions, setMentions]

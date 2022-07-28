@@ -221,15 +221,12 @@ export function handleReorga(
 export function handleCheckBox(
   mentions: IMentionAffichage[] | undefined,
   setMentions: any,
-  id: string
+  index: number
 ) {
   if (mentions) {
-    const index = mentions.findIndex(el => el.id === id);
-    if (index !== -1) {
-      const newListe = [...mentions];
-      newListe[index].estPresent = !mentions[index].estPresent;
-      setMentions(newListe);
-    }
+    const newListe = [...mentions];
+    newListe[index].estPresent = !mentions[index].estPresent;
+    setMentions(newListe);
   }
 }
 
@@ -239,13 +236,13 @@ export function selectionneEtMiseAJour(
   setMentionSelect: React.Dispatch<
     React.SetStateAction<IMentionAffichage | undefined>
   >,
-  id: string
+  id: number
 ) {
   // Sélection de la mention
-  if (mentionSelect?.id === id) {
+  if (mentionSelect?.numeroOrdre === id) {
     setMentionSelect(undefined);
   } else {
-    const mention = mentions?.find(el => el.id === id);
+    const mention = mentions?.[id];
     if (mention) {
       setMentionSelect(mention);
     }
