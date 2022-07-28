@@ -99,7 +99,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
           id: Generateur.genereCleUnique(),
           texte: "",
           nature: NatureMention.getEnumFor(event.target.value),
-          numeroOrdre: mentions?.length,
+          numeroOrdre: getNumeroOrdreMention(mentions),
           estPresent: true,
           aPoubelle: true
         } as IMentionAffichage);
@@ -118,7 +118,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
           id: Generateur.genereCleUnique(),
           texte: event.target.value,
           nature: NatureMention.getEnumFor(""),
-          numeroOrdre: mentions?.length,
+          numeroOrdre: getNumeroOrdreMention(mentions),
           estPresent: true,
           aPoubelle: true
         } as IMentionAffichage);
@@ -135,7 +135,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
       }
       nouvellesMentions.push(mentionAjout);
       nouvellesMentions.forEach(
-        (mention, index) => (mention.numeroOrdre = index)
+        (mention, index) => (mention.numeroOrdre = index + 1)
       );
       setMentions(nouvellesMentions);
       setMentionSelect(mentionAjout);
@@ -238,3 +238,8 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
     </>
   );
 };
+function getNumeroOrdreMention(
+  mentions: IMentionAffichage[] | undefined
+): number {
+  return mentions ? mentions.length + 1 : 0;
+}

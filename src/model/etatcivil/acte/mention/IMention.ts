@@ -62,23 +62,33 @@ export const Mention = {
     }
     return texte;
   },
-  trierMentions(mentions: IMention[]) {
-    mentions.sort((mention1, mentions2) =>
-      mention1.numeroOrdreExtrait
-        ? mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait
-        : mention1.numeroOrdre - mentions2.numeroOrdre
-    );
-  },
-  trierMentionsNumeroOrdre(mentions: IMention[]) {
+  trierMentionsNumeroOrdreApposition(mentions: IMention[]) {
     mentions.sort(
       (mention1, mentions2) => mention1.numeroOrdre - mentions2.numeroOrdre
     );
+
+    return mentions;
   },
-  trierMentionsNumeroOrdreExtrait(mentions: IMention[]) {
-    mentions.sort((mention1, mentions2) =>
-      mention1.numeroOrdreExtrait && mentions2.numeroOrdreExtrait
-        ? mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait
-        : mention1.numeroOrdre - mentions2.numeroOrdre
+  trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions: IMention[]) {
+    const toutesLesMentionsOntUnNumeroOrdreExtrait: boolean = mentions.every(
+      mention => mention.numeroOrdreExtrait != null
     );
+    return toutesLesMentionsOntUnNumeroOrdreExtrait
+      ? mentions.sort(
+          (mention1, mentions2) =>
+            mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait
+        )
+      : this.trierMentionsNumeroOrdreApposition(mentions);
+  },
+  filtreSansTexteMentionNiTexteMentionDelivrance(
+    mentions?: IMention[]
+  ): IMention[] {
+    return mentions
+      ? mentions.filter(
+          mention =>
+            mention.textes?.texteMention ||
+            mention.textes?.texteMentionDelivrance
+        )
+      : [];
   }
 };

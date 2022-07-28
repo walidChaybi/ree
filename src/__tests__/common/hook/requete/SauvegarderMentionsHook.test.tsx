@@ -6,20 +6,39 @@ import { requeteDelivranceRDC } from "../../../../mock/data/requeteDelivrance";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { IMention } from "../../../../model/etatcivil/acte/mention/IMention";
+import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
 import {
   SauvegarderMentionsParam,
   useSauvegarderMentions
 } from "../../../../views/common/hook/acte/mentions/SauvegarderMentionsHook";
-import {
-  mentionApi,
-  mentionOpposable
-} from "../../../pages/requeteDelivrance/editionExtraitCopie/GestionMentionsUtil.test";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
   configRequetes[0],
   configComposition[0]
 ]);
+
+const mentionApi = {
+  textes: {
+    texteMention: "texte mention",
+    texteApposition: "texte apposition"
+  },
+  typeMention: {
+    nature: { opposableAuTiers: false } as NatureMention
+  },
+  numeroOrdreExtrait: 1,
+  id: "1"
+} as IMention;
+
+const mentionOpposable = {
+  texte: "texte mention",
+  estPresent: true,
+  nature: { opposableAuTiers: true } as NatureMention,
+  id: "1",
+  numeroOrdre: 0,
+  aPoubelle: true
+};
 
 const params: SauvegarderMentionsParam = {
   mentionsApi: { mentions: [mentionApi] },

@@ -9,7 +9,10 @@ import {
 import { NatureMention } from "../../../../../../../model/etatcivil/enum/NatureMention";
 import { TypeFiche } from "../../../../../../../model/etatcivil/enum/TypeFiche";
 import { DocumentDelivrance } from "../../../../../../../model/requete/enum/DocumentDelivrance";
-import { IDocumentReponse } from "../../../../../../../model/requete/IDocumentReponse";
+import {
+  DocumentReponse,
+  IDocumentReponse
+} from "../../../../../../../model/requete/IDocumentReponse";
 import messageManager from "../../../../../../common/util/messageManager";
 import {
   getLibelle,
@@ -17,7 +20,6 @@ import {
   shallowEgalTableau
 } from "../../../../../../common/util/Utils";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
-import { GestionMentionsProps } from "./GestionMentions";
 
 export interface IMentionAffichage {
   texte: string;
@@ -32,40 +34,74 @@ export function mappingVersMentionAffichage(
   mentionsApi: IMention[],
   document: IDocumentReponse
 ): IMentionAffichage[] {
-  const estCopie = DocumentDelivrance.typeDocumentEstCopieIntegrale(
-    document.typeDocument
-  );
+  let mentionsPourAffichage: IMentionAffichage[] = [];
 
-  !estCopie
-    ? Mention.trierMentionsNumeroOrdreExtrait(mentionsApi)
-    : Mention.trierMentionsNumeroOrdre(mentionsApi);
+  if (DocumentDelivrance.estCopieIntegrale(document.typeDocument)) {
+    mentionsPourAffichage = mappingVersMentionAffichagePourCopieIntegrale(
+      mentionsApi,
+      document
+    );
+  } else if (
+    DocumentDelivrance.estExtraitAvecOuSansFilliation(document.typeDocument)
+  ) {
+    mentionsPourAffichage =
+      mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
+        mentionsApi,
+        document
+      );
+  }
+  // TODO plurilingue
+  //  else if(DocumentDelivrance.estExtraitPlurilingue()){
+  //   mentionsPourAffichage = ...
+  // }
 
-  return mentionsApi.map((mentionApi: IMention) => ({
+  return mentionsPourAffichage;
+}
+
+export function mappingVersMentionAffichagePourExtraitAvecOuSansFiliation(
+  mentionsApi: IMention[],
+  document: IDocumentReponse
+): IMentionAffichage[] {
+  const mentions =
+    Mention.filtreSansTexteMentionNiTexteMentionDelivrance(mentionsApi);
+
+  Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
+
+  return mentions.map((mentionApi: IMention) => ({
     nature: mentionApi.typeMention.nature,
-    texte: estCopie
-      ? Mention.getTexteCopie(mentionApi)
-      : Mention.getTexteExtrait(mentionApi),
-    estPresent: !document.mentionsRetirees?.find(
-      mentionRetiree => mentionRetiree.idMention === mentionApi.id
-    ),
+    texte: Mention.getTexteExtrait(mentionApi),
+    estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
     id: mentionApi.id,
-    numeroOrdre: estCopie
-      ? mentionApi.numeroOrdre
-      : mentionApi.numeroOrdreExtrait,
+    numeroOrdre: mentionApi.numeroOrdreExtrait,
     aPoubelle: mentionApi.textes.texteMention === null
   }));
 }
 
+export function mappingVersMentionAffichagePourCopieIntegrale(
+  mentionsApi: IMention[],
+  document: IDocumentReponse
+): IMentionAffichage[] {
+  const mentions = Mention.trierMentionsNumeroOrdreApposition([...mentionsApi]);
+
+  return mentions.map((mentionApi: IMention) => ({
+    nature: mentionApi.typeMention.nature,
+    texte: Mention.getTexteCopie(mentionApi),
+    estPresent: DocumentReponse.nEstPasMentionRetiree(document, mentionApi),
+    id: mentionApi.id,
+    numeroOrdre: mentionApi.numeroOrdre,
+    aPoubelle: mentionApi.textes.texteMention === null
+  }));
+}
 
 export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
   return mentionsAffichage
     .sort((a, b) => a.numeroOrdre - b.numeroOrdre)
-    .map(el => {
+    .map(mentionAffichage => {
       return {
-        libelle: el.texte,
-        checkbox: el.estPresent,
-        id: el.id,
-        aPoubelle: el.aPoubelle
+        libelle: mentionAffichage.texte,
+        checkbox: mentionAffichage.estPresent,
+        id: mentionAffichage.id,
+        aPoubelle: mentionAffichage.aPoubelle
       };
     });
 }
@@ -176,7 +212,7 @@ export function handleReorga(
     newList.splice(oldIndex, 1);
     newList.splice(newIndex, 0, item);
     newList.forEach((el, index) => {
-      el.numeroOrdre = index;
+      el.numeroOrdre = index + 1;
     });
     setMentions(newList);
   }
@@ -348,9 +384,7 @@ export function boutonReinitialiserEstDisabled(
   mentions?: IMentionAffichage[],
   document?: IDocumentReponse
 ) {
-  if (
-    DocumentDelivrance.typeDocumentEstCopieIntegrale(document?.typeDocument)
-  ) {
+  if (DocumentDelivrance.estCopieIntegrale(document?.typeDocument)) {
     return (
       !estdeverrouille ||
       (estdeverrouille &&
@@ -372,40 +406,71 @@ export function getValeurEstdeverrouillerCommencement(
 }
 
 export function validerMentions(
-  props: React.PropsWithChildren<GestionMentionsProps>,
   mentions: IMentionAffichage[] | undefined,
   sauvegarderMentions: () => void,
-  mentionsApi?: IMention[]
+  mentionsApi?: IMention[],
+  acte?: IFicheActe,
+  document?: IDocumentReponse
 ) {
+  const estDocumentCopieIntegrale = DocumentDelivrance.estCopieIntegrale(
+    document?.typeDocument
+  );
+
+  const estDocumentExtrait = DocumentDelivrance.estExtraitAvecOuSansFilliation(
+    document?.typeDocument
+  );
+
   if (
-    DocumentDelivrance.typeDocumentEstCopieIntegrale(
-      props.document?.typeDocument
+    estDocumentCopieIntegrale &&
+    modificationEffectue(mentions, mentionsApi, document)
+  ) {
+    confirmation(
+      `Vous avez choisi de décocher des mentions.
+        Celle-ci ne seront pas éditées sur la copie intégrale de l'acte choisi.`,
+      sauvegarderMentions
+    );
+  } else if (
+    !estDocumentCopieIntegrale &&
+    FicheActe.acteEstACQouOP2ouOP3(acte) &&
+    FicheActe.estActeNaissance(acte) &&
+    aucuneMentionsNationalite(mentions)
+  ) {
+    confirmation(
+      `Aucune mention de nationalité n'a été cochée. 
+        Voulez-vous continuer ?`,
+      sauvegarderMentions
+    );
+  } else if (
+    document?.typeDocument &&
+    estDocumentExtrait &&
+    NatureMention.ilExisteUneMentionInterdite(
+      getNaturesMentionsAffichage(mentions),
+      acte?.nature,
+      DocumentDelivrance.getEnumForUUID(document.typeDocument)
     )
   ) {
-    if (modificationEffectue(mentions, mentionsApi, props.document)) {
-      if (
-        window.confirm(`Vous avez choisi de décocher des mentions.
-          Celle-ci ne seront pas éditées sur la copie intégrale de l'acte choisi.`)
-      ) {
-        sauvegarderMentions();
-      }
-    } else {
-      sauvegarderMentions();
-    }
+    confirmation(
+      `Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter. 
+        Voulez-vous continuer ?`,
+      sauvegarderMentions
+    );
   } else {
-    if (
-      FicheActe.acteEstACQouOP2ouOP3(props.acte) &&
-      FicheActe.estActeNaissance(props.acte) &&
-      aucuneMentionsNationalite(mentions)
-    ) {
-      if (
-        window.confirm(`Aucune mention de nationalité n'a été cochée. 
-        Voulez-vous continuer ?`)
-      ) {
-        sauvegarderMentions();
-      }
-    } else {
-      sauvegarderMentions();
-    }
+    sauvegarderMentions();
   }
+}
+
+function confirmation(message: string, fonction: any) {
+  if (window.confirm(message)) {
+    fonction();
+  }
+}
+
+export function getNaturesMentionsAffichage(
+  mentionsAffichage?: IMentionAffichage[]
+): NatureMention[] {
+  return mentionsAffichage
+    ? mentionsAffichage
+        .filter(mentionAffichage => mentionAffichage.estPresent)
+        .map(mentionAffichage => mentionAffichage.nature)
+    : [];
 }

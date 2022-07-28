@@ -3,6 +3,12 @@ import { peupleNatureMention } from "../../../api/nomenclature/NomenclatureEtatc
 import { EnumNomemclature } from "../../../views/common/util/enum/EnumNomenclature";
 import { EnumWithLibelle } from "../../../views/common/util/enum/EnumWithLibelle";
 import { Options } from "../../../views/common/util/Type";
+import { DocumentDelivrance } from "../../requete/enum/DocumentDelivrance";
+import {
+  CODE_EXTRAIT_AVEC_FILIATION,
+  CODE_EXTRAIT_SANS_FILIATION
+} from "../../requete/enum/DocumentDelivranceConstante";
+import { NatureActe } from "./NatureActe";
 
 export const CODE_RC = "21";
 export const CODE_RC_RADIE = "22";
@@ -14,7 +20,8 @@ export const PACS = "2";
 export const LIEN_FILIATION_HORS_ADOPTION = "12";
 export const PUPILLE = "14";
 export const ANNULATION_MARIAGE = "15";
-export const ANNULATION_PACS = " 16";
+export const ANNULATION_PACS = "16";
+export const ANNULATION_ACTE = "23";
 export const CONTRAT_MARIAGE = "7";
 export const DECES = "1";
 export const REPRISE_VIE_COMMUNE = "4";
@@ -49,6 +56,47 @@ export const natureRetireesNaissance = [
   CHANGEMENT_SEXE,
   LIEN_FILIATION_HORS_ADOPTION
 ];
+
+const natureNaissanceInterditePourExtraitAvecFiliation = [
+  REPRISE_VIE_COMMUNE,
+  ANNULATION_MARIAGE,
+  ANNULATION_PACS,
+  ANNULATION_DECISION,
+  ANNULATION_EVENEMENT,
+  ANNULATION_MENTION,
+  CODE_RC_RADIE,
+  CHANGEMENT_NOM,
+  CHANGEMENT_SEXE,
+  LIEN_FILIATION_HORS_ADOPTION,
+  RECTIFICATION,
+  ANNULATION_ACTE
+];
+
+const natureMariageInterdites = [
+  CHANGEMENT_NOM,
+  LIEN_FILIATION_HORS_ADOPTION,
+  ANNULATION_EVENEMENT,
+  ANNULATION_MENTION,
+  RECTIFICATION,
+  ANNULATION_ACTE,
+  ANNULATION_MARIAGE
+];
+
+const naturesInterdites = {
+  Naissance: {
+    [CODE_EXTRAIT_AVEC_FILIATION]:
+      natureNaissanceInterditePourExtraitAvecFiliation,
+    [CODE_EXTRAIT_SANS_FILIATION]: [
+      ...natureNaissanceInterditePourExtraitAvecFiliation,
+      NATIONALITE,
+      ADOPTION
+    ]
+  },
+  Mariage: {
+    [CODE_EXTRAIT_AVEC_FILIATION]: natureMariageInterdites,
+    [CODE_EXTRAIT_SANS_FILIATION]: natureMariageInterdites
+  }
+};
 
 export class NatureMention extends EnumNomemclature {
   constructor(
@@ -131,5 +179,21 @@ export class NatureMention extends EnumNomemclature {
       uuid = EnumNomemclature.getKeyForCode(NatureMention, nature.code);
     }
     return uuid ? uuid : "";
+  }
+
+  public static ilExisteUneMentionInterdite(
+    naturesMentions: NatureMention[],
+    natureActe?: NatureActe,
+    document?: DocumentDelivrance
+  ): boolean {
+    return (
+      //@ts-ignore
+      naturesInterdites[`${natureActe?.libelle}`]?.[document?.code]?.find(
+        (codeMention: string) =>
+          naturesMentions.find(
+            natureMention => natureMention.code === codeMention
+          )
+      ) != null
+    );
   }
 }

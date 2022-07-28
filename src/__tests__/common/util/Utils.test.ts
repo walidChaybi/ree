@@ -247,10 +247,12 @@ test("Attendu: supprimeElement fonctionne correctement", () => {
 });
 
 test("Attendu: checkDirty fonctionne correctement", () => {
+  const sauvegardeFonctionConfirm = window.confirm;
   window.confirm = () => true;
   expect(checkDirty(true, jest.fn())).toBeTruthy();
   window.confirm = () => false;
   expect(checkDirty(true, jest.fn())).toBeFalsy();
+  window.confirm = sauvegardeFonctionConfirm;
 });
 
 test("Attendu: auMoinsUneProprieteEstRenseigne fonctionne correctement", () => {

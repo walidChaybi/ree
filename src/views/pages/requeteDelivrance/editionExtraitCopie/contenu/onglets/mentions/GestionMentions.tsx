@@ -120,10 +120,11 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   const valider = useCallback(() => {
     validerMentions(
-      props,
       mentions,
       sauvegarderMentions,
-      mentionsApi?.mentions
+      mentionsApi?.mentions,
+      props.acte,
+      props.document
     );
   }, [mentions, sauvegarderMentions, mentionsApi, props]);
 

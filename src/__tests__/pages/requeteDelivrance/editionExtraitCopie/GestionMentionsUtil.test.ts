@@ -1,11 +1,17 @@
 import { waitFor } from "@testing-library/react";
 import request from "superagent";
-import { documentReponseExtraitAvecFiliation } from "../../../../mock/data/DocumentReponse";
+import {
+  documentReponseCopieIntegrale,
+  documentReponseExtraitAvecFiliation
+} from "../../../../mock/data/DocumentReponse";
+import { ficheActe2, ficheActeMariage } from "../../../../mock/data/ficheActe";
+import { mentionsAffichage, mentionsApi } from "../../../../mock/data/mentions";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
 import { IMention } from "../../../../model/etatcivil/acte/mention/IMention";
 import { NatureMention } from "../../../../model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
+import { mapActe } from "../../../../views/common/hook/repertoires/MappingRepertoires";
 import {
   aucuneMentionsNationalite,
   handleCheckBox,
@@ -16,8 +22,10 @@ import {
   miseAjourEnFonctionNature,
   modificationEffectue,
   texteEnFonctionOpposableAuTiers,
-  texteNonModifieNatureChangePasDeTexteDelivrance
+  texteNonModifieNatureChangePasDeTexteDelivrance,
+  validerMentions
 } from "../../../../views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+import { acte } from "../../fiche/data/ficheActe";
 
 const superagentMock = require("superagent-mock")(request, [
   configEtatcivil[0],
@@ -33,7 +41,7 @@ beforeAll(async () => {
   });
 });
 
-export const mentionApi = {
+const mentionApi = {
   textes: {
     texteMention: "texte mention",
     texteApposition: "texte apposition"
@@ -45,7 +53,7 @@ export const mentionApi = {
   id: "1"
 } as IMention;
 
-export const mentionOpposable = {
+const mentionOpposable = {
   texte: "texte mention",
   estPresent: true,
   nature: { opposableAuTiers: true } as NatureMention,
@@ -53,7 +61,7 @@ export const mentionOpposable = {
   numeroOrdre: 0,
   aPoubelle: true
 };
-export const mentionNonOpposable = {
+const mentionNonOpposable = {
   texte: "texte mention",
   estPresent: true,
   nature: { opposableAuTiers: false } as NatureMention,
@@ -119,7 +127,7 @@ test("miseAjourEnFonctionNature", () => {
     setMentions
   );
 
-  expect(mentionSelectTest).toStrictEqual({
+  expect(mentionSelectTest!).toStrictEqual({
     aPoubelle: true,
     texte: "texte mention texte apposition",
     estPresent: true,
@@ -128,7 +136,7 @@ test("miseAjourEnFonctionNature", () => {
     numeroOrdre: 0
   });
 
-  expect(mentionsTest).toStrictEqual([
+  expect(mentionsTest!).toStrictEqual([
     {
       aPoubelle: true,
       texte: "texte mention texte apposition",
@@ -148,7 +156,7 @@ test("handleCheckBox", () => {
 
   handleCheckBox([mentionNonOpposable], setMentions, "1");
 
-  expect(mentionsTest).toStrictEqual([
+  expect(mentionsTest!).toStrictEqual([
     {
       aPoubelle: true,
       texte: "texte mention texte apposition",
@@ -168,7 +176,7 @@ test("handleReorga", () => {
 
   handleReorga([mentionNonOpposable, mentionOpposable], setMentions, 0, 1);
 
-  expect(mentionsTest).toStrictEqual([mentionOpposable, mentionNonOpposable]);
+  expect(mentionsTest!).toStrictEqual([mentionOpposable, mentionNonOpposable]);
 });
 
 test("mappingVersMentionAffichage", () => {
@@ -204,7 +212,7 @@ test("mappingVersMentionApi", () => {
             id: ""
           }
         },
-        numeroOrdreExtrait: 0
+        numeroOrdreExtrait: 1
       }
     ],
     mentionsRetirees: []
@@ -213,6 +221,106 @@ test("mappingVersMentionApi", () => {
 
 test("aucuneMentionsNationalite", () => {
   expect(aucuneMentionsNationalite([mentionOpposable])).toBeTruthy();
+});
+
+test("Attendu: validerMentions fonctionne correctement", () => {
+  const sauvegardeFonctionConfirm = window.confirm;
+  window.confirm = () => true;
+  const sauvegarderMentions = jest.fn();
+
+  const mentionsAffichageAvecUnElementdeMoins = mentionsAffichage.slice(1);
+  const mentionsApi1 = mentionsApi as any as IMention[];
+
+  // const test = modificationEffectue(
+  //   mentionsAffichage1,
+  //   mentionsApi1,
+  //   document1
+  // );
+
+  // Copie intégrale et une modification des mentions a été effectuée
+  ////////////////////////////////////////////////////////////////////
+  validerMentions(
+    mentionsAffichageAvecUnElementdeMoins,
+    sauvegarderMentions,
+    mentionsApi1,
+    acte,
+    documentReponseCopieIntegrale
+  );
+  expect(sauvegarderMentions).toBeCalledTimes(1);
+
+  window.confirm = () => false;
+  sauvegarderMentions.mockClear();
+
+  validerMentions(
+    mentionsAffichageAvecUnElementdeMoins,
+    sauvegarderMentions,
+    mentionsApi1,
+    acte,
+    documentReponseCopieIntegrale
+  );
+
+  expect(sauvegarderMentions).toBeCalledTimes(0);
+
+  // Ré-initialisation
+  ////////////////////////////////////////////////////////////////////
+  window.confirm = () => true;
+  sauvegarderMentions.mockClear();
+
+  // Acte Naissance de type ACQ et aucune mention de nationalité
+  ////////////////////////////////////////////////////////////////////
+  validerMentions(
+    mentionsAffichage,
+    sauvegarderMentions,
+    mentionsApi1,
+    mapActe(ficheActe2.data),
+    documentReponseExtraitAvecFiliation
+  );
+
+  expect(sauvegarderMentions).toBeCalledTimes(1);
+
+  window.confirm = () => false;
+  sauvegarderMentions.mockClear();
+
+  validerMentions(
+    mentionsAffichage,
+    sauvegarderMentions,
+    mentionsApi1,
+    mapActe(ficheActe2.data),
+    documentReponseExtraitAvecFiliation
+  );
+
+  expect(sauvegarderMentions).toBeCalledTimes(0);
+
+  // Ré-initialisation
+  ////////////////////////////////////////////////////////////////////
+  window.confirm = () => true;
+  sauvegarderMentions.mockClear();
+
+  // Il y a une mention interdite pour l'acte de mariage
+  ////////////////////////////////////////////////////////////////////
+  validerMentions(
+    mentionsAffichage,
+    sauvegarderMentions,
+    mentionsApi1,
+    mapActe(ficheActeMariage.data),
+    documentReponseExtraitAvecFiliation
+  );
+
+  window.confirm = () => false;
+  sauvegarderMentions.mockClear();
+
+  validerMentions(
+    mentionsAffichage,
+    sauvegarderMentions,
+    mentionsApi1,
+    mapActe(ficheActeMariage.data),
+    documentReponseExtraitAvecFiliation
+  );
+
+  expect(sauvegarderMentions).toBeCalledTimes(0);
+
+  // Restauration du confirm
+  window.confirm = sauvegardeFonctionConfirm;
 });
 
 afterAll(() => {

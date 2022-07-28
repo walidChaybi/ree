@@ -30,7 +30,7 @@ export class GestionnaireMentionsRetireesAuto {
     mentions: IMentionAvecRetiree[],
     natureActe?: NatureActe
   ): string[] {
-    Mention.trierMentions(mentions);
+    Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
     if (natureActe) {
       if (natureActe === NatureActe.NAISSANCE) {
         this.deselectionnerRadieParPaire(mentions);

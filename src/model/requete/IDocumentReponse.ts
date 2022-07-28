@@ -1,6 +1,7 @@
 import { MimeType } from "file-type/core";
 import { DEUX } from "../../views/common/util/Utils";
 import { Orientation } from "../composition/enum/Orientation";
+import { IMention } from "../etatcivil/acte/mention/IMention";
 import { ChoixDelivrance } from "./enum/ChoixDelivrance";
 import { COURRIER, DocumentDelivrance } from "./enum/DocumentDelivrance";
 import { MentionsRetirees } from "./enum/MentionsRetirees";
@@ -49,7 +50,7 @@ export const DocumentReponse = {
     documentsReponse?: IDocumentReponse[]
   ): IDocumentReponse | undefined {
     return documentsReponse?.find(d =>
-      DocumentDelivrance.typeDocumentEstCopieIntegrale(d.typeDocument)
+      DocumentDelivrance.estCopieIntegrale(d.typeDocument)
     );
   },
 
@@ -139,6 +140,22 @@ export const DocumentReponse = {
       }
     });
     return documents;
+  },
+
+  estMentionRetiree(document: IDocumentReponse, mention: IMention): boolean {
+    return (
+      document.mentionsRetirees != null &&
+      document.mentionsRetirees.find(
+        mentionRetiree => mentionRetiree.idMention === mention.id
+      ) != null
+    );
+  },
+
+  nEstPasMentionRetiree(
+    document: IDocumentReponse,
+    mention: IMention
+  ): boolean {
+    return !this.estMentionRetiree(document, mention);
   }
 };
 

@@ -149,9 +149,7 @@ function sauvegarderEnFonctionTypeDocument(
       )
     ) {
       if (
-        !DocumentDelivrance.typeDocumentEstCopieIntegrale(
-          params.document?.typeDocument
-        )
+        !DocumentDelivrance.estCopieIntegrale(params.document?.typeDocument)
       ) {
         setMentionsAEnvoyerParams({
           idActe: getValeurOuVide(params.idActe),

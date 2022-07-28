@@ -3,7 +3,6 @@ import {
   getLibelle,
   getValeurOuVide,
   jointAvecRetourALaLigne,
-  triListeObjetsSurPropriete,
   TROIS,
   UN,
   ZERO
@@ -508,18 +507,23 @@ export class CommunExtraitOuCopieActeTexteComposition {
   public static getTexteMentions(
     mentions: IMention[],
     copie: boolean,
-    mentionsRetirees: string[]
+    idMentionsRetirees: string[]
   ): string[] {
     const texteMentions: string[] = [];
 
-    const mentionsFiltrees = mentions.filter(mention => {
-      return !mentionsRetirees.some(m => m === mention.id);
+    let mentionsFiltrees =
+      Mention.filtreSansTexteMentionNiTexteMentionDelivrance(mentions);
+
+    mentionsFiltrees = mentionsFiltrees.filter(mention => {
+      return !idMentionsRetirees.some(
+        idMentionRetiree => idMentionRetiree === mention.id
+      );
     });
 
-    const mentionsTriees = triListeObjetsSurPropriete(
-      mentionsFiltrees,
-      copie ? "numeroOrdre" : "numeroOrdreExtrait"
-    );
+    const mentionsTriees =
+      Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(
+        mentionsFiltrees
+      );
 
     mentionsTriees.forEach(mention => {
       if (mention.textes) {
