@@ -1309,6 +1309,266 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
         },
         qualite: "ENFANT_MAJEUR",
         numeroDossierNational: "numeroDossierNational"
+      },
+      {
+        id: "d849143b-1ad8-480b-aa4c-ed2a86bf916e",
+        position: 6,
+        nomNaissance: "ERIC",
+        nomUsage: null,
+        anneeNaissance: 1977,
+        moisNaissance: 4,
+        jourNaissance: 3,
+        villeNaissance: null,
+        codePostalNaissance: null,
+        arrondissementNaissance: null,
+        villeEtrangereNaissance: "lieuTunis",
+        regionNaissance: null,
+        paysNaissance: "TUNISIE",
+        sexe: "FEMININ",
+        nationalite: {
+          _libelle: "Étrangère",
+          _nom: "ETRANGERE"
+        },
+        prenoms: [
+          {
+            id: "d8495c0b-3cc7-4af7-8f94-279c9e215547",
+            numeroOrdre: 1,
+            prenom: "Sarah",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: [],
+        deces: null,
+        domiciliation: null,
+        evenementUnions: [
+          {
+            id: "d84972a1-c59f-4005-bfe7-b02422d7a3c0",
+            type: "DISSOLUTION_DIVORCE",
+            jour: 2,
+            mois: 12,
+            annee: 1993,
+            ville: "testVille",
+            arrondissement: null,
+            region: null,
+            pays: "TUNISIE",
+            situationActuelle: false
+          },
+          {
+            id: "d84988df-05b5-4f29-bb8d-7fc4b93b8d91",
+            type: "UNION",
+            jour: 12,
+            mois: 4,
+            annee: 1992,
+            ville: "VilleTest",
+            arrondissement: null,
+            region: null,
+            pays: "TUNISIE",
+            situationActuelle: false
+          }
+        ],
+        typeObjetTitulaire: "FAMILLE",
+        nomDemandeFrancisation: null,
+        nomDemandeIdentification: null,
+        nomSecable: null,
+        nomPremierePartie: null,
+        nomSecondePartie: null,
+        courriel: null,
+        telephone: null,
+        situationFamilliale: null,
+        nationalites: [
+          {
+            id: "d849c550-c4e3-4215-997a-d498ea63e010",
+            nationalite: "tunisienne"
+          }
+        ],
+        prenomsDemande: [],
+        lienEtatCivil: [],
+        retenueSdanf: null,
+        qualite: "ANCIEN_CONJOINT",
+        numeroDossierNational: null,
+        demandeEffetCollectif: null,
+        valideEffetCollectif: null,
+        residence: null,
+        domiciliationEnfant: null,
+        parent2Enfant: null,
+        situationFamiliale: null
+      },
+      {
+        id: "d84903a8-f4c3-43e6-a8e1-1c762d082b89",
+        position: 7,
+        nomNaissance: "DUPONT",
+        nomUsage: null,
+        anneeNaissance: 1994,
+        moisNaissance: 2,
+        jourNaissance: 3,
+        villeNaissance: "Versailles",
+        codePostalNaissance: "78000",
+        arrondissementNaissance: null,
+        villeEtrangereNaissance: null,
+        regionNaissance: null,
+        paysNaissance: "FRANCE",
+        sexe: "FEMININ",
+        nationalite: {
+          _libelle: "Française",
+          _nom: "FRANCAISE"
+        },
+        prenoms: [
+          {
+            id: "d849f6fd-84cf-4aba-8f51-92315f95405c",
+            numeroOrdre: 1,
+            prenom: "Marie",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: [],
+        deces: null,
+        domiciliation: null,
+        evenementUnions: [
+          {
+            id: "d849f293-2218-4752-8f61-ca6023c6c4da",
+            type: "MARIAGE",
+            jour: 12,
+            mois: 1,
+            annee: 1994,
+            ville: "France",
+            arrondissement: null,
+            region: null,
+            pays: "FRANCE",
+            situationActuelle: true
+          }
+        ],
+        typeObjetTitulaire: "FAMILLE",
+        nomDemandeFrancisation: null,
+        nomDemandeIdentification: null,
+        nomSecable: null,
+        nomPremierePartie: null,
+        nomSecondePartie: null,
+        courriel: null,
+        telephone: null,
+        situationFamilliale: null,
+        nationalites: [
+          {
+            id: "d8490c10-92c0-42c3-a68c-4bcf6627fed0",
+            nationalite: "française"
+          }
+        ],
+        prenomsDemande: [],
+        lienEtatCivil: [],
+        retenueSdanf: {
+          id: "d84929f5-da58-4804-8452-578113581654",
+          nomNaissance: "DUPONT",
+          nomUsage: null,
+          nomActuel: null,
+          nomDemandeFrancisation: null,
+          nomDemandeIdentification: null,
+          jourNaissance: 3,
+          moisNaissance: 2,
+          anneeNaissance: 1994,
+          codePostalNaissance: "78000",
+          villeNaissance: "Versailles",
+          villeEtrangereNaissance: null,
+          arrondissementNaissance: null,
+          regionNaissance: null,
+          paysNaissance: "FRANCE",
+          prenomsRetenu: [
+            {
+              id: "d8490ac0-1378-46a5-8e08-96cf3edc425a",
+              numeroOrdre: 1,
+              prenom: "Marie",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        },
+        qualite: "CONJOINT_ACTUEL",
+        numeroDossierNational: null,
+        demandeEffetCollectif: null,
+        valideEffetCollectif: null,
+        residence: null,
+        domiciliationEnfant: null,
+        parent2Enfant: null,
+        situationFamiliale: null
+      },
+      {
+        id: "d8494659-335b-4b40-a687-6f64e4933e61",
+        position: 8,
+        nomNaissance: "RAMIRES",
+        nomUsage: null,
+        anneeNaissance: 1994,
+        moisNaissance: 11,
+        jourNaissance: 3,
+        villeNaissance: "Paris",
+        codePostalNaissance: "75000",
+        arrondissementNaissance: null,
+        villeEtrangereNaissance: null,
+        regionNaissance: null,
+        paysNaissance: "FRANCE",
+        sexe: "MASCULIN",
+        nationalite: {
+          _libelle: "Française",
+          _nom: "FRANCAISE"
+        },
+        prenoms: [
+          {
+            id: "d849adb4-fe58-4dcf-be5c-c265b7e0f3be",
+            numeroOrdre: 1,
+            prenom: "Alex",
+            estPrenomFrRetenuSdanf: null
+          }
+        ],
+        parentsTitulaire: [],
+        deces: null,
+        domiciliation: null,
+        evenementUnions: [],
+        typeObjetTitulaire: "FAMILLE",
+        nomDemandeFrancisation: null,
+        nomDemandeIdentification: null,
+        nomSecable: null,
+        nomPremierePartie: null,
+        nomSecondePartie: null,
+        courriel: null,
+        telephone: null,
+        situationFamilliale: null,
+        nationalites: [
+          {
+            id: "d849b62a-e9e0-494f-a00b-c066a6f769ec",
+            nationalite: "française"
+          }
+        ],
+        prenomsDemande: [],
+        lienEtatCivil: [],
+        retenueSdanf: {
+          id: "d84901a9-0af9-4248-88d5-df9ae4853fbf",
+          nomNaissance: "DUPOND",
+          nomUsage: null,
+          nomActuel: null,
+          nomDemandeFrancisation: null,
+          nomDemandeIdentification: null,
+          jourNaissance: 3,
+          moisNaissance: 11,
+          anneeNaissance: 1994,
+          codePostalNaissance: "75000",
+          villeNaissance: "Paris",
+          villeEtrangereNaissance: null,
+          arrondissementNaissance: null,
+          regionNaissance: null,
+          paysNaissance: "FRANCE",
+          prenomsRetenu: [
+            {
+              id: "d8497e48-57ec-4616-bead-ae73d582cf30",
+              numeroOrdre: 1,
+              prenom: "Alex",
+              estPrenomFrRetenuSdanf: null
+            }
+          ]
+        },
+        qualite: "FRATRIE",
+        numeroDossierNational: null,
+        demandeEffetCollectif: null,
+        valideEffetCollectif: null,
+        residence: null,
+        domiciliationEnfant: null,
+        parent2Enfant: null,
+        situationFamiliale: null
       }
     ],
     corbeilleAgent: null,
