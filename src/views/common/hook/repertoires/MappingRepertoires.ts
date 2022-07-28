@@ -29,6 +29,7 @@ import {
 } from "../../../../model/etatcivil/rcrca/IInteresse";
 import { getDateFromTimestamp, IDateCompose } from "../../util/DateUtils";
 import { formatNom, formatPrenom } from "../../util/Utils";
+import { mappingMentions } from "../acte/mentions/MentionsApiHook";
 import { IDetailMariage } from "./../../../../model/etatcivil/acte/IDetailMariage";
 
 export type TFiche = IFicheRcRca | IFichePacs | IFicheActe;
@@ -107,6 +108,7 @@ export function mapActe(data: any): IFicheActe {
     : undefined;
 
   dataActe.personnes = mapPersonnes(data.personnes, data.numero);
+  dataActe.mentions = mappingMentions(data.mentions);
 
   dataActe.visibiliteArchiviste = TypeVisibiliteArchiviste.getEnumFor(
     data.visibiliteArchiviste

@@ -54,18 +54,257 @@ export const acte: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000,
-      appositionPapier: 1606086000,
-      statut: "statut",
-      delivrable: false,
-      nomOec: "Screens",
-      prenomOec: "Gabriellia",
-      piecesAnnexes: [
+      id: "1a0aa3be-8311-465d-b750-d4c19834477a",
+      numeroOrdre: 1,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
         {
-          nom: "DOC1",
-          type: "docx"
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
         }
-      ]
+      ],
+      typeMention: {
+        codeType: "1",
+        libelleType: "Mariage",
+        codeSousType: "1-1",
+        libelleSousType: "Mariage célébré en France (mairie)",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+          nom: "NATURE_MENTION",
+          code: "27",
+          libelle: "Mariage",
+          estActif: true,
+          opposableAuTiers: false
+        },
+        natureActe: "NAISSANCE",
+        estSousType: false
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "Mariage",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
+    },
+    {
+      id: "1a0aa3be-8311-465d-b750-d4c19834477b",
+      numeroOrdre: 2,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
+        {
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
+        }
+      ],
+      typeMention: {
+        codeType: "33",
+        libelleType: "Répertoire civil ",
+        codeSousType: "33-1",
+        libelleSousType: "Inscription au répertoire civil ",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e",
+          nom: "NATURE_MENTION",
+          code: "21",
+          libelle: "RC",
+          estActif: true,
+          opposableAuTiers: true
+        },
+        natureActe: "NAISSANCE",
+        estSousType: true
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 27,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "RC",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
+    },
+    {
+      id: "1a0aa3be-8311-465d-b750-d4c19834477c",
+      numeroOrdre: 3,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
+        {
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
+        }
+      ],
+      typeMention: {
+        codeType: "33",
+        libelleType: "Répertoire civil ",
+        codeSousType: "33-2",
+        libelleSousType: "Radiation d'une inscription au répertoire civil",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e",
+          nom: "NATURE_MENTION",
+          code: "22",
+          libelle: "RC radié",
+          estActif: true,
+          opposableAuTiers: false
+        },
+        natureActe: "NAISSANCE",
+        estSousType: true
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "RC Radie",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
+    },
+    {
+      id: "1a0aa3be-8311-465d-b750-d4c19834477d",
+      numeroOrdre: 4,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
+        {
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
+        }
+      ],
+      typeMention: {
+        codeType: "2",
+        libelleType:
+          "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
+        codeSousType: "2-6-a",
+        libelleSousType: "Divorce à l'étranger",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
+          nom: "NATURE_MENTION",
+          code: "5",
+          libelle: "Divorce",
+          estActif: true,
+          opposableAuTiers: true
+        },
+        natureActe: "NAISSANCE",
+        estSousType: false
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 27,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "Divorce",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
     }
   ],
   titulaires: [
@@ -229,18 +468,257 @@ export const acte1: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000,
-      appositionPapier: 1606086000,
-      statut: "statut",
-      delivrable: false,
-      nomOec: "Screens",
-      prenomOec: "Gabriellia",
-      piecesAnnexes: [
+      id: "1a0aa3be-8311-465d-b750-d4c19834477a",
+      numeroOrdre: 1,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
         {
-          nom: "DOC1",
-          type: "docx"
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
         }
-      ]
+      ],
+      typeMention: {
+        codeType: "1",
+        libelleType: "Mariage",
+        codeSousType: "1-1",
+        libelleSousType: "Mariage célébré en France (mairie)",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+          nom: "NATURE_MENTION",
+          code: "27",
+          libelle: "Mariage",
+          estActif: true,
+          opposableAuTiers: false
+        },
+        natureActe: "NAISSANCE",
+        estSousType: false
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "Mariage",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
+    },
+    {
+      id: "1a0aa3be-8311-465d-b750-d4c19834477b",
+      numeroOrdre: 2,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
+        {
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
+        }
+      ],
+      typeMention: {
+        codeType: "33",
+        libelleType: "Répertoire civil ",
+        codeSousType: "33-1",
+        libelleSousType: "Inscription au répertoire civil ",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e",
+          nom: "NATURE_MENTION",
+          code: "21",
+          libelle: "RC",
+          estActif: true,
+          opposableAuTiers: true
+        },
+        natureActe: "NAISSANCE",
+        estSousType: true
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 27,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "RC",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
+    },
+    {
+      id: "1a0aa3be-8311-465d-b750-d4c19834477c",
+      numeroOrdre: 3,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
+        {
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
+        }
+      ],
+      typeMention: {
+        codeType: "33",
+        libelleType: "Répertoire civil ",
+        codeSousType: "33-2",
+        libelleSousType: "Radiation d'une inscription au répertoire civil",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e",
+          nom: "NATURE_MENTION",
+          code: "22",
+          libelle: "RC radié",
+          estActif: true,
+          opposableAuTiers: false
+        },
+        natureActe: "NAISSANCE",
+        estSousType: true
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "RC Radie",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
+    },
+    {
+      id: "1a0aa3be-8311-465d-b750-d4c19834477d",
+      numeroOrdre: 4,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
+        {
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
+        }
+      ],
+      typeMention: {
+        codeType: "2",
+        libelleType:
+          "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
+        codeSousType: "2-6-a",
+        libelleSousType: "Divorce à l'étranger",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
+          nom: "NATURE_MENTION",
+          code: "5",
+          libelle: "Divorce",
+          estActif: true,
+          opposableAuTiers: true
+        },
+        natureActe: "NAISSANCE",
+        estSousType: false
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 27,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "Divorce",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
     }
   ],
   titulaires: [
@@ -404,18 +882,67 @@ export const acte2: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000,
-      appositionPapier: 1606086000,
-      statut: "statut",
-      delivrable: false,
-      nomOec: "Screens",
-      prenomOec: "Gabriellia",
-      piecesAnnexes: [
+      id: "1a0aa3be-8311-465d-b750-d4c19834477a",
+      numeroOrdre: 1,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
         {
-          nom: "DOC1",
-          type: "docx"
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
         }
-      ]
+      ],
+      typeMention: {
+        codeType: "1",
+        libelleType: "Mariage",
+        codeSousType: "1-1",
+        libelleSousType: "Mariage célébré en France (mairie)",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+          nom: "NATURE_MENTION",
+          code: "27",
+          libelle: "Mariage",
+          estActif: true,
+          opposableAuTiers: false
+        },
+        natureActe: "NAISSANCE",
+        estSousType: false
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "Mariage",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
     }
   ],
   titulaires: [
@@ -579,18 +1106,67 @@ export const acte3: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000,
-      appositionPapier: 1606086000,
-      statut: "statut",
-      delivrable: false,
-      nomOec: "Screens",
-      prenomOec: "Gabriellia",
-      piecesAnnexes: [
+      id: "1a0aa3be-8311-465d-b750-d4c19834477a",
+      numeroOrdre: 1,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
         {
-          nom: "DOC1",
-          type: "docx"
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
         }
-      ]
+      ],
+      typeMention: {
+        codeType: "1",
+        libelleType: "Mariage",
+        codeSousType: "1-1",
+        libelleSousType: "Mariage célébré en France (mairie)",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+          nom: "NATURE_MENTION",
+          code: "27",
+          libelle: "Mariage",
+          estActif: true,
+          opposableAuTiers: false
+        },
+        natureActe: "NAISSANCE",
+        estSousType: false
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "Mariage",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
     }
   ],
   titulaires: [
@@ -754,18 +1330,67 @@ export const acte4: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000,
-      appositionPapier: 1606086000,
-      statut: "statut",
-      delivrable: false,
-      nomOec: "Screens",
-      prenomOec: "Gabriellia",
-      piecesAnnexes: [
+      id: "1a0aa3be-8311-465d-b750-d4c19834477a",
+      numeroOrdre: 1,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
         {
-          nom: "DOC1",
-          type: "docx"
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
         }
-      ]
+      ],
+      typeMention: {
+        codeType: "1",
+        libelleType: "Mariage",
+        codeSousType: "1-1",
+        libelleSousType: "Mariage célébré en France (mairie)",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+          nom: "NATURE_MENTION",
+          code: "27",
+          libelle: "Mariage",
+          estActif: true,
+          opposableAuTiers: false
+        },
+        natureActe: "NAISSANCE",
+        estSousType: false
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "Mariage",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
     }
   ],
   titulaires: [
@@ -1418,18 +2043,257 @@ export const acteMariage: any = {
   },
   mentions: [
     {
-      appositionNumerique: 1606086000,
-      appositionPapier: 1606086000,
-      statut: "statut",
-      delivrable: false,
-      nomOec: "Screens",
-      prenomOec: "Gabriellia",
-      piecesAnnexes: [
+      id: "1a0aa3be-8311-465d-b750-d4c19834477a",
+      numeroOrdre: 1,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
         {
-          nom: "DOC1",
-          type: "docx"
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
         }
-      ]
+      ],
+      typeMention: {
+        codeType: "1",
+        libelleType: "Mariage",
+        codeSousType: "1-1",
+        libelleSousType: "Mariage célébré en France (mairie)",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
+          nom: "NATURE_MENTION",
+          code: "27",
+          libelle: "Mariage",
+          estActif: true,
+          opposableAuTiers: false
+        },
+        natureActe: "NAISSANCE",
+        estSousType: false
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "Mariage",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
+    },
+    {
+      id: "1a0aa3be-8311-465d-b750-d4c19834477b",
+      numeroOrdre: 2,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
+        {
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
+        }
+      ],
+      typeMention: {
+        codeType: "33",
+        libelleType: "Répertoire civil ",
+        codeSousType: "33-1",
+        libelleSousType: "Inscription au répertoire civil ",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e",
+          nom: "NATURE_MENTION",
+          code: "21",
+          libelle: "RC",
+          estActif: true,
+          opposableAuTiers: true
+        },
+        natureActe: "NAISSANCE",
+        estSousType: true
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 27,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "RC",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
+    },
+    {
+      id: "1a0aa3be-8311-465d-b750-d4c19834477c",
+      numeroOrdre: 3,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
+        {
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
+        }
+      ],
+      typeMention: {
+        codeType: "33",
+        libelleType: "Répertoire civil ",
+        codeSousType: "33-2",
+        libelleSousType: "Radiation d'une inscription au répertoire civil",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e",
+          nom: "NATURE_MENTION",
+          code: "22",
+          libelle: "RC radié",
+          estActif: true,
+          opposableAuTiers: false
+        },
+        natureActe: "NAISSANCE",
+        estSousType: true
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 1,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "RC Radie",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
+    },
+    {
+      id: "1a0aa3be-8311-465d-b750-d4c19834477d",
+      numeroOrdre: 4,
+      numeroOrdreExtrait: 0,
+      villeApposition: "Tananarive",
+      regionApposition: "region apposition",
+      dateApposition: [2021, 3, 24],
+      dateCreation: [2021, 3, 15],
+      statut: "BROUILLON",
+      dateStatut: 1618480800000,
+      titulaires: [
+        {
+          ordre: 0,
+          nom: "nom titulaire",
+          sexe: "MASCULIN",
+          nationalite: "FRANCAISE",
+          prenoms: ["prenom titulaire"]
+        }
+      ],
+      typeMention: {
+        codeType: "2",
+        libelleType:
+          "Divorce/Séparation de corps/Annulation de mariage/Reprise de la vie commune",
+        codeSousType: "2-6-a",
+        libelleSousType: "Divorce à l'étranger",
+        estActif: true,
+        modeInformatisation: "OUI",
+        nature: {
+          id: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
+          nom: "NATURE_MENTION",
+          code: "5",
+          libelle: "Divorce",
+          estActif: true,
+          opposableAuTiers: true
+        },
+        natureActe: "NAISSANCE",
+        estSousType: false
+      },
+      autoriteEtatCivil: {
+        libelleTypeAutoriteEtatCivil: "libelle autorite etat civil",
+        nomOEC: "nom OEC",
+        prenomOEC: "prenom OEC"
+      },
+      evenement: {
+        minute: null,
+        heure: null,
+        jour: 27,
+        mois: 12,
+        annee: 1978,
+        voie: null,
+        ville: "Rome",
+        arrondissement: null,
+        region: "Grand Rome",
+        pays: "Italie",
+        lieuReprise: null
+      },
+      textes: {
+        texteMention: "Divorce",
+        texteApposition: null,
+        texteOEC: "texte OEC",
+        texteMentionDelivrance: null,
+        texteMentionPlurilingue: null
+      }
     }
   ],
   titulaires: [

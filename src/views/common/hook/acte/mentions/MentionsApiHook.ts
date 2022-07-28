@@ -35,7 +35,7 @@ export function useMentionsApiHook(idActe?: string) {
   return mentions;
 }
 
-function mappingMentions(mentions: any[]): IMention[] {
+export function mappingMentions(mentions: any[]): IMention[] {
   return mentions.map(element => {
     return mappingMention(element);
   });
