@@ -103,17 +103,19 @@ export function mappingUneRequeteTableauCreation(
 }
 
 function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
-  return titulaires
-    .filter(el => el.qualite !== QualiteFamille.PARENT)
-    .map(el => `${el.nom} ${getValeurOuVide(el.prenoms[0])}`)
-    .reduce((accumulateur, valeurCourante) => {
-      return `${accumulateur}, ${valeurCourante}`;
-    });
+  return titulaires.length > 0
+    ? titulaires
+        .filter(el => el.qualite !== QualiteFamille.PARENT)
+        .map(el => `${el.nom} ${getValeurOuVide(el.prenoms[0])}`)
+        .reduce((accumulateur, valeurCourante) => {
+          return `${accumulateur}, ${valeurCourante}`;
+        })
+    : "";
 }
 
 function filtrerUniquementTitulairesHorsFamille(titulaires: any) {
   return titulaires.filter(
     (titulaire: any) =>
-      titulaires.typeObjetTitulaire !== TypeObjetTitulaire.FAMILLE
+      titulaire.typeObjetTitulaire !== TypeObjetTitulaire.FAMILLE
   );
 }
