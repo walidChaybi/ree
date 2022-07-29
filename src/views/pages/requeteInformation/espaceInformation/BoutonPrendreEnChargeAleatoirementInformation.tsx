@@ -42,7 +42,7 @@ export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
       } else if (!requeteAleatoireResultat.requete) {
         messageManager.showInfoAndClose(
           getLibelle(
-            "Il n'existe plus de requête disponibles à la prise en charge"
+            "Il n'existe plus de requêtes disponibles à la prise en charge"
           )
         );
       }

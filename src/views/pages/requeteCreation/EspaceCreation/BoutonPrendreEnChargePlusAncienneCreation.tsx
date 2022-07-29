@@ -45,7 +45,7 @@ export const BoutonPrendreEnChargePlusAncienneCreation: React.FC<
       } else if (!requetePlusAncienneResultat.requete) {
         messageManager.showInfoAndClose(
           getLibelle(
-            "Il n'existe plus de requête disponibles à la prise en charge"
+            "Il n'existe plus de requêtes disponibles à la prise en charge"
           )
         );
       }
