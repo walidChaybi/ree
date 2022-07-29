@@ -9,6 +9,7 @@ import {
 } from "../../views/common/util/Utils";
 import { Nationalite } from "../etatcivil/enum/Nationalite";
 import { Sexe } from "../etatcivil/enum/Sexe";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IEvenementUnion } from "./IEvenementUnion";
 import { IParent } from "./IParents";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
@@ -40,7 +41,7 @@ export interface ITitulaireRequete {
   nomDemandeIdentification?: string;
   nomActuel?: string;
   nombreEnfantMineur?: number;
-  typeObjetTitulaire?: string;
+  typeObjetTitulaire?: TypeObjetTitulaire;
   qualite?: string;
   courriel?: string;
   telephone?: string;

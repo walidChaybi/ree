@@ -7,6 +7,7 @@ import {
 import { QualiteFamille } from "../../../../model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "../../../../model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
+import { TypeObjetTitulaire } from "../../../../model/requete/enum/TypeObjetTitulaire";
 import { TypeRequete } from "../../../../model/requete/enum/TypeRequete";
 import { IRequeteTableauCreation } from "../../../../model/requete/IRequeteTableauCreation";
 import { mapAttribueA } from "../../../../model/requete/IRequeteTableauDelivrance";
@@ -76,7 +77,10 @@ export function mappingUneRequeteTableauCreation(
   requete: any,
   mappingSupplementaire: boolean
 ): IRequeteTableauCreation {
-  const titulaires = mapTitulaires(requete?.titulaires, mappingSupplementaire);
+  const titulaires = mapTitulaires(
+    filtrerUniquementTitulairesHorsFamille(requete?.titulaires),
+    mappingSupplementaire
+  );
   return {
     idRequete: valeurOuUndefined(requete?.id),
     numeroFonctionnel: getValeurOuVide(requete?.numeroFonctionnel),
@@ -105,4 +109,11 @@ function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
     .reduce((accumulateur, valeurCourante) => {
       return `${accumulateur}, ${valeurCourante}`;
     });
+}
+
+function filtrerUniquementTitulairesHorsFamille(titulaires: any) {
+  return titulaires.filter(
+    (titulaire: any) =>
+      titulaires.typeObjetTitulaire !== TypeObjetTitulaire.FAMILLE
+  );
 }
