@@ -84,7 +84,7 @@ test("renders Page requete interactions works, no errors returned", async () => 
   });
 });
 
-test("Test Attribué à", async () => {
+test("Test Attribuée à", async () => {
   render(
     <Router history={history}>
       <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
@@ -146,7 +146,7 @@ test("Test Attribué à", async () => {
   await act(async () => {
     fireEvent.click(valider);
   });
-}); 
+});
 
 afterAll(() => {
   superagentMock.unset();

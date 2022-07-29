@@ -10,7 +10,7 @@ export const colonnesTableauRequetesServiceCreation = [
   ...colonnesTableauMesRequetesCreation.slice(0, CINQ),
   new TableauTypeColumn({
     keys: [HeaderTableauRequetesServiceCreation.AttribueA],
-    title: getLibelle("Attribué à"),
+    title: getLibelle("Attribuée à"),
     align: "center"
   }),
   ...colonnesTableauMesRequetesCreation.slice(CINQ)

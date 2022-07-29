@@ -46,7 +46,7 @@ test("Attendu: les requêtes de service s'affichent correctement", async () => {
     expect(screen.getByText("Postulant/Titulaire")).toBeDefined();
     expect(screen.getByText("Requérant")).toBeDefined();
     expect(screen.getByText("Initialisation")).toBeDefined();
-    expect(screen.getByText("Attribué à")).toBeDefined();
+    expect(screen.getByText("Attribuée à")).toBeDefined();
     expect(screen.getByText("Dernière action")).toBeDefined();
     expect(screen.getByText("Statut")).toBeDefined();
 
