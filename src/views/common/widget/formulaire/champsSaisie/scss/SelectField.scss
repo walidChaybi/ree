@@ -1,6 +1,6 @@
 @import "../../../../../../scss/_colors.scss";
 
-.SelectField {
+.SelectField { 
   select {
     font-family: "NotoSansUI-Regular", sans-serif !important;
   }
@@ -28,5 +28,17 @@
 
   option {
     font-family: "NotoSansUI-Regular", sans-serif !important;
+  }
+  
+  &:hover {
+    .MuiOutlinedInput-notchedOutline {
+      border-color: $form-outline-border !important;
+    }
+  }
+
+  &.Mui-focused { 
+    .MuiOutlinedInput-notchedOutline {
+      border-color: $form-outline-border !important;
+    }
   }
 }
