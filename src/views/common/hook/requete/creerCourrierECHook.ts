@@ -44,7 +44,11 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   useEffect(() => {
     if (estPresentIdActeEtChoixDelivrance(params)) {
       setActeApiHookParams({
-        idActe: params?.idActe
+        idActe: params?.idActe,
+        recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(
+          //@ts-ignore params.requete.choixDelivrance non null
+          params.requete.choixDelivrance
+        )
       });
     }
   }, [params]);
@@ -81,6 +85,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
       setMentionsRetirees(
         gestionnaireMentionsRetireesAuto.getMentionsRetirees(
           acteApiHookResultat?.acte?.mentions,
+          params?.requete.choixDelivrance,
           acteApiHookResultat?.acte?.nature
         )
       );

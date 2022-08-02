@@ -73,16 +73,6 @@ export function estDemandeCopieActeImage(
   );
 }
 
-export function estDemandeCopieArchiveActeTexte(
-  acte: IFicheActe,
-  choixDelivrance: ChoixDelivrance
-) {
-  return (
-    ChoixDelivrance.estCopieArchive(choixDelivrance) &&
-    FicheActe.estActeTexte(acte)
-  );
-}
-
 export function getTypeDocument(choixDelivrance: ChoixDelivrance) {
   let uuidTypeDocument = "";
   switch (choixDelivrance) {
@@ -191,10 +181,7 @@ export const getValidationEC = (
       return getValidationExtrait(acte, choixDelivrance, validation);
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
     case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
-      if (
-        !estDemandeCopieActeImage(acte, choixDelivrance) &&
-        !estDemandeCopieArchiveActeTexte(acte, choixDelivrance)
-      ) {
+      if (!acte.corpsImage && !acte.corpsTexte) {
         return Validation.E;
       }
       break;

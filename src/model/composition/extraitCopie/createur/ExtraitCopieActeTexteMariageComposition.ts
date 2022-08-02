@@ -93,7 +93,7 @@ Contrat de mariage : ${enonciationContratDeMariage}`;
     let naissance = "";
     if(dateAge || lieu){
       naissance = `
-${dateAge}${lieu}`
+${dateAge}${lieu}`;
     }
     return naissance;
   }

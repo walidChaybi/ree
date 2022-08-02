@@ -21,6 +21,7 @@ import {
   REPRISE_VIE_COMMUNE,
   SEPARATION_CORPS
 } from "../../../../../../../model/etatcivil/enum/NatureMention";
+import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
 import { DEUX } from "../../../../../../common/util/Utils";
 
 export type IMentionAvecRetiree = IMention & { retiree?: boolean };
@@ -28,10 +29,16 @@ export type IMentionAvecRetiree = IMention & { retiree?: boolean };
 export class GestionnaireMentionsRetireesAuto {
   public getMentionsRetirees(
     mentions: IMentionAvecRetiree[],
+    choixDelivrance?: ChoixDelivrance,
     natureActe?: NatureActe
   ): string[] {
     Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
-    if (natureActe) {
+    if (
+      choixDelivrance &&
+      ChoixDelivrance.estAvecOuSansFiliation(choixDelivrance) &&
+      !ChoixDelivrance.estAvecFiliation(choixDelivrance) &&
+      natureActe
+    ) {
       if (natureActe === NatureActe.NAISSANCE) {
         this.deselectionnerRadieParPaire(mentions);
         this.deselectionneSituationFamilialePassee(mentions);
@@ -50,6 +57,7 @@ export class GestionnaireMentionsRetireesAuto {
         );
       }
     }
+
     return this.formaterMentionsRetirees(mentions);
   }
 
