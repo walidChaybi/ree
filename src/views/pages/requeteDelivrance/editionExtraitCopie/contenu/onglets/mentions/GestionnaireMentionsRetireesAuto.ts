@@ -41,7 +41,12 @@ export class GestionnaireMentionsRetireesAuto {
     ) {
       if (natureActe === NatureActe.NAISSANCE) {
         this.deselectionnerRadieParPaire(mentions);
-        this.deselectionneSituationFamilialePassee(mentions);
+        this.deselectionnerAnnulationParPaire(
+          this.garderMentionsNonRetiree(mentions)
+        );
+        this.deselectionneSituationFamilialePassee(
+          this.garderMentionsNonRetiree(mentions)
+        );
       }
       this.deselectionnerAnnulationParPaire(
         this.garderMentionsNonRetiree(mentions)
@@ -321,7 +326,7 @@ export class GestionnaireMentionsRetireesAuto {
       mentions[indexDernierEvenementFamiliale].retiree = true;
       this.deselectionneSituationFamilialePassee(mentions);
     } else {
-      index = indexDernierEvenementFamiliale - 1;
+      index = indexDernierEvenementFamiliale -1;
       while (index >= 0) {
         if (
           mentionsContexte.includes(mentions[index].typeMention.nature.code)
@@ -352,10 +357,9 @@ export class GestionnaireMentionsRetireesAuto {
       mentions[indexDernierEvenementFamiliale].retiree = true;
       this.deselectionneSituationFamilialePassee(mentions);
     } else {
-      index = indexDernierEvenementFamiliale;
+      index = indexDernierEvenementFamiliale -1;
       while (index >= 0) {
         if (
-          mentions[index].typeMention.nature.code !== MARIAGE &&
           mentionsContexte.includes(mentions[index].typeMention.nature.code)
         ) {
           mentions[index].retiree = true;
