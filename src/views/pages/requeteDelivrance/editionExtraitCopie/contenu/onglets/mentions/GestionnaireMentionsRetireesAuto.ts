@@ -42,10 +42,10 @@ export class GestionnaireMentionsRetireesAuto {
       if (natureActe === NatureActe.NAISSANCE) {
         this.deselectionnerRadieParPaire(mentions);
         this.deselectionnerAnnulationParPaire(
-          this.garderMentionsNonRetiree(mentions)
+          this.garderMentionsNonRetiree(this.garderMentionsNonRetiree(mentions))
         );
         this.deselectionneSituationFamilialePassee(
-          this.garderMentionsNonRetiree(mentions)
+          this.garderMentionsNonRetiree(this.garderMentionsNonRetiree(mentions))
         );
       }
       this.deselectionnerAnnulationParPaire(
