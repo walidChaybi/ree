@@ -25,7 +25,7 @@ export const VoletPiecesJustificatives: React.FC<
     if (props.requete?.documentsPj) {
       setListe(
         props.requete.documentsPj.map((document: IDocumentPJ) => ({
-          libelle: document.libelle,
+          libelle: `${document.categorie} - ${document.libelle}`,
           checkbox: false,
           id: document.id,
           aPoubelle: false,

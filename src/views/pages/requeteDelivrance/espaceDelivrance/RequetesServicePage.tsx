@@ -12,6 +12,8 @@ import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { FeatureFlag } from "../../../common/util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../../common/util/featureFlag/gestionnaireFeatureFlag";
 import { autorisePrendreEnChargeReqTableauDelivrance } from "../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { getLibelle } from "../../../common/util/Utils";
@@ -151,17 +153,21 @@ export const RequetesServicePage: React.FC<
     idUtilisateur: string
   ) => {
     return (
-      <MenuTransfert
-        idRequete={idRequete}
-        typeRequete={TypeRequete.DELIVRANCE}
-        sousTypeRequete={SousTypeDelivrance.getEnumFor(sousType)}
-        estTransfert={false}
-        menuFermer={true}
-        icone={true}
-        pasAbandon={true}
-        idUtilisateurRequete={idUtilisateur}
-        rafraichirParent={rafraichirParent}
-      />
+      <>
+        {gestionFeatureFlagAssigneeA(sousType) && (
+          <MenuTransfert
+            idRequete={idRequete}
+            typeRequete={TypeRequete.DELIVRANCE}
+            sousTypeRequete={SousTypeDelivrance.getEnumFor(sousType)}
+            estTransfert={false}
+            menuFermer={true}
+            icone={true}
+            pasAbandon={true}
+            idUtilisateurRequete={idUtilisateur}
+            rafraichirParent={rafraichirParent}
+          />
+        )}
+      </>
     );
   };
 
@@ -192,3 +198,14 @@ export const RequetesServicePage: React.FC<
     </>
   );
 };
+
+function gestionFeatureFlagAssigneeA(sousType: string) {
+  return (
+    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
+      (SousTypeDelivrance.RDC.libelleCourt === sousType ||
+        SousTypeDelivrance.RDD.libelleCourt === sousType)) ||
+    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
+      (SousTypeDelivrance.RDCSC.libelleCourt === sousType ||
+        SousTypeDelivrance.RDCSD.libelleCourt === sousType))
+  );
+}

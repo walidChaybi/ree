@@ -3,6 +3,6 @@ import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCr
 export interface IDocumentPJ {
   id: string;
   libelle: string;
-  categorieDocument: string;
+  categorie: string;
   piecesJustificatives: IPieceJustificativeCreation[];
 }

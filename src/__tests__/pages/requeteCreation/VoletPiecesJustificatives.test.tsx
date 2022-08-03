@@ -24,8 +24,8 @@ test("renders VoletPiecesJustificatives", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Mandat")).toBeDefined();
-    expect(screen.getByText("Piece d'identité")).toBeDefined();
+    expect(screen.getByText("NATALI - Mandat")).toBeDefined();
+    expect(screen.getByText("NATALI - Piece d'identité")).toBeDefined();
     expect(screen.getAllByText("nom")[2]).toBeDefined();
   });
 

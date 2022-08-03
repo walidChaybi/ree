@@ -45,13 +45,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
                 }}
                 data-testid={row[idKey]}
               >
-                {getRowRender(
-                  columnHeaders,
-                  row,
-                  idx,
-
-                  icone
-                )}
+                {getRowRender(columnHeaders, row, idx, icone)}
               </TableRow>
             );
           })
@@ -103,7 +97,6 @@ function getRowRender(
           row.idUtilisateur
         );
       }
-
       tableauBodyCellList.push(
         <TableauBodyCell
           key={`row-${idx}-${column.keys[0]}`}
