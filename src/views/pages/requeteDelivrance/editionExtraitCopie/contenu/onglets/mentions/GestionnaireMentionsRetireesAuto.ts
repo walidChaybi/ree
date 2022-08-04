@@ -77,22 +77,24 @@ export class GestionnaireMentionsRetireesAuto {
   }
 
   public deselectionnerRadieParPaire(mentionsTriees: IMentionAvecRetiree[]) {
-    let indexRCTrouve = false;
-    mentionsTriees.forEach((mention, index: number) => {
-      if (mention.typeMention.nature.code === CODE_RC) {
-        if (
-          mentionsTriees[index + 1] &&
-          mentionsTriees[index + 1].typeMention.nature.code === CODE_RC_RADIE &&
-          !indexRCTrouve
-        ) {
-          mention.retiree = true;
-          mentionsTriees[index + 1].retiree = true;
+    let indexRCTrouve: number | undefined ;
+    let i = 0;
+    while (i < mentionsTriees.length) {
+      if (mentionsTriees[i].typeMention.nature.code === CODE_RC) {
+        if (indexRCTrouve) {
+          break;
         }
-        indexRCTrouve = true;
-      } else {
-        indexRCTrouve = false;
+        indexRCTrouve = i;
       }
-    });
+      if (mentionsTriees[i].typeMention.nature.code === CODE_RC_RADIE) {
+        if (indexRCTrouve !== undefined) {
+          mentionsTriees[i].retiree = true;
+          mentionsTriees[indexRCTrouve].retiree = true;
+        }
+        indexRCTrouve = undefined;
+      }
+      i++;
+    }
   }
 
   public deselectionnerAnnulationParPaire(
@@ -326,7 +328,7 @@ export class GestionnaireMentionsRetireesAuto {
       mentions[indexDernierEvenementFamiliale].retiree = true;
       this.deselectionneSituationFamilialePassee(mentions);
     } else {
-      index = indexDernierEvenementFamiliale -1;
+      index = indexDernierEvenementFamiliale - 1;
       while (index >= 0) {
         if (
           mentionsContexte.includes(mentions[index].typeMention.nature.code)
@@ -357,7 +359,7 @@ export class GestionnaireMentionsRetireesAuto {
       mentions[indexDernierEvenementFamiliale].retiree = true;
       this.deselectionneSituationFamilialePassee(mentions);
     } else {
-      index = indexDernierEvenementFamiliale -1;
+      index = indexDernierEvenementFamiliale - 1;
       while (index >= 0) {
         if (
           mentionsContexte.includes(mentions[index].typeMention.nature.code)
