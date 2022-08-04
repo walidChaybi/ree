@@ -5,6 +5,7 @@ import { Button } from "reakit/Button";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { ICriteresRMCRequete } from "../../../../../model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "../../../../../model/rmc/requete/IRMCRequete";
+import { getLibelle } from "../../../../common/util/Utils";
 import "./../scss/BoutonNouvelleRMCRequete.scss";
 import { PopinNouvelleRMCRequete } from "./PopinNouvelleRMCRequete";
 
@@ -37,7 +38,10 @@ export const BoutonNouvelleRMCRequete: React.FC<BoutonNouvelleRMCRequeteProps> =
 
   return (
     <>
-      <Button onClick={handleClickNouvelleRMC}>
+      <Button
+        onClick={handleClickNouvelleRMC}
+        aria-label={getLibelle("Nouvelle recherche multi critères")}
+      >
         <FontAwesomeIcon
           aria-label="NouvelleRMCRequete"
           className="loupeChampsRecherche"

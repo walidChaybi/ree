@@ -8,7 +8,7 @@ import { ReponseAppelDetailRequeteCreation } from "../../../../../../../mock/dat
 import {
   ReponseAppelDetailRequeteDelivrance,
   ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ,
-  ReponseAppelDetailRequeteDelivranceUnTitulaire
+  ReponseAppelDetailRequeteDelivranceUnTitulaire,
 } from "../../../../../../../mock/data/DetailRequeteDelivrance";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { TypePieceJustificative } from "../../../../../../../model/requete/enum/TypePieceJustificative";
@@ -48,11 +48,9 @@ test("renders Page requete with all elements", async () => {
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteDelivrance.data
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteDelivrance.data
+              )}
             />
           </Route>
         </Router>
@@ -104,11 +102,9 @@ test("renders Page requete with 1 titulaire", async () => {
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteDelivranceUnTitulaire.data
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteDelivranceUnTitulaire.data
+              )}
             />
           </Route>
         </Router>
@@ -139,6 +135,58 @@ test("renders Page requete with 1 titulaire", async () => {
   });
 });
 
+test("renders Page requete with 2 titutaires", async () => {
+  await act(async () => {
+    const history = createMemoryHistory();
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d404"
+      )
+    );
+
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
+          >
+            <ResumeRequete
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteDelivrance.data
+              )}
+            />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Résumé requête")).toBeDefined();
+    expect(screen.getByText("54j654j4jyfjtj456j4")).toBeDefined();
+    expect(
+      screen.getByText("Délivrance Extrait/Copie dématérialisée")
+    ).toBeDefined();
+    expect(screen.getByText("Info titulaire 1")).toBeDefined();
+    expect(screen.getByText("CAMPBALL")).toBeDefined();
+    expect(screen.getByText("Info titulaire 2")).toBeDefined();
+    expect(screen.getByText("AMBROSIA")).toBeDefined();
+    expect(screen.getByText("Nature")).toBeDefined();
+    expect(screen.getByText("Date de l'évènement")).toBeDefined();
+    expect(screen.getByText("12/05/2019")).toBeDefined();
+    expect(screen.getByText("Lieu de l'évènement")).toBeDefined();
+    expect(screen.getByText("Tunis / Tunisie")).toBeDefined();
+    expect(screen.getByText("Document")).toBeDefined();
+    expect(screen.getByText("Motif")).toBeDefined();
+    expect(screen.getByText("Canal")).toBeDefined();
+    expect(screen.getByText("Nom requérant")).toBeDefined();
+    expect(screen.getByText("Thierry")).toBeDefined();
+    expect(screen.getByText("Père/mère")).toBeDefined();
+  });
+});
+
 test("renders Page requete without titulaire", async () => {
   await act(async () => {
     const history = createMemoryHistory();
@@ -157,11 +205,9 @@ test("renders Page requete without titulaire", async () => {
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ.data
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteDelivranceSansTitulairesAvecPJ.data
+              )}
             />
           </Route>
         </Router>
@@ -210,11 +256,9 @@ test("renders Page requete type creation", async () => {
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  ReponseAppelDetailRequeteCreation.data
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                ReponseAppelDetailRequeteCreation.data
+              )}
             />
           </Route>
         </Router>
@@ -242,7 +286,7 @@ test("renders Page requete with mandataire hablité without raison sociale", asy
       id: "94cb55b0-7cb1-4d65-9aae-e6c972e29ed9",
       type: "AVOCAT",
       nature: "",
-      crpcen: ""
+      crpcen: "",
     } as any;
 
   await act(async () => {
@@ -262,11 +306,9 @@ test("renders Page requete with mandataire hablité without raison sociale", asy
             path={URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID}
           >
             <ResumeRequete
-              requete={
-                await mappingRequeteDelivrance(
-                  reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale
-                )
-              }
+              requete={await mappingRequeteDelivrance(
+                reponseAppelDetailRequeteDelivranceUnTitulaireRequerantMandataireHabiliteSansRaisonSociale
+              )}
             />
           </Route>
         </Router>

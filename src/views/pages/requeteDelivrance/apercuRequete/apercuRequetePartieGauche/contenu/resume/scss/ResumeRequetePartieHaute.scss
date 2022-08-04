@@ -1,0 +1,29 @@
+@import "../../../../../../../../scss/colors";
+
+.ResumeRequetePartieHaute {
+  padding: .5rem;
+
+  .panel {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 0.7rem;
+  }
+
+  .panel > *:first-child {
+    color: #0579be;
+  }
+
+  .separation {
+    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: $border;
+  }
+
+  .titleTitulaire {
+    color: #03476e;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: .7rem;
+  }
+}

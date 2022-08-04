@@ -5,10 +5,9 @@ import { IPieceJustificative } from "../../../../../../../model/requete/pieceJoi
 import { ListePiecesJointes } from "../../../../../../common/composant/piecesJointes/ListePiecesJointes";
 import { TypePieceJointe } from "../../../../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
 import { FenetreExterne } from "../../../../../../common/util/FenetreExterne";
-import { DEUX, TROIS, UN, ZERO } from "../../../../../../common/util/Utils";
-import { SectionPanel } from "../../../../../../common/widget/section/SectionPanel";
 import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
-import { getPanelsResumeRequete } from "./ResumeRequeteUtils";
+import { ResumeRequetePartieHaute } from "./ResumeRequetePartieHaute";
+import "./scss/ResumeRequete.scss";
 
 export const titreDetail = "Détails de requête";
 
@@ -19,9 +18,8 @@ interface ResumeRequeteProps {
 const width = 1100;
 const height = 600;
 
-export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
+export const ResumeRequete: React.FC<ResumeRequeteProps> = (props) => {
   const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
-  const panels = getPanelsResumeRequete(props.requete);
 
   const onClickNumero = () => {
     setFenetreExterne(true);
@@ -42,13 +40,9 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
             </span>
           </span>
         </div>
-        {panels.length > 1 && (
+        {props.requete && (
           <div className="PanelsResumeRequete">
-            <SectionPanel {...panels[ZERO]} />
-            <SectionPanel {...panels[UN]} />
-            <SectionPanel {...panels[DEUX]} />
-            <hr className={"SectionPanelAreaSeparation"} />
-            <SectionPanel {...panels[TROIS]} />
+            <ResumeRequetePartieHaute requete={props.requete} />
             <hr className={"SectionPanelAreaSeparation"} />
             <ListePiecesJointes
               pieces={mapPiecesJustificatives(
@@ -78,11 +72,11 @@ function mapPiecesJustificatives(
   pieces?: IPieceJustificative[]
 ): IPieceJointe[] {
   return pieces
-    ? pieces.map(piece => ({
+    ? pieces.map((piece) => ({
         id: piece.id,
         libelle: piece.typePieceJustificative.libelle,
         nom: piece.nom,
-        typePiece: TypePieceJointe.PIECE_JUSTIFICATIVE
+        typePiece: TypePieceJointe.PIECE_JUSTIFICATIVE,
       }))
     : [];
 }
