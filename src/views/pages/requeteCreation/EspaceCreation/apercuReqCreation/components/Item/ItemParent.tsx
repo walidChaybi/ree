@@ -2,11 +2,17 @@ import React from "react";
 import { estRenseigne } from "../../../../../../common/util/Utils";
 import Labels from "../../Labels";
 import {
+  formatLigneAdresse,
   formatLigneDateCoordonnees,
   formatLigneNationalites,
   formatLigneNomsPrenomsGenre
 } from "../Formatages";
-import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
+import {
+  DateCoordonneesType,
+  DomiciliationType,
+  IdentiteType,
+  NationaliteType
+} from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 
@@ -17,6 +23,7 @@ export interface ItemParentProps {
   identite: IdentiteType;
   naissance: DateCoordonneesType;
   nationalites: NationaliteType[];
+  domiciliation: DomiciliationType;
 }
 
 const ItemParent: React.FC<ItemParentProps & ItemProps> = props => {
@@ -35,6 +42,10 @@ const ItemParent: React.FC<ItemParentProps & ItemProps> = props => {
           Labels.resume.nationalite.defaut
         }
       />
+      {props.domiciliation.lignes.map((ligne, id) => (
+        <ItemLigne key={`ligne${id}`} texte={ligne} />
+      ))}
+      <ItemLigne texte={formatLigneAdresse(props.domiciliation)} />
     </Item>
   );
 };

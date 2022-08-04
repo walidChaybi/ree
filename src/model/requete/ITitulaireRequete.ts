@@ -50,10 +50,10 @@ export interface ITitulaireRequete {
   parent2Enfant?: ITitulaireRequete;
   valideEffetCollectif?: string;
   demandeEffetCollectif?: boolean;
+  residence?: string;
 
-  // Titulaire creation Parent
+  // Titulaire creation Parent / Union / EffetCollectif
   numeroDossierNational?: string;
-  domiciliationEnfant?: string;
 
   // Titulaire creation Union
   evenementUnions?: IEvenementUnion[];

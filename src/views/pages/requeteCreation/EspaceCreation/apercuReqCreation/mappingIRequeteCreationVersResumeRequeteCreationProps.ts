@@ -181,7 +181,21 @@ const mappingITitulaireRequeteVersItemParentProps = (
       regionDeptEtat: parent.regionNaissance,
       pays: parent.paysNaissance
     },
-    nationalites: parent.nationalites || []
+    nationalites: parent.nationalites || [],
+    domiciliation: {
+      lignes: [
+        parent.domiciliation?.ligne2,
+        parent.domiciliation?.ligne3,
+        parent.domiciliation?.ligne4,
+        parent.domiciliation?.ligne5
+      ],
+      codePostal: parent.domiciliation?.codePostal,
+      ville: parent.domiciliation?.ville,
+      lieuVilleEtranger: parent.domiciliation?.villeEtrangere,
+      arrondissement: parent.domiciliation?.arrondissement,
+      regionDeptEtat: parent.domiciliation?.region,
+      pays: parent.domiciliation?.pays
+    }
   };
 };
 
@@ -232,11 +246,18 @@ const mappingITitulaireRequeteVersItemUnionProps = (
 const mappingITitulaireRequeteVersItemEffetCollectifProps = (
   effetCollectif: ITitulaireRequete
 ): ItemEffetCollectifProps => {
+  // TODO: cette version de la condition sera correcte lorsque demandeEffetCollectif sera utilisé (voir avec Alice)
+  // const statut =
+  //   effetCollectif.valideEffetCollectif === "OUI"
+  //     ? "Validé"
+  //     : effetCollectif.demandeEffetCollectif
+  //     ? "Proposé"
+  //     : undefined;
   const statut =
     effetCollectif.valideEffetCollectif === "OUI"
       ? "Validé"
-      : effetCollectif.demandeEffetCollectif
-      ? "Proposé"
+      : effetCollectif.valideEffetCollectif === "NON"
+      ? "Non validé"
       : undefined;
 
   return {
@@ -265,7 +286,7 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
     },
     nationalites: effetCollectif.nationalites || [],
     statut,
-    residence: effetCollectif.domiciliationEnfant,
+    residence: effetCollectif.residence,
     domiciliation: {
       lignes: [
         effetCollectif.domiciliation?.ligne2,
