@@ -182,20 +182,7 @@ const mappingITitulaireRequeteVersItemParentProps = (
       pays: parent.paysNaissance
     },
     nationalites: parent.nationalites || [],
-    domiciliation: {
-      lignes: [
-        parent.domiciliation?.ligne2,
-        parent.domiciliation?.ligne3,
-        parent.domiciliation?.ligne4,
-        parent.domiciliation?.ligne5
-      ],
-      codePostal: parent.domiciliation?.codePostal,
-      ville: parent.domiciliation?.ville,
-      lieuVilleEtranger: parent.domiciliation?.villeEtrangere,
-      arrondissement: parent.domiciliation?.arrondissement,
-      regionDeptEtat: parent.domiciliation?.region,
-      pays: parent.domiciliation?.pays
-    }
+    domiciliation: parent.domiciliationEnfant
   };
 };
 
@@ -287,18 +274,7 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
     nationalites: effetCollectif.nationalites || [],
     statut,
     residence: effetCollectif.residence,
-    domiciliation: {
-      lignes: [
-        effetCollectif.domiciliation?.ligne2,
-        effetCollectif.domiciliation?.ligne3,
-        effetCollectif.domiciliation?.ligne4,
-        effetCollectif.domiciliation?.ligne5
-      ],
-      codePostal: effetCollectif.domiciliation?.codePostal,
-      ville: effetCollectif.domiciliation?.ville,
-      lieuVilleEtranger: effetCollectif.domiciliation?.villeEtrangere,
-      pays: effetCollectif.domiciliation?.pays
-    },
+    domiciliation: effetCollectif.domiciliationEnfant,
     parent:
       effetCollectif.parent2Enfant &&
       mappingITitulaireRequeteVersItemParentProps(effetCollectif.parent2Enfant)

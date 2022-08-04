@@ -2,18 +2,12 @@ import React from "react";
 import { estRenseigne } from "../../../../../../common/util/Utils";
 import Labels from "../../Labels";
 import {
-  formatLigneAdresse,
   formatLigneDateCoordonnees,
   formatLigneFrancisationIdentification,
   formatLigneNationalites,
   formatLigneNomsPrenomsGenre
 } from "../Formatages";
-import {
-  DateCoordonneesType,
-  DomiciliationType,
-  IdentiteType,
-  NationaliteType
-} from "../Types";
+import { DateCoordonneesType, IdentiteType, NationaliteType } from "../Types";
 import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import ItemParent, { ItemParentProps } from "./ItemParent";
@@ -27,7 +21,7 @@ export interface ItemEffetCollectifProps {
   nationalites: NationaliteType[];
   statut?: string;
   residence?: string;
-  domiciliation: DomiciliationType;
+  domiciliation?: string;
   parent?: ItemParentProps;
 }
 
@@ -56,10 +50,7 @@ const ItemEffetCollectif: React.FC<
       />
       <ItemLigne label={Labels.resume.effetCollectif} texte={props.statut} />
       <ItemLigne label={Labels.resume.residence} texte={props.residence} />
-      {props.domiciliation.lignes.map((ligne, id) => (
-        <ItemLigne key={`ligne${id}`} texte={ligne} />
-      ))}
-      <ItemLigne texte={formatLigneAdresse(props.domiciliation)} />
+      <ItemLigne texte={props.domiciliation} />
       {props.parent && (
         <ItemParent
           {...props.parent}

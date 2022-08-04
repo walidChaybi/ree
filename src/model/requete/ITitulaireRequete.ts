@@ -55,6 +55,9 @@ export interface ITitulaireRequete {
   // Titulaire creation Parent / Union / EffetCollectif
   numeroDossierNational?: string;
 
+  // Titulaire creation Parent2 / EffetCollectif (parce que pour ces deux cas, l'adresse s'affiche en un string simple)
+  domiciliationEnfant?: string;
+
   // Titulaire creation Union
   evenementUnions?: IEvenementUnion[];
 }
