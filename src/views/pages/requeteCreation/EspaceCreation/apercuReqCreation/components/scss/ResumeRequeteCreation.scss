@@ -1,15 +1,19 @@
 @import "../../../../../../../scss/_colors.scss";
 
+$spacing: 0.5rem;
+$height: $spacing * 2.5;
+
 .ResumeRequeteCreation {
   .ligne {
     display: flex;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: $spacing;
+    padding-bottom: $spacing;
   }
   .texte {
     display: flex;
     flex: 2;
     text-align: left;
+    align-items: center;
 
     &.bold {
       font-weight: bold;

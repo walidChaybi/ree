@@ -1,3 +1,4 @@
+import { estRenseigne } from "../../../../../common/util/Utils";
 import { resume as Labels } from "../Labels";
 import {
   DateCoordonneesType,
@@ -6,16 +7,19 @@ import {
   NationaliteType
 } from "./Types";
 
+type LigneType = string | false | undefined;
+
 // Création d'un string "A, B, C..." où ", " est le séparateur par défaut et les valeurs vides sont supprimées
-export const formatLigne = (
-  tab?: (string | false | undefined)[],
-  separateur = ", "
-) => {
+export const formatLigne = (tab?: LigneType[], separateur = ", ") => {
   const resultat = tab?.filter(Boolean).join(separateur);
-  return resultat !== "" ? resultat : undefined;
+  return estRenseigne(resultat) ? resultat : undefined;
 };
 
-export const formatLigneNomsPrenomsGenre = ({ noms, prenoms, genre }: IdentiteType) =>
+export const formatLigneNomsPrenomsGenre = ({
+  noms,
+  prenoms,
+  genre
+}: IdentiteType) =>
   formatLigne(
     [
       noms.naissance,
@@ -49,7 +53,9 @@ export const formatLigneFrancisationIdentification = ({
   );
 };
 
-export const formatLigneDateCoordonnees = (dateCoordonnees?: DateCoordonneesType) =>
+export const formatLigneDateCoordonnees = (
+  dateCoordonnees?: DateCoordonneesType
+) =>
   formatLigne([
     dateCoordonnees?.date,
     dateCoordonnees?.ville,
