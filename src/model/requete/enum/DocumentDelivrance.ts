@@ -276,6 +276,11 @@ export class DocumentDelivrance extends EnumNomemclature {
     );
   }
 
+  public static estExtraitPlurilingue(key?: string): boolean {
+    const code = key ? DocumentDelivrance.getCodeForKey(key) : undefined;
+    return code === CODE_EXTRAIT_PLURILINGUE;
+  }
+
   public static estCopieIntegrale(uuid?: string): boolean {
     return uuid
       ? DocumentDelivrance.getDocumentDelivrance(uuid).code ===

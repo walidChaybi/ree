@@ -20,6 +20,7 @@ import {
   shallowEgalTableau
 } from "../../../../../../common/util/Utils";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+import { gestionnaireRenumerotationMentions } from "./GestionnaireRenumerotationMentions";
 
 export interface IMentionAffichage {
   texte: string;
@@ -106,47 +107,42 @@ export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
     });
 }
 
-export function getEnumNatureMentionOuAutre(id: string) {
-  if (id) {
-    return NatureMention.getEnumFor(id);
-  } else {
-    return NatureMention.getEnumFromLibelle(NatureMention, "Autres");
-  }
-}
-
 export function mappingVersMentionsApi(
   mentionsApi: IMention[],
-  mentionsAffichage: IMentionAffichage[]
+  mentionsAffichage: IMentionAffichage[],
+ typeDocument: string
 ) {
+  const mentionsRenumerote =
+    gestionnaireRenumerotationMentions.renumerotationMentions(
+      mentionsAffichage,
+      mentionsApi,
+      typeDocument
+    );
   const mentionsRetirees: string[] = [];
   const mentionsAEnvoyer: any[] = [];
-  mentionsAffichage.forEach(mA => {
-    const mention = mentionsApi.find(mApi => mA.id === mApi.id);
+
+  mentionsRenumerote.forEach(mR => {
+    const mention = mentionsAffichage.find(mA => mA.id === mR.id);
     if (mention) {
-      if (mA.estPresent) {
-        mentionsAEnvoyer.push({
-          numeroOrdreExtrait: mA.numeroOrdre,
-          textes: { texteMentionDelivrance: mA.texte },
-          typeMention: {
-            nature: {
-              id: NatureMention.getUuidFromNature(mA.nature)
+      mentionsAEnvoyer.push(
+        mention.id
+          ? {
+              numeroOrdreExtrait: mR.numeroOrdreExtrait,
+              textes: { texteMentionDelivrance: mention.texte },
+              typeMention: {
+                nature: {
+                  id: NatureMention.getUuidFromNature(mention.nature)
+                }
+              },
+              id: mention.id
             }
-          },
-          id: mA.id
-        });
-      } else {
-        mentionsRetirees.push(mA.id);
+          : mR
+      );
+      if (!mention.estPresent) {
+        mentionsRetirees.push(mention.id);
       }
     } else {
-      mentionsAEnvoyer.push({
-        numeroOrdreExtrait: mA.numeroOrdre,
-        textes: { texteMentionDelivrance: mA.texte },
-        typeMention: {
-          nature: {
-            id: NatureMention.getUuidFromNature(mA.nature)
-          }
-        }
-      });
+      mentionsAEnvoyer.push(mR);
     }
   });
   return { mentionsAEnvoyer, mentionsRetirees };
@@ -236,13 +232,13 @@ export function selectionneEtMiseAJour(
   setMentionSelect: React.Dispatch<
     React.SetStateAction<IMentionAffichage | undefined>
   >,
-  id: number
+  index: number
 ) {
   // Sélection de la mention
-  if (mentionSelect?.numeroOrdre === id) {
+  if (mentionSelect?.numeroOrdre === index + 1) {
     setMentionSelect(undefined);
   } else {
-    const mention = mentions?.[id];
+    const mention = mentions?.[index];
     if (mention) {
       setMentionSelect(mention);
     }
@@ -261,25 +257,25 @@ export function handleBlur(
   >
 ) {
   if (mentions && mentionsApi && mentionSelect) {
-    const indexMentions = mentions.findIndex(el => el.id === mentionSelect?.id);
-    const indexMentionsApi = mentionsApi.findIndex(
+    const indexMention = mentions.findIndex(el => el.id === mentionSelect?.id);
+    const indexMentionApi = mentionsApi.findIndex(
       el => el.id === mentionSelect?.id
     );
 
     // Si opposableAuTiers change, on réadapte le texte si il n'a pas été changé
     if (
       texteNonModifieNatureChangePasDeTexteDelivrance(
-        mentions[indexMentions],
+        mentions[indexMention],
         mentionSelect,
-        mentionsApi[indexMentionsApi]
+        mentionsApi[indexMentionApi]
       )
     ) {
       miseAjourEnFonctionNature(
         mentions,
-        indexMentions,
+        indexMention,
         mentionSelect,
         mentionsApi,
-        indexMentionsApi,
+        indexMentionApi,
         setMentionSelect,
         setMentions
       );
@@ -287,14 +283,14 @@ export function handleBlur(
 
     // Mise à jour du texte et du select
     if (
-      indexMentions !== -1 &&
-      (mentions[indexMentions].texte !== mentionSelect?.texte ||
-        mentionSelect?.nature !== mentions[indexMentions].nature)
+      indexMention !== -1 &&
+      (mentions[indexMention].texte !== mentionSelect?.texte ||
+        mentionSelect?.nature !== mentions[indexMention].nature)
     ) {
       miseAJourMention(
         mentionSelect,
         mentions,
-        indexMentions,
+        indexMention,
         setMentionSelect,
         setMentions
       );
@@ -304,20 +300,20 @@ export function handleBlur(
 
 export function miseAjourEnFonctionNature(
   mentions: IMentionAffichage[],
-  indexMentions: number,
+  indexMention: number,
   mentionSelect: IMentionAffichage,
   mentionsApi: IMention[],
-  indexMentionsApi: number,
+  indexMentionApi: number,
   setMentionSelect: any,
   setMentions: any
 ) {
   const newMentions = [...mentions];
   const texte = texteEnFonctionOpposableAuTiers(
-    mentions[indexMentions],
+    mentions[indexMention],
     mentionSelect,
-    mentionsApi[indexMentionsApi]
+    mentionsApi[indexMentionApi]
   );
-  newMentions[indexMentions].texte = getValeurOuVide(texte);
+  newMentions[indexMention].texte = getValeurOuVide(texte);
   const newSelect = { ...mentionSelect };
   newSelect.texte = getValeurOuVide(texte);
   setMentionSelect(newSelect);

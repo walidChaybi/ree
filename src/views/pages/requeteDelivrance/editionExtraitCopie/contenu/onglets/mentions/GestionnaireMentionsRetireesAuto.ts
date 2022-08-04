@@ -66,7 +66,7 @@ export class GestionnaireMentionsRetireesAuto {
     return this.formaterMentionsRetirees(mentions);
   }
 
-  garderMentionsNonRetiree(mentions: IMentionAvecRetiree[]) {
+  public garderMentionsNonRetiree(mentions: IMentionAvecRetiree[]) {
     return mentions.filter(mention => !mention.retiree);
   }
 

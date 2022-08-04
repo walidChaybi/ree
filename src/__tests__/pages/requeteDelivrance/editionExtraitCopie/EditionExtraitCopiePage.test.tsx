@@ -167,7 +167,7 @@ test("Test édition mentions Edition Extrait copie", async () => {
   });
 
   await waitFor(() => {
-    expect(screen.getAllByText("Première mention")).toHaveLength(2);
+    expect(screen.getAllByText("Première mention")).toHaveLength(1);
   });
 });
 
@@ -224,7 +224,7 @@ test("Ajout mention et réinitialisation", async () => {
     ).toBe("Troisième mention ajoutée");
     expect(
       (screen.getByTitle("Ajouter la mention") as HTMLButtonElement).disabled
-    ).toBeFalsy();
+    ).toBeTruthy();
   });
 
   act(() => {
@@ -236,6 +236,9 @@ test("Ajout mention et réinitialisation", async () => {
   });
 
   await waitFor(() => {
+    expect(
+      (screen.getByTitle("Ajouter la mention") as HTMLButtonElement).disabled
+    ).toBeFalsy();
     expect(
       (screen.getByPlaceholderText("Nature ajoutée") as HTMLSelectElement).value
     ).toBe("b03c5992-d421-4aa1-a4cf-f97f22b267f9");

@@ -138,7 +138,8 @@ function sauvegarderEnFonctionTypeDocument(
   if (params.mentionsApi?.mentions && params.idActe) {
     const { mentionsAEnvoyer, mentionsRetirees } = mappingVersMentionsApi(
       params.mentionsApi.mentions,
-      params.mentions
+      params.mentions,
+      params.document.typeDocument
     );
     setMentionsRetireesSaved(mentionsRetirees);
     if (

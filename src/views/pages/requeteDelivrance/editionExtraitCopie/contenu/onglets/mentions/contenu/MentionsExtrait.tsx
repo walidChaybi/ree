@@ -11,7 +11,6 @@ import {
 import { SelectRece } from "../../../../../../../common/widget/formulaire/champsSaisie/SelectField";
 import { ListeGlisserDeposer } from "../../../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
 import {
-  getEnumNatureMentionOuAutre,
   handleBlur,
   handleCheckBox,
   handleReorga,
@@ -41,10 +40,6 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   mentionAjout,
   natureActe
 }) => {
-  function selectionneMention(id: number) {
-    selectionneEtMiseAJour(mentions, mentionSelect, setMentionSelect, id);
-  }
-
   const handleOnBlur = useCallback(() => {
     handleBlur(
       mentions,
@@ -59,7 +54,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
     (event: any) => {
       if (mentionSelect) {
         const temp = { ...mentionSelect };
-        temp.nature = getEnumNatureMentionOuAutre(event.target.value);
+        temp.nature = NatureMention.getEnumFor(event.target.value);
         setMentionSelect(temp);
       }
     },
@@ -92,7 +87,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
     (event: any) => {
       if (mentionAjout) {
         const temp = { ...mentionAjout };
-        temp.nature = getEnumNatureMentionOuAutre(event.target.value);
+        temp.nature = NatureMention.getEnumFor(event.target.value);
         setMentionAjout(temp);
       } else {
         setMentionAjout({
@@ -143,30 +138,25 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
     }
   }, [mentionAjout, mentions, setMentionSelect, setMentionAjout, setMentions]);
 
-  const handleSort = useCallback(
-    (oldIndex: number, newIndex: number) => {
-      handleReorga(mentions, setMentions, oldIndex, newIndex);
-    },
-    [mentions, setMentions]
-  );
-
-  const handleCheck = useCallback(
-    (id: number) => {
-      handleCheckBox(mentions, setMentions, id);
-    },
-    [mentions, setMentions]
-  );
-
   return (
     <>
       {mentions && mentions.length > 0 && (
         <>
           <ListeGlisserDeposer
             elementSelect={mentionSelect?.id}
-            setElementSelect={selectionneMention}
+            setElementSelect={id =>
+              selectionneEtMiseAJour(
+                mentions,
+                mentionSelect,
+                setMentionSelect,
+                id
+              )
+            }
             liste={mappingVersListe(mentions)}
-            handleReorga={handleSort}
-            handleCheckbox={handleCheck}
+            handleReorga={(oldIndex: number, newIndex: number) =>
+              handleReorga(mentions, setMentions, oldIndex, newIndex)
+            }
+            handleCheckbox={id => handleCheckBox(mentions, setMentions, id)}
             onClickSupprimer={onClickSupprimer}
             deverrouille={true}
             afficheDragHandle={true}
@@ -175,42 +165,40 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
           />
           <div className="FormMention Modification">
             <h3>{getLibelle("Modification d'une mention")}</h3>
+            <div className="SelectModif">
+              <span className="SelectNature">
+                <label>{getLibelle("Nature mention")}</label>
+                <SelectRece
+                  pasPremiereOptionVide={true}
+                  options={
+                    // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
+                    natureActe
+                      ? NatureMention.getEnumsAsOptions(
+                          TypeMention.getNaturesMentionPourActe(natureActe)
+                        )
+                      : NatureMention.getAllEnumsAsOptions()
+                  }
+                  label="Nature sélectionnée"
+                  value={NatureMention.getUuidFromNature(mentionSelect?.nature)}
+                  onChange={handleChangeSelect}
+                  aria-label="Nature sélectionnée"
+                  onBlur={handleOnBlur}
+                />
+              </span>
+            </div>
             <textarea
               value={getValeurOuVide(mentionSelect?.texte)}
               onChange={handleChangeTexte}
               aria-label="Texte sélectionné"
               onBlur={handleOnBlur}
             />
-            <span>
-              <label>{getLibelle("Nature mention")}</label>
-              <SelectRece
-                options={
-                  // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
-                  natureActe
-                    ? NatureMention.getEnumsAsOptions(
-                        TypeMention.getNaturesMentionPourActe(natureActe)
-                      )
-                    : NatureMention.getAllEnumsAsOptions()
-                }
-                label="Nature sélectionnée"
-                value={NatureMention.getUuidFromNature(mentionSelect?.nature)}
-                onChange={handleChangeSelect}
-                aria-label="Nature sélectionnée"
-                onBlur={handleOnBlur}
-              />
-            </span>
           </div>
         </>
       )}
       <div className="FormMention Ajout">
         <h3>{getLibelle("Ajout d'une mention")}</h3>
-        <textarea
-          value={getValeurOuVide(mentionAjout?.texte)}
-          onChange={handleAjoutTexte}
-          placeholder="Texte mention à ajouter"
-        />
         <div className="SelectAjout">
-          <span>
+          <span className="SelectNature">
             <label>{getLibelle("Nature mention")}</label>
             <SelectRece
               options={
@@ -226,14 +214,25 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
               onChange={handleAjoutSelect}
             />
           </span>
-          <button
-            disabled={!mentionAjout || mentionAjout.texte === ""}
-            onClick={handleAjoutMention}
-            title="Ajouter la mention"
-          >
-            +
-          </button>
+          <span className="ConteneurBouton">
+            <button
+              disabled={
+                !mentionAjout ||
+                mentionAjout.texte === "" ||
+                mentionAjout.nature === NatureMention.getEnumFor("")
+              }
+              onClick={handleAjoutMention}
+              title="Ajouter la mention"
+            >
+              +
+            </button>
+          </span>
         </div>
+        <textarea
+          value={getValeurOuVide(mentionAjout?.texte)}
+          onChange={handleAjoutTexte}
+          placeholder="Texte mention à ajouter"
+        />
       </div>
     </>
   );
