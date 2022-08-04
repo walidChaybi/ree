@@ -1,3 +1,4 @@
+import React from "react";
 import { estRenseigne } from "../../../../../common/util/Utils";
 import { resume as Labels } from "../Labels";
 import {
@@ -15,6 +16,24 @@ export const formatLigne = (tab?: LigneType[], separateur = ", ") => {
   return estRenseigne(resultat) ? resultat : undefined;
 };
 
+// Même utilité que formatLigne(), mais traite également les éléments JSX en plus des string dans tab[]
+export const formatLigneSpecificite = (
+  tab?: (LigneType | JSX.Element | JSX.Element[])[],
+  separateur = ", "
+) => {
+  const resultat = tab?.filter(Boolean).map((elt, i) => {
+    const separation = i < tab.filter(Boolean).length - 1 ? separateur : null;
+    return (
+      <>
+        {elt}
+        {separation}
+      </>
+    );
+  });
+
+  return estRenseigne(resultat) ? resultat : undefined;
+};
+
 export const formatLigneNomsPrenomsGenre = ({
   noms,
   prenoms,
@@ -23,7 +42,6 @@ export const formatLigneNomsPrenomsGenre = ({
   formatLigne(
     [
       noms.naissance,
-      noms.usage && `(Usage : ${noms.usage})`,
       noms.actuel && `(Actuel : ${noms.actuel})`,
       formatLigne(prenoms.naissance),
       genre

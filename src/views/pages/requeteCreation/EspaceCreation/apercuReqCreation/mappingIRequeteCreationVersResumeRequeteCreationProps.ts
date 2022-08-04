@@ -112,7 +112,6 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
     identite: {
       noms: {
         naissance: titulaire.nomNaissance,
-        usage: titulaire.nomUsage,
         actuel: titulaire.nomActuel,
         francisation: titulaire.nomDemandeFrancisation,
         identification: titulaire.nomDemandeIdentification
@@ -247,7 +246,6 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
     identite: {
       noms: {
         naissance: effetCollectif.nomNaissance,
-        usage: effetCollectif.nomUsage,
         actuel: effetCollectif.nomActuel,
         francisation: effetCollectif.nomDemandeFrancisation
       },

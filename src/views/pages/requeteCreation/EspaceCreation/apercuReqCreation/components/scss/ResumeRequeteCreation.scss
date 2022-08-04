@@ -33,4 +33,19 @@ $height: $spacing * 2.5;
       opacity: 0.5;
     }
   }
+  .infoBulle {
+    display: flex;
+    margin-left: $spacing / 2;
+
+    .icon {
+      cursor: pointer;
+      height: $height;
+      margin-left: $spacing / 2;
+      
+      svg {
+        height: $height;
+        color: $application-color;
+      }
+    }
+  }
 }

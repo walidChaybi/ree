@@ -1,8 +1,9 @@
 import React from "react";
 import { estRenseigne } from "../../../../../../common/util/Utils";
 import Labels, { REQUETE, SDANF } from "../../Labels";
-import { formatLigne } from "../Formatages";
+import { formatLigne, formatLigneSpecificite } from "../Formatages";
 import Item from "./Item";
+import { ItemInfoBulle } from "./ItemInfoBulle";
 import { ItemLigne } from "./ItemLigne";
 
 export interface ItemRequeteProps {
@@ -39,14 +40,27 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
     props.numeros.ancienSI && `n° ${props.numeros.ancienSI}`
   ]);
 
-  const specificite = formatLigne([
+  const specificite = formatLigneSpecificite([
     props.demandes.identification && Labels.resume.identification,
     props.demandes.francisation && Labels.resume.francisation,
-    props.dossierSignaleInfos && Labels.resume.signale,
-    props.campagneInfos && Labels.resume.campagne
+    props.dossierSignaleInfos && (
+      <ItemInfoBulle
+        label={Labels.resume.signale}
+        texte={props.dossierSignaleInfos}
+      />
+    ),
+    props.campagneInfos && (
+      <ItemInfoBulle
+        label={Labels.resume.campagne}
+        texte={props.campagneInfos}
+      />
+    )
   ]);
 
-  const texteSpecificite = formatLigne([props.natureDANF, specificite], " • ");
+  const texteSpecificite = formatLigneSpecificite(
+    [props.natureDANF, specificite],
+    " • "
+  );
 
   return (
     <Item

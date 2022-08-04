@@ -4,7 +4,7 @@ import { formatLigne } from "../Formatages";
 
 interface ItemLigneInfosProps {
   label?: string;
-  texte?: string | 0;
+  texte?: string | JSX.Element[] | 0;
   classNameTexte?: string;
   onClickTexte?: () => void;
   visible?: boolean;
