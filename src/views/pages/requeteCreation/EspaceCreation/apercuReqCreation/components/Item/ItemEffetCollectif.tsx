@@ -1,4 +1,5 @@
 import React from "react";
+import { Residence } from "../../../../../../../model/requete/enum/Residence";
 import { estRenseigne } from "../../../../../../common/util/Utils";
 import Labels from "../../Labels";
 import {
@@ -20,7 +21,7 @@ export interface ItemEffetCollectifProps {
   naissance: DateCoordonneesType;
   nationalites: NationaliteType[];
   statut?: string;
-  residence?: string;
+  residence?: Residence;
   domiciliation?: string;
   parent?: ItemParentProps;
 }
@@ -49,7 +50,10 @@ const ItemEffetCollectif: React.FC<
         }
       />
       <ItemLigne label={Labels.resume.effetCollectif} texte={props.statut} />
-      <ItemLigne label={Labels.resume.residence} texte={props.residence} />
+      <ItemLigne
+        label={Labels.resume.residence}
+        texte={props.residence?.libelle}
+      />
       <ItemLigne texte={props.domiciliation} />
       {props.parent && (
         <ItemParent

@@ -45,12 +45,14 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
     props.demandes.francisation && Labels.resume.francisation,
     props.dossierSignaleInfos && (
       <ItemInfoBulle
+        key={Labels.resume.signale}
         label={Labels.resume.signale}
         texte={props.dossierSignaleInfos}
       />
     ),
     props.campagneInfos && (
       <ItemInfoBulle
+        key={Labels.resume.campagne}
         label={Labels.resume.campagne}
         texte={props.campagneInfos}
       />

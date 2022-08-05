@@ -1,4 +1,6 @@
 import { QualiteFamille } from "../../../../../model/requete/enum/QualiteFamille";
+import { Residence } from "../../../../../model/requete/enum/Residence";
+import { SituationFamiliale } from "../../../../../model/requete/enum/SituationFamiliale";
 import { TypeEvenementUnion } from "../../../../../model/requete/enum/TypeEvenementUnion";
 import { TypeObjetTitulaire } from "../../../../../model/requete/enum/TypeObjetTitulaire";
 import { IEvenementUnion } from "../../../../../model/requete/IEvenementUnion";
@@ -130,7 +132,9 @@ const mappingITitulaireRequeteVersItemTitulaireProps = (
       pays: titulaire.paysNaissance
     },
     nbUnionsAnterieurs,
-    situationFamiliale: titulaire.situationFamiliale,
+    situationFamiliale: SituationFamiliale.getEnumFor(
+      titulaire.situationFamiliale
+    ),
     nbMineurs: titulaire.nombreEnfantMineur,
     nationalites: titulaire.nationalites || [],
     domiciliation: {
@@ -273,7 +277,7 @@ const mappingITitulaireRequeteVersItemEffetCollectifProps = (
     },
     nationalites: effetCollectif.nationalites || [],
     statut,
-    residence: effetCollectif.residence,
+    residence: Residence.getEnumFor(effetCollectif.residence),
     domiciliation: effetCollectif.domiciliationEnfant,
     parent:
       effetCollectif.parent2Enfant &&

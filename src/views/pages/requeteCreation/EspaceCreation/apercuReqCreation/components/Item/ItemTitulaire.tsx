@@ -1,4 +1,5 @@
 import React from "react";
+import { SituationFamiliale } from "../../../../../../../model/requete/enum/SituationFamiliale";
 import Labels, { INFOS } from "../../Labels";
 import {
   formatLigne,
@@ -22,7 +23,7 @@ export interface ItemTitulaireProps {
   identite: IdentiteType;
   naissance: DateCoordonneesType;
   nbUnionsAnterieurs: number;
-  situationFamiliale?: string;
+  situationFamiliale?: SituationFamiliale;
   nbMineurs?: number;
   nationalites: NationaliteType[];
   domiciliation: DomiciliationType;
@@ -51,7 +52,7 @@ const ItemTitulaire: React.FC<ItemTitulaireProps & ItemProps> = props => {
           label={Labels.resume.union.anterieurs}
           texte={props.nbUnionsAnterieurs.toString()}
         />
-        <ItemLigne texte={props.situationFamiliale} />
+        <ItemLigne texte={props.situationFamiliale?.libelle} />
         <ItemLigne
           label={Labels.resume.enfant.mineurs}
           texte={props.nbMineurs?.toString()}

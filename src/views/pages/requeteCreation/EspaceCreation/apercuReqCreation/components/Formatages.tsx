@@ -1,6 +1,6 @@
 import React from "react";
 import { estRenseigne } from "../../../../../common/util/Utils";
-import { resume as Labels } from "../Labels";
+import Labels from "../Labels";
 import {
   DateCoordonneesType,
   DomiciliationType,
@@ -64,8 +64,9 @@ export const formatLigneFrancisationIdentification = ({
   return formatLigne(
     [
       francisationOK &&
-        `${Labels.francisation}: ${texteFrancisationNomsPrenoms}`,
-      noms.identification && `${Labels.identification}: ${noms.identification}`
+        `${Labels.resume.francisation}: ${texteFrancisationNomsPrenoms}`,
+      noms.identification &&
+        `${Labels.resume.identification}: ${noms.identification}`
     ],
     " ; "
   );
