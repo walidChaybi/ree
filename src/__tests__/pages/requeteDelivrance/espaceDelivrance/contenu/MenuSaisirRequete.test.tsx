@@ -8,8 +8,10 @@ import {
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
+import { userDroitnonCOMEDEC } from "../../../../../mock/data/connectedUserAvecDroit";
 import { FeatureFlag } from "../../../../../views/common/util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../../../../../views/common/util/featureFlag/gestionnaireFeatureFlag";
+import { storeRece } from "../../../../../views/common/util/storeRece";
 import MenuSaisirRequete from "../../../../../views/pages/requeteDelivrance/espaceDelivrance/contenu/MenuSaisirRequete";
 import {
   URL_MES_REQUETES_DELIVRANCE,
@@ -23,7 +25,7 @@ import {
 } from "../../../../../views/router/ReceUrls";
 
 const history = createMemoryHistory();
-
+window.alert = jest.fn();
 const HookConsummerSaisirRequeteMesRequete: React.FC = () => {
   history.push(URL_MES_REQUETES_DELIVRANCE);
 
@@ -136,6 +138,7 @@ test("renders menu 'Saisir une requête' RDLFC dans Mes requetes de Délivrance"
 
 test("renders menu 'Saisir une requête' RDCSC dans Mes requetes de Service", async () => {
   render(<HookConsummerSaisirRequeteMesRequeteDeService />);
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
 
   const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 

@@ -5,10 +5,16 @@ import {
 } from "../../../../api/appels/requeteApi";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
+import { Bouton } from "../../../common/composant/boutonAntiDoubleSubmit/Bouton";
+import {
+  CreationActionEtMiseAjourStatutParams,
+  usePostCreationActionEtMiseAjourStatutApi
+} from "../../../common/hook/requete/ActionHook";
 import {
   CreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "../../../common/hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import WithHabilitation from "../../../common/util/habilitation/WithHabilitation";
 import { autorisePrendreEnChargeReqTableauDelivrance } from "../../../common/util/RequetesUtils";
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { getLibelle } from "../../../common/util/Utils";
@@ -50,6 +56,12 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   const [paramsMiseAJour, setParamsMiseAJour] = useState<
     CreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
   >();
+  const [lancerMajRequeteBouton, setLancerMajRequeteBouton] =
+    useState<CreationActionEtMiseAjourStatutParams>();
+
+  const idAction = usePostCreationActionEtMiseAjourStatutApi(
+    lancerMajRequeteBouton
+  );
 
   const [linkParameters, setLinkParameters] =
     React.useState<IQueryParametersPourRequetes>({
@@ -125,6 +137,43 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     setOperationEnCours(false);
   };
 
+  const finDeConsultation = useCallback((id: string, event: any) => {
+    event.stopPropagation();
+    setLancerMajRequeteBouton({
+      libelleAction: StatutRequete.TRAITE_DELIVRE_DEMAT.libelle,
+      statutRequete: StatutRequete.TRAITE_DELIVRE_DEMAT,
+      requeteId: id
+    });
+  }, []);
+
+  useEffect(() => {
+    if (idAction) {
+      setLinkParameters({
+        statuts: StatutRequete.getStatutsMesRequetes(),
+        tri: "dateStatut",
+        sens: "ASC",
+        range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+      });
+    }
+  }, [idAction]);
+
+  function getBoutonFinConsultation(
+    id: string,
+    sousType: string,
+    idUtilisateur: string,
+    statut?: string
+  ): JSX.Element {
+    return (
+      <>
+        {statut === "Traitée - Répondue" && (
+          <Bouton onClick={e => finDeConsultation(id, e)}>
+            {getLibelle("Fin de consultation")}
+          </Bouton>
+        )}
+      </>
+    );
+  }
+
   return (
     <>
       <OperationEnCours
@@ -145,13 +194,19 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         handleReload={handleReload}
         noRows={zeroRequete}
         enChargement={enChargement}
+        icone={{ keyColonne: "actions", getIcone: getBoutonFinConsultation }}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
       >
-        <BoutonSignature libelle={getLibelle("Signer le lot")} />
+        <BoutonSignerLeLot libelle={getLibelle("Signer le lot")} />
       </TableauRece>
 
       <BoutonRetour />
     </>
   );
 };
+
+const BoutonSignerLeLot = WithHabilitation(
+  BoutonSignature,
+  "BoutonSignerLeLot"
+);

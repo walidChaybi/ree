@@ -1,4 +1,5 @@
 import React from "react";
+import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { getLibelle } from "../../../../common/util/Utils";
 import { useCompteurRequeteHook } from "../hook/CompteurRequeteHook";
 import "./scss/CompteurRequete.scss";
@@ -8,7 +9,9 @@ interface CompteurRequeteProps {
 }
 
 export const CompteurRequete: React.FC<CompteurRequeteProps> = props => {
-  const { nombreRequetesState } = useCompteurRequeteHook(props.reloadCompteur);
+  const { nombreRequetesState } = useCompteurRequeteHook(props.reloadCompteur, [
+    StatutRequete.A_SIGNER.nom
+  ]);
 
   return (
     <span className={"compteur-requetes"}>

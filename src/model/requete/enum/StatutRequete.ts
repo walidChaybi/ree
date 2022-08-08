@@ -121,7 +121,8 @@ export class StatutRequete extends EnumWithComplete {
       StatutRequete.PRISE_EN_CHARGE.nom,
       StatutRequete.TRANSFEREE.nom,
       StatutRequete.A_SIGNER.nom,
-      StatutRequete.A_VALIDER.nom
+      StatutRequete.A_VALIDER.nom,
+      StatutRequete.TRAITE_REPONDU.nom
     ];
   }
 

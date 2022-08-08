@@ -6,6 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { getCompteurRequetes } from "../../../api/appels/requeteApi";
+import { StatutRequete } from "../../../model/requete/enum/StatutRequete";
 import { gestionnaireDoubleOuverture } from "../../common/util/GestionnaireDoubleOuverture";
 import { logError } from "../../common/util/LogManager";
 import {
@@ -56,7 +57,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
   const handleClickDeconnexion = () => {
     setMenu(null);
 
-    getCompteurRequetes()
+    getCompteurRequetes(StatutRequete.A_SIGNER.nom)
       .then(result => {
         const nbReq = result.body.data;
         setNbRequetes(nbReq);

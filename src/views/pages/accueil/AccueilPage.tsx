@@ -18,6 +18,7 @@ import {
   OfficierContextProps
 } from "../../core/contexts/OfficierContext";
 import "../accueil/scss/AccueilPage.scss";
+import { useCompteurRequeteHook } from "../requeteDelivrance/espaceDelivrance/hook/CompteurRequeteHook";
 import {
   BoutonAccueilCommunication,
   BoutonAccueilEspaceCreation,
@@ -32,15 +33,25 @@ import { useNbReqInfoHook } from "./hook/NbReqInfoHook";
 
 export const AccueilPage: React.FC = () => {
   const [nbReqInfo, setNbReqInfo] = useState<number>();
+  const [nbReqTraiteRepondu, setNbReqTraiteRepondu] = useState<number>();
   const nbReqInfoAPI = useNbReqInfoHook(
     [StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.TRANSFEREE.nom].join(",")
   );
+  const nbReqTraiteReponduAPI = useCompteurRequeteHook(false, [
+    StatutRequete.TRAITE_REPONDU.nom
+  ]);
 
   useEffect(() => {
     if (nbReqInfoAPI) {
       setNbReqInfo(nbReqInfoAPI);
     }
   }, [nbReqInfoAPI]);
+
+  useEffect(() => {
+    if (nbReqTraiteReponduAPI) {
+      setNbReqTraiteRepondu(nbReqTraiteReponduAPI.nombreRequetesState);
+    }
+  }, [nbReqTraiteReponduAPI]);
 
   return (
     <div className="AccueilPage">
@@ -62,6 +73,7 @@ export const AccueilPage: React.FC = () => {
           libelle={getLibelle("Espace délivrance")}
           pageUrl="mesrequetes"
           iconFA={faGavel}
+          badge={nbReqTraiteRepondu}
           title={getLibelle("Bouton pour accèder à l'espace délivrance")}
         ></BoutonAccueilEspaceDelivrance>
         <BoutonAccueilEspaceMiseAjour

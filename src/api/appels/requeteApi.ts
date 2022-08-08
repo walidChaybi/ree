@@ -206,12 +206,12 @@ export function patchUtilisateurAssigneRequete(
   });
 }
 
-export function getCompteurRequetes(): Promise<any> {
+export function getCompteurRequetes(statuts: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
     uri: URL_REQUETES_COUNT,
     parameters: {
-      statuts: "A_SIGNER"
+      statuts
     }
   });
 }

@@ -14,6 +14,7 @@ export enum HeaderTableauRequete {
   NatureActe = "nature",
   Document = "documentLibelle",
   Titulaires = "titulaires",
+  Actions = "actions",
   AttribueA = "attribueA",
   LibelleRequerant = "libelleRequerant",
   DateCreation = "dateCreation",
@@ -96,5 +97,11 @@ export const dateStatutColumnHeaders = [
     getElement: getIconPrioriteRequete,
     align: "center",
     sortable: true
+  }),
+  new TableauTypeColumn({
+    keys: [HeaderTableauRequete.Actions],
+    title: "Actions",
+    align: "center",
+    style: { width: "150px" }
   })
 ];

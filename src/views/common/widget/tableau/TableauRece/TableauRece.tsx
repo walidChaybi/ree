@@ -22,7 +22,8 @@ export interface IconeParams {
   getIcone: (
     id: string,
     sousType: string,
-    idUtilisateur: string
+    idUtilisateur: string,
+    statut?: string
   ) => JSX.Element;
 }
 

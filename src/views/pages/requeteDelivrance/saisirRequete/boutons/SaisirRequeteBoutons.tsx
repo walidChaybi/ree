@@ -9,38 +9,35 @@ import "./scss/SaisirRequeteBoutons.scss";
 
 export type SaisirRequeteBoutonsProps = {
   setIsBrouillon: any;
-  desactiverPrendreEnCharge: boolean;
 } & FormikComponentProps;
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   return (
     <>
       <div className="Boutons">
-        <Bouton
-          disabled={
-            !props.formik.dirty || !officierHabiliterPourLeDroit(Droit.DELIVRER)
-          }
-          id="boutonSauvegarder"
-          onClick={() => {
-            props.setIsBrouillon(true);
-            props.formik.submitForm();
-          }}
-        >
-          {getLibelle("Sauvegarder")}
-        </Bouton>
-        <Bouton
-          disabled={
-            !officierHabiliterPourLeDroit(Droit.DELIVRER) ||
-            (!props.formik.dirty && props.desactiverPrendreEnCharge)
-          }
-          id="boutonPrendreEnCharge"
-          onClick={() => {
-            props.setIsBrouillon(false);
-            props.formik.submitForm();
-          }}
-        >
-          {getLibelle("Prendre en charge")}
-        </Bouton>
+        {officierHabiliterPourLeDroit(Droit.DELIVRER) ? (
+          <Bouton
+            disabled={!props.formik.dirty}
+            id="boutonPrendreEnCharge"
+            onClick={() => {
+              props.setIsBrouillon(false);
+              props.formik.submitForm();
+            }}
+          >
+            {getLibelle("Prendre en charge")}
+          </Bouton>
+        ) : (
+          <Bouton
+            disabled={!props.formik.dirty}
+            id="boutonSauvegarder"
+            onClick={() => {
+              props.setIsBrouillon(true);
+              props.formik.submitForm();
+            }}
+          >
+            {getLibelle("Sauvegarder")}
+          </Bouton>
+        )}
       </div>
     </>
   );

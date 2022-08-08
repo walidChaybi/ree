@@ -7,6 +7,7 @@ import { Priorite } from "../../../../model/requete/enum/Priorite";
 import { ITitulaireRequeteTableau } from "../../../../model/requete/ITitulaireRequeteTableau";
 import { getLibelle, numberToString } from "../../util/Utils";
 import { getDateStringFromDateCompose } from "../DateUtils";
+import { storeRece } from "../storeRece";
 import "./scss/RequeteUtils.scss";
 
 export function prioriteDeLaRequete(priorite: string): string {
@@ -131,6 +132,21 @@ export function getCellDatesNaissancesTitulaires(data: any): JSX.Element {
       })}
     </div>
   );
+}
+
+export function getCellRequerant(data: any): JSX.Element {
+  if (data.idUtilisateurRequerant) {
+    const codeEntite = storeRece.listeEntite?.find(
+      el =>
+        el.idEntite ===
+        storeRece.listeUtilisateurs?.find(
+          ut => ut.idUtilisateur === data.idUtilisateurRequerant
+        )?.entite?.idEntite
+    )?.code;
+    return <span>{`${data.nomCompletRequerant} (${codeEntite})`}</span>;
+  } else {
+    return <span>{data.nomCompletRequerant}</span>;
+  }
 }
 
 export function getMessageZeroRequete(): JSX.Element {

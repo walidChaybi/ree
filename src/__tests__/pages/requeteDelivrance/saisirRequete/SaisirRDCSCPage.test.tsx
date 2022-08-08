@@ -9,7 +9,10 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Route, Router } from "react-router-dom";
 import request from "superagent";
-import { userDroitnonCOMEDEC } from "../../../../mock/data/connectedUserAvecDroit";
+import {
+  userDroitConsulterArchive,
+  userDroitnonCOMEDEC
+} from "../../../../mock/data/connectedUserAvecDroit";
 import { configComposition } from "../../../../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
@@ -228,6 +231,8 @@ test("test du Prendre en charge du formulaire de saisie d'une Requête de Déliv
 });
 
 test("test du Sauvegarder du formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
+  storeRece.utilisateurCourant = userDroitConsulterArchive; // Droit DELIVRER
+
   render(
     <Router history={history}>
       <SaisirRDCSCPage />

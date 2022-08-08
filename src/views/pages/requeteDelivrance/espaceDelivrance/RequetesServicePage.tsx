@@ -147,7 +147,7 @@ export const RequetesServicePage: React.FC<
     setOperationEnCours(false);
   };
 
-  const getIcone = (
+  const getIconeAssigneeA = (
     idRequete: string,
     sousType: string,
     idUtilisateur: string
@@ -185,7 +185,7 @@ export const RequetesServicePage: React.FC<
         onClickOnLine={onClickOnLine}
         columnHeaders={columnsRequestesService}
         dataState={dataState}
-        icone={{ keyColonne: "iconeAssigne", getIcone }}
+        icone={{ keyColonne: "iconeAssigne", getIcone: getIconeAssigneeA }}
         paramsTableau={paramsTableau}
         goToLink={goToLink}
         handleChangeSort={handleChangeSort}

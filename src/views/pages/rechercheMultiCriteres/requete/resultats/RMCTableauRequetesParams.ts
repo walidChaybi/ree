@@ -1,5 +1,6 @@
 import {
   getCellDatesNaissancesTitulaires,
+  getCellRequerant,
   getCellTitulaires,
   getIconPrioriteRequete,
   getObservationsNumeroRequete
@@ -16,7 +17,7 @@ export enum HeaderTableauRequete {
   Provenance = "provenance",
   Titulaires = "titulaires",
   DatesNaissancesTitulaires = "datesNaissancesTitulaires",
-  Requerant = "nomCompletRequerant",
+  Requerant = "requerant",
   AttribueA = "attribueA",
   DateCreation = "dateCreation",
   DateDerniereMaj = "dateDerniereMaj",
@@ -76,6 +77,7 @@ export const columnsTableauRequete = [
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Requerant],
+    getElement: getCellRequerant,
     title: "Requérant",
     align: "center"
   }),

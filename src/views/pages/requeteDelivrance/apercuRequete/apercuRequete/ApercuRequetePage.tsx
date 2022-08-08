@@ -1,12 +1,22 @@
 import React, { useCallback, useState } from "react";
+import { useHistory } from "react-router";
 import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
+import { Bouton } from "../../../../common/composant/boutonAntiDoubleSubmit/Bouton";
+import {
+  CreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "../../../../common/hook/requete/CreationActionMiseAjourStatutHook";
+import { getUrlPrecedente } from "../../../../common/util/route/routeUtil";
+import { storeRece } from "../../../../common/util/storeRece";
 import { getLibelle } from "../../../../common/util/Utils";
 import { VisionneuseAvecTitre } from "../../../../common/widget/document/VisionneuseAvecTitre";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
+import { receUrl } from "../../../../router/ReceUrls";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
+import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import { BoutonPrendreEnCharge } from "./contenu/BoutonPrendreEnCharge";
 
 interface ApercuRequetePageProps {
@@ -16,9 +26,14 @@ interface ApercuRequetePageProps {
 export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
   idRequeteAAfficher
 }) => {
+  const history = useHistory();
   const [documentAffiche, setDocumentAffiche] = useState<IDocumentReponse>();
 
   const [requete, setRequete] = useState<IRequeteDelivrance>();
+  const [lancerMajRequete, setLancerMajRequete] =
+    useState<CreationActionMiseAjourStatutHookParams>();
+
+  useCreationActionMiseAjourStatut(lancerMajRequete);
 
   const setRequeteCallback = useCallback(
     (req: IRequeteDelivrance) => {
@@ -33,10 +48,28 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
     },
     [setDocumentAffiche]
   );
+
+  const finDeConsultation = useCallback(() => {
+    if (requete) {
+      setLancerMajRequete({
+        libelleAction: StatutRequete.TRAITE_DELIVRE_DEMAT.libelle,
+        statutRequete: StatutRequete.TRAITE_DELIVRE_DEMAT,
+        requete: mappingRequeteDelivranceToRequeteTableau(requete),
+        callback: () => {
+          receUrl.replaceUrl(
+            history,
+            getUrlPrecedente(history.location.pathname)
+          );
+        }
+      });
+    }
+  }, [requete, history]);
+
   const estPresentBoutonPriseEnCharge =
     StatutRequete.estAuStatutATraiterOuTransferee(
       requete?.statutCourant?.statut
     ) && SousTypeDelivrance.possibleAPrendreEnCharge(requete?.sousType);
+
   return (
     <ApercuRequeteTemplate
       title={getLibelle("Aperçu de la requête")}
@@ -51,6 +84,14 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
             contenu={documentAffiche?.contenu}
             typeMime={documentAffiche?.mimeType}
           />
+          {afficherBoutonFinConsultation(
+            requete.statutCourant.statut,
+            requete.idUtilisateur
+          ) && (
+            <Bouton onClick={finDeConsultation}>
+              {getLibelle("Fin de consultation")}
+            </Bouton>
+          )}
           {!idRequeteAAfficher && <BoutonRetour />}
           {estPresentBoutonPriseEnCharge && (
             <BoutonPrendreEnCharge
@@ -63,3 +104,13 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
     </ApercuRequeteTemplate>
   );
 };
+
+function afficherBoutonFinConsultation(
+  statut: StatutRequete,
+  idUtilisateur: string
+) {
+  return (
+    statut === StatutRequete.TRAITE_REPONDU &&
+    storeRece.utilisateurCourant?.idUtilisateur === idUtilisateur
+  );
+}

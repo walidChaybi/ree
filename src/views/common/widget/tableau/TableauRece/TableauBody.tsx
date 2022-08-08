@@ -94,7 +94,8 @@ function getRowRender(
         iconeAAfficher = icone.getIcone(
           row.idRequete,
           row.sousType,
-          row.idUtilisateur
+          row.idUtilisateur,
+          row.statut
         );
       }
       tableauBodyCellList.push(

@@ -31,6 +31,7 @@ export interface IRequeteTableauDelivrance extends IRequeteTableau {
   requerant?: IRequerant;
   attribueA?: string;
   dateDerniereMaj?: string;
+  idUtilisateurRequerant?: string;
   priorite?: string;
   observations?: string[];
   idCorbeilleAgent?: string;
@@ -57,6 +58,9 @@ export function mappingUneRequeteTableauDelivrance(
   requete: any,
   mappingSupplementaire: boolean
 ): IRequeteTableauDelivrance {
+  const requerant = requete?.requerant
+    ? Requerant.mappingRequerant(requete?.requerant)
+    : undefined;
   return {
     idRequete: valeurOuUndefined(requete?.id),
     numero: getValeurOuVide(requete?.numero),
@@ -72,10 +76,11 @@ export function mappingUneRequeteTableauDelivrance(
     documentLibelle: DocumentDelivrance.getDocumentDelivrance(requete?.document)
       .libelle, // libellé du type de document demandé
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
-    requerant: requete?.requerant
-      ? Requerant.mappingRequerant(requete?.requerant)
-      : undefined,
-    nomCompletRequerant: requete?.nomCompletRequerant,
+    requerant,
+    nomCompletRequerant: requete?.nomCompletRequerant
+      ? requete?.nomCompletRequerant
+      : requerant,
+    idUtilisateurRequerant: requete?.idUtilisateurRequerant,
     attribueA: mapAttribueA(requete),
     dateCreation: getFormatDateFromTimestamp(requete?.dateCreation),
     dateDerniereMaj: getFormatDateFromTimestamp(requete?.dateDernierMAJ),

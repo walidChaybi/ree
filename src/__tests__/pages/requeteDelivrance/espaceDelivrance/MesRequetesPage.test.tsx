@@ -1,9 +1,9 @@
 import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor
 } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import React from "react";
@@ -34,8 +34,17 @@ test("renders Page requete with all elements", async () => {
 
   await waitFor(() => {
     const numero = screen.getByText("1234");
+    expect(screen.getByText("Fin de consultation")).toBeDefined();
     expect(titreNumero).toBeDefined();
     expect(numero).toBeDefined();
+  });
+
+  act(() => {
+    fireEvent.click(screen.getByText("Fin de consultation"));
+  });
+
+  await waitFor(() => {
+    expect(titreNumero).toBeDefined();
   });
 
   act(() => {
