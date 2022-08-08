@@ -21,13 +21,13 @@ export const formatLigneSpecificite = (
   tab?: (LigneType | JSX.Element | JSX.Element[])[],
   separateur = ", "
 ) => {
-  const resultat = tab?.filter(Boolean).map((elt, i) => {
-    const separation = i < tab.filter(Boolean).length - 1 ? separateur : null;
+  const resultat = tab?.filter(Boolean).map((elt, pos) => {
+    const separation = pos < tab.filter(Boolean).length - 1 ? separateur : null;
     return (
-      <>
+      <React.Fragment key={Labels.resume.infos.specifiques + String(pos)}>
         {elt}
         {separation}
-      </>
+      </React.Fragment>
     );
   });
 
