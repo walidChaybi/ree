@@ -123,26 +123,29 @@ export function mappingVersMentionsApi(
 
   mentionsRenumerote.forEach(mR => {
     const mention = mentionsAffichage.find(mA => mA.id === mR.id);
+    const mentionAAjouter = {
+      numeroOrdreExtrait: mR.numeroOrdreExtrait,
+      textes: {
+        texteMentionDelivrance: mR.textes.texteMentionDelivrance
+      },
+      typeMention: {
+        nature: {
+          id: NatureMention.getUuidFromNature(mR.typeMention.nature)
+        }
+      },
+      id: mR.id
+    };
     if (mention) {
-      mentionsAEnvoyer.push(
-        mention.id
-          ? {
-              numeroOrdreExtrait: mR.numeroOrdreExtrait,
-              textes: { texteMentionDelivrance: mention.texte },
-              typeMention: {
-                nature: {
-                  id: NatureMention.getUuidFromNature(mention.nature)
-                }
-              },
-              id: mention.id
-            }
-          : mR
+      mentionAAjouter.textes.texteMentionDelivrance = mention.texte;
+      mentionAAjouter.typeMention.nature.id = NatureMention.getUuidFromNature(
+        mention.nature
       );
+      mentionsAEnvoyer.push(mentionAAjouter);
       if (!mention.estPresent) {
         mentionsRetirees.push(mention.id);
       }
     } else {
-      mentionsAEnvoyer.push(mR);
+      mentionsAEnvoyer.push(mentionAAjouter);
     }
   });
   return { mentionsAEnvoyer, mentionsRetirees };
