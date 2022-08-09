@@ -199,7 +199,11 @@ test("mappingVersMentionAffichage", () => {
 
 test("mappingVersMentionApi", () => {
   expect(
-    mappingVersMentionsApi([mentionApi], [mentionOpposable])
+    mappingVersMentionsApi(
+      [mentionApi],
+      [mentionOpposable],
+      "28580709-06dd-4df2-bf6e-70a9482940a1"
+    )
   ).toStrictEqual({
     mentionsAEnvoyer: [
       {

@@ -106,6 +106,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
   }, [reinitialisation]);
 
   const sauvegarderMentions = useCallback(() => {
+
     if (mentionsApi && mentions && props.acte?.id && props.document) {
       setOperationEnCours(true);
       setSauvegarderMentionsParams({

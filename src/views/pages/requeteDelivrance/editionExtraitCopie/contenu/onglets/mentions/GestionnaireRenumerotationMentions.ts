@@ -21,7 +21,9 @@ export class GestionnaireRenumerotationMentions {
     mentionsEnBase: IMention[],
     typeDocument: string
   ) {
-    const res: MentionPourRenumerotation[] = [...mentionsEnBase].filter(
+    let res: MentionPourRenumerotation[] = [];
+    mentionsEnBase.forEach(el => res.push({ ...el }));
+    res = res.filter(
       // Les mentions sont réellement supprimé de la base seulement si elles
       // sont supprimés et qu'elles étaient spécifiques à ce document
       mention =>
