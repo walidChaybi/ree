@@ -207,6 +207,7 @@ export class GestionnaireRenumerotationMentions {
         }
       }
       mentionsAAjouter.push({
+        id: mention.id,
         numeroOrdreExtrait: mention.numeroOrdre,
         textes: { texteMentionDelivrance: mention.texte },
         typeMention: {
