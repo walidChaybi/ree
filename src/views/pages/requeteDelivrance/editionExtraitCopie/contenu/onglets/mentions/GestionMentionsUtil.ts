@@ -110,7 +110,7 @@ export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
 export function mappingVersMentionsApi(
   mentionsApi: IMention[],
   mentionsAffichage: IMentionAffichage[],
- typeDocument: string
+  typeDocument: string
 ) {
   const mentionsRenumerote =
     gestionnaireRenumerotationMentions.renumerotationMentions(
@@ -412,31 +412,51 @@ export function validerMentions(
     document?.typeDocument
   );
 
-  const estDocumentExtrait = DocumentDelivrance.estExtraitAvecOuSansFilliation(
-    document?.typeDocument
-  );
+  const messageControleMention = controleMentions(mentions, acte, document);
 
   if (
     estDocumentCopieIntegrale &&
     modificationEffectue(mentions, mentionsApi, document)
   ) {
-    confirmation(
-      `Vous avez choisi de décocher des mentions.
-        Celle-ci ne seront pas éditées sur la copie intégrale de l'acte choisi.`,
-      sauvegarderMentions
-    );
-  } else if (
-    !estDocumentCopieIntegrale &&
+    if (
+      window.confirm(
+        `Vous avez choisi de décocher des mentions.
+        Celle-ci ne seront pas éditées sur la copie intégrale de l'acte choisi.`
+      )
+    ) {
+      sauvegarderMentions();
+    }
+  } else if (messageControleMention) {
+    if (window.confirm(messageControleMention)) {
+      sauvegarderMentions();
+    }
+  } else {
+    sauvegarderMentions();
+  }
+}
+
+function controleMentions(
+  mentions?: IMentionAffichage[],
+  acte?: IFicheActe,
+  document?: IDocumentReponse
+) {
+  const estExtraitAvecFilliation = DocumentDelivrance.estExtraitAvecFilliation(
+    document?.typeDocument
+  );
+
+  const estDocumentExtrait = DocumentDelivrance.estExtraitAvecOuSansFilliation(
+    document?.typeDocument
+  );
+  let message = "";
+  if (
+    estExtraitAvecFilliation &&
     FicheActe.acteEstACQouOP2ouOP3(acte) &&
     FicheActe.estActeNaissance(acte) &&
     aucuneMentionsNationalite(mentions)
   ) {
-    confirmation(
-      `Aucune mention de nationalité n'a été cochée. 
-        Voulez-vous continuer ?`,
-      sauvegarderMentions
-    );
-  } else if (
+    message = `Aucune mention de nationalité n'a été cochée.\n\n`;
+  }
+  if (
     document?.typeDocument &&
     estDocumentExtrait &&
     NatureMention.ilExisteUneMentionInterdite(
@@ -445,20 +465,12 @@ export function validerMentions(
       DocumentDelivrance.getEnumForUUID(document.typeDocument)
     )
   ) {
-    confirmation(
-      `Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter. 
-        Voulez-vous continuer ?`,
-      sauvegarderMentions
-    );
-  } else {
-    sauvegarderMentions();
+    message += `Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter.\n\n`;
   }
-}
-
-function confirmation(message: string, fonction: any) {
-  if (window.confirm(message)) {
-    fonction();
+  if (message) {
+    message += `Voulez-vous continuer ?`;
   }
+  return message;
 }
 
 export function getNaturesMentionsAffichage(

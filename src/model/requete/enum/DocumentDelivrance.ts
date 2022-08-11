@@ -276,6 +276,16 @@ export class DocumentDelivrance extends EnumNomemclature {
     );
   }
 
+  public static estExtraitAvecFilliation(key?: string): boolean {
+    const code = key ? DocumentDelivrance.getCodeForKey(key) : undefined;
+    return code === CODE_EXTRAIT_AVEC_FILIATION;
+  }
+
+  public static estExtraitSansFilliation(key?: string): boolean {
+    const code = key ? DocumentDelivrance.getCodeForKey(key) : undefined;
+    return code === CODE_EXTRAIT_SANS_FILIATION;
+  }
+
   public static estExtraitPlurilingue(key?: string): boolean {
     const code = key ? DocumentDelivrance.getCodeForKey(key) : undefined;
     return code === CODE_EXTRAIT_PLURILINGUE;
