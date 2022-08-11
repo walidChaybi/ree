@@ -2,8 +2,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { IDocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
+import {
+  OngletProps,
+  VoletAvecOnglet
+} from "../../../../../common/widget/voletAvecOnglet/VoletAvecOnglet";
 import { getOngletsVisu } from "../../EditionExtraitCopieUtils";
-import { OngletProps, VoletAvecOnglet } from "../VoletAvecOnglet";
 
 interface VoletVisualisationProps {
   requete: IRequeteDelivrance;

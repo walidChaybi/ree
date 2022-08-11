@@ -26,6 +26,7 @@ import { DateCoordonneesType } from "./components/Types";
 const mappingIRequeteCreationVersResumeRequeteCreationProps = (
   requeteCreation: IRequeteCreation
 ): ResumeRequeteCreationProps => {
+
   const requete: ItemRequeteProps = {
     numeros: {
       rece: requeteCreation.numero,

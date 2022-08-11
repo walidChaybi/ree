@@ -15,7 +15,7 @@ export interface ItemProps {
   className?: AccordionReceClassNameProps;
 }
 
-const Item: React.FC<ItemProps> = ({
+export const Item: React.FC<ItemProps> = ({
   visible = true,
   etendu = true,
   ...props

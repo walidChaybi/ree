@@ -8,6 +8,7 @@ interface IGroupeBoutonProps {
   titre: string;
   onSelect: (indexMenu: number, e?: any) => any;
   listeActions: IActionOption[];
+  disabled?: boolean;
 }
 
 export const GroupeBouton: React.FC<IGroupeBoutonProps> = props => {
@@ -19,6 +20,7 @@ export const GroupeBouton: React.FC<IGroupeBoutonProps> = props => {
       <ButtonGroup orientation="vertical">
         {props.listeActions.map(el => (
           <Button
+            disabled={props.disabled}
             ref={el.ref}
             onClick={() => {
               if (

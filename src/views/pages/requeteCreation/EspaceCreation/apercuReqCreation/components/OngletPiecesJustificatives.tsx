@@ -11,12 +11,12 @@ import Labels from "../Labels";
 import ConteneurRetractable from "./ConteneurRetractable";
 import "./scss/VoletPiecesJustificatives.scss";
 
-interface VoletPiecesJustificativesProps {
+interface OngletPiecesJustificativesProps {
   requete: IRequeteCreation;
 }
 
-export const VoletPiecesJustificatives: React.FC<
-  VoletPiecesJustificativesProps
+export const OngletPiecesJustificatives: React.FC<
+  OngletPiecesJustificativesProps
 > = props => {
   const [liste, setListe] = useState<ListeItem[]>([]);
   const [pleinEcran, setPleinEcran] = useState<boolean>(false);

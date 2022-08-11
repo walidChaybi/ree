@@ -7,5 +7,14 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
-  }
+  },
+    "prettier.trailingComma": "none",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.wordWrapColumn": 80,
+    "prettier.arrowParens": "avoid",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "editor.formatOnSaveMode": "modifications"
 }

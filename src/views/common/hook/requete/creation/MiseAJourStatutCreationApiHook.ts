@@ -6,7 +6,7 @@ import { logError } from "../../../util/LogManager";
 export interface MiseAjourStatutCreationParams {
   statutRequete: StatutRequete;
   idRequete: string;
-  callback: () => void;
+  callback?: () => void;
 }
 
 export function useMiseAjourStatutCreation(
@@ -16,7 +16,9 @@ export function useMiseAjourStatutCreation(
     if (params) {
       updateStatutRequeteCreation(params.idRequete, params.statutRequete)
         .then(result => {
-          params.callback();
+          if (params.callback) {
+            params.callback();
+          }
         })
         .catch(error => {
           logError({

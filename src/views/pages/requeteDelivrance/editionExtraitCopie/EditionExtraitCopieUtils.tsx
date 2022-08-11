@@ -36,6 +36,7 @@ import {
   ZERO
 } from "../../../common/util/Utils";
 import { AccordionRece } from "../../../common/widget/accordion/AccordionRece";
+import { OngletProps } from "../../../common/widget/voletAvecOnglet/VoletAvecOnglet";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
 import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
@@ -46,7 +47,6 @@ import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/Mod
 import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import { VisionneuseActeEdition } from "./contenu/onglets/VisionneuseActeEdition";
 import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
-import { OngletProps } from "./contenu/VoletAvecOnglet";
 import { DocumentEC } from "./enum/DocumentEC";
 
 export const getOngletsEdition = (

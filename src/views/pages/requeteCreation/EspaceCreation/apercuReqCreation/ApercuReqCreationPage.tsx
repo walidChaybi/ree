@@ -4,7 +4,7 @@ import { IUuidRequeteParams } from "../../../../../model/params/IUuidRequetePara
 import { IRequeteCreation } from "../../../../../model/requete/IRequeteCreation";
 import { useDetailRequeteApiHook } from "../../../requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 import ResumeRequeteCreation from "./components/ResumeRequeteCreation";
-import { VoletPiecesJustificatives } from "./components/VoletPiecesJustificatives";
+import { VoletPieceJustificativesEtActions } from "./components/VoletPieceJusticativesEtActions";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "./mappingIRequeteCreationVersResumeRequeteCreationProps";
 import "./scss/ApercuReqCreationPage.scss";
 
@@ -22,7 +22,8 @@ const ApercuReqCreationPage: React.FC = () => {
               detailRequeteState as IRequeteCreation
             )}
           />
-          <VoletPiecesJustificatives
+
+          <VoletPieceJustificativesEtActions
             requete={detailRequeteState as IRequeteCreation}
           />
         </>

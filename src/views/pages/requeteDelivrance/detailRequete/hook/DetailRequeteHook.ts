@@ -19,6 +19,10 @@ import { TypeMandant } from "../../../../../model/requete/enum/TypeMandant";
 import { TypePieceJustificative } from "../../../../../model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "../../../../../model/requete/enum/TypeRequete";
 import { IAction } from "../../../../../model/requete/IActions";
+import {
+  IEchange,
+  IEchangeServeur
+} from "../../../../../model/requete/IEchange";
 import { IEvenementReqDelivrance } from "../../../../../model/requete/IEvenementReqDelivrance";
 import { IMandant } from "../../../../../model/requete/IMandant";
 import { IObservation } from "../../../../../model/requete/IObservation";
@@ -32,6 +36,7 @@ import { IStatutCourant } from "../../../../../model/requete/IStatutCourant";
 import { ITitulaireRequete } from "../../../../../model/requete/ITitulaireRequete";
 import { IPieceJustificative } from "../../../../../model/requete/pieceJointe/IPieceJustificative";
 import { IPieceJustificativeCreation } from "../../../../../model/requete/pieceJointe/IPieceJustificativeCreation";
+import { getFormatDateFromTimestamp } from "../../../../common/util/DateUtils";
 import { logError } from "../../../../common/util/LogManager";
 import { storeRece } from "../../../../common/util/storeRece";
 
@@ -287,6 +292,25 @@ function mapPiecesJustificativesCreation(
   return piecesJustificatives;
 }
 
+export function mapEchangesRetourSDANF(
+  arrayEchanges?: IEchangeServeur[]
+): IEchange[] {
+  const echanges: IEchange[] = [];
+
+  arrayEchanges?.forEach((echange: IEchangeServeur) => {
+    const { dateMessage, ...reste } = echange;
+
+    const echangeMapped: IEchange = {
+      date: getFormatDateFromTimestamp(dateMessage),
+      ...reste
+    };
+
+    echanges.push(echangeMapped);
+  });
+
+  return echanges;
+}
+
 export function mappingRequeteCreation(data: any): IRequeteCreation {
   return {
     ...data,
@@ -298,6 +322,11 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
     piecesJustificatives: mapPiecesJustificativesCreation(
       data.piecesJustificatives
     ),
-    mandant: data.mandant ? getMandant(data.mandant) : undefined
+    mandant: data.mandant ? getMandant(data.mandant) : undefined,
+    provenanceNatali: {
+      ...data.provenanceNatali,
+      echanges: mapEchangesRetourSDANF(data.provenanceNatali.echanges)
+    }
   };
 }
+

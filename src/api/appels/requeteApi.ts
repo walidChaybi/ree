@@ -1,6 +1,7 @@
 import { CLES } from "../../model/parametres/clesParametres";
 import { StatutRequete } from "../../model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "../../model/requete/IDocumentReponse";
+import { IEchange } from "../../model/requete/IEchange";
 import { IRequeteDelivrance } from "../../model/requete/IRequeteDelivrance";
 import { IPieceJustificative } from "../../model/requete/pieceJointe/IPieceJustificative";
 import { IRMCRequestRequete } from "../../model/rmc/requete/IRMCRequestRequete";
@@ -45,6 +46,8 @@ export const URL_REQUETE_PLUS_ANCIENNE = "/requetes/requeteplusancienne";
 export const URL_OPTION_COURRIER = "/optioncourrier";
 export const URL_REPONSE_REQ_INFO = "/reponse";
 export const URL_NB_REQ_INFO = "/requetes/information/count";
+export const URL_ECHANGE = "/echange";
+export const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
 
 const URL_REPONSES = "/reponses";
 
@@ -586,5 +589,27 @@ export function updateDocumentMention(
     method: HttpMethod.PATCH,
     uri: `${URL_DOCUMENT_REPONSE}/${id}${URL_MENTION}`,
     data: mentionsRetirees ? mentionsRetirees : []
+  });
+}
+
+export function postMessageRetourSDANF(idRequete: string, message: IEchange) {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_CREATION}${idRequete}${URL_ECHANGE}`,
+    data: message
+  });
+}
+
+export function postMessageRetourSDANFEtUpdateStatutRequete(
+  idRequete: string,
+  message: IEchange
+) {
+  return api.fetch({
+    method: HttpMethod.POST,
+    uri: `${URL_ECHANGE_STATUT}`,
+    parameters: {
+      idRequete
+    },
+    data: message
   });
 }

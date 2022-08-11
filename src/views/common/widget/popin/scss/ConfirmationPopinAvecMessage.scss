@@ -1,0 +1,15 @@
+.ConfirmationPopinAvecMessage {
+  .MuiPaper-root {
+    min-width: 540px;
+    min-height: 380px;
+
+    .messageErreur {
+      color: red;
+      display: inline-block;
+    }
+
+    .textarea {
+      width: 100%;
+    }
+  }
+}

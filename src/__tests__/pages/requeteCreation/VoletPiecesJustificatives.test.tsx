@@ -9,7 +9,7 @@ import React from "react";
 import request from "superagent";
 import { requeteCreation } from "../../../mock/data/requeteCreation";
 import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
-import { VoletPiecesJustificatives } from "../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/components/VoletPiecesJustificatives";
+import { OngletPiecesJustificatives } from "../../../views/pages/requeteCreation/EspaceCreation/apercuReqCreation/components/OngletPiecesJustificatives";
 import { mappingRequeteCreation } from "../../../views/pages/requeteDelivrance/detailRequete/hook/DetailRequeteHook";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -17,7 +17,7 @@ const superagentMock = require("superagent-mock")(request, configRequetes);
 test("renders VoletPiecesJustificatives", async () => {
   await act(async () => {
     render(
-      <VoletPiecesJustificatives
+      <OngletPiecesJustificatives
         requete={mappingRequeteCreation(requeteCreation)}
       />
     );

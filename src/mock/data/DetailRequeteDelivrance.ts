@@ -528,6 +528,7 @@ export const ReponseAppelDetailRequeteDelivranceASigner = {
     }
   }
 };
+
 export const ReponseAppelDetailRequeteDelivrancePriseEnCharge = {
   hasTechnicalError: false,
   hasBusinessError: false,

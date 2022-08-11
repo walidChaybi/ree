@@ -3,10 +3,13 @@ import { IFicheActe } from "../../../../../../model/etatcivil/acte/IFicheActe";
 import { IDocumentReponse } from "../../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { checkDirty } from "../../../../../common/util/Utils";
+import {
+  OngletProps,
+  VoletAvecOnglet
+} from "../../../../../common/widget/voletAvecOnglet/VoletAvecOnglet";
 import { RECEContext } from "../../../../../core/body/Body";
 import { getOngletsEdition } from "../../EditionExtraitCopieUtils";
 import { DocumentEC } from "../../enum/DocumentEC";
-import { OngletProps, VoletAvecOnglet } from "../VoletAvecOnglet";
 
 interface VoletEditionProps {
   requete: IRequeteDelivrance;

@@ -1655,3 +1655,108 @@ export const requeteCreationSansRequerantAvecInfosSpecifiquesEtInformationsTitul
     dossierOrigines: null,
     decret: null
   } as any as IRequeteCreation;
+
+export const requeteCreationAvecMessagesRetourSDANFSansLesDroits = {
+  ...requeteCreation,
+  provenanceNatali: {
+    ...requeteCreation.provenanceNatali,
+    echanges: [
+      {
+        id: "0feca576-2766-4937-af7c-d921270518e6",
+        emetteur: "SCEC",
+        destinataire: "SDANF",
+        nature: "RESPONSE_SCEC",
+        dateMessage: 1659616136550,
+        message:
+          "Acte irrecevable - Bonjour je ne peux recevoir votre demande - Johann"
+      },
+      {
+        id: "0feca576-2766-4937-af7c-d921270518e6",
+        emetteur: "SCEC",
+        destinataire: "SDANF",
+        nature: "RESPONSE_SCEC",
+        dateMessage: 1659616134450,
+        message: "Acte irrecevable - Je suis un message de test - Johann"
+      }
+    ]
+  }
+};
+
+export const requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus = {
+  ...requeteCreation,
+  id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4085c",
+  provenanceNatali: {
+    ...requeteCreation.provenanceNatali,
+    echanges: [
+      {
+        id: "0feca576-2766-4937-af7c-d921270518e6",
+        emetteur: "SCEC",
+        destinataire: "SDANF",
+        nature: "RESPONSE_SCEC",
+        dateMessage: 1659616136550,
+        message:
+          "Acte irrecevable - Bonjour je ne peux recevoir votre demande - Johann"
+      },
+      {
+        id: "0feca576-2766-4937-af7c-d921270518e6",
+        emetteur: "SCEC",
+        destinataire: "SDANF",
+        nature: "RESPONSE_SCEC",
+        dateMessage: 1659616134450,
+        message: "Acte irrecevable - Je suis un message de test - Johann"
+      }
+    ]
+  }
+};
+
+export const requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut =
+  {
+    ...requeteCreation,
+    id: "3ed9aa4e-921b-489f-b8fe-531dd703c68f",
+    statut: {
+      id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4082d",
+      statutRequete: "PRISE_EN_CHARGE",
+      dateEffet: 1656404736683,
+      raisonStatut: null
+    },
+    corbeilleAgent: {
+      idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646"
+    },
+    provenanceNatali: {
+      ...requeteCreation.provenanceNatali,
+      echanges: [
+        {
+          id: "0fe2a576-2766-4937-af7c-d921270518e6",
+          emetteur: "SCEC",
+          destinataire: "SDANF",
+          nature: "RESPONSE_SCEC",
+          dateMessage: 1659616136550,
+          message:
+            "Acte irrecevable - Bonjour je ne peux recevoir votre demande - Johann"
+        },
+        {
+          id: "0feca576-2766-4937-af7c-d921270518e6",
+          emetteur: "SCEC",
+          destinataire: "SDANF",
+          nature: "RESPONSE_SCEC",
+          dateMessage: 1659616134450,
+          message: "Acte irrecevable - Je suis un message de test - Johann"
+        }
+      ]
+    }
+  };
+
+export const requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut =
+  {
+    ...requeteCreation,
+    id: "3ed9aa4e-921b-429f-b8fe-531dd103c68f",
+    statut: {
+      id: "3ed97a35-c9b0-4ae4-b2dc-75eb84e4082d",
+      statutRequete: "PRISE_EN_CHARGE",
+      dateEffet: 1656404736683,
+      raisonStatut: null
+    },
+    corbeilleAgent: {
+      idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646"
+    }
+  };

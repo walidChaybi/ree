@@ -1,7 +1,7 @@
 import { Tab } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import React from "react";
-import { IOnglet } from "../../../../../model/requete/IOnglet";
+import { IOnglet } from "../../../../model/requete/IOnglet";
 
 export interface OngletProps {
   liste: IOnglet[];
@@ -10,7 +10,7 @@ export interface OngletProps {
 export interface VoletOngletProps {
   liste: IOnglet[];
   ongletSelectionne: number;
-  handleChange: (event: any, newValue: string) => void;
+  handleChange?: (event: any, newValue: string) => void;
 }
 
 export const VoletAvecOnglet: React.FC<VoletOngletProps> = props => {
