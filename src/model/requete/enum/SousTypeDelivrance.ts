@@ -42,13 +42,6 @@ export class SousTypeDelivrance extends EnumWithComplete {
     "Délivrance LF (c)"
   );
 
-  public static estSousTypeCertificatSituation(sousType: SousTypeDelivrance) {
-    return (
-      sousType === SousTypeDelivrance.RDCSC ||
-      sousType === SousTypeDelivrance.RDCSD
-    );
-  }
-
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, SousTypeDelivrance);
   }

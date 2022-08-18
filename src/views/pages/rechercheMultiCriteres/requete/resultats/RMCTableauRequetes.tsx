@@ -127,7 +127,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         requete,
         urlCourante,
         // La RMC ne remonte pas les informations suffisantes pour générer un certificat de situation automatique
-        pasDeTraitementAuto: SousTypeDelivrance.estSousTypeCertificatSituation(
+        pasDeTraitementAuto: SousTypeDelivrance.estRDCSDouRDCSC(
           SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType)
         )
       });

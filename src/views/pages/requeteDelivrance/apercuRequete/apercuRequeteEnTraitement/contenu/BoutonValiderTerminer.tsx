@@ -48,6 +48,9 @@ export const BoutonValiderTerminer: React.FC<
     case TypeCanal.INTERNET:
       futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
       break;
+    case TypeCanal.RECE:
+      futurStatut = StatutRequete.TRAITE_REPONDU;
+      break;
     default:
       futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
   }
