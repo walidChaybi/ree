@@ -56,7 +56,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
 
   const afficherBoutonValiderTerminer =
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
-    SousTypeDelivrance.estRDCSDouRDCSC(requete?.sousType);
+    SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType);
   // || ChoixDelivrance.estReponseSansDelivrance(requete.choixDelivrance)); //TODO: dans le cas d'un refus, afficher "Valider et terminer". A confirmer avec la MOA
 
   return (
