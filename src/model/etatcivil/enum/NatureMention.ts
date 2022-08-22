@@ -93,8 +93,8 @@ const naturesInterdites = {
     ]
   },
   Mariage: {
-    [CODE_EXTRAIT_AVEC_FILIATION]: natureMariageInterdites,
-    [CODE_EXTRAIT_SANS_FILIATION]: natureMariageInterdites
+    [CODE_EXTRAIT_SANS_FILIATION]: [...natureMariageInterdites, ADOPTION],
+    [CODE_EXTRAIT_AVEC_FILIATION]: natureMariageInterdites
   }
 };
 
