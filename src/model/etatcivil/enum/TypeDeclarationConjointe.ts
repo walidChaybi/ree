@@ -16,10 +16,10 @@ export class TypeDeclarationConjointe extends EnumWithLibelle {
     "d'adjonction de nom"
   );
   public static readonly ABSENCE_DECLARATION = new TypeDeclarationConjointe(
-    "abscence déclaration conjointe"
+    "aucune"
   );
   public static readonly ABSENCE_DECLARATION_VALIDEE =
-    new TypeDeclarationConjointe("abscence déclaration conjointe");
+    new TypeDeclarationConjointe("aucune");
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TypeDeclarationConjointe);

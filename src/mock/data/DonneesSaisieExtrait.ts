@@ -195,7 +195,7 @@ export const acteExtraitSaisie = {
         }
       ],
       typeDeclarationConjointe: {
-        _libelle: "abscence déclaration conjointe"
+        _libelle: "aucune"
       },
       nomPartie1: null,
       nomPartie2: null,
@@ -431,7 +431,7 @@ export const acteExtraitSaisie = {
           domicile: null,
           filiations: [],
           typeDeclarationConjointe: {
-            _libelle: "abscence déclaration conjointe"
+            _libelle: "aucune"
           },
           nomPartie1: "ABSENCE_VALIDEE",
           nomPartie2: "",
