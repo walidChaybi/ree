@@ -96,7 +96,8 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
           nature: NatureMention.getEnumFor(event.target.value),
           numeroOrdre: getNumeroOrdreMention(mentions),
           estPresent: true,
-          aPoubelle: true
+          aPoubelle: true,
+          nouveau: true
         } as IMentionAffichage);
       }
     },
@@ -115,7 +116,8 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
           nature: NatureMention.getEnumFor(""),
           numeroOrdre: getNumeroOrdreMention(mentions),
           estPresent: true,
-          aPoubelle: true
+          aPoubelle: true,
+          nouveau: true
         } as IMentionAffichage);
       }
     },

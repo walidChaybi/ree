@@ -40,6 +40,7 @@ export interface ListeItem {
   id: string;
   aPoubelle: boolean;
   sousElement?: any;
+  nouveau?: boolean;
 }
 
 type ListeItemAvecIndex = ListeItem & { index: number };
@@ -106,6 +107,7 @@ export const ListeGlisserDeposer: React.FC<
                   e.stopPropagation();
                 }
               }}
+              disabled={item.nouveau}
             />
           )}
 
@@ -173,6 +175,7 @@ export const ListeGlisserDeposer: React.FC<
               id={el.id}
               aPoubelle={el.aPoubelle}
               sousElement={el.sousElement}
+              nouveau={el.nouveau}
             />
           ))}
         </SortableContext>

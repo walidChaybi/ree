@@ -29,6 +29,7 @@ export interface IMentionAffichage {
   id: string;
   numeroOrdre: number;
   aPoubelle: boolean;
+  nouveau?: boolean;
 }
 
 export function mappingVersMentionAffichage(
@@ -102,7 +103,8 @@ export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
         libelle: mentionAffichage.texte,
         checkbox: mentionAffichage.estPresent,
         id: mentionAffichage.id,
-        aPoubelle: mentionAffichage.aPoubelle
+        aPoubelle: mentionAffichage.aPoubelle,
+        nouveau: mentionAffichage.nouveau
       };
     });
 }
