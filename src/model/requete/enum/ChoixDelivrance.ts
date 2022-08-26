@@ -81,6 +81,9 @@ export class ChoixDelivrance extends EnumWithComplete {
   public static estAvecFiliation(choix: ChoixDelivrance) {
     return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
   }
+  public static estSansFiliation(choix: ChoixDelivrance) {
+    return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;
+  }
 
   public static estAvecOuSansFiliation(choix?: ChoixDelivrance) {
     return (

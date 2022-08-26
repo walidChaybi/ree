@@ -41,7 +41,20 @@ export const DIVORCE = "5";
 export const DECISION_ACTE = "24";
 export const RECTIFICATION = "20";
 
-export const natureRetireesNaissance = [
+export const natureRetireesMariageAvecFilliation = [
+  ANNULATION_EVENEMENT,
+  ANNULATION_MENTION,
+  RECTIFICATION,
+  CHANGEMENT_NOM,
+  LIEN_FILIATION_HORS_ADOPTION
+];
+
+export const natureRetireesMariageSansFilliation = [
+  ...natureRetireesMariageAvecFilliation,
+  ADOPTION
+];
+
+export const natureRetireesNaissanceAvecFillation = [
   REPRISE_VIE_COMMUNE,
   NATIONALITE,
   ADOPTION,
@@ -50,11 +63,17 @@ export const natureRetireesNaissance = [
   ANNULATION_DECISION,
   ANNULATION_EVENEMENT,
   ANNULATION_MENTION,
-  RECTIFICATION,
   CODE_RC_RADIE,
   CHANGEMENT_NOM,
   CHANGEMENT_SEXE,
-  LIEN_FILIATION_HORS_ADOPTION
+  LIEN_FILIATION_HORS_ADOPTION,
+  RECTIFICATION
+];
+
+export const natureRetireesNaissanceSansFillation = [
+  ...natureRetireesNaissanceAvecFillation,
+  NATIONALITE,
+  ADOPTION
 ];
 
 const natureNaissanceInterditePourExtraitAvecFiliation = [

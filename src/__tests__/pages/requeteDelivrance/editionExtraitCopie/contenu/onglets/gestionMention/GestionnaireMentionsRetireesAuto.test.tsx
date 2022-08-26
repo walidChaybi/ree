@@ -23,6 +23,7 @@ import {
   REPRISE_VIE_COMMUNE,
   SEPARATION_CORPS
 } from "../../../../../../../model/etatcivil/enum/NatureMention";
+import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
 import {
   gestionnaireMentionsRetireesAuto,
   IMentionAvecRetiree
@@ -286,7 +287,7 @@ test("deselectionnerAnnulationParPaire", () => {
   ).toStrictEqual([]);
 });
 
-test("deselectionneMentionsSpecifiques", () => {
+test("deselectionneMentionsSpecifiquesNaissance", () => {
   const deselectionneMentionsSpecifiques = [
     {
       id: "1",
@@ -416,28 +417,152 @@ test("deselectionneMentionsSpecifiques", () => {
     } as IMentionAvecRetiree
   ];
   gestionnaireMentionsRetireesAuto.deselectionneMentionsSpecifiques(
-    deselectionneMentionsSpecifiques
+    deselectionneMentionsSpecifiques,
+    ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION,
+    NatureActe.NAISSANCE
+  );
+});
+
+test("deselectionneMentionsSpecifiquesMariage", () => {
+  const deselectionneMentionsSpecifiques = [
+    {
+      id: "1",
+      typeMention: {
+        nature: {
+          code: MARIAGE
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "2",
+      typeMention: {
+        nature: {
+          code: REPRISE_VIE_COMMUNE
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "3",
+      typeMention: {
+        nature: {
+          code: NATIONALITE
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "4",
+      typeMention: {
+        nature: {
+          code: ADOPTION
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "5",
+      typeMention: {
+        nature: {
+          code: ANNULATION_MARIAGE
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "6",
+      typeMention: {
+        nature: {
+          code: ANNULATION_PACS
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "7",
+      typeMention: {
+        nature: {
+          code: ANNULATION_DECISION
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "8",
+      typeMention: {
+        nature: {
+          code: ANNULATION_EVENEMENT
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "9",
+      typeMention: {
+        nature: {
+          code: ANNULATION_MENTION
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "10",
+      typeMention: {
+        nature: {
+          code: CODE_RC_RADIE
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "11",
+      typeMention: {
+        nature: {
+          code: CHANGEMENT_NOM
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "12",
+      typeMention: {
+        nature: {
+          code: CHANGEMENT_SEXE
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "13",
+      typeMention: {
+        nature: {
+          code: LIEN_FILIATION_HORS_ADOPTION
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree,
+    {
+      id: "14",
+      typeMention: {
+        nature: {
+          code: RECTIFICATION
+        }
+      },
+      retiree: false
+    } as IMentionAvecRetiree
+  ];
+  gestionnaireMentionsRetireesAuto.deselectionneMentionsSpecifiques(
+    deselectionneMentionsSpecifiques,
+    ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION,
+    NatureActe.MARIAGE
   );
 
   expect(
     gestionnaireMentionsRetireesAuto.formaterMentionsRetirees(
       deselectionneMentionsSpecifiques
     )
-  ).toStrictEqual([
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14"
-  ]);
+  ).toStrictEqual(["8", "9", "11", "13", "14"]);
 });
 
 test("deselectionneMentionsIncompatibleAvecActe", () => {
