@@ -4,7 +4,6 @@ import { SousTypeDelivrance } from "../../../../../model/requete/enum/SousTypeDe
 import { StatutRequete } from "../../../../../model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
-import { Bouton } from "../../../../common/composant/boutonAntiDoubleSubmit/Bouton";
 import {
   CreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -12,6 +11,7 @@ import {
 import { getUrlPrecedente } from "../../../../common/util/route/routeUtil";
 import { storeRece } from "../../../../common/util/storeRece";
 import { getLibelle } from "../../../../common/util/Utils";
+import { Bouton } from "../../../../common/widget/boutonAntiDoubleSubmit/Bouton";
 import { VisionneuseAvecTitre } from "../../../../common/widget/document/VisionneuseAvecTitre";
 import { BoutonRetour } from "../../../../common/widget/navigation/BoutonRetour";
 import { receUrl } from "../../../../router/ReceUrls";

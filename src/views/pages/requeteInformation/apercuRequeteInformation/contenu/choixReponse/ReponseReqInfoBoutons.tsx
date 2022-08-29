@@ -1,8 +1,8 @@
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Bouton } from "../../../../../common/composant/boutonAntiDoubleSubmit/Bouton";
 import { getLibelle } from "../../../../../common/util/Utils";
+import { Bouton } from "../../../../../common/widget/boutonAntiDoubleSubmit/Bouton";
 import { FormikComponentProps } from "../../../../../common/widget/formulaire/utils/FormUtil";
 import { receUrl, URL_RECHERCHE_REQUETE } from "../../../../../router/ReceUrls";
 import "../scss/ReponseReqInfo.scss";

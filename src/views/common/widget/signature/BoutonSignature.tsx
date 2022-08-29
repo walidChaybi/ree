@@ -8,8 +8,9 @@ import {
   IDocumentReponse
 } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { getValeurOuVide } from "../../util/Utils";
-import { BoutonOperationEnCours } from "../attente/BoutonOperationEnCours";
+import messageManager from "../../util/messageManager";
+import { getLibelle, getValeurOuVide } from "../../util/Utils";
+import { Bouton } from "../../widget/boutonAntiDoubleSubmit/Bouton";
 import { PopinSignature } from "../signature/PopinSignature";
 import {
   DocumentsATraiter,
@@ -61,9 +62,7 @@ export const BoutonSignature: React.FC<
   );
 
   const handleClickSignature = () => {
-    setShowWaitState(true);
-
-    const newDocumentsByRequeteToSign: DocumentsByRequete = {};
+    let newDocumentsByRequeteToSign: DocumentsByRequete | undefined;
     requetes.forEach(requete => {
       if (
         requete.documentsReponses &&
@@ -95,25 +94,32 @@ export const BoutonSignature: React.FC<
           }
         });
         if (documentsATraiter.documentsToSign.length > 0) {
+          newDocumentsByRequeteToSign = newDocumentsByRequeteToSign || {};
           newDocumentsByRequeteToSign[requete.idRequete] = documentsATraiter;
         }
       }
     });
 
-    setDocumentsByRequeteToSign(newDocumentsByRequeteToSign);
+    if (newDocumentsByRequeteToSign) {
+      setShowWaitState(true);
+      setDocumentsByRequeteToSign(newDocumentsByRequeteToSign);
+    } else {
+      messageManager.showWarningAndClose(
+        getLibelle(
+          "Aucun document à signer, vérifiez que les documents possèdent un CTV"
+        )
+      );
+    }
   };
 
   return (
     <>
-      <BoutonOperationEnCours
-        estDesactive={
-          !signaturePossible(requetes, uniqueSignature, connectedUser)
-        }
+      <Bouton
+        disabled={!signaturePossible(requetes, uniqueSignature, connectedUser)}
         onClick={handleClickSignature}
-        checkDirtyActive={true}
       >
         {libelle}
-      </BoutonOperationEnCours>
+      </Bouton>
 
       <PopinSignature
         documentsByRequete={documentsByRequeteToSign}

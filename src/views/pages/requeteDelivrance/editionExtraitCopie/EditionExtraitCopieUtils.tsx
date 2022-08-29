@@ -21,7 +21,6 @@ import {
   IRequeteDelivrance,
   RequeteDelivrance
 } from "../../../../model/requete/IRequeteDelivrance";
-import { Bouton } from "../../../common/composant/boutonAntiDoubleSubmit/Bouton";
 import { SuiviActionsRequete } from "../../../common/composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "../../../common/composant/suivis/SuiviObservationRequete";
 import { IActeApiHookResultat } from "../../../common/hook/acte/ActeApiHook";
@@ -36,6 +35,7 @@ import {
   ZERO
 } from "../../../common/util/Utils";
 import { AccordionRece } from "../../../common/widget/accordion/AccordionRece";
+import { Bouton } from "../../../common/widget/boutonAntiDoubleSubmit/Bouton";
 import { OngletProps } from "../../../common/widget/voletAvecOnglet/VoletAvecOnglet";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
 import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";

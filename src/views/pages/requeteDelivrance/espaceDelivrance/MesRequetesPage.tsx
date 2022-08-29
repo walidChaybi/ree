@@ -5,7 +5,6 @@ import {
 } from "../../../../api/appels/requeteApi";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
-import { Bouton } from "../../../common/composant/boutonAntiDoubleSubmit/Bouton";
 import {
   CreationActionEtMiseAjourStatutParams,
   usePostCreationActionEtMiseAjourStatutApi
@@ -19,6 +18,7 @@ import { autorisePrendreEnChargeReqTableauDelivrance } from "../../../common/uti
 import { getMessageZeroRequete } from "../../../common/util/tableauRequete/TableauRequeteUtils";
 import { getLibelle } from "../../../common/util/Utils";
 import { OperationEnCours } from "../../../common/widget/attente/OperationEnCours";
+import { Bouton } from "../../../common/widget/boutonAntiDoubleSubmit/Bouton";
 import { BoutonRetour } from "../../../common/widget/navigation/BoutonRetour";
 import { BoutonSignature } from "../../../common/widget/signature/BoutonSignature";
 import {

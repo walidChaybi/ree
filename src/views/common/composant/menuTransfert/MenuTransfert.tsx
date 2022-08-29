@@ -20,8 +20,8 @@ import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeat
 import { Option } from "../../util/Type";
 import { getLibelle } from "../../util/Utils";
 import { OperationEnCours } from "../../widget/attente/OperationEnCours";
+import { Bouton } from "../../widget/boutonAntiDoubleSubmit/Bouton";
 import { GroupeBouton } from "../../widget/menu/GroupeBouton";
-import { Bouton } from "../boutonAntiDoubleSubmit/Bouton";
 import {
   listeEntiteToOptions,
   listeUtilisateursToOptionsBis,

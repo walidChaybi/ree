@@ -1,7 +1,7 @@
 import { connect } from "formik";
 import React from "react";
-import { Bouton } from "../../../common/composant/boutonAntiDoubleSubmit/Bouton";
 import { getLibelle } from "../../../common/util/Utils";
+import { Bouton } from "../../../common/widget/boutonAntiDoubleSubmit/Bouton";
 import { FormikComponentProps } from "../../../common/widget/formulaire/utils/FormUtil";
 import RMCBoutonRappelCriteres, {
   RMCBoutonRappelCriteresProps

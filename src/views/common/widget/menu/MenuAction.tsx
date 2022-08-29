@@ -6,8 +6,8 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import React from "react";
 import { IActionOption } from "../../../../model/requete/IActionOption";
-import { Bouton } from "../../composant/boutonAntiDoubleSubmit/Bouton";
 import { DoubleSubmitUtil } from "../../util/DoubleSubmitUtil";
+import { Bouton } from "../../widget/boutonAntiDoubleSubmit/Bouton";
 import "./scss/MenuAction.scss";
 
 interface IMenuActionProps {
