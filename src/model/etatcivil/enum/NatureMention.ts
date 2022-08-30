@@ -56,8 +56,6 @@ export const natureRetireesMariageSansFilliation = [
 
 export const natureRetireesNaissanceAvecFillation = [
   REPRISE_VIE_COMMUNE,
-  NATIONALITE,
-  ADOPTION,
   ANNULATION_MARIAGE,
   ANNULATION_PACS,
   ANNULATION_DECISION,

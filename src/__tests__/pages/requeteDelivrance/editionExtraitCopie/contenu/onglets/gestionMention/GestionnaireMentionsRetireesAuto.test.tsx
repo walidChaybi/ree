@@ -856,7 +856,7 @@ test("deselectionneSituationFamilialePassee", () => {
     gestionnaireMentionsRetireesAuto.formaterMentionsRetirees(
       deselectionneSituationFamilialePassee4
     )
-  ).toStrictEqual([]);
+  ).toStrictEqual(["1"]);
 
   const deselectionneSituationFamilialePassee5 = [
     {

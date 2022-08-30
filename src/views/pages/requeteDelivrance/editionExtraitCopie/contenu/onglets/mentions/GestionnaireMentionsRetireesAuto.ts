@@ -350,7 +350,8 @@ export class GestionnaireMentionsRetireesAuto {
     while (index >= 0) {
       if (
         (mentions[index].typeMention.nature.code !== MODIFICATION_PACS ||
-          modificationPACSPassee) &&
+          modificationPACSPassee ||
+          PacsPasee) &&
         (mentions[index].typeMention.nature.code !== PACS || PacsPasee) &&
         mentionsContexte.includes(mentions[index].typeMention.nature.code)
       ) {
