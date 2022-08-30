@@ -6,7 +6,8 @@ import {
   ReponseAppelDetailRequeteDelivrancePriseEnCharge,
   ReponseAppelDetailRequeteDelivranceRDC,
   requeteAvecCopieIntegraleActeImage,
-  requeteAvecDocs
+  requeteAvecDocs,
+  requeteSansDocument
 } from "../data/DetailRequeteDelivrance";
 import {
   documentReponseCARN_CSPAC_01,
@@ -186,6 +187,8 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
         match[1] ===
+          "/requetes/delivrance/7b448d64-add5-4dbd-8041-b7081ea7bc86/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+        match[1] ===
           "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd/document?libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
         match[1] ===
           "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d884/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
@@ -269,6 +272,9 @@ export const configRequetes = [
       }
 
       // Détail requête Délivrance
+      if (match[1] === "/requetes/7b448d64-add5-4dbd-8041-b7081ea7bc86") {
+        return { data: requeteSansDocument };
+      }
       if (
         match[1] === "/requetes/a4cefb71-8457-4f6b-937e-34b49335d404" ||
         match[1] === "/requetes/1072bc37-f889-4365-8f75-912166b767dd"
@@ -322,6 +328,8 @@ export const configRequetes = [
       if (
         match[1] ===
           "/requetes/delivrance/85b32284-d3dd-4502-bfbd-5634ba52ba22/courrier?idRequete=85b32284-d3dd-4502-bfbd-5634ba52ba22&libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
+        match[1] ===
+          "/requetes/delivrance/7b448d64-add5-4dbd-8041-b7081ea7bc86/courrier?idRequete=7b448d64-add5-4dbd-8041-b7081ea7bc86&statutRequete=A_SIGNER" ||
         match[1] ===
           "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/courrier?idRequete=a4cefb71-8457-4f6b-937e-34b49335d666&libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
         match[1] ===

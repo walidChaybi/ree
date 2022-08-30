@@ -1,5 +1,5 @@
 import { getValeurOuVide } from "../../../../views/common/util/Utils";
-import { NatureMention } from "../../enum/NatureMention";
+import { NATIONALITE, NatureMention } from "../../enum/NatureMention";
 import { StatutMention } from "../../enum/StatutMention";
 import { IEvenement } from "../IEvenement";
 import { IAutoriteEtatCivil } from "./IAutoriteEtatCivil";
@@ -68,6 +68,11 @@ export const Mention = {
     );
 
     return mentions;
+  },
+  mentionNationalitePresente(mentions: IMention[]): boolean {
+    return Boolean(
+      mentions.find(el => el.typeMention.nature.code === NATIONALITE)
+    );
   },
   trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions: IMention[]) {
     const toutesLesMentionsOntUnNumeroOrdreExtrait: boolean = mentions.every(

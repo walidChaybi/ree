@@ -78,8 +78,10 @@ export class ChoixDelivrance extends EnumWithComplete {
     return choix === ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE;
   }
 
-  public static estAvecFiliation(choix: ChoixDelivrance) {
-    return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
+  public static estAvecFiliation(choix?: ChoixDelivrance): boolean {
+    return choix
+      ? choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+      : false;
   }
   public static estSansFiliation(choix: ChoixDelivrance) {
     return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;

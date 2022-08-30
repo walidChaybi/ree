@@ -109,19 +109,34 @@ export function mappingVersListe(mentionsAffichage: IMentionAffichage[]) {
     });
 }
 
+export function mappingVersMentionApi(mention: IMention) {
+  return {
+    numeroOrdreExtrait: mention.numeroOrdreExtrait,
+    textes: {
+      texteMentionDelivrance: mention.textes.texteMentionDelivrance
+    },
+    typeMention: {
+      nature: {
+        id: NatureMention.getUuidFromNature(mention.typeMention.nature)
+      }
+    },
+    id: mention.id
+  };
+}
+
 export function mappingVersMentionsApi(
   mentionsApi: IMention[],
   mentionsAffichage: IMentionAffichage[],
   typeDocument: string
 ) {
+  const mentionsRetirees: string[] = [];
+  const mentionsAEnvoyer: any[] = [];
   const mentionsRenumerote =
     gestionnaireRenumerotationMentions.renumerotationMentions(
       mentionsAffichage,
       mentionsApi,
       typeDocument
     );
-  const mentionsRetirees: string[] = [];
-  const mentionsAEnvoyer: any[] = [];
 
   mentionsRenumerote.forEach(mR => {
     const mention = mentionsAffichage.find(mA => mA.id === mR.id);
@@ -150,6 +165,7 @@ export function mappingVersMentionsApi(
       mentionsAEnvoyer.push(mentionAAjouter);
     }
   });
+
   return { mentionsAEnvoyer, mentionsRetirees };
 }
 

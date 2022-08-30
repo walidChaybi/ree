@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import {
+  FicheActe,
+  necessiteMentionNationalite
+} from "../../../../model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
 import { OptionCourrier } from "../../../../model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
@@ -7,14 +11,21 @@ import {
   useGenerationCourrierHook
 } from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/hook/GenerationCourrierHook";
 import { SaisieCourrier } from "../../../pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/modelForm/ISaisiePageModel";
+import { mappingVersMentionApi } from "../../../pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { gestionnaireMentionsRetireesAuto } from "../../../pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionnaireMentionsRetireesAuto";
 import { getOngletSelectVenantDePriseEnCharge } from "../../../pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import { DocumentEC } from "../../../pages/requeteDelivrance/editionExtraitCopie/enum/DocumentEC";
 import { DEUX } from "../../util/Utils";
 import {
   IActeApiHookParams,
+  IActeApiHookResultat,
   useInformationsActeApiHook
 } from "../acte/ActeApiHook";
+import {
+  IMiseAJourMentionsParams,
+  IMiseAJourMentionsResultat,
+  useMiseAJourMentionsApiHook
+} from "../acte/mentions/MiseAJourMentionsApiHook";
 import {
   IGenerationECParams,
   IGenerationECResultat,
@@ -38,6 +49,8 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   const [generationDocumentECParams, setGenerationDocumentECParams] =
     useState<IGenerationECParams>();
   const [mentionsRetirees, setMentionsRetirees] = useState<string[]>();
+  const [majMentionsParams, setMajMentionsParams] =
+    useState<IMiseAJourMentionsParams>();
   const [acteApiHookParams, setActeApiHookParams] =
     useState<IActeApiHookParams>();
 
@@ -45,10 +58,12 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
     if (estPresentIdActeEtChoixDelivrance(params)) {
       setActeApiHookParams({
         idActe: params?.idActe,
-        recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(
-          //@ts-ignore params.requete.choixDelivrance non null
-          params.requete.choixDelivrance
-        )
+        recupereImagesEtTexte:
+          ChoixDelivrance.estCopieIntegraleOuArchive(
+            //@ts-ignore params.requete.choixDelivrance non null
+            params.requete.choixDelivrance
+            //@ts-ignore params.requete.choixDelivrance non null
+          ) || ChoixDelivrance.estAvecFiliation(params.requete.choixDelivrance)
       });
     }
   }, [params]);
@@ -56,10 +71,54 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
   const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
 
-  // 2 - Création des paramètres pour la création du courrier
+  // 2 - Ajout des mentions auto et des mentions retirées
+  useEffect(
+    () => {
+      if (acteApiHookResultat?.acte?.mentions && acteApiHookResultat?.acte) {
+        setMentionsRetirees(
+          gestionnaireMentionsRetireesAuto.getMentionsRetirees(
+            acteApiHookResultat?.acte?.mentions,
+            params?.requete.choixDelivrance,
+            acteApiHookResultat?.acte?.nature
+          )
+        );
+        if (
+          necessiteMentionNationalite(
+            acteApiHookResultat.acte,
+            params?.requete.choixDelivrance
+          )
+        ) {
+          setMajMentionsParams({
+            idActe: acteApiHookResultat.acte.id,
+            mentions: [
+              ...acteApiHookResultat.acte.mentions.map(el =>
+                mappingVersMentionApi(el)
+              ),
+              ...FicheActe.getMentionNationalite(
+                acteApiHookResultat.acte,
+                params?.requete.choixDelivrance
+              )
+            ]
+          });
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [params, acteApiHookResultat]
+  );
+
+  const majMentionFait = useMiseAJourMentionsApiHook(majMentionsParams);
+
+  // 3 - Création des paramètres pour la création du courrier
   useEffect(() => {
     if (
-      (params && acteApiHookResultat) ||
+      (params &&
+        acteApiHookResultat &&
+        nationaliteAjouteSiBesoin(
+          majMentionFait,
+          acteApiHookResultat,
+          params
+        )) ||
       (!params?.idActe &&
         ChoixDelivrance.estReponseSansDelivrance(
           params?.requete.choixDelivrance
@@ -79,25 +138,11 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params, acteApiHookResultat]);
+  }, [params, acteApiHookResultat, majMentionFait]);
 
   const resultatGenerationCourrier = useGenerationCourrierHook(
     generationCourrierHookParams
   );
-
-  // 3 - Ajout des mentions retirées auto
-  useEffect(() => {
-    if (acteApiHookResultat?.acte?.mentions && acteApiHookResultat?.acte) {
-      setMentionsRetirees(
-        gestionnaireMentionsRetireesAuto.getMentionsRetirees(
-          acteApiHookResultat?.acte?.mentions,
-          params?.requete.choixDelivrance,
-          acteApiHookResultat?.acte?.nature
-        )
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [acteApiHookResultat?.acte?.mentions, acteApiHookResultat]);
 
   // 4 - Création des paramètre pour la génération du document demandé
   useEffect(() => {
@@ -142,6 +187,26 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatGenerationEC, resultatGenerationCourrier]);
+}
+
+function nationaliteAjouteSiBesoin(
+  majMentionFait: IMiseAJourMentionsResultat | undefined,
+  acteApiHookResultat: IActeApiHookResultat,
+  params: ICreerCourrierECParams
+) {
+  return (
+    (acteApiHookResultat.acte &&
+      majMentionFait &&
+      necessiteMentionNationalite(
+        acteApiHookResultat.acte,
+        params?.requete?.choixDelivrance
+      )) ||
+    (acteApiHookResultat.acte &&
+      !necessiteMentionNationalite(
+        acteApiHookResultat.acte,
+        params?.requete?.choixDelivrance
+      ))
+  );
 }
 
 function getIndexDocument(

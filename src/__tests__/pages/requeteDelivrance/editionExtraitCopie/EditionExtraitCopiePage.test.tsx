@@ -615,6 +615,32 @@ test("Test modifier corps extrait", async () => {
   });
 });
 
+// Ajout mention nationalité auto
+test("Test ajout nationalité auto", async () => {
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  history.push(
+    `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/7b448d64-add5-4dbd-8041-b7081ea7bc86/b41079a5-9e8d-478c-b04c-c4c2ac67134a`
+  );
+
+  await act(async () => {
+    render(
+      <Router history={history}>
+        <Route exact={true} path={URL_MES_REQUETES_DELIVRANCE_EDITION_ID}>
+          <EditionExtraitCopiePage />
+        </Route>
+      </Router>
+    );
+  });
+
+  await act(async () => {
+    fireEvent.click(screen.getByText("Valider"));
+  });
+
+  await waitFor(() => {
+    expect(screen.getAllByText("Courrier")).toBeDefined();
+  });
+});
+
 afterAll(() => {
   superagentMock.unset();
 });

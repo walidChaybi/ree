@@ -5,7 +5,8 @@ import {
   acte3,
   acte4,
   acte5,
-  acteMariage
+  acteMariage,
+  acteNationalite
 } from "../../__tests__/pages/fiche/data/ficheActe";
 import { ActeAnalyseMarginales } from "../data/ActeAnalyseMarginales";
 import {
@@ -111,6 +112,14 @@ export const configEtatcivil = [
       }
 
       if (
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a" ||
+        match[1] ===
+          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a?recupereImagesEtTexte=true"
+      ) {
+        return { data: acteNationalite };
+      }
+
+      if (
         match[1] ===
           "/repertoirecivil/pacs/89c9d030-26c3-41d3-bdde-8b4dcc0420e0" ||
         match[1] ===
@@ -160,6 +169,7 @@ export const configEtatcivil = [
       if (
         (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/mentions" ||
           match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235b/mentions" ||
+          match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/mentions" ||
           match[1] ===
             "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/corpstexte?type=EXTRAIT_AVEC_FILIATION") &&
         context.method === "post"
@@ -183,6 +193,7 @@ export const configEtatcivil = [
         match[1] === "/acte/corps/b41079a3-9e8d-478c-b04c-c4c2ac47134f" ||
         match[1] === "/acte/corps/19c0d767-64e5-4376-aa1f-6d781a2a235a" ||
         match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c2ac67134b" ||
+        match[1] === "/acte/corps/b41079a5-9e8d-478c-b04c-c4c2ac67134a" ||
         // acte texte
         match[1] === "/acte/texte/b41079a5-9e8d-478c-b04c-c4c4ey86537g"
       ) {
@@ -438,6 +449,7 @@ export const configEtatcivil = [
       if (
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/alertes" ||
         match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/alertes" ||
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/alertes" ||
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/alertes"
       ) {
         return { data: ReponseAppelGetAlertesActe.data };

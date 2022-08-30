@@ -1,11 +1,17 @@
 import { DATE_MES } from "../../../views/common/util/DateUtils";
 import {
   compactObject,
+  DEUX,
   getValeurOuVide,
-  triListeObjetsSurPropriete
+  premiereLettreEnMinuscule,
+  supprimeSautDeLigneEtEspaceInutiles,
+  triListeObjetsSurPropriete,
+  TROIS
 } from "../../../views/common/util/Utils";
+import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
 import { IPersonne } from "../commun/IPersonne";
 import { NatureActe } from "../enum/NatureActe";
+import { NATIONALITE, NatureMention } from "../enum/NatureMention";
 import { TypeActe } from "../enum/TypeActe";
 import { TypeDeclarationConjointe } from "../enum/TypeDeclarationConjointe";
 import { TypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
@@ -18,7 +24,7 @@ import { IEvenement } from "./IEvenement";
 import { ICorpsImage } from "./imageActe/ICorpsImage";
 import { IRegistre } from "./IRegistre";
 import { ITitulaireActe } from "./ITitulaireActe";
-import { IMention } from "./mention/IMention";
+import { IMention, Mention } from "./mention/IMention";
 
 export interface IFicheActe {
   id: string;
@@ -51,10 +57,10 @@ export const FicheActe = {
   getNature(acte?: IFicheActe): string {
     return acte && acte.nature ? acte.nature.libelle : "";
   },
-  estActeNaissance(acte?: IFicheActe) {
+  estActeNaissance(acte?: IFicheActe): boolean {
     return acte?.nature === NatureActe.NAISSANCE;
   },
-  acteEstACQouOP2ouOP3(acte?: IFicheActe) {
+  acteEstACQouOP2ouOP3(acte?: IFicheActe): boolean {
     return (
       acte?.registre.famille === "ACQ" ||
       acte?.registre.famille === "OP2" ||
@@ -82,8 +88,15 @@ export const FicheActe = {
         acte.corpsImage.images.length > 0)
     );
   },
-  estActeTexte(acte: IFicheActe) {
+  estActeTexte(acte: IFicheActe): boolean {
     return acte.type === TypeActe.TEXTE || !acte.corpsImage;
+  },
+  estActeImageReecrit(acte: IFicheActe): boolean {
+    return (
+      acte.type === TypeActe.IMAGE &&
+      Boolean(acte.estReecrit) &&
+      Boolean(acte.corpsTexte?.texte)
+    );
   },
   getCorpsExtraitRectificationTexte(
     acte: IFicheActe,
@@ -196,6 +209,30 @@ export const FicheActe = {
         noPage: index
       });
     });
+  },
+
+  getMentionNationalite(acte: IFicheActe, choixDelivrance?: ChoixDelivrance) {
+    if (acte && necessiteMentionNationalite(acte, choixDelivrance)) {
+      let max = 0;
+      acte.mentions.forEach(el => {
+        max = max < el.numeroOrdreExtrait ? el.numeroOrdreExtrait : max;
+      });
+      return [
+        {
+          numeroOrdreExtrait: max + 1,
+          textes: {
+            texteMentionDelivrance: extraireMentionNationalite(
+              acte.corpsTexte?.texte
+            )
+          },
+          typeMention: {
+            nature: {
+              id: NatureMention.getKeyForCode(NatureMention, NATIONALITE)
+            }
+          }
+        }
+      ];
+    } else return [];
   }
 };
 
@@ -235,4 +272,44 @@ function majNomSequable(
     titulaireAM.nomPartie1 = titulaireActe.nomPartie1;
     titulaireAM.nomPartie2 = titulaireActe.nomPartie2;
   }
+}
+
+const SOUS_LE_NOM = "sous le nom de";
+const SOUS_L_IDENTITE = "sous l'identité de";
+function extraireMentionNationalite(texte?: string) {
+  if (texte) {
+    let regex;
+    if (texte.indexOf(SOUS_LE_NOM) !== -1) {
+      regex =
+        /(^Français par|^Française par)[ :\n]+([\wÀ-ÿ '°(.\n)]*)sous le nom de[\wÀ-ÿ '°.\n]*(\([\wÀ-ÿ '°(.\n)]*\))\n\n/gm;
+    } else if (texte.indexOf(SOUS_L_IDENTITE) !== -1) {
+      regex =
+        /(^Français par|^Française par)[ :\n]+([\wÀ-ÿ '°(.\n)]*)sous l'identité de[\wÀ-ÿ '°.\n]*(\([\wÀ-ÿ '°(.\n)]*\))\n\n/gm;
+    } else {
+      regex = /(^Français par|^Française par)[ :\n]+([\wÀ-ÿ '°(.\n)]*)\n\n/gm;
+    }
+
+    const matches = new RegExp(regex).exec(texte);
+    const partieMilieu = supprimeSautDeLigneEtEspaceInutiles(
+      premiereLettreEnMinuscule(matches?.[DEUX])
+    );
+    const entreParenthese = supprimeSautDeLigneEtEspaceInutiles(
+      matches?.[TROIS]
+    );
+    return `${matches?.[1]} ${partieMilieu} ${entreParenthese}`;
+  }
+  return "Nationalite";
+}
+
+export function necessiteMentionNationalite(
+  acte: IFicheActe,
+  choixDelivrance?: ChoixDelivrance
+): boolean {
+  return (
+    FicheActe.estActeNaissance(acte) &&
+    FicheActe.acteEstACQouOP2ouOP3(acte) &&
+    (FicheActe.estActeTexte(acte) || FicheActe.estActeImageReecrit(acte)) &&
+    !Mention.mentionNationalitePresente(acte.mentions) &&
+    ChoixDelivrance.estAvecFiliation(choixDelivrance)
+  );
 }

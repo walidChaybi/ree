@@ -2062,6 +2062,139 @@ export const detailRequeteDelivranceAvecRequerantQualiteInstitutionnel = {
   }
 };
 
+export const requeteSansDocument = {
+  id: "7b448d64-add5-4dbd-8041-b7081ea7bc86",
+  numeroFonctionnel: "4ANXFD",
+  dateCreation: 1661264881377,
+  canal: "COURRIER",
+  type: "DELIVRANCE",
+  actions: [
+    {
+      id: "7b441a04-e1aa-4cbe-bb06-ef406a0b9a82",
+      numeroOrdre: 1,
+      libelle: "Saisie de la requête",
+      dateAction: 1661264881307,
+      idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
+    },
+    {
+      id: "7b63df57-18da-40c8-8aca-8c41190ea7fb",
+      numeroOrdre: 2,
+      libelle: "À signer",
+      dateAction: 1661266788548,
+      idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
+    }
+  ],
+  titulaires: [
+    {
+      id: "7b443639-337e-44f1-8601-dd6cc02038ba",
+      position: 1,
+      nomNaissance: "PRODESK",
+      nomUsage: null,
+      anneeNaissance: 1990,
+      moisNaissance: 6,
+      jourNaissance: 25,
+      villeNaissance: "V",
+      codePostalNaissance: null,
+      arrondissementNaissance: null,
+      villeEtrangereNaissance: null,
+      regionNaissance: null,
+      paysNaissance: "V",
+      sexe: "INCONNU",
+      nationalite: "FRANCAISE",
+      prenoms: [
+        {
+          id: "7b44cd0f-7ee8-479a-8de1-f3128fd6fa9c",
+          numeroOrdre: 1,
+          prenom: "Elodie",
+          estPrenomFrRetenuSdanf: null
+        }
+      ],
+      parentsTitulaire: [],
+      deces: null,
+      domiciliation: null,
+      evenementUnions: [],
+      typeObjetTitulaire: null
+    }
+  ],
+  corbeilleAgent: {
+    id: "bbdba5f5-0b65-40d1-a44c-fbbab948b3b6",
+    idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162"
+  },
+  corbeilleService: {
+    id: "99c7aab2-6def-48ae-8493-2bd72b6a32db",
+    idEntiteRattachement: "6737f85c-6207-4174-8825-d5f65d757e4f"
+  },
+  piecesJustificatives: [],
+  requerant: {
+    id: "7b4460a6-26fc-48e6-9344-7990117fd763",
+    dateCreation: 1661264881377,
+    nomFamille: "PRODESK",
+    prenom: "Elodie",
+    courriel: null,
+    telephone: null,
+    adresse: {
+      id: "80ddc98e-7b5d-48bd-9dce-1daca8c0c31b",
+      ligne2: "",
+      ligne3: "",
+      ligne4: "7 ALLÉE DES PLUVIERS",
+      ligne5: "",
+      codePostal: "44830",
+      ville: "BOUAYE",
+      pays: ""
+    },
+    qualite: "PARTICULIER",
+    detailQualiteRece: null,
+    detailQualiteParticulier: null,
+    detailQualiteMandataireHabilite: null,
+    detailQualiteInstitutionnel: null,
+    detailQualiteAutreProfessionnel: null,
+    lienRequerant: {
+      id: "7b44ae71-f4c0-4355-bc2f-29c68de95005",
+      typeLienRequerant: "TITULAIRE",
+      nature: null
+    }
+  },
+  mandant: null,
+  observations: [],
+  statut: {
+    id: "7b44716d-910c-448d-95be-322d1719451b",
+    statutRequete: "PRISE_EN_CHARGE",
+    dateEffet: 1661350928866,
+    raisonStatut: ""
+  },
+  lienRequerant: {
+    id: "7b44ae71-f4c0-4355-bc2f-29c68de95005",
+    typeLienRequerant: "TITULAIRE",
+    nature: null
+  },
+  doublons: null,
+  origines: null,
+  numeroRequeteOrigine: null,
+  sousType: "RDC",
+  motif: "NON_PRECISE_PAR_REQUERANT",
+  complementMotif: null,
+  dateDelivranceDemat: null,
+  provenance: "COURRIER",
+  statutReponse: null,
+  documentDemande: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
+  documentComplementaire: null,
+  nombreExemplairesDemandes: 1,
+  provenancePlanete: null,
+  provenanceRece: null,
+  provenanceServicePublic: null,
+  documentsReponses: [],
+  evenement: {
+    id: "7b441518-8367-431c-979a-c28716ff7990",
+    natureActe: "NAISSANCE",
+    jour: 25,
+    mois: 6,
+    annee: 1990,
+    ville: "V",
+    pays: "V"
+  },
+  choixDelivrance: "DELIVRER_EC_EXTRAIT_AVEC_FILIATION"
+};
+
 export const detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel = {
   ...ReponseAppelDetailRequeteDelivrance,
   data: {
