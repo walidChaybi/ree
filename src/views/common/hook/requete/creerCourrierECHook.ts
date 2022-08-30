@@ -58,17 +58,23 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
 
   // 2 - Création des paramètres pour la création du courrier
   useEffect(() => {
-    if (params && acteApiHookResultat) {
+    if (
+      (params && acteApiHookResultat) ||
+      (!params?.idActe &&
+        ChoixDelivrance.estReponseSansDelivrance(
+          params?.requete.choixDelivrance
+        ))
+    ) {
       setGenerationCourrierHookParams({
-        saisieCourrier: params.saisieCourrier,
-        optionsChoisies: params.optionsChoisies,
-        requete: params.requete,
-        acte: acteApiHookResultat.acte,
+        saisieCourrier: params?.saisieCourrier,
+        optionsChoisies: params?.optionsChoisies,
+        requete: params?.requete,
+        acte: acteApiHookResultat?.acte,
         // On ne change le statut que lorsqu'on a aucun documents
         mettreAJourStatut:
-          params.requete.documentsReponses.length === 0 &&
+          params?.requete.documentsReponses.length === 0 &&
           ChoixDelivrance.estReponseSansDelivrance(
-            params.requete.choixDelivrance
+            params?.requete.choixDelivrance
           )
       });
     }

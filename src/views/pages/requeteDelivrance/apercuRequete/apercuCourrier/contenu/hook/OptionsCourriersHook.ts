@@ -22,6 +22,9 @@ export function useOptionsCourriersApiHook(
             documentDelivranceChoisi,
             requete?.evenement?.natureActe
           );
+          options.sort(
+            (option1, option2) => option1.ordreEdition - option2.ordreEdition
+          );
           setOptionsCourrierDisponibles(options);
         })
         .catch(error => {
