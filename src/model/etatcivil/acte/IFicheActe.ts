@@ -281,12 +281,12 @@ function extraireMentionNationalite(texte?: string) {
     let regex;
     if (texte.indexOf(SOUS_LE_NOM) !== -1) {
       regex =
-        /(^Français par|^Française par)[ :\n]+([\wÀ-ÿ '°(.\n)]*)sous le nom de[\wÀ-ÿ '°.\n]*(\([\wÀ-ÿ '°(.\n)]*\))\n\n/gm;
+        /(^Français par|^Française par)[ :\r\n]+([\wÀ-ÿ '°(.\r\n)]*)sous le nom de[\wÀ-ÿ '°.\r\n]*(\([\wÀ-ÿ '°(.\r\n)]*\))\r?\n\r?\n/gm;
     } else if (texte.indexOf(SOUS_L_IDENTITE) !== -1) {
       regex =
-        /(^Français par|^Française par)[ :\n]+([\wÀ-ÿ '°(.\n)]*)sous l'identité de[\wÀ-ÿ '°.\n]*(\([\wÀ-ÿ '°(.\n)]*\))\n\n/gm;
+        /(^Français par|^Française par)[ :\r\n]+([\wÀ-ÿ '°(.\r\n)]*)sous l'identité de[\wÀ-ÿ '°.\r\n]*(\([\wÀ-ÿ '°(.\r\n)]*\))\r?\n\r?\n/gm;
     } else {
-      regex = /(^Français par|^Française par)[ :\n]+([\wÀ-ÿ '°(.\n)]*)\n\n/gm;
+      regex = /(^Français par|^Française par)[ :\r\n]+([\wÀ-ÿ '°(.\r\n)]*)\r?\n\r?\n/gm;
     }
 
     const matches = new RegExp(regex).exec(texte);
