@@ -7,8 +7,6 @@ import {
   ListeGlisserDeposer,
   ListeItem
 } from "../../../../../common/widget/listeGlisserDeposer/ListeGlisserDeposer";
-import Labels from "../Labels";
-import ConteneurRetractable from "./ConteneurRetractable";
 import "./scss/VoletPiecesJustificatives.scss";
 
 interface OngletPiecesJustificativesProps {
@@ -19,7 +17,6 @@ export const OngletPiecesJustificatives: React.FC<
   OngletPiecesJustificativesProps
 > = props => {
   const [liste, setListe] = useState<ListeItem[]>([]);
-  const [pleinEcran, setPleinEcran] = useState<boolean>(false);
 
   useEffect(() => {
     if (props.requete?.documentsPj) {
@@ -61,12 +58,7 @@ export const OngletPiecesJustificatives: React.FC<
   );
 
   return (
-    <ConteneurRetractable
-      titre={Labels.PJ.description}
-      pleinEcran={pleinEcran}
-      setPleinEcran={setPleinEcran}
-      className="PiecesJustificatives"
-    >
+    <span className="PiecesJustificatives">
       {props.requete && liste && (
         <ListeGlisserDeposer
           liste={liste}
@@ -77,6 +69,6 @@ export const OngletPiecesJustificatives: React.FC<
           libellesSontTitres={true}
         />
       )}
-    </ConteneurRetractable>
+    </span>
   );
 };
