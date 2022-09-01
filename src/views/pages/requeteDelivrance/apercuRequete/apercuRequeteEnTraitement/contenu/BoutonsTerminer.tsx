@@ -54,14 +54,9 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
     [goBack]
   );
 
-  const afficherBoutonValiderTerminer =
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
-    SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType);
-  // || ChoixDelivrance.estReponseSansDelivrance(requete.choixDelivrance)); //TODO: dans le cas d'un refus, afficher "Valider et terminer". A confirmer avec la MOA
-
   return (
     <>
-      {afficherBoutonValiderTerminer && (
+      {afficherBoutonValiderTerminer(requete) && (
         <BoutonValiderTerminer requete={requete} />
       )}
       {aDroitSignerEtStatutSigner && (
@@ -88,3 +83,9 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({
     </>
   );
 };
+
+const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
+  (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC) &&
+    SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) ||
+  (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
+    SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
