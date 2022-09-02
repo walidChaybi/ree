@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   FicheActe,
+  IFicheActe,
   necessiteMentionNationalite
 } from "../../../../model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "../../../../model/requete/enum/ChoixDelivrance";
@@ -18,7 +19,6 @@ import { DocumentEC } from "../../../pages/requeteDelivrance/editionExtraitCopie
 import { DEUX } from "../../util/Utils";
 import {
   IActeApiHookParams,
-  IActeApiHookResultat,
   useInformationsActeApiHook
 } from "../acte/ActeApiHook";
 import {
@@ -111,31 +111,36 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
 
   // 3 - Création des paramètres pour la création du courrier
   useEffect(() => {
-    if (
-      (params &&
-        acteApiHookResultat &&
-        nationaliteAjouteSiBesoin(
-          majMentionFait,
-          acteApiHookResultat,
-          params
-        )) ||
-      (!params?.idActe &&
-        ChoixDelivrance.estReponseSansDelivrance(
-          params?.requete.choixDelivrance
-        ))
-    ) {
-      setGenerationCourrierHookParams({
-        saisieCourrier: params?.saisieCourrier,
-        optionsChoisies: params?.optionsChoisies,
-        requete: params?.requete,
-        acte: acteApiHookResultat?.acte,
-        // On ne change le statut que lorsqu'on a aucun documents
-        mettreAJourStatut:
-          params?.requete.documentsReponses.length === 0 &&
+    if (params) {
+      const mentionNationaliteAjoute = nationaliteAjouteSiBesoin(
+        majMentionFait,
+        params,
+        acteApiHookResultat?.acte
+      );
+      if (
+        (acteApiHookResultat && mentionNationaliteAjoute) ||
+        (!params?.idActe &&
           ChoixDelivrance.estReponseSansDelivrance(
             params?.requete.choixDelivrance
-          )
-      });
+          ))
+      ) {
+        setGenerationCourrierHookParams({
+          saisieCourrier: params?.saisieCourrier,
+          optionsChoisies: params?.optionsChoisies,
+          requete: params?.requete,
+          // Si aucune mention n'a été ajouté, on n'a pas besoin de recharger l'acte
+          acte: mentionNationaliteAjoute
+            ? undefined
+            : acteApiHookResultat?.acte,
+          idActe: mentionNationaliteAjoute ? params.idActe : undefined,
+          // On ne change le statut que lorsqu'on a aucun documents
+          mettreAJourStatut:
+            params?.requete.documentsReponses.length === 0 &&
+            ChoixDelivrance.estReponseSansDelivrance(
+              params?.requete.choixDelivrance
+            )
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params, acteApiHookResultat, majMentionFait]);
@@ -191,21 +196,15 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
 
 function nationaliteAjouteSiBesoin(
   majMentionFait: IMiseAJourMentionsResultat | undefined,
-  acteApiHookResultat: IActeApiHookResultat,
-  params: ICreerCourrierECParams
+  params: ICreerCourrierECParams,
+  acte?: IFicheActe
 ) {
   return (
-    (acteApiHookResultat.acte &&
+    (acte &&
       majMentionFait &&
-      necessiteMentionNationalite(
-        acteApiHookResultat.acte,
-        params?.requete?.choixDelivrance
-      )) ||
-    (acteApiHookResultat.acte &&
-      !necessiteMentionNationalite(
-        acteApiHookResultat.acte,
-        params?.requete?.choixDelivrance
-      ))
+      necessiteMentionNationalite(acte, params?.requete?.choixDelivrance)) ||
+    (acte &&
+      !necessiteMentionNationalite(acte, params?.requete?.choixDelivrance))
   );
 }
 
