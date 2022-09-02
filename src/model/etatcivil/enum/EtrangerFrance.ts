@@ -4,6 +4,7 @@ import { Options } from "../../../views/common/util/Type";
 export class EtrangerFrance extends EnumWithLibelle {
   public static readonly ETRANGER = new EtrangerFrance("Etranger");
   public static readonly FRANCE = new EtrangerFrance("France");
+  public static readonly INCONNU = new EtrangerFrance("Inconnu");
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, EtrangerFrance);

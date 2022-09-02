@@ -1,4 +1,6 @@
 import * as Yup from "yup";
+import { EtrangerFrance } from "../../../../../../../../../../model/etatcivil/enum/EtrangerFrance";
+import { Sexe } from "../../../../../../../../../../model/etatcivil/enum/Sexe";
 import {
   DATE_NAISSANCE_OU_AGE_DE,
   NOM_NAISSANCE,
@@ -22,10 +24,13 @@ export const ParentNaissValidationSchema = Yup.object({
   .test("nomParentObligatoire", function (value: any, error: any) {
     let res: any = true;
     const parentNaissanceForm: IParentNaissanceForm = value;
+    const parentNaissanceFormSansValeurInconnu =
+      supprimeValeurInconnu(parentNaissanceForm);
+
     if (
-      parentNaissanceForm &&
-      estNonRenseigne(parentNaissanceForm.nomNaissance) &&
-      auMoinsUneProprieteEstRenseigne(parentNaissanceForm)
+      parentNaissanceFormSansValeurInconnu &&
+      estNonRenseigne(parentNaissanceFormSansValeurInconnu.nomNaissance) &&
+      auMoinsUneProprieteEstRenseigne(parentNaissanceFormSansValeurInconnu)
     ) {
       const paramsError = {
         path: `${error.path}.${NOM_NAISSANCE}`,
@@ -36,3 +41,30 @@ export const ParentNaissValidationSchema = Yup.object({
 
     return res;
   });
+
+function supprimeValeurInconnu(
+  parentNaissanceForm: IParentNaissanceForm
+): IParentNaissanceForm {
+  const parentNaissanceFormSansValeurInconnu = { ...parentNaissanceForm };
+  if (
+    parentNaissanceForm.lieuNaissance.EtrangerFrance ===
+    EtrangerFrance.getKey(EtrangerFrance.INCONNU)
+  ) {
+    parentNaissanceFormSansValeurInconnu.lieuNaissance = {
+      ...parentNaissanceForm.lieuNaissance
+    };
+    parentNaissanceFormSansValeurInconnu.lieuNaissance.EtrangerFrance = "";
+    parentNaissanceFormSansValeurInconnu.lieuNaissance.lieuComplet = "";
+    parentNaissanceFormSansValeurInconnu.lieuNaissance.ville = "";
+    parentNaissanceFormSansValeurInconnu.lieuNaissance.arrondissement = "";
+    parentNaissanceFormSansValeurInconnu.lieuNaissance.regionDepartement = "";
+    parentNaissanceFormSansValeurInconnu.lieuNaissance.pays = "";
+  }
+
+  if (parentNaissanceForm.sexe === Sexe.getKey(Sexe.INCONNU)) {
+    parentNaissanceFormSansValeurInconnu.sexe = "";
+  }
+
+  return parentNaissanceFormSansValeurInconnu;
+}
+

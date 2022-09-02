@@ -254,7 +254,11 @@ function saisieLieuEvt(
   evenement?: IEvenement,
   etrangerParDefaut = true
 ): ILieuEvenementForm {
-  const pays = evenement?.pays || (etrangerParDefaut ? "" : FRANCE);
+  const pays =
+    evenement?.pays ||
+    (etrangerParDefaut || LieuxUtils.estVilleJerusalem(evenement?.ville)
+      ? ""
+      : FRANCE);
   return {
     [LIEU_COMPLET]: evenement?.lieuReprise
       ? getValeurOuVide(evenement?.lieuReprise)
@@ -275,8 +279,8 @@ function getEtrangerOuFrance(
   evenement?: IEvenement,
   etrangerParDefaut = true
 ): string {
-  return LieuxUtils.getEtrangerOuFranceEnMajuscule(
-    evenement?.pays,
+  return LieuxUtils.getEtrangerOuFranceOuInconnuEnMajuscule(
+    evenement,
     etrangerParDefaut
   );
 }

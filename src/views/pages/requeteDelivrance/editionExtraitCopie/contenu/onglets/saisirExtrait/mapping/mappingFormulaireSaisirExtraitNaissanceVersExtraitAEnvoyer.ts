@@ -5,6 +5,7 @@ import {
 } from "../../../../../../../../model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "../../../../../../../../model/etatcivil/acte/IFiliation";
 import { ITitulaireActe } from "../../../../../../../../model/etatcivil/acte/ITitulaireActe";
+import { EtrangerFrance } from "../../../../../../../../model/etatcivil/enum/EtrangerFrance";
 import { LienParente } from "../../../../../../../../model/etatcivil/enum/LienParente";
 import { NatureActe } from "../../../../../../../../model/etatcivil/enum/NatureActe";
 import { IExtraitSaisiAEnvoyer } from "../../../../../../../common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
@@ -110,12 +111,43 @@ function mapEvenement(saisie: {
   lieuEvenement: ILieuEvenementForm;
   dateEvenement: IDateCompleteForm;
 }): IEvenement {
+  let lieuReprise = saisie.lieuEvenement.lieuComplet;
+  let ville = saisie.lieuEvenement.ville;
+  let arrondissement = saisie.lieuEvenement.arrondissement;
+  let region = saisie.lieuEvenement.regionDepartement;
+  let pays = saisie.lieuEvenement.pays;
+
+  if (
+    saisie.lieuEvenement.EtrangerFrance ===
+    EtrangerFrance.getKey(EtrangerFrance.INCONNU)
+  ) {
+    lieuReprise = "";
+    ville = "";
+    arrondissement = "";
+    region = "";
+    pays = "";
+  }
+
+  if (
+    saisie.lieuEvenement.EtrangerFrance ===
+    EtrangerFrance.getKey(EtrangerFrance.FRANCE)
+  ) {
+    pays = "";
+  }
+
+  if (
+    saisie.lieuEvenement.EtrangerFrance ===
+    EtrangerFrance.getKey(EtrangerFrance.ETRANGER)
+  ) {
+    arrondissement = "";
+  }
+
   return {
-    lieuReprise: saisie.lieuEvenement.lieuComplet,
-    ville: saisie.lieuEvenement.ville,
-    arrondissement: saisie.lieuEvenement.arrondissement,
-    region: saisie.lieuEvenement.regionDepartement,
-    pays: saisie.lieuEvenement.pays,
+    lieuReprise,
+    ville,
+    arrondissement,
+    region,
+    pays,
 
     annee: getNombreOuUndefined(saisie.dateEvenement?.annee),
     mois: getNombreOuUndefined(saisie.dateEvenement?.mois),

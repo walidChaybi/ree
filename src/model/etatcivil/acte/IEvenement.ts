@@ -54,5 +54,14 @@ export const Evenement = {
   },
   estAnneeRenseignee(evenement?: IEvenement): boolean {
     return evenement?.annee != null;
+  },
+  aucuneDonneeDuLieuRenseignee(evenement?: IEvenement): boolean {
+    return (
+      !evenement?.lieuReprise &&
+      !evenement?.pays &&
+      !evenement?.ville &&
+      !evenement?.region &&
+      !evenement?.arrondissement
+    );
   }
 };

@@ -19,6 +19,8 @@ import {
 } from "../../../../../../../mock/data/ficheActe";
 import { configEtatcivil } from "../../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../../mock/superagent-config/superagent-mock-requetes";
+import { IEvenement } from "../../../../../../../model/etatcivil/acte/IEvenement";
+import { IFicheActe } from "../../../../../../../model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
 import { mapActe } from "../../../../../../../views/common/hook/repertoires/MappingRepertoires";
 import { storeRece } from "../../../../../../../views/common/util/storeRece";
@@ -161,6 +163,38 @@ test("Attendu: le formulaire SaisirExtraitForm s'affiche correctement", async ()
     expectEstAbsent("titulaireEvt1.lieuEvenement.ville");
     expectSelectEstAbsent("titulaireEvt1.lieuEvenement.arrondissement");
     expectEstAbsent("titulaireEvt1.lieuEvenement.regionDepartement");
+  });
+});
+
+test("Attendu: la saisie des heures et minutes est possible lorsque les valeurs initiale sont non définies ", async () => {
+  const acteAvecEvenementSansHeureNiMinute: IFicheActe = {
+    ...acte,
+    evenement: {
+      ...(acte.evenement as IEvenement),
+      heure: undefined,
+      minute: undefined
+    }
+  };
+
+  render(
+    <SaisirExtraitForm
+      acte={acteAvecEvenementSansHeureNiMinute}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
+
+  await waitFor(() => {
+    expectEstPresentAvecValeurVide("titulaireEvt1.dateEvenement.nbHeure");
+    expectEstPresentAvecValeurVide("titulaireEvt1.dateEvenement.nbMinute");
+  });
+
+  changeInput("titulaireEvt1.dateEvenement.nbHeure", "10");
+  changeInput("titulaireEvt1.dateEvenement.nbMinute", "15");
+
+  await waitFor(() => {
+    expectEstPresentAvecValeur("titulaireEvt1.dateEvenement.nbHeure", "10");
+    expectEstPresentAvecValeur("titulaireEvt1.dateEvenement.nbMinute", "15");
   });
 });
 
@@ -349,6 +383,70 @@ test("Attendu: l'alimentation du lieu complet à l'étranger s'effectue correcte
   await waitFor(() => {
     expectEstPresentAvecValeurEtDisabled(
       "titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet",
+      "Brasilia (Région chaude)"
+    );
+  });
+});
+
+test("Attendu: l'alimentation du lieu complet en mode 'inconnu' s'effectue correctement", async () => {
+  render(
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+      handleDocumentEnregistre={handleDocumentEnregistre}
+    />
+  );
+
+  const widgetEtranger = screen.getByLabelText(
+    "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger"
+  ) as HTMLInputElement;
+  fireEvent.click(widgetEtranger);
+
+  const widgetVille = expectEstPresentAvecValeur(
+    "titulaireEvt1.parentNaiss1.lieuNaissance.ville",
+    ""
+  );
+  const widgetRegionDepartement = expectEstPresentAvecValeur(
+    "titulaireEvt1.parentNaiss1.lieuNaissance.regionDepartement",
+    ""
+  );
+  const widgetPays = expectEstPresentAvecValeur(
+    "titulaireEvt1.parentNaiss1.lieuNaissance.pays",
+    ""
+  );
+
+  fireEvent.input(widgetVille, {
+    target: {
+      value: "Brasilia"
+    }
+  });
+
+  fireEvent.input(widgetRegionDepartement, {
+    target: {
+      value: "Région chaude"
+    }
+  });
+
+  fireEvent.input(widgetPays, {
+    target: {
+      value: "Brésil"
+    }
+  });
+  await waitFor(() => {
+    expectEstPresentAvecValeurEtDisabled(
+      "titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet",
+      "Brasilia, Région chaude (Brésil)"
+    );
+  });
+
+  const widgetInconnu = screen.getByLabelText(
+    "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.inconnu"
+  ) as HTMLInputElement;
+  fireEvent.click(widgetInconnu);
+
+  await waitFor(() => {
+    expectEstPresentAvecValeurEtDisabled(
+      "titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet",
       ""
     );
   });
@@ -398,6 +496,22 @@ test("Attendu: le changement de type de déclaration conjointe s'effectue correc
   );
 
   expectEstAbsent("titulaireEvt1.declarationConjointe.date.annee");
+
+  fireEvent.change(typeDeclConjointe!, {
+    target: { value: "CHANGEMENT_NOM" }
+  });
+
+  await waitFor(() => {
+    expectEstPresentAvecValeurVide(
+      "titulaireEvt1.declarationConjointe.date.annee"
+    );
+  });
+
+  changeInput("titulaireEvt1.declarationConjointe.date.annee", "2000");
+
+  fireEvent.change(typeDeclConjointe!, {
+    target: { value: "ABSENCE_DECLARATION" }
+  });
 
   fireEvent.change(typeDeclConjointe!, {
     target: { value: "CHANGEMENT_NOM" }

@@ -100,7 +100,9 @@ export const DateValidationSchema = Yup.object()
       return true;
     }
 
-    if (estHeureValide(Number(nbHeureStr), Number(nbMinuteStr))) {
+    // Les minutes vides sont autorisées
+    const nbMinute = nbMinuteStr ? Number(nbMinuteStr) : 0;
+    if (estHeureValide(Number(nbHeureStr), nbMinute)) {
       return true;
     }
 

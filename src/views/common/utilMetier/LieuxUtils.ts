@@ -1,3 +1,7 @@
+import {
+  Evenement,
+  IEvenement
+} from "../../../model/etatcivil/acte/IEvenement";
 import { EtrangerFrance } from "../../../model/etatcivil/enum/EtrangerFrance";
 import { Option } from "../util/Type";
 import {
@@ -16,6 +20,7 @@ const PARIS = "PARIS";
 const MARSEILLE = "MARSEILLE";
 const LYON = "LYON";
 const villesMarseilleLyonParis = [MARSEILLE, LYON, PARIS];
+const JERUSALEM = "JERUSALEM";
 
 export class LieuxUtils {
   public static isVilleFranceAvecArrondissement(
@@ -397,17 +402,25 @@ export class LieuxUtils {
     return libelleLocalisationFrance;
   }
 
+  public static estVilleJerusalem(ville?: string): boolean {
+    return ville
+      ? ville.localeCompare(JERUSALEM, "fr", { sensitivity: "base" }) === 0
+      : false;
+  }
+
   public static getEtrangerOuFrance(
+    ville?: string,
     pays?: string,
     etrangerParDefaut = true
   ): EtrangerFrance {
     let etrangerOuFrance: EtrangerFrance;
+
     if (pays) {
       etrangerOuFrance = LieuxUtils.isPaysFrance(pays)
         ? EtrangerFrance.FRANCE
         : EtrangerFrance.ETRANGER;
     } else {
-      if (etrangerParDefaut) {
+      if (LieuxUtils.estVilleJerusalem(ville) || etrangerParDefaut) {
         etrangerOuFrance = EtrangerFrance.ETRANGER;
       } else {
         etrangerOuFrance = EtrangerFrance.FRANCE;
@@ -418,11 +431,25 @@ export class LieuxUtils {
   }
 
   public static getEtrangerOuFranceEnMajuscule(
+    ville?: string,
     pays?: string,
     etrangerParDefaut = true
   ): string {
     return EtrangerFrance.getKey(
-      LieuxUtils.getEtrangerOuFrance(pays, etrangerParDefaut)
+      LieuxUtils.getEtrangerOuFrance(ville, pays, etrangerParDefaut)
     );
+  }
+
+  public static getEtrangerOuFranceOuInconnuEnMajuscule(
+    evenement?: IEvenement,
+    etrangerParDefaut = true
+  ): string {
+    return Evenement.aucuneDonneeDuLieuRenseignee(evenement)
+      ? EtrangerFrance.getKey(EtrangerFrance.INCONNU)
+      : LieuxUtils.getEtrangerOuFranceEnMajuscule(
+          evenement?.ville,
+          evenement?.pays,
+          etrangerParDefaut
+        );
   }
 }
