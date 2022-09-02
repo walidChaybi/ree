@@ -263,7 +263,7 @@ export function supprimerEspacesInutiles(value: string) {
 export function supprimeSautDeLigneEtEspaceInutiles(value?: string) {
   let res = "";
   if (value) {
-    res = supprimerEspacesInutiles(value.replace(new RegExp(/\r?\n/g), " "));
+    res = value.trim().replace(new RegExp(/\s+/g), " ");
   }
   return res;
 }

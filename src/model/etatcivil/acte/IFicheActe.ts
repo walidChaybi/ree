@@ -281,10 +281,10 @@ function extraireMentionNationalite(texte?: string) {
     let regex;
     if (texte.indexOf(SOUS_LE_NOM) !== -1) {
       regex =
-        /(Français par|Française par)[ :\r\n]+([\wÀ-ÿ '°(.\r\n)]*)sous le nom de[\wÀ-ÿ '°.\r\n]*(\([\wÀ-ÿ '°(.\r\n)]*\))\r?\n\r?\n/gm;
+        /(Français par|Française par)[:\s]+([\s\w\W]*)sous le nom de[^(]*([\s\w\W]*?)\r?\n\r?\n/gm;
     } else if (texte.indexOf(SOUS_L_IDENTITE) !== -1) {
       regex =
-        /(Français par|Française par)[ :\r\n]+([\wÀ-ÿ '°(.\r\n)]*)sous l'identité de[\wÀ-ÿ '°.\r\n]*(\([\wÀ-ÿ '°(.\r\n)]*\))\r?\n\r?\n/gm;
+        /(Français par|Française par)[:\s]+([\s\w\W]*)sous l'identité de[^(]*([\s\w\W]*?)\r?\n\r?\n/gm;
     } else {
       regex = /(Français par|Française par)[:\s]+([\s\w\W]*?)\r?\n\r?\n/gm;
     }

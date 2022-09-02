@@ -111,39 +111,29 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
 
   // 3 - Création des paramètres pour la création du courrier
   useEffect(() => {
-    if (params) {
-      const mentionNationaliteAjoute = nationaliteAjouteSiBesoin(
-        majMentionFait,
-        params,
-        acteApiHookResultat?.acte
-      );
-      if (
-        (acteApiHookResultat && mentionNationaliteAjoute) ||
-        (!params?.idActe &&
+    if (
+      acteApiHookResultat ||
+      (!params?.idActe &&
+        ChoixDelivrance.estReponseSansDelivrance(
+          params?.requete.choixDelivrance
+        ))
+    ) {
+      setGenerationCourrierHookParams({
+        saisieCourrier: params?.saisieCourrier,
+        optionsChoisies: params?.optionsChoisies,
+        requete: params?.requete,
+        // Si aucune mention n'a été ajouté, on n'a pas besoin de recharger l'acte
+        acte: acteApiHookResultat?.acte,
+        // On ne change le statut que lorsqu'on a aucun documents
+        mettreAJourStatut:
+          params?.requete.documentsReponses.length === 0 &&
           ChoixDelivrance.estReponseSansDelivrance(
             params?.requete.choixDelivrance
-          ))
-      ) {
-        setGenerationCourrierHookParams({
-          saisieCourrier: params?.saisieCourrier,
-          optionsChoisies: params?.optionsChoisies,
-          requete: params?.requete,
-          // Si aucune mention n'a été ajouté, on n'a pas besoin de recharger l'acte
-          acte: mentionNationaliteAjoute
-            ? undefined
-            : acteApiHookResultat?.acte,
-          idActe: mentionNationaliteAjoute ? params.idActe : undefined,
-          // On ne change le statut que lorsqu'on a aucun documents
-          mettreAJourStatut:
-            params?.requete.documentsReponses.length === 0 &&
-            ChoixDelivrance.estReponseSansDelivrance(
-              params?.requete.choixDelivrance
-            )
-        });
-      }
+          )
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params, acteApiHookResultat, majMentionFait]);
+  }, [params, acteApiHookResultat]);
 
   const resultatGenerationCourrier = useGenerationCourrierHook(
     generationCourrierHookParams
@@ -151,25 +141,33 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
 
   // 4 - Création des paramètre pour la génération du document demandé
   useEffect(() => {
-    if (
-      params &&
-      params.idActe &&
-      resultatGenerationCourrier &&
-      ChoixDelivrance.estReponseAvecDelivrance(
-        params.requete.choixDelivrance
-      ) &&
-      params.requete.documentsReponses.length < DEUX &&
-      mentionsRetirees
-    ) {
-      setGenerationDocumentECParams({
-        acte: acteApiHookResultat?.acte,
-        requete: params.requete,
-        mentionsRetirees,
-        choixDelivrance: params.requete.choixDelivrance
-      });
+    if (params) {
+      const mentionNationaliteAjoute = nationaliteAjouteSiBesoin(
+        majMentionFait,
+        params,
+        acteApiHookResultat?.acte
+      );
+      if (
+        params.idActe &&
+        resultatGenerationCourrier &&
+        ChoixDelivrance.estReponseAvecDelivrance(
+          params.requete.choixDelivrance
+        ) &&
+        params.requete.documentsReponses.length < DEUX &&
+        mentionsRetirees &&
+        mentionNationaliteAjoute
+      ) {
+        setGenerationDocumentECParams({
+          acte: majMentionFait ? undefined : acteApiHookResultat?.acte,
+          idActe: majMentionFait ? params.idActe : undefined,
+          requete: params.requete,
+          mentionsRetirees,
+          choixDelivrance: params.requete.choixDelivrance
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mentionsRetirees, resultatGenerationCourrier]);
+  }, [mentionsRetirees, resultatGenerationCourrier, majMentionFait]);
 
   // Génération du document demandé
   const resultatGenerationEC = useGenerationEC(generationDocumentECParams);
