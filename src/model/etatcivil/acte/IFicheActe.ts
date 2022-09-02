@@ -286,8 +286,7 @@ function extraireMentionNationalite(texte?: string) {
       regex =
         /(Français par|Française par)[ :\r\n]+([\wÀ-ÿ '°(.\r\n)]*)sous l'identité de[\wÀ-ÿ '°.\r\n]*(\([\wÀ-ÿ '°(.\r\n)]*\))\r?\n\r?\n/gm;
     } else {
-      regex =
-        /(Français par|Française par)[ :\r\n]+([\wÀ-ÿ\-, '°(.\r\n)]*?)\r?\n\r?\n/gm;
+      regex = /(Français par|Française par)[:\s]+([\s\w\W]*?)\r?\n\r?\n/gm;
     }
 
     const matches = new RegExp(regex).exec(texte);
