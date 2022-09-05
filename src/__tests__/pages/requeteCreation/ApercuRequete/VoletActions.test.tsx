@@ -176,7 +176,7 @@ describe("Volet Actions", () => {
   });
 
   test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete et status est bon", async () => {
-    await act(() => {
+    await act(async () => {
       const history = createMemoryHistory();
 
       storeRece.utilisateurCourant = userDroitnonCOMEDEC;

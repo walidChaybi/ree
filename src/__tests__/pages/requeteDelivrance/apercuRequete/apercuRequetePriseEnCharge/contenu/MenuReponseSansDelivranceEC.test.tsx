@@ -9,7 +9,7 @@ import {
 } from "../../../../../../mock/data/requeteDelivrance";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
-import { MenuReponseSansDelivrance } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivrance";
+import { MenuReponseSansDelivranceEC } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivranceEC";
 import {
   PATH_EDITION,
   URL_MES_REQUETES_DELIVRANCE,
@@ -29,7 +29,7 @@ beforeEach(() => {
   );
   render(
     <Router history={history}>
-      <MenuReponseSansDelivrance requete={requeteRDC} />
+      <MenuReponseSansDelivranceEC requete={requeteRDC} />
     </Router>
   );
 });
@@ -50,6 +50,7 @@ test("Réponse requête incomplète", async () => {
     `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
   );
 });
+
 test("Réponse acte non détenu", async () => {
   await act(async () => {
     fireEvent.click(screen.getByText(/Acte non détenu+/));
@@ -59,6 +60,7 @@ test("Réponse acte non détenu", async () => {
     `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
   );
 });
+
 test("Réponse divers", async () => {
   await act(async () => {
     fireEvent.click(screen.getByText(/Divers+/));
@@ -68,6 +70,7 @@ test("Réponse divers", async () => {
     `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/${idRequeteRDC}/`
   );
 });
+
 test("Réponse ignorer", async () => {
   await act(async () => {
     fireEvent.click(screen.getByText("Réponse sans délivrance"));

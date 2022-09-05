@@ -38,7 +38,7 @@ import { AccordionRece } from "../../../common/widget/accordion/AccordionRece";
 import { Bouton } from "../../../common/widget/boutonAntiDoubleSubmit/Bouton";
 import { OngletProps } from "../../../common/widget/voletAvecOnglet/VoletAvecOnglet";
 import { Courrier } from "../apercuRequete/apercuCourrier/contenu/Courrier";
-import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
+import { sousTypeCreationCourrierAutomatique } from "../apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 import { BoutonModifierTraitement } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonModifierTraitement";
 import { BoutonsTerminer } from "../apercuRequete/apercuRequeteEnTraitement/contenu/BoutonsTerminer";
 import { DetailRequetePage } from "../detailRequete/DetailRequetePage";

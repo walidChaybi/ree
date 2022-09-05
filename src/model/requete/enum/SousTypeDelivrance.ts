@@ -85,11 +85,17 @@ export class SousTypeDelivrance extends EnumWithComplete {
     );
   }
 
-  public static estRDDouRDCouRDDP(sousType?: SousTypeDelivrance): boolean {
+  public static estRDDouRDDP(sousType?: SousTypeDelivrance): boolean {
     return (
       SousTypeDelivrance.soustypeRDD(sousType) ||
-      SousTypeDelivrance.estRDC(sousType) ||
       SousTypeDelivrance.estRDDP(sousType)
+    );
+  }
+
+  public static estRDDouRDCouRDDP(sousType?: SousTypeDelivrance): boolean {
+    return (
+      SousTypeDelivrance.estRDDouRDDP(sousType) ||
+      SousTypeDelivrance.estRDC(sousType)
     );
   }
 

@@ -47,13 +47,13 @@ import {
   ReponseAppelRMCActe4DernierResultats,
   ReponseAppelRMCActe4PremiersResultats
 } from "../data/RMCActe";
-
 import {
   ReponseAppelRMCInscription,
   ReponseAppelRMCInscription4DernierResultats,
   ReponseAppelRMCInscription4PremiersResultats
 } from "../data/RMCInscription";
 import { ficheActeAvecImage } from "./../data/ficheActe";
+import { getTitulairesActeAPI } from "./../data/Titulaire.ts";
 
 export const NORESULT = "NORESULT";
 
@@ -496,6 +496,10 @@ export const configEtatcivil = [
         "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235b/dernieredelivrance"
       ) {
         return { data: {} };
+      }
+
+      if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/titulaire") {
+        return { data: getTitulairesActeAPI.data };
       }
 
       const error = {

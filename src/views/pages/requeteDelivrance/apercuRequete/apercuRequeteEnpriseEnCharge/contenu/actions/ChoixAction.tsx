@@ -1,4 +1,5 @@
 import React from "react";
+import { ITitulaireActe } from "../../../../../../../model/etatcivil/acte/ITitulaireActe";
 import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../../../../model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "../../../../../../../model/requete/IRequeteDelivrance";
@@ -11,10 +12,10 @@ import { storeRece } from "../../../../../../common/util/storeRece";
 import { getLibelle } from "../../../../../../common/util/Utils";
 import { Fieldset } from "../../../../../../common/widget/fieldset/Fieldset";
 import { MenuAutre } from "./MenuAutre";
-import { MenuDelivrer } from "./MenuDelivrer";
 import { MenuDelivrerCS } from "./MenuDelivrerCS";
-import { MenuReponseSansDelivrance } from "./MenuReponseSansDelivrance";
+import { MenuDelivrerEC } from "./MenuDelivrerEC";
 import { MenuReponseSansDelivranceCS } from "./MenuReponseSansDelivranceCS";
+import { MenuReponseSansDelivranceEC } from "./MenuReponseSansDelivranceEC";
 import "./scss/ChoixAction.scss";
 
 export interface IChoixActionDelivranceProps {
@@ -23,6 +24,7 @@ export interface IChoixActionDelivranceProps {
   inscriptions?: IResultatRMCInscription[];
   dataHistory?: any;
   menuFermer?: boolean;
+  titulairesActe?: Map<string, ITitulaireActe[]>;
   nbrTitulairesActe?: Map<string, number>;
 }
 
@@ -46,14 +48,15 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
       <div className="ChoixAction">
         {SousTypeDelivrance.estRDDouRDCouRDDP(sousType) && (
           <>
-            <MenuDelivrer
+            <MenuDelivrerEC
               requete={props.requete}
               actes={props.actes}
               inscriptions={props.inscriptions}
               dataHistory={props.dataHistory}
+              titulairesActe={props.titulairesActe}
               nbrTitulairesActe={props.nbrTitulairesActe}
             />
-            <MenuReponseSansDelivrance
+            <MenuReponseSansDelivranceEC
               requete={props.requete}
               actes={props.actes}
               inscriptions={props.inscriptions}

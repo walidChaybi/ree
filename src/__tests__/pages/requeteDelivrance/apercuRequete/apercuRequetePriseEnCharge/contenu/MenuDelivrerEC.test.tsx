@@ -16,16 +16,9 @@ import {
 import { DataRMCInscriptionAvecUnRCA } from "../../../../../../mock/data/RMCInscription";
 import { configEtatcivil } from "../../../../../../mock/superagent-config/superagent-mock-etatcivil";
 import { configRequetes } from "../../../../../../mock/superagent-config/superagent-mock-requetes";
-import { NatureActe } from "../../../../../../model/etatcivil/enum/NatureActe";
 import { DocumentDelivrance } from "../../../../../../model/requete/enum/DocumentDelivrance";
 import { getUrlWithParam } from "../../../../../../views/common/util/route/routeUtil";
-import { MenuDelivrer } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrer";
-import {
-  estChoixExtraitAvecOuSansFiliation,
-  estNombreTitulairesIncoherent,
-  nonVide,
-  unActeEtUnSeulSelectionne
-} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerUtil";
+import { MenuDelivrerEC } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerEC";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "../../../../../../views/router/ReceUrls";
 
 const superagentMock = require("superagent-mock")(request, configRequetes);
@@ -54,7 +47,7 @@ test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-typ
   await act(async () => {
     render(
       <Router history={history}>
-        <MenuDelivrer
+        <MenuDelivrerEC
           requete={requeteRDC}
           inscriptions={DataRMCInscriptionAvecUnRCA}
         />
@@ -91,29 +84,6 @@ test("renders du bloc Menu Delivrer pour une requête de délivrance de sous-typ
   await waitFor(() => {
     expect(screen.getByRole("dialog")).toBeDefined();
   });
-});
-
-test("unActeEtUnSeulSelectionne", () => {
-  expect(unActeEtUnSeulSelectionne([null], [null])).toBe(false);
-});
-test("estChoixExtraitAvecOuSansFiliation", () => {
-  expect(estChoixExtraitAvecOuSansFiliation(0)).toBe(false);
-});
-test("estNombreTitulairesIncoherent", () => {
-  expect(estNombreTitulairesIncoherent(NatureActe.NAISSANCE.libelle, 2)).toBe(
-    true
-  );
-});
-test("estNombreTitulairesIncoherent", () => {
-  expect(estNombreTitulairesIncoherent(NatureActe.DECES.libelle, 2)).toBe(true);
-});
-test("estNombreTitulairesIncoherent", () => {
-  expect(estNombreTitulairesIncoherent(NatureActe.MARIAGE.libelle, 3)).toBe(
-    true
-  );
-});
-test("nonVide", () => {
-  expect(nonVide(["salut"])).toBe(true);
 });
 
 afterAll(() => {

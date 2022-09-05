@@ -11,18 +11,13 @@ import {
   useCreerCourrierEC
 } from "../../../../../../common/hook/requete/creerCourrierECHook";
 import { filtrerListeActions } from "../../../../../../common/util/RequetesUtils";
-import { getUrlPrecedente } from "../../../../../../common/util/route/routeUtil";
-import {
-  getLibelle,
-  supprimerNullEtUndefinedDuTableau
-} from "../../../../../../common/util/Utils";
+import { estRenseigne, getLibelle } from "../../../../../../common/util/Utils";
 import { OperationEnCours } from "../../../../../../common/widget/attente/OperationEnCours";
 import { GroupeBouton } from "../../../../../../common/widget/menu/GroupeBouton";
 import {
   ConfirmationPopin,
   IBoutonPopin
 } from "../../../../../../common/widget/popin/ConfirmationPopin";
-import { PATH_EDITION, receUrl } from "../../../../../../router/ReceUrls";
 import { DocumentEC } from "../../../../editionExtraitCopie/enum/DocumentEC";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
@@ -35,11 +30,11 @@ import {
   controleCoherenceEntreDocumentSelectionneEtActionDelivrer,
   getIdCourrierAuto,
   getOptionsMenuDelivrer,
-  nonVide,
+  redirection,
   sousTypeCreationCourrierAutomatique
-} from "./MenuDelivrerUtil";
+} from "./MenuUtilEC";
 
-export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
+export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
   const history = useHistory();
   const refDelivrerOptions0 = useRef(null);
 
@@ -51,36 +46,17 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
+    useState<UpdateChoixDelivranceProps>();
   const [courrierEcParams, setCourrierEcParams] =
     useState<ICreerCourrierECParams>();
 
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
-    useState<UpdateChoixDelivranceProps>();
-
   useCreerCourrierEC(courrierEcParams);
 
-  const redirection = useCallback(
-    (index: DocumentEC) => {
-      receUrl.replaceUrl(
-        history,
-        `${getUrlPrecedente(history.location.pathname)}/${PATH_EDITION}/${
-          props.requete.id
-        }/${actes?.[0].idActe}`,
-        index
-      );
-    },
-    [actes, history, props.requete.id]
-  );
-
+  // 0 - Initialiser inscriptions & actes (en retirant les valeurs falsy)
   useEffect(() => {
-    setInscriptions(
-      props.inscriptions
-        ? supprimerNullEtUndefinedDuTableau(props.inscriptions)
-        : undefined
-    );
-    setActes(
-      props.actes ? supprimerNullEtUndefinedDuTableau(props.actes) : undefined
-    );
+    setInscriptions(props.inscriptions?.filter(Boolean));
+    setActes(props.actes?.filter(Boolean));
   }, [props.actes, props.inscriptions]);
 
   // 1 - Mise à jour du choix delivrance
@@ -88,6 +64,19 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     paramUpdateChoixDelivrance
   );
 
+  const redirectionCallback = useCallback(
+    (index: DocumentEC) => {
+      redirection({
+        idActe: actes?.[0] ? actes[0].idActe : "",
+        idRequete: updateChoixDelivranceResultat?.idRequete,
+        history,
+        index
+      });
+    },
+    [actes, history, updateChoixDelivranceResultat]
+  );
+
+  // 2 - Récuperer les options pour la génération du courrier auto
   const options = useOptionsCourriersApiHook(
     DocumentDelivrance.getDocumentDelivrance(
       getIdCourrierAuto(choixDelivrance)
@@ -114,7 +103,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
         ),
         requete: requeteAvecChoixDelivrance,
         idActe: actes[0]?.idActe,
-        handleDocumentEnregistre: redirection,
+        handleDocumentEnregistre: redirectionCallback,
         setOperationEnCours
       });
     }
@@ -126,15 +115,17 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
 
   const handleDelivrerMenu = (indexMenu: number) => {
     setChoixDelivrance(delivrerOptions[indexMenu].choixDelivrance);
-    controleCoherenceEntreDocumentSelectionneEtActionDelivrer(
-      props,
+    controleCoherenceEntreDocumentSelectionneEtActionDelivrer({
+      indexMenu,
       actes,
       inscriptions,
-      indexMenu,
+      actions,
+      requete: props.requete,
+      titulairesActeMap: props.titulairesActe,
+      nbTitulairesActeMap: props.nbrTitulairesActe,
       setBoutonsPopin,
-      setMessagesBloquant,
-      listeActions
-    );
+      setMessagesBloquant
+    });
     // La redirection (cf. useEffect) s'effectue uniquement s'il n'y a pas de
     // message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionDelivrer'
   };
@@ -144,7 +135,7 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
     if (choixDelivrance && messagesBloquant && messagesBloquant.length === 0) {
       // Le contrôle de cohérence a eu lieu et pas de message bloquant
       setOperationEnCours(true);
-      // Déclanche le hook de mise à jour du choix de délivrance
+      // Déclenche le hook de mise à jour du choix de délivrance
       setParamUpdateChoixDelivrance({
         requete: props.requete,
         choixDelivrance
@@ -158,11 +149,15 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       updateChoixDelivranceResultat?.idRequete &&
       props.requete.sousType === SousTypeDelivrance.RDC
     ) {
-      redirection(DocumentEC.Courrier);
+      redirectionCallback(DocumentEC.Courrier);
     }
-  }, [updateChoixDelivranceResultat, redirection, props.requete.sousType]);
+  }, [
+    updateChoixDelivranceResultat,
+    redirectionCallback,
+    props.requete.sousType
+  ]);
 
-  const listeActions = filtrerListeActions(props.requete, delivrerOptions);
+  const actions = filtrerListeActions(props.requete, delivrerOptions);
 
   return (
     <>
@@ -173,17 +168,14 @@ export const MenuDelivrer: React.FC<IChoixActionDelivranceProps> = props => {
       />
       <GroupeBouton
         titre={getLibelle("Délivrer")}
-        listeActions={listeActions}
+        listeActions={actions}
         onSelect={handleDelivrerMenu}
       />
-      {nonVide(messagesBloquant) && (
-        <ConfirmationPopin
-          isOpen={true}
-          // @ts-ignore messagesBloquant est forcément !== undefined
-          messages={messagesBloquant}
-          boutons={boutonsPopin}
-        />
-      )}
+      <ConfirmationPopin
+        isOpen={estRenseigne(messagesBloquant)}
+        messages={messagesBloquant}
+        boutons={boutonsPopin}
+      />
     </>
   );
 };

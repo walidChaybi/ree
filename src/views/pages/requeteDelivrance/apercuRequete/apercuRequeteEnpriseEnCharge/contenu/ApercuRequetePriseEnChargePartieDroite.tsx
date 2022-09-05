@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "../../../../../../model/agent/IOfficier";
+import { ITitulaireActe } from "../../../../../../model/etatcivil/acte/ITitulaireActe";
 import { IAlerte } from "../../../../../../model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -10,6 +11,10 @@ import {
   GetNbrTitulairesActeHookParameters,
   useGetNbrTitulairesActeApiHook
 } from "../../../../../common/hook/repertoires/NbrTitulairesActeHook";
+import {
+  GetTitulairesActeHookParameters,
+  useGetTitulairesActeApiHook
+} from "../../../../../common/hook/repertoires/TitulairesActeHook";
 import { aplatirTableau } from "../../../../../common/util/Utils";
 import { BoutonRetour } from "../../../../../common/widget/navigation/BoutonRetour";
 import { RMCAuto } from "../../../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
@@ -40,9 +45,18 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
   /* Etat inscriptions sélectionnées */
   const [addActe, setAddActe] = useState<GetAlertesActeApiHookParameters>();
 
+  /* Etat paramètres d'appel de l'API de récupération des titulaires d'un acte */
+  const [titulairesActeHookParameters, setTitulairesActeHookParameters] =
+    useState<GetTitulairesActeHookParameters>();
+
   /* Etat paramètres d'appel de l'API de récupération du nombre de titulaires d'un acte */
   const [nbrTitulairesActeHookParameters, setNbrTitulairesActeHookParameters] =
     useState<GetNbrTitulairesActeHookParameters>();
+
+  /* Titulaires associés aux actes sélectionnés */
+  const [titulairesActe, setTitulairesActe] = useState<
+    Map<string, ITitulaireActe[]>
+  >(new Map([]));
 
   /* Nombre de titulaires associés aux actes sélectionnés */
   const [nbrTitulairesActe, setNbrTitulairesActe] = useState<
@@ -77,6 +91,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
       }
       setActes(newSelected);
       setNbrTitulairesActeHookParameters({ idActe: data?.idActe, isChecked });
+      setTitulairesActeHookParameters({ idActe: data?.idActe, isChecked });
     },
     [actes]
   );
@@ -99,30 +114,48 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
     [inscriptions]
   );
 
+  /* Hook d'appel de l'API de récupération des titulaires associés à un acte */
+  const resultatGetTitulairesActe = useGetTitulairesActeApiHook(
+    titulairesActeHookParameters
+  );
+
   /* Hook d'appel de l'API de récupération du nombre de titulaires associés à un acte */
   const resultatGetNbrTitulairesActe = useGetNbrTitulairesActeApiHook(
     nbrTitulairesActeHookParameters
   );
 
-  /* Actualisation de la liste des nombres de titulaires des actes sélectionnés */
+  /* Actualisation de la liste des nombres de titulaires et des titulaires des actes sélectionnés */
   useEffect(() => {
-    if (nbrTitulairesActeHookParameters) {
+    if (nbrTitulairesActeHookParameters && titulairesActeHookParameters) {
       const newNbrTitulairesActe = new Map(nbrTitulairesActe);
+      const newTitulairesActe = new Map(titulairesActe);
       if (
         nbrTitulairesActeHookParameters.isChecked &&
-        resultatGetNbrTitulairesActe
+        resultatGetNbrTitulairesActe &&
+        resultatGetTitulairesActe
       ) {
         newNbrTitulairesActe.set(
           nbrTitulairesActeHookParameters.idActe,
           resultatGetNbrTitulairesActe
         );
+        newTitulairesActe.set(
+          titulairesActeHookParameters.idActe,
+          resultatGetTitulairesActe
+        );
       } else {
         newNbrTitulairesActe.delete(nbrTitulairesActeHookParameters.idActe);
+        newTitulairesActe.delete(titulairesActeHookParameters.idActe);
       }
       setNbrTitulairesActe(newNbrTitulairesActe);
+      setTitulairesActe(newTitulairesActe);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nbrTitulairesActeHookParameters, resultatGetNbrTitulairesActe]);
+  }, [
+    nbrTitulairesActeHookParameters,
+    resultatGetNbrTitulairesActe,
+    titulairesActeHookParameters,
+    resultatGetTitulairesActe
+  ]);
 
   /* Remise à zéro des résultats de la RMC */
   const resetActeInscription = useCallback(() => {
@@ -151,6 +184,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<
         requete={detailRequete}
         actes={Array.from(actes.values())}
         inscriptions={Array.from(inscriptions.values())}
+        titulairesActe={titulairesActe}
         nbrTitulairesActe={nbrTitulairesActe}
       />
       <BoutonRetour />
