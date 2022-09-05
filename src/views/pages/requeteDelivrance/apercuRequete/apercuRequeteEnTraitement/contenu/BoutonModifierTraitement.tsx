@@ -28,7 +28,10 @@ export const BoutonModifierTraitement: React.FC<
   >();
 
   const setActionEtUpdateStatut = () => {
-    if (props.requete.documentsReponses.length === 0) {
+    if (
+      !props.requete.documentsReponses ||
+      props.requete.documentsReponses.length === 0
+    ) {
       history.replace(getUrlPrecedente(history.location.pathname));
     } else {
       setParams({
