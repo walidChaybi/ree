@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import { IUuidEditionParams } from "../../../../model/params/IUuidEditionParams";
 import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { ACTE_NON_TROUVE } from "../../../../model/requete/enum/DocumentDelivranceConstante";
+import { Validation } from "../../../../model/requete/enum/Validation";
 import {
   DocumentReponse,
   IDocumentReponse
 } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../model/requete/IRequeteDelivrance";
+import { useSupprimerDocumentComplementaireApi } from "../../../../views/common/hook/requete/SupprimerDocumentComplementaireHook";
 import { RetoucheImage } from "../../../common/composant/retoucheImage/RetoucheImage";
 import {
   IActeApiHookParams,
@@ -33,6 +35,7 @@ import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
 import { OngletDocumentsEdites } from "./contenu/OngletsDocumentsEdites";
 import {
   choisirDocumentEdite,
+  filtrerDocumentComplementaireASupprimer,
   getBoutonsEdition,
   retoucheImage
 } from "./EditionExtraitCopieUtils";
@@ -44,10 +47,20 @@ export const EditionExtraitCopiePageContext = React.createContext({
   setOperationEnCours: (operationEnCours: boolean) => {}
 });
 
+export interface ISuppressionDocumentComplementaireParams {
+  idDocumentReponse: string;
+  idRequete: string;
+}
+
 export const EditionExtraitCopiePage: React.FC = () => {
   const { isDirty, setIsDirty } = useContext(RECEContext);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
+  const [creationECParams, setCreationECParams] =
+    useState<IGenerationECParams>();
+
+  const [supprimerDocument, setSupprimerDocument] =
+    useState<ISuppressionDocumentComplementaireParams>();
 
   const { idRequeteParam, idActeParam } = useParams<IUuidEditionParams>();
   const [idRequete, setIdRequete] = useState<IDetailRequeteParams>();
@@ -59,6 +72,7 @@ export const EditionExtraitCopiePage: React.FC = () => {
   const [indexDocEdite, setIndexDocEdite] = useState<DocumentEC>(
     DocumentEC.Courrier
   );
+
   const [indexDocEditeDemande, setIndexDocEditeDemande] =
     useState<DocumentEC>();
   const [generationEcParams, setGenerationEcParams] =
@@ -71,10 +85,14 @@ export const EditionExtraitCopiePage: React.FC = () => {
     useState<IGetImagesDeLActeParams>();
 
   const { detailRequeteState } = useAvecRejeuDetailRequeteApiHook(idRequete);
+  const resulatEC = useGenerationEC(creationECParams);
 
   const resultatInformationsActeApiHook = useInformationsActeApiHook(
     informationsActeApiHookParams
   );
+
+  const resulatSuppressionDocumentComplementaire =
+    useSupprimerDocumentComplementaireApi(supprimerDocument);
 
   // Pour la retouche d'image
   const resultatGenerationEC = useGenerationEC(generationEcParams);
@@ -83,10 +101,40 @@ export const EditionExtraitCopiePage: React.FC = () => {
   );
 
   const ajouteDocument = (typeDocument: string) => {
-    if (checkDirty(isDirty, setIsDirty)) {
-      // TODO ajout d'un document complémentaire
+    if (checkDirty(isDirty, setIsDirty) && requete) {
+      setCreationECParams({
+        acte: resultatInformationsActeApiHook?.acte,
+        requete,
+        validation: Validation.O,
+        pasDAction: true,
+        mentionsRetirees: [],
+        choixDelivrance:
+          DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument)
+      });
     }
   };
+
+  const retirerDocument = () => {
+    if (requete) {
+      const documentASupprimer = filtrerDocumentComplementaireASupprimer(
+        requete.documentsReponses
+      );
+
+      if (checkDirty(isDirty, setIsDirty) && documentASupprimer) {
+        setSupprimerDocument({
+          idDocumentReponse: documentASupprimer.id,
+          idRequete: requete.id
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (resulatEC) {
+      rafraichirRequete(DocumentEC.Complementaire);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resulatEC]);
 
   useEffect(() => {
     choisirDocumentEdite(indexDocEditeDemande, setIndexDocEdite, requete);
@@ -178,11 +226,11 @@ export const EditionExtraitCopiePage: React.FC = () => {
   );
 
   useEffect(() => {
-    if (resultatGenerationEC) {
+    if (resultatGenerationEC || resulatSuppressionDocumentComplementaire) {
       rafraichirRequete(DocumentEC.Principal);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultatGenerationEC]);
+  }, [resultatGenerationEC, resulatSuppressionDocumentComplementaire]);
 
   useEffect(() => {
     if (resultatGetImagesDeLActe) {
@@ -205,9 +253,11 @@ export const EditionExtraitCopiePage: React.FC = () => {
           {requete && (
             <>
               <OngletDocumentsEdites
-                documents={requete.documentsReponses}
+                documents={documents}
                 idDocumentEdite={documentEdite?.id}
+                acte={resultatInformationsActeApiHook?.acte}
                 ajouterDocument={ajouteDocument}
+                retirerDocument={retirerDocument}
                 setDocumentEdite={changementDocEdite}
                 requete={requete}
               />
@@ -245,5 +295,3 @@ export const EditionExtraitCopiePage: React.FC = () => {
     </>
   );
 };
-
-

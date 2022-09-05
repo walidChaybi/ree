@@ -409,3 +409,14 @@ export function getBoutonsEdition(
     </div>
   );
 }
+
+export function filtrerDocumentComplementaireASupprimer(
+  documents: IDocumentReponse[]
+) {
+  let documentResponseASupprimer;
+  documentResponseASupprimer = documents.find(document => {
+    return document.ordre === DocumentEC.Complementaire;
+  });
+
+  return documentResponseASupprimer;
+}

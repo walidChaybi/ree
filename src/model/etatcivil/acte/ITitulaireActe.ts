@@ -144,7 +144,11 @@ export const TitulaireActe = {
 
   parentsSontDeMemeSexe(titulaire: ITitulaireActe) {
     const parents = TitulaireActe.getParentsDirects(titulaire);
-    const sexe = parents[0].sexe;
-    return parents.every(el => el.sexe === sexe);
+    if (parents?.length) {
+      const sexe = parents[0].sexe;
+      return parents.every(el => el.sexe === sexe);
+    } else {
+      return false;
+    }
   }
 };

@@ -48,6 +48,8 @@ export const URL_REPONSE_REQ_INFO = "/reponse";
 export const URL_NB_REQ_INFO = "/requetes/information/count";
 export const URL_ECHANGE = "/echange";
 export const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
+export const URL_DOCUMENT_COMPLEMENTAIRE =
+  "/documentsreponses/documentComplementaire";
 
 const URL_REPONSES = "/reponses";
 
@@ -57,7 +59,7 @@ export enum TypeAppelRequete {
   REQUETE_CREATION_SERVICE = "requeteCreationService",
   MES_REQUETES_DELIVRANCE = "mesRequetes",
   MES_REQUETES_INFO = "mesRequetesInfo",
-  MES_REQUETES_CREATION = "mesRequetesCreation"
+  MES_REQUETES_CREATION = "mesRequetesCreation",
 }
 
 export interface IQueryParametersPourRequetes {
@@ -94,7 +96,7 @@ export function getParametresBaseRequete(): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.POST,
     uri: `${URL_PARAMETRE}`,
-    data: CLES
+    data: CLES,
   });
 }
 
@@ -116,8 +118,8 @@ export function getRequetesDelivrance(
           ? queryParameters.tri
           : "dateStatut",
       sens: queryParameters.sens,
-      range: queryParameters.range
-    }
+      range: queryParameters.range,
+    },
   });
 }
 
@@ -139,8 +141,8 @@ export function getRequetesInformation(
           ? queryParameters.tri
           : "dateStatut",
       sens: queryParameters.sens,
-      range: queryParameters.range
-    }
+      range: queryParameters.range,
+    },
   });
 }
 
@@ -162,22 +164,22 @@ export function getRequetesCreation(
           ? queryParameters.tri
           : "dateStatut",
       sens: queryParameters.sens,
-      range: queryParameters.range
-    }
+      range: queryParameters.range,
+    },
   });
 }
 
 export function getDetailRequete(idRequete: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_REQUETES}/${idRequete}`
+    uri: `${URL_REQUETES}/${idRequete}`,
   });
 }
 
 export async function getNomenclatureRequete(nom: string): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}/${nom}`
+    uri: `${URL_NOMENCLATURE}/${nom}`,
   });
 }
 
@@ -190,8 +192,8 @@ export function rechercheMultiCriteresRequetes(
     uri: `${URL_REQUETES_RMC}`,
     data: criteres,
     parameters: {
-      range
-    }
+      range,
+    },
   });
 }
 
@@ -203,9 +205,9 @@ export function patchUtilisateurAssigneRequete(
     uri: `${URL_REPONSES}/${queryParameters.idReponse}`,
     parameters: {
       nomOec: queryParameters.nomOec,
-      prenomOec: queryParameters.prenomOec
+      prenomOec: queryParameters.prenomOec,
     },
-    headers: []
+    headers: [],
   });
 }
 
@@ -214,15 +216,15 @@ export function getCompteurRequetes(statuts: string): Promise<any> {
     method: HttpMethod.GET,
     uri: URL_REQUETES_COUNT,
     parameters: {
-      statuts
-    }
+      statuts,
+    },
   });
 }
 
 export async function creationRequeteDelivrance({
   requete,
   futurStatut,
-  refus = false
+  refus = false,
 }: {
   requete: IRequeteDelivrance;
   futurStatut: StatutRequete;
@@ -234,8 +236,8 @@ export async function creationRequeteDelivrance({
     data: requete,
     parameters: {
       refus,
-      futurStatut: StatutRequete.getKey(futurStatut)
-    }
+      futurStatut: StatutRequete.getKey(futurStatut),
+    },
   });
 }
 
@@ -243,7 +245,7 @@ export async function updateRequeteDelivrance({
   idRequete,
   requete,
   futurStatut,
-  refus = false
+  refus = false,
 }: {
   idRequete: string;
   requete: IRequeteDelivrance;
@@ -256,8 +258,8 @@ export async function updateRequeteDelivrance({
     data: requete,
     parameters: {
       refus,
-      futurStatut: StatutRequete.getKey(futurStatut)
-    }
+      futurStatut: StatutRequete.getKey(futurStatut),
+    },
   });
 }
 
@@ -268,7 +270,7 @@ export async function updateChoixDelivrance(
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_CHOIX_DELIVRANCE}`,
-    parameters: { choixDelivrance }
+    parameters: { choixDelivrance },
   });
 }
 
@@ -280,9 +282,9 @@ export async function patchSauvegarderDocument(
     method: HttpMethod.PATCH,
     uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_COURRIER}`,
     parameters: {
-      idRequete
+      idRequete,
     },
-    data: requete
+    data: requete,
   });
 }
 export async function postSauvCourrierCreerActionMajStatutRequete(
@@ -297,9 +299,9 @@ export async function postSauvCourrierCreerActionMajStatutRequete(
     parameters: {
       idRequete,
       libelleAction,
-      statutRequete: StatutRequete.getKey(statutRequete)
+      statutRequete: StatutRequete.getKey(statutRequete),
     },
-    data: requete
+    data: requete,
   });
 }
 
@@ -314,9 +316,9 @@ export async function postSauvDocumentCreerActionMajStatutRequete(
     uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_DOCUMENT}`,
     parameters: {
       libelleAction,
-      statutRequete: StatutRequete.getKey(statutRequete)
+      statutRequete: StatutRequete.getKey(statutRequete),
     },
-    data: document
+    data: document,
   });
 }
 
@@ -327,14 +329,14 @@ export async function postSauvegarderDocument(
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_DOCUMENT_REPONSE}/update/${idRequete}`,
-    data: documents
+    data: documents,
   });
 }
 
 export function getDocumentReponseById(idDcumentReponse: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_DOCUMENT_REPONSE}/${idDcumentReponse}`
+    uri: `${URL_DOCUMENT_REPONSE}/${idDcumentReponse}`,
   });
 }
 
@@ -347,8 +349,8 @@ export function postDocumentReponseApi(
     uri: `${URL_DOCUMENT_REPONSE}`,
     data: {
       idRequete,
-      documentsReponse
-    }
+      documentsReponse,
+    },
   });
 }
 export function getPieceComplementInformationById(
@@ -356,7 +358,7 @@ export function getPieceComplementInformationById(
 ): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_REQUETES}${URL_PIECES_COMPLEMENT_INFORMATION}/${idPiece}`
+    uri: `${URL_REQUETES}${URL_PIECES_COMPLEMENT_INFORMATION}/${idPiece}`,
   });
 }
 
@@ -367,21 +369,21 @@ export function postPieceComplementInformationApi(
   return api.fetch({
     method: HttpMethod.POST,
     uri: `${URL_REQUETES}/${idRequete}${URL_PIECE_COMPLEMENT_INFORMATION}`,
-    data: pieceComplementInformation
+    data: pieceComplementInformation,
   });
 }
 
 export function deleteDocumentsReponseApi(idRequete: string) {
   return api.fetch({
     method: HttpMethod.DELETE,
-    uri: `${URL_DOCUMENT_REPONSE}/${idRequete}`
+    uri: `${URL_DOCUMENT_REPONSE}/${idRequete}`,
   });
 }
 
 export function getPieceJustificativeById(idPiece: string): Promise<any> {
   return api.fetch({
     method: HttpMethod.GET,
-    uri: `${URL_REQUETES}${URL_PIECES_JUSTIFICATIVES}/${idPiece}`
+    uri: `${URL_REQUETES}${URL_PIECES_JUSTIFICATIVES}/${idPiece}`,
   });
 }
 
@@ -392,7 +394,7 @@ export function postPieceJustificative(
   return api.fetch({
     method: HttpMethod.POST,
     uri: `${URL_REQUETES}/${idRequete}${URL_PIECE_JUSTIFICATIVE}`,
-    data: pieceJustificative
+    data: pieceJustificative,
   });
 }
 
@@ -407,8 +409,8 @@ export function postCreationActionEtMiseAjourStatut(
     parameters: {
       idRequete,
       libelleAction,
-      statutRequete: StatutRequete.getKey(statutRequete)
-    }
+      statutRequete: StatutRequete.getKey(statutRequete),
+    },
   });
 }
 
@@ -429,8 +431,8 @@ export function postTransfertRequete(
       idUtilisateur,
       statutRequete: StatutRequete.getKey(statutRequete),
       libelleAction,
-      attribuer: !estTransfert
-    }
+      attribuer: !estTransfert,
+    },
   });
 }
 
@@ -443,8 +445,8 @@ export function postIgnorerRequete(
     uri: URL_IGNORER,
     parameters: {
       idRequete,
-      texteObservation
-    }
+      texteObservation,
+    },
   });
 }
 
@@ -457,8 +459,8 @@ export function rechercheMultiCriteresAutoRequetes(
     uri: `${URL_REQUETES_RMC_AUTO}`,
     data: criteres,
     parameters: {
-      range
-    }
+      range,
+    },
   });
 }
 
@@ -467,8 +469,8 @@ export function getRequeteAleatoire(type: string) {
     method: HttpMethod.GET,
     uri: URL_REQUETE_ALEATOIRE,
     parameters: {
-      type
-    }
+      type,
+    },
   });
 }
 
@@ -477,22 +479,22 @@ export function getRequetePlusAncienne(type: string) {
     method: HttpMethod.GET,
     uri: URL_REQUETE_PLUS_ANCIENNE,
     parameters: {
-      type
-    }
+      type,
+    },
   });
 }
 
 export async function getOptionsCourriers(): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}${URL_OPTION_COURRIER}`
+    uri: `${URL_NOMENCLATURE}${URL_OPTION_COURRIER}`,
   });
 }
 
 export async function getReponsesReqInfo(): Promise<any> {
   return api.fetchCache({
     method: HttpMethod.GET,
-    uri: `${URL_NOMENCLATURE}${URL_REPONSE_REQ_INFO}`
+    uri: `${URL_NOMENCLATURE}${URL_REPONSE_REQ_INFO}`,
   });
 }
 
@@ -504,7 +506,7 @@ export async function sauvegarderReponseReqInfo(
   return api.fetch({
     method: HttpMethod.POST,
     uri: `${URL_SAUVEGARDER_REPONSE_REQINFO}/${idRequete}`,
-    data: { corpsMail: corpsMailReponse, idReponse }
+    data: { corpsMail: corpsMailReponse, idReponse },
   });
 }
 
@@ -516,8 +518,8 @@ export async function updateStatutRequeteInformation(
     method: HttpMethod.PATCH,
     uri: `${URL_INFORMATION_STATUT}/${idRequete}`,
     parameters: {
-      statut: statutDemande.nom
-    }
+      statut: statutDemande.nom,
+    },
   });
 }
 
@@ -529,8 +531,8 @@ export async function updateStatutRequeteCreation(
     method: HttpMethod.PATCH,
     uri: `${URL_CREATION}${idRequete}/statut`,
     parameters: {
-      statut: statutDemande.nom
-    }
+      statut: statutDemande.nom,
+    },
   });
 }
 
@@ -541,7 +543,7 @@ export function patchDocumentsReponses(
     method: HttpMethod.PATCH,
     uri: URL_DOCUMENT_REPONSE,
     data: miseAJourDocumentParams,
-    headers: []
+    headers: [],
   });
 }
 
@@ -550,8 +552,8 @@ export function getNbReqInfo(listeStatuts: string): Promise<any> {
     method: HttpMethod.GET,
     uri: URL_NB_REQ_INFO,
     parameters: {
-      statuts: listeStatuts
-    }
+      statuts: listeStatuts,
+    },
   });
 }
 
@@ -566,8 +568,8 @@ export function postObservation(
     parameters: {
       idRequete,
       texteObservation,
-      idObservation
-    }
+      idObservation,
+    },
   });
 }
 
@@ -576,8 +578,8 @@ export function deleteObservation(idObservation: string): Promise<any> {
     method: HttpMethod.DELETE,
     uri: URL_OBSERVATION,
     parameters: {
-      idObservation
-    }
+      idObservation,
+    },
   });
 }
 
@@ -588,7 +590,20 @@ export function updateDocumentMention(
   return api.fetch({
     method: HttpMethod.PATCH,
     uri: `${URL_DOCUMENT_REPONSE}/${id}${URL_MENTION}`,
-    data: mentionsRetirees ? mentionsRetirees : []
+    data: mentionsRetirees ? mentionsRetirees : [],
+  });
+}
+
+export function deleteDocumentComplementaire(
+  idDocumentReponse: string,
+  idRequete: string
+): Promise<any> {
+  return api.fetch({
+    method: HttpMethod.DELETE,
+    uri: `${URL_DOCUMENT_COMPLEMENTAIRE}/${idDocumentReponse}`,
+    parameters: {
+      idRequete
+    }
   });
 }
 

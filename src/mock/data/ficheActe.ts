@@ -34,7 +34,7 @@ export const ficheActe1 = {
       arrondissement: "16",
       region: "Ile de France",
       pays: "France",
-      lieuReprise: "paris île de france"
+      lieuReprise: "paris île de france",
     },
     mentions: [],
     titulaires: [
@@ -56,7 +56,7 @@ export const ficheActe1 = {
           arrondissement: null,
           region: "Alaska",
           pays: "États-Unis",
-          lieuReprise: null
+          lieuReprise: null,
         },
         profession: "DEVELOPPEUR",
         age: null,
@@ -65,7 +65,7 @@ export const ficheActe1 = {
           ville: "Djibouti",
           arrondissement: null,
           region: null,
-          pays: "DJIBOUTI"
+          pays: "DJIBOUTI",
         },
         filiations: [
           {
@@ -81,12 +81,12 @@ export const ficheActe1 = {
               ville: "Nantes",
               arrondissement: null,
               region: null,
-              pays: "France"
+              pays: "France",
             },
-            prenoms: ["Constance"]
-          }
-        ]
-      }
+            prenoms: ["Constance"],
+          },
+        ],
+      },
     ],
     piecesAnnexes: [],
     alerteActes: [],
@@ -107,7 +107,7 @@ export const ficheActe1 = {
           arrondissement: null,
           region: "Pays de Loire",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         deces: {
           minute: null,
@@ -120,7 +120,7 @@ export const ficheActe1 = {
           arrondissement: null,
           region: "Nouvelle-Aquitaine",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [{ nom: "O", type: "ANCIEN_NOM" }],
         prenoms: ["Julie", "Sarah"],
@@ -130,44 +130,44 @@ export const ficheActe1 = {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Glenn",
-            prenoms: ["Pearl", "Ginger"]
+            prenoms: ["Pearl", "Ginger"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Nora",
-            prenoms: ["Reed"]
-          }
+            prenoms: ["Reed"],
+          },
         ],
         enfants: [
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Kirsten",
-            prenoms: ["Louella"]
+            prenoms: ["Louella"],
           },
           {
             id: null,
             typeLienParente: "ADOPTION",
             nom: "Reynolds",
-            prenoms: ["Mcleod", "Bates"]
+            prenoms: ["Mcleod", "Bates"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Janine",
-            prenoms: ["Alyce"]
+            prenoms: ["Alyce"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Barton",
-            prenoms: ["Buck"]
-          }
+            prenoms: ["Buck"],
+          },
         ],
         rcs: [
           { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4" },
-          { id: "76b62678-8b06-4442-ad5b-b9207627a6e3", numero: "1" }
+          { id: "76b62678-8b06-4442-ad5b-b9207627a6e3", numero: "1" },
         ],
         rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e", numero: "4094" }],
         pacss: [],
@@ -175,10 +175,10 @@ export const ficheActe1 = {
           {
             id: "923a10fb-0b15-452d-83c0-d24c76d1de8d",
             numero: "254",
-            nature: "NAISSANCE"
-          }
-        ]
-      }
+            nature: "NAISSANCE",
+          },
+        ],
+      },
     ],
     estReecrit: false,
     detailMariage: null,
@@ -204,8 +204,8 @@ export const ficheActe1 = {
         dateTransfertScec: [1969, 2, 16],
         gereScec: true,
         estOuvert: true,
-        description: ""
-      }
+        description: "",
+      },
     },
     motifAnnulation: "",
     dateInitialisationprojet: null,
@@ -226,7 +226,7 @@ export const ficheActe1 = {
           noPage: 1,
           statutRepriseImageActe: "A_REPRENDRE",
           dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
+          messageErreurDerniereTentative: null,
         },
         {
           idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
@@ -237,10 +237,10 @@ export const ficheActe1 = {
           noPage: 1,
           statutRepriseImageActe: "A_REPRENDRE",
           dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
-        }
+          messageErreurDerniereTentative: null,
+        },
       ],
-      natureActe: "NAISSANCE"
+      natureActe: "NAISSANCE",
     },
     analyseMarginales: [
       {
@@ -269,9 +269,9 @@ export const ficheActe1 = {
             nomAvantMariage: null,
             nomApresMariage: null,
             nomDernierConjoint: null,
-            prenomsDernierConjoint: null
-          }
-        ]
+            prenomsDernierConjoint: null,
+          },
+        ],
       },
       {
         dateDebut: 1577358000000,
@@ -291,12 +291,12 @@ export const ficheActe1 = {
             profession: null,
             age: null,
             domicile: null,
-            filiations: null
-          }
-        ]
-      }
-    ]
-  }
+            filiations: null,
+          },
+        ],
+      },
+    ],
+  },
 };
 
 export const ficheActe1_avecTitulaireAyantDeuxParents = {
@@ -331,7 +331,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
       arrondissement: "16",
       region: "Ile de France",
       pays: "France",
-      lieuReprise: "paris île de france"
+      lieuReprise: "paris île de france",
     },
     mentions: [],
     titulaires: [
@@ -353,7 +353,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
           arrondissement: null,
           region: "Alaska",
           pays: "États-Unis",
-          lieuReprise: null
+          lieuReprise: null,
         },
         profession: "DEVELOPPEUR",
         age: null,
@@ -362,7 +362,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
           ville: "Djibouti",
           arrondissement: null,
           region: null,
-          pays: "DJIBOUTI"
+          pays: "DJIBOUTI",
         },
         filiations: [
           {
@@ -378,9 +378,9 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
               ville: "Nantes",
               arrondissement: null,
               region: null,
-              pays: "France"
+              pays: "France",
             },
-            prenoms: ["Constance"]
+            prenoms: ["Constance"],
           },
           {
             lienParente: "PARENT",
@@ -395,12 +395,12 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
               ville: "Nantes",
               arrondissement: null,
               region: null,
-              pays: "France"
+              pays: "France",
             },
-            prenoms: ["Pierre"]
-          }
-        ]
-      }
+            prenoms: ["Pierre"],
+          },
+        ],
+      },
     ],
     piecesAnnexes: [],
     alerteActes: [],
@@ -421,7 +421,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
           arrondissement: null,
           region: "Pays de Loire",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         deces: {
           minute: null,
@@ -434,7 +434,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
           arrondissement: null,
           region: "Nouvelle-Aquitaine",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [{ nom: "O", type: "ANCIEN_NOM" }],
         prenoms: ["Julie", "Sarah"],
@@ -444,44 +444,44 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Glenn",
-            prenoms: ["Pearl", "Ginger"]
+            prenoms: ["Pearl", "Ginger"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Nora",
-            prenoms: ["Reed"]
-          }
+            prenoms: ["Reed"],
+          },
         ],
         enfants: [
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Kirsten",
-            prenoms: ["Louella"]
+            prenoms: ["Louella"],
           },
           {
             id: null,
             typeLienParente: "ADOPTION",
             nom: "Reynolds",
-            prenoms: ["Mcleod", "Bates"]
+            prenoms: ["Mcleod", "Bates"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Janine",
-            prenoms: ["Alyce"]
+            prenoms: ["Alyce"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Barton",
-            prenoms: ["Buck"]
-          }
+            prenoms: ["Buck"],
+          },
         ],
         rcs: [
           { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4" },
-          { id: "76b62678-8b06-4442-ad5b-b9207627a6e3", numero: "1" }
+          { id: "76b62678-8b06-4442-ad5b-b9207627a6e3", numero: "1" },
         ],
         rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e", numero: "4094" }],
         pacss: [],
@@ -489,10 +489,10 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
           {
             id: "923a10fb-0b15-452d-83c0-d24c76d1de8d",
             numero: "254",
-            nature: "NAISSANCE"
-          }
-        ]
-      }
+            nature: "NAISSANCE",
+          },
+        ],
+      },
     ],
     estReecrit: false,
     detailMariage: null,
@@ -518,8 +518,8 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
         dateTransfertScec: [1969, 2, 16],
         gereScec: true,
         estOuvert: true,
-        description: ""
-      }
+        description: "",
+      },
     },
     motifAnnulation: "",
     dateInitialisationprojet: null,
@@ -540,7 +540,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
           noPage: 1,
           statutRepriseImageActe: "A_REPRENDRE",
           dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
+          messageErreurDerniereTentative: null,
         },
         {
           idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
@@ -551,10 +551,10 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
           noPage: 1,
           statutRepriseImageActe: "A_REPRENDRE",
           dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
-        }
+          messageErreurDerniereTentative: null,
+        },
       ],
-      natureActe: "NAISSANCE"
+      natureActe: "NAISSANCE",
     },
     analyseMarginales: [
       {
@@ -583,9 +583,9 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
             nomAvantMariage: null,
             nomApresMariage: null,
             nomDernierConjoint: null,
-            prenomsDernierConjoint: null
-          }
-        ]
+            prenomsDernierConjoint: null,
+          },
+        ],
       },
       {
         dateDebut: 1577358000000,
@@ -605,12 +605,12 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
             profession: null,
             age: null,
             domicile: null,
-            filiations: null
-          }
-        ]
-      }
-    ]
-  }
+            filiations: null,
+          },
+        ],
+      },
+    ],
+  },
 };
 
 export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
@@ -645,7 +645,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
       arrondissement: "16",
       region: "Ile de France",
       pays: "France",
-      lieuReprise: "paris île de france"
+      lieuReprise: "paris île de france",
     },
     mentions: [],
     titulaires: [
@@ -667,7 +667,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
           arrondissement: null,
           region: "Alaska",
           pays: "États-Unis",
-          lieuReprise: null
+          lieuReprise: null,
         },
         profession: "DEVELOPPEUR",
         age: null,
@@ -676,7 +676,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
           ville: "Djibouti",
           arrondissement: null,
           region: null,
-          pays: "DJIBOUTI"
+          pays: "DJIBOUTI",
         },
         filiations: [
           {
@@ -692,9 +692,9 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
               ville: "Nantes",
               arrondissement: null,
               region: null,
-              pays: "France"
+              pays: "France",
             },
-            prenoms: ["Constance"]
+            prenoms: ["Constance"],
           },
           {
             lienParente: "PARENT",
@@ -709,12 +709,12 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
               ville: "Nantes",
               arrondissement: null,
               region: null,
-              pays: "France"
+              pays: "France",
             },
-            prenoms: ["Aurélia"]
-          }
-        ]
-      }
+            prenoms: ["Aurélia"],
+          },
+        ],
+      },
     ],
     piecesAnnexes: [],
     alerteActes: [],
@@ -735,7 +735,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
           arrondissement: null,
           region: "Pays de Loire",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         deces: {
           minute: null,
@@ -748,7 +748,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
           arrondissement: null,
           region: "Nouvelle-Aquitaine",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [{ nom: "O", type: "ANCIEN_NOM" }],
         prenoms: ["Julie", "Sarah"],
@@ -758,44 +758,44 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Glenn",
-            prenoms: ["Pearl", "Ginger"]
+            prenoms: ["Pearl", "Ginger"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Nora",
-            prenoms: ["Reed"]
-          }
+            prenoms: ["Reed"],
+          },
         ],
         enfants: [
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Kirsten",
-            prenoms: ["Louella"]
+            prenoms: ["Louella"],
           },
           {
             id: null,
             typeLienParente: "ADOPTION",
             nom: "Reynolds",
-            prenoms: ["Mcleod", "Bates"]
+            prenoms: ["Mcleod", "Bates"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Janine",
-            prenoms: ["Alyce"]
+            prenoms: ["Alyce"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Barton",
-            prenoms: ["Buck"]
-          }
+            prenoms: ["Buck"],
+          },
         ],
         rcs: [
           { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4" },
-          { id: "76b62678-8b06-4442-ad5b-b9207627a6e3", numero: "1" }
+          { id: "76b62678-8b06-4442-ad5b-b9207627a6e3", numero: "1" },
         ],
         rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e", numero: "4094" }],
         pacss: [],
@@ -803,10 +803,10 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
           {
             id: "923a10fb-0b15-452d-83c0-d24c76d1de8d",
             numero: "254",
-            nature: "NAISSANCE"
-          }
-        ]
-      }
+            nature: "NAISSANCE",
+          },
+        ],
+      },
     ],
     estReecrit: false,
     detailMariage: null,
@@ -832,8 +832,8 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
         dateTransfertScec: [1969, 2, 16],
         gereScec: true,
         estOuvert: true,
-        description: ""
-      }
+        description: "",
+      },
     },
     motifAnnulation: "",
     dateInitialisationprojet: null,
@@ -854,7 +854,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
           noPage: 1,
           statutRepriseImageActe: "A_REPRENDRE",
           dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
+          messageErreurDerniereTentative: null,
         },
         {
           idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
@@ -865,10 +865,10 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
           noPage: 1,
           statutRepriseImageActe: "A_REPRENDRE",
           dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
-        }
+          messageErreurDerniereTentative: null,
+        },
       ],
-      natureActe: "NAISSANCE"
+      natureActe: "NAISSANCE",
     },
     analyseMarginales: [
       {
@@ -897,9 +897,9 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
             nomAvantMariage: null,
             nomApresMariage: null,
             nomDernierConjoint: null,
-            prenomsDernierConjoint: null
-          }
-        ]
+            prenomsDernierConjoint: null,
+          },
+        ],
       },
       {
         dateDebut: 1577358000000,
@@ -919,12 +919,12 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
             profession: null,
             age: null,
             domicile: null,
-            filiations: null
-          }
-        ]
-      }
-    ]
-  }
+            filiations: null,
+          },
+        ],
+      },
+    ],
+  },
 };
 
 export const idFicheActe2 = "b41079a3-9e8d-478c-b04c-c4c2ac47134f";
@@ -961,7 +961,7 @@ export const ficheActe2 = {
       arrondissement: null,
       region: "Sudogwon",
       pays: "Corée du sud",
-      lieuReprise: null
+      lieuReprise: null,
     },
     mentions: [],
     titulaires: [
@@ -983,7 +983,7 @@ export const ficheActe2 = {
           arrondissement: null,
           region: "Lombardie",
           pays: "Italie",
-          lieuReprise: null
+          lieuReprise: null,
         },
         profession: "POMPIER",
         age: null,
@@ -992,7 +992,7 @@ export const ficheActe2 = {
           ville: "Bruxelles",
           arrondissement: null,
           region: "Flandre",
-          pays: "BELGIQUE"
+          pays: "BELGIQUE",
         },
         filiations: [
           {
@@ -1008,12 +1008,12 @@ export const ficheActe2 = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmela", "Linzy"]
-          }
-        ]
-      }
+            prenoms: ["Carmela", "Linzy"],
+          },
+        ],
+      },
     ],
     piecesAnnexes: [],
     alerteActes: [],
@@ -1034,7 +1034,7 @@ export const ficheActe2 = {
           arrondissement: null,
           region: "Pas-de-Calais",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [],
         prenoms: ["Jean-Louis"],
@@ -1048,10 +1048,10 @@ export const ficheActe2 = {
           {
             id: "b41079a3-9e8d-478c-b04c-c4c2ac47134f",
             numero: "483",
-            nature: "NAISSANCE"
-          }
-        ]
-      }
+            nature: "NAISSANCE",
+          },
+        ],
+      },
     ],
     estReecrit: null,
     detailMariage: null,
@@ -1077,16 +1077,16 @@ export const ficheActe2 = {
         dateTransfertScec: [1969, 2, 16],
         gereScec: true,
         estOuvert: true,
-        description: ""
-      }
+        description: "",
+      },
     },
     motifAnnulation: "motif annulation",
     dateInitialisationprojet: null,
     numeroProjet: "a0",
     corpsExtraitRectifications: [],
     corpsImage: null,
-    analyseMarginales: []
-  }
+    analyseMarginales: [],
+  },
 };
 
 export const idFicheActeMariage = "b41079a5-9e8d-478c-b04c-c4c2ac67134b";
@@ -1122,7 +1122,7 @@ export const ficheActeMariage = {
       arrondissement: null,
       region: "Catalogne",
       pays: "Espagne",
-      lieuReprise: null
+      lieuReprise: null,
     },
     mentions: [],
     titulaires: [
@@ -1144,7 +1144,7 @@ export const ficheActeMariage = {
           arrondissement: null,
           region: "",
           pays: "Fance",
-          lieuReprise: null
+          lieuReprise: null,
         },
         profession: "Enseignante",
         age: null,
@@ -1153,7 +1153,7 @@ export const ficheActeMariage = {
           ville: "Bruxelles",
           arrondissement: null,
           region: "Flandre",
-          pays: "BELGIQUE"
+          pays: "BELGIQUE",
         },
         filiations: [
           {
@@ -1170,9 +1170,9 @@ export const ficheActeMariage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmela", "Linzy"]
+            prenoms: ["Carmela", "Linzy"],
           },
           {
             type: null,
@@ -1188,9 +1188,9 @@ export const ficheActeMariage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmelaa", "Linzy"]
+            prenoms: ["Carmelaa", "Linzy"],
           },
           {
             type: null,
@@ -1206,9 +1206,9 @@ export const ficheActeMariage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmelaaa", "Linzy"]
+            prenoms: ["Carmelaaa", "Linzy"],
           },
           {
             type: null,
@@ -1224,10 +1224,10 @@ export const ficheActeMariage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmelaaaa", "Linzy"]
-          }
+            prenoms: ["Carmelaaaa", "Linzy"],
+          },
         ],
         typeDeclarationConjointe: null,
         dateDeclarationConjointe: null,
@@ -1236,7 +1236,7 @@ export const ficheActeMariage = {
         nomAvantMariage: null,
         nomApresMariage: null,
         nomDernierConjoint: null,
-        prenomsDernierConjoint: null
+        prenomsDernierConjoint: null,
       },
       {
         nom: "PRODESK",
@@ -1256,7 +1256,7 @@ export const ficheActeMariage = {
           arrondissement: null,
           region: "Catalogne",
           pays: "Espagne",
-          lieuReprise: null
+          lieuReprise: null,
         },
         profession: "Enseignante",
         age: null,
@@ -1265,7 +1265,7 @@ export const ficheActeMariage = {
           ville: "Bruxelles",
           arrondissement: null,
           region: "Flandre",
-          pays: "BELGIQUE"
+          pays: "BELGIQUE",
         },
         filiations: [
           {
@@ -1282,10 +1282,10 @@ export const ficheActeMariage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmela", "Linzy"]
-          }
+            prenoms: ["Carmela", "Linzy"],
+          },
         ],
         typeDeclarationConjointe: null,
         dateDeclarationConjointe: null,
@@ -1294,8 +1294,8 @@ export const ficheActeMariage = {
         nomAvantMariage: null,
         nomApresMariage: null,
         nomDernierConjoint: null,
-        prenomsDernierConjoint: null
-      }
+        prenomsDernierConjoint: null,
+      },
     ],
     piecesAnnexes: [],
     alerteActes: [],
@@ -1316,7 +1316,7 @@ export const ficheActeMariage = {
           arrondissement: null,
           region: "Catalogne",
           pays: "Espagne",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [],
         prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
@@ -1331,9 +1331,9 @@ export const ficheActeMariage = {
             id: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
             numero: "8012",
             statut: null,
-            nature: "MARIAGE"
-          }
-        ]
+            nature: "MARIAGE",
+          },
+        ],
       },
       {
         id: "e7114c50-d00d-48ad-bbee-af2b01e2da8e",
@@ -1351,7 +1351,7 @@ export const ficheActeMariage = {
           arrondissement: "8",
           region: null,
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [],
         prenoms: ["Jean-Louis", "Alphonse", "Raoûl"],
@@ -1366,10 +1366,10 @@ export const ficheActeMariage = {
             id: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
             numero: "8012",
             statut: null,
-            nature: "MARIAGE"
-          }
-        ]
-      }
+            nature: "MARIAGE",
+          },
+        ],
+      },
     ],
     estReecrit: true,
     registre: {
@@ -1394,8 +1394,8 @@ export const ficheActeMariage = {
         dateTransfertScec: [1969, 2, 16],
         gereScec: true,
         estOuvert: true,
-        description: ""
-      }
+        description: "",
+      },
     },
     motifAnnulation: "motif annulation",
     dateInitialisationprojet: null,
@@ -1405,9 +1405,9 @@ export const ficheActeMariage = {
       images: [
         {
           contenu: "base64",
-          noPage: 1
-        }
-      ]
+          noPage: 1,
+        },
+      ],
     },
     analyseMarginales: [
       {
@@ -1435,7 +1435,7 @@ export const ficheActeMariage = {
               arrondissement: null,
               region: "",
               pays: "Fance",
-              lieuReprise: null
+              lieuReprise: null,
             },
             profession: "Enseignante",
             age: null,
@@ -1444,7 +1444,7 @@ export const ficheActeMariage = {
               ville: "Bruxelles",
               arrondissement: null,
               region: "Flandre",
-              pays: "BELGIQUE"
+              pays: "BELGIQUE",
             },
             filiations: [
               {
@@ -1461,9 +1461,9 @@ export const ficheActeMariage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmela", "Linzy"]
+                prenoms: ["Carmela", "Linzy"],
               },
               {
                 type: null,
@@ -1479,9 +1479,9 @@ export const ficheActeMariage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmelaa", "Linzy"]
+                prenoms: ["Carmelaa", "Linzy"],
               },
               {
                 type: null,
@@ -1497,9 +1497,9 @@ export const ficheActeMariage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmelaaa", "Linzy"]
+                prenoms: ["Carmelaaa", "Linzy"],
               },
               {
                 type: null,
@@ -1515,10 +1515,10 @@ export const ficheActeMariage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmelaaaa", "Linzy"]
-              }
+                prenoms: ["Carmelaaaa", "Linzy"],
+              },
             ],
             typeDeclarationConjointe: null,
             dateDeclarationConjointe: null,
@@ -1527,7 +1527,7 @@ export const ficheActeMariage = {
             nomAvantMariage: null,
             nomApresMariage: null,
             nomDernierConjoint: null,
-            prenomsDernierConjoint: null
+            prenomsDernierConjoint: null,
           },
           {
             nom: "PRODESK",
@@ -1547,7 +1547,7 @@ export const ficheActeMariage = {
               arrondissement: null,
               region: "Catalogne",
               pays: "Espagne",
-              lieuReprise: null
+              lieuReprise: null,
             },
             profession: "Enseignante",
             age: null,
@@ -1556,7 +1556,7 @@ export const ficheActeMariage = {
               ville: "Bruxelles",
               arrondissement: null,
               region: "Flandre",
-              pays: "BELGIQUE"
+              pays: "BELGIQUE",
             },
             filiations: [
               {
@@ -1573,10 +1573,10 @@ export const ficheActeMariage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmela", "Linzy"]
-              }
+                prenoms: ["Carmela", "Linzy"],
+              },
             ],
             typeDeclarationConjointe: null,
             dateDeclarationConjointe: null,
@@ -1585,16 +1585,16 @@ export const ficheActeMariage = {
             nomAvantMariage: null,
             nomApresMariage: null,
             nomDernierConjoint: null,
-            prenomsDernierConjoint: null
-          }
-        ]
-      }
+            prenomsDernierConjoint: null,
+          },
+        ],
+      },
     ],
     type: "IMAGE",
     detailMariage: {
-      existenceContrat: "NON"
-    }
-  }
+      existenceContrat: "NON",
+    },
+  },
 };
 
 export const idFicheActeNaissance = "923a10fb-0b15-452d-83c0-d24c76d1de8e";
@@ -1630,18 +1630,18 @@ export const ficheActeNaissance = {
       arrondissement: "16",
       region: "Paris",
       pays: "France",
-      lieuReprise: null
+      lieuReprise: null,
     },
     mentions: [],
     titulaires: [
       {
         nom: "Micheldelavandièredugrand-large",
-        prenoms: ["lolita"],
-        autresNoms: null,
-        autresPrenoms: null,
         ordre: 2,
+        prenoms: ["lolita"],
         sexe: "FEMININ",
         naissance: {
+          autresNoms: null,
+          autresPrenoms: null,
           minute: null,
           heure: null,
           jour: 17,
@@ -1652,7 +1652,7 @@ export const ficheActeNaissance = {
           arrondissement: null,
           region: "Alaska",
           pays: "États-Unis",
-          lieuReprise: null
+          lieuReprise: null,
         },
         filiations: [
           {
@@ -1671,7 +1671,7 @@ export const ficheActeNaissance = {
               arrondissement: null,
               region: "Catalogne",
               pays: "Espagne",
-              lieuReprise: null
+              lieuReprise: null,
             },
             profession: "Informaticien",
             age: null,
@@ -1680,9 +1680,9 @@ export const ficheActeNaissance = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Jean", "Louis"]
+            prenoms: ["Jean", "Louis"],
           },
           {
             lienParente: "PARENT",
@@ -1700,7 +1700,7 @@ export const ficheActeNaissance = {
               arrondissement: null,
               region: "Catalogne",
               pays: "France",
-              lieuReprise: null
+              lieuReprise: null,
             },
             profession: "Dentiste",
             age: null,
@@ -1709,10 +1709,10 @@ export const ficheActeNaissance = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Louise", "Jocelyne"]
-          }
+            prenoms: ["Louise", "Jocelyne"],
+          },
         ],
         profession: "DEVELOPPEUR",
         age: null,
@@ -1721,7 +1721,7 @@ export const ficheActeNaissance = {
           ville: "Djibouti",
           arrondissement: null,
           region: null,
-          pays: "DJIBOUTI"
+          pays: "DJIBOUTI",
         },
         typeDeclarationConjointe: "CHOIX_NOM",
         dateDeclarationConjointe: [1999, 2, 3],
@@ -1730,8 +1730,8 @@ export const ficheActeNaissance = {
         nomAvantMariage: "Micheldelavandièredugrand",
         nomApresMariage: "Micheldelavandièredugrand-large",
         nomDernierConjoint: "Large",
-        prenomsDernierConjoint: "Jean Maxime"
-      }
+        prenomsDernierConjoint: "Jean Maxime",
+      },
     ],
     piecesAnnexes: [],
     alerteActes: [],
@@ -1752,7 +1752,7 @@ export const ficheActeNaissance = {
           arrondissement: null,
           region: "Pays de Loire",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         deces: {
           minute: null,
@@ -1765,13 +1765,13 @@ export const ficheActeNaissance = {
           arrondissement: null,
           region: "Nouvelle-Aquitaine",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [
           {
             nom: "O",
-            type: "ANCIEN_NOM"
-          }
+            type: "ANCIEN_NOM",
+          },
         ],
         prenoms: ["Julie", "Sarah"],
         autresPrenoms: ["Mireille"],
@@ -1780,59 +1780,59 @@ export const ficheActeNaissance = {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Glenn",
-            prenoms: ["Pearl", "Ginger"]
+            prenoms: ["Pearl", "Ginger"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Nora",
-            prenoms: ["Reed"]
-          }
+            prenoms: ["Reed"],
+          },
         ],
         enfants: [
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Janine",
-            prenoms: ["Alyce"]
+            prenoms: ["Alyce"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Kirsten",
-            prenoms: ["Louella"]
+            prenoms: ["Louella"],
           },
           {
             id: null,
             typeLienParente: "ADOPTION",
             nom: "Reynolds",
-            prenoms: ["Mcleod", "Bates"]
+            prenoms: ["Mcleod", "Bates"],
           },
           {
             id: null,
             typeLienParente: "DIRECT",
             nom: "Barton",
-            prenoms: ["Buck"]
-          }
+            prenoms: ["Buck"],
+          },
         ],
         rcs: [
           {
             id: "76b62678-8b06-4442-ad5b-b9207627a6e3",
             numero: "1",
-            statut: "ACTIF"
+            statut: "ACTIF",
           },
           {
             id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
             numero: "4",
-            statut: "INACTIF"
-          }
+            statut: "INACTIF",
+          },
         ],
         rcas: [
           {
             id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
             numero: "4094",
-            statut: "ACTIF"
-          }
+            statut: "ACTIF",
+          },
         ],
         pacss: [],
         actes: [
@@ -1840,10 +1840,10 @@ export const ficheActeNaissance = {
             id: "923a10fb-0b15-452d-83c0-d24c76d1de8e",
             numero: "254",
             statut: null,
-            nature: "NAISSANCE"
-          }
-        ]
-      }
+            nature: "NAISSANCE",
+          },
+        ],
+      },
     ],
     estReecrit: false,
     detailMariage: null,
@@ -1869,8 +1869,8 @@ export const ficheActeNaissance = {
         dateTransfertScec: [1969, 2, 16],
         gereScec: true,
         estOuvert: true,
-        description: ""
-      }
+        description: "",
+      },
     },
     motifAnnulation: "",
     dateInitialisationprojet: null,
@@ -1890,7 +1890,7 @@ export const ficheActeNaissance = {
           noPage: 1,
           statutRepriseImageActe: "A_REPRENDRE",
           dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
+          messageErreurDerniereTentative: null,
         },
         {
           idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
@@ -1900,10 +1900,10 @@ export const ficheActeNaissance = {
           noPage: 1,
           statutRepriseImageActe: "A_REPRENDRE",
           dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
-        }
+          messageErreurDerniereTentative: null,
+        },
       ],
-      natureActe: "NAISSANCE"
+      natureActe: "NAISSANCE",
     },
     analyseMarginales: [
       {
@@ -1932,9 +1932,9 @@ export const ficheActeNaissance = {
             nomAvantMariage: null,
             nomApresMariage: null,
             nomDernierConjoint: null,
-            prenomsDernierConjoint: null
-          }
-        ]
+            prenomsDernierConjoint: null,
+          },
+        ],
       },
       {
         dateDebut: 1577358000000,
@@ -1962,13 +1962,13 @@ export const ficheActeNaissance = {
             nomAvantMariage: null,
             nomApresMariage: null,
             nomDernierConjoint: null,
-            prenomsDernierConjoint: null
-          }
-        ]
-      }
+            prenomsDernierConjoint: null,
+          },
+        ],
+      },
     ],
-    type: "IMAGE"
-  }
+    type: "IMAGE",
+  },
 };
 
 export const idFicheActeDeces = "b41079a6-9e8d-478c-b04c-c4c2ac87134f";
@@ -2004,7 +2004,7 @@ export const ficheActeDeces = {
       arrondissement: null,
       region: "Loire-Atlantique",
       pays: "France",
-      lieuReprise: null
+      lieuReprise: null,
     },
     mentions: [],
     titulaires: [
@@ -2026,7 +2026,7 @@ export const ficheActeDeces = {
           arrondissement: null,
           region: "Lombardie",
           pays: "Italie",
-          lieuReprise: null
+          lieuReprise: null,
         },
         profession: "POMPIER",
         age: null,
@@ -2035,7 +2035,7 @@ export const ficheActeDeces = {
           ville: "Bruxelles",
           arrondissement: null,
           region: "Flandre",
-          pays: "BELGIQUE"
+          pays: "BELGIQUE",
         },
         filiations: [
           {
@@ -2051,10 +2051,10 @@ export const ficheActeDeces = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmela", "Linzy"]
-          }
+            prenoms: ["Carmela", "Linzy"],
+          },
         ],
         typeDeclarationConjointe: null,
         dateDeclarationConjointe: null,
@@ -2063,8 +2063,8 @@ export const ficheActeDeces = {
         nomAvantMariage: null,
         nomApresMariage: null,
         nomDernierConjoint: null,
-        prenomsDernierConjoint: null
-      }
+        prenomsDernierConjoint: null,
+      },
     ],
     piecesAnnexes: [],
     alerteActes: [],
@@ -2085,7 +2085,7 @@ export const ficheActeDeces = {
           arrondissement: null,
           region: "",
           pays: "Corée du Sud",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [],
         prenoms: ["Charlie"],
@@ -2100,9 +2100,9 @@ export const ficheActeDeces = {
             id: "b41079a6-9e8d-478c-b04c-c4c2ac87134f",
             numero: "8413",
             statut: null,
-            nature: "DECES"
-          }
-        ]
+            nature: "DECES",
+          },
+        ],
       },
       {
         id: "e7114c54-d00d-48ad-bbee-af2b01e2da77",
@@ -2120,7 +2120,7 @@ export const ficheActeDeces = {
           arrondissement: null,
           region: "Pas-de-Calais",
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [],
         prenoms: ["Juan"],
@@ -2135,10 +2135,10 @@ export const ficheActeDeces = {
             id: "b41079a6-9e8d-478c-b04c-c4c2ac87134f",
             numero: "8413",
             statut: null,
-            nature: "DECES"
-          }
-        ]
-      }
+            nature: "DECES",
+          },
+        ],
+      },
     ],
     estReecrit: null,
     detailMariage: null,
@@ -2164,8 +2164,8 @@ export const ficheActeDeces = {
         dateTransfertScec: [1969, 2, 16],
         gereScec: true,
         estOuvert: true,
-        description: ""
-      }
+        description: "",
+      },
     },
     motifAnnulation: "motif annulation",
     dateInitialisationprojet: null,
@@ -2173,11 +2173,11 @@ export const ficheActeDeces = {
     corpsExtraitRectifications: [],
     corpsImage: null,
     corpsTexte: {
-      texte: `Acte décès`
+      texte: `Acte décès`,
     },
     analyseMarginales: [],
-    type: "TEXTE"
-  }
+    type: "TEXTE",
+  },
 };
 
 const idFicheActeAvecImage = "b41079a5-9e8d-478c-b04c-c4c2ac671777";
@@ -2213,7 +2213,7 @@ export const ficheActeAvecImage = {
       arrondissement: null,
       region: "Catalogne",
       pays: "Espagne",
-      lieuReprise: null
+      lieuReprise: null,
     },
     mentions: [],
     titulaires: [
@@ -2235,7 +2235,7 @@ export const ficheActeAvecImage = {
           arrondissement: null,
           region: "",
           pays: "Fance",
-          lieuReprise: null
+          lieuReprise: null,
         },
         profession: "Enseignante",
         age: null,
@@ -2244,7 +2244,7 @@ export const ficheActeAvecImage = {
           ville: "Bruxelles",
           arrondissement: null,
           region: "Flandre",
-          pays: "BELGIQUE"
+          pays: "BELGIQUE",
         },
         filiations: [
           {
@@ -2261,9 +2261,9 @@ export const ficheActeAvecImage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmela", "Linzy"]
+            prenoms: ["Carmela", "Linzy"],
           },
           {
             type: null,
@@ -2279,9 +2279,9 @@ export const ficheActeAvecImage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmelaa", "Linzy"]
+            prenoms: ["Carmelaa", "Linzy"],
           },
           {
             type: null,
@@ -2297,9 +2297,9 @@ export const ficheActeAvecImage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmelaaa", "Linzy"]
+            prenoms: ["Carmelaaa", "Linzy"],
           },
           {
             type: null,
@@ -2315,10 +2315,10 @@ export const ficheActeAvecImage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmelaaaa", "Linzy"]
-          }
+            prenoms: ["Carmelaaaa", "Linzy"],
+          },
         ],
         typeDeclarationConjointe: null,
         dateDeclarationConjointe: null,
@@ -2327,7 +2327,7 @@ export const ficheActeAvecImage = {
         nomAvantMariage: null,
         nomApresMariage: null,
         nomDernierConjoint: null,
-        prenomsDernierConjoint: null
+        prenomsDernierConjoint: null,
       },
       {
         nom: "PRODESK",
@@ -2347,7 +2347,7 @@ export const ficheActeAvecImage = {
           arrondissement: null,
           region: "Catalogne",
           pays: "Espagne",
-          lieuReprise: null
+          lieuReprise: null,
         },
         profession: "Enseignante",
         age: null,
@@ -2356,7 +2356,7 @@ export const ficheActeAvecImage = {
           ville: "Bruxelles",
           arrondissement: null,
           region: "Flandre",
-          pays: "BELGIQUE"
+          pays: "BELGIQUE",
         },
         filiations: [
           {
@@ -2373,10 +2373,10 @@ export const ficheActeAvecImage = {
               ville: "Djibouti",
               arrondissement: null,
               region: null,
-              pays: "DJIBOUTI"
+              pays: "DJIBOUTI",
             },
-            prenoms: ["Carmela", "Linzy"]
-          }
+            prenoms: ["Carmela", "Linzy"],
+          },
         ],
         typeDeclarationConjointe: null,
         dateDeclarationConjointe: null,
@@ -2385,8 +2385,8 @@ export const ficheActeAvecImage = {
         nomAvantMariage: null,
         nomApresMariage: null,
         nomDernierConjoint: null,
-        prenomsDernierConjoint: null
-      }
+        prenomsDernierConjoint: null,
+      },
     ],
     piecesAnnexes: [],
     alerteActes: [],
@@ -2407,7 +2407,7 @@ export const ficheActeAvecImage = {
           arrondissement: null,
           region: "Catalogne",
           pays: "Espagne",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [],
         prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
@@ -2422,9 +2422,9 @@ export const ficheActeAvecImage = {
             id: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
             numero: "8012",
             statut: null,
-            nature: "MARIAGE"
-          }
-        ]
+            nature: "MARIAGE",
+          },
+        ],
       },
       {
         id: "e7114c50-d00d-48ad-bbee-af2b01e2da8e",
@@ -2442,7 +2442,7 @@ export const ficheActeAvecImage = {
           arrondissement: "8",
           region: null,
           pays: "France",
-          lieuReprise: null
+          lieuReprise: null,
         },
         autresNoms: [],
         prenoms: ["Jean-Louis", "Alphonse", "Raoûl"],
@@ -2457,10 +2457,10 @@ export const ficheActeAvecImage = {
             id: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
             numero: "8012",
             statut: null,
-            nature: "MARIAGE"
-          }
-        ]
-      }
+            nature: "MARIAGE",
+          },
+        ],
+      },
     ],
     estReecrit: true,
     registre: {
@@ -2485,8 +2485,8 @@ export const ficheActeAvecImage = {
         dateTransfertScec: [1969, 2, 16],
         gereScec: true,
         estOuvert: true,
-        description: ""
-      }
+        description: "",
+      },
     },
     motifAnnulation: "motif annulation",
     dateInitialisationprojet: null,
@@ -2500,9 +2500,9 @@ export const ficheActeAvecImage = {
       images: [
         {
           contenu: imagePngVideBase64,
-          noPage: 1
-        }
-      ]
+          noPage: 1,
+        },
+      ],
     },
     analyseMarginales: [
       {
@@ -2530,7 +2530,7 @@ export const ficheActeAvecImage = {
               arrondissement: null,
               region: "",
               pays: "Fance",
-              lieuReprise: null
+              lieuReprise: null,
             },
             profession: "Enseignante",
             age: null,
@@ -2539,7 +2539,7 @@ export const ficheActeAvecImage = {
               ville: "Bruxelles",
               arrondissement: null,
               region: "Flandre",
-              pays: "BELGIQUE"
+              pays: "BELGIQUE",
             },
             filiations: [
               {
@@ -2556,9 +2556,9 @@ export const ficheActeAvecImage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmela", "Linzy"]
+                prenoms: ["Carmela", "Linzy"],
               },
               {
                 type: null,
@@ -2574,9 +2574,9 @@ export const ficheActeAvecImage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmelaa", "Linzy"]
+                prenoms: ["Carmelaa", "Linzy"],
               },
               {
                 type: null,
@@ -2592,9 +2592,9 @@ export const ficheActeAvecImage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmelaaa", "Linzy"]
+                prenoms: ["Carmelaaa", "Linzy"],
               },
               {
                 type: null,
@@ -2610,10 +2610,10 @@ export const ficheActeAvecImage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmelaaaa", "Linzy"]
-              }
+                prenoms: ["Carmelaaaa", "Linzy"],
+              },
             ],
             typeDeclarationConjointe: null,
             dateDeclarationConjointe: null,
@@ -2622,7 +2622,7 @@ export const ficheActeAvecImage = {
             nomAvantMariage: null,
             nomApresMariage: null,
             nomDernierConjoint: null,
-            prenomsDernierConjoint: null
+            prenomsDernierConjoint: null,
           },
           {
             nom: "PRODESK",
@@ -2642,7 +2642,7 @@ export const ficheActeAvecImage = {
               arrondissement: null,
               region: "Catalogne",
               pays: "Espagne",
-              lieuReprise: null
+              lieuReprise: null,
             },
             profession: "Enseignante",
             age: null,
@@ -2651,7 +2651,7 @@ export const ficheActeAvecImage = {
               ville: "Bruxelles",
               arrondissement: null,
               region: "Flandre",
-              pays: "BELGIQUE"
+              pays: "BELGIQUE",
             },
             filiations: [
               {
@@ -2668,10 +2668,10 @@ export const ficheActeAvecImage = {
                   ville: "Djibouti",
                   arrondissement: null,
                   region: null,
-                  pays: "DJIBOUTI"
+                  pays: "DJIBOUTI",
                 },
-                prenoms: ["Carmela", "Linzy"]
-              }
+                prenoms: ["Carmela", "Linzy"],
+              },
             ],
             typeDeclarationConjointe: null,
             dateDeclarationConjointe: null,
@@ -2680,14 +2680,1222 @@ export const ficheActeAvecImage = {
             nomAvantMariage: null,
             nomApresMariage: null,
             nomDernierConjoint: null,
-            prenomsDernierConjoint: null
-          }
-        ]
-      }
+            prenomsDernierConjoint: null,
+          },
+        ],
+      },
     ],
     type: "IMAGE",
     detailMariage: {
-      existenceContrat: "NON"
-    }
-  }
+      existenceContrat: "NON",
+    },
+  },
+};
+
+export const idficheActeEC = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
+export const ficheActeEC = {
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123",
+  data: {
+    id: "b41079a5-9e8f-478a-b04c-c4c2ac671123",
+    dateInitialisation: null,
+    dateCreation: 1141815600000,
+    modeCreation: "ETABLI",
+    statut: "ANNULE",
+    dateStatut: 1282816800000,
+    nature: "NAISSANCE",
+    numero: "254",
+    numeroBisTer: "35",
+    nomOec: "DUCLOS",
+    prenomOec: "HENRI",
+    dateDerniereDelivrance: 1207130400000,
+    dateDerniereMaj: 1041505200000,
+    visibiliteArchiviste: "NON",
+    evenement: {
+      minute: 15,
+      heure: 13,
+      jour: 10,
+      mois: 10,
+      annee: 1901,
+      voie: null,
+      ville: "Paris",
+      arrondissement: "16",
+      region: "Paris",
+      pays: "France",
+      lieuReprise: null,
+    },
+    mentions: [],
+    titulaires: [
+      {
+        nom: "Micheldelavandièredugrand-large",
+        ordre: 2,
+        prenoms: ["lolita"],
+        sexe: "FEMININ",
+        naissance: {
+          autresNoms: null,
+          autresPrenoms: null,
+          minute: null,
+          heure: null,
+          jour: 17,
+          mois: 4,
+          annee: 1970,
+          voie: null,
+          ville: "Sitka",
+          arrondissement: null,
+          region: "Alaska",
+          pays: "États-Unis",
+          lieuReprise: null,
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: null,
+              mois: null,
+              annee: null,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null,
+            },
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI",
+            },
+            prenoms: ["Jean", "Louis"],
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "DUPOND",
+            sexe: "FEMININ",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 26,
+              mois: 6,
+              annee: 1981,
+              voie: null,
+              ville: "Nantes",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "France",
+              lieuReprise: null,
+            },
+            profession: "Dentiste",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI",
+            },
+            prenoms: ["Louise", "Jocelyne"],
+          },
+        ],
+        profession: "DEVELOPPEUR",
+        age: null,
+        domicile: {
+          voie: "IlotduHéron",
+          ville: "Djibouti",
+          arrondissement: null,
+          region: null,
+          pays: "DJIBOUTI",
+        },
+        typeDeclarationConjointe: "CHOIX_NOM",
+        dateDeclarationConjointe: [1999, 2, 3],
+        nomPartie1: "nom1",
+        nomPartie2: "nom2",
+        nomAvantMariage: "Micheldelavandièredugrand",
+        nomApresMariage: "Micheldelavandièredugrand-large",
+        nomDernierConjoint: "Large",
+        prenomsDernierConjoint: "Jean Maxime",
+      },
+    ],
+    piecesAnnexes: [],
+    alerteActes: [],
+    personnes: [
+      {
+        id: "e7114c57-d00d-48ad-bbee-af2b01e2da61",
+        nom: "Durant",
+        sexe: "FEMININ",
+        nationalite: "FRANCAISE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 1,
+          mois: 10,
+          annee: 1960,
+          voie: null,
+          ville: "nantes",
+          arrondissement: null,
+          region: "Pays de Loire",
+          pays: "France",
+          lieuReprise: null,
+        },
+        deces: {
+          minute: null,
+          heure: null,
+          jour: 2,
+          mois: 12,
+          annee: 2020,
+          voie: null,
+          ville: "bordeau",
+          arrondissement: null,
+          region: "Nouvelle-Aquitaine",
+          pays: "France",
+          lieuReprise: null,
+        },
+        autresNoms: [
+          {
+            nom: "O",
+            type: "ANCIEN_NOM",
+          },
+        ],
+        prenoms: ["Julie", "Sarah"],
+        autresPrenoms: ["Mireille"],
+        parents: [
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Glenn",
+            prenoms: ["Pearl", "Ginger"],
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Nora",
+            prenoms: ["Reed"],
+          },
+        ],
+        enfants: [
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Janine",
+            prenoms: ["Alyce"],
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Kirsten",
+            prenoms: ["Louella"],
+          },
+          {
+            id: null,
+            typeLienParente: "ADOPTION",
+            nom: "Reynolds",
+            prenoms: ["Mcleod", "Bates"],
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Barton",
+            prenoms: ["Buck"],
+          },
+        ],
+        rcs: [
+          {
+            id: "76b62678-8b06-4442-ad5b-b9207627a6e3",
+            numero: "1",
+            statut: "ACTIF",
+          },
+          {
+            id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
+            numero: "4",
+            statut: "INACTIF",
+          },
+        ],
+        rcas: [
+          {
+            id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
+            numero: "4094",
+            statut: "ACTIF",
+          },
+        ],
+        pacss: [],
+        actes: [
+          {
+            id: "b41079a5-9e8f-478a-b04c-c4c2ac671123",
+            numero: "254",
+            statut: null,
+            nature: "NAISSANCE",
+          },
+        ],
+      },
+    ],
+    estReecrit: false,
+    detailMariage: null,
+    registre: {
+      id: "e5f36d96-f1f8-437e-8371-76dba9837337",
+      famille: "DEP",
+      pocopa: "IRAN",
+      annee: 1987,
+      support1: null,
+      support2: null,
+      numeroDernierActe: "454",
+      pvOuverture: "pv_ouverture",
+      dateOuverture: [1993, 6, 6],
+      pvFermeture: "pv_fermeture",
+      dateFermeture: [1969, 2, 16],
+      decret2017: true,
+      type: {
+        id: "d5f36d96-f1f8-437e-8371-86dba9837341",
+        famille: "DEP",
+        pocopa: "TUNIS",
+        paysPocopa: "TUNISIE",
+        dateRattachement: [1993, 6, 6],
+        dateTransfertScec: [1969, 2, 16],
+        gereScec: true,
+        estOuvert: true,
+        description: "",
+      },
+    },
+    motifAnnulation: "",
+    dateInitialisationprojet: null,
+    numeroProjet: "a3",
+    corpsExtraitRectifications: [],
+    corpsImage: {
+      id: "ea2b891e-70f6-4f6e-a27f-dcb9d7d418a2",
+      idActe: "b41079a5-9e8f-478a-b04c-c4c2ac671123",
+      dateCreationActe: 1141815600000,
+      numeroActe: "254",
+      images: [
+        {
+          idActeImage: "960078ff-1671-4908-867e-d95f2ae42f80",
+          pathFichier: "actes\\L1_I00003_1.tif",
+          conteneur: "actes_image",
+          fichier: "L1_I00003_1.tif",
+          noPage: 1,
+          statutRepriseImageActe: "A_REPRENDRE",
+          dateDerniereTentative: null,
+          messageErreurDerniereTentative: null,
+        },
+        {
+          idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
+          pathFichier: "actes\\P1_I00001_1.tif",
+          conteneur: "actes_image",
+          fichier: "P1_I00001_1.tif",
+          noPage: 1,
+          statutRepriseImageActe: "A_REPRENDRE",
+          dateDerniereTentative: null,
+          messageErreurDerniereTentative: null,
+        },
+      ],
+      natureActe: "NAISSANCE",
+    },
+    analyseMarginales: [
+      {
+        dateDebut: 1612782000000,
+        dateFin: null,
+        nomOec: null,
+        prenomOec: null,
+        motifModification: "FRANCISATION_PRENOM",
+        titulaires: [
+          {
+            nom: "Patamob",
+            prenoms: ["Alphonse"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: "FEMININ",
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: "CHANGEMENT_NOM",
+            dateDeclarationConjointe: "2000-11-26",
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null,
+          },
+        ],
+      },
+      {
+        dateDebut: 1577358000000,
+        dateFin: null,
+        nomOec: "Lens",
+        prenomOec: "Alexis",
+        motifModification: "CHANGEMENT_PRENOM",
+        titulaires: [
+          {
+            nom: "Ozaur",
+            prenoms: ["Amandine"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: null,
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null,
+          },
+        ],
+      },
+    ],
+    type: "IMAGE",
+  },
+};
+
+export const idFicheActeAvecGenreIndetermine =
+  "b45079a5-9e8f-478a-b07c-c4c2az671123";
+export const ficheActeAvecGenreIndetermine = {
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-478a-b07c-c4c2az671123",
+  data: {
+    id: "b45079a5-9e8f-478a-b07c-c4c2az671123",
+    dateInitialisation: null,
+    dateCreation: 1141815600000,
+    modeCreation: "ETABLI",
+    statut: "ANNULE",
+    dateStatut: 1282816800000,
+    nature: "NAISSANCE",
+    numero: "254",
+    numeroBisTer: "35",
+    nomOec: "DUCLOS",
+    prenomOec: "HENRI",
+    dateDerniereDelivrance: 1207130400000,
+    dateDerniereMaj: 1041505200000,
+    visibiliteArchiviste: "NON",
+    evenement: {
+      minute: 15,
+      heure: 13,
+      jour: 10,
+      mois: 10,
+      annee: 1901,
+      voie: null,
+      ville: "Paris",
+      arrondissement: "16",
+      region: "Paris",
+      pays: "France",
+      lieuReprise: null,
+    },
+    mentions: [],
+    titulaires: [
+      {
+        nom: "Micheldelavandièredugrand-large",
+        ordre: 2,
+        prenoms: ["lolita"],
+        sexe: "INDETERMINE",
+        naissance: {
+          autresNoms: null,
+          autresPrenoms: null,
+          minute: null,
+          heure: null,
+          jour: 17,
+          mois: 4,
+          annee: 1970,
+          voie: null,
+          ville: "Sitka",
+          arrondissement: null,
+          region: "Alaska",
+          pays: "États-Unis",
+          lieuReprise: null,
+        },
+        filiations: [
+          {
+            lienParente: "PARENT",
+            ordre: 1,
+            nom: "Sacken",
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: null,
+              mois: null,
+              annee: null,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null,
+            },
+            profession: "Informaticien",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI",
+            },
+            prenoms: ["Jean", "Louis"],
+          },
+          {
+            lienParente: "PARENT",
+            ordre: 2,
+            nom: "DUPOND",
+            sexe: "FEMININ",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 26,
+              mois: 6,
+              annee: 1981,
+              voie: null,
+              ville: "Nantes",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "France",
+              lieuReprise: null,
+            },
+            profession: "Dentiste",
+            age: null,
+            domicile: {
+              voie: "16 avenue des Palmiers",
+              ville: "Djibouti",
+              arrondissement: null,
+              region: null,
+              pays: "DJIBOUTI",
+            },
+            prenoms: ["Louise", "Jocelyne"],
+          },
+        ],
+        profession: "DEVELOPPEUR",
+        age: null,
+        domicile: {
+          voie: "IlotduHéron",
+          ville: "Djibouti",
+          arrondissement: null,
+          region: null,
+          pays: "DJIBOUTI",
+        },
+        typeDeclarationConjointe: "CHOIX_NOM",
+        dateDeclarationConjointe: [1999, 2, 3],
+        nomPartie1: "nom1",
+        nomPartie2: "nom2",
+        nomAvantMariage: "Micheldelavandièredugrand",
+        nomApresMariage: "Micheldelavandièredugrand-large",
+        nomDernierConjoint: "Large",
+        prenomsDernierConjoint: "Jean Maxime",
+      },
+    ],
+    piecesAnnexes: [],
+    alerteActes: [],
+    personnes: [
+      {
+        id: "e7114c57-d00d-48ad-bbee-af2b01e2da61",
+        nom: "Durant",
+        sexe: "FEMININ",
+        nationalite: "FRANCAISE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 1,
+          mois: 10,
+          annee: 1960,
+          voie: null,
+          ville: "nantes",
+          arrondissement: null,
+          region: "Pays de Loire",
+          pays: "France",
+          lieuReprise: null,
+        },
+        deces: {
+          minute: null,
+          heure: null,
+          jour: 2,
+          mois: 12,
+          annee: 2020,
+          voie: null,
+          ville: "bordeau",
+          arrondissement: null,
+          region: "Nouvelle-Aquitaine",
+          pays: "France",
+          lieuReprise: null,
+        },
+        autresNoms: [
+          {
+            nom: "O",
+            type: "ANCIEN_NOM",
+          },
+        ],
+        prenoms: ["Julie", "Sarah"],
+        autresPrenoms: ["Mireille"],
+        parents: [
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Glenn",
+            prenoms: ["Pearl", "Ginger"],
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Nora",
+            prenoms: ["Reed"],
+          },
+        ],
+        enfants: [
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Janine",
+            prenoms: ["Alyce"],
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Kirsten",
+            prenoms: ["Louella"],
+          },
+          {
+            id: null,
+            typeLienParente: "ADOPTION",
+            nom: "Reynolds",
+            prenoms: ["Mcleod", "Bates"],
+          },
+          {
+            id: null,
+            typeLienParente: "DIRECT",
+            nom: "Barton",
+            prenoms: ["Buck"],
+          },
+        ],
+        rcs: [
+          {
+            id: "76b62678-8b06-4442-ad5b-b9207627a6e3",
+            numero: "1",
+            statut: "ACTIF",
+          },
+          {
+            id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
+            numero: "4",
+            statut: "INACTIF",
+          },
+        ],
+        rcas: [
+          {
+            id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
+            numero: "4094",
+            statut: "ACTIF",
+          },
+        ],
+        pacss: [],
+        actes: [
+          {
+            id: "b41079a5-9e8f-478a-b04c-c4c2ac671123",
+            numero: "254",
+            statut: null,
+            nature: "NAISSANCE",
+          },
+        ],
+      },
+    ],
+    estReecrit: false,
+    detailMariage: null,
+    registre: {
+      id: "e5f36d96-f1f8-437e-8371-76dba9837337",
+      famille: "DEP",
+      pocopa: "IRAN",
+      annee: 1987,
+      support1: null,
+      support2: null,
+      numeroDernierActe: "454",
+      pvOuverture: "pv_ouverture",
+      dateOuverture: [1993, 6, 6],
+      pvFermeture: "pv_fermeture",
+      dateFermeture: [1969, 2, 16],
+      decret2017: true,
+      type: {
+        id: "d5f36d96-f1f8-437e-8371-86dba9837341",
+        famille: "DEP",
+        pocopa: "TUNIS",
+        paysPocopa: "TUNISIE",
+        dateRattachement: [1993, 6, 6],
+        dateTransfertScec: [1969, 2, 16],
+        gereScec: true,
+        estOuvert: true,
+        description: "",
+      },
+    },
+    motifAnnulation: "",
+    dateInitialisationprojet: null,
+    numeroProjet: "a3",
+    corpsExtraitRectifications: [],
+    corpsImage: {
+      id: "ea2b891e-70f6-4f6e-a27f-dcb9d7d418a2",
+      idActe: "b41079a5-9e8f-478a-b04c-c4c2ac671123",
+      dateCreationActe: 1141815600000,
+      numeroActe: "254",
+      images: [
+        {
+          idActeImage: "960078ff-1671-4908-867e-d95f2ae42f80",
+          pathFichier: "actes\\L1_I00003_1.tif",
+          conteneur: "actes_image",
+          fichier: "L1_I00003_1.tif",
+          noPage: 1,
+          statutRepriseImageActe: "A_REPRENDRE",
+          dateDerniereTentative: null,
+          messageErreurDerniereTentative: null,
+        },
+        {
+          idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
+          pathFichier: "actes\\P1_I00001_1.tif",
+          conteneur: "actes_image",
+          fichier: "P1_I00001_1.tif",
+          noPage: 1,
+          statutRepriseImageActe: "A_REPRENDRE",
+          dateDerniereTentative: null,
+          messageErreurDerniereTentative: null,
+        },
+      ],
+      natureActe: "NAISSANCE",
+    },
+    analyseMarginales: [
+      {
+        dateDebut: 1612782000000,
+        dateFin: null,
+        nomOec: null,
+        prenomOec: null,
+        motifModification: "FRANCISATION_PRENOM",
+        titulaires: [
+          {
+            nom: "Patamob",
+            prenoms: ["Alphonse"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: "FEMININ",
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: "CHANGEMENT_NOM",
+            dateDeclarationConjointe: "2000-11-26",
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null,
+          },
+        ],
+      },
+      {
+        dateDebut: 1577358000000,
+        dateFin: null,
+        nomOec: "Lens",
+        prenomOec: "Alexis",
+        motifModification: "CHANGEMENT_PRENOM",
+        titulaires: [
+          {
+            nom: "Ozaur",
+            prenoms: ["Amandine"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: null,
+            naissance: null,
+            profession: null,
+            age: null,
+            domicile: null,
+            filiations: null,
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null,
+          },
+        ],
+      },
+    ],
+    type: "IMAGE",
+  },
+};
+
+export const idFicheActeAvecTitulaireMultiple =
+  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+export const ficheActeAvecTitulaireMultiple = {
+  errors: [],
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece-etatcivil-api/v1/acte/b45079a5-9e8f-488a-b07c-c4c2az613121",
+  data: {
+    id: idFicheActeMariage,
+    dateInitialisation: null,
+    dateCreation: 1256986800000,
+    modeCreation: "DRESSE",
+    statut: "VALIDE",
+    dateStatut: 1045652400000,
+    nature: "MARIAGE",
+    numero: "8012",
+    numeroBisTer: "681ABC",
+    nomOec: "MARTIN",
+    prenomOec: "JULIE",
+    dateDerniereDelivrance: 1413972000000,
+    dateDerniereMaj: 1536400800000,
+    visibiliteArchiviste: "NON",
+    evenement: {
+      minute: null,
+      heure: null,
+      jour: 25,
+      mois: 6,
+      annee: 1990,
+      voie: null,
+      ville: "Barcelone",
+      arrondissement: null,
+      region: "Catalogne",
+      pays: "Espagne",
+      lieuReprise: null,
+    },
+    mentions: [],
+    titulaires: [
+      {
+        nom: "MARTIN",
+        prenoms: ["Jean-Louis", "Alphonse", "Raoül"],
+        autresNoms: null,
+        autresPrenoms: null,
+        ordre: 1,
+        sexe: "MASCULIN",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 29,
+          mois: 11,
+          annee: 1989,
+          voie: null,
+          ville: "Paris",
+          arrondissement: null,
+          region: "",
+          pays: "Fance",
+          lieuReprise: null,
+        },
+        profession: "Enseignante",
+        age: null,
+        domicile: {
+          voie: "7 Rue du Noyer",
+          ville: "Bruxelles",
+          arrondissement: null,
+          region: "Flandre",
+          pays: "BELGIQUE",
+        },
+        filiations: [
+        ],
+        typeDeclarationConjointe: null,
+        dateDeclarationConjointe: null,
+        nomPartie1: null,
+        nomPartie2: null,
+        nomAvantMariage: null,
+        nomApresMariage: null,
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null,
+      },
+      {
+        nom: "PRODESK",
+        prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
+        autresNoms: null,
+        autresPrenoms: null,
+        ordre: 2,
+        sexe: "FEMININ",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 25,
+          mois: 6,
+          annee: 1990,
+          voie: null,
+          ville: "Barcelone",
+          arrondissement: null,
+          region: "Catalogne",
+          pays: "Espagne",
+          lieuReprise: null,
+        },
+        profession: "Enseignante",
+        age: null,
+        domicile: {
+          voie: "7 Rue du Noyer",
+          ville: "Bruxelles",
+          arrondissement: null,
+          region: "Flandre",
+          pays: "BELGIQUE",
+        },
+        filiations: [
+        ],
+        typeDeclarationConjointe: null,
+        dateDeclarationConjointe: null,
+        nomPartie1: null,
+        nomPartie2: null,
+        nomAvantMariage: null,
+        nomApresMariage: null,
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null,
+      },
+      {
+        nom: "PRODESK",
+        prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
+        autresNoms: null,
+        autresPrenoms: null,
+        ordre: 2,
+        sexe: "INCONNU",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 25,
+          mois: 6,
+          annee: 1990,
+          voie: null,
+          ville: "Barcelone",
+          arrondissement: null,
+          region: "Catalogne",
+          pays: "Espagne",
+          lieuReprise: null,
+        },
+        profession: "Enseignante",
+        age: null,
+        domicile: {
+          voie: "7 Rue du Noyer",
+          ville: "Bruxelles",
+          arrondissement: null,
+          region: "Flandre",
+          pays: "BELGIQUE",
+        },
+        filiations: [
+        ],
+        typeDeclarationConjointe: null,
+        dateDeclarationConjointe: null,
+        nomPartie1: null,
+        nomPartie2: null,
+        nomAvantMariage: null,
+        nomApresMariage: null,
+        nomDernierConjoint: null,
+        prenomsDernierConjoint: null,
+      },
+    ],
+    piecesAnnexes: [],
+    alerteActes: [],
+    personnes: [
+      {
+        id: "e7114c50-d00d-48ad-bbee-af2b01e2da8b",
+        nom: "Prodesk",
+        sexe: "FEMININ",
+        nationalite: "ETRANGERE",
+        naissance: {
+          minute: 25,
+          heure: 16,
+          jour: 25,
+          mois: 6,
+          annee: 1990,
+          voie: null,
+          ville: "Barcelone",
+          arrondissement: null,
+          region: "Catalogne",
+          pays: "Espagne",
+          lieuReprise: null,
+        },
+        autresNoms: [],
+        prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
+        autresPrenoms: [],
+        parents: [],
+        enfants: [],
+        rcs: [],
+        rcas: [],
+        pacss: [],
+        actes: [
+          {
+            id: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
+            numero: "8012",
+            statut: null,
+            nature: "MARIAGE",
+          },
+        ],
+      },
+      {
+        id: "e7114c50-d00d-48ad-bbee-af2b01e2da8e",
+        nom: "MARTIN",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        naissance: {
+          minute: 16,
+          heure: 8,
+          jour: 29,
+          mois: 11,
+          annee: 1989,
+          voie: "rue des mirabelles",
+          ville: "Paris",
+          arrondissement: "8",
+          region: null,
+          pays: "France",
+          lieuReprise: null,
+        },
+        autresNoms: [],
+        prenoms: ["Jean-Louis", "Alphonse", "Raoûl"],
+        autresPrenoms: [],
+        parents: [],
+        enfants: [],
+        rcs: [],
+        rcas: [],
+        pacss: [],
+        actes: [
+          {
+            id: "b41079a5-9e8d-478c-b04c-c4c2ac67134b",
+            numero: "8012",
+            statut: null,
+            nature: "MARIAGE",
+          },
+        ],
+      },
+    ],
+    estReecrit: true,
+    registre: {
+      id: "e60432a7-7fb1-41d9-b6ad-a01fffbd223b",
+      famille: "ACQ",
+      pocopa: "X",
+      annee: 1951,
+      support1: "1",
+      support2: null,
+      numeroDernierActe: "4564",
+      pvOuverture: "pv_ouverture",
+      dateOuverture: [1995, 12, 25],
+      pvFermeture: "pv_fermeture",
+      dateFermeture: [1990, 1, 20],
+      decret2017: null,
+      type: {
+        id: "d5f36d96-f1f8-437e-8371-86dba9837339",
+        famille: "ACQ",
+        pocopa: "TUNIS",
+        paysPocopa: "TUNISIE",
+        dateRattachement: [1993, 6, 6],
+        dateTransfertScec: [1969, 2, 16],
+        gereScec: true,
+        estOuvert: true,
+        description: "",
+      },
+    },
+    motifAnnulation: "motif annulation",
+    dateInitialisationprojet: null,
+    numeroProjet: "a11",
+    corpsExtraitRectifications: [],
+    corpsImage: {
+      images: [
+        {
+          contenu: "base64",
+          noPage: 1,
+        },
+      ],
+    },
+    analyseMarginales: [
+      {
+        dateDebut: 1612782000000,
+        dateFin: null,
+        nomOec: null,
+        prenomOec: null,
+        motifModification: "FRANCISATION_PRENOM",
+        titulaires: [
+          {
+            nom: "MARTIN",
+            prenoms: ["Jean-Louis", "Alphonse", "Raoül"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 1,
+            sexe: "MASCULIN",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 29,
+              mois: 11,
+              annee: 1989,
+              voie: null,
+              ville: "Paris",
+              arrondissement: null,
+              region: "",
+              pays: "Fance",
+              lieuReprise: null,
+            },
+            profession: "Enseignante",
+            age: null,
+            domicile: {
+              voie: "7 Rue du Noyer",
+              ville: "Bruxelles",
+              arrondissement: null,
+              region: "Flandre",
+              pays: "BELGIQUE",
+            },
+            filiations: [
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI",
+                },
+                prenoms: ["Carmela", "Linzy"],
+              },
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI",
+                },
+                prenoms: ["Carmelaa", "Linzy"],
+              },
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT_ADOPTANT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI",
+                },
+                prenoms: ["Carmelaaa", "Linzy"],
+              },
+              {
+                type: null,
+                ordre: 1,
+                nom: "Sacken",
+                sexe: "FEMININ",
+                naissance: null,
+                profession: "Coiffeuse",
+                age: null,
+                lienParente: "PARENT_ADOPTANT",
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI",
+                },
+                prenoms: ["Carmelaaaa", "Linzy"],
+              },
+            ],
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null,
+          },
+          {
+            nom: "PRODESK",
+            prenoms: ["Elodie", "Marie-Charlotte", "Pauline"],
+            autresNoms: null,
+            autresPrenoms: null,
+            ordre: 2,
+            sexe: "FEMININ",
+            naissance: {
+              minute: null,
+              heure: null,
+              jour: 25,
+              mois: 6,
+              annee: 1990,
+              voie: null,
+              ville: "Barcelone",
+              arrondissement: null,
+              region: "Catalogne",
+              pays: "Espagne",
+              lieuReprise: null,
+            },
+            profession: "Enseignante",
+            age: null,
+            domicile: {
+              voie: "7 Rue du Noyer",
+              ville: "Bruxelles",
+              arrondissement: null,
+              region: "Flandre",
+              pays: "BELGIQUE",
+            },
+            filiations: [
+              {
+                lienParente: "PARENT_ADOPTANT",
+                type: null,
+                ordre: 752,
+                nom: "Sacken",
+                sexe: "MASCULIN",
+                naissance: null,
+                profession: "Informaticien",
+                age: null,
+                domicile: {
+                  voie: "16 avenue des Palmiers",
+                  ville: "Djibouti",
+                  arrondissement: null,
+                  region: null,
+                  pays: "DJIBOUTI",
+                },
+                prenoms: ["Carmela", "Linzy"],
+              },
+            ],
+            typeDeclarationConjointe: null,
+            dateDeclarationConjointe: null,
+            nomPartie1: null,
+            nomPartie2: null,
+            nomAvantMariage: null,
+            nomApresMariage: null,
+            nomDernierConjoint: null,
+            prenomsDernierConjoint: null,
+          },
+        ],
+      },
+    ],
+    type: "IMAGE",
+    detailMariage: {
+      existenceContrat: "NON",
+    },
+  },
 };

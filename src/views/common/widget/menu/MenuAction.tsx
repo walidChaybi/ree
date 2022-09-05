@@ -13,12 +13,14 @@ import "./scss/MenuAction.scss";
 interface IMenuActionProps {
   titre: string;
   onSelect: (indexMenu: number) => any;
-  listeActions: IActionOption[];
+  listeActions?: IActionOption[];
   deplierEnBas?: boolean;
   className?: string;
+  classNameBouton?: string;
   widthMenuItem?: string;
   afficheChevron?: boolean;
   infoBulle?: string;
+  actionMoins?: () => void;
 }
 
 export const MenuAction: React.FC<IMenuActionProps> = props => {
@@ -50,7 +52,10 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
 
   return (
     <div title={props.infoBulle} className={`MenuAction ${props.className}`}>
-      <Bouton onClick={handleClick}>
+      <Bouton
+        className={`${props.classNameBouton}`}
+        onClick={props.actionMoins ? props.actionMoins : handleClick}
+      >
         <span>{props.titre}</span>
         {props.afficheChevron && afficheFleche()}
       </Bouton>
@@ -63,9 +68,10 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
         onClose={handleClose}
         TransitionProps={{
           onEnter: () => {
-            props.listeActions.forEach(el => {
-              DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
-            });
+            props.listeActions &&
+              props.listeActions.forEach(el => {
+                DoubleSubmitUtil.reactiveOnClick(el.ref?.current);
+              });
           }
         }}
         PaperProps={{
@@ -82,19 +88,20 @@ export const MenuAction: React.FC<IMenuActionProps> = props => {
           horizontal: "left"
         }}
       >
-        {props.listeActions.map(el => (
-          <MenuItem
-            ref={el.ref}
-            onClick={event => {
-              DoubleSubmitUtil.desactiveOnClick(el.ref?.current);
-              handleClose();
-              props.onSelect(el.value);
-            }}
-            key={el.value}
-          >
-            {el.label}
-          </MenuItem>
-        ))}
+        {props.listeActions &&
+          props.listeActions.map(el => (
+            <MenuItem
+              ref={el.ref}
+              onClick={event => {
+                DoubleSubmitUtil.desactiveOnClick(el.ref?.current);
+                handleClose();
+                props.onSelect(el.value);
+              }}
+              key={el.value}
+            >
+              {el.label}
+            </MenuItem>
+          ))}
       </Menu>
     </div>
   );

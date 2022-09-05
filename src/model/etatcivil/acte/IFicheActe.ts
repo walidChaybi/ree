@@ -6,7 +6,8 @@ import {
   premiereLettreEnMinuscule,
   supprimeSautDeLigneEtEspaceInutiles,
   triListeObjetsSurPropriete,
-  TROIS
+  TROIS,
+  UN
 } from "../../../views/common/util/Utils";
 import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
 import { IPersonne } from "../commun/IPersonne";
@@ -233,6 +234,33 @@ export const FicheActe = {
         }
       ];
     } else return [];
+  },
+  estNombreDeTitulaireErrone(acte: IFicheActe): boolean | undefined {
+    let error;
+    if (acte && acte.titulaires) {
+      const nombreTitulaire = acte.titulaires?.length;
+      switch (acte.nature) {
+        case NatureActe.DECES:
+        case NatureActe.NAISSANCE:
+          if (nombreTitulaire > UN) {
+            error = true;
+          }
+          break;
+        case NatureActe.MARIAGE:
+          if (nombreTitulaire > DEUX) {
+            error = true;
+          }
+          break;
+        default:
+          break;
+      }
+
+      if (!error) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   }
 };
 

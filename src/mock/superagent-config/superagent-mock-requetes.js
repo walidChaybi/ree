@@ -1,10 +1,15 @@
 import {
+  detailRequeteDelivranceAvecTitulaireMultiple,
+  detailRequeteDelivranceCopieArchive,
+  detailRequeteDelivranceGenreIndetermine,
+  getRequeteAvecDeuxDocs,
   getRequeteSansDoc,
   ReponseAppelDetailRequeteDelivrance,
   ReponseAppelDetailRequeteDelivranceASigner,
   ReponseAppelDetailRequeteDelivranceBrouillon,
   ReponseAppelDetailRequeteDelivrancePriseEnCharge,
   ReponseAppelDetailRequeteDelivranceRDC,
+  requeteActeMariageAvecTroisTitulaire,
   requeteAvecCopieIntegraleActeImage,
   requeteAvecDocs,
   requeteSansDocument
@@ -203,6 +208,10 @@ export const configRequetes = [
         match[1] ===
           "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f77/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
         match[1] ===
+          "/requetes/delivrance/9bfa282d-1e66-4538-b272-b9de4g683aaf/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+        // match[1] ===
+        //   "/requetes/delivrance/9bfa282d-1e66-4038-b272-b9de48683a1f/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
+        match[1] ===
           "/requetes/delivrance/f0ea8f29-ddcd-494b-86e4-0a58f6990c96/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER"
       ) {
         return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
@@ -270,7 +279,6 @@ export const configRequetes = [
           };
         }
       }
-
       // Détail requête Délivrance
       if (match[1] === "/requetes/7b448d64-add5-4dbd-8041-b7081ea7bc86") {
         return { data: requeteSansDocument };
@@ -298,6 +306,26 @@ export const configRequetes = [
       }
       if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f683f77") {
         return { data: requeteAvecCopieIntegraleActeImage };
+      }
+      if (match[1] === "/requetes/9bfa282d-1e66-4038-b271-b9de48283a1f") {
+        return { data: requeteActeMariageAvecTroisTitulaire };
+      }
+      if (match[1] === "/requetes/9bfa282d-1e66-4038-b271-b9de48283a8f") {
+        return { data: detailRequeteDelivranceAvecTitulaireMultiple };
+      }
+      if (match[1] === "/requetes/9bfa282d-1e66-4038-b272-b9de48683a8f") {
+        return { data: detailRequeteDelivranceGenreIndetermine };
+      }
+      if (match[1] === "/requetes/9bfa282d-1e66-4538-b272-b9de4g683aaf") {
+        if (compteur === 0) {
+          compteur++;
+          return { data: detailRequeteDelivranceCopieArchive };
+        } else {
+          compteur = 0;
+          return {
+            data: getRequeteAvecDeuxDocs(detailRequeteDelivranceCopieArchive)
+          };
+        }
       }
 
       if (match[1] === "/requetes/9bfa282d-1e66-4538-b242-b9de4f693f0e") {
@@ -544,6 +572,15 @@ export const configRequetes = [
         return { data: {} };
       }
 
+      // Supression du documents complementaire (DELETE)
+      if (
+        match[1] ===
+          "/documentsreponses/documentComplementaire/28bc3078-7e53-4b8b-8cf8-7f75a2502573?idRequete=9bfa282d-1e66-4538-b242-b9de4f683f0f" &&
+        context.method === "delete"
+      ) {
+        return { data: true };
+      }
+
       // Ajout observation
       if (
         (match[1] ===
@@ -675,6 +712,18 @@ export const configRequetes = [
       ) {
         return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
       }
+      if (
+        match[1] ===
+        "/documentsreponses/update/9bfa282d-1e66-4538-b272-b9de4g683aaf"
+      ) {
+        return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
+      }
+      // if (
+      //   match[1] ===
+      //   "/documentsreponses/update/9bfa282d-1e66-4038-b272-b9de48683a1f"
+      // ) {
+      //   return { data: ["9bfa282d-1e66-4538-b242-b9de4f683777"] };
+      // }
 
       const error = {
         msg: "url api requete non mockée",

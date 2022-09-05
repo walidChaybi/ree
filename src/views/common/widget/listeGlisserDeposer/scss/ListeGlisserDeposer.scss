@@ -35,13 +35,6 @@
       cursor: grab;
       vertical-align: middle;
     }
-    .IconeSupprimer {
-      width: 1em;
-      cursor: pointer;
-      height: 1em;
-      float: right;
-      padding: 9px;
-    }
   }
   li:hover {
     background-color: $application-hoover !important;
