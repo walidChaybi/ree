@@ -271,7 +271,9 @@ function saisieLieuEvt(
     [VILLE]: getValeurOuVide(evenement?.ville),
     [ARRONDISSEMENT]: getValeurOuVide(evenement?.arrondissement),
     [REGION_DEPARTEMENT]: getValeurOuVide(evenement?.region),
-    [PAYS]: getValeurOuVide(evenement?.pays),
+    [PAYS]: getValeurOuVide(
+      LieuxUtils.isPaysFrance(evenement?.pays) ? "" : evenement?.pays
+    ),
     [ETRANGER_FRANCE]: getEtrangerOuFrance(evenement, etrangerParDefaut)
   };
 }
