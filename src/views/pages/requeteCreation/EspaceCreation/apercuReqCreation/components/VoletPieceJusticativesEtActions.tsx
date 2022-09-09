@@ -17,7 +17,7 @@ interface ItemListe {
 export const VoletPieceJustificativesEtActions: React.FC<
   VoletPieceJusticativesEtActionsProps
 > = props => {
-  const [ongletSelectionne, setOngletSelectionne] = useState(1);
+  const [ongletSelectionne, setOngletSelectionne] = useState(0);
 
   const liste: ItemListe[] = [
     {

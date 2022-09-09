@@ -1,4 +1,5 @@
 import React from "react";
+import { RetourSdanf } from "../../../../../../../model/requete/enum/RetourSdanf";
 import { IEchange } from "../../../../../../../model/requete/IEchange";
 interface ItemEchangesRetourSDANFProps {
   echanges?: IEchange[];
@@ -13,7 +14,7 @@ export const ItemEchangesRetourSDANF: React.FC<
         {props.echanges?.map((echange, index) => (
           <li className="container" key={echange.id || 0 + index}>
             <span className="date">
-              {echange.nature} - {echange.date}
+              {RetourSdanf.getEnumFor(echange.nature).libelle} - {echange.date}
             </span>
             <span className="message">{echange.message}</span>
           </li>

@@ -49,6 +49,7 @@ export const ConfirmationPopinAvecMessage: React.FC<
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       className="ConfirmationPopinAvecMessage"
+      data-testid="popinConfirmationEtMessage"
     >
       {title && <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}
       <DialogContent>

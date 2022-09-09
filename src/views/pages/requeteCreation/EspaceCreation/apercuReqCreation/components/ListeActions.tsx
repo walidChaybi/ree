@@ -23,8 +23,11 @@ interface ListeActionsRetourSDANFProps {
 
 export const estSuperieurA500Caracteres = (texte: string) => {
   const maxTexte = 500;
-  if (texte.length > maxTexte) return true;
-  else return false;
+  if (texte.length > maxTexte) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 export const getPrenomEtNom = () => {
@@ -60,7 +63,7 @@ export const ListeActionsRetourSDANF: React.FC<
     },
     {
       value: 1,
-      label: "Element manquant"
+      label: "Élément manquant"
     },
     {
       value: 2,
@@ -95,6 +98,7 @@ export const ListeActionsRetourSDANF: React.FC<
       props.setEchanges([...(props.echanges ?? []), messageRetourSDANFMapped]);
 
       setIsOpen(false);
+      setDisabledActions(true);
       setMessageSDANF("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -121,7 +125,7 @@ export const ListeActionsRetourSDANF: React.FC<
         setTitle(getLibelle("Acte irrecevable"));
         break;
       case ELEMENT_MANQUANT:
-        setTitle(getLibelle("Element manquant"));
+        setTitle(getLibelle("Élément manquant"));
         break;
       case SUSPICION_DE_FRAUDE:
         setTitle(getLibelle("Suspicion de fraude / nouvel élément"));

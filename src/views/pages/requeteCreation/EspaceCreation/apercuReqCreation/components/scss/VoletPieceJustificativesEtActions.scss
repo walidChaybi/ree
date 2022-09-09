@@ -20,6 +20,15 @@
     padding: 0.2rem 0;
   }
 
+  .VoletAvecOnglet {
+    .BarreOnglet {
+      .MuiTab-wrapper {
+        text-transform: none;
+        font-size: 1.1rem;
+      }
+    }
+  }
+
   .ItemEchangesRetourSDANF {
     .listeMessage {
       padding: 0;

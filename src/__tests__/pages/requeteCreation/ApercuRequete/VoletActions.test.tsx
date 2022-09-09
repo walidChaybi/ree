@@ -16,6 +16,7 @@ import {
   requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut,
   requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut,
   requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus,
+  requeteCreationAvecMessagesRetourSDANFAvecMessages,
   requeteCreationAvecMessagesRetourSDANFSansLesDroits
 } from "../../../../mock/data/requeteCreation";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
@@ -30,300 +31,464 @@ beforeAll(() => {
   storeRece.listeUtilisateurs = LISTE_UTILISATEURS;
 });
 
-describe("Volet Actions", () => {
-  test("L'encart retour SDANF est present dans la page", async () => {
-    await act(async () => {
-      const history = createMemoryHistory();
+test("L'encart retour SDANF est present dans la page", async () => {
+  act(() => {
+    const history = createMemoryHistory();
 
-      history.push(
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
-          "a4cefb71-8457-4f6b-937e-34b49335d404"
-        )
-      );
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d404"
+      )
+    );
 
-      render(
-        <>
-          <Router history={history}>
-            <Route
-              exact={true}
-              path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
-            >
-              <VoletPieceJustificativesEtActions
-                requete={mappingRequeteCreation(requeteCreation)}
-              />
-            </Route>
-          </Router>
-        </>
-      );
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText("Retour SDANF")).toBeDefined();
-    });
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+          >
+            <VoletPieceJustificativesEtActions
+              requete={mappingRequeteCreation(requeteCreation)}
+            />
+          </Route>
+        </Router>
+      </>
+    );
   });
 
-  test("Doit afficher la liste des messages avec le bon nombre de messages", async () => {
-    await act(async () => {
-      const history = createMemoryHistory();
-
-      history.push(
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
-          "a4cefb71-8457-4f6b-937e-34b49335d404"
-        )
-      );
-
-      render(
-        <>
-          <Router history={history}>
-            <Route
-              exact={true}
-              path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
-            >
-              <VoletPieceJustificativesEtActions
-                requete={mappingRequeteCreation(
-                  requeteCreationAvecMessagesRetourSDANFSansLesDroits
-                )}
-              />
-            </Route>
-          </Router>
-        </>
-      );
-    });
-
-    await waitFor(() => {
-      expect(document.querySelectorAll("li.container").length).toEqual(2);
-
-      expect(
-        screen.getByText(
-          "Acte irrecevable - Bonjour je ne peux recevoir votre demande - Johann"
-        )
-      ).toBeDefined();
-    });
+  await waitFor(() => {
+    const boutonVoletAction = screen.getByText("Actions");
+    fireEvent.click(boutonVoletAction);
   });
 
-  test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_CHARGE", async () => {
-    await act(async () => {
-      const history = createMemoryHistory();
+  await waitFor(() => {
+    expect(screen.getByText("Retour SDANF")).toBeDefined();
+  });
+});
 
-      history.push(
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
-          "3ed97a35-c9b0-4ae4-b2dc-75eb84e4085c"
-        )
-      );
+test("Doit afficher le message avec le bon format titre - message - prenomNom", async () => {
+  act(() => {
+    const history = createMemoryHistory();
 
-      render(
-        <>
-          <Router history={history}>
-            <Route
-              exact={true}
-              path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
-            >
-              <VoletPieceJustificativesEtActions
-                requete={mappingRequeteCreation(
-                  requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus
-                )}
-              />
-            </Route>
-          </Router>
-        </>
-      );
-    });
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        "3ed9aa4e-921b-429f-b8fe-531dd103c68s"
+      )
+    );
 
-    await waitFor(() => {
-      const button = screen.getByText("Acte irrecevable").closest("button");
-      expect(button).toBeDisabled();
-    });
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+          >
+            <VoletPieceJustificativesEtActions
+              requete={mappingRequeteCreation(
+                requeteCreationAvecMessagesRetourSDANFAvecMessages
+              )}
+            />
+          </Route>
+        </Router>
+      </>
+    );
   });
 
-  test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete n'est pas la meme que l'agent", async () => {
-    await act(async () => {
-      const history = createMemoryHistory();
-
-      storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-
-      history.push(
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
-          "3ed9aa4e-921b-489f-b8fe-531dd703c68f"
-        )
-      );
-
-      render(
-        <>
-          <Router history={history}>
-            <Route
-              exact={true}
-              path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
-            >
-              <VoletPieceJustificativesEtActions
-                requete={mappingRequeteCreation(
-                  requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut
-                )}
-              />
-            </Route>
-          </Router>
-        </>
-      );
-    });
-
-    await waitFor(() => {
-      const button = screen.getByText("Acte irrecevable").closest("button");
-      expect(button).toBeDisabled();
-    });
+  await waitFor(() => {
+    const boutonVoletAction = screen.getByText("Actions");
+    fireEvent.click(boutonVoletAction);
   });
 
-  test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete et status est bon", async () => {
-    await act(async () => {
-      const history = createMemoryHistory();
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        "Acte irrecevable - Bonjour je ne peux recevoir votre demande - Johann Le Biannic"
+      )
+    ).toBeDefined();
+  });
+});
 
-      storeRece.utilisateurCourant = userDroitnonCOMEDEC;
-      storeRece.utilisateurCourant.idUtilisateur =
-        "90c6aee1-21be-4ba6-9e55-fc8831252646";
+test("Doit afficher la liste des messages avec le bon nombre de messages", async () => {
+  act(() => {
+    const history = createMemoryHistory();
 
-      history.push(
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
-          "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
-        )
-      );
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        "a4cefb71-8457-4f6b-937e-34b49335d404"
+      )
+    );
 
-      render(
-        <>
-          <Router history={history}>
-            <Route
-              exact={true}
-              path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
-            >
-              <VoletPieceJustificativesEtActions
-                requete={mappingRequeteCreation(
-                  requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
-                )}
-              />
-            </Route>
-          </Router>
-        </>
-      );
-    });
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+          >
+            <VoletPieceJustificativesEtActions
+              requete={mappingRequeteCreation(
+                requeteCreationAvecMessagesRetourSDANFSansLesDroits
+              )}
+            />
+          </Route>
+        </Router>
+      </>
+    );
+  });
 
+  await waitFor(() => {
+    const boutonVoletAction = screen.getByText("Actions");
+    fireEvent.click(boutonVoletAction);
+  });
+
+  await waitFor(() => {
+    expect(document.querySelectorAll("li.container").length).toEqual(2);
+
+    expect(
+      screen.getByText(
+        "Acte irrecevable - Bonjour je ne peux recevoir votre demande - Johann"
+      )
+    ).toBeDefined();
+  });
+});
+
+test("Doit desactiver les boutons quand la requete n'est pas en statut PRISE_EN_CHARGE", async () => {
+  act(() => {
+    const history = createMemoryHistory();
+
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        "3ed97a35-c9b0-4ae4-b2dc-75eb84e4085c"
+      )
+    );
+
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+          >
+            <VoletPieceJustificativesEtActions
+              requete={mappingRequeteCreation(
+                requeteCreationAvecMessagesRetourSDANFAvecMauvaisStatus
+              )}
+            />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  await waitFor(() => {
+    const boutonVoletAction = screen.getByText("Actions");
+    fireEvent.click(boutonVoletAction);
+  });
+
+  await waitFor(() => {
     const button = screen.getByText("Acte irrecevable").closest("button");
-    expect(button?.getAttribute("disabled")).toBe(null);
+    expect(button).toBeDisabled();
+  });
+});
+
+test("Doit desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete n'est pas la meme que l'agent", async () => {
+  act(() => {
+    const history = createMemoryHistory();
+
+    storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        "3ed9aa4e-921b-489f-b8fe-531dd703c68f"
+      )
+    );
+
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+          >
+            <VoletPieceJustificativesEtActions
+              requete={mappingRequeteCreation(
+                requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut
+              )}
+            />
+          </Route>
+        </Router>
+      </>
+    );
   });
 
-  test("Doit ouvrir la popin au click sur une action", async () => {
-    await act(async () => {
-      const history = createMemoryHistory();
+  await waitFor(() => {
+    const boutonVoletAction = screen.getByText("Actions");
+    fireEvent.click(boutonVoletAction);
+  });
 
-      const setState = jest.fn();
-      const useStateSpy: any = jest.spyOn(React, "useState");
-      useStateSpy.mockImplementation((init: boolean) => [init, setState]);
+  await waitFor(() => {
+    const button = screen.getByText("Acte irrecevable").closest("button");
+    expect(button).toBeDisabled();
+  });
+});
 
-      history.push(
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
-          "3ed9aa4e-921b-489f-b8fe-531dd703c68f"
-        )
-      );
+test("Doit pas desactiver les boutons quand l'idRequeteCorbeilleAgent de la requete et status est bon", async () => {
+  act(() => {
+    const history = createMemoryHistory();
 
-      render(
-        <>
-          <Router history={history}>
-            <Route
-              exact={true}
-              path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
-            >
-              <VoletPieceJustificativesEtActions
-                requete={mappingRequeteCreation(
-                  requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut
-                )}
-              />
-            </Route>
-          </Router>
-        </>
-      );
+    storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+    storeRece.utilisateurCourant.idUtilisateur =
+      "90c6aee1-21be-4ba6-9e55-fc8831252646";
 
-      const bouton = screen
-        .getByText("Acte irrecevable")
-        .closest("button") as HTMLElement;
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
+      )
+    );
 
-      fireEvent.click(bouton);
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+          >
+            <VoletPieceJustificativesEtActions
+              requete={mappingRequeteCreation(
+                requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
+              )}
+            />
+          </Route>
+        </Router>
+      </>
+    );
+  });
 
-      await waitFor(() => {
-        expect(setState).toHaveBeenCalledWith(true);
-      });
+  act(async () => {
+    await waitFor(() => {
+      const boutonVoletAction = screen.getByText("Actions");
+      fireEvent.click(boutonVoletAction);
     });
   });
 
-  test("Doit mettre à jour le titre de la popin au click sur une action", async () => {
-    await act(async () => {
-      const history = createMemoryHistory();
+  const button = screen.getByText("Acte irrecevable").closest("button");
+  expect(button?.getAttribute("disabled")).toBe(null);
+});
 
-      const setState = jest.fn();
-      const useStateSpy: any = jest.spyOn(React, "useState");
-      useStateSpy.mockImplementation((init: string) => [init, setState]);
+test("Doit ouvrir et changer le titre de la popin au click sur une action", async () => {
+  act(() => {
+    const history = createMemoryHistory();
 
-      history.push(
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
-          "3ed9aa4e-921b-489f-b8fe-531dd703c68f"
-        )
-      );
+    storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+    storeRece.utilisateurCourant.idUtilisateur =
+      "90c6aee1-21be-4ba6-9e55-fc8831252646";
 
-      render(
-        <>
-          <Router history={history}>
-            <Route
-              exact={true}
-              path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
-            >
-              <VoletPieceJustificativesEtActions
-                requete={mappingRequeteCreation(
-                  requeteCreationAvecMessagesRetourSDANFAvecMauvaisIdCorbeilleMaisBonStatut
-                )}
-              />
-            </Route>
-          </Router>
-        </>
-      );
+    history.push(
+      getUrlWithParam(
+        URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+        "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
+      )
+    );
 
-      const boutonElement = screen
-        .getByText("Element manquant")
-        .closest("button") as HTMLElement;
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+          >
+            <VoletPieceJustificativesEtActions
+              requete={mappingRequeteCreation(
+                requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
+              )}
+            />
+          </Route>
+        </Router>
+      </>
+    );
+  });
 
-      fireEvent.click(boutonElement);
+  const setState = jest.fn();
+  const useStateSpy: any = jest.spyOn(React, "useState");
+  useStateSpy.mockImplementation((init: string) => [init, setState]);
 
-      await waitFor(() => {
-        expect(setState).toHaveBeenCalledWith("Element manquant");
-      });
+  await waitFor(() => {
+    const boutonVoletAction = screen.getByText("Actions");
+    fireEvent.click(boutonVoletAction);
+  });
 
-      const boutonSuspicion = screen
-        .getByText("Suspicion de fraude / nouvel élément")
-        .closest("button") as HTMLElement;
+  await waitFor(() => {
+    const boutonAction = screen
+      .getByText("Acte irrecevable")
+      .closest("button") as HTMLElement;
+    fireEvent.click(boutonAction);
+  });
 
-      fireEvent.click(boutonSuspicion);
+  await waitFor(() => {
+    expect(setState).toHaveBeenCalledWith("Acte irrecevable");
+  });
 
-      await waitFor(() => {
-        expect(setState).toHaveBeenCalledWith(
-          "Suspicion de fraude / nouvel élément"
-        );
-      });
+  await waitFor(() => {
+    const boutonAction = screen
+      .getByText("Élément manquant")
+      .closest("button") as HTMLElement;
+    fireEvent.click(boutonAction);
+  });
+
+  await waitFor(() => {
+    expect(setState).toHaveBeenCalledWith("Élément manquant");
+  });
+
+  await waitFor(() => {
+    const boutonAction = screen
+      .getByText("Suspicion de fraude / nouvel élément")
+      .closest("button") as HTMLElement;
+    fireEvent.click(boutonAction);
+  });
+
+  await waitFor(() => {
+    expect(setState).toHaveBeenCalledWith(
+      "Suspicion de fraude / nouvel élément"
+    );
+  });
+
+  useStateSpy.mockRestore();
+});
+
+test("Doit ouvrir la popin au click sur une action", async () => {
+  const history = createMemoryHistory();
+
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  storeRece.utilisateurCourant.idUtilisateur =
+    "90c6aee1-21be-4ba6-9e55-fc8831252646";
+
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
+    )
+  );
+
+  act(() => {
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+          >
+            <VoletPieceJustificativesEtActions
+              requete={mappingRequeteCreation(
+                requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
+              )}
+            />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  const setState = jest.fn();
+  const useStateSpy: any = jest.spyOn(React, "useState");
+  useStateSpy.mockImplementation((init: string) => [init, setState]);
+
+  await waitFor(() => {
+    const boutonVoletAction = screen.getByText("Actions");
+    fireEvent.click(boutonVoletAction);
+  });
+
+  await waitFor(() => {
+    const bouton = screen
+      .getByText("Acte irrecevable")
+      .closest("button") as HTMLElement;
+    fireEvent.click(bouton);
+    expect(bouton?.getAttribute("disabled")).toBe(null);
+  });
+
+  await waitFor(() => {
+    expect(setState).toHaveBeenCalledWith(true);
+  });
+
+  useStateSpy.mockRestore();
+});
+
+test("Doit afficher un message d'erreur quand la taille maximale est dépassée", async () => {
+  const history = createMemoryHistory();
+
+  storeRece.utilisateurCourant = userDroitnonCOMEDEC;
+  storeRece.utilisateurCourant.idUtilisateur =
+    "90c6aee1-21be-4ba6-9e55-fc8831252646";
+
+  history.push(
+    getUrlWithParam(
+      URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID,
+      "3ed9aa4e-921b-429f-b8fe-531dd103c68f"
+    )
+  );
+
+  act(() => {
+    render(
+      <>
+        <Router history={history}>
+          <Route
+            exact={true}
+            path={URL_MES_REQUETES_CREATION_APERCU_REQUETE_ID}
+          >
+            <VoletPieceJustificativesEtActions
+              requete={mappingRequeteCreation(
+                requeteCreationAvecMessagesRetourSDANFAvecBonIdCorbeilleEtBonStatut
+              )}
+            />
+          </Route>
+        </Router>
+      </>
+    );
+  });
+
+  await waitFor(() => {
+    const boutonVoletAction = screen.getByText("Actions");
+    fireEvent.click(boutonVoletAction);
+  });
+
+  await waitFor(() => {
+    const boutonAction = screen
+      .getByText("Acte irrecevable")
+      .closest("button") as HTMLElement;
+    fireEvent.click(boutonAction);
+  });
+
+  await waitFor(() => {
+    const popin = screen.queryByTestId("popinConfirmationEtMessage");
+    expect(popin).toBeDefined();
+  });
+
+  const message =
+    "Lorem Ipsum is simply dummy text of the pridddddnting and typesddetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was populardddd";
+
+  await waitFor(() => {
+    const textArea = screen.getByPlaceholderText("Saisir un message");
+    fireEvent.change(textArea, {
+      target: { value: message }
     });
   });
 
-  // test("Doit fermer la popin au click sur Annuler", async () => {
-  //   const setState = jest.fn();
-  //   const useStateSpy: any = jest.spyOn(React, "useState");
-  //   useStateSpy.mockImplementation((init: boolean) => [init, setState]);
+  await waitFor(() => {
+    expect("500 caractères maximum").toBeDefined();
+  });
 
-  //   const boutonElement = screen
-  //     .getByText("Element manquant")
-  //     .closest("button") as HTMLElement;
-
-  //   fireEvent.click(boutonElement);
-
-  // });
+  await waitFor(() => {
+    const textArea = screen.getByPlaceholderText("Saisir un message");
+    fireEvent.change(textArea, {
+      target: { value: "ddd" }
+    });
+  });
 });
 
 afterAll(() => {
