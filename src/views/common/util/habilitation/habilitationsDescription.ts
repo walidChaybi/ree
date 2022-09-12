@@ -72,7 +72,7 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilEspaceDelivrance",
-    unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
+    unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC, Droit.CONSULTER],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },

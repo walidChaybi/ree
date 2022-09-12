@@ -97,7 +97,11 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_DELIVRANCE,
     component: EspaceDelivrancePage,
     props: { selectedTab: 0 },
-    auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
+    auMoinsUnDesDroits: [
+      Droit.DELIVRER,
+      Droit.DELIVRER_COMEDEC,
+      Droit.CONSULTER
+    ],
     libelle: getLibelle("Mes requêtes de délivrance")
   },
   // Aperçu requête ... depuis Mes Requêtes de DELIVRANCE
