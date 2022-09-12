@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChoixDelivrance } from "../../../../../../../model/requete/enum/ChoixDelivrance";
-import { SousTypeDelivrance } from "../../../../../../../model/requete/enum/SousTypeDelivrance";
 import { IActionOption } from "../../../../../../../model/requete/IActionOption";
 import { IResultatRMCActe } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "../../../../../../../model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -22,6 +21,7 @@ import {
 } from "./hook/UpdateChoixDelivranceApiHook";
 import {
   controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivrance,
+  estChoixActeNonDetenu,
   estChoixIgnorerRequete,
   getOptionsMenuReponseSansDelivrance,
   redirection
@@ -78,7 +78,9 @@ export const MenuReponseSansDelivranceEC: React.FC<
       setChoixDelivrance(
         reponseSansDelivranceOptions[indexMenu].choixDelivrance
       );
+      if (estChoixActeNonDetenu(indexMenu)) setActes([]);
       controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivrance({
+        indexMenu,
         actes,
         inscriptions,
         actions,
@@ -87,15 +89,13 @@ export const MenuReponseSansDelivranceEC: React.FC<
         setMessagesBloquant
       });
     }
-    // La redirection (cf. useEffect) s'effectue uniquement s'il n'y a pas de
-    // message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivrance'
+    // La redirection (cf. useEffect) s'effectue uniquement si messageBloquant=[] après les contrôles (cf. state)
   };
 
   // Le contrôle de cohérence a eu lieu
   useEffect(() => {
     if (choixDelivrance && messagesBloquant && messagesBloquant.length === 0) {
-      // Le contrôle de cohérence a eu lieu et pas de message bloquant
-      // Déclenche le hook de mise à jour du choix de délivrance
+      // Pas de message bloquant (messageBloquant=[] quand il a fait les controles & pas d'erreurs, tandis que messageBloquant=undefined quand c'est pas encore fait)
       setParamUpdateChoixDelivrance({
         requete: props.requete,
         choixDelivrance
@@ -103,12 +103,9 @@ export const MenuReponseSansDelivranceEC: React.FC<
     }
   }, [messagesBloquant, choixDelivrance, props.requete]);
 
-  // La mise à jour du choix de délivrance et du statut ont été effectués (cf.)
+  // La mise à jour du choix de délivrance et du statut ont été effectués
   useEffect(() => {
-    if (
-      updateChoixDelivranceResultat?.idRequete &&
-      props.requete.sousType === SousTypeDelivrance.RDC
-    ) {
+    if (updateChoixDelivranceResultat?.idRequete) {
       redirectionCallback(DocumentEC.Courrier);
     }
   }, [

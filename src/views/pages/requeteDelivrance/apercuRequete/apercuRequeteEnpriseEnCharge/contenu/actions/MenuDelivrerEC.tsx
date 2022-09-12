@@ -126,16 +126,14 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
       setBoutonsPopin,
       setMessagesBloquant
     });
-    // La redirection (cf. useEffect) s'effectue uniquement s'il n'y a pas de
-    // message bloquant (cf. state) de la part de 'controleCoherenceEntreDocumentSelectionneEtActionDelivrer'
+    // La redirection (cf. useEffect) s'effectue uniquement si messageBloquant=[] après les contrôles (cf. state)
   };
 
   // Le contrôle de cohérence a eu lieu
   useEffect(() => {
     if (choixDelivrance && messagesBloquant && messagesBloquant.length === 0) {
-      // Le contrôle de cohérence a eu lieu et pas de message bloquant
+      // Pas de message bloquant (messageBloquant=[] quand il a fait les controles & pas d'erreurs, tandis que messageBloquant=undefined quand c'est pas encore fait)
       setOperationEnCours(true);
-      // Déclenche le hook de mise à jour du choix de délivrance
       setParamUpdateChoixDelivrance({
         requete: props.requete,
         choixDelivrance
@@ -143,7 +141,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
     }
   }, [messagesBloquant, choixDelivrance, props.requete]);
 
-  // La mise à jour du choix de délivrance et du statut ont été effectués (cf.)
+  // La mise à jour du choix de délivrance et du statut ont été effectués
   useEffect(() => {
     if (
       updateChoixDelivranceResultat?.idRequete &&

@@ -38,7 +38,7 @@ const enum MaxTitulaireDelivrance {
   DECES = 1,
   MARIAGE = 2
 }
-const enum IndexAction {
+export const enum IndexAction {
   // Délivrer
   COPIE_INTEGRALE = 0,
   EXTRAIT_AVEC_FILIATION = 1,
@@ -81,6 +81,11 @@ export type ErreurResult = {
     nonBloquant?: boolean;
   };
 };
+type GenresType = {
+  titulaire?: string;
+  conjoint?: string;
+  parents: (string | undefined)[];
+};
 
 // Boutons ---------------------------------------------------------------
 
@@ -104,6 +109,9 @@ export const estChoixExtraitPlurilingue = (indexMenu: number) =>
 
 export const estChoixIgnorerRequete = (indexMenu: number) =>
   indexMenu === IndexAction.IGNORER_REQUETE;
+
+export const estChoixActeNonDetenu = (indexMenu: number) =>
+  indexMenu === IndexAction.ACTE_NON_DETENU;
 
 // getOptionsMenu --------------------------------------------------------
 
@@ -284,27 +292,36 @@ export const aNombreTitulairesIncoherent = (
 
 const getGenreTitulaireConjointEtParents = (
   titulairesActe?: ITitulaireActe[]
-) => {
-  const titulaire = titulairesActe?.[0]?.sexe as unknown as string;
-  const conjoint = titulairesActe?.[1]?.sexe as unknown as string;
-  const parents = titulairesActe?.[0]?.filiations
-    ?.filter(filiation => filiation.lienParente === LienParente.PARENT)
-    .map(parent => parent.sexe) as unknown as (string | undefined)[];
+): GenresType => {
+  const genres = {
+    titulaire: titulairesActe?.[0]?.sexe,
+    conjoint: titulairesActe?.[1]?.sexe,
+    parents:
+      titulairesActe?.[0]?.filiations
+        ?.filter(filiation => filiation.lienParente === LienParente.PARENT)
+        .map(parent => parent.sexe) || []
+  } as unknown as GenresType;
 
-  return { titulaire, conjoint, parents };
+  return genres;
 };
 
 export const aGenreIdentique = (
   genrePersonneA?: string,
   genrePersonneB?: string
 ) => {
-  return genrePersonneA && genrePersonneB
-    ? genrePersonneA === genrePersonneB
-    : false;
+  return (
+    genrePersonneA &&
+    genrePersonneB &&
+    !aGenreInconnu([genrePersonneA, genrePersonneB]) &&
+    genrePersonneA === genrePersonneB
+  );
 };
 
 export const aGenreIndetermine = (genres: (string | undefined)[]) =>
   genres.find(genre => genre === Sexe.getKey(Sexe.INDETERMINE)) != null;
+
+const aGenreInconnu = (genres: (string | undefined)[]) =>
+  genres.find(genre => genre === Sexe.getKey(Sexe.INCONNU)) != null;
 
 const resetDoubleSubmit = (actions: IActionOption[]) => {
   actions.forEach(action => {
@@ -357,22 +374,23 @@ export const nombreActesSelectionnesDifferentDeUn = ({
   };
 };
 
-export const nombreActesSelectionnesDifferentDeUnOuZero = ({
-  actes,
-  inscriptions
-}: {
-  actes?: IResultatRMCActe[];
-  inscriptions?: IResultatRMCInscription[];
-}): ErreurResult => {
-  return {
-    enErreur:
-      (actes != null && actes.length > 1) ||
-      (inscriptions != null && inscriptions.length !== 0),
-    popinErreur: {
-      message: "Veuillez sélectionner zéro ou un seul acte."
+export const choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero =
+  (
+    props: Pick<ErreurType, "indexMenu"> & {
+      actes?: IResultatRMCActe[];
+      inscriptions?: IResultatRMCInscription[];
     }
+  ): ErreurResult => {
+    return {
+      enErreur:
+        !estChoixActeNonDetenu(props.indexMenu) &&
+        ((props.actes != null && props.actes.length > 1) ||
+          (props.inscriptions != null && props.inscriptions.length !== 0)),
+      popinErreur: {
+        message: "Veuillez sélectionner zéro ou un seul acte."
+      }
+    };
   };
-};
 
 const corpsActeNonDisponible = (
   props: Pick<ErreurType, "acte">
@@ -561,6 +579,7 @@ export const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = ({
 
 export const controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivrance =
   ({
+    indexMenu,
     actes,
     inscriptions,
     actions,
@@ -569,7 +588,7 @@ export const controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivra
     setMessagesBloquant
   }: Omit<
     ControleCoherenceType,
-    "indexMenu" | "titulairesActeMap" | "nbTitulairesActeMap"
+    "titulairesActeMap" | "nbTitulairesActeMap"
   >) => {
     if (SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) {
       const fermer = () => {
@@ -580,7 +599,11 @@ export const controleCoherenceEntreDocumentSelectionneEtActionReponseSansDelivra
       const boutonOK = getBoutonsActionPopin([["OK", fermer]]);
 
       const erreur = controleCoherence([
-        nombreActesSelectionnesDifferentDeUnOuZero({ actes, inscriptions })
+        choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero({
+          indexMenu,
+          actes,
+          inscriptions
+        })
       ]);
 
       if (erreur) {

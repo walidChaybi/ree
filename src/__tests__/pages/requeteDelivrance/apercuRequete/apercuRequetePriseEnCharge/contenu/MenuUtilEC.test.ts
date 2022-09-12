@@ -5,12 +5,13 @@ import {
   aGenreIdentique,
   aGenreIndetermine,
   aNombreTitulairesIncoherent,
+  choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero,
   ErreurResult,
   estChoixExtraitAvecOuSansFiliation,
   estChoixExtraitPlurilingue,
   estChoixIgnorerRequete,
-  nombreActesSelectionnesDifferentDeUn,
-  nombreActesSelectionnesDifferentDeUnOuZero
+  IndexAction,
+  nombreActesSelectionnesDifferentDeUn
 } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 
 const testsCasMultiples = <T>({
@@ -91,8 +92,14 @@ test("aNombreTitulairesIncoherent", () => {
 });
 
 test("aGenreIdentique", () => {
-  const casOK = [["FEMININ", "FEMININ"]];
-  const casKO = [["FEMININ", "MASCULIN"]];
+  const casOK = [
+    ["FEMININ", "FEMININ"],
+    ["MASCULIN", "MASCULIN"]
+  ];
+  const casKO = [
+    ["FEMININ", "MASCULIN"],
+    ["INCONNU", "INCONNU"]
+  ];
 
   casOK.forEach(cas => expect(aGenreIdentique(cas[0], cas[1])).toBe(true));
   casKO.forEach(cas => expect(aGenreIdentique(cas[0], cas[1])).toBe(false));
@@ -148,30 +155,40 @@ test("nombreActesSelectionnesDifferentDeUn", () => {
   });
 });
 
-test("nombreActesSelectionnesDifferentDeUnOuZero", () => {
+test("choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero", () => {
   const acte = "test" as unknown as IResultatRMCActe;
   const inscription = "test" as unknown as IResultatRMCInscription;
-  const casOK: casType[] = [
+  const casOK: (casType & { indexMenu: number })[] = [
     {
+      indexMenu: IndexAction.REQUETE_INCOMPLETE,
       actes: [acte],
       inscriptions: [inscription]
     },
     {
+      indexMenu: IndexAction.REQUETE_INCOMPLETE,
       actes: [acte, acte],
       inscriptions: []
     }
   ];
-  const casKO: casType[] = [
+  const casKO: (casType & { indexMenu: number })[] = [
     {
+      indexMenu: IndexAction.REQUETE_INCOMPLETE,
       actes: undefined,
       inscriptions: undefined
     },
     {
+      indexMenu: IndexAction.REQUETE_INCOMPLETE,
       actes: [],
       inscriptions: []
     },
     {
+      indexMenu: IndexAction.REQUETE_INCOMPLETE,
       actes: [acte],
+      inscriptions: []
+    },
+    {
+      indexMenu: IndexAction.ACTE_NON_DETENU,
+      actes: [acte, acte],
       inscriptions: []
     }
   ];
@@ -179,6 +196,7 @@ test("nombreActesSelectionnesDifferentDeUnOuZero", () => {
   testsConditionsCasMultiples({
     casOK,
     casKO,
-    fonction: nombreActesSelectionnesDifferentDeUnOuZero
+    fonction:
+      choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero
   });
 });
