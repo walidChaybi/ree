@@ -20,7 +20,7 @@ import {
 } from "../../../hook/acte/DerniereDelivranceActeApiHook";
 import {
   IResultatPatchDocumentReponse,
-  usePatchDocumentsReponseApi
+  usePatchDocumentsReponseAvecSignatureApi
 } from "../../../hook/DocumentReponseHook";
 import {
   CreationActionEtMiseAjourStatutParams,
@@ -154,7 +154,7 @@ export function useSignatureDocumentHook(
     setSuccessSignature(newSuccesses);
   }, [documentsToSignWating, idRequetesToSign, successSignature]);
 
-  const resultatPatchDocumentReponse = usePatchDocumentsReponseApi(
+  const resultatPatchDocumentReponse = usePatchDocumentsReponseAvecSignatureApi(
     miseAJourDocumentParams
   );
 
@@ -417,9 +417,7 @@ function getDocumentAndSendToSignature(
 }
 
 function estUnDocumentASigner(uuidTypeDocument: string): boolean {
-  const documentDelivrance =
-    DocumentDelivrance.getEnumForUUID(uuidTypeDocument);
-  return DocumentDelivrance.estExtraitCopieAsigner(documentDelivrance.code);
+  return DocumentDelivrance.estExtraitCopieAsigner(uuidTypeDocument);
 }
 
 function getNewStatusRequete(

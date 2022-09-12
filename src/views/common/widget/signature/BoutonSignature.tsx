@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { DialogDisclosureHTMLProps } from "reakit/Dialog";
 import { IOfficier } from "../../../../model/agent/IOfficier";
+import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "../../../../model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import {
@@ -8,6 +9,8 @@ import {
   IDocumentReponse
 } from "../../../../model/requete/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
+import { FeatureFlag } from "../../util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "../../util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "../../util/messageManager";
 import { getLibelle, getValeurOuVide } from "../../util/Utils";
 import { Bouton } from "../../widget/boutonAntiDoubleSubmit/Bouton";
@@ -81,7 +84,7 @@ export const BoutonSignature: React.FC<
         };
 
         requete.documentsReponses.forEach((document: IDocumentReponse) => {
-          if (document.avecCtv === true) {
+          if (estUnDocumentASigner(document)) {
             documentsATraiter.documentsToSign.push({
               id: document.id,
               mimeType: document.mimeType,
@@ -147,3 +150,10 @@ const signaturePossible = (
     return requetes.some(req => req.statut === StatutRequete.A_SIGNER.libelle);
   }
 };
+function estUnDocumentASigner(document: IDocumentReponse) {
+  return gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_EC_PAC)
+    ? DocumentDelivrance.estExtraitCopieAsigner(document.typeDocument) &&
+        document.avecCtv === true
+    : /*Etape 1*/ document.avecCtv === true;
+}
+

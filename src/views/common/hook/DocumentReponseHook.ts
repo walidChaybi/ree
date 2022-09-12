@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   getDocumentReponseById,
   IMiseAJourDocumentParams,
-  patchDocumentsReponses,
+  patchDocumentsReponsesAvecSignature,
   postDocumentReponseApi
 } from "../../../api/appels/requeteApi";
 import { IDocumentReponse } from "../../../model/requete/IDocumentReponse";
@@ -71,17 +71,15 @@ export interface IResultatPatchDocumentReponse {
   erreur?: any;
 }
 
-export function usePatchDocumentsReponseApi(
+export function usePatchDocumentsReponseAvecSignatureApi(
   miseAJourDocumentParams?: IMiseAJourDocumentParams[]
 ) {
-  const [
-    resultatPatchDocumentReponse,
-    setResultatPatchDocumentReponse
-  ] = useState<IResultatPatchDocumentReponse>();
+  const [resultatPatchDocumentReponse, setResultatPatchDocumentReponse] =
+    useState<IResultatPatchDocumentReponse>();
 
   useEffect(() => {
     if (miseAJourDocumentParams && miseAJourDocumentParams.length > 0) {
-      patchDocumentsReponses(miseAJourDocumentParams)
+      patchDocumentsReponsesAvecSignature(miseAJourDocumentParams)
         .then(result => {
           setResultatPatchDocumentReponse({ idRequete: result.body.data });
         })

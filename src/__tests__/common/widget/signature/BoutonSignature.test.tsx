@@ -9,10 +9,15 @@ import {
 import React from "react";
 import request from "superagent";
 import { configRequetes } from "../../../../mock/superagent-config/superagent-mock-requetes";
+import { DocumentDelivrance } from "../../../../model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "../../../../model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "../../../../model/requete/IRequeteTableauDelivrance";
 import { BoutonSignature } from "../../../../views/common/widget/signature/BoutonSignature";
 const superagentMock = require("superagent-mock")(request, configRequetes);
+
+beforeAll(() => {
+  DocumentDelivrance.init();
+});
 
 const requete: IRequeteTableauDelivrance = {
   idRequete: "id1",
@@ -21,7 +26,7 @@ const requete: IRequeteTableauDelivrance = {
     {
       id: "123",
       nom: "aaa",
-      typeDocument: "456", // UUID nomenclature
+      typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce", // UUID nomenclature
       taille: 100,
       avecCtv: true,
       conteneurSwift: "chemin",

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Orientation } from "../../../../../model/composition/enum/Orientation";
 import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "../../../../../model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { Validation } from "../../../../../model/requete/enum/Validation";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "../../../../../model/requete/IRequeteDelivrance";
@@ -113,10 +114,13 @@ export function useGenerationEC(
           requete.sousType
         );
 
+        const typeDocument = getTypeDocument(params.choixDelivrance);
+        const avecCtv = DocumentDelivrance.estExtraitCopieAsigner(typeDocument);
         const documentReponsePourStockage = {
           contenu,
           nom: getNomDocument(params.choixDelivrance),
-          typeDocument: getTypeDocument(params.choixDelivrance), // UUID du type de document demandé (nomenclature)
+          typeDocument, // UUID du type de document demandé (nomenclature),
+          avecCtv,
           nbPages,
           mimeType: MimeType.APPLI_PDF,
           orientation: Orientation.PORTRAIT,
