@@ -322,7 +322,7 @@ export function mappingRequeteCreation(data: any): IRequeteCreation {
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
     provenanceNatali: {
       ...data.provenanceNatali,
-      echanges: mapEchangesRetourSDANF(data.provenanceNatali.echanges)
+      echanges: mapEchangesRetourSDANF(data.provenanceNatali?.echanges)
     }
   };
 }
